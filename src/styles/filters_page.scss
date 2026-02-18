@@ -1,0 +1,578 @@
+.filters-page {
+  .filters-elements-container > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.75rem !important;
+  }
+
+  .filters-elements-container > :nth-child(2) h3 {
+    margin-bottom: 0 !important;
+  }
+
+  .filters-elements-container > :nth-child(4) h3 {
+    margin-bottom: 0 !important;
+  }
+
+  .filters-elements-container > :nth-child(2) > p,
+  .filters-elements-container > :nth-child(3) > p,
+  .filters-elements-container > :nth-child(4) > p {
+    margin-top: 0 !important;
+  }
+
+  // SMALL MOBILE SCREEN
+  @media (max-width: 375.98px) {
+    > button {
+      display: none !important;
+    }
+
+    .filters-elements-container {
+      height: auto !important;
+      min-height: 0 !important;
+      justify-content: flex-start !important;
+    }
+
+    // Reduce the main page header size on extra-small screens.
+    .filters-elements-container > :first-child h2 {
+      font-size: 1.18rem !important;
+      line-height: 1.2 !important;
+    }
+
+    // Reduce the subtitle text under the main header on extra-small screens.
+    .filters-elements-container > :first-child p {
+      font-size: 0.84rem !important;
+      line-height: 1.25 !important;
+    }
+
+    .filters-elements-container > :nth-child(2) > p,
+    .filters-elements-container > :nth-child(3) > p,
+    .filters-elements-container > :nth-child(4) > p {
+      font-size: 0.78rem !important;
+      line-height: 1.2 !important;
+    }
+
+    .filters-elements-container h3 {
+      font-size: 1rem !important;
+    }
+
+    // Prevent flex children (topics + word types sections) from causing overflow.
+    .filters-elements-container > :nth-child(3),
+    .filters-elements-container > :nth-child(4) {
+      min-width: 0;
+    }
+
+    // Remove the topics list max-height so wrapped chips are not clipped.
+    .filters-elements-container > :nth-child(3) > div[class*="max-h-[110px]"] {
+      max-height: none !important;
+    }
+
+    // Allow chip labels to wrap instead of breaking layout on small widths.
+    .filters-elements-container > :nth-child(3) button,
+    .filters-elements-container > :nth-child(4) button {
+      max-width: 100%;
+      white-space: normal;
+      line-height: 1;
+    }
+
+    // Keep only 6 topic buttons visible on extra-small screens.
+    .filters-elements-container > :nth-child(3) > div {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 0.5rem !important;
+    }
+
+    .filters-elements-container
+      > :nth-child(3)
+      > div
+      > button:nth-of-type(n + 7):not(:last-child) {
+      display: none !important;
+    }
+
+    .filters-elements-container > :nth-child(3) > div > button:last-child {
+      display: inline-flex !important;
+    }
+
+    .filters-elements-container > :nth-child(3) button {
+      padding: 0.32rem 0.48rem !important;
+    }
+
+    .filters-elements-container > :nth-child(4) button {
+      padding: 0.36rem 0.62rem !important;
+    }
+
+    .filters-elements-container > :nth-child(3) button > span {
+      font-size: 0.68rem !important;
+    }
+
+    button[title="Double-click to select only this level"] {
+      padding: 0.45rem 0.55rem !important;
+    }
+
+    button[title="Double-click to select only this level"] > div:first-of-type {
+      font-size: 0.78rem !important;
+    }
+
+    button[title="Double-click to select only this level"] > div:last-of-type {
+      font-size: 0.6rem !important;
+      line-height: 1.05 !important;
+    }
+
+    .filters-elements-container > :nth-child(2) > div:last-child > button {
+      padding: 0.26rem 0.62rem !important;
+      font-size: 0.68rem !important;
+      line-height: 1.1 !important;
+    }
+
+    .filters-continue-button {
+      font-size: 1.1rem !important;
+      line-height: 1.3 !important;
+      padding: 1rem 3rem !important;
+    }
+
+    .filters-topics-open-button {
+      min-height: 3rem !important;
+      font-size: 0.95rem !important;
+      line-height: 1.2 !important;
+      border-radius: 0.9rem !important;
+    }
+
+    .filters-elements-container > :last-child {
+      margin-top: 0 !important;
+    }
+
+    .filters-elements-container > :nth-child(4) button > span {
+      font-size: 0.68rem !important;
+    }
+  }
+
+  // BIG MOBILE SCREEN
+  @media (min-width: 376px) and (max-width: 430.98px) {
+    > button {
+      display: none !important;
+    }
+
+    .filters-elements-container {
+      height: 85dvh !important;
+      justify-content: space-between !important;
+    }
+
+    .filters-elements-container > :last-child {
+      margin-top: 0 !important;
+    }
+
+    // Prevent flex children (topics + word types sections) from causing overflow.
+    .filters-elements-container > :nth-child(3),
+    .filters-elements-container > :nth-child(4) {
+      min-width: 0;
+    }
+
+    // Remove the topics list max-height so wrapped chips are not clipped.
+    .filters-elements-container > :nth-child(3) > div[class*="max-h-[110px]"] {
+      max-height: none !important;
+    }
+
+    // Allow chip labels to wrap instead of breaking layout on small widths.
+    .filters-elements-container > :nth-child(3) button,
+    .filters-elements-container > :nth-child(4) button {
+      max-width: 100%;
+      white-space: normal;
+      line-height: 1;
+    }
+
+    // Make topic chips slightly more compact in this range.
+    .filters-elements-container > :nth-child(3) button {
+      padding: 0.35rem 0.5rem !important;
+    }
+
+    // Keep word-type chips compact to reduce crowding.
+    .filters-elements-container > :nth-child(4) button {
+      padding: 0.45rem 0.75rem !important;
+    }
+
+    // Slightly reduce main level-code text size on small mobile.
+    button[title="Double-click to select only this level"] > div:first-of-type {
+      font-size: 0.9rem !important;
+    }
+
+    // Force level subtitle line visible and tight under the code.
+    button[title="Double-click to select only this level"] > div:last-of-type {
+      display: block !important;
+      font-size: 0.65rem !important;
+      line-height: 1.1 !important;
+      margin-top: 0.1rem !important;
+    }
+
+    // Reduce the main page header size on extra-small screens.
+    .filters-elements-container > :first-child h2 {
+      font-size: 1.6rem !important;
+      line-height: 1.2 !important;
+    }
+
+    // Reduce the subtitle text under the main header on extra-small screens.
+    .filters-elements-container > :first-child p {
+      font-size: 0.9rem !important;
+      line-height: 1.25 !important;
+    }
+
+    .filters-continue-button {
+      font-size: 1.1rem !important;
+      line-height: 1.3 !important;
+      padding: 1rem 3rem !important;
+    }
+
+    .filters-topics-open-button {
+      min-height: 3.2rem !important;
+      font-size: 1.05rem !important;
+      line-height: 1.2 !important;
+      border-radius: 0.95rem !important;
+    }
+  }
+
+  // SMALL TABLET SCREEN - PORTRAIT
+  @media (min-width: 767px) and (max-width: 1023.98px) and (orientation: portrait) and (pointer: coarse) and (hover: none) {
+    width: 90vw !important;
+    max-width: 90vw !important;
+    margin-inline: auto !important;
+
+    > button {
+      top: 5rem !important;
+      left: 1.5rem !important;
+      max-width: calc(100vw - 1.5rem) !important;
+    }
+
+    main {
+      box-sizing: border-box !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    .filters-elements-container {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 80dvh !important;
+      max-height: 100% !important;
+      min-height: 0 !important;
+      min-width: 0 !important;
+      justify-content: space-between !important;
+    }
+
+    .filters-elements-container > * {
+      min-width: 0 !important;
+    }
+
+    .filters-elements-container button {
+      max-width: 100% !important;
+    }
+
+    .filters-elements-container button > span,
+    .filters-elements-container button > div {
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+    }
+
+    // Slightly increase typography for better readability on small tablets.
+    .filters-elements-container h2 {
+      font-size: clamp(2.4rem, 4vw, 3.2rem) !important;
+    }
+
+    .filters-elements-container h3 {
+      font-size: clamp(1.35rem, 2.3vw, 1.65rem) !important;
+    }
+
+    .filters-elements-container p {
+      font-size: 1.02rem !important;
+    }
+
+    .filters-elements-container button > span,
+    .filters-elements-container button > div {
+      font-size: 1.02rem !important;
+    }
+
+    .filters-continue-button {
+      font-size: 1.15rem !important;
+    }
+  }
+
+  // BIG TABLET SCREEN - PORTRAIT (touch devices)
+  @media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+    > button {
+      top: 7rem !important;
+      left: 2rem !important;
+      font-size: 1.05rem !important;
+      gap: 0.6rem !important;
+    }
+
+    > button svg {
+      width: 1.4rem !important;
+      height: 1.4rem !important;
+    }
+
+    .filters-elements-container {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 80dvh !important;
+      max-height: 100% !important;
+      justify-content: space-between !important;
+    }
+
+    // Slightly increase typography for big tablets.
+    .filters-elements-container h2 {
+      font-size: clamp(3rem, 4.6vw, 3.9rem) !important;
+    }
+
+    .filters-elements-container h3 {
+      font-size: clamp(1.8rem, 2.7vw, 2.2rem) !important;
+    }
+
+    .filters-elements-container p {
+      font-size: 1.28rem !important;
+    }
+
+    .filters-elements-container button > span,
+    .filters-elements-container button > div {
+      font-size: 1.28rem !important;
+    }
+
+    .filters-continue-button {
+      font-size: 1.5rem !important;
+    }
+
+    // Force CEFR grid to 3 columns so 6 buttons render as 2 rows.
+    .filters-elements-container > :nth-child(2) > div[class*="grid-cols-3"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  }
+
+  // SMALL LAPTOP SCREEN
+  @media (min-width: 1024px) and (max-width: 1279.98px) {
+    > button {
+      top: 6rem !important;
+      left: 2rem !important;
+      font-size: 0.88rem !important;
+      gap: 0.38rem !important;
+    }
+
+    > button svg {
+      width: 1.05rem !important;
+      height: 1.05rem !important;
+    }
+
+    .filters-elements-container {
+      height: 100% !important;
+      min-height: 80dvh !important;
+      justify-content: space-between !important;
+    }
+
+    .filters-elements-container h2 {
+      font-size: clamp(1.82rem, 1.8vw, 2.2rem) !important;
+    }
+
+    .filters-elements-container h3 {
+      font-size: clamp(1.08rem, 1.45vw, 1.28rem) !important;
+    }
+
+    .filters-elements-container p {
+      font-size: 0.82rem !important;
+    }
+
+    .filters-elements-container button > span,
+    .filters-elements-container button > div {
+      font-size: 0.9rem !important;
+    }
+
+    .filters-elements-container > :nth-child(3) button > span {
+      font-size: 0.78rem !important;
+    }
+
+    .filters-elements-container > :nth-child(4) button > span {
+      font-size: 0.78rem !important;
+    }
+
+    .filters-elements-container > :nth-child(4) button {
+      padding: 0.4rem 0.8rem !important;
+    }
+
+    .filters-elements-container > :nth-child(2) > div:last-child > button {
+      padding: 0.3rem 0.68rem !important;
+      font-size: 0.74rem !important;
+    }
+
+    .filters-continue-button {
+      font-size: 0.98rem !important;
+      background-image: none !important;
+      background-color: #ff0000 !important;
+      color: #ffffff !important;
+    }
+
+    button[title="Double-click to select only this level"] > div:first-of-type {
+      font-size: 0.82rem !important;
+    }
+
+    button[title="Double-click to select only this level"] > div:last-of-type {
+      font-size: 0.8rem !important;
+      line-height: 1.05 !important;
+    }
+  }
+
+  // BIG LAPTOP SCREEN
+  @media (min-width: 1280px) and (max-width: 1535.98px) and (orientation: landscape) {
+    overflow: hidden !important;
+
+    > button {
+      top: 6rem !important;
+      left: 2rem !important;
+      font-size: 0.92rem !important;
+      gap: 0.42rem !important;
+    }
+
+    > button svg {
+      width: 1.1rem !important;
+      height: 1.1rem !important;
+    }
+
+    .filters-elements-container {
+      height: 100% !important;
+      min-height: 80dvh !important;
+      justify-content: space-between !important;
+      overflow: hidden !important;
+    }
+
+    .filters-elements-container h2 {
+      font-size: clamp(1.65rem, 1.52vw, 1.95rem) !important;
+    }
+
+    .filters-elements-container h3 {
+      font-size: clamp(1rem, 1.2vw, 1.4rem) !important;
+    }
+
+    .filters-elements-container
+      > :first-child
+      > :not([hidden])
+      ~ :not([hidden]) {
+      margin-top: 0.2rem !important;
+    }
+
+    .filters-elements-container
+      > :nth-child(2)
+      > :not([hidden])
+      ~ :not([hidden]),
+    .filters-elements-container
+      > :nth-child(3)
+      > :not([hidden])
+      ~ :not([hidden]),
+    .filters-elements-container
+      > :nth-child(4)
+      > :not([hidden])
+      ~ :not([hidden]) {
+      margin-top: 0.35rem !important;
+    }
+
+    .filters-elements-container > :nth-child(2) > p,
+    .filters-elements-container > :nth-child(3) > p,
+    .filters-elements-container > :nth-child(4) > p {
+      margin-top: 0 !important;
+    }
+
+    .filters-elements-container > :nth-child(2) > div:last-child {
+      padding-top: 0 !important;
+    }
+
+    .filters-elements-container > :nth-child(3) h3 {
+      margin-bottom: 0 !important;
+    }
+
+    .filters-elements-container > :nth-child(2) > p {
+      font-size: 0.78rem !important;
+    }
+
+    .filters-elements-container > :nth-child(3) > p,
+    .filters-elements-container > :nth-child(4) > p {
+      font-size: 0.78rem !important;
+    }
+
+    .filters-elements-container > :nth-child(2) > div:last-child > p {
+      font-size: 0.72rem !important;
+    }
+
+    .filters-elements-container > :nth-child(2) > div:last-child > button {
+      padding: 0.28rem 0.9rem !important;
+      font-size: 0.76rem !important;
+    }
+
+    button[title="Double-click to select only this level"] > div:first-of-type {
+      font-size: 0.74rem !important;
+    }
+
+    .filters-elements-container > :nth-child(4) button > span {
+      font-size: 0.74rem !important;
+    }
+
+    .filters-elements-container > :nth-child(4) button {
+      padding: 0.3rem 0.68rem !important;
+    }
+
+    .filters-elements-container > :nth-child(3) button > span {
+      font-size: 0.74rem !important;
+    }
+
+    .filters-continue-button {
+      font-size: 0.9rem !important;
+      padding: 0.55rem 1.2rem !important;
+    }
+  }
+
+  // PC SCREEN
+  @media (min-width: 1536px) {
+    > button {
+      top: 6rem !important;
+      left: 2rem !important;
+    }
+
+    .filters-elements-container {
+      height: 100% !important;
+      min-height: 75dvh !important;
+      justify-content: space-between !important;
+    }
+
+    .filters-elements-container h2 {
+      font-size: clamp(1.78rem, 1.48vw, 2.1rem) !important;
+    }
+
+    .filters-elements-container h3 {
+      font-size: clamp(0.9rem, 1.02vw, 1.12rem) !important;
+    }
+
+    .filters-elements-container > :nth-child(2) > p,
+    .filters-elements-container > :nth-child(3) > p,
+    .filters-elements-container > :nth-child(4) > p {
+      font-size: 0.76rem !important;
+    }
+
+    .filters-elements-container > :nth-child(4) button > span {
+      font-size: 0.85rem !important;
+    }
+
+    .filters-elements-container > :nth-child(4) button {
+      padding: 0.4rem 0.9rem !important;
+    }
+
+    .filters-continue-button {
+      font-size: 1.125rem !important;
+      padding: 1rem 3rem !important;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .filters-continue-button {
+      font-size: 1.125rem !important;
+      padding: 1rem 3rem !important;
+    }
+  }
+
+  @media (min-width: 376px) and (max-width: 430.98px) {
+    .filters-continue-button {
+      font-size: 1.1rem !important;
+      line-height: 1.3 !important;
+      padding: 1rem 3rem !important;
+    }
+  }
+}

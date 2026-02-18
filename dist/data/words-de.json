@@ -1,0 +1,402 @@
+[
+  {
+    "id": 1,
+    "concept_id": "A1-00001",
+    "word_lemma": "hallo",
+    "definiton": "A greeting used when meeting someone.",
+    "sentence": "Ich sage immer hallo, wenn ich meine Freunde treffe.",
+    "type": "interjection",
+    "category": "communication",
+    "level": "A1"
+  },
+  {
+    "id": 2,
+    "concept_id": "A1-00002",
+    "word_lemma": "Katze",
+    "definiton": "A small furry animal with four legs that people keep as a pet.",
+    "sentence": "Meine Katze schläft gerne auf dem Sofa.",
+    "type": "noun",
+    "category": "animals",
+    "level": "A1"
+  },
+  {
+    "id": 3,
+    "concept_id": "A1-00003",
+    "word_lemma": "Wasser",
+    "definiton": "A clear liquid that has no color, taste, or smell, and that falls from clouds as rain.",
+    "sentence": "Ich trinke jeden Tag Wasser, um gesund zu bleiben.",
+    "type": "noun",
+    "category": "food",
+    "level": "A1"
+  },
+  {
+    "id": 4,
+    "concept_id": "A1-00004",
+    "word_lemma": "glücklich",
+    "definiton": "Feeling or showing pleasure or satisfaction.",
+    "sentence": "Sie ist sehr glücklich, wenn sie mit ihrem Hund spielt.",
+    "type": "adjective",
+    "category": "feelings",
+    "level": "A1"
+  },
+  {
+    "id": 5,
+    "concept_id": "A1-00005",
+    "word_lemma": "laufen",
+    "definiton": "To move using your legs, going faster than walking.",
+    "sentence": "Die Kinder laufen jeden Nachmittag im Park.",
+    "type": "verb",
+    "category": "activities",
+    "level": "A1"
+  },
+  {
+    "id": 6,
+    "concept_id": "A1-00006",
+    "word_lemma": "Buch",
+    "definiton": "A set of printed pages that are held together in a cover.",
+    "sentence": "Ich lese ein interessantes Buch über Tiere.",
+    "type": "noun",
+    "category": "education",
+    "level": "A1"
+  },
+  {
+    "id": 7,
+    "concept_id": "A1-00007",
+    "word_lemma": "rot",
+    "definiton": "Having the color of blood or a ripe tomato.",
+    "sentence": "Mein Lieblingsapfel ist rot und liegt im Korb.",
+    "type": "adjective",
+    "category": "colors",
+    "level": "A1"
+  },
+  {
+    "id": 8,
+    "concept_id": "A1-00008",
+    "word_lemma": "schnell",
+    "definiton": "At a fast speed; in a short time.",
+    "sentence": "Bitte komm schnell, wir sind spät dran!",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "A1"
+  },
+  {
+    "id": 9,
+    "concept_id": "A1-00009",
+    "word_lemma": "Haus",
+    "definiton": "A building where people live, usually one family.",
+    "sentence": "Wir haben ein kleines Haus mit einem schönen Garten.",
+    "type": "noun",
+    "category": "places",
+    "level": "A1"
+  },
+  {
+    "id": 10,
+    "concept_id": "A1-00010",
+    "word_lemma": "essen",
+    "definiton": "To put food in your mouth, chew it and swallow it.",
+    "sentence": "Wir essen jeden Morgen zusammen Frühstück.",
+    "type": "verb",
+    "category": "daily life",
+    "level": "A1"
+  },
+  {
+    "id": 11,
+    "concept_id": "A2-00001",
+    "word_lemma": "Nachbar",
+    "definiton": "A person who lives next to or near you.",
+    "sentence": "Mein Nachbar hilft mir immer bei der Gartenarbeit.",
+    "type": "noun",
+    "category": "people",
+    "level": "A2"
+  },
+  {
+    "id": 12,
+    "concept_id": "A2-00002",
+    "word_lemma": "entscheiden",
+    "definiton": "To make a choice about something after thinking.",
+    "sentence": "Wir müssen entscheiden, wohin wir in den Urlaub fahren.",
+    "type": "verb",
+    "category": "communication",
+    "level": "A2"
+  },
+  {
+    "id": 13,
+    "concept_id": "A2-00003",
+    "word_lemma": "bequem",
+    "definiton": "Giving a feeling of physical ease and relaxation.",
+    "sentence": "Dieser Stuhl ist sehr bequem zum Lesen.",
+    "type": "adjective",
+    "category": "daily life",
+    "level": "A2"
+  },
+  {
+    "id": 14,
+    "concept_id": "A2-00004",
+    "word_lemma": "Abenteuer",
+    "definiton": "An exciting or unusual experience.",
+    "sentence": "Unsere Reise in die Berge war ein großes Abenteuer.",
+    "type": "noun",
+    "category": "activities",
+    "level": "A2"
+  },
+  {
+    "id": 15,
+    "concept_id": "A2-00005",
+    "word_lemma": "verbessern",
+    "definiton": "To make something better or to become better.",
+    "sentence": "Ich übe jeden Tag, um meine Fähigkeiten zu verbessern.",
+    "type": "verb",
+    "category": "education",
+    "level": "A2"
+  },
+  {
+    "id": 16,
+    "concept_id": "A2-00006",
+    "word_lemma": "vorsichtig",
+    "definiton": "With attention to avoid mistakes or danger.",
+    "sentence": "Sie überquerte vorsichtig die belebte Straße.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "A2"
+  },
+  {
+    "id": 17,
+    "concept_id": "B1-00001",
+    "word_lemma": "Einfluss",
+    "definiton": "The power to affect someone or something.",
+    "sentence": "Soziale Medien haben einen starken Einfluss auf junge Menschen.",
+    "type": "noun",
+    "category": "society",
+    "level": "B1"
+  },
+  {
+    "id": 18,
+    "concept_id": "B1-00002",
+    "word_lemma": "erreichen",
+    "definiton": "To successfully reach a goal or complete something.",
+    "sentence": "Sie arbeitete hart, um ihren Traum zu erreichen, Ärztin zu werden.",
+    "type": "verb",
+    "category": "work",
+    "level": "B1"
+  },
+  {
+    "id": 19,
+    "concept_id": "B1-00003",
+    "word_lemma": "zuverlässig",
+    "definiton": "Able to be trusted or depended on.",
+    "sentence": "Er ist ein zuverlässiger Freund, der immer seine Versprechen hält.",
+    "type": "adjective",
+    "category": "people",
+    "level": "B1"
+  },
+  {
+    "id": 20,
+    "concept_id": "B1-00004",
+    "word_lemma": "Gelegenheit",
+    "definiton": "A chance to do something or a favorable situation.",
+    "sentence": "Diese Arbeit bietet viele Gelegenheiten für Karrierewachstum.",
+    "type": "noun",
+    "category": "work",
+    "level": "B1"
+  },
+  {
+    "id": 21,
+    "concept_id": "B1-00005",
+    "word_lemma": "analysieren",
+    "definiton": "To examine something in detail to understand it.",
+    "sentence": "Wissenschaftler analysieren Daten, um Muster zu finden.",
+    "type": "verb",
+    "category": "education",
+    "level": "B1"
+  },
+  {
+    "id": 22,
+    "concept_id": "B1-00006",
+    "word_lemma": "besonders",
+    "definiton": "Especially; to a higher degree than usual.",
+    "sentence": "Mir hat das Konzert gefallen, besonders das letzte Lied.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "B1"
+  },
+  {
+    "id": 23,
+    "concept_id": "B2-00001",
+    "word_lemma": "umsetzen",
+    "definiton": "To put a plan or system into action.",
+    "sentence": "Das Unternehmen wird nächsten Monat neue Richtlinien umsetzen.",
+    "type": "verb",
+    "category": "work",
+    "level": "B2"
+  },
+  {
+    "id": 24,
+    "concept_id": "B2-00002",
+    "word_lemma": "erheblich",
+    "definiton": "Large in size, value, or importance.",
+    "sentence": "Es gab dieses Jahr einen erheblichen Anstieg der Verkäufe.",
+    "type": "adjective",
+    "category": "business",
+    "level": "B2"
+  },
+  {
+    "id": 25,
+    "concept_id": "B2-00003",
+    "word_lemma": "Kontroverse",
+    "definiton": "Disagreement or argument about something important.",
+    "sentence": "Das neue Gesetz löste eine Kontroverse unter den Bürgern aus.",
+    "type": "noun",
+    "category": "society",
+    "level": "B2"
+  },
+  {
+    "id": 26,
+    "concept_id": "B2-00004",
+    "word_lemma": "begreifen",
+    "definiton": "To understand something fully.",
+    "sentence": "Es ist schwierig, die Komplexität des Universums zu begreifen.",
+    "type": "verb",
+    "category": "education",
+    "level": "B2"
+  },
+  {
+    "id": 27,
+    "concept_id": "B2-00005",
+    "word_lemma": "anspruchsvoll",
+    "definiton": "Complex, advanced, or refined.",
+    "sentence": "Die Software verwendet anspruchsvolle Algorithmen.",
+    "type": "adjective",
+    "category": "technology",
+    "level": "B2"
+  },
+  {
+    "id": 28,
+    "concept_id": "B2-00006",
+    "word_lemma": "trotzdem",
+    "definiton": "In spite of that; however.",
+    "sentence": "Das Wetter war schlecht; trotzdem genossen wir unsere Reise.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "B2"
+  },
+  {
+    "id": 29,
+    "concept_id": "C1-00001",
+    "word_lemma": "verschlechtern",
+    "definiton": "To become progressively worse.",
+    "sentence": "Ohne ordentliche Wartung wird das Gebäude schnell verschlechtern.",
+    "type": "verb",
+    "category": "general",
+    "level": "C1"
+  },
+  {
+    "id": 30,
+    "concept_id": "C1-00002",
+    "word_lemma": "beispiellos",
+    "definiton": "Never done or known before.",
+    "sentence": "Die Pandemie schuf beispiellose Herausforderungen für Gesundheitssysteme.",
+    "type": "adjective",
+    "category": "society",
+    "level": "C1"
+  },
+  {
+    "id": 31,
+    "concept_id": "C1-00003",
+    "word_lemma": "Prüfung",
+    "definiton": "Critical observation or examination.",
+    "sentence": "Der Vorschlag wurde von Experten einer intensiven Prüfung unterzogen.",
+    "type": "noun",
+    "category": "communication",
+    "level": "C1"
+  },
+  {
+    "id": 32,
+    "concept_id": "C1-00004",
+    "word_lemma": "befürworten",
+    "definiton": "To publicly support or recommend something.",
+    "sentence": "Viele Wissenschaftler befürworten erneuerbare Energielösungen.",
+    "type": "verb",
+    "category": "society",
+    "level": "C1"
+  },
+  {
+    "id": 33,
+    "concept_id": "C1-00005",
+    "word_lemma": "innewohnend",
+    "definiton": "Existing as a natural or essential part of something.",
+    "sentence": "Es gibt innewohnende Risiken in jeder Anlagestrategie.",
+    "type": "adjective",
+    "category": "general",
+    "level": "C1"
+  },
+  {
+    "id": 34,
+    "concept_id": "C1-00006",
+    "word_lemma": "versehentlich",
+    "definiton": "Without intention; accidentally.",
+    "sentence": "Sie verriet versehentlich die Pläne für die Überraschungsparty.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "C1"
+  },
+  {
+    "id": 35,
+    "concept_id": "C2-00001",
+    "word_lemma": "allgegenwärtig",
+    "definiton": "Present, appearing, or found everywhere.",
+    "sentence": "Smartphones sind in der modernen Gesellschaft allgegenwärtig geworden.",
+    "type": "adjective",
+    "category": "technology",
+    "level": "C2"
+  },
+  {
+    "id": 36,
+    "concept_id": "C2-00002",
+    "word_lemma": "verkörpern",
+    "definiton": "To be a perfect example of something.",
+    "sentence": "Sein Engagement verkörpert den Geist des Ehrenamts.",
+    "type": "verb",
+    "category": "general",
+    "level": "C2"
+  },
+  {
+    "id": 37,
+    "concept_id": "C2-00003",
+    "word_lemma": "Paradigma",
+    "definiton": "A typical example or pattern of something; a model.",
+    "sentence": "Die Entdeckung stellte einen Paradigmenwechsel im wissenschaftlichen Denken dar.",
+    "type": "noun",
+    "category": "education",
+    "level": "C2"
+  },
+  {
+    "id": 38,
+    "concept_id": "C2-00004",
+    "word_lemma": "penibel",
+    "definiton": "Showing great attention to detail; very careful.",
+    "sentence": "Der Forscher führte eine penible Analyse der Daten durch.",
+    "type": "adjective",
+    "category": "people",
+    "level": "C2"
+  },
+  {
+    "id": 39,
+    "concept_id": "C2-00005",
+    "word_lemma": "erläutern",
+    "definiton": "To make something clear; to explain.",
+    "sentence": "Der Professor versuchte, die komplexe Theorie zu erläutern.",
+    "type": "verb",
+    "category": "education",
+    "level": "C2"
+  },
+  {
+    "id": 40,
+    "concept_id": "C2-00006",
+    "word_lemma": "angeblich",
+    "definiton": "Apparently or purportedly, but perhaps not actually.",
+    "sentence": "Das Treffen war angeblich über das Budget, aber andere Themen kamen auf.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "C2"
+  }
+]

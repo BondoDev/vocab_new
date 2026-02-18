@@ -1,0 +1,224 @@
+// ALL SCREENS BELOW 1024PX
+@media (max-width: 1023.98px) {
+  .header-desktop-nav {
+    display: none !important;
+  }
+
+  .header-menu-toggle {
+    display: inline-flex !important;
+    order: 1 !important;
+  }
+
+  .header-logo-wrap {
+    order: 2 !important;
+    margin-left: auto;
+  }
+
+  .header-mobile-menu {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    left: 0.75rem;
+    right: 0.75rem;
+    z-index: 60;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-1rem);
+    transition:
+      opacity 180ms ease,
+      transform 220ms ease,
+      visibility 0ms linear 220ms;
+  }
+
+  .header-mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition:
+      opacity 180ms ease,
+      transform 220ms ease,
+      visibility 0ms linear 0ms;
+  }
+
+  .header-mobile-menu-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.9rem;
+    background: rgba(27, 15, 51, 0.9);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 14px 30px rgba(12, 6, 32, 0.35);
+  }
+
+  .header-mobile-menu-inner > button {
+    text-align: left;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.55rem 0.5rem;
+    border-radius: 0.55rem;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+  }
+
+  .header-mobile-menu-inner > button:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .header-mobile-lang-wrap {
+    padding-top: 0.35rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: 0.2rem;
+  }
+
+  .header-mobile-lang-wrap .ui-language-switcher-trigger {
+    margin-top: 0.45rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header-mobile-menu {
+    display: none !important;
+  }
+}
+
+// SMALL MOBILE SCREEN
+@media (max-width: 375.98px) {
+  .header-menu-toggle {
+    padding: 0.45rem !important;
+  }
+
+  .header-menu-toggle svg {
+    width: 1.4rem !important;
+    height: 1.4rem !important;
+  }
+}
+
+// BIG MOBILE SCREEN
+@media (min-width: 376px) and (max-width: 430.98px) {
+  .header-menu-toggle {
+    padding: 0.45rem !important;
+  }
+
+  .header-menu-toggle svg {
+    width: 1.8rem !important;
+    height: 1.8rem !important;
+  }
+}
+
+// SMALL TABLET SCREEN - PORTRAIT
+@media (min-width: 767px) and (max-width: 1023.98px) and (orientation: portrait) {
+  .header-menu-toggle {
+    padding: 0.45rem !important;
+  }
+
+  .header-menu-toggle svg {
+    width: 2.2rem !important;
+    height: 2.2rem !important;
+  }
+}
+
+// BIG TABLET SCREEN - PORTRAIT
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+  .ui-language-switcher-trigger .ui-lang-name {
+    display: none !important;
+  }
+
+  .ui-language-switcher-trigger .ui-lang-code-tablet {
+    display: inline !important;
+  }
+
+  .ui-language-switcher-trigger .ui-lang-name {
+    font-size: 0.72rem !important;
+  }
+
+  .ui-language-dropdown {
+    width: 10rem !important;
+    margin-left: -2rem !important;
+  }
+
+  .ui-language-dropdown .ui-language-option-label {
+    font-size: 0.7rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .ui-language-dropdown .ui-language-option-active {
+    font-size: 0.5rem !important;
+  }
+}
+
+// SMALL LAPTOP SCREEN
+@media (min-width: 1024px) and (max-width: 1279.98px) and (orientation: landscape) {
+  .header-shell {
+    padding-top: 0.62rem !important;
+    padding-bottom: 0.62rem !important;
+  }
+
+  .site-logo {
+    font-size: 1rem !important;
+    letter-spacing: 0.24em !important;
+  }
+
+  .header-desktop-nav button,
+  .header-desktop-nav a {
+    font-size: 0.64rem !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  .ui-language-switcher-trigger .ui-lang-name {
+    font-size: 0.72rem !important;
+  }
+
+  .ui-language-dropdown {
+    width: 10rem !important;
+  }
+
+  .ui-language-dropdown .ui-language-option-label {
+    font-size: 0.7rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .ui-language-dropdown .ui-language-option-active {
+    font-size: 0.5rem !important;
+  }
+}
+
+// BIG LAPTOP SCREEN
+@media (min-width: 1280px) and (max-width: 1535.98px) and (orientation: landscape) {
+  .header-shell {
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+  }
+
+  .ui-language-dropdown {
+    width: 10.5rem !important;
+  }
+
+  .ui-language-dropdown .ui-language-option-label {
+    font-size: 0.72rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .ui-language-dropdown .ui-language-option-active {
+    font-size: 0.5rem !important;
+  }
+}
+
+// PC SCREEN
+@media (min-width: 1536px) {
+  .ui-language-dropdown .ui-language-option-label {
+    font-size: 0.8rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .ui-language-dropdown .ui-language-option-active {
+    font-size: 0.5rem !important;
+  }
+}

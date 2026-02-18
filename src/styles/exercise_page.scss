@@ -1,0 +1,527 @@
+.exercise-page {
+  position: relative;
+
+  .exercise-header {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 30;
+    padding: 0 !important;
+  }
+
+  .exercise-container {
+    max-width: min(96vw, 86rem);
+    margin-inline: auto;
+  }
+
+  .exercise-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .exercise-card {
+    position: relative;
+    display: block;
+    flex: 0 0 calc((100% - 2rem) / 3);
+    width: calc((100% - 2rem) / 3);
+    min-width: 0;
+    min-height: 6.15rem;
+    padding-top: 2.6rem !important;
+    padding-bottom: 1.1rem !important;
+    border-color: rgba(74, 43, 130, 1);
+    background: rgba(74, 43, 130, 0.2) !important;
+    backdrop-filter: blur(6px);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease,
+      transform 120ms ease;
+  }
+
+  .exercise-card:hover {
+    border-color: rgba(74, 43, 130, 1) !important;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .exercise-card:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.12);
+  }
+
+  .exercise-card:focus-visible {
+    outline: 2px solid rgba(99, 102, 241, 0.35);
+    outline-offset: 2px;
+  }
+
+  .exercise-card.is-selected {
+    border-color: rgba(74, 43, 130, 1) !important;
+    background: rgba(74, 43, 130, 0.2) !important;
+    box-shadow: 0 10px 24px rgba(74, 43, 130, 0.18);
+  }
+
+  .exercise-card.is-locked {
+    cursor: not-allowed;
+  }
+
+  .exercise-card-content {
+    min-width: 0;
+    display: block;
+    margin-top: 0.65rem;
+  }
+
+  .exercise-card-label {
+    padding-right: 0.75rem;
+    line-height: 1.3;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  .exercise-card-description {
+    margin-top: 0.22rem;
+    line-height: 1.3;
+    font-size: 0.86rem;
+    color: var(--muted-foreground);
+  }
+
+  .exercise-card-corners {
+    position: absolute;
+    top: 0.62rem;
+    left: 0.68rem;
+    right: 0.68rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .exercise-help-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.96);
+    background: linear-gradient(
+      180deg,
+      rgba(244, 247, 251, 0.96),
+      rgba(226, 232, 240, 0.94)
+    );
+    color: rgba(74, 43, 130, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1;
+    box-shadow:
+      0 2px 6px rgba(15, 23, 42, 0.18),
+      0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+    cursor: pointer;
+    pointer-events: auto;
+    transition:
+      transform 120ms ease,
+      box-shadow 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .exercise-help-button:hover {
+    box-shadow:
+      0 3px 8px rgba(15, 23, 42, 0.24),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    transform: translateY(-1px);
+  }
+
+  .exercise-help-button:active {
+    transform: translateY(0);
+    box-shadow:
+      0 1px 4px rgba(15, 23, 42, 0.22),
+      0 0 0 1px rgba(255, 255, 255, 0.45) inset;
+  }
+
+  .exercise-check {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 999px;
+    border: 2px solid rgba(74, 43, 130, 0.56);
+    color: rgba(74, 43, 130, 0.74);
+    background: rgba(255, 255, 255, 0.84);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    box-shadow: 0 0 0 1px rgba(74, 43, 130, 0.14);
+    transition:
+      color 160ms ease,
+      border-color 160ms ease,
+      background-color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .exercise-check.is-visible {
+    border-color: rgba(255, 255, 255, 0.86);
+    color: rgba(255, 255, 255, 0.94);
+    background: rgba(74, 43, 130, 0.8);
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.34),
+      0 2px 8px rgba(74, 43, 130, 0.35);
+    transform: scale(1.03);
+  }
+
+  // SMALL MOBILE SCREEN
+  @media (max-width: 375.98px) {
+    .exercise-main {
+      padding-bottom: 0.75rem !important;
+    }
+
+    .exercise-container > :not([hidden]) ~ :not([hidden]) {
+      margin-top: 1rem !important;
+    }
+
+    .exercise-header {
+      display: none !important;
+    }
+
+    .exercise-headline {
+      margin-bottom: 1rem;
+    }
+
+    .exercise-headline > h2 {
+      font-size: 1.45rem !important;
+      line-height: 1.2 !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    .exercise-headline > p {
+      font-size: 0.9rem !important;
+      line-height: 1.25 !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    .exercise-list {
+      width: 20rem;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 1rem;
+    }
+
+    .exercise-card {
+      width: 100%;
+      flex: none;
+      min-height: 4rem;
+      padding-top: 0.2rem !important;
+      padding-bottom: 0.2rem !important;
+      padding-left: 2.75rem !important;
+      padding-right: 2.75rem !important;
+    }
+
+    .exercise-card-corners {
+      top: 50%;
+      left: 0.75rem;
+      right: 0.75rem;
+      transform: translateY(-50%);
+    }
+
+    .exercise-card-content {
+      margin-top: 0 !important;
+      padding-left: 0.35rem;
+      padding-bottom: 0.05rem;
+    }
+
+    .exercise-card-label {
+      font-size: 0.96rem !important;
+      line-height: 1.35;
+    }
+
+    .exercise-card-description {
+      font-size: 0.82rem;
+      line-height: 1.3;
+    }
+
+    .exercise-helper-text {
+      font-size: 1rem !important;
+      line-height: 1.2 !important;
+      margin-bottom: 0.2rem;
+    }
+
+    .exercise-continue-wrap {
+      padding-top: 0.5rem !important;
+    }
+
+    .exercise-continue-button {
+      font-size: 1.1rem !important;
+      line-height: 1.3 !important;
+    }
+  }
+
+  // BIG MOBILE SCREEN
+  @media (min-width: 376px) and (max-width: 430.98px) {
+    .exercise-header {
+      display: none !important;
+    }
+
+    .exercise-headline > h2 {
+      font-size: 1.6rem !important;
+      line-height: 1.2 !important;
+    }
+
+    .exercise-headline > p {
+      font-size: 0.9rem !important;
+      line-height: 1.25 !important;
+    }
+
+    .exercise-list {
+      width: 22rem;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 1rem;
+    }
+
+    .exercise-card {
+      width: 100%;
+      flex: none;
+      min-height: 4.6rem;
+      padding-top: 0.2rem !important;
+      padding-bottom: 0.2rem !important;
+      padding-left: 2.75rem !important;
+      padding-right: 2.75rem !important;
+    }
+
+    .exercise-card-corners {
+      top: 50%;
+      left: 0.75rem;
+      right: 0.75rem;
+      transform: translateY(-50%);
+    }
+
+    .exercise-card-content {
+      margin-top: 0 !important;
+      padding-left: 0.35rem;
+      padding-bottom: 0.05rem;
+    }
+
+    .exercise-card-label {
+      font-size: 0.96rem !important;
+      line-height: 1.35;
+    }
+
+    .exercise-card-description {
+      font-size: 0.82rem;
+      line-height: 1.3;
+    }
+
+    .exercise-helper-text {
+      font-size: 1rem !important;
+      line-height: 1.2 !important;
+    }
+
+    .exercise-continue-button {
+      font-size: 1.1rem !important;
+      line-height: 1.3 !important;
+    }
+  }
+
+  // SMALL TABLET SCREEN - PORTRAIT
+  @media (min-width: 767px) and (max-width: 1023.98px) and (orientation: portrait) and (pointer: coarse) and (hover: none) {
+    .exercise-header {
+      position: fixed;
+      top: 5rem;
+      left: 1.5rem;
+      z-index: 50;
+    }
+
+    .exercise-main {
+      overflow-x: hidden;
+    }
+
+    .exercise-list {
+      width: 36rem;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 1rem;
+    }
+
+    .exercise-card {
+      width: 100%;
+      max-width: 100%;
+      flex: none;
+      min-height: 6rem;
+      padding-top: 1.1rem !important;
+      padding-left: 3rem !important;
+      padding-right: 3rem !important;
+    }
+
+    .exercise-card-corners {
+      top: 50%;
+      left: 0.75rem;
+      right: 0.75rem;
+      transform: translateY(-50%);
+    }
+
+    .exercise-card-content {
+      margin-top: 0 !important;
+      padding-left: 0.35rem;
+    }
+
+    .exercise-card-label {
+      font-size: 1.08rem !important;
+      line-height: 1.35;
+    }
+
+    .exercise-card-description {
+      font-size: 0.96rem;
+      line-height: 1.35;
+    }
+
+    .exercise-helper-text {
+      font-size: 0.78rem !important;
+      line-height: 1.25 !important;
+    }
+
+    .exercise-continue-button {
+      font-size: 1.35rem !important;
+      line-height: 1.3 !important;
+    }
+  }
+
+  // BIG TABLET SCREEN - PORTRAIT
+  @media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+    .exercise-header {
+      position: fixed;
+      top: 7rem;
+      left: 2rem;
+      z-index: 50;
+    }
+
+    .exercise-back-button {
+      font-size: 1.05rem;
+      gap: 0.6rem;
+    }
+
+    .exercise-back-button svg {
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+
+    .exercise-list {
+      width: min(100%, 42rem);
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 1rem;
+    }
+
+    .exercise-card {
+      width: 100%;
+      flex: none;
+      min-height: 6rem;
+    }
+
+    .exercise-card-label {
+      font-size: 1.08rem !important;
+      line-height: 1.35;
+    }
+
+    .exercise-card-description {
+      font-size: 0.96rem;
+      line-height: 1.35;
+    }
+
+    .exercise-helper-text {
+      font-size: 1.2rem !important;
+      line-height: 1.35;
+    }
+
+    .exercise-continue-button {
+      font-size: 1.35rem !important;
+      line-height: 1.3 !important;
+    }
+  }
+
+  // SMALL LAPTOP SCREEN
+  @media (min-width: 1024px) and (max-width: 1279.98px) and (orientation: landscape) {
+    .exercise-header {
+      position: fixed;
+      top: 6rem;
+      left: 2rem;
+      z-index: 50;
+    }
+
+    .exercise-headline h2 {
+      font-size: clamp(1.85rem, 2.35vw, 2.15rem) !important;
+      line-height: 1.2;
+    }
+
+    .exercise-headline p {
+      font-size: clamp(1rem, 1.35vw, 1.1rem) !important;
+      line-height: 1.35;
+    }
+
+    .exercise-card-label {
+      font-size: 0.94rem;
+    }
+
+    .exercise-card-description {
+      font-size: 0.8rem;
+      line-height: 1.25;
+    }
+
+    .exercise-list {
+      width: 56rem;
+      row-gap: 1.6rem;
+    }
+
+    .exercise-card:nth-child(4) {
+      margin-left: auto;
+    }
+
+    .exercise-card:nth-child(5) {
+      margin-right: auto;
+    }
+  }
+
+  // BIG LAPTOP SCREEN
+  @media (min-width: 1280px) and (max-width: 1535.98px) and (orientation: landscape) {
+    .exercise-header {
+      position: fixed;
+      top: 6rem;
+      left: 2rem;
+      z-index: 50;
+    }
+
+    .exercise-list {
+      width: 62rem;
+      row-gap: 1.6rem;
+    }
+
+    .exercise-card:nth-child(4) {
+      margin-left: auto;
+    }
+
+    .exercise-card:nth-child(5) {
+      margin-right: auto;
+    }
+  }
+
+  // PC SCREEN
+  @media (min-width: 1536px) {
+    .exercise-header {
+      position: fixed;
+      top: 6rem;
+      left: 2rem;
+      z-index: 50;
+    }
+
+    .exercise-list {
+      width: 62rem;
+      row-gap: 1.6rem;
+    }
+
+    .exercise-card:nth-child(4) {
+      margin-left: auto;
+    }
+
+    .exercise-card:nth-child(5) {
+      margin-right: auto;
+    }
+  }
+}

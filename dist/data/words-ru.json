@@ -1,0 +1,402 @@
+[
+  {
+    "id": 1,
+    "concept_id": "A1-00001",
+    "word_lemma": "привет",
+    "definiton": "Слово, используемое при встрече с кем-либо.",
+    "sentence": "Я всегда говорю привет, когда встречаю своих друзей.",
+    "type": "interjection",
+    "category": "communication",
+    "level": "A1"
+  },
+  {
+    "id": 2,
+    "concept_id": "A1-00002",
+    "word_lemma": "кошка",
+    "definiton": "A small furry animal with four legs that people keep as a pet.",
+    "sentence": "Моя кошка любит спать на диване.",
+    "type": "noun",
+    "category": "animals",
+    "level": "A1"
+  },
+  {
+    "id": 3,
+    "concept_id": "A1-00003",
+    "word_lemma": "вода",
+    "definiton": "A clear liquid that has no color, taste, or smell, and that falls from clouds as rain.",
+    "sentence": "Я пью воду каждый день, чтобы оставаться здоровым.",
+    "type": "noun",
+    "category": "food",
+    "level": "A1"
+  },
+  {
+    "id": 4,
+    "concept_id": "A1-00004",
+    "word_lemma": "счастливый",
+    "definiton": "Feeling or showing pleasure or satisfaction.",
+    "sentence": "Она очень счастлива, когда играет со своей собакой.",
+    "type": "adjective",
+    "category": "feelings",
+    "level": "A1"
+  },
+  {
+    "id": 5,
+    "concept_id": "A1-00005",
+    "word_lemma": "бегать",
+    "definiton": "To move using your legs, going faster than walking.",
+    "sentence": "Дети бегают в парке каждый день после обеда.",
+    "type": "verb",
+    "category": "activities",
+    "level": "A1"
+  },
+  {
+    "id": 6,
+    "concept_id": "A1-00006",
+    "word_lemma": "книга",
+    "definiton": "A set of printed pages that are held together in a cover.",
+    "sentence": "Я читаю интересную книгу о животных.",
+    "type": "noun",
+    "category": "education",
+    "level": "A1"
+  },
+  {
+    "id": 7,
+    "concept_id": "A1-00007",
+    "word_lemma": "красный",
+    "definiton": "Having the color of blood or a ripe tomato.",
+    "sentence": "Мое любимое красное яблоко лежит в корзине.",
+    "type": "adjective",
+    "category": "colors",
+    "level": "A1"
+  },
+  {
+    "id": 8,
+    "concept_id": "A1-00008",
+    "word_lemma": "быстро",
+    "definiton": "At a fast speed; in a short time.",
+    "sentence": "Пожалуйста, приходи быстро, мы опаздываем!",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "A1"
+  },
+  {
+    "id": 9,
+    "concept_id": "A1-00009",
+    "word_lemma": "дом",
+    "definiton": "A building where people live, usually one family.",
+    "sentence": "У нас есть маленький дом с красивым садом.",
+    "type": "noun",
+    "category": "places",
+    "level": "A1"
+  },
+  {
+    "id": 10,
+    "concept_id": "A1-00010",
+    "word_lemma": "есть",
+    "definiton": "To put food in your mouth, chew it and swallow it.",
+    "sentence": "Мы завтракаем вместе каждое утро.",
+    "type": "verb",
+    "category": "daily life",
+    "level": "A1"
+  },
+  {
+    "id": 11,
+    "concept_id": "A2-00001",
+    "word_lemma": "сосед",
+    "definiton": "A person who lives next to or near you.",
+    "sentence": "Мой сосед всегда помогает мне с садом.",
+    "type": "noun",
+    "category": "people",
+    "level": "A2"
+  },
+  {
+    "id": 12,
+    "concept_id": "A2-00002",
+    "word_lemma": "решать",
+    "definiton": "To make a choice about something after thinking.",
+    "sentence": "Нам нужно решить, куда поехать в отпуск.",
+    "type": "verb",
+    "category": "communication",
+    "level": "A2"
+  },
+  {
+    "id": 13,
+    "concept_id": "A2-00003",
+    "word_lemma": "удобный",
+    "definiton": "Giving a feeling of physical ease and relaxation.",
+    "sentence": "Это кресло очень удобное для чтения.",
+    "type": "adjective",
+    "category": "daily life",
+    "level": "A2"
+  },
+  {
+    "id": 14,
+    "concept_id": "A2-00004",
+    "word_lemma": "приключение",
+    "definiton": "An exciting or unusual experience.",
+    "sentence": "Наше путешествие в горы было большим приключением.",
+    "type": "noun",
+    "category": "activities",
+    "level": "A2"
+  },
+  {
+    "id": 15,
+    "concept_id": "A2-00005",
+    "word_lemma": "улучшать",
+    "definiton": "To make something better or to become better.",
+    "sentence": "Я практикуюсь каждый день, чтобы улучшить свои навыки.",
+    "type": "verb",
+    "category": "education",
+    "level": "A2"
+  },
+  {
+    "id": 16,
+    "concept_id": "A2-00006",
+    "word_lemma": "осторожно",
+    "definiton": "With attention to avoid mistakes or danger.",
+    "sentence": "Она осторожно перешла оживленную улицу.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "A2"
+  },
+  {
+    "id": 17,
+    "concept_id": "B1-00001",
+    "word_lemma": "влияние",
+    "definiton": "The power to affect someone or something.",
+    "sentence": "Социальные сети оказывают сильное влияние на молодежь.",
+    "type": "noun",
+    "category": "society",
+    "level": "B1"
+  },
+  {
+    "id": 18,
+    "concept_id": "B1-00002",
+    "word_lemma": "достигать",
+    "definiton": "To successfully reach a goal or complete something.",
+    "sentence": "Она много работала, чтобы достичь своей мечты стать врачом.",
+    "type": "verb",
+    "category": "work",
+    "level": "B1"
+  },
+  {
+    "id": 19,
+    "concept_id": "B1-00003",
+    "word_lemma": "надежный",
+    "definiton": "Able to be trusted or depended on.",
+    "sentence": "Он надежный друг, который всегда сдерживает свои обещания.",
+    "type": "adjective",
+    "category": "people",
+    "level": "B1"
+  },
+  {
+    "id": 20,
+    "concept_id": "B1-00004",
+    "word_lemma": "возможность",
+    "definiton": "A chance to do something or a favorable situation.",
+    "sentence": "Эта работа предлагает много возможностей для карьерного роста.",
+    "type": "noun",
+    "category": "work",
+    "level": "B1"
+  },
+  {
+    "id": 21,
+    "concept_id": "B1-00005",
+    "word_lemma": "анализировать",
+    "definiton": "To examine something in detail to understand it.",
+    "sentence": "Ученые анализируют данные, чтобы найти закономерности.",
+    "type": "verb",
+    "category": "education",
+    "level": "B1"
+  },
+  {
+    "id": 22,
+    "concept_id": "B1-00006",
+    "word_lemma": "особенно",
+    "definiton": "Especially; to a higher degree than usual.",
+    "sentence": "Мне понравился концерт, особенно последняя песня.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "B1"
+  },
+  {
+    "id": 23,
+    "concept_id": "B2-00001",
+    "word_lemma": "внедрять",
+    "definiton": "To put a plan or system into action.",
+    "sentence": "Компания внедрит новую политику в следующем месяце.",
+    "type": "verb",
+    "category": "work",
+    "level": "B2"
+  },
+  {
+    "id": 24,
+    "concept_id": "B2-00002",
+    "word_lemma": "существенный",
+    "definiton": "Large in size, value, or importance.",
+    "sentence": "В этом году произошел существенный рост продаж.",
+    "type": "adjective",
+    "category": "business",
+    "level": "B2"
+  },
+  {
+    "id": 25,
+    "concept_id": "B2-00003",
+    "word_lemma": "разногласие",
+    "definiton": "Disagreement or argument about something important.",
+    "sentence": "Новый закон вызвал разногласие среди граждан.",
+    "type": "noun",
+    "category": "society",
+    "level": "B2"
+  },
+  {
+    "id": 26,
+    "concept_id": "B2-00004",
+    "word_lemma": "постигать",
+    "definiton": "To understand something fully.",
+    "sentence": "Трудно постичь сложность вселенной.",
+    "type": "verb",
+    "category": "education",
+    "level": "B2"
+  },
+  {
+    "id": 27,
+    "concept_id": "B2-00005",
+    "word_lemma": "изощренный",
+    "definiton": "Complex, advanced, or refined.",
+    "sentence": "Программное обеспечение использует изощренные алгоритмы.",
+    "type": "adjective",
+    "category": "technology",
+    "level": "B2"
+  },
+  {
+    "id": 28,
+    "concept_id": "B2-00006",
+    "word_lemma": "тем не менее",
+    "definiton": "In spite of that; however.",
+    "sentence": "Погода была плохая; тем не менее, мы насладились поездкой.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "B2"
+  },
+  {
+    "id": 29,
+    "concept_id": "C1-00001",
+    "word_lemma": "ухудшаться",
+    "definiton": "To become progressively worse.",
+    "sentence": "Без надлежащего обслуживания здание быстро ухудшится.",
+    "type": "verb",
+    "category": "general",
+    "level": "C1"
+  },
+  {
+    "id": 30,
+    "concept_id": "C1-00002",
+    "word_lemma": "беспрецедентный",
+    "definiton": "Never done or known before.",
+    "sentence": "Пандемия создала беспрецедентные проблемы для систем здравоохранения.",
+    "type": "adjective",
+    "category": "society",
+    "level": "C1"
+  },
+  {
+    "id": 31,
+    "concept_id": "C1-00003",
+    "word_lemma": "тщательное изучение",
+    "definiton": "Critical observation or examination.",
+    "sentence": "Предложение подверглось тщательному изучению экспертов.",
+    "type": "noun",
+    "category": "communication",
+    "level": "C1"
+  },
+  {
+    "id": 32,
+    "concept_id": "C1-00004",
+    "word_lemma": "пропагандировать",
+    "definiton": "To publicly support or recommend something.",
+    "sentence": "Многие ученые пропагандируют решения в области возобновляемой энергии.",
+    "type": "verb",
+    "category": "society",
+    "level": "C1"
+  },
+  {
+    "id": 33,
+    "concept_id": "C1-00005",
+    "word_lemma": "присущий",
+    "definiton": "Existing as a natural or essential part of something.",
+    "sentence": "Существуют присущие риски в любой инвестиционной стратегии.",
+    "type": "adjective",
+    "category": "general",
+    "level": "C1"
+  },
+  {
+    "id": 34,
+    "concept_id": "C1-00006",
+    "word_lemma": "непреднамеренно",
+    "definiton": "Without intention; accidentally.",
+    "sentence": "Она непреднамеренно раскрыла планы вечеринки-сюрприза.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "C1"
+  },
+  {
+    "id": 35,
+    "concept_id": "C2-00001",
+    "word_lemma": "вездесущий",
+    "definiton": "Present, appearing, or found everywhere.",
+    "sentence": "Смартфоны стали вездесущими в современном обществе.",
+    "type": "adjective",
+    "category": "technology",
+    "level": "C2"
+  },
+  {
+    "id": 36,
+    "concept_id": "C2-00002",
+    "word_lemma": "олицетворять",
+    "definiton": "To be a perfect example of something.",
+    "sentence": "Его преданность олицетворяет дух волонтерства.",
+    "type": "verb",
+    "category": "general",
+    "level": "C2"
+  },
+  {
+    "id": 37,
+    "concept_id": "C2-00003",
+    "word_lemma": "парадигма",
+    "definiton": "A typical example or pattern of something; a model.",
+    "sentence": "Открытие представляло собой смену парадигмы в научном мышлении.",
+    "type": "noun",
+    "category": "education",
+    "level": "C2"
+  },
+  {
+    "id": 38,
+    "concept_id": "C2-00004",
+    "word_lemma": "тщательный",
+    "definiton": "Showing great attention to detail; very careful.",
+    "sentence": "Исследователь провел тщательный анализ данных.",
+    "type": "adjective",
+    "category": "people",
+    "level": "C2"
+  },
+  {
+    "id": 39,
+    "concept_id": "C2-00005",
+    "word_lemma": "разъяснять",
+    "definiton": "To make something clear; to explain.",
+    "sentence": "Профессор попытался разъяснить сложную теорию.",
+    "type": "verb",
+    "category": "education",
+    "level": "C2"
+  },
+  {
+    "id": 40,
+    "concept_id": "C2-00006",
+    "word_lemma": "якобы",
+    "definiton": "Apparently or purportedly, but perhaps not actually.",
+    "sentence": "Встреча якобы была о бюджете, но возникли другие вопросы.",
+    "type": "adverb",
+    "category": "connectors",
+    "level": "C2"
+  }
+]

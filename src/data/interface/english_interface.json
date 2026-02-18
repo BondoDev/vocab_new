@@ -1,0 +1,187 @@
+{
+  "header": {
+    "about": "About",
+    "languages": "Languages",
+    "help": "Help"
+  },
+
+  "home": {
+    "headline": "Practice Vocabulary",
+    "subheadline": "No lessons - Just practice.",
+    "yourLanguage": "Your language",
+    "practiceLanguage": "Practice language",
+    "changeNote": "You can change this later.",
+    "next": "Continue",
+    "stat": {
+      "words": "Words to practice",
+      "languages": "Languages available",
+      "noSignup": "No signup",
+      "noSignupDesc": "Start immediately"
+    }
+  },
+
+  "languageSelector": {
+    "search": "Search languages...",
+    "alreadySelected": "(Already selected)",
+    "noResults": "No languages found",
+    "selectLanguage": "Select a language"
+  },
+
+  "levelCategory": {
+    "title": "Customize Your Practice",
+    "subtitle": "Fine-tune your session, or skip ahead to start practicing.",
+    "optional": "(Optional)",
+    "skipNote": "Skip all to practice everything",
+    "levels": "Levels",
+    "vocabularyLevel": "Select levels for practice",
+    "levelsHelper": "Select one or more levels.",
+    "categories": "Categories",
+    "topicsToPractice": "Topics to Practice",
+    "wordTypes": "Word Types",
+    "next": "Continue",
+    "skipToNext": "Continue Without Filters",
+    "startPracticing": "Start Practicing",
+    "backToLanguages": "Back to Languages",
+    "back": "Back",
+    "takeLevelTest": "Take a quick level test",
+    "testDescription": "Not sure of your level? Take a quick test to find out.",
+    "notSureLevel": "Not sure where to start? Take a quick vocabulary test to find your level.",
+
+    "selection": {
+      "levelsSelected": "level selected",
+      "levelsSelectedPlural": "levels selected",
+      "allLevelsSelected": "All levels selected",
+      "topicsSelected": "topic selected",
+      "topicsSelectedPlural": "topics selected",
+      "typesSelected": "type selected",
+      "typesSelectedPlural": "types selected"
+    },
+
+    "topics": {
+      "skipAll": "Or skip to practice all topics",
+      "showAll": "Show all topics",
+      "showFewer": "Show fewer topics",
+      "showLess": "Show less topics",
+      "more": "more"
+    },
+
+    "types": {
+      "skipAll": "Or skip to practice all word types"
+    }
+  },
+
+  "levels": {
+    "A1": {
+      "name": "Beginner",
+      "description": "Basic words and phrases"
+    },
+    "A2": {
+      "name": "Elementary",
+      "description": "Everyday expressions"
+    },
+    "B1": {
+      "name": "Intermediate",
+      "description": "Common situations"
+    },
+    "B2": {
+      "name": "Pre-Advanced",
+      "description": "Complex topics"
+    },
+    "C1": {
+      "name": "Advanced",
+      "description": "Fluent expression"
+    },
+    "C2": {
+      "name": "Proficient",
+      "description": "Native-like mastery"
+    }
+  },
+
+  "wordTypes": {
+    "noun": "Noun",
+    "verb": "Verb",
+    "adjective": "Adjective",
+    "adverb": "Adverb",
+    "pronoun": "Pronoun",
+    "preposition": "Preposition",
+    "conjunction": "Conjunction",
+    "interjection": "Interjection"
+  },
+
+  "exerciseSelection": {
+    "title": "Choose practice exercises",
+    "subtitle": "All exercises are selected. Customize if you like.",
+    "back": "Back",
+    "startPracticing": "Start practicing",
+    "helperText": "You can change exercises later.",
+    "exercise": {
+      "wordTyping": "Word typing",
+      "halfWritten": "Half-written word completion",
+      "brokenWord": "Broken word assembling",
+      "connectWords": "Connect words",
+      "listening": "Listening"
+    }
+  },
+
+  "practice": {
+    "backToFilters": "Back to filters",
+    "menu": "Menu",
+    "showMeWord": "Show me word",
+    "hint": "Hint",
+    "seeDefinition": "See definition",
+    "seeInSentence": "See in sentence",
+    "correct": "Correct!",
+    "answer": "Answer:",
+    "alsoAccepted": "Also accepted:",
+    "nextWord": "Next word",
+    "sessionComplete": "Session Complete!",
+    "youAttempted": "You attempted",
+    "outOf": "out of",
+    "words": "words",
+    "youCompleted": "You completed",
+    "correctStat": "Correct",
+    "incorrect": "Incorrect",
+    "ofAttempts": "of attempts",
+    "noAttempts": "No words were attempted during this session.",
+    "tryTyping": "Try typing answers to track your progress!",
+    "skipped": "skipped without attempting",
+    "word": "word",
+    "were": "were",
+    "was": "was",
+    "startAgain": "Start Again",
+    "changeFilters": "Change Filters",
+    "noWords": "No words found",
+    "noWordsDesc": "We couldn't find any words matching your selected filters. Try adjusting your level, category, or word type selections.",
+    "loadingWords": "Loading words...",
+    "typeAnswer": "Type your answer here...",
+    "pronounceWord": "Pronounce word"
+  },
+
+  "exam": {
+    "title": "Vocabulary Level Exam",
+    "subtitle": "Find your approximate vocabulary level",
+    "instructions": "Select the correct translation for each word. There are 6 questions per level from A1 to C2.",
+    "question": "Question",
+    "of": "of",
+    "selectAnswer": "Select the correct translation for:",
+    "next": "Next",
+    "finish": "Finish Exam",
+    "cancel": "Cancel",
+    "results": "Your Results",
+    "estimatedLevel": "Your estimated vocabulary level is",
+
+    "levelDescription": {
+      "A1": "You have a basic vocabulary foundation. Great start!",
+      "A2": "You know common everyday words and phrases.",
+      "B1": "You have an intermediate vocabulary for daily situations.",
+      "B2": "You have a strong vocabulary for most situations.",
+      "C1": "You have an advanced vocabulary with nuanced understanding.",
+      "C2": "You have mastery-level vocabulary knowledge!"
+    },
+
+    "breakdown": "Level Breakdown",
+    "correctAnswers": "correct answers",
+    "startPracticing": "Start Practicing at This Level",
+    "backToSelection": "Back to Level Selection"
+  }
+}

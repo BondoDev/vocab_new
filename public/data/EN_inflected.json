@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "concept_id": "A1-00001",
+    "word_inflected": "about"
+  },
+  {
+    "id": "2",
+    "concept_id": "A1-00002",
+    "word_inflected": "above"
+  },
+  {
+    "id": "3",
+    "concept_id": "A1-00003",
+    "word_inflected": "action"
+  },
+  {
+    "id": "4",
+    "concept_id": "A1-00004",
+    "word_inflected": "activity"
+  },
+  {
+    "id": "5",
+    "concept_id": "A1-00005",
+    "word_inflected": "actor"
+  },
+  {
+    "id": "6",
+    "concept_id": "A1-00006",
+    "word_inflected": "add"
+  },
+  {
+    "id": "7",
+    "concept_id": "A1-00007",
+    "word_inflected": "address"
+  },
+  {
+    "id": "8",
+    "concept_id": "A1-00008",
+    "word_inflected": "address"
+  },
+  {
+    "id": "9",
+    "concept_id": "A1-00009",
+    "word_inflected": "afraid"
+  },
+  {
+    "id": "10",
+    "concept_id": "A1-00010",
+    "word_inflected": "after"
+  }
+]

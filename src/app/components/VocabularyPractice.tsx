@@ -1,0 +1,783 @@
+"use client";
+
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { motion } from "motion/react";
+import { Volume2, ChevronDown, ChevronUp } from "lucide-react";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { ConnectWordsExercise } from "./exercises/ConnectWordsExercise";
+import { ListeningExercise } from "./exercises/ListeningExercise";
+import { BrokenWordExercise } from "./exercises/BrokenWordExercise";
+import { WordTypingExercise } from "./exercises/WordTypingExercise";
+import { HalfWrittenExercise } from "./exercises/HalfWrittenExercise";
+import { shuffleArray } from "../utils/shuffleArray";
+import { highlightInflectedWords } from "../utils/highlightInflectedWords";
+import { PracticeHeader } from "./practice/PracticeHeader";
+import { PracticeLoading } from "./practice/PracticeLoading";
+import { PracticeEmptyState } from "./practice/PracticeEmptyState";
+import { PracticeResults } from "./practice/PracticeResults";
+
+interface VocabularyPracticeProps {
+  practiceLanguage: string;
+  yourLanguage: string;
+  selectedLevel: string;
+  selectedLevels: string[];
+  selectedCategories: string[];
+  selectedWordTypes: string[];
+  selectedExercises: string[];
+  onBack: () => void;
+}
+
+export function VocabularyPractice({
+  practiceLanguage,
+  yourLanguage,
+  selectedLevels,
+  selectedCategories,
+  selectedWordTypes,
+  selectedExercises,
+  onBack,
+}: VocabularyPracticeProps) {
+  const { t } = useLanguage();
+  const [words, setWords] = useState<any[]>([]);
+  const [translations, setTranslations] = useState<{
+    [key: string]: string;
+  }>({});
+  const [definitions, setDefinitions] = useState<{
+    [key: string]: string;
+  }>({});
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showSentence, setShowSentence] = useState(false);
+  const [showDefinition, setShowDefinition] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sessionComplete, setSessionComplete] = useState(false);
+  const [currentExerciseType, setCurrentExerciseType] =
+    useState<string>("wordTyping");
+  const [inflectedEntries, setInflectedEntries] = useState<any[]>([]);
+  const [exerciseStatus, setExerciseStatus] = useState({
+    isCorrect: false,
+    hasTypedAnswer: false,
+    usedShowWord: false,
+    usedHintForBrokenWord: false,
+  });
+  const [cardBlinkKey, setCardBlinkKey] = useState(0);
+  const [isCardSwitching, setIsCardSwitching] = useState(false);
+  const cardSwitchTimeoutRef = useRef<number | null>(null);
+
+  const isFourWordExercise = useCallback(
+    (exerciseType: string) =>
+      exerciseType === "connectWords" || exerciseType === "listening",
+    [],
+  );
+  const getNonFourWordFallback = useCallback(
+    () =>
+      selectedExercises.find((exercise) => !isFourWordExercise(exercise)) ||
+      "wordTyping",
+    [isFourWordExercise, selectedExercises],
+  );
+
+  // Track detailed attempt history for statistics
+  const [attemptHistory, setAttemptHistory] = useState<
+    Array<{
+      level: string;
+      type: string;
+      result: "correct" | "incorrect" | "skipped";
+    }>
+  >([]);
+
+  // Helper function to randomly select next exercise type from enabled exercises
+  const selectRandomExercise = useCallback(() => {
+    if (selectedExercises.length === 0) return "wordTyping";
+    const randomIndex = Math.floor(Math.random() * selectedExercises.length);
+    return selectedExercises[randomIndex];
+  }, [selectedExercises]);
+
+  // Helper function to check if word is eligible for current exercise type
+  const isWordEligibleForExercise = (
+    word: any,
+    exerciseType: string,
+  ): boolean => {
+    if (exerciseType === "halfWritten") {
+      // Half-written exercise only uses words with 4+ letters
+      return word.word_lemma.length >= 4;
+    }
+    if (exerciseType === "brokenWord") {
+      // Broken-word exercise only uses words with 5+ letters
+      return word.word_lemma.length >= 5;
+    }
+    // Full word typing accepts all words
+    return true;
+  };
+
+  useEffect(() => {
+    // Dynamically load the words for the practice language and user's language
+    const loadWords = async () => {
+      setIsLoading(true);
+      try {
+        // Use a static map for imports to ensure Vite can resolve them correctly
+        const wordsMap: Record<string, () => Promise<any>> = {
+          en: () => import("../../data/vocabulary/english/vocabulary.json"),
+          es: () => import("../../data/vocabulary/spanish/vocabulary.json"),
+          fr: () => import("../../data/vocabulary/french/vocabulary.json"),
+          de: () => import("../../data/vocabulary/german/vocabulary.json"),
+          it: () => import("../../data/vocabulary/italian/vocabulary.json"),
+          pt: () => import("../../data/vocabulary/portuguese/vocabulary.json"),
+          ru: () => import("../../data/vocabulary/russian/vocabulary.json"),
+        };
+
+        if (!wordsMap[practiceLanguage] || !wordsMap[yourLanguage]) {
+          throw new Error(
+            `Unsupported language: ${practiceLanguage} or ${yourLanguage}`,
+          );
+        }
+
+        const practiceModule = await wordsMap[practiceLanguage]();
+        let loadedWords = Array.isArray(practiceModule.default)
+          ? practiceModule.default
+          : [];
+
+        const yourLangModule = await wordsMap[yourLanguage]();
+        const yourLangWords = Array.isArray(yourLangModule.default)
+          ? yourLangModule.default
+          : [];
+
+        // Create prompt map (user's language words) using concept_id
+        const translationMap: { [key: string]: string } = {};
+        const definitionMap: { [key: string]: string } = {};
+        yourLangWords.forEach((word: any) => {
+          translationMap[word.concept_id] = word.word_lemma;
+          definitionMap[word.concept_id] =
+            word.definition || word.definiton || "";
+        });
+        setTranslations(translationMap);
+        setDefinitions(definitionMap);
+
+        // Load inflected entries for sentence highlighting
+        let loadedInflectedEntries: any[] = [];
+        try {
+          const inflectedMap: Record<string, () => Promise<any>> = {
+            en: () => import("../../data/inflected/english/inflected.json"),
+            es: () => import("../../data/inflected/spanish/inflected.json"),
+            fr: () => import("../../data/inflected/french/inflected.json"),
+            de: () => import("../../data/inflected/german/inflected.json"),
+            it: () => import("../../data/inflected/italian/inflected.json"),
+            pt: () => import("../../data/inflected/portuguese/inflected.json"),
+            ru: () => import("../../data/inflected/russian/inflected.json"),
+          };
+
+          if (inflectedMap[practiceLanguage]) {
+            const inflectedModule = await inflectedMap[practiceLanguage]();
+            loadedInflectedEntries = Array.isArray(inflectedModule.default)
+              ? inflectedModule.default
+              : [];
+            setInflectedEntries(loadedInflectedEntries);
+          } else {
+            setInflectedEntries([]);
+          }
+        } catch (error) {
+          console.log("No inflected entries available");
+          setInflectedEntries([]);
+        }
+
+        // Apply inflected forms to loadedWords if available (especially for English)
+        if (loadedInflectedEntries.length > 0) {
+          loadedWords = loadedWords.map((word: any) => {
+            const inflected = loadedInflectedEntries.find(
+              (inf: any) => inf.concept_id === word.concept_id,
+            );
+            return {
+              ...word,
+              word_inflected: inflected?.word_inflected || word.word_lemma,
+            };
+          });
+        }
+
+        // Filter by levels if selected (multiple levels)
+        if (selectedLevels.length > 0) {
+          loadedWords = loadedWords.filter((word: any) =>
+            selectedLevels.includes(word.level),
+          );
+        }
+
+        // Filter by categories if selected
+        if (selectedCategories.length > 0) {
+          loadedWords = loadedWords.filter((word: any) =>
+            selectedCategories.includes(word.category),
+          );
+        }
+
+        // Filter by word types if selected
+        if (selectedWordTypes.length > 0) {
+          loadedWords = loadedWords.filter((word: any) =>
+            selectedWordTypes.includes(word.type),
+          );
+        }
+
+        // Shuffle the words to randomize order
+        const shuffledWords = shuffleArray(loadedWords);
+        setWords(shuffledWords);
+
+        // Select initial exercise type
+        let initialExercise = selectRandomExercise();
+        if (isFourWordExercise(initialExercise) && shuffledWords.length < 4) {
+          initialExercise = getNonFourWordFallback();
+        }
+        setCurrentExerciseType(initialExercise);
+      } catch (error) {
+        console.error("Error loading words:", error);
+        // Fallback to empty array
+        setWords([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadWords();
+  }, [
+    practiceLanguage,
+    yourLanguage,
+    selectedLevels,
+    selectedCategories,
+    selectedWordTypes,
+    selectRandomExercise,
+    getNonFourWordFallback,
+    isFourWordExercise,
+  ]);
+
+  const currentWord = words[currentIndex];
+  const currentPrompt = currentWord ? translations[currentWord.concept_id] : ""; // Word in user's language
+  const currentDefinition = currentWord
+    ? definitions[currentWord.concept_id]
+    : ""; // Definition in user's language
+  const highlightedSentence = useMemo(() => {
+    if (!currentWord) return "";
+    const sentence =
+      typeof currentWord.sentence === "string" ? currentWord.sentence : "";
+    if (!sentence) return "";
+    const relevantEntries = inflectedEntries.filter(
+      (entry) => entry?.concept_id === currentWord.concept_id,
+    );
+    return highlightInflectedWords(sentence, practiceLanguage, relevantEntries);
+  }, [currentWord, practiceLanguage, inflectedEntries]);
+
+  useEffect(() => {
+    setExerciseStatus({
+      isCorrect: false,
+      hasTypedAnswer: false,
+      usedShowWord: false,
+      usedHintForBrokenWord: false,
+    });
+  }, [currentExerciseType, currentIndex]);
+
+  const runNextStep = () => {
+    // Determine the result for this word
+    let result: "correct" | "incorrect" | "skipped";
+
+    if (isFourWordExercise(currentExerciseType)) {
+      // For connect words, always count as correct if completed (all 4 pairs matched)
+      result = exerciseStatus.isCorrect ? "correct" : "skipped";
+    } else if (
+      exerciseStatus.usedShowWord ||
+      exerciseStatus.usedHintForBrokenWord
+    ) {
+      // User clicked "Show me word" or used hint in broken-word - count as incorrect (missed/disposed)
+      result = "incorrect";
+    } else if (currentExerciseType === "brokenWord") {
+      // For broken-word, check if completed correctly
+      result = exerciseStatus.isCorrect ? "correct" : "skipped";
+    } else if (exerciseStatus.hasTypedAnswer) {
+      // User typed something - check if it was correct
+      result = exerciseStatus.isCorrect ? "correct" : "incorrect";
+    } else {
+      // User clicked Skip without typing or showing word - count as skipped
+      result = "skipped";
+    }
+
+    // Record the attempt - for connect words, record all 4 words
+    if (isFourWordExercise(currentExerciseType)) {
+      // Record all 4 words from the connect exercise
+      const fourWords = words.slice(currentIndex, currentIndex + 4);
+      const newAttempts = fourWords.map((word) => ({
+        level: word.level,
+        type: word.type,
+        result,
+      }));
+      setAttemptHistory((prev) => [...prev, ...newAttempts]);
+    } else {
+      setAttemptHistory((prev) => [
+        ...prev,
+        {
+          level: currentWord.level,
+          type: currentWord.type,
+          result,
+        },
+      ]);
+    }
+
+    // Reset states
+    setShowSentence(false);
+    setShowDefinition(false);
+    setExerciseStatus({
+      isCorrect: false,
+      hasTypedAnswer: false,
+      usedShowWord: false,
+      usedHintForBrokenWord: false,
+    });
+
+    // Determine next word index - for connect words, skip 4 words
+    let nextIndex;
+    if (isFourWordExercise(currentExerciseType)) {
+      nextIndex = currentIndex + 4 < words.length ? currentIndex + 4 : 0;
+    } else {
+      nextIndex = currentIndex < words.length - 1 ? currentIndex + 1 : 0;
+    }
+    setCurrentIndex(nextIndex);
+
+    // Select a new exercise type for the next word
+    let nextExercise = selectRandomExercise();
+    let nextWord = words[nextIndex];
+
+    // Check word eligibility for the selected exercise
+    if (isFourWordExercise(nextExercise)) {
+      // Check if we have at least 4 words remaining
+      if (nextIndex + 4 > words.length) {
+        // Not enough words, fall back to another exercise
+        nextExercise = getNonFourWordFallback();
+      }
+    } else if (nextWord && !isWordEligibleForExercise(nextWord, nextExercise)) {
+      // Try to find an eligible word starting from next index
+      let foundEligible = false;
+      for (let i = 0; i < words.length; i++) {
+        const checkIndex = (nextIndex + i) % words.length;
+        if (isWordEligibleForExercise(words[checkIndex], nextExercise)) {
+          setCurrentIndex(checkIndex);
+          nextWord = words[checkIndex];
+          foundEligible = true;
+          break;
+        }
+      }
+
+      // If no eligible word found, fall back to full word typing
+      if (!foundEligible && selectedExercises.includes("wordTyping")) {
+        nextExercise = "wordTyping";
+      }
+    }
+
+    setCurrentExerciseType(nextExercise);
+  };
+
+  const handleNext = () => {
+    if (isCardSwitching) return;
+    setIsCardSwitching(true);
+
+    if (cardSwitchTimeoutRef.current !== null) {
+      window.clearTimeout(cardSwitchTimeoutRef.current);
+    }
+
+    cardSwitchTimeoutRef.current = window.setTimeout(() => {
+      setCardBlinkKey((prev) => prev + 1);
+      runNextStep();
+      setIsCardSwitching(false);
+      cardSwitchTimeoutRef.current = null;
+    }, 180);
+  };
+
+  const handleFinishTest = () => {
+    setSessionComplete(true);
+  };
+
+  // Calculate statistics for the matrix table
+  const calculateStatistics = () => {
+    // Get unique levels and types from attempt history
+    const levels = [...new Set(attemptHistory.map((a) => a.level))].sort();
+    const types = [...new Set(attemptHistory.map((a) => a.type))].sort();
+
+    // Build matrix data
+    const matrix: {
+      [level: string]: {
+        [type: string]: {
+          guessed: number;
+          total: number;
+        };
+      };
+    } = {};
+
+    // Initialize matrix
+    levels.forEach((level) => {
+      matrix[level] = {};
+      types.forEach((type) => {
+        matrix[level][type] = {
+          guessed: 0,
+          total: 0,
+        };
+      });
+    });
+
+    // Populate matrix with attempt data
+    attemptHistory.forEach((attempt) => {
+      const cell = matrix[attempt.level]?.[attempt.type];
+      if (cell) {
+        if (attempt.result === "correct") {
+          cell.guessed++;
+        }
+        if (attempt.result !== "skipped") {
+          cell.total++;
+        }
+      }
+    });
+
+    return { levels, types, matrix };
+  };
+
+  const handleStartAgain = () => {
+    // Shuffle words for a new random order
+    const shuffledWords = shuffleArray(words);
+    setWords(shuffledWords);
+
+    // Reset all states
+    setCurrentIndex(0);
+    setShowSentence(false);
+    setShowDefinition(false);
+    setSessionComplete(false);
+    setAttemptHistory([]);
+    setExerciseStatus({
+      isCorrect: false,
+      hasTypedAnswer: false,
+      usedShowWord: false,
+      usedHintForBrokenWord: false,
+    });
+    setCardBlinkKey((prev) => prev + 1);
+
+    // Select initial exercise type for the new session
+    let initialExercise = selectRandomExercise();
+    if (isFourWordExercise(initialExercise) && shuffledWords.length < 4) {
+      initialExercise = getNonFourWordFallback();
+    }
+    setCurrentExerciseType(initialExercise);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (cardSwitchTimeoutRef.current !== null) {
+        window.clearTimeout(cardSwitchTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const speakWord = () => {
+    if (currentWord) {
+      speakSpecificWord(currentWord.word_lemma);
+    }
+  };
+
+  const speakSpecificWord = (word: string) => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = getLanguageCode(practiceLanguage);
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const getLanguageCode = (code: string): string => {
+    const langMap: { [key: string]: string } = {
+      en: "en-US",
+      es: "es-ES",
+      fr: "fr-FR",
+      de: "de-DE",
+      it: "it-IT",
+      pt: "pt-PT",
+      ru: "ru-RU",
+    };
+    return langMap[code] || "en-US";
+  };
+
+  const getLanguageName = (code: string): string => {
+    const langMap: { [key: string]: string } = {
+      en: "English",
+      es: "Spanish",
+      fr: "French",
+      de: "German",
+      it: "Italian",
+      pt: "Portuguese",
+      ru: "Russian",
+    };
+    return langMap[code] || code;
+  };
+
+  if (isLoading) {
+    return <PracticeLoading message={t("practice.loadingWords")} />;
+  }
+
+  if (words.length === 0) {
+    return (
+      <PracticeEmptyState
+        onBack={onBack}
+        getLanguageName={getLanguageName}
+        yourLanguage={yourLanguage}
+        practiceLanguage={practiceLanguage}
+      />
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <PracticeHeader
+        onBack={onBack}
+        onStartAgain={handleStartAgain}
+        sessionComplete={sessionComplete}
+        onFinishTest={handleFinishTest}
+        getLanguageName={getLanguageName}
+        yourLanguage={yourLanguage}
+        practiceLanguage={practiceLanguage}
+      />
+
+      {/* Main Content */}
+      <main
+        className="practice-main flex-1 flex items-center justify-center px-4 py-8 md:py-12
+             transition-[padding,margin] duration-300 ease-in-out"
+      >
+        <div className="practice-card-shell w-full max-w-2xl">
+          {sessionComplete ? (
+            <PracticeResults
+              attemptHistory={attemptHistory}
+              stats={calculateStatistics()}
+            />
+          ) : (
+            <>
+              {/* Practice Card */}
+              {currentWord && (
+                  <motion.div
+                    key={`${currentIndex}-${currentExerciseType}-${cardBlinkKey}`}
+                    className={`practice-card bg-card border border-border rounded-2xl p-3 md:p-5 shadow-sm transition-all duration-300 ease-in-out flex flex-col relative ${
+                      isCardSwitching ? "practice-card-switching" : ""
+                    }`}
+                >
+                  {!isFourWordExercise(currentExerciseType) && (
+                    <div className="w-[95%] mx-auto pt-2 md:pt-3">
+                      <div className="exercise-meta-row flex items-center justify-between">
+                        <div
+                          className="exercise-meta-cefr min-w-[2.25rem] h-9 px-2 inline-flex items-center justify-center rounded-full text-sm font-semibold uppercase border-2 text-muted-foreground/70"
+                          style={{
+                            borderColor: "rgba(74, 43, 130, 0.35)",
+                          }}
+                        >
+                          {currentWord?.level ?? ""}
+                        </div>
+                        <div className="exercise-meta-category text-sm font-semibold uppercase text-muted-foreground/70 text-right">
+                          {currentWord?.category ?? ""}
+                        </div>
+                      </div>
+                      <div className="exercise-meta-word-type mt-4 text-center text-lg font-semibold text-muted-foreground">
+                        {currentWord?.type ?? ""}
+                      </div>
+                    </div>
+                  )}
+
+                  <div
+                    className={`exercise-main-content flex-1 ${
+                      isFourWordExercise(currentExerciseType)
+                        ? "pt-0 md:pt-0 flex items-center justify-center"
+                        : "pt-0"
+                    }`}
+                  >
+                    {/* Main Word Area */}
+                    <div
+                      className={`exercise-word-area space-y-6 ${
+                        isFourWordExercise(currentExerciseType)
+                          ? "flex-1 w-full flex items-center justify-center mb-0"
+                          : "mb-0"
+                      }`}
+                    >
+                      {/* Word in User's Language - Always Visible (hide for pairing exercises) */}
+                      {!isFourWordExercise(currentExerciseType) && (
+                        <div className="exercise-guess-word-container min-h-[60px] flex items-center justify-center">
+                          <div className="text-center">
+                            <h2 className="exercise-guess-word text-4xl md:text-5xl font-bold text-foreground">
+                              {currentPrompt}
+                            </h2>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Input Field / Broken-word Unified Field / Pairing Exercises */}
+                      {currentExerciseType === "connectWords" ? (
+                        <ConnectWordsExercise
+                          words={words}
+                          currentIndex={currentIndex}
+                          translations={translations}
+                          sourceLabel={getLanguageName(practiceLanguage)}
+                          targetLabel={getLanguageName(yourLanguage)}
+                          onStatusChange={setExerciseStatus}
+                        />
+                      ) : currentExerciseType === "listening" ? (
+                        <ListeningExercise
+                          words={words}
+                          currentIndex={currentIndex}
+                          translations={translations}
+                          sourceLabel={getLanguageName(practiceLanguage)}
+                          targetLabel={getLanguageName(yourLanguage)}
+                          onSpeakWord={speakSpecificWord}
+                          onStatusChange={setExerciseStatus}
+                        />
+                      ) : currentExerciseType === "brokenWord" ? (
+                        <BrokenWordExercise
+                          currentWord={currentWord}
+                          speakWord={speakWord}
+                          onStatusChange={setExerciseStatus}
+                        />
+                      ) : currentExerciseType === "halfWritten" ? (
+                        <HalfWrittenExercise
+                          currentWord={currentWord}
+                          currentPrompt={currentPrompt}
+                          practiceLanguage={practiceLanguage}
+                          speakWord={speakWord}
+                          onStatusChange={setExerciseStatus}
+                        />
+                      ) : (
+                        <WordTypingExercise
+                          currentWord={currentWord}
+                          currentPrompt={currentPrompt}
+                          practiceLanguage={practiceLanguage}
+                          speakWord={speakWord}
+                          onStatusChange={setExerciseStatus}
+                        />
+                      )}
+                    </div>
+
+                    {/* Expandable Help Sections - Hide for pairing exercises */}
+                    {!isFourWordExercise(currentExerciseType) && (
+                      <div className="exercise-help-sections space-y-2 mb-4 sm:mb-6 md:mb-8">
+                        {/* See Definition */}
+                        <div className="border border-border rounded-lg overflow-hidden">
+                          <button
+                            onClick={() => setShowDefinition(!showDefinition)}
+                            className="exercise-see-definition-button w-full flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm hover:bg-muted active:bg-muted/80 transition-colors text-left"
+                          >
+                            <span className="font-medium">See definition</span>
+                            {showDefinition ? (
+                              <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                            ) : (
+                              <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                            )}
+                          </button>
+
+                          {/* Definition content with smooth max-height transition */}
+                          <div
+                            className="transition-all duration-300 ease-in-out overflow-hidden"
+                            style={{
+                              maxHeight: showDefinition ? "150px" : "0px",
+                              opacity: showDefinition ? 1 : 0,
+                            }}
+                          >
+                            <div className="exercise-definition-content px-3 py-2.5 sm:px-4 sm:py-3 bg-muted/40 sm:bg-muted/50 text-xs sm:text-sm border-t">
+                              {currentDefinition}
+                            </div>
+                          </div>
+                        </div>
+
+                        {(exerciseStatus.isCorrect ||
+                          exerciseStatus.usedShowWord) && (
+                          <div className="border border-border rounded-lg overflow-hidden">
+                            <button
+                              onClick={() => setShowSentence(!showSentence)}
+                              className="exercise-see-sentence-button w-full flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm hover:bg-muted active:bg-muted/80 transition-colors text-left"
+                            >
+                              <span className="font-medium">
+                                See in sentence
+                              </span>
+                              {showSentence ? (
+                                <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                              ) : (
+                                <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                              )}
+                            </button>
+
+                            {/* Sentence content with smooth max-height transition */}
+                            <div
+                              className="transition-all duration-300 ease-in-out overflow-hidden"
+                              style={{
+                                maxHeight: showSentence ? "180px" : "0px",
+                                opacity: showSentence ? 1 : 0,
+                              }}
+                            >
+                              <div className="exercise-sentence-content px-3 py-2.5 sm:px-4 sm:py-3 bg-muted/40 sm:bg-muted/50 text-xs sm:text-sm border-t italic">
+                                {/* Sentence text wrapper */}
+                                <div className="relative">
+                                  <span className="block leading-relaxed pr-10">
+                                    {'"'}
+                                    <span
+                                      dangerouslySetInnerHTML={{
+                                        __html: highlightedSentence,
+                                      }}
+                                    />
+                                    {'"'}
+                                  </span>
+                                  <button
+                                    onClick={() => {
+                                      if ("speechSynthesis" in window) {
+                                        const utterance =
+                                          new SpeechSynthesisUtterance(
+                                            currentWord.sentence,
+                                          );
+                                        utterance.lang =
+                                          getLanguageCode(practiceLanguage);
+                                        window.speechSynthesis.speak(utterance);
+                                      }
+                                    }}
+                                    className="absolute top-1/2 -translate-y-1/2 right-0 p-1.5 sm:p-2 hover:bg-muted rounded-lg text-muted-foreground transition-colors"
+                                    aria-label="Listen to sentence"
+                                  >
+                                    <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Progress & Navigation */}
+                  <div className="flex items-center justify-end pt-4 border-t border-border">
+
+                    {/* For pairing exercises, allow Skip until completed */}
+                    {isFourWordExercise(currentExerciseType) ? (
+                      <button
+                        onClick={handleNext}
+                        disabled={isCardSwitching}
+                        className={`practice-next-button px-6 py-2.5 rounded-lg font-medium transition-all ${
+                          exerciseStatus.isCorrect
+                            ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                            : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        }`}
+                      >
+                        {exerciseStatus.isCorrect ? "Next" : "Skip"}
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleNext}
+                        disabled={isCardSwitching}
+                        className={`practice-next-button px-6 py-2.5 rounded-lg font-medium transition-all ${
+                          exerciseStatus.isCorrect ||
+                          exerciseStatus.usedShowWord ||
+                          exerciseStatus.usedHintForBrokenWord
+                            ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                            : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        }`}
+                      >
+                        {exerciseStatus.isCorrect ||
+                        exerciseStatus.usedShowWord ||
+                        exerciseStatus.usedHintForBrokenWord
+                          ? "Next"
+                          : "Skip"}
+                      </button>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+}
