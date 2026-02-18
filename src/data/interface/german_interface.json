@@ -1,0 +1,420 @@
+{
+  "header": {
+    "about": "Über",
+    "languages": "Sprachen",
+    "filters": "Filter",
+    "exercises": "Übungen",
+    "help": "Hilfe",
+    "levelTest": "Niveautest"
+  },
+  "home": {
+    "headline": "Wortschatz üben",
+    "subheadline": "Keine Lektionen - nur Übung.",
+    "yourLanguage": "Deine Sprache",
+    "practiceLanguage": "Übungssprache",
+    "selectYourLanguage": "Deine Sprache auswählen",
+    "selectPracticeLanguage": "Übungssprache auswählen",
+    "changeNote": "Das kannst du später ändern.",
+    "next": "Weiter",
+    "stat": {
+      "words": "Wörter zum Üben",
+      "languages": "Verfügbare Sprachen",
+      "noSignup": "Keine Anmeldung",
+      "noSignupDesc": "Sofort starten"
+    }
+  },
+  "languageSelector": {
+    "search": "Sprachen suchen...",
+    "alreadySelected": "(Bereits ausgewählt)",
+    "noResults": "Keine Sprachen gefunden",
+    "selectLanguage": "Sprache auswählen"
+  },
+  "languageContinuePopup": {
+    "title": "Wähle Sprachen, um fortzufahren",
+    "close": "Schließen",
+    "closePopup": "Popup schließen"
+  },
+  "aboutPage": {
+    "back": "Zurück",
+    "p1": "LEXISTAR ist für aktives Wortschatztraining gedacht, nicht für passives Durchblättern.",
+    "p2": "Du scrollst nicht durch Wortlisten und lernst keine Definitionen auswendig. Du trainierst Wörter durch Anwendung in sorgfältig gestalteten Übungen, die Abruf, Rechtschreibung und Erkennung stärken.",
+    "p3": "Es gibt keine Registrierung und keinen Login. Du wählst deine Muttersprache, die Sprache, die du üben möchtest, und dein CEFR-Niveau. Wenn du dein Niveau nicht kennst, hilft ein kurzer Test bei der Einordnung.",
+    "filtersTitle": "Optional kannst du filtern:",
+    "filters": {
+      "topics": "Themen",
+      "wordTypes": "Wortarten",
+      "exerciseTypes": "Übungstypen"
+    },
+    "p4": "Danach startest du eine Übungssitzung.",
+    "p5": "Das gesamte Lernen passiert in der Sitzung. Wörter werden eingeführt, abgefragt, wiederholt und durch verschiedene Übungen gefestigt, nicht als Listen angezeigt.",
+    "howTitle": "So funktioniert das Training",
+    "howSubtitle": "Das System nutzt mehrere Übungstypen, zum Beispiel:",
+    "howList": {
+      "wordTyping": "vollständiges Wort tippen",
+      "partialCompletion": "teilweises Wort ergänzen",
+      "wordAssembling": "Wort zusammensetzen",
+      "wordConnection": "Wörter verbinden",
+      "listening": "Hören (wenn aktiviert)"
+    },
+    "p6": "Einige Übungen trainieren den aktiven Abruf, andere sorgen für leichte Wiederholung. Wörter zählen nur, wenn du sie korrekt erinnerst; das Anzeigen der Lösung zählt nicht als gelernt.",
+    "p7": "Dieser Ansatz fokussiert echten Wortschatzerwerb statt Abkürzungen.",
+    "accountTitle": "Warum kein Konto?",
+    "accountSubtitle": "LEXISTAR ist bewusst sitzungsbasiert.",
+    "p8": "Du kannst sofort anfangen zu üben, ohne Konto und ohne persönliche Daten. Nach dem Verlassen der Sitzung wird nichts gespeichert.",
+    "goalTitle": "Das Ziel ist einfach:",
+    "goalText": "Wörter effektiv üben, mit so wenig Reibung wie möglich."
+  },
+  "helpPage": {
+    "back": "Zurück",
+    "title": "So startest du das Training",
+    "step1": {
+      "title": "Schritt 1: Sprachen wählen",
+      "intro": "Wähle:",
+      "item1": "deine Muttersprache",
+      "item2": "die Sprache, die du üben möchtest"
+    },
+    "step2": {
+      "title": "Schritt 2: Filter setzen (optional)",
+      "intro": "Optional kannst du wählen:",
+      "item1": "CEFR-Niveau",
+      "item2": "Themen",
+      "item3": "Wortarten",
+      "note1": "Alle Filter sind optional.",
+      "note2": "Standardmäßig sind alle Filter aktiv.",
+      "note3": "Wenn du nichts auswählst, übst du alle Niveaus, alle Themen und alle Wortarten."
+    },
+    "step3": {
+      "title": "Schritt 3: Übungen wählen",
+      "intro": "Gehe zur Übungsauswahl und wähle die Übungstypen, die du trainieren möchtest.",
+      "listTitle": "Es gibt 5 Übungstypen:",
+      "item1": "Vollständiges Wort tippen",
+      "item2": "Halbfertiges Wort ergänzen",
+      "item3": "Wort aus Teilen zusammensetzen",
+      "item4": "Wörter verbinden",
+      "item5": "Hören",
+      "note": "Standardmäßig sind alle Übungen ausgewählt."
+    },
+    "step4": {
+      "title": "Schritt 4: Sitzungsgröße wählen (optional)",
+      "intro": "Du kannst festlegen, wie viele Wörter du in der Sitzung üben möchtest.",
+      "optionalTitle": "Das ist optional:",
+      "item1": "Du kannst eine Wortanzahl festlegen",
+      "item2": "Oder ohne Limit starten und die Sitzung jederzeit beenden"
+    },
+    "types": {
+      "title": "Übungstypen erklärt",
+      "fullWord": {
+        "title": "1) Vollständiges Wort tippen",
+        "goal": "Ziel: Tippe das richtige Wort in der Sprache, die du übst.",
+        "seeTitle": "Was du siehst:",
+        "seeInput": "Ein Eingabefeld, in das du die Antwort tippst"
+      },
+      "halfWritten": {
+        "title": "2) Halbfertiges Wort ergänzen",
+        "goal": "Ziel: Ergänze ein teilweise geschriebenes Wort in der Sprache, die du übst.",
+        "seeTitle": "Was du siehst:",
+        "seePartial": "Das Zielwort teilweise angezeigt (du tippst den fehlenden Teil)",
+        "seeInput": "Ein Eingabefeld zum Ergänzen der fehlenden Buchstaben",
+        "note": "Diese Übung hat keinen Hinweis-Button, weil ein Teil des Wortes bereits sichtbar ist."
+      },
+      "brokenWord": {
+        "title": "3) Wort aus Teilen zusammensetzen",
+        "goal": "Ziel: Setze das richtige Wort zusammen, indem du Wortteile in die richtige Reihenfolge bringst.",
+        "seeTitle": "Was du siehst:",
+        "seeSlots": "Leere Plätze für die Wortteile",
+        "seeChunks": "Eine gemischte Auswahl von Wortteilen, die du in die Plätze einfügst"
+      },
+      "connectWords": {
+        "title": "4) Wörter verbinden",
+        "goal": "Ziel: Verbinde Wörter in der Übungssprache mit ihren Bedeutungen in deiner Muttersprache.",
+        "seeTitle": "Was du siehst:",
+        "seeTypeTop": "Wortart oben (gilt für alle Elemente)",
+        "seeLeft": "Linke Seite: 4 Wörter in der Übungssprache",
+        "seeRight": "Rechte Seite: 4 Bedeutungen in deiner Muttersprache",
+        "howTitle": "So funktioniert es:",
+        "how1": "Tippe links ein Element an und dann rechts das passende Element",
+        "how2": "Korrekte Paare bleiben verbunden",
+        "how3": "Falsche Paare werden kurz markiert und können erneut versucht werden"
+      },
+      "listening": {
+        "title": "5) Hörübung",
+        "goal": "Ziel: Verbinde gesprochene Wörter in der Übungssprache mit ihren Bedeutungen in deiner Muttersprache.",
+        "seeTitle": "Was du siehst:",
+        "seeTypeTop": "Wortart oben (gilt für alle Elemente)",
+        "seeLeft": "Linke Seite: 4 Audio-Buttons (Mikrofon) für Wörter in der Übungssprache",
+        "seeRight": "Rechte Seite: 4 Bedeutungen in deiner Muttersprache",
+        "howTitle": "So funktioniert es:",
+        "how1": "Tippe einen Audio-Button an, um ein Wort zu hören",
+        "how2": "Verbinde es dann mit der richtigen Bedeutung rechts",
+        "how3": "Korrekte Paare bleiben verbunden",
+        "how4": "Falsche Paare werden kurz markiert und können erneut versucht werden",
+        "note": "Hier gibt es keine Hinweise und kein \"Wort anzeigen\"."
+      }
+    },
+    "common": {
+      "seeMeaning": "Die Wortbedeutung in deiner Muttersprache",
+      "seeMeta": "Wort-Metadaten: CEFR-Niveau, Thema und Wortart"
+    },
+    "finish": {
+      "title": "Überspringen und beenden",
+      "p1": "Jede Übung enthält einen Überspringen-Button.",
+      "p2": "Du kannst die Sitzung jederzeit beenden.",
+      "p3": "Wörter zählen nur, wenn du sie korrekt erinnerst (das Anzeigen eines Wortes zählt nicht als korrekte Erinnerung)."
+    }
+  },
+  "languageNames": {
+    "en": "Englisch",
+    "es": "Spanisch",
+    "fr": "Französisch",
+    "de": "Deutsch",
+    "it": "Italienisch",
+    "pt": "Portugiesisch",
+    "ru": "Russisch"
+  },
+  "levelCategory": {
+    "title": "Deine Übung anpassen",
+    "subtitle": "Feinabstimmung deiner Sitzung oder direkt starten.",
+    "optional": "(Optional)",
+    "skipNote": "Alles überspringen, um alles zu üben",
+    "levels": "Niveaus",
+    "vocabularyLevel": "Niveaus zum Üben auswählen",
+    "levelsHelper": "Wähle ein oder mehrere Niveaus aus.",
+    "categories": "Kategorien",
+    "topicsToPractice": "Themen zum Üben",
+    "wordTypes": "Wortarten",
+    "allTopicsSelected": "Alle Themen ausgewählt",
+    "allGrammarTypesSelected": "Alle Wortarten ausgewählt",
+    "next": "Weiter",
+    "skipToNext": "Ohne Filter fortfahren",
+    "startPracticing": "Übung starten",
+    "backToLanguages": "Zurück zu Sprachen",
+    "back": "Zurück",
+    "takeLevelTest": "Schnellen Niveautest machen",
+    "testDescription": "Nicht sicher bei deinem Niveau? Mach einen kurzen Test.",
+    "notSureLevel": "Nicht sicher, wo du anfangen sollst? Mach einen kurzen Wortschatztest.",
+    "selection": {
+      "levelsSelected": "Niveau ausgewählt",
+      "levelsSelectedPlural": "Niveaus ausgewählt",
+      "allLevelsSelected": "Alle Niveaus ausgewählt",
+      "topicsSelected": "Thema ausgewählt",
+      "topicsSelectedPlural": "Themen ausgewählt",
+      "typesSelected": "Wortart ausgewählt",
+      "typesSelectedPlural": "Wortarten ausgewählt"
+    },
+    "topics": {
+      "skipAll": "Oder überspringen, um alle Themen zu üben",
+      "showAll": "Alle Themen anzeigen",
+      "showFewer": "Weniger Themen anzeigen",
+      "showLess": "Weniger Themen",
+      "more": "mehr"
+    },
+    "topicNames": {
+      "connectors": "Konnektoren",
+      "places": "Orte",
+      "abstract": "Abstrakt",
+      "daily life": "Alltag",
+      "people": "Menschen",
+      "communication": "Kommunikation",
+      "emotions": "Emotionen",
+      "time": "Zeit",
+      "transport": "Verkehr",
+      "art": "Kunst",
+      "animals": "Tiere",
+      "food": "Essen",
+      "clothes & accessories": "Kleidung & Accessoires",
+      "body": "Körper",
+      "travel": "Reisen",
+      "education": "Bildung",
+      "sport": "Sport",
+      "money": "Geld",
+      "household": "Haushalt",
+      "colors": "Farben",
+      "relationships": "Beziehungen",
+      "work": "Arbeit",
+      "technology": "Technologie",
+      "weather": "Wetter",
+      "drinks": "Getränke",
+      "numbers": "Zahlen",
+      "health": "Gesundheit",
+      "nature": "Natur",
+      "geography": "Geografie",
+      "plants": "Pflanzen",
+      "environment": "Umwelt",
+      "astronomy": "Astronomie",
+      "science": "Wissenschaft"
+    },
+    "types": {
+      "skipAll": "Oder überspringen, um alle Wortarten zu üben",
+      "showMore": "Mehr anzeigen",
+      "showMoreWithCountPrefix": "Mehr Wortarten",
+      "showAll": "Alle Wortarten anzeigen",
+      "showAllShort": "ALLE"
+    },
+    "actions": {
+      "clear": "Löschen",
+      "apply": "Anwenden"
+    },
+    "titleWithSkipAhead": "Übung anpassen oder überspringen"
+  },
+  "levels": {
+    "A1": {
+      "name": "Anfänger",
+      "description": "Grundlegende Wörter und Redewendungen"
+    },
+    "A2": {
+      "name": "Grundstufe",
+      "description": "Alltägliche Ausdrücke"
+    },
+    "B1": {
+      "name": "Mittelstufe",
+      "description": "Häufige Situationen"
+    },
+    "B2": {
+      "name": "Gehobene Mittelstufe",
+      "description": "Komplexe Themen"
+    },
+    "C1": {
+      "name": "Fortgeschritten",
+      "description": "Flüssiger Ausdruck"
+    },
+    "C2": {
+      "name": "Sehr fortgeschritten",
+      "description": "Nahezu muttersprachliche Beherrschung"
+    }
+  },
+  "wordTypes": {
+    "noun": "Substantiv",
+    "verb": "Verb",
+    "adjective": "Adjektiv",
+    "adverb": "Adverb",
+    "determiner": "Artikelwort",
+    "pronoun": "Pronomen",
+    "preposition": "Präposition",
+    "conjunction": "Konjunktion",
+    "exclamation": "Ausruf",
+    "expression": "Ausdruck",
+    "interjection": "Interjektion"
+  },
+  "exerciseSelection": {
+    "title": "Übungstypen auswählen",
+    "subtitle": "Alle Übungen sind ausgewählt. Passe sie bei Bedarf an.",
+    "back": "Zurück",
+    "helpTitle": "Übungserklärung",
+    "helpButtonAria": "Übungserklärung öffnen",
+    "helpCloseAria": "Erklärung schließen",
+    "startPracticing": "Übung starten",
+    "startButton": {
+      "selectAtLeastOne": "Wähle mindestens eine Übung",
+      "startFullSession": "Volle Sitzung starten",
+      "startCountPrefix": "Starte",
+      "startCountSuffix": "Übungen"
+    },
+    "helperText": "Du kannst die Übungen später ändern.",
+    "exercise": {
+      "wordTyping": "Wort tippen",
+      "halfWritten": "Halbfertiges Wort ergänzen",
+      "brokenWord": "Wort aus Teilen zusammensetzen",
+      "connectWords": "Wörter verbinden",
+      "listening": "Hörübung"
+    },
+    "exerciseDescription": {
+      "wordTyping": "Tippe das ganze Wort aus dem Gedächtnis.",
+      "halfWritten": "Ergänze die fehlenden Buchstaben.",
+      "brokenWord": "Setze das Wort aus Teilen zusammen.",
+      "connectWords": "Ordne Wörter ihren Übersetzungen zu.",
+      "listening": "Wähle aus, was du hörst."
+    }
+  },
+  "practice": {
+    "backToFilters": "Zurück zu Filtern",
+    "home": "Startseite",
+    "finish": "Beenden",
+    "menu": "Menü",
+    "showMeWord": "Wort anzeigen",
+    "hint": "Hinweis",
+    "nextAction": "Weiter",
+    "skipAction": "Überspringen",
+    "seeDefinition": "Definition anzeigen",
+    "seeInSentence": "Im Satz anzeigen",
+    "listenToSentence": "Satz anhören",
+    "listenToPronunciation": "Aussprache anhören",
+    "playWordAudio": "Wort-Audio abspielen",
+    "connectInstructionPrefix": "Tippe ein Wort auf",
+    "connectInstructionThen": "dann seine Bedeutung auf",
+    "listeningInstructionPrefix": "Tippe auf Audio in",
+    "wordTypingInstruction": "Tippe das richtige Wort in der Übungssprache.",
+    "halfWrittenInstruction": "Ergänze den fehlenden Teil des Wortes.",
+    "brokenWordInstruction": "Baue das richtige Wort aus den gegebenen Teilen.",
+    "incorrectOrderTryAgain": "Falsche Reihenfolge - versuche es erneut",
+    "wordsLabel": "Wörter",
+    "accuracyLabel": "Genauigkeit",
+    "performanceMatrix": "Leistungsmatrix",
+    "levelType": "NIVEAU / ART",
+    "total": "GESAMT",
+    "correct": "Richtig!",
+    "answer": "Antwort:",
+    "alsoAccepted": "Auch akzeptiert:",
+    "nextWord": "Nächstes Wort",
+    "sessionComplete": "Sitzung abgeschlossen!",
+    "youAttempted": "Du hast versucht",
+    "outOf": "von",
+    "words": "Wörtern",
+    "youCompleted": "Du hast abgeschlossen",
+    "correctStat": "Richtig",
+    "incorrect": "Falsch",
+    "ofAttempts": "der Versuche",
+    "noAttempts": "In dieser Sitzung wurden keine Wörter bearbeitet.",
+    "tryTyping": "Tippe Antworten, um deinen Fortschritt zu verfolgen!",
+    "skipped": "ohne Versuch übersprungen",
+    "word": "Wort",
+    "were": "wurden",
+    "was": "wurde",
+    "startAgain": "Neu starten",
+    "changeFilters": "Filter ändern",
+    "noWords": "Keine Wörter gefunden",
+    "noWordsDesc": "Es wurden keine Wörter gefunden, die zu deinen Filtern passen. Passe Niveau, Thema oder Wortart an.",
+    "loadingWords": "Wörter werden geladen...",
+    "typeAnswer": "Gib hier deine Antwort ein...",
+    "pronounceWord": "Wort aussprechen",
+    "keyboard": {
+      "mobileKeyboard": "Mobile Tastatur",
+      "shift": "Umschalt",
+      "backspace": "Löschen",
+      "space": "Leerzeichen",
+      "enter": "Eingabe",
+      "toggleSymbols": "Symbole umschalten"
+    }
+  },
+  "exam": {
+    "title": "Wortschatz-Niveautest",
+    "subtitle": "Finde dein ungefähres Wortschatzniveau",
+    "instructions": "Wähle für jedes Wort die richtige Übersetzung. Es gibt 6 Fragen pro Niveau von A1 bis C2.",
+    "loading": "Test wird geladen...",
+    "preparing": "Fragen werden vorbereitet...",
+    "close": "Schließen",
+    "complete": "Test abgeschlossen",
+    "question": "Frage",
+    "of": "von",
+    "levelLabel": "Niveau",
+    "chooseOption": "Wähle die richtige Option",
+    "selectAnswer": "Wähle die richtige Übersetzung für:",
+    "next": "Weiter",
+    "finish": "Test beenden",
+    "cancel": "Abbrechen",
+    "results": "Dein Ergebnis",
+    "estimatedLevel": "Dein geschätztes Wortschatzniveau ist",
+    "resultNote": "Dieses Ergebnis basiert auf Worterkennung. Du kannst dein Niveau jederzeit ändern.",
+    "levelDescription": {
+      "A1": "Du hast eine grundlegende Wortschatzbasis. Starker Start!",
+      "A2": "Du kennst häufige Wörter und Ausdrücke aus dem Alltag.",
+      "B1": "Du hast einen mittleren Wortschatz für Alltagssituationen.",
+      "B2": "Du hast einen starken Wortschatz für die meisten Situationen.",
+      "C1": "Du hast einen fortgeschrittenen Wortschatz mit Verständnis für Nuancen.",
+      "C2": "Du hast Wortschatzkenntnisse auf sehr hohem Niveau!"
+    },
+    "breakdown": "Niveau-Aufschlüsselung",
+    "correctAnswers": "richtige Antworten",
+    "startPracticing": "Auf diesem Niveau starten",
+    "backToSelection": "Zurück zur Niveauauswahl"
+  }
+}

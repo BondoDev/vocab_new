@@ -1,0 +1,421 @@
+﻿{
+  "header": {
+    "about": "A propos",
+    "languages": "Langues",
+    "filters": "Filtres",
+    "exercises": "Exercices",
+    "help": "Aide",
+    "levelTest": "Test de niveau"
+  },
+  "home": {
+    "headline": "Pratiquer le vocabulaire",
+    "subheadline": "Sans lecons, juste la pratique.",
+    "yourLanguage": "Votre langue",
+    "practiceLanguage": "Langue a pratiquer",
+    "selectYourLanguage": "Selectionnez votre langue",
+    "selectPracticeLanguage": "Selectionnez la langue a pratiquer",
+    "changeNote": "Vous pourrez modifier cela plus tard.",
+    "next": "Continuer",
+    "stat": {
+      "words": "Mots a pratiquer",
+      "languages": "Langues disponibles",
+      "noSignup": "Sans inscription",
+      "noSignupDesc": "Commencez immediatement"
+    }
+  },
+  "languageSelector": {
+    "search": "Rechercher des langues...",
+    "alreadySelected": "(Deja selectionnee)",
+    "noResults": "Aucune langue trouvee",
+    "selectLanguage": "Selectionner une langue"
+  },
+  "languageContinuePopup": {
+    "title": "Choisissez des langues pour continuer",
+    "close": "Fermer",
+    "closePopup": "Fermer la fenetre"
+  },
+  "aboutPage": {
+    "back": "Retour",
+    "p1": "LEXISTAR est concu pour la pratique active du vocabulaire, pas pour une navigation passive.",
+    "p2": "Vous ne parcourez pas de listes de mots et vous ne memorisez pas des definitions. Vous pratiquez les mots en les utilisant, avec des exercices soigneusement concus qui entrainent le rappel, l'orthographe et la reconnaissance.",
+    "p3": "Il n'y a ni inscription ni connexion. Vous choisissez votre langue maternelle, la langue que vous voulez pratiquer et votre niveau CECR. Si vous ne connaissez pas votre niveau, un test court vous aide a le determiner.",
+    "filtersTitle": "Vous pouvez filtrer en option :",
+    "filters": {
+      "topics": "themes de pratique",
+      "wordTypes": "types de mots",
+      "exerciseTypes": "types d'exercices"
+    },
+    "p4": "Ensuite, vous commencez une session de pratique.",
+    "p5": "Tout l'apprentissage se fait dans la session. Les mots sont introduits, testes, repetes et renforces via differents exercices, et non presentes sous forme de listes.",
+    "howTitle": "Comment fonctionne la pratique",
+    "howSubtitle": "Le systeme utilise plusieurs types d'exercices, par exemple :",
+    "howList": {
+      "wordTyping": "saisie du mot complet",
+      "partialCompletion": "completion partielle du mot",
+      "wordAssembling": "assemblage du mot",
+      "wordConnection": "association de mots",
+      "listening": "ecoute (si activee)"
+    },
+    "p6": "Certains exercices entrainent le rappel actif, d'autres apportent un renforcement leger. Les mots ne sont comptes que si vous les rappelez correctement ; afficher la reponse ne compte pas comme apprentissage.",
+    "p7": "Cette approche vise une acquisition reelle du vocabulaire, pas des raccourcis.",
+    "accountTitle": "Pourquoi pas de compte ?",
+    "accountSubtitle": "LEXISTAR est volontairement base sur des sessions.",
+    "p8": "Vous pouvez commencer immediatement, sans creer de compte ni partager de donnees personnelles. Rien n'est stocke lorsque vous quittez la session.",
+    "goalTitle": "L'objectif est simple :",
+    "goalText": "pratiquer les mots efficacement, avec le moins de friction possible."
+  },
+  "helpPage": {
+    "back": "Retour",
+    "title": "Comment commencer la pratique",
+    "step1": {
+      "title": "Etape 1 : Choisir les langues",
+      "intro": "Selectionnez :",
+      "item1": "votre langue maternelle",
+      "item2": "la langue que vous voulez pratiquer"
+    },
+    "step2": {
+      "title": "Etape 2 : Definir les filtres (optionnel)",
+      "intro": "Vous pouvez choisir en option :",
+      "item1": "niveau CECR",
+      "item2": "themes",
+      "item3": "types de mots (partie du discours)",
+      "note1": "Tous les filtres sont optionnels.",
+      "note2": "Par defaut, tous les filtres sont actifs.",
+      "note3": "Si vous ne selectionnez rien, vous pratiquez tous les niveaux, tous les themes et tous les types de mots."
+    },
+    "step3": {
+      "title": "Etape 3 : Choisir les exercices",
+      "intro": "Allez a la page de selection des exercices et choisissez les types d'exercices a pratiquer.",
+      "listTitle": "Il y a 5 types d'exercices :",
+      "item1": "Saisie du mot complet",
+      "item2": "Completion de mot a moitie ecrit",
+      "item3": "Assemblage de mot casse",
+      "item4": "Association de mots",
+      "item5": "Ecoute",
+      "note": "Par defaut, tous les exercices sont selectionnes."
+    },
+    "step4": {
+      "title": "Etape 4 : Choisir la taille de session (optionnel)",
+      "intro": "Vous pouvez choisir combien de mots pratiquer pendant la session.",
+      "optionalTitle": "C'est optionnel :",
+      "item1": "Vous pouvez definir une quantite de mots",
+      "item2": "Ou commencer sans limite et terminer la session a tout moment"
+    },
+    "types": {
+      "title": "Types d'exercices expliques",
+      "fullWord": {
+        "title": "1) Saisie du mot complet",
+        "goal": "Objectif : Taper le mot correct dans la langue pratiquee.",
+        "seeTitle": "Ce que vous voyez :",
+        "seeInput": "Un champ de saisie pour taper la reponse"
+      },
+      "halfWritten": {
+        "title": "2) Completion de mot a moitie ecrit",
+        "goal": "Objectif : Completer un mot partiellement ecrit dans la langue pratiquee.",
+        "seeTitle": "Ce que vous voyez :",
+        "seePartial": "Le mot cible affiche partiellement (vous devez taper la partie manquante)",
+        "seeInput": "Un champ de saisie pour completer les lettres manquantes",
+        "note": "Cet exercice n'a pas de bouton Indice, car une partie du mot est deja fournie."
+      },
+      "brokenWord": {
+        "title": "3) Assemblage de mot casse",
+        "goal": "Objectif : Assembler le mot correct en placant les morceaux dans le bon ordre.",
+        "seeTitle": "Ce que vous voyez :",
+        "seeSlots": "Emplacements vides pour les morceaux du mot",
+        "seeChunks": "Un ensemble melange de morceaux de mot a placer dans les emplacements"
+      },
+      "connectWords": {
+        "title": "4) Association de mots",
+        "goal": "Objectif : Associer des mots de la langue pratiquee a leurs significations dans votre langue maternelle.",
+        "seeTitle": "Ce que vous voyez :",
+        "seeTypeTop": "Type de mot (partie du discours) en haut (s'applique a tous les elements)",
+        "seeLeft": "Cote gauche : 4 mots dans la langue pratiquee",
+        "seeRight": "Cote droit : 4 significations dans votre langue maternelle",
+        "howTitle": "Comment ca fonctionne :",
+        "how1": "Touchez un element a gauche, puis l'element correspondant a droite",
+        "how2": "Les associations correctes restent connectees",
+        "how3": "Les associations incorrectes sont brievement surlignees et peuvent etre retentees"
+      },
+      "listening": {
+        "title": "5) Exercice d'ecoute",
+        "goal": "Objectif : Associer des mots entendus dans la langue pratiquee a leurs significations dans votre langue maternelle.",
+        "seeTitle": "Ce que vous voyez :",
+        "seeTypeTop": "Type de mot (partie du discours) en haut (s'applique a tous les elements)",
+        "seeLeft": "Cote gauche : 4 boutons audio (microphone) pour les mots de la langue pratiquee",
+        "seeRight": "Cote droit : 4 significations dans votre langue maternelle",
+        "howTitle": "Comment ca fonctionne :",
+        "how1": "Touchez un bouton audio pour entendre un mot",
+        "how2": "Puis associez-le a la bonne signification a droite",
+        "how3": "Les associations correctes restent connectees",
+        "how4": "Les associations incorrectes sont brievement surlignees et peuvent etre retentees",
+        "note": "Il n'y a ni indices ni bouton \"montre-moi le mot\" ici."
+      }
+    },
+    "common": {
+      "seeMeaning": "La signification du mot dans votre langue maternelle",
+      "seeMeta": "Metadonnees du mot : niveau CECR, theme et type de mot (partie du discours)"
+    },
+    "finish": {
+      "title": "Passer et terminer",
+      "p1": "Chaque exercice comprend un bouton Passer.",
+      "p2": "Vous pouvez terminer la session a tout moment.",
+      "p3": "Les mots ne sont comptes que si vous les rappelez correctement (afficher un mot ne compte pas comme rappel reussi)."
+    }
+  },
+  "languageNames": {
+    "en": "Anglais",
+    "es": "Espagnol",
+    "fr": "Francais",
+    "de": "Allemand",
+    "it": "Italien",
+    "pt": "Portugais",
+    "ru": "Russe"
+  },
+  "levelCategory": {
+    "title": "Personnalisez votre pratique",
+    "subtitle": "Ajustez votre session, ou passez directement a la pratique.",
+    "optional": "(Optionnel)",
+    "skipNote": "Tout passer pour tout pratiquer",
+    "levels": "Niveaux",
+    "vocabularyLevel": "Selectionnez les niveaux de pratique",
+    "levelsHelper": "Selectionnez un ou plusieurs niveaux.",
+    "categories": "Catégories",
+    "topicsToPractice": "Themes a pratiquer",
+    "wordTypes": "Types de mots",
+    "allTopicsSelected": "Tous les themes selectionnes",
+    "allGrammarTypesSelected": "Tous les types grammaticaux selectionnes",
+    "next": "Continuer",
+    "skipToNext": "Continuer sans filtres",
+    "startPracticing": "Commencer a pratiquer",
+    "backToLanguages": "Retour aux langues",
+    "back": "Retour",
+    "takeLevelTest": "Faire un test de niveau rapide",
+    "testDescription": "Pas sur de votre niveau ? Faites un test rapide pour le trouver.",
+    "notSureLevel": "Vous ne savez pas par ou commencer ? Faites un test de vocabulaire rapide pour trouver votre niveau.",
+    "selection": {
+      "levelsSelected": "niveau selectionne",
+      "levelsSelectedPlural": "niveaux selectionnes",
+      "allLevelsSelected": "Tous les niveaux selectionnes",
+      "topicsSelected": "theme selectionne",
+      "topicsSelectedPlural": "themes selectionnes",
+      "typesSelected": "type selectionne",
+      "typesSelectedPlural": "types selectionnes"
+    },
+    "topics": {
+      "skipAll": "Ou passer pour pratiquer tous les themes",
+      "showAll": "Afficher tous les themes",
+      "showFewer": "Afficher moins de themes",
+      "showLess": "Moins de themes",
+      "more": "plus"
+    },
+    "topicNames": {
+      "connectors": "Connecteurs",
+      "places": "Lieux",
+      "abstract": "Abstrait",
+      "daily life": "Vie quotidienne",
+      "people": "Personnes",
+      "communication": "Communication",
+      "emotions": "Émotions",
+      "time": "Temps",
+      "transport": "Transport",
+      "art": "Art",
+      "animals": "Animaux",
+      "food": "Nourriture",
+      "clothes & accessories": "Vetements et accessoires",
+      "body": "Corps",
+      "travel": "Voyage",
+      "education": "Éducation",
+      "sport": "Sport",
+      "money": "Argent",
+      "household": "Maison",
+      "colors": "Couleurs",
+      "relationships": "Relations",
+      "work": "Travail",
+      "technology": "Technologie",
+      "weather": "Meteo",
+      "drinks": "Boissons",
+      "numbers": "Nombres",
+      "health": "Sante",
+      "nature": "Nature",
+      "geography": "Geographie",
+      "plants": "Plantes",
+      "environment": "Environnement",
+      "astronomy": "Astronomie",
+      "science": "Science"
+    },
+    "types": {
+      "skipAll": "Ou passer pour pratiquer tous les types de mots",
+      "showMore": "Afficher plus",
+      "showMoreWithCountPrefix": "Afficher plus de types",
+      "showAll": "Afficher tous les types",
+      "showAllShort": "TOUT"
+    },
+    "actions": {
+      "clear": "Effacer",
+      "apply": "Appliquer"
+    },
+    "titleWithSkipAhead": "Personnalisez votre pratique ou passez directement"
+  },
+  "levels": {
+    "A1": {
+      "name": "Debutant",
+      "description": "Mots et expressions de base"
+    },
+    "A2": {
+      "name": "Elementaire",
+      "description": "Expressions du quotidien"
+    },
+    "B1": {
+      "name": "Intermediaire",
+      "description": "Situations courantes"
+    },
+    "B2": {
+      "name": "Intermediaire superieur",
+      "description": "Sujets complexes"
+    },
+    "C1": {
+      "name": "Avance",
+      "description": "Expression fluide"
+    },
+    "C2": {
+      "name": "Maitrise",
+      "description": "Maitrise proche d'un natif"
+    }
+  },
+  "wordTypes": {
+    "noun": "Nom",
+    "verb": "Verbe",
+    "adjective": "Adjectif",
+    "adverb": "Adverbe",
+    "determiner": "Determinant",
+    "pronoun": "Pronom",
+    "preposition": "Préposition",
+    "conjunction": "Conjonction",
+    "exclamation": "Exclamation",
+    "expression": "Expression",
+    "interjection": "Interjection"
+  },
+  "exerciseSelection": {
+    "title": "Choisissez les exercices de pratique",
+    "subtitle": "Tous les exercices sont selectionnes. Personnalisez si vous voulez.",
+    "back": "Retour",
+    "helpTitle": "Explication de l'exercice",
+    "helpButtonAria": "Ouvrir l'explication de l'exercice",
+    "helpCloseAria": "Fermer l'explication",
+    "startPracticing": "Commencer a pratiquer",
+    "startButton": {
+      "selectAtLeastOne": "Selectionnez au moins un",
+      "startFullSession": "Demarrer la session complete",
+      "startCountPrefix": "Demarrer",
+      "startCountSuffix": "exercices"
+    },
+    "helperText": "Vous pourrez modifier les exercices plus tard.",
+    "exercise": {
+      "wordTyping": "Saisie de mot",
+      "halfWritten": "Completion de mot a moitie ecrit",
+      "brokenWord": "Assemblage de mot casse",
+      "connectWords": "Associer des mots",
+      "listening": "Ecoute"
+    },
+    "exerciseDescription": {
+      "wordTyping": "Tapez le mot complet de memoire.",
+      "halfWritten": "Completez les lettres manquantes.",
+      "brokenWord": "Construisez le mot a partir de morceaux.",
+      "connectWords": "Associez les mots a leurs traductions.",
+      "listening": "Selectionnez ce que vous entendez."
+    }
+  },
+  "practice": {
+    "backToFilters": "Retour aux filtres",
+    "home": "Accueil",
+    "finish": "Terminer",
+    "menu": "Menu",
+    "showMeWord": "Afficher le mot",
+    "hint": "Indice",
+    "nextAction": "Suivant",
+    "skipAction": "Passer",
+    "seeDefinition": "Voir la definition",
+    "seeInSentence": "Voir dans une phrase",
+    "listenToSentence": "Ecouter la phrase",
+    "listenToPronunciation": "Ecouter la prononciation",
+    "playWordAudio": "Lire l'audio du mot",
+    "connectInstructionPrefix": "Touchez un mot en",
+    "connectInstructionThen": "puis sa signification en",
+    "listeningInstructionPrefix": "Touchez l'audio en",
+    "wordTypingInstruction": "Tapez le mot correct dans la langue de pratique.",
+    "halfWrittenInstruction": "Completez la partie manquante du mot.",
+    "brokenWordInstruction": "Construisez le mot correct a partir des morceaux donnes.",
+    "incorrectOrderTryAgain": "Ordre incorrect - reessayez",
+    "wordsLabel": "Mots",
+    "accuracyLabel": "Precision",
+    "performanceMatrix": "Matrice de performance",
+    "levelType": "NIVEAU / TYPE",
+    "total": "TOTAL",
+    "correct": "Correct !",
+    "answer": "Reponse :",
+    "alsoAccepted": "Egalement accepte :",
+    "nextWord": "Mot suivant",
+    "sessionComplete": "Session terminee !",
+    "youAttempted": "Vous avez tente",
+    "outOf": "sur",
+    "words": "mots",
+    "youCompleted": "Vous avez termine",
+    "correctStat": "Correctes",
+    "incorrect": "Incorrectes",
+    "ofAttempts": "des tentatives",
+    "noAttempts": "Aucun mot n'a ete tente pendant cette session.",
+    "tryTyping": "Essayez de taper les reponses pour suivre vos progres !",
+    "skipped": "passes sans tentative",
+    "word": "mot",
+    "were": "ont ete",
+    "was": "a ete",
+    "startAgain": "Recommencer",
+    "changeFilters": "Changer les filtres",
+    "noWords": "Aucun mot trouve",
+    "noWordsDesc": "Nous n'avons trouve aucun mot correspondant a vos filtres selectionnes. Essayez d'ajuster le niveau, la categorie ou le type de mot.",
+    "loadingWords": "Chargement des mots...",
+    "typeAnswer": "Saisissez votre reponse ici...",
+    "pronounceWord": "Prononcer le mot",
+    "keyboard": {
+      "mobileKeyboard": "Clavier mobile",
+      "shift": "Maj",
+      "backspace": "Retour",
+      "space": "Espace",
+      "enter": "Entree",
+      "toggleSymbols": "Basculer les symboles"
+    }
+  },
+  "exam": {
+    "title": "Test de niveau de vocabulaire",
+    "subtitle": "Trouvez votre niveau approximatif de vocabulaire",
+    "instructions": "Selectionnez la traduction correcte pour chaque mot. Il y a 6 questions par niveau, de A1 a C2.",
+    "loading": "Chargement du test...",
+    "preparing": "Preparation des questions...",
+    "close": "Fermer",
+    "complete": "Test termine",
+    "question": "Question",
+    "of": "sur",
+    "levelLabel": "Niveau",
+    "chooseOption": "Choisissez la bonne option",
+    "selectAnswer": "Selectionnez la traduction correcte pour :",
+    "next": "Suivant",
+    "finish": "Terminer le test",
+    "cancel": "Annuler",
+    "results": "Vos resultats",
+    "estimatedLevel": "Votre niveau estime de vocabulaire est",
+    "resultNote": "Ce resultat est base sur la reconnaissance du vocabulaire. Vous pouvez changer de niveau a tout moment.",
+    "levelDescription": {
+      "A1": "Vous avez une base de vocabulaire elementaire. Tres bon debut !",
+      "A2": "Vous connaissez des mots et expressions courants du quotidien.",
+      "B1": "Vous avez un vocabulaire intermediaire pour les situations quotidiennes.",
+      "B2": "Vous avez un vocabulaire solide pour la plupart des situations.",
+      "C1": "Vous avez un vocabulaire avance avec une comprehension nuancee.",
+      "C2": "Vous avez une maitrise du vocabulaire de niveau expert !"
+    },
+    "breakdown": "Repartition par niveau",
+    "correctAnswers": "reponses correctes",
+    "startPracticing": "Commencer la pratique a ce niveau",
+    "backToSelection": "Retour a la selection du niveau"
+  }
+}
+

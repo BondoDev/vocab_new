@@ -1,0 +1,420 @@
+{
+  "header": {
+    "about": "Sobre",
+    "languages": "Idiomas",
+    "filters": "Filtros",
+    "exercises": "Exercicios",
+    "help": "Ajuda",
+    "levelTest": "Teste de nivel"
+  },
+  "home": {
+    "headline": "Praticar vocabulario",
+    "subheadline": "Sem licoes, so pratica.",
+    "yourLanguage": "Seu idioma",
+    "practiceLanguage": "Idioma para praticar",
+    "selectYourLanguage": "Selecione seu idioma",
+    "selectPracticeLanguage": "Selecione o idioma para praticar",
+    "changeNote": "Voce pode mudar isso depois.",
+    "next": "Continuar",
+    "stat": {
+      "words": "Palavras para praticar",
+      "languages": "Idiomas disponiveis",
+      "noSignup": "Sem cadastro",
+      "noSignupDesc": "Comece agora"
+    }
+  },
+  "languageSelector": {
+    "search": "Pesquisar idiomas...",
+    "alreadySelected": "(Ja selecionado)",
+    "noResults": "Nenhum idioma encontrado",
+    "selectLanguage": "Selecionar idioma"
+  },
+  "languageContinuePopup": {
+    "title": "Escolha idiomas para continuar",
+    "close": "Fechar",
+    "closePopup": "Fechar popup"
+  },
+  "aboutPage": {
+    "back": "Voltar",
+    "p1": "LEXISTAR foi criado para pratica ativa de vocabulario, nao para navegacao passiva.",
+    "p2": "Voce nao percorre listas de palavras nem memoriza definicoes. Voce pratica palavras usando-as em exercicios cuidadosamente planejados, que treinam recordacao, ortografia e reconhecimento.",
+    "p3": "Nao ha cadastro nem login. Voce escolhe seu idioma nativo, o idioma que quer praticar e seu nivel CEFR. Se nao souber seu nivel, um teste curto ajuda a determinar.",
+    "filtersTitle": "Voce pode filtrar opcionalmente:",
+    "filters": {
+      "topics": "topicos de pratica",
+      "wordTypes": "tipos de palavra",
+      "exerciseTypes": "tipos de exercicio"
+    },
+    "p4": "Depois voce inicia uma sessao de pratica.",
+    "p5": "Todo o aprendizado acontece dentro da sessao. As palavras sao introduzidas, testadas, repetidas e reforcadas com diferentes exercicios, nao mostradas como listas.",
+    "howTitle": "Como a pratica funciona",
+    "howSubtitle": "O sistema usa varios tipos de exercicios, como:",
+    "howList": {
+      "wordTyping": "digitacao da palavra completa",
+      "partialCompletion": "completar palavra parcial",
+      "wordAssembling": "montagem de palavra",
+      "wordConnection": "conexao de palavras",
+      "listening": "escuta (quando ativada)"
+    },
+    "p6": "Alguns exercicios treinam recordacao ativa, outros oferecem reforco leve. Palavras contam apenas quando voce as recorda corretamente; revelar a resposta nao conta como aprendizado.",
+    "p7": "Essa abordagem foca aquisicao real de vocabulario, nao atalhos.",
+    "accountTitle": "Por que sem conta?",
+    "accountSubtitle": "LEXISTAR e intencionalmente baseado em sessoes.",
+    "p8": "Voce pode comecar a praticar imediatamente, sem criar conta nem compartilhar dados pessoais. Nada e salvo quando voce sai da sessao.",
+    "goalTitle": "O objetivo e simples:",
+    "goalText": "praticar palavras com eficiencia, com o minimo de friccao possivel."
+  },
+  "helpPage": {
+    "back": "Voltar",
+    "title": "Como comecar a pratica",
+    "step1": {
+      "title": "Passo 1: Escolher idiomas",
+      "intro": "Selecione:",
+      "item1": "seu idioma nativo",
+      "item2": "o idioma que voce quer praticar"
+    },
+    "step2": {
+      "title": "Passo 2: Definir filtros (opcional)",
+      "intro": "Voce pode escolher opcionalmente:",
+      "item1": "nivel CEFR",
+      "item2": "topicos",
+      "item3": "tipos de palavra (classe gramatical)",
+      "note1": "Todos os filtros sao opcionais.",
+      "note2": "Por padrao, todos os filtros estao ativos.",
+      "note3": "Se voce nao selecionar nada, isso significa praticar todos os niveis, topicos e tipos de palavra."
+    },
+    "step3": {
+      "title": "Passo 3: Escolher exercicios",
+      "intro": "V? para a pagina de selecao de exercicios e escolha quais tipos deseja praticar.",
+      "listTitle": "Existem 5 tipos de exercicios:",
+      "item1": "Digitacao da palavra completa",
+      "item2": "Completar palavra pela metade",
+      "item3": "Montagem de palavra quebrada",
+      "item4": "Conexao de palavras",
+      "item5": "Escuta",
+      "note": "Por padrao, todos os exercicios estao selecionados."
+    },
+    "step4": {
+      "title": "Passo 4: Escolher tamanho da sessao (opcional)",
+      "intro": "Voce pode escolher quantas palavras quer praticar na sessao.",
+      "optionalTitle": "Isso e opcional:",
+      "item1": "Voce pode definir uma quantidade de palavras",
+      "item2": "Ou praticar sem limite e terminar a sessao quando quiser"
+    },
+    "types": {
+      "title": "Tipos de exercicio explicados",
+      "fullWord": {
+        "title": "1) Digitacao da palavra completa",
+        "goal": "Objetivo: Digitar a palavra correta no idioma praticado.",
+        "seeTitle": "O que voce ve:",
+        "seeInput": "Um campo de entrada para digitar a resposta"
+      },
+      "halfWritten": {
+        "title": "2) Completar palavra pela metade",
+        "goal": "Objetivo: Completar uma palavra parcialmente escrita no idioma praticado.",
+        "seeTitle": "O que voce ve:",
+        "seePartial": "A palavra alvo parcialmente escrita (voce deve digitar a parte faltante)",
+        "seeInput": "Um campo de entrada para completar as letras faltantes",
+        "note": "Este exercicio nao tem botao de dica, porque parte da palavra ja e fornecida."
+      },
+      "brokenWord": {
+        "title": "3) Montagem de palavra quebrada",
+        "goal": "Objetivo: Montar a palavra correta colocando as partes na ordem correta.",
+        "seeTitle": "O que voce ve:",
+        "seeSlots": "Espacos vazios para as partes da palavra",
+        "seeChunks": "Um conjunto embaralhado de partes para posicionar nos espacos"
+      },
+      "connectWords": {
+        "title": "4) Conexao de palavras",
+        "goal": "Objetivo: Conectar palavras no idioma praticado com seus significados no seu idioma nativo.",
+        "seeTitle": "O que voce ve:",
+        "seeTypeTop": "Tipo de palavra (classe gramatical) no topo (aplica a todos os itens)",
+        "seeLeft": "Lado esquerdo: 4 palavras no idioma praticado",
+        "seeRight": "Lado direito: 4 significados no seu idioma nativo",
+        "howTitle": "Como funciona:",
+        "how1": "Toque em um item da esquerda e depois no correspondente da direita",
+        "how2": "Conexoes corretas permanecem ligadas",
+        "how3": "Conexoes incorretas sao destacadas por um instante e podem ser tentadas novamente"
+      },
+      "listening": {
+        "title": "5) Exercicio de escuta",
+        "goal": "Objetivo: Relacionar palavras faladas no idioma praticado com seus significados no seu idioma nativo.",
+        "seeTitle": "O que voce ve:",
+        "seeTypeTop": "Tipo de palavra (classe gramatical) no topo (aplica a todos os itens)",
+        "seeLeft": "Lado esquerdo: 4 botoes de audio (microfone) para palavras no idioma praticado",
+        "seeRight": "Lado direito: 4 significados no seu idioma nativo",
+        "howTitle": "Como funciona:",
+        "how1": "Toque em um botao de audio para ouvir uma palavra",
+        "how2": "Depois conecte com o significado correto na direita",
+        "how3": "Conexoes corretas permanecem ligadas",
+        "how4": "Conexoes incorretas sao destacadas por um instante e podem ser tentadas novamente",
+        "note": "Nao ha dicas nem botao de \"mostrar palavra\" aqui."
+      }
+    },
+    "common": {
+      "seeMeaning": "O significado da palavra no seu idioma nativo",
+      "seeMeta": "Metadados da palavra: nivel CEFR, topico e tipo de palavra (classe gramatical)"
+    },
+    "finish": {
+      "title": "Pular e finalizar",
+      "p1": "Todo exercicio inclui um botao Pular.",
+      "p2": "Voce pode encerrar a sessao a qualquer momento.",
+      "p3": "Palavras contam apenas quando voce as recorda corretamente (revelar uma palavra nao conta como recordacao correta)."
+    }
+  },
+  "languageNames": {
+    "en": "Ingles",
+    "es": "Espanhol",
+    "fr": "Frances",
+    "de": "Alemao",
+    "it": "Italiano",
+    "pt": "Portugues",
+    "ru": "Russo"
+  },
+  "levelCategory": {
+    "title": "Personalize sua pratica",
+    "subtitle": "Ajuste sua sessao, ou avance para comecar a praticar.",
+    "optional": "(Opcional)",
+    "skipNote": "Pule tudo para praticar tudo",
+    "levels": "Niveis",
+    "vocabularyLevel": "Selecione os niveis de pratica",
+    "levelsHelper": "Selecione um ou mais niveis.",
+    "categories": "Categorias",
+    "topicsToPractice": "Topicos para praticar",
+    "wordTypes": "Tipos de palavra",
+    "allTopicsSelected": "Todos os topicos selecionados",
+    "allGrammarTypesSelected": "Todos os tipos gramaticais selecionados",
+    "next": "Continuar",
+    "skipToNext": "Continuar sem filtros",
+    "startPracticing": "Comecar a praticar",
+    "backToLanguages": "Voltar para idiomas",
+    "back": "Voltar",
+    "takeLevelTest": "Fazer teste rapido de nivel",
+    "testDescription": "Nao sabe seu nivel? Faca um teste rapido para descobrir.",
+    "notSureLevel": "Nao sabe por onde comecar? Faca um teste rapido de vocabulario para descobrir seu nivel.",
+    "selection": {
+      "levelsSelected": "nivel selecionado",
+      "levelsSelectedPlural": "niveis selecionados",
+      "allLevelsSelected": "Todos os niveis selecionados",
+      "topicsSelected": "topico selecionado",
+      "topicsSelectedPlural": "topicos selecionados",
+      "typesSelected": "tipo selecionado",
+      "typesSelectedPlural": "tipos selecionados"
+    },
+    "topics": {
+      "skipAll": "Ou pule para praticar todos os topicos",
+      "showAll": "Mostrar todos os topicos",
+      "showFewer": "Mostrar menos topicos",
+      "showLess": "Menos topicos",
+      "more": "mais"
+    },
+    "topicNames": {
+      "connectors": "Conectores",
+      "places": "Lugares",
+      "abstract": "Abstrato",
+      "daily life": "Vida diaria",
+      "people": "Pessoas",
+      "communication": "Comunicacao",
+      "emotions": "Emocoes",
+      "time": "Tempo",
+      "transport": "Transporte",
+      "art": "Arte",
+      "animals": "Animais",
+      "food": "Comida",
+      "clothes & accessories": "Roupas e acessorios",
+      "body": "Corpo",
+      "travel": "Viagem",
+      "education": "Educacao",
+      "sport": "Esporte",
+      "money": "Dinheiro",
+      "household": "Casa",
+      "colors": "Cores",
+      "relationships": "Relacionamentos",
+      "work": "Trabalho",
+      "technology": "Tecnologia",
+      "weather": "Clima",
+      "drinks": "Bebidas",
+      "numbers": "Numeros",
+      "health": "Saude",
+      "nature": "Natureza",
+      "geography": "Geografia",
+      "plants": "Plantas",
+      "environment": "Meio ambiente",
+      "astronomy": "Astronomia",
+      "science": "Ciencia"
+    },
+    "types": {
+      "skipAll": "Ou pule para praticar todos os tipos de palavra",
+      "showMore": "Mostrar mais",
+      "showMoreWithCountPrefix": "Mostrar mais tipos",
+      "showAll": "Mostrar todos os tipos",
+      "showAllShort": "TUDO"
+    },
+    "actions": {
+      "clear": "Limpar",
+      "apply": "Aplicar"
+    },
+    "titleWithSkipAhead": "Personalize sua pratica ou avance"
+  },
+  "levels": {
+    "A1": {
+      "name": "Iniciante",
+      "description": "Palavras e frases basicas"
+    },
+    "A2": {
+      "name": "Elementar",
+      "description": "Expressoes do dia a dia"
+    },
+    "B1": {
+      "name": "Intermediario",
+      "description": "Situacoes comuns"
+    },
+    "B2": {
+      "name": "Intermediario avancado",
+      "description": "Topicos complexos"
+    },
+    "C1": {
+      "name": "Avancado",
+      "description": "Expressao fluente"
+    },
+    "C2": {
+      "name": "Proficiente",
+      "description": "Dominio semelhante ao nativo"
+    }
+  },
+  "wordTypes": {
+    "noun": "Substantivo",
+    "verb": "Verbo",
+    "adjective": "Adjetivo",
+    "adverb": "Adverbio",
+    "determiner": "Determinante",
+    "pronoun": "Pronome",
+    "preposition": "Preposicao",
+    "conjunction": "Conjuncao",
+    "exclamation": "Exclamacao",
+    "expression": "Expressao",
+    "interjection": "Interjeicao"
+  },
+  "exerciseSelection": {
+    "title": "Escolha exercicios de pratica",
+    "subtitle": "Todos os exercicios estao selecionados. Personalize se quiser.",
+    "back": "Voltar",
+    "helpTitle": "Explicacao do exercicio",
+    "helpButtonAria": "Abrir explicacao do exercicio",
+    "helpCloseAria": "Fechar explicacao",
+    "startPracticing": "Comecar a praticar",
+    "startButton": {
+      "selectAtLeastOne": "Selecione pelo menos um",
+      "startFullSession": "Iniciar sessao completa",
+      "startCountPrefix": "Iniciar",
+      "startCountSuffix": "exercicios"
+    },
+    "helperText": "Voce pode mudar os exercicios depois.",
+    "exercise": {
+      "wordTyping": "Digitacao de palavra",
+      "halfWritten": "Completar palavra pela metade",
+      "brokenWord": "Montagem de palavra quebrada",
+      "connectWords": "Conectar palavras",
+      "listening": "Escuta"
+    },
+    "exerciseDescription": {
+      "wordTyping": "Digite a palavra completa de memoria.",
+      "halfWritten": "Preencha as letras faltantes.",
+      "brokenWord": "Monte a palavra a partir das partes.",
+      "connectWords": "Associe palavras com traducoes.",
+      "listening": "Selecione o que voce ouve."
+    }
+  },
+  "practice": {
+    "backToFilters": "Voltar para filtros",
+    "home": "Inicio",
+    "finish": "Finalizar",
+    "menu": "Menu",
+    "showMeWord": "Mostrar palavra",
+    "hint": "Dica",
+    "nextAction": "Proximo",
+    "skipAction": "Pular",
+    "seeDefinition": "Ver definicao",
+    "seeInSentence": "Ver na frase",
+    "listenToSentence": "Ouvir frase",
+    "listenToPronunciation": "Ouvir pronuncia",
+    "playWordAudio": "Reproduzir audio da palavra",
+    "connectInstructionPrefix": "Toque em uma palavra em",
+    "connectInstructionThen": "depois no significado em",
+    "listeningInstructionPrefix": "Toque no audio em",
+    "wordTypingInstruction": "Digite a palavra correta no idioma de pratica.",
+    "halfWrittenInstruction": "Complete a parte faltante da palavra.",
+    "brokenWordInstruction": "Monte a palavra correta com os blocos fornecidos.",
+    "incorrectOrderTryAgain": "Ordem incorreta - tente novamente",
+    "wordsLabel": "Palavras",
+    "accuracyLabel": "Precisao",
+    "performanceMatrix": "Matriz de desempenho",
+    "levelType": "NIVEL / TIPO",
+    "total": "TOTAL",
+    "correct": "Correto!",
+    "answer": "Resposta:",
+    "alsoAccepted": "Tambem aceito:",
+    "nextWord": "Proxima palavra",
+    "sessionComplete": "Sessao concluida!",
+    "youAttempted": "Voce tentou",
+    "outOf": "de",
+    "words": "palavras",
+    "youCompleted": "Voce concluiu",
+    "correctStat": "Corretas",
+    "incorrect": "Incorretas",
+    "ofAttempts": "das tentativas",
+    "noAttempts": "Nenhuma palavra foi tentada nesta sessao.",
+    "tryTyping": "Tente digitar respostas para acompanhar seu progresso!",
+    "skipped": "puladas sem tentativa",
+    "word": "palavra",
+    "were": "foram",
+    "was": "foi",
+    "startAgain": "Comecar de novo",
+    "changeFilters": "Mudar filtros",
+    "noWords": "Nenhuma palavra encontrada",
+    "noWordsDesc": "Nao encontramos palavras que correspondam aos filtros selecionados. Tente ajustar nivel, categoria ou tipo de palavra.",
+    "loadingWords": "Carregando palavras...",
+    "typeAnswer": "Digite sua resposta aqui...",
+    "pronounceWord": "Pronunciar palavra",
+    "keyboard": {
+      "mobileKeyboard": "Teclado movel",
+      "shift": "Shift",
+      "backspace": "Apagar",
+      "space": "Espaco",
+      "enter": "Enter",
+      "toggleSymbols": "Alternar simbolos"
+    }
+  },
+  "exam": {
+    "title": "Teste de nivel de vocabulario",
+    "subtitle": "Descubra seu nivel aproximado de vocabulario",
+    "instructions": "Selecione a traducao correta para cada palavra. Sao 6 perguntas por nivel, de A1 a C2.",
+    "loading": "Carregando teste...",
+    "preparing": "Preparando perguntas...",
+    "close": "Fechar",
+    "complete": "Teste concluido",
+    "question": "Pergunta",
+    "of": "de",
+    "levelLabel": "Nivel",
+    "chooseOption": "Escolha a opcao correta",
+    "selectAnswer": "Selecione a traducao correta para:",
+    "next": "Proximo",
+    "finish": "Finalizar teste",
+    "cancel": "Cancelar",
+    "results": "Seus resultados",
+    "estimatedLevel": "Seu nivel estimado de vocabulario e",
+    "resultNote": "Este resultado se baseia no reconhecimento de vocabulario. Voce pode mudar seu nivel a qualquer momento.",
+    "levelDescription": {
+      "A1": "Voce tem uma base de vocabulario basica. Bom comeco!",
+      "A2": "Voce conhece palavras e expressoes comuns do dia a dia.",
+      "B1": "Voce tem vocabulario intermediario para situacoes cotidianas.",
+      "B2": "Voce tem vocabulario forte para a maioria das situacoes.",
+      "C1": "Voce tem vocabulario avancado com compreensao de nuances.",
+      "C2": "Voce tem dominio de vocabulario em nivel especialista!"
+    },
+    "breakdown": "Detalhamento por nivel",
+    "correctAnswers": "respostas corretas",
+    "startPracticing": "Comecar a praticar neste nivel",
+    "backToSelection": "Voltar para selecao de nivel"
+  }
+}

@@ -1,8 +1,13 @@
 ﻿import { createContext, useContext, useState, ReactNode } from "react";
 import englishInterface from "../data/interface/english_interface.json";
+import spanishInterface from "../data/interface/spanish_interface.json";
+import frenchInterface from "../data/interface/french_interface.json";
+import portugueseInterface from "../data/interface/portuguese_interface.json";
+import italianInterface from "../data/interface/italian_interface.json";
+import germanInterface from "../data/interface/german_interface.json";
 import russianInterface from "../data/interface/russian_interface.json";
 
-type UILanguage = "en" | "ru";
+type UILanguage = "en" | "es" | "fr" | "pt" | "it" | "de" | "ru";
 
 interface LanguageContextType {
   uiLanguage: UILanguage;
@@ -76,6 +81,21 @@ const translations: Record<UILanguage, Record<string, string>> = {
   en: flattenTranslations(
     englishInterface as unknown as Record<string, TranslationNode>,
   ),
+  es: flattenTranslations(
+    spanishInterface as unknown as Record<string, TranslationNode>,
+  ),
+  fr: flattenTranslations(
+    frenchInterface as unknown as Record<string, TranslationNode>,
+  ),
+  pt: flattenTranslations(
+    portugueseInterface as unknown as Record<string, TranslationNode>,
+  ),
+  it: flattenTranslations(
+    italianInterface as unknown as Record<string, TranslationNode>,
+  ),
+  de: flattenTranslations(
+    germanInterface as unknown as Record<string, TranslationNode>,
+  ),
   ru: flattenTranslations(
     russianInterface as unknown as Record<string, TranslationNode>,
   ),
@@ -84,7 +104,9 @@ const translations: Record<UILanguage, Record<string, string>> = {
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [uiLanguage, setUILanguage] = useState<UILanguage>(() => {
     const saved = localStorage.getItem("uiLanguage");
-    return saved === "en" || saved === "ru" ? saved : "en";
+    return saved === "en" || saved === "es" || saved === "fr" || saved === "pt" || saved === "it" || saved === "de" || saved === "ru"
+      ? saved
+      : "en";
   });
 
   const handleSetUILanguage = (lang: UILanguage) => {

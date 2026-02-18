@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 export type LanguageContinuePopupHandle = {
   show: (options?: { delayMs?: number }) => void;
@@ -20,6 +21,7 @@ export const LanguageContinuePopup = forwardRef<
   LanguageContinuePopupHandle,
   LanguageContinuePopupProps
 >(({ autoHideMs = 3000 }, ref) => {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const delayTimeoutRef = useRef<number | null>(null);
   const autoHideTimeoutRef = useRef<number | null>(null);
@@ -91,7 +93,7 @@ export const LanguageContinuePopup = forwardRef<
     <div className="fixed inset-0 z-[60] flex items-center justify-center px-4">
       <button
         type="button"
-        aria-label="Close popup"
+        aria-label={t("languageContinuePopup.closePopup")}
         className="absolute inset-0 backdrop-blur-sm cursor-pointer"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.25)" }}
         onClick={hide}
@@ -102,13 +104,13 @@ export const LanguageContinuePopup = forwardRef<
       >
         <div className="flex items-center justify-between gap-4">
           <p className="text-base md:text-lg font-semibold">
-            Choose languages to continue
+            {t("languageContinuePopup.title")}
           </p>
           <button
             type="button"
             onClick={hide}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white/70 transition hover:text-white hover:bg-white/10"
-            aria-label="Close"
+            aria-label={t("languageContinuePopup.close")}
           >
             X
           </button>

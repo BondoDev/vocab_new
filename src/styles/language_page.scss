@@ -542,6 +542,10 @@
   // PC SCREEN
   @media (min-width: 1536px) {
     .language-content-container {
+      width: min(96vw, 86rem) !important;
+      max-width: 86rem !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
       padding-bottom: 4rem !important;
     }
 

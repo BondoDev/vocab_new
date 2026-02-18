@@ -1,6 +1,6 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "motion/react";
-import { Check, ChevronLeft } from "lucide-react";
+import { Check, ChevronLeft, X } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 interface ExerciseSelectionProps {
@@ -118,6 +118,7 @@ export function ExerciseSelection({
   onContinue,
 }: ExerciseSelectionProps) {
   const { t } = useLanguage();
+  const [helpExerciseId, setHelpExerciseId] = useState<string | null>(null);
   const nextButtonStarFieldStyle = useMemo(
     () => ({
       backgroundColor: "#4a2b82",
@@ -153,10 +154,46 @@ export function ExerciseSelection({
   );
   const selectedCount = selectedExercises.length;
   const startButtonLabel = isButtonDisabled
-    ? "Select at least one"
+    ? t("exerciseSelection.startButton.selectAtLeastOne")
     : selectedCount === totalExerciseCount
-      ? "Start full session"
-      : `Start ${selectedCount} exercises`;
+      ? t("exerciseSelection.startButton.startFullSession")
+      : `${t("exerciseSelection.startButton.startCountPrefix")} ${selectedCount} ${t("exerciseSelection.startButton.startCountSuffix")}`;
+
+  const getHelpTypeKey = (exerciseId: string) => {
+    const map: Record<string, string> = {
+      wordTyping: "fullWord",
+      halfWritten: "halfWritten",
+      brokenWord: "brokenWord",
+      connectWords: "connectWords",
+      listening: "listening",
+    };
+    return map[exerciseId] ?? "fullWord";
+  };
+
+  const hasTranslation = (key: string) => t(key) !== key;
+
+  const getHelpItems = (exerciseId: string) => {
+    const key = getHelpTypeKey(exerciseId);
+    const items: string[] = [];
+    if (hasTranslation("helpPage.common.seeMeaning")) {
+      items.push(t("helpPage.common.seeMeaning"));
+    }
+    if (hasTranslation("helpPage.common.seeMeta")) {
+      items.push(t("helpPage.common.seeMeta"));
+    }
+    const specificKeys: Record<string, string[]> = {
+      fullWord: ["seeInput"],
+      halfWritten: ["seePartial", "seeInput"],
+      brokenWord: ["seeSlots", "seeChunks"],
+      connectWords: ["seeTypeTop", "seeLeft", "seeRight"],
+      listening: ["seeTypeTop", "seeLeft", "seeRight"],
+    };
+    (specificKeys[key] || []).forEach((suffix) => {
+      const itemKey = `helpPage.types.${key}.${suffix}`;
+      if (hasTranslation(itemKey)) items.push(t(itemKey));
+    });
+    return items;
+  };
 
   return (
     <div className="exercise-page flex-1 min-h-0 flex flex-col bg-background">
@@ -270,11 +307,33 @@ export function ExerciseSelection({
                   }
                   disabled={isLastSelected}
                   >
-                  <span className="exercise-card-corners" aria-hidden="true">
+                  <span className="exercise-card-corners">
                     <span className={`exercise-check ${isSelected ? "is-visible" : ""}`}>
                       <Check className="w-4 h-4" />
                     </span>
-                    <span className="exercise-help-button">?</span>
+                    <span
+                      className="exercise-help-button"
+                      role="button"
+                      tabIndex={0}
+                      aria-label={t("exerciseSelection.helpButtonAria")}
+                      onPointerDown={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                      }}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        setHelpExerciseId(exercise.id);
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key !== "Enter" && event.key !== " ") return;
+                        event.preventDefault();
+                        event.stopPropagation();
+                        setHelpExerciseId(exercise.id);
+                      }}
+                    >
+                      ?
+                    </span>
                   </span>
 
                   <span className="exercise-card-content text-left">
@@ -284,7 +343,9 @@ export function ExerciseSelection({
                       )}
                     </span>
                     <span className="exercise-card-description block text-sm text-muted-foreground">
-                      {exercise.description}
+                      {t(
+                        `exerciseSelection.exerciseDescription.${exercise.id}`,
+                      )}
                     </span>
                   </span>
                 </motion.button>
@@ -345,6 +406,88 @@ export function ExerciseSelection({
           </motion.div>
         </motion.div>
       </main>
+      {helpExerciseId && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 px-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("exerciseSelection.helpTitle")}
+          onClick={() => setHelpExerciseId(null)}
+        >
+          <div
+            className="w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-xl border border-border bg-card p-5 shadow-xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <h3 className="text-lg font-semibold text-foreground">
+                {t(`exerciseSelection.exercise.${helpExerciseId}`)}
+              </h3>
+              <button
+                type="button"
+                className="text-muted-foreground hover:text-foreground transition"
+                onClick={() => setHelpExerciseId(null)}
+                aria-label={t("exerciseSelection.helpCloseAria")}
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <p className="mb-3 text-sm text-muted-foreground">
+              {t(
+                `helpPage.types.${getHelpTypeKey(helpExerciseId)}.goal`,
+              )}
+            </p>
+
+            <h4 className="mb-2 text-sm font-semibold text-foreground">
+              {t(
+                `helpPage.types.${getHelpTypeKey(helpExerciseId)}.seeTitle`,
+              )}
+            </h4>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+              {getHelpItems(helpExerciseId).map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+
+            {(helpExerciseId === "connectWords" ||
+              helpExerciseId === "listening") && (
+              <>
+                <h4 className="mb-2 mt-4 text-sm font-semibold text-foreground">
+                  {t(
+                    `helpPage.types.${getHelpTypeKey(helpExerciseId)}.howTitle`,
+                  )}
+                </h4>
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                  <li>
+                    {t(
+                      `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how1`,
+                    )}
+                  </li>
+                  <li>
+                    {t(
+                      `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how2`,
+                    )}
+                  </li>
+                  <li>
+                    {t(
+                      `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how3`,
+                    )}
+                  </li>
+                  {hasTranslation(
+                    `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how4`,
+                  ) && (
+                    <li>
+                      {t(
+                        `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how4`,
+                      )}
+                    </li>
+                  )}
+                </ul>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

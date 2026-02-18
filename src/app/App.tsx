@@ -18,14 +18,14 @@ import {
 } from "./components/LanguageContinuePopup";
 import { LanguageProvider, useLanguage } from "../contexts/LanguageContext";
 
-const languages = [
-  { code: "en", name: "English", flagCode: "gb" },
-  { code: "es", name: "Spanish", flagCode: "es" },
-  { code: "fr", name: "French", flagCode: "fr" },
-  { code: "de", name: "German", flagCode: "de" },
-  { code: "it", name: "Italian", flagCode: "it" },
-  { code: "pt", name: "Portuguese", flagCode: "pt" },
-  { code: "ru", name: "Russian", flagCode: "ru" },
+const supportedLanguages = [
+  { code: "en", flagCode: "gb" },
+  { code: "es", flagCode: "es" },
+  { code: "fr", flagCode: "fr" },
+  { code: "de", flagCode: "de" },
+  { code: "it", flagCode: "it" },
+  { code: "pt", flagCode: "pt" },
+  { code: "ru", flagCode: "ru" },
 ];
 
 const ROUTES = {
@@ -103,12 +103,20 @@ function createDistributedStarFieldImage(starCount: number): string {
 
 function detectBrowserLanguage(): string {
   const browserLang = navigator.language.split("-")[0];
-  const matchedLang = languages.find((lang) => lang.code === browserLang);
+  const matchedLang = supportedLanguages.find((lang) => lang.code === browserLang);
   return matchedLang ? matchedLang.code : "en";
 }
 
 function AppContent() {
   const { t } = useLanguage();
+  const languages = useMemo(
+    () =>
+      supportedLanguages.map((lang) => ({
+        ...lang,
+        name: t(`languageNames.${lang.code}`),
+      })),
+    [t],
+  );
   const starFieldStyle = useMemo(
     () => ({
       backgroundColor: "#4a2b82",
@@ -435,7 +443,7 @@ function AppContent() {
             <h2 className="text-[clamp(2rem,7vw,3rem)] text-foreground leading-tight">
               {t("home.headline")}
             </h2>
-            <p className="text-[clamp(1.25rem,4.5vw,2rem)] text-muted-foreground/80 max-w-xl mx-auto">
+            <p className="text-[clamp(1.15rem,4.1vw,1.8rem)] text-muted-foreground/80 max-w-xl mx-auto">
               {t("home.subheadline")}
             </p>
           </motion.div>
@@ -448,7 +456,7 @@ function AppContent() {
             <h2 className="text-[clamp(2.25rem,4vw,3.5rem)] text-foreground leading-tight">
               {t("home.headline")}
             </h2>
-            <p className="text-[clamp(1.5rem,3vw,2.5rem)] text-muted-foreground/80 max-w-xl mx-auto">
+            <p className="text-[clamp(1.35rem,2.7vw,2.2rem)] text-muted-foreground/80 max-w-xl mx-auto">
               {t("home.subheadline")}
             </p>
           </motion.div>
@@ -470,7 +478,7 @@ function AppContent() {
                   label={t("home.yourLanguage")}
                   value={yourLanguage}
                   onChange={setYourLanguage}
-                  placeholder="Select your language"
+                  placeholder={t("home.selectYourLanguage")}
                   languages={languages}
                   disabledLanguages={[practiceLanguage]}
                 />
@@ -481,7 +489,7 @@ function AppContent() {
                   label={t("home.practiceLanguage")}
                   value={practiceLanguage}
                   onChange={setPracticeLanguage}
-                  placeholder="Select practice language"
+                  placeholder={t("home.selectPracticeLanguage")}
                   languages={languages}
                   disabledLanguages={[yourLanguage]}
                 />
@@ -491,7 +499,7 @@ function AppContent() {
                   label={t("home.yourLanguage")}
                   value={yourLanguage}
                   onChange={setYourLanguage}
-                  placeholder="Select your language"
+                  placeholder={t("home.selectYourLanguage")}
                   languages={languages}
                   disabledLanguages={[practiceLanguage]}
                 />
@@ -500,7 +508,7 @@ function AppContent() {
                   label={t("home.practiceLanguage")}
                   value={practiceLanguage}
                   onChange={setPracticeLanguage}
-                  placeholder="Select practice language"
+                  placeholder={t("home.selectPracticeLanguage")}
                   languages={languages}
                   disabledLanguages={[yourLanguage]}
                 />

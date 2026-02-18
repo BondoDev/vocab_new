@@ -6,6 +6,7 @@ import {
 import { MobileKeyboard } from "./MobileKeyboard";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { type KeyboardLanguage } from "../../../keyboards/layouts";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface HalfWrittenExerciseProps {
   currentWord: any;
@@ -32,6 +33,7 @@ export function HalfWrittenExercise({
   speakWord,
   onStatusChange,
 }: HalfWrittenExerciseProps) {
+  const { t } = useLanguage();
   const normalizedWord = (currentWord?.word_lemma ?? "").trim().replace(/\s+/g, " ");
   const [userInput, setUserInput] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
@@ -446,7 +448,7 @@ export function HalfWrittenExercise({
               disabled={usedShowWord || isCorrect}
               className="exercise-action-button px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Show me word
+              {t("practice.showMeWord")}
             </button>
           </div>
         )}

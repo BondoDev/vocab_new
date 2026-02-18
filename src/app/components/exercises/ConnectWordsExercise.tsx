@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { shuffleArray } from "../../utils/shuffleArray";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface ConnectWordsExerciseProps {
   words: any[];
@@ -24,6 +25,7 @@ export function ConnectWordsExercise({
   targetLabel,
   onStatusChange,
 }: ConnectWordsExerciseProps) {
+  const { t } = useLanguage();
   const [connectWords, setConnectWords] = useState<string[]>([]);
   const [connectMeanings, setConnectMeanings] = useState<string[]>([]);
   const [connectPairs, setConnectPairs] = useState<
@@ -193,9 +195,6 @@ export function ConnectWordsExercise({
           animation: shakeX 0.18s ease-out;
         }
       `}</style>
-        <p className="text-center text-sm text-gray-500 font-medium">
-          Tap a word in {sourceLabel}, then its meaning in {targetLabel}
-        </p>
         <div className="exercise-connect-grid grid grid-cols-2 gap-x-8 w-full mx-auto items-center">
           <h4 className="text-[0.72rem] sm:text-xs uppercase tracking-[0.14em] text-gray-500 text-center font-semibold bg-white/70 border border-purple-200/70 rounded-full py-1 px-3">
             {sourceLabel}

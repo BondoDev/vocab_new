@@ -1,4 +1,5 @@
 import { BadgeCheck } from "lucide-react";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface PracticeResultsProps {
   attemptHistory: Array<{
@@ -24,7 +25,22 @@ export function PracticeResults({
   attemptHistory,
   stats,
 }: PracticeResultsProps) {
+  const { t } = useLanguage();
   const { levels, types, matrix } = stats;
+  const formatWordTypeLabel = (typeId: string) =>
+    typeId
+      .split(/[_-]+/g)
+      .map((part) =>
+        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
+      )
+      .join(" ");
+  const getWordTypeLabel = (typeId: string) => {
+    const translated = t(`wordTypes.${typeId}`);
+    if (!translated || translated === `wordTypes.${typeId}`) {
+      return formatWordTypeLabel(typeId);
+    }
+    return translated;
+  };
   const typeSummaries = types.reduce(
     (acc, type) => {
       let guessed = 0;
@@ -56,13 +72,13 @@ export function PracticeResults({
         <div className="text-center rounded-lg border border-border bg-muted/20 px-4 py-3">
           <div className="text-xl font-bold text-primary">{totalAttempts}</div>
           <div className="text-xs text-muted-foreground uppercase tracking-wide">
-            Words
+            {t("practice.wordsLabel")}
           </div>
         </div>
         <div className="text-center rounded-lg border border-border bg-muted/20 px-4 py-3">
           <div className="text-xl font-bold text-green-600">{accuracy}%</div>
           <div className="text-xs text-muted-foreground uppercase tracking-wide">
-            Accuracy
+            {t("practice.accuracyLabel")}
           </div>
         </div>
       </div>
@@ -73,7 +89,7 @@ export function PracticeResults({
             <span className="inline-flex items-center justify-center rounded-full bg-primary/10 text-primary p-1">
               <BadgeCheck className="w-4 h-4" />
             </span>
-            <span>Performance Matrix</span>
+            <span>{t("practice.performanceMatrix")}</span>
           </h3>
         </div>
         <div className="overflow-x-auto">
@@ -81,14 +97,14 @@ export function PracticeResults({
             <thead>
               <tr className="bg-muted/10">
                 <th className="sticky left-0 z-20 w-22 max-w-22 px-1 py-2.5 font-medium border-b border-r text-muted-foreground text-xs uppercase tracking-wide whitespace-nowrap text-center bg-card shadow-[2px_0_0_0_var(--border)]">
-                  LEVEL / TYPE
+                  {t("practice.levelType")}
                 </th>
                 {types.map((type) => (
                   <th
                     key={type}
                     className="px-6 py-2.5 font-medium border-b text-center capitalize"
                   >
-                    {type}
+                    {getWordTypeLabel(type)}
                   </th>
                 ))}
               </tr>
@@ -137,7 +153,7 @@ export function PracticeResults({
               ))}
               <tr className="bg-muted/10">
                 <th className="sticky left-0 z-20 w-8 max-w-8 px-1 py-3 font-bold border-r border-t text-foreground uppercase text-center bg-card shadow-[2px_0_0_0_var(--border)]">
-                  TOTAL
+                  {t("practice.total")}
                 </th>
                 {types.map((type) => {
                   const summary = typeSummaries[type];

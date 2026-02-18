@@ -31,7 +31,7 @@
     padding-top: 2.6rem !important;
     padding-bottom: 1.1rem !important;
     border-color: rgba(74, 43, 130, 1);
-    background: rgba(74, 43, 130, 0.2) !important;
+    background: transparent !important;
     backdrop-filter: blur(6px);
     transition:
       border-color 160ms ease,
@@ -158,6 +158,11 @@
       transform 160ms ease;
   }
 
+  .exercise-check svg {
+    opacity: 0;
+    transition: opacity 140ms ease;
+  }
+
   .exercise-check.is-visible {
     border-color: rgba(255, 255, 255, 0.86);
     color: rgba(255, 255, 255, 0.94);
@@ -166,6 +171,10 @@
       0 0 0 2px rgba(255, 255, 255, 0.34),
       0 2px 8px rgba(74, 43, 130, 0.35);
     transform: scale(1.03);
+  }
+
+  .exercise-check.is-visible svg {
+    opacity: 1;
   }
 
   // SMALL MOBILE SCREEN

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { shuffleArray } from "../../utils/shuffleArray";
 import { UniversalExerciseInput } from "./UniversalExerciseInput";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface BrokenWordExerciseProps {
   currentWord: any;
@@ -19,6 +20,7 @@ export function BrokenWordExercise({
   speakWord,
   onStatusChange,
 }: BrokenWordExerciseProps) {
+  const { t } = useLanguage();
   const [wordChunks, setWordChunks] = useState<string[]>([]);
   const [shuffledChunks, setShuffledChunks] = useState<string[]>([]);
   const [placedChunks, setPlacedChunks] = useState<string[]>([]);
@@ -416,14 +418,14 @@ export function BrokenWordExercise({
               disabled={usedShowWord || isCorrect}
               className="exercise-action-button px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Show me word
+              {t("practice.showMeWord")}
             </button>
             <button
               onClick={handleBrokenWordHint}
               disabled={usedHintForBrokenWord || usedShowWord || isCorrect}
               className="exercise-action-button px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Hint
+              {t("practice.hint")}
             </button>
           </div>
         </>
@@ -431,7 +433,7 @@ export function BrokenWordExercise({
 
       {showIncorrectFeedback && (
         <div className="text-center text-red-600 font-medium">
-          Incorrect order - try again
+          {t("practice.incorrectOrderTryAgain")}
         </div>
       )}
     </div>

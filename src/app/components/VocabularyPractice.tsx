@@ -490,16 +490,59 @@ export function VocabularyPractice({
   };
 
   const getLanguageName = (code: string): string => {
-    const langMap: { [key: string]: string } = {
-      en: "English",
-      es: "Spanish",
-      fr: "French",
-      de: "German",
-      it: "Italian",
-      pt: "Portuguese",
-      ru: "Russian",
-    };
-    return langMap[code] || code;
+    const translated = t(`languageNames.${code}`);
+    if (!translated || translated === `languageNames.${code}`) {
+      return code;
+    }
+    return translated;
+  };
+
+  const formatCategoryLabel = (categoryId: string) =>
+    categoryId
+      .split(" ")
+      .map((part) =>
+        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
+      )
+      .join(" ");
+
+  const getCategoryLabel = (categoryId: string) => {
+    const translated = t(`levelCategory.topicNames.${categoryId}`);
+    if (!translated || translated === `levelCategory.topicNames.${categoryId}`) {
+      return formatCategoryLabel(categoryId);
+    }
+    return translated;
+  };
+
+  const formatWordTypeLabel = (typeId: string) =>
+    typeId
+      .split(/[_-]+/g)
+      .map((part) =>
+        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
+      )
+      .join(" ");
+
+  const getWordTypeLabel = (typeId: string) => {
+    const translated = t(`wordTypes.${typeId}`);
+    if (!translated || translated === `wordTypes.${typeId}`) {
+      return formatWordTypeLabel(typeId);
+    }
+    return translated;
+  };
+
+  const getExerciseInstruction = () => {
+    if (currentExerciseType === "connectWords") {
+      return `${t("practice.connectInstructionPrefix")} ${getLanguageName(practiceLanguage)}, ${t("practice.connectInstructionThen")} ${getLanguageName(yourLanguage)}`;
+    }
+    if (currentExerciseType === "listening") {
+      return `${t("practice.listeningInstructionPrefix")} ${getLanguageName(practiceLanguage)}, ${t("practice.connectInstructionThen")} ${getLanguageName(yourLanguage)}`;
+    }
+    if (currentExerciseType === "halfWritten") {
+      return t("practice.halfWrittenInstruction");
+    }
+    if (currentExerciseType === "brokenWord") {
+      return t("practice.brokenWordInstruction");
+    }
+    return t("practice.wordTypingInstruction");
   };
 
   if (isLoading) {
@@ -507,14 +550,7 @@ export function VocabularyPractice({
   }
 
   if (words.length === 0) {
-    return (
-      <PracticeEmptyState
-        onBack={onBack}
-        getLanguageName={getLanguageName}
-        yourLanguage={yourLanguage}
-        practiceLanguage={practiceLanguage}
-      />
-    );
+    return <PracticeEmptyState onBack={onBack} />;
   }
 
   return (
@@ -550,6 +586,13 @@ export function VocabularyPractice({
                       isCardSwitching ? "practice-card-switching" : ""
                     }`}
                 >
+                  <p
+                    className={`mx-auto max-w-[34rem] text-center text-sm text-gray-500 leading-relaxed font-medium ${
+                      isFourWordExercise(currentExerciseType) ? "mb-4" : "mb-0"
+                    }`}
+                  >
+                    {getExerciseInstruction()}
+                  </p>
                   {!isFourWordExercise(currentExerciseType) && (
                     <div className="w-[95%] mx-auto pt-2 md:pt-3">
                       <div className="exercise-meta-row flex items-center justify-between">
@@ -562,11 +605,15 @@ export function VocabularyPractice({
                           {currentWord?.level ?? ""}
                         </div>
                         <div className="exercise-meta-category text-sm font-semibold uppercase text-muted-foreground/70 text-right">
-                          {currentWord?.category ?? ""}
+                          {currentWord?.category
+                            ? getCategoryLabel(currentWord.category)
+                            : ""}
                         </div>
                       </div>
                       <div className="exercise-meta-word-type mt-4 text-center text-lg font-semibold text-muted-foreground">
-                        {currentWord?.type ?? ""}
+                        {currentWord?.type
+                          ? getWordTypeLabel(currentWord.type)
+                          : ""}
                       </div>
                     </div>
                   )}
@@ -651,7 +698,9 @@ export function VocabularyPractice({
                             onClick={() => setShowDefinition(!showDefinition)}
                             className="exercise-see-definition-button w-full flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm hover:bg-muted active:bg-muted/80 transition-colors text-left"
                           >
-                            <span className="font-medium">See definition</span>
+                            <span className="font-medium">
+                              {t("practice.seeDefinition")}
+                            </span>
                             {showDefinition ? (
                               <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
                             ) : (
@@ -681,7 +730,7 @@ export function VocabularyPractice({
                               className="exercise-see-sentence-button w-full flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm hover:bg-muted active:bg-muted/80 transition-colors text-left"
                             >
                               <span className="font-medium">
-                                See in sentence
+                                {t("practice.seeInSentence")}
                               </span>
                               {showSentence ? (
                                 <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
@@ -723,7 +772,7 @@ export function VocabularyPractice({
                                       }
                                     }}
                                     className="absolute top-1/2 -translate-y-1/2 right-0 p-1.5 sm:p-2 hover:bg-muted rounded-lg text-muted-foreground transition-colors"
-                                    aria-label="Listen to sentence"
+                                    aria-label={t("practice.listenToSentence")}
                                   >
                                     <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
                                   </button>
@@ -750,7 +799,9 @@ export function VocabularyPractice({
                             : "bg-muted text-muted-foreground hover:bg-muted/80"
                         }`}
                       >
-                        {exerciseStatus.isCorrect ? "Next" : "Skip"}
+                        {exerciseStatus.isCorrect
+                          ? t("practice.nextAction")
+                          : t("practice.skipAction")}
                       </button>
                     ) : (
                       <button
@@ -767,8 +818,8 @@ export function VocabularyPractice({
                         {exerciseStatus.isCorrect ||
                         exerciseStatus.usedShowWord ||
                         exerciseStatus.usedHintForBrokenWord
-                          ? "Next"
-                          : "Skip"}
+                          ? t("practice.nextAction")
+                          : t("practice.skipAction")}
                       </button>
                     )}
                   </div>

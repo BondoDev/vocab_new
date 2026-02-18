@@ -1,4 +1,5 @@
 import { ArrowLeft, Home } from "lucide-react";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface PracticeHeaderProps {
   onBack: () => void;
@@ -19,6 +20,8 @@ export function PracticeHeader({
   yourLanguage,
   practiceLanguage,
 }: PracticeHeaderProps) {
+  const { t } = useLanguage();
+
   return (
     <header className="sticky top-0 z-20 w-full px-3 pt-2 md:px-6 md:pt-2.5">
       <div className="w-full mx-auto lg:w-[50vw]">
@@ -43,7 +46,7 @@ export function PracticeHeader({
                 border: "1px solid rgba(100, 116, 139, 0.28)",
               }}
             >
-              Practice Again
+              {t("practice.startAgain")}
             </button>
           ) : (
             <button
@@ -55,7 +58,7 @@ export function PracticeHeader({
                 backgroundColor: "rgba(100, 116, 139, 0.12)",
                 border: "1px solid rgba(100, 116, 139, 0.28)",
               }}
-              aria-label="Back"
+              aria-label={t("practice.backToFilters")}
             >
               <ArrowLeft className="h-[1.1rem] w-[1.1rem] sm:h-[1.25rem] sm:w-[1.25rem]" />
             </button>
@@ -97,7 +100,7 @@ export function PracticeHeader({
                 border: "1px solid rgba(100, 116, 139, 0.28)",
               }}
             >
-              <span>Finish</span>
+              <span>{t("practice.finish")}</span>
             </button>
           ) : (
             <button
@@ -109,10 +112,10 @@ export function PracticeHeader({
                 backgroundColor: "rgba(100, 116, 139, 0.12)",
                 border: "1px solid rgba(100, 116, 139, 0.28)",
               }}
-              aria-label="Home"
+              aria-label={t("practice.home")}
             >
               <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>Home</span>
+              <span>{t("practice.home")}</span>
             </button>
           )}
         </div>

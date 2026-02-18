@@ -138,14 +138,14 @@ export function Header({
               onClick={onFilters}
               className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/90 bg-transparent border-0 p-0 appearance-none"
             >
-              Filters
+              {t("header.filters")}
             </button>
             <button
               type="button"
               onClick={onExercises}
               className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/90 bg-transparent border-0 p-0 appearance-none"
             >
-              Exercises
+              {t("header.exercises")}
             </button>
             <a
               href="#"
@@ -165,7 +165,7 @@ export function Header({
               onClick={onLevelTest}
               className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 bg-white/10 border border-white/30 px-3 py-1 rounded-full shadow-sm shadow-white/10 hover:bg-white/20 hover:border-white/50 appearance-none"
             >
-              LEVEL TEST
+              {t("header.levelTest")}
             </button>
           </div>
 
@@ -195,16 +195,16 @@ export function Header({
             {t("header.languages")}
           </button>
           <button type="button" onClick={handleMenuAction(onFilters)}>
-            Filters
+            {t("header.filters")}
           </button>
           <button type="button" onClick={handleMenuAction(onExercises)}>
-            Exercises
+            {t("header.exercises")}
           </button>
           <button type="button" onClick={handleMenuAction(onHelp)}>
             {t("header.help")}
           </button>
           <button type="button" onClick={handleMenuAction(onLevelTest)}>
-            LEVEL TEST
+            {t("header.levelTest")}
           </button>
           <div className="header-mobile-lang-wrap">
             <UILanguageSwitcher variant="centered-modal" />

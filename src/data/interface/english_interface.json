@@ -2,14 +2,18 @@
   "header": {
     "about": "About",
     "languages": "Languages",
-    "help": "Help"
+    "filters": "Filters",
+    "exercises": "Exercises",
+    "help": "Help",
+    "levelTest": "Level Test"
   },
-
   "home": {
     "headline": "Practice Vocabulary",
     "subheadline": "No lessons - Just practice.",
     "yourLanguage": "Your language",
     "practiceLanguage": "Practice language",
+    "selectYourLanguage": "Select your language",
+    "selectPracticeLanguage": "Select practice language",
     "changeNote": "You can change this later.",
     "next": "Continue",
     "stat": {
@@ -19,14 +23,154 @@
       "noSignupDesc": "Start immediately"
     }
   },
-
   "languageSelector": {
     "search": "Search languages...",
     "alreadySelected": "(Already selected)",
     "noResults": "No languages found",
     "selectLanguage": "Select a language"
   },
-
+  "languageContinuePopup": {
+    "title": "Choose languages to continue",
+    "close": "Close",
+    "closePopup": "Close popup"
+  },
+  "aboutPage": {
+    "back": "Back",
+    "p1": "LEXISTAR is designed for active vocabulary practice, not passive browsing.",
+    "p2": "You do not scroll through word lists or memorize definitions. You practice words by using them, through carefully designed exercises that train recall, spelling, and recognition.",
+    "p3": "There is no registration and no login. You choose your native language, the language you want to practice, and your CEFR level. If you do not know your level, a short test helps determine it.",
+    "filtersTitle": "You can optionally filter:",
+    "filters": {
+      "topics": "practice topics",
+      "wordTypes": "word types",
+      "exerciseTypes": "exercise types"
+    },
+    "p4": "Then you start a practice session.",
+    "p5": "All learning happens inside the session. Words are introduced, tested, repeated, and reinforced through different exercises, not shown as lists.",
+    "howTitle": "How practice works",
+    "howSubtitle": "The system uses multiple exercise types, such as:",
+    "howList": {
+      "wordTyping": "full word typing",
+      "partialCompletion": "partial word completion",
+      "wordAssembling": "word assembling",
+      "wordConnection": "word connection",
+      "listening": "listening (when enabled)"
+    },
+    "p6": "Some exercises train active recall, others provide light reinforcement. Words are counted only when you correctly recall them, revealing an answer does not count as learning.",
+    "p7": "This approach focuses on real vocabulary acquisition, not shortcuts.",
+    "accountTitle": "Why no account?",
+    "accountSubtitle": "LEXISTAR is intentionally session-based.",
+    "p8": "You can start practicing immediately, without creating an account or sharing personal data. Nothing is stored after you leave the session.",
+    "goalTitle": "The goal is simple:",
+    "goalText": "practice words effectively, with as little friction as possible."
+  },
+  "helpPage": {
+    "back": "Back",
+    "title": "How to start practice",
+    "step1": {
+      "title": "Step 1: Choose languages",
+      "intro": "Select:",
+      "item1": "your native language",
+      "item2": "the language you want to practice"
+    },
+    "step2": {
+      "title": "Step 2: Set filters (optional)",
+      "intro": "You can optionally choose:",
+      "item1": "CEFR level",
+      "item2": "topics",
+      "item3": "word types (part of speech)",
+      "note1": "All filters are optional.",
+      "note2": "By default, all filters are active.",
+      "note3": "If you do not select anything, it means you practice all levels, all topics, and all word types."
+    },
+    "step3": {
+      "title": "Step 3: Choose exercises",
+      "intro": "Go to the exercise selection page and choose which exercise types you want to practice.",
+      "listTitle": "There are 5 exercise types:",
+      "item1": "Full word typing",
+      "item2": "Half-written word typing",
+      "item3": "Broken-word assembling",
+      "item4": "Word connection",
+      "item5": "Listening",
+      "note": "By default, all exercises are selected."
+    },
+    "step4": {
+      "title": "Step 4: Choose session size (optional)",
+      "intro": "You can choose how many words you want to practice in the session.",
+      "optionalTitle": "This is optional:",
+      "item1": "You can set a word quantity",
+      "item2": "Or start practicing without a limit and finish the session at any time"
+    },
+    "types": {
+      "title": "Exercise types explained",
+      "fullWord": {
+        "title": "1) Full word typing",
+        "goal": "Goal: Type the correct word in the language you are practicing.",
+        "seeTitle": "What you see:",
+        "seeInput": "An input field where you type the answer"
+      },
+      "halfWritten": {
+        "title": "2) Half-written word typing",
+        "goal": "Goal: Complete a partially written word in the language you are practicing.",
+        "seeTitle": "What you see:",
+        "seePartial": "The target word shown partially written (you must type the missing part)",
+        "seeInput": "An input field for completing the missing letters",
+        "note": "This exercise has no Hint button, because part of the word is already provided."
+      },
+      "brokenWord": {
+        "title": "3) Broken-word assembling",
+        "goal": "Goal: Assemble the correct word by placing word parts in the correct order.",
+        "seeTitle": "What you see:",
+        "seeSlots": "Empty slots for the word parts",
+        "seeChunks": "A set of shuffled word parts that you place into the slots"
+      },
+      "connectWords": {
+        "title": "4) Word connection",
+        "goal": "Goal: Connect words in the practicing language with their meanings in your native language.",
+        "seeTitle": "What you see:",
+        "seeTypeTop": "Word type (part of speech) at the top (applies to all items)",
+        "seeLeft": "Left side: 4 words in the language you are practicing",
+        "seeRight": "Right side: 4 meanings in your native language",
+        "howTitle": "How it works:",
+        "how1": "Tap one item on the left, then tap the matching item on the right",
+        "how2": "Correct matches stay connected",
+        "how3": "Incorrect matches are highlighted briefly and can be retried"
+      },
+      "listening": {
+        "title": "5) Listening exercise",
+        "goal": "Goal: Match spoken words in the practicing language with their meanings in your native language.",
+        "seeTitle": "What you see:",
+        "seeTypeTop": "Word type (part of speech) at the top (applies to all items)",
+        "seeLeft": "Left side: 4 audio buttons (microphone) for words in the practicing language",
+        "seeRight": "Right side: 4 meanings in your native language",
+        "howTitle": "How it works:",
+        "how1": "Tap an audio button to hear a word",
+        "how2": "Then connect it to the correct meaning on the right",
+        "how3": "Correct matches stay connected",
+        "how4": "Incorrect matches are highlighted briefly and can be retried",
+        "note": "There are no hints and no \"show me word\" here."
+      }
+    },
+    "common": {
+      "seeMeaning": "The word meaning in your native language",
+      "seeMeta": "Word metadata: CEFR level, topic, and word type (part of speech)"
+    },
+    "finish": {
+      "title": "Skipping and finishing",
+      "p1": "Every exercise includes a Skip button.",
+      "p2": "You can finish the session at any time.",
+      "p3": "Words are counted only when you recall them correctly (revealing a word does not count as a successful recall)."
+    }
+  },
+  "languageNames": {
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French",
+    "de": "German",
+    "it": "Italian",
+    "pt": "Portuguese",
+    "ru": "Russian"
+  },
   "levelCategory": {
     "title": "Customize Your Practice",
     "subtitle": "Fine-tune your session, or skip ahead to start practicing.",
@@ -38,6 +182,8 @@
     "categories": "Categories",
     "topicsToPractice": "Topics to Practice",
     "wordTypes": "Word Types",
+    "allTopicsSelected": "All topics selected",
+    "allGrammarTypesSelected": "All grammar types selected",
     "next": "Continue",
     "skipToNext": "Continue Without Filters",
     "startPracticing": "Start Practicing",
@@ -46,7 +192,6 @@
     "takeLevelTest": "Take a quick level test",
     "testDescription": "Not sure of your level? Take a quick test to find out.",
     "notSureLevel": "Not sure where to start? Take a quick vocabulary test to find your level.",
-
     "selection": {
       "levelsSelected": "level selected",
       "levelsSelectedPlural": "levels selected",
@@ -56,7 +201,6 @@
       "typesSelected": "type selected",
       "typesSelectedPlural": "types selected"
     },
-
     "topics": {
       "skipAll": "Or skip to practice all topics",
       "showAll": "Show all topics",
@@ -64,12 +208,54 @@
       "showLess": "Show less topics",
       "more": "more"
     },
-
+    "topicNames": {
+      "connectors": "Connectors",
+      "places": "Places",
+      "abstract": "Abstract",
+      "daily life": "Daily Life",
+      "people": "People",
+      "communication": "Communication",
+      "emotions": "Emotions",
+      "time": "Time",
+      "transport": "Transport",
+      "art": "Art",
+      "animals": "Animals",
+      "food": "Food",
+      "clothes & accessories": "Clothes & Accessories",
+      "body": "Body",
+      "travel": "Travel",
+      "education": "Education",
+      "sport": "Sport",
+      "money": "Money",
+      "household": "Household",
+      "colors": "Colors",
+      "relationships": "Relationships",
+      "work": "Work",
+      "technology": "Technology",
+      "weather": "Weather",
+      "drinks": "Drinks",
+      "numbers": "Numbers",
+      "health": "Health",
+      "nature": "Nature",
+      "geography": "Geography",
+      "plants": "Plants",
+      "environment": "Environment",
+      "astronomy": "Astronomy",
+      "science": "Science"
+    },
     "types": {
-      "skipAll": "Or skip to practice all word types"
-    }
+      "skipAll": "Or skip to practice all word types",
+      "showMore": "Show more",
+      "showMoreWithCountPrefix": "Show more types",
+      "showAll": "Show all types",
+      "showAllShort": "SHOW ALL"
+    },
+    "actions": {
+      "clear": "Clear",
+      "apply": "Apply"
+    },
+    "titleWithSkipAhead": "Customize Your Practice or Skip Ahead"
   },
-
   "levels": {
     "A1": {
       "name": "Beginner",
@@ -96,23 +282,33 @@
       "description": "Native-like mastery"
     }
   },
-
   "wordTypes": {
     "noun": "Noun",
     "verb": "Verb",
     "adjective": "Adjective",
     "adverb": "Adverb",
+    "determiner": "Determiner",
     "pronoun": "Pronoun",
     "preposition": "Preposition",
     "conjunction": "Conjunction",
+    "exclamation": "Exclamation",
+    "expression": "Expression",
     "interjection": "Interjection"
   },
-
   "exerciseSelection": {
     "title": "Choose practice exercises",
     "subtitle": "All exercises are selected. Customize if you like.",
     "back": "Back",
+    "helpTitle": "Exercise explanation",
+    "helpButtonAria": "Open exercise explanation",
+    "helpCloseAria": "Close explanation",
     "startPracticing": "Start practicing",
+    "startButton": {
+      "selectAtLeastOne": "Select at least one",
+      "startFullSession": "Start full session",
+      "startCountPrefix": "Start",
+      "startCountSuffix": "exercises"
+    },
     "helperText": "You can change exercises later.",
     "exercise": {
       "wordTyping": "Word typing",
@@ -120,16 +316,41 @@
       "brokenWord": "Broken word assembling",
       "connectWords": "Connect words",
       "listening": "Listening"
+    },
+    "exerciseDescription": {
+      "wordTyping": "Type the full word from memory.",
+      "halfWritten": "Fill in missing letters.",
+      "brokenWord": "Build the word from pieces.",
+      "connectWords": "Match words with translations.",
+      "listening": "Select what you hear."
     }
   },
-
   "practice": {
     "backToFilters": "Back to filters",
+    "home": "Home",
+    "finish": "Finish",
     "menu": "Menu",
     "showMeWord": "Show me word",
     "hint": "Hint",
+    "nextAction": "Next",
+    "skipAction": "Skip",
     "seeDefinition": "See definition",
     "seeInSentence": "See in sentence",
+    "listenToSentence": "Listen to sentence",
+    "listenToPronunciation": "Listen to pronunciation",
+    "playWordAudio": "Play word audio",
+    "connectInstructionPrefix": "Tap a word in",
+    "connectInstructionThen": "then its meaning in",
+    "listeningInstructionPrefix": "Tap audio in",
+    "wordTypingInstruction": "Type the correct word in the practice language.",
+    "halfWrittenInstruction": "Complete the missing part of the word.",
+    "brokenWordInstruction": "Build the correct word from the given chunks.",
+    "incorrectOrderTryAgain": "Incorrect order - try again",
+    "wordsLabel": "Words",
+    "accuracyLabel": "Accuracy",
+    "performanceMatrix": "Performance Matrix",
+    "levelType": "LEVEL / TYPE",
+    "total": "TOTAL",
     "correct": "Correct!",
     "answer": "Answer:",
     "alsoAccepted": "Also accepted:",
@@ -154,22 +375,35 @@
     "noWordsDesc": "We couldn't find any words matching your selected filters. Try adjusting your level, category, or word type selections.",
     "loadingWords": "Loading words...",
     "typeAnswer": "Type your answer here...",
-    "pronounceWord": "Pronounce word"
+    "pronounceWord": "Pronounce word",
+    "keyboard": {
+      "mobileKeyboard": "Mobile keyboard",
+      "shift": "Shift",
+      "backspace": "Backspace",
+      "space": "Space",
+      "enter": "Enter",
+      "toggleSymbols": "Toggle symbols"
+    }
   },
-
   "exam": {
     "title": "Vocabulary Level Exam",
     "subtitle": "Find your approximate vocabulary level",
     "instructions": "Select the correct translation for each word. There are 6 questions per level from A1 to C2.",
+    "loading": "Loading exam...",
+    "preparing": "Preparing questions...",
+    "close": "Close",
+    "complete": "Exam Complete",
     "question": "Question",
     "of": "of",
+    "levelLabel": "Level",
+    "chooseOption": "Choose correct option",
     "selectAnswer": "Select the correct translation for:",
     "next": "Next",
     "finish": "Finish Exam",
     "cancel": "Cancel",
     "results": "Your Results",
     "estimatedLevel": "Your estimated vocabulary level is",
-
+    "resultNote": "This result is based on vocabulary recognition. You can change your level anytime.",
     "levelDescription": {
       "A1": "You have a basic vocabulary foundation. Great start!",
       "A2": "You know common everyday words and phrases.",
@@ -178,7 +412,6 @@
       "C1": "You have an advanced vocabulary with nuanced understanding.",
       "C2": "You have mastery-level vocabulary knowledge!"
     },
-
     "breakdown": "Level Breakdown",
     "correctAnswers": "correct answers",
     "startPracticing": "Start Practicing at This Level",

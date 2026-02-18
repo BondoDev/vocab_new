@@ -1,10 +1,13 @@
 import { ChevronLeft } from "lucide-react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 interface HelpProps {
   onBack?: () => void;
 }
 
 export function Help({ onBack }: HelpProps) {
+  const { t } = useLanguage();
+
   return (
     <main className="help-page flex-1 px-4 py-10 md:py-16">
       <div className="about-help-content mx-auto w-full max-w-3xl">
@@ -15,24 +18,25 @@ export function Help({ onBack }: HelpProps) {
             className="page-back-button mb-6 flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition"
           >
             <ChevronLeft className="w-5 h-5" />
-            <span>Back</span>
+            <span>{t("helpPage.back")}</span>
           </button>
         )}
+
         <div className="space-y-8 text-base md:text-lg leading-relaxed text-foreground">
           <div className="space-y-3">
             <h2 className="text-2xl md:text-3xl font-semibold">
-              How to start practice
+              {t("helpPage.title")}
             </h2>
           </div>
 
           <div className="space-y-3">
             <h3 className="text-xl md:text-2xl font-semibold">
-              Step 1: Choose languages
+              {t("helpPage.step1.title")}
             </h3>
-            <p>Select:</p>
+            <p>{t("helpPage.step1.intro")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>your native language</li>
-              <li>the language you want to practice</li>
+              <li>{t("helpPage.step1.item1")}</li>
+              <li>{t("helpPage.step1.item2")}</li>
             </ul>
           </div>
 
@@ -40,59 +44,48 @@ export function Help({ onBack }: HelpProps) {
 
           <div className="space-y-3">
             <h3 className="text-xl md:text-2xl font-semibold">
-              Step 2: Set filters (optional)
+              {t("helpPage.step2.title")}
             </h3>
-            <p>You can optionally choose:</p>
+            <p>{t("helpPage.step2.intro")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>CEFR level</li>
-              <li>topics</li>
-              <li>word types (part of speech)</li>
+              <li>{t("helpPage.step2.item1")}</li>
+              <li>{t("helpPage.step2.item2")}</li>
+              <li>{t("helpPage.step2.item3")}</li>
             </ul>
-            <p>All filters are optional.</p>
-            <p>By default, all filters are active.</p>
-            <p>
-              If you do not select anything, it means you practice all levels,
-              all topics, and all word types.
-            </p>
+            <p>{t("helpPage.step2.note1")}</p>
+            <p>{t("helpPage.step2.note2")}</p>
+            <p>{t("helpPage.step2.note3")}</p>
           </div>
 
           <hr className="border-border/60" />
 
           <div className="space-y-3">
             <h3 className="text-xl md:text-2xl font-semibold">
-              Step 3: Choose exercises
+              {t("helpPage.step3.title")}
             </h3>
-            <p>
-              Go to the exercise selection page and choose which exercise types
-              you want to practice.
-            </p>
-            <p>There are 5 exercise types:</p>
+            <p>{t("helpPage.step3.intro")}</p>
+            <p>{t("helpPage.step3.listTitle")}</p>
             <ol className="list-decimal pl-6 space-y-1 text-muted-foreground">
-              <li>Full word typing</li>
-              <li>Half-written word typing</li>
-              <li>Broken-word assembling</li>
-              <li>Word connection</li>
-              <li>Listening</li>
+              <li>{t("helpPage.step3.item1")}</li>
+              <li>{t("helpPage.step3.item2")}</li>
+              <li>{t("helpPage.step3.item3")}</li>
+              <li>{t("helpPage.step3.item4")}</li>
+              <li>{t("helpPage.step3.item5")}</li>
             </ol>
-            <p>By default, all exercises are selected.</p>
+            <p>{t("helpPage.step3.note")}</p>
           </div>
 
           <hr className="border-border/60" />
 
           <div className="space-y-3">
             <h3 className="text-xl md:text-2xl font-semibold">
-              Step 4: Choose session size (optional)
+              {t("helpPage.step4.title")}
             </h3>
-            <p>
-              You can choose how many words you want to practice in the session.
-            </p>
-            <p>This is optional:</p>
+            <p>{t("helpPage.step4.intro")}</p>
+            <p>{t("helpPage.step4.optionalTitle")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>You can set a word quantity</li>
-              <li>
-                Or start practicing without a limit and finish the session at
-                any time
-              </li>
+              <li>{t("helpPage.step4.item1")}</li>
+              <li>{t("helpPage.step4.item2")}</li>
             </ul>
           </div>
 
@@ -100,48 +93,20 @@ export function Help({ onBack }: HelpProps) {
 
           <div className="space-y-3">
             <h3 className="text-xl md:text-2xl font-semibold">
-              Exercise types explained
+              {t("helpPage.types.title")}
             </h3>
           </div>
 
           <div className="space-y-3">
             <h4 className="text-lg md:text-xl font-semibold">
-              1) Full word typing
+              {t("helpPage.types.fullWord.title")}
             </h4>
-            <p>Goal: Type the correct word in the language you are practicing.</p>
-            <p>What you see:</p>
+            <p>{t("helpPage.types.fullWord.goal")}</p>
+            <p>{t("helpPage.types.fullWord.seeTitle")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>The word meaning in your native language</li>
-              <li>Word metadata: CEFR level, topic, and word type (part of speech)</li>
-              <li>An input field where you type the answer</li>
-            </ul>
-            <p>Buttons and features:</p>
-            <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>
-                Hint
-                <div>Hints are calculated as 50% of the total number of letters in the target word</div>
-                <div>The hint gradually reveals letters in the answer</div>
-              </li>
-              <li>
-                Show me word
-                <div>Reveals the correct word if you cannot recall it</div>
-              </li>
-              <li>
-                Definition (drop-down)
-                <div>Expands to show the detailed definition of the word</div>
-              </li>
-              <li>
-                See in sentence (appears only after completion)
-                <div>
-                  After you guess the word correctly or use "Show me word", a
-                  button appears that opens an example sentence where the word
-                  is used
-                </div>
-              </li>
-              <li>
-                Skip
-                <div>Skips this word and moves to the next exercise</div>
-              </li>
+              <li>{t("helpPage.common.seeMeaning")}</li>
+              <li>{t("helpPage.common.seeMeta")}</li>
+              <li>{t("helpPage.types.fullWord.seeInput")}</li>
             </ul>
           </div>
 
@@ -149,94 +114,32 @@ export function Help({ onBack }: HelpProps) {
 
           <div className="space-y-3">
             <h4 className="text-lg md:text-xl font-semibold">
-              2) Half-written word typing
+              {t("helpPage.types.halfWritten.title")}
             </h4>
-            <p>
-              Goal: Complete a partially written word in the language you are
-              practicing.
-            </p>
-            <p>What you see:</p>
+            <p>{t("helpPage.types.halfWritten.goal")}</p>
+            <p>{t("helpPage.types.halfWritten.seeTitle")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>The word meaning in your native language</li>
-              <li>
-                The target word shown partially written (you must type the
-                missing part)
-              </li>
-              <li>Word metadata: CEFR level, topic, and word type (part of speech)</li>
-              <li>An input field for completing the missing letters</li>
+              <li>{t("helpPage.common.seeMeaning")}</li>
+              <li>{t("helpPage.types.halfWritten.seePartial")}</li>
+              <li>{t("helpPage.common.seeMeta")}</li>
+              <li>{t("helpPage.types.halfWritten.seeInput")}</li>
             </ul>
-            <p>Buttons and features:</p>
-            <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>
-                Show me word
-                <div>Reveals the full correct word</div>
-              </li>
-              <li>
-                Definition (drop-down)
-                <div>Expands to show the detailed definition of the word</div>
-              </li>
-              <li>
-                See in sentence (appears only after completion)
-                <div>
-                  Appears only after the word is completed correctly or revealed
-                  via "Show me word"
-                </div>
-              </li>
-              <li>
-                Skip
-                <div>Skips this word and moves to the next exercise</div>
-              </li>
-            </ul>
-            <p>Notes:</p>
-            <p>
-              This exercise has no Hint button, because part of the word is
-              already provided.
-            </p>
+            <p>{t("helpPage.types.halfWritten.note")}</p>
           </div>
 
           <hr className="border-border/60" />
 
           <div className="space-y-3">
             <h4 className="text-lg md:text-xl font-semibold">
-              3) Broken-word assembling
+              {t("helpPage.types.brokenWord.title")}
             </h4>
-            <p>
-              Goal: Assemble the correct word by placing word parts in the
-              correct order.
-            </p>
-            <p>What you see:</p>
+            <p>{t("helpPage.types.brokenWord.goal")}</p>
+            <p>{t("helpPage.types.brokenWord.seeTitle")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>The word meaning in your native language</li>
-              <li>Empty slots for the word parts</li>
-              <li>A set of shuffled word parts that you place into the slots</li>
-              <li>Word metadata: CEFR level, topic, and word type (part of speech)</li>
-            </ul>
-            <p>Buttons and features:</p>
-            <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>
-                Hint
-                <div>Available once per word</div>
-                <div>Reveals the first correct part in the correct position</div>
-              </li>
-              <li>
-                Show me word
-                <div>Reveals the full correct word</div>
-              </li>
-              <li>
-                Definition (drop-down)
-                <div>Expands to show the detailed definition of the word</div>
-              </li>
-              <li>
-                See in sentence (appears only after completion)
-                <div>
-                  Appears only after the word is assembled correctly or revealed
-                  via "Show me word"
-                </div>
-              </li>
-              <li>
-                Skip
-                <div>Skips this word and moves to the next exercise</div>
-              </li>
+              <li>{t("helpPage.common.seeMeaning")}</li>
+              <li>{t("helpPage.types.brokenWord.seeSlots")}</li>
+              <li>{t("helpPage.types.brokenWord.seeChunks")}</li>
+              <li>{t("helpPage.common.seeMeta")}</li>
             </ul>
           </div>
 
@@ -244,87 +147,55 @@ export function Help({ onBack }: HelpProps) {
 
           <div className="space-y-3">
             <h4 className="text-lg md:text-xl font-semibold">
-              4) Word connection
+              {t("helpPage.types.connectWords.title")}
             </h4>
-            <p>
-              Goal: Connect words in the practicing language with their meanings
-              in your native language.
-            </p>
-            <p>What you see:</p>
+            <p>{t("helpPage.types.connectWords.goal")}</p>
+            <p>{t("helpPage.types.connectWords.seeTitle")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>Word type (part of speech) at the top (applies to all items)</li>
-              <li>Left side: 4 words in the language you are practicing</li>
-              <li>Right side: 4 meanings in your native language</li>
+              <li>{t("helpPage.types.connectWords.seeTypeTop")}</li>
+              <li>{t("helpPage.types.connectWords.seeLeft")}</li>
+              <li>{t("helpPage.types.connectWords.seeRight")}</li>
             </ul>
-            <p>How it works:</p>
+            <p>{t("helpPage.types.connectWords.howTitle")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>Tap one item on the left, then tap the matching item on the right</li>
-              <li>Correct matches stay connected</li>
-              <li>Incorrect matches are highlighted briefly and can be retried</li>
+              <li>{t("helpPage.types.connectWords.how1")}</li>
+              <li>{t("helpPage.types.connectWords.how2")}</li>
+              <li>{t("helpPage.types.connectWords.how3")}</li>
             </ul>
-            <p>Buttons and features:</p>
-            <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>
-                Skip
-                <div>Skips this exercise and moves to the next one</div>
-              </li>
-            </ul>
-            <p>Notes:</p>
-            <p>
-              There are no hints and no “show me word” here, because all words
-              are already visible.
-            </p>
           </div>
 
           <hr className="border-border/60" />
 
           <div className="space-y-3">
             <h4 className="text-lg md:text-xl font-semibold">
-              5) Listening exercise
+              {t("helpPage.types.listening.title")}
             </h4>
-            <p>
-              Goal: Match spoken words in the practicing language with their
-              meanings in your native language.
-            </p>
-            <p>What you see:</p>
+            <p>{t("helpPage.types.listening.goal")}</p>
+            <p>{t("helpPage.types.listening.seeTitle")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>Word type (part of speech) at the top (applies to all items)</li>
-              <li>
-                Left side: 4 audio buttons (microphone) for words in the practicing
-                language
-              </li>
-              <li>Right side: 4 meanings in your native language</li>
+              <li>{t("helpPage.types.listening.seeTypeTop")}</li>
+              <li>{t("helpPage.types.listening.seeLeft")}</li>
+              <li>{t("helpPage.types.listening.seeRight")}</li>
             </ul>
-            <p>How it works:</p>
+            <p>{t("helpPage.types.listening.howTitle")}</p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>Tap an audio button to hear a word</li>
-              <li>Then connect it to the correct meaning on the right</li>
-              <li>Correct matches stay connected</li>
-              <li>Incorrect matches are highlighted briefly and can be retried</li>
+              <li>{t("helpPage.types.listening.how1")}</li>
+              <li>{t("helpPage.types.listening.how2")}</li>
+              <li>{t("helpPage.types.listening.how3")}</li>
+              <li>{t("helpPage.types.listening.how4")}</li>
             </ul>
-            <p>Buttons and features:</p>
-            <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-              <li>
-                Skip
-                <div>Skips this exercise and moves to the next one</div>
-              </li>
-            </ul>
-            <p>Notes:</p>
-            <p>There are no hints and no "show me word" here.</p>
+            <p>{t("helpPage.types.listening.note")}</p>
           </div>
 
           <hr className="border-border/60" />
 
           <div className="space-y-3">
             <h3 className="text-xl md:text-2xl font-semibold">
-              Skipping and finishing
+              {t("helpPage.finish.title")}
             </h3>
-            <p>Every exercise includes a Skip button</p>
-            <p>You can finish the session at any time</p>
-            <p>
-              Words are counted only when you recall them correctly (revealing a
-              word does not count as a successful recall)
-            </p>
+            <p>{t("helpPage.finish.p1")}</p>
+            <p>{t("helpPage.finish.p2")}</p>
+            <p>{t("helpPage.finish.p3")}</p>
           </div>
         </div>
       </div>

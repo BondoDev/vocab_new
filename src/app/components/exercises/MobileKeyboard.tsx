@@ -12,6 +12,7 @@ import {
   KEY_SHIFT,
   getKeyboardLayout,
 } from "../../../keyboards/layouts";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 export type MobileKeyboardProps = {
   language: KeyboardLanguage;
@@ -31,14 +32,6 @@ type LongPressPopupState = {
   anchorY: number;
 };
 
-const specialKeyLabels: Record<SpecialKey, string> = {
-  shift: "Shift",
-  backspace: "Backspace",
-  space: "Space",
-  enter: "Enter",
-  symbols: "Toggle symbols",
-};
-
 const LONG_PRESS_DELAY_MS = 280;
 
 export function MobileKeyboard({
@@ -50,6 +43,7 @@ export function MobileKeyboard({
   disabled = false,
   canInsertSpace = true,
 }: MobileKeyboardProps) {
+  const { t } = useLanguage();
   const [isShiftActive, setIsShiftActive] = useState(false);
   const [isSymbolsMode, setIsSymbolsMode] = useState(false);
   const [longPressPopup, setLongPressPopup] = useState<LongPressPopupState | null>(null);
@@ -63,6 +57,13 @@ export function MobileKeyboard({
   const hasSymbolsLayer = language === "fr" || language === "pt";
   const activeRows =
     hasSymbolsLayer && isSymbolsMode ? layout.symbolsLayout : layout.baseLayout;
+  const specialKeyLabels: Record<SpecialKey, string> = {
+    shift: t("practice.keyboard.shift"),
+    backspace: t("practice.keyboard.backspace"),
+    space: t("practice.keyboard.space"),
+    enter: t("practice.keyboard.enter"),
+    symbols: t("practice.keyboard.toggleSymbols"),
+  };
 
   const symbolsToggleLabel = (() => {
     if (isSymbolsMode) return "ABC";
@@ -304,7 +305,7 @@ export function MobileKeyboard({
   };
 
   const keyboard = (
-    <div className="mobile-keyboard" role="group" aria-label="Mobile keyboard">
+    <div className="mobile-keyboard" role="group" aria-label={t("practice.keyboard.mobileKeyboard")}>
       {activeRows.map((row, rowIndex) => (
         <div key={`row-${rowIndex}`} className="mobile-keyboard__row">
           {row.map((key, keyIndex) => renderKey(key, rowIndex, keyIndex))}
@@ -332,7 +333,7 @@ export function MobileKeyboard({
           aria-label={specialKeyLabels.space}
           disabled={disabled}
         >
-          Space
+          {t("practice.keyboard.space")}
         </button>
         {hasSymbolsLayer && isSymbolsMode && (
           <button
@@ -355,7 +356,7 @@ export function MobileKeyboard({
             aria-label={specialKeyLabels.enter}
             disabled={disabled}
           >
-            Enter
+            {t("practice.keyboard.enter")}
           </button>
         )}
       </div>

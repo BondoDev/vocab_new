@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Globe, ChevronDown } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -21,13 +21,13 @@ export function UILanguageSwitcher({
   });
 
   const languages = [
-    { code: "en", name: "English", enabled: true },
-    { code: "es", name: "Spanish", enabled: false },
-    { code: "fr", name: "French", enabled: false },
-    { code: "de", name: "German", enabled: false },
-    { code: "it", name: "Italian", enabled: false },
-    { code: "pt", name: "Portuguese", enabled: false },
-    { code: "ru", name: "Russian", enabled: true },
+    { code: "en", name: "English", flagCode: "gb", enabled: true },
+    { code: "es", name: "Espa\u00f1ol", flagCode: "es", enabled: true },
+    { code: "fr", name: "Fran\u00e7ais", flagCode: "fr", enabled: true },
+    { code: "de", name: "Deutsch", flagCode: "de", enabled: true },
+    { code: "it", name: "Italiano", flagCode: "it", enabled: true },
+    { code: "pt", name: "Portugu\u00eas", flagCode: "pt", enabled: true },
+    { code: "ru", name: "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", flagCode: "ru", enabled: true },
   ] as const;
   type LanguageCode = (typeof languages)[number]["code"];
 
@@ -84,7 +84,7 @@ export function UILanguageSwitcher({
   }, [isOpen]);
 
   const handleSelect = (code: LanguageCode) => {
-    if (code === "en" || code === "ru") {
+    if (code === "en" || code === "es" || code === "fr" || code === "pt" || code === "it" || code === "de" || code === "ru") {
       setUILanguage(code);
     }
     setIsOpen(false);
@@ -187,6 +187,11 @@ export function UILanguageSwitcher({
                               : "text-white/40 cursor-not-allowed"
                         }`}
                       >
+                        <span
+                          className={`fi fi-${lang.flagCode} rounded-[2px] shadow-sm border border-white/15`}
+                          aria-hidden="true"
+                          style={{ width: "18px", height: "14px" }}
+                        />
                         <span className="ui-language-option-label text-sm font-medium">
                           {lang.name}
                         </span>
@@ -216,3 +221,7 @@ export function UILanguageSwitcher({
     </>
   );
 }
+
+
+
+

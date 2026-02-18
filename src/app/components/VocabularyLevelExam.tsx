@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 interface VocabularyLevelExamProps {
   practiceLanguage: string;
@@ -30,6 +31,7 @@ export function VocabularyLevelExam({
   onComplete,
   onCancel,
 }: VocabularyLevelExamProps) {
+  const { t } = useLanguage();
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [translationMap, setTranslationMap] = useState<{
     [key: string]: string;
@@ -229,7 +231,7 @@ export function VocabularyLevelExam({
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <p className="text-muted-foreground">Loading exam...</p>
+        <p className="text-muted-foreground">{t("exam.loading")}</p>
       </div>
     );
   }
@@ -242,12 +244,12 @@ export function VocabularyLevelExam({
           <button
             onClick={onCancel}
             className="p-2 hover:bg-muted rounded-lg transition-colors"
-            aria-label="Close"
+            aria-label={t("exam.close")}
           >
             <X className="w-6 h-6" />
           </button>
           <div className="text-sm font-medium text-muted-foreground">
-            Exam Complete
+            {t("exam.complete")}
           </div>
         </div>
 
@@ -262,9 +264,9 @@ export function VocabularyLevelExam({
               y: { duration: 0.3 },
             }}
           >
-            <div className="space-y-3">
+            <div className="space-y-6">
               <h1 className="text-2xl md:text-3xl font-bold text-foreground">
-                Your vocabulary level is approximately:
+                {t("exam.estimatedLevel")}
               </h1>
               <div className="inline-block px-8 py-4 bg-primary/10 border-2 border-primary rounded-xl">
                 <span className="text-5xl font-bold text-primary">
@@ -274,8 +276,7 @@ export function VocabularyLevelExam({
             </div>
 
             <p className="text-muted-foreground">
-              This result is based on vocabulary recognition. You can change
-              your level anytime.
+              {t("exam.resultNote")}
             </p>
 
             <div className="space-y-3 pt-4">
@@ -283,13 +284,13 @@ export function VocabularyLevelExam({
                 onClick={handleStartPractice}
                 className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors font-medium"
               >
-                Start practice at this level
+                {t("exam.startPracticing")}
               </button>
               <button
                 onClick={onCancel}
                 className="w-full px-6 py-3 border border-border rounded-xl hover:bg-muted transition-colors font-medium"
               >
-                Change level manually
+                {t("exam.backToSelection")}
               </button>
             </div>
           </motion.div>
@@ -301,7 +302,7 @@ export function VocabularyLevelExam({
   if (!currentQuestion) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <p className="text-muted-foreground">Preparing questions...</p>
+        <p className="text-muted-foreground">{t("exam.preparing")}</p>
       </div>
     );
   }
@@ -309,27 +310,31 @@ export function VocabularyLevelExam({
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Top Bar */}
-      <div className="px-4 py-4 md:px-8 md:py-6 border-b border-border">
-        <div className="flex items-center justify-between mb-4">
+      <div className="px-4 py-2 md:px-8 md:py-4 border-b border-border">
+        <div className="relative flex items-center justify-between mb-2">
           <button
             onClick={onCancel}
             className="p-2 hover:bg-muted rounded-lg transition-colors"
-            aria-label="Close"
+            aria-label={t("exam.close")}
           >
             <X className="w-6 h-6" />
           </button>
-          <div className="text-sm font-medium text-muted-foreground">
-            Level: {LEVELS[currentLevel]}
+          <div className="absolute left-1/2 -translate-x-1/2 text-sm font-medium text-muted-foreground hidden max-[380px]:block">
+            {currentQuestionInLevel + 1}/{QUESTIONS_PER_LEVEL}
+          </div>
+          <div className="ml-auto text-right text-sm font-medium text-muted-foreground">
+            {t("exam.levelLabel")}: {LEVELS[currentLevel]}
           </div>
         </div>
 
         <div className="space-y-2">
-          <div className="flex justify-between text-sm text-muted-foreground">
+          <div className="flex justify-between text-sm text-muted-foreground max-[380px]:hidden">
             <span>
-              Question {currentQuestionInLevel + 1} of {QUESTIONS_PER_LEVEL}
+              {t("exam.question")} {currentQuestionInLevel + 1} {t("exam.of")}{" "}
+              {QUESTIONS_PER_LEVEL}
             </span>
           </div>
-          <div className="w-full bg-muted rounded-full h-2">
+          <div className="w-full bg-muted rounded-full h-2 max-[380px]:hidden">
             <div
               className="bg-primary h-2 rounded-full transition-all duration-300"
               style={{
@@ -341,15 +346,12 @@ export function VocabularyLevelExam({
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center px-4 py-8">
+      <main className="flex-1 flex items-center justify-center px-4 py-4">
         <div className="w-full max-w-2xl">
           <div className="text-center mb-8">
-            <h1 className="text-xl font-medium text-muted-foreground mb-6">
-              Quick Vocabulary Level Check
+            <h1 className="text-xl font-medium text-muted-foreground mb-6 max-[640px]:pb-8 max-[380px]:pb-0">
+              {t("exam.chooseOption")}
             </h1>
-            <p className="text-sm text-muted-foreground mb-8">
-              Find your approximate vocabulary level in a few minutes.
-            </p>
 
             {/* Target Word */}
             <motion.div
@@ -369,7 +371,7 @@ export function VocabularyLevelExam({
           </div>
 
           {/* Answer Options */}
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 gap-3 md:grid-rows-3 md:grid-flow-col md:auto-cols-fr">
             <AnimatePresence mode="wait">
               {currentQuestion.options.map((option, index) => {
                 const isSelected = selectedAnswer === option;
@@ -382,7 +384,7 @@ export function VocabularyLevelExam({
                     key={`${currentQuestion.word.id}-${option}`}
                     onClick={() => handleAnswerSelect(option)}
                     disabled={showFeedback}
-                    className={`w-full px-6 py-4 text-lg rounded-xl border-2 transition-all font-medium text-left ${
+                    className={`w-full px-6 py-4 max-[380px]:py-2 text-lg rounded-xl border-2 transition-all font-medium text-left ${
                       showAsCorrect
                         ? "bg-green-50 border-green-500 text-green-700"
                         : showAsWrong
@@ -408,12 +410,18 @@ export function VocabularyLevelExam({
             </AnimatePresence>
           </div>
 
-          {/* Info Text */}
-          <p className="text-xs text-muted-foreground text-center mt-8">
-            This test measures vocabulary recognition only.
-          </p>
         </div>
       </main>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+

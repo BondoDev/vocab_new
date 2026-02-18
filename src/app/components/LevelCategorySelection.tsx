@@ -31,14 +31,21 @@ const levels = [
 const categories = (Array.isArray(categoriesData) ? categoriesData : []).map(
   (cat: any) => ({
     id: cat.category,
-    name: cat.category
-      .split(" ")
-      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" "),
   }),
 );
 
-const DEFAULT_WORD_TYPES: string[] = ["noun", "verb", "adjective", "adverb"];
+const DEFAULT_WORD_TYPES: string[] = [
+  "preposition",
+  "noun",
+  "verb",
+  "adjective",
+  "adverb",
+  "determiner",
+  "conjunction",
+  "pronoun",
+  "exclamation",
+  "expression",
+];
 type VocabularyWord = { type?: string | null };
 
 const navbarColorRgb = "74, 43, 130";
@@ -227,9 +234,28 @@ export function LevelCategorySelection({
       .join(" ");
 
   const getWordTypeLabel = (typeId: string) => {
-    const translated = t(`wordType.${typeId}`);
-    if (!translated || translated === `wordType.${typeId}`) {
+    const translated = t(`wordTypes.${typeId}`);
+    if (!translated || translated === `wordTypes.${typeId}`) {
       return formatWordTypeLabel(typeId);
+    }
+    return translated;
+  };
+
+  const formatCategoryLabel = (categoryId: string) =>
+    categoryId
+      .split(" ")
+      .map((part) =>
+        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
+      )
+      .join(" ");
+
+  const getCategoryLabel = (categoryId: string) => {
+    const translated = t(`levelCategory.topicNames.${categoryId}`);
+    if (
+      !translated ||
+      translated === `levelCategory.topicNames.${categoryId}`
+    ) {
+      return formatCategoryLabel(categoryId);
     }
     return translated;
   };
@@ -409,7 +435,7 @@ export function LevelCategorySelection({
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <h2 className="text-3xl md:text-[clamp(2.25rem,3.5vw,3rem)] text-foreground leading-tight">
-              Customize Your Practice or Skip Ahead
+              {t("levelCategory.titleWithSkipAhead")}
             </h2>
           </motion.div>
 
@@ -543,7 +569,7 @@ export function LevelCategorySelection({
               {t("levelCategory.topicsToPractice")}
             </h3>
             <p className="!mt-0 text-sm md:text-[clamp(0.9rem,1.2vw,1rem)] text-center text-muted-foreground">
-              All topics selected
+              {t("levelCategory.allTopicsSelected")}
             </p>
             {isPhoneMobile ? (
               <motion.button
@@ -573,7 +599,7 @@ export function LevelCategorySelection({
                     whileTap={{ scale: 0.95 }}
                   >
                     <span className="text-sm sm:text-sm md:text-[clamp(0.85rem,1.1vw,0.875rem)] text-foreground">
-                      {category.name}
+                      {getCategoryLabel(category.id)}
                     </span>
                   </motion.button>
                 ))}
@@ -635,7 +661,7 @@ export function LevelCategorySelection({
                         whileTap={{ scale: 1 }}
                       >
                         <span className="text-sm text-foreground">
-                          {category.name}
+                          {getCategoryLabel(category.id)}
                         </span>
                       </motion.button>
                     ))}
@@ -645,7 +671,7 @@ export function LevelCategorySelection({
                       className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition"
                       onClick={() => setPendingCategories([])}
                     >
-                      Clear
+                      {t("levelCategory.actions.clear")}
                     </button>
                     <button
                       className="px-5 py-2 bg-card border-2 text-primary hover:bg-primary/5 rounded-lg transition-all shadow-sm"
@@ -655,7 +681,7 @@ export function LevelCategorySelection({
                         setIsTopicsModalOpen(false);
                       }}
                     >
-                      Apply
+                      {t("levelCategory.actions.apply")}
                     </button>
                   </div>
                 </div>
@@ -674,7 +700,7 @@ export function LevelCategorySelection({
               {t("levelCategory.wordTypes")}
             </h3>
             <p className="!mt-0 text-sm md:text-[clamp(0.9rem,1.2vw,1rem)] text-center text-muted-foreground">
-              All grammar types selected
+              {t("levelCategory.allGrammarTypesSelected")}
             </p>
             {isPhoneMobile ? (
               <motion.button
@@ -723,7 +749,7 @@ export function LevelCategorySelection({
                         setIsWordTypesModalOpen(true);
                       }}
                     >
-                      <span>Show more</span>
+                      <span>{t("levelCategory.types.showMore")}</span>
                       <ChevronDown className="w-4 h-4 sm:w-4 sm:h-4" />
                     </button>
                   </div>
@@ -738,22 +764,24 @@ export function LevelCategorySelection({
                     isLaptopFilterRange ? "justify-end" : "justify-center"
                   }`}
                 >
-                  <button
-                    className="flex items-center gap-1.5 md:gap-[clamp(0.4rem,0.8vw,0.5rem)] text-sm md:text-[clamp(0.95rem,1.2vw,1rem)] text-primary hover:underline transition-all"
-                    onClick={() => {
-                      setPendingWordTypes(selectedWordTypes);
-                      setIsWordTypesModalOpen(true);
-                    }}
-                  >
-                    <>
-                      <span className="hidden md:inline">
-                        {isLaptopFilterRange
-                          ? "Show more"
-                          : hiddenWordTypesCount > 0
-                            ? `Show more types (+${hiddenWordTypesCount})`
-                            : "Show all types"}
-                      </span>
-                      <span className="md:hidden">SHOW ALL</span>
+                    <button
+                      className="flex items-center gap-1.5 md:gap-[clamp(0.4rem,0.8vw,0.5rem)] text-sm md:text-[clamp(0.95rem,1.2vw,1rem)] text-primary hover:underline transition-all"
+                      onClick={() => {
+                        setPendingWordTypes(selectedWordTypes);
+                        setIsWordTypesModalOpen(true);
+                      }}
+                    >
+                      <>
+                        <span className="hidden md:inline">
+                          {isLaptopFilterRange
+                            ? t("levelCategory.types.showMore")
+                            : hiddenWordTypesCount > 0
+                              ? `${t("levelCategory.types.showMoreWithCountPrefix")} (+${hiddenWordTypesCount})`
+                              : t("levelCategory.types.showAll")}
+                        </span>
+                        <span className="md:hidden">
+                          {t("levelCategory.types.showAllShort")}
+                        </span>
                       <ChevronDown className="w-4 h-4 sm:w-4 sm:h-4" />
                     </>
                   </button>
@@ -808,7 +836,7 @@ export function LevelCategorySelection({
                       className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition"
                       onClick={() => setPendingWordTypes([])}
                     >
-                      Clear
+                      {t("levelCategory.actions.clear")}
                     </button>
                     <button
                       className="px-5 py-2 bg-card border-2 text-primary hover:bg-primary/5 rounded-lg transition-all shadow-sm"
@@ -818,7 +846,7 @@ export function LevelCategorySelection({
                         setIsWordTypesModalOpen(false);
                       }}
                     >
-                      Apply
+                      {t("levelCategory.actions.apply")}
                     </button>
                   </div>
                 </div>
@@ -862,3 +890,4 @@ export function LevelCategorySelection({
     </div>
   );
 }
+

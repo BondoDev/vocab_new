@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Mic } from "lucide-react";
 import { shuffleArray } from "../../utils/shuffleArray";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface ListeningExerciseProps {
   words: any[];
@@ -31,6 +32,7 @@ export function ListeningExercise({
   onSpeakWord,
   onStatusChange,
 }: ListeningExerciseProps) {
+  const { t } = useLanguage();
   const [leftItems, setLeftItems] = useState<ExerciseWord[]>([]);
   const [rightItems, setRightItems] = useState<ExerciseWord[]>([]);
   const [pairs, setPairs] = useState<
@@ -194,9 +196,6 @@ export function ListeningExercise({
           animation: shakeX 0.18s ease-out;
         }
       `}</style>
-        <p className="mx-auto max-w-[34rem] text-center text-sm text-gray-500 leading-relaxed font-medium">
-          Tap audio in {sourceLabel}, then choose its meaning in {targetLabel}
-        </p>
         <div className="exercise-listening-grid w-full grid grid-cols-2 gap-x-8 max-w-2xl mx-auto items-center mt-1">
           <h4 className="justify-self-center w-[clamp(7.1rem,24vw,11rem)] text-[0.72rem] sm:text-xs uppercase tracking-[0.14em] text-gray-500 text-center font-semibold bg-white/70 border border-purple-200/70 rounded-full py-1 px-3">
             {sourceLabel}
@@ -277,7 +276,7 @@ export function ListeningExercise({
                             ? "border-purple-200 bg-purple-100 text-slate-900/75 opacity-80"
                             : "border-purple-200 bg-purple-100 text-slate-900 hover:bg-purple-200 hover:border-purple-300"
                     }`}
-                    aria-label="Play word audio"
+                    aria-label={t("practice.playWordAudio")}
                   >
                     <Mic className="exercise-listening-mic-icon mx-auto h-6 w-6" />
                   </button>

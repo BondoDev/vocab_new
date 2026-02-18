@@ -9,6 +9,7 @@ import {
 import { motion } from "motion/react";
 import { Volume2 } from "lucide-react";
 import { cn } from "../ui/utils";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface UniversalExerciseInputProps {
   isCorrect: boolean;
@@ -63,6 +64,7 @@ export function UniversalExerciseInput({
   displayStyle,
   enableOverlayAutoFit = false,
 }: UniversalExerciseInputProps) {
+  const { t } = useLanguage();
   const hasTypingInput = Boolean(inputProps);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const fieldRef = useRef<HTMLDivElement | null>(null);
@@ -211,7 +213,7 @@ export function UniversalExerciseInput({
         <motion.button
           onClick={onSpeakWord}
           className="p-2 bg-[#6b53a3] hover:bg-[#5d4691] text-white border border-[#4a3870]/45 shadow-sm rounded-full transition-colors"
-          aria-label="Listen to pronunciation"
+          aria-label={t("practice.listenToPronunciation")}
           animate={{
             opacity: isCorrect ? 1 : 0,
             scale: isCorrect ? 1 : 0.8,

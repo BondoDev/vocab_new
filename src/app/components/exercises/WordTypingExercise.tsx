@@ -6,6 +6,7 @@ import {
 import { MobileKeyboard } from "./MobileKeyboard";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { type KeyboardLanguage } from "../../../keyboards/layouts";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface WordTypingExerciseProps {
   currentWord: any;
@@ -32,6 +33,7 @@ export function WordTypingExercise({
   speakWord,
   onStatusChange,
 }: WordTypingExerciseProps) {
+  const { t } = useLanguage();
   const [userInput, setUserInput] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
   const [revealedHintIndices, setRevealedHintIndices] = useState<number[]>([]);
@@ -460,7 +462,7 @@ export function WordTypingExercise({
               disabled={usedShowWord || isCorrect}
               className="exercise-action-button px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Show me word
+              {t("practice.showMeWord")}
             </button>
             <div className="flex items-center gap-2">
               <button
@@ -468,7 +470,7 @@ export function WordTypingExercise({
                 disabled={!areHintsAvailable() || usedShowWord || isCorrect}
                 className="exercise-action-button exercise-hint-button px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Hint
+                {t("practice.hint")}
               </button>
               {getMaxHints() > 0 && (
                 <span className="text-xs text-muted-foreground font-medium">
