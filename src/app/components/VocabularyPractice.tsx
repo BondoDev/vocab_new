@@ -61,6 +61,8 @@ export function VocabularyPractice({
   const [cardBlinkKey, setCardBlinkKey] = useState(0);
   const [isCardSwitching, setIsCardSwitching] = useState(false);
   const cardSwitchTimeoutRef = useRef<number | null>(null);
+  const isUsableLemma = (value: unknown): value is string =>
+    typeof value === "string" && value.trim().length > 0 && value.trim() !== "-";
 
   const isFourWordExercise = useCallback(
     (exerciseType: string) =>
@@ -139,16 +141,36 @@ export function VocabularyPractice({
           ? yourLangModule.default
           : [];
 
+        const validPracticeConceptIds = new Set(
+          loadedWords
+            .filter(
+              (word: any) =>
+                word?.concept_id && isUsableLemma(word?.word_lemma),
+            )
+            .map((word: any) => String(word.concept_id)),
+        );
+
         // Create prompt map (user's language words) using concept_id
         const translationMap: { [key: string]: string } = {};
         const definitionMap: { [key: string]: string } = {};
         yourLangWords.forEach((word: any) => {
+          const conceptId = String(word?.concept_id ?? "");
+          if (!conceptId || !validPracticeConceptIds.has(conceptId)) return;
+          if (!isUsableLemma(word?.word_lemma)) return;
           translationMap[word.concept_id] = word.word_lemma;
           definitionMap[word.concept_id] =
             word.definition || word.definiton || "";
         });
         setTranslations(translationMap);
         setDefinitions(definitionMap);
+
+        const validConceptIds = new Set(Object.keys(translationMap));
+        loadedWords = loadedWords.filter(
+          (word: any) =>
+            word?.concept_id &&
+            validConceptIds.has(String(word.concept_id)) &&
+            isUsableLemma(word?.word_lemma),
+        );
 
         // Load inflected entries for sentence highlighting
         let loadedInflectedEntries: any[] = [];

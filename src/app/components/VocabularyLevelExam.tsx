@@ -32,6 +32,8 @@ export function VocabularyLevelExam({
   onCancel,
 }: VocabularyLevelExamProps) {
   const { t } = useLanguage();
+  const isUsableLemma = (value: unknown): value is string =>
+    typeof value === "string" && value.trim().length > 0 && value.trim() !== "-";
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [translationMap, setTranslationMap] = useState<{
     [key: string]: string;
@@ -77,25 +79,42 @@ export function VocabularyLevelExam({
           ? practiceModule.default
           : [];
 
-        // Filter words with 4+ characters only
-        const filteredWords = practiceWords.filter(
-          (word) => word.word_lemma.length >= 4,
-        );
-
-        setAllWords(filteredWords);
-
         // Load user's language words for options
         const yourLangModule = await wordsMap[yourLanguage]();
         const yourLangWords: Word[] = Array.isArray(yourLangModule.default)
           ? yourLangModule.default
           : [];
 
+        const validPracticeConceptIds = new Set(
+          practiceWords
+            .filter(
+              (word) =>
+                word?.concept_id && isUsableLemma(word?.word_lemma),
+            )
+            .map((word) => String(word.concept_id)),
+        );
+
         // Create translation map using concept_id
         const map: { [key: string]: string } = {};
         yourLangWords.forEach((word) => {
-          map[word.concept_id] = word.word_lemma;
+          const conceptId = String(word?.concept_id ?? "");
+          if (!conceptId || !validPracticeConceptIds.has(conceptId)) return;
+          if (!isUsableLemma(word?.word_lemma)) return;
+          map[conceptId] = word.word_lemma;
         });
         setTranslationMap(map);
+
+        // Keep only words that exist in both languages and are valid on both sides
+        const validConceptIds = new Set(Object.keys(map));
+        const filteredWords = practiceWords.filter(
+          (word) =>
+            word?.concept_id &&
+            validConceptIds.has(String(word.concept_id)) &&
+            isUsableLemma(word?.word_lemma) &&
+            word.word_lemma.length >= 4,
+        );
+
+        setAllWords(filteredWords);
       } catch (error) {
         console.error("Error loading words:", error);
       } finally {
