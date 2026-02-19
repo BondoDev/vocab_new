@@ -21,6 +21,23 @@ interface TranslationObject {
 
 type TranslationNode = string | TranslationObject;
 
+function normalizeTranslationRoot(
+  source: unknown,
+): Record<string, TranslationNode> {
+  const candidate =
+    source &&
+    typeof source === "object" &&
+    "default" in (source as Record<string, unknown>)
+      ? (source as { default: unknown }).default
+      : source;
+
+  if (!candidate || typeof candidate !== "object") {
+    return {};
+  }
+
+  return candidate as Record<string, TranslationNode>;
+}
+
 const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
@@ -78,27 +95,13 @@ function getAliasKey(key: string): string | null {
 }
 
 const translations: Record<UILanguage, Record<string, string>> = {
-  en: flattenTranslations(
-    englishInterface as unknown as Record<string, TranslationNode>,
-  ),
-  es: flattenTranslations(
-    spanishInterface as unknown as Record<string, TranslationNode>,
-  ),
-  fr: flattenTranslations(
-    frenchInterface as unknown as Record<string, TranslationNode>,
-  ),
-  pt: flattenTranslations(
-    portugueseInterface as unknown as Record<string, TranslationNode>,
-  ),
-  it: flattenTranslations(
-    italianInterface as unknown as Record<string, TranslationNode>,
-  ),
-  de: flattenTranslations(
-    germanInterface as unknown as Record<string, TranslationNode>,
-  ),
-  ru: flattenTranslations(
-    russianInterface as unknown as Record<string, TranslationNode>,
-  ),
+  en: flattenTranslations(normalizeTranslationRoot(englishInterface)),
+  es: flattenTranslations(normalizeTranslationRoot(spanishInterface)),
+  fr: flattenTranslations(normalizeTranslationRoot(frenchInterface)),
+  pt: flattenTranslations(normalizeTranslationRoot(portugueseInterface)),
+  it: flattenTranslations(normalizeTranslationRoot(italianInterface)),
+  de: flattenTranslations(normalizeTranslationRoot(germanInterface)),
+  ru: flattenTranslations(normalizeTranslationRoot(russianInterface)),
 };
 
 export function LanguageProvider({ children }: { children: ReactNode }) {

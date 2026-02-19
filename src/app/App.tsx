@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import "../styles/index.css";
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowLeftRight } from "lucide-react";
+import { ArrowLeftRight, ChevronDown, Search } from "lucide-react";
 import { Header } from "./components/Header";
 import { LanguageSelector } from "./components/LanguageSelector";
 import { FloatingWords } from "./components/FloatingWords";
@@ -33,6 +33,7 @@ const ROUTES = {
   levelCategory: "/languages/filters",
   exerciseSelection: "/languages/filters/exercises",
   practice: "/languages/filters/exercises/practice",
+  explore: "/explore",
   exam: "/languages/level-test",
   about: "/about",
   help: "/help",
@@ -51,6 +52,8 @@ const pageFromPath = (path: string): PageKey | null => {
       return "exerciseSelection";
     case ROUTES.practice:
       return "practice";
+    case ROUTES.explore:
+      return "explore";
     case ROUTES.exam:
       return "exam";
     case ROUTES.about:
@@ -284,6 +287,7 @@ function AppContent() {
           onLanguages={() => navigate(ROUTES.language)}
           onFilters={() => handleRequireLanguages("levelCategory")}
           onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
         />
         <ExerciseSelection
           selectedExercises={selectedExercises}
@@ -305,6 +309,7 @@ function AppContent() {
           onLanguages={() => navigate(ROUTES.language)}
           onFilters={() => handleRequireLanguages("levelCategory")}
           onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
         />
         <div className="flex-1 min-h-0">
           <LevelCategorySelection
@@ -347,8 +352,66 @@ function AppContent() {
           onLanguages={() => navigate(ROUTES.language)}
           onFilters={() => handleRequireLanguages("levelCategory")}
           onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
         />
         <About onBack={() => navigate(ROUTES.language)} />
+      </div>
+    );
+  }
+
+  if (resolvedPage === "explore") {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header
+          onAbout={() => navigate(ROUTES.about)}
+          onHelp={() => navigate(ROUTES.help)}
+          onLevelTest={() => handleRequireLanguages("exam")}
+          onLanguages={() => navigate(ROUTES.language)}
+          onFilters={() => handleRequireLanguages("levelCategory")}
+          onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
+        />
+        <main className="flex-1 px-4 py-8 md:px-8 md:py-12">
+          <div className="mx-auto w-full max-w-5xl">
+            <div className="mb-5">
+              <label
+                htmlFor="explore-language-search"
+                className="sr-only"
+              >
+                {t("languageSelector.search")}
+              </label>
+              <div className="relative">
+                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  id="explore-language-search"
+                  type="text"
+                  placeholder={t("languageSelector.search")}
+                  className="h-12 w-full rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 pl-11 pr-4 text-foreground shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] outline-none transition-all duration-300 placeholder:text-muted-foreground/80 focus:border-primary/60 focus:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {languages.map((language) => (
+                <button
+                  key={language.code}
+                  type="button"
+                  className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                >
+                  <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                  <span className="flex items-center gap-3">
+                    <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                      <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                    </span>
+                    <span className="text-base text-foreground relative">
+                      {language.name}
+                    </span>
+                  </span>
+                  <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-y-0.5" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
@@ -363,6 +426,7 @@ function AppContent() {
           onLanguages={() => navigate(ROUTES.language)}
           onFilters={() => handleRequireLanguages("levelCategory")}
           onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
         />
         <Help onBack={() => navigate(ROUTES.language)} />
       </div>
@@ -378,6 +442,7 @@ function AppContent() {
         onLanguages={() => navigate(ROUTES.language)}
         onFilters={() => handleRequireLanguages("levelCategory")}
         onExercises={() => handleRequireLanguages("exerciseSelection")}
+        onExplore={() => navigate(ROUTES.explore)}
       />
 
       <main className="flex-1 min-h-0 flex flex-col items-center justify-center px-[clamp(1rem,3vw,2.5rem)] pt-[clamp(0.5rem,2vw,1.5rem)] pb-[clamp(2.5rem,6vw,5rem)] relative">

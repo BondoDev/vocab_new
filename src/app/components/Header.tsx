@@ -66,6 +66,7 @@ interface HeaderProps {
   onLanguages?: () => void;
   onFilters?: () => void;
   onExercises?: () => void;
+  onExplore?: () => void;
 }
 
 export function Header({
@@ -75,6 +76,7 @@ export function Header({
   onLanguages,
   onFilters,
   onExercises,
+  onExplore,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const starFieldStyle = useMemo(
@@ -147,6 +149,13 @@ export function Header({
             >
               {t("header.exercises")}
             </button>
+            <button
+              type="button"
+              onClick={onExplore}
+              className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/90 bg-transparent border-0 p-0 appearance-none"
+            >
+              Explore
+            </button>
             <a
               href="#"
               onClick={(event) => {
@@ -199,6 +208,9 @@ export function Header({
           </button>
           <button type="button" onClick={handleMenuAction(onExercises)}>
             {t("header.exercises")}
+          </button>
+          <button type="button" onClick={handleMenuAction(onExplore)}>
+            Explore
           </button>
           <button type="button" onClick={handleMenuAction(onHelp)}>
             {t("header.help")}
