@@ -1,0 +1,672 @@
+{
+  "targetLanguage": "spanish",
+  "targetLanguageDisplayName": "Espagnol",
+  "levels": {
+    "a1": {
+      "title": "Vocabulaire d’espagnol A1",
+      "intro": "Le vocabulaire d’espagnol A1 constitue la première étape pour communiquer dans des situations simples et concrètes.",
+      "introParagraphs": [
+        "Le vocabulaire d’espagnol A1 constitue la première étape pour communiquer dans des situations simples et concrètes. À ce niveau, vous apprenez les mots les plus fréquents pour vous présenter, poser des questions de base et comprendre des informations essentielles.",
+        "Avec des mots de base en espagnol bien maîtrisés, vous pouvez former des phrases courtes et participer à de petites conversations du quotidien."
+      ],
+      "levelDescription": "Débutant",
+      "ctaText": "Commencer la pratique A1",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau A1 ?",
+        "paragraph": "Le niveau A1 correspond au niveau débutant selon le Cadre européen commun de référence. Il permet d’utiliser des expressions très simples liées à des besoins immédiats.",
+        "bullets": [
+          "Vous pouvez vous présenter et donner des informations personnelles.",
+          "Vous comprenez des questions simples sur la famille ou le travail.",
+          "Vous utilisez des structures grammaticales très basiques."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Étendue du vocabulaire au niveau A1",
+        "topics": [
+          "Salutations et formules de politesse",
+          "Nombres et dates",
+          "Famille et amis",
+          "Alimentation et boissons"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Thèmes essentiels",
+            "items": [
+              "Salutations et formules de politesse",
+              "Nombres et dates",
+              "Famille et amis",
+              "Alimentation et boissons"
+            ]
+          },
+          {
+            "heading": "Compétences communicatives",
+            "items": [
+              "Poser et répondre à des questions simples",
+              "Exprimer des goûts et préférences",
+              "Décrire des objets et des lieux",
+              "Utiliser le présent de l’indicatif"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots faut-il apprendre ?",
+        "text": "Au niveau A1, on travaille généralement avec plusieurs centaines de mots. Des exercices de vocabulaire espagnol A1 réguliers permettent de consolider le vocabulaire espagnol pour débutants et de progresser rapidement.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "hola",
+            "meaning": "bonjour (salutation informelle)"
+          },
+          {
+            "word": "gracias",
+            "meaning": "merci"
+          },
+          {
+            "word": "casa",
+            "meaning": "maison"
+          },
+          {
+            "word": "comer",
+            "meaning": "manger"
+          },
+          {
+            "word": "agua",
+            "meaning": "eau"
+          },
+          {
+            "word": "amigo",
+            "meaning": "ami"
+          },
+          {
+            "word": "trabajo",
+            "meaning": "travail"
+          },
+          {
+            "word": "escuela",
+            "meaning": "école"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’espagnol A1 : mots essentiels et bases",
+      "metaDescription": "Découvrez le vocabulaire d’espagnol A1 avec des mots essentiels, des thèmes quotidiens et des exercices simples pour bien commencer.",
+      "bottomCta": {
+        "heading": "Commencez à pratiquer",
+        "text": "Pour apprendre le vocabulaire espagnol niveau A1 efficacement, répétez régulièrement, utilisez les mots en contexte et pratiquez à voix haute."
+      }
+    },
+    "a2": {
+      "title": "Vocabulaire d’espagnol A2",
+      "intro": "Le vocabulaire d’espagnol A2 élargit les bases acquises au niveau débutant et vous permet de communiquer avec davantage d’autonomie.",
+      "introParagraphs": [
+        "Le vocabulaire d’espagnol A2 élargit les bases acquises au niveau débutant et vous permet de communiquer avec davantage d’autonomie.",
+        "En apprenant le vocabulaire espagnol A2, vous pouvez parler de votre routine, raconter des expériences simples et comprendre des conversations sur des sujets familiers."
+      ],
+      "levelDescription": "Élémentaire",
+      "ctaText": "Commencer la pratique A2",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau A2 ?",
+        "paragraph": "Le niveau A2 correspond à un niveau élémentaire avancé. Vous utilisez un éventail plus large de mots et de structures.",
+        "bullets": [
+          "Vous décrivez votre quotidien et vos activités.",
+          "Vous comprenez des instructions simples.",
+          "Vous participez à de courtes conversations."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Étendue du vocabulaire au niveau A2",
+        "topics": [
+          "Transport et directions",
+          "Santé et bien-être",
+          "Temps libre",
+          "Vie quotidienne"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Domaines fréquents",
+            "items": [
+              "Transport et directions",
+              "Santé et bien-être",
+              "Temps libre",
+              "Vie quotidienne"
+            ]
+          },
+          {
+            "heading": "Compétences linguistiques",
+            "items": [
+              "Parler du passé récent",
+              "Exprimer des projets futurs",
+              "Utiliser des expressions courantes en espagnol A2",
+              "Comprendre des textes courts"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots faut-il apprendre ?",
+        "text": "Au niveau A2, les apprenants maîtrisent généralement entre 1000 et 1500 mots. Des exercices de vocabulaire espagnol A2 réguliers permettent d’enrichir son vocabulaire espagnol A2 progressivement.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "viajar",
+            "meaning": "voyager"
+          },
+          {
+            "word": "comprar",
+            "meaning": "acheter"
+          },
+          {
+            "word": "difícil",
+            "meaning": "difficile"
+          },
+          {
+            "word": "ayer",
+            "meaning": "hier"
+          },
+          {
+            "word": "mañana",
+            "meaning": "demain / matin"
+          },
+          {
+            "word": "empezar",
+            "meaning": "commencer"
+          },
+          {
+            "word": "ciudad",
+            "meaning": "ville"
+          },
+          {
+            "word": "preguntar",
+            "meaning": "demander"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’espagnol A2 : mots et expressions courantes",
+      "metaDescription": "Développez votre vocabulaire d’espagnol A2 avec des thèmes quotidiens, des expressions utiles et des exercices pratiques pour progresser.",
+      "bottomCta": {
+        "heading": "Continuez à progresser",
+        "text": "Pour apprendre le vocabulaire espagnol A2 efficacement, pratiquez avec des dialogues simples et des textes courts."
+      }
+    },
+    "b1": {
+      "title": "Vocabulaire d’espagnol B1",
+      "intro": "Le vocabulaire d’espagnol B1 marque le passage au niveau intermédiaire.",
+      "introParagraphs": [
+        "Le vocabulaire d’espagnol B1 marque le passage au niveau intermédiaire. Vous pouvez désormais communiquer avec plus d’autonomie et développer des idées plus structurées.",
+        "En apprenant le vocabulaire espagnol niveau B1, vous améliorez votre capacité à raconter des expériences, exprimer des opinions et comprendre des textes plus longs."
+      ],
+      "levelDescription": "Intermédiaire",
+      "ctaText": "Commencer la pratique B1",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau B1 ?",
+        "paragraph": "Le niveau B1 permet de se débrouiller dans la plupart des situations rencontrées en voyage ou au travail.",
+        "bullets": [
+          "Vous comprenez les points essentiels d’un discours clair.",
+          "Vous décrivez des événements et des projets.",
+          "Vous donnez des raisons simples pour justifier une opinion."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Étendue du vocabulaire au niveau B1",
+        "topics": [
+          "Études et carrière",
+          "Technologie et communication",
+          "Culture et actualité",
+          "Questions sociales"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Thèmes courants",
+            "items": [
+              "Études et carrière",
+              "Technologie et communication",
+              "Culture et actualité",
+              "Questions sociales"
+            ]
+          },
+          {
+            "heading": "Compétences lexicales",
+            "items": [
+              "Utiliser des connecteurs logiques",
+              "Comprendre des mots espagnols niveau intermédiaire",
+              "Rédiger des textes cohérents",
+              "Participer à des discussions plus longues"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots faut-il apprendre ?",
+        "text": "Au niveau B1, le vocabulaire actif atteint généralement 2000 à 2500 mots. Des exercices de vocabulaire espagnol B1 réguliers permettent d’enrichir son vocabulaire espagnol B1 et d’améliorer la fluidité.",
+        "value": 2500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "experiencia",
+            "meaning": "expérience vécue"
+          },
+          {
+            "word": "decidir",
+            "meaning": "prendre une décision"
+          },
+          {
+            "word": "resultado",
+            "meaning": "résultat"
+          },
+          {
+            "word": "oportunidad",
+            "meaning": "opportunité"
+          },
+          {
+            "word": "mejorar",
+            "meaning": "améliorer"
+          },
+          {
+            "word": "acuerdo",
+            "meaning": "accord"
+          },
+          {
+            "word": "sociedad",
+            "meaning": "société"
+          },
+          {
+            "word": "ambiente",
+            "meaning": "environnement"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’espagnol B1 : niveau intermédiaire et usage pratique",
+      "metaDescription": "Renforcez votre vocabulaire d’espagnol B1 avec des thèmes variés, des mots intermédiaires et une pratique structurée pour plus d’aisance.",
+      "bottomCta": {
+        "heading": "Préparez-vous au niveau supérieur",
+        "text": "Pour progresser vers B2, travaillez la précision lexicale et la compréhension de textes authentiques."
+      }
+    },
+    "b2": {
+      "title": "Vocabulaire d’espagnol B2",
+      "intro": "Le vocabulaire d’espagnol B2 permet de communiquer avec aisance dans des situations variées, aussi bien professionnelles qu’académiques.",
+      "introParagraphs": [
+        "Le vocabulaire d’espagnol B2 permet de communiquer avec aisance dans des situations variées, aussi bien professionnelles qu’académiques. À ce niveau, vous consolidez les bases et développez un lexique plus précis et nuancé.",
+        "Cette page propose une liste de vocabulaire espagnol B2 organisée par thèmes, afin de renforcer votre compréhension écrite et orale, et d’améliorer votre expression dans des contextes complexes."
+      ],
+      "levelDescription": "Intermédiaire supérieur",
+      "ctaText": "Commencer la pratique B2",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau B2 en espagnol ?",
+        "paragraph": "Le niveau B2 correspond à un utilisateur indépendant capable de comprendre des textes complexes et de participer activement à des discussions détaillées. Vous pouvez défendre un point de vue et argumenter avec clarté.",
+        "bullets": [
+          "Comprendre des articles et des reportages spécialisés.",
+          "Exprimer une opinion structurée sur des sujets abstraits.",
+          "Interagir avec fluidité avec des locuteurs natifs."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Étendue du vocabulaire au niveau B2",
+        "topics": [
+          "Communication et opinion",
+          "Société et actualité"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Communication et opinion",
+            "items": [
+              "Exprimer l’accord et le désaccord.",
+              "Nuancer une affirmation.",
+              "Formuler des hypothèses.",
+              "Structurer un argument."
+            ]
+          },
+          {
+            "heading": "Société et actualité",
+            "items": [
+              "Décrire des phénomènes sociaux.",
+              "Parler d’économie et de politique.",
+              "Analyser des tendances culturelles.",
+              "Comprendre des débats publics."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots au niveau B2 ?",
+        "text": "On estime qu’un apprenant B2 maîtrise plusieurs milliers de mots actifs et passifs. Un lexique espagnol B2 complet couvre les expressions fréquentes dans les médias, le monde professionnel et les études supérieures.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire B2",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "desafío",
+            "meaning": "défi"
+          },
+          {
+            "word": "lograr",
+            "meaning": "atteindre, réussir"
+          },
+          {
+            "word": "plantear",
+            "meaning": "soulever, proposer"
+          },
+          {
+            "word": "desarrollar",
+            "meaning": "développer"
+          },
+          {
+            "word": "enfoque",
+            "meaning": "approche"
+          },
+          {
+            "word": "supuesto",
+            "meaning": "hypothèse"
+          },
+          {
+            "word": "destacar",
+            "meaning": "mettre en évidence"
+          },
+          {
+            "word": "ámbito",
+            "meaning": "domaine"
+          },
+          {
+            "word": "sin embargo",
+            "meaning": "cependant"
+          },
+          {
+            "word": "llevar a cabo",
+            "meaning": "mener à bien"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’espagnol B2 – Liste et pratique",
+      "metaDescription": "Travaillez le vocabulaire d’espagnol B2 avec une liste structurée, des exemples et des mots essentiels pour progresser vers un niveau avancé.",
+      "bottomCta": {
+        "heading": "Commencez à pratiquer",
+        "text": "Entraînez-vous régulièrement avec des exercices de vocabulaire espagnol B2 pour renforcer votre mémoire active et améliorer votre aisance à l’oral comme à l’écrit."
+      }
+    },
+    "c1": {
+      "title": "Vocabulaire d’espagnol C1",
+      "intro": "Le vocabulaire d’espagnol C1 correspond à un niveau avancé où la maîtrise lexicale permet d’aborder des sujets complexes avec précision.",
+      "introParagraphs": [
+        "Le vocabulaire d’espagnol C1 correspond à un niveau avancé où la maîtrise lexicale permet d’aborder des sujets complexes avec précision. Vous êtes capable de comprendre des textes exigeants et d’exprimer des idées nuancées.",
+        "Cette liste de vocabulaire espagnol C1 vous aide à structurer votre progression vers une maîtrise approfondie de la langue, notamment dans des contextes académiques et professionnels."
+      ],
+      "levelDescription": "Avancé",
+      "ctaText": "Commencer la pratique C1",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau C1 en espagnol ?",
+        "paragraph": "Au niveau C1, l’apprenant comprend une grande variété de textes longs et spécialisés. Il peut s’exprimer spontanément et utiliser la langue de manière flexible et efficace.",
+        "bullets": [
+          "Comprendre des essais, rapports et analyses complexes.",
+          "Produire un discours structuré et argumenté.",
+          "Adapter le registre selon la situation."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Étendue du vocabulaire au niveau C1",
+        "topics": [
+          "Langage académique et formel",
+          "Vie professionnelle et société"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Langage académique et formel",
+            "items": [
+              "Formuler une thèse et une argumentation.",
+              "Employer des connecteurs complexes.",
+              "Nuancer et relativiser un propos.",
+              "Analyser des concepts abstraits."
+            ]
+          },
+          {
+            "heading": "Vie professionnelle et société",
+            "items": [
+              "Rédiger des rapports détaillés.",
+              "Débattre de questions économiques.",
+              "Évaluer des stratégies et politiques.",
+              "Interpréter des données et tendances."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots au niveau C1 ?",
+        "text": "Un lexique espagnol C1 complet inclut plusieurs milliers de mots et d’expressions permettant de comprendre et produire des discours spécialisés sans difficulté majeure.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire C1",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "planteamiento",
+            "meaning": "approche conceptuelle"
+          },
+          {
+            "word": "perspectiva",
+            "meaning": "perspective"
+          },
+          {
+            "word": "reivindicar",
+            "meaning": "revendiquer"
+          },
+          {
+            "word": "subyacente",
+            "meaning": "sous-jacent"
+          },
+          {
+            "word": "desempeñar",
+            "meaning": "exercer (une fonction)"
+          },
+          {
+            "word": "incidir",
+            "meaning": "avoir un impact"
+          },
+          {
+            "word": "consenso",
+            "meaning": "consensus"
+          },
+          {
+            "word": "envergadura",
+            "meaning": "ampleur"
+          },
+          {
+            "word": "conllevar",
+            "meaning": "entraîner, impliquer"
+          },
+          {
+            "word": "matizar",
+            "meaning": "nuancer"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’espagnol C1 – Niveau avancé",
+      "metaDescription": "Approfondissez le vocabulaire d’espagnol C1 avec une sélection structurée de mots avancés pour l’expression académique et professionnelle.",
+      "bottomCta": {
+        "heading": "Commencez à pratiquer",
+        "text": "Renforcez votre maîtrise avec des exercices de vocabulaire espagnol C1 afin de consolider votre expression écrite et orale dans des contextes exigeants."
+      }
+    },
+    "c2": {
+      "title": "Vocabulaire d’espagnol C2",
+      "intro": "Le vocabulaire d’espagnol C2 correspond au niveau de maîtrise le plus élevé du CECRL.",
+      "introParagraphs": [
+        "Le vocabulaire d’espagnol C2 correspond au niveau de maîtrise le plus élevé du CECRL. À ce stade, l’utilisateur comprend pratiquement tout ce qu’il lit ou entend et s’exprime avec une grande précision lexicale.",
+        "Cette liste de vocabulaire espagnol C2 vise à développer un lexique extrêmement riche, adapté aux contextes spécialisés, académiques et professionnels complexes."
+      ],
+      "levelDescription": "Maîtrise",
+      "ctaText": "Commencer la pratique C2",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau C2 en espagnol ?",
+        "paragraph": "Le niveau C2 indique une compétence proche d’un locuteur natif instruit. L’apprenant peut reformuler, synthétiser et argumenter avec finesse et spontanéité.",
+        "bullets": [
+          "Comprendre des textes littéraires et scientifiques exigeants.",
+          "Produire des analyses détaillées et nuancées.",
+          "Adapter parfaitement le registre et le style."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Étendue du vocabulaire au niveau C2",
+        "topics": [
+          "Discours académique et scientifique",
+          "Registres avancés et stylistiques"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Discours académique et scientifique",
+            "items": [
+              "Employer un vocabulaire technique précis.",
+              "Analyser des théories complexes.",
+              "Argumenter avec subtilité.",
+              "Synthétiser plusieurs sources."
+            ]
+          },
+          {
+            "heading": "Registres avancés et stylistiques",
+            "items": [
+              "Comprendre l’ironie et les sous-entendus.",
+              "Utiliser des tournures idiomatiques rares.",
+              "Adapter le ton selon le contexte.",
+              "Employer des nuances stylistiques fines."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots au niveau C2 ?",
+        "text": "Un lexique espagnol C2 complet comprend un nombre très élevé de mots et d’expressions, couvrant aussi bien le vocabulaire spécialisé que les registres littéraires et formels.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire C2",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "idiosincrasia",
+            "meaning": "idiosyncrasie"
+          },
+          {
+            "word": "esgrimir",
+            "meaning": "avancer (un argument)"
+          },
+          {
+            "word": "paradigma",
+            "meaning": "paradigme"
+          },
+          {
+            "word": "conjetura",
+            "meaning": "conjecture"
+          },
+          {
+            "word": "elucidar",
+            "meaning": "élucider"
+          },
+          {
+            "word": "trascendental",
+            "meaning": "transcendant, fondamental"
+          },
+          {
+            "word": "menospreciar",
+            "meaning": "mépriser"
+          },
+          {
+            "word": "verosímil",
+            "meaning": "vraisemblable"
+          },
+          {
+            "word": "inherente",
+            "meaning": "inhérent"
+          },
+          {
+            "word": "sobresaliente",
+            "meaning": "exceptionnel"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’espagnol C2 – Maîtrise complète",
+      "metaDescription": "Maîtrisez le vocabulaire d’espagnol C2 avec une sélection de termes spécialisés et avancés pour un usage académique et professionnel.",
+      "bottomCta": {
+        "heading": "Commencez à pratiquer",
+        "text": "Approfondissez votre maîtrise avec des exercices de vocabulaire espagnol C2 afin de consolider votre aisance et votre précision dans tous les registres."
+      }
+    }
+  }
+}

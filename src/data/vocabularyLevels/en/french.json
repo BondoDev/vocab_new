@@ -1,0 +1,324 @@
+{
+  "targetLanguage": "french",
+  "targetLanguageDisplayName": "French",
+  "levels": {
+    "a1": {
+      "title": "French A1 Vocabulary Practice",
+      "intro": "Structured CEFR vocabulary practice for this language level.",
+      "levelDescription": "Beginner",
+      "ctaText": "Start A1 Practice",
+      "levelExplanation": {
+        "heading": "Level Explanation",
+        "paragraph": "This section introduces what learners can usually do at this level.",
+        "bullets": [
+          "Core communication goals",
+          "Most common grammar and structures",
+          "Typical real-life usage situations"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary Scope",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Word Count",
+        "text": "Estimated active vocabulary range for this CEFR level.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "maison",
+            "meaning": "Meaning 1"
+          },
+          {
+            "word": "maison",
+            "meaning": "Meaning 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      }
+    },
+    "a2": {
+      "title": "French A2 Vocabulary Practice",
+      "intro": "Structured CEFR vocabulary practice for this language level.",
+      "levelDescription": "Elementary",
+      "ctaText": "Start A2 Practice",
+      "levelExplanation": {
+        "heading": "Level Explanation",
+        "paragraph": "This section introduces what learners can usually do at this level.",
+        "bullets": [
+          "Core communication goals",
+          "Most common grammar and structures",
+          "Typical real-life usage situations"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary Scope",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Word Count",
+        "text": "Estimated active vocabulary range for this CEFR level.",
+        "value": 1200
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "apprendre",
+            "meaning": "Meaning 1"
+          },
+          {
+            "word": "maison",
+            "meaning": "Meaning 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      }
+    },
+    "b1": {
+      "title": "French B1 Vocabulary Practice",
+      "intro": "Structured CEFR vocabulary practice for this language level.",
+      "levelDescription": "Intermediate",
+      "ctaText": "Start B1 Practice",
+      "levelExplanation": {
+        "heading": "Level Explanation",
+        "paragraph": "This section introduces what learners can usually do at this level.",
+        "bullets": [
+          "Core communication goals",
+          "Most common grammar and structures",
+          "Typical real-life usage situations"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary Scope",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Word Count",
+        "text": "Estimated active vocabulary range for this CEFR level.",
+        "value": 2000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "reussir",
+            "meaning": "Meaning 1"
+          },
+          {
+            "word": "apprendre",
+            "meaning": "Meaning 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      }
+    },
+    "b2": {
+      "title": "French B2 Vocabulary Practice",
+      "intro": "Structured CEFR vocabulary practice for this language level.",
+      "levelDescription": "Upper-Intermediate",
+      "ctaText": "Start B2 Practice",
+      "levelExplanation": {
+        "heading": "Level Explanation",
+        "paragraph": "This section introduces what learners can usually do at this level.",
+        "bullets": [
+          "Core communication goals",
+          "Most common grammar and structures",
+          "Typical real-life usage situations"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary Scope",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Word Count",
+        "text": "Estimated active vocabulary range for this CEFR level.",
+        "value": 3200
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "contexte",
+            "meaning": "Meaning 1"
+          },
+          {
+            "word": "reussir",
+            "meaning": "Meaning 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      }
+    },
+    "c1": {
+      "title": "French C1 Vocabulary Practice",
+      "intro": "Structured CEFR vocabulary practice for this language level.",
+      "levelDescription": "Advanced",
+      "ctaText": "Start C1 Practice",
+      "levelExplanation": {
+        "heading": "Level Explanation",
+        "paragraph": "This section introduces what learners can usually do at this level.",
+        "bullets": [
+          "Core communication goals",
+          "Most common grammar and structures",
+          "Typical real-life usage situations"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary Scope",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Word Count",
+        "text": "Estimated active vocabulary range for this CEFR level.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "nuance",
+            "meaning": "Meaning 1"
+          },
+          {
+            "word": "contexte",
+            "meaning": "Meaning 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      }
+    },
+    "c2": {
+      "title": "French C2 Vocabulary Practice",
+      "intro": "Structured CEFR vocabulary practice for this language level.",
+      "levelDescription": "Proficient",
+      "ctaText": "Start C2 Practice",
+      "levelExplanation": {
+        "heading": "Level Explanation",
+        "paragraph": "This section introduces what learners can usually do at this level.",
+        "bullets": [
+          "Core communication goals",
+          "Most common grammar and structures",
+          "Typical real-life usage situations"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary Scope",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Word Count",
+        "text": "Estimated active vocabulary range for this CEFR level.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "eloquent",
+            "meaning": "Meaning 1"
+          },
+          {
+            "word": "nuance",
+            "meaning": "Meaning 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      }
+    }
+  }
+}

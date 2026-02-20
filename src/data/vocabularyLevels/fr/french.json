@@ -1,0 +1,324 @@
+{
+  "targetLanguage": "french",
+  "targetLanguageDisplayName": "Francais",
+  "levels": {
+    "a1": {
+      "title": "Francais A1 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Debutant",
+      "ctaText": "Commencer la pratique A1",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "maison",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "maison",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "a2": {
+      "title": "Francais A2 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Elementaire",
+      "ctaText": "Commencer la pratique A2",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 1200
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "apprendre",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "maison",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "b1": {
+      "title": "Francais B1 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Intermediaire",
+      "ctaText": "Commencer la pratique B1",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 2000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "reussir",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "apprendre",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "b2": {
+      "title": "Francais B2 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Intermediaire superieur",
+      "ctaText": "Commencer la pratique B2",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 3200
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "contexte",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "reussir",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "c1": {
+      "title": "Francais C1 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Avance",
+      "ctaText": "Commencer la pratique C1",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "nuance",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "contexte",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "c2": {
+      "title": "Francais C2 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Maitrise",
+      "ctaText": "Commencer la pratique C2",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "eloquent",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "nuance",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    }
+  }
+}

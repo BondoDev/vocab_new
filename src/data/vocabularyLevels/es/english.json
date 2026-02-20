@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "english",
+  "targetLanguageDisplayName": "Ingles",
+  "levels": {
+    "a1": {
+      "title": "Inglés A1 práctica de vocabulario",
+      "intro": "Inglés A1 práctica de vocabulario es el primer paso para quienes empiezan a aprender el idioma.",
+      "levelDescription": "Principiante",
+      "ctaText": "Comenzar práctica A1",
+      "levelExplanation": {
+        "heading": "¿Qué significa el nivel A1?",
+        "paragraph": "El nivel A1 es el punto inicial del aprendizaje. Cuando decides aprender vocabulario inglés A1, trabajas con las palabras más comunes que aparecen en conversaciones sencillas.",
+        "bullets": [
+          "Puedes presentarte y hacer preguntas básicas.",
+          "Puedes entender palabras familiares y expresiones muy simples.",
+          "Puedes comunicarte de forma básica si la otra persona habla despacio."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "¿Qué tipo de vocabulario se aprende?",
+        "topics": [
+          "Información personal",
+          "Vida cotidiana"
+        ],
+        "wordTypes": [
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Información personal",
+            "items": [
+              "Nombre y edad",
+              "Países y nacionalidades",
+              "Miembros de la familia",
+              "Profesiones básicas"
+            ]
+          },
+          {
+            "heading": "Vida cotidiana",
+            "items": [
+              "Comida y bebidas",
+              "Números y la hora",
+              "Días y meses",
+              "Verbos comunes (go, eat, live, work)"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "¿Cuántas palabras incluye A1?",
+        "text": "En el nivel A1 se manejan aproximadamente entre 500 y 800 palabras. La práctica constante ayuda a memorizar y usar este vocabulario con mayor seguridad.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Ejemplos de vocabulario A1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "name",
+            "meaning": "nombre de una persona"
+          },
+          {
+            "word": "city",
+            "meaning": "ciudad"
+          },
+          {
+            "word": "mother",
+            "meaning": "madre"
+          },
+          {
+            "word": "house",
+            "meaning": "casa"
+          },
+          {
+            "word": "water",
+            "meaning": "agua"
+          },
+          {
+            "word": "book",
+            "meaning": "libro"
+          },
+          {
+            "word": "small",
+            "meaning": "pequeño"
+          },
+          {
+            "word": "happy",
+            "meaning": "feliz"
+          },
+          {
+            "word": "work",
+            "meaning": "trabajar"
+          },
+          {
+            "word": "school",
+            "meaning": "escuela"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      },
+      "metaTitle": "Inglés A1 práctica de vocabulario – Palabras básicas para principiantes",
+      "metaDescription": "Empieza con Inglés A1 práctica de vocabulario. Aprende palabras básicas, significados y ejemplos simples para comunicarte en situaciones cotidianas.",
+      "introParagraphs": [
+        "Inglés A1 práctica de vocabulario es el primer paso para quienes empiezan a aprender el idioma. En este nivel estudias palabras simples y frecuentes que te permiten hablar sobre ti, tu familia y tu vida diaria.",
+        "Con vocabulario básico de inglés, desarrollas frases cortas y claras. El objetivo es comprender y usar una lista de palabras inglés A1 en situaciones reales y cotidianas."
+      ],
+      "bottomCta": {
+        "heading": "Empieza a practicar",
+        "text": "Comienza hoy con Inglés A1 práctica de vocabulario y construye una base sólida en inglés paso a paso."
+      }
+    },
+    "a2": {
+      "title": "Inglés A2 práctica de vocabulario",
+      "intro": "Inglés A2 práctica de vocabulario te permite avanzar más allá de las frases muy básicas y empezar a comunicarte con mayor claridad.",
+      "levelDescription": "Elemental",
+      "ctaText": "Comenzar práctica A2",
+      "levelExplanation": {
+        "heading": "¿Qué implica el nivel A2?",
+        "paragraph": "El nivel A2 se considera elemental o preintermedio. Cuando decides aprender vocabulario inglés A2, trabajas con expresiones frecuentes relacionadas con la vida cotidiana.",
+        "bullets": [
+          "Puedes hablar de tu rutina y tus experiencias recientes.",
+          "Puedes intercambiar información en conversaciones simples.",
+          "Puedes escribir mensajes breves y descripciones básicas."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "¿Qué vocabulario se trabaja?",
+        "topics": [
+          "Actividades y entorno diario",
+          "Comunicación y experiencias"
+        ],
+        "wordTypes": [
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Actividades y entorno diario",
+            "items": [
+              "Tareas del hogar y responsabilidades",
+              "Compras y precios",
+              "Direcciones y transporte",
+              "Clima y estaciones del año"
+            ]
+          },
+          {
+            "heading": "Comunicación y experiencias",
+            "items": [
+              "Eventos pasados",
+              "Planes futuros",
+              "Preferencias y comparaciones",
+              "Situaciones sencillas de resolución de problemas"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "¿Cuántas palabras incluye A2?",
+        "text": "En el nivel A2 se manejan aproximadamente entre 1.000 y 1.500 palabras. La práctica regular de Inglés A2 práctica de vocabulario mejora la fluidez y prepara para niveles intermedios.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Ejemplos de vocabulario A2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "arrive",
+            "meaning": "llegar a un lugar"
+          },
+          {
+            "word": "borrow",
+            "meaning": "pedir algo para devolverlo después"
+          },
+          {
+            "word": "choose",
+            "meaning": "elegir entre opciones"
+          },
+          {
+            "word": "different",
+            "meaning": "no igual"
+          },
+          {
+            "word": "invite",
+            "meaning": "pedir a alguien que venga"
+          },
+          {
+            "word": "learn",
+            "meaning": "aprender algo nuevo"
+          },
+          {
+            "word": "return",
+            "meaning": "volver a un lugar"
+          },
+          {
+            "word": "save",
+            "meaning": "guardar o ahorrar"
+          },
+          {
+            "word": "travel",
+            "meaning": "viajar a otro sitio"
+          },
+          {
+            "word": "visit",
+            "meaning": "ir a ver a alguien o a un lugar"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      },
+      "metaTitle": "Inglés A2 práctica de vocabulario – Palabras esenciales nivel elemental",
+      "metaDescription": "Mejora tu nivel con Inglés A2 práctica de vocabulario. Aprende palabras esenciales, significados y ejemplos para comunicarte con más confianza.",
+      "introParagraphs": [
+        "Inglés A2 práctica de vocabulario te permite avanzar más allá de las frases muy básicas y empezar a comunicarte con mayor claridad. En este nivel amplías tu léxico para situaciones habituales como compras, viajes o actividades diarias.",
+        "Con vocabulario elemental de inglés, aprendes a describir experiencias pasadas, hacer planes sencillos y expresar opiniones básicas. Una lista de palabras inglés A2 bien organizada facilita el progreso constante."
+      ],
+      "bottomCta": {
+        "heading": "Continúa practicando",
+        "text": "Refuerza tu progreso con Inglés A2 práctica de vocabulario y desarrolla mayor seguridad al comunicarte en situaciones cotidianas."
+      }
+    },
+    "b1": {
+      "title": "Inglés B1 práctica de vocabulario",
+      "intro": "Inglés B1 práctica de vocabulario te ayuda a comunicarte con mayor seguridad en situaciones cotidianas y profesionales.",
+      "levelDescription": "Intermedio",
+      "ctaText": "Comenzar práctica B1",
+      "levelExplanation": {
+        "heading": "¿Qué significa el nivel B1?",
+        "paragraph": "El nivel B1 marca el inicio de la independencia lingüística. Cuando decides aprender vocabulario inglés B1, puedes comprender los puntos principales de textos claros y comunicarte en la mayoría de las situaciones habituales.",
+        "bullets": [
+          "Puedes describir experiencias, sueños y planes futuros.",
+          "Puedes dar razones y explicar opiniones.",
+          "Puedes escribir textos sencillos y coherentes sobre temas conocidos."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "¿Qué tipo de vocabulario se trabaja?",
+        "topics": [
+          "Vida diaria y entorno social",
+          "Opiniones y resolución de problemas"
+        ],
+        "wordTypes": [
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Vida diaria y entorno social",
+            "items": [
+              "Trabajo y estudios",
+              "Viajes y experiencias culturales",
+              "Salud y bienestar",
+              "Relaciones personales"
+            ]
+          },
+          {
+            "heading": "Opiniones y resolución de problemas",
+            "items": [
+              "Expresar acuerdo y desacuerdo",
+              "Comparar ventajas y desventajas",
+              "Hacer sugerencias",
+              "Describir causas y consecuencias"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "¿Cuántas palabras incluye B1?",
+        "text": "En el nivel B1 se manejan aproximadamente entre 2.000 y 2.500 palabras activas. La práctica constante de Inglés B1 práctica de vocabulario mejora la fluidez y prepara para niveles más avanzados.",
+        "value": 2500
+      },
+      "sampleVocabulary": {
+        "heading": "Ejemplos de vocabulario B1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "achieve",
+            "meaning": "lograr una meta"
+          },
+          {
+            "word": "advantage",
+            "meaning": "beneficio o punto positivo"
+          },
+          {
+            "word": "choice",
+            "meaning": "decisión entre opciones"
+          },
+          {
+            "word": "experience",
+            "meaning": "situación vivida"
+          },
+          {
+            "word": "improve",
+            "meaning": "hacer algo mejor"
+          },
+          {
+            "word": "opinion",
+            "meaning": "idea o punto de vista personal"
+          },
+          {
+            "word": "prepare",
+            "meaning": "organizar algo con anticipación"
+          },
+          {
+            "word": "reason",
+            "meaning": "motivo o causa"
+          },
+          {
+            "word": "result",
+            "meaning": "consecuencia o efecto"
+          },
+          {
+            "word": "suggest",
+            "meaning": "proponer una idea"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      },
+      "metaTitle": "Inglés B1 práctica de vocabulario – Palabras clave nivel intermedio",
+      "metaDescription": "Mejora tu nivel con Inglés B1 práctica de vocabulario. Aprende palabras intermedias, significados y ejemplos para comunicarte con más precisión.",
+      "introParagraphs": [
+        "Inglés B1 práctica de vocabulario te ayuda a comunicarte con mayor seguridad en situaciones cotidianas y profesionales. En este nivel intermedio amplías tu léxico para expresar opiniones, describir experiencias y participar en conversaciones más detalladas.",
+        "Con vocabulario intermedio de inglés, desarrollas la capacidad de entender textos más largos y de explicar tus ideas con mayor claridad. Una lista de palabras inglés B1 bien estructurada facilita un progreso constante y práctico."
+      ],
+      "bottomCta": {
+        "heading": "Continúa avanzando",
+        "text": "Refuerza tus habilidades con Inglés B1 práctica de vocabulario y desarrolla mayor precisión y confianza al comunicarte en inglés."
+      }
+    },
+    "b2": {
+      "title": "Inglés B2 práctica de vocabulario",
+      "intro": "Inglés B2 práctica de vocabulario te permite comunicarte con mayor precisión y seguridad en contextos sociales, académicos y profesionales.",
+      "levelDescription": "Intermedio alto",
+      "ctaText": "Comenzar práctica B2",
+      "levelExplanation": {
+        "heading": "¿Qué implica el nivel B2?",
+        "paragraph": "El nivel B2 representa un uso independiente y fluido del idioma. Cuando decides aprender vocabulario inglés B2, puedes entender textos complejos y expresar tus ideas de forma clara y organizada.",
+        "bullets": [
+          "Puedes argumentar y defender tu punto de vista.",
+          "Puedes comprender artículos y discursos extensos.",
+          "Puedes interactuar con hablantes nativos con naturalidad."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "¿Qué vocabulario se trabaja?",
+        "topics": [
+          "Ámbito académico y profesional",
+          "Lenguaje abstracto y analítico"
+        ],
+        "wordTypes": [
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Ámbito académico y profesional",
+            "items": [
+              "Comunicación en el trabajo",
+              "Tecnología e innovación",
+              "Educación y formación",
+              "Medios de comunicación"
+            ]
+          },
+          {
+            "heading": "Lenguaje abstracto y analítico",
+            "items": [
+              "Relaciones de causa y efecto",
+              "Evaluación de ventajas y desventajas",
+              "Expresión de probabilidad",
+              "Negociación y acuerdos"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "¿Cuántas palabras incluye B2?",
+        "text": "En el nivel B2 se manejan aproximadamente entre 3.000 y 4.000 palabras. La práctica constante de Inglés B2 práctica de vocabulario mejora la fluidez y prepara para niveles avanzados.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Ejemplos de vocabulario B2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "assess",
+            "meaning": "evaluar algo cuidadosamente"
+          },
+          {
+            "word": "consequence",
+            "meaning": "resultado o efecto de una acción"
+          },
+          {
+            "word": "efficient",
+            "meaning": "que funciona de manera eficaz"
+          },
+          {
+            "word": "evidence",
+            "meaning": "prueba o información que confirma algo"
+          },
+          {
+            "word": "maintain",
+            "meaning": "mantener o conservar"
+          },
+          {
+            "word": "perspective",
+            "meaning": "punto de vista"
+          },
+          {
+            "word": "reliable",
+            "meaning": "que se puede confiar"
+          },
+          {
+            "word": "significant",
+            "meaning": "importante o relevante"
+          },
+          {
+            "word": "strategy",
+            "meaning": "plan para lograr un objetivo"
+          },
+          {
+            "word": "trend",
+            "meaning": "tendencia o dirección general"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      },
+      "metaTitle": "Inglés B2 práctica de vocabulario – Palabras nivel intermedio alto",
+      "metaDescription": "Perfecciona tu nivel con Inglés B2 práctica de vocabulario. Aprende palabras clave, significados y ejemplos para comunicarte con mayor fluidez.",
+      "introParagraphs": [
+        "Inglés B2 práctica de vocabulario te permite comunicarte con mayor precisión y seguridad en contextos sociales, académicos y profesionales. En este nivel intermedio alto amplías tu capacidad para debatir ideas y expresar opiniones complejas.",
+        "Con vocabulario avanzado de inglés, puedes comprender textos más extensos y participar activamente en conversaciones detalladas. Una lista de palabras inglés B2 bien estructurada facilita el progreso constante."
+      ],
+      "bottomCta": {
+        "heading": "Sigue avanzando",
+        "text": "Consolida tu progreso con Inglés B2 práctica de vocabulario y mejora tu capacidad para comunicarte con mayor precisión y fluidez."
+      }
+    },
+    "c1": {
+      "title": "Inglés C1 práctica de vocabulario",
+      "intro": "Inglés C1 práctica de vocabulario está orientado a estudiantes que buscan un dominio avanzado del idioma.",
+      "levelDescription": "Avanzado",
+      "ctaText": "Comenzar práctica C1",
+      "levelExplanation": {
+        "heading": "¿Qué caracteriza el nivel C1?",
+        "paragraph": "El nivel C1 implica un uso eficaz y flexible del idioma. Cuando decides aprender vocabulario inglés C1, puedes interpretar significados implícitos y producir textos claros, detallados y bien estructurados.",
+        "bullets": [
+          "Puedes expresar ideas complejas con fluidez.",
+          "Puedes comprender artículos y ensayos extensos.",
+          "Puedes adaptar el lenguaje al contexto académico o profesional."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ámbitos de vocabulario en C1",
+        "topics": [
+          "Contexto académico y profesional",
+          "Lenguaje abstracto y matizado"
+        ],
+        "wordTypes": [
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Contexto académico y profesional",
+            "items": [
+              "Terminología analítica y conceptual",
+              "Lenguaje formal para presentaciones",
+              "Evaluación crítica y argumentación",
+              "Comunicación corporativa"
+            ]
+          },
+          {
+            "heading": "Lenguaje abstracto y matizado",
+            "items": [
+              "Expresión de hipótesis y probabilidad",
+              "Distinciones sutiles de significado",
+              "Estructuración de argumentos complejos",
+              "Descripción de relaciones causales"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "¿Cuántas palabras incluye C1?",
+        "text": "En el nivel C1 se manejan más de 5.000 palabras, incluidas expresiones idiomáticas y términos especializados. La práctica constante de Inglés C1 práctica de vocabulario mejora la precisión y la flexibilidad expresiva.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Ejemplos de vocabulario C1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "allocate",
+            "meaning": "asignar recursos para un fin específico"
+          },
+          {
+            "word": "coherent",
+            "meaning": "lógico y bien estructurado"
+          },
+          {
+            "word": "comprehensive",
+            "meaning": "completo y detallado"
+          },
+          {
+            "word": "constrain",
+            "meaning": "limitar o restringir"
+          },
+          {
+            "word": "derive",
+            "meaning": "obtener de una fuente"
+          },
+          {
+            "word": "facilitate",
+            "meaning": "hacer algo más fácil"
+          },
+          {
+            "word": "implication",
+            "meaning": "consecuencia o significado implícito"
+          },
+          {
+            "word": "notion",
+            "meaning": "idea o concepto"
+          },
+          {
+            "word": "substantial",
+            "meaning": "considerable en cantidad o importancia"
+          },
+          {
+            "word": "validate",
+            "meaning": "confirmar o comprobar la validez"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      },
+      "metaTitle": "Inglés C1 práctica de vocabulario – Léxico avanzado y preciso",
+      "metaDescription": "Perfecciona tu nivel con Inglés C1 práctica de vocabulario. Aprende palabras avanzadas, matices y ejemplos para comunicarte con precisión académica y profesional.",
+      "introParagraphs": [
+        "Inglés C1 práctica de vocabulario está orientado a estudiantes que buscan un dominio avanzado del idioma. En este nivel puedes comprender textos complejos, participar en debates formales y expresar ideas con precisión y matices.",
+        "El desarrollo de vocabulario avanzado de inglés permite comunicar argumentos estructurados y adaptar el registro según el contexto. Una lista de palabras inglés C1 organizada facilita la ampliación sistemática del léxico."
+      ],
+      "bottomCta": {
+        "heading": "Perfecciona tu dominio",
+        "text": "Consolida tu nivel con Inglés C1 práctica de vocabulario y desarrolla una comunicación precisa, formal y eficaz en contextos exigentes."
+      }
+    },
+    "c2": {
+      "title": "Ingl?s C2 pr?ctica de vocabulario",
+      "intro": "Ingl?s C2 pr?ctica de vocabulario est? orientado a estudiantes que buscan un dominio completo del idioma.",
+      "levelDescription": "Experto",
+      "ctaText": "Comenzar pr?ctica C2",
+      "levelExplanation": {
+        "heading": "?Qu? define el nivel C2?",
+        "paragraph": "El nivel C2 representa el m?ximo grado de competencia. Cuando decides aprender vocabulario ingl?s C2, puedes interpretar significados impl?citos, iron?a y referencias culturales con facilidad.",
+        "bullets": [
+          "Puedes reformular ideas con diferentes estilos.",
+          "Puedes comprender textos especializados y literarios.",
+          "Puedes comunicarte con precisi?n en contextos acad?micos y profesionales."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "?mbitos de vocabulario en C2",
+        "topics": [
+          "Lenguaje acad?mico y especializado",
+          "Matices y variaci?n estil?stica"
+        ],
+        "wordTypes": [
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Lenguaje acad?mico y especializado",
+            "items": [
+              "Terminolog?a te?rica y conceptual",
+              "Expresi?n cr?tica y anal?tica",
+              "Comunicaci?n formal avanzada",
+              "Vocabulario t?cnico y profesional"
+            ]
+          },
+          {
+            "heading": "Matices y variaci?n estil?stica",
+            "items": [
+              "Diferencias sutiles de significado",
+              "Uso figurado e idiom?tico",
+              "Adaptaci?n de registro",
+              "Precisi?n en la argumentaci?n"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "?Cu?ntas palabras incluye C2?",
+        "text": "En el nivel C2 se manejan m?s de 8.000 palabras, incluidas expresiones poco frecuentes y especializadas. La pr?ctica constante de Ingl?s C2 pr?ctica de vocabulario consolida el dominio avanzado del ingl?s y la flexibilidad expresiva.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Ejemplos de vocabulario C2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "ambiguous",
+            "meaning": "que puede tener m?s de una interpretaci?n"
+          },
+          {
+            "word": "convoluted",
+            "meaning": "excesivamente complejo o dif?cil de entender"
+          },
+          {
+            "word": "discern",
+            "meaning": "percibir o distinguir con claridad"
+          },
+          {
+            "word": "eloquent",
+            "meaning": "que se expresa con gran claridad y eficacia"
+          },
+          {
+            "word": "meticulous",
+            "meaning": "muy detallista y preciso"
+          },
+          {
+            "word": "pragmatic",
+            "meaning": "que act?a de manera pr?ctica y realista"
+          },
+          {
+            "word": "resilient",
+            "meaning": "capaz de recuperarse r?pidamente"
+          },
+          {
+            "word": "scrutinize",
+            "meaning": "examinar de forma minuciosa"
+          },
+          {
+            "word": "substantiate",
+            "meaning": "aportar pruebas que confirmen algo"
+          },
+          {
+            "word": "ubiquitous",
+            "meaning": "presente en todas partes"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      },
+      "metaTitle": "Ingl?s C2 pr?ctica de vocabulario ? L?xico de nivel experto",
+      "metaDescription": "Alcanza el dominio total con Ingl?s C2 pr?ctica de vocabulario. Aprende t?rminos complejos, matices y usos avanzados para comunicarte con precisi?n absoluta.",
+      "introParagraphs": [
+        "Ingl?s C2 pr?ctica de vocabulario est? orientado a estudiantes que buscan un dominio completo del idioma. En este nivel puedes comprender pr?cticamente cualquier tipo de texto y expresar ideas con exactitud y matices sutiles.",
+        "El desarrollo de vocabulario casi nativo en ingl?s permite adaptar el registro seg?n el contexto y comunicar conceptos complejos con naturalidad. Una lista de palabras ingl?s C2 bien estructurada facilita el perfeccionamiento l?xico al m?s alto nivel."
+      ],
+      "bottomCta": {
+        "heading": "Alcanza el dominio total",
+        "text": "Perfecciona tu nivel con Ingl?s C2 pr?ctica de vocabulario y desarrolla una competencia ling??stica cercana a la de un hablante nativo."
+      }
+    }
+  }
+}

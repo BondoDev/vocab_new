@@ -1,0 +1,672 @@
+{
+  "targetLanguage": "spanish",
+  "targetLanguageDisplayName": "Spanisch",
+  "levels": {
+    "a1": {
+      "title": "Spanisch Wortschatz A1",
+      "intro": "Der Spanisch Wortschatz A1 bildet die Grundlage für deine ersten Schritte in der Sprache.",
+      "introParagraphs": [
+        "Der Spanisch Wortschatz A1 bildet die Grundlage für deine ersten Schritte in der Sprache. In diesem Niveau lernst du einfache, häufig gebrauchte Wörter und feste Wendungen für alltägliche Situationen.",
+        "Mit einem soliden spanische Grundwortschatz A1 kannst du dich vorstellen, einfache Fragen stellen und kurze Gespräche führen."
+      ],
+      "levelDescription": "Anfänger",
+      "ctaText": "A1-Training starten",
+      "levelExplanation": {
+        "heading": "Was bedeutet das Niveau A1?",
+        "paragraph": "Das Niveau A1 entspricht der elementaren Sprachverwendung. Ziel ist es, einfache Ausdrücke zu verstehen und selbst zu benutzen.",
+        "bullets": [
+          "Du kannst dich und andere vorstellen.",
+          "Du verstehst einfache Fragen zu Familie, Arbeit oder Herkunft.",
+          "Du verwendest sehr einfache Satzstrukturen im Präsens."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Umfang des Wortschatzes auf A1",
+        "topics": [
+          "Begrüßungen und Verabschiedungen",
+          "Zahlen, Uhrzeit und Datum",
+          "Familie und Freunde",
+          "Essen und Trinken"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Wichtige Themenbereiche",
+            "items": [
+              "Begrüßungen und Verabschiedungen",
+              "Zahlen, Uhrzeit und Datum",
+              "Familie und Freunde",
+              "Essen und Trinken"
+            ]
+          },
+          {
+            "heading": "Kommunikative Grundlagen",
+            "items": [
+              "Einfache Fragen stellen",
+              "Vorlieben ausdrücken",
+              "Alltägliche Gegenstände beschreiben",
+              "Kurze Aussagen im Präsens bilden"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter braucht man?",
+        "text": "Im Niveau A1 lernst du einige Hundert Wörter. Mit regelmäßigen Übungen Spanisch Wortschatz A1 kannst du den Basiswortschatz Spanisch A1 sicher festigen.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "hola",
+            "meaning": "Hallo"
+          },
+          {
+            "word": "gracias",
+            "meaning": "Danke"
+          },
+          {
+            "word": "casa",
+            "meaning": "Haus"
+          },
+          {
+            "word": "comer",
+            "meaning": "essen"
+          },
+          {
+            "word": "agua",
+            "meaning": "Wasser"
+          },
+          {
+            "word": "amigo",
+            "meaning": "Freund"
+          },
+          {
+            "word": "escuela",
+            "meaning": "Schule"
+          },
+          {
+            "word": "trabajo",
+            "meaning": "Arbeit"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Niveaus entdecken"
+      },
+      "metaTitle": "Spanisch Wortschatz A1 – Grundlagen und einfache Wörter",
+      "metaDescription": "Lerne Spanisch Wortschatz A1 mit einfachen Wörtern, Alltagsthemen und klaren Übungen für einen sicheren Start in die Sprache.",
+      "bottomCta": {
+        "heading": "Starte mit dem Lernen",
+        "text": "Spanisch für Anfänger Wortschatz sollte täglich wiederholt und aktiv angewendet werden. Kleine Dialoge und einfache Übungen helfen dir beim Einstieg."
+      }
+    },
+    "a2": {
+      "title": "Spanisch Wortschatz A2",
+      "intro": "Der Spanisch Wortschatz A2 baut auf den Grundlagen auf und erweitert deine sprachlichen Möglichkeiten im Alltag.",
+      "introParagraphs": [
+        "Der Spanisch Wortschatz A2 baut auf den Grundlagen auf und erweitert deine sprachlichen Möglichkeiten im Alltag. Du kannst dich differenzierter ausdrücken und einfache Gespräche sicherer führen.",
+        "Mit regelmäßigem Spanisch lernen Wortschatz A2 entwickelst du mehr Sicherheit beim Sprechen und Verstehen."
+      ],
+      "levelDescription": "Grundstufe",
+      "ctaText": "A2-Training starten",
+      "levelExplanation": {
+        "heading": "Was bedeutet das Niveau A2?",
+        "paragraph": "A2 steht für elementare Sprachverwendung mit erweitertem Wortschatz.",
+        "bullets": [
+          "Du kannst deine täglichen Aktivitäten beschreiben.",
+          "Du verstehst einfache Anweisungen und kurze Texte.",
+          "Du führst Gespräche zu vertrauten Themen."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Umfang des Wortschatzes auf A2",
+        "topics": [
+          "Reisen und Verkehr",
+          "Gesundheit",
+          "Freizeitaktivitäten",
+          "Einkaufen und Dienstleistungen"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Häufige Themen",
+            "items": [
+              "Reisen und Verkehr",
+              "Gesundheit",
+              "Freizeitaktivitäten",
+              "Einkaufen und Dienstleistungen"
+            ]
+          },
+          {
+            "heading": "Sprachliche Entwicklung",
+            "items": [
+              "Über Vergangenes sprechen",
+              "Zukünftige Pläne ausdrücken",
+              "Alltagswortschatz Spanisch A2 anwenden",
+              "Einfache Meinungen formulieren"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter braucht man?",
+        "text": "Im Niveau A2 beherrschst du meist 1000 bis 1500 Wörter. Mit Übungen Spanisch Wortschatz A2 kannst du deinen Spanisch Niveau A2 Wortschatz systematisch erweitern.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "viajar",
+            "meaning": "reisen"
+          },
+          {
+            "word": "comprar",
+            "meaning": "kaufen"
+          },
+          {
+            "word": "difícil",
+            "meaning": "schwierig"
+          },
+          {
+            "word": "ayer",
+            "meaning": "gestern"
+          },
+          {
+            "word": "mañana",
+            "meaning": "morgen"
+          },
+          {
+            "word": "empezar",
+            "meaning": "beginnen"
+          },
+          {
+            "word": "ciudad",
+            "meaning": "Stadt"
+          },
+          {
+            "word": "preguntar",
+            "meaning": "fragen"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Niveaus entdecken"
+      },
+      "metaTitle": "Spanisch Wortschatz A2 – Alltagssprache erweitern",
+      "metaDescription": "Erweitere deinen Spanisch Wortschatz A2 mit praxisnahen Themen, wichtigen Ausdrücken und gezielten Übungen für mehr Sicherheit.",
+      "bottomCta": {
+        "heading": "Weiter lernen",
+        "text": "Regelmäßiges Wiederholen und Anwenden in Dialogen hilft dir, deinen Spanisch Grundwortschatz A2 dauerhaft zu festigen."
+      }
+    },
+    "b1": {
+      "title": "Spanisch Wortschatz B1",
+      "intro": "Der Spanisch Wortschatz B1 markiert den Übergang zur Mittelstufe.",
+      "introParagraphs": [
+        "Der Spanisch Wortschatz B1 markiert den Übergang zur Mittelstufe. Du kannst dich nun selbstständiger ausdrücken und komplexere Inhalte verstehen.",
+        "Mit regelmäßigem Spanisch lernen Wortschatz B1 entwickelst du mehr Sicherheit im Gespräch und im schriftlichen Ausdruck."
+      ],
+      "levelDescription": "Mittelstufe",
+      "ctaText": "B1-Training starten",
+      "levelExplanation": {
+        "heading": "Was bedeutet das Niveau B1?",
+        "paragraph": "B1 steht für selbstständige Sprachverwendung in vertrauten Situationen.",
+        "bullets": [
+          "Du verstehst die Hauptpunkte klarer Gespräche.",
+          "Du beschreibst Erfahrungen und Ereignisse.",
+          "Du begründest einfache Meinungen."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Umfang des Wortschatzes auf B1",
+        "topics": [
+          "Arbeit und Ausbildung",
+          "Medien und Technologie",
+          "Gesellschaftliche Themen",
+          "Kultur und Reisen"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Wichtige Themen",
+            "items": [
+              "Arbeit und Ausbildung",
+              "Medien und Technologie",
+              "Gesellschaftliche Themen",
+              "Kultur und Reisen"
+            ]
+          },
+          {
+            "heading": "Sprachliche Kompetenzen",
+            "items": [
+              "Konjunktionen und Verbindungswörter verwenden",
+              "Spanisch Wörter Mittelstufe sicher anwenden",
+              "Kurztexte strukturiert verfassen",
+              "Längere Gespräche führen"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter braucht man?",
+        "text": "Auf B1-Niveau umfasst der aktive Wortschatz etwa 2000 bis 2500 Wörter. Mit Übungen Spanisch Wortschatz B1 kannst du deinen Wortschatz Spanisch Niveau B1 kontinuierlich ausbauen.",
+        "value": 2500
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "experiencia",
+            "meaning": "Erfahrung"
+          },
+          {
+            "word": "decidir",
+            "meaning": "entscheiden"
+          },
+          {
+            "word": "resultado",
+            "meaning": "Ergebnis"
+          },
+          {
+            "word": "oportunidad",
+            "meaning": "Gelegenheit"
+          },
+          {
+            "word": "mejorar",
+            "meaning": "verbessern"
+          },
+          {
+            "word": "acuerdo",
+            "meaning": "Vereinbarung"
+          },
+          {
+            "word": "sociedad",
+            "meaning": "Gesellschaft"
+          },
+          {
+            "word": "ambiente",
+            "meaning": "Umwelt"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Niveaus entdecken"
+      },
+      "metaTitle": "Spanisch Wortschatz B1 – Mittelstufe sicher beherrschen",
+      "metaDescription": "Stärke deinen Spanisch Wortschatz B1 mit wichtigen Themen, erweiterten Ausdrücken und gezielter Praxis für mehr Sprachsicherheit.",
+      "bottomCta": {
+        "heading": "Bereit für das nächste Niveau?",
+        "text": "Um B2 zu erreichen, solltest du deinen Spanisch Mittelstufe Wortschatz weiter vertiefen und regelmäßig mit authentischen Texten arbeiten."
+      }
+    },
+    "b2": {
+      "title": "Spanisch Wortschatz B2",
+      "intro": "Der Spanisch Wortschatz B2 bildet die Grundlage für eine selbstständige und sichere Kommunikation in komplexeren Situationen.",
+      "introParagraphs": [
+        "Der Spanisch Wortschatz B2 bildet die Grundlage für eine selbstständige und sichere Kommunikation in komplexeren Situationen. Auf diesem Niveau erweitern Sie Ihr aktives Vokabular deutlich und lernen, differenziert zu argumentieren.",
+        "Diese Spanisch Vokabelliste B2 hilft Ihnen, typische Themenbereiche systematisch zu vertiefen und Ihre Ausdrucksfähigkeit im schriftlichen und mündlichen Spanisch gezielt auszubauen."
+      ],
+      "levelDescription": "Gehobene Mittelstufe",
+      "ctaText": "B2-Training starten",
+      "levelExplanation": {
+        "heading": "Was bedeutet das Niveau B2 im Spanischen?",
+        "paragraph": "Auf dem Niveau B2 können Lernende anspruchsvollere Texte verstehen und sich klar und detailliert zu verschiedenen Themen äußern. Sie sind in der Lage, Argumente zu entwickeln und Standpunkte zu verteidigen.",
+        "bullets": [
+          "Verstehen von Artikeln und Berichten zu aktuellen Themen.",
+          "Aktive Teilnahme an Diskussionen mit Muttersprachlern.",
+          "Strukturierte Darstellung von Vor- und Nachteilen."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Umfang des Wortschatzes auf B2",
+        "topics": [
+          "Meinung und Argumentation",
+          "Gesellschaft und Medien"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Meinung und Argumentation",
+            "items": [
+              "Zustimmung und Widerspruch ausdrücken.",
+              "Hypothesen formulieren.",
+              "Begründungen strukturieren.",
+              "Zusammenhänge erklären."
+            ]
+          },
+          {
+            "heading": "Gesellschaft und Medien",
+            "items": [
+              "Über politische und wirtschaftliche Themen sprechen.",
+              "Soziale Entwicklungen beschreiben.",
+              "Berichte analysieren.",
+              "Aktuelle Ereignisse kommentieren."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter umfasst B2?",
+        "text": "Der Spanisch Wortschatz Mittelstufe umfasst mehrere tausend Wörter und Redewendungen, die eine differenzierte und flüssige Kommunikation ermöglichen.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz B2",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "desafío",
+            "meaning": "Herausforderung"
+          },
+          {
+            "word": "lograr",
+            "meaning": "erreichen, schaffen"
+          },
+          {
+            "word": "plantear",
+            "meaning": "aufwerfen, vorschlagen"
+          },
+          {
+            "word": "desarrollar",
+            "meaning": "entwickeln"
+          },
+          {
+            "word": "enfoque",
+            "meaning": "Ansatz"
+          },
+          {
+            "word": "supuesto",
+            "meaning": "Annahme"
+          },
+          {
+            "word": "destacar",
+            "meaning": "hervorheben"
+          },
+          {
+            "word": "ámbito",
+            "meaning": "Bereich"
+          },
+          {
+            "word": "sin embargo",
+            "meaning": "jedoch"
+          },
+          {
+            "word": "llevar a cabo",
+            "meaning": "durchführen"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Niveaus entdecken"
+      },
+      "metaTitle": "Spanisch Wortschatz B2 – Mittelstufe erweitern",
+      "metaDescription": "Trainieren Sie Ihren Spanisch Wortschatz B2 mit strukturierten Listen, Beispielen und praxisnahen Wörtern für Alltag, Beruf und Studium.",
+      "bottomCta": {
+        "heading": "Jetzt üben und festigen",
+        "text": "Nutzen Sie Spanisch Wortschatz Übungen B2, um neue Wörter aktiv anzuwenden und Ihre Sprachkompetenz gezielt weiterzuentwickeln."
+      }
+    },
+    "c1": {
+      "title": "Spanisch Wortschatz C1",
+      "intro": "Der Spanisch Wortschatz C1 steht für fortgeschrittene Sprachkompetenz.",
+      "introParagraphs": [
+        "Der Spanisch Wortschatz C1 steht für fortgeschrittene Sprachkompetenz. Lernende können komplexe Sachverhalte differenziert darstellen und auch abstrakte Themen sprachlich präzise erfassen.",
+        "Diese Spanisch Vokabelliste C1 unterstützt Sie dabei, Ihren Wortschatz gezielt auszubauen und stilistisch sicher auf hohem Niveau zu kommunizieren."
+      ],
+      "levelDescription": "Oberstufe",
+      "ctaText": "C1-Training starten",
+      "levelExplanation": {
+        "heading": "Was bedeutet das Niveau C1?",
+        "paragraph": "Auf C1 verstehen Sie lange, anspruchsvolle Texte und erkennen implizite Bedeutungen. Sie können sich spontan und fließend ausdrücken, ohne häufig nach Worten suchen zu müssen.",
+        "bullets": [
+          "Analyse komplexer Texte und Argumentationen.",
+          "Strukturierte und kohärente Präsentationen.",
+          "Flexibler Gebrauch verschiedener Sprachregister."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Wortschatzumfang auf C1",
+        "topics": [
+          "Akademische Kommunikation",
+          "Beruf und Gesellschaft"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Akademische Kommunikation",
+            "items": [
+              "Argumente differenziert entwickeln.",
+              "Begriffe präzise definieren.",
+              "Komplexe Zusammenhänge darstellen.",
+              "Kritisch Stellung nehmen."
+            ]
+          },
+          {
+            "heading": "Beruf und Gesellschaft",
+            "items": [
+              "Fachtexte verstehen.",
+              "Strategien bewerten.",
+              "Berichte verfassen.",
+              "Diskussionen moderieren."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie groß ist der Wortschatz auf C1?",
+        "text": "Der Spanisch Wortschatz Oberstufe umfasst mehrere tausend aktive und passive Begriffe, die eine nahezu mühelose Kommunikation in anspruchsvollen Kontexten ermöglichen.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz C1",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "planteamiento",
+            "meaning": "Herangehensweise"
+          },
+          {
+            "word": "perspectiva",
+            "meaning": "Perspektive"
+          },
+          {
+            "word": "reivindicar",
+            "meaning": "einfordern"
+          },
+          {
+            "word": "subyacente",
+            "meaning": "zugrunde liegend"
+          },
+          {
+            "word": "desempeñar",
+            "meaning": "ausüben"
+          },
+          {
+            "word": "incidir",
+            "meaning": "einwirken auf"
+          },
+          {
+            "word": "consenso",
+            "meaning": "Konsens"
+          },
+          {
+            "word": "envergadura",
+            "meaning": "Tragweite"
+          },
+          {
+            "word": "conllevar",
+            "meaning": "mit sich bringen"
+          },
+          {
+            "word": "matizar",
+            "meaning": "nuancieren"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Niveaus entdecken"
+      },
+      "metaTitle": "Spanisch Wortschatz C1 – Oberstufe meistern",
+      "metaDescription": "Erweitern Sie Ihren Spanisch Wortschatz C1 mit anspruchsvollen Begriffen und präzisen Formulierungen für Studium und Beruf.",
+      "bottomCta": {
+        "heading": "Gezielt weiterlernen",
+        "text": "Vertiefen Sie Ihr Wissen mit Spanisch Wortschatz Übungen C1 und entwickeln Sie stilistische Sicherheit auf fortgeschrittenem Niveau."
+      }
+    },
+    "c2": {
+      "title": "Spanisch Wortschatz C2",
+      "intro": "Der Spanisch Wortschatz C2 steht für nahezu muttersprachliche Kompetenz.",
+      "introParagraphs": [
+        "Der Spanisch Wortschatz C2 steht für nahezu muttersprachliche Kompetenz. Lernende verstehen komplexeste Texte und drücken sich stilistisch sicher und differenziert aus.",
+        "Diese Spanisch Vokabelliste C2 unterstützt Sie dabei, Ihren Wortschatz auf höchstem Niveau auszubauen und auch seltene oder fachsprachliche Begriffe sicher zu verwenden."
+      ],
+      "levelDescription": "Sprachliche Meisterschaft",
+      "ctaText": "C2-Training starten",
+      "levelExplanation": {
+        "heading": "Was kennzeichnet C2?",
+        "paragraph": "Auf diesem Niveau können Sie Informationen aus verschiedenen Quellen zusammenfassen, Argumente präzise formulieren und Bedeutungsnuancen sicher erfassen.",
+        "bullets": [
+          "Verstehen literarischer und wissenschaftlicher Texte.",
+          "Fein abgestimmte Argumentation.",
+          "Souveräner Umgang mit stilistischen Mitteln."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Wortschatz auf höchstem Niveau",
+        "topics": [
+          "Wissenschaft und Theorie",
+          "Stil und Nuance"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Wissenschaft und Theorie",
+            "items": [
+              "Komplexe Konzepte erläutern.",
+              "Fachterminologie korrekt einsetzen.",
+              "Theorien vergleichen.",
+              "Implizite Bedeutungen analysieren."
+            ]
+          },
+          {
+            "heading": "Stil und Nuance",
+            "items": [
+              "Ironie und Untertöne verstehen.",
+              "Register flexibel wechseln.",
+              "Sprachliche Feinheiten nutzen.",
+              "Präzise Formulierungen wählen."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie umfangreich ist C2?",
+        "text": "Der Spanisch Wortschatz auf Muttersprachenniveau umfasst ein sehr großes Spektrum an aktiven und passiven Begriffen, die eine nahezu vollständige sprachliche Souveränität ermöglichen.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz C2",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "idiosincrasia",
+            "meaning": "Eigenart"
+          },
+          {
+            "word": "esgrimir",
+            "meaning": "vorbringen (Argument)"
+          },
+          {
+            "word": "paradigma",
+            "meaning": "Paradigma"
+          },
+          {
+            "word": "conjetura",
+            "meaning": "Vermutung"
+          },
+          {
+            "word": "elucidar",
+            "meaning": "klären"
+          },
+          {
+            "word": "trascendental",
+            "meaning": "grundlegend"
+          },
+          {
+            "word": "menospreciar",
+            "meaning": "geringschätzen"
+          },
+          {
+            "word": "verosímil",
+            "meaning": "glaubwürdig"
+          },
+          {
+            "word": "inherente",
+            "meaning": "inhärent"
+          },
+          {
+            "word": "sobresaliente",
+            "meaning": "herausragend"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Niveaus entdecken"
+      },
+      "metaTitle": "Spanisch Wortschatz C2 – Sprachliche Meisterschaft",
+      "metaDescription": "Meistern Sie den Spanisch Wortschatz C2 mit präzisen, spezialisierten Begriffen für akademische, berufliche und literarische Kontexte.",
+      "bottomCta": {
+        "heading": "Meistern Sie das höchste Niveau",
+        "text": "Arbeiten Sie gezielt mit Spanisch Wortschatz Übungen C2, um stilistische Präzision und maximale Ausdruckskraft im Spanischen zu erreichen."
+      }
+    }
+  }
+}

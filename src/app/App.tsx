@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import "../styles/index.css";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowLeftRight, ChevronDown, Search } from "lucide-react";
@@ -12,11 +13,20 @@ import { VocabularyPractice } from "./components/VocabularyPractice";
 import { VocabularyLevelExam } from "./components/VocabularyLevelExam";
 import { About } from "./components/About";
 import { Help } from "./components/Help";
+import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
+import { NotFoundPage } from "./components/NotFoundPage";
 import {
   LanguageContinuePopup,
   type LanguageContinuePopupHandle,
 } from "./components/LanguageContinuePopup";
 import { LanguageProvider, useLanguage } from "../contexts/LanguageContext";
+import {
+  getVocabularyLevelContent,
+  type CefrLevelCode,
+  type TargetLanguageSlug,
+  type UiLanguageCode,
+} from "../data/vocabularyLevels";
+import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../data/seo/slugs";
 
 const supportedLanguages = [
   { code: "en", flagCode: "gb" },
@@ -28,6 +38,48 @@ const supportedLanguages = [
   { code: "ru", flagCode: "ru" },
 ];
 
+const DEFAULT_EXERCISES = [
+  "wordTyping",
+  "halfWritten",
+  "brokenWord",
+  "connectWords",
+  "listening",
+];
+
+interface ParsedVocabularyRoute {
+  uiLang: UiLanguageCode;
+  targetLanguage: TargetLanguageSlug;
+  level: CefrLevelCode;
+}
+
+function parseVocabularyRoute(path: string): ParsedVocabularyRoute | null {
+  const match = path.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+  if (!match) {
+    return null;
+  }
+
+  const [, uiLangRaw, slug] = match;
+  const resolved = resolveVocabularyRoute(uiLangRaw, slug);
+  if (!resolved) {
+    return null;
+  }
+
+  const hasContent = getVocabularyLevelContent(
+    resolved.uiLang,
+    resolved.targetLanguage,
+    resolved.level,
+  );
+
+  if (!hasContent) {
+    return null;
+  }
+
+  return {
+    uiLang: resolved.uiLang,
+    targetLanguage: resolved.targetLanguage,
+    level: resolved.level,
+  };
+}
 const ROUTES = {
   language: "/languages",
   levelCategory: "/languages/filters",
@@ -39,9 +91,10 @@ const ROUTES = {
   help: "/help",
 } as const;
 
-type PageKey = keyof typeof ROUTES;
+type RouteKey = keyof typeof ROUTES;
+type PageKey = RouteKey | "vocabularyLevel" | "notFound";
 
-const pageFromPath = (path: string): PageKey | null => {
+const pageFromPath = (path: string): PageKey => {
   switch (path) {
     case "/":
     case ROUTES.language:
@@ -60,8 +113,12 @@ const pageFromPath = (path: string): PageKey | null => {
       return "about";
     case ROUTES.help:
       return "help";
-    default:
-      return null;
+    default: {
+      if (parseVocabularyRoute(path)) {
+        return "vocabularyLevel";
+      }
+      return "notFound";
+    }
   }
 };
 
@@ -104,14 +161,475 @@ function createDistributedStarFieldImage(starCount: number): string {
   return layers.join(",\n    ");
 }
 
-function detectBrowserLanguage(): string {
-  const browserLang = navigator.language.split("-")[0];
-  const matchedLang = supportedLanguages.find((lang) => lang.code === browserLang);
-  return matchedLang ? matchedLang.code : "en";
-}
-
 function AppContent() {
-  const { t } = useLanguage();
+  const { t, uiLanguage, setUILanguage } = useLanguage();
+  const vocabularyPracticeByUiLanguage: Record<string, string> = {
+    en: "Vocabulary Practice",
+    es: "práctica de vocabulario",
+    fr: "Pratique du vocabulaire",
+    de: "Wortschatzubung",
+    it: "Pratica del vocabolario",
+    pt: "Pratica de vocabulario",
+    ru: "Практика словарного запаса",
+  };
+  const englishExploreTopics = useMemo(() => {
+    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
+
+    if (uiLanguage === "fr") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulaire d’anglais ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "de") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Englisch Wortschatz ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "it") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabolario di inglese ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "pt") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulário de inglês ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "ru") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Словарный запас английского ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+
+    const englishLabel = t("languageNames.en");
+    const practiceLabel =
+      vocabularyPracticeByUiLanguage[uiLanguage] ??
+      vocabularyPracticeByUiLanguage.en;
+
+    return levels
+      .map((level) => ({
+        level,
+        label: `${englishLabel} ${level.toUpperCase()} ${practiceLabel}`,
+        path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
+      }))
+      .filter((topic) => Boolean(topic.path));
+  }, [t, uiLanguage]);
+  const spanishExploreTopics = useMemo(() => {
+    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
+
+    if (uiLanguage === "es") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulario de español ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "de") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Spanisch Wortschatz ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "fr") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulaire d’espagnol ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "pt") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulário de espanhol ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "it") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabolario di spagnolo ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "ru") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Словарный запас испанского ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+
+    return levels
+      .map((level) => ({
+        level,
+        label: `Spanish Vocabulary ${level.toUpperCase()}`,
+        path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
+      }))
+      .filter((topic) => Boolean(topic.path));
+  }, [uiLanguage]);
+  const frenchExploreTopics = useMemo(() => {
+    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
+
+    if (uiLanguage === "es") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulario de francés ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "de") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Französisch Wortschatz ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "ru") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Словарный запас французского ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "fr") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulaire de français ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "pt") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulário de francês ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "it") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabolario di francese ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+
+    return levels
+      .map((level) => ({
+        level,
+        label: `French Vocabulary ${level.toUpperCase()}`,
+        path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
+      }))
+      .filter((topic) => Boolean(topic.path));
+  }, [uiLanguage]);
+  const germanExploreTopics = useMemo(() => {
+    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
+
+    if (uiLanguage === "es") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulario de alemán ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "de") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Deutsch Wortschatz ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "ru") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Словарный запас немецкого ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "fr") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulaire d’allemand ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "pt") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulário de alemão ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "it") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabolario di tedesco ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+
+    return levels
+      .map((level) => ({
+        level,
+        label: `German Vocabulary ${level.toUpperCase()}`,
+        path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
+      }))
+      .filter((topic) => Boolean(topic.path));
+  }, [uiLanguage]);
+  const italianExploreTopics = useMemo(() => {
+    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
+
+    if (uiLanguage === "es") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulario de italiano ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "de") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Italienisch Wortschatz ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "ru") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Словарный запас итальянского ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "fr") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulaire d’italien ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "pt") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulário de italiano ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "it") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabolario di italiano ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+
+    return levels
+      .map((level) => ({
+        level,
+        label: `Italian Vocabulary ${level.toUpperCase()}`,
+        path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
+      }))
+      .filter((topic) => Boolean(topic.path));
+  }, [uiLanguage]);
+  const portugueseExploreTopics = useMemo(() => {
+    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
+
+    if (uiLanguage === "es") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulario de portugués ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "de") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Portugiesisch Wortschatz ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "ru") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Словарный запас португальского ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "fr") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulaire de portugais ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "pt") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulário de português ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "it") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabolario di portoghese ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+
+    return levels
+      .map((level) => ({
+        level,
+        label: `Portuguese Vocabulary ${level.toUpperCase()}`,
+        path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
+      }))
+      .filter((topic) => Boolean(topic.path));
+  }, [uiLanguage]);
+  const russianExploreTopics = useMemo(() => {
+    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
+
+    if (uiLanguage === "es") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulario de ruso ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "de") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Russisch Wortschatz ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "ru") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Словарный запас русского ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "fr") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulaire de russe ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "pt") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabulário de russo ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+    if (uiLanguage === "it") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `Vocabolario di russo ${level.toUpperCase()}`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+
+    return levels
+      .map((level) => ({
+        level,
+        label: `Russian Vocabulary ${level.toUpperCase()}`,
+        path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
+      }))
+      .filter((topic) => Boolean(topic.path));
+  }, [uiLanguage]);
   const languages = useMemo(
     () =>
       supportedLanguages.map((lang) => ({
@@ -143,33 +661,26 @@ function AppContent() {
   const [practiceLanguage, setPracticeLanguage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-  const currentPage = useMemo(
-    () => pageFromPath(location.pathname),
-    [location.pathname],
-  );
+  const vocabularyRoute = useMemo(() => parseVocabularyRoute(location.pathname), [location.pathname]);
+  const currentPage = useMemo(() => pageFromPath(location.pathname), [location.pathname]);
   const [selectedLevel, setSelectedLevel] = useState("A1");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
   const [selectedWordTypes, setSelectedWordTypes] = useState<string[]>([]);
-  const [selectedExercises, setSelectedExercises] = useState<string[]>([
-    "wordTyping",
-    "halfWritten",
-    "brokenWord",
-    "connectWords",
-    "listening",
-  ]);
+  const [isEnglishExploreOpen, setIsEnglishExploreOpen] = useState(false);
+  const [isSpanishExploreOpen, setIsSpanishExploreOpen] = useState(false);
+  const [isFrenchExploreOpen, setIsFrenchExploreOpen] = useState(false);
+  const [isGermanExploreOpen, setIsGermanExploreOpen] = useState(false);
+  const [isItalianExploreOpen, setIsItalianExploreOpen] = useState(false);
+  const [isPortugueseExploreOpen, setIsPortugueseExploreOpen] = useState(false);
+  const [isRussianExploreOpen, setIsRussianExploreOpen] = useState(false);
+  const [selectedExercises, setSelectedExercises] = useState<string[]>([...DEFAULT_EXERCISES]);
   const isContinueDisabled = !yourLanguage || !practiceLanguage;
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
   const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
-  const resolvedPage = currentPage ?? "language";
-
-  useEffect(() => {
-    if (!currentPage) {
-      navigate(ROUTES.language, { replace: true });
-    }
-  }, [currentPage, navigate]);
+  const resolvedPage = currentPage;
 
   const handleStartPracticing = () => {
     if (isContinueDisabled) {
@@ -178,6 +689,36 @@ function AppContent() {
     }
     navigate(ROUTES.levelCategory);
   };
+
+
+  const handleStartVocabularyPractice = (
+    _targetLanguage: TargetLanguageSlug,
+    level: string,
+  ) => {
+    setSelectedLevel(level.toUpperCase());
+    setSelectedLevels([level.toUpperCase()]);
+    setSelectedCategories([]);
+    setSelectedWordTypes([]);
+    setSelectedExercises([...DEFAULT_EXERCISES]);
+
+    if (isContinueDisabled) {
+      navigate(ROUTES.language);
+      setPopupQueuedForLanguage(true);
+      return;
+    }
+
+    navigate(ROUTES.levelCategory);
+  };
+
+  useEffect(() => {
+    if (resolvedPage !== "vocabularyLevel" || !vocabularyRoute) {
+      return;
+    }
+
+    if (uiLanguage !== vocabularyRoute.uiLang) {
+      setUILanguage(vocabularyRoute.uiLang);
+    }
+  }, [resolvedPage, setUILanguage, uiLanguage, vocabularyRoute]);
 
   // Cleanup when leaving page or changing languages
   useEffect(() => {
@@ -200,7 +741,7 @@ function AppContent() {
     navigate(ROUTES.exerciseSelection);
   };
 
-  const handleRequireLanguages = (nextPage: PageKey) => {
+  const handleRequireLanguages = (nextPage: RouteKey) => {
     if (isContinueDisabled) {
       const suppressPopup = resolvedPage === "about";
       navigate(ROUTES.language);
@@ -390,25 +931,399 @@ function AppContent() {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {languages.map((language) => (
-                <button
-                  key={language.code}
-                  type="button"
-                  className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
-                >
-                  <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
-                  <span className="flex items-center gap-3">
-                    <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
-                      <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+            <div className="columns-1 gap-4 space-y-4 sm:columns-2 lg:columns-3">
+              {languages.map((language) =>
+                language.code === "en" ? (
+                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsEnglishExploreOpen((prev) => !prev);
+                        setIsSpanishExploreOpen(false);
+                        setIsFrenchExploreOpen(false);
+                        setIsGermanExploreOpen(false);
+                        setIsItalianExploreOpen(false);
+                        setIsPortugueseExploreOpen(false);
+                        setIsRussianExploreOpen(false);
+                      }}
+                      className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                    >
+                      <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                        </span>
+                        <span className="text-base text-foreground relative">
+                          {language.name}
+                        </span>
+                      </span>
+                      <ChevronDown
+                        className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
+                          isEnglishExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                        }`}
+                      />
+                    </button>
+                    {isEnglishExploreOpen ? (
+                      <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
+                        {englishExploreTopics.map((topic) => (
+                          <Link
+                            key={topic.level}
+                            to={topic.path ?? "#"}
+                            onClick={() => {
+                              setIsEnglishExploreOpen(false);
+                              setIsFrenchExploreOpen(false);
+                              setIsSpanishExploreOpen(false);
+                              setIsGermanExploreOpen(false);
+                              setIsItalianExploreOpen(false);
+                              setIsPortugueseExploreOpen(false);
+                              setIsRussianExploreOpen(false);
+                            }}
+                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+                          >
+                            {topic.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : language.code === "es" ? (
+                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsSpanishExploreOpen((prev) => !prev);
+                        setIsEnglishExploreOpen(false);
+                        setIsFrenchExploreOpen(false);
+                        setIsGermanExploreOpen(false);
+                        setIsItalianExploreOpen(false);
+                        setIsPortugueseExploreOpen(false);
+                        setIsRussianExploreOpen(false);
+                      }}
+                      className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                    >
+                      <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                        </span>
+                        <span className="text-base text-foreground relative">
+                          {language.name}
+                        </span>
+                      </span>
+                      <ChevronDown
+                        className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
+                          isSpanishExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                        }`}
+                      />
+                    </button>
+                    {isSpanishExploreOpen ? (
+                      <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
+                        {spanishExploreTopics.map((topic) => (
+                          <Link
+                            key={topic.level}
+                            to={topic.path ?? "#"}
+                            onClick={() => {
+                              setIsSpanishExploreOpen(false);
+                              setIsFrenchExploreOpen(false);
+                              setIsEnglishExploreOpen(false);
+                              setIsGermanExploreOpen(false);
+                              setIsItalianExploreOpen(false);
+                              setIsPortugueseExploreOpen(false);
+                              setIsRussianExploreOpen(false);
+                            }}
+                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+                          >
+                            {topic.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : language.code === "fr" ? (
+                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsFrenchExploreOpen((prev) => !prev);
+                        setIsEnglishExploreOpen(false);
+                        setIsSpanishExploreOpen(false);
+                        setIsGermanExploreOpen(false);
+                        setIsItalianExploreOpen(false);
+                        setIsPortugueseExploreOpen(false);
+                        setIsRussianExploreOpen(false);
+                      }}
+                      className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                    >
+                      <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                        </span>
+                        <span className="text-base text-foreground relative">
+                          {language.name}
+                        </span>
+                      </span>
+                      <ChevronDown
+                        className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
+                          isFrenchExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                        }`}
+                      />
+                    </button>
+                    {isFrenchExploreOpen ? (
+                      <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
+                        {frenchExploreTopics.map((topic) => (
+                          <Link
+                            key={topic.level}
+                            to={topic.path ?? "#"}
+                            onClick={() => {
+                              setIsFrenchExploreOpen(false);
+                              setIsEnglishExploreOpen(false);
+                              setIsSpanishExploreOpen(false);
+                              setIsGermanExploreOpen(false);
+                              setIsItalianExploreOpen(false);
+                              setIsPortugueseExploreOpen(false);
+                              setIsRussianExploreOpen(false);
+                            }}
+                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+                          >
+                            {topic.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : language.code === "de" ? (
+                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsGermanExploreOpen((prev) => !prev);
+                        setIsEnglishExploreOpen(false);
+                        setIsSpanishExploreOpen(false);
+                        setIsFrenchExploreOpen(false);
+                        setIsItalianExploreOpen(false);
+                        setIsPortugueseExploreOpen(false);
+                        setIsRussianExploreOpen(false);
+                      }}
+                      className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                    >
+                      <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                        </span>
+                        <span className="text-base text-foreground relative">
+                          {language.name}
+                        </span>
+                      </span>
+                      <ChevronDown
+                        className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
+                          isGermanExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                        }`}
+                      />
+                    </button>
+                    {isGermanExploreOpen ? (
+                      <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
+                        {germanExploreTopics.map((topic) => (
+                          <Link
+                            key={topic.level}
+                            to={topic.path ?? "#"}
+                            onClick={() => {
+                              setIsGermanExploreOpen(false);
+                              setIsFrenchExploreOpen(false);
+                              setIsEnglishExploreOpen(false);
+                              setIsSpanishExploreOpen(false);
+                              setIsItalianExploreOpen(false);
+                              setIsPortugueseExploreOpen(false);
+                              setIsRussianExploreOpen(false);
+                            }}
+                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+                          >
+                            {topic.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : language.code === "it" ? (
+                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsItalianExploreOpen((prev) => !prev);
+                        setIsEnglishExploreOpen(false);
+                        setIsSpanishExploreOpen(false);
+                        setIsFrenchExploreOpen(false);
+                        setIsGermanExploreOpen(false);
+                        setIsPortugueseExploreOpen(false);
+                        setIsRussianExploreOpen(false);
+                      }}
+                      className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                    >
+                      <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                        </span>
+                        <span className="text-base text-foreground relative">
+                          {language.name}
+                        </span>
+                      </span>
+                      <ChevronDown
+                        className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
+                          isItalianExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                        }`}
+                      />
+                    </button>
+                    {isItalianExploreOpen ? (
+                      <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
+                        {italianExploreTopics.map((topic) => (
+                          <Link
+                            key={topic.level}
+                            to={topic.path ?? "#"}
+                            onClick={() => {
+                              setIsItalianExploreOpen(false);
+                              setIsGermanExploreOpen(false);
+                              setIsFrenchExploreOpen(false);
+                              setIsEnglishExploreOpen(false);
+                              setIsSpanishExploreOpen(false);
+                              setIsPortugueseExploreOpen(false);
+                              setIsRussianExploreOpen(false);
+                            }}
+                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+                          >
+                            {topic.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : language.code === "pt" ? (
+                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsPortugueseExploreOpen((prev) => !prev);
+                        setIsEnglishExploreOpen(false);
+                        setIsSpanishExploreOpen(false);
+                        setIsFrenchExploreOpen(false);
+                        setIsGermanExploreOpen(false);
+                        setIsItalianExploreOpen(false);
+                        setIsRussianExploreOpen(false);
+                      }}
+                      className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                    >
+                      <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                        </span>
+                        <span className="text-base text-foreground relative">
+                          {language.name}
+                        </span>
+                      </span>
+                      <ChevronDown
+                        className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
+                          isPortugueseExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                        }`}
+                      />
+                    </button>
+                    {isPortugueseExploreOpen ? (
+                      <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
+                        {portugueseExploreTopics.map((topic) => (
+                          <Link
+                            key={topic.level}
+                            to={topic.path ?? "#"}
+                            onClick={() => {
+                              setIsPortugueseExploreOpen(false);
+                              setIsItalianExploreOpen(false);
+                              setIsGermanExploreOpen(false);
+                              setIsFrenchExploreOpen(false);
+                              setIsEnglishExploreOpen(false);
+                              setIsSpanishExploreOpen(false);
+                              setIsRussianExploreOpen(false);
+                            }}
+                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+                          >
+                            {topic.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : language.code === "ru" ? (
+                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsRussianExploreOpen((prev) => !prev);
+                        setIsEnglishExploreOpen(false);
+                        setIsSpanishExploreOpen(false);
+                        setIsFrenchExploreOpen(false);
+                        setIsGermanExploreOpen(false);
+                        setIsItalianExploreOpen(false);
+                        setIsPortugueseExploreOpen(false);
+                      }}
+                      className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                    >
+                      <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                        </span>
+                        <span className="text-base text-foreground relative">
+                          {language.name}
+                        </span>
+                      </span>
+                      <ChevronDown
+                        className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
+                          isRussianExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                        }`}
+                      />
+                    </button>
+                    {isRussianExploreOpen ? (
+                      <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
+                        {russianExploreTopics.map((topic) => (
+                          <Link
+                            key={topic.level}
+                            to={topic.path ?? "#"}
+                            onClick={() => {
+                              setIsRussianExploreOpen(false);
+                              setIsPortugueseExploreOpen(false);
+                              setIsItalianExploreOpen(false);
+                              setIsGermanExploreOpen(false);
+                              setIsFrenchExploreOpen(false);
+                              setIsEnglishExploreOpen(false);
+                              setIsSpanishExploreOpen(false);
+                            }}
+                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+                          >
+                            {topic.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : (
+                  <div key={language.code} className="mb-4 break-inside-avoid">
+                  <button
+                    type="button"
+                    className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                  >
+                    <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                    <span className="flex items-center gap-3">
+                      <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                        <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                      </span>
+                      <span className="text-base text-foreground relative">
+                        {language.name}
+                      </span>
                     </span>
-                    <span className="text-base text-foreground relative">
-                      {language.name}
-                    </span>
-                  </span>
-                  <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-y-0.5" />
-                </button>
-              ))}
+                    <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-y-0.5" />
+                  </button>
+                  </div>
+                ),
+              )}
             </div>
           </div>
         </main>
@@ -429,6 +1344,63 @@ function AppContent() {
           onExplore={() => navigate(ROUTES.explore)}
         />
         <Help onBack={() => navigate(ROUTES.language)} />
+      </div>
+    );
+  }
+
+
+  if (resolvedPage === "vocabularyLevel") {
+    if (!vocabularyRoute) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header
+            onAbout={() => navigate(ROUTES.about)}
+            onHelp={() => navigate(ROUTES.help)}
+            onLevelTest={() => handleRequireLanguages("exam")}
+            onLanguages={() => navigate(ROUTES.language)}
+            onFilters={() => handleRequireLanguages("levelCategory")}
+            onExercises={() => handleRequireLanguages("exerciseSelection")}
+            onExplore={() => navigate(ROUTES.explore)}
+          />
+          <NotFoundPage message="Invalid vocabulary practice page." />
+        </div>
+      );
+    }
+
+  return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header
+          onAbout={() => navigate(ROUTES.about)}
+          onHelp={() => navigate(ROUTES.help)}
+          onLevelTest={() => handleRequireLanguages("exam")}
+          onLanguages={() => navigate(ROUTES.language)}
+          onFilters={() => handleRequireLanguages("levelCategory")}
+          onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
+        />
+        <VocabularyLevelPage
+          uiLang={vocabularyRoute.uiLang}
+          targetLanguage={vocabularyRoute.targetLanguage}
+          level={vocabularyRoute.level}
+          onStartPractice={handleStartVocabularyPractice}
+        />
+      </div>
+    );
+  }
+
+  if (resolvedPage === "notFound") {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header
+          onAbout={() => navigate(ROUTES.about)}
+          onHelp={() => navigate(ROUTES.help)}
+          onLevelTest={() => handleRequireLanguages("exam")}
+          onLanguages={() => navigate(ROUTES.language)}
+          onFilters={() => handleRequireLanguages("levelCategory")}
+          onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
+        />
+        <NotFoundPage />
       </div>
     );
   }
@@ -717,3 +1689,23 @@ export default function App() {
     </LanguageProvider>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

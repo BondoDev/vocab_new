@@ -1,0 +1,324 @@
+{
+  "targetLanguage": "russian",
+  "targetLanguageDisplayName": "Ruso",
+  "levels": {
+    "a1": {
+      "title": "Ruso A1 Vocabulary Practice",
+      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "levelDescription": "Principiante",
+      "ctaText": "Comenzar practica A1",
+      "levelExplanation": {
+        "heading": "Explicacion del nivel",
+        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "bullets": [
+          "Objetivos principales de comunicacion",
+          "Gramatica y estructuras frecuentes",
+          "Situaciones tipicas de uso real"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Alcance de vocabulario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Cantidad de palabras",
+        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulario de ejemplo",
+        "columns": {
+          "word": "Palabra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "dom",
+            "meaning": "Significado 1"
+          },
+          {
+            "word": "dom",
+            "meaning": "Significado 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      }
+    },
+    "a2": {
+      "title": "Ruso A2 Vocabulary Practice",
+      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "levelDescription": "Elemental",
+      "ctaText": "Comenzar practica A2",
+      "levelExplanation": {
+        "heading": "Explicacion del nivel",
+        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "bullets": [
+          "Objetivos principales de comunicacion",
+          "Gramatica y estructuras frecuentes",
+          "Situaciones tipicas de uso real"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Alcance de vocabulario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Cantidad de palabras",
+        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
+        "value": 1200
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulario de ejemplo",
+        "columns": {
+          "word": "Palabra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "ucit",
+            "meaning": "Significado 1"
+          },
+          {
+            "word": "dom",
+            "meaning": "Significado 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      }
+    },
+    "b1": {
+      "title": "Ruso B1 Vocabulary Practice",
+      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "levelDescription": "Intermedio",
+      "ctaText": "Comenzar practica B1",
+      "levelExplanation": {
+        "heading": "Explicacion del nivel",
+        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "bullets": [
+          "Objetivos principales de comunicacion",
+          "Gramatica y estructuras frecuentes",
+          "Situaciones tipicas de uso real"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Alcance de vocabulario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Cantidad de palabras",
+        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
+        "value": 2000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulario de ejemplo",
+        "columns": {
+          "word": "Palabra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "dostic",
+            "meaning": "Significado 1"
+          },
+          {
+            "word": "ucit",
+            "meaning": "Significado 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      }
+    },
+    "b2": {
+      "title": "Ruso B2 Vocabulary Practice",
+      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "levelDescription": "Intermedio alto",
+      "ctaText": "Comenzar practica B2",
+      "levelExplanation": {
+        "heading": "Explicacion del nivel",
+        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "bullets": [
+          "Objetivos principales de comunicacion",
+          "Gramatica y estructuras frecuentes",
+          "Situaciones tipicas de uso real"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Alcance de vocabulario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Cantidad de palabras",
+        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
+        "value": 3200
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulario de ejemplo",
+        "columns": {
+          "word": "Palabra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "kontekst",
+            "meaning": "Significado 1"
+          },
+          {
+            "word": "dostic",
+            "meaning": "Significado 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      }
+    },
+    "c1": {
+      "title": "Ruso C1 Vocabulary Practice",
+      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "levelDescription": "Avanzado",
+      "ctaText": "Comenzar practica C1",
+      "levelExplanation": {
+        "heading": "Explicacion del nivel",
+        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "bullets": [
+          "Objetivos principales de comunicacion",
+          "Gramatica y estructuras frecuentes",
+          "Situaciones tipicas de uso real"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Alcance de vocabulario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Cantidad de palabras",
+        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulario de ejemplo",
+        "columns": {
+          "word": "Palabra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "ottenok",
+            "meaning": "Significado 1"
+          },
+          {
+            "word": "kontekst",
+            "meaning": "Significado 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      }
+    },
+    "c2": {
+      "title": "Ruso C2 Vocabulary Practice",
+      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "levelDescription": "Dominio",
+      "ctaText": "Comenzar practica C2",
+      "levelExplanation": {
+        "heading": "Explicacion del nivel",
+        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "bullets": [
+          "Objetivos principales de comunicacion",
+          "Gramatica y estructuras frecuentes",
+          "Situaciones tipicas de uso real"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Alcance de vocabulario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Cantidad de palabras",
+        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulario de ejemplo",
+        "columns": {
+          "word": "Palabra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "krasnorecivyj",
+            "meaning": "Significado 1"
+          },
+          {
+            "word": "ottenok",
+            "meaning": "Significado 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar otros niveles"
+      }
+    }
+  }
+}

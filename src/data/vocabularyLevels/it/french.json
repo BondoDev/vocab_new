@@ -1,0 +1,324 @@
+{
+  "targetLanguage": "french",
+  "targetLanguageDisplayName": "Francese",
+  "levels": {
+    "a1": {
+      "title": "Francese A1 Vocabulary Practice",
+      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "levelDescription": "Principiante",
+      "ctaText": "Inizia pratica A1",
+      "levelExplanation": {
+        "heading": "Spiegazione del livello",
+        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "bullets": [
+          "Obiettivi principali di comunicazione",
+          "Grammatica e strutture frequenti",
+          "Situazioni tipiche di uso reale"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Numero di parole",
+        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabolario di esempio",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "maison",
+            "meaning": "Significato 1"
+          },
+          {
+            "word": "maison",
+            "meaning": "Significato 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      }
+    },
+    "a2": {
+      "title": "Francese A2 Vocabulary Practice",
+      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "levelDescription": "Elementare",
+      "ctaText": "Inizia pratica A2",
+      "levelExplanation": {
+        "heading": "Spiegazione del livello",
+        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "bullets": [
+          "Obiettivi principali di comunicazione",
+          "Grammatica e strutture frequenti",
+          "Situazioni tipiche di uso reale"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Numero di parole",
+        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
+        "value": 1200
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabolario di esempio",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "apprendre",
+            "meaning": "Significato 1"
+          },
+          {
+            "word": "maison",
+            "meaning": "Significato 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      }
+    },
+    "b1": {
+      "title": "Francese B1 Vocabulary Practice",
+      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "levelDescription": "Intermedio",
+      "ctaText": "Inizia pratica B1",
+      "levelExplanation": {
+        "heading": "Spiegazione del livello",
+        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "bullets": [
+          "Obiettivi principali di comunicazione",
+          "Grammatica e strutture frequenti",
+          "Situazioni tipiche di uso reale"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Numero di parole",
+        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
+        "value": 2000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabolario di esempio",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "reussir",
+            "meaning": "Significato 1"
+          },
+          {
+            "word": "apprendre",
+            "meaning": "Significato 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      }
+    },
+    "b2": {
+      "title": "Francese B2 Vocabulary Practice",
+      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "levelDescription": "Intermedio avanzato",
+      "ctaText": "Inizia pratica B2",
+      "levelExplanation": {
+        "heading": "Spiegazione del livello",
+        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "bullets": [
+          "Obiettivi principali di comunicazione",
+          "Grammatica e strutture frequenti",
+          "Situazioni tipiche di uso reale"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Numero di parole",
+        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
+        "value": 3200
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabolario di esempio",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "contexte",
+            "meaning": "Significato 1"
+          },
+          {
+            "word": "reussir",
+            "meaning": "Significato 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      }
+    },
+    "c1": {
+      "title": "Francese C1 Vocabulary Practice",
+      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "levelDescription": "Avanzato",
+      "ctaText": "Inizia pratica C1",
+      "levelExplanation": {
+        "heading": "Spiegazione del livello",
+        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "bullets": [
+          "Obiettivi principali di comunicazione",
+          "Grammatica e strutture frequenti",
+          "Situazioni tipiche di uso reale"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Numero di parole",
+        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabolario di esempio",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "nuance",
+            "meaning": "Significato 1"
+          },
+          {
+            "word": "contexte",
+            "meaning": "Significato 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      }
+    },
+    "c2": {
+      "title": "Francese C2 Vocabulary Practice",
+      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "levelDescription": "Padronanza",
+      "ctaText": "Inizia pratica C2",
+      "levelExplanation": {
+        "heading": "Spiegazione del livello",
+        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "bullets": [
+          "Obiettivi principali di comunicazione",
+          "Grammatica e strutture frequenti",
+          "Situazioni tipiche di uso reale"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Numero di parole",
+        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabolario di esempio",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "eloquent",
+            "meaning": "Significato 1"
+          },
+          {
+            "word": "nuance",
+            "meaning": "Significato 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      }
+    }
+  }
+}

@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "english",
+  "targetLanguageDisplayName": "Anglais",
+  "levels": {
+    "a1": {
+      "title": "Vocabulaire d’anglais A1",
+      "intro": "Le vocabulaire d’anglais A1 constitue la première étape pour les apprenants débutants.",
+      "levelDescription": "Débutant",
+      "ctaText": "Commencer la pratique A1",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau A1 ?",
+        "paragraph": "Le niveau A1 correspond au stade initial de l’apprentissage. Lorsque vous décidez d’apprendre le vocabulaire anglais A1, vous travaillez sur les mots les plus courants utilisés dans la vie quotidienne.",
+        "bullets": [
+          "Vous pouvez vous présenter et poser des questions simples.",
+          "Vous pouvez comprendre des expressions familières et très basiques.",
+          "Vous pouvez communiquer si votre interlocuteur parle lentement."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Quel type de vocabulaire apprend-on ?",
+        "topics": [
+          "Informations personnelles",
+          "Vie quotidienne"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Informations personnelles",
+            "items": [
+              "Nom et âge",
+              "Pays et nationalités",
+              "Membres de la famille",
+              "Professions simples"
+            ]
+          },
+          {
+            "heading": "Vie quotidienne",
+            "items": [
+              "Nourriture et boissons",
+              "Nombres et heure",
+              "Jours et mois",
+              "Verbes courants (go, eat, live, work)"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots au niveau A1 ?",
+        "text": "Au niveau A1, les apprenants maîtrisent généralement entre 500 et 800 mots. Une pratique régulière du vocabulaire d’anglais A1 permet de renforcer la mémoire et la confiance à l’oral.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire A1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "name",
+            "meaning": "nom d’une personne"
+          },
+          {
+            "word": "city",
+            "meaning": "ville"
+          },
+          {
+            "word": "mother",
+            "meaning": "mère"
+          },
+          {
+            "word": "house",
+            "meaning": "maison"
+          },
+          {
+            "word": "water",
+            "meaning": "eau"
+          },
+          {
+            "word": "book",
+            "meaning": "livre"
+          },
+          {
+            "word": "small",
+            "meaning": "petit"
+          },
+          {
+            "word": "happy",
+            "meaning": "heureux"
+          },
+          {
+            "word": "work",
+            "meaning": "travailler"
+          },
+          {
+            "word": "school",
+            "meaning": "école"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’anglais A1 – Mots essentiels pour débutants",
+      "metaDescription": "Commencez avec le vocabulaire d’anglais A1. Découvrez des mots essentiels, leurs significations et des exemples simples pour débuter en anglais.",
+      "introParagraphs": [
+        "Le vocabulaire d’anglais A1 constitue la première étape pour les apprenants débutants. À ce niveau, vous apprenez des mots simples et fréquents qui vous permettent de parler de vous, de votre famille et de votre quotidien.",
+        "Avec un vocabulaire anglais débutant, vous construisez des phrases courtes et claires. Une liste de mots anglais A1 bien organisée vous aide à mémoriser les bases essentielles et à communiquer dans des situations simples."
+      ],
+      "bottomCta": {
+        "heading": "Commencez à pratiquer",
+        "text": "Développez vos bases avec le vocabulaire d’anglais A1 et progressez pas à pas vers une communication simple et efficace."
+      }
+    },
+    "a2": {
+      "title": "Vocabulaire d’anglais A2",
+      "intro": "Le vocabulaire d’anglais A2 permet de dépasser les bases très simples et de communiquer avec plus d’aisance.",
+      "levelDescription": "Élémentaire",
+      "ctaText": "Commencer la pratique A2",
+      "levelExplanation": {
+        "heading": "Que représente le niveau A2 ?",
+        "paragraph": "Le niveau A2 correspond à un stade élémentaire ou préintermédiaire. Lorsque vous choisissez d’apprendre le vocabulaire anglais A2, vous travaillez sur des expressions fréquentes liées à la vie quotidienne.",
+        "bullets": [
+          "Vous pouvez décrire des situations simples et habituelles.",
+          "Vous pouvez échanger des informations de base.",
+          "Vous pouvez écrire des messages courts et clairs."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Quels thèmes sont abordés ?",
+        "topics": [
+          "Vie quotidienne et activités",
+          "Communication et expériences"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Vie quotidienne et activités",
+            "items": [
+              "Tâches domestiques",
+              "Achats et prix",
+              "Transports et directions",
+              "Météo et saisons"
+            ]
+          },
+          {
+            "heading": "Communication et expériences",
+            "items": [
+              "Événements passés",
+              "Projets futurs",
+              "Préférences et comparaisons",
+              "Situations simples de résolution de problèmes"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots au niveau A2 ?",
+        "text": "Au niveau A2, les apprenants maîtrisent généralement entre 1 000 et 1 500 mots. Une pratique régulière du vocabulaire d’anglais A2 renforce la compréhension et prépare au niveau intermédiaire.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire A2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "arrive",
+            "meaning": "arriver à un endroit"
+          },
+          {
+            "word": "borrow",
+            "meaning": "emprunter quelque chose"
+          },
+          {
+            "word": "choose",
+            "meaning": "choisir entre plusieurs options"
+          },
+          {
+            "word": "different",
+            "meaning": "différent, pas identique"
+          },
+          {
+            "word": "invite",
+            "meaning": "inviter quelqu’un"
+          },
+          {
+            "word": "learn",
+            "meaning": "apprendre"
+          },
+          {
+            "word": "return",
+            "meaning": "retourner, revenir"
+          },
+          {
+            "word": "save",
+            "meaning": "économiser ou conserver"
+          },
+          {
+            "word": "travel",
+            "meaning": "voyager"
+          },
+          {
+            "word": "visit",
+            "meaning": "rendre visite"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’anglais A2 – Mots essentiels niveau élémentaire",
+      "metaDescription": "Améliorez votre niveau avec le vocabulaire d’anglais A2. Découvrez des mots essentiels, leurs significations et des exemples pour communiquer au quotidien.",
+      "introParagraphs": [
+        "Le vocabulaire d’anglais A2 permet de dépasser les bases très simples et de communiquer avec plus d’aisance. À ce niveau élémentaire, vous élargissez votre lexique pour parler de votre routine, de vos expériences et de vos projets.",
+        "Avec un vocabulaire anglais élémentaire, vous commencez à construire des phrases plus variées et à comprendre des textes courts. Une liste de mots anglais A2 bien structurée facilite l’apprentissage progressif."
+      ],
+      "bottomCta": {
+        "heading": "Continuez à progresser",
+        "text": "Renforcez vos compétences grâce au vocabulaire d’anglais A2 et gagnez en confiance dans vos échanges quotidiens."
+      }
+    },
+    "b1": {
+      "title": "Vocabulaire d’anglais B1",
+      "intro": "Le vocabulaire d’anglais B1 marque l’entrée dans un usage plus autonome de la langue. À ce niveau intermédiaire, vous pouvez participer à des conversations plus longues et exprimer vos opinions avec davantage de précision.",
+      "levelDescription": "Intermédiaire",
+      "ctaText": "Commencer la pratique B1",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau B1 ?",
+        "paragraph": "Le niveau B1 correspond à une compétence intermédiaire. Lorsque vous choisissez d’apprendre le vocabulaire anglais B1, vous êtes capable de comprendre les points principaux de discussions claires sur des sujets familiers.",
+        "bullets": [
+          "Vous pouvez décrire des expériences et des projets.",
+          "Vous pouvez expliquer vos opinions et donner des raisons.",
+          "Vous pouvez rédiger des textes simples mais structurés."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Quels thèmes sont abordés ?",
+        "topics": [
+          "Vie quotidienne et travail",
+          "Expression d’idées"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Vie quotidienne et travail",
+            "items": [
+              "Études et carrière",
+              "Voyages et loisirs",
+              "Santé et bien-être",
+              "Relations sociales"
+            ]
+          },
+          {
+            "heading": "Expression d’idées",
+            "items": [
+              "Accord et désaccord",
+              "Avantages et inconvénients",
+              "Suggestions et recommandations",
+              "Causes et conséquences"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots au niveau B1 ?",
+        "text": "Au niveau B1, les apprenants maîtrisent environ 2 000 à 2 500 mots. La pratique régulière du vocabulaire d’anglais B1 améliore la fluidité et prépare au niveau supérieur.",
+        "value": 2500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire B1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "achieve",
+            "meaning": "atteindre un objectif"
+          },
+          {
+            "word": "benefit",
+            "meaning": "avantage ou résultat positif"
+          },
+          {
+            "word": "choice",
+            "meaning": "décision entre plusieurs options"
+          },
+          {
+            "word": "experience",
+            "meaning": "expérience vécue"
+          },
+          {
+            "word": "improve",
+            "meaning": "améliorer"
+          },
+          {
+            "word": "opinion",
+            "meaning": "avis personnel"
+          },
+          {
+            "word": "prepare",
+            "meaning": "préparer à l’avance"
+          },
+          {
+            "word": "reason",
+            "meaning": "motif ou cause"
+          },
+          {
+            "word": "result",
+            "meaning": "résultat ou conséquence"
+          },
+          {
+            "word": "suggest",
+            "meaning": "suggérer une idée"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’anglais B1 – Lexique niveau intermédiaire",
+      "metaDescription": "Développez votre niveau avec le vocabulaire d’anglais B1. Apprenez des mots intermédiaires, leurs significations et des exemples pour communiquer avec assurance.",
+      "introParagraphs": [
+        "Le vocabulaire d’anglais B1 marque l’entrée dans un usage plus autonome de la langue. À ce niveau intermédiaire, vous pouvez participer à des conversations plus longues et exprimer vos opinions avec davantage de précision.",
+        "Un vocabulaire anglais intermédiaire solide vous aide à comprendre des textes plus détaillés et à structurer vos idées. Une liste de mots anglais B1 bien organisée favorise une progression régulière."
+      ],
+      "bottomCta": {
+        "heading": "Poursuivez votre progression",
+        "text": "Renforcez vos compétences avec le vocabulaire d’anglais B1 et gagnez en assurance dans vos échanges."
+      }
+    },
+    "b2": {
+      "title": "Vocabulaire d’anglais B2",
+      "intro": "Le vocabulaire d’anglais B2 correspond à un niveau intermédiaire supérieur. À ce stade, vous pouvez comprendre des textes complexes et exprimer vos idées avec clarté et précision.",
+      "levelDescription": "Intermédiaire supérieur",
+      "ctaText": "Commencer la pratique B2",
+      "levelExplanation": {
+        "heading": "Que représente le niveau B2 ?",
+        "paragraph": "Le niveau B2 indique une utilisation fluide et indépendante de la langue. Lorsque vous choisissez d’apprendre le vocabulaire anglais B2, vous pouvez interagir naturellement avec des locuteurs natifs.",
+        "bullets": [
+          "Vous pouvez argumenter et nuancer vos propos.",
+          "Vous pouvez comprendre des articles et conférences plus longs.",
+          "Vous pouvez rédiger des textes détaillés."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Domaines de vocabulaire",
+        "topics": [
+          "Contexte académique et professionnel",
+          "Langage abstrait"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Contexte académique et professionnel",
+            "items": [
+              "Communication au travail",
+              "Technologie et innovation",
+              "Médias et actualité",
+              "Analyse et évaluation"
+            ]
+          },
+          {
+            "heading": "Langage abstrait",
+            "items": [
+              "Cause et conséquence",
+              "Probabilité et hypothèse",
+              "Négociation",
+              "Argumentation structurée"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots au niveau B2 ?",
+        "text": "Au niveau B2, les apprenants maîtrisent environ 3 000 à 4 000 mots. La pratique régulière du vocabulaire d’anglais B2 consolide la fluidité et prépare aux niveaux avancés.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire B2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "assess",
+            "meaning": "évaluer avec attention"
+          },
+          {
+            "word": "consequence",
+            "meaning": "résultat d’une action"
+          },
+          {
+            "word": "efficient",
+            "meaning": "efficace et organisé"
+          },
+          {
+            "word": "evidence",
+            "meaning": "preuve ou indication claire"
+          },
+          {
+            "word": "maintain",
+            "meaning": "maintenir dans un bon état"
+          },
+          {
+            "word": "perspective",
+            "meaning": "point de vue"
+          },
+          {
+            "word": "reliable",
+            "meaning": "digne de confiance"
+          },
+          {
+            "word": "significant",
+            "meaning": "important ou notable"
+          },
+          {
+            "word": "strategy",
+            "meaning": "plan pour atteindre un objectif"
+          },
+          {
+            "word": "trend",
+            "meaning": "tendance générale"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’anglais B2 – Lexique niveau intermédiaire supérieur",
+      "metaDescription": "Perfectionnez votre anglais avec le vocabulaire d’anglais B2. Découvrez des mots avancés et des exemples pour communiquer avec aisance.",
+      "introParagraphs": [
+        "Le vocabulaire d’anglais B2 correspond à un niveau intermédiaire supérieur. À ce stade, vous pouvez comprendre des textes complexes et exprimer vos idées avec clarté et précision.",
+        "Un vocabulaire anglais avancé vous permet de participer à des discussions détaillées et de défendre votre point de vue. Une liste de mots anglais B2 bien structurée soutient votre progression."
+      ],
+      "bottomCta": {
+        "heading": "Continuez à progresser",
+        "text": "Approfondissez vos compétences grâce au vocabulaire d’anglais B2 et développez une communication plus nuancée."
+      }
+    },
+    "c1": {
+      "title": "Vocabulaire d’anglais C1",
+      "intro": "Le vocabulaire d’anglais C1 s’adresse aux apprenants avancés qui souhaitent perfectionner leur expression. À ce niveau, vous pouvez comprendre des textes exigeants et communiquer avec précision et nuance.",
+      "levelDescription": "Avancé",
+      "ctaText": "Commencer la pratique C1",
+      "levelExplanation": {
+        "heading": "Que caractérise le niveau C1 ?",
+        "paragraph": "Le niveau C1 implique une maîtrise avancée. Lorsque vous choisissez d’apprendre le vocabulaire anglais C1, vous pouvez produire des discours clairs et détaillés sur des sujets complexes.",
+        "bullets": [
+          "Vous pouvez interpréter des significations implicites.",
+          "Vous pouvez rédiger des textes bien organisés.",
+          "Vous pouvez adapter votre style selon la situation."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Domaines de vocabulaire",
+        "topics": [
+          "Contexte académique",
+          "Nuances et précision"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Contexte académique",
+            "items": [
+              "Analyse critique",
+              "Terminologie spécialisée",
+              "Argumentation formelle",
+              "Communication institutionnelle"
+            ]
+          },
+          {
+            "heading": "Nuances et précision",
+            "items": [
+              "Distinctions sémantiques",
+              "Hypothèses et probabilité",
+              "Registre formel",
+              "Structuration avancée des idées"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots au niveau C1 ?",
+        "text": "Au niveau C1, les apprenants maîtrisent plus de 5 000 mots. La pratique régulière du vocabulaire d’anglais C1 renforce la précision et la flexibilité linguistique.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire C1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "allocate",
+            "meaning": "attribuer des ressources"
+          },
+          {
+            "word": "coherent",
+            "meaning": "logique et structuré"
+          },
+          {
+            "word": "comprehensive",
+            "meaning": "complet et détaillé"
+          },
+          {
+            "word": "constrain",
+            "meaning": "limiter ou restreindre"
+          },
+          {
+            "word": "derive",
+            "meaning": "tirer d’une source"
+          },
+          {
+            "word": "facilitate",
+            "meaning": "rendre plus facile"
+          },
+          {
+            "word": "implication",
+            "meaning": "conséquence implicite"
+          },
+          {
+            "word": "notion",
+            "meaning": "idée ou concept"
+          },
+          {
+            "word": "substantial",
+            "meaning": "important ou considérable"
+          },
+          {
+            "word": "validate",
+            "meaning": "confirmer la validité"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’anglais C1 – Lexique avancé et précis",
+      "metaDescription": "Développez votre maîtrise avec le vocabulaire d’anglais C1. Découvrez des mots avancés et des exemples pour une communication académique et professionnelle.",
+      "introParagraphs": [
+        "Le vocabulaire d’anglais C1 s’adresse aux apprenants avancés qui souhaitent perfectionner leur expression. À ce niveau, vous pouvez comprendre des textes exigeants et communiquer avec précision et nuance.",
+        "Un vocabulaire anglais niveau avancé permet d’argumenter efficacement et d’adapter le registre au contexte. Une liste de mots anglais C1 structurée soutient une progression approfondie."
+      ],
+      "bottomCta": {
+        "heading": "Perfectionnez votre maîtrise",
+        "text": "Développez une expression précise et professionnelle grâce au vocabulaire d’anglais C1."
+      }
+    },
+    "c2": {
+      "title": "Vocabulaire d’anglais C2",
+      "intro": "Le vocabulaire d’anglais C2 correspond au niveau de maîtrise le plus élevé. À ce stade, vous comprenez pratiquement tout type de texte et vous exprimez avec une grande précision stylistique.",
+      "levelDescription": "Maîtrise",
+      "ctaText": "Commencer la pratique C2",
+      "levelExplanation": {
+        "heading": "Que représente le niveau C2 ?",
+        "paragraph": "Le niveau C2 reflète une compétence quasi native. Lorsque vous choisissez d’apprendre le vocabulaire anglais C2, vous êtes capable d’interpréter des nuances subtiles et des références culturelles complexes.",
+        "bullets": [
+          "Vous pouvez reformuler des idées avec différentes nuances.",
+          "Vous pouvez comprendre des textes spécialisés.",
+          "Vous pouvez communiquer avec une précision exceptionnelle."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Domaines de vocabulaire",
+        "topics": [
+          "Langage spécialisé",
+          "Nuances stylistiques"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Langage spécialisé",
+            "items": [
+              "Terminologie académique avancée",
+              "Analyse conceptuelle",
+              "Communication institutionnelle",
+              "Langage technique"
+            ]
+          },
+          {
+            "heading": "Nuances stylistiques",
+            "items": [
+              "Expressions idiomatiques complexes",
+              "Distinctions sémantiques fines",
+              "Adaptation du registre",
+              "Argumentation experte"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots au niveau C2 ?",
+        "text": "Au niveau C2, les apprenants maîtrisent plus de 8 000 mots, y compris des expressions rares et spécialisées. La pratique régulière du vocabulaire d’anglais C2 garantit une maîtrise complète.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire C2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "ambiguous",
+            "meaning": "qui peut avoir plusieurs interprétations"
+          },
+          {
+            "word": "convoluted",
+            "meaning": "très complexe et difficile à comprendre"
+          },
+          {
+            "word": "discern",
+            "meaning": "percevoir clairement"
+          },
+          {
+            "word": "eloquent",
+            "meaning": "qui s’exprime avec efficacité"
+          },
+          {
+            "word": "meticulous",
+            "meaning": "extrêmement précis et attentif aux détails"
+          },
+          {
+            "word": "pragmatic",
+            "meaning": "réaliste et pratique"
+          },
+          {
+            "word": "resilient",
+            "meaning": "capable de se rétablir rapidement"
+          },
+          {
+            "word": "scrutinize",
+            "meaning": "examiner attentivement"
+          },
+          {
+            "word": "substantiate",
+            "meaning": "fournir des preuves"
+          },
+          {
+            "word": "ubiquitous",
+            "meaning": "présent partout"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      },
+      "metaTitle": "Vocabulaire d’anglais C2 – Maîtrise linguistique complète",
+      "metaDescription": "Atteignez la maîtrise avec le vocabulaire d’anglais C2. Découvrez un lexique expert et des exemples pour communiquer avec précision et aisance.",
+      "introParagraphs": [
+        "Le vocabulaire d’anglais C2 correspond au niveau de maîtrise le plus élevé. À ce stade, vous comprenez pratiquement tout type de texte et vous exprimez avec une grande précision stylistique.",
+        "Un vocabulaire anglais maîtrise permet d’adapter le ton et le registre selon le contexte. Une liste de mots anglais C2 structurée soutient un perfectionnement linguistique approfondi."
+      ],
+      "bottomCta": {
+        "heading": "Atteignez la maîtrise complète",
+        "text": "Perfectionnez votre expression et votre précision grâce au vocabulaire d’anglais C2."
+      }
+    }
+  }
+}

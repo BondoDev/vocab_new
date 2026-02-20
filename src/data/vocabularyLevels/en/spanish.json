@@ -1,0 +1,522 @@
+{
+  "targetLanguage": "spanish",
+  "targetLanguageDisplayName": "Spanish",
+  "levels": {
+    "a1": {
+      "title": "Spanish Vocabulary A1",
+      "intro": "Spanish Vocabulary A1 introduces the most essential words and expressions you need to communicate in simple everyday situations.",
+      "introParagraphs": [
+        "Spanish Vocabulary A1 introduces the most essential words and expressions you need to communicate in simple everyday situations.",
+        "At this beginner stage, you focus on basic Spanish words for beginners, clear pronunciation, and short practical phrases that help you speak and understand from day one."
+      ],
+      "levelDescription": "Beginner",
+      "ctaText": "Start A1 Practice",
+      "levelExplanation": {
+        "heading": "What A1 level vocabulary means",
+        "paragraph": "A1 vocabulary covers the most common and practical words used in daily life. With consistent Spanish A1 vocabulary practice, you build confidence step by step.",
+        "bullets": [
+          "You can introduce yourself and ask simple personal questions.",
+          "You understand common words related to family, food, and daily routines.",
+          "You can form short, basic sentences in predictable situations."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary scope at A1",
+        "topics": [
+          "Greetings and introductions",
+          "Numbers, dates, and time",
+          "Family and friends",
+          "Food and drinks"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Everyday topics",
+            "items": [
+              "Greetings and introductions",
+              "Numbers, dates, and time",
+              "Family and friends",
+              "Food and drinks"
+            ]
+          },
+          {
+            "heading": "Practical communication",
+            "items": [
+              "Asking and answering simple questions",
+              "Talking about likes and dislikes",
+              "Describing basic objects and places",
+              "Using common verbs in the present tense"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words do you need?",
+        "text": "At A1, learners typically work with a few hundred core items from a beginner Spanish word list. The goal is not quantity, but active control and regular A1 Spanish vocabulary exercises.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Sample vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          { "word": "hola", "meaning": "hello" },
+          { "word": "adiós", "meaning": "goodbye" },
+          { "word": "gracias", "meaning": "thank you" },
+          { "word": "por favor", "meaning": "please" },
+          { "word": "familia", "meaning": "family" },
+          { "word": "agua", "meaning": "water" },
+          { "word": "comer", "meaning": "to eat" },
+          { "word": "vivir", "meaning": "to live" },
+          { "word": "casa", "meaning": "house" },
+          { "word": "amigo", "meaning": "friend" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "Spanish Vocabulary A1: Basic Words and Beginner Practice",
+      "metaDescription": "Start learning with Spanish Vocabulary A1: essential everyday words, simple phrases, and clear beginner practice to build your foundation.",
+      "bottomCta": {
+        "heading": "Start building your foundation",
+        "text": "Practice daily with short sessions, repeat words in context, and use simple dialogues. Strong Spanish vocabulary for absolute beginners creates the base for all higher levels."
+      }
+    },
+    "a2": {
+      "title": "Spanish Vocabulary A2",
+      "intro": "Spanish Vocabulary A2 builds directly on the beginner stage and helps you communicate more independently in everyday situations.",
+      "introParagraphs": [
+        "Spanish Vocabulary A2 builds directly on the beginner stage and helps you communicate more independently in everyday situations. At this level, you move beyond single words and start using connected phrases with greater confidence.",
+        "With consistent Spanish A2 vocabulary practice, learners develop the ability to describe experiences, talk about plans, and handle routine interactions more smoothly than at A1."
+      ],
+      "levelDescription": "Elementary",
+      "ctaText": "Start A2 Practice",
+      "levelExplanation": {
+        "heading": "What A2 level vocabulary means",
+        "paragraph": "At A2, vocabulary expands into practical daily contexts. You are no longer limited to memorized phrases, you begin to combine words flexibly.",
+        "bullets": [
+          "You can describe your background, education, and work in simple terms.",
+          "You understand common expressions related to shopping, travel, and daily routines.",
+          "You can manage predictable conversations with familiar topics."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary scope at A2",
+        "topics": [
+          "Daily activities and routines",
+          "Travel and transportation",
+          "Food, restaurants, and shopping",
+          "Health and basic problems"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Core communication topics",
+            "items": [
+              "Daily activities and routines",
+              "Travel and transportation",
+              "Food, restaurants, and shopping",
+              "Health and basic problems"
+            ]
+          },
+          {
+            "heading": "Language development areas",
+            "items": [
+              "Using common irregular verbs",
+              "Forming short descriptions of people and places",
+              "Talking about past experiences in simple terms",
+              "Understanding basic Spanish phrases A2 learners frequently encounter"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words do you need?",
+        "text": "At A2, learners typically control 1,000-1,500 active words and expressions. Regular A2 Spanish vocabulary exercises help consolidate retention and improve fluency.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Sample vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          { "word": "viajar", "meaning": "to travel" },
+          { "word": "trabajo", "meaning": "job, work" },
+          { "word": "comprar", "meaning": "to buy" },
+          { "word": "ayer", "meaning": "yesterday" },
+          { "word": "mañana", "meaning": "tomorrow" },
+          { "word": "rápido", "meaning": "fast" },
+          { "word": "difícil", "meaning": "difficult" },
+          { "word": "preguntar", "meaning": "to ask" },
+          { "word": "empezar", "meaning": "to begin" },
+          { "word": "ciudad", "meaning": "city" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "Spanish Vocabulary A2: Everyday Words and Practical Expressions",
+      "metaDescription": "Expand your skills with Spanish Vocabulary A2: everyday topics, useful phrases, and structured practice to move beyond the beginner level confidently.",
+      "bottomCta": {
+        "heading": "Continue progressing",
+        "text": "To move toward B1, focus on expanding context-based usage. Review words in short dialogues, practice writing small paragraphs, and actively use new expressions in conversation. A structured approach helps you steadily learn Spanish vocabulary A2 level content without overload."
+      }
+    },
+    "b1": {
+      "title": "Spanish Vocabulary B1",
+      "intro": "Spanish Vocabulary B1 marks the transition from basic communication to independent language use.",
+      "introParagraphs": [
+        "Spanish Vocabulary B1 marks the transition from basic communication to independent language use. At this level, you begin to handle more varied topics and express opinions with greater clarity.",
+        "Through structured Spanish B1 vocabulary practice, learners gain control over everyday discussions, short narratives, and workplace-related conversations."
+      ],
+      "levelDescription": "Intermediate",
+      "ctaText": "Start B1 Practice",
+      "levelExplanation": {
+        "heading": "What B1 level vocabulary means",
+        "paragraph": "B1 vocabulary allows you to function independently in familiar contexts. You are able to describe experiences, explain plans, and give simple reasons for opinions.",
+        "bullets": [
+          "You understand the main points of clear standard speech.",
+          "You can describe events and ambitions with reasonable accuracy.",
+          "You can manage travel and social situations in Spanish-speaking environments."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary scope at B1",
+        "topics": [
+          "Education and career topics",
+          "Technology and media",
+          "Social issues and lifestyle",
+          "Travel and cultural experiences"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Communication themes",
+            "items": [
+              "Education and career topics",
+              "Technology and media",
+              "Social issues and lifestyle",
+              "Travel and cultural experiences"
+            ]
+          },
+          {
+            "heading": "Language competence focus",
+            "items": [
+              "Expressing opinions and preferences clearly",
+              "Using connectors (because, however, therefore)",
+              "Understanding practical Spanish vocabulary B1 learners meet in news and articles",
+              "Developing confidence with past and future forms"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words do you need?",
+        "text": "At B1, learners typically control around 2,000-2,500 words. Consistent B1 Spanish vocabulary exercises ensure deeper retention and smoother spontaneous speech.",
+        "value": 2500
+      },
+      "sampleVocabulary": {
+        "heading": "Sample vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          { "word": "desarrollar", "meaning": "to develop" },
+          { "word": "decidir", "meaning": "to decide" },
+          { "word": "experiencia", "meaning": "experience" },
+          { "word": "oportunidad", "meaning": "opportunity" },
+          { "word": "mejorar", "meaning": "to improve" },
+          { "word": "acuerdo", "meaning": "agreement" },
+          { "word": "explicar", "meaning": "to explain" },
+          { "word": "resultado", "meaning": "result" },
+          { "word": "sociedad", "meaning": "society" },
+          { "word": "ambiente", "meaning": "environment" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "Spanish Vocabulary B1: Intermediate Words and Real-Life Usage",
+      "metaDescription": "Strengthen your skills with Spanish Vocabulary B1: practical topics, intermediate word lists, and structured exercises for confident communication.",
+      "bottomCta": {
+        "heading": "Move toward upper-intermediate",
+        "text": "To reach B2, focus on expanding nuance and precision. Practice forming longer explanations, learn synonyms, and refine your accuracy. Structured practice helps Spanish vocabulary for intermediate learners become active and automatic."
+      }
+    },
+    "b2": {
+      "title": "Spanish Vocabulary B2",
+      "intro": "Spanish Vocabulary B2 represents a clear step into upper-intermediate proficiency.",
+      "introParagraphs": [
+        "Spanish Vocabulary B2 represents a clear step into upper-intermediate proficiency. At this level, you can discuss complex topics, defend opinions, and understand extended speech without constant support.",
+        "Consistent Spanish B2 vocabulary practice allows learners to refine precision, expand thematic range, and respond spontaneously in professional, academic, and social contexts."
+      ],
+      "levelDescription": "Upper-Intermediate",
+      "ctaText": "Start B2 Practice",
+      "levelExplanation": {
+        "heading": "What B2 level vocabulary means",
+        "paragraph": "B2 vocabulary enables independent communication across a broad range of subjects. You move beyond survival communication and begin managing nuance and detail effectively.",
+        "bullets": [
+          "You can participate actively in discussions and debates.",
+          "You understand implicit meaning in extended conversations.",
+          "You can structure arguments and provide supporting examples."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary scope at B2",
+        "topics": [
+          "Economy and employment trends",
+          "Technology and innovation",
+          "Education systems and policy",
+          "Social challenges and global issues"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Expanded communication domains",
+            "items": [
+              "Economy and employment trends",
+              "Technology and innovation",
+              "Education systems and policy",
+              "Social challenges and global issues"
+            ]
+          },
+          {
+            "heading": "Language precision areas",
+            "items": [
+              "Using connectors for structured arguments",
+              "Distinguishing near-synonyms accurately",
+              "Understanding advanced Spanish vocabulary B2 learners meet in media",
+              "Producing coherent multi-paragraph explanations"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words do you need?",
+        "text": "At B2, active vocabulary often reaches 3,000-4,000 words. Regular B2 Spanish vocabulary exercises strengthen retention and fluency under real-time conditions.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          { "word": "desafío", "meaning": "challenge" },
+          { "word": "rendimiento", "meaning": "performance, output" },
+          { "word": "gestionar", "meaning": "to manage" },
+          { "word": "impacto", "meaning": "impact" },
+          { "word": "evidencia", "meaning": "evidence" },
+          { "word": "incrementar", "meaning": "to increase" },
+          { "word": "establecer", "meaning": "to establish" },
+          { "word": "propuesta", "meaning": "proposal" },
+          { "word": "competencia", "meaning": "competition, competence" },
+          { "word": "perspectiva", "meaning": "perspective" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "Spanish Vocabulary B2: Upper-Intermediate Words and Usage",
+      "metaDescription": "Strengthen fluency with Spanish Vocabulary B2: nuanced vocabulary, real-life topics, and structured practice for confident communication.",
+      "bottomCta": {
+        "heading": "Refine your fluency",
+        "text": "To move toward C1, focus on precision and stylistic control. Practice structured writing, analyze authentic materials, and actively expand Spanish vocabulary for upper intermediate learners through contextual exercises."
+      }
+    },
+    "c1": {
+      "title": "Spanish Vocabulary C1",
+      "intro": "Spanish Vocabulary C1 allows you to communicate with precision, flexibility, and stylistic awareness across academic, professional, and public contexts.",
+      "introParagraphs": [
+        "Spanish Vocabulary C1 allows you to communicate with precision, flexibility, and stylistic awareness across academic, professional, and public contexts.",
+        "Through systematic Spanish C1 vocabulary practice, learners refine nuance, control tone, and understand subtle differences in meaning."
+      ],
+      "levelDescription": "Advanced",
+      "ctaText": "Start C1 Practice",
+      "levelExplanation": {
+        "heading": "What C1 level vocabulary means",
+        "paragraph": "C1 vocabulary supports advanced comprehension and production in complex situations.",
+        "bullets": [
+          "You understand demanding texts and implicit meaning.",
+          "You express ideas fluently without obvious searching for words.",
+          "You adapt vocabulary according to register and audience."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary scope at C1",
+        "topics": [
+          "Public policy and governance",
+          "Research and academic discussion",
+          "Professional negotiations",
+          "Media analysis and critique"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Advanced communication domains",
+            "items": [
+              "Public policy and governance",
+              "Research and academic discussion",
+              "Professional negotiations",
+              "Media analysis and critique"
+            ]
+          },
+          {
+            "heading": "Precision and style",
+            "items": [
+              "Using academic Spanish vocabulary C1 learners encounter in formal texts",
+              "Controlling tone and rhetorical emphasis",
+              "Mastering collocations and advanced connectors",
+              "Distinguishing fine semantic differences"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words do you need?",
+        "text": "At C1, learners often control 5,000 or more words actively. Consistent C1 Spanish vocabulary exercises ensure depth of understanding and flexible application.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          { "word": "plantear", "meaning": "to propose, raise (an issue)" },
+          { "word": "viabilidad", "meaning": "viability" },
+          { "word": "enfoque", "meaning": "approach, focus" },
+          { "word": "argumentar", "meaning": "to argue, reason" },
+          { "word": "evolución", "meaning": "evolution, development" },
+          { "word": "contexto", "meaning": "context" },
+          { "word": "fundamental", "meaning": "fundamental" },
+          { "word": "hipótesis", "meaning": "hypothesis" },
+          { "word": "interpretar", "meaning": "to interpret" },
+          { "word": "criterio", "meaning": "criterion" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "Spanish Vocabulary C1: Advanced Words and Academic Usage",
+      "metaDescription": "Master Spanish Vocabulary C1 with advanced word lists, academic expressions, and structured practice for professional fluency.",
+      "bottomCta": {
+        "heading": "Advance toward mastery",
+        "text": "To progress to C2, focus on stylistic sophistication and subtle connotation. Engage with authentic academic and professional materials to strengthen Spanish vocabulary for advanced learners."
+      }
+    },
+    "c2": {
+      "title": "Spanish Vocabulary C2",
+      "intro": "Spanish Vocabulary C2 represents full proficiency and near-native command.",
+      "introParagraphs": [
+        "Spanish Vocabulary C2 represents full proficiency and near-native command. At this stage, vocabulary is precise, flexible, and contextually sensitive.",
+        "Advanced Spanish C2 vocabulary practice focuses on stylistic control, subtle connotation, and the ability to adapt language across highly specialized domains."
+      ],
+      "levelDescription": "Proficient",
+      "ctaText": "Start C2 Practice",
+      "levelExplanation": {
+        "heading": "What C2 level vocabulary means",
+        "paragraph": "C2 vocabulary enables effortless comprehension and production of complex language in any context.",
+        "bullets": [
+          "You understand virtually all forms of written and spoken Spanish.",
+          "You express ideas with accuracy and subtle differentiation.",
+          "You control rhetorical devices and stylistic variation."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary scope at C2",
+        "topics": [
+          "Specialized academic discourse",
+          "Literary analysis and critique",
+          "Professional leadership communication",
+          "Advanced negotiation and persuasion"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Mastery domains",
+            "items": [
+              "Specialized academic discourse",
+              "Literary analysis and critique",
+              "Professional leadership communication",
+              "Advanced negotiation and persuasion"
+            ]
+          },
+          {
+            "heading": "Advanced control areas",
+            "items": [
+              "Mastering near-native Spanish vocabulary nuances",
+              "Employing stylistic variation intentionally",
+              "Understanding rare idiomatic constructions",
+              "Producing precise and elegant written argumentation"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words do you need?",
+        "text": "At C2, vocabulary knowledge often exceeds 8,000-10,000 words, with strong passive recognition and active flexibility. Regular C2 Spanish vocabulary exercises maintain sharpness and depth.",
+        "value": 10000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          { "word": "idiosincrasia", "meaning": "distinctive character" },
+          { "word": "paradigma", "meaning": "paradigm" },
+          { "word": "matizar", "meaning": "to nuance, qualify" },
+          { "word": "trascender", "meaning": "to transcend" },
+          { "word": "ambigüedad", "meaning": "ambiguity" },
+          { "word": "conjetura", "meaning": "conjecture" },
+          { "word": "retórica", "meaning": "rhetoric" },
+          { "word": "contradicción", "meaning": "contradiction" },
+          { "word": "implícito", "meaning": "implicit" },
+          { "word": "subyacente", "meaning": "underlying" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "Spanish Vocabulary C2: Mastery-Level Words and Precision",
+      "metaDescription": "Achieve mastery with Spanish Vocabulary C2: refined expressions, nuanced vocabulary, and high-level practice for near-native proficiency.",
+      "bottomCta": {
+        "heading": "Maintain full proficiency",
+        "text": "Continue engaging with complex authentic material, analyze advanced texts, and refine expression. Spanish vocabulary mastery level is achieved through constant exposure and deliberate refinement."
+      }
+    }
+  }
+}

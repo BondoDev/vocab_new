@@ -1,0 +1,324 @@
+{
+  "targetLanguage": "german",
+  "targetLanguageDisplayName": "Nemeckij",
+  "levels": {
+    "a1": {
+      "title": "Nemeckij A1 Vocabulary Practice",
+      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
+      "levelDescription": "Nacalnyj",
+      "ctaText": "Nacat praktiku A1",
+      "levelExplanation": {
+        "heading": "Opisanie urovnja",
+        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "bullets": [
+          "Kljucievye kommunikativnye celi",
+          "Castaja grammatika i struktury",
+          "Tipicnye situacii realnoj zizni"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Obem slovarja",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Kolichestvo slov",
+        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Primery slov",
+        "columns": {
+          "word": "Slovo",
+          "meaning": "Znacenie"
+        },
+        "rows": [
+          {
+            "word": "Haus",
+            "meaning": "Znacenie 1"
+          },
+          {
+            "word": "Haus",
+            "meaning": "Znacenie 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Drugie uroveni"
+      }
+    },
+    "a2": {
+      "title": "Nemeckij A2 Vocabulary Practice",
+      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
+      "levelDescription": "Elementarnyj",
+      "ctaText": "Nacat praktiku A2",
+      "levelExplanation": {
+        "heading": "Opisanie urovnja",
+        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "bullets": [
+          "Kljucievye kommunikativnye celi",
+          "Castaja grammatika i struktury",
+          "Tipicnye situacii realnoj zizni"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Obem slovarja",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Kolichestvo slov",
+        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
+        "value": 1200
+      },
+      "sampleVocabulary": {
+        "heading": "Primery slov",
+        "columns": {
+          "word": "Slovo",
+          "meaning": "Znacenie"
+        },
+        "rows": [
+          {
+            "word": "lernen",
+            "meaning": "Znacenie 1"
+          },
+          {
+            "word": "Haus",
+            "meaning": "Znacenie 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Drugie uroveni"
+      }
+    },
+    "b1": {
+      "title": "Nemeckij B1 Vocabulary Practice",
+      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
+      "levelDescription": "Srednij",
+      "ctaText": "Nacat praktiku B1",
+      "levelExplanation": {
+        "heading": "Opisanie urovnja",
+        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "bullets": [
+          "Kljucievye kommunikativnye celi",
+          "Castaja grammatika i struktury",
+          "Tipicnye situacii realnoj zizni"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Obem slovarja",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Kolichestvo slov",
+        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
+        "value": 2000
+      },
+      "sampleVocabulary": {
+        "heading": "Primery slov",
+        "columns": {
+          "word": "Slovo",
+          "meaning": "Znacenie"
+        },
+        "rows": [
+          {
+            "word": "erreichen",
+            "meaning": "Znacenie 1"
+          },
+          {
+            "word": "lernen",
+            "meaning": "Znacenie 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Drugie uroveni"
+      }
+    },
+    "b2": {
+      "title": "Nemeckij B2 Vocabulary Practice",
+      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
+      "levelDescription": "Vyse srednego",
+      "ctaText": "Nacat praktiku B2",
+      "levelExplanation": {
+        "heading": "Opisanie urovnja",
+        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "bullets": [
+          "Kljucievye kommunikativnye celi",
+          "Castaja grammatika i struktury",
+          "Tipicnye situacii realnoj zizni"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Obem slovarja",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Kolichestvo slov",
+        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
+        "value": 3200
+      },
+      "sampleVocabulary": {
+        "heading": "Primery slov",
+        "columns": {
+          "word": "Slovo",
+          "meaning": "Znacenie"
+        },
+        "rows": [
+          {
+            "word": "Zusammenhang",
+            "meaning": "Znacenie 1"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "Znacenie 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Drugie uroveni"
+      }
+    },
+    "c1": {
+      "title": "Nemeckij C1 Vocabulary Practice",
+      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
+      "levelDescription": "Prodvinutyj",
+      "ctaText": "Nacat praktiku C1",
+      "levelExplanation": {
+        "heading": "Opisanie urovnja",
+        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "bullets": [
+          "Kljucievye kommunikativnye celi",
+          "Castaja grammatika i struktury",
+          "Tipicnye situacii realnoj zizni"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Obem slovarja",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Kolichestvo slov",
+        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Primery slov",
+        "columns": {
+          "word": "Slovo",
+          "meaning": "Znacenie"
+        },
+        "rows": [
+          {
+            "word": "Nuance",
+            "meaning": "Znacenie 1"
+          },
+          {
+            "word": "Zusammenhang",
+            "meaning": "Znacenie 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Drugie uroveni"
+      }
+    },
+    "c2": {
+      "title": "Nemeckij C2 Vocabulary Practice",
+      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
+      "levelDescription": "Svobodnoe vladenie",
+      "ctaText": "Nacat praktiku C2",
+      "levelExplanation": {
+        "heading": "Opisanie urovnja",
+        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "bullets": [
+          "Kljucievye kommunikativnye celi",
+          "Castaja grammatika i struktury",
+          "Tipicnye situacii realnoj zizni"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Obem slovarja",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Kolichestvo slov",
+        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Primery slov",
+        "columns": {
+          "word": "Slovo",
+          "meaning": "Znacenie"
+        },
+        "rows": [
+          {
+            "word": "beredt",
+            "meaning": "Znacenie 1"
+          },
+          {
+            "word": "Nuance",
+            "meaning": "Znacenie 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Drugie uroveni"
+      }
+    }
+  }
+}

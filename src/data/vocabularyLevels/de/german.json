@@ -1,0 +1,324 @@
+{
+  "targetLanguage": "german",
+  "targetLanguageDisplayName": "Deutsch",
+  "levels": {
+    "a1": {
+      "title": "Deutsch A1 Vocabulary Practice",
+      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "levelDescription": "Anfaenger",
+      "ctaText": "A1-Training starten",
+      "levelExplanation": {
+        "heading": "Niveauerklaerung",
+        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "bullets": [
+          "Zentrale Kommunikationsziele",
+          "Hauefige Grammatik und Strukturen",
+          "Typische Alltagssituationen"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Wortschatzumfang",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Wortanzahl",
+        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "Haus",
+            "meaning": "Bedeutung 1"
+          },
+          {
+            "word": "Haus",
+            "meaning": "Bedeutung 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Andere Niveaus entdecken"
+      }
+    },
+    "a2": {
+      "title": "Deutsch A2 Vocabulary Practice",
+      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "levelDescription": "Grundstufe",
+      "ctaText": "A2-Training starten",
+      "levelExplanation": {
+        "heading": "Niveauerklaerung",
+        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "bullets": [
+          "Zentrale Kommunikationsziele",
+          "Hauefige Grammatik und Strukturen",
+          "Typische Alltagssituationen"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Wortschatzumfang",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Wortanzahl",
+        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "value": 1200
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "lernen",
+            "meaning": "Bedeutung 1"
+          },
+          {
+            "word": "Haus",
+            "meaning": "Bedeutung 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Andere Niveaus entdecken"
+      }
+    },
+    "b1": {
+      "title": "Deutsch B1 Vocabulary Practice",
+      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "levelDescription": "Mittelstufe",
+      "ctaText": "B1-Training starten",
+      "levelExplanation": {
+        "heading": "Niveauerklaerung",
+        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "bullets": [
+          "Zentrale Kommunikationsziele",
+          "Hauefige Grammatik und Strukturen",
+          "Typische Alltagssituationen"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Wortschatzumfang",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Wortanzahl",
+        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "value": 2000
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "erreichen",
+            "meaning": "Bedeutung 1"
+          },
+          {
+            "word": "lernen",
+            "meaning": "Bedeutung 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Andere Niveaus entdecken"
+      }
+    },
+    "b2": {
+      "title": "Deutsch B2 Vocabulary Practice",
+      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "levelDescription": "Gehobene Mittelstufe",
+      "ctaText": "B2-Training starten",
+      "levelExplanation": {
+        "heading": "Niveauerklaerung",
+        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "bullets": [
+          "Zentrale Kommunikationsziele",
+          "Hauefige Grammatik und Strukturen",
+          "Typische Alltagssituationen"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Wortschatzumfang",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Wortanzahl",
+        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "value": 3200
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "Zusammenhang",
+            "meaning": "Bedeutung 1"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "Bedeutung 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Andere Niveaus entdecken"
+      }
+    },
+    "c1": {
+      "title": "Deutsch C1 Vocabulary Practice",
+      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "levelDescription": "Fortgeschritten",
+      "ctaText": "C1-Training starten",
+      "levelExplanation": {
+        "heading": "Niveauerklaerung",
+        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "bullets": [
+          "Zentrale Kommunikationsziele",
+          "Hauefige Grammatik und Strukturen",
+          "Typische Alltagssituationen"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Wortschatzumfang",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Wortanzahl",
+        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "Nuance",
+            "meaning": "Bedeutung 1"
+          },
+          {
+            "word": "Zusammenhang",
+            "meaning": "Bedeutung 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Andere Niveaus entdecken"
+      }
+    },
+    "c2": {
+      "title": "Deutsch C2 Vocabulary Practice",
+      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "levelDescription": "Sehr fortgeschritten",
+      "ctaText": "C2-Training starten",
+      "levelExplanation": {
+        "heading": "Niveauerklaerung",
+        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "bullets": [
+          "Zentrale Kommunikationsziele",
+          "Hauefige Grammatik und Strukturen",
+          "Typische Alltagssituationen"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Wortschatzumfang",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Wortanzahl",
+        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Beispielwortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "beredt",
+            "meaning": "Bedeutung 1"
+          },
+          {
+            "word": "Nuance",
+            "meaning": "Bedeutung 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Andere Niveaus entdecken"
+      }
+    }
+  }
+}

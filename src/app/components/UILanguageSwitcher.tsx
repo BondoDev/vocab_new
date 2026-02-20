@@ -1,7 +1,9 @@
 ﻿import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Globe, ChevronDown } from "lucide-react";
+import { useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
 
 interface UILanguageSwitcherProps {
   variant?: "default" | "centered-modal";
@@ -11,6 +13,8 @@ export function UILanguageSwitcher({
   variant = "default",
 }: UILanguageSwitcherProps) {
   const { uiLanguage, setUILanguage, t } = useLanguage();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -85,6 +89,21 @@ export function UILanguageSwitcher({
 
   const handleSelect = (code: LanguageCode) => {
     if (code === "en" || code === "es" || code === "fr" || code === "pt" || code === "it" || code === "de" || code === "ru") {
+      const match = location.pathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+      if (match) {
+        const [, currentUiLang, slug] = match;
+        const resolved = resolveVocabularyRoute(currentUiLang, slug);
+        if (resolved) {
+          const nextPath = buildLocalizedVocabularyPath(
+            code,
+            resolved.targetLanguage,
+            resolved.level,
+          );
+          if (nextPath && nextPath !== location.pathname) {
+            navigate(nextPath);
+          }
+        }
+      }
       setUILanguage(code);
     }
     setIsOpen(false);
@@ -221,6 +240,8 @@ export function UILanguageSwitcher({
     </>
   );
 }
+
+
 
 
 

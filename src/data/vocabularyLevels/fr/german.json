@@ -1,0 +1,324 @@
+{
+  "targetLanguage": "german",
+  "targetLanguageDisplayName": "Allemand",
+  "levels": {
+    "a1": {
+      "title": "Allemand A1 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Debutant",
+      "ctaText": "Commencer la pratique A1",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "Haus",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "Haus",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "a2": {
+      "title": "Allemand A2 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Elementaire",
+      "ctaText": "Commencer la pratique A2",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 1200
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "lernen",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "Haus",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "b1": {
+      "title": "Allemand B1 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Intermediaire",
+      "ctaText": "Commencer la pratique B1",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 2000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "erreichen",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "lernen",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "b2": {
+      "title": "Allemand B2 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Intermediaire superieur",
+      "ctaText": "Commencer la pratique B2",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 3200
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "Zusammenhang",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "c1": {
+      "title": "Allemand C1 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Avance",
+      "ctaText": "Commencer la pratique C1",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "Nuance",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "Zusammenhang",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    },
+    "c2": {
+      "title": "Allemand C2 Vocabulary Practice",
+      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
+      "levelDescription": "Maitrise",
+      "ctaText": "Commencer la pratique C2",
+      "levelExplanation": {
+        "heading": "Explication du niveau",
+        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "bullets": [
+          "Objectifs essentiels de communication",
+          "Grammaire et structures courantes",
+          "Situations typiques de la vie reelle"
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portee du vocabulaire",
+        "topics": [
+          "Topic 1",
+          "Topic 2",
+          "Topic 3"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ]
+      },
+      "wordCount": {
+        "heading": "Nombre de mots",
+        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Vocabulaire exemple",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          {
+            "word": "beredt",
+            "meaning": "Signification 1"
+          },
+          {
+            "word": "Nuance",
+            "meaning": "Signification 2"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorer les autres niveaux"
+      }
+    }
+  }
+}

@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "english",
+  "targetLanguageDisplayName": "Inglês",
+  "levels": {
+    "a1": {
+      "title": "Vocabulário de inglês A1",
+      "intro": "O vocabulário de inglês A1 é o ponto de partida para quem está começando a aprender o idioma.",
+      "levelDescription": "Iniciante",
+      "ctaText": "Iniciar prática A1",
+      "levelExplanation": {
+        "heading": "O que significa o nível A1?",
+        "paragraph": "O nível A1 corresponde ao estágio inicial do aprendizado. Ao aprender vocabulário de inglês A1, você trabalha com palavras e expressões essenciais para comunicação simples.",
+        "bullets": [
+          "Você pode se apresentar e fazer perguntas básicas.",
+          "Você pode compreender frases curtas e palavras familiares.",
+          "Você pode se comunicar de forma simples em situações cotidianas."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Quais temas são abordados?",
+        "topics": [
+          "Informações pessoais",
+          "Vida cotidiana"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Informações pessoais",
+            "items": [
+              "Nome e idade",
+              "Países e nacionalidades",
+              "Membros da família",
+              "Profissões simples"
+            ]
+          },
+          {
+            "heading": "Vida cotidiana",
+            "items": [
+              "Comida e bebidas",
+              "Números e horários",
+              "Dias e meses",
+              "Verbos comuns (go, eat, live, work)"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras inclui o A1?",
+        "text": "No nível A1, o estudante normalmente conhece entre 500 e 800 palavras. A prática constante do vocabulário de inglês A1 fortalece a memória e a confiança.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário A1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "name",
+            "meaning": "nome de uma pessoa"
+          },
+          {
+            "word": "city",
+            "meaning": "cidade"
+          },
+          {
+            "word": "mother",
+            "meaning": "mãe"
+          },
+          {
+            "word": "house",
+            "meaning": "casa"
+          },
+          {
+            "word": "water",
+            "meaning": "água"
+          },
+          {
+            "word": "book",
+            "meaning": "livro"
+          },
+          {
+            "word": "small",
+            "meaning": "pequeno"
+          },
+          {
+            "word": "happy",
+            "meaning": "feliz"
+          },
+          {
+            "word": "work",
+            "meaning": "trabalhar"
+          },
+          {
+            "word": "school",
+            "meaning": "escola"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar outros níveis"
+      },
+      "metaTitle": "Vocabulário de inglês A1 – Palavras básicas para iniciantes",
+      "metaDescription": "Comece com o vocabulário de inglês A1. Aprenda palavras essenciais, significados e exemplos simples para dar os primeiros passos no inglês.",
+      "introParagraphs": [
+        "O vocabulário de inglês A1 é o ponto de partida para quem está começando a aprender o idioma. Neste nível, você aprende palavras simples e frequentes usadas em situações do dia a dia.",
+        "Com o vocabulário de inglês para iniciantes, é possível se apresentar, falar sobre a família e descrever rotinas básicas. Uma lista de palavras inglês A1 bem organizada facilita a construção de uma base sólida."
+      ],
+      "bottomCta": {
+        "heading": "Comece agora",
+        "text": "Construa sua base com o vocabulário de inglês A1 e avance passo a passo no aprendizado."
+      }
+    },
+    "a2": {
+      "title": "Vocabulário de inglês A2",
+      "intro": "O vocabulário de inglês A2 amplia as bases do nível inicial.",
+      "levelDescription": "Básico",
+      "ctaText": "Iniciar prática A2",
+      "levelExplanation": {
+        "heading": "O que caracteriza o nível A2?",
+        "paragraph": "O nível A2 corresponde à fase elementar. Ao aprender vocabulário de inglês A2, você trabalha com expressões frequentes relacionadas à vida diária.",
+        "bullets": [
+          "Você pode descrever rotinas e experiências passadas.",
+          "Você pode compreender diálogos simples.",
+          "Você pode escrever mensagens curtas."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Temas principais",
+        "topics": [
+          "Dia a dia",
+          "Comunicação"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Dia a dia",
+            "items": [
+              "Compras e preços",
+              "Transporte",
+              "Clima",
+              "Atividades de lazer"
+            ]
+          },
+          {
+            "heading": "Comunicação",
+            "items": [
+              "Comparações",
+              "Preferências",
+              "Planos futuros",
+              "Pequenos problemas"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras inclui o A2?",
+        "text": "No nível A2, o estudante conhece cerca de 1.000 a 1.500 palavras. A prática do vocabulário de inglês A2 melhora a fluência.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário A2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "arrive",
+            "meaning": "chegar"
+          },
+          {
+            "word": "borrow",
+            "meaning": "pegar emprestado"
+          },
+          {
+            "word": "choose",
+            "meaning": "escolher"
+          },
+          {
+            "word": "different",
+            "meaning": "diferente"
+          },
+          {
+            "word": "invite",
+            "meaning": "convidar"
+          },
+          {
+            "word": "learn",
+            "meaning": "aprender"
+          },
+          {
+            "word": "return",
+            "meaning": "retornar"
+          },
+          {
+            "word": "save",
+            "meaning": "economizar"
+          },
+          {
+            "word": "travel",
+            "meaning": "viajar"
+          },
+          {
+            "word": "visit",
+            "meaning": "visitar"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar outros níveis"
+      },
+      "metaTitle": "Vocabulário de inglês A2 – Palavras nível básico",
+      "metaDescription": "Amplie seu conhecimento com o vocabulário de inglês A2. Aprenda palavras essenciais para situações do cotidiano.",
+      "introParagraphs": [
+        "O vocabulário de inglês A2 amplia as bases do nível inicial. Neste estágio, você consegue falar sobre experiências simples e situações do cotidiano com mais segurança.",
+        "Com o vocabulário de inglês básico, você desenvolve frases mais variadas e compreende textos curtos. Uma lista de palavras inglês A2 ajuda a organizar o estudo de forma eficiente."
+      ],
+      "bottomCta": {
+        "heading": "Continue avançando",
+        "text": "Fortaleça suas habilidades com o vocabulário de inglês A2 e prepare-se para o nível intermediário."
+      }
+    },
+    "b1": {
+      "title": "Vocabulário de inglês B1",
+      "intro": "O vocabulário de inglês B1 permite que você se comunique com mais autonomia.",
+      "levelDescription": "Intermediário",
+      "ctaText": "Iniciar prática B1",
+      "levelExplanation": {
+        "heading": "O que significa o nível B1?",
+        "paragraph": "O nível B1 indica uso independente da língua. Ao aprender vocabulário de inglês B1, você consegue entender os pontos principais de textos sobre temas familiares.",
+        "bullets": [
+          "Você pode descrever experiências e acontecimentos.",
+          "Você pode explicar opiniões e dar razões.",
+          "Você pode escrever textos simples e coerentes."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Áreas de vocabulário",
+        "topics": [
+          "Vida cotidiana e trabalho",
+          "Comunicação e argumentação"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Vida cotidiana e trabalho",
+            "items": [
+              "Estudos e carreira",
+              "Viagens e cultura",
+              "Saúde e estilo de vida",
+              "Relacionamentos"
+            ]
+          },
+          {
+            "heading": "Comunicação e argumentação",
+            "items": [
+              "Vantagens e desvantagens",
+              "Sugestões",
+              "Causas e consequências",
+              "Discussões simples"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras inclui o B1?",
+        "text": "No nível B1, o estudante domina cerca de 2.000 a 2.500 palavras. A prática constante do vocabulário de inglês B1 melhora a fluência e a precisão.",
+        "value": 2500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário B1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "achieve",
+            "meaning": "alcançar um objetivo"
+          },
+          {
+            "word": "benefit",
+            "meaning": "benefício"
+          },
+          {
+            "word": "decision",
+            "meaning": "decisão"
+          },
+          {
+            "word": "experience",
+            "meaning": "experiência"
+          },
+          {
+            "word": "improve",
+            "meaning": "melhorar"
+          },
+          {
+            "word": "opinion",
+            "meaning": "opinião"
+          },
+          {
+            "word": "prepare",
+            "meaning": "preparar"
+          },
+          {
+            "word": "reason",
+            "meaning": "motivo"
+          },
+          {
+            "word": "result",
+            "meaning": "resultado"
+          },
+          {
+            "word": "suggest",
+            "meaning": "sugerir"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar outros níveis"
+      },
+      "metaTitle": "Vocabulário de inglês B1 – Palavras nível intermediário",
+      "metaDescription": "Desenvolva seu inglês com o vocabulário de inglês B1. Aprenda palavras intermediárias e exemplos para se comunicar com mais confiança.",
+      "introParagraphs": [
+        "O vocabulário de inglês B1 permite que você se comunique com mais autonomia. Neste nível intermediário, é possível falar sobre experiências, opiniões e planos de forma mais clara.",
+        "Com o vocabulário de inglês intermediário, você amplia sua capacidade de compreender textos e participar de conversas mais longas. Uma lista de palavras inglês B1 ajuda a organizar o estudo de maneira estruturada."
+      ],
+      "bottomCta": {
+        "heading": "Continue evoluindo",
+        "text": "Fortaleça suas habilidades com o vocabulário de inglês B1 e prepare-se para o próximo nível."
+      }
+    },
+    "b2": {
+      "title": "Vocabulário de inglês B2",
+      "intro": "O vocabulário de inglês B2 permite comunicação mais precisa e detalhada.",
+      "levelDescription": "Intermediário avançado",
+      "ctaText": "Iniciar prática B2",
+      "levelExplanation": {
+        "heading": "O que caracteriza o nível B2?",
+        "paragraph": "O nível B2 representa fluência independente. Ao aprender vocabulário de inglês B2, você pode expressar argumentos bem estruturados.",
+        "bullets": [
+          "Você pode defender opiniões com exemplos.",
+          "Você pode compreender palestras e artigos mais longos.",
+          "Você pode interagir com naturalidade."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Áreas principais",
+        "topics": [
+          "Contexto profissional",
+          "Temas abstratos"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Contexto profissional",
+            "items": [
+              "Análise e avaliação",
+              "Tecnologia",
+              "Economia",
+              "Comunicação formal"
+            ]
+          },
+          {
+            "heading": "Temas abstratos",
+            "items": [
+              "Probabilidade",
+              "Consequências",
+              "Estratégias",
+              "Discussões complexas"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras inclui o B2?",
+        "text": "No nível B2, o estudante conhece cerca de 3.000 a 4.000 palavras. A prática do vocabulário de inglês B2 aumenta a precisão comunicativa.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário B2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "assess",
+            "meaning": "avaliar"
+          },
+          {
+            "word": "consequence",
+            "meaning": "consequência"
+          },
+          {
+            "word": "efficient",
+            "meaning": "eficiente"
+          },
+          {
+            "word": "evidence",
+            "meaning": "evidência"
+          },
+          {
+            "word": "maintain",
+            "meaning": "manter"
+          },
+          {
+            "word": "perspective",
+            "meaning": "perspectiva"
+          },
+          {
+            "word": "reliable",
+            "meaning": "confiável"
+          },
+          {
+            "word": "significant",
+            "meaning": "significativo"
+          },
+          {
+            "word": "strategy",
+            "meaning": "estratégia"
+          },
+          {
+            "word": "trend",
+            "meaning": "tendência"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar outros níveis"
+      },
+      "metaTitle": "Vocabulário de inglês B2 – Nível intermediário avançado",
+      "metaDescription": "Amplie seu domínio com o vocabulário de inglês B2. Aprenda palavras avançadas para estudos, trabalho e debates.",
+      "introParagraphs": [
+        "O vocabulário de inglês B2 permite comunicação mais precisa e detalhada. Neste nível, você consegue compreender textos complexos e participar de discussões com mais segurança.",
+        "Com o vocabulário de inglês intermediário avançado, você desenvolve maior controle lexical. Uma lista de palavras inglês B2 facilita o estudo estruturado."
+      ],
+      "bottomCta": {
+        "heading": "Aprofunde seu nível",
+        "text": "Amplie seu vocabulário de inglês B2 e desenvolva maior precisão na comunicação."
+      }
+    },
+    "c1": {
+      "title": "Vocabulário de inglês C1",
+      "intro": "O vocabulário de inglês C1 é voltado para estudantes que desejam alto nível de precisão.",
+      "levelDescription": "Avançado",
+      "ctaText": "Iniciar prática C1",
+      "levelExplanation": {
+        "heading": "O que representa o nível C1?",
+        "paragraph": "O nível C1 indica competência avançada. Ao aprender vocabulário de inglês C1, você consegue formular argumentos complexos com segurança.",
+        "bullets": [
+          "Você pode interpretar significados implícitos.",
+          "Você pode produzir textos detalhados e organizados.",
+          "Você pode adaptar o registro linguístico."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Áreas de estudo",
+        "topics": [
+          "Contexto acadêmico",
+          "Nuances linguísticas"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Contexto acadêmico",
+            "items": [
+              "Análise crítica",
+              "Hipóteses",
+              "Argumentação estruturada",
+              "Terminologia especializada"
+            ]
+          },
+          {
+            "heading": "Nuances linguísticas",
+            "items": [
+              "Conceitos abstratos",
+              "Implicações",
+              "Variação de registro",
+              "Diferenças semânticas"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras inclui o C1?",
+        "text": "No nível C1, o estudante domina mais de 5.000 palavras. A prática do vocabulário de inglês C1 aumenta a flexibilidade e a precisão.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário C1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "allocate",
+            "meaning": "alocar"
+          },
+          {
+            "word": "coherent",
+            "meaning": "coerente"
+          },
+          {
+            "word": "comprehensive",
+            "meaning": "abrangente"
+          },
+          {
+            "word": "derive",
+            "meaning": "derivar"
+          },
+          {
+            "word": "facilitate",
+            "meaning": "facilitar"
+          },
+          {
+            "word": "implication",
+            "meaning": "implicação"
+          },
+          {
+            "word": "notion",
+            "meaning": "noção"
+          },
+          {
+            "word": "substantial",
+            "meaning": "substancial"
+          },
+          {
+            "word": "validate",
+            "meaning": "validar"
+          },
+          {
+            "word": "constrain",
+            "meaning": "restringir"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar outros níveis"
+      },
+      "metaTitle": "Vocabulário de inglês C1 – Nível avançado e preciso",
+      "metaDescription": "Aperfeiçoe seu inglês com o vocabulário de inglês C1. Descubra palavras avançadas para contextos acadêmicos e profissionais.",
+      "introParagraphs": [
+        "O vocabulário de inglês C1 é voltado para estudantes que desejam alto nível de precisão. Você pode compreender textos complexos e expressar ideias com clareza e nuances.",
+        "Com o vocabulário de inglês avançado, você desenvolve maior domínio estilístico. Uma lista de palavras inglês C1 apoia a expansão estruturada do léxico."
+      ],
+      "bottomCta": {
+        "heading": "Aperfeiçoe sua fluência",
+        "text": "Desenvolva maior precisão com o vocabulário de inglês C1 e alcance um nível avançado consistente."
+      }
+    },
+    "c2": {
+      "title": "Vocabulário de inglês C2",
+      "intro": "O vocabulário de inglês C2 representa o mais alto nível de competência.",
+      "levelDescription": "Proficiente",
+      "ctaText": "Iniciar prática C2",
+      "levelExplanation": {
+        "heading": "O que caracteriza o nível C2?",
+        "paragraph": "O nível C2 indica domínio quase nativo. Ao aprender vocabulário de inglês C2, você consegue interpretar nuances sutis e referências complexas.",
+        "bullets": [
+          "Você pode compreender textos especializados.",
+          "Você pode reformular ideias complexas com naturalidade.",
+          "Você pode se expressar com extrema precisão."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Áreas de aprofundamento",
+        "topics": [
+          "Contextos especializados",
+          "Precisão semântica"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Contextos especializados",
+            "items": [
+              "Terminologia acadêmica",
+              "Conceitos teóricos",
+              "Análise avançada",
+              "Retórica"
+            ]
+          },
+          {
+            "heading": "Precisão semântica",
+            "items": [
+              "Conotações",
+              "Expressões idiomáticas complexas",
+              "Significados implícitos",
+              "Argumentação sofisticada"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras inclui o C2?",
+        "text": "No nível C2, o estudante domina mais de 8.000 palavras. A prática do vocabulário de inglês C2 consolida uma competência quase nativa.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário C2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "ambiguous",
+            "meaning": "ambíguo"
+          },
+          {
+            "word": "convoluted",
+            "meaning": "complexo e difícil de entender"
+          },
+          {
+            "word": "discern",
+            "meaning": "discernir"
+          },
+          {
+            "word": "eloquent",
+            "meaning": "eloquente"
+          },
+          {
+            "word": "meticulous",
+            "meaning": "meticuloso"
+          },
+          {
+            "word": "pragmatic",
+            "meaning": "pragmático"
+          },
+          {
+            "word": "resilient",
+            "meaning": "resiliente"
+          },
+          {
+            "word": "scrutinize",
+            "meaning": "examinar cuidadosamente"
+          },
+          {
+            "word": "substantiate",
+            "meaning": "comprovar com evidências"
+          },
+          {
+            "word": "ubiquitous",
+            "meaning": "onipresente"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explorar outros níveis"
+      },
+      "metaTitle": "Vocabulário de inglês C2 – Nível de domínio completo",
+      "metaDescription": "Alcance o domínio com o vocabulário de inglês C2. Aprenda termos complexos e nuances para comunicação quase nativa.",
+      "introParagraphs": [
+        "O vocabulário de inglês C2 representa o mais alto nível de competência. Você pode compreender praticamente qualquer texto e se expressar com grande precisão.",
+        "Com o vocabulário de inglês nível avançado, é possível adaptar estilo e registro conforme o contexto. Uma lista de palavras inglês C2 apoia o aperfeiçoamento final do idioma."
+      ],
+      "bottomCta": {
+        "heading": "Alcance o domínio completo",
+        "text": "Desenvolva sua expressão ao máximo com o vocabulário de inglês C2 e atinja um nível quase nativo."
+      }
+    }
+  }
+}
