@@ -1,323 +1,689 @@
-{
+﻿{
   "targetLanguage": "italian",
   "targetLanguageDisplayName": "Italiano",
   "levels": {
     "a1": {
-      "title": "Italiano A1 Vocabulary Practice",
-      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "title": "Vocabolario di italiano A1",
+      "intro": "Il vocabolario di italiano A1 è il livello iniziale per i principianti.",
       "levelDescription": "Principiante",
       "ctaText": "Inizia pratica A1",
       "levelExplanation": {
-        "heading": "Spiegazione del livello",
-        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "heading": "Cosa significa il livello A1 in italiano?",
+        "paragraph": "Il livello A1 corrisponde al livello principiante secondo il QCER. Gli studenti possono comprendere e usare espressioni familiari e frasi semplici per bisogni concreti.",
         "bullets": [
-          "Obiettivi principali di comunicazione",
-          "Grammatica e strutture frequenti",
-          "Situazioni tipiche di uso reale"
+          "Saluti e presentazioni.",
+          "Fare e rispondere a domande semplici.",
+          "Comprendere istruzioni brevi e chiare."
         ]
       },
       "vocabularyScope": {
-        "heading": "Ambito del vocabolario",
+        "heading": "Cosa comprende il vocabolario di italiano A1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Comunicazione quotidiana",
+          "Temi personali"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Comunicazione quotidiana",
+            "items": [
+              "Saluti e formule di cortesia",
+              "Numeri, giorni della settimana e mesi",
+              "Verbi comuni al presente",
+              "Domande semplici"
+            ]
+          },
+          {
+            "heading": "Temi personali",
+            "items": [
+              "Famiglia e amici",
+              "Cibo e bevande",
+              "Casa e ambiente",
+              "Aggettivi di base"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Numero di parole",
-        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
+        "heading": "Quante parole comprende il vocabolario di italiano A1?",
+        "text": "Il livello A1 include generalmente tra 500 e 800 parole essenziali. L’obiettivo non è solo memorizzare, ma utilizzare attivamente le parole in frasi semplici. Gli esercizi di italiano A1 aiutano a consolidare l’apprendimento.",
         "value": 800
       },
       "sampleVocabulary": {
-        "heading": "Vocabolario di esempio",
+        "heading": "Esempi di vocabolario italiano A1",
         "columns": {
           "word": "Parola",
           "meaning": "Significato"
         },
         "rows": [
           {
-            "word": "casa",
-            "meaning": "Significato 1"
+            "word": "ciao",
+            "meaning": "ciao / saluto"
+          },
+          {
+            "word": "arrivederci",
+            "meaning": "arrivederci"
+          },
+          {
+            "word": "grazie",
+            "meaning": "grazie"
+          },
+          {
+            "word": "famiglia",
+            "meaning": "famiglia"
           },
           {
             "word": "casa",
-            "meaning": "Significato 2"
+            "meaning": "casa"
+          },
+          {
+            "word": "mangiare",
+            "meaning": "mangiare"
+          },
+          {
+            "word": "bere",
+            "meaning": "bere"
+          },
+          {
+            "word": "amico",
+            "meaning": "amico"
+          },
+          {
+            "word": "grande",
+            "meaning": "grande"
+          },
+          {
+            "word": "piccolo",
+            "meaning": "piccolo"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Esplora altri livelli"
+        "heading": "Altri livelli di italiano"
+      },
+      "metaTitle": "Vocabolario di italiano A1 – Parole di base per principianti",
+      "metaDescription": "Impara il vocabolario di italiano A1 con parole semplici ed esempi chiari. Costruisci una base solida per comunicare in italiano.",
+      "introParagraphs": [
+        "Il vocabolario di italiano A1 è il livello iniziale per i principianti. A questo livello, gli studenti imparano parole e frasi semplici per comunicare nella vita quotidiana.",
+        "Le parole di base italiano A1 includono saluti, numeri, verbi comuni e domande semplici. Una lista di parole italiano A1 ben organizzata permette di ampliare progressivamente il vocabolario e acquisire sicurezza nella comunicazione."
+      ],
+      "bottomCta": {
+        "heading": "Inizia a imparare ora",
+        "text": "Il vocabolario di italiano A1 fornisce una base solida. Esercitati regolarmente, costruisci frasi semplici e ascolta brevi dialoghi per rafforzare le competenze linguistiche."
       }
     },
     "a2": {
-      "title": "Italiano A2 Vocabulary Practice",
-      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "title": "Vocabolario di italiano A2",
+      "intro": "Il vocabolario di italiano A2 completa le conoscenze del livello A1.",
       "levelDescription": "Elementare",
       "ctaText": "Inizia pratica A2",
       "levelExplanation": {
-        "heading": "Spiegazione del livello",
-        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "heading": "Cosa significa il livello A2 in italiano?",
+        "paragraph": "Il livello A2 corrisponde a un utente elementare. Gli studenti possono capire espressioni frequentemente usate e interagire in compiti semplici e di routine.",
         "bullets": [
-          "Obiettivi principali di comunicazione",
-          "Grammatica e strutture frequenti",
-          "Situazioni tipiche di uso reale"
+          "Descrivere routine e attività quotidiane.",
+          "Raccontare esperienze semplici passate.",
+          "Scambiare informazioni in contesti familiari."
         ]
       },
       "vocabularyScope": {
-        "heading": "Ambito del vocabolario",
+        "heading": "Cosa comprende il vocabolario di italiano A2?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Vita quotidiana e servizi",
+          "Comunicazione ampliata"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Vita quotidiana e servizi",
+            "items": [
+              "Trasporti e spostamenti",
+              "Acquisti e denaro",
+              "Salute e benessere",
+              "Lavoro e appuntamenti"
+            ]
+          },
+          {
+            "heading": "Comunicazione ampliata",
+            "items": [
+              "Connettori semplici",
+              "Espressioni temporali",
+              "Aggettivi di opinione",
+              "Verbi al passato prossimo"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Numero di parole",
-        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
-        "value": 1200
+        "heading": "Quante parole comprende il vocabolario di italiano A2?",
+        "text": "Il livello A2 include generalmente tra 1.000 e 1.500 parole utili. La pratica regolare consente di consolidare le conoscenze e migliorare la fluidità linguistica.",
+        "value": 1500
       },
       "sampleVocabulary": {
-        "heading": "Vocabolario di esempio",
+        "heading": "Esempi di vocabolario italiano A2",
         "columns": {
           "word": "Parola",
           "meaning": "Significato"
         },
         "rows": [
           {
-            "word": "imparare",
-            "meaning": "Significato 1"
+            "word": "viaggio",
+            "meaning": "viaggio"
           },
           {
-            "word": "casa",
-            "meaning": "Significato 2"
+            "word": "biglietto",
+            "meaning": "biglietto"
+          },
+          {
+            "word": "negozio",
+            "meaning": "negozio"
+          },
+          {
+            "word": "soldi",
+            "meaning": "soldi"
+          },
+          {
+            "word": "lavoro",
+            "meaning": "lavoro"
+          },
+          {
+            "word": "malato",
+            "meaning": "malato"
+          },
+          {
+            "word": "ieri",
+            "meaning": "ieri"
+          },
+          {
+            "word": "domani",
+            "meaning": "domani"
+          },
+          {
+            "word": "spesso",
+            "meaning": "spesso"
+          },
+          {
+            "word": "importante",
+            "meaning": "importante"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Esplora altri livelli"
+        "heading": "Altri livelli di italiano"
+      },
+      "metaTitle": "Vocabolario di italiano A2 – Livello elementare",
+      "metaDescription": "Impara il vocabolario di italiano A2 con parole comuni ed esempi pratici. Migliora comprensione e comunicazione a livello elementare.",
+      "introParagraphs": [
+        "Il vocabolario di italiano A2 completa le conoscenze del livello A1. Gli studenti possono formare frasi più lunghe e comunicare più facilmente in situazioni quotidiane.",
+        "Il vocabolario quotidiano italiano comprende argomenti come lavoro, tempo libero, viaggi e salute. Una lista strutturata di parole italiano A2 aiuta ad acquisire gradualmente nuovi termini."
+      ],
+      "bottomCta": {
+        "heading": "Prosegui con l’apprendimento",
+        "text": "Il vocabolario di italiano A2 permette di comunicare in modo più autonomo. Leggi testi semplici, ascolta dialoghi e ripeti regolarmente nuove parole."
       }
     },
     "b1": {
-      "title": "Italiano B1 Vocabulary Practice",
-      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "title": "Vocabolario di italiano B1",
+      "intro": "Il vocabolario di italiano B1 corrisponde al livello intermedio.",
       "levelDescription": "Intermedio",
       "ctaText": "Inizia pratica B1",
       "levelExplanation": {
-        "heading": "Spiegazione del livello",
-        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "heading": "Cosa significa il livello B1 in italiano?",
+        "paragraph": "Il livello B1 corrisponde a un uso indipendente della lingua a livello intermedio. Gli studenti possono gestire la maggior parte delle situazioni quotidiane e produrre testi semplici e coerenti.",
         "bullets": [
-          "Obiettivi principali di comunicazione",
-          "Grammatica e strutture frequenti",
-          "Situazioni tipiche di uso reale"
+          "Esprimere opinioni personali.",
+          "Descrivere esperienze ed eventi.",
+          "Comprendere testi informativi chiari."
         ]
       },
       "vocabularyScope": {
-        "heading": "Ambito del vocabolario",
+        "heading": "Cosa comprende il vocabolario di italiano B1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Lavoro e società",
+          "Argomentazione e narrazione"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Lavoro e società",
+            "items": [
+              "Professioni e responsabilità",
+              "Istruzione e formazione",
+              "Tecnologia e media",
+              "Temi sociali"
+            ]
+          },
+          {
+            "heading": "Argomentazione e narrazione",
+            "items": [
+              "Connettori logici",
+              "Espressioni di accordo e disaccordo",
+              "Aggettivi comparativi",
+              "Parole astratte italiano B1"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Numero di parole",
-        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
-        "value": 2000
+        "heading": "Quante parole comprende il vocabolario di italiano B1?",
+        "text": "Il livello B1 include generalmente tra 2.000 e 3.000 parole. Per ampliare il vocabolario italiano B1, si consiglia di leggere articoli, ascoltare podcast e praticare regolarmente la conversazione.",
+        "value": 3000
       },
       "sampleVocabulary": {
-        "heading": "Vocabolario di esempio",
+        "heading": "Esempi di vocabolario italiano B1",
         "columns": {
           "word": "Parola",
           "meaning": "Significato"
         },
         "rows": [
           {
-            "word": "raggiungere",
-            "meaning": "Significato 1"
+            "word": "succedere",
+            "meaning": "succedere / avere successo"
           },
           {
-            "word": "imparare",
-            "meaning": "Significato 2"
+            "word": "fallimento",
+            "meaning": "fallimento"
+          },
+          {
+            "word": "datore di lavoro",
+            "meaning": "datore di lavoro"
+          },
+          {
+            "word": "candidato",
+            "meaning": "candidato"
+          },
+          {
+            "word": "sviluppare",
+            "meaning": "sviluppare"
+          },
+          {
+            "word": "ambiente",
+            "meaning": "ambiente"
+          },
+          {
+            "word": "vantaggio",
+            "meaning": "vantaggio"
+          },
+          {
+            "word": "svantaggio",
+            "meaning": "svantaggio"
+          },
+          {
+            "word": "proporre",
+            "meaning": "proporre"
+          },
+          {
+            "word": "obiettivo",
+            "meaning": "obiettivo"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Esplora altri livelli"
+        "heading": "Altri livelli di italiano"
+      },
+      "metaTitle": "Vocabolario di italiano B1 – Livello intermedio",
+      "metaDescription": "Impara il vocabolario di italiano B1 con parole intermedie ed esempi dettagliati. Migliora la tua espressione e comprensione in italiano.",
+      "introParagraphs": [
+        "Il vocabolario di italiano B1 corrisponde al livello intermedio. Gli studenti possono comprendere i punti principali di messaggi chiari e comunicare con maggiore dettaglio.",
+        "Le parole intermedie italiano B1 consentono di esprimere opinioni, descrivere esperienze e partecipare a conversazioni più complesse. Una lista ben strutturata di parole italiano B1 aiuta a espandere il vocabolario e rafforzare le competenze linguistiche."
+      ],
+      "bottomCta": {
+        "heading": "Rafforza il tuo livello intermedio",
+        "text": "Con un vocabolario italiano B1 solido, puoi comunicare in modo chiaro e strutturato. Esercitati regolarmente, discuti argomenti di attualità e leggi testi più complessi per arricchire il tuo vocabolario."
       }
     },
     "b2": {
-      "title": "Italiano B2 Vocabulary Practice",
-      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "title": "Vocabolario di italiano B2",
+      "intro": "Il vocabolario di italiano B2 è pensato per chi desidera comunicare con scioltezza e affrontare argomenti più complessi.",
       "levelDescription": "Intermedio avanzato",
       "ctaText": "Inizia pratica B2",
       "levelExplanation": {
-        "heading": "Spiegazione del livello",
-        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "heading": "Cosa significa il livello B2?",
+        "paragraph": "Al livello B2, si può interagire spontaneamente con parlanti nativi. Il vocabolario italiano B2 include termini astratti, connettivi logici e espressioni utili per dibattiti e contesti professionali.",
         "bullets": [
-          "Obiettivi principali di comunicazione",
-          "Grammatica e strutture frequenti",
-          "Situazioni tipiche di uso reale"
+          "Comprendere le idee principali in testi complessi.",
+          "Esporre e difendere le proprie opinioni in modo strutturato.",
+          "Usare connettivi per organizzare il discorso."
         ]
       },
       "vocabularyScope": {
-        "heading": "Ambito del vocabolario",
+        "heading": "Ambito del vocabolario B2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Discussione e argomentazione",
+          "Lavoro e società"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Discussione e argomentazione",
+            "items": [
+              "Espressioni per concordare o dissentire.",
+              "Connettivi per confrontare e contrastare.",
+              "Vocabolario per giustificare le proprie opinioni.",
+              "Termini per analizzare problemi e soluzioni."
+            ]
+          },
+          {
+            "heading": "Lavoro e società",
+            "items": [
+              "Parole legate al lavoro e allo studio.",
+              "Vocabolario su temi sociali attuali.",
+              "Espressioni formali per rapporti e email.",
+              "Termini relativi a responsabilità e progetti."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Numero di parole",
-        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
-        "value": 3200
+        "heading": "Quante parole contiene il livello B2?",
+        "text": "Il vocabolario italiano B2 comprende generalmente diverse migliaia di parole attive. L’uso corretto sia scritto che orale è fondamentale.",
+        "value": 4000
       },
       "sampleVocabulary": {
-        "heading": "Vocabolario di esempio",
+        "heading": "Esempi di vocabolario B2",
         "columns": {
           "word": "Parola",
           "meaning": "Significato"
         },
         "rows": [
           {
-            "word": "contesto",
-            "meaning": "Significato 1"
+            "word": "tuttavia",
+            "meaning": "tuttavia / comunque"
+          },
+          {
+            "word": "migliorare",
+            "meaning": "migliorare"
+          },
+          {
+            "word": "sfida",
+            "meaning": "sfida / sfidare"
+          },
+          {
+            "word": "pertanto",
+            "meaning": "perciò / quindi"
           },
           {
             "word": "raggiungere",
-            "meaning": "Significato 2"
+            "meaning": "raggiungere"
+          },
+          {
+            "word": "convincere",
+            "meaning": "convincere"
+          },
+          {
+            "word": "progresso",
+            "meaning": "progresso"
+          },
+          {
+            "word": "responsabilità",
+            "meaning": "responsabilità"
+          },
+          {
+            "word": "valutare",
+            "meaning": "valutare"
+          },
+          {
+            "word": "problema",
+            "meaning": "problema"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Esplora altri livelli"
+        "heading": "Altri livelli CEFR"
+      },
+      "metaTitle": "Vocabolario di italiano B2 – Parole ed espressioni chiave",
+      "metaDescription": "Migliora il vocabolario di italiano B2 con parole essenziali, significati ed esempi per comunicare con sicurezza in contesti quotidiani e professionali.",
+      "introParagraphs": [
+        "Il vocabolario di italiano B2 è pensato per chi desidera comunicare con scioltezza e affrontare argomenti più complessi. A questo livello, è possibile partecipare a discussioni e esprimere le proprie idee con chiarezza.",
+        "Le parole italiane intermedie permettono di costruire argomentazioni, valutare vantaggi e svantaggi e comprendere testi più lunghi e articolati. L’obiettivo è migliorare precisione e fluidità nella comunicazione."
+      ],
+      "bottomCta": {
+        "heading": "Continua ad ampliare il tuo vocabolario",
+        "text": "Per padroneggiare il vocabolario B2, leggi testi, ascolta discussioni e pratica la produzione scritta e orale. L’uso attivo consolida le parole apprese."
       }
     },
     "c1": {
-      "title": "Italiano C1 Vocabulary Practice",
-      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "title": "Vocabolario di italiano C1",
+      "intro": "Il vocabolario di italiano C1 corrisponde a un livello avanzato, in cui si padroneggiano espressioni complesse e termini astratti.",
       "levelDescription": "Avanzato",
       "ctaText": "Inizia pratica C1",
       "levelExplanation": {
-        "heading": "Spiegazione del livello",
-        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "heading": "Caratteristiche del livello C1",
+        "paragraph": "Le parole C1 includono termini tecnici, espressioni formali e una varietà di connettivi logici.",
         "bullets": [
-          "Obiettivi principali di comunicazione",
-          "Grammatica e strutture frequenti",
-          "Situazioni tipiche di uso reale"
+          "Comprensione di testi complessi e specializzati.",
+          "Espressione fluida e strutturata di idee astratte.",
+          "Adattamento del registro linguistico al contesto."
         ]
       },
       "vocabularyScope": {
-        "heading": "Ambito del vocabolario",
+        "heading": "Ambito del vocabolario C1",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Linguaggio accademico",
+          "Comunicazione professionale"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Linguaggio accademico",
+            "items": [
+              "Termini per analisi e valutazione.",
+              "Espressioni per costruire argomenti complessi.",
+              "Vocabolario per presentazioni formali.",
+              "Parole relative a ricerca e pensiero critico."
+            ]
+          },
+          {
+            "heading": "Comunicazione professionale",
+            "items": [
+              "Espressioni formali per report e documenti.",
+              "Verbi precisi per argomentazioni e negoziazioni.",
+              "Aggettivi avanzati per descrivere situazioni.",
+              "Terminologia per gestione e organizzazione."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Numero di parole",
-        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
+        "heading": "Quante parole contiene C1?",
+        "text": "Il vocabolario italiano C1 comprende generalmente diverse migliaia di parole attive. L’uso corretto e fluente è essenziale.",
         "value": 5000
       },
       "sampleVocabulary": {
-        "heading": "Vocabolario di esempio",
+        "heading": "Esempi di vocabolario C1",
         "columns": {
           "word": "Parola",
           "meaning": "Significato"
         },
         "rows": [
           {
-            "word": "sfumatura",
-            "meaning": "Significato 1"
+            "word": "tuttavia",
+            "meaning": "tuttavia / comunque"
           },
           {
-            "word": "contesto",
-            "meaning": "Significato 2"
+            "word": "approfondire",
+            "meaning": "approfondire"
+          },
+          {
+            "word": "coerente",
+            "meaning": "coerente; logico"
+          },
+          {
+            "word": "pertinente",
+            "meaning": "pertinente; appropriato"
+          },
+          {
+            "word": "elaborare",
+            "meaning": "elaborare; sviluppare"
+          },
+          {
+            "word": "mettere in discussione",
+            "meaning": "mettere in discussione"
+          },
+          {
+            "word": "considerevole",
+            "meaning": "considerevole"
+          },
+          {
+            "word": "essenzialmente",
+            "meaning": "essenzialmente"
+          },
+          {
+            "word": "questioni chiave",
+            "meaning": "questioni chiave"
+          },
+          {
+            "word": "raggiungere",
+            "meaning": "raggiungere"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Esplora altri livelli"
+        "heading": "Altri livelli CEFR"
+      },
+      "metaTitle": "Vocabolario di italiano C1 – Parole avanzate",
+      "metaDescription": "Migliora il vocabolario di italiano C1 con parole avanzate, esempi ed esercizi per comunicare con precisione e sicurezza.",
+      "introParagraphs": [
+        "Il vocabolario di italiano C1 corrisponde a un livello avanzato, in cui si padroneggiano espressioni complesse e termini astratti. Si comprendono testi lunghi e si comunica in modo preciso e spontaneo.",
+        "Le parole italiane avanzate consentono di analizzare, argomentare e usare sfumature linguistiche in contesti accademici o professionali. L’obiettivo è ampliare il vocabolario mantenendo un registro appropriato."
+      ],
+      "bottomCta": {
+        "heading": "Continua a migliorare il tuo italiano",
+        "text": "Per padroneggiare il vocabolario C1, leggi testi complessi, partecipa a dibattiti e scrivi saggi strutturati. La pratica regolare aumenta precisione e sicurezza."
       }
     },
     "c2": {
-      "title": "Italiano C2 Vocabulary Practice",
-      "intro": "Pratica strutturata del vocabolario CEFR per questo livello.",
+      "title": "Vocabolario di italiano C2",
+      "intro": "Il vocabolario di italiano C2 rappresenta la padronanza completa secondo il CEFR.",
       "levelDescription": "Padronanza",
       "ctaText": "Inizia pratica C2",
       "levelExplanation": {
-        "heading": "Spiegazione del livello",
-        "paragraph": "Questa sezione descrive cosa uno studente di solito sa fare a questo livello.",
+        "heading": "Caratteristiche del livello C2",
+        "paragraph": "Le parole C2 coprono ambiti accademici, letterari e tecnici, con attenzione alle sfumature di significato.",
         "bullets": [
-          "Obiettivi principali di comunicazione",
-          "Grammatica e strutture frequenti",
-          "Situazioni tipiche di uso reale"
+          "Comprensione di testi specialistici e letterari.",
+          "Uso preciso di sinonimi con differenze sottili.",
+          "Adattamento perfetto ai registri formali e informali."
         ]
       },
       "vocabularyScope": {
-        "heading": "Ambito del vocabolario",
+        "heading": "Ambito del vocabolario C2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Linguaggio accademico e letterario",
+          "Sfumature e stile"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Linguaggio accademico e letterario",
+            "items": [
+              "Terminologia specializzata in vari ambiti.",
+              "Figure retoriche ed espressioni letterarie.",
+              "Vocabolario letterario avanzato.",
+              "Verbi precisi per analisi critica."
+            ]
+          },
+          {
+            "heading": "Sfumature e stile",
+            "items": [
+              "Sinonimi con differenze sottili di significato.",
+              "Chiare differenziazioni dei registri linguistici.",
+              "Espressioni idiomatiche autentiche.",
+              "Adattamento culturale della lingua."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Numero di parole",
-        "text": "Intervallo stimato di vocabolario attivo per questo livello CEFR.",
-        "value": 8000
+        "heading": "Quante parole contiene C2?",
+        "text": "Il vocabolario italiano C2 può superare le 6.000 parole attive. La padronanza si riflette nell’uso naturale e preciso.",
+        "value": 6500
       },
       "sampleVocabulary": {
-        "heading": "Vocabolario di esempio",
+        "heading": "Esempi di vocabolario C2",
         "columns": {
           "word": "Parola",
           "meaning": "Significato"
         },
         "rows": [
           {
-            "word": "eloquente",
-            "meaning": "Significato 1"
+            "word": "indispensabile",
+            "meaning": "indispensabile; inevitabile"
           },
           {
-            "word": "sfumatura",
-            "meaning": "Significato 2"
+            "word": "finezza",
+            "meaning": "finezza; raffinatezza"
+          },
+          {
+            "word": "inevitabile",
+            "meaning": "inevitabile"
+          },
+          {
+            "word": "sfumare",
+            "meaning": "sfumare; precisare"
+          },
+          {
+            "word": "eloquenza",
+            "meaning": "eloquenza"
+          },
+          {
+            "word": "giudizio",
+            "meaning": "giudizio; discernimento"
+          },
+          {
+            "word": "raggiungere",
+            "meaning": "raggiungere un risultato"
+          },
+          {
+            "word": "ambivalente",
+            "meaning": "ambivalente; con aspetti opposti"
+          },
+          {
+            "word": "plausibile",
+            "meaning": "plausibile"
+          },
+          {
+            "word": "motivare",
+            "meaning": "motivare; giustificare"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Esplora altri livelli"
+        "heading": "Altri livelli CEFR"
+      },
+      "metaTitle": "Vocabolario di italiano C2 – Padronanza completa",
+      "metaDescription": "Scopri il vocabolario di italiano C2 con parole rare e precise per raggiungere la padronanza completa della lingua.",
+      "introParagraphs": [
+        "Il vocabolario di italiano C2 rappresenta la padronanza completa secondo il CEFR. Comprendi quasi tutto ciò che leggi o ascolti e puoi esprimerti con precisione, sfumature e spontaneità.",
+        "Il vocabolario molto avanzato include parole rare, espressioni idiomatiche e sottigliezze stilistiche. Consente di adattare perfettamente il linguaggio a qualsiasi contesto."
+      ],
+      "bottomCta": {
+        "heading": "Raggiungi la padronanza completa dell’italiano",
+        "text": "Per padroneggiare il vocabolario C2, leggi opere letterarie, partecipa a conferenze specialistiche e scrivi testi complessi. Una pratica intensa e varia è essenziale per la padronanza totale della lingua."
       }
     }
   }

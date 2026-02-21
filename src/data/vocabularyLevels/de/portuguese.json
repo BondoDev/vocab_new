@@ -1,323 +1,689 @@
-{
+﻿{
   "targetLanguage": "portuguese",
   "targetLanguageDisplayName": "Portugiesisch",
   "levels": {
     "a1": {
-      "title": "Portugiesisch A1 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
-      "levelDescription": "Anfaenger",
+      "title": "Portugiesisch Wortschatz A1",
+      "intro": "Der Portugiesisch Wortschatz A1 entspricht dem Anfängerniveau.",
+      "levelDescription": "Anfänger",
       "ctaText": "A1-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Was bedeutet das A1-Niveau in Portugiesisch?",
+        "paragraph": "Das A1-Niveau entspricht dem Anfängerniveau laut GER. Lernende können bekannte Ausdrücke und einfache Sätze für konkrete Bedürfnisse verstehen und anwenden.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Begrüßungen und Vorstellungen.",
+          "Einfach Fragen stellen und beantworten.",
+          "Kurze und klare Anweisungen verstehen."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Was umfasst der Portugiesisch Wortschatz A1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Alltägliche Kommunikation",
+          "Persönliche Themen"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Alltägliche Kommunikation",
+            "items": [
+              "Begrüßungen und Höflichkeitsformen",
+              "Zahlen, Wochentage und Monate",
+              "Häufige Verben im Präsens",
+              "Einfach Fragen"
+            ]
+          },
+          {
+            "heading": "Persönliche Themen",
+            "items": [
+              "Familie und Freunde",
+              "Essen und Getränke",
+              "Haus und Umgebung",
+              "Grundlegende Adjektive"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "heading": "Wie viele Wörter enthält der Portugiesisch Wortschatz A1?",
+        "text": "Das A1-Niveau umfasst in der Regel 500 bis 800 wichtige Wörter. Ziel ist nicht nur das Auswendiglernen, sondern die aktive Anwendung der Wörter in einfachen Sätzen. Portugiesisch A1 Übungen helfen, das Gelernte zu festigen.",
         "value": 800
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispiele für Portugiesisch Wortschatz A1",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "casa",
-            "meaning": "Bedeutung 1"
+            "word": "olá",
+            "meaning": "hallo"
+          },
+          {
+            "word": "adeus",
+            "meaning": "auf Wiedersehen"
+          },
+          {
+            "word": "obrigado",
+            "meaning": "danke"
+          },
+          {
+            "word": "família",
+            "meaning": "Familie"
           },
           {
             "word": "casa",
-            "meaning": "Bedeutung 2"
+            "meaning": "Haus"
+          },
+          {
+            "word": "comer",
+            "meaning": "essen"
+          },
+          {
+            "word": "beber",
+            "meaning": "trinken"
+          },
+          {
+            "word": "amigo",
+            "meaning": "Freund"
+          },
+          {
+            "word": "grande",
+            "meaning": "groß"
+          },
+          {
+            "word": "pequeno",
+            "meaning": "klein"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Weitere Portugiesisch-Niveaus"
+      },
+      "metaTitle": "Portugiesisch Wortschatz A1 – Grundlegende Wörter für Anfänger",
+      "metaDescription": "Lerne den Portugiesisch Wortschatz A1 mit einfachen Wörtern und Beispielen. Baue eine solide Basis für die tägliche Kommunikation auf Portugiesisch.",
+      "introParagraphs": [
+        "Der Portugiesisch Wortschatz A1 entspricht dem Anfängerniveau. Lernende lernen einfache Wörter und Sätze, um sich im Alltag verständigen zu können.",
+        "Grundlegende portugiesische Wörter A1 umfassen Begrüßungen, Zahlen, häufige Verben und einfache Fragen. Eine gut strukturierte portugiesische Wortliste A1 hilft, den Wortschatz Schritt für Schritt zu erweitern und Selbstvertrauen beim Sprechen zu gewinnen."
+      ],
+      "bottomCta": {
+        "heading": "Beginnen Sie jetzt zu lernen",
+        "text": "Der Portugiesisch Wortschatz A1 bietet eine solide Basis. Üben Sie regelmäßig, bilden Sie einfache Sätze und hören Sie kurze Dialoge, um Ihre Sprachfähigkeiten zu stärken."
       }
     },
     "a2": {
-      "title": "Portugiesisch A2 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
-      "levelDescription": "Grundstufe",
+      "title": "Portugiesisch Wortschatz A2",
+      "intro": "Der Portugiesisch Wortschatz A2 erweitert die Kenntnisse des A1-Niveaus.",
+      "levelDescription": "Elementar",
       "ctaText": "A2-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Was bedeutet das A2-Niveau in Portugiesisch?",
+        "paragraph": "Das A2-Niveau entspricht einem elementaren Sprachbenutzer. Lernende können häufig gebrauchte Ausdrücke verstehen und einfache Routineaufgaben bewältigen.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Alltägliche Aktivitäten und Routinen beschreiben.",
+          "Über einfache Erfahrungen in der Vergangenheit sprechen.",
+          "Informationen in bekannten Kontexten austauschen."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Was umfasst der Portugiesisch Wortschatz A2?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Alltag und Dienstleistungen",
+          "Erweiterte Kommunikation"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Alltag und Dienstleistungen",
+            "items": [
+              "Transport und Wege",
+              "Einkaufen und Geld",
+              "Gesundheit und Wohlbefinden",
+              "Arbeit und Termine"
+            ]
+          },
+          {
+            "heading": "Erweiterte Kommunikation",
+            "items": [
+              "Einfache Verbindungswörter",
+              "Zeitausdrücke",
+              "Adjektive zur Meinungsäußerung",
+              "Verben im Perfekt"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
-        "value": 1200
+        "heading": "Wie viele Wörter enthält der Portugiesisch Wortschatz A2?",
+        "text": "Das A2-Niveau umfasst etwa 1.000 bis 1.500 nützliche Wörter. Regelmäßiges Üben festigt das Gelernte und verbessert die Sprachflüssigkeit.",
+        "value": 1500
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispiele für Portugiesisch Wortschatz A2",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "aprender",
-            "meaning": "Bedeutung 1"
+            "word": "viagem",
+            "meaning": "Reise"
           },
           {
-            "word": "casa",
-            "meaning": "Bedeutung 2"
+            "word": "bilhete",
+            "meaning": "Fahrschein"
+          },
+          {
+            "word": "loja",
+            "meaning": "Geschäft"
+          },
+          {
+            "word": "dinheiro",
+            "meaning": "Geld"
+          },
+          {
+            "word": "trabalho",
+            "meaning": "Arbeit"
+          },
+          {
+            "word": "doente",
+            "meaning": "krank"
+          },
+          {
+            "word": "ontem",
+            "meaning": "gestern"
+          },
+          {
+            "word": "amanhã",
+            "meaning": "morgen"
+          },
+          {
+            "word": "frequentemente",
+            "meaning": "oft"
+          },
+          {
+            "word": "importante",
+            "meaning": "wichtig"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Weitere Portugiesisch-Niveaus"
+      },
+      "metaTitle": "Portugiesisch Wortschatz A2 – Elementares Niveau",
+      "metaDescription": "Lernen Sie den Portugiesisch Wortschatz A2 mit häufigen Wörtern und praktischen Beispielen. Verbessern Sie Ihr Verständnis und Ihre Kommunikation auf elementarem Niveau.",
+      "introParagraphs": [
+        "Der Portugiesisch Wortschatz A2 erweitert die Kenntnisse des A1-Niveaus. Lernende können längere Sätze bilden und sich leichter in Alltagssituationen verständigen.",
+        "Der tägliche Wortschatz Portugiesisch umfasst Themen wie Arbeit, Freizeit, Reisen und Gesundheit. Eine strukturierte Portugiesisch Wortliste A2 unterstützt den schrittweisen Erwerb neuer Wörter."
+      ],
+      "bottomCta": {
+        "heading": "Setzen Sie das Lernen fort",
+        "text": "Der Portugiesisch Wortschatz A2 ermöglicht selbstständigere Kommunikation. Lesen Sie einfache Texte, hören Sie Dialoge und wiederholen Sie neue Wörter regelmäßig."
       }
     },
     "b1": {
-      "title": "Portugiesisch B1 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "title": "Portugiesisch Wortschatz B1",
+      "intro": "Der Portugiesisch Wortschatz B1 entspricht dem mittleren Niveau.",
       "levelDescription": "Mittelstufe",
       "ctaText": "B1-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Was bedeutet das B1-Niveau in Portugiesisch?",
+        "paragraph": "Das B1-Niveau entspricht einem unabhängigen Sprachbenutzer auf mittlerem Niveau. Lernende können die meisten Alltagssituationen bewältigen und einfache, kohärente Texte erstellen.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Persönliche Meinungen ausdrücken.",
+          "Erfahrungen und Ereignisse beschreiben.",
+          "Klare, informative Texte verstehen."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Was umfasst der Portugiesisch Wortschatz B1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Arbeit und Gesellschaft",
+          "Argumentation und Erzählung"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Arbeit und Gesellschaft",
+            "items": [
+              "Berufe und Verantwortlichkeiten",
+              "Bildung und Ausbildung",
+              "Technologie und Medien",
+              "Soziale Themen"
+            ]
+          },
+          {
+            "heading": "Argumentation und Erzählung",
+            "items": [
+              "Logische Verbindungswörter",
+              "Ausdrücke für Zustimmung und Ablehnung",
+              "Komparative Adjektive",
+              "Abstrakte portugiesische Wörter B1"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
-        "value": 2000
+        "heading": "Wie viele Wörter enthält der Portugiesisch Wortschatz B1?",
+        "text": "Das B1-Niveau umfasst in der Regel 2.000 bis 3.000 Wörter. Um den portugiesischen Wortschatz B1 zu erweitern, empfiehlt es sich, Artikel zu lesen, Podcasts zu hören und regelmäßig Gespräche zu üben.",
+        "value": 3000
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispiele für Portugiesisch Wortschatz B1",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "atingir",
-            "meaning": "Bedeutung 1"
+            "word": "acontecer",
+            "meaning": "geschehen"
           },
           {
-            "word": "aprender",
-            "meaning": "Bedeutung 2"
+            "word": "fracasso",
+            "meaning": "Fehlschlag"
+          },
+          {
+            "word": "empregador",
+            "meaning": "Arbeitgeber"
+          },
+          {
+            "word": "candidato",
+            "meaning": "Kandidat"
+          },
+          {
+            "word": "desenvolver",
+            "meaning": "entwickeln"
+          },
+          {
+            "word": "ambiente",
+            "meaning": "Umgebung"
+          },
+          {
+            "word": "vantagem",
+            "meaning": "Vorteil"
+          },
+          {
+            "word": "desvantagem",
+            "meaning": "Nachteil"
+          },
+          {
+            "word": "propor",
+            "meaning": "vorschlagen"
+          },
+          {
+            "word": "objetivo",
+            "meaning": "Ziel"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Weitere Portugiesisch-Niveaus"
+      },
+      "metaTitle": "Portugiesisch Wortschatz B1 – Mittleres Niveau",
+      "metaDescription": "Lernen Sie Portugiesisch Wortschatz B1 mit mittleren Wörtern und detaillierten Beispielen. Verbessern Sie Ausdruck und Verständnis auf Portugiesisch.",
+      "introParagraphs": [
+        "Der Portugiesisch Wortschatz B1 entspricht dem mittleren Niveau. Lernende können die Hauptpunkte klarer Nachrichten verstehen und detaillierter kommunizieren.",
+        "Mittlere portugiesische Wörter B1 ermöglichen es, Meinungen auszudrücken, Erfahrungen zu beschreiben und an komplexeren Gesprächen teilzunehmen. Eine strukturierte Portugiesisch Wortliste B1 hilft, den Wortschatz zu erweitern und die Sprachfertigkeiten zu stärken."
+      ],
+      "bottomCta": {
+        "heading": "Stärken Sie Ihr mittleres Niveau",
+        "text": "Mit einem soliden Portugiesisch Wortschatz B1 können Sie klar und strukturiert kommunizieren. Üben Sie regelmäßig, diskutieren Sie aktuelle Themen und lesen Sie komplexere Texte, um Ihren Wortschatz zu erweitern."
       }
     },
     "b2": {
-      "title": "Portugiesisch B2 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "title": "Portugiesisch Wortschatz B2",
+      "intro": "Der Portugiesisch Wortschatz B2 richtet sich an Lernende, die flüssig kommunizieren und komplexere Themen bearbeiten möchten.",
       "levelDescription": "Gehobene Mittelstufe",
       "ctaText": "B2-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Was bedeutet das Niveau B2?",
+        "paragraph": "Auf B2-Niveau können Sie spontan mit Muttersprachlern interagieren. Der Portugiesisch Wortschatz B2 enthält abstrakte Begriffe, logische Verbindungen und nützliche Ausdrücke für Diskussionen und berufliche Kontexte.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Die Hauptideen in komplexen Texten verstehen.",
+          "Meinungen klar ausdrücken und vertreten.",
+          "Verbindungen zur Strukturierung des Textes nutzen."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Umfang des Wortschatzes B2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Diskussion und Argumentation",
+          "Arbeit und Gesellschaft"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Diskussion und Argumentation",
+            "items": [
+              "Ausdrücke für Zustimmung oder Ablehnung.",
+              "Verbindungen für Vergleich und Kontrast.",
+              "Vokabular zur Begründung von Meinungen.",
+              "Begriffe zur Analyse von Problemen und Lösungen."
+            ]
+          },
+          {
+            "heading": "Arbeit und Gesellschaft",
+            "items": [
+              "Wörter im Zusammenhang mit Arbeit und Studium.",
+              "Vokabular zu aktuellen gesellschaftlichen Themen.",
+              "Formelle Ausdrücke für Berichte und E-Mails.",
+              "Begriffe im Zusammenhang mit Verantwortung und Projekten."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
-        "value": 3200
+        "heading": "Wie viele Wörter enthält B2?",
+        "text": "Der Portugiesisch Wortschatz B2 umfasst in der Regel mehrere tausend aktive Wörter. Korrekte Anwendung in Sprache und Schrift ist entscheidend.",
+        "value": 4000
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispielvokabular B2",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "contexto",
-            "meaning": "Bedeutung 1"
+            "word": "no entanto",
+            "meaning": "jedoch / dennoch"
           },
           {
-            "word": "atingir",
-            "meaning": "Bedeutung 2"
+            "word": "melhorar",
+            "meaning": "verbessern"
+          },
+          {
+            "word": "desafio",
+            "meaning": "Herausforderung"
+          },
+          {
+            "word": "portanto",
+            "meaning": "deshalb / folglich"
+          },
+          {
+            "word": "alcançar",
+            "meaning": "erreichen / erzielen"
+          },
+          {
+            "word": "convencer",
+            "meaning": "überzeugen"
+          },
+          {
+            "word": "progresso",
+            "meaning": "Fortschritt"
+          },
+          {
+            "word": "responsabilidade",
+            "meaning": "Verantwortung"
+          },
+          {
+            "word": "avaliar",
+            "meaning": "bewerten"
+          },
+          {
+            "word": "problema",
+            "meaning": "Problem"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Andere CEFR-Niveaus"
+      },
+      "metaTitle": "Portugiesisch Wortschatz B2 – Wichtige Wörter und Ausdrücke",
+      "metaDescription": "Verbessern Sie Ihren Portugiesisch Wortschatz B2 mit wichtigen Wörtern, Bedeutungen und Beispielen für Alltag und Beruf.",
+      "introParagraphs": [
+        "Der Portugiesisch Wortschatz B2 richtet sich an Lernende, die flüssig kommunizieren und komplexere Themen bearbeiten möchten. Auf diesem Niveau können Sie an Diskussionen teilnehmen und Ihre Ideen klar ausdrücken.",
+        "Mittleres portugiesisches Vokabular unterstützt Sie beim Argumentieren, beim Abwägen von Vor- und Nachteilen und beim Verstehen längerer und detaillierter Texte. Ziel ist es, Präzision und Flüssigkeit beim Sprechen und Schreiben zu verbessern."
+      ],
+      "bottomCta": {
+        "heading": "Erweitern Sie weiterhin Ihren Wortschatz",
+        "text": "Um den B2-Wortschatz zu meistern, lesen Sie Texte, hören Sie Diskussionen und üben Sie mündlich und schriftlich. Aktive Anwendung festigt das Gelernte."
       }
     },
     "c1": {
-      "title": "Portugiesisch C1 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "title": "Portugiesisch Wortschatz C1",
+      "intro": "Der Portugiesisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, auf dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden.",
       "levelDescription": "Fortgeschritten",
       "ctaText": "C1-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Merkmale des Niveaus C1",
+        "paragraph": "C1-Wörter umfassen technische Begriffe, formelle Ausdrücke und vielfältige logische Verbindungen.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Verstehen komplexer und fachlicher Texte.",
+          "Flüssige, strukturierte Ausdrucksweise abstrakter Ideen.",
+          "Anpassung des Sprachstils an den Kontext."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Umfang des Wortschatzes C1",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Akademische Sprache",
+          "Berufliche Kommunikation"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Akademische Sprache",
+            "items": [
+              "Begriffe für Analyse und Bewertung.",
+              "Ausdrücke für komplexe Argumentation.",
+              "Vokabular für formelle Präsentationen.",
+              "Wörter für Forschung und kritisches Denken."
+            ]
+          },
+          {
+            "heading": "Berufliche Kommunikation",
+            "items": [
+              "Formelle Ausdrücke für Berichte und Dokumente.",
+              "Präzise Verben für Argumentation und Verhandlung.",
+              "Fortgeschrittene Adjektive zur Beschreibung von Situationen.",
+              "Fachbegriffe für Management und Organisation."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "heading": "Wie viele Wörter enthält C1?",
+        "text": "Der Portugiesisch Wortschatz C1 umfasst mehrere tausend aktive Wörter. Korrekte und flüssige Anwendung ist entscheidend.",
         "value": 5000
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispielvokabular C1",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "nuance",
-            "meaning": "Bedeutung 1"
+            "word": "no entanto",
+            "meaning": "jedoch / dennoch"
           },
           {
-            "word": "contexto",
-            "meaning": "Bedeutung 2"
+            "word": "aprofundar",
+            "meaning": "vertiefen"
+          },
+          {
+            "word": "coerente",
+            "meaning": "kohärent; logisch"
+          },
+          {
+            "word": "pertinente",
+            "meaning": "relevant; passend"
+          },
+          {
+            "word": "elaborar",
+            "meaning": "ausarbeiten; entwickeln"
+          },
+          {
+            "word": "colocar em questão",
+            "meaning": "in Frage stellen"
+          },
+          {
+            "word": "considerável",
+            "meaning": "erheblich"
+          },
+          {
+            "word": "essencialmente",
+            "meaning": "wesentlich / im Wesentlichen"
+          },
+          {
+            "word": "questões-chave",
+            "meaning": "Schlüsselthemen"
+          },
+          {
+            "word": "alcançar",
+            "meaning": "erreichen / erzielen"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Andere CEFR-Niveaus"
+      },
+      "metaTitle": "Portugiesisch Wortschatz C1 – Fortgeschrittene Wörter",
+      "metaDescription": "Verbessern Sie Ihren Portugiesisch Wortschatz C1 mit fortgeschrittenen Wörtern, Beispielen und Übungen für präzise und selbstbewusste Kommunikation.",
+      "introParagraphs": [
+        "Der Portugiesisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, auf dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden. Sie können längere Texte verstehen und präzise sowie spontan kommunizieren.",
+        "Fortgeschrittenes portugiesisches Vokabular ermöglicht Analyse, Argumentation und den Einsatz sprachlicher Nuancen in akademischen oder beruflichen Kontexten. Ziel ist die Erweiterung des Wortschatzes bei gleichzeitiger Wahrung eines angemessenen Registers."
+      ],
+      "bottomCta": {
+        "heading": "Verbessern Sie weiterhin Ihr Portugiesisch",
+        "text": "Um den C1-Wortschatz zu meistern, lesen Sie komplexe Texte, beteiligen Sie sich an Diskussionen und verfassen Sie strukturierte Essays. Regelmäßige Übung steigert Präzision und Selbstvertrauen."
       }
     },
     "c2": {
-      "title": "Portugiesisch C2 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "title": "Portugiesisch Wortschatz C2",
+      "intro": "Der Portugiesisch Wortschatz C2 repräsentiert laut CEFR die vollständige Beherrschung der Sprache.",
       "levelDescription": "Sehr fortgeschritten",
       "ctaText": "C2-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Merkmale des Niveaus C2",
+        "paragraph": "C2-Wörter decken akademische, literarische und technische Bereiche ab, mit besonderem Augenmerk auf feine Bedeutungsunterschiede.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Verstehen spezialisierter und literarischer Texte.",
+          "Präziser Einsatz von Synonymen mit subtilen Nuancen.",
+          "Perfekte Anpassung an formelle und informelle Register."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Umfang des Wortschatzes C2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Akademische und literarische Sprache",
+          "Nuancen und Stil"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Akademische und literarische Sprache",
+            "items": [
+              "Fachspezifische Terminologie in verschiedenen Bereichen.",
+              "Stilmittel und literarische Ausdrücke.",
+              "Fortgeschrittenes literarisches Vokabular.",
+              "Präzise Verben für kritische Analysen."
+            ]
+          },
+          {
+            "heading": "Nuancen und Stil",
+            "items": [
+              "Synonyme mit subtilen Bedeutungsunterschieden.",
+              "Klare Unterscheidung der Sprachregister.",
+              "Authentische idiomatische Ausdrücke.",
+              "Kulturell angepasste Sprache."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
-        "value": 8000
+        "heading": "Wie viele Wörter enthält C2?",
+        "text": "Der Portugiesisch Wortschatz C2 kann mehr als 6.000 aktive Wörter umfassen. Die Beherrschung zeigt sich in natürlicher und präziser Anwendung.",
+        "value": 6500
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispielvokabular C2",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "eloquente",
-            "meaning": "Bedeutung 1"
+            "word": "indispensável",
+            "meaning": "unverzichtbar; unvermeidlich"
           },
           {
-            "word": "nuance",
-            "meaning": "Bedeutung 2"
+            "word": "sofisticação",
+            "meaning": "Sophistication; Raffinesse"
+          },
+          {
+            "word": "inevitável",
+            "meaning": "unvermeidlich"
+          },
+          {
+            "word": "nuancear",
+            "meaning": "nuancieren; klären"
+          },
+          {
+            "word": "eloquência",
+            "meaning": "Redekunst / Eloquenz"
+          },
+          {
+            "word": "julgamento",
+            "meaning": "Urteil; Beurteilung"
+          },
+          {
+            "word": "alcançar",
+            "meaning": "ein Ergebnis erzielen"
+          },
+          {
+            "word": "ambivalente",
+            "meaning": "ambivalent; gegensätzliche Aspekte"
+          },
+          {
+            "word": "plausível",
+            "meaning": "plausibel"
+          },
+          {
+            "word": "motivar",
+            "meaning": "motivieren; begründen"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Andere CEFR-Niveaus"
+      },
+      "metaTitle": "Portugiesisch Wortschatz C2 – Vollständige Beherrschung",
+      "metaDescription": "Entdecken Sie den Portugiesisch Wortschatz C2 mit seltenen und präzisen Wörtern, um eine vollständige Sprachbeherrschung zu erreichen.",
+      "introParagraphs": [
+        "Der Portugiesisch Wortschatz C2 repräsentiert laut CEFR die vollständige Beherrschung der Sprache. Sie verstehen nahezu alles, was Sie lesen oder hören, und können sich präzise, nuanciert und spontan ausdrücken.",
+        "Das sehr fortgeschrittene Vokabular enthält seltene Wörter, idiomatische Ausdrücke und stilistische Feinheiten. Es ermöglicht eine perfekte Anpassung der Sprache an jeden Kontext."
+      ],
+      "bottomCta": {
+        "heading": "Erreichen Sie die vollständige Beherrschung des Portugiesischen",
+        "text": "Um den C2-Wortschatz zu meistern, lesen Sie literarische Werke, nehmen Sie an Fachkonferenzen teil und verfassen Sie komplexe Texte. Intensive und vielfältige Praxis ist entscheidend für die volle Sprachbeherrschung."
       }
     }
   }

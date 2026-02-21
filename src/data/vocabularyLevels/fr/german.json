@@ -1,323 +1,689 @@
-{
+﻿{
   "targetLanguage": "german",
   "targetLanguageDisplayName": "Allemand",
   "levels": {
     "a1": {
-      "title": "Allemand A1 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Debutant",
+      "title": "Vocabulaire d’allemand A1",
+      "intro": "Le vocabulaire d’allemand A1 est la première étape pour les débutants.",
+      "levelDescription": "Débutant",
       "ctaText": "Commencer la pratique A1",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Que signifie le niveau A1 en allemand ?",
+        "paragraph": "Le niveau A1 correspond à la phase débutante selon le Cadre européen commun de référence pour les langues (CECR). Les apprenants peuvent comprendre et utiliser des expressions familières et des phrases très simples pour des besoins concrets.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Saluer et se présenter.",
+          "Poser et répondre à des questions simples.",
+          "Comprendre des instructions courtes et claires."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Que comprend le vocabulaire d’allemand A1 ?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Communication quotidienne",
+          "Sujets personnels"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Communication quotidienne",
+            "items": [
+              "Salutations et expressions de politesse",
+              "Nombres, jours de la semaine et mois",
+              "Verbes courants au présent",
+              "Questions simples"
+            ]
+          },
+          {
+            "heading": "Sujets personnels",
+            "items": [
+              "Famille et amis",
+              "Alimentation et boissons",
+              "Maison et environnement",
+              "Adjectifs de base"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "heading": "Combien de mots comprend le vocabulaire allemand A1 ?",
+        "text": "Le niveau A1 comprend généralement entre 500 et 800 mots essentiels. L’objectif n’est pas seulement de les mémoriser, mais de les utiliser activement dans des phrases simples. Les exercices vocabulaire allemand A1 permettent de consolider l’apprentissage.",
         "value": 800
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire allemand A1",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "Haus",
-            "meaning": "Signification 1"
+            "word": "hallo",
+            "meaning": "bonjour"
+          },
+          {
+            "word": "tschüss",
+            "meaning": "au revoir"
+          },
+          {
+            "word": "danke",
+            "meaning": "merci"
+          },
+          {
+            "word": "Familie",
+            "meaning": "famille"
           },
           {
             "word": "Haus",
-            "meaning": "Signification 2"
+            "meaning": "maison"
+          },
+          {
+            "word": "essen",
+            "meaning": "manger"
+          },
+          {
+            "word": "trinken",
+            "meaning": "boire"
+          },
+          {
+            "word": "Freund",
+            "meaning": "ami"
+          },
+          {
+            "word": "groß",
+            "meaning": "grand"
+          },
+          {
+            "word": "klein",
+            "meaning": "petit"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux d’allemand"
+      },
+      "metaTitle": "Vocabulaire d’allemand A1 – Mots essentiels pour débutants",
+      "metaDescription": "Apprenez le vocabulaire d’allemand A1 avec des mots essentiels et des exemples simples. Construisez une base solide pour commencer à parler et comprendre l’allemand.",
+      "introParagraphs": [
+        "Le vocabulaire d’allemand A1 est la première étape pour les débutants. À ce niveau, vous apprenez des mots et expressions simples pour communiquer dans la vie quotidienne.",
+        "Les mots de base allemand A1 incluent salutations, nombres, verbes courants et questions simples. Utiliser une liste de vocabulaire allemand A1 bien organisée permet d’élargir progressivement le vocabulaire et de gagner en confiance."
+      ],
+      "bottomCta": {
+        "heading": "Commencez à apprendre dès maintenant",
+        "text": "Connaître le vocabulaire d’allemand A1 fournit une base solide. Pratiquez régulièrement, utilisez les mots dans des phrases simples et écoutez de courts dialogues pour renforcer vos compétences."
       }
     },
     "a2": {
-      "title": "Allemand A2 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Elementaire",
+      "title": "Vocabulaire d’allemand A2",
+      "intro": "Le vocabulaire d’allemand A2 développe les connaissances acquises au niveau A1.",
+      "levelDescription": "Élémentaire",
       "ctaText": "Commencer la pratique A2",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Que signifie le niveau A2 en allemand ?",
+        "paragraph": "Le niveau A2 correspond à une maîtrise élémentaire. Les apprenants peuvent comprendre les expressions fréquemment utilisées et interagir dans des tâches simples et routinières.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Décrire les activités et routines quotidiennes.",
+          "Parler d’expériences passées simples.",
+          "Échanger des informations dans des contextes familiers."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Que comprend le vocabulaire d’allemand A2 ?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Vie quotidienne et services",
+          "Communication élargie"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Vie quotidienne et services",
+            "items": [
+              "Transport et déplacements",
+              "Achats et argent",
+              "Santé et bien-être",
+              "Travail et rendez-vous"
+            ]
+          },
+          {
+            "heading": "Communication élargie",
+            "items": [
+              "Connecteurs simples",
+              "Expressions temporelles",
+              "Adjectifs d’opinion",
+              "Verbes au passé (Perfekt)"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
-        "value": 1200
+        "heading": "Combien de mots comprend le vocabulaire allemand A2 ?",
+        "text": "Le niveau A2 comprend généralement entre 1 000 et 1 500 mots utiles. La pratique régulière aide à les consolider et à améliorer la fluidité.",
+        "value": 1500
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire allemand A2",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "lernen",
-            "meaning": "Signification 1"
+            "word": "Reise",
+            "meaning": "voyage"
           },
           {
-            "word": "Haus",
-            "meaning": "Signification 2"
+            "word": "Fahrkarte",
+            "meaning": "billet"
+          },
+          {
+            "word": "Geschäft",
+            "meaning": "magasin"
+          },
+          {
+            "word": "Geld",
+            "meaning": "argent"
+          },
+          {
+            "word": "Arbeit",
+            "meaning": "travail"
+          },
+          {
+            "word": "krank",
+            "meaning": "malade"
+          },
+          {
+            "word": "gestern",
+            "meaning": "hier"
+          },
+          {
+            "word": "morgen",
+            "meaning": "demain"
+          },
+          {
+            "word": "oft",
+            "meaning": "souvent"
+          },
+          {
+            "word": "wichtig",
+            "meaning": "important"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux d’allemand"
+      },
+      "metaTitle": "Vocabulaire d’allemand A2 – Niveau élémentaire",
+      "metaDescription": "Apprenez le vocabulaire d’allemand A2 avec des mots courants et des exemples pratiques. Améliorez votre compréhension et communication à un niveau élémentaire.",
+      "introParagraphs": [
+        "Le vocabulaire d’allemand A2 développe les connaissances acquises au niveau A1. À ce stade, les apprenants peuvent former des phrases plus longues et communiquer plus facilement dans des situations quotidiennes.",
+        "Le vocabulaire quotidien allemand couvre des thèmes tels que le travail, les loisirs, les voyages et la santé. Une liste de vocabulaire allemand A2 bien structurée aide à maîtriser progressivement de nouveaux mots."
+      ],
+      "bottomCta": {
+        "heading": "Poursuivez votre apprentissage",
+        "text": "Le vocabulaire d’allemand A2 permet une communication plus autonome. Lisez des textes simples, écoutez des dialogues et révisez régulièrement les nouveaux mots."
       }
     },
     "b1": {
-      "title": "Allemand B1 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Intermediaire",
+      "title": "Vocabulaire d’allemand B1",
+      "intro": "Le vocabulaire d’allemand B1 représente le niveau intermédiaire.",
+      "levelDescription": "Intermédiaire",
       "ctaText": "Commencer la pratique B1",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Que signifie le niveau B1 en allemand ?",
+        "paragraph": "Le niveau B1 correspond à une utilisation indépendante de l’allemand au niveau intermédiaire. Les apprenants peuvent gérer la plupart des situations quotidiennes et produire des textes simples mais cohérents.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Exprimer des points de vue personnels.",
+          "Décrire des expériences et événements.",
+          "Comprendre des textes informatifs de manière claire."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Que comprend le vocabulaire d’allemand B1 ?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Travail et société",
+          "Argumentation et narration"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Travail et société",
+            "items": [
+              "Professions et responsabilités",
+              "Éducation et formation",
+              "Technologie et médias",
+              "Sujets sociaux"
+            ]
+          },
+          {
+            "heading": "Argumentation et narration",
+            "items": [
+              "Connecteurs logiques",
+              "Expressions d’accord et de désaccord",
+              "Adjectifs comparatifs",
+              "Mots abstraits allemand B1"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
-        "value": 2000
+        "heading": "Combien de mots comprend le vocabulaire allemand B1 ?",
+        "text": "Le niveau B1 comprend généralement entre 2 000 et 3 000 mots. Pour élargir le vocabulaire B1 allemand, il est recommandé de lire des articles, écouter des podcasts et pratiquer la conversation régulièrement.",
+        "value": 3000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire allemand B1",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "erreichen",
-            "meaning": "Signification 1"
+            "word": "erfolgen",
+            "meaning": "réussir"
           },
           {
-            "word": "lernen",
-            "meaning": "Signification 2"
+            "word": "Misserfolg",
+            "meaning": "échec"
+          },
+          {
+            "word": "Arbeitgeber",
+            "meaning": "employeur"
+          },
+          {
+            "word": "Kandidat",
+            "meaning": "candidat"
+          },
+          {
+            "word": "entwickeln",
+            "meaning": "développer"
+          },
+          {
+            "word": "Umwelt",
+            "meaning": "environnement"
+          },
+          {
+            "word": "Vorteil",
+            "meaning": "avantage"
+          },
+          {
+            "word": "Nachteil",
+            "meaning": "désavantage"
+          },
+          {
+            "word": "vorschlagen",
+            "meaning": "proposer"
+          },
+          {
+            "word": "Ziel",
+            "meaning": "objectif"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux d’allemand"
+      },
+      "metaTitle": "Vocabulaire d’allemand B1 – Niveau intermédiaire",
+      "metaDescription": "Apprenez le vocabulaire d’allemand B1 avec des mots intermédiaires et des exemples détaillés. Améliorez votre expression et compréhension en allemand.",
+      "introParagraphs": [
+        "Le vocabulaire d’allemand B1 représente le niveau intermédiaire. Les apprenants peuvent comprendre les points principaux de messages clairs et s’exprimer avec plus de détails.",
+        "Les mots intermédiaires allemand B1 permettent d’exprimer des opinions, de raconter des expériences et de participer à des conversations plus complexes. Une liste de vocabulaire allemand B1 bien structurée aide à élargir le vocabulaire et renforcer les compétences linguistiques."
+      ],
+      "bottomCta": {
+        "heading": "Renforcez votre niveau intermédiaire",
+        "text": "Avec un vocabulaire allemand B1 solide, vous pouvez communiquer de manière claire et structurée. Pratiquez régulièrement, discutez de sujets actuels et lisez des textes plus complexes pour approfondir votre vocabulaire."
       }
     },
     "b2": {
-      "title": "Allemand B2 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Intermediaire superieur",
+      "title": "Vocabulaire d’allemand B2",
+      "intro": "Le vocabulaire d’allemand B2 est destiné aux apprenants capables de communiquer avec fluidité et souhaitant aborder des sujets plus complexes.",
+      "levelDescription": "Intermédiaire supérieur",
       "ctaText": "Commencer la pratique B2",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Que signifie le niveau B2 ?",
+        "paragraph": "Au niveau B2, vous pouvez interagir spontanément avec des locuteurs natifs. Les mots allemands niveau B2 comprennent des termes abstraits, des connecteurs logiques et des expressions utiles pour les débats ou contextes professionnels.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Compréhension des idées principales de textes complexes.",
+          "Expression et défense d’opinions de manière structurée.",
+          "Utilisation de connecteurs variés pour organiser le discours."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Portée du vocabulaire B2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Discussion et argumentation",
+          "Travail et société"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Discussion et argumentation",
+            "items": [
+              "Expressions pour être d’accord ou en désaccord.",
+              "Connecteurs pour comparaison et contraste.",
+              "Vocabulaire pour justifier des opinions.",
+              "Termes pour analyser problèmes et solutions."
+            ]
+          },
+          {
+            "heading": "Travail et société",
+            "items": [
+              "Mots liés au travail et aux études.",
+              "Vocabulaire sur les questions sociales actuelles.",
+              "Expressions formelles pour rapports et e-mails.",
+              "Termes pour responsabilités et projets."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
-        "value": 3200
+        "heading": "Combien de mots au niveau B2 ?",
+        "text": "Le vocabulaire allemand B2 inclut généralement plusieurs milliers de mots actifs. L’essentiel est de pouvoir les utiliser correctement à l’oral et à l’écrit.",
+        "value": 4000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire B2",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "Zusammenhang",
-            "meaning": "Signification 1"
+            "word": "jedoch",
+            "meaning": "cependant"
+          },
+          {
+            "word": "verbessern",
+            "meaning": "améliorer"
+          },
+          {
+            "word": "Herausforderung",
+            "meaning": "défi"
+          },
+          {
+            "word": "somit",
+            "meaning": "ainsi; donc"
           },
           {
             "word": "erreichen",
-            "meaning": "Signification 2"
+            "meaning": "atteindre"
+          },
+          {
+            "word": "überzeugen",
+            "meaning": "convaincre"
+          },
+          {
+            "word": "Fortschritt",
+            "meaning": "progrès"
+          },
+          {
+            "word": "Verantwortung",
+            "meaning": "responsabilité"
+          },
+          {
+            "word": "bewerten",
+            "meaning": "évaluer"
+          },
+          {
+            "word": "Problem",
+            "meaning": "problème"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux CEFR"
+      },
+      "metaTitle": "Vocabulaire d’allemand B2 – Mots et expressions clés",
+      "metaDescription": "Développez votre vocabulaire d’allemand B2 avec des mots essentiels, significations et exemples pour communiquer avec confiance dans la vie quotidienne et professionnelle.",
+      "introParagraphs": [
+        "Le vocabulaire d’allemand B2 est destiné aux apprenants capables de communiquer avec fluidité et souhaitant aborder des sujets plus complexes. À ce niveau, vous pouvez participer à des discussions et exprimer clairement vos idées.",
+        "Le vocabulaire intermédiaire allemand vous permet de construire des arguments, d’évaluer les avantages et inconvénients, et de comprendre des textes longs et complexes. L’objectif est d’améliorer précision et fluidité dans la communication."
+      ],
+      "bottomCta": {
+        "heading": "Continuez à enrichir votre vocabulaire",
+        "text": "Pour maîtriser le vocabulaire allemand B2, lisez des textes, écoutez des débats et pratiquez l’expression orale et écrite. L’usage actif consolide les mots appris."
       }
     },
     "c1": {
-      "title": "Allemand C1 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Avance",
+      "title": "Vocabulaire d’allemand C1",
+      "intro": "Le vocabulaire d’allemand C1 correspond à un niveau avancé où vous maîtrisez des expressions complexes et des termes abstraits.",
+      "levelDescription": "Avancé",
       "ctaText": "Commencer la pratique C1",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Caractéristiques du niveau C1",
+        "paragraph": "Les mots allemands niveau C1 incluent des termes spécialisés, des expressions formelles et des connecteurs logiques variés.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Compréhension de textes complexes et spécialisés.",
+          "Expression fluide et structurée d’idées abstraites.",
+          "Adaptation du registre linguistique selon le contexte."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Portée du vocabulaire C1",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Langage académique",
+          "Communication professionnelle"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Langage académique",
+            "items": [
+              "Termes pour analyse et évaluation.",
+              "Expressions pour structurer un raisonnement complexe.",
+              "Vocabulaire pour présentations formelles.",
+              "Mots liés à la recherche et à la pensée critique."
+            ]
+          },
+          {
+            "heading": "Communication professionnelle",
+            "items": [
+              "Expressions formelles pour rapports et documents.",
+              "Verbes précis pour argumentation et négociation.",
+              "Adjectifs avancés pour décrire des situations.",
+              "Terminologie pour gestion et organisation."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "heading": "Combien de mots au niveau C1 ?",
+        "text": "Le vocabulaire allemand C1 contient généralement plusieurs milliers de mots actifs. La clé est de les utiliser correctement et avec fluidité.",
         "value": 5000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire C1",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "Nuance",
-            "meaning": "Signification 1"
+            "word": "dennoch",
+            "meaning": "cependant"
           },
           {
-            "word": "Zusammenhang",
-            "meaning": "Signification 2"
+            "word": "vertiefen",
+            "meaning": "approfondir"
+          },
+          {
+            "word": "kohärent",
+            "meaning": "cohérent; logique"
+          },
+          {
+            "word": "relevant",
+            "meaning": "pertinent; approprié"
+          },
+          {
+            "word": "erarbeiten",
+            "meaning": "élaborer; développer"
+          },
+          {
+            "word": "in Frage stellen",
+            "meaning": "mettre en question"
+          },
+          {
+            "word": "beträchtlich",
+            "meaning": "considérable"
+          },
+          {
+            "word": "jedoch",
+            "meaning": "cependant"
+          },
+          {
+            "word": "Schlüsselfragen",
+            "meaning": "questions clés"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "atteindre"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux CEFR"
+      },
+      "metaTitle": "Vocabulaire d’allemand C1 – Mots avancés",
+      "metaDescription": "Améliorez votre vocabulaire d’allemand C1 avec des mots avancés, exemples et explications pour communiquer de façon précise et nuancée.",
+      "introParagraphs": [
+        "Le vocabulaire d’allemand C1 correspond à un niveau avancé où vous maîtrisez des expressions complexes et des termes abstraits. Vous pouvez comprendre des textes longs et communiquer avec précision et spontanéité.",
+        "Le vocabulaire avancé allemand permet d’analyser, d’argumenter et d’utiliser des nuances linguistiques dans des contextes académiques ou professionnels. L’objectif est d’élargir le lexique tout en maintenant un registre approprié."
+      ],
+      "bottomCta": {
+        "heading": "Progressez en allemand",
+        "text": "Pour maîtriser le vocabulaire C1, lisez des textes complexes, participez à des débats et rédigez des essais structurés. La pratique régulière améliore précision et confiance."
       }
     },
     "c2": {
-      "title": "Allemand C2 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Maitrise",
+      "title": "Vocabulaire d’allemand C2",
+      "intro": "Le vocabulaire d’allemand C2 représente la maîtrise complète de la langue selon le CEFR.",
+      "levelDescription": "Maîtrise complète",
       "ctaText": "Commencer la pratique C2",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Caractéristiques du niveau C2",
+        "paragraph": "Les mots allemands niveau C2 couvrent les domaines académique, littéraire et technique avec un accent sur les nuances de sens.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Compréhension de textes spécialisés et littéraires.",
+          "Usage précis de synonymes avec nuances.",
+          "Adaptation parfaite aux registres formels et informels."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Portée du vocabulaire C2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Langage académique et littéraire",
+          "Nuances et style"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Langage académique et littéraire",
+            "items": [
+              "Terminologie spécialisée dans divers domaines.",
+              "Figures de style et expressions littéraires.",
+              "Vocabulaire littéraire avancé.",
+              "Verbes précis pour l’analyse critique."
+            ]
+          },
+          {
+            "heading": "Nuances et style",
+            "items": [
+              "Synonymes avec différences subtiles.",
+              "Distinction claire entre registres de langue.",
+              "Expressions idiomatiques authentiques.",
+              "Adaptation culturelle du langage."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
-        "value": 8000
+        "heading": "Combien de mots au niveau C2 ?",
+        "text": "Le vocabulaire allemand C2 peut dépasser 6 000 mots actifs. La maîtrise réelle se mesure par la capacité à les utiliser naturellement et avec précision.",
+        "value": 6500
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire C2",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "beredt",
-            "meaning": "Signification 1"
+            "word": "unabdingbar",
+            "meaning": "indispensable; inévitable"
           },
           {
-            "word": "Nuance",
-            "meaning": "Signification 2"
+            "word": "Feinheit",
+            "meaning": "subtilité; finesse"
+          },
+          {
+            "word": "unvermeidlich",
+            "meaning": "inévitable"
+          },
+          {
+            "word": "nuancieren",
+            "meaning": "nuancer; préciser"
+          },
+          {
+            "word": "Beredsamkeit",
+            "meaning": "élocution; éloquence"
+          },
+          {
+            "word": "Urteilsvermögen",
+            "meaning": "jugement; discernement"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "atteindre un résultat"
+          },
+          {
+            "word": "ambivalent",
+            "meaning": "ambivalent; aux aspects opposés"
+          },
+          {
+            "word": "plausibel",
+            "meaning": "plausible"
+          },
+          {
+            "word": "begründen",
+            "meaning": "fonder; justifier"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux CEFR"
+      },
+      "metaTitle": "Vocabulaire d’allemand C2 – Maîtrise complète de la langue",
+      "metaDescription": "Découvrez le vocabulaire d’allemand C2 avec des mots rares et précis pour atteindre une maîtrise complète de la langue.",
+      "introParagraphs": [
+        "Le vocabulaire d’allemand C2 représente la maîtrise complète de la langue selon le CEFR. Vous comprenez pratiquement tout ce que vous lisez ou entendez et pouvez vous exprimer avec précision, nuance et spontanéité.",
+        "Le vocabulaire très avancé allemand inclut des termes rares, des expressions idiomatiques et des subtilités stylistiques. Il permet d’adapter parfaitement le langage à tout contexte."
+      ],
+      "bottomCta": {
+        "heading": "Atteignez la maîtrise complète",
+        "text": "Pour maîtriser le vocabulaire allemand C2, lisez des œuvres littéraires, assistez à des conférences spécialisées et rédigez des textes complexes. La pratique intensive et variée est essentielle pour consolider l’excellence linguistique."
       }
     }
   }

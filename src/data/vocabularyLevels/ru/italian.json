@@ -1,323 +1,689 @@
-{
+﻿{
   "targetLanguage": "italian",
-  "targetLanguageDisplayName": "Italjanskij",
+  "targetLanguageDisplayName": "Итальянский",
   "levels": {
     "a1": {
-      "title": "Italjanskij A1 Vocabulary Practice",
-      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
-      "levelDescription": "Nacalnyj",
-      "ctaText": "Nacat praktiku A1",
+      "title": "Словарный запас итальянского A1",
+      "intro": "Словарный запас итальянского A1 – это начальный уровень для начинающих.",
+      "levelDescription": "Начальный",
+      "ctaText": "Начать практику A1",
       "levelExplanation": {
-        "heading": "Opisanie urovnja",
-        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "heading": "Что означает уровень A1 в итальянском?",
+        "paragraph": "Уровень A1 соответствует начальному уровню по CEFR. Учащиеся могут понимать и использовать знакомые выражения и простые фразы для конкретных нужд.",
         "bullets": [
-          "Kljucievye kommunikativnye celi",
-          "Castaja grammatika i struktury",
-          "Tipicnye situacii realnoj zizni"
+          "Приветствия и представления.",
+          "Задавать и отвечать на простые вопросы.",
+          "Понимать короткие и ясные инструкции."
         ]
       },
       "vocabularyScope": {
-        "heading": "Obem slovarja",
+        "heading": "Что включает словарный запас итальянского A1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Повседневное общение",
+          "Личные темы"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Существительные",
+          "Глаголы",
+          "Прилагательные"
+        ],
+        "groups": [
+          {
+            "heading": "Повседневное общение",
+            "items": [
+              "Приветствия и вежливые выражения",
+              "Числа, дни недели и месяцы",
+              "Распространённые глаголы в настоящем времени",
+              "Простые вопросы"
+            ]
+          },
+          {
+            "heading": "Личные темы",
+            "items": [
+              "Семья и друзья",
+              "Еда и напитки",
+              "Дом и окружающая среда",
+              "Базовые прилагательные"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Kolichestvo slov",
-        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
+        "heading": "Сколько слов включает словарный запас итальянского A1?",
+        "text": "Уровень A1 обычно включает от 500 до 800 основных слов. Цель не только запоминать, но и активно использовать слова в простых предложениях. Упражнения итальянского A1 помогают закрепить знания.",
         "value": 800
       },
       "sampleVocabulary": {
-        "heading": "Primery slov",
+        "heading": "Примеры слов итальянского A1",
         "columns": {
-          "word": "Slovo",
-          "meaning": "Znacenie"
+          "word": "Слово",
+          "meaning": "Значение"
         },
         "rows": [
           {
-            "word": "casa",
-            "meaning": "Znacenie 1"
+            "word": "ciao",
+            "meaning": "привет / приветствие"
+          },
+          {
+            "word": "arrivederci",
+            "meaning": "до свидания"
+          },
+          {
+            "word": "grazie",
+            "meaning": "спасибо"
+          },
+          {
+            "word": "famiglia",
+            "meaning": "семья"
           },
           {
             "word": "casa",
-            "meaning": "Znacenie 2"
+            "meaning": "дом"
+          },
+          {
+            "word": "mangiare",
+            "meaning": "есть"
+          },
+          {
+            "word": "bere",
+            "meaning": "пить"
+          },
+          {
+            "word": "amico",
+            "meaning": "друг"
+          },
+          {
+            "word": "grande",
+            "meaning": "большой"
+          },
+          {
+            "word": "piccolo",
+            "meaning": "маленький"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Drugie uroveni"
+        "heading": "Другие уровни итальянского"
+      },
+      "metaTitle": "Словарный запас итальянского A1 – базовые слова для начинающих",
+      "metaDescription": "Изучайте словарный запас итальянского A1 с простыми словами и примерами. Создайте прочную базу для общения на итальянском языке.",
+      "introParagraphs": [
+        "Словарный запас итальянского A1 – это начальный уровень для начинающих. На этом уровне учащиеся изучают простые слова и фразы для повседневного общения.",
+        "Базовые слова итальянского A1 включают приветствия, числа, распространённые глаголы и простые вопросы. Хорошо организованный список слов итальянского A1 помогает постепенно расширять словарный запас и уверенно общаться."
+      ],
+      "bottomCta": {
+        "heading": "Начните изучать уже сейчас",
+        "text": "Словарный запас итальянского A1 создаёт прочную основу. Практикуйтесь регулярно, составляйте простые предложения и слушайте короткие диалоги для укрепления языковых навыков."
       }
     },
     "a2": {
-      "title": "Italjanskij A2 Vocabulary Practice",
-      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
-      "levelDescription": "Elementarnyj",
-      "ctaText": "Nacat praktiku A2",
+      "title": "Словарный запас итальянского A2",
+      "intro": "Словарный запас итальянского A2 расширяет знания уровня A1.",
+      "levelDescription": "Элементарный",
+      "ctaText": "Начать практику A2",
       "levelExplanation": {
-        "heading": "Opisanie urovnja",
-        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "heading": "Что означает уровень A2 в итальянском?",
+        "paragraph": "Уровень A2 соответствует элементарному пользователю языка. Учащиеся могут понимать часто используемые выражения и взаимодействовать в простых и рутинных задачах.",
         "bullets": [
-          "Kljucievye kommunikativnye celi",
-          "Castaja grammatika i struktury",
-          "Tipicnye situacii realnoj zizni"
+          "Описывать повседневные действия и рутины.",
+          "Рассказывать о простых событиях прошлого.",
+          "Обмениваться информацией в знакомой обстановке."
         ]
       },
       "vocabularyScope": {
-        "heading": "Obem slovarja",
+        "heading": "Что включает словарный запас итальянского A2?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Повседневная жизнь и услуги",
+          "Расширенная коммуникация"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Существительные",
+          "Глаголы",
+          "Прилагательные"
+        ],
+        "groups": [
+          {
+            "heading": "Повседневная жизнь и услуги",
+            "items": [
+              "Транспорт и передвижение",
+              "Покупки и деньги",
+              "Здоровье и благополучие",
+              "Работа и встречи"
+            ]
+          },
+          {
+            "heading": "Расширенная коммуникация",
+            "items": [
+              "Простые соединительные слова",
+              "Временные выражения",
+              "Прилагательные для выражения мнения",
+              "Глаголы в passato prossimo"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Kolichestvo slov",
-        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
-        "value": 1200
+        "heading": "Сколько слов включает словарный запас итальянского A2?",
+        "text": "Уровень A2 обычно включает от 1.000 до 1.500 полезных слов. Регулярная практика помогает закрепить знания и улучшить беглость речи.",
+        "value": 1500
       },
       "sampleVocabulary": {
-        "heading": "Primery slov",
+        "heading": "Примеры слов итальянского A2",
         "columns": {
-          "word": "Slovo",
-          "meaning": "Znacenie"
+          "word": "Слово",
+          "meaning": "Значение"
         },
         "rows": [
           {
-            "word": "imparare",
-            "meaning": "Znacenie 1"
+            "word": "viaggio",
+            "meaning": "путешествие"
           },
           {
-            "word": "casa",
-            "meaning": "Znacenie 2"
+            "word": "biglietto",
+            "meaning": "билет"
+          },
+          {
+            "word": "negozio",
+            "meaning": "магазин"
+          },
+          {
+            "word": "soldi",
+            "meaning": "деньги"
+          },
+          {
+            "word": "lavoro",
+            "meaning": "работа"
+          },
+          {
+            "word": "malato",
+            "meaning": "больной"
+          },
+          {
+            "word": "ieri",
+            "meaning": "вчера"
+          },
+          {
+            "word": "domani",
+            "meaning": "завтра"
+          },
+          {
+            "word": "spesso",
+            "meaning": "часто"
+          },
+          {
+            "word": "importante",
+            "meaning": "важный"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Drugie uroveni"
+        "heading": "Другие уровни итальянского"
+      },
+      "metaTitle": "Словарный запас итальянского A2 – элементарный уровень",
+      "metaDescription": "Изучайте словарный запас итальянского A2 с распространёнными словами и практическими примерами. Улучшайте понимание и общение на элементарном уровне.",
+      "introParagraphs": [
+        "Словарный запас итальянского A2 расширяет знания уровня A1. Учащиеся могут строить более длинные предложения и легче общаться в повседневных ситуациях.",
+        "Повседневный словарь итальянского включает темы: работа, досуг, путешествия и здоровье. Структурированный список слов итальянского A2 помогает постепенно осваивать новые термины."
+      ],
+      "bottomCta": {
+        "heading": "Продолжайте обучение",
+        "text": "Словарный запас итальянского A2 позволяет общаться более самостоятельно. Читайте простые тексты, слушайте диалоги и регулярно повторяйте новые слова."
       }
     },
     "b1": {
-      "title": "Italjanskij B1 Vocabulary Practice",
-      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
-      "levelDescription": "Srednij",
-      "ctaText": "Nacat praktiku B1",
+      "title": "Словарный запас итальянского B1",
+      "intro": "Словарный запас итальянского B1 соответствует промежуточному уровню.",
+      "levelDescription": "Средний",
+      "ctaText": "Начать практику B1",
       "levelExplanation": {
-        "heading": "Opisanie urovnja",
-        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "heading": "Что означает уровень B1 в итальянском?",
+        "paragraph": "Уровень B1 соответствует независимому использованию языка на промежуточном уровне. Учащиеся могут справляться с большинством повседневных ситуаций и создавать простые, связные тексты.",
         "bullets": [
-          "Kljucievye kommunikativnye celi",
-          "Castaja grammatika i struktury",
-          "Tipicnye situacii realnoj zizni"
+          "Выражение личного мнения.",
+          "Описание опыта и событий.",
+          "Понимание ясных информативных текстов."
         ]
       },
       "vocabularyScope": {
-        "heading": "Obem slovarja",
+        "heading": "Что включает словарный запас итальянского B1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Работа и общество",
+          "Аргументация и повествование"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Существительные",
+          "Глаголы",
+          "Прилагательные"
+        ],
+        "groups": [
+          {
+            "heading": "Работа и общество",
+            "items": [
+              "Профессии и обязанности",
+              "Образование и обучение",
+              "Технологии и медиа",
+              "Социальные темы"
+            ]
+          },
+          {
+            "heading": "Аргументация и повествование",
+            "items": [
+              "Логические связки",
+              "Выражения согласия и несогласия",
+              "Сравнительные прилагательные",
+              "Абстрактные слова итальянского B1"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Kolichestvo slov",
-        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
-        "value": 2000
+        "heading": "Сколько слов включает словарный запас итальянского B1?",
+        "text": "Уровень B1 обычно включает от 2.000 до 3.000 слов. Для расширения словарного запаса итальянского B1 рекомендуется читать статьи, слушать подкасты и регулярно практиковать разговор.",
+        "value": 3000
       },
       "sampleVocabulary": {
-        "heading": "Primery slov",
+        "heading": "Примеры слов итальянского B1",
         "columns": {
-          "word": "Slovo",
-          "meaning": "Znacenie"
+          "word": "Слово",
+          "meaning": "Значение"
         },
         "rows": [
           {
-            "word": "raggiungere",
-            "meaning": "Znacenie 1"
+            "word": "succedere",
+            "meaning": "происходить / иметь успех"
           },
           {
-            "word": "imparare",
-            "meaning": "Znacenie 2"
+            "word": "fallimento",
+            "meaning": "неудача"
+          },
+          {
+            "word": "datore di lavoro",
+            "meaning": "работодатель"
+          },
+          {
+            "word": "candidato",
+            "meaning": "кандидат"
+          },
+          {
+            "word": "sviluppare",
+            "meaning": "развивать"
+          },
+          {
+            "word": "ambiente",
+            "meaning": "окружение"
+          },
+          {
+            "word": "vantaggio",
+            "meaning": "преимущество"
+          },
+          {
+            "word": "svantaggio",
+            "meaning": "недостаток"
+          },
+          {
+            "word": "proporre",
+            "meaning": "предлагать"
+          },
+          {
+            "word": "obiettivo",
+            "meaning": "цель"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Drugie uroveni"
+        "heading": "Другие уровни итальянского"
+      },
+      "metaTitle": "Словарный запас итальянского B1 – промежуточный уровень",
+      "metaDescription": "Изучайте словарный запас итальянского B1 со словами среднего уровня и детальными примерами. Улучшайте выражение и понимание на итальянском.",
+      "introParagraphs": [
+        "Словарный запас итальянского B1 соответствует промежуточному уровню. Учащиеся могут понимать основные моменты ясных сообщений и общаться с большим количеством деталей.",
+        "Слова среднего уровня итальянского B1 позволяют выражать мнения, описывать опыт и участвовать в более сложных разговорах. Структурированный список слов итальянского B1 помогает расширить словарный запас и укрепить языковые навыки."
+      ],
+      "bottomCta": {
+        "heading": "Укрепляйте свой промежуточный уровень",
+        "text": "С прочным словарным запасом итальянского B1 вы можете ясно и структурированно общаться. Практикуйтесь регулярно, обсуждайте актуальные темы и читайте более сложные тексты для обогащения словарного запаса."
       }
     },
     "b2": {
-      "title": "Italjanskij B2 Vocabulary Practice",
-      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
-      "levelDescription": "Vyse srednego",
-      "ctaText": "Nacat praktiku B2",
+      "title": "Словарный запас итальянского B2",
+      "intro": "Словарный запас итальянского B2 предназначен для тех, кто хочет свободно общаться и обсуждать более сложные темы.",
+      "levelDescription": "Выше среднего",
+      "ctaText": "Начать практику B2",
       "levelExplanation": {
-        "heading": "Opisanie urovnja",
-        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "heading": "Что означает уровень B2?",
+        "paragraph": "На уровне B2 вы можете спонтанно общаться с носителями языка. Словарный запас итальянского B2 включает абстрактные термины, логические связки и полезные выражения для дебатов и профессионального общения.",
         "bullets": [
-          "Kljucievye kommunikativnye celi",
-          "Castaja grammatika i struktury",
-          "Tipicnye situacii realnoj zizni"
+          "Понимание основных идей в сложных текстах.",
+          "Выражение и защита своих мнений структурировано.",
+          "Использование связок для организации речи."
         ]
       },
       "vocabularyScope": {
-        "heading": "Obem slovarja",
+        "heading": "Область словарного запаса B2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Обсуждение и аргументация",
+          "Работа и общество"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Существительные",
+          "Глаголы",
+          "Прилагательные"
+        ],
+        "groups": [
+          {
+            "heading": "Обсуждение и аргументация",
+            "items": [
+              "Выражения для согласия или несогласия.",
+              "Связки для сравнения и противопоставления.",
+              "Словарный запас для обоснования мнений.",
+              "Термины для анализа проблем и решений."
+            ]
+          },
+          {
+            "heading": "Работа и общество",
+            "items": [
+              "Слова, связанные с работой и учебой.",
+              "Словарный запас по актуальным социальным темам.",
+              "Формальные выражения для отчетов и писем.",
+              "Термины, касающиеся ответственности и проектов."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Kolichestvo slov",
-        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
-        "value": 3200
+        "heading": "Сколько слов содержит уровень B2?",
+        "text": "Словарный запас итальянского B2 обычно включает несколько тысяч активных слов. Важно правильно использовать их в речи и письме.",
+        "value": 4000
       },
       "sampleVocabulary": {
-        "heading": "Primery slov",
+        "heading": "Примеры словарного запаса B2",
         "columns": {
-          "word": "Slovo",
-          "meaning": "Znacenie"
+          "word": "Слово",
+          "meaning": "Значение"
         },
         "rows": [
           {
-            "word": "contesto",
-            "meaning": "Znacenie 1"
+            "word": "tuttavia",
+            "meaning": "однако / тем не менее"
+          },
+          {
+            "word": "migliorare",
+            "meaning": "улучшать"
+          },
+          {
+            "word": "sfida",
+            "meaning": "вызов / задача"
+          },
+          {
+            "word": "pertanto",
+            "meaning": "следовательно / поэтому"
           },
           {
             "word": "raggiungere",
-            "meaning": "Znacenie 2"
+            "meaning": "достигать"
+          },
+          {
+            "word": "convincere",
+            "meaning": "убеждать"
+          },
+          {
+            "word": "progresso",
+            "meaning": "прогресс"
+          },
+          {
+            "word": "responsabilità",
+            "meaning": "ответственность"
+          },
+          {
+            "word": "valutare",
+            "meaning": "оценивать"
+          },
+          {
+            "word": "problema",
+            "meaning": "проблема"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Drugie uroveni"
+        "heading": "Другие уровни CEFR"
+      },
+      "metaTitle": "Словарный запас итальянского B2 – ключевые слова и выражения",
+      "metaDescription": "Улучшите словарный запас итальянского B2 с помощью ключевых слов, значений и примеров для уверенного общения в повседневных и рабочих ситуациях.",
+      "introParagraphs": [
+        "Словарный запас итальянского B2 предназначен для тех, кто хочет свободно общаться и обсуждать более сложные темы. На этом уровне можно участвовать в дискуссиях и ясно выражать свои мысли.",
+        "Средний итальянский словарь помогает строить аргументы, оценивать плюсы и минусы и понимать более длинные и сложные тексты. Цель – улучшить точность и беглость речи."
+      ],
+      "bottomCta": {
+        "heading": "Продолжайте расширять словарный запас",
+        "text": "Чтобы освоить словарный запас B2, читайте тексты, слушайте обсуждения и практикуйте устную и письменную речь. Активное использование помогает закрепить изученное."
       }
     },
     "c1": {
-      "title": "Italjanskij C1 Vocabulary Practice",
-      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
-      "levelDescription": "Prodvinutyj",
-      "ctaText": "Nacat praktiku C1",
+      "title": "Словарный запас итальянского C1",
+      "intro": "Словарный запас итальянского C1 соответствует продвинутому уровню, где вы владеете сложными выражениями и абстрактными терминами.",
+      "levelDescription": "Продвинутый",
+      "ctaText": "Начать практику C1",
       "levelExplanation": {
-        "heading": "Opisanie urovnja",
-        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "heading": "Особенности уровня C1",
+        "paragraph": "Слова C1 включают технические термины, формальные выражения и разнообразные логические связки.",
         "bullets": [
-          "Kljucievye kommunikativnye celi",
-          "Castaja grammatika i struktury",
-          "Tipicnye situacii realnoj zizni"
+          "Понимание сложных и специализированных текстов.",
+          "Беглое и структурированное выражение абстрактных идей.",
+          "Адаптация стиля речи под контекст."
         ]
       },
       "vocabularyScope": {
-        "heading": "Obem slovarja",
+        "heading": "Область словарного запаса C1",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Академический язык",
+          "Профессиональная коммуникация"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Существительные",
+          "Глаголы",
+          "Прилагательные"
+        ],
+        "groups": [
+          {
+            "heading": "Академический язык",
+            "items": [
+              "Термины для анализа и оценки.",
+              "Выражения для построения сложных аргументов.",
+              "Словарный запас для формальных презентаций.",
+              "Слова, связанные с исследованиями и критическим мышлением."
+            ]
+          },
+          {
+            "heading": "Профессиональная коммуникация",
+            "items": [
+              "Формальные выражения для отчетов и документов.",
+              "Точные глаголы для аргументации и переговоров.",
+              "Продвинутые прилагательные для описания ситуаций.",
+              "Терминология для управления и организации."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Kolichestvo slov",
-        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
+        "heading": "Сколько слов содержит C1?",
+        "text": "Словарный запас итальянского C1 включает тысячи активных слов. Правильное и беглое использование крайне важно.",
         "value": 5000
       },
       "sampleVocabulary": {
-        "heading": "Primery slov",
+        "heading": "Примеры словарного запаса C1",
         "columns": {
-          "word": "Slovo",
-          "meaning": "Znacenie"
+          "word": "Слово",
+          "meaning": "Значение"
         },
         "rows": [
           {
-            "word": "sfumatura",
-            "meaning": "Znacenie 1"
+            "word": "tuttavia",
+            "meaning": "однако / тем не менее"
           },
           {
-            "word": "contesto",
-            "meaning": "Znacenie 2"
+            "word": "approfondire",
+            "meaning": "углублять"
+          },
+          {
+            "word": "coerente",
+            "meaning": "логичный; последовательный"
+          },
+          {
+            "word": "pertinente",
+            "meaning": "уместный; соответствующий"
+          },
+          {
+            "word": "elaborare",
+            "meaning": "разрабатывать; обрабатывать"
+          },
+          {
+            "word": "mettere in discussione",
+            "meaning": "ставить под вопрос"
+          },
+          {
+            "word": "considerevole",
+            "meaning": "значительный"
+          },
+          {
+            "word": "essenzialmente",
+            "meaning": "существенно"
+          },
+          {
+            "word": "questioni chiave",
+            "meaning": "ключевые вопросы"
+          },
+          {
+            "word": "raggiungere",
+            "meaning": "достигать"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Drugie uroveni"
+        "heading": "Другие уровни CEFR"
+      },
+      "metaTitle": "Словарный запас итальянского C1 – продвинутый уровень",
+      "metaDescription": "Улучшайте словарный запас итальянского C1 с продвинутыми словами, примерами и упражнениями для точного и уверенного общения.",
+      "introParagraphs": [
+        "Словарный запас итальянского C1 соответствует продвинутому уровню, где вы владеете сложными выражениями и абстрактными терминами. Вы понимаете длинные тексты и общаетесь точно и спонтанно.",
+        "Продвинутый итальянский словарь позволяет анализировать, аргументировать и использовать языковые нюансы в академических и профессиональных контекстах. Цель – расширить словарный запас при сохранении подходящего стиля речи."
+      ],
+      "bottomCta": {
+        "heading": "Продолжайте совершенствовать итальянский",
+        "text": "Чтобы освоить словарный запас C1, читайте сложные тексты, участвуйте в дискуссиях и пишите структурированные эссе. Регулярная практика повышает точность и уверенность."
       }
     },
     "c2": {
-      "title": "Italjanskij C2 Vocabulary Practice",
-      "intro": "Strukturirovannaja praktika slovarja CEFR dla etogo urovnja.",
-      "levelDescription": "Svobodnoe vladenie",
-      "ctaText": "Nacat praktiku C2",
+      "title": "Словарный запас итальянского C2",
+      "intro": "Словарный запас итальянского C2 представляет собой полное владение языком по CEFR.",
+      "levelDescription": "Свободное владение",
+      "ctaText": "Начать практику C2",
       "levelExplanation": {
-        "heading": "Opisanie urovnja",
-        "paragraph": "Etot razdel pokazyvaet, cto obycno mozno na etom urovne.",
+        "heading": "Особенности уровня C2",
+        "paragraph": "Слова C2 охватывают академические, литературные и технические области с вниманием к смысловым нюансам.",
         "bullets": [
-          "Kljucievye kommunikativnye celi",
-          "Castaja grammatika i struktury",
-          "Tipicnye situacii realnoj zizni"
+          "Понимание специализированных и литературных текстов.",
+          "Точное использование синонимов с тонкими различиями.",
+          "Идеальная адаптация к формальным и неформальным стилям."
         ]
       },
       "vocabularyScope": {
-        "heading": "Obem slovarja",
+        "heading": "Область словарного запаса C2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Академический и литературный язык",
+          "Нюансы и стиль"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Существительные",
+          "Глаголы",
+          "Прилагательные"
+        ],
+        "groups": [
+          {
+            "heading": "Академический и литературный язык",
+            "items": [
+              "Специализированная терминология в разных областях.",
+              "Риторические фигуры и литературные выражения.",
+              "Продвинутый литературный словарь.",
+              "Точные глаголы для критического анализа."
+            ]
+          },
+          {
+            "heading": "Нюансы и стиль",
+            "items": [
+              "Синонимы с тонкими различиями значений.",
+              "Четкое различие стилей речи.",
+              "Аутентичные идиоматические выражения.",
+              "Культурно адаптированная речь."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Kolichestvo slov",
-        "text": "Ocenocnyj aktivnyj slovarnyj zapas dlja etogo urovnja CEFR.",
-        "value": 8000
+        "heading": "Сколько слов содержит C2?",
+        "text": "Словарный запас итальянского C2 может превышать 6 000 активных слов. Владение проявляется в естественном и точном использовании.",
+        "value": 6500
       },
       "sampleVocabulary": {
-        "heading": "Primery slov",
+        "heading": "Примеры словарного запаса C2",
         "columns": {
-          "word": "Slovo",
-          "meaning": "Znacenie"
+          "word": "Слово",
+          "meaning": "Значение"
         },
         "rows": [
           {
-            "word": "eloquente",
-            "meaning": "Znacenie 1"
+            "word": "indispensabile",
+            "meaning": "необходимый; неизбежный"
           },
           {
-            "word": "sfumatura",
-            "meaning": "Znacenie 2"
+            "word": "finezza",
+            "meaning": "тонкость; изысканность"
+          },
+          {
+            "word": "inevitabile",
+            "meaning": "неизбежный"
+          },
+          {
+            "word": "sfumare",
+            "meaning": "проявлять нюансы; уточнять"
+          },
+          {
+            "word": "eloquenza",
+            "meaning": "красноречие"
+          },
+          {
+            "word": "giudizio",
+            "meaning": "суждение; рассудительность"
+          },
+          {
+            "word": "raggiungere",
+            "meaning": "достигать результата"
+          },
+          {
+            "word": "ambivalente",
+            "meaning": "амбивалентный; с противоположными аспектами"
+          },
+          {
+            "word": "plausibile",
+            "meaning": "правдоподобный"
+          },
+          {
+            "word": "motivare",
+            "meaning": "мотивировать; обосновывать"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Drugie uroveni"
+        "heading": "Другие уровни CEFR"
+      },
+      "metaTitle": "Словарный запас итальянского C2 – Полное владение",
+      "metaDescription": "Изучите словарный запас итальянского C2 с редкими и точными словами, чтобы достичь полного владения языком.",
+      "introParagraphs": [
+        "Словарный запас итальянского C2 представляет собой полное владение языком по CEFR. Вы понимаете почти всё, что читаете или слышите, и можете выражаться с точностью, нюансами и спонтанностью.",
+        "Очень продвинутый словарь включает редкие слова, идиоматические выражения и стилистические тонкости. Позволяет идеально адаптировать речь к любому контексту."
+      ],
+      "bottomCta": {
+        "heading": "Достигните полного владения итальянским",
+        "text": "Чтобы освоить словарный запас C2, читайте литературные произведения, участвуйте в специализированных конференциях и пишите сложные тексты. Интенсивная и разнообразная практика необходима для полного владения языком."
       }
     }
   }

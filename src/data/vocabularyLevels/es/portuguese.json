@@ -1,323 +1,689 @@
-{
+﻿{
   "targetLanguage": "portuguese",
-  "targetLanguageDisplayName": "Portugues",
+  "targetLanguageDisplayName": "Portugués",
   "levels": {
     "a1": {
-      "title": "Portugues A1 Vocabulary Practice",
-      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "title": "Vocabulario de portugués A1",
+      "intro": "El vocabulario de portugués A1 es el nivel inicial para quienes comienzan a aprender el idioma.",
       "levelDescription": "Principiante",
-      "ctaText": "Comenzar practica A1",
+      "ctaText": "Iniciar práctica A1",
       "levelExplanation": {
-        "heading": "Explicacion del nivel",
-        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "heading": "¿Qué significa el nivel A1 en portugués?",
+        "paragraph": "El nivel A1 corresponde al nivel principiante según el MCER. Los estudiantes pueden comprender y usar expresiones conocidas y frases simples para necesidades concretas.",
         "bullets": [
-          "Objetivos principales de comunicacion",
-          "Gramatica y estructuras frecuentes",
-          "Situaciones tipicas de uso real"
+          "Saludos y presentaciones.",
+          "Hacer y responder preguntas simples.",
+          "Entender instrucciones cortas y claras."
         ]
       },
       "vocabularyScope": {
-        "heading": "Alcance de vocabulario",
+        "heading": "¿Qué incluye el vocabulario de portugués A1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Comunicación diaria",
+          "Temas personales"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Comunicación diaria",
+            "items": [
+              "Saludos y expresiones de cortesía",
+              "Números, días de la semana y meses",
+              "Verbos comunes en presente",
+              "Preguntas sencillas"
+            ]
+          },
+          {
+            "heading": "Temas personales",
+            "items": [
+              "Familia y amigos",
+              "Comida y bebidas",
+              "Casa y entorno",
+              "Adjetivos básicos"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Cantidad de palabras",
-        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
+        "heading": "¿Cuántas palabras incluye el vocabulario de portugués A1?",
+        "text": "El nivel A1 suele incluir entre 500 y 800 palabras esenciales. El objetivo no es solo memorizar, sino usar activamente las palabras en oraciones simples. Los ejercicios de portugués A1 ayudan a consolidar el aprendizaje.",
         "value": 800
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de ejemplo",
+        "heading": "Ejemplos de vocabulario portugués A1",
         "columns": {
           "word": "Palabra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "casa",
-            "meaning": "Significado 1"
+            "word": "olá",
+            "meaning": "hola"
+          },
+          {
+            "word": "adeus",
+            "meaning": "adiós"
+          },
+          {
+            "word": "obrigado",
+            "meaning": "gracias"
+          },
+          {
+            "word": "família",
+            "meaning": "familia"
           },
           {
             "word": "casa",
-            "meaning": "Significado 2"
+            "meaning": "casa"
+          },
+          {
+            "word": "comer",
+            "meaning": "comer"
+          },
+          {
+            "word": "beber",
+            "meaning": "beber"
+          },
+          {
+            "word": "amigo",
+            "meaning": "amigo"
+          },
+          {
+            "word": "grande",
+            "meaning": "grande"
+          },
+          {
+            "word": "pequeño",
+            "meaning": "pequeño"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar otros niveles"
+        "heading": "Otros niveles de portugués"
+      },
+      "metaTitle": "Vocabulario de portugués A1 – Palabras básicas para principiantes",
+      "metaDescription": "Aprende vocabulario de portugués A1 con palabras simples y ejemplos. Crea una base sólida para la comunicación diaria en portugués.",
+      "introParagraphs": [
+        "El vocabulario de portugués A1 es el nivel inicial para quienes comienzan a aprender el idioma. En este nivel, los estudiantes aprenden palabras y frases simples para la comunicación cotidiana.",
+        "Las palabras básicas de portugués A1 incluyen saludos, números, verbos comunes y preguntas sencillas. Una lista de palabras portugués A1 bien organizada ayuda a ampliar el vocabulario de manera gradual y ganar confianza al hablar."
+      ],
+      "bottomCta": {
+        "heading": "Comienza a aprender ahora",
+        "text": "El vocabulario de portugués A1 proporciona una base sólida. Practica regularmente, forma oraciones simples y escucha diálogos cortos para fortalecer tus habilidades lingüísticas."
       }
     },
     "a2": {
-      "title": "Portugues A2 Vocabulary Practice",
-      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "title": "Vocabulario de portugués A2",
+      "intro": "El vocabulario de portugués A2 amplía los conocimientos del nivel A1.",
       "levelDescription": "Elemental",
-      "ctaText": "Comenzar practica A2",
+      "ctaText": "Iniciar práctica A2",
       "levelExplanation": {
-        "heading": "Explicacion del nivel",
-        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "heading": "¿Qué significa el nivel A2 en portugués?",
+        "paragraph": "El nivel A2 corresponde a un usuario elemental del idioma. Los estudiantes pueden entender expresiones usadas con frecuencia e interactuar en tareas simples y rutinarias.",
         "bullets": [
-          "Objetivos principales de comunicacion",
-          "Gramatica y estructuras frecuentes",
-          "Situaciones tipicas de uso real"
+          "Describir actividades diarias y rutinas.",
+          "Hablar sobre experiencias simples del pasado.",
+          "Intercambiar información en contextos conocidos."
         ]
       },
       "vocabularyScope": {
-        "heading": "Alcance de vocabulario",
+        "heading": "¿Qué incluye el vocabulario de portugués A2?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Vida diaria y servicios",
+          "Comunicación extendida"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Vida diaria y servicios",
+            "items": [
+              "Transporte y desplazamientos",
+              "Compras y dinero",
+              "Salud y bienestar",
+              "Trabajo y citas"
+            ]
+          },
+          {
+            "heading": "Comunicación extendida",
+            "items": [
+              "Conectores simples",
+              "Expresiones de tiempo",
+              "Adjetivos para expresar opinión",
+              "Verbos en pretérito perfecto"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Cantidad de palabras",
-        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
-        "value": 1200
+        "heading": "¿Cuántas palabras incluye el vocabulario de portugués A2?",
+        "text": "El nivel A2 suele incluir entre 1.000 y 1.500 palabras útiles. La práctica regular consolida el aprendizaje y mejora la fluidez.",
+        "value": 1500
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de ejemplo",
+        "heading": "Ejemplos de vocabulario portugués A2",
         "columns": {
           "word": "Palabra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "aprender",
-            "meaning": "Significado 1"
+            "word": "viagem",
+            "meaning": "viaje"
           },
           {
-            "word": "casa",
-            "meaning": "Significado 2"
+            "word": "bilhete",
+            "meaning": "boleto"
+          },
+          {
+            "word": "loja",
+            "meaning": "tienda"
+          },
+          {
+            "word": "dinheiro",
+            "meaning": "dinero"
+          },
+          {
+            "word": "trabalho",
+            "meaning": "trabajo"
+          },
+          {
+            "word": "doente",
+            "meaning": "enfermo"
+          },
+          {
+            "word": "ontem",
+            "meaning": "ayer"
+          },
+          {
+            "word": "amanhã",
+            "meaning": "mañana"
+          },
+          {
+            "word": "frequentemente",
+            "meaning": "a menudo"
+          },
+          {
+            "word": "importante",
+            "meaning": "importante"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar otros niveles"
+        "heading": "Otros niveles de portugués"
+      },
+      "metaTitle": "Vocabulario de portugués A2 – Nivel elemental",
+      "metaDescription": "Aprende vocabulario de portugués A2 con palabras comunes y ejemplos prácticos. Mejora la comprensión y la comunicación a nivel elemental.",
+      "introParagraphs": [
+        "El vocabulario de portugués A2 amplía los conocimientos del nivel A1. Los estudiantes pueden formar oraciones más largas y comunicarse con mayor facilidad en situaciones cotidianas.",
+        "El vocabulario diario en portugués incluye temas como trabajo, ocio, viajes y salud. Una lista de palabras portugués A2 estructurada ayuda a adquirir nuevos términos de forma gradual."
+      ],
+      "bottomCta": {
+        "heading": "Sigue aprendiendo",
+        "text": "El vocabulario de portugués A2 permite comunicarse con mayor independencia. Lee textos simples, escucha diálogos y repasa nuevas palabras regularmente."
       }
     },
     "b1": {
-      "title": "Portugues B1 Vocabulary Practice",
-      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "title": "Vocabulario de portugués B1",
+      "intro": "El vocabulario de portugués B1 corresponde al nivel intermedio.",
       "levelDescription": "Intermedio",
-      "ctaText": "Comenzar practica B1",
+      "ctaText": "Iniciar práctica B1",
       "levelExplanation": {
-        "heading": "Explicacion del nivel",
-        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "heading": "¿Qué significa el nivel B1 en portugués?",
+        "paragraph": "El nivel B1 corresponde a un usuario independiente del idioma a nivel intermedio. Los estudiantes pueden manejar la mayoría de situaciones cotidianas y producir textos simples y coherentes.",
         "bullets": [
-          "Objetivos principales de comunicacion",
-          "Gramatica y estructuras frecuentes",
-          "Situaciones tipicas de uso real"
+          "Expresar opiniones personales.",
+          "Describir experiencias y eventos.",
+          "Comprender textos claros e informativos."
         ]
       },
       "vocabularyScope": {
-        "heading": "Alcance de vocabulario",
+        "heading": "¿Qué incluye el vocabulario de portugués B1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Trabajo y sociedad",
+          "Argumentación y narración"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Trabajo y sociedad",
+            "items": [
+              "Profesiones y responsabilidades",
+              "Educación y formación",
+              "Tecnología y medios",
+              "Temas sociales"
+            ]
+          },
+          {
+            "heading": "Argumentación y narración",
+            "items": [
+              "Conectores lógicos",
+              "Expresiones de acuerdo y desacuerdo",
+              "Adjetivos comparativos",
+              "Palabras abstractas de portugués B1"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Cantidad de palabras",
-        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
-        "value": 2000
+        "heading": "¿Cuántas palabras incluye el vocabulario de portugués B1?",
+        "text": "El nivel B1 suele incluir entre 2.000 y 3.000 palabras. Para ampliar el vocabulario portugués B1, se recomienda leer artículos, escuchar podcasts y practicar la conversación regularmente.",
+        "value": 3000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de ejemplo",
+        "heading": "Ejemplos de vocabulario portugués B1",
         "columns": {
           "word": "Palabra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "atingir",
-            "meaning": "Significado 1"
+            "word": "acontecer",
+            "meaning": "suceder"
           },
           {
-            "word": "aprender",
-            "meaning": "Significado 2"
+            "word": "fracasso",
+            "meaning": "fracaso"
+          },
+          {
+            "word": "empregador",
+            "meaning": "empleador"
+          },
+          {
+            "word": "candidato",
+            "meaning": "candidato"
+          },
+          {
+            "word": "desenvolver",
+            "meaning": "desarrollar"
+          },
+          {
+            "word": "ambiente",
+            "meaning": "entorno"
+          },
+          {
+            "word": "vantagem",
+            "meaning": "ventaja"
+          },
+          {
+            "word": "desvantagem",
+            "meaning": "desventaja"
+          },
+          {
+            "word": "propor",
+            "meaning": "proponer"
+          },
+          {
+            "word": "objetivo",
+            "meaning": "objetivo"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar otros niveles"
+        "heading": "Otros niveles de portugués"
+      },
+      "metaTitle": "Vocabulario de portugués B1 – Nivel intermedio",
+      "metaDescription": "Aprende vocabulario de portugués B1 con palabras intermedias y ejemplos detallados. Mejora la expresión y comprensión en portugués.",
+      "introParagraphs": [
+        "El vocabulario de portugués B1 corresponde al nivel intermedio. Los estudiantes pueden entender los puntos principales de mensajes claros y comunicarse con más detalle.",
+        "Las palabras intermedias de portugués B1 permiten expresar opiniones, describir experiencias y participar en conversaciones más complejas. Una lista de palabras portugués B1 estructurada ayuda a ampliar el vocabulario y fortalecer las habilidades lingüísticas."
+      ],
+      "bottomCta": {
+        "heading": "Fortalece tu nivel intermedio",
+        "text": "Con un vocabulario sólido de portugués B1, puedes comunicarte con claridad y estructura. Practica regularmente, discute temas actuales y lee textos más complejos para enriquecer tu vocabulario."
       }
     },
     "b2": {
-      "title": "Portugues B2 Vocabulary Practice",
-      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "title": "Vocabulario de portugués B2",
+      "intro": "El vocabulario de portugués B2 está diseñado para quienes desean comunicarse con fluidez y abordar temas más complejos.",
       "levelDescription": "Intermedio alto",
-      "ctaText": "Comenzar practica B2",
+      "ctaText": "Iniciar práctica B2",
       "levelExplanation": {
-        "heading": "Explicacion del nivel",
-        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "heading": "¿Qué significa el nivel B2?",
+        "paragraph": "En el nivel B2 puedes interactuar de forma espontánea con hablantes nativos. El vocabulario de portugués B2 incluye términos abstractos, conectores lógicos y expresiones útiles para debates y contextos profesionales.",
         "bullets": [
-          "Objetivos principales de comunicacion",
-          "Gramatica y estructuras frecuentes",
-          "Situaciones tipicas de uso real"
+          "Comprender las ideas principales en textos complejos.",
+          "Expresar y defender opiniones con claridad.",
+          "Usar conectores para organizar el discurso."
         ]
       },
       "vocabularyScope": {
-        "heading": "Alcance de vocabulario",
+        "heading": "Alcance del vocabulario B2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Discusión y argumentación",
+          "Trabajo y sociedad"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Discusión y argumentación",
+            "items": [
+              "Expresiones para estar de acuerdo o en desacuerdo.",
+              "Conectores para comparación y contraste.",
+              "Vocabulario para justificar opiniones.",
+              "Términos para analizar problemas y soluciones."
+            ]
+          },
+          {
+            "heading": "Trabajo y sociedad",
+            "items": [
+              "Palabras relacionadas con trabajo y estudios.",
+              "Vocabulario sobre temas sociales actuales.",
+              "Expresiones formales para informes y correos.",
+              "Términos relacionados con responsabilidades y proyectos."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Cantidad de palabras",
-        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
-        "value": 3200
+        "heading": "¿Cuántas palabras contiene el nivel B2?",
+        "text": "El vocabulario de portugués B2 generalmente incluye varios miles de palabras activas. Su uso correcto en el habla y la escritura es esencial.",
+        "value": 4000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de ejemplo",
+        "heading": "Ejemplos de vocabulario B2",
         "columns": {
           "word": "Palabra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "contexto",
-            "meaning": "Significado 1"
+            "word": "no entanto",
+            "meaning": "sin embargo / no obstante"
           },
           {
-            "word": "atingir",
-            "meaning": "Significado 2"
+            "word": "melhorar",
+            "meaning": "mejorar"
+          },
+          {
+            "word": "desafio",
+            "meaning": "desafío / reto"
+          },
+          {
+            "word": "portanto",
+            "meaning": "por lo tanto / por consiguiente"
+          },
+          {
+            "word": "alcançar",
+            "meaning": "alcanzar / lograr"
+          },
+          {
+            "word": "convencer",
+            "meaning": "convencer"
+          },
+          {
+            "word": "progresso",
+            "meaning": "progreso"
+          },
+          {
+            "word": "responsabilidade",
+            "meaning": "responsabilidad"
+          },
+          {
+            "word": "avaliar",
+            "meaning": "evaluar"
+          },
+          {
+            "word": "problema",
+            "meaning": "problema"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar otros niveles"
+        "heading": "Otros niveles CEFR"
+      },
+      "metaTitle": "Vocabulario de portugués B2 – Palabras y expresiones clave",
+      "metaDescription": "Mejora tu vocabulario de portugués B2 con palabras esenciales, significados y ejemplos para comunicarte con confianza en situaciones diarias y profesionales.",
+      "introParagraphs": [
+        "El vocabulario de portugués B2 está diseñado para quienes desean comunicarse con fluidez y abordar temas más complejos. En este nivel puedes participar en discusiones y expresar tus ideas con claridad.",
+        "Las palabras intermedias de portugués ayudan a construir argumentos, evaluar ventajas y desventajas, y comprender textos más largos y detallados. El objetivo es mejorar la precisión y la fluidez al hablar y escribir."
+      ],
+      "bottomCta": {
+        "heading": "Continúa ampliando tu vocabulario",
+        "text": "Para dominar el vocabulario B2, lee textos, escucha discusiones y practica la expresión oral y escrita. El uso activo ayuda a consolidar lo aprendido."
       }
     },
     "c1": {
-      "title": "Portugues C1 Vocabulary Practice",
-      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "title": "Vocabulario de portugués C1",
+      "intro": "El vocabulario de portugués C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y términos abstractos.",
       "levelDescription": "Avanzado",
-      "ctaText": "Comenzar practica C1",
+      "ctaText": "Iniciar práctica C1",
       "levelExplanation": {
-        "heading": "Explicacion del nivel",
-        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "heading": "Características del nivel C1",
+        "paragraph": "Las palabras C1 incluyen términos técnicos, expresiones formales y diversos conectores lógicos.",
         "bullets": [
-          "Objetivos principales de comunicacion",
-          "Gramatica y estructuras frecuentes",
-          "Situaciones tipicas de uso real"
+          "Comprender textos complejos y especializados.",
+          "Expresarse de manera fluida y estructurada con ideas abstractas.",
+          "Adaptar el estilo de lenguaje según el contexto."
         ]
       },
       "vocabularyScope": {
-        "heading": "Alcance de vocabulario",
+        "heading": "Alcance del vocabulario C1",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Lenguaje académico",
+          "Comunicación profesional"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Lenguaje académico",
+            "items": [
+              "Términos para análisis y evaluación.",
+              "Expresiones para construir argumentos complejos.",
+              "Vocabulario para presentaciones formales.",
+              "Palabras relacionadas con investigación y pensamiento crítico."
+            ]
+          },
+          {
+            "heading": "Comunicación profesional",
+            "items": [
+              "Expresiones formales para informes y documentos.",
+              "Verbos precisos para argumentación y negociación.",
+              "Adjetivos avanzados para describir situaciones.",
+              "Términos para gestión y organización."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Cantidad de palabras",
-        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
+        "heading": "¿Cuántas palabras contiene C1?",
+        "text": "El vocabulario de portugués C1 incluye varios miles de palabras activas. Su uso correcto y fluido es esencial.",
         "value": 5000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de ejemplo",
+        "heading": "Ejemplos de vocabulario C1",
         "columns": {
           "word": "Palabra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "nuance",
-            "meaning": "Significado 1"
+            "word": "no entanto",
+            "meaning": "sin embargo / no obstante"
           },
           {
-            "word": "contexto",
-            "meaning": "Significado 2"
+            "word": "aprofundar",
+            "meaning": "profundizar"
+          },
+          {
+            "word": "coerente",
+            "meaning": "coherente; lógico"
+          },
+          {
+            "word": "pertinente",
+            "meaning": "pertinente; apropiado"
+          },
+          {
+            "word": "elaborar",
+            "meaning": "elaborar; desarrollar"
+          },
+          {
+            "word": "colocar em questão",
+            "meaning": "poner en cuestión"
+          },
+          {
+            "word": "considerável",
+            "meaning": "considerable"
+          },
+          {
+            "word": "essencialmente",
+            "meaning": "esencialmente"
+          },
+          {
+            "word": "questões-chave",
+            "meaning": "cuestiones clave"
+          },
+          {
+            "word": "alcançar",
+            "meaning": "alcanzar / lograr"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar otros niveles"
+        "heading": "Otros niveles CEFR"
+      },
+      "metaTitle": "Vocabulario de portugués C1 – Palabras avanzadas",
+      "metaDescription": "Mejora tu vocabulario de portugués C1 con palabras avanzadas, ejemplos y ejercicios para comunicarte con precisión y confianza.",
+      "introParagraphs": [
+        "El vocabulario de portugués C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y términos abstractos. Puedes comprender textos extensos y comunicarte con precisión y espontaneidad.",
+        "Las palabras avanzadas de portugués permiten analizar, argumentar y usar matices lingüísticos en contextos académicos o profesionales. El objetivo es ampliar el vocabulario manteniendo un registro adecuado."
+      ],
+      "bottomCta": {
+        "heading": "Continúa mejorando tu portugués",
+        "text": "Para dominar el vocabulario C1, lee textos complejos, participa en debates y escribe ensayos estructurados. La práctica regular aumenta la precisión y la confianza."
       }
     },
     "c2": {
-      "title": "Portugues C2 Vocabulary Practice",
-      "intro": "Practica estructurada de vocabulario CEFR para este nivel.",
+      "title": "Vocabulario de portugués C2",
+      "intro": "El vocabulario de portugués C2 representa el dominio completo según CEFR.",
       "levelDescription": "Dominio",
-      "ctaText": "Comenzar practica C2",
+      "ctaText": "Iniciar práctica C2",
       "levelExplanation": {
-        "heading": "Explicacion del nivel",
-        "paragraph": "Esta seccion describe lo que normalmente puede hacer el estudiante en este nivel.",
+        "heading": "Características del nivel C2",
+        "paragraph": "Las palabras C2 abarcan áreas académicas, literarias y técnicas, con atención a los matices de significado.",
         "bullets": [
-          "Objetivos principales de comunicacion",
-          "Gramatica y estructuras frecuentes",
-          "Situaciones tipicas de uso real"
+          "Comprender textos especializados y literarios.",
+          "Uso preciso de sinónimos con diferencias sutiles.",
+          "Adaptación perfecta a registros formales e informales."
         ]
       },
       "vocabularyScope": {
-        "heading": "Alcance de vocabulario",
+        "heading": "Alcance del vocabulario C2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Lenguaje académico y literario",
+          "Matices y estilo"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Sustantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Lenguaje académico y literario",
+            "items": [
+              "Terminología especializada en distintas áreas.",
+              "Figuras retóricas y expresiones literarias.",
+              "Vocabulario literario avanzado.",
+              "Verbos precisos para análisis crítico."
+            ]
+          },
+          {
+            "heading": "Matices y estilo",
+            "items": [
+              "Sinónimos con diferencias sutiles de significado.",
+              "Distinción clara de registros de lenguaje.",
+              "Expresiones idiomáticas auténticas.",
+              "Lenguaje adaptado culturalmente."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Cantidad de palabras",
-        "text": "Rango estimado de vocabulario activo para este nivel CEFR.",
-        "value": 8000
+        "heading": "¿Cuántas palabras contiene C2?",
+        "text": "El vocabulario de portugués C2 puede superar las 6.000 palabras activas. El dominio se refleja en un uso natural y preciso.",
+        "value": 6500
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de ejemplo",
+        "heading": "Ejemplos de vocabulario C2",
         "columns": {
           "word": "Palabra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "eloquente",
-            "meaning": "Significado 1"
+            "word": "indispensável",
+            "meaning": "indispensable; inevitable"
           },
           {
-            "word": "nuance",
-            "meaning": "Significado 2"
+            "word": "sofisticação",
+            "meaning": "sofisticación; refinamiento"
+          },
+          {
+            "word": "inevitável",
+            "meaning": "inevitable"
+          },
+          {
+            "word": "nuancear",
+            "meaning": "matizar; aclarar"
+          },
+          {
+            "word": "eloquência",
+            "meaning": "elocuencia"
+          },
+          {
+            "word": "julgamento",
+            "meaning": "juicio; discernimiento"
+          },
+          {
+            "word": "alcançar",
+            "meaning": "lograr un resultado"
+          },
+          {
+            "word": "ambivalente",
+            "meaning": "ambivalente; con aspectos opuestos"
+          },
+          {
+            "word": "plausível",
+            "meaning": "plausible"
+          },
+          {
+            "word": "motivar",
+            "meaning": "motivar; justificar"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar otros niveles"
+        "heading": "Otros niveles CEFR"
+      },
+      "metaTitle": "Vocabulario de portugués C2 – Dominio completo",
+      "metaDescription": "Descubre el vocabulario de portugués C2 con palabras raras y precisas para alcanzar un dominio completo del idioma.",
+      "introParagraphs": [
+        "El vocabulario de portugués C2 representa el dominio completo según CEFR. Puedes comprender casi todo lo que lees o escuchas y expresarte con precisión, matices y espontaneidad.",
+        "El vocabulario muy avanzado incluye palabras raras, expresiones idiomáticas y sutilezas estilísticas. Permite adaptar el lenguaje perfectamente a cualquier contexto."
+      ],
+      "bottomCta": {
+        "heading": "Alcanza el dominio completo del portugués",
+        "text": "Para dominar el vocabulario C2, lee obras literarias, participa en conferencias especializadas y escribe textos complejos. La práctica intensiva y variada es esencial para lograr un dominio total."
       }
     }
   }

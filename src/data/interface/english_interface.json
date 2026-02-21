@@ -192,6 +192,7 @@
     "takeLevelTest": "Take a quick level test",
     "testDescription": "Not sure of your level? Take a quick test to find out.",
     "notSureLevel": "Not sure where to start? Take a quick vocabulary test to find your level.",
+    "levelSingleSelectHint": "Double-click to select only this level",
     "selection": {
       "levelsSelected": "level selected",
       "levelsSelectedPlural": "levels selected",
@@ -204,9 +205,11 @@
     "topics": {
       "skipAll": "Or skip to practice all topics",
       "showAll": "Show all topics",
+      "showAllShort": "SHOW ALL",
       "showFewer": "Show fewer topics",
       "showLess": "Show less topics",
-      "more": "more"
+      "more": "more",
+      "filterButton": "Tap to filter practice topics"
     },
     "topicNames": {
       "connectors": "Connectors",
@@ -248,11 +251,13 @@
       "showMore": "Show more",
       "showMoreWithCountPrefix": "Show more types",
       "showAll": "Show all types",
-      "showAllShort": "SHOW ALL"
+      "showAllShort": "SHOW ALL",
+      "filterButton": "Tap to filter grammar types"
     },
     "actions": {
       "clear": "Clear",
-      "apply": "Apply"
+      "apply": "Apply",
+      "close": "Close"
     },
     "titleWithSkipAhead": "Customize Your Practice or Skip Ahead"
   },

@@ -3,321 +3,687 @@
   "targetLanguageDisplayName": "Russo",
   "levels": {
     "a1": {
-      "title": "Russo A1 Vocabulary Practice",
-      "intro": "Pratica estruturada de vocabulario CEFR para este nivel.",
+      "title": "Vocabulário de russo A1",
+      "intro": "O vocabulário de russo A1 corresponde ao nível iniciante.",
       "levelDescription": "Iniciante",
-      "ctaText": "Iniciar pratica A1",
+      "ctaText": "Iniciar prática A1",
       "levelExplanation": {
-        "heading": "Explicacao do nivel",
-        "paragraph": "Esta secao mostra o que o aluno normalmente consegue fazer neste nivel.",
+        "heading": "O que significa o nível A1 em russo?",
+        "paragraph": "O nível A1 representa um iniciante de acordo com o CEFR. Os alunos podem compreender e usar expressões familiares e frases simples para necessidades concretas.",
         "bullets": [
-          "Objetivos principais de comunicacao",
-          "Gramatica e estruturas frequentes",
-          "Situacoes tipicas de uso real"
+          "Saudações e apresentações.",
+          "Fazer e responder perguntas simples.",
+          "Compreender instruções curtas e claras."
         ]
       },
       "vocabularyScope": {
-        "heading": "Escopo de vocabulario",
+        "heading": "O que inclui o vocabulário de russo A1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Comunicação cotidiana",
+          "Temas pessoais"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Comunicação cotidiana",
+            "items": [
+              "Saudações e fórmulas de cortesia",
+              "Números, dias da semana e meses",
+              "Verbos comuns no presente",
+              "Perguntas simples"
+            ]
+          },
+          {
+            "heading": "Temas pessoais",
+            "items": [
+              "Família e amigos",
+              "Comida e bebida",
+              "Casa e entorno",
+              "Adjetivos básicos"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Contagem de palavras",
-        "text": "Faixa estimada de vocabulario ativo para este nivel CEFR.",
+        "heading": "Quantas palavras contém o vocabulário de russo A1?",
+        "text": "O nível A1 geralmente inclui entre 500 e 800 palavras essenciais. O objetivo não é apenas memorizar, mas usar ativamente em frases simples. Exercícios de russo A1 ajudam a consolidar o aprendizado.",
         "value": 800
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de exemplo",
+        "heading": "Exemplos de vocabulário de russo A1",
         "columns": {
           "word": "Palavra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "dom",
-            "meaning": "Significado 1"
+            "word": "привет",
+            "meaning": "olá"
           },
           {
-            "word": "dom",
-            "meaning": "Significado 2"
+            "word": "пока",
+            "meaning": "tchau"
+          },
+          {
+            "word": "спасибо",
+            "meaning": "obrigado"
+          },
+          {
+            "word": "семья",
+            "meaning": "família"
+          },
+          {
+            "word": "дом",
+            "meaning": "casa"
+          },
+          {
+            "word": "есть",
+            "meaning": "comer"
+          },
+          {
+            "word": "пить",
+            "meaning": "beber"
+          },
+          {
+            "word": "друг",
+            "meaning": "amigo"
+          },
+          {
+            "word": "большой",
+            "meaning": "grande"
+          },
+          {
+            "word": "маленький",
+            "meaning": "pequeno"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar outros niveis"
+        "heading": "Outros níveis de russo"
+      },
+      "metaTitle": "Vocabulário de russo A1 – Palavras básicas para iniciantes",
+      "metaDescription": "Aprenda o vocabulário de russo A1 com palavras simples e exemplos práticos. Construa uma base sólida para comunicação em russo.",
+      "introParagraphs": [
+        "O vocabulário de russo A1 corresponde ao nível iniciante. Os alunos aprendem palavras e frases simples para se comunicar em situações do dia a dia.",
+        "Palavras russas básicas A1 incluem cumprimentos, números, verbos comuns e perguntas simples. A lista de palavras russas A1 ajuda a expandir gradualmente o vocabulário e ganhar confiança ao falar."
+      ],
+      "bottomCta": {
+        "heading": "Comece a aprender agora",
+        "text": "O vocabulário de russo A1 oferece uma base sólida. Pratique regularmente, forme frases simples e ouça diálogos curtos para aprimorar suas habilidades linguísticas."
       }
     },
     "a2": {
-      "title": "Russo A2 Vocabulary Practice",
-      "intro": "Pratica estruturada de vocabulario CEFR para este nivel.",
+      "title": "Vocabulário de russo A2",
+      "intro": "O vocabulário de russo A2 amplia os conhecimentos do nível A1.",
       "levelDescription": "Elementar",
-      "ctaText": "Iniciar pratica A2",
+      "ctaText": "Iniciar prática A2",
       "levelExplanation": {
-        "heading": "Explicacao do nivel",
-        "paragraph": "Esta secao mostra o que o aluno normalmente consegue fazer neste nivel.",
+        "heading": "O que significa o nível A2 em russo?",
+        "paragraph": "O nível A2 corresponde a um usuário elementar. Os alunos compreendem expressões de uso frequente e podem interagir em tarefas simples e rotineiras.",
         "bullets": [
-          "Objetivos principais de comunicacao",
-          "Gramatica e estruturas frequentes",
-          "Situacoes tipicas de uso real"
+          "Descrever atividades e rotinas diárias.",
+          "Contar experiências passadas simples.",
+          "Trocar informações em contextos familiares."
         ]
       },
       "vocabularyScope": {
-        "heading": "Escopo de vocabulario",
+        "heading": "O que inclui o vocabulário de russo A2?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Vida cotidiana e serviços",
+          "Comunicação estendida"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Vida cotidiana e serviços",
+            "items": [
+              "Transporte e deslocamentos",
+              "Compras e dinheiro",
+              "Saúde e bem-estar",
+              "Trabalho e compromissos"
+            ]
+          },
+          {
+            "heading": "Comunicação estendida",
+            "items": [
+              "Conectores simples",
+              "Expressões de tempo",
+              "Adjetivos para expressar opinião",
+              "Verbos no passado"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Contagem de palavras",
-        "text": "Faixa estimada de vocabulario ativo para este nivel CEFR.",
-        "value": 1200
+        "heading": "Quantas palavras contém o vocabulário de russo A2?",
+        "text": "O nível A2 geralmente inclui entre 1.000 e 1.500 palavras úteis. Praticar regularmente ajuda a consolidar o aprendizado e melhorar a fluência.",
+        "value": 1500
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de exemplo",
+        "heading": "Exemplos de vocabulário de russo A2",
         "columns": {
           "word": "Palavra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "ucit",
-            "meaning": "Significado 1"
+            "word": "путешествие",
+            "meaning": "viagem"
           },
           {
-            "word": "dom",
-            "meaning": "Significado 2"
+            "word": "билет",
+            "meaning": "bilhete"
+          },
+          {
+            "word": "магазин",
+            "meaning": "loja"
+          },
+          {
+            "word": "деньги",
+            "meaning": "dinheiro"
+          },
+          {
+            "word": "работа",
+            "meaning": "trabalho"
+          },
+          {
+            "word": "больной",
+            "meaning": "doente"
+          },
+          {
+            "word": "вчера",
+            "meaning": "ontem"
+          },
+          {
+            "word": "завтра",
+            "meaning": "amanhã"
+          },
+          {
+            "word": "часто",
+            "meaning": "frequentemente"
+          },
+          {
+            "word": "важно",
+            "meaning": "importante"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar outros niveis"
+        "heading": "Outros níveis de russo"
+      },
+      "metaTitle": "Vocabulário de russo A2 – Nível elementar",
+      "metaDescription": "Aprenda o vocabulário de russo A2 com palavras comuns e exemplos práticos. Melhore compreensão e comunicação em nível elementar.",
+      "introParagraphs": [
+        "O vocabulário de russo A2 amplia os conhecimentos do nível A1. Os alunos podem formar frases mais longas e se comunicar com mais facilidade em situações cotidianas.",
+        "O vocabulário cotidiano russo cobre temas como trabalho, lazer, viagens e saúde. A lista de palavras russas A2 permite adquirir termos mais complexos gradualmente."
+      ],
+      "bottomCta": {
+        "heading": "Continue aprendendo",
+        "text": "O vocabulário de russo A2 permite uma comunicação mais independente. Leia textos simples, ouça diálogos e revise novas palavras regularmente."
       }
     },
     "b1": {
-      "title": "Russo B1 Vocabulary Practice",
-      "intro": "Pratica estruturada de vocabulario CEFR para este nivel.",
-      "levelDescription": "Intermediario",
-      "ctaText": "Iniciar pratica B1",
+      "title": "Vocabulário de russo B1",
+      "intro": "O vocabulário de russo B1 corresponde ao nível intermediário.",
+      "levelDescription": "Intermediário",
+      "ctaText": "Iniciar prática B1",
       "levelExplanation": {
-        "heading": "Explicacao do nivel",
-        "paragraph": "Esta secao mostra o que o aluno normalmente consegue fazer neste nivel.",
+        "heading": "O que significa o nível B1 em russo?",
+        "paragraph": "O nível B1 representa um usuário independente intermediário. Os alunos lidam com a maioria das situações cotidianas e podem produzir textos simples e coerentes.",
         "bullets": [
-          "Objetivos principais de comunicacao",
-          "Gramatica e estruturas frequentes",
-          "Situacoes tipicas de uso real"
+          "Expressar opiniões pessoais.",
+          "Descrever eventos e experiências.",
+          "Compreender textos informativos claros."
         ]
       },
       "vocabularyScope": {
-        "heading": "Escopo de vocabulario",
+        "heading": "O que inclui o vocabulário de russo B1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Trabalho e sociedade",
+          "Argumentação e narração"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Trabalho e sociedade",
+            "items": [
+              "Profissões e responsabilidades",
+              "Educação e formação",
+              "Tecnologia e mídia",
+              "Temas sociais"
+            ]
+          },
+          {
+            "heading": "Argumentação e narração",
+            "items": [
+              "Conectores lógicos",
+              "Expressões de concordância e discordância",
+              "Adjetivos comparativos",
+              "Palavras russas abstratas B1"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Contagem de palavras",
-        "text": "Faixa estimada de vocabulario ativo para este nivel CEFR.",
-        "value": 2000
+        "heading": "Quantas palavras contém o vocabulário de russo B1?",
+        "text": "O nível B1 geralmente inclui entre 2.000 e 3.000 palavras. Para expandir o vocabulário russo B1, leia artigos, ouça podcasts e pratique conversação regularmente.",
+        "value": 3000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de exemplo",
+        "heading": "Exemplos de vocabulário de russo B1",
         "columns": {
           "word": "Palavra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "dostic",
-            "meaning": "Significado 1"
+            "word": "происходить",
+            "meaning": "acontecer"
           },
           {
-            "word": "ucit",
-            "meaning": "Significado 2"
+            "word": "неудача",
+            "meaning": "insucesso"
+          },
+          {
+            "word": "работодатель",
+            "meaning": "empregador"
+          },
+          {
+            "word": "кандидат",
+            "meaning": "candidato"
+          },
+          {
+            "word": "развивать",
+            "meaning": "desenvolver"
+          },
+          {
+            "word": "окружающая среда",
+            "meaning": "meio ambiente"
+          },
+          {
+            "word": "преимущество",
+            "meaning": "vantagem"
+          },
+          {
+            "word": "недостаток",
+            "meaning": "desvantagem"
+          },
+          {
+            "word": "предлагать",
+            "meaning": "propor"
+          },
+          {
+            "word": "цель",
+            "meaning": "objetivo"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar outros niveis"
+        "heading": "Outros níveis de russo"
+      },
+      "metaTitle": "Vocabulário de russo B1 – Nível intermediário",
+      "metaDescription": "Aprenda o vocabulário de russo B1 com palavras intermediárias e exemplos detalhados. Melhore expressão e compreensão em russo.",
+      "introParagraphs": [
+        "O vocabulário de russo B1 corresponde ao nível intermediário. Os alunos podem compreender os pontos principais de textos claros e comunicar-se com mais detalhes.",
+        "Palavras russas intermediárias B1 permitem expressar opiniões, descrever experiências e participar de conversas mais complexas. A lista de palavras russas B1 expande o vocabulário e fortalece as competências linguísticas."
+      ],
+      "bottomCta": {
+        "heading": "Fortaleça seu nível intermediário",
+        "text": "Com um vocabulário de russo B1 sólido, você pode comunicar-se de forma clara e estruturada. Pratique regularmente, discuta temas atuais e leia textos mais complexos para enriquecer seu vocabulário."
       }
     },
     "b2": {
-      "title": "Russo B2 Vocabulary Practice",
-      "intro": "Pratica estruturada de vocabulario CEFR para este nivel.",
-      "levelDescription": "Intermediario avancado",
-      "ctaText": "Iniciar pratica B2",
+      "title": "Vocabulário de russo B2",
+      "intro": "O vocabulário de russo B2 foi desenvolvido para estudantes que desejam se comunicar com fluência e lidar com tópicos mais complexos.",
+      "levelDescription": "Intermediário avançado",
+      "ctaText": "Iniciar prática B2",
       "levelExplanation": {
-        "heading": "Explicacao do nivel",
-        "paragraph": "Esta secao mostra o que o aluno normalmente consegue fazer neste nivel.",
+        "heading": "O que significa o nível B2?",
+        "paragraph": "No nível B2, você consegue interagir espontaneamente com falantes nativos. O vocabulário de russo B2 inclui termos abstratos, conectores lógicos e expressões úteis para debates e contextos profissionais.",
         "bullets": [
-          "Objetivos principais de comunicacao",
-          "Gramatica e estruturas frequentes",
-          "Situacoes tipicas de uso real"
+          "Compreender as ideias principais de textos complexos.",
+          "Expressar e defender opiniões com clareza.",
+          "Usar conectores para estruturar o discurso."
         ]
       },
       "vocabularyScope": {
-        "heading": "Escopo de vocabulario",
+        "heading": "Escopo do vocabulário B2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Discussão e argumentação",
+          "Trabalho e sociedade"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Discussão e argumentação",
+            "items": [
+              "Expressões para concordar ou discordar.",
+              "Conectores para comparação e contraste.",
+              "Vocabulário para justificar opiniões.",
+              "Termos para analisar problemas e soluções."
+            ]
+          },
+          {
+            "heading": "Trabalho e sociedade",
+            "items": [
+              "Palavras relacionadas a trabalho e estudo.",
+              "Vocabulário sobre temas sociais atuais.",
+              "Expressões formais para relatórios e e-mails.",
+              "Termos sobre responsabilidades e projetos."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Contagem de palavras",
-        "text": "Faixa estimada de vocabulario ativo para este nivel CEFR.",
-        "value": 3200
+        "heading": "Quantas palavras existem no B2?",
+        "text": "O vocabulário de russo B2 geralmente inclui várias milhares de palavras ativas. A aplicação correta é essencial tanto na escrita quanto na fala.",
+        "value": 4000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de exemplo",
+        "heading": "Exemplos de vocabulário B2",
         "columns": {
           "word": "Palavra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "kontekst",
-            "meaning": "Significado 1"
+            "word": "однако",
+            "meaning": "no entanto / todavia"
           },
           {
-            "word": "dostic",
-            "meaning": "Significado 2"
+            "word": "улучшать",
+            "meaning": "melhorar"
+          },
+          {
+            "word": "вызов",
+            "meaning": "desafio"
+          },
+          {
+            "word": "поэтому",
+            "meaning": "portanto / por isso"
+          },
+          {
+            "word": "достигать",
+            "meaning": "alcançar / conseguir"
+          },
+          {
+            "word": "убеждать",
+            "meaning": "convencer"
+          },
+          {
+            "word": "прогресс",
+            "meaning": "progresso"
+          },
+          {
+            "word": "ответственность",
+            "meaning": "responsabilidade"
+          },
+          {
+            "word": "оценивать",
+            "meaning": "avaliar"
+          },
+          {
+            "word": "проблема",
+            "meaning": "problema"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar outros niveis"
+        "heading": "Outros níveis CEFR"
+      },
+      "metaTitle": "Vocabulário de russo B2 – Palavras e expressões essenciais",
+      "metaDescription": "Aprimore seu vocabulário de russo B2 com palavras-chave, significados e exemplos para comunicação eficaz no dia a dia e no trabalho.",
+      "introParagraphs": [
+        "O vocabulário de russo B2 foi desenvolvido para estudantes que desejam se comunicar com fluência e lidar com tópicos mais complexos. Neste nível, você consegue participar de discussões e expressar suas ideias com clareza.",
+        "O vocabulário russo intermediário ajuda a construir argumentos, avaliar prós e contras e compreender textos mais longos e detalhados. O objetivo é melhorar a precisão e a fluência tanto na fala quanto na escrita."
+      ],
+      "bottomCta": {
+        "heading": "Continue desenvolvendo seu vocabulário",
+        "text": "Para dominar o B2, leia textos, ouça discussões e pratique oralmente e por escrito. A aplicação ativa consolida o aprendizado."
       }
     },
     "c1": {
-      "title": "Russo C1 Vocabulary Practice",
-      "intro": "Pratica estruturada de vocabulario CEFR para este nivel.",
-      "levelDescription": "Avancado",
-      "ctaText": "Iniciar pratica C1",
+      "title": "Vocabulário de russo C1",
+      "intro": "O vocabulário de russo C1 corresponde a um nível avançado, no qual você domina expressões complexas e termos abstratos.",
+      "levelDescription": "Avançado",
+      "ctaText": "Iniciar prática C1",
       "levelExplanation": {
-        "heading": "Explicacao do nivel",
-        "paragraph": "Esta secao mostra o que o aluno normalmente consegue fazer neste nivel.",
+        "heading": "Características do nível C1",
+        "paragraph": "As palavras C1 incluem termos técnicos, expressões formais e diferentes conectores lógicos.",
         "bullets": [
-          "Objetivos principais de comunicacao",
-          "Gramatica e estruturas frequentes",
-          "Situacoes tipicas de uso real"
+          "Compreensão de textos complexos e especializados.",
+          "Expressão fluente e estruturada de ideias abstratas.",
+          "Adaptação do estilo de linguagem ao contexto."
         ]
       },
       "vocabularyScope": {
-        "heading": "Escopo de vocabulario",
+        "heading": "Escopo do vocabulário C1",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Linguagem acadêmica",
+          "Comunicação profissional"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Linguagem acadêmica",
+            "items": [
+              "Termos para análise e avaliação.",
+              "Expressões para argumentação complexa.",
+              "Vocabulário para apresentações formais.",
+              "Termos relacionados à pesquisa e pensamento crítico."
+            ]
+          },
+          {
+            "heading": "Comunicação profissional",
+            "items": [
+              "Expressões formais para relatórios e documentos.",
+              "Verbos precisos para argumentação e negociação.",
+              "Adjetivos avançados para descrever situações.",
+              "Terminologia para gestão e organização."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Contagem de palavras",
-        "text": "Faixa estimada de vocabulario ativo para este nivel CEFR.",
+        "heading": "Quantas palavras existem no C1?",
+        "text": "O vocabulário de russo C1 inclui várias milhares de palavras ativas. A aplicação correta e fluente é essencial.",
         "value": 5000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de exemplo",
+        "heading": "Exemplos de vocabulário C1",
         "columns": {
           "word": "Palavra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "ottenok",
-            "meaning": "Significado 1"
+            "word": "однако",
+            "meaning": "no entanto / todavia"
           },
           {
-            "word": "kontekst",
-            "meaning": "Significado 2"
+            "word": "углублять",
+            "meaning": "aprofundar / elaborar"
+          },
+          {
+            "word": "логичный",
+            "meaning": "lógico / coerente"
+          },
+          {
+            "word": "уместный",
+            "meaning": "pertinente / apropriado"
+          },
+          {
+            "word": "разрабатывать",
+            "meaning": "desenvolver / elaborar"
+          },
+          {
+            "word": "ставить под вопрос",
+            "meaning": "colocar em questão / questionar"
+          },
+          {
+            "word": "значительный",
+            "meaning": "considerável / importante"
+          },
+          {
+            "word": "по сути",
+            "meaning": "essencialmente / em essência"
+          },
+          {
+            "word": "ключевые вопросы",
+            "meaning": "questões-chave"
+          },
+          {
+            "word": "достигать",
+            "meaning": "alcançar / conseguir"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar outros niveis"
+        "heading": "Outros níveis CEFR"
+      },
+      "metaTitle": "Vocabulário de russo C1 – Palavras avançadas",
+      "metaDescription": "Aprimore seu vocabulário de russo C1 com palavras avançadas, exemplos e exercícios para comunicar-se com precisão e segurança.",
+      "introParagraphs": [
+        "O vocabulário de russo C1 corresponde a um nível avançado, no qual você domina expressões complexas e termos abstratos. É possível compreender textos longos e comunicar-se com precisão e espontaneidade.",
+        "O vocabulário avançado permite análise, argumentação e uso de nuances linguísticas em contextos acadêmicos ou profissionais. O objetivo é ampliar o léxico mantendo um estilo adequado."
+      ],
+      "bottomCta": {
+        "heading": "Continue aprimorando seu russo",
+        "text": "Para dominar o C1, leia textos complexos, participe de debates e escreva ensaios estruturados. A prática regular aumenta a precisão e a confiança."
       }
     },
     "c2": {
-      "title": "Russo C2 Vocabulary Practice",
-      "intro": "Pratica estruturada de vocabulario CEFR para este nivel.",
+      "title": "Vocabulário de russo C2",
+      "intro": "O vocabulário de russo C2 representa a plena maestria segundo o CEFR.",
       "levelDescription": "Proficiente",
-      "ctaText": "Iniciar pratica C2",
+      "ctaText": "Iniciar prática C2",
       "levelExplanation": {
-        "heading": "Explicacao do nivel",
-        "paragraph": "Esta secao mostra o que o aluno normalmente consegue fazer neste nivel.",
+        "heading": "Características do nível C2",
+        "paragraph": "As palavras C2 abrangem áreas acadêmicas, literárias e técnicas, considerando pequenas diferenças de significado.",
         "bullets": [
-          "Objetivos principais de comunicacao",
-          "Gramatica e estruturas frequentes",
-          "Situacoes tipicas de uso real"
+          "Compreensão de textos especializados e literários.",
+          "Uso preciso de sinônimos com nuances.",
+          "Adaptação perfeita aos registros formais e informais."
         ]
       },
       "vocabularyScope": {
-        "heading": "Escopo de vocabulario",
+        "heading": "Escopo do vocabulário C2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Linguagem acadêmica e literária",
+          "Nuances e estilo"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Linguagem acadêmica e literária",
+            "items": [
+              "Terminologia especializada em diversas áreas.",
+              "Figuras de linguagem e expressões literárias.",
+              "Vocabulário literário avançado.",
+              "Verbos precisos para análises críticas."
+            ]
+          },
+          {
+            "heading": "Nuances e estilo",
+            "items": [
+              "Sinônimos com pequenas diferenças de significado.",
+              "Clara distinção dos registros linguísticos.",
+              "Expressões idiomáticas autênticas.",
+              "Linguagem culturalmente apropriada."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Contagem de palavras",
-        "text": "Faixa estimada de vocabulario ativo para este nivel CEFR.",
-        "value": 8000
+        "heading": "Quantas palavras existem no C2?",
+        "text": "O vocabulário de russo C2 pode incluir mais de 6.000 palavras ativas. A maestria se manifesta com um uso natural e preciso.",
+        "value": 6500
       },
       "sampleVocabulary": {
-        "heading": "Vocabulario de exemplo",
+        "heading": "Exemplos de vocabulário C2",
         "columns": {
           "word": "Palavra",
           "meaning": "Significado"
         },
         "rows": [
           {
-            "word": "krasnorecivyj",
-            "meaning": "Significado 1"
+            "word": "необходимый",
+            "meaning": "indispensável / inevitável"
           },
           {
-            "word": "ottenok",
-            "meaning": "Significado 2"
+            "word": "утонченность",
+            "meaning": "refinamento / sofisticação"
+          },
+          {
+            "word": "неизбежный",
+            "meaning": "inevitável"
+          },
+          {
+            "word": "уточнять",
+            "meaning": "precisar / nuançar"
+          },
+          {
+            "word": "красноречие",
+            "meaning": "eloquência / arte de falar"
+          },
+          {
+            "word": "суждение",
+            "meaning": "julgamento / discernimento"
+          },
+          {
+            "word": "достигать",
+            "meaning": "atingir um resultado"
+          },
+          {
+            "word": "амбивалентный",
+            "meaning": "ambivalente / contraditório"
+          },
+          {
+            "word": "правдоподобный",
+            "meaning": "plausível"
+          },
+          {
+            "word": "мотивировать",
+            "meaning": "motivar / justificar"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorar outros niveis"
+        "heading": "Outros níveis CEFR"
+      },
+      "metaTitle": "Vocabulário de russo C2 – Nível de maestria",
+      "metaDescription": "Descubra o vocabulário de russo C2 com palavras raras e precisas para alcançar a plena maestria da língua.",
+      "introParagraphs": [
+        "O vocabulário de russo C2 representa a plena maestria segundo o CEFR. Você consegue compreender quase tudo que lê ou ouve e se expressar com precisão, nuances e espontaneidade.",
+        "O vocabulário muito avançado inclui palavras raras, expressões idiomáticas e sutilezas estilísticas. Permite adaptar perfeitamente a linguagem a qualquer contexto."
+      ],
+      "bottomCta": {
+        "heading": "Alcance a plena maestria do russo",
+        "text": "Para dominar o vocabulário C2, leia obras literárias, participe de conferências especializadas e escreva textos complexos. Prática intensa e diversificada é essencial para o pleno controle da língua."
       }
     }
   }

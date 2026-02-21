@@ -1,323 +1,689 @@
-{
+﻿{
   "targetLanguage": "portuguese",
   "targetLanguageDisplayName": "Portugais",
   "levels": {
     "a1": {
-      "title": "Portugais A1 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Debutant",
+      "title": "Vocabulaire de portugais A1",
+      "intro": "Le vocabulaire de portugais A1 correspond au niveau débutant pour les apprenants.",
+      "levelDescription": "Débutant",
       "ctaText": "Commencer la pratique A1",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Que signifie le niveau A1 en portugais ?",
+        "paragraph": "Le niveau A1 correspond au niveau débutant selon le CECR. Les apprenants peuvent comprendre et utiliser des expressions familières et des phrases simples pour des besoins concrets.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Salutations et présentations.",
+          "Poser et répondre à des questions simples.",
+          "Comprendre des instructions courtes et claires."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Que comprend le vocabulaire portugais A1 ?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Communication quotidienne",
+          "Sujets personnels"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Communication quotidienne",
+            "items": [
+              "Salutations et formules de politesse",
+              "Nombres, jours de la semaine et mois",
+              "Verbes courants au présent",
+              "Questions simples"
+            ]
+          },
+          {
+            "heading": "Sujets personnels",
+            "items": [
+              "Famille et amis",
+              "Nourriture et boissons",
+              "Maison et environnement",
+              "Adjectifs de base"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "heading": "Combien de mots contient le vocabulaire portugais A1 ?",
+        "text": "Le niveau A1 comprend généralement entre 500 et 800 mots essentiels. L'objectif n'est pas seulement de mémoriser, mais d'utiliser activement les mots dans des phrases simples. Les exercices de portugais A1 aident à consolider l'apprentissage.",
         "value": 800
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire portugais A1",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "casa",
-            "meaning": "Signification 1"
+            "word": "olá",
+            "meaning": "bonjour"
+          },
+          {
+            "word": "adeus",
+            "meaning": "au revoir"
+          },
+          {
+            "word": "obrigado",
+            "meaning": "merci"
+          },
+          {
+            "word": "família",
+            "meaning": "famille"
           },
           {
             "word": "casa",
-            "meaning": "Signification 2"
+            "meaning": "maison"
+          },
+          {
+            "word": "comer",
+            "meaning": "manger"
+          },
+          {
+            "word": "beber",
+            "meaning": "boire"
+          },
+          {
+            "word": "amigo",
+            "meaning": "ami"
+          },
+          {
+            "word": "grande",
+            "meaning": "grand"
+          },
+          {
+            "word": "pequeno",
+            "meaning": "petit"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux de portugais"
+      },
+      "metaTitle": "Vocabulaire de portugais A1 – Mots de base pour débutants",
+      "metaDescription": "Apprenez le vocabulaire de portugais A1 avec des mots simples et des exemples. Construisez une base solide pour la communication quotidienne en portugais.",
+      "introParagraphs": [
+        "Le vocabulaire de portugais A1 correspond au niveau débutant pour les apprenants. À ce stade, les étudiants apprennent des mots et phrases simples pour communiquer au quotidien.",
+        "Les mots portugais de base A1 comprennent les salutations, les nombres, les verbes courants et les questions simples. Une liste de mots portugais A1 bien organisée permet d'élargir progressivement le vocabulaire et de gagner en confiance à l'oral."
+      ],
+      "bottomCta": {
+        "heading": "Commencez à apprendre maintenant",
+        "text": "Le vocabulaire portugais A1 fournit une base solide. Pratiquez régulièrement, formez des phrases simples et écoutez des dialogues courts pour renforcer vos compétences linguistiques."
       }
     },
     "a2": {
-      "title": "Portugais A2 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Elementaire",
+      "title": "Vocabulaire de portugais A2",
+      "intro": "Le vocabulaire de portugais A2 développe les connaissances acquises au niveau A1.",
+      "levelDescription": "Élémentaire",
       "ctaText": "Commencer la pratique A2",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Que signifie le niveau A2 en portugais ?",
+        "paragraph": "Le niveau A2 correspond à un utilisateur élémentaire de la langue. Les apprenants peuvent comprendre des expressions fréquemment utilisées et interagir dans des tâches simples et routinières.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Décrire les routines et activités quotidiennes.",
+          "Parler de ses expériences passées simples.",
+          "Échanger des informations dans des contextes connus."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Que comprend le vocabulaire portugais A2 ?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Vie quotidienne et services",
+          "Communication étendue"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Vie quotidienne et services",
+            "items": [
+              "Transports et déplacements",
+              "Achats et argent",
+              "Santé et bien-être",
+              "Travail et rendez-vous"
+            ]
+          },
+          {
+            "heading": "Communication étendue",
+            "items": [
+              "Connecteurs simples",
+              "Expressions temporelles",
+              "Adjectifs pour exprimer l’opinion",
+              "Verbes au passé composé"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
-        "value": 1200
+        "heading": "Combien de mots contient le vocabulaire portugais A2 ?",
+        "text": "Le niveau A2 comprend généralement entre 1 000 et 1 500 mots utiles. La pratique régulière consolide les connaissances et améliore la fluidité.",
+        "value": 1500
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire portugais A2",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "aprender",
-            "meaning": "Signification 1"
+            "word": "viagem",
+            "meaning": "voyage"
           },
           {
-            "word": "casa",
-            "meaning": "Signification 2"
+            "word": "bilhete",
+            "meaning": "billet"
+          },
+          {
+            "word": "loja",
+            "meaning": "magasin"
+          },
+          {
+            "word": "dinheiro",
+            "meaning": "argent"
+          },
+          {
+            "word": "trabalho",
+            "meaning": "travail"
+          },
+          {
+            "word": "doente",
+            "meaning": "malade"
+          },
+          {
+            "word": "ontem",
+            "meaning": "hier"
+          },
+          {
+            "word": "amanhã",
+            "meaning": "demain"
+          },
+          {
+            "word": "frequentemente",
+            "meaning": "souvent"
+          },
+          {
+            "word": "importante",
+            "meaning": "important"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux de portugais"
+      },
+      "metaTitle": "Vocabulaire de portugais A2 – Niveau élémentaire",
+      "metaDescription": "Apprenez le vocabulaire de portugais A2 avec des mots courants et des exemples pratiques. Améliorez compréhension et communication à un niveau élémentaire.",
+      "introParagraphs": [
+        "Le vocabulaire de portugais A2 développe les connaissances acquises au niveau A1. Les apprenants peuvent former des phrases plus longues et communiquer plus facilement dans des situations quotidiennes.",
+        "Le vocabulaire quotidien portugais comprend des thèmes tels que le travail, les loisirs, les voyages et la santé. Une liste de mots portugais A2 structurée aide à acquérir progressivement de nouveaux termes."
+      ],
+      "bottomCta": {
+        "heading": "Continuez à apprendre",
+        "text": "Le vocabulaire de portugais A2 permet une communication plus autonome. Lisez des textes simples, écoutez des dialogues et révisez régulièrement les nouveaux mots."
       }
     },
     "b1": {
-      "title": "Portugais B1 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Intermediaire",
+      "title": "Vocabulaire de portugais B1",
+      "intro": "Le vocabulaire de portugais B1 correspond au niveau intermédiaire.",
+      "levelDescription": "Intermédiaire",
       "ctaText": "Commencer la pratique B1",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Que signifie le niveau B1 en portugais ?",
+        "paragraph": "Le niveau B1 correspond à un utilisateur indépendant de langue à un niveau intermédiaire. Les apprenants peuvent gérer la majorité des situations quotidiennes et produire des textes simples et cohérents.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Exprimer des opinions personnelles.",
+          "Décrire des expériences et événements.",
+          "Comprendre des textes informatifs clairs."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Que comprend le vocabulaire portugais B1 ?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Travail et société",
+          "Argumentation et narration"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Travail et société",
+            "items": [
+              "Professions et responsabilités",
+              "Éducation et formation",
+              "Technologie et médias",
+              "Sujets sociaux"
+            ]
+          },
+          {
+            "heading": "Argumentation et narration",
+            "items": [
+              "Connecteurs logiques",
+              "Expressions d’accord et de désaccord",
+              "Adjectifs comparatifs",
+              "Mots abstraits portugais B1"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
-        "value": 2000
+        "heading": "Combien de mots contient le vocabulaire portugais B1 ?",
+        "text": "Le niveau B1 comprend généralement entre 2 000 et 3 000 mots. Pour élargir le vocabulaire portugais B1, il est recommandé de lire des articles, écouter des podcasts et pratiquer la conversation régulièrement.",
+        "value": 3000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire portugais B1",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "atingir",
-            "meaning": "Signification 1"
+            "word": "acontecer",
+            "meaning": "se produire"
           },
           {
-            "word": "aprender",
-            "meaning": "Signification 2"
+            "word": "fracasso",
+            "meaning": "échec"
+          },
+          {
+            "word": "empregador",
+            "meaning": "employeur"
+          },
+          {
+            "word": "candidato",
+            "meaning": "candidat"
+          },
+          {
+            "word": "desenvolver",
+            "meaning": "développer"
+          },
+          {
+            "word": "ambiente",
+            "meaning": "environnement"
+          },
+          {
+            "word": "vantagem",
+            "meaning": "avantage"
+          },
+          {
+            "word": "desvantagem",
+            "meaning": "désavantage"
+          },
+          {
+            "word": "propor",
+            "meaning": "proposer"
+          },
+          {
+            "word": "objetivo",
+            "meaning": "objectif"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux de portugais"
+      },
+      "metaTitle": "Vocabulaire de portugais B1 – Niveau intermédiaire",
+      "metaDescription": "Apprenez le vocabulaire de portugais B1 avec des mots intermédiaires et exemples détaillés. Améliorez l’expression et la compréhension en portugais.",
+      "introParagraphs": [
+        "Le vocabulaire de portugais B1 correspond au niveau intermédiaire. Les apprenants peuvent comprendre les points principaux de messages clairs et communiquer de manière plus détaillée.",
+        "Les mots intermédiaires portugais B1 permettent d’exprimer des opinions, de décrire des expériences et de participer à des conversations plus complexes. Une liste de mots portugais B1 structurée aide à élargir le vocabulaire et à renforcer les compétences linguistiques."
+      ],
+      "bottomCta": {
+        "heading": "Renforcez votre niveau intermédiaire",
+        "text": "Avec un vocabulaire solide portugais B1, vous pouvez communiquer clairement et de manière structurée. Pratiquez régulièrement, discutez de sujets actuels et lisez des textes plus complexes pour enrichir votre vocabulaire."
       }
     },
     "b2": {
-      "title": "Portugais B2 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Intermediaire superieur",
+      "title": "Vocabulaire de portugais B2",
+      "intro": "Le vocabulaire de portugais B2 est destiné aux apprenants souhaitant communiquer avec fluidité et aborder des sujets plus complexes.",
+      "levelDescription": "Intermédiaire avancé",
       "ctaText": "Commencer la pratique B2",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Que signifie le niveau B2 ?",
+        "paragraph": "Au niveau B2, vous pouvez interagir spontanément avec des locuteurs natifs. Le vocabulaire portugais B2 inclut des termes abstraits, des connecteurs logiques et des expressions utiles pour les débats et les contextes professionnels.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Comprendre les idées principales dans des textes complexes.",
+          "Exprimer et défendre ses opinions clairement.",
+          "Utiliser des connecteurs pour organiser le discours."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Portée du vocabulaire B2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Discussion et argumentation",
+          "Travail et société"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Discussion et argumentation",
+            "items": [
+              "Expressions pour être d’accord ou en désaccord.",
+              "Connecteurs pour comparaison et contraste.",
+              "Vocabulaire pour justifier des opinions.",
+              "Termes pour analyser problèmes et solutions."
+            ]
+          },
+          {
+            "heading": "Travail et société",
+            "items": [
+              "Mots liés au travail et aux études.",
+              "Vocabulaire sur les sujets sociaux actuels.",
+              "Expressions formelles pour rapports et emails.",
+              "Termes liés aux responsabilités et projets."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
-        "value": 3200
+        "heading": "Combien de mots pour le niveau B2 ?",
+        "text": "Le vocabulaire de portugais B2 inclut généralement plusieurs milliers de mots actifs. Un usage correct à l’oral et à l’écrit est essentiel.",
+        "value": 4000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire B2",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "contexto",
-            "meaning": "Signification 1"
+            "word": "no entanto",
+            "meaning": "cependant / néanmoins"
           },
           {
-            "word": "atingir",
-            "meaning": "Signification 2"
+            "word": "melhorar",
+            "meaning": "améliorer"
+          },
+          {
+            "word": "desafio",
+            "meaning": "défi"
+          },
+          {
+            "word": "portanto",
+            "meaning": "donc / par conséquent"
+          },
+          {
+            "word": "alcançar",
+            "meaning": "atteindre / réaliser"
+          },
+          {
+            "word": "convencer",
+            "meaning": "convaincre"
+          },
+          {
+            "word": "progresso",
+            "meaning": "progrès"
+          },
+          {
+            "word": "responsabilidade",
+            "meaning": "responsabilité"
+          },
+          {
+            "word": "avaliar",
+            "meaning": "évaluer"
+          },
+          {
+            "word": "problema",
+            "meaning": "problème"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux CECR"
+      },
+      "metaTitle": "Vocabulaire de portugais B2 – Mots et expressions clés",
+      "metaDescription": "Améliorez votre vocabulaire de portugais B2 avec des mots essentiels, leurs significations et exemples pour communiquer avec confiance au quotidien et au travail.",
+      "introParagraphs": [
+        "Le vocabulaire de portugais B2 est destiné aux apprenants souhaitant communiquer avec fluidité et aborder des sujets plus complexes. À ce niveau, vous pouvez participer à des discussions et exprimer vos idées clairement.",
+        "Les mots portugais intermédiaires vous aident à construire des arguments, évaluer les avantages et inconvénients, et comprendre des textes plus longs et détaillés. L’objectif est d’améliorer la précision et la fluidité à l’oral comme à l’écrit."
+      ],
+      "bottomCta": {
+        "heading": "Continuez à enrichir votre vocabulaire",
+        "text": "Pour maîtriser le vocabulaire B2, lisez des textes, écoutez des discussions et pratiquez l’oral et l’écrit. L’usage actif consolide l’apprentissage."
       }
     },
     "c1": {
-      "title": "Portugais C1 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Avance",
+      "title": "Vocabulaire de portugais C1",
+      "intro": "Le vocabulaire de portugais C1 correspond à un niveau avancé, où l’on maîtrise des expressions complexes et des termes abstraits.",
+      "levelDescription": "Avancé",
       "ctaText": "Commencer la pratique C1",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Caractéristiques du niveau C1",
+        "paragraph": "Les mots C1 incluent des termes techniques, des expressions formelles et divers connecteurs logiques.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Compréhension de textes complexes et spécialisés.",
+          "Expression fluide et structurée d’idées abstraites.",
+          "Adaptation du registre de langue au contexte."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Portée du vocabulaire C1",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Langage académique",
+          "Communication professionnelle"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Langage académique",
+            "items": [
+              "Mots pour analyse et évaluation.",
+              "Expressions pour construire des arguments complexes.",
+              "Vocabulaire pour présentations formelles.",
+              "Termes liés à la recherche et à la pensée critique."
+            ]
+          },
+          {
+            "heading": "Communication professionnelle",
+            "items": [
+              "Expressions formelles pour rapports et documents.",
+              "Verbes précis pour argumentation et négociation.",
+              "Adjectifs avancés pour décrire des situations.",
+              "Terminologie pour gestion et organisation."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
+        "heading": "Combien de mots contient C1 ?",
+        "text": "Le vocabulaire de portugais C1 comprend plusieurs milliers de mots actifs. Un usage correct et fluide est essentiel.",
         "value": 5000
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire C1",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "nuance",
-            "meaning": "Signification 1"
+            "word": "no entanto",
+            "meaning": "cependant / néanmoins"
           },
           {
-            "word": "contexto",
-            "meaning": "Signification 2"
+            "word": "aprofundar",
+            "meaning": "approfondir"
+          },
+          {
+            "word": "coerente",
+            "meaning": "cohérent; logique"
+          },
+          {
+            "word": "pertinente",
+            "meaning": "pertinent; approprié"
+          },
+          {
+            "word": "elaborar",
+            "meaning": "élaborer; développer"
+          },
+          {
+            "word": "colocar em questão",
+            "meaning": "mettre en question"
+          },
+          {
+            "word": "considerável",
+            "meaning": "considérable"
+          },
+          {
+            "word": "essencialmente",
+            "meaning": "essentiellement"
+          },
+          {
+            "word": "questões-chave",
+            "meaning": "questions clés"
+          },
+          {
+            "word": "alcançar",
+            "meaning": "atteindre / réaliser"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux CECR"
+      },
+      "metaTitle": "Vocabulaire de portugais C1 – Mots avancés",
+      "metaDescription": "Améliorez votre vocabulaire de portugais C1 avec des mots avancés, exemples et exercices pour communiquer avec précision et confiance.",
+      "introParagraphs": [
+        "Le vocabulaire de portugais C1 correspond à un niveau avancé, où l’on maîtrise des expressions complexes et des termes abstraits. Vous pouvez comprendre des textes longs et communiquer avec précision et spontanéité.",
+        "Les mots portugais avancés permettent l’analyse, l’argumentation et l’utilisation de nuances linguistiques dans des contextes académiques ou professionnels. L’objectif est d’élargir le vocabulaire tout en maintenant un registre approprié."
+      ],
+      "bottomCta": {
+        "heading": "Continuez à améliorer votre portugais",
+        "text": "Pour maîtriser le vocabulaire C1, lisez des textes complexes, participez à des débats et rédigez des essais structurés. La pratique régulière augmente précision et confiance."
       }
     },
     "c2": {
-      "title": "Portugais C2 Vocabulary Practice",
-      "intro": "Pratique structuree du vocabulaire CECR pour ce niveau.",
-      "levelDescription": "Maitrise",
+      "title": "Vocabulaire de portugais C2",
+      "intro": "Le vocabulaire de portugais C2 représente la maîtrise complète selon le CECR.",
+      "levelDescription": "Maîtrise",
       "ctaText": "Commencer la pratique C2",
       "levelExplanation": {
-        "heading": "Explication du niveau",
-        "paragraph": "Cette section decrit ce que l apprenant peut faire en general a ce niveau.",
+        "heading": "Caractéristiques du niveau C2",
+        "paragraph": "Les mots C2 couvrent les domaines académique, littéraire et technique, avec attention aux différences subtiles de sens.",
         "bullets": [
-          "Objectifs essentiels de communication",
-          "Grammaire et structures courantes",
-          "Situations typiques de la vie reelle"
+          "Compréhension de textes spécialisés et littéraires.",
+          "Utilisation précise des synonymes avec nuances.",
+          "Adaptation parfaite aux registres formels et informels."
         ]
       },
       "vocabularyScope": {
-        "heading": "Portee du vocabulaire",
+        "heading": "Portée du vocabulaire C2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Langage académique et littéraire",
+          "Nuances et style"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Langage académique et littéraire",
+            "items": [
+              "Terminologie spécialisée dans différents domaines.",
+              "Figures de style et expressions littéraires.",
+              "Vocabulaire littéraire avancé.",
+              "Verbes précis pour l’analyse critique."
+            ]
+          },
+          {
+            "heading": "Nuances et style",
+            "items": [
+              "Synonymes avec différences subtiles de sens.",
+              "Distinction claire des registres de langue.",
+              "Expressions idiomatiques authentiques.",
+              "Langage adapté culturellement."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Nombre de mots",
-        "text": "Plage estimee du vocabulaire actif pour ce niveau CECR.",
-        "value": 8000
+        "heading": "Combien de mots contient C2 ?",
+        "text": "Le vocabulaire de portugais C2 peut dépasser 6 000 mots actifs. La maîtrise se reflète dans un usage naturel et précis.",
+        "value": 6500
       },
       "sampleVocabulary": {
-        "heading": "Vocabulaire exemple",
+        "heading": "Exemples de vocabulaire C2",
         "columns": {
           "word": "Mot",
           "meaning": "Signification"
         },
         "rows": [
           {
-            "word": "eloquente",
-            "meaning": "Signification 1"
+            "word": "indispensável",
+            "meaning": "indispensable; inévitable"
           },
           {
-            "word": "nuance",
-            "meaning": "Signification 2"
+            "word": "sofisticação",
+            "meaning": "sophistication; raffinement"
+          },
+          {
+            "word": "inevitável",
+            "meaning": "inévitable"
+          },
+          {
+            "word": "nuancear",
+            "meaning": "nuancer; clarifier"
+          },
+          {
+            "word": "eloquência",
+            "meaning": "élocution / éloquence"
+          },
+          {
+            "word": "julgamento",
+            "meaning": "jugement; discernement"
+          },
+          {
+            "word": "alcançar",
+            "meaning": "atteindre un résultat"
+          },
+          {
+            "word": "ambivalente",
+            "meaning": "ambivalent; avec aspects opposés"
+          },
+          {
+            "word": "plausível",
+            "meaning": "plausible"
+          },
+          {
+            "word": "motivar",
+            "meaning": "motiver; justifier"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Explorer les autres niveaux"
+        "heading": "Autres niveaux CECR"
+      },
+      "metaTitle": "Vocabulaire de portugais C2 – Maîtrise complète",
+      "metaDescription": "Découvrez le vocabulaire de portugais C2 avec des mots rares et précis pour atteindre une maîtrise complète de la langue.",
+      "introParagraphs": [
+        "Le vocabulaire de portugais C2 représente la maîtrise complète selon le CECR. Vous comprenez presque tout ce que vous lisez ou entendez et pouvez vous exprimer avec précision, nuances et spontanéité.",
+        "Le vocabulaire très avancé inclut des mots rares, des expressions idiomatiques et des subtilités stylistiques. Il permet d’adapter parfaitement la langue à tout contexte."
+      ],
+      "bottomCta": {
+        "heading": "Atteignez la maîtrise complète du portugais",
+        "text": "Pour maîtriser le vocabulaire C2, lisez des œuvres littéraires, participez à des conférences spécialisées et rédigez des textes complexes. Une pratique intensive et variée est essentielle pour un plein contrôle de la langue."
       }
     }
   }

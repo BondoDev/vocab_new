@@ -192,6 +192,7 @@
     "takeLevelTest": "Faire un test de niveau rapide",
     "testDescription": "Pas sur de votre niveau ? Faites un test rapide pour le trouver.",
     "notSureLevel": "Vous ne savez pas par ou commencer ? Faites un test de vocabulaire rapide pour trouver votre niveau.",
+    "levelSingleSelectHint": "Double-cliquez pour selectionner uniquement ce niveau",
     "selection": {
       "levelsSelected": "niveau selectionne",
       "levelsSelectedPlural": "niveaux selectionnes",
@@ -204,9 +205,11 @@
     "topics": {
       "skipAll": "Ou passer pour pratiquer tous les themes",
       "showAll": "Afficher tous les themes",
+      "showAllShort": "TOUT",
       "showFewer": "Afficher moins de themes",
       "showLess": "Moins de themes",
-      "more": "plus"
+      "more": "plus",
+      "filterButton": "Appuyez pour filtrer les themes de pratique"
     },
     "topicNames": {
       "connectors": "Connecteurs",
@@ -248,11 +251,13 @@
       "showMore": "Afficher plus",
       "showMoreWithCountPrefix": "Afficher plus de types",
       "showAll": "Afficher tous les types",
-      "showAllShort": "TOUT"
+      "showAllShort": "TOUT",
+      "filterButton": "Appuyez pour filtrer les types grammaticaux"
     },
     "actions": {
       "clear": "Effacer",
-      "apply": "Appliquer"
+      "apply": "Appliquer",
+      "close": "Fermer"
     },
     "titleWithSkipAhead": "Personnalisez votre pratique ou passez directement"
   },
@@ -418,4 +423,3 @@
     "backToSelection": "Retour a la selection du niveau"
   }
 }
-

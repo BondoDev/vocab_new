@@ -1,323 +1,689 @@
 {
   "targetLanguage": "french",
-  "targetLanguageDisplayName": "Franzoesisch",
+  "targetLanguageDisplayName": "Französisch",
   "levels": {
     "a1": {
-      "title": "Franzoesisch A1 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
-      "levelDescription": "Anfaenger",
+      "title": "Französisch Wortschatz A1",
+      "intro": "Der Französisch Wortschatz A1 bildet die Grundlage für alle, die mit dem Französischlernen beginnen.",
+      "levelDescription": "Anfänger",
       "ctaText": "A1-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Was bedeutet das Niveau A1 im Französischen?",
+        "paragraph": "Das Niveau A1 entspricht der ersten Stufe des Gemeinsamen Europäischen Referenzrahmens (GER). Lernende können vertraute, alltägliche Ausdrücke verstehen und verwenden sowie einfache Sätze bilden.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Sich begrüßen und vorstellen.",
+          "Einfache Fragen stellen und beantworten.",
+          "Kurze, klare Aussagen verstehen."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Was umfasst der Französisch Wortschatz A1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Alltägliche Kommunikation",
+          "Persönliche Themen"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Alltägliche Kommunikation",
+            "items": [
+              "Begrüßungen und Höflichkeitsformen",
+              "Zahlen, Wochentage und Monate",
+              "Häufige Verben im Präsens",
+              "Einfache Fragewörter"
+            ]
+          },
+          {
+            "heading": "Persönliche Themen",
+            "items": [
+              "Familie und Freunde",
+              "Essen und Getränke",
+              "Wohnen und Umgebung",
+              "Grundlegende Adjektive"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "heading": "Wie viele Wörter gehören zum Französisch Wortschatz A1?",
+        "text": "Im Niveau A1 werden in der Regel etwa 500 bis 800 einfache französische Wörter A1 vermittelt. Wichtig ist nicht nur das Auswendiglernen, sondern das aktive Anwenden in kurzen Sätzen. Regelmäßige Französisch Wortschatz Übungen A1 helfen dabei, die neuen Begriffe langfristig zu behalten.",
         "value": 800
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispiele für Französisch Wortschatz A1",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "maison",
-            "meaning": "Bedeutung 1"
+            "word": "bonjour",
+            "meaning": "Guten Tag"
+          },
+          {
+            "word": "au revoir",
+            "meaning": "Auf Wiedersehen"
+          },
+          {
+            "word": "merci",
+            "meaning": "danke"
+          },
+          {
+            "word": "famille",
+            "meaning": "Familie"
           },
           {
             "word": "maison",
-            "meaning": "Bedeutung 2"
+            "meaning": "Haus"
+          },
+          {
+            "word": "manger",
+            "meaning": "essen"
+          },
+          {
+            "word": "boire",
+            "meaning": "trinken"
+          },
+          {
+            "word": "ami",
+            "meaning": "Freund"
+          },
+          {
+            "word": "grand",
+            "meaning": "groß"
+          },
+          {
+            "word": "petit",
+            "meaning": "klein"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Weitere Französisch-Niveaus"
+      },
+      "metaTitle": "Französisch Wortschatz A1 – Grundwortschatz für Anfänger",
+      "metaDescription": "Lerne Französisch Wortschatz A1 mit einfachen Wörtern und Beispielen. Baue deinen Grundwortschatz systematisch und praxisnah auf.",
+      "introParagraphs": [
+        "Der Französisch Wortschatz A1 bildet die Grundlage für alle, die mit dem Französischlernen beginnen. Auf diesem Einstiegsniveau lernst du wichtige Wörter und feste Ausdrücke, die dir helfen, dich in alltäglichen Situationen einfach zu verständigen.",
+        "Zu Beginn stehen französische Wörter für Anfänger im Mittelpunkt, die häufig im Alltag verwendet werden. Dazu gehören Begrüßungen, Zahlen, einfache Verben und grundlegende Fragen. Mit einer klar strukturierten Wortliste Französisch A1 kannst du deinen Wortschatz Schritt für Schritt erweitern und sicher anwenden."
+      ],
+      "bottomCta": {
+        "heading": "Starte jetzt mit dem Lernen",
+        "text": "Ein sicherer Französisch Wortschatz A1 erleichtert dir den Übergang zu höheren Niveaus. Übe regelmäßig, wiederhole neue Wörter laut und setze sie in einfachen Dialogen ein, um dein Sprachgefühl zu stärken."
       }
     },
     "a2": {
-      "title": "Franzoesisch A2 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
-      "levelDescription": "Grundstufe",
+      "title": "Französisch Wortschatz A2",
+      "intro": "Der Französisch Wortschatz A2 baut auf den Grundlagen des Anfängerniveaus auf.",
+      "levelDescription": "Elementarstufe",
       "ctaText": "A2-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Was bedeutet das Niveau A2 im Französischen?",
+        "paragraph": "Das Niveau A2 steht für eine elementare Sprachverwendung. Lernende verstehen häufig gebrauchte Ausdrücke und können sich in einfachen, routinemäßigen Situationen austauschen.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Über Gewohnheiten und tägliche Abläufe sprechen.",
+          "Vergangene Ereignisse einfach beschreiben.",
+          "Informationen in vertrauten Situationen austauschen."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Was umfasst der Französisch Wortschatz A2?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Alltag und Organisation",
+          "Kommunikation und Zeit"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Alltag und Organisation",
+            "items": [
+              "Reisen und Verkehr",
+              "Einkaufen und Geld",
+              "Gesundheit und Körper",
+              "Arbeit und Termine"
+            ]
+          },
+          {
+            "heading": "Kommunikation und Zeit",
+            "items": [
+              "Zeitangaben und Häufigkeit",
+              "Verbindungswörter",
+              "Meinungen ausdrücken",
+              "Vergangenheitsformen"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
-        "value": 1200
+        "heading": "Wie viele Wörter gehören zum Französisch Wortschatz A2?",
+        "text": "Auf dem Niveau A2 umfasst der Wortschatz meist etwa 1.000 bis 1.500 Wörter. Regelmäßige Französisch Wortschatz Übungen Niveau A2 unterstützen dich dabei, neue Begriffe sicher anzuwenden und langfristig zu behalten.",
+        "value": 1500
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispiele für Französisch Wortschatz A2",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "apprendre",
-            "meaning": "Bedeutung 1"
+            "word": "voyage",
+            "meaning": "Reise"
           },
           {
-            "word": "maison",
-            "meaning": "Bedeutung 2"
+            "word": "billet",
+            "meaning": "Ticket"
+          },
+          {
+            "word": "magasin",
+            "meaning": "Geschäft"
+          },
+          {
+            "word": "argent",
+            "meaning": "Geld"
+          },
+          {
+            "word": "travail",
+            "meaning": "Arbeit"
+          },
+          {
+            "word": "malade",
+            "meaning": "krank"
+          },
+          {
+            "word": "hier",
+            "meaning": "gestern"
+          },
+          {
+            "word": "demain",
+            "meaning": "morgen"
+          },
+          {
+            "word": "souvent",
+            "meaning": "oft"
+          },
+          {
+            "word": "important",
+            "meaning": "wichtig"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Weitere Französisch-Niveaus"
+      },
+      "metaTitle": "Französisch Wortschatz A2 – Wortschatz für den Alltag",
+      "metaDescription": "Entdecke Französisch Wortschatz A2 mit praktischen Wörtern für Alltag und Reisen. Erweitere deinen Wortschatz gezielt und effektiv.",
+      "introParagraphs": [
+        "Der Französisch Wortschatz A2 baut auf den Grundlagen des Anfängerniveaus auf. Lernende können nun längere Sätze bilden und sich in typischen Alltagssituationen besser verständigen.",
+        "Französische Wörter Niveau A2 decken Themen wie Reisen, Arbeit, Gesundheit und Freizeit ab. Mit einer strukturierten Wortliste Französisch A2 kannst du deinen Wortschatz erweitern Französisch A2 und mehr Sicherheit im Gespräch gewinnen."
+      ],
+      "bottomCta": {
+        "heading": "Baue deinen Wortschatz weiter aus",
+        "text": "Mit einem soliden Französisch Wortschatz A2 kannst du dich in vielen Alltagssituationen selbstständig ausdrücken. Lies einfache Texte, höre Dialoge und wiederhole neue Wörter regelmäßig."
       }
     },
     "b1": {
-      "title": "Franzoesisch B1 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "title": "Französisch Wortschatz B1",
+      "intro": "Der Französisch Wortschatz B1 markiert den Übergang zur Mittelstufe.",
       "levelDescription": "Mittelstufe",
       "ctaText": "B1-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Was bedeutet das Niveau B1 im Französischen?",
+        "paragraph": "Das Niveau B1 steht für selbstständige Sprachverwendung auf mittlerem Niveau. Lernende verstehen die Hauptpunkte klarer Standardsprache und können sich in den meisten Alltagssituationen verständigen.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Eigene Meinungen begründen.",
+          "Erfahrungen und Ereignisse beschreiben.",
+          "Zusammenhängende Texte verfassen."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Was umfasst der Französisch Wortschatz B1?",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Beruf und Gesellschaft",
+          "Argumentation und Struktur"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Beruf und Gesellschaft",
+            "items": [
+              "Arbeitswelt und Karriere",
+              "Bildung und Weiterbildung",
+              "Medien und Technologie",
+              "Soziale Themen"
+            ]
+          },
+          {
+            "heading": "Argumentation und Struktur",
+            "items": [
+              "Logische Verknüpfungen",
+              "Ausdruck von Zustimmung und Kritik",
+              "Vergleichsformen",
+              "Abstrakte Begriffe"
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
-        "value": 2000
+        "heading": "Wie viele Wörter gehören zum Französisch Wortschatz B1?",
+        "text": "Auf dem Niveau B1 verfügen Lernende meist über 2.000 bis 3.000 Wörter. Durch regelmäßige Französisch Wortschatz Übungen B1 und aktives Sprechen kannst du deinen Wortschatz kontinuierlich erweitern.",
+        "value": 3000
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispiele für Französisch Wortschatz B1",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "reussir",
-            "meaning": "Bedeutung 1"
+            "word": "réussir",
+            "meaning": "erfolgreich sein"
           },
           {
-            "word": "apprendre",
-            "meaning": "Bedeutung 2"
+            "word": "échec",
+            "meaning": "Misserfolg"
+          },
+          {
+            "word": "employeur",
+            "meaning": "Arbeitgeber"
+          },
+          {
+            "word": "candidat",
+            "meaning": "Bewerber"
+          },
+          {
+            "word": "développer",
+            "meaning": "entwickeln"
+          },
+          {
+            "word": "environnement",
+            "meaning": "Umwelt"
+          },
+          {
+            "word": "avantage",
+            "meaning": "Vorteil"
+          },
+          {
+            "word": "inconvénient",
+            "meaning": "Nachteil"
+          },
+          {
+            "word": "proposer",
+            "meaning": "vorschlagen"
+          },
+          {
+            "word": "objectif",
+            "meaning": "Ziel"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Weitere Französisch-Niveaus"
+      },
+      "metaTitle": "Französisch Wortschatz B1 – Wortschatz auf Mittelstufe",
+      "metaDescription": "Lerne Französisch Wortschatz B1 mit wichtigen Wörtern für Gespräche und Beruf. Erweitere deinen Wortschatz auf Mittelstufenniveau.",
+      "introParagraphs": [
+        "Der Französisch Wortschatz B1 markiert den Übergang zur Mittelstufe. Lernende können nun zusammenhängend sprechen, ihre Meinung ausdrücken und komplexere Themen verstehen.",
+        "Französische Wörter Niveau B1 ermöglichen es, über Arbeit, Bildung, Gesellschaft und persönliche Erfahrungen zu sprechen. Mit einer strukturierten Wortliste Französisch B1 kannst du deinen Wortschatz ausbauen Französisch B1 und aktiver an Gesprächen teilnehmen."
+      ],
+      "bottomCta": {
+        "heading": "Festige dein Mittelstufenniveau",
+        "text": "Mit einem soliden Französisch Wortschatz B1 kannst du dich klar und strukturiert ausdrücken. Übe regelmäßig, diskutiere aktuelle Themen und lies anspruchsvollere Texte, um deinen Wortschatz weiter zu vertiefen."
       }
     },
     "b2": {
-      "title": "Franzoesisch B2 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
-      "levelDescription": "Gehobene Mittelstufe",
+      "title": "Französisch Wortschatz B2",
+      "intro": "Der Französisch Wortschatz B2 richtet sich an Lernende, die bereits sicher kommunizieren können und nun komplexere Themen bewältigen möchten.",
+      "levelDescription": "Obere Mittelstufe",
       "ctaText": "B2-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Was bedeutet das Niveau B2?",
+        "paragraph": "Auf dem B2-Niveau kannst du dich spontan und flüssig mit Muttersprachlern verständigen. Der Französisch Wortschatz für B2 Niveau umfasst abstraktere Begriffe, verbindende Ausdrücke und themenspezifische Wörter aus Bereichen wie Gesellschaft, Bildung und Beruf.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Verständnis komplexerer Texte und Diskussionen.",
+          "Strukturierte Darstellung eigener Standpunkte.",
+          "Verwendung vielfältiger Konnektoren und Ausdrücke."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Umfang des Wortschatzes auf B2",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Diskussion und Argumentation",
+          "Beruf und Gesellschaft"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Diskussion und Argumentation",
+            "items": [
+              "Ausdrücke für Zustimmung und Widerspruch.",
+              "Verbindungswörter für Vergleich und Gegensatz.",
+              "Wortschatz zur Begründung von Meinungen.",
+              "Begriffe zur Analyse von Problemen und Lösungen."
+            ]
+          },
+          {
+            "heading": "Beruf und Gesellschaft",
+            "items": [
+              "Vokabeln rund um Arbeit und Ausbildung.",
+              "Wörter zu aktuellen gesellschaftlichen Themen.",
+              "Formelle Ausdrücke für E-Mails und Berichte.",
+              "Begriffe für Verantwortung und Projekte."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
-        "value": 3200
+        "heading": "Wie viele Wörter umfasst B2?",
+        "text": "Eine B2 Französisch Vokabelliste umfasst in der Regel mehrere tausend Wörter. Entscheidend ist jedoch nicht nur die Anzahl, sondern die Fähigkeit, den Wortschatz aktiv und flexibel einzusetzen.",
+        "value": 4000
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispielwortschatz B2",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "contexte",
-            "meaning": "Bedeutung 1"
+            "word": "cependant",
+            "meaning": "jedoch; allerdings"
           },
           {
-            "word": "reussir",
-            "meaning": "Bedeutung 2"
+            "word": "améliorer",
+            "meaning": "verbessern"
+          },
+          {
+            "word": "enjeu",
+            "meaning": "zentrale Frage; Herausforderung"
+          },
+          {
+            "word": "ainsi",
+            "meaning": "somit; auf diese Weise"
+          },
+          {
+            "word": "réussir",
+            "meaning": "erfolgreich sein"
+          },
+          {
+            "word": "convaincre",
+            "meaning": "überzeugen"
+          },
+          {
+            "word": "progrès",
+            "meaning": "Fortschritt"
+          },
+          {
+            "word": "responsabilité",
+            "meaning": "Verantwortung"
+          },
+          {
+            "word": "évaluer",
+            "meaning": "bewerten"
+          },
+          {
+            "word": "défi",
+            "meaning": "Herausforderung"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Weitere GER-Niveaus entdecken"
+      },
+      "metaTitle": "Französisch Wortschatz B2 – Vokabelliste mit Bedeutungen",
+      "metaDescription": "Erweitere deinen Französisch Wortschatz B2 mit wichtigen Vokabeln, Bedeutungen und Beispielen für mehr Sicherheit im Gespräch und im Beruf.",
+      "introParagraphs": [
+        "Der Französisch Wortschatz B2 richtet sich an Lernende, die bereits sicher kommunizieren können und nun komplexere Themen bewältigen möchten. Auf diesem Niveau bist du in der Lage, detaillierte Gespräche zu führen, Texte zu verstehen und deine Meinung klar zu vertreten.",
+        "Mit einem gezielten Ausbau der Französisch Vokabeln Niveau B2 entwickelst du mehr Präzision im Ausdruck. Du lernst, Argumente zu strukturieren, Vor- und Nachteile abzuwägen und dich auch in formelleren Situationen angemessen auszudrücken."
+      ],
+      "bottomCta": {
+        "heading": "Baue deinen Wortschatz weiter aus",
+        "text": "Wenn du Französisch lernen Wortschatz B2 gezielt trainierst, solltest du regelmäßig lesen, hören und selbst sprechen oder schreiben. Durch aktive Anwendung festigst du neue Vokabeln und erreichst langfristige Sicherheit im Ausdruck."
       }
     },
     "c1": {
-      "title": "Franzoesisch C1 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
+      "title": "Französisch Wortschatz C1",
+      "intro": "Der Französisch Wortschatz C1 steht für ein fortgeschrittenes Sprachniveau, auf dem du komplexe Inhalte sicher verstehst und differenziert ausdrücken kannst.",
       "levelDescription": "Fortgeschritten",
       "ctaText": "C1-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Merkmale des Niveaus C1",
+        "paragraph": "Die Französisch Vokabeln Niveau C1 umfassen abstrakte Begriffe, gehobene Ausdrücke und spezialisierte Terminologie.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Verständnis komplexer und längerer Texte.",
+          "Flüssiger und strukturierter Ausdruck.",
+          "Flexible Anpassung an formelle und informelle Situationen."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Umfang des C1-Wortschatzes",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Akademischer Wortschatz",
+          "Professionelle Kommunikation"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Akademischer Wortschatz",
+            "items": [
+              "Begriffe zur Analyse und Bewertung.",
+              "Strukturierende Ausdrücke für Argumentationen.",
+              "Formelle Redewendungen für Präsentationen.",
+              "Vokabeln aus Forschung und Theorie."
+            ]
+          },
+          {
+            "heading": "Professionelle Kommunikation",
+            "items": [
+              "Formelle Ausdrücke für Berichte und Stellungnahmen.",
+              "Präzise Verben für Verhandlungen.",
+              "Differenzierte Adjektive.",
+              "Begriffe zu Organisation und Strategie."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
+        "heading": "Wie viele Wörter umfasst C1?",
+        "text": "Eine C1 Französisch Vokabelliste kann mehrere tausend aktive Wörter umfassen. Wichtig ist, dass du den Französisch Wortschatz für C1 Niveau sicher und angemessen einsetzen kannst.",
         "value": 5000
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispielwortschatz C1",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "nuance",
-            "meaning": "Bedeutung 1"
+            "word": "néanmoins",
+            "meaning": "dennoch"
           },
           {
-            "word": "contexte",
-            "meaning": "Bedeutung 2"
+            "word": "approfondir",
+            "meaning": "vertiefen"
+          },
+          {
+            "word": "cohérent",
+            "meaning": "schlüssig; kohärent"
+          },
+          {
+            "word": "pertinent",
+            "meaning": "relevant; zutreffend"
+          },
+          {
+            "word": "élaborer",
+            "meaning": "ausarbeiten"
+          },
+          {
+            "word": "remettre en question",
+            "meaning": "infrage stellen"
+          },
+          {
+            "word": "considérable",
+            "meaning": "erheblich"
+          },
+          {
+            "word": "toutefois",
+            "meaning": "allerdings"
+          },
+          {
+            "word": "enjeux",
+            "meaning": "zentrale Aspekte"
+          },
+          {
+            "word": "parvenir",
+            "meaning": "gelangen; erreichen"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Weitere GER-Niveaus entdecken"
+      },
+      "metaTitle": "Französisch Wortschatz C1 – Fortgeschrittene Vokabeln",
+      "metaDescription": "Vertiefe deinen Französisch Wortschatz C1 mit anspruchsvollen Vokabeln, Bedeutungen und Beispielen für Studium, Beruf und Diskussionen.",
+      "introParagraphs": [
+        "Der Französisch Wortschatz C1 steht für ein fortgeschrittenes Sprachniveau, auf dem du komplexe Inhalte sicher verstehst und differenziert ausdrücken kannst. Du kannst anspruchsvolle Texte lesen und dich in Diskussionen präzise und spontan äußern.",
+        "Ein fortgeschrittener Französisch Wortschatz ermöglicht es dir, Nuancen auszudrücken und verschiedene Register situationsgerecht einzusetzen. Besonders im akademischen oder beruflichen Kontext ist dieser Wortschatz entscheidend."
+      ],
+      "bottomCta": {
+        "heading": "Erreiche ein hohes Sprachniveau",
+        "text": "Durch regelmäßige Lektüre anspruchsvoller Texte, Diskussionen und schriftliche Übungen kannst du deinen Wortschatz systematisch erweitern. So entwickelst du Sicherheit und Ausdrucksstärke auf C1-Niveau."
       }
     },
     "c2": {
-      "title": "Franzoesisch C2 Vocabulary Practice",
-      "intro": "Strukturiertes CEFR-Wortschatztraining fuer dieses Sprachniveau.",
-      "levelDescription": "Sehr fortgeschritten",
+      "title": "Französisch Wortschatz C2",
+      "intro": "Der Französisch Wortschatz C2 steht für nahezu muttersprachliche Kompetenz.",
+      "levelDescription": "Meisterstufe",
       "ctaText": "C2-Training starten",
       "levelExplanation": {
-        "heading": "Niveauerklaerung",
-        "paragraph": "Dieser Abschnitt beschreibt, was Lernende auf diesem Niveau typischerweise koennen.",
+        "heading": "Merkmale des Niveaus C2",
+        "paragraph": "Die Französisch Vokabeln Niveau C2 decken akademische, literarische und technische Bereiche ab und verlangen ein sicheres Gefühl für Sprachstil.",
         "bullets": [
-          "Zentrale Kommunikationsziele",
-          "Hauefige Grammatik und Strukturen",
-          "Typische Alltagssituationen"
+          "Verständnis selbst sehr anspruchsvoller Texte.",
+          "Präzise Unterscheidung zwischen feinen Bedeutungsnuancen.",
+          "Souveräner Umgang mit unterschiedlichen Registern."
         ]
       },
       "vocabularyScope": {
-        "heading": "Wortschatzumfang",
+        "heading": "Umfang des C2-Wortschatzes",
         "topics": [
-          "Topic 1",
-          "Topic 2",
-          "Topic 3"
+          "Akademische und literarische Sprache",
+          "Nuancen und Stil"
         ],
         "wordTypes": [
-          "Nouns",
-          "Verbs",
-          "Adjectives"
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Akademische und literarische Sprache",
+            "items": [
+              "Fachspezifische Terminologie.",
+              "Rhetorische Stilmittel.",
+              "Literarische Ausdrucksweisen.",
+              "Präzise Verben für kritische Analysen."
+            ]
+          },
+          {
+            "heading": "Nuancen und Stil",
+            "items": [
+              "Synonyme mit feinen Bedeutungsunterschieden.",
+              "Klare Trennung zwischen formellem und informellem Stil.",
+              "Authentische idiomatische Wendungen.",
+              "Kulturell angepasste Ausdrucksweisen."
+            ]
+          }
         ]
       },
       "wordCount": {
-        "heading": "Wortanzahl",
-        "text": "Geschaetzter aktiver Wortschatz fuer dieses CEFR-Niveau.",
-        "value": 8000
+        "heading": "Wie viele Wörter umfasst C2?",
+        "text": "Eine C2 Französisch Vokabelliste kann weit über 6.000 aktive Wörter enthalten. Entscheidend ist jedoch die sichere und flexible Anwendung des Französisch Wortschatz für C2 Niveau in allen Kommunikationssituationen.",
+        "value": 6500
       },
       "sampleVocabulary": {
-        "heading": "Beispielwortschatz",
+        "heading": "Beispielwortschatz C2",
         "columns": {
           "word": "Wort",
           "meaning": "Bedeutung"
         },
         "rows": [
           {
-            "word": "eloquent",
-            "meaning": "Bedeutung 1"
+            "word": "péremptoire",
+            "meaning": "bestimmt; keinen Widerspruch duldend"
           },
           {
-            "word": "nuance",
-            "meaning": "Bedeutung 2"
+            "word": "subtilité",
+            "meaning": "Feinheit; Subtilität"
+          },
+          {
+            "word": "inéluctable",
+            "meaning": "unausweichlich"
+          },
+          {
+            "word": "nuancer",
+            "meaning": "differenzieren"
+          },
+          {
+            "word": "éloquence",
+            "meaning": "Beredsamkeit"
+          },
+          {
+            "word": "discernement",
+            "meaning": "Urteilsvermögen"
+          },
+          {
+            "word": "aboutir",
+            "meaning": "zu einem Ergebnis führen"
+          },
+          {
+            "word": "ambivalent",
+            "meaning": "zwiespältig"
+          },
+          {
+            "word": "plausible",
+            "meaning": "plausibel"
+          },
+          {
+            "word": "fonder",
+            "meaning": "begründen; gründen"
           }
         ]
       },
       "internalNavigation": {
-        "heading": "Andere Niveaus entdecken"
+        "heading": "Weitere GER-Niveaus entdecken"
+      },
+      "metaTitle": "Französisch Wortschatz C2 – Sprachliche Meisterschaft",
+      "metaDescription": "Entdecke den Französisch Wortschatz C2 mit präzisen und anspruchsvollen Vokabeln für eine nahezu muttersprachliche Ausdrucksfähigkeit.",
+      "introParagraphs": [
+        "Der Französisch Wortschatz C2 steht für nahezu muttersprachliche Kompetenz. Auf diesem Niveau verstehst du komplexe, literarische und fachliche Texte und kannst dich spontan, präzise und differenziert ausdrücken.",
+        "Ein sehr fortgeschrittener Französisch Wortschatz umfasst seltene Begriffe, stilistische Feinheiten und idiomatische Wendungen. Ziel ist es, in jeder Situation das passende Register und die richtige Nuance zu wählen."
+      ],
+      "bottomCta": {
+        "heading": "Erreiche sprachliche Meisterschaft",
+        "text": "Um den Französisch Wortschatz C2 zu beherrschen, solltest du anspruchsvolle Literatur lesen, wissenschaftliche Vorträge hören und regelmäßig komplexe Texte verfassen. Intensive und vielfältige Praxis führt zu echter sprachlicher Souveränität."
       }
     }
   }

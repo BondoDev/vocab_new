@@ -485,7 +485,7 @@ export function LevelCategorySelection({
                       };
                     }}
                     onDoubleClick={() => handleSelectOnlyLevel(level.code)}
-                    title="Double-click to select only this level"
+                    title={t("levelCategory.levelSingleSelectHint")}
                     className={`relative p-2 sm:p-2.5 md:p-[clamp(0.62rem,1.05vw,0.68rem)] rounded-xl sm:rounded-lg border-2 transition-all ${
                       isSelected
                         ? "border-primary shadow-lg shadow-primary/20"
@@ -582,7 +582,7 @@ export function LevelCategorySelection({
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
-                Tap to filter practice topics
+                {t("levelCategory.topics.filterButton")}
               </motion.button>
             ) : (
               <div className="flex flex-wrap justify-center gap-2 md:gap-[clamp(0.6rem,1.2vw,0.75rem)] lg:gap-[clamp(0.55rem,1vw,0.625rem)] max-h-[110px] md:max-h-[180px] lg:max-h-none">
@@ -616,7 +616,9 @@ export function LevelCategorySelection({
                         {t("levelCategory.showAllTopics")} (+
                         {hiddenTopicsCount} {t("levelCategory.moreTopics")})
                       </span>
-                      <span className="md:hidden">SHOW ALL</span>
+                      <span className="md:hidden">
+                        {t("levelCategory.topics.showAllShort")}
+                      </span>
                       <ChevronDown className="w-4 h-4 sm:w-4 sm:h-4" />
                     </>
                   </button>
@@ -642,7 +644,7 @@ export function LevelCategorySelection({
                     <button
                       className="text-3xl -mt-2 leading-none text-muted-foreground hover:text-foreground transition"
                       onClick={() => setIsTopicsModalOpen(false)}
-                      aria-label="Close"
+                      aria-label={t("levelCategory.actions.close")}
                     >
                       ×
                     </button>
@@ -713,7 +715,7 @@ export function LevelCategorySelection({
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
-                Tap to filter grammar types
+                {t("levelCategory.types.filterButton")}
               </motion.button>
             ) : (
               <div
@@ -807,7 +809,7 @@ export function LevelCategorySelection({
                     <button
                       className="text-muted-foreground hover:text-foreground transition"
                       onClick={() => setIsWordTypesModalOpen(false)}
-                      aria-label="Close"
+                      aria-label={t("levelCategory.actions.close")}
                     >
                       <X className="w-5 h-5" />
                     </button>
