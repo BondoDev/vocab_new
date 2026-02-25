@@ -11,6 +11,11 @@ import { WordTypingExercise } from "./exercises/WordTypingExercise";
 import { HalfWrittenExercise } from "./exercises/HalfWrittenExercise";
 import { shuffleArray } from "../utils/shuffleArray";
 import { highlightInflectedWords } from "../utils/highlightInflectedWords";
+import {
+  advanceTypingRepeatQueue,
+  getEligibleTypingExercisesForWord,
+  type TypingRepeatEntry,
+} from "../utils/typingRepeatQueue";
 import { PracticeHeader } from "./practice/PracticeHeader";
 import { PracticeLoading } from "./practice/PracticeLoading";
 import { PracticeEmptyState } from "./practice/PracticeEmptyState";
@@ -61,22 +66,14 @@ export function VocabularyPractice({
   const [cardBlinkKey, setCardBlinkKey] = useState(0);
   const [isCardSwitching, setIsCardSwitching] = useState(false);
   const cardSwitchTimeoutRef = useRef<number | null>(null);
-  const forcedTypingRepeatQueueRef = useRef<
-    Array<{ conceptId: string; remainingTypingExercises: number }>
-  >([]);
+  const forcedTypingRepeatQueueRef = useRef<TypingRepeatEntry[]>([]);
+  const resumeIndexAfterForcedRepeatRef = useRef<number | null>(null);
   const isUsableLemma = (value: unknown): value is string =>
     typeof value === "string" && value.trim().length > 0 && value.trim() !== "-";
 
   const isFourWordExercise = useCallback(
     (exerciseType: string) =>
       exerciseType === "connectWords" || exerciseType === "listening",
-    [],
-  );
-  const isTypingExercise = useCallback(
-    (exerciseType: string) =>
-      exerciseType === "wordTyping" ||
-      exerciseType === "halfWritten" ||
-      exerciseType === "brokenWord",
     [],
   );
   const getNonFourWordFallback = useCallback(
@@ -118,15 +115,6 @@ export function VocabularyPractice({
     },
     [],
   );
-  const getEligibleTypingExercisesForWord = useCallback(
-    (word: any) =>
-      selectedExercises.filter(
-        (exercise) =>
-          isTypingExercise(exercise) && isWordEligibleForExercise(word, exercise),
-      ),
-    [selectedExercises, isTypingExercise, isWordEligibleForExercise],
-  );
-
   useEffect(() => {
     // Dynamically load the words for the practice language and user's language
     const loadWords = async () => {
@@ -254,6 +242,7 @@ export function VocabularyPractice({
         // Shuffle the words to randomize order
         const shuffledWords = shuffleArray(loadedWords);
         forcedTypingRepeatQueueRef.current = [];
+        resumeIndexAfterForcedRepeatRef.current = null;
         setWords(shuffledWords);
 
         // Select initial exercise type
@@ -353,47 +342,18 @@ export function VocabularyPractice({
       ]);
     }
 
-    // Track delayed forced repeats for "show me word" in typing exercises.
-    // Words revealed with the button must return after 4 typing exercises.
-    const queueAfterCountdown = forcedTypingRepeatQueueRef.current.map((entry) => {
-      if (isTypingExercise(currentExerciseType)) {
-        return {
-          ...entry,
-          remainingTypingExercises: entry.remainingTypingExercises - 1,
-        };
-      }
-      return entry;
-    });
-
-    if (
-      isTypingExercise(currentExerciseType) &&
-      exerciseStatus.usedShowWord &&
-      currentWord?.concept_id !== undefined &&
-      currentWord?.concept_id !== null
-    ) {
-      const conceptId = String(currentWord.concept_id);
-      const withoutCurrentWord = queueAfterCountdown.filter(
-        (entry) => entry.conceptId !== conceptId,
-      );
-      withoutCurrentWord.push({
-        conceptId,
-        remainingTypingExercises: 4,
+    const { queue: advancedQueue, dueConceptId: dueRepeatConceptId } =
+      advanceTypingRepeatQueue({
+        queue: forcedTypingRepeatQueueRef.current,
+        currentExerciseType,
+        usedShowWord: exerciseStatus.usedShowWord,
+        currentConceptId:
+          currentWord?.concept_id !== undefined &&
+          currentWord?.concept_id !== null
+            ? String(currentWord.concept_id)
+            : null,
       });
-      forcedTypingRepeatQueueRef.current = withoutCurrentWord;
-    } else {
-      forcedTypingRepeatQueueRef.current = queueAfterCountdown;
-    }
-
-    const dueRepeat = forcedTypingRepeatQueueRef.current.find(
-      (entry) => entry.remainingTypingExercises <= 0,
-    );
-    const dueRepeatConceptId = dueRepeat?.conceptId ?? null;
-    if (dueRepeatConceptId) {
-      // Consume due repeats immediately so they can never loop forever.
-      forcedTypingRepeatQueueRef.current = forcedTypingRepeatQueueRef.current.filter(
-        (entry) => entry.conceptId !== dueRepeatConceptId,
-      );
-    }
+    forcedTypingRepeatQueueRef.current = advancedQueue;
 
     // Reset states
     setShowSentence(false);
@@ -405,9 +365,14 @@ export function VocabularyPractice({
       usedHintForBrokenWord: false,
     });
 
-    // Determine next word index - for connect words, skip 4 words
+    // Determine next word index - for connect words, skip 4 words.
+    // If the current card was a forced repeat injection, resume from where
+    // the normal sequence would have continued.
     let nextIndex;
-    if (isFourWordExercise(currentExerciseType)) {
+    if (resumeIndexAfterForcedRepeatRef.current !== null) {
+      nextIndex = resumeIndexAfterForcedRepeatRef.current;
+      resumeIndexAfterForcedRepeatRef.current = null;
+    } else if (isFourWordExercise(currentExerciseType)) {
       nextIndex = currentIndex + 4 < words.length ? currentIndex + 4 : 0;
     } else {
       nextIndex = currentIndex < words.length - 1 ? currentIndex + 1 : 0;
@@ -421,9 +386,13 @@ export function VocabularyPractice({
       );
       if (repeatedWordIndex !== -1) {
         const repeatedWord = words[repeatedWordIndex];
-        const eligibleTypingExercises =
-          getEligibleTypingExercisesForWord(repeatedWord);
+        const eligibleTypingExercises = getEligibleTypingExercisesForWord(
+          repeatedWord,
+          selectedExercises,
+          isWordEligibleForExercise,
+        );
         if (eligibleTypingExercises.length > 0) {
+          resumeIndexAfterForcedRepeatRef.current = nextIndex;
           resolvedNextIndex = repeatedWordIndex;
           const randomTypingIndex = Math.floor(
             Math.random() * eligibleTypingExercises.length,
@@ -564,6 +533,7 @@ export function VocabularyPractice({
     // Shuffle words for a new random order
     const shuffledWords = shuffleArray(words);
     forcedTypingRepeatQueueRef.current = [];
+    resumeIndexAfterForcedRepeatRef.current = null;
     setWords(shuffledWords);
 
     // Reset all states
