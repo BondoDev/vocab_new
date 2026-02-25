@@ -61,12 +61,22 @@ export function VocabularyPractice({
   const [cardBlinkKey, setCardBlinkKey] = useState(0);
   const [isCardSwitching, setIsCardSwitching] = useState(false);
   const cardSwitchTimeoutRef = useRef<number | null>(null);
+  const forcedTypingRepeatQueueRef = useRef<
+    Array<{ conceptId: string; remainingTypingExercises: number }>
+  >([]);
   const isUsableLemma = (value: unknown): value is string =>
     typeof value === "string" && value.trim().length > 0 && value.trim() !== "-";
 
   const isFourWordExercise = useCallback(
     (exerciseType: string) =>
       exerciseType === "connectWords" || exerciseType === "listening",
+    [],
+  );
+  const isTypingExercise = useCallback(
+    (exerciseType: string) =>
+      exerciseType === "wordTyping" ||
+      exerciseType === "halfWritten" ||
+      exerciseType === "brokenWord",
     [],
   );
   const getNonFourWordFallback = useCallback(
@@ -93,21 +103,29 @@ export function VocabularyPractice({
   }, [selectedExercises]);
 
   // Helper function to check if word is eligible for current exercise type
-  const isWordEligibleForExercise = (
-    word: any,
-    exerciseType: string,
-  ): boolean => {
-    if (exerciseType === "halfWritten") {
-      // Half-written exercise only uses words with 4+ letters
-      return word.word_lemma.length >= 4;
-    }
-    if (exerciseType === "brokenWord") {
-      // Broken-word exercise only uses words with 5+ letters
-      return word.word_lemma.length >= 5;
-    }
-    // Full word typing accepts all words
-    return true;
-  };
+  const isWordEligibleForExercise = useCallback(
+    (word: any, exerciseType: string): boolean => {
+      if (exerciseType === "halfWritten") {
+        // Half-written exercise only uses words with 4+ letters
+        return word.word_lemma.length >= 4;
+      }
+      if (exerciseType === "brokenWord") {
+        // Broken-word exercise only uses words with 5+ letters
+        return word.word_lemma.length >= 5;
+      }
+      // Full word typing accepts all words
+      return true;
+    },
+    [],
+  );
+  const getEligibleTypingExercisesForWord = useCallback(
+    (word: any) =>
+      selectedExercises.filter(
+        (exercise) =>
+          isTypingExercise(exercise) && isWordEligibleForExercise(word, exercise),
+      ),
+    [selectedExercises, isTypingExercise, isWordEligibleForExercise],
+  );
 
   useEffect(() => {
     // Dynamically load the words for the practice language and user's language
@@ -235,6 +253,7 @@ export function VocabularyPractice({
 
         // Shuffle the words to randomize order
         const shuffledWords = shuffleArray(loadedWords);
+        forcedTypingRepeatQueueRef.current = [];
         setWords(shuffledWords);
 
         // Select initial exercise type
@@ -334,6 +353,48 @@ export function VocabularyPractice({
       ]);
     }
 
+    // Track delayed forced repeats for "show me word" in typing exercises.
+    // Words revealed with the button must return after 4 typing exercises.
+    const queueAfterCountdown = forcedTypingRepeatQueueRef.current.map((entry) => {
+      if (isTypingExercise(currentExerciseType)) {
+        return {
+          ...entry,
+          remainingTypingExercises: entry.remainingTypingExercises - 1,
+        };
+      }
+      return entry;
+    });
+
+    if (
+      isTypingExercise(currentExerciseType) &&
+      exerciseStatus.usedShowWord &&
+      currentWord?.concept_id !== undefined &&
+      currentWord?.concept_id !== null
+    ) {
+      const conceptId = String(currentWord.concept_id);
+      const withoutCurrentWord = queueAfterCountdown.filter(
+        (entry) => entry.conceptId !== conceptId,
+      );
+      withoutCurrentWord.push({
+        conceptId,
+        remainingTypingExercises: 4,
+      });
+      forcedTypingRepeatQueueRef.current = withoutCurrentWord;
+    } else {
+      forcedTypingRepeatQueueRef.current = queueAfterCountdown;
+    }
+
+    const dueRepeat = forcedTypingRepeatQueueRef.current.find(
+      (entry) => entry.remainingTypingExercises <= 0,
+    );
+    const dueRepeatConceptId = dueRepeat?.conceptId ?? null;
+    if (dueRepeatConceptId) {
+      // Consume due repeats immediately so they can never loop forever.
+      forcedTypingRepeatQueueRef.current = forcedTypingRepeatQueueRef.current.filter(
+        (entry) => entry.conceptId !== dueRepeatConceptId,
+      );
+    }
+
     // Reset states
     setShowSentence(false);
     setShowDefinition(false);
@@ -351,16 +412,37 @@ export function VocabularyPractice({
     } else {
       nextIndex = currentIndex < words.length - 1 ? currentIndex + 1 : 0;
     }
-    setCurrentIndex(nextIndex);
+    let resolvedNextIndex = nextIndex;
+    let forcedNextExercise: string | null = null;
+
+    if (dueRepeatConceptId) {
+      const repeatedWordIndex = words.findIndex(
+        (word) => String(word?.concept_id ?? "") === dueRepeatConceptId,
+      );
+      if (repeatedWordIndex !== -1) {
+        const repeatedWord = words[repeatedWordIndex];
+        const eligibleTypingExercises =
+          getEligibleTypingExercisesForWord(repeatedWord);
+        if (eligibleTypingExercises.length > 0) {
+          resolvedNextIndex = repeatedWordIndex;
+          const randomTypingIndex = Math.floor(
+            Math.random() * eligibleTypingExercises.length,
+          );
+          forcedNextExercise = eligibleTypingExercises[randomTypingIndex];
+        }
+      }
+    }
+
+    setCurrentIndex(resolvedNextIndex);
 
     // Select a new exercise type for the next word
-    let nextExercise = selectRandomExercise();
-    let nextWord = words[nextIndex];
+    let nextExercise = forcedNextExercise ?? selectRandomExercise();
+    let nextWord = words[resolvedNextIndex];
 
     // Check word eligibility for the selected exercise
     if (isFourWordExercise(nextExercise)) {
       // Check if we have at least 4 words remaining
-      if (nextIndex + 4 > words.length) {
+      if (resolvedNextIndex + 4 > words.length) {
         // Not enough words, fall back to another exercise
         nextExercise = getNonFourWordFallback();
       }
@@ -368,7 +450,7 @@ export function VocabularyPractice({
       // Try to find an eligible word starting from next index
       let foundEligible = false;
       for (let i = 0; i < words.length; i++) {
-        const checkIndex = (nextIndex + i) % words.length;
+        const checkIndex = (resolvedNextIndex + i) % words.length;
         if (isWordEligibleForExercise(words[checkIndex], nextExercise)) {
           setCurrentIndex(checkIndex);
           nextWord = words[checkIndex];
@@ -401,6 +483,35 @@ export function VocabularyPractice({
       cardSwitchTimeoutRef.current = null;
     }, 180);
   };
+
+  const isNextActionAvailable = isFourWordExercise(currentExerciseType)
+    ? exerciseStatus.isCorrect
+    : exerciseStatus.isCorrect ||
+      exerciseStatus.usedShowWord ||
+      exerciseStatus.usedHintForBrokenWord;
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.key !== "Enter" ||
+        event.repeat ||
+        event.shiftKey ||
+        event.ctrlKey ||
+        event.altKey ||
+        event.metaKey
+      ) {
+        return;
+      }
+      if (!isNextActionAvailable || isCardSwitching) {
+        return;
+      }
+      event.preventDefault();
+      handleNext();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isNextActionAvailable, isCardSwitching, handleNext]);
 
   const handleFinishTest = () => {
     setSessionComplete(true);
@@ -452,6 +563,7 @@ export function VocabularyPractice({
   const handleStartAgain = () => {
     // Shuffle words for a new random order
     const shuffledWords = shuffleArray(words);
+    forcedTypingRepeatQueueRef.current = [];
     setWords(shuffledWords);
 
     // Reset all states
@@ -816,12 +928,12 @@ export function VocabularyPractice({
                         onClick={handleNext}
                         disabled={isCardSwitching}
                         className={`practice-next-button px-6 py-2.5 rounded-lg font-medium transition-all ${
-                          exerciseStatus.isCorrect
+                          isNextActionAvailable
                             ? "bg-primary text-primary-foreground hover:bg-primary/90"
                             : "bg-muted text-muted-foreground hover:bg-muted/80"
                         }`}
                       >
-                        {exerciseStatus.isCorrect
+                        {isNextActionAvailable
                           ? t("practice.nextAction")
                           : t("practice.skipAction")}
                       </button>
@@ -830,16 +942,12 @@ export function VocabularyPractice({
                         onClick={handleNext}
                         disabled={isCardSwitching}
                         className={`practice-next-button px-6 py-2.5 rounded-lg font-medium transition-all ${
-                          exerciseStatus.isCorrect ||
-                          exerciseStatus.usedShowWord ||
-                          exerciseStatus.usedHintForBrokenWord
+                          isNextActionAvailable
                             ? "bg-primary text-primary-foreground hover:bg-primary/90"
                             : "bg-muted text-muted-foreground hover:bg-muted/80"
                         }`}
                       >
-                        {exerciseStatus.isCorrect ||
-                        exerciseStatus.usedShowWord ||
-                        exerciseStatus.usedHintForBrokenWord
+                        {isNextActionAvailable
                           ? t("practice.nextAction")
                           : t("practice.skipAction")}
                       </button>

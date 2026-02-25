@@ -148,9 +148,9 @@ export function BrokenWordExercise({
   }, []);
 
   const checkBrokenWordAnswer = (placed: string[]) => {
-    const isCorrectOrder = placed.every(
-      (chunk, index) => chunk === wordChunks[index],
-    );
+    // Validate against the full assembled string so duplicate chunks
+    // are interchangeable and not tied to shuffled source indices.
+    const isCorrectOrder = placed.join("") === rawWord;
 
     if (isCorrectOrder) {
       setIsCorrect(true);
