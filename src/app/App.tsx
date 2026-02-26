@@ -46,6 +46,64 @@ const DEFAULT_EXERCISES = [
   "listening",
 ];
 
+const STORAGE_KEYS = {
+  yourLanguage: "app.yourLanguage",
+  practiceLanguage: "app.practiceLanguage",
+  selectedLevel: "app.selectedLevel",
+  selectedCategories: "app.selectedCategories",
+  selectedLevels: "app.selectedLevels",
+  selectedWordTypes: "app.selectedWordTypes",
+  selectedExercises: "app.selectedExercises",
+} as const;
+
+const VALID_LEVEL_CODES = new Set(["A1", "A2", "B1", "B2", "C1", "C2"]);
+
+function canUseLocalStorage(): boolean {
+  return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+}
+
+function readStoredString(
+  key: string,
+  isValid: (value: string) => boolean,
+): string | null {
+  if (!canUseLocalStorage()) {
+    return null;
+  }
+
+  const value = window.localStorage.getItem(key);
+  if (!value || !isValid(value)) {
+    return null;
+  }
+
+  return value;
+}
+
+function readStoredStringArray(
+  key: string,
+  isValidItem?: (value: string) => boolean,
+): string[] | null {
+  if (!canUseLocalStorage()) {
+    return null;
+  }
+
+  const rawValue = window.localStorage.getItem(key);
+  if (!rawValue) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(rawValue);
+    if (!Array.isArray(parsed)) {
+      return null;
+    }
+
+    const normalized = parsed.filter((item): item is string => typeof item === "string");
+    return isValidItem ? normalized.filter(isValidItem) : normalized;
+  } catch {
+    return null;
+  }
+}
+
 interface ParsedVocabularyRoute {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
@@ -163,6 +221,10 @@ function createDistributedStarFieldImage(starCount: number): string {
 
 function AppContent() {
   const { t, uiLanguage, setUILanguage } = useLanguage();
+  const supportedLanguageCodes = useMemo(
+    () => new Set(supportedLanguages.map((language) => language.code)),
+    [],
+  );
   const vocabularyPracticeByUiLanguage: Record<string, string> = {
     en: "Vocabulary Practice",
     es: "práctica de vocabulario",
@@ -657,16 +719,45 @@ function AppContent() {
     }),
     [starFieldStyle],
   );
-  const [yourLanguage, setYourLanguage] = useState("");
-  const [practiceLanguage, setPracticeLanguage] = useState("");
+  const [yourLanguage, setYourLanguage] = useState(() =>
+    readStoredString(
+      STORAGE_KEYS.yourLanguage,
+      (value) => supportedLanguageCodes.has(value),
+    ) ?? "",
+  );
+  const [practiceLanguage, setPracticeLanguage] = useState(() =>
+    readStoredString(
+      STORAGE_KEYS.practiceLanguage,
+      (value) => supportedLanguageCodes.has(value),
+    ) ?? "",
+  );
   const location = useLocation();
   const navigate = useNavigate();
   const vocabularyRoute = useMemo(() => parseVocabularyRoute(location.pathname), [location.pathname]);
   const currentPage = useMemo(() => pageFromPath(location.pathname), [location.pathname]);
-  const [selectedLevel, setSelectedLevel] = useState("A1");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
-  const [selectedWordTypes, setSelectedWordTypes] = useState<string[]>([]);
+  const [selectedLevel, setSelectedLevel] = useState(() =>
+    (
+      readStoredString(
+        STORAGE_KEYS.selectedLevel,
+        (value) => VALID_LEVEL_CODES.has(value.toUpperCase()),
+      ) ?? "A1"
+    ).toUpperCase(),
+  );
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    () => readStoredStringArray(STORAGE_KEYS.selectedCategories) ?? [],
+  );
+  const [selectedLevels, setSelectedLevels] = useState<string[]>(
+    () =>
+      (
+        readStoredStringArray(
+          STORAGE_KEYS.selectedLevels,
+          (value) => VALID_LEVEL_CODES.has(value.toUpperCase()),
+        ) ?? []
+      ).map((value) => value.toUpperCase()),
+  );
+  const [selectedWordTypes, setSelectedWordTypes] = useState<string[]>(
+    () => readStoredStringArray(STORAGE_KEYS.selectedWordTypes) ?? [],
+  );
   const [isEnglishExploreOpen, setIsEnglishExploreOpen] = useState(false);
   const [isSpanishExploreOpen, setIsSpanishExploreOpen] = useState(false);
   const [isFrenchExploreOpen, setIsFrenchExploreOpen] = useState(false);
@@ -674,13 +765,85 @@ function AppContent() {
   const [isItalianExploreOpen, setIsItalianExploreOpen] = useState(false);
   const [isPortugueseExploreOpen, setIsPortugueseExploreOpen] = useState(false);
   const [isRussianExploreOpen, setIsRussianExploreOpen] = useState(false);
-  const [selectedExercises, setSelectedExercises] = useState<string[]>([...DEFAULT_EXERCISES]);
+  const [selectedExercises, setSelectedExercises] = useState<string[]>(() => {
+    const allowedExercises = new Set(DEFAULT_EXERCISES);
+    const persistedExercises = readStoredStringArray(
+      STORAGE_KEYS.selectedExercises,
+      (value) => allowedExercises.has(value),
+    );
+
+    return persistedExercises && persistedExercises.length > 0
+      ? persistedExercises
+      : [...DEFAULT_EXERCISES];
+  });
   const isContinueDisabled = !yourLanguage || !practiceLanguage;
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
   const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
+  const hasAutoRedirectedRef = useRef(false);
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const resolvedPage = currentPage;
+
+  useEffect(() => {
+    if (!canUseLocalStorage()) {
+      return;
+    }
+    window.localStorage.setItem(STORAGE_KEYS.yourLanguage, yourLanguage);
+  }, [yourLanguage]);
+
+  useEffect(() => {
+    if (!canUseLocalStorage()) {
+      return;
+    }
+    window.localStorage.setItem(STORAGE_KEYS.practiceLanguage, practiceLanguage);
+  }, [practiceLanguage]);
+
+  useEffect(() => {
+    if (!canUseLocalStorage()) {
+      return;
+    }
+    window.localStorage.setItem(STORAGE_KEYS.selectedLevel, selectedLevel);
+  }, [selectedLevel]);
+
+  useEffect(() => {
+    if (!canUseLocalStorage()) {
+      return;
+    }
+    window.localStorage.setItem(
+      STORAGE_KEYS.selectedCategories,
+      JSON.stringify(selectedCategories),
+    );
+  }, [selectedCategories]);
+
+  useEffect(() => {
+    if (!canUseLocalStorage()) {
+      return;
+    }
+    window.localStorage.setItem(
+      STORAGE_KEYS.selectedLevels,
+      JSON.stringify(selectedLevels),
+    );
+  }, [selectedLevels]);
+
+  useEffect(() => {
+    if (!canUseLocalStorage()) {
+      return;
+    }
+    window.localStorage.setItem(
+      STORAGE_KEYS.selectedWordTypes,
+      JSON.stringify(selectedWordTypes),
+    );
+  }, [selectedWordTypes]);
+
+  useEffect(() => {
+    if (!canUseLocalStorage()) {
+      return;
+    }
+    window.localStorage.setItem(
+      STORAGE_KEYS.selectedExercises,
+      JSON.stringify(selectedExercises),
+    );
+  }, [selectedExercises]);
 
   const handleStartPracticing = () => {
     if (isContinueDisabled) {
@@ -719,6 +882,17 @@ function AppContent() {
       setUILanguage(vocabularyRoute.uiLang);
     }
   }, [resolvedPage, setUILanguage, uiLanguage, vocabularyRoute]);
+
+  useEffect(() => {
+    if (hasAutoRedirectedRef.current) {
+      return;
+    }
+
+    if (resolvedPage === "language" && !isContinueDisabled) {
+      hasAutoRedirectedRef.current = true;
+      navigate(ROUTES.exerciseSelection, { replace: true });
+    }
+  }, [isContinueDisabled, navigate, resolvedPage]);
 
   // Cleanup when leaving page or changing languages
   useEffect(() => {
