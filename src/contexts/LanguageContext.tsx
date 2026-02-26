@@ -62,6 +62,23 @@ function flattenTranslations(
   return result;
 }
 
+function lookupNestedTranslation(
+  root: Record<string, TranslationNode>,
+  key: string,
+): string | undefined {
+  const parts = key.split(".");
+  let current: unknown = root;
+
+  for (const part of parts) {
+    if (!current || typeof current !== "object" || !(part in (current as Record<string, unknown>))) {
+      return undefined;
+    }
+    current = (current as Record<string, unknown>)[part];
+  }
+
+  return typeof current === "string" ? current : undefined;
+}
+
 function getAliasKey(key: string): string | null {
   if (key.startsWith("level.")) {
     return key.replace("level.", "levels.");
@@ -104,6 +121,16 @@ const translations: Record<UILanguage, Record<string, string>> = {
   ru: flattenTranslations(normalizeTranslationRoot(russianInterface)),
 };
 
+const translationRoots: Record<UILanguage, Record<string, TranslationNode>> = {
+  en: normalizeTranslationRoot(englishInterface),
+  es: normalizeTranslationRoot(spanishInterface),
+  fr: normalizeTranslationRoot(frenchInterface),
+  pt: normalizeTranslationRoot(portugueseInterface),
+  it: normalizeTranslationRoot(italianInterface),
+  de: normalizeTranslationRoot(germanInterface),
+  ru: normalizeTranslationRoot(russianInterface),
+};
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [uiLanguage, setUILanguage] = useState<UILanguage>(() => {
     const saved = localStorage.getItem("uiLanguage");
@@ -121,12 +148,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const selectedTranslations = translations[uiLanguage];
     const fallbackTranslations = translations.en;
     const aliasKey = getAliasKey(key);
+    const selectedRoot = translationRoots[uiLanguage];
+    const fallbackRoot = translationRoots.en;
 
     return (
       selectedTranslations[key] ||
       (aliasKey ? selectedTranslations[aliasKey] : undefined) ||
+      lookupNestedTranslation(selectedRoot, key) ||
+      (aliasKey ? lookupNestedTranslation(selectedRoot, aliasKey) : undefined) ||
       fallbackTranslations[key] ||
       (aliasKey ? fallbackTranslations[aliasKey] : undefined) ||
+      lookupNestedTranslation(fallbackRoot, key) ||
+      (aliasKey ? lookupNestedTranslation(fallbackRoot, aliasKey) : undefined) ||
       key
     );
   };
@@ -146,10 +179,11 @@ export function useLanguage() {
     console.warn(
       "useLanguage called outside of LanguageProvider, using fallback",
     );
+    const fallbackRoot = translationRoots.en;
     return {
       uiLanguage: "en" as UILanguage,
       setUILanguage: () => {},
-      t: (key: string) => key,
+      t: (key: string) => lookupNestedTranslation(fallbackRoot, key) || key,
     };
   }
   return context;

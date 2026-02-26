@@ -36,7 +36,7 @@
   },
   "aboutPage": {
     "back": "Voltar",
-    "p1": "LEXISTAR foi criado para pratica ativa de vocabulario, nao para navegacao passiva.",
+    "p1": "FLUENTSTELLAR foi criado para pratica ativa de vocabulario, nao para navegacao passiva.",
     "p2": "Voce nao percorre listas de palavras nem memoriza definicoes. Voce pratica palavras usando-as em exercicios cuidadosamente planejados, que treinam recordacao, ortografia e reconhecimento.",
     "p3": "Nao ha cadastro nem login. Voce escolhe seu idioma nativo, o idioma que quer praticar e seu nivel CEFR. Se nao souber seu nivel, um teste curto ajuda a determinar.",
     "filtersTitle": "Voce pode filtrar opcionalmente:",
@@ -59,7 +59,7 @@
     "p6": "Alguns exercicios treinam recordacao ativa, outros oferecem reforco leve. Palavras contam apenas quando voce as recorda corretamente; revelar a resposta nao conta como aprendizado.",
     "p7": "Essa abordagem foca aquisicao real de vocabulario, nao atalhos.",
     "accountTitle": "Por que sem conta?",
-    "accountSubtitle": "LEXISTAR e intencionalmente baseado em sessoes.",
+    "accountSubtitle": "FLUENTSTELLAR e intencionalmente baseado em sessoes.",
     "p8": "Voce pode comecar a praticar imediatamente, sem criar conta nem compartilhar dados pessoais. Nada e salvo quando voce sai da sessao.",
     "goalTitle": "O objetivo e simples:",
     "goalText": "praticar palavras com eficiencia, com o minimo de friccao possivel."
@@ -418,3 +418,4 @@
     "backToSelection": "Voltar para selecao de nivel"
   }
 }
+

@@ -36,7 +36,7 @@
   },
   "aboutPage": {
     "back": "Zurück",
-    "p1": "LEXISTAR ist für aktives Wortschatztraining gedacht, nicht für passives Durchblättern.",
+    "p1": "FLUENTSTELLAR ist für aktives Wortschatztraining gedacht, nicht für passives Durchblättern.",
     "p2": "Du scrollst nicht durch Wortlisten und lernst keine Definitionen auswendig. Du trainierst Wörter durch Anwendung in sorgfältig gestalteten Übungen, die Abruf, Rechtschreibung und Erkennung stärken.",
     "p3": "Es gibt keine Registrierung und keinen Login. Du wählst deine Muttersprache, die Sprache, die du üben möchtest, und dein CEFR-Niveau. Wenn du dein Niveau nicht kennst, hilft ein kurzer Test bei der Einordnung.",
     "filtersTitle": "Optional kannst du filtern:",
@@ -59,7 +59,7 @@
     "p6": "Einige Übungen trainieren den aktiven Abruf, andere sorgen für leichte Wiederholung. Wörter zählen nur, wenn du sie korrekt erinnerst; das Anzeigen der Lösung zählt nicht als gelernt.",
     "p7": "Dieser Ansatz fokussiert echten Wortschatzerwerb statt Abkürzungen.",
     "accountTitle": "Warum kein Konto?",
-    "accountSubtitle": "LEXISTAR ist bewusst sitzungsbasiert.",
+    "accountSubtitle": "FLUENTSTELLAR ist bewusst sitzungsbasiert.",
     "p8": "Du kannst sofort anfangen zu üben, ohne Konto und ohne persönliche Daten. Nach dem Verlassen der Sitzung wird nichts gespeichert.",
     "goalTitle": "Das Ziel ist einfach:",
     "goalText": "Wörter effektiv üben, mit so wenig Reibung wie möglich."
@@ -418,3 +418,4 @@
     "backToSelection": "Zurück zur Niveauauswahl"
   }
 }
+

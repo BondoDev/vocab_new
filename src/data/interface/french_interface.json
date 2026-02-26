@@ -1,4 +1,4 @@
-﻿{
+{
   "header": {
     "about": "A propos",
     "languages": "Langues",
@@ -36,7 +36,7 @@
   },
   "aboutPage": {
     "back": "Retour",
-    "p1": "LEXISTAR est concu pour la pratique active du vocabulaire, pas pour une navigation passive.",
+    "p1": "FLUENTSTELLAR est concu pour la pratique active du vocabulaire, pas pour une navigation passive.",
     "p2": "Vous ne parcourez pas de listes de mots et vous ne memorisez pas des definitions. Vous pratiquez les mots en les utilisant, avec des exercices soigneusement concus qui entrainent le rappel, l'orthographe et la reconnaissance.",
     "p3": "Il n'y a ni inscription ni connexion. Vous choisissez votre langue maternelle, la langue que vous voulez pratiquer et votre niveau CECR. Si vous ne connaissez pas votre niveau, un test court vous aide a le determiner.",
     "filtersTitle": "Vous pouvez filtrer en option :",
@@ -59,7 +59,7 @@
     "p6": "Certains exercices entrainent le rappel actif, d'autres apportent un renforcement leger. Les mots ne sont comptes que si vous les rappelez correctement ; afficher la reponse ne compte pas comme apprentissage.",
     "p7": "Cette approche vise une acquisition reelle du vocabulaire, pas des raccourcis.",
     "accountTitle": "Pourquoi pas de compte ?",
-    "accountSubtitle": "LEXISTAR est volontairement base sur des sessions.",
+    "accountSubtitle": "FLUENTSTELLAR est volontairement base sur des sessions.",
     "p8": "Vous pouvez commencer immediatement, sans creer de compte ni partager de donnees personnelles. Rien n'est stocke lorsque vous quittez la session.",
     "goalTitle": "L'objectif est simple :",
     "goalText": "pratiquer les mots efficacement, avec le moins de friction possible."
@@ -423,3 +423,4 @@
     "backToSelection": "Retour a la selection du niveau"
   }
 }
+

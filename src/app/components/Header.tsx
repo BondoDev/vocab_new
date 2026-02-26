@@ -114,7 +114,7 @@ export function Header({
         {/* Logo */}
         <div className="header-logo-wrap order-2 md:order-1">
           <h1 className="site-logo text-lg font-black tracking-[0.3em] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
-            LEXISTAR
+            FLUENTSTELLAR
           </h1>
         </div>
 
@@ -226,3 +226,4 @@ export function Header({
     </header>
   );
 }
+
