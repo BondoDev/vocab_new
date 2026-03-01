@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import "../styles/index.css";
@@ -1007,6 +1007,7 @@ function AppContent() {
         selectedWordTypes={selectedWordTypes}
         selectedExercises={selectedExercises}
         onBack={() => navigate(ROUTES.exerciseSelection)}
+        onGoFilters={() => navigate(ROUTES.levelCategory)}
       />
     );
   }

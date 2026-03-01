@@ -30,6 +30,7 @@ interface VocabularyPracticeProps {
   selectedWordTypes: string[];
   selectedExercises: string[];
   onBack: () => void;
+  onGoFilters: () => void;
 }
 
 export function VocabularyPractice({
@@ -40,6 +41,7 @@ export function VocabularyPractice({
   selectedWordTypes,
   selectedExercises,
   onBack,
+  onGoFilters,
 }: VocabularyPracticeProps) {
   const { t } = useLanguage();
   const [words, setWords] = useState<any[]>([]);
@@ -889,8 +891,14 @@ export function VocabularyPractice({
                     )}
                   </div>
 
-                  {/* Progress & Navigation */}
-                  <div className="flex items-center justify-end pt-4 border-t border-border">
+                                    {/* Progress & Navigation */}
+                  <div className="flex items-center justify-between pt-4 border-t border-border">
+                    <button
+                      onClick={onGoFilters}
+                      className="px-4 py-2.5 rounded-lg font-medium transition-all bg-muted text-muted-foreground hover:bg-muted/80"
+                    >
+                      Filters
+                    </button>
 
                     {/* For pairing exercises, allow Skip until completed */}
                     {isFourWordExercise(currentExerciseType) ? (
