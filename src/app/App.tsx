@@ -719,17 +719,26 @@ function AppContent() {
     }),
     [starFieldStyle],
   );
-  const [yourLanguage, setYourLanguage] = useState(() =>
-    readStoredString(
-      STORAGE_KEYS.yourLanguage,
-      (value) => supportedLanguageCodes.has(value),
-    ) ?? "",
+  const [initialLanguageSelection] = useState<{
+    yourLanguage: string;
+    practiceLanguage: string;
+  }>(() => ({
+    yourLanguage:
+      readStoredString(
+        STORAGE_KEYS.yourLanguage,
+        (value) => supportedLanguageCodes.has(value),
+      ) ?? "",
+    practiceLanguage:
+      readStoredString(
+        STORAGE_KEYS.practiceLanguage,
+        (value) => supportedLanguageCodes.has(value),
+      ) ?? "",
+  }));
+  const [yourLanguage, setYourLanguage] = useState(
+    () => initialLanguageSelection.yourLanguage,
   );
-  const [practiceLanguage, setPracticeLanguage] = useState(() =>
-    readStoredString(
-      STORAGE_KEYS.practiceLanguage,
-      (value) => supportedLanguageCodes.has(value),
-    ) ?? "",
+  const [practiceLanguage, setPracticeLanguage] = useState(
+    () => initialLanguageSelection.practiceLanguage,
   );
   const location = useLocation();
   const navigate = useNavigate();
@@ -780,6 +789,12 @@ function AppContent() {
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
   const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
   const hasAutoRedirectedRef = useRef(false);
+  const shouldAutoRedirectFromStoredLanguagesRef = useRef(
+    Boolean(
+      initialLanguageSelection.yourLanguage &&
+        initialLanguageSelection.practiceLanguage,
+    ),
+  );
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const resolvedPage = currentPage;
@@ -885,6 +900,10 @@ function AppContent() {
 
   useEffect(() => {
     if (hasAutoRedirectedRef.current) {
+      return;
+    }
+
+    if (!shouldAutoRedirectFromStoredLanguagesRef.current) {
       return;
     }
 
