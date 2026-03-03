@@ -3,38 +3,1517 @@
 
   <url>
     <loc>https://fluentstellar.com/</loc>
+    <lastmod>2026-03-03</lastmod>
   </url>
 
   <url>
     <loc>https://fluentstellar.com/languages</loc>
+    <lastmod>2026-03-03</lastmod>
   </url>
 
   <url>
     <loc>https://fluentstellar.com/languages/filters</loc>
+    <lastmod>2026-03-03</lastmod>
   </url>
 
   <url>
     <loc>https://fluentstellar.com/languages/filters/exercises</loc>
+    <lastmod>2026-03-03</lastmod>
   </url>
 
   <url>
     <loc>https://fluentstellar.com/languages/filters/exercises/practice</loc>
+    <lastmod>2026-03-03</lastmod>
   </url>
 
   <url>
     <loc>https://fluentstellar.com/explore</loc>
+    <lastmod>2026-03-03</lastmod>
   </url>
 
   <url>
     <loc>https://fluentstellar.com/languages/level-test</loc>
+    <lastmod>2026-03-03</lastmod>
   </url>
 
   <url>
     <loc>https://fluentstellar.com/about</loc>
+    <lastmod>2026-03-03</lastmod>
   </url>
 
   <url>
     <loc>https://fluentstellar.com/help</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/deutsch-a1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/deutsch-a2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/deutsch-b1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/deutsch-b2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/deutsch-c1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/deutsch-c2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/englisch-a1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/englisch-a2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/englisch-b1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/englisch-b2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/englisch-c1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/englisch-c2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/franzoesisch-a1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/franzoesisch-a2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/franzoesisch-b1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/franzoesisch-b2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/franzoesisch-c1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/franzoesisch-c2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/italienisch-a1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/italienisch-a2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/italienisch-b1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/italienisch-b2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/italienisch-c1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/italienisch-c2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/portugiesisch-a1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/portugiesisch-a2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/portugiesisch-b1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/portugiesisch-b2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/portugiesisch-c1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/portugiesisch-c2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/russisch-a1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/russisch-a2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/russisch-b1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/russisch-b2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/russisch-c1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/russisch-c2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/spanisch-a1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/spanisch-a2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/spanisch-b1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/spanisch-b2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/spanisch-c1-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/de/spanisch-c2-wortschatz-ueben</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/english-a1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/english-a2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/english-b1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/english-b2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/english-c1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/english-c2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/french-a1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/french-a2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/french-b1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/french-b2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/french-c1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/french-c2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/german-a1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/german-a2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/german-b1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/german-b2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/german-c1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/german-c2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/italian-a1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/italian-a2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/italian-b1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/italian-b2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/italian-c1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/italian-c2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/portuguese-a1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/portuguese-a2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/portuguese-b1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/portuguese-b2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/portuguese-c1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/portuguese-c2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/russian-a1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/russian-a2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/russian-b1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/russian-b2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/russian-c1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/russian-c2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/spanish-a1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/spanish-a2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/spanish-b1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/spanish-b2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/spanish-c1-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/en/spanish-c2-vocabulary-practice</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-aleman-a1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-aleman-a2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-aleman-b1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-aleman-b2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-aleman-c1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-aleman-c2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-espanol-a1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-espanol-a2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-espanol-b1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-espanol-b2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-espanol-c1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-espanol-c2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-frances-a1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-frances-a2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-frances-b1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-frances-b2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-frances-c1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-frances-c2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ingles-a1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ingles-a2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ingles-b1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ingles-b2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ingles-c1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ingles-c2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-italiano-a1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-italiano-a2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-italiano-b1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-italiano-b2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-italiano-c1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-italiano-c2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-portugues-a1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-portugues-a2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-portugues-b1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-portugues-b2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-portugues-c1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-portugues-c2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ruso-a1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ruso-a2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ruso-b1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ruso-b2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ruso-c1-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/es/vocabulario-ruso-c2-practica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-allemand-a1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-allemand-a2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-allemand-b1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-allemand-b2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-allemand-c1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-allemand-c2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-anglais-a1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-anglais-a2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-anglais-b1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-anglais-b2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-anglais-c1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-anglais-c2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-espagnol-a1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-espagnol-a2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-espagnol-b1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-espagnol-b2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-espagnol-c1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-espagnol-c2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-francais-a1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-francais-a2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-francais-b1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-francais-b2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-francais-c1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-francais-c2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-italien-a1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-italien-a2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-italien-b1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-italien-b2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-italien-c1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-italien-c2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-portugais-a1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-portugais-a2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-portugais-b1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-portugais-b2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-portugais-c1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-portugais-c2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-russe-a1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-russe-a2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-russe-b1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-russe-b2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-russe-c1-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/fr/vocabulaire-russe-c2-pratique</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-francese-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-francese-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-francese-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-francese-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-francese-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-francese-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-inglese-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-inglese-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-inglese-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-inglese-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-inglese-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-inglese-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-italiano-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-italiano-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-italiano-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-italiano-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-italiano-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-italiano-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-portoghese-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-portoghese-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-portoghese-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-portoghese-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-portoghese-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-portoghese-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-russo-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-russo-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-russo-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-russo-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-russo-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-russo-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-spagnolo-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-spagnolo-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-spagnolo-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-spagnolo-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-spagnolo-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-spagnolo-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-tedesco-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-tedesco-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-tedesco-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-tedesco-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-tedesco-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/it/vocabolario-tedesco-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-alemao-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-alemao-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-alemao-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-alemao-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-alemao-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-alemao-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-espanhol-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-espanhol-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-espanhol-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-espanhol-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-espanhol-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-espanhol-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-frances-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-frances-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-frances-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-frances-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-frances-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-frances-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-ingles-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-ingles-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-ingles-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-ingles-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-ingles-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-ingles-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-italiano-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-italiano-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-italiano-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-italiano-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-italiano-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-italiano-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-portugues-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-portugues-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-portugues-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-portugues-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-portugues-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-portugues-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-russo-a1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-russo-a2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-russo-b1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-russo-b2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-russo-c1-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/pt/vocabulario-russo-c2-pratica</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-angliiskii-a1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-angliiskii-a2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-angliiskii-b1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-angliiskii-b2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-angliiskii-c1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-angliiskii-c2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-frantsuzskii-a1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-frantsuzskii-a2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-frantsuzskii-b1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-frantsuzskii-b2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-frantsuzskii-c1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-frantsuzskii-c2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-ispanskii-a1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-ispanskii-a2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-ispanskii-b1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-ispanskii-b2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-ispanskii-c1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-ispanskii-c2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-italyanskii-a1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-italyanskii-a2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-italyanskii-b1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-italyanskii-b2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-italyanskii-c1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-italyanskii-c2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-nemetskii-a1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-nemetskii-a2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-nemetskii-b1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-nemetskii-b2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-nemetskii-c1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-nemetskii-c2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-portugalskii-a1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-portugalskii-a2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-portugalskii-b1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-portugalskii-b2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-portugalskii-c1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-portugalskii-c2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-russkii-a1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-russkii-a2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-russkii-b1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-russkii-b2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-russkii-c1-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://fluentstellar.com/ru/slovar-russkii-c2-praktika</loc>
+    <lastmod>2026-03-03</lastmod>
   </url>
 
 </urlset>

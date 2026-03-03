@@ -4,6 +4,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "prebuild": "npm run -s sitemap",
     "build": "vite build",
     "dev": "vite"
   },
