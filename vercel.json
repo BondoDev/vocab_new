@@ -1,7 +1,13 @@
 {
   "redirects": [
     {
-      "source": "https://www.fluentstellar.com/:path*",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.fluentstellar.com"
+        }
+      ],
       "destination": "https://fluentstellar.com/:path*",
       "permanent": true
     }
