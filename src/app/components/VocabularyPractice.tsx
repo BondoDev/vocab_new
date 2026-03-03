@@ -897,7 +897,7 @@ export function VocabularyPractice({
                       onClick={onGoFilters}
                       className="px-4 py-2.5 rounded-lg font-medium transition-all bg-muted text-muted-foreground hover:bg-muted/80"
                     >
-                      Filters
+                      {t("header.filters")}
                     </button>
 
                     {/* For pairing exercises, allow Skip until completed */}
