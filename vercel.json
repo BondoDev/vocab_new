@@ -1,20 +1,8 @@
 {
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.fluentstellar.com"
-        }
-      ],
-      "destination": "https://fluentstellar.com/:path*",
-      "permanent": true
-    }
-  ],
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
-    { "source": "/robots.txt", "destination": "/robots.txt" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/((?!assets/|sitemap.xml|robots.txt).*)",
+      "destination": "/index.html"
+    }
   ]
 }
