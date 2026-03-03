@@ -114,7 +114,20 @@ export function Header({
         {/* Logo */}
         <div className="header-logo-wrap order-2 md:order-1">
           <h1 className="site-logo text-lg font-black tracking-[0.3em] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
-            FLUENTSTELLAR
+            <a
+              href="/languages"
+              onClick={(event) => {
+                if (!onLanguages) {
+                  return;
+                }
+                event.preventDefault();
+                onLanguages();
+              }}
+              className="hover:text-white transition"
+              aria-label="Go to languages page"
+            >
+              FLUENTSTELLAR
+            </a>
           </h1>
         </div>
 
