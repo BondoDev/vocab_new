@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 import App from "./app/App.tsx";
-import { initAnalytics, trackPageView } from "./analytics";
+import { trackPageView } from "./analytics";
 import "flag-icons/css/flag-icons.min.css";
 import "./styles/index.css";
 import "./styles/filters_page.scss";
@@ -22,8 +22,6 @@ function AnalyticsTracker() {
 
   return null;
 }
-
-initAnalytics();
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter basename={import.meta.env.BASE_URL}>

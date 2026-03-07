@@ -5,6 +5,24 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="robots" content="index, follow" />
+      <script type="module">
+        const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
+
+        if (measurementId) {
+          const script = document.createElement("script");
+          script.async = true;
+          script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+          document.head.appendChild(script);
+
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function gtag() {
+            window.dataLayer.push(arguments);
+          };
+
+          window.gtag("js", new Date());
+          window.gtag("config", measurementId, { send_page_view: false });
+        }
+      </script>
       <title>FluentStellar - Structured Vocabulary Learning Platform</title>
       <meta
         name="description"
