@@ -1,54 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow" />
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="robots" content="index, follow" />
-      <script>
-        (function initGa4() {
-          var measurementId = "%VITE_GA_MEASUREMENT_ID%".trim();
-          if (!measurementId || measurementId.indexOf("VITE_GA_MEASUREMENT_ID") !== -1) {
-            return;
-          }
+    <title>FluentStellar - Structured Vocabulary Learning Platform</title>
+    <meta
+      name="description"
+      content="Structured CEFR vocabulary system with interactive exercises and intelligent learning tools."
+    />
+    <link rel="canonical" href="https://fluentstellar.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://fluentstellar.com/" />
+    <meta
+      property="og:title"
+      content="FluentStellar - Structured Language Learning"
+    />
+    <meta
+      property="og:description"
+      content="Structured CEFR vocabulary and interactive exercises."
+    />
+    <link rel="icon" type="image/png" href="/src/photos/fav_icon.png" />
+  </head>
 
-          var gaScript = document.createElement("script");
-          gaScript.async = true;
-          gaScript.src =
-            "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
-          document.head.appendChild(gaScript);
-
-          window.dataLayer = window.dataLayer || [];
-          window.gtag = function gtag() {
-            window.dataLayer.push(arguments);
-          };
-
-          window.gtag("js", new Date());
-          window.gtag("config", measurementId, { send_page_view: false });
-        })();
-      </script>
-      <title>FluentStellar - Structured Vocabulary Learning Platform</title>
-      <meta
-        name="description"
-        content="Structured CEFR vocabulary system with interactive exercises and intelligent learning tools."
-      />
-      <link rel="canonical" href="https://fluentstellar.com/" />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://fluentstellar.com/" />
-      <meta
-        property="og:title"
-        content="FluentStellar - Structured Language Learning"
-      />
-      <meta
-        property="og:description"
-        content="Structured CEFR vocabulary and interactive exercises."
-      />
-      <link rel="icon" type="image/png" href="/src/photos/fav_icon.png" />
-    </head>
-
-    <body>
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
