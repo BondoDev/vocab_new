@@ -1,11 +1,19 @@
-import { BadgeCheck } from "lucide-react";
+import { useMemo, useState } from "react";
+import { BadgeCheck, X } from "lucide-react";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface PracticeResultsProps {
   attemptHistory: Array<{
+    conceptId: string;
     level: string;
     type: string;
     result: "correct" | "incorrect" | "skipped";
+  }>;
+  studiedWords: Array<{
+    conceptId: string;
+    nativeWord: string;
+    targetWord: string;
+    wordType: string;
   }>;
   stats: {
     levels: string[];
@@ -23,9 +31,11 @@ interface PracticeResultsProps {
 
 export function PracticeResults({
   attemptHistory,
+  studiedWords,
   stats,
 }: PracticeResultsProps) {
   const { t } = useLanguage();
+  const [isStudiedWordsOpen, setIsStudiedWordsOpen] = useState(false);
   const { levels, types, matrix } = stats;
   const formatWordTypeLabel = (typeId: string) =>
     typeId
@@ -65,6 +75,13 @@ export function PracticeResults({
   ).length;
   const accuracy =
     totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0;
+  const sortedStudiedWords = useMemo(
+    () =>
+      [...studiedWords].sort((a, b) =>
+        a.nativeWord.localeCompare(b.nativeWord, undefined, { sensitivity: "base" }),
+      ),
+    [studiedWords],
+  );
 
   return (
     <div className="space-y-8 py-4 lg:space-y-6 lg:py-1">
@@ -194,6 +211,71 @@ export function PracticeResults({
           </table>
         </div>
       </div>
+
+      <div className="flex justify-center">
+        <button
+          type="button"
+          onClick={() => setIsStudiedWordsOpen(true)}
+          className="inline-flex items-center rounded-xl border border-primary/25 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/15"
+        >
+          Practiced words
+        </button>
+      </div>
+
+      {isStudiedWordsOpen ? (
+        <div
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/45 px-4 py-6 backdrop-blur-[2px]"
+          onMouseDown={() => setIsStudiedWordsOpen(false)}
+        >
+          <div
+            className="w-full max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-border px-4 py-3 sm:px-5">
+              <div>
+                <h3 className="text-base font-semibold text-foreground">
+                  Practiced words
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {sortedStudiedWords.length} words in this session
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsStudiedWordsOpen(false)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                aria-label="Close practiced words"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="max-h-[70vh] overflow-auto">
+              <table className="w-full text-left text-sm">
+                <thead className="sticky top-0 z-10 bg-card">
+                  <tr className="border-b border-border">
+                    <th className="px-4 py-3 font-semibold text-foreground">Your language</th>
+                    <th className="px-4 py-3 font-semibold text-foreground">Target language</th>
+                    <th className="px-4 py-3 font-semibold text-foreground">Word type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sortedStudiedWords.map((word) => (
+                    <tr
+                      key={word.conceptId}
+                      className="border-b border-border/70 last:border-b-0"
+                    >
+                      <td className="px-4 py-3 text-foreground">{word.nativeWord || "—"}</td>
+                      <td className="px-4 py-3 text-foreground">{word.targetWord || "—"}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{word.wordType || "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

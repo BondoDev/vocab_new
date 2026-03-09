@@ -88,6 +88,7 @@ export function VocabularyPractice({
   // Track detailed attempt history for statistics
   const [attemptHistory, setAttemptHistory] = useState<
     Array<{
+      conceptId: string;
       level: string;
       type: string;
       result: "correct" | "incorrect" | "skipped";
@@ -328,6 +329,7 @@ export function VocabularyPractice({
       // Record all 4 words from the connect exercise
       const fourWords = words.slice(currentIndex, currentIndex + 4);
       const newAttempts = fourWords.map((word) => ({
+        conceptId: String(word.concept_id),
         level: word.level,
         type: word.type,
         result,
@@ -337,6 +339,7 @@ export function VocabularyPractice({
       setAttemptHistory((prev) => [
         ...prev,
         {
+          conceptId: String(currentWord.concept_id),
           level: currentWord.level,
           type: currentWord.type,
           result,
@@ -531,6 +534,60 @@ export function VocabularyPractice({
     return { levels, types, matrix };
   };
 
+  const formatWordTypeLabel = (typeId: string) =>
+    typeId
+      .split(/[_-]+/g)
+      .map((part) =>
+        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
+      )
+      .join(" ");
+
+  const getWordTypeLabel = (typeId: string) => {
+    const translated = t(`wordTypes.${typeId}`);
+    if (!translated || translated === `wordTypes.${typeId}`) {
+      return formatWordTypeLabel(typeId);
+    }
+    return translated;
+  };
+
+  const studiedWords = useMemo(() => {
+    const seenConceptIds = new Set<string>();
+
+    return attemptHistory.reduce<
+      Array<{
+        conceptId: string;
+        nativeWord: string;
+        targetWord: string;
+        wordType: string;
+      }>
+    >((acc, attempt) => {
+      if (attempt.result !== "correct") {
+        return acc;
+      }
+
+      if (seenConceptIds.has(attempt.conceptId)) {
+        return acc;
+      }
+
+      const matchedWord = words.find(
+        (word) => String(word?.concept_id ?? "") === attempt.conceptId,
+      );
+
+      if (!matchedWord) {
+        return acc;
+      }
+
+      seenConceptIds.add(attempt.conceptId);
+      acc.push({
+        conceptId: attempt.conceptId,
+        nativeWord: translations[attempt.conceptId] ?? "",
+        targetWord: matchedWord.word_lemma ?? "",
+        wordType: matchedWord.type ? getWordTypeLabel(matchedWord.type) : "",
+      });
+      return acc;
+    }, []);
+  }, [attemptHistory, translations, words, t]);
+
   const handleStartAgain = () => {
     // Shuffle words for a new random order
     const shuffledWords = shuffleArray(words);
@@ -619,22 +676,6 @@ export function VocabularyPractice({
     return translated;
   };
 
-  const formatWordTypeLabel = (typeId: string) =>
-    typeId
-      .split(/[_-]+/g)
-      .map((part) =>
-        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
-      )
-      .join(" ");
-
-  const getWordTypeLabel = (typeId: string) => {
-    const translated = t(`wordTypes.${typeId}`);
-    if (!translated || translated === `wordTypes.${typeId}`) {
-      return formatWordTypeLabel(typeId);
-    }
-    return translated;
-  };
-
   const getExerciseInstruction = () => {
     if (currentExerciseType === "connectWords") {
       return `${t("practice.connectInstructionPrefix")} ${getLanguageName(practiceLanguage)}, ${t("practice.connectInstructionThen")} ${getLanguageName(yourLanguage)}`;
@@ -681,6 +722,7 @@ export function VocabularyPractice({
             <PracticeResults
               attemptHistory={attemptHistory}
               stats={calculateStatistics()}
+              studiedWords={studiedWords}
             />
           ) : (
             <>
