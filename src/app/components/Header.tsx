@@ -67,6 +67,16 @@ interface HeaderProps {
   onFilters?: () => void;
   onExercises?: () => void;
   onExplore?: () => void;
+  activePage?:
+    | "about"
+    | "help"
+    | "exam"
+    | "language"
+    | "levelCategory"
+    | "exerciseSelection"
+    | "explore"
+    | "vocabularyLevel"
+    | "notFound";
 }
 
 export function Header({
@@ -77,6 +87,7 @@ export function Header({
   onFilters,
   onExercises,
   onExplore,
+  activePage,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const starFieldStyle = useMemo(
@@ -93,6 +104,16 @@ export function Header({
     setIsMenuOpen(false);
     action?.();
   };
+  const isActive = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
+    activePage ? pages.includes(activePage) : false;
+  const getDesktopNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
+    `inline-flex items-center leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] border border-transparent rounded-full px-3 py-1.5 appearance-none ${
+      isActive(...pages)
+        ? "bg-white/18 text-white shadow-sm shadow-white/10"
+        : "bg-transparent text-white/90 hover:text-white hover:bg-white/10"
+    }`;
+  const getMobileNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
+    isActive(...pages) ? "is-active text-white" : undefined;
 
   return (
     <header
@@ -137,35 +158,35 @@ export function Header({
             <button
               type="button"
               onClick={onAbout}
-              className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/90 bg-transparent border-0 p-0 appearance-none"
+              className={getDesktopNavClassName("about")}
             >
               {t("header.about")}
             </button>
             <button
               type="button"
               onClick={onLanguages}
-              className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/90 bg-transparent border-0 p-0 appearance-none"
+              className={getDesktopNavClassName("language")}
             >
               {t("header.languages")}
             </button>
             <button
               type="button"
               onClick={onFilters}
-              className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/90 bg-transparent border-0 p-0 appearance-none"
+              className={getDesktopNavClassName("levelCategory")}
             >
               {t("header.filters")}
             </button>
             <button
               type="button"
               onClick={onExercises}
-              className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/90 bg-transparent border-0 p-0 appearance-none"
+              className={getDesktopNavClassName("exerciseSelection")}
             >
               {t("header.exercises")}
             </button>
             <button
               type="button"
               onClick={onExplore}
-              className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/90 bg-transparent border-0 p-0 appearance-none"
+              className={getDesktopNavClassName("explore", "vocabularyLevel")}
             >
               Explore
             </button>
@@ -178,14 +199,18 @@ export function Header({
                 event.preventDefault();
                 onHelp();
               }}
-              className="inline-flex items-center leading-none cursor-pointer hover:text-white transition"
+              className={getDesktopNavClassName("help")}
             >
               {t("header.help")}
             </a>
             <button
               type="button"
               onClick={onLevelTest}
-              className="inline-flex items-center leading-none cursor-pointer hover:text-white transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 bg-white/10 border border-white/30 px-3 py-1 rounded-full shadow-sm shadow-white/10 hover:bg-white/20 hover:border-white/50 appearance-none"
+              className={`inline-flex items-center leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 border px-3 py-1 rounded-full shadow-sm appearance-none ${
+                isActive("exam")
+                  ? "bg-white/24 border-white/55 shadow-white/20"
+                  : "bg-white/10 border-white/30 shadow-white/10 hover:bg-white/20 hover:border-white/50"
+              }`}
             >
               {t("header.levelTest")}
             </button>
@@ -210,25 +235,53 @@ export function Header({
         aria-hidden={!isMenuOpen}
       >
         <div className="header-mobile-menu-inner">
-          <button type="button" onClick={handleMenuAction(onAbout)}>
+          <button
+            type="button"
+            onClick={handleMenuAction(onAbout)}
+            className={getMobileNavClassName("about")}
+          >
             {t("header.about")}
           </button>
-          <button type="button" onClick={handleMenuAction(onLanguages)}>
+          <button
+            type="button"
+            onClick={handleMenuAction(onLanguages)}
+            className={getMobileNavClassName("language")}
+          >
             {t("header.languages")}
           </button>
-          <button type="button" onClick={handleMenuAction(onFilters)}>
+          <button
+            type="button"
+            onClick={handleMenuAction(onFilters)}
+            className={getMobileNavClassName("levelCategory")}
+          >
             {t("header.filters")}
           </button>
-          <button type="button" onClick={handleMenuAction(onExercises)}>
+          <button
+            type="button"
+            onClick={handleMenuAction(onExercises)}
+            className={getMobileNavClassName("exerciseSelection")}
+          >
             {t("header.exercises")}
           </button>
-          <button type="button" onClick={handleMenuAction(onExplore)}>
+          <button
+            type="button"
+            onClick={handleMenuAction(onExplore)}
+            className={getMobileNavClassName("explore", "vocabularyLevel")}
+          >
             Explore
           </button>
-          <button type="button" onClick={handleMenuAction(onHelp)}>
+          <button
+            type="button"
+            onClick={handleMenuAction(onHelp)}
+            className={getMobileNavClassName("help")}
+          >
             {t("header.help")}
           </button>
-          <button type="button" onClick={handleMenuAction(onLevelTest)}>
+          <button
+            type="button"
+            onClick={handleMenuAction(onLevelTest)}
+            className={getMobileNavClassName("exam")}
+          >
             {t("header.levelTest")}
           </button>
           <div className="header-mobile-lang-wrap">
@@ -239,4 +292,3 @@ export function Header({
     </header>
   );
 }
-

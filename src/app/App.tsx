@@ -1020,6 +1020,7 @@ function AppContent() {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header
+          activePage="exerciseSelection"
           onAbout={() => navigate(ROUTES.about)}
           onHelp={() => navigate(ROUTES.help)}
           onLevelTest={() => handleRequireLanguages("exam")}
@@ -1042,6 +1043,7 @@ function AppContent() {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header
+          activePage="levelCategory"
           onAbout={() => navigate(ROUTES.about)}
           onHelp={() => navigate(ROUTES.help)}
           onLevelTest={() => handleRequireLanguages("exam")}
@@ -1085,6 +1087,7 @@ function AppContent() {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header
+          activePage="about"
           onAbout={() => navigate(ROUTES.about)}
           onHelp={() => navigate(ROUTES.help)}
           onLevelTest={() => handleRequireLanguages("exam")}
@@ -1102,6 +1105,7 @@ function AppContent() {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header
+          activePage="explore"
           onAbout={() => navigate(ROUTES.about)}
           onHelp={() => navigate(ROUTES.help)}
           onLevelTest={() => handleRequireLanguages("exam")}
@@ -1533,6 +1537,7 @@ function AppContent() {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header
+          activePage="help"
           onAbout={() => navigate(ROUTES.about)}
           onHelp={() => navigate(ROUTES.help)}
           onLevelTest={() => handleRequireLanguages("exam")}
@@ -1552,6 +1557,7 @@ function AppContent() {
       return (
         <div className="min-h-screen flex flex-col bg-background">
           <Header
+            activePage="notFound"
             onAbout={() => navigate(ROUTES.about)}
             onHelp={() => navigate(ROUTES.help)}
             onLevelTest={() => handleRequireLanguages("exam")}
@@ -1568,6 +1574,7 @@ function AppContent() {
   return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header
+          activePage="vocabularyLevel"
           onAbout={() => navigate(ROUTES.about)}
           onHelp={() => navigate(ROUTES.help)}
           onLevelTest={() => handleRequireLanguages("exam")}
@@ -1590,6 +1597,7 @@ function AppContent() {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header
+          activePage="notFound"
           onAbout={() => navigate(ROUTES.about)}
           onHelp={() => navigate(ROUTES.help)}
           onLevelTest={() => handleRequireLanguages("exam")}
@@ -1606,6 +1614,7 @@ function AppContent() {
   return (
     <div className="language-page h-[100svh] w-full min-w-0 md:h-screen md:w-[100vw] md:min-w-[100vw] flex flex-col bg-background">
       <Header
+        activePage="language"
         onAbout={() => navigate(ROUTES.about)}
         onHelp={() => navigate(ROUTES.help)}
         onLevelTest={() => handleRequireLanguages("exam")}
