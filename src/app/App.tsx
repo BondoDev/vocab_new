@@ -789,6 +789,7 @@ function AppContent() {
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
   const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
   const hasAutoRedirectedRef = useRef(false);
+  const initialPathRef = useRef(location.pathname);
   const shouldAutoRedirectFromStoredLanguagesRef = useRef(
     Boolean(
       initialLanguageSelection.yourLanguage &&
@@ -907,7 +908,10 @@ function AppContent() {
       return;
     }
 
-    if (resolvedPage === "language" && !isContinueDisabled) {
+    const startedOnLanguagePage =
+      pageFromPath(initialPathRef.current) === "language";
+
+    if (resolvedPage === "language" && !isContinueDisabled && startedOnLanguagePage) {
       hasAutoRedirectedRef.current = true;
       navigate(ROUTES.exerciseSelection, { replace: true });
     }
