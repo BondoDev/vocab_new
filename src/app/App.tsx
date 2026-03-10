@@ -284,6 +284,17 @@ function AppContent() {
     }
 
     const englishLabel = t("languageNames.en");
+
+    if (uiLanguage === "en") {
+      return levels
+        .map((level) => ({
+          level,
+          label: `${englishLabel} ${level.toUpperCase()} Vocabulary`,
+          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
+        }))
+        .filter((topic) => Boolean(topic.path));
+    }
+
     const practiceLabel =
       vocabularyPracticeByUiLanguage[uiLanguage] ??
       vocabularyPracticeByUiLanguage.en;

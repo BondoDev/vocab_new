@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "English",
   "levels": {
     "a1": {
-      "title": "English A1 Vocabulary Practice",
+      "title": "English A1 Vocabulary",
       "intro": "English A1 vocabulary practice is the first step for beginners who want to build a strong foundation.",
       "levelDescription": "Beginner",
       "ctaText": "Start A1 Practice",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "English A2 Vocabulary Practice",
+      "title": "English A2 Vocabulary",
       "intro": "English A2 vocabulary practice helps you move beyond very basic phrases and start speaking in longer, clearer sentences.",
       "levelDescription": "Elementary",
       "ctaText": "Start A2 Practice",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "English B1 Vocabulary Practice",
+      "title": "English B1 Vocabulary",
       "intro": "English B1 vocabulary practice helps you develop stronger communication skills and move beyond basic conversations.",
       "levelDescription": "Intermediate",
       "ctaText": "Start B1 Practice",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "English B2 vocabulary practice",
+      "title": "English B2 Vocabulary",
       "intro": "English B2 vocabulary practice helps you communicate with greater precision and flexibility.",
       "levelDescription": "Upper-Intermediate",
       "ctaText": "Start B2 Practice",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "English C1 vocabulary practice",
+      "title": "English C1 Vocabulary",
       "intro": "English C1 vocabulary practice focuses on precision, nuance, and stylistic control.",
       "levelDescription": "Advanced",
       "ctaText": "Start C1 Practice",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "English C2 vocabulary practice",
+      "title": "English C2 Vocabulary",
       "intro": "English C2 vocabulary practice is designed for learners aiming at full mastery and near-native fluency.",
       "levelDescription": "Proficient",
       "ctaText": "Start C2 Practice",
