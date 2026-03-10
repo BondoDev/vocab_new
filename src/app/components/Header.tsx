@@ -188,7 +188,7 @@ export function Header({
               onClick={onExplore}
               className={getDesktopNavClassName("explore", "vocabularyLevel")}
             >
-              Explore
+              {t("header.explore")}
             </button>
             <a
               href="#"
@@ -268,7 +268,7 @@ export function Header({
             onClick={handleMenuAction(onExplore)}
             className={getMobileNavClassName("explore", "vocabularyLevel")}
           >
-            Explore
+            {t("header.explore")}
           </button>
           <button
             type="button"

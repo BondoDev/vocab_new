@@ -218,7 +218,7 @@ export function PracticeResults({
           onClick={() => setIsStudiedWordsOpen(true)}
           className="inline-flex items-center rounded-xl border border-primary/25 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/15"
         >
-          Practiced words
+          {t("practice.practicedWords")}
         </button>
       </div>
 
@@ -234,17 +234,17 @@ export function PracticeResults({
             <div className="flex items-center justify-between border-b border-border px-4 py-3 sm:px-5">
               <div>
                 <h3 className="text-base font-semibold text-foreground">
-                  Practiced words
+                  {t("practice.practicedWords")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {sortedStudiedWords.length} words in this session
+                  {sortedStudiedWords.length} {t("practice.wordsInThisSession")}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsStudiedWordsOpen(false)}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                aria-label="Close practiced words"
+                aria-label={t("practice.closePracticedWords")}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -254,9 +254,9 @@ export function PracticeResults({
               <table className="w-full text-left text-sm">
                 <thead className="sticky top-0 z-10 bg-card">
                   <tr className="border-b border-border">
-                    <th className="px-4 py-3 font-semibold text-foreground">Your language</th>
-                    <th className="px-4 py-3 font-semibold text-foreground">Target language</th>
-                    <th className="px-4 py-3 font-semibold text-foreground">Word type</th>
+                    <th className="px-4 py-3 font-semibold text-foreground">{t("practice.yourLanguageHeader")}</th>
+                    <th className="px-4 py-3 font-semibold text-foreground">{t("practice.targetLanguageHeader")}</th>
+                    <th className="px-4 py-3 font-semibold text-foreground">{t("practice.wordTypeHeader")}</th>
                   </tr>
                 </thead>
                 <tbody>
