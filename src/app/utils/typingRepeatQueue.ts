@@ -21,16 +21,16 @@ export const getEligibleTypingExercisesForWord = (
 interface AdvanceTypingRepeatQueueParams {
   queue: TypingRepeatEntry[];
   currentExerciseType: string;
-  usedShowWord: boolean;
   currentConceptId: string | null;
+  shouldScheduleRepeat: boolean;
   repeatDelayTypingExercises?: number;
 }
 
 export const advanceTypingRepeatQueue = ({
   queue,
   currentExerciseType,
-  usedShowWord,
   currentConceptId,
+  shouldScheduleRepeat,
   repeatDelayTypingExercises = 4,
 }: AdvanceTypingRepeatQueueParams): {
   queue: TypingRepeatEntry[];
@@ -45,7 +45,11 @@ export const advanceTypingRepeatQueue = ({
       : entry,
   );
 
-  if (isTypingExercise(currentExerciseType) && usedShowWord && currentConceptId) {
+  if (
+    isTypingExercise(currentExerciseType) &&
+    shouldScheduleRepeat &&
+    currentConceptId
+  ) {
     nextQueue = nextQueue.filter((entry) => entry.conceptId !== currentConceptId);
     nextQueue.push({
       conceptId: currentConceptId,

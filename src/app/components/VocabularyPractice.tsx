@@ -67,6 +67,11 @@ export function VocabularyPractice({
   });
   const [cardBlinkKey, setCardBlinkKey] = useState(0);
   const [isCardSwitching, setIsCardSwitching] = useState(false);
+  const [cycleWords, setCycleWords] = useState<any[]>([]);
+  const [reinforcementWords, setReinforcementWords] = useState<any[]>([]);
+  const [cycleStage, setCycleStage] = useState<
+    "collection" | "microReview" | "reinforcement"
+  >("collection");
   const cardSwitchTimeoutRef = useRef<number | null>(null);
   const forcedTypingRepeatQueueRef = useRef<TypingRepeatEntry[]>([]);
   const resumeIndexAfterForcedRepeatRef = useRef<number | null>(null);
@@ -78,12 +83,28 @@ export function VocabularyPractice({
       exerciseType === "connectWords" || exerciseType === "listening",
     [],
   );
+  const typingExerciseTypes = useMemo(
+    () => selectedExercises.filter((exercise) => !isFourWordExercise(exercise)),
+    [isFourWordExercise, selectedExercises],
+  );
+  const reinforcementExerciseTypes = useMemo(
+    () => selectedExercises.filter((exercise) => isFourWordExercise(exercise)),
+    [isFourWordExercise, selectedExercises],
+  );
+  const isCycleModeEnabled = typingExerciseTypes.length > 0;
   const getNonFourWordFallback = useCallback(
     () =>
       selectedExercises.find((exercise) => !isFourWordExercise(exercise)) ||
       "wordTyping",
     [isFourWordExercise, selectedExercises],
   );
+  const pickRandomExercise = useCallback((exerciseTypes: string[]) => {
+    if (exerciseTypes.length === 0) {
+      return null;
+    }
+    const randomIndex = Math.floor(Math.random() * exerciseTypes.length);
+    return exerciseTypes[randomIndex];
+  }, []);
 
   // Track detailed attempt history for statistics
   const [attemptHistory, setAttemptHistory] = useState<
@@ -97,10 +118,8 @@ export function VocabularyPractice({
 
   // Helper function to randomly select next exercise type from enabled exercises
   const selectRandomExercise = useCallback(() => {
-    if (selectedExercises.length === 0) return "wordTyping";
-    const randomIndex = Math.floor(Math.random() * selectedExercises.length);
-    return selectedExercises[randomIndex];
-  }, [selectedExercises]);
+    return pickRandomExercise(selectedExercises) ?? "wordTyping";
+  }, [pickRandomExercise, selectedExercises]);
 
   // Helper function to check if word is eligible for current exercise type
   const isWordEligibleForExercise = useCallback(
@@ -116,6 +135,33 @@ export function VocabularyPractice({
       // Full word typing accepts all words
       return true;
     },
+    [],
+  );
+  const getNextLinearIndex = useCallback(
+    (index: number) => (index < words.length - 1 ? index + 1 : 0),
+    [words.length],
+  );
+  const getNextCollectionIndex = useCallback(
+    (index: number) =>
+      resumeIndexAfterForcedRepeatRef.current ?? getNextLinearIndex(index),
+    [getNextLinearIndex],
+  );
+  const clearPendingResumeIndex = useCallback(() => {
+    resumeIndexAfterForcedRepeatRef.current = null;
+  }, []);
+  const selectTypingExerciseForWord = useCallback(
+    (word: any) =>
+      pickRandomExercise(
+        getEligibleTypingExercisesForWord(
+          word,
+          typingExerciseTypes,
+          isWordEligibleForExercise,
+        ),
+      ),
+    [isWordEligibleForExercise, pickRandomExercise, typingExerciseTypes],
+  );
+  const getRandomRepeatDelay = useCallback(
+    () => 3 + Math.floor(Math.random() * 3),
     [],
   );
   useEffect(() => {
@@ -246,13 +292,33 @@ export function VocabularyPractice({
         const shuffledWords = shuffleArray(loadedWords);
         forcedTypingRepeatQueueRef.current = [];
         resumeIndexAfterForcedRepeatRef.current = null;
+        setCycleWords([]);
+        setReinforcementWords([]);
+        setCycleStage("collection");
         setWords(shuffledWords);
 
         // Select initial exercise type
-        let initialExercise = selectRandomExercise();
-        if (isFourWordExercise(initialExercise) && shuffledWords.length < 4) {
+        let initialExercise = isCycleModeEnabled
+          ? selectTypingExerciseForWord(shuffledWords[0])
+          : selectRandomExercise();
+        let initialIndex = 0;
+        if (!initialExercise && isCycleModeEnabled) {
+          for (let i = 0; i < shuffledWords.length; i += 1) {
+            const candidateExercise = selectTypingExerciseForWord(shuffledWords[i]);
+            if (candidateExercise) {
+              initialIndex = i;
+              initialExercise = candidateExercise;
+              break;
+            }
+          }
+        }
+        if (!initialExercise) {
+          initialExercise = "wordTyping";
+        }
+        if (!isCycleModeEnabled && isFourWordExercise(initialExercise) && shuffledWords.length < 4) {
           initialExercise = getNonFourWordFallback();
         }
+        setCurrentIndex(initialIndex);
         setCurrentExerciseType(initialExercise);
       } catch (error) {
         console.error("Error loading words:", error);
@@ -271,11 +337,15 @@ export function VocabularyPractice({
     selectedCategories,
     selectedWordTypes,
     selectRandomExercise,
+    selectTypingExerciseForWord,
+    isCycleModeEnabled,
     getNonFourWordFallback,
     isFourWordExercise,
   ]);
 
   const currentWord = words[currentIndex];
+  const currentReinforcementWords =
+    cycleStage === "reinforcement" ? reinforcementWords : null;
   const currentPrompt = currentWord ? translations[currentWord.concept_id] : ""; // Word in user's language
   const currentDefinition = currentWord
     ? definitions[currentWord.concept_id]
@@ -301,41 +371,34 @@ export function VocabularyPractice({
   }, [currentExerciseType, currentIndex]);
 
   const runNextStep = () => {
-    // Determine the result for this word
     let result: "correct" | "incorrect" | "skipped";
 
     if (isFourWordExercise(currentExerciseType)) {
-      // For connect words, always count as correct if completed (all 4 pairs matched)
       result = exerciseStatus.isCorrect ? "correct" : "skipped";
     } else if (
       exerciseStatus.usedShowWord ||
       exerciseStatus.usedHintForBrokenWord
     ) {
-      // User clicked "Show me word" or used hint in broken-word - count as incorrect (missed/disposed)
       result = "incorrect";
     } else if (currentExerciseType === "brokenWord") {
-      // For broken-word, check if completed correctly
       result = exerciseStatus.isCorrect ? "correct" : "skipped";
     } else if (exerciseStatus.hasTypedAnswer) {
-      // User typed something - check if it was correct
       result = exerciseStatus.isCorrect ? "correct" : "incorrect";
     } else {
-      // User clicked Skip without typing or showing word - count as skipped
       result = "skipped";
     }
 
-    // Record the attempt - for connect words, record all 4 words
     if (isFourWordExercise(currentExerciseType)) {
-      // Record all 4 words from the connect exercise
-      const fourWords = words.slice(currentIndex, currentIndex + 4);
-      const newAttempts = fourWords.map((word) => ({
+      const fourWords =
+        currentReinforcementWords ?? words.slice(currentIndex, currentIndex + 4);
+      const newAttempts = fourWords.slice(0, 4).map((word) => ({
         conceptId: String(word.concept_id),
         level: word.level,
         type: word.type,
         result,
       }));
       setAttemptHistory((prev) => [...prev, ...newAttempts]);
-    } else {
+    } else if (currentWord) {
       setAttemptHistory((prev) => [
         ...prev,
         {
@@ -347,20 +410,22 @@ export function VocabularyPractice({
       ]);
     }
 
+    const shouldScheduleRepeat =
+      result !== "correct" && !isFourWordExercise(currentExerciseType);
     const { queue: advancedQueue, dueConceptId: dueRepeatConceptId } =
       advanceTypingRepeatQueue({
         queue: forcedTypingRepeatQueueRef.current,
         currentExerciseType,
-        usedShowWord: exerciseStatus.usedShowWord,
         currentConceptId:
           currentWord?.concept_id !== undefined &&
           currentWord?.concept_id !== null
             ? String(currentWord.concept_id)
             : null,
+        shouldScheduleRepeat,
+        repeatDelayTypingExercises: getRandomRepeatDelay(),
       });
     forcedTypingRepeatQueueRef.current = advancedQueue;
 
-    // Reset states
     setShowSentence(false);
     setShowDefinition(false);
     setExerciseStatus({
@@ -370,76 +435,174 @@ export function VocabularyPractice({
       usedHintForBrokenWord: false,
     });
 
-    // Determine next word index - for connect words, skip 4 words.
-    // If the current card was a forced repeat injection, resume from where
-    // the normal sequence would have continued.
-    let nextIndex;
-    if (resumeIndexAfterForcedRepeatRef.current !== null) {
-      nextIndex = resumeIndexAfterForcedRepeatRef.current;
-      resumeIndexAfterForcedRepeatRef.current = null;
-    } else if (isFourWordExercise(currentExerciseType)) {
-      nextIndex = currentIndex + 4 < words.length ? currentIndex + 4 : 0;
-    } else {
-      nextIndex = currentIndex < words.length - 1 ? currentIndex + 1 : 0;
-    }
-    let resolvedNextIndex = nextIndex;
-    let forcedNextExercise: string | null = null;
+    const moveToNextCollectionTyping = () => {
+      let resolvedNextIndex = getNextCollectionIndex(currentIndex);
+      if (resumeIndexAfterForcedRepeatRef.current !== null) {
+        clearPendingResumeIndex();
+      }
 
-    if (dueRepeatConceptId) {
-      const repeatedWordIndex = words.findIndex(
-        (word) => String(word?.concept_id ?? "") === dueRepeatConceptId,
-      );
-      if (repeatedWordIndex !== -1) {
-        const repeatedWord = words[repeatedWordIndex];
-        const eligibleTypingExercises = getEligibleTypingExercisesForWord(
-          repeatedWord,
-          selectedExercises,
-          isWordEligibleForExercise,
+      let nextWord = words[resolvedNextIndex];
+      let nextExercise = nextWord
+        ? selectTypingExerciseForWord(nextWord)
+        : null;
+
+      if (dueRepeatConceptId) {
+        const repeatedWordIndex = words.findIndex(
+          (word) => String(word?.concept_id ?? "") === dueRepeatConceptId,
         );
-        if (eligibleTypingExercises.length > 0) {
-          resumeIndexAfterForcedRepeatRef.current = nextIndex;
-          resolvedNextIndex = repeatedWordIndex;
-          const randomTypingIndex = Math.floor(
-            Math.random() * eligibleTypingExercises.length,
-          );
-          forcedNextExercise = eligibleTypingExercises[randomTypingIndex];
-        }
-      }
-    }
-
-    setCurrentIndex(resolvedNextIndex);
-
-    // Select a new exercise type for the next word
-    let nextExercise = forcedNextExercise ?? selectRandomExercise();
-    let nextWord = words[resolvedNextIndex];
-
-    // Check word eligibility for the selected exercise
-    if (isFourWordExercise(nextExercise)) {
-      // Check if we have at least 4 words remaining
-      if (resolvedNextIndex + 4 > words.length) {
-        // Not enough words, fall back to another exercise
-        nextExercise = getNonFourWordFallback();
-      }
-    } else if (nextWord && !isWordEligibleForExercise(nextWord, nextExercise)) {
-      // Try to find an eligible word starting from next index
-      let foundEligible = false;
-      for (let i = 0; i < words.length; i++) {
-        const checkIndex = (resolvedNextIndex + i) % words.length;
-        if (isWordEligibleForExercise(words[checkIndex], nextExercise)) {
-          setCurrentIndex(checkIndex);
-          nextWord = words[checkIndex];
-          foundEligible = true;
-          break;
+        if (repeatedWordIndex !== -1) {
+          const repeatedWord = words[repeatedWordIndex];
+          const repeatedExercise = selectTypingExerciseForWord(repeatedWord);
+          if (repeatedExercise) {
+            if (repeatedWordIndex !== resolvedNextIndex) {
+              resumeIndexAfterForcedRepeatRef.current = resolvedNextIndex;
+            }
+            resolvedNextIndex = repeatedWordIndex;
+            nextWord = repeatedWord;
+            nextExercise = repeatedExercise;
+          }
         }
       }
 
-      // If no eligible word found, fall back to full word typing
-      if (!foundEligible && selectedExercises.includes("wordTyping")) {
-        nextExercise = "wordTyping";
+      if (!nextExercise && words.length > 0) {
+        for (let i = 0; i < words.length; i += 1) {
+          const checkIndex = (resolvedNextIndex + i) % words.length;
+          const candidateWord = words[checkIndex];
+          const candidateExercise = selectTypingExerciseForWord(candidateWord);
+          if (candidateExercise) {
+            resolvedNextIndex = checkIndex;
+            nextWord = candidateWord;
+            nextExercise = candidateExercise;
+            break;
+          }
+        }
       }
+
+      if (!nextWord) {
+        setSessionComplete(true);
+        return;
+      }
+
+      setCycleStage("collection");
+      setCurrentIndex(resolvedNextIndex);
+      setCurrentExerciseType(nextExercise ?? "wordTyping");
+    };
+
+    if (!isCycleModeEnabled) {
+      let nextIndex;
+      if (resumeIndexAfterForcedRepeatRef.current !== null) {
+        nextIndex = resumeIndexAfterForcedRepeatRef.current;
+        resumeIndexAfterForcedRepeatRef.current = null;
+      } else if (isFourWordExercise(currentExerciseType)) {
+        nextIndex = currentIndex + 4 < words.length ? currentIndex + 4 : 0;
+      } else {
+        nextIndex = getNextLinearIndex(currentIndex);
+      }
+
+      let resolvedNextIndex = nextIndex;
+      let nextExercise = selectRandomExercise();
+      let nextWord = words[resolvedNextIndex];
+
+      if (isFourWordExercise(nextExercise)) {
+        if (resolvedNextIndex + 4 > words.length) {
+          nextExercise = getNonFourWordFallback();
+        }
+      } else if (nextWord && !isWordEligibleForExercise(nextWord, nextExercise)) {
+        for (let i = 0; i < words.length; i += 1) {
+          const checkIndex = (resolvedNextIndex + i) % words.length;
+          if (isWordEligibleForExercise(words[checkIndex], nextExercise)) {
+            resolvedNextIndex = checkIndex;
+            nextWord = words[checkIndex];
+            break;
+          }
+        }
+      }
+
+      setCurrentIndex(resolvedNextIndex);
+      setCurrentExerciseType(nextExercise);
+      return;
     }
 
-    setCurrentExerciseType(nextExercise);
+    if (cycleStage === "reinforcement") {
+      setCycleWords([]);
+      setReinforcementWords([]);
+      moveToNextCollectionTyping();
+      return;
+    }
+
+    if (cycleStage === "microReview") {
+      if (reinforcementWords.length === 4 && reinforcementExerciseTypes.length > 0) {
+        setCycleStage("reinforcement");
+        setCurrentExerciseType(
+          pickRandomExercise(reinforcementExerciseTypes) ?? "connectWords",
+        );
+        return;
+      }
+
+      setCycleWords([]);
+      setReinforcementWords([]);
+      moveToNextCollectionTyping();
+      return;
+    }
+
+    const shouldAddToCycle =
+      Boolean(currentWord) &&
+      (exerciseStatus.isCorrect ||
+        exerciseStatus.usedShowWord ||
+        exerciseStatus.usedHintForBrokenWord);
+
+    const nextCycleWords = shouldAddToCycle
+      ? cycleWords.some(
+          (word) =>
+            String(word?.concept_id ?? "") ===
+            String(currentWord?.concept_id ?? ""),
+        )
+        ? cycleWords
+        : [...cycleWords, currentWord]
+      : cycleWords;
+
+    setCycleWords(nextCycleWords);
+
+    if (nextCycleWords.length === 4) {
+      setReinforcementWords(nextCycleWords);
+
+      const nextCollectionIndex = getNextCollectionIndex(currentIndex);
+      if (resumeIndexAfterForcedRepeatRef.current === null) {
+        resumeIndexAfterForcedRepeatRef.current = nextCollectionIndex;
+      }
+
+      const reviewCandidates = nextCycleWords.slice(0, -1);
+      const reviewWord =
+        reviewCandidates[Math.floor(Math.random() * reviewCandidates.length)];
+      const reviewIndex = words.findIndex(
+        (word) =>
+          String(word?.concept_id ?? "") ===
+          String(reviewWord?.concept_id ?? ""),
+      );
+      const reviewExercise = reviewWord
+        ? selectTypingExerciseForWord(reviewWord)
+        : null;
+
+      if (reviewWord && reviewIndex !== -1 && reviewExercise) {
+        setCycleStage("microReview");
+        setCurrentIndex(reviewIndex);
+        setCurrentExerciseType(reviewExercise);
+        return;
+      }
+
+      if (reinforcementExerciseTypes.length > 0) {
+        setCycleStage("reinforcement");
+        setCurrentExerciseType(
+          pickRandomExercise(reinforcementExerciseTypes) ?? "connectWords",
+        );
+        return;
+      }
+
+      setCycleWords([]);
+      setReinforcementWords([]);
+    }
+
+    moveToNextCollectionTyping();
   };
 
   const handleNext = () => {
@@ -603,6 +766,9 @@ export function VocabularyPractice({
     setShowDefinition(false);
     setSessionComplete(false);
     setAttemptHistory([]);
+    setCycleWords([]);
+    setReinforcementWords([]);
+    setCycleStage("collection");
     setExerciseStatus({
       isCorrect: false,
       hasTypedAnswer: false,
@@ -612,8 +778,23 @@ export function VocabularyPractice({
     setCardBlinkKey((prev) => prev + 1);
 
     // Select initial exercise type for the new session
-    let initialExercise = selectRandomExercise();
-    if (isFourWordExercise(initialExercise) && shuffledWords.length < 4) {
+    let initialExercise = isCycleModeEnabled
+      ? selectTypingExerciseForWord(shuffledWords[0])
+      : selectRandomExercise();
+    if (!initialExercise && isCycleModeEnabled) {
+      for (let i = 0; i < shuffledWords.length; i += 1) {
+        const candidateExercise = selectTypingExerciseForWord(shuffledWords[i]);
+        if (candidateExercise) {
+          setCurrentIndex(i);
+          initialExercise = candidateExercise;
+          break;
+        }
+      }
+    }
+    if (!initialExercise) {
+      initialExercise = "wordTyping";
+    }
+    if (!isCycleModeEnabled && isFourWordExercise(initialExercise) && shuffledWords.length < 4) {
       initialExercise = getNonFourWordFallback();
     }
     setCurrentExerciseType(initialExercise);
@@ -799,6 +980,7 @@ export function VocabularyPractice({
                         <ConnectWordsExercise
                           words={words}
                           currentIndex={currentIndex}
+                          exerciseWords={currentReinforcementWords ?? undefined}
                           translations={translations}
                           sourceLabel={getLanguageName(practiceLanguage)}
                           targetLabel={getLanguageName(yourLanguage)}
@@ -808,6 +990,7 @@ export function VocabularyPractice({
                         <ListeningExercise
                           words={words}
                           currentIndex={currentIndex}
+                          exerciseWords={currentReinforcementWords ?? undefined}
                           translations={translations}
                           sourceLabel={getLanguageName(practiceLanguage)}
                           targetLabel={getLanguageName(yourLanguage)}

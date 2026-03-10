@@ -6,6 +6,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 interface ListeningExerciseProps {
   words: any[];
   currentIndex: number;
+  exerciseWords?: any[];
   translations: { [key: string]: string };
   sourceLabel: string;
   targetLabel: string;
@@ -26,6 +27,7 @@ type ExerciseWord = {
 export function ListeningExercise({
   words,
   currentIndex,
+  exerciseWords,
   translations,
   sourceLabel,
   targetLabel,
@@ -74,7 +76,7 @@ export function ListeningExercise({
   );
 
   useEffect(() => {
-    const fourWords = words.slice(currentIndex, currentIndex + 4);
+    const fourWords = exerciseWords ?? words.slice(currentIndex, currentIndex + 4);
     if (fourWords.length < 4) {
       setLeftItems([]);
       setRightItems([]);
@@ -119,7 +121,7 @@ export function ListeningExercise({
       usedShowWord: false,
       usedHintForBrokenWord: false,
     });
-  }, [currentIndex, words, translations, onStatusChange]);
+  }, [currentIndex, exerciseWords, words, translations, onStatusChange]);
 
   useEffect(() => {
     onStatusChange({

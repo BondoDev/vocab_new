@@ -6,6 +6,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 interface ConnectWordsExerciseProps {
   words: any[];
   currentIndex: number;
+  exerciseWords?: any[];
   translations: { [key: string]: string };
   sourceLabel: string;
   targetLabel: string;
@@ -20,6 +21,7 @@ interface ConnectWordsExerciseProps {
 export function ConnectWordsExercise({
   words,
   currentIndex,
+  exerciseWords,
   translations,
   sourceLabel,
   targetLabel,
@@ -68,7 +70,7 @@ export function ConnectWordsExercise({
   );
 
   useEffect(() => {
-    const fourWords = words.slice(currentIndex, currentIndex + 4);
+    const fourWords = exerciseWords ?? words.slice(currentIndex, currentIndex + 4);
     if (fourWords.length < 4) {
       setConnectWords([]);
       setConnectMeanings([]);
@@ -108,7 +110,7 @@ export function ConnectWordsExercise({
       usedShowWord: false,
       usedHintForBrokenWord: false,
     });
-  }, [currentIndex, words, translations, onStatusChange]);
+  }, [currentIndex, exerciseWords, words, translations, onStatusChange]);
 
   useEffect(() => {
     onStatusChange({
@@ -140,7 +142,8 @@ export function ConnectWordsExercise({
     const selectedWordText = connectWords[selectedWord];
     const selectedMeaningText = connectMeanings[meaningIndex];
 
-    const currentFourWords = words.slice(currentIndex, currentIndex + 4);
+    const currentFourWords =
+      exerciseWords ?? words.slice(currentIndex, currentIndex + 4);
     const wordObject = currentFourWords.find(
       (w) => w.word_lemma === selectedWordText,
     );
