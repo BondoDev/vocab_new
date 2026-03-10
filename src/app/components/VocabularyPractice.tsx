@@ -458,11 +458,13 @@ export function VocabularyPractice({
     }, 180);
   };
 
-  const isNextActionAvailable = isFourWordExercise(currentExerciseType)
-    ? exerciseStatus.isCorrect
-    : exerciseStatus.isCorrect ||
-      exerciseStatus.usedShowWord ||
-      exerciseStatus.usedHintForBrokenWord;
+  const isNextActionAvailable =
+    isFourWordExercise(currentExerciseType) ||
+    currentExerciseType === "brokenWord"
+      ? exerciseStatus.isCorrect
+      : exerciseStatus.isCorrect ||
+        exerciseStatus.usedShowWord ||
+        exerciseStatus.usedHintForBrokenWord;
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
