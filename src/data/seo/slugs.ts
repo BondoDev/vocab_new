@@ -15,6 +15,13 @@ export type TargetLanguageSlug = (typeof SUPPORTED_TARGET_LANGUAGES)[number];
 export type Level = (typeof SUPPORTED_LEVELS)[number];
 export type PageType = "vocab-practice";
 export type PageKey = `${TargetLanguageSlug}:${Level}:${PageType}`;
+export interface LocalizedVocabularyRoute {
+  uiLang: UiLanguageCode;
+  targetLanguage: TargetLanguageSlug;
+  level: Level;
+  path: string;
+  slug: string;
+}
 
 const TARGET_NAME_SLUGS: Record<UiLanguageCode, Record<TargetLanguageSlug, string>> = {
   en: {
@@ -174,4 +181,32 @@ export function resolveVocabularyRoute(uiLangRaw: string, slug: string): {
     targetLanguage: parsed.targetLanguage,
     level: parsed.level,
   };
+}
+
+export function getAllLocalizedVocabularyRoutes(): LocalizedVocabularyRoute[] {
+  const routes: LocalizedVocabularyRoute[] = [];
+
+  SUPPORTED_UI_LANGUAGES.forEach((uiLang) => {
+    SUPPORTED_TARGET_LANGUAGES.forEach((targetLanguage) => {
+      SUPPORTED_LEVELS.forEach((level) => {
+        const path = buildLocalizedVocabularyPath(uiLang, targetLanguage, level);
+        const pageKey = buildVocabularyPageKey(targetLanguage, level);
+        const slug = getSlugForPage(uiLang, pageKey);
+
+        if (!path || !slug) {
+          return;
+        }
+
+        routes.push({
+          uiLang,
+          targetLanguage,
+          level,
+          path,
+          slug,
+        });
+      });
+    });
+  });
+
+  return routes;
 }

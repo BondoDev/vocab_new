@@ -1,17 +1,15 @@
-﻿import { useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { useMemo } from "react";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
+import { SUPPORTED_LEVELS, buildLocalizedVocabularyPath } from "../../data/seo/slugs";
 import {
   getVocabularyLevelContent,
   type CefrLevelCode,
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../data/vocabularyLevels";
-import {
-  SUPPORTED_LEVELS,
-  SUPPORTED_UI_LANGUAGES,
-  buildLocalizedVocabularyPath,
-} from "../../data/seo/slugs";
+import { buildVocabularySeoMetadata } from "../../seo/metadata";
+import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 
 interface VocabularyLevelPageProps {
   uiLang: UiLanguageCode;
@@ -67,87 +65,12 @@ export function VocabularyLevelPage({
   onStartPractice,
 }: VocabularyLevelPageProps) {
   const location = useLocation();
+  const siteOrigin = useSeoSiteOrigin();
   const wordsUnit = WORDS_UNIT_BY_UI_LANG[uiLang] ?? WORDS_UNIT_BY_UI_LANG.en;
   const contentBundle = useMemo(
     () => getVocabularyLevelContent(uiLang, targetLanguage, level),
     [uiLang, targetLanguage, level],
   );
-
-  useEffect(() => {
-    if (!contentBundle) {
-      return;
-    }
-
-    const { file, levelContent } = contentBundle;
-    const levelDisplay = LEVEL_DISPLAY[level];
-    const title =
-      levelContent.metaTitle ??
-      `${file.targetLanguageDisplayName} ${levelDisplay} Vocabulary Practice - CEFR ${levelContent.levelDescription}`;
-    const description =
-      levelContent.metaDescription ??
-      `${levelContent.intro} ${levelContent.wordCount.text} ${levelContent.wordCount.value}+ ${wordsUnit}.`;
-    const canonicalHref = `${window.location.origin}${location.pathname}`;
-
-    document.title = title;
-
-    const upsertMeta = (name: string, content: string) => {
-      let tag = document.querySelector(
-        `meta[name=\"${name}\"]`,
-      ) as HTMLMetaElement | null;
-      if (!tag) {
-        tag = document.createElement("meta");
-        tag.setAttribute("name", name);
-        document.head.appendChild(tag);
-      }
-      tag.setAttribute("content", content);
-    };
-
-    upsertMeta("description", description);
-
-    let canonical = document.querySelector(
-      "link[rel='canonical']",
-    ) as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute("href", canonicalHref);
-
-    const oldAlternateTags = document.querySelectorAll(
-      "link[data-vocab-hreflang='true']",
-    );
-    oldAlternateTags.forEach((tag) => tag.remove());
-
-    SUPPORTED_UI_LANGUAGES.forEach((lang) => {
-      const localizedPath = buildLocalizedVocabularyPath(lang, targetLanguage, level);
-      if (!localizedPath) {
-        return;
-      }
-
-      const href = `${window.location.origin}${localizedPath}`;
-      const alt = document.createElement("link");
-      alt.setAttribute("rel", "alternate");
-      alt.setAttribute("hreflang", lang);
-      alt.setAttribute("href", href);
-      alt.setAttribute("data-vocab-hreflang", "true");
-      document.head.appendChild(alt);
-    });
-
-    const xDefaultPath =
-      buildLocalizedVocabularyPath("en", targetLanguage, level) ?? "/";
-    const xDefault = document.createElement("link");
-    xDefault.setAttribute("rel", "alternate");
-    xDefault.setAttribute("hreflang", "x-default");
-    xDefault.setAttribute("href", `${window.location.origin}${xDefaultPath}`);
-    xDefault.setAttribute("data-vocab-hreflang", "true");
-    document.head.appendChild(xDefault);
-
-    return () => {
-      const tags = document.querySelectorAll("link[data-vocab-hreflang='true']");
-      tags.forEach((tag) => tag.remove());
-    };
-  }, [contentBundle, level, location.pathname, targetLanguage, wordsUnit]);
 
   if (!contentBundle) {
     return null;
@@ -155,6 +78,13 @@ export function VocabularyLevelPage({
 
   const { levelContent } = contentBundle;
   const levelDisplay = LEVEL_DISPLAY[level];
+  const seoMetadata = buildVocabularySeoMetadata({
+    uiLang,
+    targetLanguage,
+    level,
+    pathname: location.pathname,
+    siteOrigin,
+  });
   const ctaText = levelContent.ctaText || `Start ${levelDisplay} Practice`;
   const localizedHeaders =
     SAMPLE_TABLE_HEADERS_BY_UI_LANG[uiLang] ?? SAMPLE_TABLE_HEADERS_BY_UI_LANG.en;
@@ -170,9 +100,21 @@ export function VocabularyLevelPage({
     levelContent.introParagraphs && levelContent.introParagraphs.length > 0
       ? levelContent.introParagraphs
       : [levelContent.intro];
+  const internalNavigationLinks = SUPPORTED_LEVELS.filter((item) => item !== level).map(
+    (nextLevel) => {
+      const nextLevelContent = getVocabularyLevelContent(uiLang, targetLanguage, nextLevel);
+
+      return {
+        level: nextLevel,
+        href: buildVocabularyUrl(uiLang, targetLanguage, nextLevel),
+        label: nextLevelContent?.levelContent.title ?? LEVEL_DISPLAY[nextLevel],
+      };
+    },
+  );
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
+      {seoMetadata ? <SEOHead metadata={seoMetadata} /> : null}
       <div className="mx-auto w-full max-w-5xl space-y-8">
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <h1 className="text-3xl text-foreground md:text-4xl">{levelContent.title}</h1>
@@ -280,19 +222,18 @@ export function VocabularyLevelPage({
 
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <h2 className="text-2xl text-foreground">{levelContent.internalNavigation.heading}</h2>
-          
+
           <div className="mt-2 flex flex-wrap gap-2">
-            {SUPPORTED_LEVELS.filter((item) => item !== level).map((nextLevel) => (
+            {internalNavigationLinks.map((item) => (
               <Link
-                key={nextLevel}
+                key={item.level}
                 className="rounded-lg border border-primary/30 px-3 py-1.5 text-sm text-primary transition hover:bg-primary/10"
-                to={buildVocabularyUrl(uiLang, targetLanguage, nextLevel)}
+                to={item.href}
               >
-                {LEVEL_DISPLAY[nextLevel]}
+                {item.label}
               </Link>
             ))}
           </div>
-
         </section>
 
         <section className="pb-4">
@@ -314,5 +255,3 @@ export function VocabularyLevelPage({
     </main>
   );
 }
-
-

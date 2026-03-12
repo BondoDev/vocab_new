@@ -3,11 +3,21 @@ import { Menu, X } from "lucide-react";
 import { UILanguageSwitcher } from "../components/UILanguageSwitcher";
 import { useLanguage } from "../../contexts/LanguageContext";
 
-function randomBetween(min: number, max: number): number {
-  return Math.random() * (max - min) + min;
+function createSeededRandom(seed: number): () => number {
+  let state = seed >>> 0;
+
+  return () => {
+    state = (1664525 * state + 1013904223) >>> 0;
+    return state / 4294967296;
+  };
+}
+
+function randomBetween(random: () => number, min: number, max: number): number {
+  return random() * (max - min) + min;
 }
 
 function createRandomStarFieldImage(starCount: number): string {
+  const random = createSeededRandom(14057);
   const sizeOptions = [0.8, 1, 1.2, 1.4];
   const colorOptions = [
     "#fff",
@@ -26,8 +36,8 @@ function createRandomStarFieldImage(starCount: number): string {
     let placed = false;
 
     for (let attempt = 0; attempt < 25; attempt++) {
-      const candidateX = randomBetween(6, 94);
-      const candidateY = randomBetween(16, 84);
+      const candidateX = randomBetween(random, 6, 94);
+      const candidateY = randomBetween(random, 16, 84);
       const tooClose = points.some((point) => {
         const dx = point.x - candidateX;
         const dy = point.y - candidateY;
@@ -43,13 +53,13 @@ function createRandomStarFieldImage(starCount: number): string {
     }
 
     if (!placed) {
-      x = randomBetween(6, 94);
-      y = randomBetween(16, 84);
+      x = randomBetween(random, 6, 94);
+      y = randomBetween(random, 16, 84);
     }
 
     points.push({ x, y });
-    const size = sizeOptions[Math.floor(Math.random() * sizeOptions.length)];
-    const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+    const size = sizeOptions[Math.floor(random() * sizeOptions.length)];
+    const color = colorOptions[Math.floor(random() * colorOptions.length)];
 
     layers.push(
       `radial-gradient(${size}px ${size}px at ${x.toFixed(1)}% ${y.toFixed(1)}%, ${color}, rgba(0,0,0,0))`,
@@ -107,9 +117,9 @@ export function Header({
   const isActive = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
     activePage ? pages.includes(activePage) : false;
   const getDesktopNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
-    `inline-flex items-center leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] border border-transparent rounded-full px-3 py-1.5 appearance-none ${
+    `relative inline-flex items-center leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] border border-transparent px-3 py-1.5 appearance-none ${
       isActive(...pages)
-        ? "bg-white/18 text-white shadow-sm shadow-white/10"
+        ? "rounded-full border-white/45 bg-white/18 text-white shadow-[0_8px_18px_rgba(12,10,24,0.18)]"
         : "bg-transparent text-white/90 hover:text-white hover:bg-white/10"
     }`;
   const getMobileNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
@@ -118,10 +128,9 @@ export function Header({
   return (
     <header
       style={starFieldStyle}
-      className="header-shell relative w-full px-4 py-3 md:px-8 md:py-4
+      className="header-shell relative w-full px-4 py-3 md:px-8 md:py-3
                  sticky top-0 z-50 shadow-[0_8px_18px_rgba(20,10,45,0.25)] overflow-visible"
     >
-      {/* Nebula glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -130,11 +139,9 @@ export function Header({
         }}
       />
 
-      {/* NAV */}
       <nav className="header-nav relative flex items-center justify-between max-w-7xl mx-auto">
-        {/* Logo */}
         <div className="header-logo-wrap order-2 md:order-1">
-          <h1 className="site-logo text-lg font-black tracking-[0.3em] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
+          <div className="site-logo text-lg font-black tracking-[0.3em] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
             <a
               href="/languages"
               onClick={(event) => {
@@ -149,10 +156,9 @@ export function Header({
             >
               FLUENTSTELLAR
             </a>
-          </h1>
+          </div>
         </div>
 
-        {/* Desktop navigation */}
         <div className="header-desktop-nav hidden md:flex order-2 items-center gap-8">
           <div className="flex gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/90">
             <button
@@ -221,7 +227,6 @@ export function Header({
           </div>
         </div>
 
-        {/* Mobile menu */}
         <button
           className="header-menu-toggle md:hidden order-1 p-1 text-white"
           onClick={() => setIsMenuOpen((v) => !v)}

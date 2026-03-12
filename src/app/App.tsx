@@ -19,7 +19,7 @@ import {
   LanguageContinuePopup,
   type LanguageContinuePopupHandle,
 } from "./components/LanguageContinuePopup";
-import { LanguageProvider, useLanguage } from "../contexts/LanguageContext";
+import { LanguageProvider, useLanguage, type UILanguage } from "../contexts/LanguageContext";
 import {
   getVocabularyLevelContent,
   type CefrLevelCode,
@@ -27,6 +27,8 @@ import {
   type UiLanguageCode,
 } from "../data/vocabularyLevels";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../data/seo/slugs";
+import { SeoProvider, type SeoManager } from "../seo/SeoContext";
+import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 
 const supportedLanguages = [
   { code: "en", flagCode: "gb" },
@@ -1900,11 +1902,23 @@ function AppContent() {
   );
 }
 
-export default function App() {
+interface AppProps {
+  initialUILanguage?: UILanguage;
+  seoManager?: SeoManager;
+  siteOrigin?: string;
+}
+
+export default function App({
+  initialUILanguage,
+  seoManager,
+  siteOrigin = DEFAULT_SITE_ORIGIN,
+}: AppProps) {
   return (
-    <LanguageProvider>
-      <AppContent />
-    </LanguageProvider>
+    <SeoProvider manager={seoManager} siteOrigin={siteOrigin}>
+      <LanguageProvider initialUILanguage={initialUILanguage}>
+        <AppContent />
+      </LanguageProvider>
+    </SeoProvider>
   );
 }
 

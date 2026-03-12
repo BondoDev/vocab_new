@@ -7,7 +7,7 @@ import italianInterface from "../data/interface/italian_interface.json";
 import germanInterface from "../data/interface/german_interface.json";
 import russianInterface from "../data/interface/russian_interface.json";
 
-type UILanguage = "en" | "es" | "fr" | "pt" | "it" | "de" | "ru";
+export type UILanguage = "en" | "es" | "fr" | "pt" | "it" | "de" | "ru";
 
 interface LanguageContextType {
   uiLanguage: UILanguage;
@@ -131,17 +131,35 @@ const translationRoots: Record<UILanguage, Record<string, TranslationNode>> = {
   ru: normalizeTranslationRoot(russianInterface),
 };
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [uiLanguage, setUILanguage] = useState<UILanguage>(() => {
-    const saved = localStorage.getItem("uiLanguage");
-    return saved === "en" || saved === "es" || saved === "fr" || saved === "pt" || saved === "it" || saved === "de" || saved === "ru"
-      ? saved
-      : "en";
-  });
+interface LanguageProviderProps {
+  children: ReactNode;
+  initialUILanguage?: UILanguage;
+}
+
+function readStoredUiLanguage(): UILanguage | null {
+  if (typeof window === "undefined" || typeof window.localStorage === "undefined") {
+    return null;
+  }
+
+  const saved = window.localStorage.getItem("uiLanguage");
+  return saved === "en" || saved === "es" || saved === "fr" || saved === "pt" || saved === "it" || saved === "de" || saved === "ru"
+    ? saved
+    : null;
+}
+
+export function LanguageProvider({
+  children,
+  initialUILanguage = "en",
+}: LanguageProviderProps) {
+  const [uiLanguage, setUILanguage] = useState<UILanguage>(
+    () => readStoredUiLanguage() ?? initialUILanguage,
+  );
 
   const handleSetUILanguage = (lang: UILanguage) => {
     setUILanguage(lang);
-    localStorage.setItem("uiLanguage", lang);
+    if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
+      window.localStorage.setItem("uiLanguage", lang);
+    }
   };
 
   const t = (key: string): string => {
