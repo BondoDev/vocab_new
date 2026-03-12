@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { SUPPORTED_LEVELS, buildLocalizedVocabularyPath } from "../../data/seo/slugs";
@@ -71,6 +71,14 @@ export function VocabularyLevelPage({
     () => getVocabularyLevelContent(uiLang, targetLanguage, level),
     [uiLang, targetLanguage, level],
   );
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
 
   if (!contentBundle) {
     return null;
