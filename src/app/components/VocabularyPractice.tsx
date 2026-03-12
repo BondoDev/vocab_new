@@ -370,7 +370,7 @@ export function VocabularyPractice({
     });
   }, [currentExerciseType, currentIndex]);
 
-  const runNextStep = () => {
+  const runNextStep = (wasExplicitSkip = false) => {
     let result: "correct" | "incorrect" | "skipped";
 
     if (isFourWordExercise(currentExerciseType)) {
@@ -411,7 +411,9 @@ export function VocabularyPractice({
     }
 
     const shouldScheduleRepeat =
-      result !== "correct" && !isFourWordExercise(currentExerciseType);
+      !wasExplicitSkip &&
+      result !== "correct" &&
+      !isFourWordExercise(currentExerciseType);
     const { queue: advancedQueue, dueConceptId: dueRepeatConceptId } =
       advanceTypingRepeatQueue({
         queue: forcedTypingRepeatQueueRef.current,
@@ -615,7 +617,7 @@ export function VocabularyPractice({
 
     cardSwitchTimeoutRef.current = window.setTimeout(() => {
       setCardBlinkKey((prev) => prev + 1);
-      runNextStep();
+      runNextStep(!isNextActionAvailable);
       setIsCardSwitching(false);
       cardSwitchTimeoutRef.current = null;
     }, 180);
