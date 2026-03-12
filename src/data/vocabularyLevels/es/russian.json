@@ -6,10 +6,10 @@
       "title": "Vocabulario de ruso A1",
       "intro": "El vocabulario de ruso A1 corresponde al nivel principiante.",
       "levelDescription": "Principiante",
-      "ctaText": "Iniciar pr?ctica A1",
+      "ctaText": "Iniciar práctica A1",
       "levelExplanation": {
-        "heading": "?Qu? significa el nivel A1 en ruso?",
-        "paragraph": "El nivel A1 representa un principiante seg?n el MCER. Los estudiantes pueden comprender y usar expresiones conocidas y frases sencillas para necesidades concretas.",
+        "heading": "¿Qué significa el nivel A1 en ruso?",
+        "paragraph": "El nivel A1 representa un principiante según el MCER. Los estudiantes pueden comprender y usar expresiones conocidas y frases sencillas para necesidades concretas.",
         "bullets": [
           "Saludos y presentaciones.",
           "Hacer y responder preguntas simples.",
@@ -17,9 +17,9 @@
         ]
       },
       "vocabularyScope": {
-        "heading": "?Qu? incluye el vocabulario de ruso A1?",
+        "heading": "¿Qué incluye el vocabulario de ruso A1?",
         "topics": [
-          "Comunicaci?n diaria",
+          "Comunicación diaria",
           "Temas personales"
         ],
         "wordTypes": [
@@ -29,10 +29,10 @@
         ],
         "groups": [
           {
-            "heading": "Comunicaci?n diaria",
+            "heading": "Comunicación diaria",
             "items": [
-              "Saludos y expresiones de cortes?a",
-              "N?meros, d?as de la semana y meses",
+              "Saludos y expresiones de cortesía",
+              "Números, días de la semana y meses",
               "Verbos comunes en presente",
               "Preguntas sencillas"
             ]
@@ -43,13 +43,13 @@
               "Familia y amigos",
               "Comida y bebidas",
               "Casa y entorno",
-              "Adjetivos b?sicos"
+              "Adjetivos básicos"
             ]
           }
         ]
       },
       "wordCount": {
-        "heading": "?Cu?ntas palabras contiene el vocabulario de ruso A1?",
+        "heading": "¿Cuántas palabras contiene el vocabulario de ruso A1?",
         "text": "El nivel A1 suele incluir entre 500 y 800 palabras esenciales. El objetivo no es solo memorizar, sino usar activamente las palabras en frases simples. Los ejercicios de ruso A1 ayudan a consolidar el aprendizaje.",
         "value": 800
       },
@@ -61,80 +61,80 @@
         },
         "rows": [
           {
-            "word": "??????",
+            "word": "привет",
             "meaning": "hola"
           },
           {
-            "word": "????",
-            "meaning": "adi?s"
+            "word": "пока",
+            "meaning": "adiós"
           },
           {
-            "word": "???????",
+            "word": "спасибо",
             "meaning": "gracias"
           },
           {
-            "word": "?????",
+            "word": "семья",
             "meaning": "familia"
           },
           {
-            "word": "???",
+            "word": "дом",
             "meaning": "casa"
           },
           {
-            "word": "????",
+            "word": "есть",
             "meaning": "comer"
           },
           {
-            "word": "????",
+            "word": "пить",
             "meaning": "beber"
           },
           {
-            "word": "????",
+            "word": "друг",
             "meaning": "amigo"
           },
           {
-            "word": "???????",
+            "word": "большой",
             "meaning": "grande"
           },
           {
-            "word": "?????????",
-            "meaning": "peque?o"
+            "word": "маленький",
+            "meaning": "pequeño"
           }
         ]
       },
       "internalNavigation": {
         "heading": "Otros niveles de ruso"
       },
-      "metaTitle": "Vocabulario de ruso A1 ? Palabras b?sicas para principiantes",
-      "metaDescription": "Aprende vocabulario de ruso A1 con palabras simples y ejemplos pr?cticos. Construye una base s?lida para la comunicaci?n diaria en ruso.",
+      "metaTitle": "Vocabulario de ruso A1 – Palabras básicas para principiantes",
+      "metaDescription": "Aprende vocabulario de ruso A1 con palabras simples y ejemplos prácticos. Construye una base sólida para la comunicación diaria en ruso.",
       "introParagraphs": [
-        "El vocabulario de ruso A1 corresponde al nivel principiante. Los estudiantes aprenden palabras y frases simples para la comunicaci?n cotidiana.",
-        "Palabras b?sicas de ruso A1 incluyen saludos, n?meros, verbos comunes y preguntas sencillas. La lista de palabras ruso A1 ayuda a ampliar el vocabulario de forma gradual y a ganar confianza al hablar."
+        "El vocabulario de ruso A1 corresponde al nivel principiante. Los estudiantes aprenden palabras y frases simples para la comunicación cotidiana.",
+        "Palabras básicas de ruso A1 incluyen saludos, números, verbos comunes y preguntas sencillas. La lista de palabras ruso A1 ayuda a ampliar el vocabulario de forma gradual y a ganar confianza al hablar."
       ],
       "bottomCta": {
         "heading": "Comienza a aprender ahora",
-        "text": "El vocabulario de ruso A1 proporciona una base s?lida. Practica regularmente, forma frases simples y escucha di?logos cortos para fortalecer tus habilidades ling??sticas."
+        "text": "El vocabulario de ruso A1 proporciona una base sólida. Practica regularmente, forma frases simples y escucha diálogos cortos para fortalecer tus habilidades lingüísticas."
       }
     },
     "a2": {
       "title": "Vocabulario de ruso A2",
-      "intro": "El vocabulario de ruso A2 ampl?a los conocimientos del nivel A1.",
+      "intro": "El vocabulario de ruso A2 amplía los conocimientos del nivel A1.",
       "levelDescription": "Elemental",
-      "ctaText": "Iniciar pr?ctica A2",
+      "ctaText": "Iniciar práctica A2",
       "levelExplanation": {
-        "heading": "?Qu? significa el nivel A2 en ruso?",
+        "heading": "¿Qué significa el nivel A2 en ruso?",
         "paragraph": "El nivel A2 corresponde a un usuario elemental del idioma. Los estudiantes comprenden expresiones de uso frecuente y pueden interactuar en tareas simples y rutinarias.",
         "bullets": [
           "Describir actividades y rutinas diarias.",
           "Hablar sobre experiencias pasadas sencillas.",
-          "Intercambiar informaci?n en contextos conocidos."
+          "Intercambiar información en contextos conocidos."
         ]
       },
       "vocabularyScope": {
-        "heading": "?Qu? incluye el vocabulario de ruso A2?",
+        "heading": "¿Qué incluye el vocabulario de ruso A2?",
         "topics": [
           "Vida diaria y servicios",
-          "Comunicaci?n ampliada"
+          "Comunicación ampliada"
         ],
         "wordTypes": [
           "Sustantivos",
@@ -152,7 +152,7 @@
             ]
           },
           {
-            "heading": "Comunicaci?n ampliada",
+            "heading": "Comunicación ampliada",
             "items": [
               "Conectores simples",
               "Expresiones de tiempo",
@@ -163,8 +163,8 @@
         ]
       },
       "wordCount": {
-        "heading": "?Cu?ntas palabras contiene el vocabulario de ruso A2?",
-        "text": "El nivel A2 incluye aproximadamente 1.000?1.500 palabras ?tiles. La pr?ctica regular consolida el aprendizaje y mejora la fluidez.",
+        "heading": "¿Cuántas palabras contiene el vocabulario de ruso A2?",
+        "text": "El nivel A2 incluye aproximadamente 1.000-1.500 palabras útiles. La práctica regular consolida el aprendizaje y mejora la fluidez.",
         "value": 1500
       },
       "sampleVocabulary": {
@@ -175,43 +175,43 @@
         },
         "rows": [
           {
-            "word": "???????????",
+            "word": "путешествие",
             "meaning": "viaje"
           },
           {
-            "word": "?????",
+            "word": "билет",
             "meaning": "boleto"
           },
           {
-            "word": "???????",
+            "word": "магазин",
             "meaning": "tienda"
           },
           {
-            "word": "??????",
+            "word": "деньги",
             "meaning": "dinero"
           },
           {
-            "word": "??????",
+            "word": "работа",
             "meaning": "trabajo"
           },
           {
-            "word": "???????",
+            "word": "больной",
             "meaning": "enfermo"
           },
           {
-            "word": "?????",
+            "word": "вчера",
             "meaning": "ayer"
           },
           {
-            "word": "??????",
-            "meaning": "ma?ana"
+            "word": "завтра",
+            "meaning": "mañana"
           },
           {
-            "word": "?????",
+            "word": "часто",
             "meaning": "frecuentemente"
           },
           {
-            "word": "?????",
+            "word": "важно",
             "meaning": "importante"
           }
         ]
@@ -219,25 +219,25 @@
       "internalNavigation": {
         "heading": "Otros niveles de ruso"
       },
-      "metaTitle": "Vocabulario de ruso A2 ? Nivel elemental",
-      "metaDescription": "Aprende vocabulario de ruso A2 con palabras comunes y ejemplos pr?cticos. Mejora la comprensi?n y la comunicaci?n en el nivel elemental.",
+      "metaTitle": "Vocabulario de ruso A2 – Nivel elemental",
+      "metaDescription": "Aprende vocabulario de ruso A2 con palabras comunes y ejemplos prácticos. Mejora la comprensión y la comunicación en el nivel elemental.",
       "introParagraphs": [
-        "El vocabulario de ruso A2 ampl?a los conocimientos del nivel A1. Los estudiantes pueden formar oraciones m?s largas y comunicarse con mayor facilidad en situaciones cotidianas.",
-        "El vocabulario diario de ruso abarca temas como trabajo, ocio, viajes y salud. La lista de palabras ruso A2 permite adquirir gradualmente t?rminos m?s complejos."
+        "El vocabulario de ruso A2 amplía los conocimientos del nivel A1. Los estudiantes pueden formar oraciones más largas y comunicarse con mayor facilidad en situaciones cotidianas.",
+        "El vocabulario diario de ruso abarca temas como trabajo, ocio, viajes y salud. La lista de palabras ruso A2 permite adquirir gradualmente términos más complejos."
       ],
       "bottomCta": {
         "heading": "Sigue aprendiendo",
-        "text": "El vocabulario de ruso A2 permite una comunicaci?n m?s independiente. Lee textos sencillos, escucha di?logos y repite palabras nuevas regularmente."
+        "text": "El vocabulario de ruso A2 permite una comunicación más independiente. Lee textos sencillos, escucha diálogos y repite palabras nuevas regularmente."
       }
     },
     "b1": {
       "title": "Vocabulario de ruso B1",
       "intro": "El vocabulario de ruso B1 corresponde al nivel intermedio.",
       "levelDescription": "Intermedio",
-      "ctaText": "Iniciar pr?ctica B1",
+      "ctaText": "Iniciar práctica B1",
       "levelExplanation": {
-        "heading": "?Qu? significa el nivel B1 en ruso?",
-        "paragraph": "El nivel B1 representa a un usuario independiente intermedio. Los estudiantes pueden manejar la mayor?a de las situaciones cotidianas y producir textos simples y coherentes.",
+        "heading": "¿Qué significa el nivel B1 en ruso?",
+        "paragraph": "El nivel B1 representa a un usuario independiente intermedio. Los estudiantes pueden manejar la mayoría de las situaciones cotidianas y producir textos simples y coherentes.",
         "bullets": [
           "Expresar opiniones personales.",
           "Describir eventos y experiencias.",
@@ -245,10 +245,10 @@
         ]
       },
       "vocabularyScope": {
-        "heading": "?Qu? incluye el vocabulario de ruso B1?",
+        "heading": "¿Qué incluye el vocabulario de ruso B1?",
         "topics": [
           "Trabajo y sociedad",
-          "Argumentaci?n y narraci?n"
+          "Argumentación y narración"
         ],
         "wordTypes": [
           "Sustantivos",
@@ -260,15 +260,15 @@
             "heading": "Trabajo y sociedad",
             "items": [
               "Profesiones y responsabilidades",
-              "Educaci?n y formaci?n",
-              "Tecnolog?a y medios",
+              "Educación y formación",
+              "Tecnología y medios",
               "Temas sociales"
             ]
           },
           {
-            "heading": "Argumentaci?n y narraci?n",
+            "heading": "Argumentación y narración",
             "items": [
-              "Conectores l?gicos",
+              "Conectores lógicos",
               "Expresiones de acuerdo y desacuerdo",
               "Adjetivos comparativos",
               "Palabras abstractas de ruso B1"
@@ -277,8 +277,8 @@
         ]
       },
       "wordCount": {
-        "heading": "?Cu?ntas palabras contiene el vocabulario de ruso B1?",
-        "text": "El nivel B1 suele incluir entre 2.000 y 3.000 palabras. Para ampliar el vocabulario de ruso B1, lee art?culos, escucha podcasts y practica la conversaci?n regularmente.",
+        "heading": "¿Cuántas palabras contiene el vocabulario de ruso B1?",
+        "text": "El nivel B1 suele incluir entre 2.000 y 3.000 palabras. Para ampliar el vocabulario de ruso B1, lee artículos, escucha podcasts y practica la conversación regularmente.",
         "value": 3000
       },
       "sampleVocabulary": {
@@ -289,43 +289,43 @@
         },
         "rows": [
           {
-            "word": "???????????",
+            "word": "происходить",
             "meaning": "ocurrir"
           },
           {
-            "word": "???????",
+            "word": "неудача",
             "meaning": "fracaso"
           },
           {
-            "word": "????????????",
+            "word": "работодатель",
             "meaning": "empleador"
           },
           {
-            "word": "????????",
+            "word": "кандидат",
             "meaning": "candidato"
           },
           {
-            "word": "?????????",
+            "word": "развивать",
             "meaning": "desarrollar"
           },
           {
-            "word": "?????????? ?????",
+            "word": "окружающая среда",
             "meaning": "medio ambiente"
           },
           {
-            "word": "????????????",
+            "word": "преимущество",
             "meaning": "ventaja"
           },
           {
-            "word": "??????????",
+            "word": "недостаток",
             "meaning": "desventaja"
           },
           {
-            "word": "??????????",
+            "word": "предлагать",
             "meaning": "proponer"
           },
           {
-            "word": "????",
+            "word": "цель",
             "meaning": "objetivo"
           }
         ]
@@ -333,25 +333,25 @@
       "internalNavigation": {
         "heading": "Otros niveles de ruso"
       },
-      "metaTitle": "Vocabulario de ruso B1 ? Nivel intermedio",
-      "metaDescription": "Aprende vocabulario de ruso B1 con palabras intermedias y ejemplos detallados. Mejora la expresi?n y comprensi?n en ruso.",
+      "metaTitle": "Vocabulario de ruso B1 – Nivel intermedio",
+      "metaDescription": "Aprende vocabulario de ruso B1 con palabras intermedias y ejemplos detallados. Mejora la expresión y comprensión en ruso.",
       "introParagraphs": [
-        "El vocabulario de ruso B1 corresponde al nivel intermedio. Los estudiantes pueden comprender los puntos principales de mensajes claros y comunicarse con m?s detalle.",
-        "Las palabras intermedias de ruso B1 permiten expresar opiniones, describir experiencias y participar en conversaciones m?s complejas. La lista de palabras ruso B1 ayuda a ampliar el vocabulario y fortalecer las habilidades ling??sticas."
+        "El vocabulario de ruso B1 corresponde al nivel intermedio. Los estudiantes pueden comprender los puntos principales de mensajes claros y comunicarse con más detalle.",
+        "Las palabras intermedias de ruso B1 permiten expresar opiniones, describir experiencias y participar en conversaciones más complejas. La lista de palabras ruso B1 ayuda a ampliar el vocabulario y fortalecer las habilidades lingüísticas."
       ],
       "bottomCta": {
         "heading": "Refuerza tu nivel intermedio",
-        "text": "Con un s?lido vocabulario de ruso B1, podr?s comunicarte de manera clara y estructurada. Practica regularmente, discute temas actuales y lee textos m?s complejos para enriquecer tu vocabulario."
+        "text": "Con un sólido vocabulario de ruso B1, podrás comunicarte de manera clara y estructurada. Practica regularmente, discute temas actuales y lee textos más complejos para enriquecer tu vocabulario."
       }
     },
     "b2": {
       "title": "Vocabulario de ruso B2",
-      "intro": "El vocabulario de ruso B2 est? dise?ado para estudiantes que desean comunicarse con fluidez y manejar temas m?s complejos.",
+      "intro": "El vocabulario de ruso B2 está diseñado para estudiantes que desean comunicarse con fluidez y manejar temas más complejos.",
       "levelDescription": "Intermedio alto",
-      "ctaText": "Iniciar pr?ctica B2",
+      "ctaText": "Iniciar práctica B2",
       "levelExplanation": {
-        "heading": "?Qu? significa el nivel B2?",
-        "paragraph": "En el nivel B2 puedes interactuar de manera espont?nea con hablantes nativos. El vocabulario de ruso B2 incluye t?rminos abstractos, conectores l?gicos y expresiones ?tiles para debates y contextos profesionales.",
+        "heading": "¿Qué significa el nivel B2?",
+        "paragraph": "En el nivel B2 puedes interactuar de manera espontánea con hablantes nativos. El vocabulario de ruso B2 incluye términos abstractos, conectores lógicos y expresiones útiles para debates y contextos profesionales.",
         "bullets": [
           "Comprender las ideas principales de textos complejos.",
           "Expresar y defender opiniones claramente.",
@@ -361,7 +361,7 @@
       "vocabularyScope": {
         "heading": "Alcance del vocabulario B2",
         "topics": [
-          "Discusi?n y argumentaci?n",
+          "Discusión y argumentación",
           "Trabajo y sociedad"
         ],
         "wordTypes": [
@@ -371,12 +371,12 @@
         ],
         "groups": [
           {
-            "heading": "Discusi?n y argumentaci?n",
+            "heading": "Discusión y argumentación",
             "items": [
               "Expresiones para estar de acuerdo o en desacuerdo.",
-              "Conectores para comparaci?n y contraste.",
+              "Conectores para comparación y contraste.",
               "Vocabulario para justificar opiniones.",
-              "T?rminos para analizar problemas y soluciones."
+              "Términos para analizar problemas y soluciones."
             ]
           },
           {
@@ -385,13 +385,13 @@
               "Palabras relacionadas con el trabajo y el estudio.",
               "Vocabulario sobre temas sociales actuales.",
               "Expresiones formales para informes y correos.",
-              "T?rminos relacionados con responsabilidades y proyectos."
+              "Términos relacionados con responsabilidades y proyectos."
             ]
           }
         ]
       },
       "wordCount": {
-        "heading": "?Cu?ntas palabras incluye B2?",
+        "heading": "¿Cuántas palabras incluye B2?",
         "text": "El vocabulario de ruso B2 suele abarcar varios miles de palabras activas. Su correcto uso en el habla y la escritura es clave.",
         "value": 4000
       },
@@ -403,43 +403,43 @@
         },
         "rows": [
           {
-            "word": "??????",
+            "word": "однако",
             "meaning": "sin embargo / no obstante"
           },
           {
-            "word": "????????",
+            "word": "улучшать",
             "meaning": "mejorar"
           },
           {
-            "word": "?????",
-            "meaning": "desaf?o / reto"
+            "word": "вызов",
+            "meaning": "desafío / reto"
           },
           {
-            "word": "???????",
+            "word": "поэтому",
             "meaning": "por lo tanto / entonces"
           },
           {
-            "word": "?????????",
+            "word": "достигать",
             "meaning": "alcanzar / lograr"
           },
           {
-            "word": "????????",
+            "word": "убеждать",
             "meaning": "convencer"
           },
           {
-            "word": "????????",
+            "word": "прогресс",
             "meaning": "progreso"
           },
           {
-            "word": "???????????????",
+            "word": "ответственность",
             "meaning": "responsabilidad"
           },
           {
-            "word": "?????????",
+            "word": "оценивать",
             "meaning": "evaluar"
           },
           {
-            "word": "????????",
+            "word": "проблема",
             "meaning": "problema"
           }
         ]
@@ -447,36 +447,36 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de ruso B2 ? Palabras y expresiones clave",
+      "metaTitle": "Vocabulario de ruso B2 – Palabras y expresiones clave",
       "metaDescription": "Mejora tu vocabulario de ruso B2 con palabras esenciales, significados y ejemplos para comunicarte de forma efectiva en la vida diaria y profesional.",
       "introParagraphs": [
-        "El vocabulario de ruso B2 est? dise?ado para estudiantes que desean comunicarse con fluidez y manejar temas m?s complejos. En este nivel, puedes participar en discusiones y expresar tus ideas con claridad.",
-        "El vocabulario intermedio de ruso ayuda a construir argumentos, evaluar ventajas y desventajas, y comprender textos m?s largos y detallados. El objetivo es mejorar la precisi?n y la fluidez tanto en la expresi?n oral como escrita."
+        "El vocabulario de ruso B2 está diseñado para estudiantes que desean comunicarse con fluidez y manejar temas más complejos. En este nivel, puedes participar en discusiones y expresar tus ideas con claridad.",
+        "El vocabulario intermedio de ruso ayuda a construir argumentos, evaluar ventajas y desventajas, y comprender textos más largos y detallados. El objetivo es mejorar la precisión y la fluidez tanto en la expresión oral como escrita."
       ],
       "bottomCta": {
-        "heading": "Contin?a ampliando tu vocabulario",
-        "text": "Para dominar B2, lee textos, escucha discusiones y practica la expresi?n oral y escrita. La aplicaci?n activa consolida lo aprendido."
+        "heading": "Continúa ampliando tu vocabulario",
+        "text": "Para dominar B2, lee textos, escucha discusiones y practica la expresión oral y escrita. La aplicación activa consolida lo aprendido."
       }
     },
     "c1": {
       "title": "Vocabulario de ruso C1",
-      "intro": "El vocabulario de ruso C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y t?rminos abstractos.",
+      "intro": "El vocabulario de ruso C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y términos abstractos.",
       "levelDescription": "Avanzado",
-      "ctaText": "Iniciar pr?ctica C1",
+      "ctaText": "Iniciar práctica C1",
       "levelExplanation": {
-        "heading": "Caracter?sticas del nivel C1",
-        "paragraph": "Las palabras C1 incluyen t?rminos t?cnicos, expresiones formales y diversos conectores l?gicos.",
+        "heading": "Características del nivel C1",
+        "paragraph": "Las palabras C1 incluyen términos técnicos, expresiones formales y diversos conectores lógicos.",
         "bullets": [
-          "Comprensi?n de textos complejos y especializados.",
-          "Expresi?n fluida y estructurada de ideas abstractas.",
-          "Adaptaci?n del estilo ling??stico seg?n el contexto."
+          "Comprensión de textos complejos y especializados.",
+          "Expresión fluida y estructurada de ideas abstractas.",
+          "Adaptación del estilo lingüístico según el contexto."
         ]
       },
       "vocabularyScope": {
         "heading": "Alcance del vocabulario C1",
         "topics": [
-          "Lenguaje acad?mico",
-          "Comunicaci?n profesional"
+          "Lenguaje académico",
+          "Comunicación profesional"
         ],
         "wordTypes": [
           "Sustantivos",
@@ -485,27 +485,27 @@
         ],
         "groups": [
           {
-            "heading": "Lenguaje acad?mico",
+            "heading": "Lenguaje académico",
             "items": [
-              "T?rminos para an?lisis y evaluaci?n.",
-              "Expresiones para argumentaci?n compleja.",
+              "Términos para análisis y evaluación.",
+              "Expresiones para argumentación compleja.",
               "Vocabulario para presentaciones formales.",
-              "T?rminos relacionados con investigaci?n y pensamiento cr?tico."
+              "Términos relacionados con investigación y pensamiento crítico."
             ]
           },
           {
-            "heading": "Comunicaci?n profesional",
+            "heading": "Comunicación profesional",
             "items": [
               "Expresiones formales para informes y documentos.",
-              "Verbos precisos para argumentaci?n y negociaci?n.",
+              "Verbos precisos para argumentación y negociación.",
               "Adjetivos avanzados para describir situaciones.",
-              "Terminolog?a para gesti?n y organizaci?n."
+              "Terminología para gestión y organización."
             ]
           }
         ]
       },
       "wordCount": {
-        "heading": "?Cu?ntas palabras incluye C1?",
+        "heading": "¿Cuántas palabras incluye C1?",
         "text": "El vocabulario de ruso C1 incluye varios miles de palabras activas. Su uso correcto y fluido es fundamental.",
         "value": 5000
       },
@@ -517,43 +517,43 @@
         },
         "rows": [
           {
-            "word": "??????",
+            "word": "однако",
             "meaning": "sin embargo / no obstante"
           },
           {
-            "word": "?????????",
+            "word": "углублять",
             "meaning": "profundizar / elaborar"
           },
           {
-            "word": "????????",
-            "meaning": "l?gico / coherente"
+            "word": "логичный",
+            "meaning": "lógico / coherente"
           },
           {
-            "word": "????????",
+            "word": "уместный",
             "meaning": "relevante / apropiado"
           },
           {
-            "word": "?????????????",
+            "word": "разрабатывать",
             "meaning": "desarrollar / elaborar"
           },
           {
-            "word": "??????? ??? ??????",
-            "meaning": "poner en cuesti?n / cuestionar"
+            "word": "ставить под вопрос",
+            "meaning": "poner en cuestión / cuestionar"
           },
           {
-            "word": "????????????",
+            "word": "значительный",
             "meaning": "considerable / significativo"
           },
           {
-            "word": "?? ????",
+            "word": "по сути",
             "meaning": "esencialmente / en esencia"
           },
           {
-            "word": "???????? ???????",
+            "word": "ключевые вопросы",
             "meaning": "cuestiones clave"
           },
           {
-            "word": "?????????",
+            "word": "достигать",
             "meaning": "alcanzar / lograr"
           }
         ]
@@ -561,35 +561,35 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de ruso C1 ? Palabras avanzadas",
-      "metaDescription": "Mejora tu vocabulario de ruso C1 con palabras avanzadas, ejemplos y ejercicios para comunicarte con precisi?n y confianza.",
+      "metaTitle": "Vocabulario de ruso C1 – Palabras avanzadas",
+      "metaDescription": "Mejora tu vocabulario de ruso C1 con palabras avanzadas, ejemplos y ejercicios para comunicarte con precisión y confianza.",
       "introParagraphs": [
-        "El vocabulario de ruso C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y t?rminos abstractos. Puedes comprender textos extensos y comunicarte con precisi?n y espontaneidad.",
-        "El vocabulario avanzado permite analizar, argumentar y usar matices ling??sticos en contextos acad?micos o profesionales. El objetivo es ampliar el l?xico manteniendo un registro adecuado."
+        "El vocabulario de ruso C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y términos abstractos. Puedes comprender textos extensos y comunicarte con precisión y espontaneidad.",
+        "El vocabulario avanzado permite analizar, argumentar y usar matices lingüísticos en contextos académicos o profesionales. El objetivo es ampliar el léxico manteniendo un registro adecuado."
       ],
       "bottomCta": {
         "heading": "Sigue perfeccionando tu ruso",
-        "text": "Para dominar C1, lee textos complejos, participa en debates y redacta ensayos estructurados. La pr?ctica regular aumenta la precisi?n y la confianza."
+        "text": "Para dominar C1, lee textos complejos, participa en debates y redacta ensayos estructurados. La práctica regular aumenta la precisión y la confianza."
       }
     },
     "c2": {
       "title": "Vocabulario de ruso C2",
-      "intro": "El vocabulario de ruso C2 representa un dominio completo seg?n el MCER.",
+      "intro": "El vocabulario de ruso C2 representa un dominio completo según el MCER.",
       "levelDescription": "Dominio",
-      "ctaText": "Iniciar pr?ctica C2",
+      "ctaText": "Iniciar práctica C2",
       "levelExplanation": {
-        "heading": "Caracter?sticas del nivel C2",
-        "paragraph": "Las palabras C2 cubren ?mbitos acad?micos, literarios y t?cnicos, prestando atenci?n a diferencias sutiles de significado.",
+        "heading": "Características del nivel C2",
+        "paragraph": "Las palabras C2 cubren ámbitos académicos, literarios y técnicos, prestando atención a diferencias sutiles de significado.",
         "bullets": [
           "Comprender textos especializados y literarios.",
-          "Uso preciso de sin?nimos con matices.",
-          "Adaptaci?n perfecta a registros formales e informales."
+          "Uso preciso de sinónimos con matices.",
+          "Adaptación perfecta a registros formales e informales."
         ]
       },
       "vocabularyScope": {
         "heading": "Alcance del vocabulario C2",
         "topics": [
-          "Lenguaje acad?mico y literario",
+          "Lenguaje académico y literario",
           "Matices y estilo"
         ],
         "wordTypes": [
@@ -599,27 +599,27 @@
         ],
         "groups": [
           {
-            "heading": "Lenguaje acad?mico y literario",
+            "heading": "Lenguaje académico y literario",
             "items": [
-              "Terminolog?a especializada en diversas ?reas.",
-              "Figuras ret?ricas y expresiones literarias.",
+              "Terminología especializada en diversas áreas.",
+              "Figuras retóricas y expresiones literarias.",
               "Vocabulario literario avanzado.",
-              "Verbos precisos para an?lisis cr?tico."
+              "Verbos precisos para análisis crítico."
             ]
           },
           {
             "heading": "Matices y estilo",
             "items": [
-              "Sin?nimos con diferencias sutiles de significado.",
-              "Diferenciaci?n clara de registros ling??sticos.",
-              "Expresiones idiom?ticas aut?nticas.",
+              "Sinónimos con diferencias sutiles de significado.",
+              "Diferenciación clara de registros lingüísticos.",
+              "Expresiones idiomáticas auténticas.",
               "Lenguaje adaptado culturalmente."
             ]
           }
         ]
       },
       "wordCount": {
-        "heading": "?Cu?ntas palabras incluye C2?",
+        "heading": "¿Cuántas palabras incluye C2?",
         "text": "El vocabulario de ruso C2 puede superar las 6 000 palabras activas. El dominio se demuestra mediante un uso natural y preciso.",
         "value": 6500
       },
@@ -631,43 +631,43 @@
         },
         "rows": [
           {
-            "word": "???????????",
+            "word": "необходимый",
             "meaning": "indispensable / inevitable"
           },
           {
-            "word": "????????????",
-            "meaning": "sofisticaci?n / refinamiento"
+            "word": "утонченность",
+            "meaning": "sofisticación / refinamiento"
           },
           {
-            "word": "??????????",
+            "word": "неизбежный",
             "meaning": "inevitable"
           },
           {
-            "word": "????????",
+            "word": "уточнять",
             "meaning": "matizar / aclarar"
           },
           {
-            "word": "???????????",
+            "word": "красноречие",
             "meaning": "elocuencia / arte de hablar"
           },
           {
-            "word": "????????",
+            "word": "суждение",
             "meaning": "juicio / discernimiento"
           },
           {
-            "word": "?????????",
+            "word": "достигать",
             "meaning": "alcanzar un resultado"
           },
           {
-            "word": "?????????????",
+            "word": "амбивалентный",
             "meaning": "ambivalente / con aspectos opuestos"
           },
           {
-            "word": "??????????????",
+            "word": "правдоподобный",
             "meaning": "plausible"
           },
           {
-            "word": "????????????",
+            "word": "мотивировать",
             "meaning": "motivar / justificar"
           }
         ]
@@ -675,15 +675,15 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de ruso C2 ? Nivel de dominio",
+      "metaTitle": "Vocabulario de ruso C2 – Nivel de dominio",
       "metaDescription": "Descubre el vocabulario de ruso C2 con palabras raras y precisas para lograr un dominio completo del idioma.",
       "introParagraphs": [
-        "El vocabulario de ruso C2 representa un dominio completo seg?n el MCER. Puedes comprender casi todo lo que lees o escuchas y expresarte con precisi?n, matices y espontaneidad.",
-        "El vocabulario muy avanzado incluye palabras raras, expresiones idiom?ticas y sutilezas estil?sticas. Permite adaptar el lenguaje a cualquier contexto con naturalidad."
+        "El vocabulario de ruso C2 representa un dominio completo según el MCER. Puedes comprender casi todo lo que lees o escuchas y expresarte con precisión, matices y espontaneidad.",
+        "El vocabulario muy avanzado incluye palabras raras, expresiones idiomáticas y sutilezas estilísticas. Permite adaptar el lenguaje a cualquier contexto con naturalidad."
       ],
       "bottomCta": {
         "heading": "Alcanza el dominio completo del ruso",
-        "text": "Para dominar el vocabulario C2, lee obras literarias, participa en conferencias especializadas y redacta textos complejos. La pr?ctica intensa y variada es esencial para el control total del idioma."
+        "text": "Para dominar el vocabulario C2, lee obras literarias, participa en conferencias especializadas y redacta textos complejos. La práctica intensa y variada es esencial para el control total del idioma."
       }
     }
   }

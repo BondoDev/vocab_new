@@ -4,15 +4,15 @@
   "levels": {
     "a1": {
       "title": "Vocabulaire de russe A1",
-      "intro": "Le vocabulaire de russe A1 correspond au niveau d?butant.",
-      "levelDescription": "D?butant",
+      "intro": "Le vocabulaire de russe A1 correspond au niveau débutant.",
+      "levelDescription": "Débutant",
       "ctaText": "Commencer la pratique A1",
       "levelExplanation": {
         "heading": "Que signifie le niveau A1 en russe ?",
-        "paragraph": "Le niveau A1 repr?sente un d?butant selon le CECR. Les apprenants peuvent comprendre et utiliser des expressions famili?res et des phrases simples pour des besoins concrets.",
+        "paragraph": "Le niveau A1 représente un débutant selon le CECR. Les apprenants peuvent comprendre et utiliser des expressions familières et des phrases simples pour des besoins concrets.",
         "bullets": [
-          "Salutations et pr?sentations.",
-          "Poser et r?pondre ? des questions simples.",
+          "Salutations et présentations.",
+          "Poser et répondre à des questions simples.",
           "Comprendre des instructions courtes et claires."
         ]
       },
@@ -20,7 +20,7 @@
         "heading": "Que comprend le vocabulaire de russe A1 ?",
         "topics": [
           "Communication quotidienne",
-          "Th?mes personnels"
+          "Thèmes personnels"
         ],
         "wordTypes": [
           "Noms",
@@ -33,12 +33,12 @@
             "items": [
               "Salutations et formules de politesse",
               "Nombres, jours de la semaine et mois",
-              "Verbes courants au pr?sent",
+              "Verbes courants au présent",
               "Questions simples"
             ]
           },
           {
-            "heading": "Th?mes personnels",
+            "heading": "Thèmes personnels",
             "items": [
               "Famille et amis",
               "Nourriture et boissons",
@@ -50,7 +50,7 @@
       },
       "wordCount": {
         "heading": "Combien de mots contient le vocabulaire de russe A1 ?",
-        "text": "Le niveau A1 comprend g?n?ralement entre 500 et 800 mots essentiels. L?objectif n?est pas seulement la m?morisation mais l?usage actif des mots dans des phrases simples. Les exercices de russe A1 aident ? consolider les acquis.",
+        "text": "Le niveau A1 comprend généralement entre 500 et 800 mots essentiels. L’objectif n’est pas seulement la mémorisation mais l’usage actif des mots dans des phrases simples. Les exercices de russe A1 aident à consolider les acquis.",
         "value": 800
       },
       "sampleVocabulary": {
@@ -61,43 +61,43 @@
         },
         "rows": [
           {
-            "word": "??????",
+            "word": "привет",
             "meaning": "bonjour"
           },
           {
-            "word": "????",
+            "word": "пока",
             "meaning": "au revoir"
           },
           {
-            "word": "???????",
+            "word": "спасибо",
             "meaning": "merci"
           },
           {
-            "word": "?????",
+            "word": "семья",
             "meaning": "famille"
           },
           {
-            "word": "???",
+            "word": "дом",
             "meaning": "maison"
           },
           {
-            "word": "????",
+            "word": "есть",
             "meaning": "manger"
           },
           {
-            "word": "????",
+            "word": "пить",
             "meaning": "boire"
           },
           {
-            "word": "????",
+            "word": "друг",
             "meaning": "ami"
           },
           {
-            "word": "???????",
+            "word": "большой",
             "meaning": "grand"
           },
           {
-            "word": "?????????",
+            "word": "маленький",
             "meaning": "petit"
           }
         ]
@@ -105,36 +105,36 @@
       "internalNavigation": {
         "heading": "Autres niveaux de russe"
       },
-      "metaTitle": "Vocabulaire de russe A1 ? Mots de base pour d?butants",
+      "metaTitle": "Vocabulaire de russe A1 – Mots de base pour débutants",
       "metaDescription": "Apprenez le vocabulaire de russe A1 avec des mots simples et des exemples pratiques. Construisez une base solide pour communiquer en russe.",
       "introParagraphs": [
-        "Le vocabulaire de russe A1 correspond au niveau d?butant. Les apprenants acqui?rent des mots et des phrases simples pour la communication quotidienne.",
-        "Les mots russes de base A1 incluent les salutations, les nombres, les verbes courants et les questions simples. La liste de mots russe A1 permet d??largir progressivement le vocabulaire et de gagner en confiance ? l?oral."
+        "Le vocabulaire de russe A1 correspond au niveau débutant. Les apprenants acquièrent des mots et des phrases simples pour la communication quotidienne.",
+        "Les mots russes de base A1 incluent les salutations, les nombres, les verbes courants et les questions simples. La liste de mots russe A1 permet d’élargir progressivement le vocabulaire et de gagner en confiance à l’oral."
       ],
       "bottomCta": {
-        "heading": "Commencez ? apprendre d?s maintenant",
-        "text": "Le vocabulaire de russe A1 fournit une base solide. Pratiquez r?guli?rement, formez des phrases simples et ?coutez de courts dialogues pour renforcer vos comp?tences linguistiques."
+        "heading": "Commencez à apprendre dès maintenant",
+        "text": "Le vocabulaire de russe A1 fournit une base solide. Pratiquez régulièrement, formez des phrases simples et Écoutez de courts dialogues pour renforcer vos compétences linguistiques."
       }
     },
     "a2": {
       "title": "Vocabulaire de russe A2",
-      "intro": "Le vocabulaire de russe A2 ?tend les connaissances acquises au niveau A1.",
-      "levelDescription": "?l?mentaire",
+      "intro": "Le vocabulaire de russe A2 étend les connaissances acquises au niveau A1.",
+      "levelDescription": "Élémentaire",
       "ctaText": "Commencer la pratique A2",
       "levelExplanation": {
         "heading": "Que signifie le niveau A2 en russe ?",
-        "paragraph": "Le niveau A2 correspond ? un utilisateur ?l?mentaire. Les apprenants comprennent des expressions fr?quemment utilis?es et peuvent interagir dans des t?ches simples et routini?res.",
+        "paragraph": "Le niveau A2 correspond à un utilisateur Élémentaire. Les apprenants comprennent des expressions fréquemment utilisées et peuvent interagir dans des tâches simples et routinières.",
         "bullets": [
-          "D?crire les activit?s et routines quotidiennes.",
-          "Parler de ses exp?riences pass?es simples.",
-          "?changer des informations dans des contextes connus."
+          "Décrire les activités et routines quotidiennes.",
+          "Parler de ses expériences passées simples.",
+          "Échanger des informations dans des contextes connus."
         ]
       },
       "vocabularyScope": {
         "heading": "Que comprend le vocabulaire de russe A2 ?",
         "topics": [
           "Vie quotidienne et services",
-          "Communication ?largie"
+          "Communication élargie"
         ],
         "wordTypes": [
           "Noms",
@@ -145,26 +145,26 @@
           {
             "heading": "Vie quotidienne et services",
             "items": [
-              "Transports et d?placements",
+              "Transports et déplacements",
               "Achats et argent",
-              "Sant? et bien-?tre",
+              "Santé et bien-être",
               "Travail et rendez-vous"
             ]
           },
           {
-            "heading": "Communication ?largie",
+            "heading": "Communication élargie",
             "items": [
               "Connecteurs simples",
               "Expressions temporelles",
               "Adjectifs pour exprimer des opinions",
-              "Verbes au pass?"
+              "Verbes au passé"
             ]
           }
         ]
       },
       "wordCount": {
         "heading": "Combien de mots contient le vocabulaire de russe A2 ?",
-        "text": "Le niveau A2 comprend g?n?ralement entre 1 000 et 1 500 mots utiles. La pratique r?guli?re consolide l?apprentissage et am?liore la fluidit?.",
+        "text": "Le niveau A2 comprend généralement entre 1 000 et 1 500 mots utiles. La pratique régulière consolide l’apprentissage et améliore la fluidité.",
         "value": 1500
       },
       "sampleVocabulary": {
@@ -175,43 +175,43 @@
         },
         "rows": [
           {
-            "word": "???????????",
+            "word": "путешествие",
             "meaning": "voyage"
           },
           {
-            "word": "?????",
+            "word": "билет",
             "meaning": "billet"
           },
           {
-            "word": "???????",
+            "word": "магазин",
             "meaning": "magasin"
           },
           {
-            "word": "??????",
+            "word": "деньги",
             "meaning": "argent"
           },
           {
-            "word": "??????",
+            "word": "работа",
             "meaning": "travail"
           },
           {
-            "word": "???????",
+            "word": "больной",
             "meaning": "malade"
           },
           {
-            "word": "?????",
+            "word": "вчера",
             "meaning": "hier"
           },
           {
-            "word": "??????",
+            "word": "завтра",
             "meaning": "demain"
           },
           {
-            "word": "?????",
+            "word": "часто",
             "meaning": "souvent"
           },
           {
-            "word": "?????",
+            "word": "важно",
             "meaning": "important"
           }
         ]
@@ -219,35 +219,35 @@
       "internalNavigation": {
         "heading": "Autres niveaux de russe"
       },
-      "metaTitle": "Vocabulaire de russe A2 ? Niveau ?l?mentaire",
-      "metaDescription": "Apprenez le vocabulaire de russe A2 avec des mots courants et exemples pratiques. Am?liorez votre compr?hension et votre communication au niveau ?l?mentaire.",
+      "metaTitle": "Vocabulaire de russe A2 – Niveau Élémentaire",
+      "metaDescription": "Apprenez le vocabulaire de russe A2 avec des mots courants et exemples pratiques. Améliorez votre compréhension et votre communication au niveau Élémentaire.",
       "introParagraphs": [
-        "Le vocabulaire de russe A2 ?tend les connaissances acquises au niveau A1. Les apprenants peuvent former des phrases plus longues et communiquer plus facilement dans des situations quotidiennes.",
-        "Le vocabulaire quotidien russe couvre des th?mes tels que le travail, les loisirs, les voyages et la sant?. La liste de mots russe A2 permet d?acqu?rir progressivement de nouveaux termes."
+        "Le vocabulaire de russe A2 étend les connaissances acquises au niveau A1. Les apprenants peuvent former des phrases plus longues et communiquer plus facilement dans des situations quotidiennes.",
+        "Le vocabulaire quotidien russe couvre des thèmes tels que le travail, les loisirs, les voyages et la santé. La liste de mots russe A2 permet d’acquérir progressivement de nouveaux termes."
       ],
       "bottomCta": {
         "heading": "Poursuivez votre apprentissage",
-        "text": "Le vocabulaire de russe A2 permet une communication plus autonome. Lisez des textes simples, ?coutez des dialogues et r?p?tez r?guli?rement les nouveaux mots."
+        "text": "Le vocabulaire de russe A2 permet une communication plus autonome. Lisez des textes simples, Écoutez des dialogues et répétez régulièrement les nouveaux mots."
       }
     },
     "b1": {
       "title": "Vocabulaire de russe B1",
-      "intro": "Le vocabulaire de russe B1 correspond au niveau interm?diaire.",
-      "levelDescription": "Interm?diaire",
+      "intro": "Le vocabulaire de russe B1 correspond au niveau intermédiaire.",
+      "levelDescription": "Intermédiaire",
       "ctaText": "Commencer la pratique B1",
       "levelExplanation": {
         "heading": "Que signifie le niveau B1 en russe ?",
-        "paragraph": "Le niveau B1 repr?sente un utilisateur ind?pendant interm?diaire. Les apprenants peuvent g?rer la plupart des situations courantes et produire des textes simples et coh?rents.",
+        "paragraph": "Le niveau B1 représente un utilisateur indépendant intermédiaire. Les apprenants peuvent gérer la plupart des situations courantes et produire des textes simples et cohérents.",
         "bullets": [
           "Exprimer des opinions personnelles.",
-          "D?crire des ?v?nements et exp?riences.",
+          "Décrire des événements et expériences.",
           "Comprendre des textes informatifs clairs."
         ]
       },
       "vocabularyScope": {
         "heading": "Que comprend le vocabulaire de russe B1 ?",
         "topics": [
-          "Travail et soci?t?",
+          "Travail et société",
           "Argumentation et narration"
         ],
         "wordTypes": [
@@ -257,11 +257,11 @@
         ],
         "groups": [
           {
-            "heading": "Travail et soci?t?",
+            "heading": "Travail et société",
             "items": [
-              "Professions et responsabilit?s",
-              "?ducation et formation",
-              "Technologie et m?dias",
+              "Professions et responsabilités",
+              "Éducation et formation",
+              "Technologie et médias",
               "Sujets sociaux"
             ]
           },
@@ -269,7 +269,7 @@
             "heading": "Argumentation et narration",
             "items": [
               "Connecteurs logiques",
-              "Expressions d?accord et de d?saccord",
+              "Expressions d’accord et de désaccord",
               "Adjectifs comparatifs",
               "Mots abstraits russes B1"
             ]
@@ -278,7 +278,7 @@
       },
       "wordCount": {
         "heading": "Combien de mots contient le vocabulaire de russe B1 ?",
-        "text": "Le niveau B1 comprend g?n?ralement entre 2 000 et 3 000 mots. Pour ?largir le vocabulaire de russe B1, lisez des articles, ?coutez des podcasts et pratiquez la conversation r?guli?rement.",
+        "text": "Le niveau B1 comprend généralement entre 2 000 et 3 000 mots. Pour élargir le vocabulaire de russe B1, lisez des articles, Écoutez des podcasts et pratiquez la conversation régulièrement.",
         "value": 3000
       },
       "sampleVocabulary": {
@@ -289,43 +289,43 @@
         },
         "rows": [
           {
-            "word": "???????????",
+            "word": "происходить",
             "meaning": "se produire"
           },
           {
-            "word": "???????",
-            "meaning": "?chec"
+            "word": "неудача",
+            "meaning": "Échec"
           },
           {
-            "word": "????????????",
+            "word": "работодатель",
             "meaning": "employeur"
           },
           {
-            "word": "????????",
+            "word": "кандидат",
             "meaning": "candidat"
           },
           {
-            "word": "?????????",
-            "meaning": "d?velopper"
+            "word": "развивать",
+            "meaning": "développer"
           },
           {
-            "word": "?????????? ?????",
+            "word": "окружающая среда",
             "meaning": "environnement"
           },
           {
-            "word": "????????????",
+            "word": "преимущество",
             "meaning": "avantage"
           },
           {
-            "word": "??????????",
-            "meaning": "d?savantage"
+            "word": "недостаток",
+            "meaning": "désavantage"
           },
           {
-            "word": "??????????",
+            "word": "предлагать",
             "meaning": "proposer"
           },
           {
-            "word": "????",
+            "word": "цель",
             "meaning": "objectif"
           }
         ]
@@ -333,36 +333,36 @@
       "internalNavigation": {
         "heading": "Autres niveaux de russe"
       },
-      "metaTitle": "Vocabulaire de russe B1 ? Niveau interm?diaire",
-      "metaDescription": "Apprenez le vocabulaire de russe B1 avec des mots interm?diaires et des exemples d?taill?s. Am?liorez l?expression et la compr?hension en russe.",
+      "metaTitle": "Vocabulaire de russe B1 – Niveau intermédiaire",
+      "metaDescription": "Apprenez le vocabulaire de russe B1 avec des mots intermédiaires et des exemples détaillés. Améliorez l’expression et la compréhension en russe.",
       "introParagraphs": [
-        "Le vocabulaire de russe B1 correspond au niveau interm?diaire. Les apprenants peuvent comprendre les points principaux de messages clairs et communiquer avec plus de d?tails.",
-        "Les mots russes interm?diaires B1 permettent d?exprimer des opinions, de d?crire des exp?riences et de participer ? des conversations plus complexes. La liste de mots russe B1 aide ? ?largir le vocabulaire et ? renforcer les comp?tences linguistiques."
+        "Le vocabulaire de russe B1 correspond au niveau intermédiaire. Les apprenants peuvent comprendre les points principaux de messages clairs et communiquer avec plus de détails.",
+        "Les mots russes intermédiaires B1 permettent d’exprimer des opinions, de décrire des expériences et de participer à des conversations plus complexes. La liste de mots russe B1 aide à élargir le vocabulaire et à renforcer les compétences linguistiques."
       ],
       "bottomCta": {
-        "heading": "Renforcez votre niveau interm?diaire",
-        "text": "Avec un solide vocabulaire de russe B1, vous pouvez communiquer de mani?re claire et structur?e. Pratiquez r?guli?rement, discutez de sujets actuels et lisez des textes plus complexes pour enrichir votre vocabulaire."
+        "heading": "Renforcez votre niveau intermédiaire",
+        "text": "Avec un solide vocabulaire de russe B1, vous pouvez communiquer de manière claire et structurée. Pratiquez régulièrement, discutez de sujets actuels et lisez des textes plus complexes pour enrichir votre vocabulaire."
       }
     },
     "b2": {
       "title": "Vocabulaire de russe B2",
-      "intro": "Le vocabulaire de russe B2 est con?u pour les apprenants souhaitant communiquer avec aisance et aborder des sujets plus complexes.",
-      "levelDescription": "Interm?diaire sup?rieur",
+      "intro": "Le vocabulaire de russe B2 est conçu pour les apprenants souhaitant communiquer avec aisance et aborder des sujets plus complexes.",
+      "levelDescription": "Intermédiaire supérieur",
       "ctaText": "Commencer la pratique B2",
       "levelExplanation": {
         "heading": "Que signifie le niveau B2 ?",
-        "paragraph": "Au niveau B2, vous pouvez interagir spontan?ment avec des locuteurs natifs. Le vocabulaire de russe B2 inclut des termes abstraits, des connecteurs logiques et des expressions utiles pour les d?bats et les contextes professionnels.",
+        "paragraph": "Au niveau B2, vous pouvez interagir spontanément avec des locuteurs natifs. Le vocabulaire de russe B2 inclut des termes abstraits, des connecteurs logiques et des expressions utiles pour les débats et les contextes professionnels.",
         "bullets": [
-          "Comprendre les id?es principales de textes complexes.",
-          "Exprimer et d?fendre vos opinions clairement.",
+          "Comprendre les idées principales de textes complexes.",
+          "Exprimer et défendre vos opinions clairement.",
           "Utiliser des connecteurs pour structurer le discours."
         ]
       },
       "vocabularyScope": {
-        "heading": "Port?e du vocabulaire B2",
+        "heading": "Portée du vocabulaire B2",
         "topics": [
           "Discussion et argumentation",
-          "Travail et soci?t?"
+          "Travail et société"
         ],
         "wordTypes": [
           "Noms",
@@ -373,26 +373,26 @@
           {
             "heading": "Discussion et argumentation",
             "items": [
-              "Expressions pour ?tre d?accord ou en d?saccord.",
+              "Expressions pour être d’accord ou en désaccord.",
               "Connecteurs pour comparaison et contraste.",
               "Vocabulaire pour justifier ses opinions.",
-              "Termes pour analyser probl?mes et solutions."
+              "Termes pour analyser problèmes et solutions."
             ]
           },
           {
-            "heading": "Travail et soci?t?",
+            "heading": "Travail et société",
             "items": [
-              "Mots li?s au travail et aux ?tudes.",
+              "Mots liés au travail et aux études.",
               "Vocabulaire sur des sujets sociaux actuels.",
               "Expressions formelles pour rapports et emails.",
-              "Termes concernant responsabilit?s et projets."
+              "Termes concernant responsabilités et projets."
             ]
           }
         ]
       },
       "wordCount": {
         "heading": "Combien de mots comprend le B2 ?",
-        "text": "Le vocabulaire russe B2 couvre g?n?ralement plusieurs milliers de mots actifs. Leur utilisation correcte ? l?oral et ? l??crit est cruciale.",
+        "text": "Le vocabulaire russe B2 couvre généralement plusieurs milliers de mots actifs. Leur utilisation correcte à l’oral et à l’écrit est cruciale.",
         "value": 4000
       },
       "sampleVocabulary": {
@@ -403,79 +403,79 @@
         },
         "rows": [
           {
-            "word": "??????",
-            "meaning": "cependant / n?anmoins"
+            "word": "однако",
+            "meaning": "cependant / néanmoins"
           },
           {
-            "word": "????????",
-            "meaning": "am?liorer"
+            "word": "улучшать",
+            "meaning": "améliorer"
           },
           {
-            "word": "?????",
-            "meaning": "d?fi"
+            "word": "вызов",
+            "meaning": "défi"
           },
           {
-            "word": "???????",
-            "meaning": "donc / par cons?quent"
+            "word": "поэтому",
+            "meaning": "donc / par conséquent"
           },
           {
-            "word": "?????????",
-            "meaning": "atteindre / r?aliser"
+            "word": "достигать",
+            "meaning": "atteindre / réaliser"
           },
           {
-            "word": "????????",
+            "word": "убеждать",
             "meaning": "convaincre"
           },
           {
-            "word": "????????",
-            "meaning": "progr?s"
+            "word": "прогресс",
+            "meaning": "progrès"
           },
           {
-            "word": "???????????????",
-            "meaning": "responsabilit?"
+            "word": "ответственность",
+            "meaning": "responsabilité"
           },
           {
-            "word": "?????????",
-            "meaning": "?valuer"
+            "word": "оценивать",
+            "meaning": "Évaluer"
           },
           {
-            "word": "????????",
-            "meaning": "probl?me"
+            "word": "проблема",
+            "meaning": "problème"
           }
         ]
       },
       "internalNavigation": {
         "heading": "Autres niveaux CECR"
       },
-      "metaTitle": "Vocabulaire de russe B2 ? Mots et expressions essentiels",
-      "metaDescription": "D?veloppez votre vocabulaire russe B2 avec des mots cl?s, leurs significations et exemples pour communiquer efficacement au quotidien et au travail.",
+      "metaTitle": "Vocabulaire de russe B2 – Mots et expressions essentiels",
+      "metaDescription": "Développez votre vocabulaire russe B2 avec des mots clés, leurs significations et exemples pour communiquer efficacement au quotidien et au travail.",
       "introParagraphs": [
-        "Le vocabulaire de russe B2 est con?u pour les apprenants souhaitant communiquer avec aisance et aborder des sujets plus complexes. ? ce niveau, vous pouvez participer ? des discussions et exprimer vos id?es clairement.",
-        "Le vocabulaire russe interm?diaire permet de construire des arguments, ?valuer les avantages et inconv?nients, et comprendre des textes plus longs et d?taill?s. L?objectif est d?am?liorer la pr?cision et la fluidit? ? l?oral comme ? l??crit."
+        "Le vocabulaire de russe B2 est conçu pour les apprenants souhaitant communiquer avec aisance et aborder des sujets plus complexes. À ce niveau, vous pouvez participer à des discussions et exprimer vos idées clairement.",
+        "Le vocabulaire russe intermédiaire permet de construire des arguments, Évaluer les avantages et inconvénients, et comprendre des textes plus longs et détaillés. L’objectif est d’améliorer la précision et la fluidité à l’oral comme à l’écrit."
       ],
       "bottomCta": {
-        "heading": "Continuez ? enrichir votre vocabulaire",
-        "text": "Pour ma?triser le B2, lisez des textes, ?coutez des discussions et pratiquez l?oral et l??crit. L?application active consolide l?apprentissage."
+        "heading": "Continuez à enrichir votre vocabulaire",
+        "text": "Pour maîtriser le B2, lisez des textes, Écoutez des discussions et pratiquez l’oral et l’écrit. L’application active consolide l’apprentissage."
       }
     },
     "c1": {
       "title": "Vocabulaire de russe C1",
-      "intro": "Le vocabulaire russe C1 correspond ? un niveau avanc? o? l?on ma?trise des expressions complexes et des termes abstraits.",
-      "levelDescription": "Avanc?",
+      "intro": "Le vocabulaire russe C1 correspond à un niveau avancé où l’on maîtrise des expressions complexes et des termes abstraits.",
+      "levelDescription": "Avancé",
       "ctaText": "Commencer la pratique C1",
       "levelExplanation": {
-        "heading": "Caract?ristiques du niveau C1",
+        "heading": "Caractéristiques du niveau C1",
         "paragraph": "Les mots C1 incluent des termes techniques, expressions formelles et divers connecteurs logiques.",
         "bullets": [
-          "Compr?hension de textes complexes et sp?cialis?s.",
-          "Expression fluide et structur?e d?id?es abstraites.",
+          "Compréhension de textes complexes et spécialisés.",
+          "Expression fluide et structurée d’idées abstraites.",
           "Adaptation du style linguistique selon le contexte."
         ]
       },
       "vocabularyScope": {
-        "heading": "Port?e du vocabulaire C1",
+        "heading": "Portée du vocabulaire C1",
         "topics": [
-          "Langage acad?mique",
+          "Langage académique",
           "Communication professionnelle"
         ],
         "wordTypes": [
@@ -485,21 +485,21 @@
         ],
         "groups": [
           {
-            "heading": "Langage acad?mique",
+            "heading": "Langage académique",
             "items": [
-              "Termes pour l?analyse et l??valuation.",
+              "Termes pour l’analyse et l’évaluation.",
               "Expressions pour argumentation complexe.",
-              "Vocabulaire pour pr?sentations formelles.",
-              "Termes li?s ? la recherche et ? la pens?e critique."
+              "Vocabulaire pour présentations formelles.",
+              "Termes liés à la recherche et à la pensée critique."
             ]
           },
           {
             "heading": "Communication professionnelle",
             "items": [
               "Expressions formelles pour rapports et documents.",
-              "Verbes pr?cis pour argumentation et n?gociation.",
-              "Adjectifs avanc?s pour d?crire des situations.",
-              "Terminologie pour la gestion et l?organisation."
+              "Verbes précis pour argumentation et négociation.",
+              "Adjectifs avancés pour décrire des situations.",
+              "Terminologie pour la gestion et l’organisation."
             ]
           }
         ]
@@ -517,79 +517,79 @@
         },
         "rows": [
           {
-            "word": "??????",
-            "meaning": "cependant / n?anmoins"
+            "word": "однако",
+            "meaning": "cependant / néanmoins"
           },
           {
-            "word": "?????????",
-            "meaning": "approfondir / ?laborer"
+            "word": "углублять",
+            "meaning": "approfondir / Élaborer"
           },
           {
-            "word": "????????",
-            "meaning": "logique / coh?rent"
+            "word": "логичный",
+            "meaning": "logique / cohérent"
           },
           {
-            "word": "????????",
-            "meaning": "pertinent / appropri?"
+            "word": "уместный",
+            "meaning": "pertinent / approprié"
           },
           {
-            "word": "?????????????",
-            "meaning": "d?velopper / ?laborer"
+            "word": "разрабатывать",
+            "meaning": "développer / Élaborer"
           },
           {
-            "word": "??????? ??? ??????",
+            "word": "ставить под вопрос",
             "meaning": "remettre en question / contester"
           },
           {
-            "word": "????????????",
-            "meaning": "consid?rable / important"
+            "word": "значительный",
+            "meaning": "considérable / important"
           },
           {
-            "word": "?? ????",
+            "word": "по сути",
             "meaning": "essentiellement / en substance"
           },
           {
-            "word": "???????? ???????",
-            "meaning": "questions cl?s"
+            "word": "ключевые вопросы",
+            "meaning": "questions clés"
           },
           {
-            "word": "?????????",
-            "meaning": "atteindre / r?aliser"
+            "word": "достигать",
+            "meaning": "atteindre / réaliser"
           }
         ]
       },
       "internalNavigation": {
         "heading": "Autres niveaux CECR"
       },
-      "metaTitle": "Vocabulaire de russe C1 ? Mots avanc?s",
-      "metaDescription": "Am?liorez votre vocabulaire russe C1 avec des mots avanc?s, exemples et exercices pour communiquer avec pr?cision et assurance.",
+      "metaTitle": "Vocabulaire de russe C1 – Mots avancés",
+      "metaDescription": "Améliorez votre vocabulaire russe C1 avec des mots avancés, exemples et exercices pour communiquer avec précision et assurance.",
       "introParagraphs": [
-        "Le vocabulaire russe C1 correspond ? un niveau avanc? o? l?on ma?trise des expressions complexes et des termes abstraits. Vous pouvez comprendre des textes longs et communiquer avec pr?cision et spontan?it?.",
-        "Le vocabulaire avanc? permet d?analyser, argumenter et utiliser des nuances linguistiques dans des contextes acad?miques ou professionnels. L?objectif est d??largir le lexique tout en conservant un registre appropri?."
+        "Le vocabulaire russe C1 correspond à un niveau avancé où l’on maîtrise des expressions complexes et des termes abstraits. Vous pouvez comprendre des textes longs et communiquer avec précision et spontanéité.",
+        "Le vocabulaire avancé permet d’analyser, argumenter et utiliser des nuances linguistiques dans des contextes académiques ou professionnels. L’objectif est d’élargir le lexique tout en conservant un registre approprié."
       ],
       "bottomCta": {
-        "heading": "Continuez ? perfectionner votre russe",
-        "text": "Pour ma?triser le C1, lisez des textes complexes, participez ? des d?bats et r?digez des essais structur?s. La pratique r?guli?re am?liore la pr?cision et la confiance."
+        "heading": "Continuez à perfectionner votre russe",
+        "text": "Pour maîtriser le C1, lisez des textes complexes, participez à des débats et rédigez des essais structurés. La pratique régulière améliore la précision et la confiance."
       }
     },
     "c2": {
       "title": "Vocabulaire de russe C2",
-      "intro": "Le vocabulaire de russe C2 repr?sente la ma?trise compl?te selon le CECR.",
-      "levelDescription": "Ma?trise",
+      "intro": "Le vocabulaire de russe C2 représente la maîtrise complète selon le CECR.",
+      "levelDescription": "Maîtrise",
       "ctaText": "Commencer la pratique C2",
       "levelExplanation": {
-        "heading": "Caract?ristiques du niveau C2",
-        "paragraph": "Les mots C2 couvrent les domaines acad?miques, litt?raires et techniques, en pr?tant attention aux distinctions subtiles de sens.",
+        "heading": "Caractéristiques du niveau C2",
+        "paragraph": "Les mots C2 couvrent les domaines académiques, littéraires et techniques, en prêtant attention aux distinctions subtiles de sens.",
         "bullets": [
-          "Compr?hension de textes sp?cialis?s et litt?raires.",
-          "Usage pr?cis des synonymes avec nuances.",
+          "Compréhension de textes spécialisés et littéraires.",
+          "Usage précis des synonymes avec nuances.",
           "Adaptation parfaite aux registres formels et informels."
         ]
       },
       "vocabularyScope": {
-        "heading": "Port?e du vocabulaire C2",
+        "heading": "Portée du vocabulaire C2",
         "topics": [
-          "Langage acad?mique et litt?raire",
+          "Langage académique et littéraire",
           "Nuances et style"
         ],
         "wordTypes": [
@@ -599,28 +599,28 @@
         ],
         "groups": [
           {
-            "heading": "Langage acad?mique et litt?raire",
+            "heading": "Langage académique et littéraire",
             "items": [
-              "Terminologie sp?cialis?e dans diff?rents domaines.",
-              "Figures de style et expressions litt?raires.",
-              "Vocabulaire litt?raire avanc?.",
-              "Verbes pr?cis pour l?analyse critique."
+              "Terminologie spécialisée dans différents domaines.",
+              "Figures de style et expressions littéraires.",
+              "Vocabulaire littéraire avancé.",
+              "Verbes précis pour l’analyse critique."
             ]
           },
           {
             "heading": "Nuances et style",
             "items": [
-              "Synonymes avec diff?rences subtiles de sens.",
+              "Synonymes avec différences subtiles de sens.",
               "Distinction claire des registres linguistiques.",
               "Expressions idiomatiques authentiques.",
-              "Langage adapt? culturellement."
+              "Langage adapté culturellement."
             ]
           }
         ]
       },
       "wordCount": {
         "heading": "Combien de mots comprend le C2 ?",
-        "text": "Le vocabulaire russe C2 peut inclure plus de 6 000 mots actifs. La ma?trise se d?montre par un usage naturel et pr?cis.",
+        "text": "Le vocabulaire russe C2 peut inclure plus de 6 000 mots actifs. La maîtrise se démontre par un usage naturel et précis.",
         "value": 6500
       },
       "sampleVocabulary": {
@@ -631,43 +631,43 @@
         },
         "rows": [
           {
-            "word": "???????????",
-            "meaning": "indispensable / in?vitable"
+            "word": "необходимый",
+            "meaning": "indispensable / inévitable"
           },
           {
-            "word": "????????????",
+            "word": "утонченность",
             "meaning": "sophistication / raffinement"
           },
           {
-            "word": "??????????",
-            "meaning": "in?vitable"
+            "word": "неизбежный",
+            "meaning": "inévitable"
           },
           {
-            "word": "????????",
-            "meaning": "nuancer / pr?ciser"
+            "word": "уточнять",
+            "meaning": "nuancer / préciser"
           },
           {
-            "word": "???????????",
-            "meaning": "?loquence / art de parler"
+            "word": "красноречие",
+            "meaning": "éloquence / art de parler"
           },
           {
-            "word": "????????",
+            "word": "суждение",
             "meaning": "jugement / discernement"
           },
           {
-            "word": "?????????",
-            "meaning": "atteindre un r?sultat"
+            "word": "достигать",
+            "meaning": "atteindre un résultat"
           },
           {
-            "word": "?????????????",
-            "meaning": "ambivalent / avec aspects oppos?s"
+            "word": "амбивалентный",
+            "meaning": "ambivalent / avec aspects opposés"
           },
           {
-            "word": "??????????????",
+            "word": "правдоподобный",
             "meaning": "plausible"
           },
           {
-            "word": "????????????",
+            "word": "мотивировать",
             "meaning": "motiver / justifier"
           }
         ]
@@ -675,15 +675,15 @@
       "internalNavigation": {
         "heading": "Autres niveaux CECR"
       },
-      "metaTitle": "Vocabulaire de russe C2 ? Niveau ma?trise",
-      "metaDescription": "D?couvrez le vocabulaire russe C2 avec des mots rares et pr?cis pour atteindre une ma?trise compl?te de la langue.",
+      "metaTitle": "Vocabulaire de russe C2 – Niveau maîtrise",
+      "metaDescription": "Découvrez le vocabulaire russe C2 avec des mots rares et précis pour atteindre une maîtrise complète de la langue.",
       "introParagraphs": [
-        "Le vocabulaire de russe C2 repr?sente la ma?trise compl?te selon le CECR. Vous pouvez comprendre presque tout ce que vous lisez ou entendez et vous exprimer avec pr?cision, nuances et spontan?it?.",
-        "Le vocabulaire tr?s avanc? inclut des mots rares, des expressions idiomatiques et des subtilit?s stylistiques. Il permet d?adapter parfaitement le langage ? tous les contextes."
+        "Le vocabulaire de russe C2 représente la maîtrise complète selon le CECR. Vous pouvez comprendre presque tout ce que vous lisez ou entendez et vous exprimer avec précision, nuances et spontanéité.",
+        "Le vocabulaire très avancé inclut des mots rares, des expressions idiomatiques et des subtilités stylistiques. Il permet d’adapter parfaitement le langage à tous les contextes."
       ],
       "bottomCta": {
-        "heading": "Atteignez la ma?trise compl?te du russe",
-        "text": "Pour ma?triser le vocabulaire C2, lisez des ?uvres litt?raires, participez ? des conf?rences sp?cialis?es et r?digez des textes complexes. Une pratique intensive et vari?e est essentielle pour un contr?le total de la langue."
+        "heading": "Atteignez la maîtrise complète du russe",
+        "text": "Pour maîtriser le vocabulaire C2, lisez des œuvres littéraires, participez à des conférences spécialisées et rédigez des textes complexes. Une pratique intensive et variée est essentielle pour un contrôle total de la langue."
       }
     }
   }
