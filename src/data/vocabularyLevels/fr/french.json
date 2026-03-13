@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Français",
   "levels": {
     "a1": {
-      "title": "Vocabulaire de français A1",
+      "title": "Pratique du vocabulaire français A1 – Liste de mots pour débutants",
       "intro": "Le vocabulaire de français A1 constitue la première étape pour commencer à apprendre la langue.",
       "levelDescription": "Débutant",
       "ctaText": "Commencer la pratique A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux de français"
       },
-      "metaTitle": "Vocabulaire de français A1 – Mots essentiels pour débuter",
+      "metaTitle": "Pratique du vocabulaire français A1 – Mots pour débutants",
       "metaDescription": "Découvrez le vocabulaire de français A1 avec des mots essentiels et exemples simples. Construisez une base solide pour commencer à apprendre le français.",
       "introParagraphs": [
         "Le vocabulaire de français A1 constitue la première étape pour commencer à apprendre la langue. À ce niveau débutant, vous découvrez des mots et des expressions simples qui permettent de communiquer dans des situations très courantes du quotidien.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulaire de français A2",
+      "title": "Pratique du vocabulaire français A2 – Liste de mots niveau élémentaire",
       "intro": "Le vocabulaire de français A2 approfondit les bases acquises au niveau débutant.",
       "levelDescription": "Élémentaire",
       "ctaText": "Commencer la pratique A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux de français"
       },
-      "metaTitle": "Vocabulaire de français A2 – Niveau élémentaire",
+      "metaTitle": "Pratique du vocabulaire français A2 – Liste de mots élémentaire",
       "metaDescription": "Explorez le vocabulaire de français A2 avec des mots courants et exemples pratiques. Développez votre niveau élémentaire en français.",
       "introParagraphs": [
         "Le vocabulaire de français A2 approfondit les bases acquises au niveau débutant. À ce stade, l’apprenant peut s’exprimer avec plus d’aisance dans des situations courantes et comprendre des phrases plus variées.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulaire de français B1",
+      "title": "Pratique du vocabulaire français B1 – Liste de mots niveau intermédiaire",
       "intro": "Le vocabulaire de français B1 marque l’entrée dans un niveau intermédiaire.",
       "levelDescription": "Intermédiaire",
       "ctaText": "Commencer la pratique B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux de français"
       },
-      "metaTitle": "Vocabulaire de français B1 – Niveau intermédiaire",
+      "metaTitle": "Pratique du vocabulaire français B1 – Mots niveau intermédiaire",
       "metaDescription": "Découvrez le vocabulaire de français B1 avec des mots intermédiaires et exemples détaillés. Développez votre expression et votre compréhension.",
       "introParagraphs": [
         "Le vocabulaire de français B1 marque l’entrée dans un niveau intermédiaire. À ce stade, l’apprenant peut comprendre les points essentiels d’un discours clair et s’exprimer de manière plus développée.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulaire de français B2",
+      "title": "Pratique du vocabulaire français B2 – Liste de mots niveau intermédiaire supérieur",
       "intro": "Le vocabulaire de français B2 correspond à un niveau intermédiaire avancé où l’apprenant peut communiquer avec aisance dans la plupart des situations du quotidien, du travail ou des études.",
       "levelDescription": "Intermédiaire avancé",
       "ctaText": "Commencer la pratique B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Découvrez les autres niveaux du CECRL"
       },
-      "metaTitle": "Vocabulaire de français B2 – Liste de mots et définitions",
+      "metaTitle": "Pratique du vocabulaire français B2 – Vocabulaire intermédiaire supérieur",
       "metaDescription": "Développez votre vocabulaire de français B2 avec une liste de mots essentiels, définitions claires et exemples pour progresser à l’oral et à l’écrit.",
       "introParagraphs": [
         "Le vocabulaire de français B2 correspond à un niveau intermédiaire avancé où l’apprenant peut communiquer avec aisance dans la plupart des situations du quotidien, du travail ou des études. À ce stade, vous êtes capable d’exprimer des idées complexes et de participer activement à des discussions structurées.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulaire de français C1",
+      "title": "Pratique du vocabulaire français C1 – Liste de mots avancés",
       "intro": "Le vocabulaire de français C1 correspond à un niveau avancé où l’utilisateur maîtrise des expressions complexes et des termes abstraits.",
       "levelDescription": "Avancé",
       "ctaText": "Commencer la pratique C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Découvrez les autres niveaux du CECRL"
       },
-      "metaTitle": "Vocabulaire de français C1 – Mots avancés et usage précis",
+      "metaTitle": "Pratique du vocabulaire français C1 – Mots avancés français",
       "metaDescription": "Approfondissez votre vocabulaire de français C1 avec une liste avancée de mots, définitions et exemples pour communiquer avec précision et nuance.",
       "introParagraphs": [
         "Le vocabulaire de français C1 correspond à un niveau avancé où l’utilisateur maîtrise des expressions complexes et des termes abstraits. À ce stade, vous pouvez comprendre des textes longs et exigeants et vous exprimer avec spontanéité et précision.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulaire de français C2",
+      "title": "Pratique du vocabulaire français C2 – Liste de mots niveau maîtrise",
       "intro": "Le vocabulaire de français C2 correspond au niveau de maîtrise complète du CECRL.",
       "levelDescription": "Maîtrise complète",
       "ctaText": "Commencer la pratique C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Découvrez les autres niveaux du CECRL"
       },
-      "metaTitle": "Vocabulaire de français C2 – Niveau maîtrise complète",
+      "metaTitle": "Pratique du vocabulaire français C2 – Vocabulaire français avancé",
       "metaDescription": "Découvrez le vocabulaire de français C2 avec des mots rares, précis et nuancés pour atteindre une maîtrise complète du français.",
       "introParagraphs": [
         "Le vocabulaire de français C2 correspond au niveau de maîtrise complète du CECRL. À ce stade, vous comprenez pratiquement tout ce que vous lisez ou entendez et vous pouvez vous exprimer avec précision, nuance et spontanéité.",

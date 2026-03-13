@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Francés",
   "levels": {
     "a1": {
-      "title": "Vocabulario de francés A1",
+      "title": "Práctica de vocabulario de francés A1 – Lista de palabras para principiantes",
       "intro": "El vocabulario de francés A1 es el primer paso para comenzar a comunicarte en este idioma.",
       "levelDescription": "Principiante",
       "ctaText": "Comenzar práctica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de francés"
       },
-      "metaTitle": "Vocabulario de francés A1 - Palabras básicas para empezar",
+      "metaTitle": "Práctica de vocabulario francés A1 – Palabras para principiantes",
       "metaDescription": "Aprende vocabulario de francés A1 con palabras básicas y significados en español. Construye tu base con una lista esencial para principiantes.",
       "introParagraphs": [
         "El vocabulario de francés A1 es el primer paso para comenzar a comunicarte en este idioma. En este nivel inicial aprendes palabras y expresiones muy comunes que se utilizan en situaciones cotidianas, como presentarte, saludar o pedir algo en una tienda.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulario de francés A2",
+      "title": "Práctica de vocabulario de francés A2 – Lista de palabras de nivel elemental",
       "intro": "El vocabulario de francés A2 amplía los conocimientos adquiridos en el nivel inicial.",
       "levelDescription": "Básico alto",
       "ctaText": "Comenzar práctica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de francés"
       },
-      "metaTitle": "Vocabulario de francés A2 - Lista práctica nivel básico",
+      "metaTitle": "Práctica de vocabulario francés A2 – Lista de palabras básicas",
       "metaDescription": "Descubre el vocabulario de francés A2 con palabras útiles y ejemplos claros. Amplía tu nivel básico con términos para la vida diaria.",
       "introParagraphs": [
         "El vocabulario de francés A2 amplía los conocimientos adquiridos en el nivel inicial. En esta etapa, el estudiante ya puede formar frases más largas y participar en conversaciones sencillas sobre temas habituales.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulario de francés B1",
+      "title": "Práctica de vocabulario de francés B1 – Lista de palabras de nivel intermedio",
       "intro": "El vocabulario de francés B1 marca el paso hacia un nivel intermedio.",
       "levelDescription": "Intermedio",
       "ctaText": "Comenzar práctica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de francés"
       },
-      "metaTitle": "Vocabulario de francés B1 - Nivel intermedio práctico",
+      "metaTitle": "Práctica de vocabulario francés B1 – Palabras de nivel intermedio",
       "metaDescription": "Aprende vocabulario de francés B1 con palabras intermedias y ejemplos claros. Mejora tu comunicación y amplía tu nivel en francés.",
       "introParagraphs": [
         "El vocabulario de francés B1 marca el paso hacia un nivel intermedio. En esta etapa, el estudiante puede comprender las ideas principales de textos claros y participar en conversaciones más variadas.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulario de francés B2",
+      "title": "Práctica de vocabulario de francés B2 – Lista de palabras de nivel intermedio alto",
       "intro": "El vocabulario de francés B2 está pensado para estudiantes que ya pueden comunicarse con soltura y desean expresar ideas más complejas.",
       "levelDescription": "Intermedio alto",
       "ctaText": "Comenzar práctica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Explora otros niveles del MCER"
       },
-      "metaTitle": "Vocabulario de francés B2 - Lista de palabras y significados",
+      "metaTitle": "Práctica de vocabulario francés B2 – Vocabulario intermedio alto",
       "metaDescription": "Amplía tu vocabulario de francés B2 con listas de palabras, significados y ejemplos prácticos para comunicarte con más fluidez y precisión.",
       "introParagraphs": [
         "El vocabulario de francés B2 está pensado para estudiantes que ya pueden comunicarse con soltura y desean expresar ideas más complejas. En este nivel intermedio alto, puedes participar en conversaciones detalladas, comprender textos extensos y defender tu punto de vista con mayor claridad.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulario de francés C1",
+      "title": "Práctica de vocabulario de francés C1 – Lista de palabras avanzadas",
       "intro": "El vocabulario de francés C1 está orientado a estudiantes que desean comunicarse con precisión y naturalidad en contextos complejos.",
       "levelDescription": "Avanzado",
       "ctaText": "Comenzar práctica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Explora otros niveles del MCER"
       },
-      "metaTitle": "Vocabulario de francés C1 - Palabras avanzadas y ejemplos",
+      "metaTitle": "Práctica de vocabulario francés C1 – Palabras avanzadas de francés",
       "metaDescription": "Mejora tu vocabulario de francés C1 con listas avanzadas, significados y ejemplos para comunicarte con precisión en contextos formales y académicos.",
       "introParagraphs": [
         "El vocabulario de francés C1 está orientado a estudiantes que desean comunicarse con precisión y naturalidad en contextos complejos. En este nivel avanzado, puedes comprender textos exigentes y expresar ideas detalladas sin dificultad.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulario de francés C2",
+      "title": "Práctica de vocabulario de francés C2 – Lista de palabras de dominio avanzado",
       "intro": "El vocabulario de francés C2 representa el dominio casi total del idioma.",
       "levelDescription": "Dominio",
       "ctaText": "Comenzar práctica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Explora otros niveles del MCER"
       },
-      "metaTitle": "Vocabulario de francés C2 - Dominio y precisión lingüística",
+      "metaTitle": "Práctica de vocabulario francés C2 – Vocabulario avanzado de francés",
       "metaDescription": "Explora el vocabulario de francés C2 con palabras avanzadas y significados detallados para alcanzar un dominio casi nativo del idioma.",
       "introParagraphs": [
         "El vocabulario de francés C2 representa el dominio casi total del idioma. En este nivel, el estudiante puede comprender prácticamente todo lo que escucha o lee y expresarse con gran precisión.",

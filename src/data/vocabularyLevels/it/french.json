@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Francese",
   "levels": {
     "a1": {
-      "title": "Vocabolario di francese A1",
+      "title": "Pratica del vocabolario francese A1 – Lista di parole per principianti",
       "intro": "Il vocabolario di francese A1 rappresenta il primo passo per chi inizia a imparare la lingua.",
       "levelDescription": "Principiante",
       "ctaText": "Inizia pratica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di francese"
       },
-      "metaTitle": "Vocabolario di francese A1 – Parole essenziali per principianti",
+      "metaTitle": "Pratica del vocabolario francese A1 – Parole per principianti",
       "metaDescription": "Scopri il vocabolario di francese A1 con parole essenziali ed esempi semplici. Costruisci una base solida per iniziare a imparare il francese.",
       "introParagraphs": [
         "Il vocabolario di francese A1 rappresenta il primo passo per chi inizia a imparare la lingua. A questo livello, si apprendono parole e frasi semplici che permettono di comunicare in situazioni quotidiane molto comuni.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabolario di francese A2",
+      "title": "Pratica del vocabolario francese A2 – Lista di parole livello elementare",
       "intro": "Il vocabolario di francese A2 amplia le basi acquisite a livello A1.",
       "levelDescription": "Elementare",
       "ctaText": "Inizia pratica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di francese"
       },
-      "metaTitle": "Vocabolario di francese A2 – Livello elementare",
+      "metaTitle": "Pratica del vocabolario francese A2 – Lista di parole base",
       "metaDescription": "Scopri il vocabolario di francese A2 con parole comuni ed esempi pratici. Migliora il tuo livello elementare in francese.",
       "introParagraphs": [
         "Il vocabolario di francese A2 amplia le basi acquisite a livello A1. A questo stadio, lo studente può esprimersi con maggiore scioltezza in situazioni quotidiane e comprendere frasi più varie.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabolario di francese B1",
+      "title": "Pratica del vocabolario francese B1 – Lista di parole livello intermedio",
       "intro": "Il vocabolario di francese B1 segna l’ingresso nel livello intermedio.",
       "levelDescription": "Intermedio",
       "ctaText": "Inizia pratica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di francese"
       },
-      "metaTitle": "Vocabolario di francese B1 – Livello intermedio",
+      "metaTitle": "Pratica del vocabolario francese B1 – Parole livello intermedio",
       "metaDescription": "Scopri il vocabolario di francese B1 con parole intermedie ed esempi dettagliati. Migliora la tua espressione e comprensione.",
       "introParagraphs": [
         "Il vocabolario di francese B1 segna l’ingresso nel livello intermedio. Gli studenti possono comprendere i punti principali di un discorso chiaro e esprimersi in modo più articolato.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabolario di francese B2",
+      "title": "Pratica del vocabolario francese B2 – Lista di parole livello intermedio avanzato",
       "intro": "Il vocabolario di francese B2 rappresenta un livello intermedio-avanzato in cui lo studente è capace di comunicare con disinvoltura in molte situazioni quotidiane, lavorative o di studio.",
       "levelDescription": "Intermedio avanzato",
       "ctaText": "Inizia pratica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Scopri gli altri livelli del QCER"
       },
-      "metaTitle": "Vocabolario di francese B2 – Lista di parole essenziali",
+      "metaTitle": "Pratica del vocabolario francese B2 – Vocabolario intermedio avanzato",
       "metaDescription": "Migliora il tuo vocabolario di francese B2 con parole chiave, definizioni chiare ed esempi per parlare e scrivere con sicurezza.",
       "introParagraphs": [
         "Il vocabolario di francese B2 rappresenta un livello intermedio-avanzato in cui lo studente è capace di comunicare con disinvoltura in molte situazioni quotidiane, lavorative o di studio. A questo livello, puoi esprimere idee complesse e partecipare attivamente a discussioni articolate.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabolario di francese C1",
+      "title": "Pratica del vocabolario francese C1 – Lista di parole avanzate",
       "intro": "Il vocabolario di francese C1 corrisponde a un livello avanzato in cui si padroneggiano espressioni complesse e termini astratti.",
       "levelDescription": "Avanzato",
       "ctaText": "Inizia pratica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Scopri gli altri livelli del QCER"
       },
-      "metaTitle": "Vocabolario di francese C1 – Parole avanzate e usi precisi",
+      "metaTitle": "Pratica del vocabolario francese C1 – Parole avanzate di francese",
       "metaDescription": "Approfondisci il vocabolario di francese C1 con parole avanzate, definizioni ed esempi per comunicare con precisione e sfumature.",
       "introParagraphs": [
         "Il vocabolario di francese C1 corrisponde a un livello avanzato in cui si padroneggiano espressioni complesse e termini astratti. Puoi comprendere testi lunghi e impegnativi e comunicare con spontaneità e precisione.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabolario di francese C2",
+      "title": "Pratica del vocabolario francese C2 – Lista di parole livello padronanza",
       "intro": "Il vocabolario di francese C2 corrisponde al livello di padronanza completa del QCER.",
       "levelDescription": "Padronanza completa",
       "ctaText": "Inizia pratica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Scopri gli altri livelli del QCER"
       },
-      "metaTitle": "Vocabolario di francese C2 – Padronanza completa",
+      "metaTitle": "Pratica del vocabolario francese C2 – Vocabolario avanzato francese",
       "metaDescription": "Scopri il vocabolario di francese C2 con parole rare, precise e sfumate per raggiungere una padronanza completa della lingua.",
       "introParagraphs": [
         "Il vocabolario di francese C2 corrisponde al livello di padronanza completa del QCER. A questo livello comprendi praticamente tutto ciò che leggi o ascolti e puoi esprimerti con precisione, sfumature e spontaneità.",

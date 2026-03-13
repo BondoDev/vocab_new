@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Französisch",
   "levels": {
     "a1": {
-      "title": "Französisch Wortschatz A1",
+      "title": "Französisch A1 Wortschatz üben – Wortliste für Anfänger",
       "intro": "Der Französisch Wortschatz A1 bildet die Grundlage für alle, die mit dem Französischlernen beginnen.",
       "levelDescription": "Anfänger",
       "ctaText": "A1-Training starten",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Weitere Französisch-Niveaus"
       },
-      "metaTitle": "Französisch Wortschatz A1 – Grundwortschatz für Anfänger",
+      "metaTitle": "Französisch A1 Wortschatz üben – Wörter für Anfänger",
       "metaDescription": "Lerne Französisch Wortschatz A1 mit einfachen Wörtern und Beispielen. Baue deinen Grundwortschatz systematisch und praxisnah auf.",
       "introParagraphs": [
         "Der Französisch Wortschatz A1 bildet die Grundlage für alle, die mit dem Französischlernen beginnen. Auf diesem Einstiegsniveau lernst du wichtige Wörter und feste Ausdrücke, die dir helfen, dich in alltäglichen Situationen einfach zu verständigen.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Französisch Wortschatz A2",
+      "title": "Französisch A2 Wortschatz üben – Wortliste für Grundstufe",
       "intro": "Der Französisch Wortschatz A2 baut auf den Grundlagen des Anfängerniveaus auf.",
       "levelDescription": "Elementarstufe",
       "ctaText": "A2-Training starten",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Weitere Französisch-Niveaus"
       },
-      "metaTitle": "Französisch Wortschatz A2 – Wortschatz für den Alltag",
+      "metaTitle": "Französisch A2 Wortschatz üben – Wortliste Grundstufe",
       "metaDescription": "Entdecke Französisch Wortschatz A2 mit praktischen Wörtern für Alltag und Reisen. Erweitere deinen Wortschatz gezielt und effektiv.",
       "introParagraphs": [
         "Der Französisch Wortschatz A2 baut auf den Grundlagen des Anfängerniveaus auf. Lernende können nun längere Sätze bilden und sich in typischen Alltagssituationen besser verständigen.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Französisch Wortschatz B1",
+      "title": "Französisch B1 Wortschatz üben – Wortliste für Mittelstufe",
       "intro": "Der Französisch Wortschatz B1 markiert den Übergang zur Mittelstufe.",
       "levelDescription": "Mittelstufe",
       "ctaText": "B1-Training starten",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Weitere Französisch-Niveaus"
       },
-      "metaTitle": "Französisch Wortschatz B1 – Wortschatz auf Mittelstufe",
+      "metaTitle": "Französisch B1 Wortschatz üben – Wörter Mittelstufe",
       "metaDescription": "Lerne Französisch Wortschatz B1 mit wichtigen Wörtern für Gespräche und Beruf. Erweitere deinen Wortschatz auf Mittelstufenniveau.",
       "introParagraphs": [
         "Der Französisch Wortschatz B1 markiert den Übergang zur Mittelstufe. Lernende können nun zusammenhängend sprechen, ihre Meinung ausdrücken und komplexere Themen verstehen.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Französisch Wortschatz B2",
+      "title": "Französisch B2 Wortschatz üben – Wortliste für obere Mittelstufe",
       "intro": "Der Französisch Wortschatz B2 richtet sich an Lernende, die bereits sicher kommunizieren können und nun komplexere Themen bewältigen möchten.",
       "levelDescription": "Obere Mittelstufe",
       "ctaText": "B2-Training starten",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Weitere GER-Niveaus entdecken"
       },
-      "metaTitle": "Französisch Wortschatz B2 – Vokabelliste mit Bedeutungen",
+      "metaTitle": "Französisch B2 Wortschatz üben – Wortliste obere Mittelstufe",
       "metaDescription": "Erweitere deinen Französisch Wortschatz B2 mit wichtigen Vokabeln, Bedeutungen und Beispielen für mehr Sicherheit im Gespräch und im Beruf.",
       "introParagraphs": [
         "Der Französisch Wortschatz B2 richtet sich an Lernende, die bereits sicher kommunizieren können und nun komplexere Themen bewältigen möchten. Auf diesem Niveau bist du in der Lage, detaillierte Gespräche zu führen, Texte zu verstehen und deine Meinung klar zu vertreten.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Französisch Wortschatz C1",
+      "title": "Französisch C1 Wortschatz üben – Wortliste für Fortgeschrittene",
       "intro": "Der Französisch Wortschatz C1 steht für ein fortgeschrittenes Sprachniveau, auf dem du komplexe Inhalte sicher verstehst und differenziert ausdrücken kannst.",
       "levelDescription": "Fortgeschritten",
       "ctaText": "C1-Training starten",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Weitere GER-Niveaus entdecken"
       },
-      "metaTitle": "Französisch Wortschatz C1 – Fortgeschrittene Vokabeln",
+      "metaTitle": "Französisch C1 Wortschatz üben – Fortgeschrittene französische Wörter",
       "metaDescription": "Vertiefe deinen Französisch Wortschatz C1 mit anspruchsvollen Vokabeln, Bedeutungen und Beispielen für Studium, Beruf und Diskussionen.",
       "introParagraphs": [
         "Der Französisch Wortschatz C1 steht für ein fortgeschrittenes Sprachniveau, auf dem du komplexe Inhalte sicher verstehst und differenziert ausdrücken kannst. Du kannst anspruchsvolle Texte lesen und dich in Diskussionen präzise und spontan äußern.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Französisch Wortschatz C2",
+      "title": "Französisch C2 Wortschatz üben – Wortliste für sehr Fortgeschrittene",
       "intro": "Der Französisch Wortschatz C2 steht für nahezu muttersprachliche Kompetenz.",
       "levelDescription": "Meisterstufe",
       "ctaText": "C2-Training starten",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Weitere GER-Niveaus entdecken"
       },
-      "metaTitle": "Französisch Wortschatz C2 – Sprachliche Meisterschaft",
+      "metaTitle": "Französisch C2 Wortschatz üben – Sehr fortgeschrittene Wörter",
       "metaDescription": "Entdecke den Französisch Wortschatz C2 mit präzisen und anspruchsvollen Vokabeln für eine nahezu muttersprachliche Ausdrucksfähigkeit.",
       "introParagraphs": [
         "Der Französisch Wortschatz C2 steht für nahezu muttersprachliche Kompetenz. Auf diesem Niveau verstehst du komplexe, literarische und fachliche Texte und kannst dich spontan, präzise und differenziert ausdrücken.",

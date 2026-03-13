@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Francês",
   "levels": {
     "a1": {
-      "title": "Vocabulário de francês A1",
+      "title": "Prática de vocabulário de francês A1 – Lista de palavras para iniciantes",
       "intro": "O vocabulário de francês A1 representa o primeiro passo para quem começa a aprender a língua.",
       "levelDescription": "Iniciante",
       "ctaText": "Iniciar prática A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Outros níveis de francês"
       },
-      "metaTitle": "Vocabulário de francês A1 – Palavras essenciais para iniciantes",
+      "metaTitle": "Prática de vocabulário de francês A1 – Palavras para iniciantes",
       "metaDescription": "Aprenda o vocabulário de francês A1 com palavras essenciais e exemplos simples. Construa uma base sólida para começar a estudar francês.",
       "introParagraphs": [
         "O vocabulário de francês A1 representa o primeiro passo para quem começa a aprender a língua. Neste nível, você aprende palavras e expressões simples para se comunicar em situações do dia a dia.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulário de francês A2",
+      "title": "Prática de vocabulário de francês A2 – Lista de palavras nível básico",
       "intro": "O vocabulário de francês A2 amplia os conhecimentos adquiridos no nível A1.",
       "levelDescription": "Elementar",
       "ctaText": "Iniciar prática A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Outros níveis de francês"
       },
-      "metaTitle": "Vocabulário de francês A2 – Nível elementar",
+      "metaTitle": "Prática de vocabulário de francês A2 – Lista de palavras básicas",
       "metaDescription": "Aprenda o vocabulário de francês A2 com palavras comuns e exemplos práticos. Melhore sua compreensão e expressão no nível elementar.",
       "introParagraphs": [
         "O vocabulário de francês A2 amplia os conhecimentos adquiridos no nível A1. Nesta fase, o aluno consegue formar frases mais longas e se comunicar com maior fluidez em situações cotidianas.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulário de francês B1",
+      "title": "Prática de vocabulário de francês B1 – Lista de palavras nível intermediário",
       "intro": "O vocabulário de francês B1 marca a entrada no nível intermediário.",
       "levelDescription": "Intermediário",
       "ctaText": "Iniciar prática B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Outros níveis de francês"
       },
-      "metaTitle": "Vocabulário de francês B1 – Nível intermediário",
+      "metaTitle": "Prática de vocabulário de francês B1 – Palavras nível intermediário",
       "metaDescription": "Aprenda o vocabulário de francês B1 com palavras intermediárias e exemplos detalhados. Melhore sua expressão e compreensão na língua francesa.",
       "introParagraphs": [
         "O vocabulário de francês B1 marca a entrada no nível intermediário. Os alunos conseguem compreender os pontos principais de um discurso claro e se expressar de forma mais detalhada.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulário de francês B2",
+      "title": "Prática de vocabulário de francês B2 – Lista de palavras nível intermediário avançado",
       "intro": "O vocabulário de francês B2 destina-se a aprendizes que já conseguem se comunicar com fluência e querem lidar com temas mais complexos.",
       "levelDescription": "Intermediário avançado",
       "ctaText": "Iniciar prática B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Outros níveis do CEFR"
       },
-      "metaTitle": "Vocabulário de francês B2 – Lista de palavras essenciais",
+      "metaTitle": "Prática de vocabulário de francês B2 – Vocabulário intermediário avançado",
       "metaDescription": "Expanda seu vocabulário de francês B2 com palavras importantes, significados claros e exemplos para se comunicar com segurança.",
       "introParagraphs": [
         "O vocabulário de francês B2 destina-se a aprendizes que já conseguem se comunicar com fluência e querem lidar com temas mais complexos. Neste nível, você consegue participar de discussões detalhadas e expressar suas ideias de forma clara.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulário de francês C1",
+      "title": "Prática de vocabulário de francês C1 – Lista de palavras avançadas",
       "intro": "O vocabulário de francês C1 corresponde a um nível avançado em que você domina expressões complexas e termos abstratos.",
       "levelDescription": "Avançado",
       "ctaText": "Iniciar prática C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Outros níveis do CEFR"
       },
-      "metaTitle": "Vocabulário de francês C1 – Palavras avançadas e precisas",
+      "metaTitle": "Prática de vocabulário de francês C1 – Palavras avançadas francês",
       "metaDescription": "Aprimore seu vocabulário de francês C1 com palavras avançadas, definições e exemplos para se expressar com precisão e nuance.",
       "introParagraphs": [
         "O vocabulário de francês C1 corresponde a um nível avançado em que você domina expressões complexas e termos abstratos. É capaz de compreender textos longos e se comunicar de forma precisa e espontânea.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulário de francês C2",
+      "title": "Prática de vocabulário de francês C2 – Lista de palavras nível proficiente",
       "intro": "O vocabulário de francês C2 representa o nível de domínio completo do CEFR.",
       "levelDescription": "Domínio completo",
       "ctaText": "Iniciar prática C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Outros níveis do CEFR"
       },
-      "metaTitle": "Vocabulário de francês C2 – Domínio completo da língua",
+      "metaTitle": "Prática de vocabulário de francês C2 – Vocabulário avançado francês",
       "metaDescription": "Descubra o vocabulário de francês C2 com palavras raras, precisas e nuances para atingir domínio completo da língua.",
       "introParagraphs": [
         "O vocabulário de francês C2 representa o nível de domínio completo do CEFR. Você compreende praticamente tudo o que lê ou ouve e pode se expressar com precisão, nuances e espontaneidade.",
