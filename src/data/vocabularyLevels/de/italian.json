@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Italienisch",
   "levels": {
     "a1": {
-      "title": "Italienisch Wortschatz A1",
+      "title": "Italienisch A1 Wortschatz üben – Wortliste für Anfänger",
       "intro": "Der Italienisch Wortschatz A1 ist der Einstieg für Anfänger.",
       "levelDescription": "Anfänger",
       "ctaText": "A1-Training starten",
@@ -75,7 +75,7 @@
       "internalNavigation": {
         "heading": "Weitere Italienisch-Niveaus"
       },
-      "metaTitle": "Italienisch Wortschatz A1 – Grundlegende Wörter für Anfänger",
+      "metaTitle": "Italienisch A1 Wortschatz üben – Wörter für Anfänger",
       "metaDescription": "Lernen Sie den Italienisch Wortschatz A1 mit einfachen Wörtern und Beispielen. Bauen Sie eine solide Basis für die Kommunikation auf Italienisch auf.",
       "introParagraphs": [
         "Der Italienisch Wortschatz A1 ist der Einstieg für Anfänger. Auf diesem Niveau lernen die Lernenden einfache Wörter und Ausdrücke für die alltägliche Kommunikation.",
@@ -87,7 +87,7 @@
       }
     },
     "a2": {
-      "title": "Italienisch Wortschatz A2",
+      "title": "Italienisch A2 Wortschatz üben – Wortliste für Grundstufe",
       "intro": "Der Italienisch Wortschatz A2 baut auf den Kenntnissen des A1-Niveaus auf.",
       "levelDescription": "Elementar",
       "ctaText": "A2-Training starten",
@@ -159,7 +159,7 @@
       "internalNavigation": {
         "heading": "Weitere Italienisch-Niveaus"
       },
-      "metaTitle": "Italienisch Wortschatz A2 – Elementares Niveau",
+      "metaTitle": "Italienisch A2 Wortschatz üben – Wortliste Grundstufe",
       "metaDescription": "Lernen Sie den Italienisch Wortschatz A2 mit häufigen Wörtern und praktischen Beispielen. Verbessern Sie Ihr Verständnis und Ihre Kommunikation auf elementarem Niveau.",
       "introParagraphs": [
         "Der Italienisch Wortschatz A2 baut auf den Kenntnissen des A1-Niveaus auf. Lernende können längere Sätze bilden und sich leichter in alltäglichen Situationen verständigen.",
@@ -171,7 +171,7 @@
       }
     },
     "b1": {
-      "title": "Italienisch Wortschatz B1",
+      "title": "Italienisch B1 Wortschatz üben – Wortliste für Mittelstufe",
       "intro": "Der Italienisch Wortschatz B1 entspricht dem mittleren Niveau.",
       "levelDescription": "Mittelstufe",
       "ctaText": "B1-Training starten",
@@ -243,7 +243,7 @@
       "internalNavigation": {
         "heading": "Weitere Italienisch-Niveaus"
       },
-      "metaTitle": "Italienisch Wortschatz B1 – Mittleres Niveau",
+      "metaTitle": "Italienisch B1 Wortschatz üben – Wörter Mittelstufe",
       "metaDescription": "Lernen Sie den Italienisch Wortschatz B1 mit mittleren Wörtern und detaillierten Beispielen. Verbessern Sie Ausdruck und Verständnis in Italienisch.",
       "introParagraphs": [
         "Der Italienisch Wortschatz B1 entspricht dem mittleren Niveau. Lernende können die Hauptpunkte klarer Nachrichten verstehen und sich detaillierter ausdrücken.",
@@ -255,7 +255,7 @@
       }
     },
     "b2": {
-      "title": "Italienisch Wortschatz B2",
+      "title": "Italienisch B2 Wortschatz üben – Wortliste für obere Mittelstufe",
       "intro": "Der Italienisch Wortschatz B2 richtet sich an Lernende, die bereits flüssig kommunizieren können und komplexere Themen behandeln möchten.",
       "levelDescription": "Mittelstufe",
       "ctaText": "B2-Training starten",
@@ -327,7 +327,7 @@
       "internalNavigation": {
         "heading": "Andere CEFR-Niveaus"
       },
-      "metaTitle": "Italienisch Wortschatz B2 – Wichtige Wörter und Ausdrücke",
+      "metaTitle": "Italienisch B2 Wortschatz üben – Wortliste obere Mittelstufe",
       "metaDescription": "Verbessern Sie Ihren Italienisch Wortschatz B2 mit wichtigen Wörtern, Bedeutungen und Beispielen für Alltag und Beruf.",
       "introParagraphs": [
         "Der Italienisch Wortschatz B2 richtet sich an Lernende, die bereits flüssig kommunizieren können und komplexere Themen behandeln möchten. Auf diesem Niveau können Sie Diskussionen führen und Ihre Ideen klar ausdrücken.",
@@ -339,7 +339,7 @@
       }
     },
     "c1": {
-      "title": "Italienisch Wortschatz C1",
+      "title": "Italienisch C1 Wortschatz üben – Wortliste für Fortgeschrittene",
       "intro": "Der Italienisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, in dem Sie komplexe Ausdrücke und abstrakte Begriffe beherrschen.",
       "levelDescription": "Fortgeschritten",
       "ctaText": "C1-Training starten",
@@ -411,7 +411,7 @@
       "internalNavigation": {
         "heading": "Andere CEFR-Niveaus"
       },
-      "metaTitle": "Italienisch Wortschatz C1 – Fortgeschrittene Wörter",
+      "metaTitle": "Italienisch C1 Wortschatz üben – Fortgeschrittene italienische Wörter",
       "metaDescription": "Verbessern Sie Ihren Italienisch Wortschatz C1 mit fortgeschrittenen Wörtern, Beispielen und Erklärungen für präzise Kommunikation.",
       "introParagraphs": [
         "Der Italienisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, in dem Sie komplexe Ausdrücke und abstrakte Begriffe beherrschen. Sie verstehen lange Texte und können präzise und spontan kommunizieren.",
@@ -423,7 +423,7 @@
       }
     },
     "c2": {
-      "title": "Italienisch Wortschatz C2",
+      "title": "Italienisch C2 Wortschatz üben – Wortliste für sehr Fortgeschrittene",
       "intro": "Der Italienisch Wortschatz C2 steht für volle Sprachbeherrschung gemäß CEFR.",
       "levelDescription": "Sehr fortgeschritten",
       "ctaText": "C2-Training starten",
@@ -495,7 +495,7 @@
       "internalNavigation": {
         "heading": "Andere CEFR-Niveaus"
       },
-      "metaTitle": "Italienisch Wortschatz C2 – Volle Beherrschung",
+      "metaTitle": "Italienisch C2 Wortschatz üben – Sehr fortgeschrittene Wörter",
       "metaDescription": "Entdecken Sie den Italienisch Wortschatz C2 mit seltenen und präzisen Wörtern, um die Sprache vollständig zu beherrschen.",
       "introParagraphs": [
         "Der Italienisch Wortschatz C2 steht für volle Sprachbeherrschung gemäß CEFR. Sie verstehen nahezu alles, was Sie lesen oder hören, und können sich präzise, nuanciert und spontan ausdrücken.",

@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Italiano",
   "levels": {
     "a1": {
-      "title": "Vocabulário de italiano A1",
+      "title": "Prática de vocabulário de italiano A1 – Lista de palavras para iniciantes",
       "intro": "O vocabulário de italiano A1 é o nível inicial para iniciantes.",
       "levelDescription": "Iniciante",
       "ctaText": "Iniciar prática A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Outros níveis de italiano"
       },
-      "metaTitle": "Vocabulário de italiano A1 – Palavras básicas para iniciantes",
+      "metaTitle": "Prática de vocabulário de italiano A1 – Palavras para iniciantes",
       "metaDescription": "Aprenda o vocabulário de italiano A1 com palavras simples e exemplos claros. Construa uma base sólida para se comunicar em italiano.",
       "introParagraphs": [
         "O vocabulário de italiano A1 é o nível inicial para iniciantes. Neste nível, os alunos aprendem palavras e frases simples para se comunicar no dia a dia.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulário de italiano A2",
+      "title": "Prática de vocabulário de italiano A2 – Lista de palavras nível básico",
       "intro": "O vocabulário de italiano A2 constrói sobre o conhecimento do nível A1.",
       "levelDescription": "Elementar",
       "ctaText": "Iniciar prática A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Outros níveis de italiano"
       },
-      "metaTitle": "Vocabulário de italiano A2 – Nível elementar",
+      "metaTitle": "Prática de vocabulário de italiano A2 – Lista de palavras básicas",
       "metaDescription": "Aprenda o vocabulário de italiano A2 com palavras comuns e exemplos práticos. Melhore a compreensão e comunicação no nível elementar.",
       "introParagraphs": [
         "O vocabulário de italiano A2 constrói sobre o conhecimento do nível A1. Os alunos podem formar frases mais longas e se comunicar mais facilmente em situações cotidianas.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulário de italiano B1",
+      "title": "Prática de vocabulário de italiano B1 – Lista de palavras nível intermediário",
       "intro": "O vocabulário de italiano B1 corresponde ao nível intermediário.",
       "levelDescription": "Intermediário",
       "ctaText": "Iniciar prática B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Outros níveis de italiano"
       },
-      "metaTitle": "Vocabulário de italiano B1 – Nível intermediário",
+      "metaTitle": "Prática de vocabulário de italiano B1 – Palavras nível intermediário",
       "metaDescription": "Aprenda o vocabulário de italiano B1 com palavras intermediárias e exemplos detalhados. Melhore a expressão e compreensão em italiano.",
       "introParagraphs": [
         "O vocabulário de italiano B1 corresponde ao nível intermediário. Os alunos podem compreender os pontos principais de mensagens claras e comunicar-se com mais detalhes.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulário de italiano B2",
+      "title": "Prática de vocabulário de italiano B2 – Lista de palavras nível intermediário avançado",
       "intro": "O vocabulário de italiano B2 é voltado para quem deseja se comunicar com fluência e tratar de assuntos mais complexos.",
       "levelDescription": "Intermediário avançado",
       "ctaText": "Iniciar prática B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Outros níveis CEFR"
       },
-      "metaTitle": "Vocabulário de italiano B2 – Palavras e expressões essenciais",
+      "metaTitle": "Prática de vocabulário de italiano B2 – Vocabulário intermediário avançado",
       "metaDescription": "Aprimore o vocabulário de italiano B2 com palavras essenciais, significados e exemplos para comunicação segura em contextos cotidianos e profissionais.",
       "introParagraphs": [
         "O vocabulário de italiano B2 é voltado para quem deseja se comunicar com fluência e tratar de assuntos mais complexos. Neste nível, é possível participar de discussões e expressar ideias de forma clara.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulário de italiano C1",
+      "title": "Prática de vocabulário de italiano C1 – Lista de palavras avançadas",
       "intro": "O vocabulário de italiano C1 corresponde a um nível avançado, no qual você domina expressões complexas e termos abstratos.",
       "levelDescription": "Avançado",
       "ctaText": "Iniciar prática C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Outros níveis CEFR"
       },
-      "metaTitle": "Vocabulário de italiano C1 – Palavras avançadas",
+      "metaTitle": "Prática de vocabulário de italiano C1 – Palavras avançadas italiano",
       "metaDescription": "Aprimore o vocabulário de italiano C1 com palavras avançadas, exemplos e exercícios para comunicar-se com precisão e segurança.",
       "introParagraphs": [
         "O vocabulário de italiano C1 corresponde a um nível avançado, no qual você domina expressões complexas e termos abstratos. É possível compreender textos longos e comunicar-se de forma precisa e espontânea.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulário de italiano C2",
+      "title": "Prática de vocabulário de italiano C2 – Lista de palavras nível proficiente",
       "intro": "O vocabulário de italiano C2 representa o domínio completo segundo o CEFR.",
       "levelDescription": "Proficiência",
       "ctaText": "Iniciar prática C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Outros níveis CEFR"
       },
-      "metaTitle": "Vocabulário de italiano C2 – Domínio completo",
+      "metaTitle": "Prática de vocabulário de italiano C2 – Vocabulário avançado italiano",
       "metaDescription": "Descubra o vocabulário de italiano C2 com palavras raras e precisas para atingir o domínio completo da língua.",
       "introParagraphs": [
         "O vocabulário de italiano C2 representa o domínio completo segundo o CEFR. Você compreende quase tudo o que lê ou ouve e pode expressar-se com precisão, nuances e espontaneidade.",

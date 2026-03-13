@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Italien",
   "levels": {
     "a1": {
-      "title": "Vocabulaire d’italien A1",
+      "title": "Pratique du vocabulaire italien A1 – Liste de mots pour débutants",
       "intro": "Le vocabulaire d’italien A1 est le premier niveau pour les débutants.",
       "levelDescription": "Débutant",
       "ctaText": "Commencer la pratique A1",
@@ -75,7 +75,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux d’italien"
       },
-      "metaTitle": "Vocabulaire d’italien A1 – Mots essentiels pour débutants",
+      "metaTitle": "Pratique du vocabulaire italien A1 – Mots pour débutants",
       "metaDescription": "Apprenez le vocabulaire d’italien A1 avec des mots simples et des exemples faciles. Construisez une base solide pour communiquer en italien.",
       "introParagraphs": [
         "Le vocabulaire d’italien A1 est le premier niveau pour les débutants. À ce stade, les apprenants étudient des mots et expressions simples pour communiquer dans la vie quotidienne.",
@@ -87,7 +87,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulaire d’italien A2",
+      "title": "Pratique du vocabulaire italien A2 – Liste de mots niveau élémentaire",
       "intro": "Le vocabulaire d’italien A2 complète les connaissances du niveau A1.",
       "levelDescription": "Élémentaire",
       "ctaText": "Commencer la pratique A2",
@@ -159,7 +159,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux d’italien"
       },
-      "metaTitle": "Vocabulaire d’italien A2 – Niveau élémentaire",
+      "metaTitle": "Pratique du vocabulaire italien A2 – Liste de mots élémentaire",
       "metaDescription": "Apprenez le vocabulaire d’italien A2 avec des mots courants et des exemples pratiques. Améliorez votre compréhension et votre communication au niveau élémentaire.",
       "introParagraphs": [
         "Le vocabulaire d’italien A2 complète les connaissances du niveau A1. Les apprenants peuvent former des phrases plus longues et communiquer plus facilement dans des situations quotidiennes.",
@@ -171,7 +171,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulaire d’italien B1",
+      "title": "Pratique du vocabulaire italien B1 – Liste de mots niveau intermédiaire",
       "intro": "Le vocabulaire d’italien B1 correspond au niveau intermédiaire.",
       "levelDescription": "Intermédiaire",
       "ctaText": "Commencer la pratique B1",
@@ -243,7 +243,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux d’italien"
       },
-      "metaTitle": "Vocabulaire d’italien B1 – Niveau intermédiaire",
+      "metaTitle": "Pratique du vocabulaire italien B1 – Mots niveau intermédiaire",
       "metaDescription": "Apprenez le vocabulaire d’italien B1 avec des mots intermédiaires et des exemples détaillés. Améliorez votre expression et compréhension en italien.",
       "introParagraphs": [
         "Le vocabulaire d’italien B1 correspond au niveau intermédiaire. Les apprenants peuvent comprendre les points principaux de messages clairs et s’exprimer avec plus de détails.",
@@ -255,7 +255,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulaire d’italien B2",
+      "title": "Pratique du vocabulaire italien B2 – Liste de mots niveau intermédiaire supérieur",
       "intro": "Le vocabulaire d’italien B2 s’adresse aux apprenants capables de communiquer avec fluidité et souhaitant aborder des sujets plus complexes.",
       "levelDescription": "Intermédiaire avancé",
       "ctaText": "Commencer la pratique B2",
@@ -327,7 +327,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CEFR"
       },
-      "metaTitle": "Vocabulaire d’italien B2 – Mots et expressions clés",
+      "metaTitle": "Pratique du vocabulaire italien B2 – Vocabulaire intermédiaire supérieur",
       "metaDescription": "Développez votre vocabulaire d’italien B2 avec des mots essentiels, leurs significations et exemples pour communiquer avec assurance au quotidien et au travail.",
       "introParagraphs": [
         "Le vocabulaire d’italien B2 s’adresse aux apprenants capables de communiquer avec fluidité et souhaitant aborder des sujets plus complexes. À ce niveau, vous pouvez participer à des discussions et exprimer vos idées clairement.",
@@ -339,7 +339,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulaire d’italien C1",
+      "title": "Pratique du vocabulaire italien C1 – Liste de mots avancés",
       "intro": "Le vocabulaire d’italien C1 correspond à un niveau avancé où vous maîtrisez des expressions complexes et des termes abstraits.",
       "levelDescription": "Avancé",
       "ctaText": "Commencer la pratique C1",
@@ -411,7 +411,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CEFR"
       },
-      "metaTitle": "Vocabulaire d’italien C1 – Mots avancés",
+      "metaTitle": "Pratique du vocabulaire italien C1 – Mots avancés italiens",
       "metaDescription": "Améliorez votre vocabulaire d’italien C1 avec des mots avancés, exemples et explications pour communiquer avec précision et nuances.",
       "introParagraphs": [
         "Le vocabulaire d’italien C1 correspond à un niveau avancé où vous maîtrisez des expressions complexes et des termes abstraits. Vous pouvez comprendre des textes longs et communiquer de manière précise et spontanée.",
@@ -423,7 +423,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulaire d’italien C2",
+      "title": "Pratique du vocabulaire italien C2 – Liste de mots niveau maîtrise",
       "intro": "Le vocabulaire d’italien C2 représente la maîtrise complète selon le CEFR.",
       "levelDescription": "Maîtrise",
       "ctaText": "Commencer la pratique C2",
@@ -495,7 +495,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CEFR"
       },
-      "metaTitle": "Vocabulaire d’italien C2 – Maîtrise complète",
+      "metaTitle": "Pratique du vocabulaire italien C2 – Vocabulaire italien avancé",
       "metaDescription": "Découvrez le vocabulaire d’italien C2 avec des mots rares et précis pour atteindre une maîtrise complète de la langue.",
       "introParagraphs": [
         "Le vocabulaire d’italien C2 représente la maîtrise complète selon le CEFR. Vous comprenez presque tout ce que vous lisez ou entendez et pouvez vous exprimer avec précision, nuance et spontanéité.",

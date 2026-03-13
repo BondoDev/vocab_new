@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Italian",
   "levels": {
     "a1": {
-      "title": "Italian Vocabulary A1",
+      "title": "Italian A1 Vocabulary Practice – Beginner Word List",
       "intro": "Italian Vocabulary A1 is the first step for beginners.",
       "levelDescription": "Beginner",
       "ctaText": "Start A1 Practice",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Other Italian levels"
       },
-      "metaTitle": "Italian Vocabulary A1 – Essential Words for Beginners",
+      "metaTitle": "Italian A1 Vocabulary Practice – Beginner Words & Exercises",
       "metaDescription": "Learn Italian Vocabulary A1 with essential words and simple examples. Build a solid foundation for daily communication in Italian.",
       "introParagraphs": [
         "Italian Vocabulary A1 is the first step for beginners. At this level, learners study simple words and expressions to communicate in everyday situations.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Italian Vocabulary A2",
+      "title": "Italian A2 Vocabulary Practice – Elementary Word List",
       "intro": "Italian Vocabulary A2 builds on the A1 level.",
       "levelDescription": "Elementary",
       "ctaText": "Start A2 Practice",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Other Italian levels"
       },
-      "metaTitle": "Italian Vocabulary A2 – Elementary Level",
+      "metaTitle": "Italian A2 Vocabulary Practice – Elementary Word List & Practice",
       "metaDescription": "Learn Italian Vocabulary A2 with common words and practical examples. Improve understanding and communication at the elementary level.",
       "introParagraphs": [
         "Italian Vocabulary A2 builds on the A1 level. At this level, learners can form longer sentences and communicate more easily in everyday situations.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Italian Vocabulary B1",
+      "title": "Italian B1 Vocabulary Practice – Intermediate Word List",
       "intro": "Italian Vocabulary B1 represents the intermediate level.",
       "levelDescription": "Intermediate",
       "ctaText": "Start B1 Practice",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Other Italian levels"
       },
-      "metaTitle": "Italian Vocabulary B1 – Intermediate Level",
+      "metaTitle": "Italian B1 Vocabulary Practice – Intermediate Italian Words",
       "metaDescription": "Learn Italian Vocabulary B1 with intermediate words and detailed examples. Improve your expression and comprehension in Italian.",
       "introParagraphs": [
         "Italian Vocabulary B1 represents the intermediate level. Learners can understand the main points of clear messages and express themselves in more detail.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Italian Vocabulary B2",
+      "title": "Italian B2 Vocabulary Practice – Upper-Intermediate Word List",
       "intro": "Italian Vocabulary B2 is designed for learners who can already communicate fluently and want to handle more complex topics.",
       "levelDescription": "Upper-Intermediate",
       "ctaText": "Start B2 Practice",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Other CEFR Levels"
       },
-      "metaTitle": "Italian Vocabulary B2 – Key Words and Expressions",
+      "metaTitle": "Italian B2 Vocabulary Practice – Upper-Intermediate Italian Vocabulary",
       "metaDescription": "Expand your Italian B2 vocabulary with essential words, meanings, and examples for confident communication in daily life and work.",
       "introParagraphs": [
         "Italian Vocabulary B2 is designed for learners who can already communicate fluently and want to handle more complex topics. At this level, you can participate in discussions and express your ideas clearly.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Italian Vocabulary C1",
+      "title": "Italian C1 Vocabulary Practice – Advanced Word List",
       "intro": "Italian Vocabulary C1 represents an advanced level where you master complex expressions and abstract terms.",
       "levelDescription": "Advanced",
       "ctaText": "Start C1 Practice",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Other CEFR Levels"
       },
-      "metaTitle": "Italian Vocabulary C1 – Advanced Words",
+      "metaTitle": "Italian C1 Vocabulary Practice – Advanced Italian Words & Exercises",
       "metaDescription": "Improve your Italian C1 vocabulary with advanced words, examples, and explanations for precise and nuanced communication.",
       "introParagraphs": [
         "Italian Vocabulary C1 represents an advanced level where you master complex expressions and abstract terms. You can understand long texts and communicate accurately and spontaneously.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Italian Vocabulary C2",
+      "title": "Italian C2 Vocabulary Practice – Proficient Word List",
       "intro": "Italian Vocabulary C2 represents full mastery according to CEFR standards.",
       "levelDescription": "Proficient",
       "ctaText": "Start C2 Practice",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Other CEFR Levels"
       },
-      "metaTitle": "Italian Vocabulary C2 – Complete Mastery",
+      "metaTitle": "Italian C2 Vocabulary Practice – Proficient Italian Vocabulary Practice",
       "metaDescription": "Discover Italian C2 vocabulary with rare and precise words to achieve complete mastery of the language.",
       "introParagraphs": [
         "Italian Vocabulary C2 represents full mastery according to CEFR standards. You understand almost everything you read or hear and can express yourself with precision, nuance, and spontaneity.",

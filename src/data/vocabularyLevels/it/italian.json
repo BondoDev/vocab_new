@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Italiano",
   "levels": {
     "a1": {
-      "title": "Vocabolario di italiano A1",
+      "title": "Pratica del vocabolario italiano A1 – Lista di parole per principianti",
       "intro": "Il vocabolario di italiano A1 è il livello iniziale per i principianti.",
       "levelDescription": "Principiante",
       "ctaText": "Inizia pratica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di italiano"
       },
-      "metaTitle": "Vocabolario di italiano A1 – Parole di base per principianti",
+      "metaTitle": "Pratica del vocabolario italiano A1 – Parole per principianti",
       "metaDescription": "Impara il vocabolario di italiano A1 con parole semplici ed esempi chiari. Costruisci una base solida per comunicare in italiano.",
       "introParagraphs": [
         "Il vocabolario di italiano A1 è il livello iniziale per i principianti. A questo livello, gli studenti imparano parole e frasi semplici per comunicare nella vita quotidiana.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabolario di italiano A2",
+      "title": "Pratica del vocabolario italiano A2 – Lista di parole livello elementare",
       "intro": "Il vocabolario di italiano A2 completa le conoscenze del livello A1.",
       "levelDescription": "Elementare",
       "ctaText": "Inizia pratica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di italiano"
       },
-      "metaTitle": "Vocabolario di italiano A2 – Livello elementare",
+      "metaTitle": "Pratica del vocabolario italiano A2 – Lista di parole base",
       "metaDescription": "Impara il vocabolario di italiano A2 con parole comuni ed esempi pratici. Migliora comprensione e comunicazione a livello elementare.",
       "introParagraphs": [
         "Il vocabolario di italiano A2 completa le conoscenze del livello A1. Gli studenti possono formare frasi più lunghe e comunicare più facilmente in situazioni quotidiane.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabolario di italiano B1",
+      "title": "Pratica del vocabolario italiano B1 – Lista di parole livello intermedio",
       "intro": "Il vocabolario di italiano B1 corrisponde al livello intermedio.",
       "levelDescription": "Intermedio",
       "ctaText": "Inizia pratica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di italiano"
       },
-      "metaTitle": "Vocabolario di italiano B1 – Livello intermedio",
+      "metaTitle": "Pratica del vocabolario italiano B1 – Parole livello intermedio",
       "metaDescription": "Impara il vocabolario di italiano B1 con parole intermedie ed esempi dettagliati. Migliora la tua espressione e comprensione in italiano.",
       "introParagraphs": [
         "Il vocabolario di italiano B1 corrisponde al livello intermedio. Gli studenti possono comprendere i punti principali di messaggi chiari e comunicare con maggiore dettaglio.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabolario di italiano B2",
+      "title": "Pratica del vocabolario italiano B2 – Lista di parole livello intermedio avanzato",
       "intro": "Il vocabolario di italiano B2 è pensato per chi desidera comunicare con scioltezza e affrontare argomenti più complessi.",
       "levelDescription": "Intermedio avanzato",
       "ctaText": "Inizia pratica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di italiano B2 – Parole ed espressioni chiave",
+      "metaTitle": "Pratica del vocabolario italiano B2 – Vocabolario intermedio avanzato",
       "metaDescription": "Migliora il vocabolario di italiano B2 con parole essenziali, significati ed esempi per comunicare con sicurezza in contesti quotidiani e professionali.",
       "introParagraphs": [
         "Il vocabolario di italiano B2 è pensato per chi desidera comunicare con scioltezza e affrontare argomenti più complessi. A questo livello, è possibile partecipare a discussioni e esprimere le proprie idee con chiarezza.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabolario di italiano C1",
+      "title": "Pratica del vocabolario italiano C1 – Lista di parole avanzate",
       "intro": "Il vocabolario di italiano C1 corrisponde a un livello avanzato, in cui si padroneggiano espressioni complesse e termini astratti.",
       "levelDescription": "Avanzato",
       "ctaText": "Inizia pratica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di italiano C1 – Parole avanzate",
+      "metaTitle": "Pratica del vocabolario italiano C1 – Parole avanzate italiane",
       "metaDescription": "Migliora il vocabolario di italiano C1 con parole avanzate, esempi ed esercizi per comunicare con precisione e sicurezza.",
       "introParagraphs": [
         "Il vocabolario di italiano C1 corrisponde a un livello avanzato, in cui si padroneggiano espressioni complesse e termini astratti. Si comprendono testi lunghi e si comunica in modo preciso e spontaneo.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabolario di italiano C2",
+      "title": "Pratica del vocabolario italiano C2 – Lista di parole livello padronanza",
       "intro": "Il vocabolario di italiano C2 rappresenta la padronanza completa secondo il CEFR.",
       "levelDescription": "Padronanza",
       "ctaText": "Inizia pratica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di italiano C2 – Padronanza completa",
+      "metaTitle": "Pratica del vocabolario italiano C2 – Vocabolario italiano avanzato",
       "metaDescription": "Scopri il vocabolario di italiano C2 con parole rare e precise per raggiungere la padronanza completa della lingua.",
       "introParagraphs": [
         "Il vocabolario di italiano C2 rappresenta la padronanza completa secondo il CEFR. Comprendi quasi tutto ciò che leggi o ascolti e puoi esprimerti con precisione, sfumature e spontaneità.",
