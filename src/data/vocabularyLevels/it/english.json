@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Inglese",
   "levels": {
     "a1": {
-      "title": "Vocabolario di inglese A1",
+      "title": "Pratica del vocabolario inglese A1 – Lista di parole per principianti",
       "intro": "Il vocabolario di inglese A1 rappresenta il primo passo nell’apprendimento della lingua. A questo livello impari parole semplici e molto frequenti, utili per le situazioni quotidiane.",
       "levelDescription": "Principiante",
       "ctaText": "Inizia pratica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Esplora altri livelli"
       },
-      "metaTitle": "Vocabolario di inglese A1 – Parole base per principianti",
+      "metaTitle": "Pratica del vocabolario inglese A1 – Parole per principianti",
       "metaDescription": "Inizia con il vocabolario di inglese A1. Scopri parole essenziali, significati ed esempi semplici per muovere i primi passi in inglese.",
       "introParagraphs": [
         "Il vocabolario di inglese A1 rappresenta il primo passo nell’apprendimento della lingua. A questo livello impari parole semplici e molto frequenti, utili per le situazioni quotidiane.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabolario di inglese A2",
+      "title": "Pratica del vocabolario inglese A2 – Lista di parole livello elementare",
       "intro": "Il vocabolario di inglese A2 amplia le basi e ti permette di comunicare in modo più sicuro. A questo livello puoi parlare di esperienze, routine e progetti semplici.",
       "levelDescription": "Elementare",
       "ctaText": "Inizia pratica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Esplora altri livelli"
       },
-      "metaTitle": "Vocabolario di inglese A2 – Parole livello elementare",
+      "metaTitle": "Pratica del vocabolario inglese A2 – Lista di parole base",
       "metaDescription": "Migliora il tuo inglese con il vocabolario di inglese A2. Scopri parole utili e significati per comunicare con più sicurezza.",
       "introParagraphs": [
         "Il vocabolario di inglese A2 amplia le basi e ti permette di comunicare in modo più sicuro. A questo livello puoi parlare di esperienze, routine e progetti semplici.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabolario di inglese B1",
+      "title": "Pratica del vocabolario inglese B1 – Lista di parole livello intermedio",
       "intro": "Il vocabolario di inglese B1 ti permette di comunicare in modo più autonomo e chiaro. A questo livello intermedio puoi parlare di esperienze, opinioni e progetti in modo più dettagliato.",
       "levelDescription": "Intermedio",
       "ctaText": "Inizia pratica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Esplora altri livelli"
       },
-      "metaTitle": "Vocabolario di inglese B1 – Parole livello intermedio",
+      "metaTitle": "Pratica del vocabolario inglese B1 – Lista di parole intermedie",
       "metaDescription": "Migliora il tuo livello con il vocabolario di inglese B1. Scopri parole intermedie, significati ed esempi per comunicare con sicurezza.",
       "introParagraphs": [
         "Il vocabolario di inglese B1 ti permette di comunicare in modo più autonomo e chiaro. A questo livello intermedio puoi parlare di esperienze, opinioni e progetti in modo più dettagliato.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabolario di inglese B2",
+      "title": "Pratica del vocabolario inglese B2 – Lista di parole livello intermedio avanzato",
       "intro": "Il vocabolario di inglese B2 ti consente di comunicare con maggiore precisione e sicurezza. Puoi comprendere testi complessi e partecipare a discussioni articolate.",
       "levelDescription": "Intermedio avanzato",
       "ctaText": "Inizia pratica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Esplora altri livelli"
       },
-      "metaTitle": "Vocabolario di inglese B2 – Parole livello intermedio avanzato",
+      "metaTitle": "Pratica del vocabolario inglese B2 – Vocabolario intermedio avanzato",
       "metaDescription": "Amplia le tue competenze con il vocabolario di inglese B2. Impara parole avanzate per studio, lavoro e discussioni complesse.",
       "introParagraphs": [
         "Il vocabolario di inglese B2 ti consente di comunicare con maggiore precisione e sicurezza. Puoi comprendere testi complessi e partecipare a discussioni articolate.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabolario di inglese C1",
+      "title": "Pratica del vocabolario inglese C1 – Lista di parole avanzate",
       "intro": "Il vocabolario di inglese C1 è destinato a chi desidera un controllo avanzato della lingua. Puoi comprendere testi impegnativi ed esprimerti con precisione e sfumature.",
       "levelDescription": "Avanzato",
       "ctaText": "Inizia pratica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Esplora altri livelli"
       },
-      "metaTitle": "Vocabolario di inglese C1 – Lessico avanzato e preciso",
+      "metaTitle": "Pratica del vocabolario inglese C1 – Parole avanzate",
       "metaDescription": "Perfeziona il tuo inglese con il vocabolario di inglese C1. Scopri parole avanzate e sfumature per contesti accademici e professionali.",
       "introParagraphs": [
         "Il vocabolario di inglese C1 è destinato a chi desidera un controllo avanzato della lingua. Puoi comprendere testi impegnativi ed esprimerti con precisione e sfumature.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabolario di inglese C2",
+      "title": "Pratica del vocabolario inglese C2 – Lista di parole livello padronanza",
       "intro": "Il vocabolario di inglese C2 rappresenta il livello di competenza più alto. Puoi comprendere quasi ogni testo e comunicare con grande precisione stilistica.",
       "levelDescription": "Padronanza",
       "ctaText": "Inizia pratica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Esplora altri livelli"
       },
-      "metaTitle": "Vocabolario di inglese C2 – Livello esperto e padronanza completa",
+      "metaTitle": "Pratica del vocabolario inglese C2 – Vocabolario livello esperto",
       "metaDescription": "Raggiungi la padronanza con il vocabolario di inglese C2. Scopri termini complessi e sfumature per una competenza quasi madrelingua.",
       "introParagraphs": [
         "Il vocabolario di inglese C2 rappresenta il livello di competenza più alto. Puoi comprendere quasi ogni testo e comunicare con grande precisione stilistica.",

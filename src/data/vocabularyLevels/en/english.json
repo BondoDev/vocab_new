@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "English",
   "levels": {
     "a1": {
-      "title": "English A1 Vocabulary",
+      "title": "English A1 Vocabulary Practice – Beginner Word List",
       "intro": "English A1 vocabulary practice is the first step for beginners who want to build a strong foundation.",
       "levelDescription": "Beginner",
       "ctaText": "Start A1 Practice",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "English A1 Vocabulary Practice - Basic Words for Beginners",
+      "metaTitle": "English A1 Vocabulary Practice – Beginner Words & Exercises",
       "metaDescription": "Start learning with English A1 vocabulary practice. Discover basic words, meanings, and simple examples designed for true beginners.",
       "introParagraphs": [
         "English A1 vocabulary practice is the first step for beginners who want to build a strong foundation. At this level, you learn simple and useful words that help you speak about yourself, your family, and everyday life.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "English A2 Vocabulary",
+      "title": "English A2 Vocabulary Practice – Elementary Word List",
       "intro": "English A2 vocabulary practice helps you move beyond very basic phrases and start speaking in longer, clearer sentences.",
       "levelDescription": "Elementary",
       "ctaText": "Start A2 Practice",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "English A2 Vocabulary Practice - Essential Words for Elementary Learners",
+      "metaTitle": "English A2 Vocabulary Practice – Elementary Word List",
       "metaDescription": "Improve your skills with English A2 vocabulary practice. Learn essential elementary words, meanings, and examples for everyday communication.",
       "introParagraphs": [
         "English A2 vocabulary practice helps you move beyond very basic phrases and start speaking in longer, clearer sentences. At this level, you expand your vocabulary for everyday situations such as shopping, travel, work, and free time.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "English B1 Vocabulary",
+      "title": "English B1 Vocabulary Practice – Intermediate Word List",
       "intro": "English B1 vocabulary practice helps you develop stronger communication skills and move beyond basic conversations.",
       "levelDescription": "Intermediate",
       "ctaText": "Start B1 Practice",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "English B1 Vocabulary Practice - Intermediate Word List & Exercises",
+      "metaTitle": "English B1 Vocabulary Practice – Intermediate Word List",
       "metaDescription": "Strengthen your skills with English B1 vocabulary practice. Learn key intermediate words, meanings, and examples for confident communication.",
       "introParagraphs": [
         "English B1 vocabulary practice helps you develop stronger communication skills and move beyond basic conversations. At this intermediate stage, you learn to express opinions, describe experiences, and handle everyday challenges more independently.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "English B2 Vocabulary",
+      "title": "English B2 Vocabulary Practice – Upper-Intermediate Word List",
       "intro": "English B2 vocabulary practice helps you communicate with greater precision and flexibility.",
       "levelDescription": "Upper-Intermediate",
       "ctaText": "Start B2 Practice",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "English B2 Vocabulary Practice - Upper Intermediate Word List",
+      "metaTitle": "English B2 Vocabulary Practice – Upper-Intermediate Vocabulary",
       "metaDescription": "Advance your skills with English B2 vocabulary practice. Learn upper intermediate words, meanings, and examples for fluent communication.",
       "introParagraphs": [
         "English B2 vocabulary practice helps you communicate with greater precision and flexibility. At this upper intermediate stage, you can discuss abstract topics, explain complex ideas, and interact more confidently in professional and academic settings.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "English C1 Vocabulary",
+      "title": "English C1 Vocabulary Practice – Advanced Word List",
       "intro": "English C1 vocabulary practice focuses on precision, nuance, and stylistic control.",
       "levelDescription": "Advanced",
       "ctaText": "Start C1 Practice",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "English C1 Vocabulary Practice - Advanced Word List & Exercises",
+      "metaTitle": "English C1 Vocabulary Practice – Advanced English Words",
       "metaDescription": "Refine your skills with English C1 vocabulary practice. Learn advanced words, nuanced meanings, and examples for academic and professional fluency.",
       "introParagraphs": [
         "English C1 vocabulary practice focuses on precision, nuance, and stylistic control. At this advanced stage, learners can engage with complex texts, express subtle distinctions, and adapt language appropriately across academic, professional, and social contexts.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "English C2 Vocabulary",
+      "title": "English C2 Vocabulary Practice – Proficient Word List",
       "intro": "English C2 vocabulary practice is designed for learners aiming at full mastery and near-native fluency.",
       "levelDescription": "Proficient",
       "ctaText": "Start C2 Practice",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "English C2 Vocabulary Practice - Mastery Level Word List",
+      "metaTitle": "English C2 Vocabulary Practice – Proficient English Vocabulary",
       "metaDescription": "Perfect your skills with English C2 vocabulary practice. Master nuanced words, precise meanings, and advanced usage for near-native fluency.",
       "introParagraphs": [
         "English C2 vocabulary practice is designed for learners aiming at full mastery and near-native fluency. At this level, you refine stylistic control, interpret subtle meaning shifts, and use language with precision across academic, professional, and literary contexts.",

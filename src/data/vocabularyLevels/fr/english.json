@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Anglais",
   "levels": {
     "a1": {
-      "title": "Vocabulaire d’anglais A1",
+      "title": "Pratique du vocabulaire anglais A1 – Liste de mots pour débutants",
       "intro": "Le vocabulaire d’anglais A1 constitue la première étape pour les apprenants débutants.",
       "levelDescription": "Débutant",
       "ctaText": "Commencer la pratique A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’anglais A1 – Mots essentiels pour débutants",
+      "metaTitle": "Pratique du vocabulaire anglais A1 – Mots pour débutants",
       "metaDescription": "Commencez avec le vocabulaire d’anglais A1. Découvrez des mots essentiels, leurs significations et des exemples simples pour débuter en anglais.",
       "introParagraphs": [
         "Le vocabulaire d’anglais A1 constitue la première étape pour les apprenants débutants. À ce niveau, vous apprenez des mots simples et fréquents qui vous permettent de parler de vous, de votre famille et de votre quotidien.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulaire d’anglais A2",
+      "title": "Pratique du vocabulaire anglais A2 – Liste de mots niveau élémentaire",
       "intro": "Le vocabulaire d’anglais A2 permet de dépasser les bases très simples et de communiquer avec plus d’aisance.",
       "levelDescription": "Élémentaire",
       "ctaText": "Commencer la pratique A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’anglais A2 – Mots essentiels niveau élémentaire",
+      "metaTitle": "Pratique du vocabulaire anglais A2 – Liste de mots élémentaire",
       "metaDescription": "Améliorez votre niveau avec le vocabulaire d’anglais A2. Découvrez des mots essentiels, leurs significations et des exemples pour communiquer au quotidien.",
       "introParagraphs": [
         "Le vocabulaire d’anglais A2 permet de dépasser les bases très simples et de communiquer avec plus d’aisance. À ce niveau élémentaire, vous élargissez votre lexique pour parler de votre routine, de vos expériences et de vos projets.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulaire d’anglais B1",
+      "title": "Pratique du vocabulaire anglais B1 – Liste de mots niveau intermédiaire",
       "intro": "Le vocabulaire d’anglais B1 marque l’entrée dans un usage plus autonome de la langue. À ce niveau intermédiaire, vous pouvez participer à des conversations plus longues et exprimer vos opinions avec davantage de précision.",
       "levelDescription": "Intermédiaire",
       "ctaText": "Commencer la pratique B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’anglais B1 – Lexique niveau intermédiaire",
+      "metaTitle": "Pratique du vocabulaire anglais B1 – Liste de mots intermédiaire",
       "metaDescription": "Développez votre niveau avec le vocabulaire d’anglais B1. Apprenez des mots intermédiaires, leurs significations et des exemples pour communiquer avec assurance.",
       "introParagraphs": [
         "Le vocabulaire d’anglais B1 marque l’entrée dans un usage plus autonome de la langue. À ce niveau intermédiaire, vous pouvez participer à des conversations plus longues et exprimer vos opinions avec davantage de précision.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulaire d’anglais B2",
+      "title": "Pratique du vocabulaire anglais B2 – Liste de mots niveau intermédiaire supérieur",
       "intro": "Le vocabulaire d’anglais B2 correspond à un niveau intermédiaire supérieur. À ce stade, vous pouvez comprendre des textes complexes et exprimer vos idées avec clarté et précision.",
       "levelDescription": "Intermédiaire supérieur",
       "ctaText": "Commencer la pratique B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’anglais B2 – Lexique niveau intermédiaire supérieur",
+      "metaTitle": "Pratique du vocabulaire anglais B2 – Vocabulaire intermédiaire supérieur",
       "metaDescription": "Perfectionnez votre anglais avec le vocabulaire d’anglais B2. Découvrez des mots avancés et des exemples pour communiquer avec aisance.",
       "introParagraphs": [
         "Le vocabulaire d’anglais B2 correspond à un niveau intermédiaire supérieur. À ce stade, vous pouvez comprendre des textes complexes et exprimer vos idées avec clarté et précision.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulaire d’anglais C1",
+      "title": "Pratique du vocabulaire anglais C1 – Liste de mots avancés",
       "intro": "Le vocabulaire d’anglais C1 s’adresse aux apprenants avancés qui souhaitent perfectionner leur expression. À ce niveau, vous pouvez comprendre des textes exigeants et communiquer avec précision et nuance.",
       "levelDescription": "Avancé",
       "ctaText": "Commencer la pratique C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’anglais C1 – Lexique avancé et précis",
+      "metaTitle": "Pratique du vocabulaire anglais C1 – Mots avancés",
       "metaDescription": "Développez votre maîtrise avec le vocabulaire d’anglais C1. Découvrez des mots avancés et des exemples pour une communication académique et professionnelle.",
       "introParagraphs": [
         "Le vocabulaire d’anglais C1 s’adresse aux apprenants avancés qui souhaitent perfectionner leur expression. À ce niveau, vous pouvez comprendre des textes exigeants et communiquer avec précision et nuance.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulaire d’anglais C2",
+      "title": "Pratique du vocabulaire anglais C2 – Liste de mots niveau maîtrise",
       "intro": "Le vocabulaire d’anglais C2 correspond au niveau de maîtrise le plus élevé. À ce stade, vous comprenez pratiquement tout type de texte et vous exprimez avec une grande précision stylistique.",
       "levelDescription": "Maîtrise",
       "ctaText": "Commencer la pratique C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’anglais C2 – Maîtrise linguistique complète",
+      "metaTitle": "Pratique du vocabulaire anglais C2 – Vocabulaire niveau maîtrise",
       "metaDescription": "Atteignez la maîtrise avec le vocabulaire d’anglais C2. Découvrez un lexique expert et des exemples pour communiquer avec précision et aisance.",
       "introParagraphs": [
         "Le vocabulaire d’anglais C2 correspond au niveau de maîtrise le plus élevé. À ce stade, vous comprenez pratiquement tout type de texte et vous exprimez avec une grande précision stylistique.",
