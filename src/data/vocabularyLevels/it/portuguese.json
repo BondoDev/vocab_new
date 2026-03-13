@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Portoghese",
   "levels": {
     "a1": {
-      "title": "Vocabolario di portoghese A1",
+      "title": "Pratica del vocabolario portoghese A1",
       "intro": "Il vocabolario di portoghese A1 corrisponde al livello principiante.",
       "levelDescription": "Principiante",
       "ctaText": "Inizia pratica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di portoghese"
       },
-      "metaTitle": "Vocabolario di portoghese A1 ? Parole di base per principianti",
+      "metaTitle": "Pratica del vocabolario portoghese A1 – Parole per principianti",
       "metaDescription": "Impara il vocabolario di portoghese A1 con parole semplici ed esempi. Costruisci una solida base per la comunicazione quotidiana in portoghese.",
       "introParagraphs": [
         "Il vocabolario di portoghese A1 corrisponde al livello principiante. Gli studenti imparano parole e frasi semplici per comunicare nella vita quotidiana.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabolario di portoghese A2",
+      "title": "Pratica del vocabolario portoghese A2",
       "intro": "Il vocabolario di portoghese A2 sviluppa le conoscenze del livello A1.",
       "levelDescription": "Elementare",
       "ctaText": "Inizia pratica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di portoghese"
       },
-      "metaTitle": "Vocabolario di portoghese A2 ? Livello elementare",
+      "metaTitle": "Pratica del vocabolario portoghese A2 – Vocabolario livello elementare",
       "metaDescription": "Impara il vocabolario di portoghese A2 con parole comuni ed esempi pratici. Migliora comprensione e comunicazione a livello elementare.",
       "introParagraphs": [
         "Il vocabolario di portoghese A2 sviluppa le conoscenze del livello A1. Gli studenti possono formare frasi pi? lunghe e comunicare pi? facilmente in situazioni quotidiane.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabolario di portoghese B1",
+      "title": "Pratica del vocabolario portoghese B1",
       "intro": "Il vocabolario di portoghese B1 corrisponde al livello intermedio.",
       "levelDescription": "Intermedio",
       "ctaText": "Inizia pratica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di portoghese"
       },
-      "metaTitle": "Vocabolario di portoghese B1 ? Livello intermedio",
+      "metaTitle": "Pratica del vocabolario portoghese B1 – Vocabolario livello intermedio",
       "metaDescription": "Impara il vocabolario di portoghese B1 con parole intermedie ed esempi dettagliati. Migliora espressione e comprensione in portoghese.",
       "introParagraphs": [
         "Il vocabolario di portoghese B1 corrisponde al livello intermedio. Gli studenti possono comprendere i punti principali di messaggi chiari e comunicare in modo pi? dettagliato.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabolario di portoghese B2",
+      "title": "Pratica del vocabolario portoghese B2",
       "intro": "Il vocabolario di portoghese B2 ? pensato per chi desidera comunicare con fluidit? e affrontare argomenti pi? complessi.",
       "levelDescription": "Intermedio avanzato",
       "ctaText": "Inizia pratica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di portoghese B2 ? Parole ed espressioni essenziali",
+      "metaTitle": "Pratica del vocabolario portoghese B2 – Vocabolario intermedio avanzato",
       "metaDescription": "Migliora il tuo vocabolario di portoghese B2 con parole chiave, significati ed esempi per comunicare con sicurezza nella vita quotidiana e nel lavoro.",
       "introParagraphs": [
         "Il vocabolario di portoghese B2 ? pensato per chi desidera comunicare con fluidit? e affrontare argomenti pi? complessi. A questo livello, puoi partecipare a discussioni e esprimere chiaramente le tue idee.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabolario di portoghese C1",
+      "title": "Pratica del vocabolario portoghese C1",
       "intro": "Il vocabolario di portoghese C1 corrisponde a un livello avanzato, dove si padroneggiano espressioni complesse e termini astratti.",
       "levelDescription": "Avanzato",
       "ctaText": "Inizia pratica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di portoghese C1 ? Parole avanzate",
+      "metaTitle": "Pratica del vocabolario portoghese C1 – Parole avanzate portoghesi",
       "metaDescription": "Migliora il tuo vocabolario di portoghese C1 con parole avanzate, esempi ed esercizi per comunicare con precisione e sicurezza.",
       "introParagraphs": [
         "Il vocabolario di portoghese C1 corrisponde a un livello avanzato, dove si padroneggiano espressioni complesse e termini astratti. Puoi comprendere testi lunghi e comunicare con precisione e spontaneit?.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabolario di portoghese C2",
+      "title": "Pratica del vocabolario portoghese C2",
       "intro": "Il vocabolario di portoghese C2 rappresenta la padronanza completa secondo il CEFR.",
       "levelDescription": "Padronanza",
       "ctaText": "Inizia pratica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di portoghese C2 ? Padronanza completa",
+      "metaTitle": "Pratica del vocabolario portoghese C2 – Vocabolario portoghese avanzato",
       "metaDescription": "Scopri il vocabolario di portoghese C2 con parole rare e precise per raggiungere una completa padronanza della lingua.",
       "introParagraphs": [
         "Il vocabolario di portoghese C2 rappresenta la padronanza completa secondo il CEFR. Comprendi quasi tutto ci? che leggi o ascolti e puoi esprimerti con precisione, sfumature e spontaneit?.",

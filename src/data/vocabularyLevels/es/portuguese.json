@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Portugués",
   "levels": {
     "a1": {
-      "title": "Vocabulario de portugués A1",
+      "title": "Práctica de vocabulario de portugués A1",
       "intro": "El vocabulario de portugués A1 es el nivel inicial para quienes comienzan a aprender el idioma.",
       "levelDescription": "Principiante",
       "ctaText": "Iniciar práctica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de portugués"
       },
-      "metaTitle": "Vocabulario de portugués A1 – Palabras básicas para principiantes",
+      "metaTitle": "Práctica de vocabulario portugués A1 – Palabras para principiantes",
       "metaDescription": "Aprende vocabulario de portugués A1 con palabras simples y ejemplos. Crea una base sólida para la comunicación diaria en portugués.",
       "introParagraphs": [
         "El vocabulario de portugués A1 es el nivel inicial para quienes comienzan a aprender el idioma. En este nivel, los estudiantes aprenden palabras y frases simples para la comunicación cotidiana.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulario de portugués A2",
+      "title": "Práctica de vocabulario de portugués A2",
       "intro": "El vocabulario de portugués A2 amplía los conocimientos del nivel A1.",
       "levelDescription": "Elemental",
       "ctaText": "Iniciar práctica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de portugués"
       },
-      "metaTitle": "Vocabulario de portugués A2 – Nivel elemental",
+      "metaTitle": "Práctica de vocabulario portugués A2 – Vocabulario nivel elemental",
       "metaDescription": "Aprende vocabulario de portugués A2 con palabras comunes y ejemplos prácticos. Mejora la comprensión y la comunicación a nivel elemental.",
       "introParagraphs": [
         "El vocabulario de portugués A2 amplía los conocimientos del nivel A1. Los estudiantes pueden formar oraciones más largas y comunicarse con mayor facilidad en situaciones cotidianas.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulario de portugués B1",
+      "title": "Práctica de vocabulario de portugués B1",
       "intro": "El vocabulario de portugués B1 corresponde al nivel intermedio.",
       "levelDescription": "Intermedio",
       "ctaText": "Iniciar práctica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de portugués"
       },
-      "metaTitle": "Vocabulario de portugués B1 – Nivel intermedio",
+      "metaTitle": "Práctica de vocabulario portugués B1 – Vocabulario nivel intermedio",
       "metaDescription": "Aprende vocabulario de portugués B1 con palabras intermedias y ejemplos detallados. Mejora la expresión y comprensión en portugués.",
       "introParagraphs": [
         "El vocabulario de portugués B1 corresponde al nivel intermedio. Los estudiantes pueden entender los puntos principales de mensajes claros y comunicarse con más detalle.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulario de portugués B2",
+      "title": "Práctica de vocabulario de portugués B2",
       "intro": "El vocabulario de portugués B2 está diseñado para quienes desean comunicarse con fluidez y abordar temas más complejos.",
       "levelDescription": "Intermedio alto",
       "ctaText": "Iniciar práctica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de portugués B2 – Palabras y expresiones clave",
+      "metaTitle": "Práctica de vocabulario portugués B2 – Vocabulario intermedio alto",
       "metaDescription": "Mejora tu vocabulario de portugués B2 con palabras esenciales, significados y ejemplos para comunicarte con confianza en situaciones diarias y profesionales.",
       "introParagraphs": [
         "El vocabulario de portugués B2 está diseñado para quienes desean comunicarse con fluidez y abordar temas más complejos. En este nivel puedes participar en discusiones y expresar tus ideas con claridad.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulario de portugués C1",
+      "title": "Práctica de vocabulario de portugués C1",
       "intro": "El vocabulario de portugués C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y términos abstractos.",
       "levelDescription": "Avanzado",
       "ctaText": "Iniciar práctica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de portugués C1 – Palabras avanzadas",
+      "metaTitle": "Práctica de vocabulario portugués C1 – Palabras avanzadas de portugués",
       "metaDescription": "Mejora tu vocabulario de portugués C1 con palabras avanzadas, ejemplos y ejercicios para comunicarte con precisión y confianza.",
       "introParagraphs": [
         "El vocabulario de portugués C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y términos abstractos. Puedes comprender textos extensos y comunicarte con precisión y espontaneidad.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulario de portugués C2",
+      "title": "Práctica de vocabulario de portugués C2",
       "intro": "El vocabulario de portugués C2 representa el dominio completo según CEFR.",
       "levelDescription": "Dominio",
       "ctaText": "Iniciar práctica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de portugués C2 – Dominio completo",
+      "metaTitle": "Práctica de vocabulario portugués C2 – Vocabulario avanzado de portugués",
       "metaDescription": "Descubre el vocabulario de portugués C2 con palabras raras y precisas para alcanzar un dominio completo del idioma.",
       "introParagraphs": [
         "El vocabulario de portugués C2 representa el dominio completo según CEFR. Puedes comprender casi todo lo que lees o escuchas y expresarte con precisión, matices y espontaneidad.",

@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Portugiesisch",
   "levels": {
     "a1": {
-      "title": "Portugiesisch Wortschatz A1",
+      "title": "Portugiesisch A1 Wortschatz üben",
       "intro": "Der Portugiesisch Wortschatz A1 entspricht dem Anfängerniveau.",
       "levelDescription": "Anfänger",
       "ctaText": "A1-Training starten",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Weitere Portugiesisch-Niveaus"
       },
-      "metaTitle": "Portugiesisch Wortschatz A1 – Grundlegende Wörter für Anfänger",
+      "metaTitle": "Portugiesisch A1 Wortschatz üben – Wörter für Anfänger",
       "metaDescription": "Lerne den Portugiesisch Wortschatz A1 mit einfachen Wörtern und Beispielen. Baue eine solide Basis für die tägliche Kommunikation auf Portugiesisch.",
       "introParagraphs": [
         "Der Portugiesisch Wortschatz A1 entspricht dem Anfängerniveau. Lernende lernen einfache Wörter und Sätze, um sich im Alltag verständigen zu können.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Portugiesisch Wortschatz A2",
+      "title": "Portugiesisch A2 Wortschatz üben",
       "intro": "Der Portugiesisch Wortschatz A2 erweitert die Kenntnisse des A1-Niveaus.",
       "levelDescription": "Elementar",
       "ctaText": "A2-Training starten",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Weitere Portugiesisch-Niveaus"
       },
-      "metaTitle": "Portugiesisch Wortschatz A2 – Elementares Niveau",
+      "metaTitle": "Portugiesisch A2 Wortschatz üben – Wortschatz Grundstufe",
       "metaDescription": "Lernen Sie den Portugiesisch Wortschatz A2 mit häufigen Wörtern und praktischen Beispielen. Verbessern Sie Ihr Verständnis und Ihre Kommunikation auf elementarem Niveau.",
       "introParagraphs": [
         "Der Portugiesisch Wortschatz A2 erweitert die Kenntnisse des A1-Niveaus. Lernende können längere Sätze bilden und sich leichter in Alltagssituationen verständigen.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Portugiesisch Wortschatz B1",
+      "title": "Portugiesisch B1 Wortschatz üben",
       "intro": "Der Portugiesisch Wortschatz B1 entspricht dem mittleren Niveau.",
       "levelDescription": "Mittelstufe",
       "ctaText": "B1-Training starten",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Weitere Portugiesisch-Niveaus"
       },
-      "metaTitle": "Portugiesisch Wortschatz B1 – Mittleres Niveau",
+      "metaTitle": "Portugiesisch B1 Wortschatz üben – Wortschatz Mittelstufe",
       "metaDescription": "Lernen Sie Portugiesisch Wortschatz B1 mit mittleren Wörtern und detaillierten Beispielen. Verbessern Sie Ausdruck und Verständnis auf Portugiesisch.",
       "introParagraphs": [
         "Der Portugiesisch Wortschatz B1 entspricht dem mittleren Niveau. Lernende können die Hauptpunkte klarer Nachrichten verstehen und detaillierter kommunizieren.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Portugiesisch Wortschatz B2",
+      "title": "Portugiesisch B2 Wortschatz üben",
       "intro": "Der Portugiesisch Wortschatz B2 richtet sich an Lernende, die flüssig kommunizieren und komplexere Themen bearbeiten möchten.",
       "levelDescription": "Gehobene Mittelstufe",
       "ctaText": "B2-Training starten",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Andere CEFR-Niveaus"
       },
-      "metaTitle": "Portugiesisch Wortschatz B2 – Wichtige Wörter und Ausdrücke",
+      "metaTitle": "Portugiesisch B2 Wortschatz üben – Wortschatz obere Mittelstufe",
       "metaDescription": "Verbessern Sie Ihren Portugiesisch Wortschatz B2 mit wichtigen Wörtern, Bedeutungen und Beispielen für Alltag und Beruf.",
       "introParagraphs": [
         "Der Portugiesisch Wortschatz B2 richtet sich an Lernende, die flüssig kommunizieren und komplexere Themen bearbeiten möchten. Auf diesem Niveau können Sie an Diskussionen teilnehmen und Ihre Ideen klar ausdrücken.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Portugiesisch Wortschatz C1",
+      "title": "Portugiesisch C1 Wortschatz üben",
       "intro": "Der Portugiesisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, auf dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden.",
       "levelDescription": "Fortgeschritten",
       "ctaText": "C1-Training starten",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Andere CEFR-Niveaus"
       },
-      "metaTitle": "Portugiesisch Wortschatz C1 – Fortgeschrittene Wörter",
+      "metaTitle": "Portugiesisch C1 Wortschatz üben – Fortgeschrittene portugiesische Wörter",
       "metaDescription": "Verbessern Sie Ihren Portugiesisch Wortschatz C1 mit fortgeschrittenen Wörtern, Beispielen und Übungen für präzise und selbstbewusste Kommunikation.",
       "introParagraphs": [
         "Der Portugiesisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, auf dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden. Sie können längere Texte verstehen und präzise sowie spontan kommunizieren.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Portugiesisch Wortschatz C2",
+      "title": "Portugiesisch C2 Wortschatz üben",
       "intro": "Der Portugiesisch Wortschatz C2 repräsentiert laut CEFR die vollständige Beherrschung der Sprache.",
       "levelDescription": "Sehr fortgeschritten",
       "ctaText": "C2-Training starten",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Andere CEFR-Niveaus"
       },
-      "metaTitle": "Portugiesisch Wortschatz C2 – Vollständige Beherrschung",
+      "metaTitle": "Portugiesisch C2 Wortschatz üben – Sehr fortgeschrittene Wörter",
       "metaDescription": "Entdecken Sie den Portugiesisch Wortschatz C2 mit seltenen und präzisen Wörtern, um eine vollständige Sprachbeherrschung zu erreichen.",
       "introParagraphs": [
         "Der Portugiesisch Wortschatz C2 repräsentiert laut CEFR die vollständige Beherrschung der Sprache. Sie verstehen nahezu alles, was Sie lesen oder hören, und können sich präzise, nuanciert und spontan ausdrücken.",

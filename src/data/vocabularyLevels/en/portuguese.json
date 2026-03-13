@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Portuguese",
   "levels": {
     "a1": {
-      "title": "Portuguese Vocabulary A1",
+      "title": "Portuguese A1 Vocabulary Practice",
       "intro": "Portuguese Vocabulary A1 is the beginner level for learners.",
       "levelDescription": "Beginner",
       "ctaText": "Start A1 Practice",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Other Portuguese levels"
       },
-      "metaTitle": "Portuguese Vocabulary A1 – Basic Words for Beginners",
+      "metaTitle": "Portuguese A1 Vocabulary Practice – Beginner Words",
       "metaDescription": "Learn Portuguese Vocabulary A1 with simple words and examples. Build a strong foundation for daily communication in Portuguese.",
       "introParagraphs": [
         "Portuguese Vocabulary A1 is the beginner level for learners. At this level, students learn simple words and phrases for everyday communication.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Portuguese Vocabulary A2",
+      "title": "Portuguese A2 Vocabulary Practice",
       "intro": "Portuguese Vocabulary A2 builds on the A1 knowledge.",
       "levelDescription": "Elementary",
       "ctaText": "Start A2 Practice",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Other Portuguese levels"
       },
-      "metaTitle": "Portuguese Vocabulary A2 – Elementary Level",
+      "metaTitle": "Portuguese A2 Vocabulary Practice – Elementary Vocabulary",
       "metaDescription": "Learn Portuguese Vocabulary A2 with common words and practical examples. Improve comprehension and communication at the elementary level.",
       "introParagraphs": [
         "Portuguese Vocabulary A2 builds on the A1 knowledge. Learners can form longer sentences and communicate more easily in daily situations.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Portuguese Vocabulary B1",
+      "title": "Portuguese B1 Vocabulary Practice",
       "intro": "Portuguese Vocabulary B1 corresponds to the intermediate level.",
       "levelDescription": "Intermediate",
       "ctaText": "Start B1 Practice",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Other Portuguese levels"
       },
-      "metaTitle": "Portuguese Vocabulary B1 – Intermediate Level",
+      "metaTitle": "Portuguese B1 Vocabulary Practice – Intermediate Vocabulary",
       "metaDescription": "Learn Portuguese Vocabulary B1 with intermediate words and detailed examples. Improve expression and comprehension in Portuguese.",
       "introParagraphs": [
         "Portuguese Vocabulary B1 corresponds to the intermediate level. Learners can understand the main points of clear messages and communicate in more detail.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Portuguese Vocabulary B2",
+      "title": "Portuguese B2 Vocabulary Practice",
       "intro": "Portuguese Vocabulary B2 is designed for learners aiming to communicate fluently and discuss more complex topics.",
       "levelDescription": "Upper-Intermediate",
       "ctaText": "Start B2 Practice",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Other CEFR Levels"
       },
-      "metaTitle": "Portuguese Vocabulary B2 – Key Words and Expressions",
+      "metaTitle": "Portuguese B2 Vocabulary Practice – Upper-Intermediate Vocabulary",
       "metaDescription": "Improve your Portuguese B2 vocabulary with essential words, meanings, and examples for confident communication in daily and professional contexts.",
       "introParagraphs": [
         "Portuguese Vocabulary B2 is designed for learners aiming to communicate fluently and discuss more complex topics. At this level, you can participate in discussions and express your ideas clearly.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Portuguese Vocabulary C1",
+      "title": "Portuguese C1 Vocabulary Practice",
       "intro": "Portuguese C1 vocabulary represents an advanced level, where you master complex expressions and abstract terms.",
       "levelDescription": "Advanced",
       "ctaText": "Start C1 Practice",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Other CEFR Levels"
       },
-      "metaTitle": "Portuguese Vocabulary C1 – Advanced Words",
+      "metaTitle": "Portuguese C1 Vocabulary Practice – Advanced Portuguese Words",
       "metaDescription": "Improve your Portuguese C1 vocabulary with advanced words, examples, and exercises for precise and confident communication.",
       "introParagraphs": [
         "Portuguese C1 vocabulary represents an advanced level, where you master complex expressions and abstract terms. You can understand long texts and communicate precisely and spontaneously.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Portuguese Vocabulary C2",
+      "title": "Portuguese C2 Vocabulary Practice",
       "intro": "Portuguese C2 vocabulary represents full mastery according to CEFR.",
       "levelDescription": "Proficient",
       "ctaText": "Start C2 Practice",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Other CEFR Levels"
       },
-      "metaTitle": "Portuguese Vocabulary C2 – Mastery Level",
+      "metaTitle": "Portuguese C2 Vocabulary Practice – Proficient Portuguese Vocabulary",
       "metaDescription": "Discover Portuguese C2 vocabulary with rare and precise words to achieve complete mastery of the language.",
       "introParagraphs": [
         "Portuguese C2 vocabulary represents full mastery according to CEFR. You understand almost everything you read or hear and can express yourself with precision, nuance, and spontaneity.",

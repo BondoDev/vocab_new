@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Portugais",
   "levels": {
     "a1": {
-      "title": "Vocabulaire de portugais A1",
+      "title": "Pratique du vocabulaire portugais A1",
       "intro": "Le vocabulaire de portugais A1 correspond au niveau débutant pour les apprenants.",
       "levelDescription": "Débutant",
       "ctaText": "Commencer la pratique A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux de portugais"
       },
-      "metaTitle": "Vocabulaire de portugais A1 – Mots de base pour débutants",
+      "metaTitle": "Pratique du vocabulaire portugais A1 – Mots pour débutants",
       "metaDescription": "Apprenez le vocabulaire de portugais A1 avec des mots simples et des exemples. Construisez une base solide pour la communication quotidienne en portugais.",
       "introParagraphs": [
         "Le vocabulaire de portugais A1 correspond au niveau débutant pour les apprenants. À ce stade, les étudiants apprennent des mots et phrases simples pour communiquer au quotidien.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulaire de portugais A2",
+      "title": "Pratique du vocabulaire portugais A2",
       "intro": "Le vocabulaire de portugais A2 développe les connaissances acquises au niveau A1.",
       "levelDescription": "Élémentaire",
       "ctaText": "Commencer la pratique A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux de portugais"
       },
-      "metaTitle": "Vocabulaire de portugais A2 – Niveau élémentaire",
+      "metaTitle": "Pratique du vocabulaire portugais A2 – Vocabulaire niveau élémentaire",
       "metaDescription": "Apprenez le vocabulaire de portugais A2 avec des mots courants et des exemples pratiques. Améliorez compréhension et communication à un niveau élémentaire.",
       "introParagraphs": [
         "Le vocabulaire de portugais A2 développe les connaissances acquises au niveau A1. Les apprenants peuvent former des phrases plus longues et communiquer plus facilement dans des situations quotidiennes.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulaire de portugais B1",
+      "title": "Pratique du vocabulaire portugais B1",
       "intro": "Le vocabulaire de portugais B1 correspond au niveau intermédiaire.",
       "levelDescription": "Intermédiaire",
       "ctaText": "Commencer la pratique B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux de portugais"
       },
-      "metaTitle": "Vocabulaire de portugais B1 – Niveau intermédiaire",
+      "metaTitle": "Pratique du vocabulaire portugais B1 – Vocabulaire niveau intermédiaire",
       "metaDescription": "Apprenez le vocabulaire de portugais B1 avec des mots intermédiaires et exemples détaillés. Améliorez l’expression et la compréhension en portugais.",
       "introParagraphs": [
         "Le vocabulaire de portugais B1 correspond au niveau intermédiaire. Les apprenants peuvent comprendre les points principaux de messages clairs et communiquer de manière plus détaillée.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulaire de portugais B2",
+      "title": "Pratique du vocabulaire portugais B2",
       "intro": "Le vocabulaire de portugais B2 est destiné aux apprenants souhaitant communiquer avec fluidité et aborder des sujets plus complexes.",
       "levelDescription": "Intermédiaire avancé",
       "ctaText": "Commencer la pratique B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CECR"
       },
-      "metaTitle": "Vocabulaire de portugais B2 – Mots et expressions clés",
+      "metaTitle": "Pratique du vocabulaire portugais B2 – Vocabulaire intermédiaire supérieur",
       "metaDescription": "Améliorez votre vocabulaire de portugais B2 avec des mots essentiels, leurs significations et exemples pour communiquer avec confiance au quotidien et au travail.",
       "introParagraphs": [
         "Le vocabulaire de portugais B2 est destiné aux apprenants souhaitant communiquer avec fluidité et aborder des sujets plus complexes. À ce niveau, vous pouvez participer à des discussions et exprimer vos idées clairement.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulaire de portugais C1",
+      "title": "Pratique du vocabulaire portugais C1",
       "intro": "Le vocabulaire de portugais C1 correspond à un niveau avancé, où l’on maîtrise des expressions complexes et des termes abstraits.",
       "levelDescription": "Avancé",
       "ctaText": "Commencer la pratique C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CECR"
       },
-      "metaTitle": "Vocabulaire de portugais C1 – Mots avancés",
+      "metaTitle": "Pratique du vocabulaire portugais C1 – Mots avancés portugais",
       "metaDescription": "Améliorez votre vocabulaire de portugais C1 avec des mots avancés, exemples et exercices pour communiquer avec précision et confiance.",
       "introParagraphs": [
         "Le vocabulaire de portugais C1 correspond à un niveau avancé, où l’on maîtrise des expressions complexes et des termes abstraits. Vous pouvez comprendre des textes longs et communiquer avec précision et spontanéité.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulaire de portugais C2",
+      "title": "Pratique du vocabulaire portugais C2",
       "intro": "Le vocabulaire de portugais C2 représente la maîtrise complète selon le CECR.",
       "levelDescription": "Maîtrise",
       "ctaText": "Commencer la pratique C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CECR"
       },
-      "metaTitle": "Vocabulaire de portugais C2 – Maîtrise complète",
+      "metaTitle": "Pratique du vocabulaire portugais C2 – Vocabulaire portugais avancé",
       "metaDescription": "Découvrez le vocabulaire de portugais C2 avec des mots rares et précis pour atteindre une maîtrise complète de la langue.",
       "introParagraphs": [
         "Le vocabulaire de portugais C2 représente la maîtrise complète selon le CECR. Vous comprenez presque tout ce que vous lisez ou entendez et pouvez vous exprimer avec précision, nuances et spontanéité.",
