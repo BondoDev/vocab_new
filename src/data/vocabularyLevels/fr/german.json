@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Allemand",
   "levels": {
     "a1": {
-      "title": "Vocabulaire d’allemand A1",
+      "title": "Pratique du vocabulaire allemand A1 – Liste de mots pour débutants",
       "intro": "Le vocabulaire d’allemand A1 est la première étape pour les débutants.",
       "levelDescription": "Débutant",
       "ctaText": "Commencer la pratique A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux d’allemand"
       },
-      "metaTitle": "Vocabulaire d’allemand A1 – Mots essentiels pour débutants",
+      "metaTitle": "Pratique du vocabulaire allemand A1 – Mots pour débutants",
       "metaDescription": "Apprenez le vocabulaire d’allemand A1 avec des mots essentiels et des exemples simples. Construisez une base solide pour commencer à parler et comprendre l’allemand.",
       "introParagraphs": [
         "Le vocabulaire d’allemand A1 est la première étape pour les débutants. À ce niveau, vous apprenez des mots et expressions simples pour communiquer dans la vie quotidienne.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulaire d’allemand A2",
+      "title": "Pratique du vocabulaire allemand A2 – Liste de mots niveau élémentaire",
       "intro": "Le vocabulaire d’allemand A2 développe les connaissances acquises au niveau A1.",
       "levelDescription": "Élémentaire",
       "ctaText": "Commencer la pratique A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux d’allemand"
       },
-      "metaTitle": "Vocabulaire d’allemand A2 – Niveau élémentaire",
+      "metaTitle": "Pratique du vocabulaire allemand A2 – Liste de mots élémentaire",
       "metaDescription": "Apprenez le vocabulaire d’allemand A2 avec des mots courants et des exemples pratiques. Améliorez votre compréhension et communication à un niveau élémentaire.",
       "introParagraphs": [
         "Le vocabulaire d’allemand A2 développe les connaissances acquises au niveau A1. À ce stade, les apprenants peuvent former des phrases plus longues et communiquer plus facilement dans des situations quotidiennes.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulaire d’allemand B1",
+      "title": "Pratique du vocabulaire allemand B1 – Liste de mots niveau intermédiaire",
       "intro": "Le vocabulaire d’allemand B1 représente le niveau intermédiaire.",
       "levelDescription": "Intermédiaire",
       "ctaText": "Commencer la pratique B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux d’allemand"
       },
-      "metaTitle": "Vocabulaire d’allemand B1 – Niveau intermédiaire",
+      "metaTitle": "Pratique du vocabulaire allemand B1 – Mots niveau intermédiaire",
       "metaDescription": "Apprenez le vocabulaire d’allemand B1 avec des mots intermédiaires et des exemples détaillés. Améliorez votre expression et compréhension en allemand.",
       "introParagraphs": [
         "Le vocabulaire d’allemand B1 représente le niveau intermédiaire. Les apprenants peuvent comprendre les points principaux de messages clairs et s’exprimer avec plus de détails.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulaire d’allemand B2",
+      "title": "Pratique du vocabulaire allemand B2 – Liste de mots niveau intermédiaire supérieur",
       "intro": "Le vocabulaire d’allemand B2 est destiné aux apprenants capables de communiquer avec fluidité et souhaitant aborder des sujets plus complexes.",
       "levelDescription": "Intermédiaire supérieur",
       "ctaText": "Commencer la pratique B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CEFR"
       },
-      "metaTitle": "Vocabulaire d’allemand B2 – Mots et expressions clés",
+      "metaTitle": "Pratique du vocabulaire allemand B2 – Vocabulaire intermédiaire supérieur",
       "metaDescription": "Développez votre vocabulaire d’allemand B2 avec des mots essentiels, significations et exemples pour communiquer avec confiance dans la vie quotidienne et professionnelle.",
       "introParagraphs": [
         "Le vocabulaire d’allemand B2 est destiné aux apprenants capables de communiquer avec fluidité et souhaitant aborder des sujets plus complexes. À ce niveau, vous pouvez participer à des discussions et exprimer clairement vos idées.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulaire d’allemand C1",
+      "title": "Pratique du vocabulaire allemand C1 – Liste de mots avancés",
       "intro": "Le vocabulaire d’allemand C1 correspond à un niveau avancé où vous maîtrisez des expressions complexes et des termes abstraits.",
       "levelDescription": "Avancé",
       "ctaText": "Commencer la pratique C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CEFR"
       },
-      "metaTitle": "Vocabulaire d’allemand C1 – Mots avancés",
+      "metaTitle": "Pratique du vocabulaire allemand C1 – Mots avancés allemands",
       "metaDescription": "Améliorez votre vocabulaire d’allemand C1 avec des mots avancés, exemples et explications pour communiquer de façon précise et nuancée.",
       "introParagraphs": [
         "Le vocabulaire d’allemand C1 correspond à un niveau avancé où vous maîtrisez des expressions complexes et des termes abstraits. Vous pouvez comprendre des textes longs et communiquer avec précision et spontanéité.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulaire d’allemand C2",
+      "title": "Pratique du vocabulaire allemand C2 – Liste de mots niveau maîtrise",
       "intro": "Le vocabulaire d’allemand C2 représente la maîtrise complète de la langue selon le CEFR.",
       "levelDescription": "Maîtrise complète",
       "ctaText": "Commencer la pratique C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CEFR"
       },
-      "metaTitle": "Vocabulaire d’allemand C2 – Maîtrise complète de la langue",
+      "metaTitle": "Pratique du vocabulaire allemand C2 – Vocabulaire allemand avancé",
       "metaDescription": "Découvrez le vocabulaire d’allemand C2 avec des mots rares et précis pour atteindre une maîtrise complète de la langue.",
       "introParagraphs": [
         "Le vocabulaire d’allemand C2 représente la maîtrise complète de la langue selon le CEFR. Vous comprenez pratiquement tout ce que vous lisez ou entendez et pouvez vous exprimer avec précision, nuance et spontanéité.",

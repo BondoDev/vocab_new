@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Deutsch",
   "levels": {
     "a1": {
-      "title": "Deutsch Wortschatz A1",
+      "title": "Deutsch A1 Wortschatz üben – Wortliste für Anfänger",
       "intro": "Der Deutsch Wortschatz A1 ist der erste Schritt für Anfänger.",
       "levelDescription": "Anfänger",
       "ctaText": "A1-Training starten",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Weitere Deutsch-Niveaus"
       },
-      "metaTitle": "Deutsch Wortschatz A1 – Wichtige Wörter für Anfänger",
+      "metaTitle": "Deutsch A1 Wortschatz üben – Wörter für Anfänger",
       "metaDescription": "Lerne den Deutsch Wortschatz A1 mit wichtigen Wörtern und einfachen Beispielen. Baue eine solide Basis für erste Kommunikation auf Deutsch.",
       "introParagraphs": [
         "Der Deutsch Wortschatz A1 ist der erste Schritt für Anfänger. Auf diesem Niveau lernt man einfache Wörter und Ausdrücke, um sich im Alltag zu verständigen.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Deutsch Wortschatz A2",
+      "title": "Deutsch A2 Wortschatz üben – Wortliste Grundstufe",
       "intro": "Der Deutsch Wortschatz A2 baut auf dem A1-Niveau auf.",
       "levelDescription": "Grundstufe",
       "ctaText": "A2-Training starten",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Weitere Deutsch-Niveaus"
       },
-      "metaTitle": "Deutsch Wortschatz A2 – Elementares Niveau",
+      "metaTitle": "Deutsch A2 Wortschatz üben – Wortliste Grundstufe",
       "metaDescription": "Lerne Deutsch Wortschatz A2 mit häufigen Wörtern und praktischen Beispielen. Verbessere dein Verständnis und deine Kommunikation auf elementarem Niveau.",
       "introParagraphs": [
         "Der Deutsch Wortschatz A2 baut auf dem A1-Niveau auf. Lernende können längere Sätze bilden und in alltäglichen Situationen flüssiger kommunizieren.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Deutsch Wortschatz B1",
+      "title": "Deutsch B1 Wortschatz üben – Wortliste Mittelstufe",
       "intro": "Der Deutsch Wortschatz B1 repräsentiert das mittlere Niveau.",
       "levelDescription": "Mittelstufe",
       "ctaText": "B1-Training starten",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Weitere Deutsch-Niveaus"
       },
-      "metaTitle": "Deutsch Wortschatz B1 – Mittleres Niveau",
+      "metaTitle": "Deutsch B1 Wortschatz üben – Wörter Mittelstufe",
       "metaDescription": "Lerne Deutsch Wortschatz B1 mit mittleren Wörtern und detaillierten Beispielen. Verbessere Ausdruck und Verständnis in deutscher Sprache.",
       "introParagraphs": [
         "Der Deutsch Wortschatz B1 repräsentiert das mittlere Niveau. Lernende können die Hauptpunkte klarer Mitteilungen verstehen und sich detaillierter ausdrücken.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Deutsch Wortschatz B2",
+      "title": "Deutsch B2 Wortschatz üben – Wortliste obere Mittelstufe",
       "intro": "Der Deutsch Wortschatz B2 richtet sich an Lernende, die bereits flüssig kommunizieren können und komplexere Themen behandeln möchten.",
       "levelDescription": "Obere Mittelstufe",
       "ctaText": "B2-Training starten",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Weitere CEFR-Niveaus"
       },
-      "metaTitle": "Deutsch Wortschatz B2 – Wichtige Wörter und Ausdrücke",
+      "metaTitle": "Deutsch B2 Wortschatz üben – Wortliste obere Mittelstufe",
       "metaDescription": "Erweitern Sie Ihren Deutsch Wortschatz B2 mit wichtigen Wörtern, Bedeutungen und Beispielen für selbstbewusste Kommunikation im Alltag und Beruf.",
       "introParagraphs": [
         "Der Deutsch Wortschatz B2 richtet sich an Lernende, die bereits flüssig kommunizieren können und komplexere Themen behandeln möchten. Auf diesem Niveau können Sie an Diskussionen teilnehmen und Ihre Gedanken klar ausdrücken.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Deutsch Wortschatz C1",
+      "title": "Deutsch C1 Wortschatz üben – Wortliste für Fortgeschrittene",
       "intro": "Der Deutsch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, auf dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden.",
       "levelDescription": "Fortgeschritten",
       "ctaText": "C1-Training starten",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Weitere CEFR-Niveaus"
       },
-      "metaTitle": "Deutsch Wortschatz C1 – Fortgeschrittene Wörter",
+      "metaTitle": "Deutsch C1 Wortschatz üben – Fortgeschrittene deutsche Wörter",
       "metaDescription": "Verbessern Sie Ihren Deutsch Wortschatz C1 mit fortgeschrittenen Wörtern, Beispielen und Erklärungen für präzise und nuancierte Kommunikation.",
       "introParagraphs": [
         "Der Deutsch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, auf dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden. Sie können lange Texte verstehen und präzise sowie spontan kommunizieren.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Deutsch Wortschatz C2",
+      "title": "Deutsch C2 Wortschatz üben – Wortliste für sehr Fortgeschrittene",
       "intro": "Der Deutsch Wortschatz C2 steht für die vollständige Beherrschung der Sprache nach dem CEFR.",
       "levelDescription": "Souverän",
       "ctaText": "C2-Training starten",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Weitere CEFR-Niveaus"
       },
-      "metaTitle": "Deutsch Wortschatz C2 – Vollständige Sprachbeherrschung",
+      "metaTitle": "Deutsch C2 Wortschatz üben – Sehr fortgeschrittene Wörter",
       "metaDescription": "Entdecken Sie den Deutsch Wortschatz C2 mit seltenen und präzisen Wörtern, um eine vollständige Beherrschung der Sprache zu erreichen.",
       "introParagraphs": [
         "Der Deutsch Wortschatz C2 steht für die vollständige Beherrschung der Sprache nach dem CEFR. Sie verstehen nahezu alles, was Sie lesen oder hören, und können sich präzise, nuanciert und spontan ausdrücken.",

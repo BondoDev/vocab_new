@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Alemão",
   "levels": {
     "a1": {
-      "title": "Vocabulário de alemão A1",
+      "title": "Prática de vocabulário de alemão A1 – Lista de palavras para iniciantes",
       "intro": "O vocabulário de alemão A1 representa o primeiro passo para iniciantes.",
       "levelDescription": "Iniciante",
       "ctaText": "Iniciar prática A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Outros níveis de alemão"
       },
-      "metaTitle": "Vocabulário de alemão A1 – Palavras essenciais para iniciantes",
+      "metaTitle": "Prática de vocabulário de alemão A1 – Palavras para iniciantes",
       "metaDescription": "Aprenda o vocabulário de alemão A1 com palavras essenciais e exemplos simples. Construa uma base sólida para se comunicar em alemão.",
       "introParagraphs": [
         "O vocabulário de alemão A1 representa o primeiro passo para iniciantes. Neste nível, aprende-se palavras e expressões simples para se comunicar no dia a dia.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulário de alemão A2",
+      "title": "Prática de vocabulário de alemão A2 – Lista de palavras nível básico",
       "intro": "O vocabulário de alemão A2 desenvolve os conhecimentos do nível A1.",
       "levelDescription": "Elementar",
       "ctaText": "Iniciar prática A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Outros níveis de alemão"
       },
-      "metaTitle": "Vocabulário de alemão A2 – Nível elementar",
+      "metaTitle": "Prática de vocabulário de alemão A2 – Lista de palavras básicas",
       "metaDescription": "Aprenda o vocabulário de alemão A2 com palavras comuns e exemplos práticos. Melhore a compreensão e comunicação no nível elementar.",
       "introParagraphs": [
         "O vocabulário de alemão A2 desenvolve os conhecimentos do nível A1. Neste nível, os alunos conseguem formar frases mais longas e se comunicar com mais facilidade em situações do dia a dia.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulário de alemão B1",
+      "title": "Prática de vocabulário de alemão B1 – Lista de palavras nível intermediário",
       "intro": "O vocabulário de alemão B1 representa o nível intermediário.",
       "levelDescription": "Intermediário",
       "ctaText": "Iniciar prática B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Outros níveis de alemão"
       },
-      "metaTitle": "Vocabulário de alemão B1 – Nível intermediário",
+      "metaTitle": "Prática de vocabulário de alemão B1 – Palavras nível intermediário",
       "metaDescription": "Aprenda o vocabulário de alemão B1 com palavras intermediárias e exemplos detalhados. Melhore expressão e compreensão na língua alemã.",
       "introParagraphs": [
         "O vocabulário de alemão B1 representa o nível intermediário. Os alunos conseguem compreender os pontos principais de mensagens claras e se expressar com mais detalhes.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulário de alemão B2",
+      "title": "Prática de vocabulário de alemão B2 – Lista de palavras nível intermediário avançado",
       "intro": "O vocabulário de alemão B2 é destinado a quem já consegue se comunicar com fluência e deseja abordar temas mais complexos.",
       "levelDescription": "Intermediário avançado",
       "ctaText": "Iniciar prática B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Outros níveis CEFR"
       },
-      "metaTitle": "Vocabulário de alemão B2 – Palavras e expressões essenciais",
+      "metaTitle": "Prática de vocabulário de alemão B2 – Vocabulário intermediário avançado",
       "metaDescription": "Amplie seu vocabulário de alemão B2 com palavras, significados e exemplos para comunicar-se com confiança no dia a dia e no trabalho.",
       "introParagraphs": [
         "O vocabulário de alemão B2 é destinado a quem já consegue se comunicar com fluência e deseja abordar temas mais complexos. Neste nível, você consegue participar de discussões e expressar suas ideias de forma clara.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulário de alemão C1",
+      "title": "Prática de vocabulário de alemão C1 – Lista de palavras avançadas",
       "intro": "O vocabulário de alemão C1 corresponde a um nível avançado, no qual você domina expressões complexas e termos abstratos.",
       "levelDescription": "Avançado",
       "ctaText": "Iniciar prática C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Outros níveis CEFR"
       },
-      "metaTitle": "Vocabulário de alemão C1 – Palavras avançadas",
+      "metaTitle": "Prática de vocabulário de alemão C1 – Palavras avançadas alemão",
       "metaDescription": "Melhore seu vocabulário de alemão C1 com palavras avançadas, exemplos e explicações para se comunicar de forma precisa e nuanceada.",
       "introParagraphs": [
         "O vocabulário de alemão C1 corresponde a um nível avançado, no qual você domina expressões complexas e termos abstratos. É possível compreender textos longos e comunicar-se de forma precisa e espontânea.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulário de alemão C2",
+      "title": "Prática de vocabulário de alemão C2 – Lista de palavras nível proficiente",
       "intro": "O vocabulário de alemão C2 representa o domínio completo da língua segundo o CEFR.",
       "levelDescription": "Proficiência",
       "ctaText": "Iniciar prática C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Outros níveis CEFR"
       },
-      "metaTitle": "Vocabulário de alemão C2 – Domínio completo da língua",
+      "metaTitle": "Prática de vocabulário de alemão C2 – Vocabulário avançado alemão",
       "metaDescription": "Descubra o vocabulário de alemão C2 com palavras raras e precisas para atingir domínio completo da língua.",
       "introParagraphs": [
         "O vocabulário de alemão C2 representa o domínio completo da língua segundo o CEFR. Você compreende praticamente tudo que lê ou ouve e pode se expressar com precisão, nuances e espontaneidade.",

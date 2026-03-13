@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Alemán",
   "levels": {
     "a1": {
-      "title": "Vocabulario de alemán A1",
+      "title": "Práctica de vocabulario de alemán A1 – Lista de palabras para principiantes",
       "intro": "El vocabulario de alemán A1 es el primer paso para quienes comienzan a aprender el idioma.",
       "levelDescription": "Principiante",
       "ctaText": "Iniciar práctica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de alemán"
       },
-      "metaTitle": "Vocabulario de alemán A1 – Palabras esenciales para principiantes",
+      "metaTitle": "Práctica de vocabulario alemán A1 – Palabras para principiantes",
       "metaDescription": "Aprende el vocabulario de alemán A1 con palabras esenciales y ejemplos sencillos. Construye una base sólida para empezar a hablar y comprender alemán.",
       "introParagraphs": [
         "El vocabulario de alemán A1 es el primer paso para quienes comienzan a aprender el idioma. En este nivel se aprenden palabras y expresiones simples que permiten comunicarse en situaciones cotidianas.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulario de alemán A2",
+      "title": "Práctica de vocabulario de alemán A2 – Lista de palabras de nivel elemental",
       "intro": "El vocabulario de alemán A2 amplía los conocimientos adquiridos en el nivel A1.",
       "levelDescription": "Elemental",
       "ctaText": "Iniciar práctica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de alemán"
       },
-      "metaTitle": "Vocabulario de alemán A2 – Nivel elemental",
+      "metaTitle": "Práctica de vocabulario alemán A2 – Lista de palabras básicas",
       "metaDescription": "Aprende vocabulario de alemán A2 con palabras comunes y ejemplos prácticos. Mejora la comprensión y comunicación a nivel elemental.",
       "introParagraphs": [
         "El vocabulario de alemán A2 amplía los conocimientos adquiridos en el nivel A1. En esta etapa, los estudiantes pueden formar frases más largas y comunicarse con mayor fluidez en situaciones cotidianas.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulario de alemán B1",
+      "title": "Práctica de vocabulario de alemán B1 – Lista de palabras de nivel intermedio",
       "intro": "El vocabulario de alemán B1 representa el nivel intermedio.",
       "levelDescription": "Intermedio",
       "ctaText": "Iniciar práctica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de alemán"
       },
-      "metaTitle": "Vocabulario de alemán B1 – Nivel intermedio",
+      "metaTitle": "Práctica de vocabulario alemán B1 – Palabras de nivel intermedio",
       "metaDescription": "Aprende vocabulario de alemán B1 con palabras intermedias y ejemplos detallados. Mejora tu expresión y comprensión en alemán.",
       "introParagraphs": [
         "El vocabulario de alemán B1 representa el nivel intermedio. Los estudiantes pueden comprender los puntos principales de mensajes claros y expresarse con mayor detalle.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulario de alemán B2",
+      "title": "Práctica de vocabulario de alemán B2 – Lista de palabras de nivel intermedio alto",
       "intro": "El vocabulario de alemán B2 está diseñado para estudiantes que ya pueden comunicarse con fluidez y quieren manejar temas más complejos.",
       "levelDescription": "Intermedio alto",
       "ctaText": "Iniciar práctica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de alemán B2 – Palabras y expresiones clave",
+      "metaTitle": "Práctica de vocabulario alemán B2 – Vocabulario intermedio alto",
       "metaDescription": "Amplía tu vocabulario de alemán B2 con palabras esenciales, significados y ejemplos para comunicarte con confianza en contextos cotidianos y profesionales.",
       "introParagraphs": [
         "El vocabulario de alemán B2 está diseñado para estudiantes que ya pueden comunicarse con fluidez y quieren manejar temas más complejos. En este nivel, puedes participar en discusiones y expresar tus ideas de manera clara.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulario de alemán C1",
+      "title": "Práctica de vocabulario de alemán C1 – Lista de palabras avanzadas",
       "intro": "El vocabulario de alemán C1 corresponde a un nivel avanzado en el que dominas expresiones complejas y términos abstractos.",
       "levelDescription": "Avanzado",
       "ctaText": "Iniciar práctica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de alemán C1 – Palabras avanzadas",
+      "metaTitle": "Práctica de vocabulario alemán C1 – Palabras avanzadas de alemán",
       "metaDescription": "Mejora tu vocabulario de alemán C1 con palabras avanzadas, ejemplos y explicaciones para una comunicación precisa y matizada.",
       "introParagraphs": [
         "El vocabulario de alemán C1 corresponde a un nivel avanzado en el que dominas expresiones complejas y términos abstractos. Puedes entender textos extensos y comunicarte con precisión y espontaneidad.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulario de alemán C2",
+      "title": "Práctica de vocabulario de alemán C2 – Lista de palabras de dominio avanzado",
       "intro": "El vocabulario de alemán C2 representa el dominio total del idioma según el CEFR.",
       "levelDescription": "Dominio completo",
       "ctaText": "Iniciar práctica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de alemán C2 – Dominio completo del idioma",
+      "metaTitle": "Práctica de vocabulario alemán C2 – Vocabulario avanzado de alemán",
       "metaDescription": "Domina el vocabulario de alemán C2 con palabras raras y precisas para alcanzar un control completo del idioma.",
       "introParagraphs": [
         "El vocabulario de alemán C2 representa el dominio total del idioma según el CEFR. Comprendes prácticamente todo lo leído o escuchado y puedes expresarte con precisión, matices y espontaneidad.",

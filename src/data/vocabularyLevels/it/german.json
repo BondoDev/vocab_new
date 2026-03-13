@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Tedesco",
   "levels": {
     "a1": {
-      "title": "Vocabolario di tedesco A1",
+      "title": "Pratica del vocabolario tedesco A1 – Lista di parole per principianti",
       "intro": "Il vocabolario di tedesco A1 rappresenta il primo passo per i principianti.",
       "levelDescription": "Principiante",
       "ctaText": "Inizia pratica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di tedesco"
       },
-      "metaTitle": "Vocabolario di tedesco A1 – Parole essenziali per principianti",
+      "metaTitle": "Pratica del vocabolario tedesco A1 – Parole per principianti",
       "metaDescription": "Impara il vocabolario di tedesco A1 con parole essenziali ed esempi semplici. Costruisci una base solida per comunicare in tedesco.",
       "introParagraphs": [
         "Il vocabolario di tedesco A1 rappresenta il primo passo per i principianti. A questo livello si apprendono parole ed espressioni semplici per comunicare nella vita quotidiana.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabolario di tedesco A2",
+      "title": "Pratica del vocabolario tedesco A2 – Lista di parole livello elementare",
       "intro": "Il vocabolario di tedesco A2 sviluppa le conoscenze acquisite nel livello A1.",
       "levelDescription": "Elementare",
       "ctaText": "Inizia pratica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di tedesco"
       },
-      "metaTitle": "Vocabolario di tedesco A2 – Livello elementare",
+      "metaTitle": "Pratica del vocabolario tedesco A2 – Lista di parole base",
       "metaDescription": "Impara il vocabolario di tedesco A2 con parole comuni ed esempi pratici. Migliora la comprensione e la comunicazione a livello elementare.",
       "introParagraphs": [
         "Il vocabolario di tedesco A2 sviluppa le conoscenze acquisite nel livello A1. A questo livello, gli studenti possono formare frasi più lunghe e comunicare più facilmente nelle situazioni quotidiane.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabolario di tedesco B1",
+      "title": "Pratica del vocabolario tedesco B1 – Lista di parole livello intermedio",
       "intro": "Il vocabolario di tedesco B1 rappresenta il livello intermedio.",
       "levelDescription": "Intermedio",
       "ctaText": "Inizia pratica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di tedesco"
       },
-      "metaTitle": "Vocabolario di tedesco B1 – Livello intermedio",
+      "metaTitle": "Pratica del vocabolario tedesco B1 – Parole livello intermedio",
       "metaDescription": "Impara il vocabolario di tedesco B1 con parole intermedie ed esempi dettagliati. Migliora espressione e comprensione in tedesco.",
       "introParagraphs": [
         "Il vocabolario di tedesco B1 rappresenta il livello intermedio. Gli studenti possono comprendere i punti principali di messaggi chiari ed esprimersi con maggiore dettaglio.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabolario di tedesco B2",
+      "title": "Pratica del vocabolario tedesco B2 – Lista di parole livello intermedio avanzato",
       "intro": "Il vocabolario di tedesco B2 è pensato per chi già comunica fluentemente e vuole affrontare argomenti più complessi.",
       "levelDescription": "Intermedio avanzato",
       "ctaText": "Inizia pratica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di tedesco B2 – Parole ed espressioni essenziali",
+      "metaTitle": "Pratica del vocabolario tedesco B2 – Vocabolario intermedio avanzato",
       "metaDescription": "Espandi il tuo vocabolario di tedesco B2 con parole chiave, significati ed esempi per comunicare con sicurezza nella vita quotidiana e professionale.",
       "introParagraphs": [
         "Il vocabolario di tedesco B2 è pensato per chi già comunica fluentemente e vuole affrontare argomenti più complessi. A questo livello puoi partecipare a discussioni e esprimere chiaramente le tue idee.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabolario di tedesco C1",
+      "title": "Pratica del vocabolario tedesco C1 – Lista di parole avanzate",
       "intro": "Il vocabolario di tedesco C1 corrisponde a un livello avanzato in cui padroneggi espressioni complesse e termini astratti.",
       "levelDescription": "Avanzato",
       "ctaText": "Inizia pratica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di tedesco C1 – Parole avanzate",
+      "metaTitle": "Pratica del vocabolario tedesco C1 – Parole avanzate di tedesco",
       "metaDescription": "Migliora il tuo vocabolario di tedesco C1 con parole avanzate, esempi e spiegazioni per comunicare in modo preciso e sfumato.",
       "introParagraphs": [
         "Il vocabolario di tedesco C1 corrisponde a un livello avanzato in cui padroneggi espressioni complesse e termini astratti. Puoi comprendere testi lunghi e comunicare con precisione e spontaneità.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabolario di tedesco C2",
+      "title": "Pratica del vocabolario tedesco C2 – Lista di parole livello padronanza",
       "intro": "Il vocabolario di tedesco C2 rappresenta la padronanza completa della lingua secondo il CEFR.",
       "levelDescription": "Padronanza",
       "ctaText": "Inizia pratica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di tedesco C2 – Padronanza completa della lingua",
+      "metaTitle": "Pratica del vocabolario tedesco C2 – Vocabolario avanzato tedesco",
       "metaDescription": "Scopri il vocabolario di tedesco C2 con parole rare e precise per raggiungere una padronanza completa della lingua.",
       "introParagraphs": [
         "Il vocabolario di tedesco C2 rappresenta la padronanza completa della lingua secondo il CEFR. Comprendi praticamente tutto ciò che leggi o ascolti e puoi esprimerti con precisione, sfumature e spontaneità.",
