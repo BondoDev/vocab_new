@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Spanisch",
   "levels": {
     "a1": {
-      "title": "Spanisch Wortschatz A1",
+      "title": "Spanisch A1 Wortschatz üben – Wortliste für Anfänger",
       "intro": "Der Spanisch Wortschatz A1 bildet die Grundlage für deine ersten Schritte in der Sprache.",
       "introParagraphs": [
         "Der Spanisch Wortschatz A1 bildet die Grundlage für deine ersten Schritte in der Sprache. In diesem Niveau lernst du einfache, häufig gebrauchte Wörter und feste Wendungen für alltägliche Situationen.",
@@ -103,7 +103,7 @@
       "internalNavigation": {
         "heading": "Weitere Niveaus entdecken"
       },
-      "metaTitle": "Spanisch Wortschatz A1 – Grundlagen und einfache Wörter",
+      "metaTitle": "Spanisch A1 Wortschatz üben – Wörter für Anfänger",
       "metaDescription": "Lerne Spanisch Wortschatz A1 mit einfachen Wörtern, Alltagsthemen und klaren Übungen für einen sicheren Start in die Sprache.",
       "bottomCta": {
         "heading": "Starte mit dem Lernen",
@@ -111,7 +111,7 @@
       }
     },
     "a2": {
-      "title": "Spanisch Wortschatz A2",
+      "title": "Spanisch A2 Wortschatz üben – Wortliste für Grundstufe",
       "intro": "Der Spanisch Wortschatz A2 baut auf den Grundlagen auf und erweitert deine sprachlichen Möglichkeiten im Alltag.",
       "introParagraphs": [
         "Der Spanisch Wortschatz A2 baut auf den Grundlagen auf und erweitert deine sprachlichen Möglichkeiten im Alltag. Du kannst dich differenzierter ausdrücken und einfache Gespräche sicherer führen.",
@@ -211,7 +211,7 @@
       "internalNavigation": {
         "heading": "Weitere Niveaus entdecken"
       },
-      "metaTitle": "Spanisch Wortschatz A2 – Alltagssprache erweitern",
+      "metaTitle": "Spanisch A2 Wortschatz üben – Wortliste Grundstufe",
       "metaDescription": "Erweitere deinen Spanisch Wortschatz A2 mit praxisnahen Themen, wichtigen Ausdrücken und gezielten Übungen für mehr Sicherheit.",
       "bottomCta": {
         "heading": "Weiter lernen",
@@ -219,7 +219,7 @@
       }
     },
     "b1": {
-      "title": "Spanisch Wortschatz B1",
+      "title": "Spanisch B1 Wortschatz üben – Wortliste für Mittelstufe",
       "intro": "Der Spanisch Wortschatz B1 markiert den Übergang zur Mittelstufe.",
       "introParagraphs": [
         "Der Spanisch Wortschatz B1 markiert den Übergang zur Mittelstufe. Du kannst dich nun selbstständiger ausdrücken und komplexere Inhalte verstehen.",
@@ -319,7 +319,7 @@
       "internalNavigation": {
         "heading": "Weitere Niveaus entdecken"
       },
-      "metaTitle": "Spanisch Wortschatz B1 – Mittelstufe sicher beherrschen",
+      "metaTitle": "Spanisch B1 Wortschatz üben – Wörter Mittelstufe",
       "metaDescription": "Stärke deinen Spanisch Wortschatz B1 mit wichtigen Themen, erweiterten Ausdrücken und gezielter Praxis für mehr Sprachsicherheit.",
       "bottomCta": {
         "heading": "Bereit für das nächste Niveau?",
@@ -327,7 +327,7 @@
       }
     },
     "b2": {
-      "title": "Spanisch Wortschatz B2",
+      "title": "Spanisch B2 Wortschatz üben – Wortliste für obere Mittelstufe",
       "intro": "Der Spanisch Wortschatz B2 bildet die Grundlage für eine selbstständige und sichere Kommunikation in komplexeren Situationen.",
       "introParagraphs": [
         "Der Spanisch Wortschatz B2 bildet die Grundlage für eine selbstständige und sichere Kommunikation in komplexeren Situationen. Auf diesem Niveau erweitern Sie Ihr aktives Vokabular deutlich und lernen, differenziert zu argumentieren.",
@@ -433,7 +433,7 @@
       "internalNavigation": {
         "heading": "Weitere Niveaus entdecken"
       },
-      "metaTitle": "Spanisch Wortschatz B2 – Mittelstufe erweitern",
+      "metaTitle": "Spanisch B2 Wortschatz üben – Wortliste obere Mittelstufe",
       "metaDescription": "Trainieren Sie Ihren Spanisch Wortschatz B2 mit strukturierten Listen, Beispielen und praxisnahen Wörtern für Alltag, Beruf und Studium.",
       "bottomCta": {
         "heading": "Jetzt üben und festigen",
@@ -441,7 +441,7 @@
       }
     },
     "c1": {
-      "title": "Spanisch Wortschatz C1",
+      "title": "Spanisch C1 Wortschatz üben – Wortliste für Fortgeschrittene",
       "intro": "Der Spanisch Wortschatz C1 steht für fortgeschrittene Sprachkompetenz.",
       "introParagraphs": [
         "Der Spanisch Wortschatz C1 steht für fortgeschrittene Sprachkompetenz. Lernende können komplexe Sachverhalte differenziert darstellen und auch abstrakte Themen sprachlich präzise erfassen.",
@@ -547,7 +547,7 @@
       "internalNavigation": {
         "heading": "Weitere Niveaus entdecken"
       },
-      "metaTitle": "Spanisch Wortschatz C1 – Oberstufe meistern",
+      "metaTitle": "Spanisch C1 Wortschatz üben – Fortgeschrittene spanische Wörter",
       "metaDescription": "Erweitern Sie Ihren Spanisch Wortschatz C1 mit anspruchsvollen Begriffen und präzisen Formulierungen für Studium und Beruf.",
       "bottomCta": {
         "heading": "Gezielt weiterlernen",
@@ -555,7 +555,7 @@
       }
     },
     "c2": {
-      "title": "Spanisch Wortschatz C2",
+      "title": "Spanisch C2 Wortschatz üben – Wortliste für sehr Fortgeschrittene",
       "intro": "Der Spanisch Wortschatz C2 steht für nahezu muttersprachliche Kompetenz.",
       "introParagraphs": [
         "Der Spanisch Wortschatz C2 steht für nahezu muttersprachliche Kompetenz. Lernende verstehen komplexeste Texte und drücken sich stilistisch sicher und differenziert aus.",
@@ -661,7 +661,7 @@
       "internalNavigation": {
         "heading": "Weitere Niveaus entdecken"
       },
-      "metaTitle": "Spanisch Wortschatz C2 – Sprachliche Meisterschaft",
+      "metaTitle": "Spanisch C2 Wortschatz üben – Sehr fortgeschrittene Wörter",
       "metaDescription": "Meistern Sie den Spanisch Wortschatz C2 mit präzisen, spezialisierten Begriffen für akademische, berufliche und literarische Kontexte.",
       "bottomCta": {
         "heading": "Meistern Sie das höchste Niveau",

@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Español",
   "levels": {
     "a1": {
-      "title": "Vocabulario de español A1",
+      "title": "Práctica de vocabulario de español A1 – Lista de palabras para principiantes",
       "intro": "El vocabulario de español A1 es el primer paso para comenzar a comunicarte en situaciones cotidianas.",
       "introParagraphs": [
         "El vocabulario de español A1 es el primer paso para comenzar a comunicarte en situaciones cotidianas. En este nivel inicial aprendes palabras y expresiones muy frecuentes que te permiten presentarte, hacer preguntas sencillas y entender información básica.",
@@ -103,7 +103,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Vocabulario de español A1: Palabras básicas y práctica inicial",
+      "metaTitle": "Práctica de vocabulario español A1 – Palabras para principiantes",
       "metaDescription": "Aprende vocabulario de español A1 con palabras esenciales, ejemplos simples y práctica clara para empezar a comunicarte desde el primer día.",
       "bottomCta": {
         "heading": "Empieza a practicar",
@@ -111,7 +111,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulario de español A2",
+      "title": "Práctica de vocabulario de español A2 – Lista de palabras de nivel elemental",
       "intro": "El vocabulario de español A2 amplía la base inicial y te permite comunicarte con mayor independencia en situaciones habituales.",
       "introParagraphs": [
         "El vocabulario de español A2 amplía la base inicial y te permite comunicarte con mayor independencia en situaciones habituales. En este nivel ya puedes formar frases más completas y expresar ideas simples con mayor claridad.",
@@ -211,7 +211,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Vocabulario de español A2: Palabras y expresiones cotidianas",
+      "metaTitle": "Práctica de vocabulario español A2 – Lista de palabras básicas",
       "metaDescription": "Mejora tu vocabulario de español A2 con temas prácticos, frases comunes y ejercicios claros para avanzar con seguridad al siguiente nivel.",
       "bottomCta": {
         "heading": "Sigue avanzando",
@@ -219,7 +219,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulario de español B1",
+      "title": "Práctica de vocabulario de español B1 – Lista de palabras de nivel intermedio",
       "intro": "El vocabulario de español B1 marca la transición hacia un nivel intermedio en el que puedes comunicarte con mayor autonomía y precisión.",
       "introParagraphs": [
         "El vocabulario de español B1 marca la transición hacia un nivel intermedio en el que puedes comunicarte con mayor autonomía y precisión. Aquí ya no solo entiendes frases simples, sino que desarrollas argumentos básicos y narraciones más completas.",
@@ -319,7 +319,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Vocabulario de español B1: Nivel intermedio y uso práctico",
+      "metaTitle": "Práctica de vocabulario español B1 – Palabras de nivel intermedio",
       "metaDescription": "Fortalece tu vocabulario de español B1 con temas variados, palabras intermedias y práctica estructurada para comunicarte con mayor fluidez.",
       "bottomCta": {
         "heading": "Prepárate para el siguiente nivel",
@@ -327,7 +327,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulario de español B2",
+      "title": "Práctica de vocabulario de español B2 – Lista de palabras de nivel intermedio alto",
       "intro": "El vocabulario de español B2 corresponde a un nivel intermedio alto en el que ya puedes comunicarte con soltura en la mayoría de contextos académicos, laborales y sociales.",
       "introParagraphs": [
         "El vocabulario de español B2 corresponde a un nivel intermedio alto en el que ya puedes comunicarte con soltura en la mayoría de contextos académicos, laborales y sociales. En esta etapa amplías tu repertorio léxico y mejoras la precisión en el uso de las palabras.",
@@ -427,7 +427,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Vocabulario de español B2: Nivel intermedio alto y uso avanzado",
+      "metaTitle": "Práctica de vocabulario español B2 – Vocabulario intermedio alto",
       "metaDescription": "Mejora tu vocabulario de español B2 con palabras más complejas, temas actuales y práctica estructurada para comunicarte con precisión y fluidez.",
       "bottomCta": {
         "heading": "Prepárate para el nivel avanzado",
@@ -435,7 +435,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulario de español C1",
+      "title": "Práctica de vocabulario de español C1 – Lista de palabras avanzadas",
       "intro": "El vocabulario de español C1 permite comunicarte con gran precisión en contextos académicos y profesionales.",
       "introParagraphs": [
         "El vocabulario de español C1 permite comunicarte con gran precisión en contextos académicos y profesionales. En este nivel avanzado ya puedes expresar ideas complejas con fluidez y control del registro.",
@@ -535,7 +535,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Vocabulario de español C1: Nivel avanzado y precisión léxica",
+      "metaTitle": "Práctica de vocabulario español C1 – Palabras avanzadas de español",
       "metaDescription": "Domina el vocabulario de español C1 con términos avanzados, lenguaje académico y práctica estructurada para comunicarte con exactitud.",
       "bottomCta": {
         "heading": "Avanza hacia la maestría",
@@ -543,7 +543,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulario de español C2",
+      "title": "Práctica de vocabulario de español C2 – Lista de palabras de dominio avanzado",
       "intro": "El vocabulario de español C2 representa el dominio más alto del idioma.",
       "introParagraphs": [
         "El vocabulario de español C2 representa el dominio más alto del idioma. En este nivel puedes comprender y producir prácticamente cualquier tipo de texto con precisión y naturalidad.",
@@ -643,7 +643,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Vocabulario de español C2: Nivel experto y dominio total",
+      "metaTitle": "Práctica de vocabulario español C2 – Vocabulario avanzado de español",
       "metaDescription": "Alcanza el dominio completo con vocabulario de español C2: términos complejos, matices sutiles y práctica avanzada para nivel experto.",
       "bottomCta": {
         "heading": "Mantén el dominio avanzado",

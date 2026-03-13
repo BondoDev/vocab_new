@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Espanhol",
   "levels": {
     "a1": {
-      "title": "Vocabulário de espanhol A1",
+      "title": "Prática de vocabulário de espanhol A1 – Lista de palavras para iniciantes",
       "intro": "O Vocabulário de espanhol A1 é o primeiro passo para começar a se comunicar em situações simples e cotidianas.",
       "introParagraphs": [
         "O Vocabulário de espanhol A1 é o primeiro passo para começar a se comunicar em situações simples e cotidianas. Neste nível inicial, você aprende palavras frequentes e expressões básicas usadas no dia a dia.",
@@ -79,7 +79,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Vocabulário de espanhol A1 – palavras essenciais para iniciantes",
+      "metaTitle": "Prática de vocabulário de espanhol A1 – Palavras para iniciantes",
       "metaDescription": "Aprenda vocabulário de espanhol A1 com palavras essenciais, temas do dia a dia e exercícios simples para começar a se comunicar.",
       "bottomCta": {
         "heading": "Comece a praticar",
@@ -87,7 +87,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulário de espanhol A2",
+      "title": "Prática de vocabulário de espanhol A2 – Lista de palavras nível básico",
       "intro": "O Vocabulário de espanhol A2 amplia as bases adquiridas no nível inicial e permite maior autonomia na comunicação cotidiana.",
       "introParagraphs": [
         "O Vocabulário de espanhol A2 amplia as bases adquiridas no nível inicial e permite maior autonomia na comunicação cotidiana.",
@@ -163,7 +163,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Vocabulário de espanhol A2 – palavras e expressões do dia a dia",
+      "metaTitle": "Prática de vocabulário de espanhol A2 – Lista de palavras básicas",
       "metaDescription": "Amplie seu vocabulário de espanhol A2 com temas práticos, expressões frequentes e exercícios estruturados para evoluir com confiança.",
       "bottomCta": {
         "heading": "Continue evoluindo",
@@ -171,7 +171,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulário de espanhol B1",
+      "title": "Prática de vocabulário de espanhol B1 – Lista de palavras nível intermediário",
       "intro": "O Vocabulário de espanhol B1 marca a transição para o nível intermediário.",
       "introParagraphs": [
         "O Vocabulário de espanhol B1 marca a transição para o nível intermediário. Neste estágio, você consegue se comunicar com maior autonomia e desenvolver ideias de forma mais estruturada.",
@@ -247,7 +247,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Vocabulário de espanhol B1 – nível intermediário e uso prático",
+      "metaTitle": "Prática de vocabulário de espanhol B1 – Palavras nível intermediário",
       "metaDescription": "Fortaleça seu vocabulário de espanhol B1 com temas variados, palavras intermediárias e prática estruturada para falar com mais fluência.",
       "bottomCta": {
         "heading": "Prepare-se para o próximo nível",
@@ -255,7 +255,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulário de espanhol B2",
+      "title": "Prática de vocabulário de espanhol B2 – Lista de palavras nível intermediário avançado",
       "intro": "O vocabulário de espanhol B2 marca a transição para um uso mais seguro e flexível da língua.",
       "introParagraphs": [
         "O vocabulário de espanhol B2 marca a transição para um uso mais seguro e flexível da língua. Nesse nível, o estudante já consegue compreender textos mais complexos, participar de debates e expressar opiniões com maior precisão.",
@@ -331,7 +331,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Vocabulário de espanhol B2 – Lista e prática",
+      "metaTitle": "Prática de vocabulário de espanhol B2 – Vocabulário intermediário avançado",
       "metaDescription": "Amplie seu vocabulário de espanhol B2 com lista estruturada, exemplos práticos e palavras essenciais para estudo, trabalho e certificações.",
       "bottomCta": {
         "heading": "Comece a praticar",
@@ -339,7 +339,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulário de espanhol C1",
+      "title": "Prática de vocabulário de espanhol C1 – Lista de palavras avançadas",
       "intro": "O vocabulário de espanhol C1 corresponde a um nível avançado de domínio da língua.",
       "introParagraphs": [
         "O vocabulário de espanhol C1 corresponde a um nível avançado de domínio da língua. O estudante compreende textos longos e complexos e consegue expressar ideias com clareza, precisão e variedade lexical.",
@@ -415,7 +415,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Vocabulário de espanhol C1 – Nível avançado",
+      "metaTitle": "Prática de vocabulário de espanhol C1 – Palavras avançadas espanhol",
       "metaDescription": "Aprimore seu vocabulário de espanhol C1 com termos avançados e léxico acadêmico para estudo, trabalho e comunicação profissional.",
       "bottomCta": {
         "heading": "Pratique e avance",
@@ -423,7 +423,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulário de espanhol C2",
+      "title": "Prática de vocabulário de espanhol C2 – Lista de palavras nível proficiente",
       "intro": "O vocabulário de espanhol C2 representa o nível mais alto de proficiência.",
       "introParagraphs": [
         "O vocabulário de espanhol C2 representa o nível mais alto de proficiência. O estudante compreende praticamente tudo o que lê ou ouve e consegue expressar-se com extrema precisão e naturalidade.",
@@ -499,7 +499,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Vocabulário de espanhol C2 – Proficiência máxima",
+      "metaTitle": "Prática de vocabulário de espanhol C2 – Vocabulário avançado espanhol",
       "metaDescription": "Alcance a proficiência com o vocabulário de espanhol C2: termos especializados, linguagem avançada e precisão lexical.",
       "bottomCta": {
         "heading": "Aperfeiçoe sua proficiência",

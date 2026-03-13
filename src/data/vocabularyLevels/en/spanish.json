@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Spanish",
   "levels": {
     "a1": {
-      "title": "Spanish Vocabulary A1",
+      "title": "Spanish A1 Vocabulary Practice – Beginner Word List",
       "intro": "Spanish Vocabulary A1 introduces the most essential words and expressions you need to communicate in simple everyday situations.",
       "introParagraphs": [
         "Spanish Vocabulary A1 introduces the most essential words and expressions you need to communicate in simple everyday situations.",
@@ -81,7 +81,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "Spanish Vocabulary A1: Basic Words and Beginner Practice",
+      "metaTitle": "Spanish A1 Vocabulary Practice – Beginner Words & Exercises",
       "metaDescription": "Start learning with Spanish Vocabulary A1: essential everyday words, simple phrases, and clear beginner practice to build your foundation.",
       "bottomCta": {
         "heading": "Start building your foundation",
@@ -89,7 +89,7 @@
       }
     },
     "a2": {
-      "title": "Spanish Vocabulary A2",
+      "title": "Spanish A2 Vocabulary Practice – Elementary Word List",
       "intro": "Spanish Vocabulary A2 builds directly on the beginner stage and helps you communicate more independently in everyday situations.",
       "introParagraphs": [
         "Spanish Vocabulary A2 builds directly on the beginner stage and helps you communicate more independently in everyday situations. At this level, you move beyond single words and start using connected phrases with greater confidence.",
@@ -167,7 +167,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "Spanish Vocabulary A2: Everyday Words and Practical Expressions",
+      "metaTitle": "Spanish A2 Vocabulary Practice – Elementary Word List & Practice",
       "metaDescription": "Expand your skills with Spanish Vocabulary A2: everyday topics, useful phrases, and structured practice to move beyond the beginner level confidently.",
       "bottomCta": {
         "heading": "Continue progressing",
@@ -175,7 +175,7 @@
       }
     },
     "b1": {
-      "title": "Spanish Vocabulary B1",
+      "title": "Spanish B1 Vocabulary Practice – Intermediate Word List",
       "intro": "Spanish Vocabulary B1 marks the transition from basic communication to independent language use.",
       "introParagraphs": [
         "Spanish Vocabulary B1 marks the transition from basic communication to independent language use. At this level, you begin to handle more varied topics and express opinions with greater clarity.",
@@ -253,7 +253,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "Spanish Vocabulary B1: Intermediate Words and Real-Life Usage",
+      "metaTitle": "Spanish B1 Vocabulary Practice – Intermediate Spanish Words",
       "metaDescription": "Strengthen your skills with Spanish Vocabulary B1: practical topics, intermediate word lists, and structured exercises for confident communication.",
       "bottomCta": {
         "heading": "Move toward upper-intermediate",
@@ -261,7 +261,7 @@
       }
     },
     "b2": {
-      "title": "Spanish Vocabulary B2",
+      "title": "Spanish B2 Vocabulary Practice – Upper-Intermediate Word List",
       "intro": "Spanish Vocabulary B2 represents a clear step into upper-intermediate proficiency.",
       "introParagraphs": [
         "Spanish Vocabulary B2 represents a clear step into upper-intermediate proficiency. At this level, you can discuss complex topics, defend opinions, and understand extended speech without constant support.",
@@ -339,7 +339,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "Spanish Vocabulary B2: Upper-Intermediate Words and Usage",
+      "metaTitle": "Spanish B2 Vocabulary Practice – Upper-Intermediate Spanish Vocabulary",
       "metaDescription": "Strengthen fluency with Spanish Vocabulary B2: nuanced vocabulary, real-life topics, and structured practice for confident communication.",
       "bottomCta": {
         "heading": "Refine your fluency",
@@ -347,7 +347,7 @@
       }
     },
     "c1": {
-      "title": "Spanish Vocabulary C1",
+      "title": "Spanish C1 Vocabulary Practice – Advanced Word List",
       "intro": "Spanish Vocabulary C1 allows you to communicate with precision, flexibility, and stylistic awareness across academic, professional, and public contexts.",
       "introParagraphs": [
         "Spanish Vocabulary C1 allows you to communicate with precision, flexibility, and stylistic awareness across academic, professional, and public contexts.",
@@ -425,7 +425,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "Spanish Vocabulary C1: Advanced Words and Academic Usage",
+      "metaTitle": "Spanish C1 Vocabulary Practice – Advanced Spanish Words & Exercises",
       "metaDescription": "Master Spanish Vocabulary C1 with advanced word lists, academic expressions, and structured practice for professional fluency.",
       "bottomCta": {
         "heading": "Advance toward mastery",
@@ -433,7 +433,7 @@
       }
     },
     "c2": {
-      "title": "Spanish Vocabulary C2",
+      "title": "Spanish C2 Vocabulary Practice – Proficient Word List",
       "intro": "Spanish Vocabulary C2 represents full proficiency and near-native command.",
       "introParagraphs": [
         "Spanish Vocabulary C2 represents full proficiency and near-native command. At this stage, vocabulary is precise, flexible, and contextually sensitive.",
@@ -511,7 +511,7 @@
       "internalNavigation": {
         "heading": "Explore Other Levels"
       },
-      "metaTitle": "Spanish Vocabulary C2: Mastery-Level Words and Precision",
+      "metaTitle": "Spanish C2 Vocabulary Practice – Proficient Spanish Vocabulary Practice",
       "metaDescription": "Achieve mastery with Spanish Vocabulary C2: refined expressions, nuanced vocabulary, and high-level practice for near-native proficiency.",
       "bottomCta": {
         "heading": "Maintain full proficiency",

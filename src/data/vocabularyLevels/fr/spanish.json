@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Espagnol",
   "levels": {
     "a1": {
-      "title": "Vocabulaire d’espagnol A1",
+      "title": "Pratique du vocabulaire espagnol A1 – Liste de mots pour débutants",
       "intro": "Le vocabulaire d’espagnol A1 constitue la première étape pour communiquer dans des situations simples et concrètes.",
       "introParagraphs": [
         "Le vocabulaire d’espagnol A1 constitue la première étape pour communiquer dans des situations simples et concrètes. À ce niveau, vous apprenez les mots les plus fréquents pour vous présenter, poser des questions de base et comprendre des informations essentielles.",
@@ -103,7 +103,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’espagnol A1 : mots essentiels et bases",
+      "metaTitle": "Pratique du vocabulaire espagnol A1 – Mots pour débutants",
       "metaDescription": "Découvrez le vocabulaire d’espagnol A1 avec des mots essentiels, des thèmes quotidiens et des exercices simples pour bien commencer.",
       "bottomCta": {
         "heading": "Commencez à pratiquer",
@@ -111,7 +111,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulaire d’espagnol A2",
+      "title": "Pratique du vocabulaire espagnol A2 – Liste de mots niveau élémentaire",
       "intro": "Le vocabulaire d’espagnol A2 élargit les bases acquises au niveau débutant et vous permet de communiquer avec davantage d’autonomie.",
       "introParagraphs": [
         "Le vocabulaire d’espagnol A2 élargit les bases acquises au niveau débutant et vous permet de communiquer avec davantage d’autonomie.",
@@ -211,7 +211,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’espagnol A2 : mots et expressions courantes",
+      "metaTitle": "Pratique du vocabulaire espagnol A2 – Liste de mots élémentaire",
       "metaDescription": "Développez votre vocabulaire d’espagnol A2 avec des thèmes quotidiens, des expressions utiles et des exercices pratiques pour progresser.",
       "bottomCta": {
         "heading": "Continuez à progresser",
@@ -219,7 +219,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulaire d’espagnol B1",
+      "title": "Pratique du vocabulaire espagnol B1 – Liste de mots niveau intermédiaire",
       "intro": "Le vocabulaire d’espagnol B1 marque le passage au niveau intermédiaire.",
       "introParagraphs": [
         "Le vocabulaire d’espagnol B1 marque le passage au niveau intermédiaire. Vous pouvez désormais communiquer avec plus d’autonomie et développer des idées plus structurées.",
@@ -319,7 +319,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’espagnol B1 : niveau intermédiaire et usage pratique",
+      "metaTitle": "Pratique du vocabulaire espagnol B1 – Mots niveau intermédiaire",
       "metaDescription": "Renforcez votre vocabulaire d’espagnol B1 avec des thèmes variés, des mots intermédiaires et une pratique structurée pour plus d’aisance.",
       "bottomCta": {
         "heading": "Préparez-vous au niveau supérieur",
@@ -327,7 +327,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulaire d’espagnol B2",
+      "title": "Pratique du vocabulaire espagnol B2 – Liste de mots niveau intermédiaire supérieur",
       "intro": "Le vocabulaire d’espagnol B2 permet de communiquer avec aisance dans des situations variées, aussi bien professionnelles qu’académiques.",
       "introParagraphs": [
         "Le vocabulaire d’espagnol B2 permet de communiquer avec aisance dans des situations variées, aussi bien professionnelles qu’académiques. À ce niveau, vous consolidez les bases et développez un lexique plus précis et nuancé.",
@@ -433,7 +433,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’espagnol B2 – Liste et pratique",
+      "metaTitle": "Pratique du vocabulaire espagnol B2 – Vocabulaire intermédiaire supérieur",
       "metaDescription": "Travaillez le vocabulaire d’espagnol B2 avec une liste structurée, des exemples et des mots essentiels pour progresser vers un niveau avancé.",
       "bottomCta": {
         "heading": "Commencez à pratiquer",
@@ -441,7 +441,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulaire d’espagnol C1",
+      "title": "Pratique du vocabulaire espagnol C1 – Liste de mots avancés",
       "intro": "Le vocabulaire d’espagnol C1 correspond à un niveau avancé où la maîtrise lexicale permet d’aborder des sujets complexes avec précision.",
       "introParagraphs": [
         "Le vocabulaire d’espagnol C1 correspond à un niveau avancé où la maîtrise lexicale permet d’aborder des sujets complexes avec précision. Vous êtes capable de comprendre des textes exigeants et d’exprimer des idées nuancées.",
@@ -547,7 +547,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’espagnol C1 – Niveau avancé",
+      "metaTitle": "Pratique du vocabulaire espagnol C1 – Mots avancés espagnols",
       "metaDescription": "Approfondissez le vocabulaire d’espagnol C1 avec une sélection structurée de mots avancés pour l’expression académique et professionnelle.",
       "bottomCta": {
         "heading": "Commencez à pratiquer",
@@ -555,7 +555,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulaire d’espagnol C2",
+      "title": "Pratique du vocabulaire espagnol C2 – Liste de mots niveau maîtrise",
       "intro": "Le vocabulaire d’espagnol C2 correspond au niveau de maîtrise le plus élevé du CECRL.",
       "introParagraphs": [
         "Le vocabulaire d’espagnol C2 correspond au niveau de maîtrise le plus élevé du CECRL. À ce stade, l’utilisateur comprend pratiquement tout ce qu’il lit ou entend et s’exprime avec une grande précision lexicale.",
@@ -661,7 +661,7 @@
       "internalNavigation": {
         "heading": "Explorer les autres niveaux"
       },
-      "metaTitle": "Vocabulaire d’espagnol C2 – Maîtrise complète",
+      "metaTitle": "Pratique du vocabulaire espagnol C2 – Vocabulaire espagnol avancé",
       "metaDescription": "Maîtrisez le vocabulaire d’espagnol C2 avec une sélection de termes spécialisés et avancés pour un usage académique et professionnel.",
       "bottomCta": {
         "heading": "Commencez à pratiquer",

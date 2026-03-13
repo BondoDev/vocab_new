@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Spagnolo",
   "levels": {
     "a1": {
-      "title": "Vocabolario di spagnolo A1",
+      "title": "Pratica del vocabolario spagnolo A1 – Lista di parole per principianti",
       "intro": "Il Vocabolario di spagnolo A1 rappresenta il primo passo per iniziare a comunicare in modo semplice ed efficace.",
       "introParagraphs": [
         "Il Vocabolario di spagnolo A1 rappresenta il primo passo per iniziare a comunicare in modo semplice ed efficace. In questo livello impari le parole più frequenti e le espressioni di base utilizzate nella vita quotidiana.",
@@ -79,7 +79,7 @@
       "internalNavigation": {
         "heading": "Esplora gli altri livelli"
       },
-      "metaTitle": "Vocabolario di spagnolo A1 – parole base e prime espressioni",
+      "metaTitle": "Pratica del vocabolario spagnolo A1 – Parole per principianti",
       "metaDescription": "Scopri il vocabolario di spagnolo A1 con parole essenziali, temi quotidiani ed esercizi semplici per iniziare a comunicare subito.",
       "bottomCta": {
         "heading": "Inizia a praticare",
@@ -87,7 +87,7 @@
       }
     },
     "a2": {
-      "title": "Vocabolario di spagnolo A2",
+      "title": "Pratica del vocabolario spagnolo A2 – Lista di parole livello elementare",
       "intro": "Il Vocabolario di spagnolo A2 amplia le basi acquisite nel livello iniziale e ti permette di comunicare con maggiore autonomia.",
       "introParagraphs": [
         "Il Vocabolario di spagnolo A2 amplia le basi acquisite nel livello iniziale e ti permette di comunicare con maggiore autonomia.",
@@ -163,7 +163,7 @@
       "internalNavigation": {
         "heading": "Esplora gli altri livelli"
       },
-      "metaTitle": "Vocabolario di spagnolo A2 – parole ed espressioni quotidiane",
+      "metaTitle": "Pratica del vocabolario spagnolo A2 – Lista di parole base",
       "metaDescription": "Amplia il tuo vocabolario di spagnolo A2 con temi pratici, espressioni comuni ed esercizi per comunicare con maggiore sicurezza.",
       "bottomCta": {
         "heading": "Continua a migliorare",
@@ -171,7 +171,7 @@
       }
     },
     "b1": {
-      "title": "Vocabolario di spagnolo B1",
+      "title": "Pratica del vocabolario spagnolo B1 – Lista di parole livello intermedio",
       "intro": "Il Vocabolario di spagnolo B1 segna il passaggio a un livello intermedio, dove puoi comunicare con maggiore sicurezza e autonomia.",
       "introParagraphs": [
         "Il Vocabolario di spagnolo B1 segna il passaggio a un livello intermedio, dove puoi comunicare con maggiore sicurezza e autonomia.",
@@ -247,7 +247,7 @@
       "internalNavigation": {
         "heading": "Esplora gli altri livelli"
       },
-      "metaTitle": "Vocabolario di spagnolo B1 – livello intermedio e uso pratico",
+      "metaTitle": "Pratica del vocabolario spagnolo B1 – Parole di livello intermedio",
       "metaDescription": "Rafforza il tuo vocabolario di spagnolo B1 con temi vari, parole intermedie ed esercizi strutturati per parlare con più fluidità.",
       "bottomCta": {
         "heading": "Preparati al livello successivo",
@@ -255,7 +255,7 @@
       }
     },
     "b2": {
-      "title": "Vocabolario di spagnolo B2",
+      "title": "Pratica del vocabolario spagnolo B2 – Lista di parole livello intermedio avanzato",
       "intro": "Il vocabolario di spagnolo B2 rappresenta una fase cruciale nello sviluppo della competenza linguistica.",
       "introParagraphs": [
         "Il vocabolario di spagnolo B2 rappresenta una fase cruciale nello sviluppo della competenza linguistica. A questo livello, lo studente non si limita più a comunicare in situazioni quotidiane, ma è in grado di affrontare temi più complessi, discutere opinioni e comprendere testi articolati. La padronanza lessicale diventa più precisa e consente di esprimersi con maggiore sicurezza.",
@@ -331,7 +331,7 @@
       "internalNavigation": {
         "heading": "Esplora gli altri livelli"
       },
-      "metaTitle": "Vocabolario di spagnolo B2 – Lista e pratica avanzata",
+      "metaTitle": "Pratica del vocabolario spagnolo B2 – Vocabolario intermedio avanzato",
       "metaDescription": "Amplia il tuo vocabolario di spagnolo B2 con liste strutturate, parole chiave ed esempi utili per studio, lavoro e certificazioni linguistiche.",
       "bottomCta": {
         "heading": "Inizia a praticare",
@@ -339,7 +339,7 @@
       }
     },
     "c1": {
-      "title": "Vocabolario di spagnolo C1",
+      "title": "Pratica del vocabolario spagnolo C1 – Lista di parole avanzate",
       "intro": "Il vocabolario di spagnolo C1 indica una competenza avanzata, in cui lo studente padroneggia strutture complesse e un lessico ricco e variegato.",
       "introParagraphs": [
         "Il vocabolario di spagnolo C1 indica una competenza avanzata, in cui lo studente padroneggia strutture complesse e un lessico ricco e variegato. A questo livello si comprendono testi lunghi e specialistici, e si è in grado di esprimere idee articolate con precisione.",
@@ -415,7 +415,7 @@
       "internalNavigation": {
         "heading": "Esplora gli altri livelli"
       },
-      "metaTitle": "Vocabolario di spagnolo C1 – Livello avanzato",
+      "metaTitle": "Pratica del vocabolario spagnolo C1 – Parole avanzate di spagnolo",
       "metaDescription": "Approfondisci il vocabolario di spagnolo C1 con termini avanzati e lessico accademico per studio, lavoro e comunicazione professionale.",
       "bottomCta": {
         "heading": "Metti alla prova il tuo livello",
@@ -423,7 +423,7 @@
       }
     },
     "c2": {
-      "title": "Vocabolario di spagnolo C2",
+      "title": "Pratica del vocabolario spagnolo C2 – Lista di parole livello padronanza",
       "intro": "Il vocabolario di spagnolo C2 rappresenta il livello più alto di competenza linguistica.",
       "introParagraphs": [
         "Il vocabolario di spagnolo C2 rappresenta il livello più alto di competenza linguistica. Lo studente comprende quasi tutto ciò che legge o ascolta e sa esprimersi con estrema precisione e naturalezza.",
@@ -499,7 +499,7 @@
       "internalNavigation": {
         "heading": "Esplora gli altri livelli"
       },
-      "metaTitle": "Vocabolario di spagnolo C2 – Padronanza completa",
+      "metaTitle": "Pratica del vocabolario spagnolo C2 – Vocabolario avanzato spagnolo",
       "metaDescription": "Raggiungi la padronanza con il vocabolario di spagnolo C2: termini specialistici, lessico avanzato e parole per uso accademico e professionale.",
       "bottomCta": {
         "heading": "Raggiungi la padronanza",
