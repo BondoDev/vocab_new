@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Russian",
   "levels": {
     "a1": {
-      "title": "Russian Vocabulary A1",
+      "title": "Russian A1 Vocabulary Practice",
       "intro": "Russian Vocabulary A1 corresponds to the beginner level.",
       "levelDescription": "Beginner",
       "ctaText": "Start A1 Practice",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Other Russian Levels"
       },
-      "metaTitle": "Russian Vocabulary A1 - Basic Words for Beginners",
+      "metaTitle": "Russian A1 Vocabulary Practice – Beginner Words",
       "metaDescription": "Learn Russian Vocabulary A1 with simple words and examples. Build a solid foundation for daily communication in Russian.",
       "introParagraphs": [
         "Russian Vocabulary A1 corresponds to the beginner level. Learners acquire simple words and phrases for everyday communication.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Russian Vocabulary A2",
+      "title": "Russian A2 Vocabulary Practice",
       "intro": "Russian Vocabulary A2 expands knowledge from the A1 level.",
       "levelDescription": "Elementary",
       "ctaText": "Start A2 Practice",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Other Russian Levels"
       },
-      "metaTitle": "Russian Vocabulary A2 - Elementary Level",
+      "metaTitle": "Russian A2 Vocabulary Practice – Elementary Vocabulary",
       "metaDescription": "Learn Russian Vocabulary A2 with common words and practical examples. Improve understanding and communication at the elementary level.",
       "introParagraphs": [
         "Russian Vocabulary A2 expands knowledge from the A1 level. Learners can form longer sentences and communicate more easily in everyday situations.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Russian Vocabulary B1",
+      "title": "Russian B1 Vocabulary Practice",
       "intro": "Russian Vocabulary B1 corresponds to the intermediate level.",
       "levelDescription": "Intermediate",
       "ctaText": "Start B1 Practice",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Other Russian Levels"
       },
-      "metaTitle": "Russian Vocabulary B1 - Intermediate Level",
+      "metaTitle": "Russian B1 Vocabulary Practice – Intermediate Vocabulary",
       "metaDescription": "Learn Russian Vocabulary B1 with intermediate words and detailed examples. Improve expression and comprehension in Russian.",
       "introParagraphs": [
         "Russian Vocabulary B1 corresponds to the intermediate level. Learners can understand the main points of clear messages and communicate in more detail.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Russian Vocabulary B2",
+      "title": "Russian B2 Vocabulary Practice",
       "intro": "Russian Vocabulary B2 is designed for learners aiming to communicate fluently and handle more complex topics.",
       "levelDescription": "Upper-Intermediate",
       "ctaText": "Start B2 Practice",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Other CEFR Levels"
       },
-      "metaTitle": "Russian Vocabulary B2 - Essential Words and Expressions",
+      "metaTitle": "Russian B2 Vocabulary Practice – Upper-Intermediate Vocabulary",
       "metaDescription": "Expand your Russian B2 vocabulary with key words, meanings, and examples to communicate effectively in daily and professional contexts.",
       "introParagraphs": [
         "Russian Vocabulary B2 is designed for learners aiming to communicate fluently and handle more complex topics. At this level, you can participate in discussions and clearly express your ideas.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Russian Vocabulary C1",
+      "title": "Russian C1 Vocabulary Practice",
       "intro": "Russian Vocabulary C1 corresponds to an advanced level, where complex expressions and abstract terms are mastered.",
       "levelDescription": "Advanced",
       "ctaText": "Start C1 Practice",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Other CEFR Levels"
       },
-      "metaTitle": "Russian Vocabulary C1 - Advanced Words",
+      "metaTitle": "Russian C1 Vocabulary Practice – Advanced Russian Words",
       "metaDescription": "Expand your Russian C1 vocabulary with advanced words, examples, and exercises to communicate with precision and confidence.",
       "introParagraphs": [
         "Russian Vocabulary C1 corresponds to an advanced level, where complex expressions and abstract terms are mastered. You can understand long texts and communicate with accuracy and spontaneity.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Russian Vocabulary C2",
+      "title": "Russian C2 Vocabulary Practice",
       "intro": "Russian Vocabulary C2 represents complete mastery according to the CEFR.",
       "levelDescription": "Proficient",
       "ctaText": "Start C2 Practice",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Other CEFR Levels"
       },
-      "metaTitle": "Russian Vocabulary C2 - Mastery Level",
+      "metaTitle": "Russian C2 Vocabulary Practice – Proficient Russian Vocabulary",
       "metaDescription": "Discover Russian C2 vocabulary with rare and precise words to achieve full mastery of the language.",
       "introParagraphs": [
         "Russian Vocabulary C2 represents complete mastery according to the CEFR. You can understand almost everything you read or hear and express yourself with precision, nuance, and spontaneity.",

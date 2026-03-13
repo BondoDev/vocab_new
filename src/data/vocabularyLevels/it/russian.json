@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Russo",
   "levels": {
     "a1": {
-      "title": "Vocabolario di russo A1",
+      "title": "Pratica del vocabolario russo A1",
       "intro": "Il vocabolario di russo A1 corrisponde al livello principiante. Gli studenti imparano parole e frasi semplici per comunicare nelle situazioni quotidiane.",
       "levelDescription": "Principiante",
       "ctaText": "Inizia pratica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di russo"
       },
-      "metaTitle": "Vocabolario di russo A1 – Parole di base per principianti",
+      "metaTitle": "Pratica del vocabolario russo A1 – Parole per principianti",
       "metaDescription": "Impara il vocabolario di russo A1 con parole semplici ed esempi pratici. Costruisci una solida base per comunicare in russo.",
       "introParagraphs": [
         "Il vocabolario di russo A1 corrisponde al livello principiante. Gli studenti imparano parole e frasi semplici per comunicare nelle situazioni quotidiane.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabolario di russo A2",
+      "title": "Pratica del vocabolario russo A2",
       "intro": "Il vocabolario di russo A2 amplia le conoscenze del livello A1. Gli studenti possono formare frasi più lunghe e comunicare più facilmente nelle situazioni quotidiane.",
       "levelDescription": "Elementare",
       "ctaText": "Inizia pratica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di russo"
       },
-      "metaTitle": "Vocabolario di russo A2 – Livello elementare",
+      "metaTitle": "Pratica del vocabolario russo A2 – Vocabolario livello elementare",
       "metaDescription": "Impara il vocabolario di russo A2 con parole comuni ed esempi pratici. Migliora comprensione e comunicazione a livello elementare.",
       "introParagraphs": [
         "Il vocabolario di russo A2 amplia le conoscenze del livello A1. Gli studenti possono formare frasi più lunghe e comunicare più facilmente nelle situazioni quotidiane.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabolario di russo B1",
+      "title": "Pratica del vocabolario russo B1",
       "intro": "Il vocabolario di russo B1 corrisponde al livello intermedio. Gli studenti possono comprendere i punti principali di testi chiari e comunicare con più dettagli.",
       "levelDescription": "Intermedio",
       "ctaText": "Inizia pratica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Altri livelli di russo"
       },
-      "metaTitle": "Vocabolario di russo B1 – Livello intermedio",
+      "metaTitle": "Pratica del vocabolario russo B1 – Vocabolario livello intermedio",
       "metaDescription": "Impara il vocabolario di russo B1 con parole intermedie ed esempi dettagliati. Migliora espressione e comprensione in russo.",
       "introParagraphs": [
         "Il vocabolario di russo B1 corrisponde al livello intermedio. Gli studenti possono comprendere i punti principali di testi chiari e comunicare con più dettagli.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabolario di russo B2",
+      "title": "Pratica del vocabolario russo B2",
       "intro": "Il vocabolario di russo B2 – progettato per studenti che vogliono comunicare con scioltezza e affrontare argomenti più complessi.",
       "levelDescription": "Intermedio avanzato",
       "ctaText": "Inizia pratica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di russo B2 – Parole ed espressioni essenziali",
+      "metaTitle": "Pratica del vocabolario russo B2 – Vocabolario intermedio avanzato",
       "metaDescription": "Migliora il tuo vocabolario di russo B2 con parole chiave, significati ed esempi per comunicare efficacemente in contesti quotidiani e lavorativi.",
       "introParagraphs": [
         "Il vocabolario di russo B2 – progettato per studenti che vogliono comunicare con scioltezza e affrontare argomenti più complessi. A questo livello, puoi partecipare a discussioni e esprimere chiaramente le tue idee.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabolario di russo C1",
+      "title": "Pratica del vocabolario russo C1",
       "intro": "Il vocabolario di russo C1 corrisponde a un livello avanzato in cui si padroneggiano espressioni complesse e termini astratti.",
       "levelDescription": "Avanzato",
       "ctaText": "Inizia pratica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di russo C1 – Parole avanzate",
+      "metaTitle": "Pratica del vocabolario russo C1 – Parole avanzate russe",
       "metaDescription": "Migliora il tuo vocabolario di russo C1 con parole avanzate, esempi ed esercizi per comunicare con precisione e sicurezza.",
       "introParagraphs": [
         "Il vocabolario di russo C1 corrisponde a un livello avanzato in cui si padroneggiano espressioni complesse e termini astratti. Puoi comprendere testi lunghi e comunicare con precisione e spontaneità.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabolario di russo C2",
+      "title": "Pratica del vocabolario russo C2",
       "intro": "Il vocabolario di russo C2 rappresenta la padronanza completa secondo il CEFR.",
       "levelDescription": "Padronanza",
       "ctaText": "Inizia pratica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Altri livelli CEFR"
       },
-      "metaTitle": "Vocabolario di russo C2 – Livello di padronanza",
+      "metaTitle": "Pratica del vocabolario russo C2 – Vocabolario russo avanzato",
       "metaDescription": "Scopri il vocabolario di russo C2 con parole rare e precise per raggiungere una padronanza completa della lingua.",
       "introParagraphs": [
         "Il vocabolario di russo C2 rappresenta la padronanza completa secondo il CEFR. Puoi comprendere quasi tutto ciò che leggi o ascolti e esprimerti con precisione, sfumature e spontaneità.",

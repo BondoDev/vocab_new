@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Ruso",
   "levels": {
     "a1": {
-      "title": "Vocabulario de ruso A1",
+      "title": "Práctica de vocabulario de ruso A1",
       "intro": "El vocabulario de ruso A1 corresponde al nivel principiante.",
       "levelDescription": "Principiante",
       "ctaText": "Iniciar práctica A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de ruso"
       },
-      "metaTitle": "Vocabulario de ruso A1 – Palabras básicas para principiantes",
+      "metaTitle": "Práctica de vocabulario ruso A1 – Palabras para principiantes",
       "metaDescription": "Aprende vocabulario de ruso A1 con palabras simples y ejemplos prácticos. Construye una base sólida para la comunicación diaria en ruso.",
       "introParagraphs": [
         "El vocabulario de ruso A1 corresponde al nivel principiante. Los estudiantes aprenden palabras y frases simples para la comunicación cotidiana.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulario de ruso A2",
+      "title": "Práctica de vocabulario de ruso A2",
       "intro": "El vocabulario de ruso A2 amplía los conocimientos del nivel A1.",
       "levelDescription": "Elemental",
       "ctaText": "Iniciar práctica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de ruso"
       },
-      "metaTitle": "Vocabulario de ruso A2 – Nivel elemental",
+      "metaTitle": "Práctica de vocabulario ruso A2 – Vocabulario nivel elemental",
       "metaDescription": "Aprende vocabulario de ruso A2 con palabras comunes y ejemplos prácticos. Mejora la comprensión y la comunicación en el nivel elemental.",
       "introParagraphs": [
         "El vocabulario de ruso A2 amplía los conocimientos del nivel A1. Los estudiantes pueden formar oraciones más largas y comunicarse con mayor facilidad en situaciones cotidianas.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulario de ruso B1",
+      "title": "Práctica de vocabulario de ruso B1",
       "intro": "El vocabulario de ruso B1 corresponde al nivel intermedio.",
       "levelDescription": "Intermedio",
       "ctaText": "Iniciar práctica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Otros niveles de ruso"
       },
-      "metaTitle": "Vocabulario de ruso B1 – Nivel intermedio",
+      "metaTitle": "Práctica de vocabulario ruso B1 – Vocabulario nivel intermedio",
       "metaDescription": "Aprende vocabulario de ruso B1 con palabras intermedias y ejemplos detallados. Mejora la expresión y comprensión en ruso.",
       "introParagraphs": [
         "El vocabulario de ruso B1 corresponde al nivel intermedio. Los estudiantes pueden comprender los puntos principales de mensajes claros y comunicarse con más detalle.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulario de ruso B2",
+      "title": "Práctica de vocabulario de ruso B2",
       "intro": "El vocabulario de ruso B2 está diseñado para estudiantes que desean comunicarse con fluidez y manejar temas más complejos.",
       "levelDescription": "Intermedio alto",
       "ctaText": "Iniciar práctica B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de ruso B2 – Palabras y expresiones clave",
+      "metaTitle": "Práctica de vocabulario ruso B2 – Vocabulario intermedio alto",
       "metaDescription": "Mejora tu vocabulario de ruso B2 con palabras esenciales, significados y ejemplos para comunicarte de forma efectiva en la vida diaria y profesional.",
       "introParagraphs": [
         "El vocabulario de ruso B2 está diseñado para estudiantes que desean comunicarse con fluidez y manejar temas más complejos. En este nivel, puedes participar en discusiones y expresar tus ideas con claridad.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulario de ruso C1",
+      "title": "Práctica de vocabulario de ruso C1",
       "intro": "El vocabulario de ruso C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y términos abstractos.",
       "levelDescription": "Avanzado",
       "ctaText": "Iniciar práctica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de ruso C1 – Palabras avanzadas",
+      "metaTitle": "Práctica de vocabulario ruso C1 – Palabras avanzadas de ruso",
       "metaDescription": "Mejora tu vocabulario de ruso C1 con palabras avanzadas, ejemplos y ejercicios para comunicarte con precisión y confianza.",
       "introParagraphs": [
         "El vocabulario de ruso C1 corresponde a un nivel avanzado, donde se dominan expresiones complejas y términos abstractos. Puedes comprender textos extensos y comunicarte con precisión y espontaneidad.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulario de ruso C2",
+      "title": "Práctica de vocabulario de ruso C2",
       "intro": "El vocabulario de ruso C2 representa un dominio completo según el MCER.",
       "levelDescription": "Dominio",
       "ctaText": "Iniciar práctica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Otros niveles CEFR"
       },
-      "metaTitle": "Vocabulario de ruso C2 – Nivel de dominio",
+      "metaTitle": "Práctica de vocabulario ruso C2 – Vocabulario avanzado de ruso",
       "metaDescription": "Descubre el vocabulario de ruso C2 con palabras raras y precisas para lograr un dominio completo del idioma.",
       "introParagraphs": [
         "El vocabulario de ruso C2 representa un dominio completo según el MCER. Puedes comprender casi todo lo que lees o escuchas y expresarte con precisión, matices y espontaneidad.",

@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Russisch",
   "levels": {
     "a1": {
-      "title": "Russisch Wortschatz A1",
+      "title": "Russisch A1 Wortschatz üben",
       "intro": "Der Russisch Wortschatz A1 entspricht dem Anfängerlevel.",
       "levelDescription": "Anfänger",
       "ctaText": "A1-Training starten",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Weitere Russisch-Level"
       },
-      "metaTitle": "Russisch Wortschatz A1 – Grundlegende Wörter für Anfänger",
+      "metaTitle": "Russisch A1 Wortschatz üben – Wörter für Anfänger",
       "metaDescription": "Lerne den Russisch Wortschatz A1 mit einfachen Wörtern und praktischen Beispielen. Baue eine solide Basis für die alltägliche Kommunikation auf.",
       "introParagraphs": [
         "Der Russisch Wortschatz A1 entspricht dem Anfängerlevel. Lernende erwerben einfache Wörter und Sätze für die alltägliche Kommunikation.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Russisch Wortschatz A2",
+      "title": "Russisch A2 Wortschatz üben",
       "intro": "Der Russisch Wortschatz A2 erweitert die Kenntnisse aus A1.",
       "levelDescription": "Elementares Niveau",
       "ctaText": "A2-Training starten",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Weitere Russisch-Level"
       },
-      "metaTitle": "Russisch Wortschatz A2 – Elementares Niveau",
+      "metaTitle": "Russisch A2 Wortschatz üben – Wortschatz Grundstufe",
       "metaDescription": "Lerne den Russisch Wortschatz A2 mit häufigen Wörtern und praktischen Beispielen. Verbessere dein Verständnis und deine Kommunikation auf elementarem Niveau.",
       "introParagraphs": [
         "Der Russisch Wortschatz A2 erweitert die Kenntnisse aus A1. Lernende können längere Sätze bilden und sich in alltäglichen Situationen leichter verständigen.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Russisch Wortschatz B1",
+      "title": "Russisch B1 Wortschatz üben",
       "intro": "Der Russisch Wortschatz B1 entspricht dem Mittelstufenlevel.",
       "levelDescription": "Mittelstufe",
       "ctaText": "B1-Training starten",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Weitere Russisch-Level"
       },
-      "metaTitle": "Russisch Wortschatz B1 – Mittelstufe",
+      "metaTitle": "Russisch B1 Wortschatz üben – Wortschatz Mittelstufe",
       "metaDescription": "Lerne den Russisch Wortschatz B1 mit mittleren Wörtern und detaillierten Beispielen. Verbessere Ausdruck und Verständnis auf Russisch.",
       "introParagraphs": [
         "Der Russisch Wortschatz B1 entspricht dem Mittelstufenlevel. Lernende können die Hauptpunkte klarer Nachrichten verstehen und detaillierter kommunizieren.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Russisch Wortschatz B2",
+      "title": "Russisch B2 Wortschatz üben",
       "intro": "Der Russisch Wortschatz B2 ist für Lernende konzipiert, die flüssig kommunizieren und komplexere Themen behandeln möchten.",
       "levelDescription": "Gehobene Mittelstufe",
       "ctaText": "B2-Training starten",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Weitere CEFR-Niveaus"
       },
-      "metaTitle": "Russisch Wortschatz B2 – Wichtige Wörter und Ausdrücke",
+      "metaTitle": "Russisch B2 Wortschatz üben – Wortschatz obere Mittelstufe",
       "metaDescription": "Verbessern Sie Ihren Russisch Wortschatz B2 mit Schlüsselwörtern, Bedeutungen und Beispielen für effektive Kommunikation im Alltag und Beruf.",
       "introParagraphs": [
         "Der Russisch Wortschatz B2 ist für Lernende konzipiert, die flüssig kommunizieren und komplexere Themen behandeln möchten. Auf diesem Niveau können Sie an Diskussionen teilnehmen und Ihre Gedanken klar ausdrücken.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Russisch Wortschatz C1",
+      "title": "Russisch C1 Wortschatz üben",
       "intro": "Der Russisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, bei dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden.",
       "levelDescription": "Fortgeschritten",
       "ctaText": "C1-Training starten",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Weitere CEFR-Niveaus"
       },
-      "metaTitle": "Russisch Wortschatz C1 – Fortgeschrittene Wörter",
+      "metaTitle": "Russisch C1 Wortschatz üben – Fortgeschrittene russische Wörter",
       "metaDescription": "Verbessern Sie Ihren Russisch Wortschatz C1 mit fortgeschrittenen Wörtern, Beispielen und Übungen für präzise und sichere Kommunikation.",
       "introParagraphs": [
         "Der Russisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, bei dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden. Sie können lange Texte verstehen und präzise sowie spontan kommunizieren.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Russisch Wortschatz C2",
+      "title": "Russisch C2 Wortschatz üben",
       "intro": "Der Russisch Wortschatz C2 repräsentiert laut CEFR die vollständige Beherrschung.",
       "levelDescription": "Meisterschaft",
       "ctaText": "C2-Training starten",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Weitere CEFR-Niveaus"
       },
-      "metaTitle": "Russisch Wortschatz C2 – Meisterschaftsniveau",
+      "metaTitle": "Russisch C2 Wortschatz üben – Sehr fortgeschrittene Wörter",
       "metaDescription": "Entdecken Sie den Russisch Wortschatz C2 mit seltenen und präzisen Wörtern, um eine vollständige Beherrschung der Sprache zu erreichen.",
       "introParagraphs": [
         "Der Russisch Wortschatz C2 repräsentiert laut CEFR die vollständige Beherrschung. Sie können nahezu alles, was Sie lesen oder hören, verstehen und sich präzise, nuanciert und spontan ausdrücken.",

@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Russe",
   "levels": {
     "a1": {
-      "title": "Vocabulaire de russe A1",
+      "title": "Pratique du vocabulaire russe A1",
       "intro": "Le vocabulaire de russe A1 correspond au niveau débutant.",
       "levelDescription": "Débutant",
       "ctaText": "Commencer la pratique A1",
@@ -105,7 +105,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux de russe"
       },
-      "metaTitle": "Vocabulaire de russe A1 – Mots de base pour débutants",
+      "metaTitle": "Pratique du vocabulaire russe A1 – Mots pour débutants",
       "metaDescription": "Apprenez le vocabulaire de russe A1 avec des mots simples et des exemples pratiques. Construisez une base solide pour communiquer en russe.",
       "introParagraphs": [
         "Le vocabulaire de russe A1 correspond au niveau débutant. Les apprenants acquièrent des mots et des phrases simples pour la communication quotidienne.",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Vocabulaire de russe A2",
+      "title": "Pratique du vocabulaire russe A2",
       "intro": "Le vocabulaire de russe A2 étend les connaissances acquises au niveau A1.",
       "levelDescription": "Élémentaire",
       "ctaText": "Commencer la pratique A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux de russe"
       },
-      "metaTitle": "Vocabulaire de russe A2 – Niveau Élémentaire",
+      "metaTitle": "Pratique du vocabulaire russe A2 – Vocabulaire niveau élémentaire",
       "metaDescription": "Apprenez le vocabulaire de russe A2 avec des mots courants et exemples pratiques. Améliorez votre compréhension et votre communication au niveau Élémentaire.",
       "introParagraphs": [
         "Le vocabulaire de russe A2 étend les connaissances acquises au niveau A1. Les apprenants peuvent former des phrases plus longues et communiquer plus facilement dans des situations quotidiennes.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Vocabulaire de russe B1",
+      "title": "Pratique du vocabulaire russe B1",
       "intro": "Le vocabulaire de russe B1 correspond au niveau intermédiaire.",
       "levelDescription": "Intermédiaire",
       "ctaText": "Commencer la pratique B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux de russe"
       },
-      "metaTitle": "Vocabulaire de russe B1 – Niveau intermédiaire",
+      "metaTitle": "Pratique du vocabulaire russe B1 – Vocabulaire niveau intermédiaire",
       "metaDescription": "Apprenez le vocabulaire de russe B1 avec des mots intermédiaires et des exemples détaillés. Améliorez l’expression et la compréhension en russe.",
       "introParagraphs": [
         "Le vocabulaire de russe B1 correspond au niveau intermédiaire. Les apprenants peuvent comprendre les points principaux de messages clairs et communiquer avec plus de détails.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Vocabulaire de russe B2",
+      "title": "Pratique du vocabulaire russe B2",
       "intro": "Le vocabulaire de russe B2 est conçu pour les apprenants souhaitant communiquer avec aisance et aborder des sujets plus complexes.",
       "levelDescription": "Intermédiaire supérieur",
       "ctaText": "Commencer la pratique B2",
@@ -447,7 +447,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CECR"
       },
-      "metaTitle": "Vocabulaire de russe B2 – Mots et expressions essentiels",
+      "metaTitle": "Pratique du vocabulaire russe B2 – Vocabulaire intermédiaire supérieur",
       "metaDescription": "Développez votre vocabulaire russe B2 avec des mots clés, leurs significations et exemples pour communiquer efficacement au quotidien et au travail.",
       "introParagraphs": [
         "Le vocabulaire de russe B2 est conçu pour les apprenants souhaitant communiquer avec aisance et aborder des sujets plus complexes. À ce niveau, vous pouvez participer à des discussions et exprimer vos idées clairement.",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Vocabulaire de russe C1",
+      "title": "Pratique du vocabulaire russe C1",
       "intro": "Le vocabulaire russe C1 correspond à un niveau avancé où l’on maîtrise des expressions complexes et des termes abstraits.",
       "levelDescription": "Avancé",
       "ctaText": "Commencer la pratique C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CECR"
       },
-      "metaTitle": "Vocabulaire de russe C1 – Mots avancés",
+      "metaTitle": "Pratique du vocabulaire russe C1 – Mots avancés russes",
       "metaDescription": "Améliorez votre vocabulaire russe C1 avec des mots avancés, exemples et exercices pour communiquer avec précision et assurance.",
       "introParagraphs": [
         "Le vocabulaire russe C1 correspond à un niveau avancé où l’on maîtrise des expressions complexes et des termes abstraits. Vous pouvez comprendre des textes longs et communiquer avec précision et spontanéité.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Vocabulaire de russe C2",
+      "title": "Pratique du vocabulaire russe C2",
       "intro": "Le vocabulaire de russe C2 représente la maîtrise complète selon le CECR.",
       "levelDescription": "Maîtrise",
       "ctaText": "Commencer la pratique C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Autres niveaux CECR"
       },
-      "metaTitle": "Vocabulaire de russe C2 – Niveau maîtrise",
+      "metaTitle": "Pratique du vocabulaire russe C2 – Vocabulaire russe avancé",
       "metaDescription": "Découvrez le vocabulaire russe C2 avec des mots rares et précis pour atteindre une maîtrise complète de la langue.",
       "introParagraphs": [
         "Le vocabulaire de russe C2 représente la maîtrise complète selon le CECR. Vous pouvez comprendre presque tout ce que vous lisez ou entendez et vous exprimer avec précision, nuances et spontanéité.",
