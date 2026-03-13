@@ -17,6 +17,12 @@ const CORE_ROUTES = [
   "/explore",
   "/languages/level-test",
   "/en/english-level-test",
+  "/es/test-de-nivel-de-ingles",
+  "/fr/test-de-niveau-d-anglais",
+  "/de/englisch-niveau-test",
+  "/it/test-di-livello-di-inglese",
+  "/pt/teste-de-nivel-de-ingles",
+  "/ru/test-urovnya-angliiskogo",
   "/about",
   "/help",
 ];

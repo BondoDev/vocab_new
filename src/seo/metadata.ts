@@ -5,7 +5,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../data/seo/slugs";
-import { getLevelTestContent } from "../data/levelTests";
+import { getLevelTestContent, getLevelTestSeoPath } from "../data/levelTests";
 import { getVocabularyLevelContent } from "../data/vocabularyLevels";
 import type { SeoMetadata } from "./SeoContext";
 
@@ -111,13 +111,24 @@ export function buildLevelTestSeoMetadata({
     description: content.metaDescription,
     canonical,
     alternates: [
-      {
-        hreflang: uiLang,
-        href: canonical,
-      },
+      ...SUPPORTED_UI_LANGUAGES.flatMap((lang) => {
+        const localizedPath = getLevelTestSeoPath(lang, targetLanguage);
+        const localizedContent = getLevelTestContent(lang, targetLanguage);
+
+        if (!localizedPath || !localizedContent) {
+          return [];
+        }
+
+        return [
+          {
+            hreflang: lang,
+            href: `${origin}${localizedPath}`,
+          },
+        ];
+      }),
       {
         hreflang: "x-default",
-        href: canonical,
+        href: `${origin}${getLevelTestSeoPath("en", targetLanguage) ?? pathname}`,
       },
     ],
   };

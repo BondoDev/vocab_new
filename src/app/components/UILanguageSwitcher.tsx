@@ -4,6 +4,7 @@ import { Globe, ChevronDown } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
+import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/levelTests";
 
 interface UILanguageSwitcherProps {
   variant?: "default" | "centered-modal";
@@ -89,6 +90,14 @@ export function UILanguageSwitcher({
 
   const handleSelect = (code: LanguageCode) => {
     if (code === "en" || code === "es" || code === "fr" || code === "pt" || code === "it" || code === "de" || code === "ru") {
+      const levelTestRoute = resolveLevelTestSeoRoute(location.pathname);
+      if (levelTestRoute) {
+        const nextPath = getLevelTestSeoPath(code, levelTestRoute.targetLanguage);
+        if (nextPath && nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+      }
+
       const match = location.pathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
       if (match) {
         const [, currentUiLang, slug] = match;

@@ -6,19 +6,23 @@ import {
   resolveVocabularyRoute,
   type UiLanguageCode,
 } from "./data/seo/slugs";
+import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "./data/levelTests";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
 
 export function getPrerenderRoutes(): string[] {
   return [
     ...getAllLocalizedVocabularyRoutes().map((route) => route.path),
-    "/en/english-level-test",
+    ...(["en", "es", "fr", "de", "it", "pt", "ru"] as const)
+      .map((uiLang) => getLevelTestSeoPath(uiLang, "english"))
+      .filter((route): route is string => Boolean(route)),
   ];
 }
 
 function getInitialUiLanguage(url: string): UiLanguageCode {
-  if (url === "/en/english-level-test") {
-    return "en";
+  const levelTestRoute = resolveLevelTestSeoRoute(url);
+  if (levelTestRoute) {
+    return levelTestRoute.uiLang;
   }
 
   const match = url.match(/^\/([a-z]{2})\/([^/?#]+)$/);

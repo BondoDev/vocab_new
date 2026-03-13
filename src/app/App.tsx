@@ -30,6 +30,7 @@ import {
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../data/seo/slugs";
 import { SeoProvider, type SeoManager } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
+import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../data/levelTests";
 
 const supportedLanguages = [
   { code: "en", flagCode: "gb" },
@@ -166,14 +167,7 @@ function parseVocabularyRoute(path: string): ParsedVocabularyRoute | null {
 }
 
 function parseLevelTestSeoRoute(path: string): ParsedLevelTestSeoRoute | null {
-  if (path === "/en/english-level-test") {
-    return {
-      uiLang: "en",
-      targetLanguage: "english",
-    };
-  }
-
-  return null;
+  return resolveLevelTestSeoRoute(path);
 }
 const ROUTES = {
   language: "/languages",
@@ -302,10 +296,7 @@ function AppContent() {
     {
       level: "test",
       label: buildExploreLevelTestLabel(targetLanguage),
-      path:
-        uiLanguage === "en" && targetLanguage === "english"
-          ? "/en/english-level-test"
-          : ROUTES.exam,
+      path: getLevelTestSeoPath(uiLanguage, targetLanguage) ?? ROUTES.exam,
       kind: "test",
       targetLanguage,
     },
@@ -1021,6 +1012,16 @@ function AppContent() {
       setUILanguage(vocabularyRoute.uiLang);
     }
   }, [resolvedPage, setUILanguage, uiLanguage, vocabularyRoute]);
+
+  useEffect(() => {
+    if (resolvedPage !== "levelTestSeo" || !levelTestSeoRoute) {
+      return;
+    }
+
+    if (uiLanguage !== levelTestSeoRoute.uiLang) {
+      setUILanguage(levelTestSeoRoute.uiLang);
+    }
+  }, [levelTestSeoRoute, resolvedPage, setUILanguage, uiLanguage]);
 
   useEffect(() => {
     if (hasAutoRedirectedRef.current) {
