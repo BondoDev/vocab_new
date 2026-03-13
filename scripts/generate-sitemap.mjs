@@ -16,6 +16,7 @@ const CORE_ROUTES = [
   "/languages/filters/exercises/practice",
   "/explore",
   "/languages/level-test",
+  "/en/english-level-test",
   "/about",
   "/help",
 ];

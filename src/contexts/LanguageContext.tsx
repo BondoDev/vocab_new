@@ -149,10 +149,10 @@ function readStoredUiLanguage(): UILanguage | null {
 
 export function LanguageProvider({
   children,
-  initialUILanguage = "en",
+  initialUILanguage,
 }: LanguageProviderProps) {
   const [uiLanguage, setUILanguage] = useState<UILanguage>(
-    () => readStoredUiLanguage() ?? initialUILanguage,
+    () => initialUILanguage ?? readStoredUiLanguage() ?? "en",
   );
 
   const handleSetUILanguage = (lang: UILanguage) => {

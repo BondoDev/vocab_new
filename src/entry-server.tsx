@@ -10,10 +10,17 @@ import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
 
 export function getPrerenderRoutes(): string[] {
-  return getAllLocalizedVocabularyRoutes().map((route) => route.path);
+  return [
+    ...getAllLocalizedVocabularyRoutes().map((route) => route.path),
+    "/en/english-level-test",
+  ];
 }
 
 function getInitialUiLanguage(url: string): UiLanguageCode {
+  if (url === "/en/english-level-test") {
+    return "en";
+  }
+
   const match = url.match(/^\/([a-z]{2})\/([^/?#]+)$/);
   if (!match) {
     return "en";

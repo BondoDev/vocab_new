@@ -14,6 +14,7 @@ import { VocabularyLevelExam } from "./components/VocabularyLevelExam";
 import { About } from "./components/About";
 import { Help } from "./components/Help";
 import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
+import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { NotFoundPage } from "./components/NotFoundPage";
 import {
   LanguageContinuePopup,
@@ -112,6 +113,29 @@ interface ParsedVocabularyRoute {
   level: CefrLevelCode;
 }
 
+interface ParsedLevelTestSeoRoute {
+  uiLang: UiLanguageCode;
+  targetLanguage: TargetLanguageSlug;
+}
+
+interface ExploreTopic {
+  level: CefrLevelCode | "test";
+  label: string;
+  path: string;
+  kind: "level" | "test";
+  targetLanguage: TargetLanguageSlug;
+}
+
+const TARGET_LANGUAGE_TO_UI_CODE: Record<TargetLanguageSlug, UILanguage> = {
+  english: "en",
+  spanish: "es",
+  french: "fr",
+  german: "de",
+  italian: "it",
+  portuguese: "pt",
+  russian: "ru",
+};
+
 function parseVocabularyRoute(path: string): ParsedVocabularyRoute | null {
   const match = path.match(/^\/([a-z]{2})\/([^/?#]+)$/);
   if (!match) {
@@ -140,6 +164,17 @@ function parseVocabularyRoute(path: string): ParsedVocabularyRoute | null {
     level: resolved.level,
   };
 }
+
+function parseLevelTestSeoRoute(path: string): ParsedLevelTestSeoRoute | null {
+  if (path === "/en/english-level-test") {
+    return {
+      uiLang: "en",
+      targetLanguage: "english",
+    };
+  }
+
+  return null;
+}
 const ROUTES = {
   language: "/languages",
   levelCategory: "/languages/filters",
@@ -152,7 +187,7 @@ const ROUTES = {
 } as const;
 
 type RouteKey = keyof typeof ROUTES;
-type PageKey = RouteKey | "vocabularyLevel" | "notFound";
+type PageKey = RouteKey | "vocabularyLevel" | "levelTestSeo" | "notFound";
 
 const pageFromPath = (path: string): PageKey => {
   switch (path) {
@@ -174,6 +209,9 @@ const pageFromPath = (path: string): PageKey => {
     case ROUTES.help:
       return "help";
     default: {
+      if (parseLevelTestSeoRoute(path)) {
+        return "levelTestSeo";
+      }
       if (parseVocabularyRoute(path)) {
         return "vocabularyLevel";
       }
@@ -236,6 +274,42 @@ function AppContent() {
     pt: "Pratica de vocabulario",
     ru: "Практика словарного запаса",
   };
+  const buildExploreLevelTestLabel = (targetLanguage: TargetLanguageSlug) => {
+    const languageCode = TARGET_LANGUAGE_TO_UI_CODE[targetLanguage];
+    const languageName = t(`languageNames.${languageCode}`);
+    const levelTestLabel = t("header.levelTest");
+
+    switch (uiLanguage) {
+      case "en":
+      case "de":
+        return `${languageName} ${levelTestLabel}`;
+      default:
+        return `${levelTestLabel}: ${languageName.toLowerCase()}`;
+    }
+  };
+
+  const withLevelTestExploreTopic = (
+    topics: Array<{ level: CefrLevelCode; label: string; path: string | null | undefined }>,
+    targetLanguage: TargetLanguageSlug,
+  ): ExploreTopic[] => [
+    ...topics.map((topic) => ({
+      level: topic.level,
+      label: topic.label,
+      path: topic.path ?? "#",
+      kind: "level" as const,
+      targetLanguage,
+    })),
+    {
+      level: "test",
+      label: buildExploreLevelTestLabel(targetLanguage),
+      path:
+        uiLanguage === "en" && targetLanguage === "english"
+          ? "/en/english-level-test"
+          : ROUTES.exam,
+      kind: "test",
+      targetLanguage,
+    },
+  ];
   const englishExploreTopics = useMemo(() => {
     const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
 
@@ -705,6 +779,34 @@ function AppContent() {
       }))
       .filter((topic) => Boolean(topic.path));
   }, [uiLanguage]);
+  const englishExploreItems = useMemo(
+    () => withLevelTestExploreTopic(englishExploreTopics, "english"),
+    [englishExploreTopics],
+  );
+  const spanishExploreItems = useMemo(
+    () => withLevelTestExploreTopic(spanishExploreTopics, "spanish"),
+    [spanishExploreTopics],
+  );
+  const frenchExploreItems = useMemo(
+    () => withLevelTestExploreTopic(frenchExploreTopics, "french"),
+    [frenchExploreTopics],
+  );
+  const germanExploreItems = useMemo(
+    () => withLevelTestExploreTopic(germanExploreTopics, "german"),
+    [germanExploreTopics],
+  );
+  const italianExploreItems = useMemo(
+    () => withLevelTestExploreTopic(italianExploreTopics, "italian"),
+    [italianExploreTopics],
+  );
+  const portugueseExploreItems = useMemo(
+    () => withLevelTestExploreTopic(portugueseExploreTopics, "portuguese"),
+    [portugueseExploreTopics],
+  );
+  const russianExploreItems = useMemo(
+    () => withLevelTestExploreTopic(russianExploreTopics, "russian"),
+    [russianExploreTopics],
+  );
   const languages = useMemo(
     () =>
       supportedLanguages.map((lang) => ({
@@ -755,6 +857,10 @@ function AppContent() {
   );
   const location = useLocation();
   const navigate = useNavigate();
+  const levelTestSeoRoute = useMemo(
+    () => parseLevelTestSeoRoute(location.pathname),
+    [location.pathname],
+  );
   const vocabularyRoute = useMemo(() => parseVocabularyRoute(location.pathname), [location.pathname]);
   const currentPage = useMemo(() => pageFromPath(location.pathname), [location.pathname]);
   const [selectedLevel, setSelectedLevel] = useState(() =>
@@ -800,6 +906,10 @@ function AppContent() {
   });
   const isContinueDisabled = !yourLanguage || !practiceLanguage;
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
+  const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] = useState(false);
+  const [levelTestDraftYourLanguage, setLevelTestDraftYourLanguage] = useState("");
+  const [levelTestDraftPracticeLanguage, setLevelTestDraftPracticeLanguage] = useState("");
+  const [levelTestModalSwapRotation, setLevelTestModalSwapRotation] = useState(0);
   const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
   const hasAutoRedirectedRef = useRef(false);
   const initialPathRef = useRef(location.pathname);
@@ -979,9 +1089,93 @@ function AppContent() {
     navigate(ROUTES.exam);
   };
 
+  const openLevelTestLanguageModal = (targetLanguageCode: UILanguage) => {
+    setLevelTestDraftYourLanguage(yourLanguage);
+    setLevelTestDraftPracticeLanguage(practiceLanguage || targetLanguageCode);
+    setIsLevelTestLanguageModalOpen(true);
+  };
+
+  const handleStartSeoLevelTest = (targetLanguageCode: UILanguage) => {
+    if (!yourLanguage || !practiceLanguage) {
+      openLevelTestLanguageModal(targetLanguageCode);
+      return;
+    }
+
+    if (yourLanguage === targetLanguageCode) {
+      openLevelTestLanguageModal(targetLanguageCode);
+      return;
+    }
+
+    if (practiceLanguage !== targetLanguageCode) {
+      setPracticeLanguage(targetLanguageCode);
+    }
+
+    navigate(ROUTES.exam);
+  };
+
+  const handleConfirmLevelTestLanguages = () => {
+    if (
+      !levelTestDraftYourLanguage ||
+      !levelTestDraftPracticeLanguage ||
+      levelTestDraftYourLanguage === levelTestDraftPracticeLanguage
+    ) {
+      return;
+    }
+
+    setYourLanguage(levelTestDraftYourLanguage);
+    setPracticeLanguage(levelTestDraftPracticeLanguage);
+    setIsLevelTestLanguageModalOpen(false);
+    navigate(ROUTES.exam);
+  };
+
   const handleExamComplete = (level: string) => {
     setSelectedLevels([level]);
     navigate(ROUTES.levelCategory);
+  };
+
+  const closeAllExploreDropdowns = () => {
+    setIsEnglishExploreOpen(false);
+    setIsSpanishExploreOpen(false);
+    setIsFrenchExploreOpen(false);
+    setIsGermanExploreOpen(false);
+    setIsItalianExploreOpen(false);
+    setIsPortugueseExploreOpen(false);
+    setIsRussianExploreOpen(false);
+  };
+
+  const renderExploreTopicItem = (topic: ExploreTopic) => {
+    if (topic.kind === "test") {
+      return (
+        <button
+          key={`${topic.targetLanguage}-${topic.level}`}
+          type="button"
+          onClick={() => {
+            closeAllExploreDropdowns();
+            if (topic.path === ROUTES.exam) {
+              setPracticeLanguage(TARGET_LANGUAGE_TO_UI_CODE[topic.targetLanguage]);
+              handleStartExam();
+              return;
+            }
+
+            navigate(topic.path);
+          }}
+          className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+        >
+          {topic.label}
+        </button>
+      );
+    }
+
+    return (
+      <Link
+        key={`${topic.targetLanguage}-${topic.level}`}
+        to={topic.path}
+        onClick={closeAllExploreDropdowns}
+        className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+      >
+        {topic.label}
+      </Link>
+    );
   };
 
   const handleReverseLanguages = () => {
@@ -989,6 +1183,13 @@ function AppContent() {
     setYourLanguage(practiceLanguage);
     setPracticeLanguage(temp);
     setSwapRotation((prev) => prev + 180);
+  };
+
+  const handleReverseLevelTestModalLanguages = () => {
+    const temp = levelTestDraftYourLanguage;
+    setLevelTestDraftYourLanguage(levelTestDraftPracticeLanguage);
+    setLevelTestDraftPracticeLanguage(temp);
+    setLevelTestModalSwapRotation((prev) => prev + 180);
   };
 
   const swapButton = (
@@ -1012,6 +1213,121 @@ function AppContent() {
       </motion.span>
     </motion.button>
   );
+
+  const levelTestModalSwapButton = (
+    <motion.button
+      type="button"
+      onClick={handleReverseLevelTestModalLanguages}
+      className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full border border-border/70 bg-muted/50 text-muted-foreground hover:text-foreground hover:border-primary/40 hover:bg-muted/70 shadow-sm transition-all opacity-90 md:opacity-100"
+      aria-label="Reverse languages"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <motion.span
+        animate={shouldReduceMotion ? undefined : { rotate: levelTestModalSwapRotation }}
+        transition={
+          shouldReduceMotion
+            ? { duration: 0 }
+            : { duration: 0.25, ease: "easeInOut" }
+        }
+        className="inline-flex"
+      >
+        <ArrowLeftRight className="w-4 h-4 rotate-90 md:rotate-0 text-foreground/80" />
+      </motion.span>
+    </motion.button>
+  );
+
+  const isLevelTestLanguageSelectionDisabled =
+    !levelTestDraftYourLanguage ||
+    !levelTestDraftPracticeLanguage ||
+    levelTestDraftYourLanguage === levelTestDraftPracticeLanguage;
+
+  const levelTestLanguageModal = isLevelTestLanguageModalOpen ? (
+    <div className="fixed inset-0 z-[70] flex items-center justify-center px-4 py-6">
+      <button
+        type="button"
+        aria-label={t("languageContinuePopup.closePopup")}
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        onClick={() => setIsLevelTestLanguageModalOpen(false)}
+      />
+      <div className="relative z-10 w-full max-w-2xl rounded-3xl border border-border bg-card p-6 shadow-2xl md:p-8">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-2xl text-foreground">{t("languageContinuePopup.title")}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t("home.selectYourLanguage")} and {t("home.selectPracticeLanguage").toLowerCase()}.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsLevelTestLanguageModalOpen(false)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground transition hover:bg-muted hover:text-foreground"
+            aria-label={t("languageContinuePopup.close")}
+          >
+            X
+          </button>
+        </div>
+
+        <div className="mt-6">
+          <div className="md:hidden relative space-y-10">
+            <LanguageSelector
+              label={t("home.yourLanguage")}
+              value={levelTestDraftYourLanguage}
+              onChange={setLevelTestDraftYourLanguage}
+              placeholder={t("home.selectYourLanguage")}
+              languages={languages}
+              disabledLanguages={[levelTestDraftPracticeLanguage]}
+            />
+            <div className="absolute left-1/2 top-[calc(50%+16px)] -translate-x-1/2 -translate-y-1/2 z-10">
+              {levelTestModalSwapButton}
+            </div>
+            <LanguageSelector
+              label={t("home.practiceLanguage")}
+              value={levelTestDraftPracticeLanguage}
+              onChange={setLevelTestDraftPracticeLanguage}
+              placeholder={t("home.selectPracticeLanguage")}
+              languages={languages}
+              disabledLanguages={[levelTestDraftYourLanguage]}
+            />
+          </div>
+          <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-6">
+            <LanguageSelector
+              label={t("home.yourLanguage")}
+              value={levelTestDraftYourLanguage}
+              onChange={setLevelTestDraftYourLanguage}
+              placeholder={t("home.selectYourLanguage")}
+              languages={languages}
+              disabledLanguages={[levelTestDraftPracticeLanguage]}
+            />
+            <div className="flex justify-center mt-8">{levelTestModalSwapButton}</div>
+            <LanguageSelector
+              label={t("home.practiceLanguage")}
+              value={levelTestDraftPracticeLanguage}
+              onChange={setLevelTestDraftPracticeLanguage}
+              placeholder={t("home.selectPracticeLanguage")}
+              languages={languages}
+              disabledLanguages={[levelTestDraftYourLanguage]}
+            />
+          </div>
+        </div>
+
+        <div className="mt-6 flex justify-end">
+          <button
+            type="button"
+            onClick={handleConfirmLevelTestLanguages}
+            disabled={isLevelTestLanguageSelectionDisabled}
+            className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition ${
+              isLevelTestLanguageSelectionDisabled
+                ? "cursor-not-allowed bg-muted text-muted-foreground"
+                : "border border-primary/45 bg-primary/10 text-primary hover:bg-primary/15"
+            }`}
+          >
+            Start Level Test
+          </button>
+        </div>
+      </div>
+    </div>
+  ) : null;
 
   if (resolvedPage === "practice") {
     return (
@@ -1180,24 +1496,7 @@ function AppContent() {
                     </button>
                     {isEnglishExploreOpen ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
-                        {englishExploreTopics.map((topic) => (
-                          <Link
-                            key={topic.level}
-                            to={topic.path ?? "#"}
-                            onClick={() => {
-                              setIsEnglishExploreOpen(false);
-                              setIsFrenchExploreOpen(false);
-                              setIsSpanishExploreOpen(false);
-                              setIsGermanExploreOpen(false);
-                              setIsItalianExploreOpen(false);
-                              setIsPortugueseExploreOpen(false);
-                              setIsRussianExploreOpen(false);
-                            }}
-                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
-                          >
-                            {topic.label}
-                          </Link>
-                        ))}
+                        {englishExploreItems.map(renderExploreTopicItem)}
                       </div>
                     ) : null}
                   </div>
@@ -1233,24 +1532,7 @@ function AppContent() {
                     </button>
                     {isSpanishExploreOpen ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
-                        {spanishExploreTopics.map((topic) => (
-                          <Link
-                            key={topic.level}
-                            to={topic.path ?? "#"}
-                            onClick={() => {
-                              setIsSpanishExploreOpen(false);
-                              setIsFrenchExploreOpen(false);
-                              setIsEnglishExploreOpen(false);
-                              setIsGermanExploreOpen(false);
-                              setIsItalianExploreOpen(false);
-                              setIsPortugueseExploreOpen(false);
-                              setIsRussianExploreOpen(false);
-                            }}
-                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
-                          >
-                            {topic.label}
-                          </Link>
-                        ))}
+                        {spanishExploreItems.map(renderExploreTopicItem)}
                       </div>
                     ) : null}
                   </div>
@@ -1286,24 +1568,7 @@ function AppContent() {
                     </button>
                     {isFrenchExploreOpen ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
-                        {frenchExploreTopics.map((topic) => (
-                          <Link
-                            key={topic.level}
-                            to={topic.path ?? "#"}
-                            onClick={() => {
-                              setIsFrenchExploreOpen(false);
-                              setIsEnglishExploreOpen(false);
-                              setIsSpanishExploreOpen(false);
-                              setIsGermanExploreOpen(false);
-                              setIsItalianExploreOpen(false);
-                              setIsPortugueseExploreOpen(false);
-                              setIsRussianExploreOpen(false);
-                            }}
-                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
-                          >
-                            {topic.label}
-                          </Link>
-                        ))}
+                        {frenchExploreItems.map(renderExploreTopicItem)}
                       </div>
                     ) : null}
                   </div>
@@ -1339,24 +1604,7 @@ function AppContent() {
                     </button>
                     {isGermanExploreOpen ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
-                        {germanExploreTopics.map((topic) => (
-                          <Link
-                            key={topic.level}
-                            to={topic.path ?? "#"}
-                            onClick={() => {
-                              setIsGermanExploreOpen(false);
-                              setIsFrenchExploreOpen(false);
-                              setIsEnglishExploreOpen(false);
-                              setIsSpanishExploreOpen(false);
-                              setIsItalianExploreOpen(false);
-                              setIsPortugueseExploreOpen(false);
-                              setIsRussianExploreOpen(false);
-                            }}
-                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
-                          >
-                            {topic.label}
-                          </Link>
-                        ))}
+                        {germanExploreItems.map(renderExploreTopicItem)}
                       </div>
                     ) : null}
                   </div>
@@ -1392,24 +1640,7 @@ function AppContent() {
                     </button>
                     {isItalianExploreOpen ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
-                        {italianExploreTopics.map((topic) => (
-                          <Link
-                            key={topic.level}
-                            to={topic.path ?? "#"}
-                            onClick={() => {
-                              setIsItalianExploreOpen(false);
-                              setIsGermanExploreOpen(false);
-                              setIsFrenchExploreOpen(false);
-                              setIsEnglishExploreOpen(false);
-                              setIsSpanishExploreOpen(false);
-                              setIsPortugueseExploreOpen(false);
-                              setIsRussianExploreOpen(false);
-                            }}
-                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
-                          >
-                            {topic.label}
-                          </Link>
-                        ))}
+                        {italianExploreItems.map(renderExploreTopicItem)}
                       </div>
                     ) : null}
                   </div>
@@ -1445,24 +1676,7 @@ function AppContent() {
                     </button>
                     {isPortugueseExploreOpen ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
-                        {portugueseExploreTopics.map((topic) => (
-                          <Link
-                            key={topic.level}
-                            to={topic.path ?? "#"}
-                            onClick={() => {
-                              setIsPortugueseExploreOpen(false);
-                              setIsItalianExploreOpen(false);
-                              setIsGermanExploreOpen(false);
-                              setIsFrenchExploreOpen(false);
-                              setIsEnglishExploreOpen(false);
-                              setIsSpanishExploreOpen(false);
-                              setIsRussianExploreOpen(false);
-                            }}
-                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
-                          >
-                            {topic.label}
-                          </Link>
-                        ))}
+                        {portugueseExploreItems.map(renderExploreTopicItem)}
                       </div>
                     ) : null}
                   </div>
@@ -1498,24 +1712,7 @@ function AppContent() {
                     </button>
                     {isRussianExploreOpen ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
-                        {russianExploreTopics.map((topic) => (
-                          <Link
-                            key={topic.level}
-                            to={topic.path ?? "#"}
-                            onClick={() => {
-                              setIsRussianExploreOpen(false);
-                              setIsPortugueseExploreOpen(false);
-                              setIsItalianExploreOpen(false);
-                              setIsGermanExploreOpen(false);
-                              setIsFrenchExploreOpen(false);
-                              setIsEnglishExploreOpen(false);
-                              setIsSpanishExploreOpen(false);
-                            }}
-                            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
-                          >
-                            {topic.label}
-                          </Link>
-                        ))}
+                        {russianExploreItems.map(renderExploreTopicItem)}
                       </div>
                     ) : null}
                   </div>
@@ -1560,6 +1757,51 @@ function AppContent() {
           onExplore={() => navigate(ROUTES.explore)}
         />
         <Help onBack={() => navigate(ROUTES.language)} />
+      </div>
+    );
+  }
+
+  if (resolvedPage === "levelTestSeo") {
+    if (!levelTestSeoRoute) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header
+            activePage="notFound"
+            onAbout={() => navigate(ROUTES.about)}
+            onHelp={() => navigate(ROUTES.help)}
+            onLevelTest={() => handleRequireLanguages("exam")}
+            onLanguages={() => navigate(ROUTES.language)}
+            onFilters={() => handleRequireLanguages("levelCategory")}
+            onExercises={() => handleRequireLanguages("exerciseSelection")}
+            onExplore={() => navigate(ROUTES.explore)}
+          />
+          <NotFoundPage message="Invalid level test page." />
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header
+          activePage="vocabularyLevel"
+          onAbout={() => navigate(ROUTES.about)}
+          onHelp={() => navigate(ROUTES.help)}
+          onLevelTest={() => handleRequireLanguages("exam")}
+          onLanguages={() => navigate(ROUTES.language)}
+          onFilters={() => handleRequireLanguages("levelCategory")}
+          onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
+        />
+        <LevelTestSeoPage
+          uiLang={levelTestSeoRoute.uiLang}
+          targetLanguage={levelTestSeoRoute.targetLanguage}
+          onStartTest={() =>
+            handleStartSeoLevelTest(
+              TARGET_LANGUAGE_TO_UI_CODE[levelTestSeoRoute.targetLanguage],
+            )
+          }
+        />
+        {levelTestLanguageModal}
       </div>
     );
   }

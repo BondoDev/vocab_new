@@ -5,6 +5,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../data/seo/slugs";
+import { getLevelTestContent } from "../data/levelTests";
 import { getVocabularyLevelContent } from "../data/vocabularyLevels";
 import type { SeoMetadata } from "./SeoContext";
 
@@ -81,6 +82,42 @@ export function buildVocabularySeoMetadata({
       {
         hreflang: "x-default",
         href: `${origin}${buildLocalizedVocabularyPath("en", targetLanguage, level) ?? "/"}`,
+      },
+    ],
+  };
+}
+
+export function buildLevelTestSeoMetadata({
+  uiLang,
+  targetLanguage,
+  pathname,
+  siteOrigin,
+}: {
+  uiLang: UiLanguageCode;
+  targetLanguage: TargetLanguageSlug;
+  pathname: string;
+  siteOrigin: string;
+}): SeoMetadata | null {
+  const content = getLevelTestContent(uiLang, targetLanguage);
+  if (!content) {
+    return null;
+  }
+
+  const origin = normalizeOrigin(siteOrigin);
+  const canonical = `${origin}${pathname}`;
+
+  return {
+    title: content.metaTitle,
+    description: content.metaDescription,
+    canonical,
+    alternates: [
+      {
+        hreflang: uiLang,
+        href: canonical,
+      },
+      {
+        hreflang: "x-default",
+        href: canonical,
       },
     ],
   };
