@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Inglês",
   "levels": {
     "a1": {
-      "title": "Prática de vocabulário de inglês A1 – Lista de palavras para iniciantes",
+      "title": "Prática de vocabulário de inglês A1",
       "intro": "O vocabulário de inglês A1 é o ponto de partida para quem está começando a aprender o idioma.",
       "levelDescription": "Iniciante",
       "ctaText": "Iniciar prática A1",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Prática de vocabulário de inglês A2 – Lista de palavras nível básico",
+      "title": "Prática de vocabulário de inglês A2",
       "intro": "O vocabulário de inglês A2 amplia as bases do nível inicial.",
       "levelDescription": "Básico",
       "ctaText": "Iniciar prática A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Prática de vocabulário de inglês A2 – Lista de palavras básicas",
+      "metaTitle": "Prática de vocabulário de inglês A2 – Vocabulário nível básico",
       "metaDescription": "Amplie seu conhecimento com o vocabulário de inglês A2. Aprenda palavras essenciais para situações do cotidiano.",
       "introParagraphs": [
         "O vocabulário de inglês A2 amplia as bases do nível inicial. Neste estágio, você consegue falar sobre experiências simples e situações do cotidiano com mais segurança.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Prática de vocabulário de inglês B1 – Lista de palavras nível intermediário",
+      "title": "Prática de vocabulário de inglês B1",
       "intro": "O vocabulário de inglês B1 permite que você se comunique com mais autonomia.",
       "levelDescription": "Intermediário",
       "ctaText": "Iniciar prática B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Prática de vocabulário de inglês B1 – Lista de palavras intermediárias",
+      "metaTitle": "Prática de vocabulário de inglês B1 – Vocabulário nível intermediário",
       "metaDescription": "Desenvolva seu inglês com o vocabulário de inglês B1. Aprenda palavras intermediárias e exemplos para se comunicar com mais confiança.",
       "introParagraphs": [
         "O vocabulário de inglês B1 permite que você se comunique com mais autonomia. Neste nível intermediário, é possível falar sobre experiências, opiniões e planos de forma mais clara.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Prática de vocabulário de inglês B2 – Lista de palavras nível intermediário avançado",
+      "title": "Prática de vocabulário de inglês B2",
       "intro": "O vocabulário de inglês B2 permite comunicação mais precisa e detalhada.",
       "levelDescription": "Intermediário avançado",
       "ctaText": "Iniciar prática B2",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Prática de vocabulário de inglês C1 – Lista de palavras avançadas",
+      "title": "Prática de vocabulário de inglês C1",
       "intro": "O vocabulário de inglês C1 é voltado para estudantes que desejam alto nível de precisão.",
       "levelDescription": "Avançado",
       "ctaText": "Iniciar prática C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Prática de vocabulário de inglês C1 – Palavras avançadas",
+      "metaTitle": "Prática de vocabulário de inglês C1 – Palavras avançadas inglesas",
       "metaDescription": "Aperfeiçoe seu inglês com o vocabulário de inglês C1. Descubra palavras avançadas para contextos acadêmicos e profissionais.",
       "introParagraphs": [
         "O vocabulário de inglês C1 é voltado para estudantes que desejam alto nível de precisão. Você pode compreender textos complexos e expressar ideias com clareza e nuances.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Prática de vocabulário de inglês C2 – Lista de palavras nível proficiente",
+      "title": "Prática de vocabulário de inglês C2",
       "intro": "O vocabulário de inglês C2 representa o mais alto nível de competência.",
       "levelDescription": "Proficiente",
       "ctaText": "Iniciar prática C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Explorar outros níveis"
       },
-      "metaTitle": "Prática de vocabulário de inglês C2 – Vocabulário nível proficiente",
+      "metaTitle": "Prática de vocabulário de inglês C2 – Vocabulário inglês avançado",
       "metaDescription": "Alcance o domínio com o vocabulário de inglês C2. Aprenda termos complexos e nuances para comunicação quase nativa.",
       "introParagraphs": [
         "O vocabulário de inglês C2 representa o mais alto nível de competência. Você pode compreender praticamente qualquer texto e se expressar com grande precisão.",

@@ -3,7 +3,7 @@
   "targetLanguageDisplayName": "Ingles",
   "levels": {
     "a1": {
-      "title": "Práctica de vocabulario de inglés A1 – Lista de palabras para principiantes",
+      "title": "Práctica de vocabulario de inglés A1",
       "intro": "Inglés A1 práctica de vocabulario es el primer paso para quienes empiezan a aprender el idioma.",
       "levelDescription": "Principiante",
       "ctaText": "Comenzar práctica A1",
@@ -117,7 +117,7 @@
       }
     },
     "a2": {
-      "title": "Práctica de vocabulario de inglés A2 – Lista de palabras de nivel elemental",
+      "title": "Práctica de vocabulario de inglés A2",
       "intro": "Inglés A2 práctica de vocabulario te permite avanzar más allá de las frases muy básicas y empezar a comunicarte con mayor claridad.",
       "levelDescription": "Elemental",
       "ctaText": "Comenzar práctica A2",
@@ -219,7 +219,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Práctica de vocabulario inglés A2 – Lista de palabras básica",
+      "metaTitle": "Práctica de vocabulario inglés A2 – Vocabulario nivel elemental",
       "metaDescription": "Mejora tu nivel con Inglés A2 práctica de vocabulario. Aprende palabras esenciales, significados y ejemplos para comunicarte con más confianza.",
       "introParagraphs": [
         "Inglés A2 práctica de vocabulario te permite avanzar más allá de las frases muy básicas y empezar a comunicarte con mayor claridad. En este nivel amplías tu léxico para situaciones habituales como compras, viajes o actividades diarias.",
@@ -231,7 +231,7 @@
       }
     },
     "b1": {
-      "title": "Práctica de vocabulario de inglés B1 – Lista de palabras de nivel intermedio",
+      "title": "Práctica de vocabulario de inglés B1",
       "intro": "Inglés B1 práctica de vocabulario te ayuda a comunicarte con mayor seguridad en situaciones cotidianas y profesionales.",
       "levelDescription": "Intermedio",
       "ctaText": "Comenzar práctica B1",
@@ -333,7 +333,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Práctica de vocabulario inglés B1 – Lista de palabras intermedia",
+      "metaTitle": "Práctica de vocabulario inglés B1 – Vocabulario nivel intermedio",
       "metaDescription": "Mejora tu nivel con Inglés B1 práctica de vocabulario. Aprende palabras intermedias, significados y ejemplos para comunicarte con más precisión.",
       "introParagraphs": [
         "Inglés B1 práctica de vocabulario te ayuda a comunicarte con mayor seguridad en situaciones cotidianas y profesionales. En este nivel intermedio amplías tu léxico para expresar opiniones, describir experiencias y participar en conversaciones más detalladas.",
@@ -345,7 +345,7 @@
       }
     },
     "b2": {
-      "title": "Práctica de vocabulario de inglés B2 – Lista de palabras de nivel intermedio alto",
+      "title": "Práctica de vocabulario de inglés B2",
       "intro": "Inglés B2 práctica de vocabulario te permite comunicarte con mayor precisión y seguridad en contextos sociales, académicos y profesionales.",
       "levelDescription": "Intermedio alto",
       "ctaText": "Comenzar práctica B2",
@@ -459,7 +459,7 @@
       }
     },
     "c1": {
-      "title": "Práctica de vocabulario de inglés C1 – Lista de palabras avanzadas",
+      "title": "Práctica de vocabulario de inglés C1",
       "intro": "Inglés C1 práctica de vocabulario está orientado a estudiantes que buscan un dominio avanzado del idioma.",
       "levelDescription": "Avanzado",
       "ctaText": "Comenzar práctica C1",
@@ -561,7 +561,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Práctica de vocabulario inglés C1 – Palabras avanzadas",
+      "metaTitle": "Práctica de vocabulario inglés C1 – Palabras avanzadas de inglés",
       "metaDescription": "Perfecciona tu nivel con Inglés C1 práctica de vocabulario. Aprende palabras avanzadas, matices y ejemplos para comunicarte con precisión académica y profesional.",
       "introParagraphs": [
         "Inglés C1 práctica de vocabulario está orientado a estudiantes que buscan un dominio avanzado del idioma. En este nivel puedes comprender textos complejos, participar en debates formales y expresar ideas con precisión y matices.",
@@ -573,7 +573,7 @@
       }
     },
     "c2": {
-      "title": "Práctica de vocabulario de inglés C2 – Lista de palabras de dominio avanzado",
+      "title": "Práctica de vocabulario de inglés C2",
       "intro": "Ingl?s C2 pr?ctica de vocabulario est? orientado a estudiantes que buscan un dominio completo del idioma.",
       "levelDescription": "Experto",
       "ctaText": "Comenzar pr?ctica C2",
@@ -675,7 +675,7 @@
       "internalNavigation": {
         "heading": "Explorar otros niveles"
       },
-      "metaTitle": "Práctica de vocabulario inglés C2 – Vocabulario nivel experto",
+      "metaTitle": "Práctica de vocabulario inglés C2 – Vocabulario avanzado de inglés",
       "metaDescription": "Alcanza el dominio total con Ingl?s C2 pr?ctica de vocabulario. Aprende t?rminos complejos, matices y usos avanzados para comunicarte con precisi?n absoluta.",
       "introParagraphs": [
         "Ingl?s C2 pr?ctica de vocabulario est? orientado a estudiantes que buscan un dominio completo del idioma. En este nivel puedes comprender pr?cticamente cualquier tipo de texto y expresar ideas con exactitud y matices sutiles.",
