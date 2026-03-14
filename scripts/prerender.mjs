@@ -8,7 +8,7 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const DIST_DIR = path.join(ROOT_DIR, "dist");
 const SSR_DIR = path.join(ROOT_DIR, ".prerender");
 const TEMPLATE_PATH = path.join(DIST_DIR, "index.html");
-const SITE_ORIGIN = process.env.SITE_ORIGIN || "https://fluentstellar.com";
+const SITE_ORIGIN = process.env.SITE_ORIGIN || "https://www.fluentstellar.com";
 
 function stripManagedHeadTags(template) {
   return template

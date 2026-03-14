@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 
-const SITE_URL = (process.env.SITE_URL || "https://fluentstellar.com").replace(/\/+$/, "");
+const SITE_URL = (process.env.SITE_URL || "https://www.fluentstellar.com").replace(/\/+$/, "");
 
 const CORE_ROUTES = [
   "/",

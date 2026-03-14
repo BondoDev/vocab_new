@@ -1,4 +1,4 @@
-export const DEFAULT_SITE_ORIGIN = "https://fluentstellar.com";
+export const DEFAULT_SITE_ORIGIN = "https://www.fluentstellar.com";
 
 export const DEFAULT_SEO_METADATA = {
   title: "FluentStellar - Structured Vocabulary Learning Platform",

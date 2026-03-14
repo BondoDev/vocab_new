@@ -1,4 +1,4 @@
-﻿import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import englishInterface from "../data/interface/english_interface.json";
 import spanishInterface from "../data/interface/spanish_interface.json";
 import frenchInterface from "../data/interface/french_interface.json";
@@ -152,8 +152,19 @@ export function LanguageProvider({
   initialUILanguage,
 }: LanguageProviderProps) {
   const [uiLanguage, setUILanguage] = useState<UILanguage>(
-    () => initialUILanguage ?? readStoredUiLanguage() ?? "en",
+    () => initialUILanguage ?? "en",
   );
+
+  useEffect(() => {
+    if (initialUILanguage) {
+      return;
+    }
+
+    const storedLanguage = readStoredUiLanguage();
+    if (storedLanguage && storedLanguage !== uiLanguage) {
+      setUILanguage(storedLanguage);
+    }
+  }, [initialUILanguage, uiLanguage]);
 
   const handleSetUILanguage = (lang: UILanguage) => {
     setUILanguage(lang);
@@ -206,3 +217,4 @@ export function useLanguage() {
   }
   return context;
 }
+

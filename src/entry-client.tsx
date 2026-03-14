@@ -22,7 +22,19 @@ const app = (
   </BrowserRouter>
 );
 
-if (rootElement.hasChildNodes()) {
+const hasRenderableServerMarkup = Array.from(rootElement.childNodes).some((node) => {
+  if (node.nodeType === Node.ELEMENT_NODE) {
+    return true;
+  }
+
+  if (node.nodeType === Node.TEXT_NODE) {
+    return (node.textContent ?? "").trim().length > 0;
+  }
+
+  return false;
+});
+
+if (hasRenderableServerMarkup) {
   hydrateRoot(rootElement, app);
 } else {
   createRoot(rootElement).render(app);

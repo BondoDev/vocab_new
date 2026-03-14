@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fluentstellar.com/sitemap.xml
+Sitemap: https://www.fluentstellar.com/sitemap.xml

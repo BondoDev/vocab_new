@@ -224,10 +224,19 @@ const pageFromPath = (path: string): PageKey => {
 };
 
 function randomBetween(min: number, max: number): number {
-  return Math.random() * (max - min) + min;
+  return min + (max - min) * 0.5;
 }
 
-function createDistributedStarFieldImage(starCount: number): string {
+function createSeededRandom(seed: number): () => number {
+  let value = seed >>> 0;
+
+  return () => {
+    value = (value * 1664525 + 1013904223) >>> 0;
+    return value / 4294967296;
+  };
+}
+
+function createDistributedStarFieldImage(starCount: number, seed = starCount): string {
   const cols = Math.ceil(Math.sqrt(starCount));
   const rows = Math.ceil(starCount / cols);
   const sizeOptions = [1.2, 1.4, 1.8, 2.2];
@@ -239,6 +248,7 @@ function createDistributedStarFieldImage(starCount: number): string {
     "rgba(255,255,255,0.9)",
   ];
   const layers: string[] = [];
+  const nextRandom = createSeededRandom(seed);
 
   for (let i = 0; i < starCount; i++) {
     const col = i % cols;
@@ -249,10 +259,14 @@ function createDistributedStarFieldImage(starCount: number): string {
     const xMax = (col + 1) * cellWidth - 10;
     const yMin = row * cellHeight + 14;
     const yMax = (row + 1) * cellHeight - 14;
-    const x = randomBetween(Math.max(5, xMin), Math.min(95, xMax)).toFixed(1);
-    const y = randomBetween(Math.max(8, yMin), Math.min(92, yMax)).toFixed(1);
-    const size = sizeOptions[Math.floor(Math.random() * sizeOptions.length)];
-    const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+    const x = (
+      Math.max(5, xMin) + (Math.min(95, xMax) - Math.max(5, xMin)) * nextRandom()
+    ).toFixed(1);
+    const y = (
+      Math.max(8, yMin) + (Math.min(92, yMax) - Math.max(8, yMin)) * nextRandom()
+    ).toFixed(1);
+    const size = sizeOptions[Math.floor(nextRandom() * sizeOptions.length)];
+    const color = colorOptions[Math.floor(nextRandom() * colorOptions.length)];
 
     layers.push(
       `radial-gradient(${size}px ${size}px at ${x}% ${y}%, ${color}, rgba(0,0,0,0))`,
@@ -834,27 +848,8 @@ function AppContent() {
     }),
     [starFieldStyle],
   );
-  const [initialLanguageSelection] = useState<{
-    yourLanguage: string;
-    practiceLanguage: string;
-  }>(() => ({
-    yourLanguage:
-      readStoredString(
-        STORAGE_KEYS.yourLanguage,
-        (value) => supportedLanguageCodes.has(value),
-      ) ?? "",
-    practiceLanguage:
-      readStoredString(
-        STORAGE_KEYS.practiceLanguage,
-        (value) => supportedLanguageCodes.has(value),
-      ) ?? "",
-  }));
-  const [yourLanguage, setYourLanguage] = useState(
-    () => initialLanguageSelection.yourLanguage,
-  );
-  const [practiceLanguage, setPracticeLanguage] = useState(
-    () => initialLanguageSelection.practiceLanguage,
-  );
+  const [yourLanguage, setYourLanguage] = useState("");
+  const [practiceLanguage, setPracticeLanguage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const levelTestSeoRoute = useMemo(
@@ -864,29 +859,10 @@ function AppContent() {
   const seoHubRoute = useMemo(() => parseSeoHubRoute(location.pathname), [location.pathname]);
   const vocabularyRoute = useMemo(() => parseVocabularyRoute(location.pathname), [location.pathname]);
   const currentPage = useMemo(() => pageFromPath(location.pathname), [location.pathname]);
-  const [selectedLevel, setSelectedLevel] = useState(() =>
-    (
-      readStoredString(
-        STORAGE_KEYS.selectedLevel,
-        (value) => VALID_LEVEL_CODES.has(value.toUpperCase()),
-      ) ?? "A1"
-    ).toUpperCase(),
-  );
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    () => readStoredStringArray(STORAGE_KEYS.selectedCategories) ?? [],
-  );
-  const [selectedLevels, setSelectedLevels] = useState<string[]>(
-    () =>
-      (
-        readStoredStringArray(
-          STORAGE_KEYS.selectedLevels,
-          (value) => VALID_LEVEL_CODES.has(value.toUpperCase()),
-        ) ?? []
-      ).map((value) => value.toUpperCase()),
-  );
-  const [selectedWordTypes, setSelectedWordTypes] = useState<string[]>(
-    () => readStoredStringArray(STORAGE_KEYS.selectedWordTypes) ?? [],
-  );
+  const [selectedLevel, setSelectedLevel] = useState("A1");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
+  const [selectedWordTypes, setSelectedWordTypes] = useState<string[]>([]);
   const [isEnglishExploreOpen, setIsEnglishExploreOpen] = useState(false);
   const [isSpanishExploreOpen, setIsSpanishExploreOpen] = useState(false);
   const [isFrenchExploreOpen, setIsFrenchExploreOpen] = useState(false);
@@ -894,17 +870,7 @@ function AppContent() {
   const [isItalianExploreOpen, setIsItalianExploreOpen] = useState(false);
   const [isPortugueseExploreOpen, setIsPortugueseExploreOpen] = useState(false);
   const [isRussianExploreOpen, setIsRussianExploreOpen] = useState(false);
-  const [selectedExercises, setSelectedExercises] = useState<string[]>(() => {
-    const allowedExercises = new Set(DEFAULT_EXERCISES);
-    const persistedExercises = readStoredStringArray(
-      STORAGE_KEYS.selectedExercises,
-      (value) => allowedExercises.has(value),
-    );
-
-    return persistedExercises && persistedExercises.length > 0
-      ? persistedExercises
-      : [...DEFAULT_EXERCISES];
-  });
+  const [selectedExercises, setSelectedExercises] = useState<string[]>([...DEFAULT_EXERCISES]);
   const isContinueDisabled = !yourLanguage || !practiceLanguage;
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
   const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] = useState(false);
@@ -914,15 +880,67 @@ function AppContent() {
   const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
   const hasAutoRedirectedRef = useRef(false);
   const initialPathRef = useRef(location.pathname);
-  const shouldAutoRedirectFromStoredLanguagesRef = useRef(
-    Boolean(
-      initialLanguageSelection.yourLanguage &&
-        initialLanguageSelection.practiceLanguage,
-    ),
-  );
+  const shouldAutoRedirectFromStoredLanguagesRef = useRef(false);
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const resolvedPage = currentPage;
+
+  useEffect(() => {
+    const persistedYourLanguage = readStoredString(
+      STORAGE_KEYS.yourLanguage,
+      (value) => supportedLanguageCodes.has(value),
+    );
+    const persistedPracticeLanguage = readStoredString(
+      STORAGE_KEYS.practiceLanguage,
+      (value) => supportedLanguageCodes.has(value),
+    );
+    const persistedSelectedLevel = readStoredString(
+      STORAGE_KEYS.selectedLevel,
+      (value) => VALID_LEVEL_CODES.has(value.toUpperCase()),
+    );
+    const persistedSelectedCategories =
+      readStoredStringArray(STORAGE_KEYS.selectedCategories) ?? [];
+    const persistedSelectedLevels =
+      (
+        readStoredStringArray(
+          STORAGE_KEYS.selectedLevels,
+          (value) => VALID_LEVEL_CODES.has(value.toUpperCase()),
+        ) ?? []
+      ).map((value) => value.toUpperCase());
+    const persistedSelectedWordTypes =
+      readStoredStringArray(STORAGE_KEYS.selectedWordTypes) ?? [];
+    const allowedExercises = new Set(DEFAULT_EXERCISES);
+    const persistedSelectedExercises = readStoredStringArray(
+      STORAGE_KEYS.selectedExercises,
+      (value) => allowedExercises.has(value),
+    );
+
+    if (persistedYourLanguage) {
+      setYourLanguage(persistedYourLanguage);
+    }
+    if (persistedPracticeLanguage) {
+      setPracticeLanguage(persistedPracticeLanguage);
+    }
+    if (persistedSelectedLevel) {
+      setSelectedLevel(persistedSelectedLevel.toUpperCase());
+    }
+    if (persistedSelectedCategories.length > 0) {
+      setSelectedCategories(persistedSelectedCategories);
+    }
+    if (persistedSelectedLevels.length > 0) {
+      setSelectedLevels(persistedSelectedLevels);
+    }
+    if (persistedSelectedWordTypes.length > 0) {
+      setSelectedWordTypes(persistedSelectedWordTypes);
+    }
+    if (persistedSelectedExercises && persistedSelectedExercises.length > 0) {
+      setSelectedExercises(persistedSelectedExercises);
+    }
+
+    shouldAutoRedirectFromStoredLanguagesRef.current = Boolean(
+      persistedYourLanguage && persistedPracticeLanguage,
+    );
+  }, [supportedLanguageCodes]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {
