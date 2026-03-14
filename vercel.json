@@ -1,11 +1,32 @@
 {
-  "routes": [
+  "redirects": [
     {
-      "handle": "filesystem"
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.fluentstellar.com"
+        }
+      ],
+      "destination": "https://fluentstellar.com/:path*",
+      "permanent": true
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "fluentstellar.vercel.app"
+        }
+      ],
+      "destination": "https://fluentstellar.com/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
