@@ -164,12 +164,12 @@
     }
   },
   "languageNames": {
-    "en": "Ingles",
-    "es": "Espanol",
-    "fr": "Frances",
-    "de": "Aleman",
+    "en": "Inglés",
+    "es": "Español",
+    "fr": "Francés",
+    "de": "Alemán",
     "it": "Italiano",
-    "pt": "Portugues",
+    "pt": "Portugués",
     "ru": "Ruso"
   },
   "levelCategory": {

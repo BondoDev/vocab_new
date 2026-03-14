@@ -6,6 +6,7 @@ import {
   resolveVocabularyRoute,
   type UiLanguageCode,
 } from "./data/seo/slugs";
+import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "./data/levelTests";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
@@ -13,6 +14,7 @@ import { DEFAULT_SITE_ORIGIN } from "./seo/site";
 export function getPrerenderRoutes(): string[] {
   return [
     ...getAllLocalizedVocabularyRoutes().map((route) => route.path),
+    ...getAllSeoHubPaths(),
     ...(["en", "es", "fr", "de", "it", "pt", "ru"] as const)
       .map((uiLang) => getLevelTestSeoPath(uiLang, "english"))
       .filter((route): route is string => Boolean(route)),
@@ -23,6 +25,11 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
   const levelTestRoute = resolveLevelTestSeoRoute(url);
   if (levelTestRoute) {
     return levelTestRoute.uiLang;
+  }
+
+  const seoHubRoute = resolveSeoHubRoute(url);
+  if (seoHubRoute) {
+    return seoHubRoute;
   }
 
   const match = url.match(/^\/([a-z]{2})\/([^/?#]+)$/);

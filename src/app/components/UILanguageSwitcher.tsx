@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/levelTests";
+import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
 
 interface UILanguageSwitcherProps {
   variant?: "default" | "centered-modal";
@@ -90,6 +91,18 @@ export function UILanguageSwitcher({
 
   const handleSelect = (code: LanguageCode) => {
     if (code === "en" || code === "es" || code === "fr" || code === "pt" || code === "it" || code === "de" || code === "ru") {
+      const seoHubRoute = resolveSeoHubRoute(location.pathname);
+      if (seoHubRoute) {
+        const nextPath = getSeoHubPath(code);
+        if (nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+        setUILanguage(code);
+        setIsOpen(false);
+        setSearchQuery("");
+        return;
+      }
+
       const levelTestRoute = resolveLevelTestSeoRoute(location.pathname);
       if (levelTestRoute) {
         const nextPath = getLevelTestSeoPath(code, levelTestRoute.targetLanguage);

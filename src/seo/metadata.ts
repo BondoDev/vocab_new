@@ -5,6 +5,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../data/seo/slugs";
+import { getAllSeoHubPaths, getSeoHubPath } from "../data/seo/hub";
 import { getLevelTestContent, getLevelTestSeoPath } from "../data/levelTests";
 import { getVocabularyLevelContent } from "../data/vocabularyLevels";
 import type { SeoMetadata } from "./SeoContext";
@@ -26,6 +27,43 @@ const WORDS_UNIT_BY_UI_LANG: Record<UiLanguageCode, string> = {
   it: "parole",
   pt: "palavras",
   ru: "слов",
+};
+
+const SEO_HUB_METADATA: Record<
+  UiLanguageCode,
+  {
+    title: string;
+    description: string;
+  }
+> = {
+  en: {
+    title: "SEO Pages - Vocabulary Practice and Level Tests",
+    description: "Browse all vocabulary practice pages and available language level tests in one place.",
+  },
+  es: {
+    title: "Páginas SEO - Práctica de vocabulario y tests de nivel",
+    description: "Consulta todas las páginas de práctica de vocabulario y los tests de nivel disponibles en un solo lugar.",
+  },
+  fr: {
+    title: "Pages SEO - Pratique du vocabulaire et tests de niveau",
+    description: "Consultez toutes les pages de pratique du vocabulaire et les tests de niveau disponibles au même endroit.",
+  },
+  de: {
+    title: "SEO-Seiten - Wortschatz und Niveau-Tests",
+    description: "Finden Sie alle Wortschatzseiten und verfügbaren Niveau-Tests an einem Ort.",
+  },
+  it: {
+    title: "Pagine SEO - Pratica del vocabolario e test di livello",
+    description: "Consulta tutte le pagine di pratica del vocabolario e i test di livello disponibili in un unico posto.",
+  },
+  pt: {
+    title: "Páginas SEO - Prática de vocabulário e testes de nível",
+    description: "Consulte todas as páginas de prática de vocabulário e os testes de nível disponíveis em um só lugar.",
+  },
+  ru: {
+    title: "SEO-страницы - Практика словарного запаса и тесты уровня",
+    description: "Здесь собраны все страницы для практики словарного запаса и доступные тесты уровня.",
+  },
 };
 
 function normalizeOrigin(siteOrigin: string): string {
@@ -129,6 +167,36 @@ export function buildLevelTestSeoMetadata({
       {
         hreflang: "x-default",
         href: `${origin}${getLevelTestSeoPath("en", targetLanguage) ?? pathname}`,
+      },
+    ],
+  };
+}
+
+export function buildSeoHubMetadata({
+  uiLang,
+  pathname,
+  siteOrigin,
+}: {
+  uiLang: UiLanguageCode;
+  pathname: string;
+  siteOrigin: string;
+}): SeoMetadata {
+  const origin = normalizeOrigin(siteOrigin);
+  const canonical = `${origin}${pathname}`;
+  const copy = SEO_HUB_METADATA[uiLang] ?? SEO_HUB_METADATA.en;
+
+  return {
+    title: copy.title,
+    description: copy.description,
+    canonical,
+    alternates: [
+      ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
+        hreflang: lang,
+        href: `${origin}${getSeoHubPath(lang)}`,
+      })),
+      {
+        hreflang: "x-default",
+        href: `${origin}${getAllSeoHubPaths()[0]}`,
       },
     ],
   };

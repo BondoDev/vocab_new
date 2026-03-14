@@ -16,6 +16,7 @@ import { Help } from "./components/Help";
 import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { NotFoundPage } from "./components/NotFoundPage";
+import { SeoHubPage } from "./components/SeoHubPage";
 import {
   LanguageContinuePopup,
   type LanguageContinuePopupHandle,
@@ -28,6 +29,7 @@ import {
   type UiLanguageCode,
 } from "../data/vocabularyLevels";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../data/seo/slugs";
+import { resolveSeoHubRoute } from "../data/seo/hub";
 import { SeoProvider, type SeoManager } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../data/levelTests";
@@ -169,6 +171,10 @@ function parseVocabularyRoute(path: string): ParsedVocabularyRoute | null {
 function parseLevelTestSeoRoute(path: string): ParsedLevelTestSeoRoute | null {
   return resolveLevelTestSeoRoute(path);
 }
+
+function parseSeoHubRoute(path: string): UiLanguageCode | null {
+  return resolveSeoHubRoute(path);
+}
 const ROUTES = {
   language: "/languages",
   levelCategory: "/languages/filters",
@@ -181,7 +187,7 @@ const ROUTES = {
 } as const;
 
 type RouteKey = keyof typeof ROUTES;
-type PageKey = RouteKey | "vocabularyLevel" | "levelTestSeo" | "notFound";
+type PageKey = RouteKey | "vocabularyLevel" | "levelTestSeo" | "seoHub" | "notFound";
 
 const pageFromPath = (path: string): PageKey => {
   switch (path) {
@@ -203,6 +209,9 @@ const pageFromPath = (path: string): PageKey => {
     case ROUTES.help:
       return "help";
     default: {
+      if (parseSeoHubRoute(path)) {
+        return "seoHub";
+      }
       if (parseLevelTestSeoRoute(path)) {
         return "levelTestSeo";
       }
@@ -852,6 +861,7 @@ function AppContent() {
     () => parseLevelTestSeoRoute(location.pathname),
     [location.pathname],
   );
+  const seoHubRoute = useMemo(() => parseSeoHubRoute(location.pathname), [location.pathname]);
   const vocabularyRoute = useMemo(() => parseVocabularyRoute(location.pathname), [location.pathname]);
   const currentPage = useMemo(() => pageFromPath(location.pathname), [location.pathname]);
   const [selectedLevel, setSelectedLevel] = useState(() =>
@@ -1022,6 +1032,16 @@ function AppContent() {
       setUILanguage(levelTestSeoRoute.uiLang);
     }
   }, [levelTestSeoRoute, resolvedPage, setUILanguage, uiLanguage]);
+
+  useEffect(() => {
+    if (resolvedPage !== "seoHub" || !seoHubRoute) {
+      return;
+    }
+
+    if (uiLanguage !== seoHubRoute) {
+      setUILanguage(seoHubRoute);
+    }
+  }, [resolvedPage, seoHubRoute, setUILanguage, uiLanguage]);
 
   useEffect(() => {
     if (hasAutoRedirectedRef.current) {
@@ -1858,6 +1878,42 @@ function AppContent() {
           level={vocabularyRoute.level}
           onStartPractice={handleStartVocabularyPractice}
         />
+      </div>
+    );
+  }
+
+  if (resolvedPage === "seoHub") {
+    if (!seoHubRoute) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header
+            activePage="notFound"
+            onAbout={() => navigate(ROUTES.about)}
+            onHelp={() => navigate(ROUTES.help)}
+            onLevelTest={() => handleRequireLanguages("exam")}
+            onLanguages={() => navigate(ROUTES.language)}
+            onFilters={() => handleRequireLanguages("levelCategory")}
+            onExercises={() => handleRequireLanguages("exerciseSelection")}
+            onExplore={() => navigate(ROUTES.explore)}
+          />
+          <NotFoundPage message="Invalid SEO page index." />
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header
+          activePage="explore"
+          onAbout={() => navigate(ROUTES.about)}
+          onHelp={() => navigate(ROUTES.help)}
+          onLevelTest={() => handleRequireLanguages("exam")}
+          onLanguages={() => navigate(ROUTES.language)}
+          onFilters={() => handleRequireLanguages("levelCategory")}
+          onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
+        />
+        <SeoHubPage uiLang={seoHubRoute} />
       </div>
     );
   }

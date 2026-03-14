@@ -2,6 +2,8 @@ import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { SUPPORTED_LEVELS, buildLocalizedVocabularyPath } from "../../data/seo/slugs";
+import { getLevelTestSeoPath } from "../../data/levelTests";
+import { getSeoHubPath } from "../../data/seo/hub";
 import {
   getVocabularyLevelContent,
   type CefrLevelCode,
@@ -50,6 +52,51 @@ const SAMPLE_TABLE_HEADERS_BY_UI_LANG: Record<
   ru: { word: "Слово", meaning: "Значение" },
 };
 
+const RELATED_LINKS_COPY: Record<
+  UiLanguageCode,
+  {
+    heading: string;
+    seoHubLabel: string;
+    levelTestLabel: (languageName: string) => string;
+  }
+> = {
+  en: {
+    heading: "Related pages",
+    seoHubLabel: "Browse all SEO pages",
+    levelTestLabel: (languageName) => `Take the ${languageName} level test`,
+  },
+  es: {
+    heading: "Páginas relacionadas",
+    seoHubLabel: "Ver todas las páginas SEO",
+    levelTestLabel: (languageName) => `Haz el test de nivel de ${languageName}`,
+  },
+  fr: {
+    heading: "Pages associées",
+    seoHubLabel: "Voir toutes les pages SEO",
+    levelTestLabel: (languageName) => `Passez le test de niveau de ${languageName}`,
+  },
+  de: {
+    heading: "Verwandte Seiten",
+    seoHubLabel: "Alle SEO-Seiten ansehen",
+    levelTestLabel: (languageName) => `${languageName} Niveau-Test machen`,
+  },
+  it: {
+    heading: "Pagine correlate",
+    seoHubLabel: "Vedi tutte le pagine SEO",
+    levelTestLabel: (languageName) => `Fai il test di livello di ${languageName}`,
+  },
+  pt: {
+    heading: "Páginas relacionadas",
+    seoHubLabel: "Ver todas as páginas SEO",
+    levelTestLabel: (languageName) => `Faça o teste de nível de ${languageName}`,
+  },
+  ru: {
+    heading: "Связанные страницы",
+    seoHubLabel: "Посмотреть все SEO-страницы",
+    levelTestLabel: (languageName) => `Тест уровня ${languageName}`,
+  },
+};
+
 function buildVocabularyUrl(
   uiLang: UiLanguageCode,
   targetLanguage: TargetLanguageSlug,
@@ -94,6 +141,7 @@ export function VocabularyLevelPage({
     siteOrigin,
   });
   const ctaText = levelContent.ctaText || `Start ${levelDisplay} Practice`;
+  const relatedCopy = RELATED_LINKS_COPY[uiLang] ?? RELATED_LINKS_COPY.en;
   const localizedHeaders =
     SAMPLE_TABLE_HEADERS_BY_UI_LANG[uiLang] ?? SAMPLE_TABLE_HEADERS_BY_UI_LANG.en;
   const wordHeader =
@@ -119,6 +167,9 @@ export function VocabularyLevelPage({
       };
     },
   );
+  const levelTestHref = getLevelTestSeoPath(uiLang, targetLanguage);
+  const targetLanguageDisplayName = contentBundle.file.targetLanguageDisplayName;
+  const seoHubHref = getSeoHubPath(uiLang);
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
@@ -242,6 +293,24 @@ export function VocabularyLevelPage({
               </Link>
             ))}
           </div>
+        </section>
+
+        <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
+          <h2 className="text-2xl text-foreground">{relatedCopy.heading}</h2>
+          <ul className="mt-4 list-disc space-y-2 pl-5">
+            {levelTestHref ? (
+              <li>
+                <Link className="text-primary transition hover:underline" to={levelTestHref}>
+                  {relatedCopy.levelTestLabel(targetLanguageDisplayName)}
+                </Link>
+              </li>
+            ) : null}
+            <li>
+              <Link className="text-primary transition hover:underline" to={seoHubHref}>
+                {relatedCopy.seoHubLabel}
+              </Link>
+            </li>
+          </ul>
         </section>
 
         <section className="pb-4">
