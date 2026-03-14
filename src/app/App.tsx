@@ -1146,6 +1146,19 @@ function AppContent() {
 
   const renderExploreTopicItem = (topic: ExploreTopic) => {
     if (topic.kind === "test") {
+      if (topic.path !== ROUTES.exam) {
+        return (
+          <Link
+            key={`${topic.targetLanguage}-${topic.level}`}
+            to={topic.path}
+            onClick={closeAllExploreDropdowns}
+            className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
+          >
+            {topic.label}
+          </Link>
+        );
+      }
+
       return (
         <button
           key={`${topic.targetLanguage}-${topic.level}`}

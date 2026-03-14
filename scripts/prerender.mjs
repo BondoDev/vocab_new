@@ -15,6 +15,10 @@ function stripManagedHeadTags(template) {
     .replace(/<title>[\s\S]*?<\/title>/i, "")
     .replace(/<meta\s+name="description"[\s\S]*?>/i, "")
     .replace(/<link\s+rel="canonical"[\s\S]*?>/i, "")
+    .replace(/<meta\s+property="og:type"[\s\S]*?>/i, "")
+    .replace(/<meta\s+property="og:url"[\s\S]*?>/i, "")
+    .replace(/<meta\s+property="og:title"[\s\S]*?>/i, "")
+    .replace(/<meta\s+property="og:description"[\s\S]*?>/i, "")
     .replace(/<link\s+rel="alternate"[\s\S]*?data-vocab-hreflang="true"[\s\S]*?>/gi, "");
 }
 

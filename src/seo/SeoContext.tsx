@@ -55,6 +55,18 @@ function upsertMetaDescription(content: string) {
   tag.setAttribute("content", content);
 }
 
+function upsertMetaProperty(property: string, content: string) {
+  let tag = document.querySelector(`meta[property='${property}']`) as HTMLMetaElement | null;
+
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute("property", property);
+    document.head.appendChild(tag);
+  }
+
+  tag.setAttribute("content", content);
+}
+
 function upsertCanonical(href: string) {
   let tag = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
 
@@ -75,6 +87,10 @@ export function applySeoMetadata(metadata: SeoMetadata) {
   document.title = metadata.title;
   upsertMetaDescription(metadata.description);
   upsertCanonical(metadata.canonical);
+  upsertMetaProperty("og:type", "website");
+  upsertMetaProperty("og:url", metadata.canonical);
+  upsertMetaProperty("og:title", metadata.title);
+  upsertMetaProperty("og:description", metadata.description);
   removeManagedAlternateTags();
 
   (metadata.alternates ?? []).forEach((alternate) => {
@@ -99,6 +115,10 @@ export function renderSeoTags(metadata: SeoMetadata): string {
     `<title>${escapeHtml(metadata.title)}</title>`,
     `<meta name="description" content="${escapeHtml(metadata.description)}">`,
     `<link rel="canonical" href="${escapeHtml(metadata.canonical)}">`,
+    `<meta property="og:type" content="website">`,
+    `<meta property="og:url" content="${escapeHtml(metadata.canonical)}">`,
+    `<meta property="og:title" content="${escapeHtml(metadata.title)}">`,
+    `<meta property="og:description" content="${escapeHtml(metadata.description)}">`,
     alternates,
   ]
     .filter(Boolean)

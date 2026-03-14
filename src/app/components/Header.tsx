@@ -3,6 +3,16 @@ import { Menu, X } from "lucide-react";
 import { UILanguageSwitcher } from "../components/UILanguageSwitcher";
 import { useLanguage } from "../../contexts/LanguageContext";
 
+const NAV_HREFS = {
+  about: "/about",
+  language: "/languages",
+  levelCategory: "/languages/filters",
+  exerciseSelection: "/languages/filters/exercises",
+  explore: "/explore",
+  help: "/help",
+  exam: "/languages/level-test",
+} as const;
+
 function createSeededRandom(seed: number): () => number {
   let state = seed >>> 0;
 
@@ -124,6 +134,15 @@ export function Header({
     }`;
   const getMobileNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
     isActive(...pages) ? "is-active text-white" : undefined;
+  const createNavClickHandler = (action?: () => void) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!action) {
+      return;
+    }
+
+    event.preventDefault();
+    setIsMenuOpen(false);
+    action();
+  };
 
   return (
     <header
@@ -143,14 +162,8 @@ export function Header({
         <div className="header-logo-wrap order-2 md:order-1">
           <div className="site-logo text-lg font-black tracking-[0.3em] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
             <a
-              href="/languages"
-              onClick={(event) => {
-                if (!onLanguages) {
-                  return;
-                }
-                event.preventDefault();
-                onLanguages();
-              }}
+              href={NAV_HREFS.language}
+              onClick={createNavClickHandler(onLanguages)}
               className="hover:text-white transition"
               aria-label="Go to languages page"
             >
@@ -161,57 +174,51 @@ export function Header({
 
         <div className="header-desktop-nav hidden md:flex order-2 items-center gap-8">
           <div className="flex gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/90">
-            <button
-              type="button"
-              onClick={onAbout}
+            <a
+              href={NAV_HREFS.about}
+              onClick={createNavClickHandler(onAbout)}
               className={getDesktopNavClassName("about")}
             >
               {t("header.about")}
-            </button>
-            <button
-              type="button"
-              onClick={onLanguages}
+            </a>
+            <a
+              href={NAV_HREFS.language}
+              onClick={createNavClickHandler(onLanguages)}
               className={getDesktopNavClassName("language")}
             >
               {t("header.languages")}
-            </button>
-            <button
-              type="button"
-              onClick={onFilters}
+            </a>
+            <a
+              href={NAV_HREFS.levelCategory}
+              onClick={createNavClickHandler(onFilters)}
               className={getDesktopNavClassName("levelCategory")}
             >
               {t("header.filters")}
-            </button>
-            <button
-              type="button"
-              onClick={onExercises}
+            </a>
+            <a
+              href={NAV_HREFS.exerciseSelection}
+              onClick={createNavClickHandler(onExercises)}
               className={getDesktopNavClassName("exerciseSelection")}
             >
               {t("header.exercises")}
-            </button>
-            <button
-              type="button"
-              onClick={onExplore}
+            </a>
+            <a
+              href={NAV_HREFS.explore}
+              onClick={createNavClickHandler(onExplore)}
               className={getDesktopNavClassName("explore", "vocabularyLevel")}
             >
               {t("header.explore")}
-            </button>
+            </a>
             <a
-              href="#"
-              onClick={(event) => {
-                if (!onHelp) {
-                  return;
-                }
-                event.preventDefault();
-                onHelp();
-              }}
+              href={NAV_HREFS.help}
+              onClick={createNavClickHandler(onHelp)}
               className={getDesktopNavClassName("help")}
             >
               {t("header.help")}
             </a>
-            <button
-              type="button"
-              onClick={onLevelTest}
+            <a
+              href={NAV_HREFS.exam}
+              onClick={createNavClickHandler(onLevelTest)}
               className={`inline-flex items-center leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 border px-3 py-1 rounded-full shadow-sm appearance-none ${
                 isActive("exam")
                   ? "bg-white/24 border-white/55 shadow-white/20"
@@ -219,7 +226,7 @@ export function Header({
               }`}
             >
               {t("header.levelTest")}
-            </button>
+            </a>
           </div>
 
           <div className="pl-5 border-l border-white/20 scale-90">
@@ -240,55 +247,55 @@ export function Header({
         aria-hidden={!isMenuOpen}
       >
         <div className="header-mobile-menu-inner">
-          <button
-            type="button"
-            onClick={handleMenuAction(onAbout)}
+          <a
+            href={NAV_HREFS.about}
+            onClick={createNavClickHandler(onAbout)}
             className={getMobileNavClassName("about")}
           >
             {t("header.about")}
-          </button>
-          <button
-            type="button"
-            onClick={handleMenuAction(onLanguages)}
+          </a>
+          <a
+            href={NAV_HREFS.language}
+            onClick={createNavClickHandler(onLanguages)}
             className={getMobileNavClassName("language")}
           >
             {t("header.languages")}
-          </button>
-          <button
-            type="button"
-            onClick={handleMenuAction(onFilters)}
+          </a>
+          <a
+            href={NAV_HREFS.levelCategory}
+            onClick={createNavClickHandler(onFilters)}
             className={getMobileNavClassName("levelCategory")}
           >
             {t("header.filters")}
-          </button>
-          <button
-            type="button"
-            onClick={handleMenuAction(onExercises)}
+          </a>
+          <a
+            href={NAV_HREFS.exerciseSelection}
+            onClick={createNavClickHandler(onExercises)}
             className={getMobileNavClassName("exerciseSelection")}
           >
             {t("header.exercises")}
-          </button>
-          <button
-            type="button"
-            onClick={handleMenuAction(onExplore)}
+          </a>
+          <a
+            href={NAV_HREFS.explore}
+            onClick={createNavClickHandler(onExplore)}
             className={getMobileNavClassName("explore", "vocabularyLevel")}
           >
             {t("header.explore")}
-          </button>
-          <button
-            type="button"
-            onClick={handleMenuAction(onHelp)}
+          </a>
+          <a
+            href={NAV_HREFS.help}
+            onClick={createNavClickHandler(onHelp)}
             className={getMobileNavClassName("help")}
           >
             {t("header.help")}
-          </button>
-          <button
-            type="button"
-            onClick={handleMenuAction(onLevelTest)}
+          </a>
+          <a
+            href={NAV_HREFS.exam}
+            onClick={createNavClickHandler(onLevelTest)}
             className={getMobileNavClassName("exam")}
           >
             {t("header.levelTest")}
-          </button>
+          </a>
           <div className="header-mobile-lang-wrap">
             <UILanguageSwitcher variant="centered-modal" />
           </div>
