@@ -3,6 +3,7 @@ import {
   UniversalExerciseCaret,
   UniversalExerciseInput,
 } from "./UniversalExerciseInput";
+import { DesktopSpecialCharacters } from "./DesktopSpecialCharacters";
 import { MobileKeyboard } from "./MobileKeyboard";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { type KeyboardLanguage } from "../../../keyboards/layouts";
@@ -231,6 +232,31 @@ export function HalfWrittenExercise({
     }
   };
 
+  const handleDesktopCharacterInsert = (character: string) => {
+    const target = inputRef.current;
+    const maxLength = Math.max(0, normalizedWord.length - visibleLetterCount);
+    const selectionStart = target?.selectionStart ?? caretIndex;
+    const selectionEnd = target?.selectionEnd ?? selectionStart;
+    const nextRawValue =
+      userInput.slice(0, selectionStart) +
+      character +
+      userInput.slice(selectionEnd);
+    const normalizedValue = normalizeAgainstTemplate(nextRawValue);
+    const limitedValue = normalizedValue.slice(0, maxLength);
+    const nextCaretIndex = Math.min(selectionStart + character.length, limitedValue.length);
+
+    setUserInput(limitedValue);
+    setHasTypedAnswer(true);
+    setIsInputFocused(true);
+    setCaretIndex(nextCaretIndex);
+
+    window.requestAnimationFrame(() => {
+      if (!inputRef.current) return;
+      inputRef.current.focus();
+      inputRef.current.setSelectionRange(nextCaretIndex, nextCaretIndex);
+    });
+  };
+
   const handleShowWord = () => {
     if (!currentWord) return;
     setUsedShowWord(true);
@@ -435,6 +461,12 @@ export function HalfWrittenExercise({
             lineCount > 1 ? `${48 + (lineCount - 1) * 24}px` : undefined,
         }}
       />
+      {!isMobileViewport && !isCorrect && (
+        <DesktopSpecialCharacters
+          language={resolveKeyboardLanguage(practiceLanguage)}
+          onInsert={handleDesktopCharacterInsert}
+        />
+      )}
 
       <div
         className={`mt-6 flex items-start justify-center ${

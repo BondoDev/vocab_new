@@ -403,7 +403,7 @@ export function BrokenWordExercise({
                   className={`exercise-broken-chunk-button px-2.5 py-1 text-lg font-medium rounded-lg border-2 transition-all ${
                     usedChunks[chunkIndex]
                       ? "border-muted bg-muted text-muted-foreground opacity-30 cursor-not-allowed"
-                      : "border-primary bg-background text-foreground hover:bg-primary/10 active:bg-primary/20"
+                      : "border-[#34205f] bg-[#34205f] text-white hover:bg-[#46307a] active:bg-[#28174a]"
                   }`}
                 >
                   {chunk.toLocaleLowerCase()}

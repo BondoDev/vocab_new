@@ -3,6 +3,7 @@ import {
   UniversalExerciseCaret,
   UniversalExerciseInput,
 } from "./UniversalExerciseInput";
+import { DesktopSpecialCharacters } from "./DesktopSpecialCharacters";
 import { MobileKeyboard } from "./MobileKeyboard";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { type KeyboardLanguage } from "../../../keyboards/layouts";
@@ -215,6 +216,32 @@ export function WordTypingExercise({
     if (!isInputFocused) {
       setIsInputFocused(true);
     }
+  };
+
+  const handleDesktopCharacterInsert = (character: string) => {
+    const target = inputRef.current;
+    const maxLength = currentWord?.word_lemma?.length ?? 0;
+    const selectionStart = target?.selectionStart ?? caretIndex;
+    const selectionEnd = target?.selectionEnd ?? selectionStart;
+    const nextRawValue =
+      userInput.slice(0, selectionStart) +
+      character +
+      userInput.slice(selectionEnd);
+    const normalizedValue = normalizeAgainstTemplate(nextRawValue);
+    const limitedValue =
+      maxLength > 0 ? normalizedValue.slice(0, maxLength) : "";
+    const nextCaretIndex = Math.min(selectionStart + character.length, limitedValue.length);
+
+    setUserInput(limitedValue);
+    setHasTypedAnswer(true);
+    setIsInputFocused(true);
+    setCaretIndex(nextCaretIndex);
+
+    window.requestAnimationFrame(() => {
+      if (!inputRef.current) return;
+      inputRef.current.focus();
+      inputRef.current.setSelectionRange(nextCaretIndex, nextCaretIndex);
+    });
   };
 
   const handleHint = () => {
@@ -449,6 +476,12 @@ export function WordTypingExercise({
             lineCount > 1 ? `${48 + (lineCount - 1) * 24}px` : undefined,
         }}
       />
+      {!isMobileViewport && !isCorrect && (
+        <DesktopSpecialCharacters
+          language={resolveKeyboardLanguage(practiceLanguage)}
+          onInsert={handleDesktopCharacterInsert}
+        />
+      )}
 
       <div
         className={`mt-6 flex items-start justify-center ${
