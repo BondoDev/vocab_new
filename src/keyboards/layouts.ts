@@ -8,6 +8,7 @@ export type KeyboardLayout = {
   type: "mobile";
   baseLayout: string[][];
   symbolsLayout: string[][];
+  extraLayout?: string[][];
   longPress?: Record<string, string[]>;
 };
 
@@ -32,12 +33,13 @@ export const keyboardLayouts: Record<KeyboardLanguage, KeyboardLayout> = {
     locale: "de",
     type: "mobile",
     baseLayout: [
-      ["q", "w", "e", "r", "t", "z", "u", "i", "o", "p", "\u00fc"],
-      ["a", "s", "d", "f", "g", "h", "j", "k", "l", "\u00f6", "\u00e4"],
-      [KEY_SHIFT, "y", "x", "c", "v", "b", "n", "m", "\u00df", KEY_BACKSPACE],
-      [".", ",", "?", "!", ":", ";", "'", "-"],
+      ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+      ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+      [KEY_SHIFT, "z", "x", "c", "v", "b", "n", "m", KEY_BACKSPACE],
+      ["\u00f6", "\u00e4", "\u00fc", "\u00df"],
     ],
     symbolsLayout: [],
+    extraLayout: [[".", ",", "?", "!", ":", ";", "'", "-"]],
   },
   ru: {
     locale: "ru",
@@ -58,9 +60,9 @@ export const keyboardLayouts: Record<KeyboardLanguage, KeyboardLayout> = {
       ["a", "s", "d", "f", "g", "h", "j", "k", "l", "\u00f1"],
       [KEY_SHIFT, "z", "x", "c", "v", "b", "n", "m", KEY_BACKSPACE],
       ["\u00e1", "\u00e9", "\u00ed", "\u00f3", "\u00fa", "\u00fc"],
-      [".", ",", "?", "!", "\u00bf", "\u00a1", ":", "-", "'"],
     ],
     symbolsLayout: [],
+    extraLayout: [[".", ",", "?", "!", "\u00bf", "\u00a1", ":", "-", "'"]],
   },
   fr: {
     locale: "fr",
@@ -94,7 +96,8 @@ export const keyboardLayouts: Record<KeyboardLanguage, KeyboardLayout> = {
       [KEY_SHIFT, "z", "x", "c", "v", "b", "n", "m", KEY_BACKSPACE],
       ["\u00e1", "\u00e9", "\u00ed", "\u00f3", "\u00fa", "\u00e3", "\u00f5", "\u00ea", "\u00f4"],
     ],
-    symbolsLayout: [
+    symbolsLayout: [],
+    extraLayout: [
       [".", ",", "?", "!", ":", ";", "-", "'", "(", ")"],
       ["\u00e2", "\u00e0"],
     ],
@@ -107,9 +110,9 @@ export const keyboardLayouts: Record<KeyboardLanguage, KeyboardLayout> = {
       ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
       [KEY_SHIFT, "z", "x", "c", "v", "b", "n", "m", KEY_BACKSPACE],
       ["\u00e0", "\u00e8", "\u00ec", "\u00f2", "\u00f9", "\u00e9"],
-      [".", ",", "?", "!", ":", ";", "-", "'", "(", ")"],
     ],
     symbolsLayout: [],
+    extraLayout: [[".", ",", "?", "!", ":", ";", "-", "'", "(", ")"]],
   },
 };
 

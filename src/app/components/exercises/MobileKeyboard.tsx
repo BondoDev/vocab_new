@@ -24,7 +24,7 @@ export type MobileKeyboardProps = {
   canInsertSpace?: boolean;
 };
 
-type SpecialKey = "shift" | "backspace" | "space" | "enter" | "symbols";
+type SpecialKey = "shift" | "backspace" | "space" | "enter" | "symbols" | "extra";
 
 type LongPressPopupState = {
   options: string[];
@@ -46,6 +46,7 @@ export function MobileKeyboard({
   const { t } = useLanguage();
   const [isShiftActive, setIsShiftActive] = useState(false);
   const [isSymbolsMode, setIsSymbolsMode] = useState(false);
+  const [isExtraLayerVisible, setIsExtraLayerVisible] = useState(false);
   const [longPressPopup, setLongPressPopup] = useState<LongPressPopupState | null>(null);
   const [activePopupIndex, setActivePopupIndex] = useState(0);
 
@@ -54,15 +55,22 @@ export function MobileKeyboard({
   const longPressOpenedRef = useRef(false);
 
   const layout = useMemo(() => getKeyboardLayout(language), [language]);
-  const hasSymbolsLayer = language === "fr" || language === "pt";
+  const hasSymbolsLayer = layout.symbolsLayout.length > 0;
+  const hasExtraLayer = Boolean(layout.extraLayout && layout.extraLayout.length > 0);
   const activeRows =
-    hasSymbolsLayer && isSymbolsMode ? layout.symbolsLayout : layout.baseLayout;
+    hasSymbolsLayer && isSymbolsMode
+      ? layout.symbolsLayout
+      : [
+          ...layout.baseLayout,
+          ...(hasExtraLayer && isExtraLayerVisible ? layout.extraLayout ?? [] : []),
+        ];
   const specialKeyLabels: Record<SpecialKey, string> = {
     shift: t("practice.keyboard.shift"),
     backspace: t("practice.keyboard.backspace"),
     space: t("practice.keyboard.space"),
     enter: t("practice.keyboard.enter"),
     symbols: t("practice.keyboard.toggleSymbols"),
+    extra: t("practice.keyboard.toggleSymbols"),
   };
 
   const symbolsToggleLabel = (() => {
@@ -72,6 +80,7 @@ export function MobileKeyboard({
     if (language === "pt") return "â#+";
     return "#+";
   })();
+  const extraToggleLabel = "#+";
 
   const toUpperWithLanguage = (key: string): string => {
     if (key === "\u00df") return "\u1e9e";
@@ -133,6 +142,14 @@ export function MobileKeyboard({
     if (key === "symbols") {
       if (!hasSymbolsLayer) return;
       setIsSymbolsMode((prev) => !prev);
+      setIsShiftActive(false);
+      closeLongPressPopup();
+      return;
+    }
+    if (key === "extra") {
+      if (!hasExtraLayer) return;
+      setIsExtraLayerVisible((prev) => !prev);
+      setIsSymbolsMode(false);
       setIsShiftActive(false);
       closeLongPressPopup();
       return;
@@ -316,13 +333,25 @@ export function MobileKeyboard({
         {hasSymbolsLayer && (
           <button
             type="button"
-            className="mobile-keyboard__key mobile-keyboard__key--action"
+            className={`mobile-keyboard__key mobile-keyboard__key--action ${isSymbolsMode ? "is-active" : ""}`}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => handleSpecialKey("symbols")}
             aria-label={specialKeyLabels.symbols}
             disabled={disabled}
           >
             {symbolsToggleLabel}
+          </button>
+        )}
+        {hasExtraLayer && (
+          <button
+            type="button"
+            className={`mobile-keyboard__key mobile-keyboard__key--action ${isExtraLayerVisible ? "is-active" : ""}`}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => handleSpecialKey("extra")}
+            aria-label={specialKeyLabels.extra}
+            disabled={disabled}
+          >
+            {extraToggleLabel}
           </button>
         )}
         <button
