@@ -162,7 +162,7 @@
   background-color: #ffffff !important;
 }
 
-.mobile-keyboard {
+.mobile-keyboard-v2 {
   --mobile-kb-key-width: 1.92rem;
   position: fixed;
   left: 0;
@@ -196,12 +196,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mobile-keyboard {
+  .mobile-keyboard-v2 {
     animation: none;
   }
 }
 
-.mobile-keyboard__row {
+.mobile-keyboard-v2__row {
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
@@ -211,7 +211,7 @@
   max-width: 100%;
 }
 
-.mobile-keyboard__key {
+.mobile-keyboard-v2__key {
   min-width: 0;
   min-height: 2.42rem;
   width: 100%;
@@ -232,53 +232,53 @@
   max-width: 100%;
 }
 
-.mobile-keyboard__row:not(.mobile-keyboard__row--actions)
-  .mobile-keyboard__key {
+.mobile-keyboard-v2__row:not(.mobile-keyboard-v2__row--actions)
+  .mobile-keyboard-v2__key {
   flex: 1 1 0;
   width: auto;
   max-width: 3rem;
 }
 
-.mobile-keyboard__key:active {
+.mobile-keyboard-v2__key:active {
   transform: translateY(1px) scale(0.98);
   background: color-mix(in oklab, var(--primary) 18%, var(--card) 82%);
   border-color: color-mix(in oklab, var(--primary) 42%, var(--border) 58%);
 }
 
-.mobile-keyboard__key:disabled {
+.mobile-keyboard-v2__key:disabled {
   opacity: 0.55;
 }
 
-.mobile-keyboard__row--punctuation .mobile-keyboard__key {
+.mobile-keyboard-v2__row--punctuation .mobile-keyboard-v2__key {
   font-size: clamp(1.42rem, 5vw, 1.66rem) !important;
 }
 
-.mobile-keyboard__row--actions {
+.mobile-keyboard-v2__row--actions {
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
 }
 
-.mobile-keyboard__row--actions .mobile-keyboard__key {
+.mobile-keyboard-v2__row--actions .mobile-keyboard-v2__key {
   width: auto;
   min-width: 2.45rem;
   max-width: 3rem;
 }
 
-.mobile-keyboard__row--actions .mobile-keyboard__key--action:first-child {
+.mobile-keyboard-v2__row--actions .mobile-keyboard-v2__key--action:first-child {
   min-width: 3.8rem;
 }
 
-.mobile-keyboard__key--wide {
+.mobile-keyboard-v2__key--wide {
   flex: 1;
   max-width: 7rem;
 }
 
-.mobile-keyboard__row--actions .mobile-keyboard__key--wide {
+.mobile-keyboard-v2__row--actions .mobile-keyboard-v2__key--wide {
   max-width: 7rem;
 }
 
-.mobile-keyboard__key.mobile-keyboard__key--backspace {
+.mobile-keyboard-v2__key.mobile-keyboard-v2__key--backspace {
   font-size: 1.16rem !important;
   line-height: 1 !important;
   font-weight: 700 !important;
@@ -290,12 +290,12 @@
     0 0 0 1px rgba(214, 90, 90, 0.08);
 }
 
-.mobile-keyboard__key.mobile-keyboard__key--backspace:active {
+.mobile-keyboard-v2__key.mobile-keyboard-v2__key--backspace:active {
   background: color-mix(in oklab, #ffdede 84%, white 16%);
   border-color: color-mix(in oklab, #c94949 78%, white 22%);
 }
 
-.mobile-keyboard__popup {
+.mobile-keyboard-v2__popup {
   position: fixed;
   z-index: 1210;
   display: inline-flex;
@@ -310,7 +310,7 @@
   user-select: none;
 }
 
-.mobile-keyboard__popup-option {
+.mobile-keyboard-v2__popup-option {
   min-width: 2rem;
   min-height: 2.15rem;
   padding: 0.2rem 0.36rem;
@@ -324,12 +324,12 @@
   background: transparent;
 }
 
-.mobile-keyboard__popup-option.is-active {
+.mobile-keyboard-v2__popup-option.is-active {
   background: color-mix(in oklab, var(--primary) 18%, var(--card) 82%);
   color: var(--foreground);
 }
 
-.mobile-keyboard {
+.mobile-keyboard-v2 {
   --mobile-kb-key-width: 1.7rem;
   gap: 0.32rem;
   padding: 0.36rem 0.24rem calc(0.44rem + env(safe-area-inset-bottom));
@@ -337,37 +337,37 @@
 
 // BIG MOBILE SCREEN KEYBOARD
 @media (min-width: 376px) and (max-width: 430.98px) {
-  .mobile-keyboard {
+  .mobile-keyboard-v2 {
     --mobile-kb-key-width: 2.12rem;
     gap: 0.38rem;
     padding: 0.48rem 0.3rem calc(0.54rem + env(safe-area-inset-bottom));
     bottom: 7rem;
   }
 
-  .mobile-keyboard__row {
+  .mobile-keyboard-v2__row {
     gap: 0.3rem;
   }
 
-  .mobile-keyboard__key {
+  .mobile-keyboard-v2__key {
     min-height: 2.5rem;
     padding: 0.82rem 0.12rem;
     font-size: clamp(1.58rem, 4.9vw, 1.84rem) !important;
     border-radius: 0.6rem;
   }
 
-  .mobile-keyboard__key--wide,
-  .mobile-keyboard__row--actions .mobile-keyboard__key--wide {
+  .mobile-keyboard-v2__key--wide,
+  .mobile-keyboard-v2__row--actions .mobile-keyboard-v2__key--wide {
     max-width: 7.6rem;
   }
 }
 
-.mobile-keyboard__key--action.is-active {
+.mobile-keyboard-v2__key--action.is-active {
   background: color-mix(in oklab, var(--primary) 22%, var(--card) 78%);
   border-color: color-mix(in oklab, var(--primary) 50%, var(--border) 50%);
 }
 
 @media (min-width: 1024px) {
-  .mobile-keyboard {
+  .mobile-keyboard-v2 {
     display: none;
   }
 }

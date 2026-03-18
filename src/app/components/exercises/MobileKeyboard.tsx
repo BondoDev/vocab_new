@@ -260,7 +260,7 @@ export function MobileKeyboard({
     const handlePointerDown = (event: PointerEvent) => {
       const target = event.target as HTMLElement | null;
       if (!target) return;
-      if (target.closest(".mobile-keyboard")) return;
+      if (target.closest(".mobile-keyboard-v2")) return;
       if (target.closest(".exercise-hint-button")) return;
       onClose();
     };
@@ -275,7 +275,7 @@ export function MobileKeyboard({
         <button
           key={`shift-${rowIndex}-${keyIndex}`}
           type="button"
-          className={`mobile-keyboard__key mobile-keyboard__key--action mobile-keyboard__key--edge ${isShiftActive ? "is-active" : ""}`}
+          className={`mobile-keyboard-v2__key mobile-keyboard-v2__key--action mobile-keyboard-v2__key--edge ${isShiftActive ? "is-active" : ""}`}
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => handleSpecialKey("shift")}
           aria-label={specialKeyLabels.shift}
@@ -291,7 +291,7 @@ export function MobileKeyboard({
         <button
           key={`backspace-${rowIndex}-${keyIndex}`}
           type="button"
-          className="mobile-keyboard__key mobile-keyboard__key--action mobile-keyboard__key--edge mobile-keyboard__key--backspace"
+          className="mobile-keyboard-v2__key mobile-keyboard-v2__key--action mobile-keyboard-v2__key--edge mobile-keyboard-v2__key--backspace"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => handleSpecialKey("backspace")}
           aria-label={specialKeyLabels.backspace}
@@ -309,7 +309,7 @@ export function MobileKeyboard({
       <button
         key={`key-${rowIndex}-${keyIndex}-${key}`}
         type="button"
-        className="mobile-keyboard__key"
+        className="mobile-keyboard-v2__key"
         onPointerDown={(event) => handleTextKeyPointerDown(event, key)}
         onPointerUp={(event) => handleTextKeyPointerUp(event, key)}
         onPointerCancel={handleTextKeyPointerCancel}
@@ -322,18 +322,18 @@ export function MobileKeyboard({
   };
 
   const keyboard = (
-    <div className="mobile-keyboard" role="group" aria-label={t("practice.keyboard.mobileKeyboard")}>
+    <div className="mobile-keyboard-v2" role="group" aria-label={t("practice.keyboard.mobileKeyboard")}>
       {activeRows.map((row, rowIndex) => (
-        <div key={`row-${rowIndex}`} className="mobile-keyboard__row">
+        <div key={`row-${rowIndex}`} className="mobile-keyboard-v2__row">
           {row.map((key, keyIndex) => renderKey(key, rowIndex, keyIndex))}
         </div>
       ))}
 
-      <div className="mobile-keyboard__row mobile-keyboard__row--actions">
+      <div className="mobile-keyboard-v2__row mobile-keyboard-v2__row--actions">
         {hasSymbolsLayer && (
           <button
             type="button"
-            className={`mobile-keyboard__key mobile-keyboard__key--action ${isSymbolsMode ? "is-active" : ""}`}
+            className={`mobile-keyboard-v2__key mobile-keyboard-v2__key--action ${isSymbolsMode ? "is-active" : ""}`}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => handleSpecialKey("symbols")}
             aria-label={specialKeyLabels.symbols}
@@ -345,7 +345,7 @@ export function MobileKeyboard({
         {hasExtraLayer && (
           <button
             type="button"
-            className={`mobile-keyboard__key mobile-keyboard__key--action ${isExtraLayerVisible ? "is-active" : ""}`}
+            className={`mobile-keyboard-v2__key mobile-keyboard-v2__key--action ${isExtraLayerVisible ? "is-active" : ""}`}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => handleSpecialKey("extra")}
             aria-label={specialKeyLabels.extra}
@@ -356,7 +356,7 @@ export function MobileKeyboard({
         )}
         <button
           type="button"
-          className="mobile-keyboard__key mobile-keyboard__key--action mobile-keyboard__key--wide"
+          className="mobile-keyboard-v2__key mobile-keyboard-v2__key--action mobile-keyboard-v2__key--wide"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => handleSpecialKey("space")}
           aria-label={specialKeyLabels.space}
@@ -367,7 +367,7 @@ export function MobileKeyboard({
         {hasSymbolsLayer && isSymbolsMode && (
           <button
             type="button"
-            className="mobile-keyboard__key mobile-keyboard__key--action mobile-keyboard__key--backspace"
+            className="mobile-keyboard-v2__key mobile-keyboard-v2__key--action mobile-keyboard-v2__key--backspace"
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => handleSpecialKey("backspace")}
             aria-label={specialKeyLabels.backspace}
@@ -379,7 +379,7 @@ export function MobileKeyboard({
         {onSubmit && (
           <button
             type="button"
-            className="mobile-keyboard__key mobile-keyboard__key--action"
+            className="mobile-keyboard-v2__key mobile-keyboard-v2__key--action"
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => handleSpecialKey("enter")}
             aria-label={specialKeyLabels.enter}
@@ -393,14 +393,14 @@ export function MobileKeyboard({
       {longPressPopup && (
         <div
           ref={popupRef}
-          className="mobile-keyboard__popup"
+          className="mobile-keyboard-v2__popup"
           style={{ left: longPressPopup.anchorX, top: longPressPopup.anchorY }}
         >
           {longPressPopup.options.map((option, index) => (
             <div
               key={`popup-option-${option}-${index}`}
               data-kb-popup-option-index={index}
-              className={`mobile-keyboard__popup-option ${activePopupIndex === index ? "is-active" : ""}`}
+              className={`mobile-keyboard-v2__popup-option ${activePopupIndex === index ? "is-active" : ""}`}
             >
               {isShiftActive ? toUpperWithLanguage(option) : option}
             </div>

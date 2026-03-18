@@ -47,6 +47,7 @@ export function HalfWrittenExercise({
   const [lineCount, setLineCount] = useState(1);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const hasAutoPlayedCorrectAudioRef = useRef(false);
   const missingTemplate = normalizedWord.substring(visibleLetterCount);
 
   const resolveKeyboardLanguage = (language: string): KeyboardLanguage => {
@@ -101,6 +102,7 @@ export function HalfWrittenExercise({
     setCaretIndex(0);
     setIsInputFocused(false);
     setLineCount(1);
+    hasAutoPlayedCorrectAudioRef.current = false;
     charSlotRefs.current = [];
     setVisibleLetterCount(calculateVisiblePortion(normalizedWord.length));
   }, [currentWord, normalizedWord]);
@@ -181,6 +183,12 @@ export function HalfWrittenExercise({
       activeElement.blur();
     }
   }, [isCorrect]);
+
+  useEffect(() => {
+    if (!isCorrect || hasAutoPlayedCorrectAudioRef.current) return;
+    hasAutoPlayedCorrectAudioRef.current = true;
+    speakWord();
+  }, [isCorrect, speakWord]);
 
   const updateCaretIndex = (target?: HTMLInputElement | null) => {
     if (!target) return;

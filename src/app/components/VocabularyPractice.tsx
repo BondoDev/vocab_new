@@ -986,6 +986,7 @@ export function VocabularyPractice({
                           translations={translations}
                           sourceLabel={getLanguageName(practiceLanguage)}
                           targetLabel={getLanguageName(yourLanguage)}
+                          onSpeakWord={speakSpecificWord}
                           onStatusChange={setExerciseStatus}
                         />
                       ) : currentExerciseType === "listening" ? (

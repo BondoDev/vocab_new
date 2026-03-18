@@ -10,6 +10,7 @@ interface ConnectWordsExerciseProps {
   translations: { [key: string]: string };
   sourceLabel: string;
   targetLabel: string;
+  onSpeakWord: (word: string) => void;
   onStatusChange: (status: {
     isCorrect: boolean;
     hasTypedAnswer: boolean;
@@ -25,6 +26,7 @@ export function ConnectWordsExercise({
   translations,
   sourceLabel,
   targetLabel,
+  onSpeakWord,
   onStatusChange,
 }: ConnectWordsExerciseProps) {
   const { t } = useLanguage();
@@ -152,6 +154,7 @@ export function ConnectWordsExercise({
       : "";
 
     if (selectedMeaningText === correctMeaning) {
+      onSpeakWord(selectedWordText);
       const newPairs = [
         ...connectPairs,
         { wordIndex: selectedWord, meaningIndex },

@@ -46,6 +46,7 @@ export function WordTypingExercise({
   const [lineCount, setLineCount] = useState(1);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const hasAutoPlayedCorrectAudioRef = useRef(false);
   const templateWord = currentWord?.word_lemma ?? "";
 
   const resolveKeyboardLanguage = (language: string): KeyboardLanguage => {
@@ -92,6 +93,7 @@ export function WordTypingExercise({
     setCaretIndex(0);
     setIsInputFocused(false);
     setLineCount(1);
+    hasAutoPlayedCorrectAudioRef.current = false;
     charSlotRefs.current = [];
   }, [currentWord]);
 
@@ -166,6 +168,12 @@ export function WordTypingExercise({
     if (viewportWidth >= 1024) return;
     inputRef.current?.blur();
   }, [isCorrect]);
+
+  useEffect(() => {
+    if (!isCorrect || hasAutoPlayedCorrectAudioRef.current) return;
+    hasAutoPlayedCorrectAudioRef.current = true;
+    speakWord();
+  }, [isCorrect, speakWord]);
 
   const updateCaretIndex = (target?: HTMLInputElement | null) => {
     if (!target) return;

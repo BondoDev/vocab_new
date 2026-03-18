@@ -33,6 +33,7 @@ export function BrokenWordExercise({
   const [isCorrect, setIsCorrect] = useState(false);
   const [lineCount, setLineCount] = useState(1);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const hasAutoPlayedCorrectAudioRef = useRef(false);
   const rawWord: string = currentWord?.word_lemma ?? "";
   const { fieldStyle } = getSharedExerciseFieldSizing(rawWord);
 
@@ -89,6 +90,7 @@ export function BrokenWordExercise({
     setUsedShowWord(false);
     setIsCorrect(false);
     setLineCount(1);
+    hasAutoPlayedCorrectAudioRef.current = false;
     charSlotRefs.current = [];
   };
 
@@ -131,6 +133,12 @@ export function BrokenWordExercise({
 
     return () => window.cancelAnimationFrame(raf);
   }, [wordChunks, placedChunks, usedShowWord, rawWord]);
+
+  useEffect(() => {
+    if (!isCorrect || hasAutoPlayedCorrectAudioRef.current) return;
+    hasAutoPlayedCorrectAudioRef.current = true;
+    speakWord();
+  }, [isCorrect, speakWord]);
 
   useEffect(() => {
     const handleResize = () => {
