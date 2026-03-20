@@ -838,8 +838,39 @@ export function VocabularyPractice({
   };
 
   const getLanguageName = (code: string): string => {
-    const translated = t(`languageNames.${code}`);
-    if (!translated || translated === `languageNames.${code}`) {
+    const normalized = code.trim().toLowerCase();
+    const aliases: Record<string, string> = {
+      en: "en",
+      "en-us": "en",
+      english: "en",
+      es: "es",
+      "es-es": "es",
+      spanish: "es",
+      espanol: "es",
+      fr: "fr",
+      "fr-fr": "fr",
+      french: "fr",
+      francais: "fr",
+      de: "de",
+      "de-de": "de",
+      german: "de",
+      deutsch: "de",
+      it: "it",
+      "it-it": "it",
+      italian: "it",
+      italiano: "it",
+      pt: "pt",
+      "pt-pt": "pt",
+      portuguese: "pt",
+      portugues: "pt",
+      ru: "ru",
+      "ru-ru": "ru",
+      russian: "ru",
+      russkiy: "ru",
+    };
+    const key = aliases[normalized] ?? normalized;
+    const translated = t(`languageNames.${key}`);
+    if (!translated || translated === `languageNames.${key}`) {
       return code;
     }
     return translated;
