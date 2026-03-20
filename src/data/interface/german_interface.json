@@ -389,7 +389,8 @@
       "backspace": "Löschen",
       "space": "Leerzeichen",
       "enter": "Eingabe",
-      "toggleSymbols": "Symbole umschalten"
+      "toggleSymbols": "Symbole umschalten",
+      "specialCharacters": "Sonderzeichen"
     }
   },
   "exam": {

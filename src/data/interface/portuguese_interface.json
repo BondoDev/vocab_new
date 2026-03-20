@@ -389,7 +389,8 @@
       "backspace": "Apagar",
       "space": "Espaco",
       "enter": "Enter",
-      "toggleSymbols": "Alternar simbolos"
+      "toggleSymbols": "Alternar simbolos",
+      "specialCharacters": "Caracteres especiais"
     }
   },
   "exam": {

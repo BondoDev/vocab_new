@@ -394,7 +394,8 @@
       "backspace": "Retour",
       "space": "Espace",
       "enter": "Entree",
-      "toggleSymbols": "Basculer les symboles"
+      "toggleSymbols": "Basculer les symboles",
+      "specialCharacters": "Caracteres speciaux"
     }
   },
   "exam": {

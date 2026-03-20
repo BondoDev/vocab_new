@@ -394,7 +394,8 @@
       "backspace": "Backspace",
       "space": "Space",
       "enter": "Enter",
-      "toggleSymbols": "Toggle symbols"
+      "toggleSymbols": "Toggle symbols",
+      "specialCharacters": "Special characters"
     }
   },
   "exam": {

@@ -247,7 +247,8 @@
       "backspace": "Backspace",
       "space": "Пробел",
       "enter": "Ввод",
-      "toggleSymbols": "Символы"
+      "toggleSymbols": "Символы",
+      "specialCharacters": "Специальные символы"
     }
   },
   "exam": {
