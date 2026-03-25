@@ -69,9 +69,9 @@ export function VocabularyPractice({
   const [isCardSwitching, setIsCardSwitching] = useState(false);
   const [cycleWords, setCycleWords] = useState<any[]>([]);
   const [reinforcementWords, setReinforcementWords] = useState<any[]>([]);
-  const [cycleStage, setCycleStage] = useState<
-    "collection" | "microReview" | "reinforcement"
-  >("collection");
+  const [cycleStage, setCycleStage] = useState<"collection" | "reinforcement">(
+    "collection",
+  );
   const cardSwitchTimeoutRef = useRef<number | null>(null);
   const forcedTypingRepeatQueueRef = useRef<TypingRepeatEntry[]>([]);
   const resumeIndexAfterForcedRepeatRef = useRef<number | null>(null);
@@ -532,21 +532,6 @@ export function VocabularyPractice({
       return;
     }
 
-    if (cycleStage === "microReview") {
-      if (reinforcementWords.length === 4 && reinforcementExerciseTypes.length > 0) {
-        setCycleStage("reinforcement");
-        setCurrentExerciseType(
-          pickRandomExercise(reinforcementExerciseTypes) ?? "connectWords",
-        );
-        return;
-      }
-
-      setCycleWords([]);
-      setReinforcementWords([]);
-      moveToNextCollectionTyping();
-      return;
-    }
-
     const shouldAddToCycle =
       Boolean(currentWord) &&
       (exerciseStatus.isCorrect ||
@@ -571,25 +556,6 @@ export function VocabularyPractice({
       const nextCollectionIndex = getNextCollectionIndex(currentIndex);
       if (resumeIndexAfterForcedRepeatRef.current === null) {
         resumeIndexAfterForcedRepeatRef.current = nextCollectionIndex;
-      }
-
-      const reviewCandidates = nextCycleWords.slice(0, -1);
-      const reviewWord =
-        reviewCandidates[Math.floor(Math.random() * reviewCandidates.length)];
-      const reviewIndex = words.findIndex(
-        (word) =>
-          String(word?.concept_id ?? "") ===
-          String(reviewWord?.concept_id ?? ""),
-      );
-      const reviewExercise = reviewWord
-        ? selectTypingExerciseForWord(reviewWord)
-        : null;
-
-      if (reviewWord && reviewIndex !== -1 && reviewExercise) {
-        setCycleStage("microReview");
-        setCurrentIndex(reviewIndex);
-        setCurrentExerciseType(reviewExercise);
-        return;
       }
 
       if (reinforcementExerciseTypes.length > 0) {
