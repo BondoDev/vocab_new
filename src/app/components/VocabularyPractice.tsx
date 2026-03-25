@@ -412,7 +412,7 @@ export function VocabularyPractice({
 
     const shouldScheduleRepeat =
       !wasExplicitSkip &&
-      result !== "correct" &&
+      exerciseStatus.usedShowWord &&
       !isFourWordExercise(currentExerciseType);
     const { queue: advancedQueue, dueConceptId: dueRepeatConceptId } =
       advanceTypingRepeatQueue({
