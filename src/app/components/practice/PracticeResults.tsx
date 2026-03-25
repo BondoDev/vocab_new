@@ -8,12 +8,14 @@ interface PracticeResultsProps {
     level: string;
     type: string;
     result: "correct" | "incorrect" | "skipped";
+    wasTyped: boolean;
   }>;
-  studiedWords: Array<{
+  sessionWords: Array<{
     conceptId: string;
     nativeWord: string;
     targetWord: string;
     wordType: string;
+    status: "practiced" | "skipped";
   }>;
   stats: {
     levels: string[];
@@ -31,7 +33,7 @@ interface PracticeResultsProps {
 
 export function PracticeResults({
   attemptHistory,
-  studiedWords,
+  sessionWords,
   stats,
 }: PracticeResultsProps) {
   const { t } = useLanguage();
@@ -75,13 +77,29 @@ export function PracticeResults({
   ).length;
   const accuracy =
     totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0;
-  const sortedStudiedWords = useMemo(
+  const sortedSessionWords = useMemo(
     () =>
-      [...studiedWords].sort((a, b) =>
-        a.nativeWord.localeCompare(b.nativeWord, undefined, { sensitivity: "base" }),
+      [...sessionWords].sort((a, b) =>
+        a.nativeWord.localeCompare(b.nativeWord, undefined, {
+          sensitivity: "base",
+        }),
       ),
-    [studiedWords],
+    [sessionWords],
   );
+  const practicedWords = useMemo(
+    () => sortedSessionWords.filter((word) => word.status === "practiced"),
+    [sortedSessionWords],
+  );
+  const skippedWords = useMemo(
+    () => sortedSessionWords.filter((word) => word.status === "skipped"),
+    [sortedSessionWords],
+  );
+  const skippedWordsLabel = (() => {
+    const translated = t("practice.skippedWords");
+    return !translated || translated === "practice.skippedWords"
+      ? "Skipped words"
+      : translated;
+  })();
 
   return (
     <div className="space-y-8 py-4 lg:space-y-6 lg:py-1">
@@ -161,7 +179,7 @@ export function PracticeResults({
                             </div>
                           </div>
                         ) : (
-                          <span className="text-muted-foreground">—</span>
+                          <span className="text-muted-foreground">вЂ”</span>
                         )}
                       </td>
                     );
@@ -201,7 +219,7 @@ export function PracticeResults({
                           </div>
                         </div>
                       ) : (
-                        <span className="text-muted-foreground">вЂ”</span>
+                        <span className="text-muted-foreground">РІР‚вЂќ</span>
                       )}
                     </td>
                   );
@@ -237,7 +255,7 @@ export function PracticeResults({
                   {t("practice.practicedWords")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {sortedStudiedWords.length} {t("practice.wordsInThisSession")}
+                  {sortedSessionWords.length} {t("practice.wordsInThisSession")}
                 </p>
               </div>
               <button
@@ -254,22 +272,74 @@ export function PracticeResults({
               <table className="w-full text-left text-sm">
                 <thead className="sticky top-0 z-10 bg-card">
                   <tr className="border-b border-border">
-                    <th className="px-4 py-3 font-semibold text-foreground">{t("practice.yourLanguageHeader")}</th>
-                    <th className="px-4 py-3 font-semibold text-foreground">{t("practice.targetLanguageHeader")}</th>
-                    <th className="px-4 py-3 font-semibold text-foreground">{t("practice.wordTypeHeader")}</th>
+                    <th className="px-4 py-3 font-semibold text-foreground">
+                      {t("practice.yourLanguageHeader")}
+                    </th>
+                    <th className="px-4 py-3 font-semibold text-foreground">
+                      {t("practice.targetLanguageHeader")}
+                    </th>
+                    <th className="px-4 py-3 font-semibold text-foreground">
+                      {t("practice.wordTypeHeader")}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedStudiedWords.map((word) => (
-                    <tr
-                      key={word.conceptId}
-                      className="border-b border-border/70 last:border-b-0"
-                    >
-                      <td className="px-4 py-3 text-foreground">{word.nativeWord || "—"}</td>
-                      <td className="px-4 py-3 text-foreground">{word.targetWord || "—"}</td>
-                      <td className="px-4 py-3 text-muted-foreground">{word.wordType || "—"}</td>
-                    </tr>
-                  ))}
+                  {practicedWords.length > 0 ? (
+                    <>
+                      <tr className="border-b border-border bg-muted/20">
+                        <td
+                          colSpan={3}
+                          className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground"
+                        >
+                          {t("practice.practicedWords")} ({practicedWords.length})
+                        </td>
+                      </tr>
+                      {practicedWords.map((word) => (
+                        <tr
+                          key={word.conceptId}
+                          className="border-b border-border/70 last:border-b-0"
+                        >
+                          <td className="px-4 py-3 text-foreground">
+                            {word.nativeWord || "вЂ”"}
+                          </td>
+                          <td className="px-4 py-3 text-foreground">
+                            {word.targetWord || "вЂ”"}
+                          </td>
+                          <td className="px-4 py-3 text-muted-foreground">
+                            {word.wordType || "вЂ”"}
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  ) : null}
+                  {skippedWords.length > 0 ? (
+                    <>
+                      <tr className="border-b border-border bg-muted/20">
+                        <td
+                          colSpan={3}
+                          className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground"
+                        >
+                          {skippedWordsLabel} ({skippedWords.length})
+                        </td>
+                      </tr>
+                      {skippedWords.map((word) => (
+                        <tr
+                          key={word.conceptId}
+                          className="border-b border-border/70 last:border-b-0"
+                        >
+                          <td className="px-4 py-3 text-foreground">
+                            {word.nativeWord || "вЂ”"}
+                          </td>
+                          <td className="px-4 py-3 text-foreground">
+                            {word.targetWord || "вЂ”"}
+                          </td>
+                          <td className="px-4 py-3 text-muted-foreground">
+                            {word.wordType || "вЂ”"}
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  ) : null}
                 </tbody>
               </table>
             </div>
