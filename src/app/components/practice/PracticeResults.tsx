@@ -9,6 +9,7 @@ interface PracticeResultsProps {
     type: string;
     result: "correct" | "incorrect" | "skipped";
     wasTyped: boolean;
+    wasRevealed: boolean;
   }>;
   sessionWords: Array<{
     conceptId: string;
@@ -16,7 +17,7 @@ interface PracticeResultsProps {
     targetWord: string;
     wordType: string;
     wordTopic: string;
-    status: "practiced" | "skipped";
+    status: "guessed" | "viewed" | "skipped";
   }>;
   stats: {
     levels: string[];
@@ -105,14 +106,30 @@ export function PracticeResults({
       ),
     [sessionWords],
   );
-  const practicedWords = useMemo(
-    () => sortedSessionWords.filter((word) => word.status === "practiced"),
+  const guessedWords = useMemo(
+    () => sortedSessionWords.filter((word) => word.status === "guessed"),
+    [sortedSessionWords],
+  );
+  const viewedWords = useMemo(
+    () => sortedSessionWords.filter((word) => word.status === "viewed"),
     [sortedSessionWords],
   );
   const skippedWords = useMemo(
     () => sortedSessionWords.filter((word) => word.status === "skipped"),
     [sortedSessionWords],
   );
+  const guessedWordsLabel = (() => {
+    const translated = t("practice.guessedWords");
+    return !translated || translated === "practice.guessedWords"
+      ? "Guessed words"
+      : translated;
+  })();
+  const viewedWordsLabel = (() => {
+    const translated = t("practice.viewedWords");
+    return !translated || translated === "practice.viewedWords"
+      ? "Viewed words"
+      : translated;
+  })();
   const skippedWordsLabel = (() => {
     const translated = t("practice.skippedWords");
     return !translated || translated === "practice.skippedWords"
@@ -261,7 +278,7 @@ export function PracticeResults({
           onClick={() => setIsStudiedWordsOpen(true)}
           className="inline-flex items-center rounded-xl border border-primary/25 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/15"
         >
-          {t("practice.practicedWords")}
+          {guessedWordsLabel}
         </button>
       </div>
 
@@ -277,7 +294,7 @@ export function PracticeResults({
             <div className="flex items-center justify-between border-b border-border px-4 py-3 sm:px-5">
               <div>
                 <h3 className="text-base font-semibold text-foreground">
-                  {t("practice.practicedWords")}
+                  {guessedWordsLabel}
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   {sortedSessionWords.length} {t("practice.wordsInThisSession")}
@@ -312,17 +329,50 @@ export function PracticeResults({
                   </tr>
                 </thead>
                 <tbody>
-                  {practicedWords.length > 0 ? (
+                  {guessedWords.length > 0 ? (
                     <>
                       <tr className="border-b border-border bg-muted/20">
                         <td
                           colSpan={4}
                           className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground"
                         >
-                          {t("practice.practicedWords")} ({practicedWords.length})
+                          {guessedWordsLabel} ({guessedWords.length})
                         </td>
                       </tr>
-                      {practicedWords.map((word) => (
+                      {guessedWords.map((word) => (
+                        <tr
+                          key={word.conceptId}
+                          className="border-b border-border/70 last:border-b-0"
+                        >
+                          <td className="px-4 py-3 text-foreground">
+                            {word.nativeWord || "вЂ”"}
+                          </td>
+                          <td className="px-4 py-3 text-foreground">
+                            {word.targetWord || "вЂ”"}
+                          </td>
+                          <td className="px-4 py-3 text-muted-foreground">
+                            {word.wordType || "вЂ”"}
+                          </td>
+                          <td className="px-4 py-3 text-muted-foreground">
+                            {word.wordTopic
+                              ? getTopicLabel(word.wordTopic)
+                              : "вЂ”"}
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  ) : null}
+                  {viewedWords.length > 0 ? (
+                    <>
+                      <tr className="border-b border-border bg-muted/20">
+                        <td
+                          colSpan={4}
+                          className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground"
+                        >
+                          {viewedWordsLabel} ({viewedWords.length})
+                        </td>
+                      </tr>
+                      {viewedWords.map((word) => (
                         <tr
                           key={word.conceptId}
                           className="border-b border-border/70 last:border-b-0"

@@ -114,6 +114,7 @@ export function VocabularyPractice({
       type: string;
       result: "correct" | "incorrect" | "skipped";
       wasTyped: boolean;
+      wasRevealed: boolean;
     }>
   >([]);
 
@@ -374,6 +375,7 @@ export function VocabularyPractice({
   const runNextStep = (wasExplicitSkip = false) => {
     let result: "correct" | "incorrect" | "skipped";
     const wasTyped = exerciseStatus.hasTypedAnswer;
+    const wasRevealed = exerciseStatus.usedShowWord;
 
     if (isFourWordExercise(currentExerciseType)) {
       result = exerciseStatus.isCorrect ? "correct" : "skipped";
@@ -399,6 +401,7 @@ export function VocabularyPractice({
         type: word.type,
         result,
         wasTyped: false,
+        wasRevealed: false,
       }));
       setAttemptHistory((prev) => [...prev, ...newAttempts]);
     } else if (currentWord) {
@@ -410,6 +413,7 @@ export function VocabularyPractice({
           type: currentWord.type,
           result,
           wasTyped,
+          wasRevealed,
         },
       ]);
     }
@@ -699,7 +703,7 @@ export function VocabularyPractice({
         targetWord: string;
         wordType: string;
         wordTopic: string;
-        status: "practiced" | "skipped";
+        status: "guessed" | "viewed" | "skipped";
       }
     >();
 
@@ -711,10 +715,12 @@ export function VocabularyPractice({
 
       const previousEntry = sessionWordMap.get(attempt.conceptId);
       const nextStatus = attempt.wasTyped
-        ? "practiced"
-        : attempt.result === "skipped"
-          ? "skipped"
-          : null;
+        ? "guessed"
+        : attempt.wasRevealed
+          ? "viewed"
+          : attempt.result === "skipped"
+            ? "skipped"
+            : null;
 
       if (!nextStatus && !previousEntry) {
         return;
@@ -727,9 +733,11 @@ export function VocabularyPractice({
         wordType: matchedWord.type ? getWordTypeLabel(matchedWord.type) : "",
         wordTopic: matchedWord.category ?? "",
         status:
-          previousEntry?.status === "practiced" || nextStatus === "practiced"
-            ? "practiced"
-            : "skipped",
+          previousEntry?.status === "guessed" || nextStatus === "guessed"
+            ? "guessed"
+            : previousEntry?.status === "viewed" || nextStatus === "viewed"
+              ? "viewed"
+              : "skipped",
       });
     });
 
