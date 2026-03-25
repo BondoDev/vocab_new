@@ -698,6 +698,7 @@ export function VocabularyPractice({
         nativeWord: string;
         targetWord: string;
         wordType: string;
+        wordTopic: string;
         status: "practiced" | "skipped";
       }
     >();
@@ -724,6 +725,7 @@ export function VocabularyPractice({
         nativeWord: translations[attempt.conceptId] ?? "",
         targetWord: matchedWord.word_lemma ?? "",
         wordType: matchedWord.type ? getWordTypeLabel(matchedWord.type) : "",
+        wordTopic: matchedWord.category ?? "",
         status:
           previousEntry?.status === "practiced" || nextStatus === "practiced"
             ? "practiced"
@@ -918,6 +920,8 @@ export function VocabularyPractice({
               attemptHistory={attemptHistory}
               stats={calculateStatistics()}
               sessionWords={sessionWords}
+              yourLanguageLabel={getLanguageName(yourLanguage)}
+              practiceLanguageLabel={getLanguageName(practiceLanguage)}
             />
           ) : (
             <>

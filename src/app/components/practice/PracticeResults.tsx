@@ -15,6 +15,7 @@ interface PracticeResultsProps {
     nativeWord: string;
     targetWord: string;
     wordType: string;
+    wordTopic: string;
     status: "practiced" | "skipped";
   }>;
   stats: {
@@ -29,12 +30,16 @@ interface PracticeResultsProps {
       };
     };
   };
+  yourLanguageLabel: string;
+  practiceLanguageLabel: string;
 }
 
 export function PracticeResults({
   attemptHistory,
   sessionWords,
   stats,
+  yourLanguageLabel,
+  practiceLanguageLabel,
 }: PracticeResultsProps) {
   const { t } = useLanguage();
   const [isStudiedWordsOpen, setIsStudiedWordsOpen] = useState(false);
@@ -50,6 +55,20 @@ export function PracticeResults({
     const translated = t(`wordTypes.${typeId}`);
     if (!translated || translated === `wordTypes.${typeId}`) {
       return formatWordTypeLabel(typeId);
+    }
+    return translated;
+  };
+  const formatTopicLabel = (topicId: string) =>
+    topicId
+      .split(/[_-]+/g)
+      .map((part) =>
+        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
+      )
+      .join(" ");
+  const getTopicLabel = (topicId: string) => {
+    const translated = t(`levelCategory.topicNames.${topicId}`);
+    if (!translated || translated === `levelCategory.topicNames.${topicId}`) {
+      return formatTopicLabel(topicId);
     }
     return translated;
   };
@@ -98,6 +117,12 @@ export function PracticeResults({
     const translated = t("practice.skippedWords");
     return !translated || translated === "practice.skippedWords"
       ? "Skipped words"
+      : translated;
+  })();
+  const topicHeaderLabel = (() => {
+    const translated = t("practice.topicHeader");
+    return !translated || translated === "practice.topicHeader"
+      ? "Topic"
       : translated;
   })();
 
@@ -273,13 +298,16 @@ export function PracticeResults({
                 <thead className="sticky top-0 z-10 bg-card">
                   <tr className="border-b border-border">
                     <th className="px-4 py-3 font-semibold text-foreground">
-                      {t("practice.yourLanguageHeader")}
+                      {yourLanguageLabel}
                     </th>
                     <th className="px-4 py-3 font-semibold text-foreground">
-                      {t("practice.targetLanguageHeader")}
+                      {practiceLanguageLabel}
                     </th>
                     <th className="px-4 py-3 font-semibold text-foreground">
                       {t("practice.wordTypeHeader")}
+                    </th>
+                    <th className="px-4 py-3 font-semibold text-foreground">
+                      {topicHeaderLabel}
                     </th>
                   </tr>
                 </thead>
@@ -288,7 +316,7 @@ export function PracticeResults({
                     <>
                       <tr className="border-b border-border bg-muted/20">
                         <td
-                          colSpan={3}
+                          colSpan={4}
                           className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground"
                         >
                           {t("practice.practicedWords")} ({practicedWords.length})
@@ -308,6 +336,11 @@ export function PracticeResults({
                           <td className="px-4 py-3 text-muted-foreground">
                             {word.wordType || "вЂ”"}
                           </td>
+                          <td className="px-4 py-3 text-muted-foreground">
+                            {word.wordTopic
+                              ? getTopicLabel(word.wordTopic)
+                              : "вЂ”"}
+                          </td>
                         </tr>
                       ))}
                     </>
@@ -316,7 +349,7 @@ export function PracticeResults({
                     <>
                       <tr className="border-b border-border bg-muted/20">
                         <td
-                          colSpan={3}
+                          colSpan={4}
                           className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground"
                         >
                           {skippedWordsLabel} ({skippedWords.length})
@@ -335,6 +368,11 @@ export function PracticeResults({
                           </td>
                           <td className="px-4 py-3 text-muted-foreground">
                             {word.wordType || "вЂ”"}
+                          </td>
+                          <td className="px-4 py-3 text-muted-foreground">
+                            {word.wordTopic
+                              ? getTopicLabel(word.wordTopic)
+                              : "вЂ”"}
                           </td>
                         </tr>
                       ))}
