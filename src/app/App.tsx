@@ -1070,10 +1070,17 @@ function AppContent() {
       return;
     }
 
-    const startedOnLanguagePage =
-      pageFromPath(initialPathRef.current) === "language";
+    const initialPage = pageFromPath(initialPathRef.current);
+    const startedOnLanguagePage = initialPage === "language";
+    const startedOnPracticePage = initialPage === "practice";
 
     if (resolvedPage === "language" && !isContinueDisabled && startedOnLanguagePage) {
+      hasAutoRedirectedRef.current = true;
+      navigate(ROUTES.exerciseSelection, { replace: true });
+      return;
+    }
+
+    if (!isContinueDisabled && startedOnPracticePage && resolvedPage === "practice") {
       hasAutoRedirectedRef.current = true;
       navigate(ROUTES.exerciseSelection, { replace: true });
     }
