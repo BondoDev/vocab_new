@@ -182,6 +182,18 @@ export function PracticeResults({
 
   return (
     <div className="space-y-8 py-4 lg:space-y-6 lg:py-1">
+      <style>
+        {`
+          @keyframes practicedWordsCalloutFloat {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-4px);
+            }
+          }
+        `}
+      </style>
       <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
         <div className="text-center rounded-lg border border-border bg-muted/20 px-4 py-3">
           <div className="text-xl font-bold text-primary">{totalAttempts}</div>
@@ -317,10 +329,13 @@ export function PracticeResults({
         >
           {practicedWordsButtonLabel}
         </button>
-        <div className="relative mt-1 max-w-xs rounded-2xl bg-primary px-4 py-3 text-center text-xs leading-relaxed text-primary-foreground shadow-sm">
+        <div
+          className="relative mt-1 max-w-xs rounded-[1.35rem] border border-primary/30 bg-transparent px-4 py-3 text-center text-xs leading-relaxed text-foreground shadow-sm"
+          style={{ animation: "practicedWordsCalloutFloat 2.4s ease-in-out infinite" }}
+        >
           <div
             aria-hidden="true"
-            className="absolute left-1/2 top-[-8px] h-4 w-4 -translate-x-1/2 rotate-45 bg-primary"
+            className="absolute left-1/2 top-[-8px] h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-primary/30 bg-background"
           />
           <span className="relative block">
             Click this button to see guessed, viewed, and skipped words from this session.
