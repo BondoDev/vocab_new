@@ -309,7 +309,7 @@ export function PracticeResults({
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center gap-4">
         <button
           type="button"
           onClick={() => setIsStudiedWordsOpen(true)}
@@ -317,9 +317,12 @@ export function PracticeResults({
         >
           {practicedWordsButtonLabel}
         </button>
-        <div className="flex items-center gap-2 text-center text-xs text-muted-foreground">
-          <span aria-hidden="true" className="text-sm text-primary">^</span>
-          <span>
+        <div className="relative mt-1 max-w-xs rounded-2xl bg-primary px-4 py-3 text-center text-xs leading-relaxed text-primary-foreground shadow-sm">
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-[-8px] h-4 w-4 -translate-x-1/2 rotate-45 bg-primary"
+          />
+          <span className="relative block">
             Click this button to see guessed, viewed, and skipped words from this session.
           </span>
         </div>
