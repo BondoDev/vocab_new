@@ -286,7 +286,6 @@ export function WordTypingExercise({
     if (!currentWord) return;
     setUsedShowWord(true);
     setUserInput(currentWord.word_lemma || "");
-    setHasTypedAnswer(true);
   };
 
   const rawWord: string = currentWord?.word_lemma ?? "";

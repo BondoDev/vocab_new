@@ -132,6 +132,12 @@ export function PracticeResults({
       ? "Guessed words"
       : translated;
   })();
+  const practicedWordsButtonLabel = (() => {
+    const translated = t("practice.practicedWords");
+    return !translated || translated === "practice.practicedWords"
+      ? "Practiced words"
+      : translated;
+  })();
 
   const viewedWordsLabel = (() => {
     const translated = t("practice.viewedWords");
@@ -309,7 +315,7 @@ export function PracticeResults({
           onClick={() => setIsStudiedWordsOpen(true)}
           className="inline-flex items-center rounded-xl border border-primary/25 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/15"
         >
-          {guessedWordsLabel}
+          {practicedWordsButtonLabel}
         </button>
         <div className="flex items-center gap-2 text-center text-xs text-muted-foreground">
           <span aria-hidden="true" className="text-sm text-primary">^</span>
@@ -331,7 +337,7 @@ export function PracticeResults({
             <div className="flex items-center justify-between border-b border-border px-4 py-3 sm:px-5">
               <div>
                 <h3 className="text-base font-semibold text-foreground">
-                  {guessedWordsLabel}
+                  {practicedWordsButtonLabel}
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   {sortedSessionWords.length} {t("practice.wordsInThisSession")}
