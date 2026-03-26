@@ -45,6 +45,7 @@ export function PracticeResults({
   const { t } = useLanguage();
   const [isStudiedWordsOpen, setIsStudiedWordsOpen] = useState(false);
   const { levels, types, matrix } = stats;
+
   const formatWordTypeLabel = (typeId: string) =>
     typeId
       .split(/[_-]+/g)
@@ -52,6 +53,7 @@ export function PracticeResults({
         part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
       )
       .join(" ");
+
   const getWordTypeLabel = (typeId: string) => {
     const translated = t(`wordTypes.${typeId}`);
     if (!translated || translated === `wordTypes.${typeId}`) {
@@ -59,6 +61,7 @@ export function PracticeResults({
     }
     return translated;
   };
+
   const formatTopicLabel = (topicId: string) =>
     topicId
       .split(/[_-]+/g)
@@ -66,6 +69,7 @@ export function PracticeResults({
         part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
       )
       .join(" ");
+
   const getTopicLabel = (topicId: string) => {
     const translated = t(`levelCategory.topicNames.${topicId}`);
     if (!translated || translated === `levelCategory.topicNames.${topicId}`) {
@@ -73,6 +77,7 @@ export function PracticeResults({
     }
     return translated;
   };
+
   const typeSummaries = types.reduce(
     (acc, type) => {
       let guessed = 0;
@@ -97,6 +102,7 @@ export function PracticeResults({
   ).length;
   const accuracy =
     totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0;
+
   const sortedSessionWords = useMemo(
     () =>
       [...sessionWords].sort((a, b) =>
@@ -106,6 +112,7 @@ export function PracticeResults({
       ),
     [sessionWords],
   );
+
   const guessedWords = useMemo(
     () => sortedSessionWords.filter((word) => word.status === "guessed"),
     [sortedSessionWords],
@@ -118,30 +125,54 @@ export function PracticeResults({
     () => sortedSessionWords.filter((word) => word.status === "skipped"),
     [sortedSessionWords],
   );
+
   const guessedWordsLabel = (() => {
     const translated = t("practice.guessedWords");
     return !translated || translated === "practice.guessedWords"
       ? "Guessed words"
       : translated;
   })();
+
   const viewedWordsLabel = (() => {
     const translated = t("practice.viewedWords");
     return !translated || translated === "practice.viewedWords"
       ? "Viewed words"
       : translated;
   })();
+
   const skippedWordsLabel = (() => {
     const translated = t("practice.skippedWords");
     return !translated || translated === "practice.skippedWords"
       ? "Skipped words"
       : translated;
   })();
+
   const topicHeaderLabel = (() => {
     const translated = t("practice.topicHeader");
     return !translated || translated === "practice.topicHeader"
       ? "Topic"
       : translated;
   })();
+
+  const renderWordRow = (word: {
+    conceptId: string;
+    nativeWord: string;
+    targetWord: string;
+    wordType: string;
+    wordTopic: string;
+  }) => (
+    <tr
+      key={word.conceptId}
+      className="border-b border-border/70 last:border-b-0"
+    >
+      <td className="px-4 py-3 text-foreground">{word.nativeWord || "-"}</td>
+      <td className="px-4 py-3 text-foreground">{word.targetWord || "-"}</td>
+      <td className="px-4 py-3 text-muted-foreground">{word.wordType || "-"}</td>
+      <td className="px-4 py-3 text-muted-foreground">
+        {word.wordTopic ? getTopicLabel(word.wordTopic) : "-"}
+      </td>
+    </tr>
+  );
 
   return (
     <div className="space-y-8 py-4 lg:space-y-6 lg:py-1">
@@ -221,7 +252,7 @@ export function PracticeResults({
                             </div>
                           </div>
                         ) : (
-                          <span className="text-muted-foreground">вЂ”</span>
+                          <span className="text-muted-foreground">-</span>
                         )}
                       </td>
                     );
@@ -261,7 +292,7 @@ export function PracticeResults({
                           </div>
                         </div>
                       ) : (
-                        <span className="text-muted-foreground">РІР‚вЂќ</span>
+                        <span className="text-muted-foreground">-</span>
                       )}
                     </td>
                   );
@@ -272,7 +303,7 @@ export function PracticeResults({
         </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center gap-2">
         <button
           type="button"
           onClick={() => setIsStudiedWordsOpen(true)}
@@ -280,6 +311,12 @@ export function PracticeResults({
         >
           {guessedWordsLabel}
         </button>
+        <div className="flex items-center gap-2 text-center text-xs text-muted-foreground">
+          <span aria-hidden="true" className="text-sm text-primary">^</span>
+          <span>
+            Click this button to see guessed, viewed, and skipped words from this session.
+          </span>
+        </div>
       </div>
 
       {isStudiedWordsOpen ? (
@@ -339,27 +376,7 @@ export function PracticeResults({
                           {guessedWordsLabel} ({guessedWords.length})
                         </td>
                       </tr>
-                      {guessedWords.map((word) => (
-                        <tr
-                          key={word.conceptId}
-                          className="border-b border-border/70 last:border-b-0"
-                        >
-                          <td className="px-4 py-3 text-foreground">
-                            {word.nativeWord || "вЂ”"}
-                          </td>
-                          <td className="px-4 py-3 text-foreground">
-                            {word.targetWord || "вЂ”"}
-                          </td>
-                          <td className="px-4 py-3 text-muted-foreground">
-                            {word.wordType || "вЂ”"}
-                          </td>
-                          <td className="px-4 py-3 text-muted-foreground">
-                            {word.wordTopic
-                              ? getTopicLabel(word.wordTopic)
-                              : "вЂ”"}
-                          </td>
-                        </tr>
-                      ))}
+                      {guessedWords.map(renderWordRow)}
                     </>
                   ) : null}
                   {viewedWords.length > 0 ? (
@@ -372,27 +389,7 @@ export function PracticeResults({
                           {viewedWordsLabel} ({viewedWords.length})
                         </td>
                       </tr>
-                      {viewedWords.map((word) => (
-                        <tr
-                          key={word.conceptId}
-                          className="border-b border-border/70 last:border-b-0"
-                        >
-                          <td className="px-4 py-3 text-foreground">
-                            {word.nativeWord || "вЂ”"}
-                          </td>
-                          <td className="px-4 py-3 text-foreground">
-                            {word.targetWord || "вЂ”"}
-                          </td>
-                          <td className="px-4 py-3 text-muted-foreground">
-                            {word.wordType || "вЂ”"}
-                          </td>
-                          <td className="px-4 py-3 text-muted-foreground">
-                            {word.wordTopic
-                              ? getTopicLabel(word.wordTopic)
-                              : "вЂ”"}
-                          </td>
-                        </tr>
-                      ))}
+                      {viewedWords.map(renderWordRow)}
                     </>
                   ) : null}
                   {skippedWords.length > 0 ? (
@@ -405,27 +402,7 @@ export function PracticeResults({
                           {skippedWordsLabel} ({skippedWords.length})
                         </td>
                       </tr>
-                      {skippedWords.map((word) => (
-                        <tr
-                          key={word.conceptId}
-                          className="border-b border-border/70 last:border-b-0"
-                        >
-                          <td className="px-4 py-3 text-foreground">
-                            {word.nativeWord || "вЂ”"}
-                          </td>
-                          <td className="px-4 py-3 text-foreground">
-                            {word.targetWord || "вЂ”"}
-                          </td>
-                          <td className="px-4 py-3 text-muted-foreground">
-                            {word.wordType || "вЂ”"}
-                          </td>
-                          <td className="px-4 py-3 text-muted-foreground">
-                            {word.wordTopic
-                              ? getTopicLabel(word.wordTopic)
-                              : "вЂ”"}
-                          </td>
-                        </tr>
-                      ))}
+                      {skippedWords.map(renderWordRow)}
                     </>
                   ) : null}
                 </tbody>
