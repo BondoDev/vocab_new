@@ -330,12 +330,12 @@ export function PracticeResults({
           {practicedWordsButtonLabel}
         </button>
         <div
-          className="relative mt-1 max-w-xs rounded-[1.35rem] border border-primary/30 bg-transparent px-4 py-3 text-center text-xs leading-relaxed text-foreground shadow-sm"
+          className="relative mt-1 max-w-xs rounded-[1.35rem] border border-primary/30 bg-white px-4 py-3 text-center text-xs leading-relaxed text-foreground shadow-sm"
           style={{ animation: "practicedWordsCalloutFloat 2.4s ease-in-out infinite" }}
         >
           <div
             aria-hidden="true"
-            className="absolute left-1/2 top-[-8px] h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-primary/30 bg-background"
+            className="absolute left-1/2 top-[-8px] h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-primary/30 bg-white"
           />
           <span className="relative block">
             Click this button to see guessed, viewed, and skipped words from this session.
