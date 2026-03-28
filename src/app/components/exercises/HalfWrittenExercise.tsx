@@ -35,7 +35,9 @@ export function HalfWrittenExercise({
   onStatusChange,
 }: HalfWrittenExerciseProps) {
   const { t } = useLanguage();
-  const normalizedWord = (currentWord?.word_lemma ?? "").trim().replace(/\s+/g, " ");
+  const normalizedWord = (currentWord?.word_lemma ?? "")
+    .trim()
+    .replace(/\s+/g, " ");
   const [userInput, setUserInput] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
   const [hasTypedAnswer, setHasTypedAnswer] = useState(false);
@@ -47,6 +49,7 @@ export function HalfWrittenExercise({
   const [lineCount, setLineCount] = useState(1);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputAnchorRef = useRef<HTMLDivElement | null>(null);
   const hasAutoPlayedCorrectAudioRef = useRef(false);
   const missingTemplate = normalizedWord.substring(visibleLetterCount);
 
@@ -78,7 +81,15 @@ export function HalfWrittenExercise({
     if (aliases[normalized]) {
       return aliases[normalized];
     }
-    const supported: KeyboardLanguage[] = ["en", "de", "ru", "es", "fr", "pt", "it"];
+    const supported: KeyboardLanguage[] = [
+      "en",
+      "de",
+      "ru",
+      "es",
+      "fr",
+      "pt",
+      "it",
+    ];
     if (supported.includes(normalized as KeyboardLanguage)) {
       return normalized as KeyboardLanguage;
     }
@@ -138,8 +149,15 @@ export function HalfWrittenExercise({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const mediaQuery = window.matchMedia("(max-width: 1023.98px)");
-    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
+    const mediaQuery = window.matchMedia("(max-width: 767.98px)");
+    const updateViewport = () => {
+      const ua = navigator.userAgent || "";
+      const isMobileUserAgent =
+        /iPhone|iPod|Android.+Mobile|Windows Phone|webOS|BlackBerry|Opera Mini/i.test(
+          ua,
+        );
+      setIsMobileViewport(mediaQuery.matches && isMobileUserAgent);
+    };
     updateViewport();
     mediaQuery.addEventListener("change", updateViewport);
     return () => mediaQuery.removeEventListener("change", updateViewport);
@@ -153,10 +171,9 @@ export function HalfWrittenExercise({
 
     const userAnswer = userInput.trim().toLowerCase();
     const correctAnswer = normalizedWord.toLowerCase();
-    const inflectedAnswer = (
+    const inflectedAnswer =
       currentWord.word_inflected?.trim().replace(/\s+/g, " ").toLowerCase() ||
-      correctAnswer
-    );
+      correctAnswer;
 
     const missingPart = correctAnswer.substring(visibleLetterCount);
     const missingPartInflected = inflectedAnswer.substring(visibleLetterCount);
@@ -251,7 +268,10 @@ export function HalfWrittenExercise({
       userInput.slice(selectionEnd);
     const normalizedValue = normalizeAgainstTemplate(nextRawValue);
     const limitedValue = normalizedValue.slice(0, maxLength);
-    const nextCaretIndex = Math.min(selectionStart + character.length, limitedValue.length);
+    const nextCaretIndex = Math.min(
+      selectionStart + character.length,
+      limitedValue.length,
+    );
 
     setUserInput(limitedValue);
     setHasTypedAnswer(true);
@@ -289,186 +309,198 @@ export function HalfWrittenExercise({
 
   return (
     <div className="w-full flex flex-col items-center">
-      <UniversalExerciseInput
-        isCorrect={isCorrect}
-        onSpeakWord={speakWord}
-        fieldStyle={fieldStyle}
-        enableOverlayAutoFit={enableOverlayAutoFit}
-        overlay={
-          <div className="absolute inset-0 flex items-center justify-start pointer-events-none px-4 py-2">
-            <div className="flex flex-wrap content-center gap-y-1">
-              {wordSegments.map((segment, segmentIndex) => (
-                <div
-                  key={`segment-${segment.startIndex}`}
-                  className={
-                    shouldWrapSingleWord
-                      ? "inline-flex flex-wrap"
-                      : "inline-flex"
-                  }
-                  data-compound-segment="true"
-                  style={{
-                    gap: "0.5em",
-                    width: shouldWrapSingleWord ? "100%" : undefined,
-                    marginRight:
-                      segmentIndex < wordSegments.length - 1 ? "0.25em" : "0",
-                  }}
-                >
-                  {segment.text.split("").map((letter: string, offset: number) => {
-                    const index = segment.startIndex + offset;
-                    const isVisiblePortion = index < visibleLetterCount;
-
-                    const userTypedChar =
-                      index >= visibleLetterCount
-                        ? userInput[index - visibleLetterCount]
-                        : null;
-
-                    let displayChar;
-                    let charStyle = "text-foreground";
-
-                    if (isVisiblePortion) {
-                      displayChar = letter;
-                      charStyle = "text-foreground";
-                    } else if (
-                      userTypedChar !== undefined &&
-                      userTypedChar !== null
-                    ) {
-                      displayChar = userTypedChar;
-                      charStyle = isCorrect ? "text-primary" : "text-foreground";
-                    } else {
-                      displayChar = "_";
-                      charStyle = "text-muted-foreground/50";
+      <div ref={inputAnchorRef} className="w-full">
+        <UniversalExerciseInput
+          isCorrect={isCorrect}
+          onSpeakWord={speakWord}
+          fieldStyle={fieldStyle}
+          enableOverlayAutoFit={enableOverlayAutoFit}
+          overlay={
+            <div className="absolute inset-0 flex items-center justify-start pointer-events-none px-4 py-2">
+              <div className="flex flex-wrap content-center gap-y-1">
+                {wordSegments.map((segment, segmentIndex) => (
+                  <div
+                    key={`segment-${segment.startIndex}`}
+                    className={
+                      shouldWrapSingleWord
+                        ? "inline-flex flex-wrap"
+                        : "inline-flex"
                     }
+                    data-compound-segment="true"
+                    style={{
+                      gap: "0.5em",
+                      width: shouldWrapSingleWord ? "100%" : undefined,
+                      marginRight:
+                        segmentIndex < wordSegments.length - 1 ? "0.25em" : "0",
+                    }}
+                  >
+                    {segment.text
+                      .split("")
+                      .map((letter: string, offset: number) => {
+                        const index = segment.startIndex + offset;
+                        const isVisiblePortion = index < visibleLetterCount;
 
-                    const displayCaretIndex = visibleLetterCount + caretIndex;
-                    const showCaret =
-                      isInputFocused && displayCaretIndex === index;
-                    const caretPositionClass =
-                      index === 0 ? "left-[calc(100%+0.25em)]" : "-left-[0.25em]";
+                        const userTypedChar =
+                          index >= visibleLetterCount
+                            ? userInput[index - visibleLetterCount]
+                            : null;
 
-                    return (
+                        let displayChar;
+                        let charStyle = "text-foreground";
+
+                        if (isVisiblePortion) {
+                          displayChar = letter;
+                          charStyle = "text-foreground";
+                        } else if (
+                          userTypedChar !== undefined &&
+                          userTypedChar !== null
+                        ) {
+                          displayChar = userTypedChar;
+                          charStyle = isCorrect
+                            ? "text-primary"
+                            : "text-foreground";
+                        } else {
+                          displayChar = "_";
+                          charStyle = "text-muted-foreground/50";
+                        }
+
+                        const displayCaretIndex =
+                          visibleLetterCount + caretIndex;
+                        const showCaret =
+                          isInputFocused && displayCaretIndex === index;
+                        const caretPositionClass =
+                          index === 0
+                            ? "left-[calc(100%+0.25em)]"
+                            : "-left-[0.25em]";
+
+                        return (
+                          <div
+                            key={`char-${index}`}
+                            className="relative flex flex-col items-center"
+                            ref={(node) => {
+                              charSlotRefs.current[index] = node;
+                            }}
+                            style={{ width: "1ch" }}
+                          >
+                            {showCaret && (
+                              <UniversalExerciseCaret
+                                className={caretPositionClass}
+                              />
+                            )}
+                            <span
+                              className={`exercise-answer-char text-xl md:text-2xl font-medium text-center whitespace-pre font-mono ${charStyle}`}
+                            >
+                              {displayChar}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    {segmentIndex < wordSegments.length - 1 && (
                       <div
-                        key={`char-${index}`}
                         className="relative flex flex-col items-center"
                         ref={(node) => {
-                          charSlotRefs.current[index] = node;
+                          charSlotRefs.current[
+                            segment.startIndex + segment.text.length
+                          ] = node;
                         }}
-                        style={{ width: "1ch" }}
+                        style={{ width: "0.35ch" }}
                       >
-                        {showCaret && (
-                          <UniversalExerciseCaret className={caretPositionClass} />
-                        )}
-                        <span
-                          className={`exercise-answer-char text-xl md:text-2xl font-medium text-center whitespace-pre font-mono ${charStyle}`}
-                        >
-                          {displayChar}
-                        </span>
+                        {isInputFocused &&
+                          visibleLetterCount + caretIndex ===
+                            segment.startIndex + segment.text.length && (
+                            <UniversalExerciseCaret />
+                          )}
+                        <span className="exercise-answer-char text-xl md:text-2xl font-medium text-center whitespace-pre font-mono text-foreground" />
                       </div>
-                    );
-                  })}
-                  {segmentIndex < wordSegments.length - 1 && (
-                    <div
-                      className="relative flex flex-col items-center"
-                      ref={(node) => {
-                        charSlotRefs.current[segment.startIndex + segment.text.length] = node;
-                      }}
-                      style={{ width: "0.35ch" }}
-                    >
-                      {isInputFocused &&
-                        visibleLetterCount + caretIndex ===
-                          segment.startIndex + segment.text.length && (
-                          <UniversalExerciseCaret />
-                        )}
-                      <span className="exercise-answer-char text-xl md:text-2xl font-medium text-center whitespace-pre font-mono text-foreground" />
+                    )}
+                  </div>
+                ))}
+                {isInputFocused &&
+                  visibleLetterCount + caretIndex === rawWord.length && (
+                    <div className="relative" style={{ width: "0ch" }}>
+                      <UniversalExerciseCaret className="left-[0.25em]" />
                     </div>
                   )}
-                </div>
-              ))}
-              {isInputFocused &&
-                visibleLetterCount + caretIndex ===
-                  rawWord.length && (
-                  <div className="relative" style={{ width: "0ch" }}>
-                    <UniversalExerciseCaret className="left-[0.25em]" />
-                  </div>
-                )}
+              </div>
             </div>
-          </div>
-        }
-        inputProps={{
-          type: "text",
-          value: userInput,
-          onPointerDown: (e) => {
+          }
+          inputProps={{
+            type: "text",
+            value: userInput,
+            onPointerDown: (e) => {
             if (!isMobileViewport) return;
             e.preventDefault();
             setIsInputFocused(true);
             setCaretIndex(userInput.length);
           },
-          onChange: (e) => {
-            const normalizedValue = normalizeAgainstTemplate(e.target.value);
-            setUserInput(normalizedValue);
-            setHasTypedAnswer(true);
-            requestAnimationFrame(() => {
-              e.target.value = normalizedValue;
-              updateCaretIndex(e.target);
-            });
-          },
-          onKeyDown: (e) => {
-            if (e.key !== " ") return;
-            const cursorPosition =
-              e.currentTarget.selectionStart !== null
-                ? e.currentTarget.selectionStart
-                : userInput.length;
-            if (missingTemplate[cursorPosition] !== " ") {
-              e.preventDefault();
-            }
-          },
-          onSelect: (e) => updateCaretIndex(e.target as HTMLInputElement),
-          onKeyUp: (e) =>
-            updateCaretIndex(e.currentTarget as HTMLInputElement),
-          onClick: (e) => {
+            onChange: (e) => {
+              const normalizedValue = normalizeAgainstTemplate(e.target.value);
+              setUserInput(normalizedValue);
+              setHasTypedAnswer(true);
+              requestAnimationFrame(() => {
+                e.target.value = normalizedValue;
+                updateCaretIndex(e.target);
+              });
+            },
+            onKeyDown: (e) => {
+              if (e.key !== " ") return;
+              const cursorPosition =
+                e.currentTarget.selectionStart !== null
+                  ? e.currentTarget.selectionStart
+                  : userInput.length;
+              if (missingTemplate[cursorPosition] !== " ") {
+                e.preventDefault();
+              }
+            },
+            onSelect: (e) => updateCaretIndex(e.target as HTMLInputElement),
+            onKeyUp: (e) =>
+              updateCaretIndex(e.currentTarget as HTMLInputElement),
+            onClick: (e) => {
             if (isMobileViewport) {
               setIsInputFocused(true);
               setCaretIndex(userInput.length);
               return;
             }
             updateCaretIndex(e.currentTarget as HTMLInputElement);
-          },
-          onFocus: (e) => {
+            },
+            onFocus: (e) => {
             if (isMobileViewport) {
               setIsInputFocused(true);
               setCaretIndex(userInput.length);
               e.currentTarget.blur();
               inputRef.current = null;
               return;
-            }
-            inputRef.current = e.currentTarget;
-            setIsInputFocused(true);
-            updateCaretIndex(e.target);
-          },
-          onBlur: () => {
-            if (!isMobileViewport) {
-              setIsInputFocused(false);
-            }
-            inputRef.current = null;
-          },
-          maxLength: normalizedWord.length - visibleLetterCount,
-          autoCapitalize: "off",
-          autoCorrect: "off",
-          inputMode: isMobileViewport ? "none" : "text",
-          readOnly: isMobileViewport,
-          spellCheck: "false",
-        }}
-        inputClassName={`exercise-answer-input w-full text-xl md:text-2xl px-4 py-3 bg-background border-2 rounded-xl outline-none transition-all text-left font-medium font-mono caret-primary ${
-          isCorrect
-            ? "border-primary bg-primary/10"
-            : "border-border focus:border-primary"
-        }`}
-        inputStyle={{
-          color: "transparent",
-          caretColor: "transparent",
-          minHeight:
-            lineCount > 1 ? `${48 + (lineCount - 1) * 24}px` : undefined,
-        }}
-      />
+              }
+              inputRef.current = e.currentTarget;
+              setIsInputFocused(true);
+              updateCaretIndex(e.target);
+            },
+            onBlur: () => {
+              if (!isMobileViewport) {
+                setIsInputFocused(false);
+              }
+              inputRef.current = null;
+            },
+            maxLength: normalizedWord.length - visibleLetterCount,
+            autoCapitalize: "off",
+            autoCorrect: "off",
+            inputMode: isMobileViewport ? "none" : "text",
+            readOnly: isMobileViewport,
+            spellCheck: "false",
+          }}
+          inputClassName={`exercise-answer-input w-full text-xl md:text-2xl px-4 py-3 bg-background border-2 rounded-xl outline-none transition-all text-left font-medium font-mono caret-primary ${
+            isCorrect
+              ? "border-primary bg-primary/10"
+              : "border-border focus:border-primary"
+          }`}
+          inputStyle={{
+            color: "transparent",
+            caretColor: "transparent",
+            minHeight:
+              lineCount > 1 ? `${48 + (lineCount - 1) * 24}px` : undefined,
+          }}
+        />
+      </div>
       {!isMobileViewport && !isCorrect && (
         <DesktopSpecialCharacters
           language={resolveKeyboardLanguage(practiceLanguage)}
@@ -499,6 +531,8 @@ export function HalfWrittenExercise({
           value={userInput}
           onChange={handleMobileKeyboardChange}
           canInsertSpace={missingTemplate[userInput.length] === " "}
+          anchorElement={inputAnchorRef.current}
+          desiredGapPx={64}
           onClose={() => {
             setIsInputFocused(false);
             inputRef.current?.blur();

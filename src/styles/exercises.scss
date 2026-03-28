@@ -167,7 +167,7 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 2rem;
+  bottom: env(safe-area-inset-bottom);
   z-index: 1200;
   display: flex;
   flex-direction: column;
@@ -341,7 +341,6 @@
     --mobile-kb-key-width: 2.12rem;
     gap: 0.38rem;
     padding: 0.48rem 0.3rem calc(0.54rem + env(safe-area-inset-bottom));
-    bottom: 7rem;
   }
 
   .mobile-keyboard-v2__row {
@@ -374,6 +373,10 @@
 
 // SMALL MOBILE SCREEN
 @media (max-width: 375.98px) {
+  .mobile-keyboard-v2__key {
+    font-size: clamp(1rem, 4.2vw, 1.08rem) !important;
+  }
+
   .exercise-guess-word {
     font-size: 1.9rem !important;
     line-height: 1.15 !important;

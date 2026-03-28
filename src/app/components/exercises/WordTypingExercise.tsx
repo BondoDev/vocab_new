@@ -46,6 +46,7 @@ export function WordTypingExercise({
   const [lineCount, setLineCount] = useState(1);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputAnchorRef = useRef<HTMLDivElement | null>(null);
   const hasAutoPlayedCorrectAudioRef = useRef(false);
   const templateWord = currentWord?.word_lemma ?? "";
 
@@ -128,8 +129,15 @@ export function WordTypingExercise({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const mediaQuery = window.matchMedia("(max-width: 1023.98px)");
-    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
+    const mediaQuery = window.matchMedia("(max-width: 767.98px)");
+    const updateViewport = () => {
+      const ua = navigator.userAgent || "";
+      const isMobileUserAgent =
+        /iPhone|iPod|Android.+Mobile|Windows Phone|webOS|BlackBerry|Opera Mini/i.test(
+          ua,
+        );
+      setIsMobileViewport(mediaQuery.matches && isMobileUserAgent);
+    };
     updateViewport();
     mediaQuery.addEventListener("change", updateViewport);
     return () => mediaQuery.removeEventListener("change", updateViewport);
@@ -304,6 +312,7 @@ export function WordTypingExercise({
 
   return (
     <div className="w-full flex flex-col items-center">
+      <div ref={inputAnchorRef} className="w-full">
       <UniversalExerciseInput
         isCorrect={isCorrect}
         onSpeakWord={speakWord}
@@ -483,6 +492,7 @@ export function WordTypingExercise({
             lineCount > 1 ? `${48 + (lineCount - 1) * 24}px` : undefined,
         }}
       />
+      </div>
       {!isMobileViewport && !isCorrect && (
         <DesktopSpecialCharacters
           language={resolveKeyboardLanguage(practiceLanguage)}
@@ -527,6 +537,8 @@ export function WordTypingExercise({
           value={userInput}
           onChange={handleMobileKeyboardChange}
           canInsertSpace={templateWord[userInput.length] === " "}
+          anchorElement={inputAnchorRef.current}
+          desiredGapPx={64}
           onClose={() => {
             setIsInputFocused(false);
             inputRef.current?.blur();

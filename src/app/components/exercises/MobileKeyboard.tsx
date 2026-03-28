@@ -22,6 +22,8 @@ export type MobileKeyboardProps = {
   onClose?: () => void;
   disabled?: boolean;
   canInsertSpace?: boolean;
+  anchorElement?: HTMLElement | null;
+  desiredGapPx?: number;
 };
 
 type SpecialKey = "shift" | "backspace" | "space" | "enter" | "symbols" | "extra";
@@ -42,6 +44,8 @@ export function MobileKeyboard({
   onClose,
   disabled = false,
   canInsertSpace = true,
+  anchorElement = null,
+  desiredGapPx = 48,
 }: MobileKeyboardProps) {
   const { t } = useLanguage();
   const [isShiftActive, setIsShiftActive] = useState(false);
@@ -49,7 +53,9 @@ export function MobileKeyboard({
   const [isExtraLayerVisible, setIsExtraLayerVisible] = useState(false);
   const [longPressPopup, setLongPressPopup] = useState<LongPressPopupState | null>(null);
   const [activePopupIndex, setActivePopupIndex] = useState(0);
+  const [bottomOffset, setBottomOffset] = useState<number | null>(null);
 
+  const keyboardRef = useRef<HTMLDivElement | null>(null);
   const popupRef = useRef<HTMLDivElement | null>(null);
   const longPressTimerRef = useRef<number | null>(null);
   const longPressOpenedRef = useRef(false);
@@ -255,6 +261,42 @@ export function MobileKeyboard({
   );
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const updatePosition = () => {
+      const keyboardHeight = keyboardRef.current?.getBoundingClientRect().height ?? 0;
+      if (!anchorElement || keyboardHeight <= 0) {
+        setBottomOffset(null);
+        return;
+      }
+
+      const anchorRect = anchorElement.getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const visibleBottom = viewport
+        ? viewport.offsetTop + viewport.height
+        : window.innerHeight;
+      const desiredTop = anchorRect.bottom + desiredGapPx;
+      const nextBottom = Math.max(0, visibleBottom - desiredTop - keyboardHeight);
+      setBottomOffset(Math.round(nextBottom));
+    };
+
+    updatePosition();
+
+    const viewport = window.visualViewport;
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+    viewport?.addEventListener("resize", updatePosition);
+    viewport?.addEventListener("scroll", updatePosition);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+      viewport?.removeEventListener("resize", updatePosition);
+      viewport?.removeEventListener("scroll", updatePosition);
+    };
+  }, [anchorElement, desiredGapPx, value, isSymbolsMode, isExtraLayerVisible]);
+
+  useEffect(() => {
     if (!onClose) return;
 
     const handlePointerDown = (event: PointerEvent) => {
@@ -322,7 +364,13 @@ export function MobileKeyboard({
   };
 
   const keyboard = (
-    <div className="mobile-keyboard-v2" role="group" aria-label={t("practice.keyboard.mobileKeyboard")}>
+    <div
+      ref={keyboardRef}
+      className="mobile-keyboard-v2"
+      role="group"
+      aria-label={t("practice.keyboard.mobileKeyboard")}
+      style={bottomOffset !== null ? { bottom: `${bottomOffset}px` } : undefined}
+    >
       {activeRows.map((row, rowIndex) => (
         <div key={`row-${rowIndex}`} className="mobile-keyboard-v2__row">
           {row.map((key, keyIndex) => renderKey(key, rowIndex, keyIndex))}
