@@ -63,11 +63,21 @@
       display: flex !important;
       flex-direction: column !important;
       justify-content: flex-start !important;
-      row-gap: 2rem !important;
+      row-gap: 1rem !important;
+      position: relative !important;
+      top: 1rem !important;
+    }
+
+    .md\:hidden.w-full.max-w-2xl.text-center {
+      margin-bottom: 0.6rem !important;
     }
 
     .md\:hidden h2 {
-      font-size: clamp(2.35rem, 7.2vw, 3.3rem) !important;
+      font-size: clamp(1.85rem, 5.8vw, 2.35rem) !important;
+    }
+
+    .language-form-stack {
+      margin-top: 0.9rem !important;
     }
 
     .fixed.bottom-5 {
