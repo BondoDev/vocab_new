@@ -46,7 +46,16 @@ const DEFAULT_WORD_TYPES: string[] = [
   "exclamation",
   "expression",
 ];
-type VocabularyWord = { type?: string | null };
+type VocabularyWord = {
+  type?: string | null;
+  level?: string | null;
+  category?: string | null;
+};
+type FilterWord = {
+  type: string;
+  level: string;
+  category: string;
+};
 
 const navbarColorRgb = "74, 43, 130";
 const levelOpacities = [0.05, 0.15, 0.3, 0.5, 0.65, 0.75];
@@ -126,6 +135,9 @@ export function LevelCategorySelection({
   const [pendingWordTypes, setPendingWordTypes] = useState<string[]>([]);
   const [allWordTypes, setAllWordTypes] =
     useState<string[]>(DEFAULT_WORD_TYPES);
+  const [filterWords, setFilterWords] = useState<FilterWord[]>([]);
+  const [isVocabularyMetadataReady, setIsVocabularyMetadataReady] =
+    useState(false);
   const { t } = useLanguage();
   const lastTouchRef = useRef<{
     time: number;
@@ -135,6 +147,7 @@ export function LevelCategorySelection({
     level: null,
   });
   const suppressClickUntilRef = useRef(0);
+  const filteredCountCacheRef = useRef<Map<string, number>>(new Map());
   const nextButtonStarFieldStyle = useMemo(
     () => ({
       backgroundColor: "#4a2b82",
@@ -260,54 +273,131 @@ export function LevelCategorySelection({
     return translated;
   };
 
-  const toggleCategory = (categoryId: string) => {
-    if (selectedCategories.includes(categoryId)) {
-      setSelectedCategories(
-        selectedCategories.filter((id) => id !== categoryId),
-      );
-    } else {
-      setSelectedCategories([...selectedCategories, categoryId]);
+  const getFilteredWordCount = (
+    levelsToUse: string[],
+    categoriesToUse: string[],
+    wordTypesToUse: string[],
+  ) => {
+    if (!isVocabularyMetadataReady) {
+      return 1;
     }
+    const key = [
+      [...levelsToUse].sort().join("|"),
+      [...categoriesToUse].sort().join("|"),
+      [...wordTypesToUse].sort().join("|"),
+    ].join("::");
+    const cached = filteredCountCacheRef.current.get(key);
+    if (typeof cached === "number") {
+      return cached;
+    }
+    const count = filterWords.filter((word) => {
+      if (levelsToUse.length > 0 && !levelsToUse.includes(word.level)) {
+        return false;
+      }
+      if (
+        categoriesToUse.length > 0 &&
+        !categoriesToUse.includes(word.category)
+      ) {
+        return false;
+      }
+      if (wordTypesToUse.length > 0 && !wordTypesToUse.includes(word.type)) {
+        return false;
+      }
+      return true;
+    }).length;
+    filteredCountCacheRef.current.set(key, count);
+    return count;
   };
 
-  const togglePendingCategory = (categoryId: string) => {
-    if (pendingCategories.includes(categoryId)) {
-      setPendingCategories(pendingCategories.filter((id) => id !== categoryId));
-    } else {
-      setPendingCategories([...pendingCategories, categoryId]);
-    }
-  };
-
-  const togglePendingWordType = (typeId: string) => {
-    if (pendingWordTypes.includes(typeId)) {
-      setPendingWordTypes(pendingWordTypes.filter((id) => id !== typeId));
-    } else {
-      setPendingWordTypes([...pendingWordTypes, typeId]);
-    }
-  };
-
-  const toggleLevel = (levelCode: string) => {
+  const resolveToggledLevels = (levelCode: string): string[] => {
     const nextLevels = selectedLevels.includes(levelCode)
       ? selectedLevels.filter((code) => code !== levelCode)
       : [...selectedLevels, levelCode];
+    return nextLevels.length === 0 ? allLevelCodes : nextLevels;
+  };
 
-    if (nextLevels.length === 0) {
-      setSelectedLevels(allLevelCodes);
+  const resolveToggledCategory = (
+    categoryId: string,
+    sourceCategories: string[],
+  ): string[] =>
+    sourceCategories.includes(categoryId)
+      ? sourceCategories.filter((id) => id !== categoryId)
+      : [...sourceCategories, categoryId];
+
+  const resolveToggledWordType = (typeId: string, sourceTypes: string[]) =>
+    sourceTypes.includes(typeId)
+      ? sourceTypes.filter((id) => id !== typeId)
+      : [...sourceTypes, typeId];
+
+  const hasWordsAfterLevelToggle = (levelCode: string) =>
+    getFilteredWordCount(
+      resolveToggledLevels(levelCode),
+      selectedCategories,
+      selectedWordTypes,
+    ) > 0;
+
+  const hasWordsAfterCategoryToggle = (
+    categoryId: string,
+    sourceCategories: string[] = selectedCategories,
+  ) =>
+    getFilteredWordCount(
+      selectedLevels,
+      resolveToggledCategory(categoryId, sourceCategories),
+      selectedWordTypes,
+    ) > 0;
+
+  const hasWordsAfterWordTypeToggle = (
+    typeId: string,
+    sourceTypes: string[] = selectedWordTypes,
+  ) =>
+    getFilteredWordCount(
+      selectedLevels,
+      selectedCategories,
+      resolveToggledWordType(typeId, sourceTypes),
+    ) > 0;
+
+  const toggleCategory = (categoryId: string) => {
+    if (!hasWordsAfterCategoryToggle(categoryId)) {
       return;
     }
+    setSelectedCategories(resolveToggledCategory(categoryId, selectedCategories));
+  };
 
-    setSelectedLevels(nextLevels);
+  const togglePendingCategory = (categoryId: string) => {
+    if (!hasWordsAfterCategoryToggle(categoryId, pendingCategories)) {
+      return;
+    }
+    setPendingCategories(resolveToggledCategory(categoryId, pendingCategories));
+  };
+
+  const togglePendingWordType = (typeId: string) => {
+    if (!hasWordsAfterWordTypeToggle(typeId, pendingWordTypes)) {
+      return;
+    }
+    setPendingWordTypes(resolveToggledWordType(typeId, pendingWordTypes));
+  };
+
+  const toggleLevel = (levelCode: string) => {
+    if (!hasWordsAfterLevelToggle(levelCode)) {
+      return;
+    }
+    setSelectedLevels(resolveToggledLevels(levelCode));
   };
 
   const toggleWordType = (typeId: string) => {
-    if (selectedWordTypes.includes(typeId)) {
-      setSelectedWordTypes(selectedWordTypes.filter((id) => id !== typeId));
-    } else {
-      setSelectedWordTypes([...selectedWordTypes, typeId]);
+    if (!hasWordsAfterWordTypeToggle(typeId)) {
+      return;
     }
+    setSelectedWordTypes(resolveToggledWordType(typeId, selectedWordTypes));
   };
 
   const handleSelectOnlyLevel = (levelCode: string) => {
+    if (
+      getFilteredWordCount([levelCode], selectedCategories, selectedWordTypes) ===
+      0
+    ) {
+      return;
+    }
     setSelectedLevels([levelCode]);
   };
 
@@ -318,7 +408,12 @@ export function LevelCategorySelection({
   }, [selectedLevels.length, setSelectedLevels]);
 
   useEffect(() => {
+    filteredCountCacheRef.current.clear();
+  }, [filterWords]);
+
+  useEffect(() => {
     let isMounted = true;
+    setIsVocabularyMetadataReady(false);
 
     const loadWordTypes = async () => {
       try {
@@ -342,6 +437,18 @@ export function LevelCategorySelection({
         const words: VocabularyWord[] = Array.isArray(module.default)
           ? (module.default as VocabularyWord[])
           : [];
+        const normalizedFilterWords: FilterWord[] = words
+          .map((word) => ({
+            type:
+              typeof word?.type === "string" ? word.type.trim().toLowerCase() : "",
+            level:
+              typeof word?.level === "string" ? word.level.trim().toUpperCase() : "",
+            category:
+              typeof word?.category === "string"
+                ? word.category.trim().toLowerCase()
+                : "",
+          }))
+          .filter((word) => word.type && word.level && word.category);
         const discoveredTypes: string[] = [
           ...new Set(
             words
@@ -358,8 +465,14 @@ export function LevelCategorySelection({
             ? [...discoveredTypes]
             : [...DEFAULT_WORD_TYPES];
         setAllWordTypes(nextWordTypes);
+        setFilterWords(normalizedFilterWords);
+        setIsVocabularyMetadataReady(true);
       } catch {
-        if (isMounted) setAllWordTypes(DEFAULT_WORD_TYPES);
+        if (isMounted) {
+          setAllWordTypes(DEFAULT_WORD_TYPES);
+          setFilterWords([]);
+          setIsVocabularyMetadataReady(true);
+        }
       }
     };
 
@@ -373,6 +486,9 @@ export function LevelCategorySelection({
     selectedCategories.length > 0 ||
     selectedWordTypes.length > 0 ||
     selectedLevels.length !== allLevelCodes.length;
+  const hasWordsForCurrentFilters =
+    getFilteredWordCount(selectedLevels, selectedCategories, selectedWordTypes) >
+    0;
 
   return (
     <div className="filters-page flex flex-col flex-1 bg-background">
@@ -457,10 +573,13 @@ export function LevelCategorySelection({
             <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-[clamp(0.75rem,1.6vw,1rem)] lg:gap-[clamp(0.65rem,1vw,0.625rem)]">
               {levels.map((level, index) => {
                 const isSelected = selectedLevels.includes(level.code);
+                const isDisabled = !hasWordsAfterLevelToggle(level.code);
                 return (
                   <motion.button
                     key={level.code}
+                    disabled={isDisabled}
                     onClick={() => {
+                      if (isDisabled) return;
                       if (suppressClickUntilRef.current > Date.now()) return;
                       toggleLevel(level.code);
                     }}
@@ -490,14 +609,14 @@ export function LevelCategorySelection({
                       isSelected
                         ? "border-primary shadow-lg shadow-primary/20"
                         : "border-primary/60 hover:border-primary bg-transparent"
-                    }`}
+                    } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
+                    whileHover={isDisabled ? undefined : { scale: 1.05 }}
+                    whileTap={isDisabled ? undefined : { scale: 0.95 }}
                     style={{
                       backgroundColor: isSelected
                         ? `rgba(${navbarColorRgb}, ${levelOpacities[index] ?? 0.1})`
                         : "transparent",
                     }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
                   >
                     {isSelected && (
                       <span
@@ -586,23 +705,28 @@ export function LevelCategorySelection({
               </motion.button>
             ) : (
               <div className="flex flex-wrap justify-center gap-2 md:gap-[clamp(0.6rem,1.2vw,0.75rem)] lg:gap-[clamp(0.55rem,1vw,0.625rem)] max-h-[110px] md:max-h-[180px] lg:max-h-none">
-                {visibleCategories.map((category) => (
-                  <motion.button
-                    key={category.id}
-                    onClick={() => toggleCategory(category.id)}
-                    className={`px-3 py-1.5 sm:px-3 sm:py-2 md:px-[clamp(0.85rem,1.3vw,0.75rem)] md:py-[clamp(0.45rem,0.8vw,0.5rem)] rounded-xl sm:rounded-lg border-2 transition-all flex items-center gap-1.5 sm:gap-2 md:gap-[clamp(0.4rem,0.8vw,0.5rem)] ${
-                      selectedCategories.includes(category.id)
-                        ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-                        : "border-border bg-card hover:border-primary/50"
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <span className="text-sm sm:text-sm md:text-[clamp(0.85rem,1.1vw,0.875rem)] text-foreground">
-                      {getCategoryLabel(category.id)}
-                    </span>
-                  </motion.button>
-                ))}
+                {visibleCategories.map((category) => {
+                  const isSelected = selectedCategories.includes(category.id);
+                  const isDisabled = !hasWordsAfterCategoryToggle(category.id);
+                  return (
+                    <motion.button
+                      key={category.id}
+                      disabled={isDisabled}
+                      onClick={() => toggleCategory(category.id)}
+                      className={`px-3 py-1.5 sm:px-3 sm:py-2 md:px-[clamp(0.85rem,1.3vw,0.75rem)] md:py-[clamp(0.45rem,0.8vw,0.5rem)] rounded-xl sm:rounded-lg border-2 transition-all flex items-center gap-1.5 sm:gap-2 md:gap-[clamp(0.4rem,0.8vw,0.5rem)] ${
+                        isSelected
+                          ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+                          : "border-border bg-card hover:border-primary/50"
+                      } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
+                      whileHover={isDisabled ? undefined : { scale: 1.05 }}
+                      whileTap={isDisabled ? undefined : { scale: 0.95 }}
+                    >
+                      <span className="text-sm sm:text-sm md:text-[clamp(0.85rem,1.1vw,0.875rem)] text-foreground">
+                        {getCategoryLabel(category.id)}
+                      </span>
+                    </motion.button>
+                  );
+                })}
                 {hiddenTopicsCount > 0 && (
                   <button
                     className="px-3 py-1.5 md:px-[clamp(0.85rem,1.3vw,0.75rem)] md:py-[clamp(0.45rem,0.8vw,0.5rem)] flex items-center gap-1.5 md:gap-[clamp(0.4rem,0.8vw,0.5rem)] text-sm sm:text-sm md:text-[clamp(0.85rem,1.1vw,0.875rem)] text-primary hover:underline transition-all"
@@ -650,23 +774,31 @@ export function LevelCategorySelection({
                     </button>
                   </div>
                   <div className="flex flex-wrap gap-2 overflow-y-auto max-h-[60vh] pr-1">
-                    {categories.map((category) => (
-                      <motion.button
-                        key={category.id}
-                        onClick={() => togglePendingCategory(category.id)}
-                        className={`px-3 py-2 rounded-lg border-2 transition-all flex items-center gap-2 ${
-                          pendingCategories.includes(category.id)
-                            ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-                            : "border-border bg-card hover:border-primary/50"
-                        }`}
-                        whileHover={{ scale: 1 }}
-                        whileTap={{ scale: 1 }}
-                      >
-                        <span className="text-sm text-foreground">
-                          {getCategoryLabel(category.id)}
-                        </span>
-                      </motion.button>
-                    ))}
+                    {categories.map((category) => {
+                      const isSelected = pendingCategories.includes(category.id);
+                      const isDisabled = !hasWordsAfterCategoryToggle(
+                        category.id,
+                        pendingCategories,
+                      );
+                      return (
+                        <motion.button
+                          key={category.id}
+                          disabled={isDisabled}
+                          onClick={() => togglePendingCategory(category.id)}
+                          className={`px-3 py-2 rounded-lg border-2 transition-all flex items-center gap-2 ${
+                            isSelected
+                              ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+                              : "border-border bg-card hover:border-primary/50"
+                          } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
+                          whileHover={{ scale: 1 }}
+                          whileTap={{ scale: 1 }}
+                        >
+                          <span className="text-sm text-foreground">
+                            {getCategoryLabel(category.id)}
+                          </span>
+                        </motion.button>
+                      );
+                    })}
                   </div>
                   <div className="mt-4 flex items-center justify-between">
                     <button
@@ -678,6 +810,13 @@ export function LevelCategorySelection({
                     <button
                       className="px-5 py-2 bg-card border-2 text-primary hover:bg-primary/5 rounded-lg transition-all shadow-sm"
                       style={{ borderColor: "#6366f14d" }}
+                      disabled={
+                        getFilteredWordCount(
+                          selectedLevels,
+                          pendingCategories,
+                          selectedWordTypes,
+                        ) === 0
+                      }
                       onClick={() => {
                         setSelectedCategories(pendingCategories);
                         setIsTopicsModalOpen(false);
@@ -724,23 +863,28 @@ export function LevelCategorySelection({
                 }
               >
                 <div className="flex flex-wrap justify-center gap-2 pb-0 mb-0 md:gap-[clamp(0.6rem,1.2vw,0.75rem)] lg:gap-[clamp(0.55rem,1vw,0.625rem)]">
-                  {visibleWordTypes.map((typeId) => (
-                    <motion.button
-                      key={typeId}
-                      onClick={() => toggleWordType(typeId)}
-                      className={`px-4 py-2 sm:px-6 sm:py-3 md:px-[clamp(1rem,1.8vw,1.5rem)] md:py-[clamp(0.55rem,1vw,0.75rem)] rounded-full border transition-all ${
-                        selectedWordTypes.includes(typeId)
-                          ? "border-primary bg-primary/5 text-primary shadow-md"
-                          : "border-muted-foreground/20 bg-background text-foreground hover:border-primary/40"
-                      }`}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <span className="text-sm md:text-[clamp(0.95rem,1.2vw,1rem)] font-medium">
-                        {getWordTypeLabel(typeId)}
-                      </span>
-                    </motion.button>
-                  ))}
+                  {visibleWordTypes.map((typeId) => {
+                    const isSelected = selectedWordTypes.includes(typeId);
+                    const isDisabled = !hasWordsAfterWordTypeToggle(typeId);
+                    return (
+                      <motion.button
+                        key={typeId}
+                        disabled={isDisabled}
+                        onClick={() => toggleWordType(typeId)}
+                        className={`px-4 py-2 sm:px-6 sm:py-3 md:px-[clamp(1rem,1.8vw,1.5rem)] md:py-[clamp(0.55rem,1vw,0.75rem)] rounded-full border transition-all ${
+                          isSelected
+                            ? "border-primary bg-primary/5 text-primary shadow-md"
+                            : "border-muted-foreground/20 bg-background text-foreground hover:border-primary/40"
+                        } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
+                        whileHover={isDisabled ? undefined : { scale: 1.05 }}
+                        whileTap={isDisabled ? undefined : { scale: 0.95 }}
+                      >
+                        <span className="text-sm md:text-[clamp(0.95rem,1.2vw,1rem)] font-medium">
+                          {getWordTypeLabel(typeId)}
+                        </span>
+                      </motion.button>
+                    );
+                  })}
                 </div>
                 {isLaptopFilterRange && prioritizedWordTypes.length > 0 && (
                   <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2">
@@ -815,23 +959,31 @@ export function LevelCategorySelection({
                     </button>
                   </div>
                   <div className="flex flex-wrap gap-2 overflow-y-auto max-h-[60vh] pr-1">
-                    {prioritizedWordTypes.map((typeId) => (
-                      <motion.button
-                        key={typeId}
-                        onClick={() => togglePendingWordType(typeId)}
-                        className={`px-3 py-2 rounded-lg border-2 transition-all flex items-center gap-2 ${
-                          pendingWordTypes.includes(typeId)
-                            ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-                            : "border-border bg-card hover:border-primary/50"
-                        }`}
-                        whileHover={{ scale: 1 }}
-                        whileTap={{ scale: 1 }}
-                      >
-                        <span className="text-sm text-foreground">
-                          {getWordTypeLabel(typeId)}
-                        </span>
-                      </motion.button>
-                    ))}
+                    {prioritizedWordTypes.map((typeId) => {
+                      const isSelected = pendingWordTypes.includes(typeId);
+                      const isDisabled = !hasWordsAfterWordTypeToggle(
+                        typeId,
+                        pendingWordTypes,
+                      );
+                      return (
+                        <motion.button
+                          key={typeId}
+                          disabled={isDisabled}
+                          onClick={() => togglePendingWordType(typeId)}
+                          className={`px-3 py-2 rounded-lg border-2 transition-all flex items-center gap-2 ${
+                            isSelected
+                              ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+                              : "border-border bg-card hover:border-primary/50"
+                          } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
+                          whileHover={{ scale: 1 }}
+                          whileTap={{ scale: 1 }}
+                        >
+                          <span className="text-sm text-foreground">
+                            {getWordTypeLabel(typeId)}
+                          </span>
+                        </motion.button>
+                      );
+                    })}
                   </div>
                   <div className="mt-4 flex items-center justify-between">
                     <button
@@ -843,6 +995,13 @@ export function LevelCategorySelection({
                     <button
                       className="px-5 py-2 bg-card border-2 text-primary hover:bg-primary/5 rounded-lg transition-all shadow-sm"
                       style={{ borderColor: "#6366f14d" }}
+                      disabled={
+                        getFilteredWordCount(
+                          selectedLevels,
+                          selectedCategories,
+                          pendingWordTypes,
+                        ) === 0
+                      }
                       onClick={() => {
                         setSelectedWordTypes(pendingWordTypes);
                         setIsWordTypesModalOpen(false);
@@ -865,17 +1024,22 @@ export function LevelCategorySelection({
           >
             <motion.button
               onClick={onContinue}
+              disabled={!hasWordsForCurrentFilters}
               style={{
                 ...nextButtonStarFieldStyle,
                 boxShadow:
                   "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
               }}
-              className="filters-continue-button text-white px-12 py-4 md:px-[clamp(2.5rem,5vw,3rem)] md:py-[clamp(0.9rem,1.6vw,1rem)] text-lg md:text-[clamp(1rem,1.4vw,1.125rem)] rounded-xl sm:rounded-lg font-bold"
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 20px 40px #6366f14d",
-              }}
-              whileTap={{ scale: 0.95 }}
+              className="filters-continue-button text-white px-12 py-4 md:px-[clamp(2.5rem,5vw,3rem)] md:py-[clamp(0.9rem,1.6vw,1rem)] text-lg md:text-[clamp(1rem,1.4vw,1.125rem)] rounded-xl sm:rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+              whileHover={
+                hasWordsForCurrentFilters
+                  ? {
+                      scale: 1.05,
+                      boxShadow: "0 20px 40px #6366f14d",
+                    }
+                  : undefined
+              }
+              whileTap={hasWordsForCurrentFilters ? { scale: 0.95 } : undefined}
               transition={{
                 type: "spring",
                 stiffness: 400,
