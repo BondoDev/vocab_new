@@ -11,6 +11,7 @@ export interface SeoMetadata {
   description: string;
   canonical: string;
   alternates?: SeoAlternateLink[];
+  jsonLd?: string;
 }
 
 export interface SeoManager {
@@ -32,6 +33,19 @@ function escapeHtml(value: string): string {
     .replace(/"/g, "&quot;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
+}
+
+function upsertManagedJsonLd(jsonLd: string | undefined) {
+  const existing = document.querySelector('script[data-managed-jsonld="true"]');
+  if (existing) existing.remove();
+
+  if (!jsonLd) return;
+
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.setAttribute("data-managed-jsonld", "true");
+  script.textContent = jsonLd;
+  document.head.appendChild(script);
 }
 
 function removeManagedAlternateTags() {
@@ -91,6 +105,7 @@ export function applySeoMetadata(metadata: SeoMetadata) {
   upsertMetaProperty("og:url", metadata.canonical);
   upsertMetaProperty("og:title", metadata.title);
   upsertMetaProperty("og:description", metadata.description);
+  upsertManagedJsonLd(metadata.jsonLd);
   removeManagedAlternateTags();
 
   (metadata.alternates ?? []).forEach((alternate) => {
@@ -120,6 +135,9 @@ export function renderSeoTags(metadata: SeoMetadata): string {
     `<meta property="og:title" content="${escapeHtml(metadata.title)}">`,
     `<meta property="og:description" content="${escapeHtml(metadata.description)}">`,
     alternates,
+    metadata.jsonLd
+      ? `<script type="application/ld+json" data-managed-jsonld="true">${metadata.jsonLd}</script>`
+      : "",
   ]
     .filter(Boolean)
     .join("\n    ");
