@@ -19,7 +19,8 @@ function stripManagedHeadTags(template) {
     .replace(/<meta\s+property="og:url"[\s\S]*?>/i, "")
     .replace(/<meta\s+property="og:title"[\s\S]*?>/i, "")
     .replace(/<meta\s+property="og:description"[\s\S]*?>/i, "")
-    .replace(/<link\s+rel="alternate"[\s\S]*?data-vocab-hreflang="true"[\s\S]*?>/gi, "");
+    .replace(/<link\s+rel="alternate"[\s\S]*?data-vocab-hreflang="true"[\s\S]*?>/gi, "")
+    .replace(/<script\s[^>]*data-managed-jsonld="true"[^>]*>[\s\S]*?<\/script>/gi, "");
 }
 
 async function loadServerBundle() {

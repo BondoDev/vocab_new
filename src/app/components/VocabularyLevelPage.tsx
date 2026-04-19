@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { SUPPORTED_LEVELS, buildLocalizedVocabularyPath } from "../../data/seo/slugs";
+import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, buildLocalizedVocabularyPath } from "../../data/seo/slugs";
 import { getLevelTestSeoPath } from "../../data/levelTests";
 import { getSeoHubPath } from "../../data/seo/hub";
 import {
@@ -10,7 +10,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../data/vocabularyLevels";
-import { buildVocabularySeoMetadata } from "../../seo/metadata";
+import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 
 interface VocabularyLevelPageProps {
@@ -27,6 +27,88 @@ const LEVEL_DISPLAY: Record<CefrLevelCode, string> = {
   b2: "B2",
   c1: "C1",
   c2: "C2",
+};
+
+const WORD_MAP: Record<string, number> = {
+  A1: 500,
+  A2: 1500,
+  B1: 2500,
+  B2: 4000,
+  C1: 8000,
+  C2: 10000,
+};
+
+interface CuriosityArgs {
+  language: string;
+  level: string;
+  words: number;
+}
+
+const CURIOSITY_TRANSLATIONS: Record<
+  UiLanguageCode,
+  {
+    h1: (args: CuriosityArgs) => string;
+    h2: (args: Pick<CuriosityArgs, "language" | "level">) => string;
+    description: (args: Pick<CuriosityArgs, "level" | "words">) => string;
+    cta: string;
+  }
+> = {
+  en: {
+    h1: ({ language, level, words }) =>
+      `${language} ${level} Vocabulary: Mastering the ${words} Essential Words`,
+    h2: ({ language, level }) => `How many words are in ${language} ${level}?`,
+    description: ({ level, words }) =>
+      `To reach ${level} proficiency, you need approximately ${words} words. However, simply knowing the list isn't enough—you need to master the usage and pronunciation.`,
+    cta: "Start Practice",
+  },
+  ru: {
+    h1: ({ language, level, words }) =>
+      `${language} ${level}: Как освоить необходимые ${words} слов`,
+    h2: ({ language, level }) => `Сколько слов в ${language} ${level}?`,
+    description: ({ level, words }) =>
+      `Для достижения уровня ${level} вам нужно примерно ${words} слов. Однако просто знать список недостаточно — нужно освоить употребление и произношение.`,
+    cta: "Начать практику",
+  },
+  es: {
+    h1: ({ language, level, words }) =>
+      `${language} ${level}: Domina las ${words} palabras esenciales`,
+    h2: ({ language, level }) => `¿Cuántas palabras tiene el ${language} ${level}?`,
+    description: ({ level, words }) =>
+      `Para alcanzar el nivel ${level} necesitas aproximadamente ${words} palabras. Sin embargo, no basta con conocer la lista — debes dominar el uso y la pronunciación.`,
+    cta: "Comenzar práctica",
+  },
+  fr: {
+    h1: ({ language, level, words }) =>
+      `${language} ${level}: Maîtrisez les ${words} mots essentiels`,
+    h2: ({ language, level }) => `Combien de mots contient le ${language} ${level} ?`,
+    description: ({ level, words }) =>
+      `Pour atteindre le niveau ${level}, vous avez besoin d'environ ${words} mots. Cependant, connaître la liste ne suffit pas — vous devez maîtriser l'usage et la prononciation.`,
+    cta: "Commencer la pratique",
+  },
+  de: {
+    h1: ({ language, level, words }) =>
+      `${language} ${level}: Beherrschen Sie die ${words} wichtigsten Wörter`,
+    h2: ({ language, level }) => `Wie viele Wörter hat ${language} ${level}?`,
+    description: ({ level, words }) =>
+      `Um das ${level}-Niveau zu erreichen, benötigen Sie etwa ${words} Wörter. Aber es reicht nicht, die Liste zu kennen — Sie müssen Verwendung und Aussprache meistern.`,
+    cta: "Übung starten",
+  },
+  it: {
+    h1: ({ language, level, words }) =>
+      `${language} ${level}: Padroneggia le ${words} parole essenziali`,
+    h2: ({ language, level }) => `Quante parole ha ${language} ${level}?`,
+    description: ({ level, words }) =>
+      `Per raggiungere il livello ${level}, hai bisogno di circa ${words} parole. Tuttavia, conoscere la lista non è sufficiente — devi padroneggiare l'uso e la pronuncia.`,
+    cta: "Inizia la pratica",
+  },
+  pt: {
+    h1: ({ language, level, words }) =>
+      `${language} ${level}: Domine as ${words} palavras essenciais`,
+    h2: ({ language, level }) => `Quantas palavras tem o ${language} ${level}?`,
+    description: ({ level, words }) =>
+      `Para alcançar o nível ${level}, você precisa de aproximadamente ${words} palavras. No entanto, apenas conhecer a lista não é suficiente — você precisa dominar o uso e a pronúncia.`,
+    cta: "Iniciar prática",
+  },
 };
 
 const WORDS_UNIT_BY_UI_LANG: Record<UiLanguageCode, string> = {
@@ -50,6 +132,40 @@ const SAMPLE_TABLE_HEADERS_BY_UI_LANG: Record<
   it: { word: "Parola", meaning: "Significato" },
   pt: { word: "Palavra", meaning: "Significado" },
   ru: { word: "Слово", meaning: "Значение" },
+};
+
+const CROSS_LANGUAGE_COPY: Record<
+  UiLanguageCode,
+  { heading: (level: string) => string; linkSuffix: string }
+> = {
+  en: {
+    heading: (level) => `Practice ${level} vocabulary in other languages`,
+    linkSuffix: "vocabulary list",
+  },
+  es: {
+    heading: (level) => `Practica vocabulario ${level} en otros idiomas`,
+    linkSuffix: "lista de vocabulario",
+  },
+  fr: {
+    heading: (level) => `Pratiquez le vocabulaire ${level} dans d'autres langues`,
+    linkSuffix: "liste de vocabulaire",
+  },
+  de: {
+    heading: (level) => `${level} Vokabular in anderen Sprachen üben`,
+    linkSuffix: "Wortliste",
+  },
+  it: {
+    heading: (level) => `Pratica il vocabolario ${level} in altre lingue`,
+    linkSuffix: "lista di vocabolario",
+  },
+  pt: {
+    heading: (level) => `Pratique vocabulário ${level} em outros idiomas`,
+    linkSuffix: "lista de vocabulário",
+  },
+  ru: {
+    heading: (level) => `Практикуйте словарный запас ${level} на других языках`,
+    linkSuffix: "список слов",
+  },
 };
 
 const RELATED_LINKS_COPY: Record<
@@ -133,6 +249,8 @@ export function VocabularyLevelPage({
 
   const { levelContent } = contentBundle;
   const levelDisplay = LEVEL_DISPLAY[level];
+  const wordMapCount = WORD_MAP[levelDisplay] ?? levelContent.wordCount.value;
+  const curiosityT = CURIOSITY_TRANSLATIONS[uiLang] ?? CURIOSITY_TRANSLATIONS.en;
   const seoMetadata = buildVocabularySeoMetadata({
     uiLang,
     targetLanguage,
@@ -170,27 +288,63 @@ export function VocabularyLevelPage({
   const levelTestHref = getLevelTestSeoPath(uiLang, targetLanguage);
   const targetLanguageDisplayName = contentBundle.file.targetLanguageDisplayName;
   const seoHubHref = getSeoHubPath(uiLang);
+  const crossLangCopy = CROSS_LANGUAGE_COPY[uiLang] ?? CROSS_LANGUAGE_COPY.en;
+  const crossLanguageLinks = SUPPORTED_TARGET_LANGUAGES.filter((lang) => lang !== targetLanguage)
+    .map((lang) => {
+      const content = getVocabularyLevelContent(uiLang, lang, level);
+      const href = buildLocalizedVocabularyPath(uiLang, lang, level);
+      if (!href || !content) return null;
+      return {
+        lang,
+        href,
+        label: `${content.file.targetLanguageDisplayName} ${levelDisplay} ${crossLangCopy.linkSuffix}`,
+      };
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
+  const faqSection = buildVocabularyFaqSection(
+    uiLang,
+    targetLanguageDisplayName,
+    levelDisplay,
+    levelContent,
+    wordsUnit,
+  );
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
       {seoMetadata ? <SEOHead metadata={seoMetadata} /> : null}
       <div className="mx-auto w-full max-w-5xl space-y-8">
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
-          <h1 className="text-3xl text-foreground md:text-4xl">{levelContent.title}</h1>
-          <div className="mt-3 space-y-3">
+          <h1 className="text-3xl text-foreground md:text-4xl">
+            {curiosityT.h1({
+              language: targetLanguageDisplayName,
+              level: levelDisplay,
+              words: wordMapCount,
+            })}
+          </h1>
+
+          <div className="mt-5 rounded-xl border border-primary/15 bg-primary/5 p-5 shadow-sm">
+            <h2 className="text-xl font-semibold text-foreground">
+              {curiosityT.h2({ language: targetLanguageDisplayName, level: levelDisplay })}
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {curiosityT.description({ level: levelDisplay, words: wordMapCount })}
+            </p>
+            <button
+              type="button"
+              className="mt-4 rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
+              onClick={() => onStartPractice(targetLanguage, levelDisplay)}
+            >
+              {curiosityT.cta}
+            </button>
+          </div>
+
+          <div className="mt-5 space-y-3">
             {introParagraphs.map((paragraph) => (
               <p key={paragraph} className="text-base text-muted-foreground">
                 {paragraph}
               </p>
             ))}
           </div>
-          <button
-            type="button"
-            className="mt-5 rounded-xl border border-primary/45 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary/15"
-            onClick={() => onStartPractice(targetLanguage, levelDisplay)}
-          >
-            {ctaText}
-          </button>
         </section>
 
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
@@ -295,6 +449,25 @@ export function VocabularyLevelPage({
           </div>
         </section>
 
+        {crossLanguageLinks.length > 0 ? (
+          <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
+            <h2 className="text-2xl text-foreground">
+              {crossLangCopy.heading(levelDisplay)}
+            </h2>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {crossLanguageLinks.map((item) => (
+                <Link
+                  key={item.lang}
+                  className="rounded-lg border border-primary/30 px-3 py-1.5 text-sm text-primary transition hover:bg-primary/10"
+                  to={item.href}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <h2 className="text-2xl text-foreground">{relatedCopy.heading}</h2>
           <ul className="mt-4 list-disc space-y-2 pl-5">
@@ -311,6 +484,18 @@ export function VocabularyLevelPage({
               </Link>
             </li>
           </ul>
+        </section>
+
+        <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
+          <h2 className="text-2xl text-foreground">{faqSection.heading}</h2>
+          <div className="mt-4 space-y-5">
+            {faqSection.items.map((item) => (
+              <div key={item.question}>
+                <h3 className="text-base font-semibold text-foreground">{item.question}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{item.answer}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section className="pb-4">
