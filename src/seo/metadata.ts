@@ -5,6 +5,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../data/seo/slugs";
+import { buildWordPath } from "../data/seo/wordSlugs";
 import { getAllSeoHubPaths, getSeoHubPath } from "../data/seo/hub";
 import { getLevelTestContent, getLevelTestSeoPath } from "../data/levelTests";
 import { getVocabularyLevelContent, type VocabularyLevelContent } from "../data/vocabularyLevels";
@@ -352,4 +353,79 @@ export function buildSeoHubMetadata({
       },
     ],
   };
+}
+
+// ─── Word SEO page metadata ───────────────────────────────────────────────────
+
+const WORD_META_TITLE: Record<UiLanguageCode, (lang: string, word: string) => string> = {
+  en: (lang, word) => `${lang} Word "${word}" Meaning – Definition and Example`,
+  es: (lang, word) => `Palabra ${lang} "${word}" – Significado y Ejemplo`,
+  fr: (lang, word) => `Mot ${lang} "${word}" – Signification et Exemple`,
+  de: (lang, word) => `${lang}es Wort "${word}" – Bedeutung und Beispiel`,
+  it: (lang, word) => `Parola ${lang} "${word}" – Significato ed Esempio`,
+  pt: (lang, word) => `Palavra ${lang} "${word}" – Significado e Exemplo`,
+  ru: (lang, word) => `Слово "${word}" на ${lang} – значение и пример`,
+};
+
+const WORD_META_DESC: Record<UiLanguageCode, (lang: string, word: string) => string> = {
+  en: (lang, word) =>
+    `Learn the meaning of the ${lang} word "${word}", see example sentences, and practice this vocabulary word with interactive exercises.`,
+  es: (lang, word) =>
+    `Aprende el significado de la palabra ${lang} "${word}", ve oraciones de ejemplo y practica este vocabulario con ejercicios interactivos.`,
+  fr: (lang, word) =>
+    `Apprenez le sens du mot ${lang} "${word}", découvrez des exemples de phrases et pratiquez ce vocabulaire avec des exercices interactifs.`,
+  de: (lang, word) =>
+    `Lerne die Bedeutung des ${lang}en Wortes "${word}", sieh Beispielsätze und übe dieses Vokabel mit interaktiven Übungen.`,
+  it: (lang, word) =>
+    `Impara il significato della parola ${lang} "${word}", vedi frasi di esempio e pratica questo vocabolario con esercizi interattivi.`,
+  pt: (lang, word) =>
+    `Aprenda o significado da palavra ${lang} "${word}", veja frases de exemplo e pratique este vocabulário com exercícios interativos.`,
+  ru: (lang, word) =>
+    `Узнайте значение слова "${word}" на ${lang}, посмотрите примеры предложений и потренируйтесь с интерактивными упражнениями.`,
+};
+
+export interface WordSeoMetadataParams {
+  uiLang: UiLanguageCode;
+  targetLanguage: TargetLanguageSlug;
+  targetLanguageDisplayName: string;
+  wordLemma: string;
+  cefrLevel: string;
+  pathname: string;
+  siteOrigin: string;
+}
+
+export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata {
+  const { uiLang, targetLanguage, targetLanguageDisplayName, wordLemma, cefrLevel, pathname, siteOrigin } =
+    params;
+  const origin = siteOrigin.replace(/\/$/, "");
+  const title = (WORD_META_TITLE[uiLang] ?? WORD_META_TITLE.en)(targetLanguageDisplayName, wordLemma);
+  const description = (WORD_META_DESC[uiLang] ?? WORD_META_DESC.en)(
+    targetLanguageDisplayName,
+    wordLemma,
+  );
+
+  const alternates = [
+    ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
+      hreflang: lang,
+      href: `${origin}${buildWordPath(lang, targetLanguage, wordLemma)}`,
+    })),
+    {
+      hreflang: "x-default",
+      href: `${origin}${buildWordPath("en", targetLanguage, wordLemma)}`,
+    },
+  ];
+
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    name: wordLemma,
+    description,
+    url: `${origin}${buildWordPath(uiLang, targetLanguage, wordLemma)}`,
+    inDefinedTermSet: {
+      "@type": "DefinedTermSet",
+      name: `${targetLanguageDisplayName} ${cefrLevel} Vocabulary`,
+    },
+  });
+
+  return { title, description, canonical: `${origin}${pathname}`, alternates, jsonLd };
 }

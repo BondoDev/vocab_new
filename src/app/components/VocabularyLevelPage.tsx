@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, buildLocalizedVocabularyPath } from "../../data/seo/slugs";
@@ -12,12 +12,35 @@ import {
 } from "../../data/vocabularyLevels";
 import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
+import { buildWordPath } from "../../data/seo/wordSlugs";
 
 interface VocabularyLevelPageProps {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
   level: CefrLevelCode;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
+}
+
+type VocabEntry = { word_lemma: string; level: string };
+const vocabModules = import.meta.glob("../../data/vocabulary/*/vocabulary.json") as Record<
+  string,
+  () => Promise<{ default: VocabEntry[] }>
+>;
+
+const WORDS_PER_PAGE = 54;
+
+function getPaginationRange(current: number, total: number): (number | "…")[] {
+  if (total <= 9) return Array.from({ length: total }, (_, i) => i);
+  const result: (number | "…")[] = [];
+  let prev = -1;
+  for (let i = 0; i < total; i++) {
+    if (i === 0 || i === total - 1 || (i >= current - 2 && i <= current + 2)) {
+      if (prev !== -1 && i - prev > 1) result.push("…");
+      result.push(i);
+      prev = i;
+    }
+  }
+  return result;
 }
 
 const LEVEL_DISPLAY: Record<CefrLevelCode, string> = {
@@ -168,6 +191,51 @@ const CROSS_LANGUAGE_COPY: Record<
   },
 };
 
+const BROWSE_WORDS_COPY: Record<
+  UiLanguageCode,
+  {
+    heading: (args: { level: string; language: string }) => string;
+    description: string;
+  }
+> = {
+  en: {
+    heading: ({ level, language }) => `Browse ${level} ${language} Words`,
+    description:
+      "Explore common vocabulary words for this level. Click a word to learn its meaning, see example sentences, and practice it with exercises.",
+  },
+  es: {
+    heading: ({ level, language }) => `Explorar palabras ${level} de ${language}`,
+    description:
+      "Explora las palabras de vocabulario más comunes para este nivel. Haz clic en una palabra para ver su significado, ejemplos de oraciones y practicar con ejercicios.",
+  },
+  fr: {
+    heading: ({ level, language }) => `Explorer les mots ${language} de niveau ${level}`,
+    description:
+      "Découvrez les mots de vocabulaire courants pour ce niveau. Cliquez sur un mot pour en apprendre le sens, voir des exemples de phrases et vous entraîner avec des exercices.",
+  },
+  de: {
+    heading: ({ level, language }) => `${level} ${language} Wörter durchsuchen`,
+    description:
+      "Erkunden Sie häufige Vokabeln für dieses Niveau. Klicken Sie auf ein Wort, um seine Bedeutung zu erfahren, Beispielsätze zu sehen und es mit Übungen zu üben.",
+  },
+  it: {
+    heading: ({ level, language }) => `Esplora le parole ${language} di livello ${level}`,
+    description:
+      "Esplora le parole di vocabolario più comuni per questo livello. Clicca su una parola per impararne il significato, vedere frasi di esempio e praticare con gli esercizi.",
+  },
+  pt: {
+    heading: ({ level, language }) => `Explorar palavras ${language} de nível ${level}`,
+    description:
+      "Explore as palavras de vocabulário mais comuns para este nível. Clique em uma palavra para aprender seu significado, ver exemplos de frases e praticar com exercícios.",
+  },
+  ru: {
+    heading: ({ level, language }) => `Слова ${language} уровня ${level}`,
+    description:
+      "Изучайте распространённые слова для этого уровня. Нажмите на слово, чтобы узнать его значение, увидеть примеры предложений и потренироваться с упражнениями.",
+  },
+};
+
+
 const RELATED_LINKS_COPY: Record<
   UiLanguageCode,
   {
@@ -289,6 +357,7 @@ export function VocabularyLevelPage({
   const targetLanguageDisplayName = contentBundle.file.targetLanguageDisplayName;
   const seoHubHref = getSeoHubPath(uiLang);
   const crossLangCopy = CROSS_LANGUAGE_COPY[uiLang] ?? CROSS_LANGUAGE_COPY.en;
+  const browseWordsCopy = BROWSE_WORDS_COPY[uiLang] ?? BROWSE_WORDS_COPY.en;
   const crossLanguageLinks = SUPPORTED_TARGET_LANGUAGES.filter((lang) => lang !== targetLanguage)
     .map((lang) => {
       const content = getVocabularyLevelContent(uiLang, lang, level);
@@ -308,6 +377,37 @@ export function VocabularyLevelPage({
     levelContent,
     wordsUnit,
   );
+
+  const [browseWords, setBrowseWords] = useState<string[]>([]);
+  const [browsePage, setBrowsePage] = useState(0);
+
+  useEffect(() => {
+    setBrowseWords([]);
+    setBrowsePage(0);
+    const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
+    const loader = vocabModules[key];
+    if (!loader) return;
+    let cancelled = false;
+    loader().then((mod) => {
+      if (cancelled) return;
+      const levelUp = LEVEL_DISPLAY[level];
+      const seen = new Set<string>();
+      const words: string[] = [];
+      for (const w of mod.default) {
+        if (w.level === levelUp && w.word_lemma.length > 2 && !seen.has(w.word_lemma)) {
+          seen.add(w.word_lemma);
+          words.push(w.word_lemma);
+        }
+      }
+      setBrowseWords(words);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [targetLanguage, level]);
+
+  const totalBrowsePages = Math.max(1, Math.ceil(browseWords.length / WORDS_PER_PAGE));
+  const pageWords = browseWords.slice(browsePage * WORDS_PER_PAGE, (browsePage + 1) * WORDS_PER_PAGE);
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
@@ -431,6 +531,64 @@ export function VocabularyLevelPage({
               </tbody>
             </table>
           </div>
+        </section>
+
+        <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
+          <h2 className="text-2xl text-foreground">
+            {browseWordsCopy.heading({ level: levelDisplay, language: targetLanguageDisplayName })}
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground">{browseWordsCopy.description}</p>
+          {pageWords.length > 0 ? (
+            <>
+              <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                {pageWords.map((word) => (
+                  <Link
+                    key={word}
+                    to={buildWordPath(uiLang, targetLanguage, word)}
+                    className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                  >
+                    {word}
+                  </Link>
+                ))}
+              </div>
+              {totalBrowsePages > 1 && (
+                <div className="mt-5 flex flex-wrap justify-center gap-1.5">
+                  {getPaginationRange(browsePage, totalBrowsePages).map((item, idx) =>
+                    item === "…" ? (
+                      <span
+                        key={`ellipsis-${idx}`}
+                        className="px-2 py-1 text-sm text-muted-foreground"
+                      >
+                        …
+                      </span>
+                    ) : (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => setBrowsePage(item)}
+                        className={
+                          item === browsePage
+                            ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
+                            : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
+                        }
+                      >
+                        {item + 1}
+                      </button>
+                    ),
+                  )}
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-8 animate-pulse rounded-lg border border-border bg-border/30"
+                />
+              ))}
+            </div>
+          )}
         </section>
 
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
