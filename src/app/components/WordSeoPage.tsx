@@ -116,29 +116,16 @@ function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function getTypeVerb(type: string): string {
+function wordTypeLabel(type: string): string {
   const t = type.toLowerCase();
-  if (t.includes("noun")) return "refers to";
-  if (t.includes("verb")) return "describes the action of";
-  if (t.includes("adj")) return "describes the quality of being";
-  if (t.includes("adv")) return "indicates";
-  if (t.includes("prep")) return "shows a relationship, meaning";
-  if (t.includes("conj")) return "connects ideas, meaning";
-  return "means";
-}
-
-function generateExtraSentences(word: string, type: string): [string, string] {
-  const w = word.toLowerCase();
-  const W = capitalize(w);
-  const t = type.toLowerCase();
-  if (t.includes("noun")) return [`She bought a ${w} at the market.`, `The ${w} was very useful.`];
-  if (t.includes("verb")) return [`I like to ${w} every morning.`, `They ${w} together every week.`];
-  if (t.includes("adj")) return [`The room felt very ${w}.`, `She seemed ${w} after the news.`];
-  if (t.includes("adv")) return [`He spoke ${w} and clearly.`, `She finished the work ${w}.`];
-  if (t.includes("prep")) return [`The cat sat ${w} the chair.`, `She walked ${w} the building.`];
-  if (t.includes("conj")) return [`She is kind ${w} patient.`, `I study ${w} I work.`];
-  if (t.includes("pron")) return [`${W} is my best friend.`, `Can you see ${w}?`];
-  return [`${W} is an important word to know.`, `You will hear "${w}" in many conversations.`];
+  if (t.includes("noun")) return "noun";
+  if (t.includes("verb")) return "verb";
+  if (t.includes("adj")) return "adjective";
+  if (t.includes("adv")) return "adverb";
+  if (t.includes("prep")) return "preposition";
+  if (t.includes("conj")) return "conjunction";
+  if (t.includes("pron")) return "pronoun";
+  return type;
 }
 
 function highlightWord(sentence: string, word: string): React.ReactNode {
@@ -198,9 +185,9 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     h1: (word, lang) => `Meaning of the ${lang} Word "${capitalize(word)}"`,
     meaningHeading: (word) => `Meaning of the Word "${word}"`,
     meaningIntro: (word, lang, def, category, type) => {
-      const d = def.replace(/\.$/, "").toLowerCase();
-      const v = getTypeVerb(type);
-      return `The ${lang} word "${word}" ${v} ${d}. It commonly appears in ${category} situations and is one of the important words for ${lang} learners to recognise early. Understanding "${word}" will help you follow everyday conversations, read simple texts, and express your thoughts more naturally in ${lang}.`;
+      const d = def.replace(/\.$/, "");
+      const tl = wordTypeLabel(type);
+      return `The ${lang} word "${word}" is a ${tl} that means: ${d}. You will find it in ${category} contexts and it is one of the essential words for beginners to learn. Knowing "${word}" will help you understand everyday conversations and read simple ${lang} texts with confidence.`;
     },
     examplesHeading: "Example Sentences",
     trySentencePrompt: (word) =>
@@ -462,7 +449,7 @@ export function WordSeoPage({
     loader().then((mod) => {
       if (cancelled) return;
       const entry = mod.default.find((w) => wordToSlug(w.word_lemma) === wordSlug);
-      setWordEntry(entry ?? null);
+      setWordEntry(entry && entry.level.toUpperCase() === "A1" ? entry : null);
 
       if (entry) {
         const seen = new Set<string>([entry.word_lemma.toLowerCase()]);
@@ -539,7 +526,6 @@ export function WordSeoPage({
   const category = wordEntry.category;
   const level = wordEntry.level;
   const speechLang = SPEECH_LANG[targetLanguage] ?? "en-US";
-  const [extraSentence1, extraSentence2] = generateExtraSentences(word, wordType);
   const usageLines = t.usageLines(word, targetLangName, wordType, category);
 
   const cefrLevelLinks = SUPPORTED_LEVELS.map((lvl) => {
@@ -555,8 +541,6 @@ export function WordSeoPage({
     [t.levelLabel, level],
     [t.categoryLabel, category],
   ];
-
-  const allSentences = [sentence, extraSentence1, extraSentence2];
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
@@ -587,19 +571,12 @@ export function WordSeoPage({
           <p className="mt-3 text-muted-foreground">{definition}</p>
         </section>
 
-        {/* Example Sentences — 3 */}
+        {/* Example Sentence */}
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <h2 className="text-2xl text-foreground">{t.examplesHeading}</h2>
-          <ul className="mt-4 space-y-3">
-            {allSentences.map((s, i) => (
-              <li
-                key={i}
-                className="rounded-lg border border-border/70 px-4 py-3 italic text-muted-foreground"
-              >
-                {highlightWord(s, word)}
-              </li>
-            ))}
-          </ul>
+          <p className="mt-4 rounded-lg border border-border/70 px-4 py-3 italic text-muted-foreground">
+            {highlightWord(sentence, word)}
+          </p>
           <p className="mt-4 text-sm text-muted-foreground">{t.trySentencePrompt(word)}</p>
         </section>
 

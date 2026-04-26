@@ -31,19 +31,12 @@ export function buildWordPath(
 }
 
 export function resolveWordRoute(uiLangRaw: string, slug: string): WordRouteMatch | null {
-  if (!isSupportedUiLanguage(uiLangRaw)) return null;
-
-  for (const targetLanguage of SUPPORTED_TARGET_LANGUAGES) {
-    const prefix = `${targetLanguage}-word-`;
-    if (slug.startsWith(prefix)) {
-      const wordSlug = slug.slice(prefix.length);
-      if (wordSlug.length > 0) {
-        return { uiLang: uiLangRaw, targetLanguage, wordSlug };
-      }
-    }
-  }
-
-  return null;
+  if (uiLangRaw !== "en") return null;
+  const prefix = "english-word-";
+  if (!slug.startsWith(prefix)) return null;
+  const wordSlug = slug.slice(prefix.length);
+  if (wordSlug.length === 0) return null;
+  return { uiLang: "en", targetLanguage: "english", wordSlug };
 }
 
 export function getAllWordPaths(
