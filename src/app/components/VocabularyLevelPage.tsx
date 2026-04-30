@@ -541,24 +541,15 @@ export function VocabularyLevelPage({
           {pageWords.length > 0 ? (
             <>
               <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                {pageWords.map((word) =>
-                  uiLang === "en" && targetLanguage === "english" && level === "a1" ? (
-                    <Link
-                      key={word}
-                      to={buildWordPath(uiLang, targetLanguage, word)}
-                      className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
-                    >
-                      {word}
-                    </Link>
-                  ) : (
-                    <span
-                      key={word}
-                      className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground"
-                    >
-                      {word}
-                    </span>
-                  ),
-                )}
+                {pageWords.map((word) => (
+                  <Link
+                    key={word}
+                    to={buildWordPath(uiLang, targetLanguage, word)}
+                    className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                  >
+                    {word}
+                  </Link>
+                ))}
               </div>
               {totalBrowsePages > 1 && (
                 <div className="mt-5 flex flex-wrap justify-center gap-1.5">

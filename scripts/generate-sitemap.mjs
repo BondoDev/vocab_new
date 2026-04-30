@@ -110,6 +110,37 @@ const SLUG_PATTERNS = {
   it: (targetSlug, level) => `vocabolario-${targetSlug}-${level}-pratica`,
 };
 
+const UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"];
+
+function wordToSlug(lemma) {
+  return lemma
+    .toLowerCase()
+    .replace(/[''']/g, "")
+    .replace(/[^a-z0-9À-ɏЀ-ӿ\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "portuguese", "russian"];
+
+async function collectWordRoutes() {
+  const routes = [];
+  for (const targetLanguage of TARGET_LANGUAGES) {
+    const vocabPath = path.join(ROOT_DIR, "src", "data", "vocabulary", targetLanguage, "vocabulary.json");
+    const raw = await fs.readFile(vocabPath, "utf8");
+    const vocab = JSON.parse(raw.replace(/^﻿/, ""));
+    for (const entry of vocab) {
+      const slug = wordToSlug(entry.word_lemma);
+      if (!slug) continue;
+      for (const uiLang of UI_LANGUAGES) {
+        routes.push(`/${uiLang}/${targetLanguage}-word-${slug}`);
+      }
+    }
+  }
+  return routes;
+}
+
 function xmlEscape(value) {
   return value
     .replaceAll("&", "&amp;")
@@ -189,7 +220,8 @@ function buildSitemapXml(paths) {
 
 async function main() {
   const vocabularyRoutes = await collectVocabularyRoutes();
-  const allRoutes = [...new Set([...CORE_ROUTES, ...vocabularyRoutes])];
+  const wordRoutes = await collectWordRoutes();
+  const allRoutes = [...new Set([...CORE_ROUTES, ...vocabularyRoutes, ...wordRoutes])];
   const sitemap = buildSitemapXml(allRoutes);
   const outputPath = path.join(ROOT_DIR, "public", "sitemap.xml");
   await fs.writeFile(outputPath, sitemap, "utf8");
