@@ -10,40 +10,15 @@ import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "./data/levelTests";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
-import { getAllWordPaths, resolveWordRoute } from "./data/seo/wordSlugs";
-import { SUPPORTED_TARGET_LANGUAGES } from "./data/seo/slugs";
-import englishVocab from "./data/vocabulary/english/vocabulary.json";
-import germanVocab from "./data/vocabulary/german/vocabulary.json";
-import spanishVocab from "./data/vocabulary/spanish/vocabulary.json";
-import frenchVocab from "./data/vocabulary/french/vocabulary.json";
-import italianVocab from "./data/vocabulary/italian/vocabulary.json";
-import portugueseVocab from "./data/vocabulary/portuguese/vocabulary.json";
-import russianVocab from "./data/vocabulary/russian/vocabulary.json";
-
-type RawVocabEntry = { word_lemma: string; level: string };
-
-const VOCAB_BY_LANGUAGE: Record<string, RawVocabEntry[]> = {
-  english: englishVocab as RawVocabEntry[],
-  german: germanVocab as RawVocabEntry[],
-  spanish: spanishVocab as RawVocabEntry[],
-  french: frenchVocab as RawVocabEntry[],
-  italian: italianVocab as RawVocabEntry[],
-  portuguese: portugueseVocab as RawVocabEntry[],
-  russian: russianVocab as RawVocabEntry[],
-};
+import { resolveWordRoute } from "./data/seo/wordSlugs";
 
 export function getPrerenderRoutes(): string[] {
-  const wordEntries = SUPPORTED_TARGET_LANGUAGES.flatMap((targetLanguage) =>
-    (VOCAB_BY_LANGUAGE[targetLanguage] ?? []).map((w) => ({ targetLanguage, wordLemma: w.word_lemma })),
-  );
-
   return [
     ...getAllLocalizedVocabularyRoutes().map((route) => route.path),
     ...getAllSeoHubPaths(),
     ...(["en", "es", "fr", "de", "it", "pt", "ru"] as const)
       .map((uiLang) => getLevelTestSeoPath(uiLang, "english"))
       .filter((route): route is string => Boolean(route)),
-    ...getAllWordPaths(wordEntries),
   ];
 }
 
