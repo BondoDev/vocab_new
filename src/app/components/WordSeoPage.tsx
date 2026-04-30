@@ -458,110 +458,118 @@ export function WordSeoPage({
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
       {seoMetadata ? <SEOHead metadata={seoMetadata} /> : null}
-      <div className="mx-auto w-full max-w-[1120px] space-y-6">
+      <div className="mx-auto w-full max-w-[1200px] space-y-6">
 
-        {/* HERO */}
-        <section className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-10">
-          <h1 className="text-lg font-medium text-muted-foreground md:text-xl">
-            {t.h1(word, targetLangName)}
-          </h1>
-          <div className="mt-4 flex items-end gap-3">
-            <span className="text-6xl font-bold leading-none tracking-tight text-foreground md:text-7xl">
-              {word}
-            </span>
-            <button
-              type="button"
-              aria-label={t.pronounceLabel}
-              onClick={() => speakWord(word, speechLang)}
-              className="mb-1 flex-shrink-0 rounded-full p-2 text-muted-foreground transition hover:bg-primary/10 hover:text-primary"
-            >
-              <Volume2 className="h-8 w-8" />
-            </button>
+        {/* HERO — two-column card */}
+        <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr]">
+
+            {/* LEFT: word + meta + definition + CTA */}
+            <div className="p-6 md:p-10">
+              <h1 className="text-base font-medium text-muted-foreground md:text-lg">
+                {t.h1(word, targetLangName)}
+              </h1>
+              <div className="mt-4 flex items-end gap-3">
+                <span className="text-6xl font-bold leading-none tracking-tight text-foreground md:text-7xl">
+                  {word}
+                </span>
+                <button
+                  type="button"
+                  aria-label={t.pronounceLabel}
+                  onClick={() => speakWord(word, speechLang)}
+                  className="mb-1 flex-shrink-0 rounded-full p-2 text-muted-foreground transition hover:bg-primary/10 hover:text-primary"
+                >
+                  <Volume2 className="h-8 w-8" />
+                </button>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                  {level}
+                </span>
+                <span className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium capitalize text-muted-foreground">
+                  {wordType}
+                </span>
+                {category && (
+                  <span className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium capitalize text-muted-foreground">
+                    {category}
+                  </span>
+                )}
+              </div>
+              <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+                {definition}
+              </p>
+              <button
+                type="button"
+                onClick={scrollToExercise}
+                className="mt-6 rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
+              >
+                {t.practiceHeading}
+              </button>
+            </div>
+
+            {/* RIGHT: example sentence */}
+            <div className="flex flex-col border-t border-border bg-muted/20 p-6 lg:border-l lg:border-t-0 md:p-8 lg:p-10">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                {t.exampleSentenceHeading}
+              </p>
+              <div className="mt-4 flex flex-1 items-center">
+                <p className="text-lg italic leading-relaxed text-foreground">
+                  {highlightWord(sentence, word)}
+                </p>
+              </div>
+            </div>
+
           </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-              {level}
-            </span>
-            <span className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium capitalize text-muted-foreground">
-              {wordType}
-            </span>
-            {category && (
-              <span className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium capitalize text-muted-foreground">
-                {category}
-              </span>
-            )}
-          </div>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            {definition}
-          </p>
-          <button
-            type="button"
-            onClick={scrollToExercise}
-            className="mt-6 rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
-          >
-            {t.practiceHeading}
-          </button>
         </section>
 
-        {/* MAIN GRID */}
+        {/* CONTENT GRID: exercise + info/related */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[3fr_2fr]">
 
-          {/* LEFT — example + exercise */}
-          <div className="space-y-6">
-
-            <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
-              <h2 className="text-base font-semibold text-foreground">{t.exampleSentenceHeading}</h2>
-              <p className="mt-3 rounded-xl border border-border/60 bg-muted/30 px-5 py-4 text-base italic leading-relaxed text-muted-foreground">
-                {highlightWord(sentence, word)}
+          {/* LEFT — exercise */}
+          <section className="rounded-2xl border-2 border-primary/25 bg-primary/[0.04] p-6 md:p-8">
+            <h2 className="text-base font-semibold text-foreground">{t.practiceHeading}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{t.practiceInstruction}</p>
+            <div className="mt-5 space-y-4">
+              <p className="rounded-lg border border-border/60 bg-card px-4 py-3 text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">{t.definitionLabel}</span>{" "}
+                {definition}
               </p>
-            </section>
-
-            <section className="rounded-2xl border-2 border-primary/25 bg-primary/[0.04] p-6 md:p-8">
-              <h2 className="text-base font-semibold text-foreground">{t.practiceHeading}</h2>
-              <p className="mt-1 text-sm text-muted-foreground">{t.practiceInstruction}</p>
-              <div className="mt-5 space-y-4">
-                <p className="rounded-lg border border-border/60 bg-card px-4 py-3 text-sm text-muted-foreground">
-                  <span className="font-medium text-foreground">{t.definitionLabel}</span>{" "}
-                  {definition}
-                </p>
-                <input
-                  ref={exerciseInputRef}
-                  type="text"
-                  value={practiceInput}
-                  onChange={(e) => {
-                    setPracticeInput(e.target.value);
-                    setPracticeResult(null);
-                  }}
-                  onKeyDown={(e) => e.key === "Enter" && checkAnswer()}
-                  className="w-full rounded-xl border border-border bg-background px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  placeholder="..."
-                  aria-label={t.practiceInstruction}
-                />
-                <div className="flex items-center gap-4">
-                  <button
-                    type="button"
-                    onClick={checkAnswer}
-                    className="rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
-                  >
-                    {t.checkButtonLabel}
-                  </button>
-                  {practiceResult === "correct" && (
-                    <span className="text-sm font-semibold text-green-600 dark:text-green-400">
-                      {t.correctMessage}
-                    </span>
-                  )}
-                  {practiceResult === "incorrect" && (
-                    <span className="text-sm font-semibold text-red-500">
-                      {t.tryAgainMessage}
-                    </span>
-                  )}
-                </div>
+              <input
+                ref={exerciseInputRef}
+                type="text"
+                value={practiceInput}
+                onChange={(e) => {
+                  setPracticeInput(e.target.value);
+                  setPracticeResult(null);
+                }}
+                onKeyDown={(e) => e.key === "Enter" && checkAnswer()}
+                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="..."
+                aria-label={t.practiceInstruction}
+              />
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={checkAnswer}
+                  className="rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
+                >
+                  {t.checkButtonLabel}
+                </button>
+                {practiceResult === "correct" && (
+                  <span className="text-sm font-semibold text-green-600 dark:text-green-400">
+                    {t.correctMessage}
+                  </span>
+                )}
+                {practiceResult === "incorrect" && (
+                  <span className="text-sm font-semibold text-red-500">
+                    {t.tryAgainMessage}
+                  </span>
+                )}
               </div>
-            </section>
+            </div>
+          </section>
 
-          </div>
-
-          {/* RIGHT — word info + related words */}
+          {/* RIGHT — word info + related */}
           <div className="space-y-6">
 
             <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
