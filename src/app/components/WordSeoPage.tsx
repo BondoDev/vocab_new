@@ -644,21 +644,21 @@ export function WordSeoPage({
         <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr]">
             {/* LEFT: word + meta + definition + CTA */}
-            <div className="p-6 md:p-10">
+            <div className="flex h-full flex-col justify-center p-6 md:p-10">
               <h1 className="text-base font-medium text-muted-foreground md:text-lg">
                 {t.h1(word, targetLangName)}
               </h1>
-              <div className="mt-4 flex items-end gap-3">
-                <span className="text-6xl font-bold leading-none tracking-tight text-foreground md:text-7xl">
+              <div className="mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
+                <span className="break-words text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl md:text-7xl">
                   {word}
                 </span>
                 <button
                   type="button"
                   aria-label={t.pronounceLabel}
                   onClick={() => speakWord(word, speechLang)}
-                  className="mb-1 flex-shrink-0 rounded-full p-2 text-muted-foreground transition hover:bg-primary/10 hover:text-primary"
+                  className="inline-flex flex-shrink-0 items-center justify-center rounded-full p-2 text-primary/80 transition hover:bg-primary/10 hover:text-primary"
                 >
-                  <Volume2 className="h-8 w-8" />
+                  <Volume2 className="h-11 w-11 sm:h-12 sm:w-12" />
                 </button>
               </div>
               <div className="mt-4">
