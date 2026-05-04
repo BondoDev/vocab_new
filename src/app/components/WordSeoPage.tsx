@@ -3,16 +3,19 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Volume2 } from "lucide-react";
 import {
-  SUPPORTED_LEVELS,
-  buildLocalizedVocabularyPath,
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../data/seo/slugs";
 import { buildWordPath, wordToSlug } from "../../data/seo/wordSlugs";
 import { buildWordSeoMetadata } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
-
-type CefrLevel = (typeof SUPPORTED_LEVELS)[number];
+import englishInterface from "../../data/interface/english_interface.json";
+import spanishInterface from "../../data/interface/spanish_interface.json";
+import frenchInterface from "../../data/interface/french_interface.json";
+import germanInterface from "../../data/interface/german_interface.json";
+import italianInterface from "../../data/interface/italian_interface.json";
+import portugueseInterface from "../../data/interface/portuguese_interface.json";
+import russianInterface from "../../data/interface/russian_interface.json";
 
 interface VocabEntry {
   concept_id: string;
@@ -22,6 +25,22 @@ interface VocabEntry {
   type: string;
   category: string;
   level: string;
+}
+
+const WORDS_PER_PAGE = 54;
+
+function getPaginationRange(current: number, total: number): (number | "...")[] {
+  if (total <= 9) return Array.from({ length: total }, (_, i) => i);
+  const result: (number | "...")[] = [];
+  let prev = -1;
+  for (let i = 0; i < total; i++) {
+    if (i === 0 || i === total - 1 || (i >= current - 2 && i <= current + 2)) {
+      if (prev !== -1 && i - prev > 1) result.push("...");
+      result.push(i);
+      prev = i;
+    }
+  }
+  return result;
 }
 
 const UI_LANG_TO_VOCAB: Record<UiLanguageCode, TargetLanguageSlug> = {
@@ -48,7 +67,10 @@ const SPEECH_LANG: Record<TargetLanguageSlug, string> = {
   russian: "ru-RU",
 };
 
-const TARGET_LANG_NAMES: Record<UiLanguageCode, Record<TargetLanguageSlug, string>> = {
+const TARGET_LANG_NAMES: Record<
+  UiLanguageCode,
+  Record<TargetLanguageSlug, string>
+> = {
   en: {
     english: "English",
     german: "German",
@@ -118,6 +140,38 @@ function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+function formatKeyLabel(value: string): string {
+  return value
+    .split(" ")
+    .map((part) =>
+      part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
+    )
+    .join(" ");
+}
+
+function lookupNestedTranslation(root: unknown, key: string): string | undefined {
+  if (!root || typeof root !== "object") return undefined;
+  const parts = key.split(".");
+  let current: unknown = root as Record<string, unknown>;
+  for (const part of parts) {
+    if (!current || typeof current !== "object" || !(part in (current as Record<string, unknown>))) {
+      return undefined;
+    }
+    current = (current as Record<string, unknown>)[part];
+  }
+  return typeof current === "string" ? current : undefined;
+}
+
+const UI_INTERFACE_MAP: Record<UiLanguageCode, unknown> = {
+  en: englishInterface,
+  es: spanishInterface,
+  fr: frenchInterface,
+  de: germanInterface,
+  it: italianInterface,
+  pt: portugueseInterface,
+  ru: russianInterface,
+};
+
 function highlightWord(sentence: string, word: string): React.ReactNode {
   const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const regex = new RegExp(`(${escaped})`, "i");
@@ -162,6 +216,9 @@ interface WordPageT {
   correctMessage: string;
   tryAgainMessage: string;
   practiceCta: (level: string) => string;
+  levelQuestion: (word: string) => string;
+  grammarQuestion: (word: string) => string;
+  topicQuestion: (word: string) => string;
   notFoundTitle: string;
   notFoundBody: string;
 }
@@ -184,11 +241,16 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Correct ✓",
     tryAgainMessage: "Try again",
     practiceCta: (level) => `Practice More ${level} Vocabulary`,
+    levelQuestion: (w) => `What is the CEFR level of the word "${w}"?`,
+    grammarQuestion: (w) => `What grammatical category does "${w}" have?`,
+    topicQuestion: (w) => `Which vocabulary topic does "${w}" belong to?`,
     notFoundTitle: "Word not found",
-    notFoundBody: "The requested word could not be found in our vocabulary database.",
+    notFoundBody:
+      "The requested word could not be found in our vocabulary database.",
   },
   es: {
-    h1: (word, lang) => `Significado de la palabra ${lang} "${capitalize(word)}"`,
+    h1: (word, lang) =>
+      `Significado de la palabra ${lang} "${capitalize(word)}"`,
     definitionHeading: "Definición",
     exampleSentenceHeading: "Frase de ejemplo",
     wordInfoHeading: "Información de la palabra",
@@ -204,8 +266,12 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Correcto ✓",
     tryAgainMessage: "Inténtalo de nuevo",
     practiceCta: (level) => `Practica más vocabulario ${level}`,
+    levelQuestion: (w) => `¿Qué nivel MCER tiene la palabra "${w}"?`,
+    grammarQuestion: (w) => `¿Qué categoría gramatical tiene "${w}"?`,
+    topicQuestion: (w) => `¿A qué tema de vocabulario pertenece "${w}"?`,
     notFoundTitle: "Palabra no encontrada",
-    notFoundBody: "La palabra solicitada no se encontró en nuestra base de datos de vocabulario.",
+    notFoundBody:
+      "La palabra solicitada no se encontró en nuestra base de datos de vocabulario.",
   },
   fr: {
     h1: (word, lang) => `Signification du mot ${lang} "${capitalize(word)}"`,
@@ -218,14 +284,19 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     relatedWordsHeading: "Mots associés",
     pronounceLabel: "Écouter la prononciation",
     practiceHeading: "Pratiquer ce mot",
-    practiceInstruction: "Tapez le mot correct en vous basant sur la définition.",
+    practiceInstruction:
+      "Tapez le mot correct en vous basant sur la définition.",
     definitionLabel: "Définition :",
     checkButtonLabel: "Vérifier la réponse",
     correctMessage: "Correct ✓",
     tryAgainMessage: "Réessayez",
     practiceCta: (level) => `Pratiquer plus de vocabulaire ${level}`,
+    levelQuestion: (w) => `Quel est le niveau CECRL du mot « ${w} » ?`,
+    grammarQuestion: (w) => `Quelle est la nature grammaticale de « ${w} » ?`,
+    topicQuestion: (w) => `À quel thème de vocabulaire appartient « ${w} » ?`,
     notFoundTitle: "Mot introuvable",
-    notFoundBody: "Le mot demandé n'a pas été trouvé dans notre base de données de vocabulaire.",
+    notFoundBody:
+      "Le mot demandé n'a pas été trouvé dans notre base de données de vocabulaire.",
   },
   de: {
     h1: (word, lang) => `Bedeutung des ${lang}en Wortes "${capitalize(word)}"`,
@@ -244,11 +315,16 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Richtig ✓",
     tryAgainMessage: "Nochmal versuchen",
     practiceCta: (level) => `Mehr ${level} Vokabeln üben`,
+    levelQuestion: (w) => `Welches GER-Niveau hat das Wort „${w}“?`,
+    grammarQuestion: (w) => `Welche Wortart ist „${w}“?`,
+    topicQuestion: (w) => `Zu welchem Wortschatzthema gehört „${w}“?`,
     notFoundTitle: "Wort nicht gefunden",
-    notFoundBody: "Das angeforderte Wort wurde in unserer Vokabeldatenbank nicht gefunden.",
+    notFoundBody:
+      "Das angeforderte Wort wurde in unserer Vokabeldatenbank nicht gefunden.",
   },
   it: {
-    h1: (word, lang) => `Significato della parola ${lang} "${capitalize(word)}"`,
+    h1: (word, lang) =>
+      `Significato della parola ${lang} "${capitalize(word)}"`,
     definitionHeading: "Definizione",
     exampleSentenceHeading: "Frase di esempio",
     wordInfoHeading: "Informazioni sulla parola",
@@ -264,8 +340,12 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Corretto ✓",
     tryAgainMessage: "Riprova",
     practiceCta: (level) => `Pratica più vocabolario ${level}`,
+    levelQuestion: (w) => `Qual è il livello QCER della parola "${w}"?`,
+    grammarQuestion: (w) => `Quale parte del discorso è "${w}"?`,
+    topicQuestion: (w) => `A quale argomento di vocabolario appartiene "${w}"?`,
     notFoundTitle: "Parola non trovata",
-    notFoundBody: "La parola richiesta non è stata trovata nel nostro database di vocabolario.",
+    notFoundBody:
+      "La parola richiesta non è stata trovata nel nostro database di vocabolario.",
   },
   pt: {
     h1: (word, lang) => `Significado da palavra ${lang} "${capitalize(word)}"`,
@@ -284,8 +364,12 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Correto ✓",
     tryAgainMessage: "Tente novamente",
     practiceCta: (level) => `Pratique mais vocabulário ${level}`,
+    levelQuestion: (w) => `Qual é o nível QECR da palavra "${w}"?`,
+    grammarQuestion: (w) => `Qual é a classe gramatical de "${w}"?`,
+    topicQuestion: (w) => `A que tema de vocabulário pertence "${w}"?`,
     notFoundTitle: "Palavra não encontrada",
-    notFoundBody: "A palavra solicitada não foi encontrada em nosso banco de dados de vocabulário.",
+    notFoundBody:
+      "A palavra solicitada não foi encontrada em nosso banco de dados de vocabulário.",
   },
   ru: {
     h1: (word, lang) => `Значение слова "${capitalize(word)}" на ${lang}`,
@@ -304,8 +388,12 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Правильно ✓",
     tryAgainMessage: "Попробуйте снова",
     practiceCta: (level) => `Практикуйте больше слов уровня ${level}`,
+    levelQuestion: (w) => `Какой уровень CEFR у слова «${w}»?`,
+    grammarQuestion: (w) => `Какая часть речи у слова «${w}»?`,
+    topicQuestion: (w) => `К какой теме словарного запаса относится слово «${w}»?`,
     notFoundTitle: "Слово не найдено",
-    notFoundBody: "Запрошенное слово не найдено в нашей базе данных словарного запаса.",
+    notFoundBody:
+      "Запрошенное слово не найдено в нашей базе данных словарного запаса.",
   },
 };
 
@@ -320,23 +408,40 @@ export function WordSeoPage({
   uiLang,
   targetLanguage,
   wordSlug,
+  onStartPractice,
 }: WordSeoPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
   const t = TRANSLATIONS[uiLang] ?? TRANSLATIONS.en;
-  const targetLangName = (TARGET_LANG_NAMES[uiLang] ?? TARGET_LANG_NAMES.en)[targetLanguage];
+  const targetLangName = (TARGET_LANG_NAMES[uiLang] ?? TARGET_LANG_NAMES.en)[
+    targetLanguage
+  ];
 
   const exerciseInputRef = useRef<HTMLInputElement>(null);
-  const [wordEntry, setWordEntry] = useState<VocabEntry | null | undefined>(undefined);
+  const [wordEntry, setWordEntry] = useState<VocabEntry | null | undefined>(
+    undefined,
+  );
   const [displayDefinition, setDisplayDefinition] = useState<string>("");
+  const [displayWordLemma, setDisplayWordLemma] = useState<string>("");
+  const [displayWordType, setDisplayWordType] = useState<string>("");
+  const [displayCategory, setDisplayCategory] = useState<string>("");
   const [relatedWords, setRelatedWords] = useState<string[]>([]);
+  const [browseWords, setBrowseWords] = useState<string[]>([]);
+  const [browsePage, setBrowsePage] = useState(0);
   const [practiceInput, setPracticeInput] = useState("");
-  const [practiceResult, setPracticeResult] = useState<"correct" | "incorrect" | null>(null);
+  const [practiceResult, setPracticeResult] = useState<
+    "correct" | "incorrect" | null
+  >(null);
 
   useEffect(() => {
     setWordEntry(undefined);
     setDisplayDefinition("");
+    setDisplayWordLemma("");
+    setDisplayWordType("");
+    setDisplayCategory("");
     setRelatedWords([]);
+    setBrowseWords([]);
+    setBrowsePage(0);
     setPracticeInput("");
     setPracticeResult(null);
     const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
@@ -348,7 +453,9 @@ export function WordSeoPage({
     let cancelled = false;
     loader().then(async (mod) => {
       if (cancelled) return;
-      const entry = mod.default.find((w) => wordToSlug(w.word_lemma) === wordSlug);
+      const entry = mod.default.find(
+        (w) => wordToSlug(w.word_lemma) === wordSlug,
+      );
       setWordEntry(entry ?? null);
 
       if (!entry) return;
@@ -361,13 +468,24 @@ export function WordSeoPage({
         if (uiLoader) {
           const uiMod = await uiLoader();
           if (cancelled) return;
-          const uiEntry = uiMod.default.find((w) => w.concept_id === entry.concept_id);
+          const uiEntry = uiMod.default.find(
+            (w) => w.concept_id === entry.concept_id,
+          );
           setDisplayDefinition(uiEntry?.definiton ?? entry.definiton);
+          setDisplayWordLemma(uiEntry?.word_lemma ?? entry.word_lemma);
+          setDisplayWordType(uiEntry?.type ?? entry.type);
+          setDisplayCategory(uiEntry?.category ?? entry.category);
         } else {
           setDisplayDefinition(entry.definiton);
+          setDisplayWordLemma(entry.word_lemma);
+          setDisplayWordType(entry.type);
+          setDisplayCategory(entry.category);
         }
       } else {
         setDisplayDefinition(entry.definiton);
+        setDisplayWordLemma(entry.word_lemma);
+        setDisplayWordType(entry.type);
+        setDisplayCategory(entry.category);
       }
 
       const seen = new Set<string>([entry.word_lemma.toLowerCase()]);
@@ -381,10 +499,21 @@ export function WordSeoPage({
         ) {
           seen.add(w.word_lemma.toLowerCase());
           related.push(w.word_lemma);
-          if (related.length >= 5) break;
+          if (related.length >= 20) break;
         }
       }
       setRelatedWords(related);
+
+      const browseSeen = new Set<string>();
+      const levelWords: string[] = [];
+      for (const w of mod.default) {
+        const normalized = w.word_lemma.toLowerCase();
+        if (w.level === entry.level && w.word_lemma.length > 2 && !browseSeen.has(normalized)) {
+          browseSeen.add(normalized);
+          levelWords.push(w.word_lemma);
+        }
+      }
+      setBrowseWords(levelWords);
     });
     return () => {
       cancelled = true;
@@ -402,14 +531,24 @@ export function WordSeoPage({
       pathname: location.pathname,
       siteOrigin,
     });
-  }, [wordEntry, uiLang, targetLanguage, targetLangName, location.pathname, siteOrigin]);
+  }, [
+    wordEntry,
+    uiLang,
+    targetLanguage,
+    targetLangName,
+    location.pathname,
+    siteOrigin,
+  ]);
 
   if (wordEntry === undefined) {
     return (
       <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
         <div className="mx-auto w-full max-w-2xl space-y-6">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="rounded-2xl border border-border bg-card p-6">
+            <div
+              key={i}
+              className="rounded-2xl border border-border bg-card p-6"
+            >
               <div className="h-6 w-2/4 animate-pulse rounded bg-border/40" />
               <div className="mt-4 space-y-2">
                 <div className="h-4 w-full animate-pulse rounded bg-border/30" />
@@ -436,14 +575,53 @@ export function WordSeoPage({
   }
 
   const word = wordEntry.word_lemma;
+  const localizedWordLemma = displayWordLemma || wordEntry.word_lemma;
   const definition = displayDefinition || wordEntry.definiton;
   const sentence = wordEntry.sentence;
-  const wordType = wordEntry.type;
-  const category = wordEntry.category;
+  const wordType = displayWordType || wordEntry.type;
+  const category = displayCategory || wordEntry.category;
   const level = wordEntry.level;
   const speechLang = SPEECH_LANG[targetLanguage] ?? "en-US";
-  const cefrLevel = level.toLowerCase() as CefrLevel;
-  const practiceHref = buildLocalizedVocabularyPath(uiLang, targetLanguage, cefrLevel);
+  const uiRoot = UI_INTERFACE_MAP[uiLang] ?? UI_INTERFACE_MAP.en;
+  const enRoot = UI_INTERFACE_MAP.en;
+  const translatedWordType =
+    lookupNestedTranslation(uiRoot, `wordTypes.${wordType}`) ??
+    lookupNestedTranslation(enRoot, `wordTypes.${wordType}`) ??
+    `wordTypes.${wordType}`;
+  const localizedWordType =
+    translatedWordType && translatedWordType !== `wordTypes.${wordType}`
+      ? translatedWordType
+      : formatKeyLabel(wordType);
+  const translatedLevel =
+    lookupNestedTranslation(uiRoot, `levels.${level.toLowerCase()}`) ??
+    lookupNestedTranslation(enRoot, `levels.${level.toLowerCase()}`) ??
+    `levels.${level.toLowerCase()}`;
+  const localizedLevel =
+    translatedLevel && translatedLevel !== `levels.${level.toLowerCase()}`
+      ? translatedLevel
+      : level;
+  const translatedCategory = category
+    ? (lookupNestedTranslation(uiRoot, `levelCategory.topicNames.${category}`) ??
+      lookupNestedTranslation(enRoot, `levelCategory.topicNames.${category}`) ??
+      `levelCategory.topicNames.${category}`)
+    : "";
+  const localizedCategory =
+    category &&
+    translatedCategory &&
+    translatedCategory !== `levelCategory.topicNames.${category}`
+      ? translatedCategory
+      : category
+        ? formatKeyLabel(category)
+        : "";
+  const levelQuestion = t.levelQuestion(word);
+  const typeQuestion = t.grammarQuestion(word);
+  const categoryQuestion = t.topicQuestion(word);
+  const browseHeading = `Browse More ${level} ${targetLangName} Words`;
+  const totalBrowsePages = Math.max(1, Math.ceil(browseWords.length / WORDS_PER_PAGE));
+  const pageWords = browseWords.slice(
+    browsePage * WORDS_PER_PAGE,
+    (browsePage + 1) * WORDS_PER_PAGE,
+  );
 
   function checkAnswer() {
     const correct = practiceInput.trim().toLowerCase() === word.toLowerCase();
@@ -451,7 +629,10 @@ export function WordSeoPage({
   }
 
   function scrollToExercise() {
-    exerciseInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    exerciseInputRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
     exerciseInputRef.current?.focus();
   }
 
@@ -459,11 +640,9 @@ export function WordSeoPage({
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
       {seoMetadata ? <SEOHead metadata={seoMetadata} /> : null}
       <div className="mx-auto w-full max-w-[1200px] space-y-6">
-
         {/* HERO — two-column card */}
         <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr]">
-
             {/* LEFT: word + meta + definition + CTA */}
             <div className="p-6 md:p-10">
               <h1 className="text-base font-medium text-muted-foreground md:text-lg">
@@ -482,29 +661,30 @@ export function WordSeoPage({
                   <Volume2 className="h-8 w-8" />
                 </button>
               </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                  {level}
+              <div className="mt-4">
+                <span className="text-3xl font-bold leading-tight tracking-tight text-primary/80 md:text-4xl">
+                  {localizedWordLemma}
                 </span>
-                <span className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium capitalize text-muted-foreground">
-                  {wordType}
-                </span>
-                {category && (
-                  <span className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium capitalize text-muted-foreground">
-                    {category}
-                  </span>
-                )}
               </div>
               <p className="mt-5 text-base leading-relaxed text-muted-foreground">
                 {definition}
               </p>
-              <button
-                type="button"
-                onClick={scrollToExercise}
-                className="mt-6 rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
-              >
-                {t.practiceHeading}
-              </button>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={scrollToExercise}
+                  className="rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
+                >
+                  {t.practiceHeading}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onStartPractice(targetLanguage, level)}
+                  className="rounded-xl border border-primary/45 bg-primary/10 px-6 py-2.5 text-sm font-bold text-primary transition hover:bg-primary/15"
+                >
+                  {t.practiceCta(level)}
+                </button>
+              </div>
             </div>
 
             {/* RIGHT: example sentence */}
@@ -518,20 +698,24 @@ export function WordSeoPage({
                 </p>
               </div>
             </div>
-
           </div>
         </section>
 
         {/* CONTENT GRID: exercise + info/related */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[3fr_2fr]">
-
+        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-[3fr_2fr]">
           {/* LEFT — exercise */}
-          <section className="rounded-2xl border-2 border-primary/25 bg-primary/[0.04] p-6 md:p-8">
-            <h2 className="text-base font-semibold text-foreground">{t.practiceHeading}</h2>
-            <p className="mt-1 text-sm text-muted-foreground">{t.practiceInstruction}</p>
+          <section className="h-full rounded-2xl border-2 border-primary/25 bg-primary/[0.04] p-6 md:p-8">
+            <h2 className="text-base font-semibold text-foreground">
+              {t.practiceHeading}
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {t.practiceInstruction}
+            </p>
             <div className="mt-5 space-y-4">
               <p className="rounded-lg border border-border/60 bg-card px-4 py-3 text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">{t.definitionLabel}</span>{" "}
+                <span className="font-medium text-foreground">
+                  {t.definitionLabel}
+                </span>{" "}
                 {definition}
               </p>
               <input
@@ -570,56 +754,125 @@ export function WordSeoPage({
           </section>
 
           {/* RIGHT — word info + related */}
-          <div className="space-y-6">
-
-            <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
-              <h2 className="text-base font-semibold text-foreground">{t.wordInfoHeading}</h2>
-              <dl className="mt-4 divide-y divide-border/50">
-                {[
-                  [t.levelLabel, level],
-                  [t.typeLabel, wordType],
-                  ...(category ? [[t.categoryLabel, category]] : []),
-                ].map(([label, value]) => (
-                  <div key={label} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-                    <dt className="text-sm text-muted-foreground">{label}</dt>
-                    <dd className="text-sm font-semibold capitalize text-foreground">{value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-
-            {relatedWords.length > 0 && (
-              <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
-                <h2 className="text-base font-semibold text-foreground">{t.relatedWordsHeading}</h2>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {relatedWords.map((relWord) => (
-                    <Link
-                      key={relWord}
-                      to={buildWordPath(uiLang, targetLanguage, relWord)}
-                      className="rounded-lg border border-border px-3 py-1.5 text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
-                    >
-                      {relWord}
-                    </Link>
-                  ))}
+          <section className="h-full rounded-2xl border border-border bg-card p-6 md:p-8">
+            <h2 className="text-base font-semibold text-foreground">
+              {t.wordInfoHeading}
+            </h2>
+            <div className="mt-5 space-y-3">
+              <div className="rounded-xl border border-primary/20 bg-primary/[0.04] p-4">
+                <h3 className="text-sm font-semibold leading-5 text-foreground">
+                  {levelQuestion}
+                </h3>
+                <p className="mt-2 inline-flex rounded-md border border-primary/25 bg-background px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-primary">
+                  {localizedLevel}
+                </p>
+              </div>
+              <div className="rounded-xl border border-border bg-muted/20 p-4">
+                <h3 className="text-sm font-semibold leading-5 text-foreground">
+                  {typeQuestion}
+                </h3>
+                <p className="mt-2 text-sm font-semibold capitalize text-foreground">
+                  {localizedWordType}
+                </p>
+              </div>
+              {category ? (
+                <div className="rounded-xl border border-border bg-muted/20 p-4">
+                  <h3 className="text-sm font-semibold leading-5 text-foreground">
+                    {categoryQuestion}
+                  </h3>
+                  <p className="mt-2 text-sm font-semibold capitalize text-foreground">
+                    {localizedCategory}
+                  </p>
                 </div>
-              </section>
-            )}
-
-          </div>
+              ) : null}
+            </div>
+          </section>
         </div>
 
-        {/* BOTTOM CTA */}
-        {practiceHref && (
-          <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
-            <Link
-              to={practiceHref}
-              className="inline-block rounded-xl bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
-            >
-              {t.practiceCta(level)}
-            </Link>
-          </div>
+        {relatedWords.length > 0 && (
+          <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
+            <h2 className="text-base font-semibold text-foreground">
+              {t.relatedWordsHeading}
+            </h2>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {relatedWords.map((relWord) => (
+                <Link
+                  key={relWord}
+                  to={buildWordPath(uiLang, targetLanguage, relWord)}
+                  className="rounded-lg border border-border px-3 py-1.5 text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                >
+                  {relWord}
+                </Link>
+              ))}
+            </div>
+          </section>
         )}
 
+        {/* BOTTOM CTA */}
+        <div className="flex justify-center rounded-2xl border border-border bg-card p-6 md:p-8">
+          <button
+            type="button"
+            onClick={() => onStartPractice(targetLanguage, level)}
+            className="inline-block rounded-xl bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
+          >
+            {t.practiceCta(level)}
+          </button>
+        </div>
+
+        <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
+          <h2 className="text-2xl text-foreground">{browseHeading}</h2>
+          {pageWords.length > 0 ? (
+            <>
+              <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                {pageWords.map((browseWord) => (
+                  <Link
+                    key={browseWord}
+                    to={buildWordPath(uiLang, targetLanguage, browseWord)}
+                    className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                  >
+                    {browseWord}
+                  </Link>
+                ))}
+              </div>
+              {totalBrowsePages > 1 && (
+                <div className="mt-5 flex flex-wrap justify-center gap-1.5">
+                  {getPaginationRange(browsePage, totalBrowsePages).map((item, idx) =>
+                    item === "..." ? (
+                      <span
+                        key={`ellipsis-${idx}`}
+                        className="px-2 py-1 text-sm text-muted-foreground"
+                      >
+                        ...
+                      </span>
+                    ) : (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => setBrowsePage(item)}
+                        className={
+                          item === browsePage
+                            ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
+                            : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
+                        }
+                      >
+                        {item + 1}
+                      </button>
+                    ),
+                  )}
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-8 animate-pulse rounded-lg border border-border bg-border/30"
+                />
+              ))}
+            </div>
+          )}
+        </section>
       </div>
     </main>
   );
