@@ -7,6 +7,11 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 
 const SITE_URL = (process.env.SITE_URL || "https://www.fluentstellar.com").replace(/\/+$/, "");
+const WORD_SITEMAP_LIMIT = Number.parseInt(process.env.WORD_SITEMAP_LIMIT || "0", 10);
+const WORD_SITEMAP_OFFSET = Number.parseInt(process.env.WORD_SITEMAP_OFFSET || "0", 10);
+const WORD_SITEMAP_TARGET_LANGUAGE = (process.env.WORD_SITEMAP_TARGET_LANGUAGE || "").trim().toLowerCase();
+const WORD_SITEMAP_LEVEL = (process.env.WORD_SITEMAP_LEVEL || "").trim().toUpperCase();
+const WORD_SITEMAP_UI_LANG = (process.env.WORD_SITEMAP_UI_LANG || "").trim().toLowerCase();
 
 const CORE_ROUTES = [
   "/",
@@ -126,18 +131,39 @@ const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "
 
 async function collectWordRoutes() {
   const routes = [];
-  for (const targetLanguage of TARGET_LANGUAGES) {
+  const seen = new Set();
+  const selectedTargetLanguages = WORD_SITEMAP_TARGET_LANGUAGE
+    ? TARGET_LANGUAGES.filter((lang) => lang === WORD_SITEMAP_TARGET_LANGUAGE)
+    : TARGET_LANGUAGES;
+  const selectedUiLanguages =
+    WORD_SITEMAP_UI_LANG && UI_LANGUAGES.includes(WORD_SITEMAP_UI_LANG)
+      ? [WORD_SITEMAP_UI_LANG]
+      : UI_LANGUAGES;
+
+  for (const targetLanguage of selectedTargetLanguages) {
     const vocabPath = path.join(ROOT_DIR, "src", "data", "vocabulary", targetLanguage, "vocabulary.json");
     const raw = await fs.readFile(vocabPath, "utf8");
-    const vocab = JSON.parse(raw.replace(/^﻿/, ""));
+    const vocab = JSON.parse(raw.replace(/^\uFEFF/, ""));
     for (const entry of vocab) {
+      if (WORD_SITEMAP_LEVEL && entry.level !== WORD_SITEMAP_LEVEL) continue;
       const slug = wordToSlug(entry.word_lemma);
       if (!slug) continue;
-      for (const uiLang of UI_LANGUAGES) {
+      const uniqueWordKey = `${targetLanguage}:${slug}`;
+      if (seen.has(uniqueWordKey)) continue;
+      seen.add(uniqueWordKey);
+      for (const uiLang of selectedUiLanguages) {
         routes.push(`/${uiLang}/${targetLanguage}-word-${slug}`);
       }
     }
   }
+
+  if (Number.isFinite(WORD_SITEMAP_LIMIT) && WORD_SITEMAP_LIMIT > 0) {
+    const offset = Number.isFinite(WORD_SITEMAP_OFFSET) && WORD_SITEMAP_OFFSET > 0
+      ? WORD_SITEMAP_OFFSET
+      : 0;
+    return routes.slice(offset, offset + WORD_SITEMAP_LIMIT);
+  }
+
   return routes;
 }
 
