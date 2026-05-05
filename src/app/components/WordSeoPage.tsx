@@ -150,7 +150,14 @@ function formatKeyLabel(value: string): string {
 }
 
 function slugToDisplayWord(slug: string): string {
-  return slug
+  let decoded = slug;
+  try {
+    decoded = decodeURIComponent(slug);
+  } catch {
+    // Keep original slug when malformed escape sequences are present.
+  }
+
+  return decoded
     .replace(/-/g, " ")
     .trim();
 }
