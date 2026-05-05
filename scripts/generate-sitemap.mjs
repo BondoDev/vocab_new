@@ -12,6 +12,7 @@ const WORD_SITEMAP_OFFSET = Number.parseInt(process.env.WORD_SITEMAP_OFFSET || "
 const WORD_SITEMAP_TARGET_LANGUAGE = (process.env.WORD_SITEMAP_TARGET_LANGUAGE || "english").trim().toLowerCase();
 const WORD_SITEMAP_LEVEL = (process.env.WORD_SITEMAP_LEVEL || "A1").trim().toUpperCase();
 const WORD_SITEMAP_UI_LANG = (process.env.WORD_SITEMAP_UI_LANG || "en").trim().toLowerCase();
+const SITEMAP_CHUNK_SIZE = Number.parseInt(process.env.SITEMAP_CHUNK_SIZE || "50000", 10);
 
 const CORE_ROUTES = [
   "/",
@@ -244,17 +245,91 @@ function buildSitemapXml(paths) {
   return lines.join("\n");
 }
 
+function buildSitemapIndexXml(fileNames) {
+  const lastmod = new Date().toISOString().slice(0, 10);
+  const lines = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    "",
+  ];
+
+  for (const fileName of fileNames) {
+    lines.push("  <sitemap>");
+    lines.push(`    <loc>${xmlEscape(`${SITE_URL}/${fileName}`)}</loc>`);
+    lines.push(`    <lastmod>${lastmod}</lastmod>`);
+    lines.push("  </sitemap>");
+    lines.push("");
+  }
+
+  lines.push("</sitemapindex>");
+  lines.push("");
+  return lines.join("\n");
+}
+
+function chunkArray(values, chunkSize) {
+  const result = [];
+  const size = Number.isFinite(chunkSize) && chunkSize > 0 ? chunkSize : 50000;
+  for (let index = 0; index < values.length; index += size) {
+    result.push(values.slice(index, index + size));
+  }
+  return result;
+}
+
 async function main() {
+  const publicDir = path.join(ROOT_DIR, "public");
+  const sitemapsDir = path.join(publicDir, "sitemaps");
+  await fs.mkdir(sitemapsDir, { recursive: true });
+
+  const existingSubSitemapFiles = await fs.readdir(sitemapsDir);
+  await Promise.all(
+    existingSubSitemapFiles
+      .filter((name) => /^sitemap-(core|cefr|words-\d{4})\.xml$/.test(name))
+      .map((name) => fs.rm(path.join(sitemapsDir, name), { force: true })),
+  );
+  const existingRootFiles = await fs.readdir(publicDir);
+  await Promise.all(
+    existingRootFiles
+      .filter((name) => /^sitemap-(core|cefr|words-\d{4})\.xml$/.test(name))
+      .map((name) => fs.rm(path.join(publicDir, name), { force: true })),
+  );
+
   const vocabularyRoutes = await collectVocabularyRoutes();
   const wordRoutes = await collectWordRoutes();
-  const allRoutes = [...new Set([...CORE_ROUTES, ...vocabularyRoutes, ...wordRoutes])];
-  const sitemap = buildSitemapXml(allRoutes);
-  const outputPath = path.join(ROOT_DIR, "public", "sitemap.xml");
-  await fs.writeFile(outputPath, sitemap, "utf8");
-  console.log(`Generated sitemap with ${allRoutes.length} URLs at ${outputPath}`);
+
+  const sitemapFiles = [];
+
+  const coreRoutes = Array.from(new Set(CORE_ROUTES));
+  if (coreRoutes.length > 0) {
+    const coreName = "sitemap-core.xml";
+    await fs.writeFile(path.join(sitemapsDir, coreName), buildSitemapXml(coreRoutes), "utf8");
+    sitemapFiles.push(`sitemaps/${coreName}`);
+  }
+
+  if (vocabularyRoutes.length > 0) {
+    const cefrName = "sitemap-cefr.xml";
+    await fs.writeFile(path.join(sitemapsDir, cefrName), buildSitemapXml(vocabularyRoutes), "utf8");
+    sitemapFiles.push(`sitemaps/${cefrName}`);
+  }
+
+  const wordChunks = chunkArray(wordRoutes, SITEMAP_CHUNK_SIZE);
+  for (let i = 0; i < wordChunks.length; i += 1) {
+    const wordsName = `sitemap-words-${String(i + 1).padStart(4, "0")}.xml`;
+    await fs.writeFile(path.join(sitemapsDir, wordsName), buildSitemapXml(wordChunks[i]), "utf8");
+    sitemapFiles.push(`sitemaps/${wordsName}`);
+  }
+
+  const indexXml = buildSitemapIndexXml(sitemapFiles);
+  const indexPath = path.join(publicDir, "sitemap.xml");
+  await fs.writeFile(indexPath, indexXml, "utf8");
+
+  const totalUrls = coreRoutes.length + vocabularyRoutes.length + wordRoutes.length;
+  console.log(
+    `Generated sitemap index (${sitemapFiles.length} files, ${totalUrls} URLs total) at ${indexPath}`,
+  );
 }
 
 main().catch((error) => {
   console.error("Failed to generate sitemap:", error);
   process.exitCode = 1;
 });
+
