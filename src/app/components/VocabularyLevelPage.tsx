@@ -21,7 +21,7 @@ interface VocabularyLevelPageProps {
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
 }
 
-type VocabEntry = { word_lemma: string; level: string };
+type VocabEntry = { concept_id: string; word_lemma: string; level: string };
 const vocabModules = import.meta.glob("../../data/vocabulary/*/vocabulary.json") as Record<
   string,
   () => Promise<{ default: VocabEntry[] }>
@@ -378,7 +378,7 @@ export function VocabularyLevelPage({
     wordsUnit,
   );
 
-  const [browseWords, setBrowseWords] = useState<string[]>([]);
+  const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
   const [browsePage, setBrowsePage] = useState(0);
 
   useEffect(() => {
@@ -392,11 +392,11 @@ export function VocabularyLevelPage({
       if (cancelled) return;
       const levelUp = LEVEL_DISPLAY[level];
       const seen = new Set<string>();
-      const words: string[] = [];
+      const words: VocabEntry[] = [];
       for (const w of mod.default) {
-        if (w.level === levelUp && w.word_lemma.length > 2 && !seen.has(w.word_lemma)) {
-          seen.add(w.word_lemma);
-          words.push(w.word_lemma);
+        if (w.level === levelUp && w.word_lemma.length > 2 && !seen.has(w.concept_id)) {
+          seen.add(w.concept_id);
+          words.push(w);
         }
       }
       setBrowseWords(words);
@@ -543,11 +543,11 @@ export function VocabularyLevelPage({
               <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 {pageWords.map((word) => (
                   <Link
-                    key={word}
-                    to={buildWordPath(uiLang, targetLanguage, word)}
+                    key={word.concept_id}
+                    to={buildWordPath(uiLang, targetLanguage, word.word_lemma, word.concept_id)}
                     className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                   >
-                    {word}
+                    {word.word_lemma}
                   </Link>
                 ))}
               </div>

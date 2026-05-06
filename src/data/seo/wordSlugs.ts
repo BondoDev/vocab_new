@@ -10,6 +10,7 @@ export interface WordRouteMatch {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
   wordSlug: string;
+  conceptId: string | null;
 }
 
 export function wordToSlug(lemma: string): string {
@@ -26,8 +27,25 @@ export function buildWordPath(
   uiLang: UiLanguageCode,
   targetLanguage: TargetLanguageSlug,
   wordLemma: string,
+  conceptId?: string | null,
 ): string {
-  return `/${uiLang}/${targetLanguage}-word-${wordToSlug(wordLemma)}`;
+  return buildWordPathFromSlug(
+    uiLang,
+    targetLanguage,
+    wordToSlug(wordLemma),
+    conceptId,
+  );
+}
+
+export function buildWordPathFromSlug(
+  uiLang: UiLanguageCode,
+  targetLanguage: TargetLanguageSlug,
+  wordSlug: string,
+  conceptId?: string | null,
+): string {
+  const base = `/${uiLang}/${targetLanguage}-word-${wordSlug}`;
+  if (!conceptId || !conceptId.trim()) return base;
+  return `${base}--${conceptId.trim()}`;
 }
 
 export function resolveWordRoute(uiLangRaw: string, slug: string): WordRouteMatch | null {
@@ -35,29 +53,32 @@ export function resolveWordRoute(uiLangRaw: string, slug: string): WordRouteMatc
   for (const targetLanguage of SUPPORTED_TARGET_LANGUAGES) {
     const prefix = `${targetLanguage}-word-`;
     if (slug.startsWith(prefix)) {
-      const wordSlug = slug.slice(prefix.length);
+      const suffix = slug.slice(prefix.length);
+      const [wordSlug, conceptIdRaw] = suffix.split("--");
       if (wordSlug.length === 0) return null;
-      return { uiLang: uiLangRaw, targetLanguage, wordSlug };
+      const conceptId = conceptIdRaw?.trim() ? conceptIdRaw.trim() : null;
+      return { uiLang: uiLangRaw, targetLanguage, wordSlug, conceptId };
     }
   }
   return null;
 }
 
 export function getAllWordPaths(
-  entries: Array<{ targetLanguage: TargetLanguageSlug; wordLemma: string }>,
+  entries: Array<{ targetLanguage: TargetLanguageSlug; wordLemma: string; conceptId?: string | null }>,
 ): string[] {
   const paths: string[] = [];
   const seen = new Set<string>();
 
-  for (const { targetLanguage, wordLemma } of entries) {
+  for (const { targetLanguage, wordLemma, conceptId } of entries) {
     const slug = wordToSlug(wordLemma);
     if (!slug) continue;
-    const key = `${targetLanguage}:${slug}`;
+    const conceptKey = conceptId?.trim();
+    const key = conceptKey ? `${targetLanguage}:${conceptKey}` : `${targetLanguage}:${slug}`;
     if (seen.has(key)) continue;
     seen.add(key);
 
     for (const uiLang of SUPPORTED_UI_LANGUAGES) {
-      paths.push(buildWordPath(uiLang, targetLanguage, wordLemma));
+      paths.push(buildWordPath(uiLang, targetLanguage, wordLemma, conceptId));
     }
   }
 

@@ -414,6 +414,7 @@ interface WordSeoPageProps {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
   wordSlug: string;
+  conceptId?: string | null;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
 }
 
@@ -421,6 +422,7 @@ export function WordSeoPage({
   uiLang,
   targetLanguage,
   wordSlug,
+  conceptId,
   onStartPractice,
 }: WordSeoPageProps) {
   const location = useLocation();
@@ -438,8 +440,8 @@ export function WordSeoPage({
   const [displayWordLemma, setDisplayWordLemma] = useState<string>("");
   const [displayWordType, setDisplayWordType] = useState<string>("");
   const [displayCategory, setDisplayCategory] = useState<string>("");
-  const [relatedWords, setRelatedWords] = useState<string[]>([]);
-  const [browseWords, setBrowseWords] = useState<string[]>([]);
+  const [relatedWords, setRelatedWords] = useState<VocabEntry[]>([]);
+  const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
   const [browsePage, setBrowsePage] = useState(0);
   const [practiceInput, setPracticeInput] = useState("");
   const [practiceResult, setPracticeResult] = useState<
@@ -474,9 +476,11 @@ export function WordSeoPage({
     let cancelled = false;
     loader().then(async (mod) => {
       if (cancelled) return;
-      const entry = mod.default.find(
-        (w) => wordToSlug(w.word_lemma) === wordSlug,
-      );
+      const entry =
+        (conceptId
+          ? mod.default.find((w) => String(w.concept_id) === conceptId)
+          : undefined) ??
+        mod.default.find((w) => wordToSlug(w.word_lemma) === wordSlug);
       setWordEntry(entry ?? null);
 
       if (!entry) return;
@@ -509,29 +513,28 @@ export function WordSeoPage({
         setDisplayCategory(entry.category);
       }
 
-      const seen = new Set<string>([entry.word_lemma.toLowerCase()]);
-      const related: string[] = [];
+      const seen = new Set<string>([entry.concept_id]);
+      const related: VocabEntry[] = [];
       for (const w of mod.default) {
         if (
           w.category === entry.category &&
           w.level === entry.level &&
           w.word_lemma.length > 2 &&
-          !seen.has(w.word_lemma.toLowerCase())
+          !seen.has(w.concept_id)
         ) {
-          seen.add(w.word_lemma.toLowerCase());
-          related.push(w.word_lemma);
+          seen.add(w.concept_id);
+          related.push(w);
           if (related.length >= 20) break;
         }
       }
       setRelatedWords(related);
 
       const browseSeen = new Set<string>();
-      const levelWords: string[] = [];
+      const levelWords: VocabEntry[] = [];
       for (const w of mod.default) {
-        const normalized = w.word_lemma.toLowerCase();
-        if (w.level === entry.level && w.word_lemma.length > 2 && !browseSeen.has(normalized)) {
-          browseSeen.add(normalized);
-          levelWords.push(w.word_lemma);
+        if (w.level === entry.level && w.word_lemma.length > 2 && !browseSeen.has(w.concept_id)) {
+          browseSeen.add(w.concept_id);
+          levelWords.push(w);
         }
       }
       setBrowseWords(levelWords);
@@ -539,7 +542,7 @@ export function WordSeoPage({
     return () => {
       cancelled = true;
     };
-  }, [targetLanguage, wordSlug, uiLang]);
+  }, [targetLanguage, wordSlug, conceptId, uiLang]);
 
   const seoMetadata = useMemo(() => {
     const fallbackWord = slugToDisplayWord(wordSlug) || wordSlug;
@@ -817,11 +820,11 @@ export function WordSeoPage({
             <div className="mt-4 flex flex-wrap gap-2">
               {relatedWords.map((relWord) => (
                 <Link
-                  key={relWord}
-                  to={buildWordPath(uiLang, targetLanguage, relWord)}
+                  key={relWord.concept_id}
+                  to={buildWordPath(uiLang, targetLanguage, relWord.word_lemma, relWord.concept_id)}
                   className="rounded-lg border border-border px-3 py-1.5 text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                 >
-                  {relWord}
+                  {relWord.word_lemma}
                 </Link>
               ))}
             </div>
@@ -846,11 +849,11 @@ export function WordSeoPage({
               <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 {pageWords.map((browseWord) => (
                   <Link
-                    key={browseWord}
-                    to={buildWordPath(uiLang, targetLanguage, browseWord)}
+                    key={browseWord.concept_id}
+                    to={buildWordPath(uiLang, targetLanguage, browseWord.word_lemma, browseWord.concept_id)}
                     className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                   >
-                    {browseWord}
+                    {browseWord.word_lemma}
                   </Link>
                 ))}
               </div>

@@ -11,6 +11,7 @@ const WORD_SITEMAP_LIMIT = Number.parseInt(process.env.WORD_SITEMAP_LIMIT || "10
 const WORD_SITEMAP_OFFSET = Number.parseInt(process.env.WORD_SITEMAP_OFFSET || "0", 10);
 const WORD_SITEMAP_TARGET_LANGUAGE = (process.env.WORD_SITEMAP_TARGET_LANGUAGE || "english").trim().toLowerCase();
 const WORD_SITEMAP_LEVEL = (process.env.WORD_SITEMAP_LEVEL || "A1").trim().toUpperCase();
+const WORD_SITEMAP_ALL_LEVELS = WORD_SITEMAP_LEVEL === "ALL";
 const WORD_SITEMAP_UI_LANG = (process.env.WORD_SITEMAP_UI_LANG || "en").trim().toLowerCase();
 const SITEMAP_CHUNK_SIZE = Number.parseInt(process.env.SITEMAP_CHUNK_SIZE || "50000", 10);
 
@@ -146,14 +147,18 @@ async function collectWordRoutes() {
     const raw = await fs.readFile(vocabPath, "utf8");
     const vocab = JSON.parse(raw.replace(/^\uFEFF/, ""));
     for (const entry of vocab) {
-      if (WORD_SITEMAP_LEVEL && entry.level !== WORD_SITEMAP_LEVEL) continue;
+      if (!WORD_SITEMAP_ALL_LEVELS && WORD_SITEMAP_LEVEL && entry.level !== WORD_SITEMAP_LEVEL) continue;
       const slug = wordToSlug(entry.word_lemma);
       if (!slug) continue;
-      const uniqueWordKey = `${targetLanguage}:${slug}`;
+      const conceptId = String(entry.concept_id ?? "").trim();
+      const uniqueWordKey = conceptId
+        ? `${targetLanguage}:${conceptId}`
+        : `${targetLanguage}:${slug}`;
       if (seen.has(uniqueWordKey)) continue;
       seen.add(uniqueWordKey);
+      const wordPathSuffix = conceptId ? `${slug}--${conceptId}` : slug;
       for (const uiLang of selectedUiLanguages) {
-        routes.push(`/${uiLang}/${targetLanguage}-word-${slug}`);
+        routes.push(`/${uiLang}/${targetLanguage}-word-${wordPathSuffix}`);
       }
     }
   }

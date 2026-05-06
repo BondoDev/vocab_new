@@ -6,7 +6,7 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
-import { resolveWordRoute, buildWordPath } from "../../data/seo/wordSlugs";
+import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordSlugs";
 
 interface UILanguageSwitcherProps {
   variant?: "default" | "centered-modal";
@@ -118,7 +118,12 @@ export function UILanguageSwitcher({
 
         const wordResolved = resolveWordRoute(currentUiLang, slug);
         if (wordResolved) {
-          const nextPath = buildWordPath(code, wordResolved.targetLanguage, wordResolved.wordSlug);
+          const nextPath = buildWordPathFromSlug(
+            code,
+            wordResolved.targetLanguage,
+            wordResolved.wordSlug,
+            wordResolved.conceptId,
+          );
           if (nextPath !== location.pathname) {
             navigate(nextPath);
           }
@@ -276,7 +281,6 @@ export function UILanguageSwitcher({
     </>
   );
 }
-
 
 
 

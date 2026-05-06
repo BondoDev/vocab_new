@@ -1924,6 +1924,7 @@ function AppContent() {
           uiLang={wordRoute.uiLang}
           targetLanguage={wordRoute.targetLanguage}
           wordSlug={wordRoute.wordSlug}
+          conceptId={wordRoute.conceptId}
           onStartPractice={handleStartVocabularyPractice}
         />
       </div>
@@ -2322,7 +2323,6 @@ export default function App({
     </SeoProvider>
   );
 }
-
 
 
 
