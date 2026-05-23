@@ -228,13 +228,18 @@ async function collectVocabularyRoutes() {
   return Array.from(routes).sort();
 }
 
-function buildSitemapXml(paths) {
+function buildSitemapXml(paths, options = {}) {
+  const comment = options.comment ? String(options.comment).trim() : "";
   const lastmod = new Date().toISOString().slice(0, 10);
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     "",
   ];
+  if (comment) {
+    lines.push(`  <!-- ${xmlEscape(comment)} -->`);
+    lines.push("");
+  }
 
   for (const route of paths) {
     const loc = `${SITE_URL}${route}`;
@@ -319,7 +324,14 @@ async function main() {
   const wordChunks = chunkArray(wordRoutes, SITEMAP_CHUNK_SIZE);
   for (let i = 0; i < wordChunks.length; i += 1) {
     const wordsName = `sitemap-words-${String(i + 1).padStart(4, "0")}.xml`;
-    await fs.writeFile(path.join(sitemapsDir, wordsName), buildSitemapXml(wordChunks[i]), "utf8");
+    await fs.writeFile(
+      path.join(sitemapsDir, wordsName),
+      buildSitemapXml(wordChunks[i], {
+        comment:
+          "This sitemap contains English-word URLs with English UI paths (en). Both the UI language and the word language are English; each URL includes a lemma slug and concept_id.",
+      }),
+      "utf8",
+    );
     sitemapFiles.push(`sitemaps/${wordsName}`);
   }
 
