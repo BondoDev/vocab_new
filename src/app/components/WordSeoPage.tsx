@@ -221,6 +221,7 @@ interface WordPageT {
   levelLabel: string;
   categoryLabel: string;
   relatedWordsHeading: string;
+  otherMeaningsHeading: string;
   pronounceLabel: string;
   practiceHeading: string;
   practiceInstruction: string;
@@ -229,11 +230,20 @@ interface WordPageT {
   correctMessage: string;
   tryAgainMessage: string;
   practiceCta: (level: string) => string;
+  browseMoreHeading: (level: string, targetLang: string) => string;
   levelQuestion: (word: string) => string;
   grammarQuestion: (word: string) => string;
   topicQuestion: (word: string) => string;
   notFoundTitle: string;
   notFoundBody: string;
+}
+
+function normalizeLemma(value: string): string {
+  return value
+    .normalize("NFC")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ");
 }
 
 const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
@@ -246,6 +256,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "CEFR level",
     categoryLabel: "Category",
     relatedWordsHeading: "Related Words",
+    otherMeaningsHeading: "Other Meanings of This Word",
     pronounceLabel: "Hear pronunciation",
     practiceHeading: "Practice This Word",
     practiceInstruction: "Type the correct word based on the definition.",
@@ -254,6 +265,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Correct ✓",
     tryAgainMessage: "Try again",
     practiceCta: (level) => `Practice More ${level} Vocabulary`,
+    browseMoreHeading: (level, lang) => `Browse More ${level} ${lang} Words`,
     levelQuestion: (w) => `What is the CEFR level of the word "${w}"?`,
     grammarQuestion: (w) => `What grammatical category does "${w}" have?`,
     topicQuestion: (w) => `Which vocabulary topic does "${w}" belong to?`,
@@ -271,6 +283,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Nivel MCER",
     categoryLabel: "Categoría",
     relatedWordsHeading: "Palabras relacionadas",
+    otherMeaningsHeading: "Otros significados de esta palabra",
     pronounceLabel: "Escuchar pronunciación",
     practiceHeading: "Practica esta palabra",
     practiceInstruction: "Escribe la palabra correcta según la definición.",
@@ -279,6 +292,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Correcto ✓",
     tryAgainMessage: "Inténtalo de nuevo",
     practiceCta: (level) => `Practica más vocabulario ${level}`,
+    browseMoreHeading: (level, lang) =>
+      `Explora más palabras ${lang} de nivel ${level}`,
     levelQuestion: (w) => `¿Qué nivel MCER tiene la palabra "${w}"?`,
     grammarQuestion: (w) => `¿Qué categoría gramatical tiene "${w}"?`,
     topicQuestion: (w) => `¿A qué tema de vocabulario pertenece "${w}"?`,
@@ -295,6 +310,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Niveau CECR",
     categoryLabel: "Catégorie",
     relatedWordsHeading: "Mots associés",
+    otherMeaningsHeading: "Autres significations de ce mot",
     pronounceLabel: "Écouter la prononciation",
     practiceHeading: "Pratiquer ce mot",
     practiceInstruction:
@@ -304,6 +320,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Correct ✓",
     tryAgainMessage: "Réessayez",
     practiceCta: (level) => `Pratiquer plus de vocabulaire ${level}`,
+    browseMoreHeading: (level, lang) =>
+      `Explorer plus de mots ${lang} de niveau ${level}`,
     levelQuestion: (w) => `Quel est le niveau CECRL du mot « ${w} » ?`,
     grammarQuestion: (w) => `Quelle est la nature grammaticale de « ${w} » ?`,
     topicQuestion: (w) => `À quel thème de vocabulaire appartient « ${w} » ?`,
@@ -320,6 +338,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "GER-Niveau",
     categoryLabel: "Kategorie",
     relatedWordsHeading: "Verwandte Wörter",
+    otherMeaningsHeading: "Andere Bedeutungen dieses Wortes",
     pronounceLabel: "Aussprache anhören",
     practiceHeading: "Dieses Wort üben",
     practiceInstruction: "Tippe das richtige Wort anhand der Definition.",
@@ -328,7 +347,9 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Richtig ✓",
     tryAgainMessage: "Nochmal versuchen",
     practiceCta: (level) => `Mehr ${level} Vokabeln üben`,
-    levelQuestion: (w) => `Welches GER-Niveau hat das Wort „${w}“?`,
+    browseMoreHeading: (level, lang) =>
+      `Mehr ${level}-Wörter auf ${lang} entdecken`,
+    levelQuestion: (w) => `Welches GER-Niveau hat das Wort „${w}„?`,
     grammarQuestion: (w) => `Welche Wortart ist „${w}“?`,
     topicQuestion: (w) => `Zu welchem Wortschatzthema gehört „${w}“?`,
     notFoundTitle: "Wort nicht gefunden",
@@ -345,6 +366,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Livello QCER",
     categoryLabel: "Categoria",
     relatedWordsHeading: "Parole correlate",
+    otherMeaningsHeading: "Altri significati di questa parola",
     pronounceLabel: "Ascolta la pronuncia",
     practiceHeading: "Pratica questa parola",
     practiceInstruction: "Digita la parola corretta in base alla definizione.",
@@ -353,6 +375,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Corretto ✓",
     tryAgainMessage: "Riprova",
     practiceCta: (level) => `Pratica più vocabolario ${level}`,
+    browseMoreHeading: (level, lang) =>
+      `Scopri più parole ${lang} di livello ${level}`,
     levelQuestion: (w) => `Qual è il livello QCER della parola "${w}"?`,
     grammarQuestion: (w) => `Quale parte del discorso è "${w}"?`,
     topicQuestion: (w) => `A quale argomento di vocabolario appartiene "${w}"?`,
@@ -369,6 +393,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Nível QECR",
     categoryLabel: "Categoria",
     relatedWordsHeading: "Palavras relacionadas",
+    otherMeaningsHeading: "Outros significados desta palavra",
     pronounceLabel: "Ouvir pronúncia",
     practiceHeading: "Pratique esta palavra",
     practiceInstruction: "Digite a palavra correta com base na definição.",
@@ -377,6 +402,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Correto ✓",
     tryAgainMessage: "Tente novamente",
     practiceCta: (level) => `Pratique mais vocabulário ${level}`,
+    browseMoreHeading: (level, lang) =>
+      `Explore mais palavras ${lang} de nível ${level}`,
     levelQuestion: (w) => `Qual é o nível QECR da palavra "${w}"?`,
     grammarQuestion: (w) => `Qual é a classe gramatical de "${w}"?`,
     topicQuestion: (w) => `A que tema de vocabulário pertence "${w}"?`,
@@ -393,6 +420,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Уровень CEFR",
     categoryLabel: "Категория",
     relatedWordsHeading: "Связанные слова",
+    otherMeaningsHeading: "Другие значения этого слова",
     pronounceLabel: "Услышать произношение",
     practiceHeading: "Практикуйте это слово",
     practiceInstruction: "Введите правильное слово на основе определения.",
@@ -401,6 +429,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     correctMessage: "Правильно ✓",
     tryAgainMessage: "Попробуйте снова",
     practiceCta: (level) => `Практикуйте больше слов уровня ${level}`,
+    browseMoreHeading: (level, lang) =>
+      `Изучайте больше ${lang} слов уровня ${level}`,
     levelQuestion: (w) => `Какой уровень CEFR у слова «${w}»?`,
     grammarQuestion: (w) => `Какая часть речи у слова «${w}»?`,
     topicQuestion: (w) => `К какой теме словарного запаса относится слово «${w}»?`,
@@ -442,6 +472,7 @@ export function WordSeoPage({
   const [displayCategory, setDisplayCategory] = useState<string>("");
   const [relatedWords, setRelatedWords] = useState<VocabEntry[]>([]);
   const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
+  const [otherMeanings, setOtherMeanings] = useState<VocabEntry[]>([]);
   const [browsePage, setBrowsePage] = useState(0);
   const [practiceInput, setPracticeInput] = useState("");
   const [practiceResult, setPracticeResult] = useState<
@@ -464,6 +495,7 @@ export function WordSeoPage({
     setDisplayCategory("");
     setRelatedWords([]);
     setBrowseWords([]);
+    setOtherMeanings([]);
     setBrowsePage(0);
     setPracticeInput("");
     setPracticeResult(null);
@@ -487,12 +519,14 @@ export function WordSeoPage({
 
       // Load definition in UI language when it differs from the target language
       const uiVocabLang = UI_LANG_TO_VOCAB[uiLang];
+      let uiByConceptId: Map<string, VocabEntry> | null = null;
       if (uiVocabLang !== targetLanguage) {
         const uiKey = `../../data/vocabulary/${uiVocabLang}/vocabulary.json`;
         const uiLoader = wordVocabModules[uiKey];
         if (uiLoader) {
           const uiMod = await uiLoader();
           if (cancelled) return;
+          uiByConceptId = new Map(uiMod.default.map((w) => [w.concept_id, w]));
           const uiEntry = uiMod.default.find(
             (w) => w.concept_id === entry.concept_id,
           );
@@ -512,6 +546,19 @@ export function WordSeoPage({
         setDisplayWordType(entry.type);
         setDisplayCategory(entry.category);
       }
+
+      const currentNormalizedLemma = normalizeLemma(entry.word_lemma);
+      const alternatives = mod.default.filter(
+        (w) =>
+          w.concept_id !== entry.concept_id &&
+          normalizeLemma(w.word_lemma) === currentNormalizedLemma,
+      );
+      setOtherMeanings(
+        alternatives.map((w) => {
+          if (!uiByConceptId) return w;
+          return uiByConceptId.get(w.concept_id) ?? w;
+        }),
+      );
 
       const seen = new Set<string>([entry.concept_id]);
       const related: VocabEntry[] = [];
@@ -639,7 +686,7 @@ export function WordSeoPage({
   const levelQuestion = t.levelQuestion(word);
   const typeQuestion = t.grammarQuestion(word);
   const categoryQuestion = t.topicQuestion(word);
-  const browseHeading = `Browse More ${level} ${targetLangName} Words`;
+  const browseHeading = t.browseMoreHeading(level, targetLangName);
   const totalBrowsePages = Math.max(1, Math.ceil(browseWords.length / WORDS_PER_PAGE));
   const pageWords = browseWords.slice(
     browsePage * WORDS_PER_PAGE,
@@ -723,6 +770,49 @@ export function WordSeoPage({
             </div>
           </div>
         </section>
+
+        {otherMeanings.length > 0 && (
+          <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
+            <h2 className="text-base font-semibold text-foreground">
+              {t.otherMeaningsHeading}
+            </h2>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {otherMeanings.map((meaning) => {
+                const translatedOtherType =
+                  lookupNestedTranslation(uiRoot, `wordTypes.${meaning.type}`) ??
+                  lookupNestedTranslation(enRoot, `wordTypes.${meaning.type}`) ??
+                  `wordTypes.${meaning.type}`;
+                const localizedOtherType =
+                  translatedOtherType &&
+                  translatedOtherType !== `wordTypes.${meaning.type}`
+                    ? translatedOtherType
+                    : formatKeyLabel(meaning.type);
+                const summary = [
+                  meaning.definiton,
+                  meaning.level,
+                  meaning.type ? localizedOtherType : "",
+                ]
+                  .filter(Boolean)
+                  .join(" · ");
+
+                return (
+                  <Link
+                    key={meaning.concept_id}
+                    to={buildWordPath(
+                      uiLang,
+                      targetLanguage,
+                      meaning.word_lemma,
+                      meaning.concept_id,
+                    )}
+                    className="rounded-lg border-2 border-primary/35 bg-primary/[0.08] px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:border-primary/60 hover:bg-primary/[0.14] hover:text-primary"
+                  >
+                    {summary}
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* CONTENT GRID: exercise + info/related */}
         <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-[3fr_2fr]">
