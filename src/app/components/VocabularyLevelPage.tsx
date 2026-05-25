@@ -196,50 +196,50 @@ const BROWSE_WORDS_COPY: Record<
   {
     heading: (args: { level: string; language: string }) => string;
     description: string;
-    searchPlaceholder: string;
+    searchPlaceholder: (level: string) => string;
   }
 > = {
   en: {
     heading: ({ level, language }) => `Browse ${level} ${language} Words`,
     description:
       "Explore common vocabulary words for this level. Click a word to learn its meaning, see example sentences, and practice it with exercises.",
-    searchPlaceholder: "Search words...",
+    searchPlaceholder: (level) => `Search ${level} words...`,
   },
   es: {
     heading: ({ level, language }) => `Explorar palabras ${level} de ${language}`,
     description:
       "Explora las palabras de vocabulario más comunes para este nivel. Haz clic en una palabra para ver su significado, ejemplos de oraciones y practicar con ejercicios.",
-    searchPlaceholder: "Buscar palabras...",
+    searchPlaceholder: (level) => `Buscar palabras ${level}...`,
   },
   fr: {
     heading: ({ level, language }) => `Explorer les mots ${language} de niveau ${level}`,
     description:
       "Découvrez les mots de vocabulaire courants pour ce niveau. Cliquez sur un mot pour en apprendre le sens, voir des exemples de phrases et vous entraîner avec des exercices.",
-    searchPlaceholder: "Rechercher des mots...",
+    searchPlaceholder: (level) => `Rechercher des mots ${level}...`,
   },
   de: {
     heading: ({ level, language }) => `${level} ${language} Wörter durchsuchen`,
     description:
       "Erkunden Sie häufige Vokabeln für dieses Niveau. Klicken Sie auf ein Wort, um seine Bedeutung zu erfahren, Beispielsätze zu sehen und es mit Übungen zu üben.",
-    searchPlaceholder: "Wörter suchen...",
+    searchPlaceholder: (level) => `${level}-Wörter suchen...`,
   },
   it: {
     heading: ({ level, language }) => `Esplora le parole ${language} di livello ${level}`,
     description:
       "Esplora le parole di vocabolario più comuni per questo livello. Clicca su una parola per impararne il significato, vedere frasi di esempio e praticare con gli esercizi.",
-    searchPlaceholder: "Cerca parole...",
+    searchPlaceholder: (level) => `Cerca parole ${level}...`,
   },
   pt: {
     heading: ({ level, language }) => `Explorar palavras ${language} de nível ${level}`,
     description:
       "Explore as palavras de vocabulário mais comuns para este nível. Clique em uma palavra para aprender seu significado, ver exemplos de frases e praticar com exercícios.",
-    searchPlaceholder: "Pesquisar palavras...",
+    searchPlaceholder: (level) => `Pesquisar palavras ${level}...`,
   },
   ru: {
     heading: ({ level, language }) => `Слова ${language} уровня ${level}`,
     description:
       "Изучайте распространённые слова для этого уровня. Нажмите на слово, чтобы узнать его значение, увидеть примеры предложений и потренироваться с упражнениями.",
-    searchPlaceholder: "Поиск слов...",
+    searchPlaceholder: (level) => `Поиск слов уровня ${level}...`,
   },
 };
 
@@ -568,7 +568,7 @@ export function VocabularyLevelPage({
               setBrowseSearch(e.target.value);
               setBrowsePage(0);
             }}
-            placeholder={browseWordsCopy.searchPlaceholder}
+            placeholder={browseWordsCopy.searchPlaceholder(levelDisplay)}
             className="mt-4 w-full rounded-xl border-2 border-primary/35 bg-primary/[0.06] px-4 py-3 text-base font-medium text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/35"
           />
           {pageWords.length > 0 ? (
