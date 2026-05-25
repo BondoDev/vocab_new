@@ -127,7 +127,7 @@ export function Header({
   const isActive = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
     activePage ? pages.includes(activePage) : false;
   const getDesktopNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
-    `relative inline-flex items-center leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] border border-transparent px-3 py-1.5 appearance-none ${
+    `relative inline-flex items-center leading-none cursor-pointer rounded-md transition text-[10px] font-bold uppercase tracking-[0.2em] border border-transparent px-3 py-1.5 appearance-none ${
       isActive(...pages)
         ? "rounded-full border-white/45 bg-white/18 text-white shadow-[0_8px_18px_rgba(12,10,24,0.18)]"
         : "bg-transparent text-white/90 hover:text-white hover:bg-white/10"
