@@ -196,42 +196,50 @@ const BROWSE_WORDS_COPY: Record<
   {
     heading: (args: { level: string; language: string }) => string;
     description: string;
+    searchPlaceholder: string;
   }
 > = {
   en: {
     heading: ({ level, language }) => `Browse ${level} ${language} Words`,
     description:
       "Explore common vocabulary words for this level. Click a word to learn its meaning, see example sentences, and practice it with exercises.",
+    searchPlaceholder: "Search words...",
   },
   es: {
     heading: ({ level, language }) => `Explorar palabras ${level} de ${language}`,
     description:
       "Explora las palabras de vocabulario más comunes para este nivel. Haz clic en una palabra para ver su significado, ejemplos de oraciones y practicar con ejercicios.",
+    searchPlaceholder: "Buscar palabras...",
   },
   fr: {
     heading: ({ level, language }) => `Explorer les mots ${language} de niveau ${level}`,
     description:
       "Découvrez les mots de vocabulaire courants pour ce niveau. Cliquez sur un mot pour en apprendre le sens, voir des exemples de phrases et vous entraîner avec des exercices.",
+    searchPlaceholder: "Rechercher des mots...",
   },
   de: {
     heading: ({ level, language }) => `${level} ${language} Wörter durchsuchen`,
     description:
       "Erkunden Sie häufige Vokabeln für dieses Niveau. Klicken Sie auf ein Wort, um seine Bedeutung zu erfahren, Beispielsätze zu sehen und es mit Übungen zu üben.",
+    searchPlaceholder: "Wörter suchen...",
   },
   it: {
     heading: ({ level, language }) => `Esplora le parole ${language} di livello ${level}`,
     description:
       "Esplora le parole di vocabolario più comuni per questo livello. Clicca su una parola per impararne il significato, vedere frasi di esempio e praticare con gli esercizi.",
+    searchPlaceholder: "Cerca parole...",
   },
   pt: {
     heading: ({ level, language }) => `Explorar palavras ${language} de nível ${level}`,
     description:
       "Explore as palavras de vocabulário mais comuns para este nível. Clique em uma palavra para aprender seu significado, ver exemplos de frases e praticar com exercícios.",
+    searchPlaceholder: "Pesquisar palavras...",
   },
   ru: {
     heading: ({ level, language }) => `Слова ${language} уровня ${level}`,
     description:
       "Изучайте распространённые слова для этого уровня. Нажмите на слово, чтобы узнать его значение, увидеть примеры предложений и потренироваться с упражнениями.",
+    searchPlaceholder: "Поиск слов...",
   },
 };
 
@@ -380,10 +388,12 @@ export function VocabularyLevelPage({
 
   const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
   const [browsePage, setBrowsePage] = useState(0);
+  const [browseSearch, setBrowseSearch] = useState("");
 
   useEffect(() => {
     setBrowseWords([]);
     setBrowsePage(0);
+    setBrowseSearch("");
     const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
     const loader = vocabModules[key];
     if (!loader) return;
@@ -406,8 +416,21 @@ export function VocabularyLevelPage({
     };
   }, [targetLanguage, level]);
 
-  const totalBrowsePages = Math.max(1, Math.ceil(browseWords.length / WORDS_PER_PAGE));
-  const pageWords = browseWords.slice(browsePage * WORDS_PER_PAGE, (browsePage + 1) * WORDS_PER_PAGE);
+  const normalizedSearch = browseSearch.trim().toLowerCase();
+  const filteredBrowseWords = normalizedSearch
+    ? browseWords.filter((word) =>
+        word.word_lemma.toLowerCase().includes(normalizedSearch),
+      )
+    : browseWords;
+  const totalBrowsePages = Math.max(
+    1,
+    Math.ceil(filteredBrowseWords.length / WORDS_PER_PAGE),
+  );
+  const safeBrowsePage = Math.min(browsePage, Math.max(totalBrowsePages - 1, 0));
+  const pageWords = filteredBrowseWords.slice(
+    safeBrowsePage * WORDS_PER_PAGE,
+    (safeBrowsePage + 1) * WORDS_PER_PAGE,
+  );
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
@@ -538,6 +561,16 @@ export function VocabularyLevelPage({
             {browseWordsCopy.heading({ level: levelDisplay, language: targetLanguageDisplayName })}
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">{browseWordsCopy.description}</p>
+          <input
+            type="text"
+            value={browseSearch}
+            onChange={(e) => {
+              setBrowseSearch(e.target.value);
+              setBrowsePage(0);
+            }}
+            placeholder={browseWordsCopy.searchPlaceholder}
+            className="mt-4 w-full rounded-xl border-2 border-primary/35 bg-primary/[0.06] px-4 py-3 text-base font-medium text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/35"
+          />
           {pageWords.length > 0 ? (
             <>
               <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
@@ -553,7 +586,7 @@ export function VocabularyLevelPage({
               </div>
               {totalBrowsePages > 1 && (
                 <div className="mt-5 flex flex-wrap justify-center gap-1.5">
-                  {getPaginationRange(browsePage, totalBrowsePages).map((item, idx) =>
+                  {getPaginationRange(safeBrowsePage, totalBrowsePages).map((item, idx) =>
                     item === "…" ? (
                       <span
                         key={`ellipsis-${idx}`}
@@ -567,7 +600,7 @@ export function VocabularyLevelPage({
                         type="button"
                         onClick={() => setBrowsePage(item)}
                         className={
-                          item === browsePage
+                          item === safeBrowsePage
                             ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
                             : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
                         }
