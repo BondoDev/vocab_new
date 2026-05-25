@@ -2027,7 +2027,7 @@ function AppContent() {
   }
 
   return (
-    <div className="language-page h-[100svh] w-full min-w-0 md:h-screen md:w-[100vw] md:min-w-[100vw] flex flex-col bg-background">
+    <div className="language-page min-h-[100svh] w-full min-w-0 flex flex-col overflow-x-hidden bg-background">
       <Header
         activePage="language"
         onAbout={() => navigate(ROUTES.about)}
@@ -2323,7 +2323,6 @@ export default function App({
     </SeoProvider>
   );
 }
-
 
 
 

@@ -222,6 +222,7 @@ interface WordPageT {
   categoryLabel: string;
   relatedWordsHeading: string;
   otherMeaningsHeading: string;
+  openWordPageCta: string;
   pronounceLabel: string;
   practiceHeading: string;
   practiceInstruction: string;
@@ -257,6 +258,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     categoryLabel: "Category",
     relatedWordsHeading: "Related Words",
     otherMeaningsHeading: "Other Meanings of This Word",
+    openWordPageCta: "Open Word Page",
     pronounceLabel: "Hear pronunciation",
     practiceHeading: "Practice This Word",
     practiceInstruction: "Type the correct word based on the definition.",
@@ -284,6 +286,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     categoryLabel: "Categoría",
     relatedWordsHeading: "Palabras relacionadas",
     otherMeaningsHeading: "Otros significados de esta palabra",
+    openWordPageCta: "Abrir página de la palabra",
     pronounceLabel: "Escuchar pronunciación",
     practiceHeading: "Practica esta palabra",
     practiceInstruction: "Escribe la palabra correcta según la definición.",
@@ -311,6 +314,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     categoryLabel: "Catégorie",
     relatedWordsHeading: "Mots associés",
     otherMeaningsHeading: "Autres significations de ce mot",
+    openWordPageCta: "Ouvrir la page du mot",
     pronounceLabel: "Écouter la prononciation",
     practiceHeading: "Pratiquer ce mot",
     practiceInstruction:
@@ -339,6 +343,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     categoryLabel: "Kategorie",
     relatedWordsHeading: "Verwandte Wörter",
     otherMeaningsHeading: "Andere Bedeutungen dieses Wortes",
+    openWordPageCta: "Wortseite öffnen",
     pronounceLabel: "Aussprache anhören",
     practiceHeading: "Dieses Wort üben",
     practiceInstruction: "Tippe das richtige Wort anhand der Definition.",
@@ -367,6 +372,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     categoryLabel: "Categoria",
     relatedWordsHeading: "Parole correlate",
     otherMeaningsHeading: "Altri significati di questa parola",
+    openWordPageCta: "Apri la pagina della parola",
     pronounceLabel: "Ascolta la pronuncia",
     practiceHeading: "Pratica questa parola",
     practiceInstruction: "Digita la parola corretta in base alla definizione.",
@@ -394,6 +400,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     categoryLabel: "Categoria",
     relatedWordsHeading: "Palavras relacionadas",
     otherMeaningsHeading: "Outros significados desta palavra",
+    openWordPageCta: "Abrir página da palavra",
     pronounceLabel: "Ouvir pronúncia",
     practiceHeading: "Pratique esta palavra",
     practiceInstruction: "Digite a palavra correta com base na definição.",
@@ -421,6 +428,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     categoryLabel: "Категория",
     relatedWordsHeading: "Связанные слова",
     otherMeaningsHeading: "Другие значения этого слова",
+    openWordPageCta: "Открыть страницу слова",
     pronounceLabel: "Услышать произношение",
     practiceHeading: "Практикуйте это слово",
     practiceInstruction: "Введите правильное слово на основе определения.",
@@ -776,7 +784,7 @@ export function WordSeoPage({
             <h2 className="text-base font-semibold text-foreground">
               {t.otherMeaningsHeading}
             </h2>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 divide-y divide-border rounded-xl border-2 border-primary/20 bg-primary/[0.03]">
               {otherMeanings.map((meaning) => {
                 const translatedOtherType =
                   lookupNestedTranslation(uiRoot, `wordTypes.${meaning.type}`) ??
@@ -787,27 +795,37 @@ export function WordSeoPage({
                   translatedOtherType !== `wordTypes.${meaning.type}`
                     ? translatedOtherType
                     : formatKeyLabel(meaning.type);
-                const summary = [
-                  meaning.definiton,
-                  meaning.level,
-                  meaning.type ? localizedOtherType : "",
-                ]
-                  .filter(Boolean)
-                  .join(" · ");
 
                 return (
-                  <Link
+                  <div
                     key={meaning.concept_id}
-                    to={buildWordPath(
-                      uiLang,
-                      targetLanguage,
-                      meaning.word_lemma,
-                      meaning.concept_id,
-                    )}
-                    className="rounded-lg border-2 border-primary/35 bg-primary/[0.08] px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:border-primary/60 hover:bg-primary/[0.14] hover:text-primary"
+                    className="flex flex-col gap-3 bg-card/80 p-3 sm:flex-row sm:items-center sm:gap-4"
                   >
-                    {summary}
-                  </Link>
+                    <p className="min-w-0 flex-1 break-words text-sm text-foreground">
+                      {meaning.definiton}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2 sm:shrink-0">
+                      <span className="rounded-full border border-primary/35 bg-primary/[0.14] px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary">
+                        {meaning.level}
+                      </span>
+                      {meaning.type ? (
+                        <span className="rounded-full border border-border/80 bg-muted/70 px-2 py-0.5 text-xs font-medium text-foreground/80">
+                          {localizedOtherType}
+                        </span>
+                      ) : null}
+                    </div>
+                    <Link
+                      to={buildWordPath(
+                        uiLang,
+                        targetLanguage,
+                        meaning.word_lemma,
+                        meaning.concept_id,
+                      )}
+                      className="inline-flex shrink-0 items-center justify-center rounded-lg border-2 border-primary/50 bg-primary/15 px-3 py-1.5 text-xs font-bold text-primary shadow-sm transition hover:bg-primary/25 hover:border-primary/70"
+                    >
+                      {t.openWordPageCta}
+                    </Link>
+                  </div>
                 );
               })}
             </div>
