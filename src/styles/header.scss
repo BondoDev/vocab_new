@@ -1,3 +1,21 @@
+.header-shell {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  will-change: transform;
+}
+
+.header-shell.is-hidden {
+  transform: translateY(calc(-100% - 0.4rem));
+}
+
+.header-spacer {
+  height: var(--site-header-height, 4.875rem);
+  flex: 0 0 auto;
+}
+
 // ALL SCREENS BELOW 1024PX
 @media (max-width: 1023.98px) {
   .header-desktop-nav {

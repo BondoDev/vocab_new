@@ -20,6 +20,12 @@ export function ScrollToTopButton() {
     }
 
     const updateVisibility = () => {
+      const isMobileViewport = window.innerWidth < 1024;
+      if (isMobileViewport) {
+        setIsVisible(false);
+        return;
+      }
+
       const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
       const scrollHeight = document.documentElement.scrollHeight;
       const viewportHeight = window.innerHeight;
