@@ -495,7 +495,7 @@ export function LevelCategorySelection({
       {/* Fixed back button */}
       <button
         onClick={onBack}
-        className="fixed top-14 left-4 md:top-20 md:left-8 z-50 hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+        className="absolute top-14 z-50 hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
       >
         <ChevronLeft className="w-5 h-5" />
         <span>{t("levelCategory.back")}</span>

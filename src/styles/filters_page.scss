@@ -1,4 +1,15 @@
 .filters-page {
+  @media (max-width: 1023.98px) {
+    > button {
+      display: none !important;
+    }
+  }
+
+  > button {
+    position: absolute !important;
+    left: var(--nav-left-edge) !important;
+  }
+
   .filters-elements-container > :not([hidden]) ~ :not([hidden]) {
     margin-top: 0.75rem !important;
   }
@@ -239,7 +250,7 @@
 
     > button {
       top: 5rem !important;
-      left: 1.5rem !important;
+      left: var(--nav-left-edge) !important;
       max-width: calc(100vw - 1.5rem) !important;
     }
 
@@ -301,7 +312,7 @@
   @media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
     > button {
       top: 7rem !important;
-      left: 2rem !important;
+      left: var(--nav-left-edge) !important;
       font-size: 1.05rem !important;
       gap: 0.6rem !important;
     }
@@ -351,7 +362,7 @@
   @media (min-width: 1024px) and (max-width: 1279.98px) {
     > button {
       top: 6rem !important;
-      left: 2rem !important;
+      left: var(--nav-left-edge) !important;
       font-size: 0.88rem !important;
       gap: 0.38rem !important;
     }
@@ -423,7 +434,7 @@
 
     > button {
       top: 6rem !important;
-      left: 2rem !important;
+      left: var(--nav-left-edge) !important;
       font-size: 0.92rem !important;
       gap: 0.42rem !important;
     }
@@ -528,7 +539,7 @@
   @media (min-width: 1536px) {
     > button {
       top: 6rem !important;
-      left: 2rem !important;
+      left: var(--nav-left-edge) !important;
     }
 
     .filters-elements-container {

@@ -1,6 +1,8 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --nav-left-edge: max(2rem, calc((100vw - 80rem) / 2));
+  --nav-right-edge: max(2rem, calc((100vw - 80rem) / 2));
   --font-size: 16px;
   --font-family-sans: "Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-family-heading: "Sora", "Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
@@ -134,6 +136,20 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  @media (max-width: 1023.98px) {
+    :root {
+      --nav-right-edge: max(0.5rem, env(safe-area-inset-right));
+    }
+
+    body.has-scroll-top-button::after,
+    #root.has-scroll-top-button::after {
+      content: "";
+      display: block;
+      height: calc(4.25rem + env(safe-area-inset-bottom));
+      pointer-events: none;
+    }
   }
 
 

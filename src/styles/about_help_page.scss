@@ -1,5 +1,11 @@
 .about-page,
 .help-page {
+  @media (max-width: 1023.98px) {
+    .page-back-button {
+      display: none !important;
+    }
+  }
+
   // SMALL MOBILE SCREEN
   @media (max-width: 375.98px) {
     .page-back-button {
@@ -17,9 +23,9 @@
   // SMALL TABLET SCREEN - PORTRAIT
   @media (min-width: 767px) and (max-width: 1023.98px) and (orientation: portrait) and (pointer: coarse) and (hover: none) {
     .page-back-button {
-      position: fixed;
+      position: absolute;
       top: 5rem;
-      left: 2rem;
+      left: var(--nav-left-edge);
       z-index: 50;
       margin-bottom: 0 !important;
       font-size: 1.05rem;
@@ -42,9 +48,9 @@
   // BIG TABLET SCREEN - PORTRAIT
   @media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
     .page-back-button {
-      position: fixed;
+      position: absolute;
       top: 6rem;
-      left: 1rem;
+      left: var(--nav-left-edge);
       z-index: 50;
       margin-bottom: 0 !important;
     }
@@ -53,9 +59,9 @@
   // SMALL LAPTOP SCREEN
   @media (min-width: 1024px) and (max-width: 1279.98px) and (orientation: landscape) {
     .page-back-button {
-      position: fixed;
+      position: absolute;
       top: 6rem;
-      left: 2rem;
+      left: var(--nav-left-edge);
       z-index: 50;
       margin-bottom: 0 !important;
     }
@@ -64,9 +70,9 @@
   // BIG LAPTOP SCREEN
   @media (min-width: 1280px) and (max-width: 1535.98px) and (orientation: landscape) {
     .page-back-button {
-      position: fixed;
+      position: absolute;
       top: 6rem;
-      left: 2rem;
+      left: var(--nav-left-edge);
       z-index: 50;
       margin-bottom: 0 !important;
     }
@@ -75,9 +81,9 @@
   // PC SCREEN
   @media (min-width: 1536px) {
     .page-back-button {
-      position: fixed;
+      position: absolute;
       top: 6rem;
-      left: 2rem;
+      left: var(--nav-left-edge);
       z-index: 50;
       margin-bottom: 0 !important;
     }

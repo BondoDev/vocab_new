@@ -18,6 +18,7 @@ import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { SeoHubPage } from "./components/SeoHubPage";
 import { WordSeoPage } from "./components/WordSeoPage";
+import { ScrollToTopButton } from "./components/ScrollToTopButton";
 import {
   LanguageContinuePopup,
   type LanguageContinuePopupHandle,
@@ -2318,12 +2319,14 @@ export default function App({
   return (
     <SeoProvider manager={seoManager} siteOrigin={siteOrigin}>
       <LanguageProvider initialUILanguage={initialUILanguage}>
-        <AppContent />
+        <>
+          <AppContent />
+          <ScrollToTopButton />
+        </>
       </LanguageProvider>
     </SeoProvider>
   );
 }
-
 
 
 

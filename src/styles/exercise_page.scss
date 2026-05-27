@@ -1,10 +1,16 @@
 .exercise-page {
   position: relative;
 
+  @media (max-width: 1023.98px) {
+    .exercise-header {
+      display: none !important;
+    }
+  }
+
   .exercise-header {
     position: absolute;
     top: 1rem;
-    left: 1rem;
+    left: var(--nav-left-edge);
     z-index: 30;
     padding: 0 !important;
   }
@@ -333,9 +339,9 @@
   // SMALL TABLET SCREEN - PORTRAIT
   @media (min-width: 767px) and (max-width: 1023.98px) and (orientation: portrait) and (pointer: coarse) and (hover: none) {
     .exercise-header {
-      position: fixed;
+      position: absolute;
       top: 5rem;
-      left: 1.5rem;
+      left: var(--nav-left-edge);
       z-index: 50;
     }
 
@@ -396,9 +402,9 @@
   // BIG TABLET SCREEN - PORTRAIT
   @media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
     .exercise-header {
-      position: fixed;
+      position: absolute;
       top: 7rem;
-      left: 2rem;
+      left: var(--nav-left-edge);
       z-index: 50;
     }
 
@@ -449,9 +455,9 @@
   // SMALL LAPTOP SCREEN
   @media (min-width: 1024px) and (max-width: 1279.98px) and (orientation: landscape) {
     .exercise-header {
-      position: fixed;
+      position: absolute;
       top: 6rem;
-      left: 2rem;
+      left: var(--nav-left-edge);
       z-index: 50;
     }
 
@@ -491,9 +497,9 @@
   // BIG LAPTOP SCREEN
   @media (min-width: 1280px) and (max-width: 1535.98px) and (orientation: landscape) {
     .exercise-header {
-      position: fixed;
+      position: absolute;
       top: 6rem;
-      left: 2rem;
+      left: var(--nav-left-edge);
       z-index: 50;
     }
 
@@ -514,9 +520,9 @@
   // PC SCREEN
   @media (min-width: 1536px) {
     .exercise-header {
-      position: fixed;
+      position: absolute;
       top: 6rem;
-      left: 2rem;
+      left: var(--nav-left-edge);
       z-index: 50;
     }
 

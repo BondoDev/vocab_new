@@ -219,10 +219,10 @@ export function Header({
             <a
               href={NAV_HREFS.exam}
               onClick={createNavClickHandler(onLevelTest)}
-              className={`inline-flex items-center leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 border px-3 py-1 rounded-full shadow-sm appearance-none ${
+              className={`header-level-test-nav inline-flex items-center leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 border px-3 py-1 rounded-full shadow-sm appearance-none ${
                 isActive("exam")
-                  ? "bg-white/24 border-white/55 shadow-white/20"
-                  : "bg-white/10 border-white/30 shadow-white/10 hover:bg-white/20 hover:border-white/50"
+                  ? "is-active"
+                  : ""
               }`}
             >
               {t("header.levelTest")}
