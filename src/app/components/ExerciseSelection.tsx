@@ -1,6 +1,15 @@
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
-import { Check, ChevronLeft, X } from "lucide-react";
+import {
+  Check,
+  ChevronLeft,
+  Headphones,
+  Keyboard,
+  Link2,
+  Puzzle,
+  TextCursorInput,
+  X,
+} from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 interface ExerciseSelectionProps {
@@ -57,6 +66,27 @@ const exerciseGroups = [
   },
 ];
 const exerciseItems = exerciseGroups.flatMap((group) => group.items);
+const exerciseCardBackgrounds: Record<string, string> = {
+  wordTyping: "#F2F0FF",
+  halfWritten: "#EEF9F2",
+  brokenWord: "#FFF3EC",
+  connectWords: "#EEF7FF",
+  listening: "#FFF9E8",
+};
+const exerciseCardBorders: Record<string, string> = {
+  wordTyping: "#7A68D8",
+  halfWritten: "#4FA876",
+  brokenWord: "#D78A5C",
+  connectWords: "#5B95DA",
+  listening: "#C8A53A",
+};
+const exerciseCardIconColors: Record<string, string> = {
+  wordTyping: "#6B58C8",
+  halfWritten: "#3E9765",
+  brokenWord: "#C67646",
+  connectWords: "#4B86CB",
+  listening: "#B8932E",
+};
 
 function randomBetween(min: number, max: number): number {
   return Math.random() * (max - min) + min;
@@ -284,6 +314,14 @@ export function ExerciseSelection({
                     key={exercise.id}
                     onClick={() => toggleExercise(exercise.id)}
                     aria-pressed={isSelected}
+                    style={{
+                      ["--exercise-card-bg" as "--exercise-card-bg"]:
+                        exerciseCardBackgrounds[exercise.id] ?? "#F2F0FF",
+                      ["--exercise-card-border" as "--exercise-card-border"]:
+                        exerciseCardBorders[exercise.id] ?? "#7A68D8",
+                      ["--exercise-card-icon" as "--exercise-card-icon"]:
+                        exerciseCardIconColors[exercise.id] ?? "#6B58C8",
+                    }}
                     className={`exercise-card p-5 rounded-lg border-2 transition-all ${
                       isSelected
                         ? "border-primary shadow-md shadow-primary/10"
@@ -334,6 +372,14 @@ export function ExerciseSelection({
                     >
                       ?
                     </span>
+                  </span>
+
+                  <span className="exercise-card-icon" aria-hidden="true">
+                    {exercise.id === "wordTyping" && <Keyboard className="w-7 h-7" />}
+                    {exercise.id === "halfWritten" && <TextCursorInput className="w-7 h-7" />}
+                    {exercise.id === "brokenWord" && <Puzzle className="w-7 h-7" />}
+                    {exercise.id === "connectWords" && <Link2 className="w-7 h-7" />}
+                    {exercise.id === "listening" && <Headphones className="w-7 h-7" />}
                   </span>
 
                   <span className="exercise-card-content text-left">

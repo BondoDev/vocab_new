@@ -36,8 +36,9 @@
     min-height: 6.15rem;
     padding-top: 2.6rem !important;
     padding-bottom: 1.1rem !important;
-    border-color: rgba(74, 43, 130, 1);
-    background: transparent !important;
+    border-color: var(--exercise-card-border, rgba(74, 43, 130, 1));
+    border-width: 2.5px !important;
+    background: var(--exercise-card-bg, transparent) !important;
     backdrop-filter: blur(6px);
     transition:
       border-color 160ms ease,
@@ -47,7 +48,7 @@
   }
 
   .exercise-card:hover {
-    border-color: rgba(74, 43, 130, 1) !important;
+    border-color: var(--exercise-card-border, rgba(74, 43, 130, 1)) !important;
     box-shadow: 0 8px 20px rgba(99, 102, 241, 0.12);
     transform: translateY(-1px);
   }
@@ -63,8 +64,9 @@
   }
 
   .exercise-card.is-selected {
-    border-color: rgba(74, 43, 130, 1) !important;
-    background: rgba(74, 43, 130, 0.2) !important;
+    border-color: var(--exercise-card-border, rgba(74, 43, 130, 1)) !important;
+    border-width: 2.5px !important;
+    background: var(--exercise-card-bg, transparent) !important;
     box-shadow: 0 10px 24px rgba(74, 43, 130, 0.18);
   }
 
@@ -72,10 +74,23 @@
     cursor: not-allowed;
   }
 
+  .exercise-card-icon {
+    position: absolute;
+    top: 3.65rem;
+    left: 0.78rem;
+    color: var(--exercise-card-icon, rgba(74, 43, 130, 0.9));
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
   .exercise-card-content {
     min-width: 0;
     display: block;
-    margin-top: 0.65rem;
+    margin-top: 0;
+    padding-left: 3.45rem;
   }
 
   .exercise-card-label {
@@ -83,6 +98,9 @@
     line-height: 1.3;
     font-weight: 500;
     color: var(--foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .exercise-card-description {
@@ -90,6 +108,18 @@
     line-height: 1.3;
     font-size: 0.86rem;
     color: var(--muted-foreground);
+  }
+
+  @media (max-width: 1023.98px) {
+    .exercise-card-icon {
+      top: 0.72rem;
+      left: 2.95rem;
+    }
+
+    .exercise-card-content {
+      padding-top: 0.95rem;
+      padding-left: 2.9rem;
+    }
   }
 
   .exercise-card-corners {
@@ -172,7 +202,7 @@
   .exercise-check.is-visible {
     border-color: rgba(255, 255, 255, 0.86);
     color: rgba(255, 255, 255, 0.94);
-    background: rgba(74, 43, 130, 0.8);
+    background: var(--exercise-card-border, rgba(74, 43, 130, 0.8));
     box-shadow:
       0 0 0 2px rgba(255, 255, 255, 0.34),
       0 2px 8px rgba(74, 43, 130, 0.35);
@@ -589,6 +619,34 @@
 
     .exercise-card:nth-child(5) {
       margin-right: auto;
+    }
+  }
+
+  // FINAL MOBILE OVERRIDE: keep check + icon on same top row in 1-column layout
+  @media (max-width: 1023.98px) {
+    .exercise-card-corners {
+      top: 50% !important;
+      left: 0.68rem !important;
+      right: 0.68rem !important;
+      transform: translateY(-50%) !important;
+    }
+
+    .exercise-card-icon {
+      top: 50% !important;
+      transform: translateY(-50%);
+      left: 2.95rem !important;
+    }
+
+    .exercise-card-content {
+      padding-top: 0 !important;
+      padding-left: 2.9rem !important;
+      padding-right: 2.2rem !important;
+    }
+
+    .exercise-card-label {
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
     }
   }
 }

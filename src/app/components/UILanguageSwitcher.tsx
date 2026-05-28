@@ -19,7 +19,6 @@ export function UILanguageSwitcher({
   const location = useLocation();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownPosition, setDropdownPosition] = useState({
@@ -41,15 +40,6 @@ export function UILanguageSwitcher({
   const currentLanguage =
     languages.find((lang) => lang.code === uiLanguage) ||
     languages[0];
-
-  const filteredLanguages = languages.filter((lang) => {
-    const query = searchQuery.trim().toLowerCase();
-    if (!query) return true;
-    return (
-      lang.name.toLowerCase().includes(query) ||
-      lang.code.toLowerCase().includes(query)
-    );
-  });
 
   // Calculate dropdown position when opened
   useEffect(() => {
@@ -77,7 +67,6 @@ export function UILanguageSwitcher({
       }
 
       setIsOpen(false);
-      setSearchQuery("");
     };
 
     const timeoutId = setTimeout(() => {
@@ -100,7 +89,6 @@ export function UILanguageSwitcher({
         }
         setUILanguage(code);
         setIsOpen(false);
-        setSearchQuery("");
         return;
       }
 
@@ -129,7 +117,6 @@ export function UILanguageSwitcher({
           }
           setUILanguage(code);
           setIsOpen(false);
-          setSearchQuery("");
           return;
         }
 
@@ -148,14 +135,10 @@ export function UILanguageSwitcher({
       setUILanguage(code);
     }
     setIsOpen(false);
-    setSearchQuery("");
   };
 
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!isOpen) {
-      setSearchQuery("");
-    }
     setIsOpen(!isOpen);
   };
 
@@ -192,7 +175,6 @@ export function UILanguageSwitcher({
                 style={{ zIndex: 99998 }}
                 onMouseDown={() => {
                   setIsOpen(false);
-                  setSearchQuery("");
                 }}
               />
             )}
@@ -215,64 +197,48 @@ export function UILanguageSwitcher({
                     }
               }
             >
-              <div className="p-2 border-b border-white/10">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={t("languageSelector.search")}
-                  className="w-full px-3 py-2 bg-background border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-foreground"
-                />
-              </div>
-
               <div className="max-h-64 overflow-y-auto p-1">
-                {filteredLanguages.length > 0 ? (
-                  filteredLanguages.map((lang) => {
-                    const isSelected = lang.code === uiLanguage;
-                    return (
-                      <button
-                        key={lang.code}
-                        type="button"
-                        onMouseDown={(e) => {
-                          e.stopPropagation();
-                          if (!lang.enabled) return;
-                          handleSelect(lang.code);
-                        }}
-                        disabled={!lang.enabled}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
-                          isSelected
-                            ? "bg-white/15 text-white"
-                            : lang.enabled
-                              ? "text-white/70 hover:bg-white/10 hover:text-white"
-                              : "text-white/40 cursor-not-allowed"
-                        }`}
-                      >
-                        <span
-                          className={`fi fi-${lang.flagCode} rounded-[2px] shadow-sm border border-white/15`}
-                          aria-hidden="true"
-                          style={{ width: "18px", height: "14px" }}
-                        />
-                        <span className="ui-language-option-label text-sm font-medium">
-                          {lang.name}
+                {languages.map((lang) => {
+                  const isSelected = lang.code === uiLanguage;
+                  return (
+                    <button
+                      key={lang.code}
+                      type="button"
+                      onMouseDown={(e) => {
+                        e.stopPropagation();
+                        if (!lang.enabled) return;
+                        handleSelect(lang.code);
+                      }}
+                      disabled={!lang.enabled}
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
+                        isSelected
+                          ? "bg-white/15 text-white"
+                          : lang.enabled
+                            ? "text-white/70 hover:bg-white/10 hover:text-white"
+                            : "text-white/40 cursor-not-allowed"
+                      }`}
+                    >
+                      <span
+                        className={`fi fi-${lang.flagCode} rounded-[2px] shadow-sm border border-white/15`}
+                        aria-hidden="true"
+                        style={{ width: "18px", height: "14px" }}
+                      />
+                      <span className="ui-language-option-label text-sm font-medium">
+                        {lang.name}
+                      </span>
+                      {!lang.enabled && (
+                        <span className="ml-auto text-[10px] uppercase tracking-[0.12em] text-white/40">
+                          Soon
                         </span>
-                        {!lang.enabled && (
-                          <span className="ml-auto text-[10px] uppercase tracking-[0.12em] text-white/40">
-                            Soon
-                          </span>
-                        )}
-                        {isSelected && (
-                          <span className="ui-language-option-active ml-auto text-[10px] uppercase tracking-[0.2em] text-white/60">
-                            Active
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })
-                ) : (
-                  <div className="px-3 py-3 text-sm text-white/70 text-center">
-                    {t("languageSelector.noResults")}
-                  </div>
-                )}
+                      )}
+                      {isSelected && (
+                        <span className="ui-language-option-active ml-auto text-[10px] uppercase tracking-[0.2em] text-white/60">
+                          Active
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </>,
@@ -281,7 +247,6 @@ export function UILanguageSwitcher({
     </>
   );
 }
-
 
 
 
