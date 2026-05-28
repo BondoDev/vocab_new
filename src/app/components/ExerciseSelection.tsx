@@ -198,7 +198,7 @@ export function ExerciseSelection({
   return (
     <div className="exercise-page flex-1 min-h-0 flex flex-col bg-background">
       {/* Header with back button */}
-      <div className="exercise-header px-4 py-6 md:px-8">
+      <div className="exercise-header px-4 md:px-8">
         <button
           onClick={onBack}
           className="exercise-back-button flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
