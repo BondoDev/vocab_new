@@ -5,7 +5,6 @@ import {
   ChevronLeft,
   Headphones,
   Keyboard,
-  Link2,
   Puzzle,
   TextCursorInput,
   X,
@@ -361,7 +360,22 @@ export function ExerciseSelection({
                     {exercise.id === "wordTyping" && <Keyboard className="w-7 h-7" />}
                     {exercise.id === "halfWritten" && <TextCursorInput className="w-7 h-7" />}
                     {exercise.id === "brokenWord" && <Puzzle className="w-7 h-7" />}
-                    {exercise.id === "connectWords" && <Link2 className="w-7 h-7" />}
+                    {exercise.id === "connectWords" && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.43" />
+                        <path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.33-1.33" />
+                      </svg>
+                    )}
                     {exercise.id === "listening" && <Headphones className="w-7 h-7" />}
                   </span>
 
