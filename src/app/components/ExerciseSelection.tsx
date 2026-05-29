@@ -174,6 +174,13 @@ export function ExerciseSelection({
     ? t("exerciseSelection.startButton.selectAtLeastOne")
     : selectedCount === totalExerciseCount
       ? t("exerciseSelection.startButton.startFullSession")
+          .split(" ")
+          .map((word) =>
+            word.length > 0
+              ? `${word.charAt(0).toUpperCase()}${word.slice(1)}`
+              : word,
+          )
+          .join(" ")
       : `${t("exerciseSelection.startButton.startCountPrefix")} ${selectedCount} ${t("exerciseSelection.startButton.startCountSuffix")}`;
 
   const getHelpTypeKey = (exerciseId: string) => {
