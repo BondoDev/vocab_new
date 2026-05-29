@@ -21,7 +21,6 @@ import { PracticeLoading } from "./practice/PracticeLoading";
 import { PracticeEmptyState } from "./practice/PracticeEmptyState";
 import { PracticeResults } from "./practice/PracticeResults";
 import {
-  exerciseCardBackgrounds,
   exerciseCardBorders,
 } from "../constants/exerciseTheme";
 
@@ -946,7 +945,7 @@ export function VocabularyPractice({
                     }`}
                     style={{
                       ["--practice-card-bg" as "--practice-card-bg"]:
-                        exerciseCardBackgrounds[currentExerciseType] ?? "#F2F0FF",
+                        "#F8FAFC",
                       ["--practice-card-border" as "--practice-card-border"]:
                         exerciseCardBorders[currentExerciseType] ?? "#7A68D8",
                     }}
