@@ -1169,7 +1169,7 @@ export function VocabularyPractice({
                         className={`practice-next-button px-6 py-2.5 rounded-lg font-medium transition-all ${
                           isNextActionAvailable
                             ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                            : "bg-muted text-muted-foreground hover:bg-muted/80"
+                            : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
                         }`}
                       >
                         {isNextActionAvailable
@@ -1183,7 +1183,7 @@ export function VocabularyPractice({
                         className={`practice-next-button px-6 py-2.5 rounded-lg font-medium transition-all ${
                           isNextActionAvailable
                             ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                            : "bg-muted text-muted-foreground hover:bg-muted/80"
+                            : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
                         }`}
                       >
                         {isNextActionAvailable
