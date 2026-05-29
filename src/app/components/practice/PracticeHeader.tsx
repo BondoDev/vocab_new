@@ -95,9 +95,9 @@ export function PracticeHeader({
               type="button"
               className="practice-finish-button inline-flex items-center gap-1.5 rounded-xl px-2 py-1 sm:px-3 sm:py-1.5 text-[0.72rem] sm:text-sm font-semibold transition-colors hover:bg-muted"
               style={{
-                color: "rgba(100, 116, 139, 0.78)",
-                backgroundColor: "rgba(100, 116, 139, 0.12)",
-                border: "1px solid rgba(100, 116, 139, 0.28)",
+                color: "rgba(146, 64, 64, 0.88)",
+                backgroundColor: "rgba(239, 68, 68, 0.12)",
+                border: "1px solid rgba(239, 68, 68, 0.28)",
               }}
             >
               <span>{t("practice.finish")}</span>
