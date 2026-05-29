@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- This sitemap contains English-word URLs with English UI paths (en). Both the UI language and the word language are English; each URL includes a lemma slug and concept_id. -->
+  <!-- Word SEO URLs for UI language en and target language english. -->
 
   <url>
     <loc>https://www.fluentstellar.com/en/english-word-about--A1-00001</loc>

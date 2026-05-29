@@ -9,7 +9,7 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const SITE_URL = (process.env.SITE_URL || "https://www.fluentstellar.com").replace(/\/+$/, "");
 const WORD_SITEMAP_LIMIT = Number.parseInt(process.env.WORD_SITEMAP_LIMIT || "0", 10);
 const WORD_SITEMAP_OFFSET = Number.parseInt(process.env.WORD_SITEMAP_OFFSET || "0", 10);
-const WORD_SITEMAP_TARGET_LANGUAGE = (process.env.WORD_SITEMAP_TARGET_LANGUAGE || "english").trim().toLowerCase();
+const WORD_SITEMAP_TARGET_LANGUAGE = (process.env.WORD_SITEMAP_TARGET_LANGUAGE || "ALL").trim().toLowerCase();
 const WORD_SITEMAP_LEVEL = (process.env.WORD_SITEMAP_LEVEL || "ALL").trim().toUpperCase();
 const WORD_SITEMAP_ALL_LEVELS = WORD_SITEMAP_LEVEL === "ALL";
 const WORD_SITEMAP_UI_LANG = (process.env.WORD_SITEMAP_UI_LANG || "en").trim().toLowerCase();
@@ -118,8 +118,13 @@ const SLUG_PATTERNS = {
 };
 
 const UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"];
+const ALLOWED_WORD_SITEMAP_PAIRS = new Set(["en:english", "en:spanish"]);
+const WORD_SITEMAP_PAIR_LIMITS = {
+  "en:spanish": 2000,
+};
 
 function wordToSlug(lemma) {
+  if (typeof lemma !== "string") return "";
   return lemma
     .toLowerCase()
     .replace(/[''']/g, "")
@@ -132,11 +137,11 @@ function wordToSlug(lemma) {
 const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "portuguese", "russian"];
 
 async function collectWordRoutes() {
-  const routes = [];
-  const seen = new Set();
-  const selectedTargetLanguages = WORD_SITEMAP_TARGET_LANGUAGE
-    ? TARGET_LANGUAGES.filter((lang) => lang === WORD_SITEMAP_TARGET_LANGUAGE)
-    : TARGET_LANGUAGES;
+  const routesByPair = new Map();
+  const selectedTargetLanguages =
+    !WORD_SITEMAP_TARGET_LANGUAGE || WORD_SITEMAP_TARGET_LANGUAGE === "all"
+      ? TARGET_LANGUAGES
+      : TARGET_LANGUAGES.filter((lang) => lang === WORD_SITEMAP_TARGET_LANGUAGE);
   const selectedUiLanguages =
     WORD_SITEMAP_UI_LANG && UI_LANGUAGES.includes(WORD_SITEMAP_UI_LANG)
       ? [WORD_SITEMAP_UI_LANG]
@@ -146,6 +151,11 @@ async function collectWordRoutes() {
     const vocabPath = path.join(ROOT_DIR, "src", "data", "vocabulary", targetLanguage, "vocabulary.json");
     const raw = await fs.readFile(vocabPath, "utf8");
     const vocab = JSON.parse(raw.replace(/^\uFEFF/, ""));
+    const seen = new Set();
+    const pairRoutes = new Map();
+    for (const uiLang of selectedUiLanguages) {
+      pairRoutes.set(uiLang, []);
+    }
     for (const entry of vocab) {
       if (!WORD_SITEMAP_ALL_LEVELS && WORD_SITEMAP_LEVEL && entry.level !== WORD_SITEMAP_LEVEL) continue;
       const slug = wordToSlug(entry.word_lemma);
@@ -158,19 +168,35 @@ async function collectWordRoutes() {
       seen.add(uniqueWordKey);
       const wordPathSuffix = conceptId ? `${slug}--${conceptId}` : slug;
       for (const uiLang of selectedUiLanguages) {
-        routes.push(`/${uiLang}/${targetLanguage}-word-${wordPathSuffix}`);
+        pairRoutes.get(uiLang).push(`/${uiLang}/${targetLanguage}-word-${wordPathSuffix}`);
+      }
+    }
+
+    for (const uiLang of selectedUiLanguages) {
+      const pairKey = `${uiLang}:${targetLanguage}`;
+      if (!ALLOWED_WORD_SITEMAP_PAIRS.has(pairKey)) continue;
+      const baseRoutes = pairRoutes.get(uiLang) || [];
+      const pairLimit = WORD_SITEMAP_PAIR_LIMITS[pairKey];
+      const limitedRoutes =
+        Number.isFinite(pairLimit) && pairLimit > 0
+          ? baseRoutes.slice(0, pairLimit)
+          : baseRoutes;
+      if (Number.isFinite(WORD_SITEMAP_LIMIT) && WORD_SITEMAP_LIMIT > 0) {
+        const offset =
+          Number.isFinite(WORD_SITEMAP_OFFSET) && WORD_SITEMAP_OFFSET > 0
+            ? WORD_SITEMAP_OFFSET
+            : 0;
+        routesByPair.set(
+          pairKey,
+          limitedRoutes.slice(offset, offset + WORD_SITEMAP_LIMIT),
+        );
+      } else {
+        routesByPair.set(pairKey, limitedRoutes);
       }
     }
   }
 
-  if (Number.isFinite(WORD_SITEMAP_LIMIT) && WORD_SITEMAP_LIMIT > 0) {
-    const offset = Number.isFinite(WORD_SITEMAP_OFFSET) && WORD_SITEMAP_OFFSET > 0
-      ? WORD_SITEMAP_OFFSET
-      : 0;
-    return routes.slice(offset, offset + WORD_SITEMAP_LIMIT);
-  }
-
-  return routes;
+  return routesByPair;
 }
 
 function xmlEscape(value) {
@@ -293,18 +319,27 @@ async function main() {
   const existingSubSitemapFiles = await fs.readdir(sitemapsDir);
   await Promise.all(
     existingSubSitemapFiles
-      .filter((name) => /^sitemap-(core|cefr|words-\d{4})\.xml$/.test(name))
+      .filter((name) => /^sitemap-(core|cefr|words.*)\.xml$/.test(name))
       .map((name) => fs.rm(path.join(sitemapsDir, name), { force: true })),
   );
   const existingRootFiles = await fs.readdir(publicDir);
   await Promise.all(
     existingRootFiles
-      .filter((name) => /^sitemap-(core|cefr|words-\d{4})\.xml$/.test(name))
+      .filter((name) => /^sitemap-(core|cefr|words.*)\.xml$/.test(name))
       .map((name) => fs.rm(path.join(publicDir, name), { force: true })),
   );
 
   const vocabularyRoutes = await collectVocabularyRoutes();
-  const wordRoutes = await collectWordRoutes();
+  const wordRoutesByPair = await collectWordRoutes();
+  const targetLangCodeByName = {
+    english: "en",
+    german: "de",
+    spanish: "sp",
+    french: "fr",
+    italian: "it",
+    portuguese: "pt",
+    russian: "ru",
+  };
 
   const sitemapFiles = [];
 
@@ -321,25 +356,38 @@ async function main() {
     sitemapFiles.push(`sitemaps/${cefrName}`);
   }
 
-  const wordChunks = chunkArray(wordRoutes, SITEMAP_CHUNK_SIZE);
-  for (let i = 0; i < wordChunks.length; i += 1) {
-    const wordsName = `sitemap-words-${String(i + 1).padStart(4, "0")}.xml`;
-    await fs.writeFile(
-      path.join(sitemapsDir, wordsName),
-      buildSitemapXml(wordChunks[i], {
-        comment:
-          "This sitemap contains English-word URLs with English UI paths (en). Both the UI language and the word language are English; each URL includes a lemma slug and concept_id.",
-      }),
-      "utf8",
-    );
-    sitemapFiles.push(`sitemaps/${wordsName}`);
+  const pairKeys = Array.from(wordRoutesByPair.keys()).sort();
+  for (const pairKey of pairKeys) {
+    const [uiLang, targetLanguage] = pairKey.split(":");
+    const pairRoutes = wordRoutesByPair.get(pairKey) || [];
+    if (pairRoutes.length === 0) continue;
+    const targetCode = targetLangCodeByName[targetLanguage] || targetLanguage.slice(0, 2);
+    const wordChunks = chunkArray(pairRoutes, SITEMAP_CHUNK_SIZE);
+    for (let i = 0; i < wordChunks.length; i += 1) {
+      const wordsName =
+        wordChunks.length === 1
+          ? `sitemap-words-${uiLang}-${targetCode}.xml`
+          : `sitemap-words-${uiLang}-${targetCode}-${String(i + 1).padStart(4, "0")}.xml`;
+      await fs.writeFile(
+        path.join(sitemapsDir, wordsName),
+        buildSitemapXml(wordChunks[i], {
+          comment: `Word SEO URLs for UI language ${uiLang} and target language ${targetLanguage}.`,
+        }),
+        "utf8",
+      );
+      sitemapFiles.push(`sitemaps/${wordsName}`);
+    }
   }
 
   const indexXml = buildSitemapIndexXml(sitemapFiles);
   const indexPath = path.join(publicDir, "sitemap.xml");
   await fs.writeFile(indexPath, indexXml, "utf8");
 
-  const totalUrls = coreRoutes.length + vocabularyRoutes.length + wordRoutes.length;
+  const totalWordUrls = Array.from(wordRoutesByPair.values()).reduce(
+    (sum, routes) => sum + routes.length,
+    0,
+  );
+  const totalUrls = coreRoutes.length + vocabularyRoutes.length + totalWordUrls;
   console.log(
     `Generated sitemap index (${sitemapFiles.length} files, ${totalUrls} URLs total) at ${indexPath}`,
   );
