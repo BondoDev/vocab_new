@@ -20,6 +20,10 @@ import { PracticeHeader } from "./practice/PracticeHeader";
 import { PracticeLoading } from "./practice/PracticeLoading";
 import { PracticeEmptyState } from "./practice/PracticeEmptyState";
 import { PracticeResults } from "./practice/PracticeResults";
+import {
+  exerciseCardBackgrounds,
+  exerciseCardBorders,
+} from "../constants/exerciseTheme";
 
 interface VocabularyPracticeProps {
   practiceLanguage: string;
@@ -935,11 +939,17 @@ export function VocabularyPractice({
             <>
               {/* Practice Card */}
               {currentWord && (
-                  <motion.div
+                <motion.div
                     key={`${currentIndex}-${currentExerciseType}-${cardBlinkKey}`}
                     className={`practice-card bg-card border border-border rounded-2xl p-3 md:p-5 shadow-sm transition-all duration-300 ease-in-out flex flex-col relative ${
                       isCardSwitching ? "practice-card-switching" : ""
                     }`}
+                    style={{
+                      ["--practice-card-bg" as "--practice-card-bg"]:
+                        exerciseCardBackgrounds[currentExerciseType] ?? "#F2F0FF",
+                      ["--practice-card-border" as "--practice-card-border"]:
+                        exerciseCardBorders[currentExerciseType] ?? "#7A68D8",
+                    }}
                 >
                   <p
                     className={`mx-auto max-w-[34rem] text-center text-sm text-gray-500 leading-relaxed font-medium ${

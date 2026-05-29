@@ -11,6 +11,11 @@ import {
   X,
 } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import {
+  exerciseCardBackgrounds,
+  exerciseCardBorders,
+  exerciseCardIconColors,
+} from "../constants/exerciseTheme";
 
 interface ExerciseSelectionProps {
   selectedExercises: string[];
@@ -66,28 +71,6 @@ const exerciseGroups = [
   },
 ];
 const exerciseItems = exerciseGroups.flatMap((group) => group.items);
-const exerciseCardBackgrounds: Record<string, string> = {
-  wordTyping: "#F2F0FF",
-  halfWritten: "#EEF9F2",
-  brokenWord: "#FFF3EC",
-  connectWords: "#EEF7FF",
-  listening: "#FFF9E8",
-};
-const exerciseCardBorders: Record<string, string> = {
-  wordTyping: "#7A68D8",
-  halfWritten: "#4FA876",
-  brokenWord: "#D78A5C",
-  connectWords: "#5B95DA",
-  listening: "#C8A53A",
-};
-const exerciseCardIconColors: Record<string, string> = {
-  wordTyping: "#6B58C8",
-  halfWritten: "#3E9765",
-  brokenWord: "#C67646",
-  connectWords: "#4B86CB",
-  listening: "#B8932E",
-};
-
 function randomBetween(min: number, max: number): number {
   return Math.random() * (max - min) + min;
 }
