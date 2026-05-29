@@ -239,7 +239,8 @@ interface WordPageT {
   notFoundBody: string;
 }
 
-function normalizeLemma(value: string): string {
+function normalizeLemma(value: unknown): string {
+  if (typeof value !== "string") return "";
   return value
     .normalize("NFC")
     .toLowerCase()
@@ -482,6 +483,8 @@ export function WordSeoPage({
   const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
   const [otherMeanings, setOtherMeanings] = useState<VocabEntry[]>([]);
   const [browsePage, setBrowsePage] = useState(0);
+  const [browseSearch, setBrowseSearch] = useState("");
+  const [isBrowseLoading, setIsBrowseLoading] = useState(false);
   const [practiceInput, setPracticeInput] = useState("");
   const [practiceResult, setPracticeResult] = useState<
     "correct" | "incorrect" | null
@@ -505,12 +508,15 @@ export function WordSeoPage({
     setBrowseWords([]);
     setOtherMeanings([]);
     setBrowsePage(0);
+    setBrowseSearch("");
+    setIsBrowseLoading(true);
     setPracticeInput("");
     setPracticeResult(null);
     const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
     const loader = wordVocabModules[key];
     if (!loader) {
       setWordEntry(null);
+      setIsBrowseLoading(false);
       return;
     }
     let cancelled = false;
@@ -520,10 +526,17 @@ export function WordSeoPage({
         (conceptId
           ? mod.default.find((w) => String(w.concept_id) === conceptId)
           : undefined) ??
-        mod.default.find((w) => wordToSlug(w.word_lemma) === wordSlug);
+        mod.default.find(
+          (w) =>
+            typeof w.word_lemma === "string" &&
+            wordToSlug(w.word_lemma) === wordSlug,
+        );
       setWordEntry(entry ?? null);
 
-      if (!entry) return;
+      if (!entry) {
+        setIsBrowseLoading(false);
+        return;
+      }
 
       // Load definition in UI language when it differs from the target language
       const uiVocabLang = UI_LANG_TO_VOCAB[uiLang];
@@ -571,10 +584,12 @@ export function WordSeoPage({
       const seen = new Set<string>([entry.concept_id]);
       const related: VocabEntry[] = [];
       for (const w of mod.default) {
+        if (typeof w.word_lemma !== "string" || w.word_lemma.length <= 2) {
+          continue;
+        }
         if (
           w.category === entry.category &&
           w.level === entry.level &&
-          w.word_lemma.length > 2 &&
           !seen.has(w.concept_id)
         ) {
           seen.add(w.concept_id);
@@ -587,12 +602,22 @@ export function WordSeoPage({
       const browseSeen = new Set<string>();
       const levelWords: VocabEntry[] = [];
       for (const w of mod.default) {
-        if (w.level === entry.level && w.word_lemma.length > 2 && !browseSeen.has(w.concept_id)) {
+        if (
+          w.level === entry.level &&
+          typeof w.word_lemma === "string" &&
+          w.word_lemma.length > 2 &&
+          !browseSeen.has(w.concept_id)
+        ) {
           browseSeen.add(w.concept_id);
           levelWords.push(w);
         }
       }
       setBrowseWords(levelWords);
+      setIsBrowseLoading(false);
+    }).catch(() => {
+      if (cancelled) return;
+      setBrowseWords([]);
+      setIsBrowseLoading(false);
     });
     return () => {
       cancelled = true;
@@ -695,10 +720,20 @@ export function WordSeoPage({
   const typeQuestion = t.grammarQuestion(word);
   const categoryQuestion = t.topicQuestion(word);
   const browseHeading = t.browseMoreHeading(level, targetLangName);
-  const totalBrowsePages = Math.max(1, Math.ceil(browseWords.length / WORDS_PER_PAGE));
-  const pageWords = browseWords.slice(
-    browsePage * WORDS_PER_PAGE,
-    (browsePage + 1) * WORDS_PER_PAGE,
+  const normalizedBrowseSearch = browseSearch.trim().toLowerCase();
+  const filteredBrowseWords = normalizedBrowseSearch
+    ? browseWords.filter((browseWord) =>
+        browseWord.word_lemma.toLowerCase().includes(normalizedBrowseSearch),
+      )
+    : browseWords;
+  const totalBrowsePages = Math.max(
+    1,
+    Math.ceil(filteredBrowseWords.length / WORDS_PER_PAGE),
+  );
+  const safeBrowsePage = Math.min(browsePage, Math.max(totalBrowsePages - 1, 0));
+  const pageWords = filteredBrowseWords.slice(
+    safeBrowsePage * WORDS_PER_PAGE,
+    (safeBrowsePage + 1) * WORDS_PER_PAGE,
   );
 
   function checkAnswer() {
@@ -952,7 +987,26 @@ export function WordSeoPage({
 
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <h2 className="text-2xl text-foreground">{browseHeading}</h2>
-          {pageWords.length > 0 ? (
+          <input
+            type="text"
+            value={browseSearch}
+            onChange={(e) => {
+              setBrowseSearch(e.target.value);
+              setBrowsePage(0);
+            }}
+            placeholder={`Search ${level} words...`}
+            className="mt-4 w-full rounded-xl border-2 border-primary/35 bg-primary/[0.06] px-4 py-3 text-base font-medium text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/35"
+          />
+          {isBrowseLoading ? (
+            <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-8 animate-pulse rounded-lg border border-border bg-border/30"
+                />
+              ))}
+            </div>
+          ) : pageWords.length > 0 ? (
             <>
               <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 {pageWords.map((browseWord) => (
@@ -967,7 +1021,7 @@ export function WordSeoPage({
               </div>
               {totalBrowsePages > 1 && (
                 <div className="mt-5 flex flex-wrap justify-center gap-1.5">
-                  {getPaginationRange(browsePage, totalBrowsePages).map((item, idx) =>
+                  {getPaginationRange(safeBrowsePage, totalBrowsePages).map((item, idx) =>
                     item === "..." ? (
                       <span
                         key={`ellipsis-${idx}`}
@@ -981,7 +1035,7 @@ export function WordSeoPage({
                         type="button"
                         onClick={() => setBrowsePage(item)}
                         className={
-                          item === browsePage
+                          item === safeBrowsePage
                             ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
                             : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
                         }
@@ -994,13 +1048,8 @@ export function WordSeoPage({
               )}
             </>
           ) : (
-            <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-8 animate-pulse rounded-lg border border-border bg-border/30"
-                />
-              ))}
+            <div className="mt-5 rounded-lg border border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground">
+              No words found for this search.
             </div>
           )}
         </section>
