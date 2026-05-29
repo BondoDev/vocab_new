@@ -1030,7 +1030,7 @@ export function LevelCategorySelection({
                 boxShadow:
                   "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
               }}
-              className="filters-continue-button text-white px-12 py-4 md:px-[clamp(2.5rem,5vw,3rem)] md:py-[clamp(0.9rem,1.6vw,1rem)] text-lg md:text-[clamp(1rem,1.4vw,1.125rem)] rounded-xl sm:rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="filters-continue-button text-white px-12 py-4 text-lg rounded-xl sm:rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
               whileHover={
                 hasWordsForCurrentFilters
                   ? {

@@ -2194,7 +2194,7 @@ function AppContent() {
                 onClick={handleStartPracticing}
                 aria-disabled={isContinueDisabled}
                 style={nextButtonStarFieldStyle}
-                className={`language-continue-button text-white px-[clamp(2.5rem,6vw,3.5rem)] py-[clamp(0.75rem,2vw,1.25rem)] text-[clamp(1rem,2.2vw,1.25rem)] rounded-lg shadow-lg shadow-primary/30 ${
+                className={`language-continue-button text-white px-12 py-4 text-lg rounded-lg shadow-lg shadow-primary/30 ${
                   isContinueDisabled
                     ? "opacity-60 cursor-not-allowed shadow-none"
                     : ""
@@ -2282,7 +2282,7 @@ function AppContent() {
               onClick={handleStartPracticing}
               aria-disabled={isContinueDisabled}
               style={nextButtonStarFieldStyle}
-              className={`language-continue-button text-white px-[clamp(2.5rem,6vw,3.5rem)] py-[clamp(0.75rem,2vw,1.25rem)] text-[clamp(1rem,2.2vw,1.25rem)] rounded-lg shadow-lg shadow-primary/30 ${
+              className={`language-continue-button text-white px-12 py-4 text-lg rounded-lg shadow-lg shadow-primary/30 ${
                 isContinueDisabled ? "opacity-60 cursor-not-allowed shadow-none" : ""
               }`}
               whileHover={{
@@ -2327,7 +2327,6 @@ export default function App({
     </SeoProvider>
   );
 }
-
 
 
 
