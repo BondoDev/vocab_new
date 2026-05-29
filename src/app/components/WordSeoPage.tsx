@@ -734,7 +734,7 @@ export function WordSeoPage({
                   type="button"
                   aria-label={t.pronounceLabel}
                   onClick={() => speakWord(word, speechLang)}
-                  className="inline-flex flex-shrink-0 items-center justify-center rounded-full p-2 text-primary/80 transition hover:bg-primary/10 hover:text-primary"
+                  className="inline-flex flex-shrink-0 items-center justify-center rounded-full p-2 text-primary/80 transition hover:bg-primary/10 hover:text-primary translate-y-1"
                 >
                   <Volume2 className="h-11 w-11 sm:h-12 sm:w-12" />
                 </button>
