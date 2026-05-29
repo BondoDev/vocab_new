@@ -28,6 +28,11 @@
     margin-top: 0 !important;
   }
 
+  // Keep first/last CEFR buttons from being clipped when hover scale is applied.
+  .filters-elements-container > :nth-child(2) > div:nth-child(3) {
+    padding-inline: clamp(0.18rem, 0.45vw, 0.35rem);
+  }
+
   // SMALL MOBILE SCREEN
   @media (max-width: 375.98px) {
     > button {
