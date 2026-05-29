@@ -23,10 +23,10 @@ export function PracticeHeader({
   const { t } = useLanguage();
 
   return (
-    <header className="sticky top-0 z-20 w-full px-3 pt-2 md:px-6 md:pt-2.5">
+    <header className="sticky top-0 z-20 w-full px-3 pt-3 md:px-6 md:pt-2.5">
       <div className="w-full mx-auto lg:w-[50vw]">
         <div
-          className="flex items-center justify-between gap-2 rounded-2xl px-2.5 py-1.5 sm:px-3 sm:py-2"
+          className="flex items-center justify-between gap-2 rounded-2xl px-2.5 py-2 sm:px-3 sm:py-2"
           style={{
             background:
               "linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,249,251,0.92))",
@@ -65,14 +65,14 @@ export function PracticeHeader({
           )}
 
           <div
-            className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-2.5 py-1 sm:px-3 sm:py-1.5 font-bold uppercase tracking-wide"
+            className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-2.5 py-1.5 sm:px-3 sm:py-1.5 font-bold uppercase tracking-wide"
             style={{
               backgroundColor: "rgba(74, 43, 130, 0.08)",
               border: "1px solid rgba(74, 43, 130, 0.2)",
             }}
           >
             <span
-              className="text-[0.68rem] sm:text-xs"
+              className="text-[0.78rem] sm:text-xs"
               style={{ color: "rgba(74, 43, 130, 0.72)" }}
             >
               {getLanguageName(yourLanguage)}
@@ -82,7 +82,7 @@ export function PracticeHeader({
               style={{ backgroundColor: "rgba(74, 43, 130, 0.28)" }}
             />
             <span
-              className="text-[0.68rem] sm:text-xs"
+              className="text-[0.78rem] sm:text-xs"
               style={{ color: "rgba(74, 43, 130, 0.72)" }}
             >
               {getLanguageName(practiceLanguage)}
