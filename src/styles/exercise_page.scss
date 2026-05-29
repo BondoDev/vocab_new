@@ -563,7 +563,7 @@
     }
 
     .exercise-list {
-      width: 56rem;
+      width: 60rem;
       row-gap: 1.6rem;
     }
 
@@ -586,7 +586,7 @@
     }
 
     .exercise-list {
-      width: 62rem;
+      width: 66rem;
       row-gap: 1.6rem;
     }
 
@@ -609,7 +609,7 @@
     }
 
     .exercise-list {
-      width: 62rem;
+      width: 68rem;
       row-gap: 1.6rem;
     }
 
@@ -619,6 +619,104 @@
 
     .exercise-card:nth-child(5) {
       margin-right: auto;
+    }
+  }
+
+  // DESKTOP/LAPTOP CARD LAYOUT REFINEMENT
+  @media (min-width: 1024px) and (orientation: landscape) {
+    .exercise-container {
+      max-width: min(96vw, 92rem);
+    }
+
+    .exercise-headline > h2,
+    .exercise-headline > p {
+      max-width: 48rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .exercise-card {
+      min-height: 7.35rem;
+      padding-top: 1rem !important;
+      padding-bottom: 1rem !important;
+      padding-left: 1rem !important;
+      padding-right: 4.1rem !important;
+    }
+
+    .exercise-card-corners {
+      top: 0.72rem;
+      bottom: 0.72rem;
+      left: auto;
+      right: 0.72rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .exercise-check {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+
+    .exercise-help-button {
+      width: 1.56rem;
+      height: 1.56rem;
+      font-size: 0.9rem;
+    }
+
+    .exercise-card-icon {
+      top: 50%;
+      left: 1rem;
+      transform: translateY(-50%);
+      width: 3.75rem;
+      height: 3.75rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.42);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.5) inset,
+        0 2px 8px rgba(15, 23, 42, 0.1);
+    }
+
+    .exercise-card-icon > svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .exercise-card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.28rem;
+      margin-top: 0;
+      padding-left: 4.55rem;
+      padding-right: 0.2rem;
+      min-height: 100%;
+    }
+
+    .exercise-card-label {
+      font-size: 1.02rem;
+      font-weight: 600;
+      line-height: 1.25;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .exercise-card-description {
+      margin-top: 0;
+      font-size: 0.88rem;
+      line-height: 1.32;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      max-width: 100%;
     }
   }
 
