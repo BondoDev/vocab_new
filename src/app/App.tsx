@@ -252,7 +252,7 @@ function createSeededRandom(seed: number): () => number {
 function createDistributedStarFieldImage(starCount: number, seed = starCount): string {
   const cols = Math.ceil(Math.sqrt(starCount));
   const rows = Math.ceil(starCount / cols);
-  const sizeOptions = [1.2, 1.4, 1.8, 2.2];
+  const sparkleScaleOptions = [0.8, 1, 1.2, 1.4];
   const colorOptions = [
     "#fff",
     "#fff",
@@ -278,11 +278,17 @@ function createDistributedStarFieldImage(starCount: number, seed = starCount): s
     const y = (
       Math.max(8, yMin) + (Math.min(92, yMax) - Math.max(8, yMin)) * nextRandom()
     ).toFixed(1);
-    const size = sizeOptions[Math.floor(nextRandom() * sizeOptions.length)];
+    const sparkleScale =
+      sparkleScaleOptions[Math.floor(nextRandom() * sparkleScaleOptions.length)];
     const color = colorOptions[Math.floor(nextRandom() * colorOptions.length)];
+    const longArm = ((4.8 + (6.6 - 4.8) * nextRandom()) * sparkleScale).toFixed(1);
+    const shortArm = ((1.05 + (1.45 - 1.05) * nextRandom()) * sparkleScale).toFixed(2);
+    const core = ((0.9 + (1.3 - 0.9) * nextRandom()) * sparkleScale).toFixed(2);
 
     layers.push(
-      `radial-gradient(${size}px ${size}px at ${x}% ${y}%, ${color}, rgba(0,0,0,0))`,
+      `radial-gradient(ellipse ${longArm}px ${shortArm}px at ${x}% ${y}%, ${color}, rgba(0,0,0,0) 72%)`,
+      `radial-gradient(ellipse ${shortArm}px ${longArm}px at ${x}% ${y}%, ${color}, rgba(0,0,0,0) 72%)`,
+      `radial-gradient(${core}px ${core}px at ${x}% ${y}%, rgba(255,255,255,0.98), rgba(0,0,0,0))`,
     );
   }
 
@@ -2327,8 +2333,6 @@ export default function App({
     </SeoProvider>
   );
 }
-
-
 
 
 

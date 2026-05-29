@@ -26,8 +26,8 @@ function randomBetween(random: () => number, min: number, max: number): number {
   return random() * (max - min) + min;
 }
 
-function createRandomStarFieldImage(starCount: number): string {
-  const random = createSeededRandom(14057);
+function createRandomStarFieldImage(starCount: number, seed: number): string {
+  const random = createSeededRandom(seed);
   const sizeOptions = [0.8, 1, 1.2, 1.4];
   const colorOptions = [
     "#fff",
@@ -38,7 +38,7 @@ function createRandomStarFieldImage(starCount: number): string {
   ];
   const layers: string[] = [];
   const points: Array<{ x: number; y: number }> = [];
-  const minDistance = 12;
+  const minDistance = 9;
 
   for (let i = 0; i < starCount; i++) {
     let x = 0;
@@ -79,6 +79,65 @@ function createRandomStarFieldImage(starCount: number): string {
   return layers.join(",\n    ");
 }
 
+function createSparkleFieldImage(sparkleCount: number, seed: number): string {
+  const random = createSeededRandom(seed);
+  const layers: string[] = [];
+  const points: Array<{ x: number; y: number }> = [];
+  const minDistance = 16;
+  const sparkleScaleOptions = [0.8, 1, 1.2, 1.4];
+  const colorOptions = [
+    "rgba(255,255,255,0.95)",
+    "rgba(245,245,255,0.92)",
+    "rgba(236,232,255,0.9)",
+  ];
+
+  for (let i = 0; i < sparkleCount; i++) {
+    let x = 0;
+    let y = 0;
+    let placed = false;
+
+    for (let attempt = 0; attempt < 24; attempt++) {
+      const candidateX = randomBetween(random, 8, 92);
+      const candidateY = randomBetween(random, 18, 82);
+      const tooClose = points.some((point) => {
+        const dx = point.x - candidateX;
+        const dy = point.y - candidateY;
+        return Math.hypot(dx, dy) < minDistance;
+      });
+
+      if (!tooClose) {
+        x = candidateX;
+        y = candidateY;
+        placed = true;
+        break;
+      }
+    }
+
+    if (!placed) {
+      x = randomBetween(random, 8, 92);
+      y = randomBetween(random, 18, 82);
+    }
+
+    points.push({ x, y });
+    const color = colorOptions[Math.floor(random() * colorOptions.length)];
+    const scale =
+      sparkleScaleOptions[Math.floor(random() * sparkleScaleOptions.length)];
+    const longArm = (randomBetween(random, 4.8, 6.6) * scale).toFixed(1);
+    const shortArm = (randomBetween(random, 1.05, 1.45) * scale).toFixed(2);
+    const core = (randomBetween(random, 0.9, 1.3) * scale).toFixed(2);
+    const xPos = `${x.toFixed(1)}%`;
+    const yPos = `${y.toFixed(1)}%`;
+
+    layers.push(
+      `radial-gradient(ellipse ${longArm}px ${shortArm}px at ${xPos} ${yPos}, ${color}, rgba(0,0,0,0) 72%)`,
+      `radial-gradient(ellipse ${shortArm}px ${longArm}px at ${xPos} ${yPos}, ${color}, rgba(0,0,0,0) 72%)`,
+      `radial-gradient(${core}px ${core}px at ${xPos} ${yPos}, rgba(255,255,255,0.98), rgba(0,0,0,0))`,
+    );
+  }
+
+  return layers.join(",\n    ");
+}
+
 interface HeaderProps {
   onAbout?: () => void;
   onHelp?: () => void;
@@ -112,14 +171,21 @@ export function Header({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const lastScrollYRef = useRef(0);
+  const starSeeds = useMemo(
+    () => ({
+      sparkle: Math.floor(Math.random() * 0xffffffff),
+      dots: Math.floor(Math.random() * 0xffffffff),
+    }),
+    [],
+  );
   const starFieldStyle = useMemo(
     () => ({
       backgroundColor: "#4a2b82",
-      backgroundImage: createRandomStarFieldImage(14),
+      backgroundImage: `${createSparkleFieldImage(6, starSeeds.sparkle)},\n${createRandomStarFieldImage(22, starSeeds.dots)}`,
       backgroundSize: "100% 100%",
       backgroundRepeat: "no-repeat",
     }),
-    [],
+    [starSeeds],
   );
   const { t } = useLanguage();
 
