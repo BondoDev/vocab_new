@@ -900,6 +900,16 @@ function AppContent() {
   const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
   const hasAutoRedirectedRef = useRef(false);
   const initialPathRef = useRef(location.pathname);
+  const startedFromReloadRef = useRef(
+    typeof window !== "undefined" &&
+      window.performance
+        .getEntriesByType("navigation")
+        .some(
+          (entry) =>
+            "type" in entry &&
+            (entry as PerformanceNavigationTiming).type === "reload",
+        ),
+  );
   const shouldAutoRedirectFromStoredLanguagesRef = useRef(false);
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
@@ -1104,7 +1114,12 @@ function AppContent() {
     const startedOnLanguagePage = initialPage === "language";
     const startedOnPracticePage = initialPage === "practice";
 
-    if (resolvedPage === "language" && !isContinueDisabled && startedOnLanguagePage) {
+    if (
+      resolvedPage === "language" &&
+      !isContinueDisabled &&
+      startedOnLanguagePage &&
+      !startedFromReloadRef.current
+    ) {
       hasAutoRedirectedRef.current = true;
       navigate(ROUTES.exerciseSelection, { replace: true });
       return;
@@ -2237,8 +2252,8 @@ function AppContent() {
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="text-[clamp(1.25rem,2.5vw,1.5rem)] bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
-                  15+
+                <div className="text-[clamp(1.25rem,2.5vw,1.5rem)] font-semibold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                  7
                 </div>
                 <div className="text-[clamp(0.75rem,1.5vw,0.9rem)] text-muted-foreground">
                   {t("home.stat.languages")}
@@ -2267,8 +2282,8 @@ function AppContent() {
                 <span>words</span>
               </span>
               <span className="flex items-baseline gap-1">
-                <span className="font-semibold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
-                  15+
+                <span className="font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                  7
                 </span>
                 <span>languages</span>
               </span>
@@ -2333,10 +2348,6 @@ export default function App({
     </SeoProvider>
   );
 }
-
-
-
-
 
 
 
