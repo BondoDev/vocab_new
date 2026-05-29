@@ -174,6 +174,18 @@ export function VocabularyPractice({
     const loadWords = async () => {
       setIsLoading(true);
       try {
+        const normalizedPracticeLanguage = (practiceLanguage ?? "").trim();
+        const normalizedYourLanguage = (yourLanguage ?? "").trim();
+
+        // Wait until both languages are initialized.
+        if (!normalizedPracticeLanguage || !normalizedYourLanguage) {
+          setWords([]);
+          setTranslations({});
+          setDefinitions({});
+          setInflectedEntries([]);
+          return;
+        }
+
         // Use a static map for imports to ensure Vite can resolve them correctly
         const wordsMap: Record<string, () => Promise<any>> = {
           en: () => import("../../data/vocabulary/english/vocabulary.json"),
@@ -185,18 +197,23 @@ export function VocabularyPractice({
           ru: () => import("../../data/vocabulary/russian/vocabulary.json"),
         };
 
-        if (!wordsMap[practiceLanguage] || !wordsMap[yourLanguage]) {
-          throw new Error(
-            `Unsupported language: ${practiceLanguage} or ${yourLanguage}`,
+        if (
+          !wordsMap[normalizedPracticeLanguage] ||
+          !wordsMap[normalizedYourLanguage]
+        ) {
+          console.warn(
+            `Unsupported language: ${normalizedPracticeLanguage} or ${normalizedYourLanguage}`,
           );
+          setWords([]);
+          return;
         }
 
-        const practiceModule = await wordsMap[practiceLanguage]();
+        const practiceModule = await wordsMap[normalizedPracticeLanguage]();
         let loadedWords = Array.isArray(practiceModule.default)
           ? practiceModule.default
           : [];
 
-        const yourLangModule = await wordsMap[yourLanguage]();
+        const yourLangModule = await wordsMap[normalizedYourLanguage]();
         const yourLangWords = Array.isArray(yourLangModule.default)
           ? yourLangModule.default
           : [];
@@ -245,8 +262,9 @@ export function VocabularyPractice({
             ru: () => import("../../data/inflected/russian/inflected.json"),
           };
 
-          if (inflectedMap[practiceLanguage]) {
-            const inflectedModule = await inflectedMap[practiceLanguage]();
+          if (inflectedMap[normalizedPracticeLanguage]) {
+            const inflectedModule =
+              await inflectedMap[normalizedPracticeLanguage]();
             loadedInflectedEntries = Array.isArray(inflectedModule.default)
               ? inflectedModule.default
               : [];
