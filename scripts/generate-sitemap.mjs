@@ -119,9 +119,7 @@ const SLUG_PATTERNS = {
 
 const UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"];
 const ALLOWED_WORD_SITEMAP_PAIRS = new Set(["en:english", "en:spanish"]);
-const WORD_SITEMAP_PAIR_LIMITS = {
-  "en:spanish": 2000,
-};
+const WORD_SITEMAP_PAIR_LIMITS = {};
 
 function wordToSlug(lemma) {
   if (typeof lemma !== "string") return "";
