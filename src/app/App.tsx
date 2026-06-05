@@ -30,7 +30,11 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../data/vocabularyLevels";
-import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../data/seo/slugs";
+import {
+  buildLocalizedVocabularyPath,
+  isSupportedUiLanguage,
+  resolveVocabularyRoute,
+} from "../data/seo/slugs";
 import { resolveWordRoute, type WordRouteMatch } from "../data/seo/wordSlugs";
 import { resolveSeoHubRoute } from "../data/seo/hub";
 import { SeoProvider, type SeoManager } from "../seo/SeoContext";
@@ -124,6 +128,11 @@ interface ParsedLevelTestSeoRoute {
   targetLanguage: TargetLanguageSlug;
 }
 
+interface ParsedPracticeRoute {
+  yourLanguage: UILanguage;
+  practiceLanguage: UILanguage;
+}
+
 interface ExploreTopic {
   level: CefrLevelCode | "test";
   label: string;
@@ -199,7 +208,32 @@ const ROUTES = {
 type RouteKey = keyof typeof ROUTES;
 type PageKey = RouteKey | "vocabularyLevel" | "levelTestSeo" | "seoHub" | "wordPage" | "notFound";
 
+function buildPracticeRoute(yourLanguage: UILanguage, practiceLanguage: UILanguage): string {
+  return `${ROUTES.exerciseSelection}/${yourLanguage}-${practiceLanguage}/practice`;
+}
+
+function parsePracticeRoute(path: string): ParsedPracticeRoute | null {
+  const match = path.match(/^\/languages\/filters\/exercises\/([a-z]{2})-([a-z]{2})\/practice$/);
+  if (!match) {
+    return null;
+  }
+
+  const [, yourLanguageRaw, practiceLanguageRaw] = match;
+  if (!isSupportedUiLanguage(yourLanguageRaw) || !isSupportedUiLanguage(practiceLanguageRaw)) {
+    return null;
+  }
+
+  return {
+    yourLanguage: yourLanguageRaw,
+    practiceLanguage: practiceLanguageRaw,
+  };
+}
+
 const pageFromPath = (path: string): PageKey => {
+  if (parsePracticeRoute(path)) {
+    return "practice";
+  }
+
   switch (path) {
     case "/":
     case ROUTES.language:
@@ -878,6 +912,7 @@ function AppContent() {
   const seoHubRoute = useMemo(() => parseSeoHubRoute(location.pathname), [location.pathname]);
   const vocabularyRoute = useMemo(() => parseVocabularyRoute(location.pathname), [location.pathname]);
   const wordRoute = useMemo(() => parseWordRoute(location.pathname), [location.pathname]);
+  const practiceRoute = useMemo(() => parsePracticeRoute(location.pathname), [location.pathname]);
   const currentPage = useMemo(() => pageFromPath(location.pathname), [location.pathname]);
   const [selectedLevel, setSelectedLevel] = useState("A1");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -1102,6 +1137,34 @@ function AppContent() {
   }, [resolvedPage, setUILanguage, uiLanguage, wordRoute]);
 
   useEffect(() => {
+    if (resolvedPage !== "practice" || !practiceRoute) {
+      return;
+    }
+
+    if (yourLanguage !== practiceRoute.yourLanguage) {
+      setYourLanguage(practiceRoute.yourLanguage);
+    }
+
+    if (practiceLanguage !== practiceRoute.practiceLanguage) {
+      setPracticeLanguage(practiceRoute.practiceLanguage);
+    }
+  }, [practiceLanguage, practiceRoute, resolvedPage, yourLanguage]);
+
+  useEffect(() => {
+    if (resolvedPage !== "practice" || !yourLanguage || !practiceLanguage) {
+      return;
+    }
+
+    const expectedPath = buildPracticeRoute(
+      yourLanguage as UILanguage,
+      practiceLanguage as UILanguage,
+    );
+    if (location.pathname !== expectedPath) {
+      navigate(expectedPath, { replace: true });
+    }
+  }, [location.pathname, navigate, practiceLanguage, resolvedPage, yourLanguage]);
+
+  useEffect(() => {
     if (hasAutoRedirectedRef.current) {
       return;
     }
@@ -1112,7 +1175,7 @@ function AppContent() {
 
     const initialPage = pageFromPath(initialPathRef.current);
     const startedOnLanguagePage = initialPage === "language";
-    const startedOnPracticePage = initialPage === "practice";
+    const startedOnLegacyPracticePage = initialPathRef.current === ROUTES.practice;
 
     if (
       resolvedPage === "language" &&
@@ -1125,7 +1188,7 @@ function AppContent() {
       return;
     }
 
-    if (!isContinueDisabled && startedOnPracticePage && resolvedPage === "practice") {
+    if (!isContinueDisabled && startedOnLegacyPracticePage && resolvedPage === "practice") {
       hasAutoRedirectedRef.current = true;
       navigate(ROUTES.exerciseSelection, { replace: true });
     }
@@ -1165,7 +1228,12 @@ function AppContent() {
   };
 
   const handleContinueToPractice = () => {
-    navigate(ROUTES.practice);
+    if (isContinueDisabled) {
+      popupRef.current?.show({ delayMs: 0 });
+      return;
+    }
+
+    navigate(buildPracticeRoute(yourLanguage as UILanguage, practiceLanguage as UILanguage));
   };
 
   const handleStartExam = () => {
@@ -2348,7 +2416,6 @@ export default function App({
     </SeoProvider>
   );
 }
-
 
 
 
