@@ -6,6 +6,14 @@ import type {
   TargetLanguageSlug,
   VocabularyLevelContent,
 } from "../../data/vocabularyLevels";
+import { buildLocalizedVocabularyPath } from "../../data/seo/slugs";
+
+export const DEV_CEFR_PREVIEW_PATH =
+  `/test${buildLocalizedVocabularyPath(
+    sampleContent.route.uiLang,
+    sampleContent.route.targetLanguage,
+    sampleContent.route.level,
+  ) ?? "/en/english-b1-vocabulary-practice"}`;
 
 function buildSeoMetadata(): SeoMetadata {
   return {

@@ -18,7 +18,10 @@ import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { SeoHubPage } from "./components/SeoHubPage";
 import { WordSeoPage } from "./components/WordSeoPage";
-import { DevSeoCefrPlaceholderPage } from "./components/DevSeoCefrPlaceholderPage";
+import {
+  DevSeoCefrPlaceholderPage,
+  DEV_CEFR_PREVIEW_PATH,
+} from "./components/DevSeoCefrPlaceholderPage";
 import { ScrollToTopButton } from "./components/ScrollToTopButton";
 import {
   LanguageContinuePopup,
@@ -134,8 +137,6 @@ interface ParsedPracticeRoute {
   practiceLanguage: UILanguage;
 }
 
-const DEV_SEO_CEFR_PLACEHOLDER_ROUTE = "/dev/seo-cefr-placeholder";
-
 interface ExploreTopic {
   level: CefrLevelCode | "test";
   label: string;
@@ -181,6 +182,14 @@ function parseVocabularyRoute(path: string): ParsedVocabularyRoute | null {
     targetLanguage: resolved.targetLanguage,
     level: resolved.level,
   };
+}
+
+function parseDevSeoCefrPlaceholderRoute(path: string): ParsedVocabularyRoute | null {
+  if (!path.startsWith("/test/")) {
+    return null;
+  }
+
+  return parseVocabularyRoute(path.slice("/test".length));
 }
 
 function parseLevelTestSeoRoute(path: string): ParsedLevelTestSeoRoute | null {
@@ -263,7 +272,7 @@ const pageFromPath = (path: string): PageKey => {
     case ROUTES.help:
       return "help";
     default: {
-      if (import.meta.env.DEV && path === DEV_SEO_CEFR_PLACEHOLDER_ROUTE) {
+      if (import.meta.env.DEV && parseDevSeoCefrPlaceholderRoute(path)) {
         return "devSeoCefrPlaceholder";
       }
       if (parseSeoHubRoute(path)) {
@@ -2112,6 +2121,24 @@ function AppContent() {
   }
 
   if (resolvedPage === "devSeoCefrPlaceholder") {
+    if (!parseDevSeoCefrPlaceholderRoute(location.pathname)) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header
+            activePage="notFound"
+            onAbout={() => navigate(ROUTES.about)}
+            onHelp={() => navigate(ROUTES.help)}
+            onLevelTest={() => handleRequireLanguages("exam")}
+            onLanguages={() => navigate(ROUTES.language)}
+            onFilters={() => handleRequireLanguages("levelCategory")}
+            onExercises={() => handleRequireLanguages("exerciseSelection")}
+            onExplore={() => navigate(ROUTES.explore)}
+          />
+          <NotFoundPage message={`Invalid preview page. Try ${DEV_CEFR_PREVIEW_PATH}`} />
+        </div>
+      );
+    }
+
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header
@@ -2447,7 +2474,6 @@ export default function App({
     </SeoProvider>
   );
 }
-
 
 
 
