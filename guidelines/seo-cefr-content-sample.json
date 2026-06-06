@@ -1,0 +1,201 @@
+{
+  "route": {
+    "uiLang": "en",
+    "targetLanguage": "english",
+    "targetLanguageDisplayName": "English",
+    "level": "b1",
+    "pathname": "/en/english-b1-vocabulary-practice"
+  },
+  "seo": {
+    "metaTitle": "English B1 Vocabulary Practice - Intermediate English Vocabulary",
+    "metaDescription": "Strengthen your skills with English B1 vocabulary practice. Learn key intermediate words, meanings, and examples for confident communication.",
+    "canonicalUrl": "https://www.fluentstellar.com/en/english-b1-vocabulary-practice",
+    "alternates": [
+      {
+        "hreflang": "en",
+        "href": "https://www.fluentstellar.com/en/english-b1-vocabulary-practice"
+      },
+      {
+        "hreflang": "es",
+        "href": "https://www.fluentstellar.com/es/vocabulario-ingles-b1-practica"
+      },
+      {
+        "hreflang": "x-default",
+        "href": "https://www.fluentstellar.com/en/english-b1-vocabulary-practice"
+      }
+    ],
+    "faqJsonLd": {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What vocabulary is included in the English B1 word list?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The B1 level marks the transition to independent language use. When you learn English vocabulary B1 level, you can understand the main points of clear standard input on familiar topics and manage most situations while traveling or working."
+          }
+        }
+      ]
+    }
+  },
+  "content": {
+    "heroTitle": "English B1 Vocabulary: Mastering the 2500 Essential Words",
+    "heroQuestion": "How many words are in English B1?",
+    "heroAnswer": "To reach B1 proficiency, you need approximately 2500 words. However, simply knowing the list is not enough; you need to master the usage and pronunciation.",
+    "heroCta": "Start Practice",
+    "practiceUrl": "/languages/filters/exercises/en-en/practice?levels=B1",
+    "introParagraphs": [
+      "English B1 vocabulary practice helps you develop stronger communication skills and move beyond basic conversations. At this intermediate stage, you learn to express opinions, describe experiences, and handle everyday challenges more independently.",
+      "With intermediate English vocabulary, you expand your ability to understand texts, participate in discussions, and write clear messages. A structured B1 English word list supports steady progress and practical language use."
+    ],
+    "levelExplanation": {
+      "heading": "What Does B1 Level Mean?",
+      "paragraph": "The B1 level marks the transition to independent language use. When you learn English vocabulary B1 level, you can understand the main points of clear standard input on familiar topics and manage most situations while traveling or working.",
+      "bullets": [
+        "You can describe experiences, events, and goals in detail.",
+        "You can explain reasons and give simple arguments.",
+        "You can write connected texts on familiar subjects."
+      ]
+    },
+    "vocabularyScope": {
+      "heading": "What Vocabulary Is Included?",
+      "groups": [
+        {
+          "heading": "Everyday and Social Topics",
+          "items": [
+            "Work and career development",
+            "Education and learning",
+            "Travel and cultural experiences",
+            "Health and lifestyle choices"
+          ]
+        },
+        {
+          "heading": "Opinions and Problem Solving",
+          "items": [
+            "Expressing agreement and disagreement",
+            "Making suggestions and recommendations",
+            "Describing advantages and disadvantages",
+            "Discussing plans and future intentions"
+          ]
+        }
+      ]
+    },
+    "wordCount": {
+      "heading": "How Many Words Are in B1?",
+      "text": "At B1, learners typically control around 2,000-2,500 words. Regular English B1 vocabulary practice strengthens retention, improves accuracy, and prepares you for more advanced communication.",
+      "value": 2500,
+      "wordUnit": "words"
+    },
+    "sampleVocabulary": {
+      "heading": "Sample B1 Vocabulary",
+      "columns": {
+        "word": "Word",
+        "meaning": "Meaning"
+      },
+      "rows": [
+        {
+          "word": "achieve",
+          "meaning": "to successfully reach a goal"
+        },
+        {
+          "word": "argument",
+          "meaning": "a disagreement or discussion with different opinions"
+        },
+        {
+          "word": "benefit",
+          "meaning": "an advantage or positive result"
+        },
+        {
+          "word": "challenge",
+          "meaning": "a difficult task or situation"
+        },
+        {
+          "word": "solution",
+          "meaning": "an answer to a problem"
+        }
+      ]
+    },
+    "browseWords": {
+      "heading": "Browse B1 English Words",
+      "description": "Explore common vocabulary words for this level. Click a word to learn its meaning, see example sentences, and practice it with exercises.",
+      "items": [
+        "achieve",
+        "argument",
+        "benefit",
+        "challenge",
+        "opinion",
+        "solution"
+      ]
+    },
+    "internalNavigation": {
+      "heading": "Explore Other Levels",
+      "items": [
+        {
+          "label": "English A2 Vocabulary Practice",
+          "href": "/en/english-a2-vocabulary-practice"
+        },
+        {
+          "label": "English B2 Vocabulary Practice",
+          "href": "/en/english-b2-vocabulary-practice"
+        },
+        {
+          "label": "English C1 Vocabulary Practice",
+          "href": "/en/english-c1-vocabulary-practice"
+        }
+      ]
+    },
+    "crossLanguageLinks": {
+      "heading": "Practice B1 vocabulary in other languages",
+      "items": [
+        {
+          "label": "Spanish B1 vocabulary list",
+          "href": "/en/spanish-b1-vocabulary-practice"
+        },
+        {
+          "label": "French B1 vocabulary list",
+          "href": "/en/french-b1-vocabulary-practice"
+        },
+        {
+          "label": "German B1 vocabulary list",
+          "href": "/en/german-b1-vocabulary-practice"
+        }
+      ]
+    },
+    "relatedPages": {
+      "heading": "Related pages",
+      "items": [
+        {
+          "label": "Take the English level test",
+          "href": "/en/english-level-test"
+        },
+        {
+          "label": "Browse all SEO pages",
+          "href": "/en/seo-pages"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions",
+      "items": [
+        {
+          "question": "What vocabulary is included in the English B1 word list?",
+          "answer": "The B1 level marks the transition to independent language use. When you learn English vocabulary B1 level, you can understand the main points of clear standard input on familiar topics and manage most situations while traveling or working."
+        },
+        {
+          "question": "How many English B1 words should I know?",
+          "answer": "At B1, learners typically control around 2,000-2,500 words. Regular English B1 vocabulary practice strengthens retention, improves accuracy, and prepares you for more advanced communication. 2500+ words."
+        },
+        {
+          "question": "What topics does the English B1 vocabulary list cover?",
+          "answer": "Work and career development, education and learning, travel and cultural experiences, health and lifestyle choices, expressing agreement and disagreement, making suggestions and recommendations."
+        }
+      ]
+    },
+    "bottomCta": {
+      "heading": "Start Practicing Now",
+      "text": "Improve fluency and confidence with consistent English B1 vocabulary practice. Strengthen your intermediate skills and prepare for higher levels of communication.",
+      "buttonLabel": "Start B1 Practice"
+    }
+  }
+}

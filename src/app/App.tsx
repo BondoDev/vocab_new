@@ -18,6 +18,7 @@ import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { SeoHubPage } from "./components/SeoHubPage";
 import { WordSeoPage } from "./components/WordSeoPage";
+import { DevSeoCefrPlaceholderPage } from "./components/DevSeoCefrPlaceholderPage";
 import { ScrollToTopButton } from "./components/ScrollToTopButton";
 import {
   LanguageContinuePopup,
@@ -133,6 +134,8 @@ interface ParsedPracticeRoute {
   practiceLanguage: UILanguage;
 }
 
+const DEV_SEO_CEFR_PLACEHOLDER_ROUTE = "/dev/seo-cefr-placeholder";
+
 interface ExploreTopic {
   level: CefrLevelCode | "test";
   label: string;
@@ -206,7 +209,14 @@ const ROUTES = {
 } as const;
 
 type RouteKey = keyof typeof ROUTES;
-type PageKey = RouteKey | "vocabularyLevel" | "levelTestSeo" | "seoHub" | "wordPage" | "notFound";
+type PageKey =
+  | RouteKey
+  | "vocabularyLevel"
+  | "levelTestSeo"
+  | "seoHub"
+  | "wordPage"
+  | "devSeoCefrPlaceholder"
+  | "notFound";
 
 function buildPracticeRoute(yourLanguage: UILanguage, practiceLanguage: UILanguage): string {
   return `${ROUTES.exerciseSelection}/${yourLanguage}-${practiceLanguage}/practice`;
@@ -253,6 +263,9 @@ const pageFromPath = (path: string): PageKey => {
     case ROUTES.help:
       return "help";
     default: {
+      if (import.meta.env.DEV && path === DEV_SEO_CEFR_PLACEHOLDER_ROUTE) {
+        return "devSeoCefrPlaceholder";
+      }
       if (parseSeoHubRoute(path)) {
         return "seoHub";
       }
@@ -2098,6 +2111,24 @@ function AppContent() {
     );
   }
 
+  if (resolvedPage === "devSeoCefrPlaceholder") {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header
+          activePage="vocabularyLevel"
+          onAbout={() => navigate(ROUTES.about)}
+          onHelp={() => navigate(ROUTES.help)}
+          onLevelTest={() => handleRequireLanguages("exam")}
+          onLanguages={() => navigate(ROUTES.language)}
+          onFilters={() => handleRequireLanguages("levelCategory")}
+          onExercises={() => handleRequireLanguages("exerciseSelection")}
+          onExplore={() => navigate(ROUTES.explore)}
+        />
+        <DevSeoCefrPlaceholderPage onStartPractice={handleStartVocabularyPractice} />
+      </div>
+    );
+  }
+
   if (resolvedPage === "notFound") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
@@ -2416,8 +2447,6 @@ export default function App({
     </SeoProvider>
   );
 }
-
-
 
 
 

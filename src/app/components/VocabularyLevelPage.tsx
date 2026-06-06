@@ -9,9 +9,10 @@ import {
   type CefrLevelCode,
   type TargetLanguageSlug,
   type UiLanguageCode,
+  type VocabularyLevelContent,
 } from "../../data/vocabularyLevels";
 import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../seo/metadata";
-import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
+import { SEOHead, useSeoSiteOrigin, type SeoMetadata } from "../../seo/SeoContext";
 import { buildWordPath } from "../../data/seo/wordSlugs";
 
 interface VocabularyLevelPageProps {
@@ -19,6 +20,14 @@ interface VocabularyLevelPageProps {
   targetLanguage: TargetLanguageSlug;
   level: CefrLevelCode;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
+  contentOverride?: {
+    file: {
+      targetLanguage: TargetLanguageSlug;
+      targetLanguageDisplayName: string;
+    };
+    levelContent: VocabularyLevelContent;
+  };
+  seoMetadataOverride?: SeoMetadata | null;
 }
 
 type VocabEntry = { concept_id: string; word_lemma: string; level: string };
@@ -302,13 +311,15 @@ export function VocabularyLevelPage({
   targetLanguage,
   level,
   onStartPractice,
+  contentOverride,
+  seoMetadataOverride,
 }: VocabularyLevelPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
   const wordsUnit = WORDS_UNIT_BY_UI_LANG[uiLang] ?? WORDS_UNIT_BY_UI_LANG.en;
   const contentBundle = useMemo(
-    () => getVocabularyLevelContent(uiLang, targetLanguage, level),
-    [uiLang, targetLanguage, level],
+    () => contentOverride ?? getVocabularyLevelContent(uiLang, targetLanguage, level),
+    [contentOverride, uiLang, targetLanguage, level],
   );
 
   useEffect(() => {
@@ -327,13 +338,15 @@ export function VocabularyLevelPage({
   const levelDisplay = LEVEL_DISPLAY[level];
   const wordMapCount = WORD_MAP[levelDisplay] ?? levelContent.wordCount.value;
   const curiosityT = CURIOSITY_TRANSLATIONS[uiLang] ?? CURIOSITY_TRANSLATIONS.en;
-  const seoMetadata = buildVocabularySeoMetadata({
-    uiLang,
-    targetLanguage,
-    level,
-    pathname: location.pathname,
-    siteOrigin,
-  });
+  const seoMetadata =
+    seoMetadataOverride ??
+    buildVocabularySeoMetadata({
+      uiLang,
+      targetLanguage,
+      level,
+      pathname: location.pathname,
+      siteOrigin,
+    });
   const ctaText = levelContent.ctaText || `Start ${levelDisplay} Practice`;
   const relatedCopy = RELATED_LINKS_COPY[uiLang] ?? RELATED_LINKS_COPY.en;
   const localizedHeaders =
