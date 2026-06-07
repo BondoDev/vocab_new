@@ -3,20 +3,74 @@ import sampleContent from "../../../guidelines/seo-cefr-content-sample.json";
 import { VocabularyLevelPage } from "./VocabularyLevelPage";
 import type { SeoMetadata } from "../../seo/SeoContext";
 import type {
+  CefrLevelCode,
   TargetLanguageSlug,
   VocabularyLevelContent,
+  UiLanguageCode,
 } from "../../data/vocabularyLevels";
 import { buildLocalizedVocabularyPath } from "../../data/seo/slugs";
 import { buildVocabularyFaqSection } from "../../seo/metadata";
 
+type PreviewTargetLanguage = TargetLanguageSlug | UiLanguageCode;
+
+export type SeoCefrContentItem = {
+  uiLanguage: UiLanguageCode;
+  targetLanguage: PreviewTargetLanguage;
+  targetLanguageDisplayName: string;
+  level: CefrLevelCode;
+  content: VocabularyLevelContent;
+};
+
+const previewItems = sampleContent as SeoCefrContentItem[];
+const defaultPreviewItem = previewItems[0];
+
+const TARGET_LANGUAGE_CODE_TO_SLUG: Record<UiLanguageCode, TargetLanguageSlug> = {
+  en: "english",
+  es: "spanish",
+  de: "german",
+  fr: "french",
+  it: "italian",
+  pt: "portuguese",
+  ru: "russian",
+};
+
+function normalizeTargetLanguage(targetLanguage: PreviewTargetLanguage): TargetLanguageSlug {
+  return TARGET_LANGUAGE_CODE_TO_SLUG[targetLanguage as UiLanguageCode] ?? targetLanguage;
+}
+
 export const DEV_CEFR_PREVIEW_PATH =
   `/test${buildLocalizedVocabularyPath(
-    sampleContent.route.uiLang,
-    sampleContent.route.targetLanguage,
-    sampleContent.route.level,
+    defaultPreviewItem?.uiLanguage ?? "en",
+    normalizeTargetLanguage(defaultPreviewItem?.targetLanguage ?? "english"),
+    defaultPreviewItem?.level ?? "b1",
   ) ?? "/en/english-b1-vocabulary-practice"}`;
 
-function buildSeoMetadata(): SeoMetadata {
+export function findSeoCefrPreviewItem(params: {
+  uiLanguage: UiLanguageCode;
+  targetLanguage: TargetLanguageSlug;
+  level: CefrLevelCode;
+}): SeoCefrContentItem | null {
+  return (
+    previewItems.find(
+      (item) =>
+        item.uiLanguage === params.uiLanguage &&
+        normalizeTargetLanguage(item.targetLanguage) === params.targetLanguage &&
+        item.level === params.level,
+    ) ?? null
+  );
+}
+
+function buildPreviewPath(item: SeoCefrContentItem): string {
+  return (
+    `/test${buildLocalizedVocabularyPath(
+      item.uiLanguage,
+      normalizeTargetLanguage(item.targetLanguage),
+      item.level,
+    ) ?? "/en/english-b1-vocabulary-practice"}`
+  );
+}
+
+function buildSeoMetadata(item: SeoCefrContentItem, previewPath: string): SeoMetadata {
   const wordsUnitByUiLang = {
     en: "words",
     es: "palabras",
@@ -24,98 +78,72 @@ function buildSeoMetadata(): SeoMetadata {
     fr: "mots",
     it: "parole",
     pt: "palavras",
-    ru: "слов",
+    ru: "slov",
   } as const;
-  const wordsUnit = wordsUnitByUiLang[sampleContent.route.uiLang] ?? wordsUnitByUiLang.en;
+  const wordsUnit = wordsUnitByUiLang[item.uiLanguage] ?? wordsUnitByUiLang.en;
   const faqSection = buildVocabularyFaqSection(
-    sampleContent.route.uiLang,
-    sampleContent.route.targetLanguageDisplayName,
-    sampleContent.route.level.toUpperCase(),
-    buildLevelContent(),
+    item.uiLanguage,
+    item.targetLanguageDisplayName,
+    item.level.toUpperCase(),
+    item.content,
     wordsUnit,
   );
 
   return {
-    title: sampleContent.seo.metaTitle,
-    description: sampleContent.seo.metaDescription,
-    canonical: `https://www.fluentstellar.com${DEV_CEFR_PREVIEW_PATH}`,
+    title: item.content.metaTitle ?? item.content.title,
+    description: item.content.metaDescription ?? "",
+    canonical: `https://www.fluentstellar.com${previewPath}`,
     alternates: [
       {
-        hreflang: sampleContent.route.uiLang,
-        href: `https://www.fluentstellar.com${DEV_CEFR_PREVIEW_PATH}`,
+        hreflang: item.uiLanguage,
+        href: `https://www.fluentstellar.com${previewPath}`,
       },
       {
         hreflang: "x-default",
-        href: `https://www.fluentstellar.com${DEV_CEFR_PREVIEW_PATH}`,
+        href: `https://www.fluentstellar.com${previewPath}`,
       },
     ],
     jsonLd: JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: faqSection.items.map((item) => ({
+      mainEntity: faqSection.items.map((faqItem) => ({
         "@type": "Question",
-        name: item.question,
+        name: faqItem.question,
         acceptedAnswer: {
           "@type": "Answer",
-          text: item.answer,
+          text: faqItem.answer,
         },
       })),
     }),
   };
 }
 
-function buildLevelContent(): VocabularyLevelContent {
-  return {
-    title: `${sampleContent.route.targetLanguageDisplayName} ${sampleContent.route.level.toUpperCase()} Vocabulary Practice`,
-    metaTitle: sampleContent.seo.metaTitle,
-    metaDescription: sampleContent.seo.metaDescription,
-    intro: sampleContent.content.introParagraphs[0] ?? "",
-    introParagraphs: sampleContent.content.introParagraphs,
-    levelDescription: sampleContent.route.level.toUpperCase(),
-    ctaText: sampleContent.content.bottomCta.buttonLabel,
-    levelExplanation: sampleContent.content.levelExplanation,
-    vocabularyScope: {
-      heading: sampleContent.content.vocabularyScope.heading,
-      topics: [],
-      wordTypes: [],
-      groups: sampleContent.content.vocabularyScope.groups,
-    },
-    wordCount: {
-      heading: sampleContent.content.wordCount.heading,
-      text: sampleContent.content.wordCount.text,
-      value: sampleContent.content.wordCount.value,
-    },
-    sampleVocabulary: sampleContent.content.sampleVocabulary,
-    internalNavigation: {
-      heading: sampleContent.content.internalNavigation.heading,
-    },
-    bottomCta: {
-      heading: sampleContent.content.bottomCta.heading,
-      text: sampleContent.content.bottomCta.text,
-    },
-  };
-}
-
 export function DevSeoCefrPlaceholderPage({
+  item,
   onStartPractice,
 }: {
+  item: SeoCefrContentItem;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
 }) {
-  const seoMetadata = useMemo(() => buildSeoMetadata(), []);
-  const levelContent = useMemo(() => buildLevelContent(), []);
+  const previewPath = useMemo(() => buildPreviewPath(item), [item]);
+  const seoMetadata = useMemo(() => buildSeoMetadata(item, previewPath), [item, previewPath]);
+  const normalizedTargetLanguage = useMemo(
+    () => normalizeTargetLanguage(item.targetLanguage),
+    [item.targetLanguage],
+  );
 
   return (
     <VocabularyLevelPage
-      uiLang={sampleContent.route.uiLang}
-      targetLanguage={sampleContent.route.targetLanguage}
-      level={sampleContent.route.level}
+      uiLang={item.uiLanguage}
+      targetLanguage={normalizedTargetLanguage}
+      level={item.level}
       onStartPractice={onStartPractice}
       contentOverride={{
         file: {
-          targetLanguage: sampleContent.route.targetLanguage,
-          targetLanguageDisplayName: sampleContent.route.targetLanguageDisplayName,
+          targetLanguage: normalizedTargetLanguage,
+          targetLanguageDisplayName: item.targetLanguageDisplayName,
         },
-        levelContent,
+        levelContent: item.content,
       }}
       seoMetadataOverride={seoMetadata}
     />

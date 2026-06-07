@@ -1,172 +1,1274 @@
-{
-  "route": {
-    "uiLang": "en",
-    "targetLanguage": "english",
+[
+  {
+    "uiLanguage": "en",
+    "targetLanguage": "en",
+    "targetLanguageDisplayName": "English",
+    "level": "a1",
+    "content": {
+      "title": "English A1 Vocabulary for First Conversations and Daily Life",
+      "metaTitle": "English A1 Vocabulary for Beginners | Words & Practice",
+      "metaDescription": "Learn useful English A1 vocabulary for introductions, family, food, numbers, daily routines, places, and simple beginner conversations.",
+      "intro": "English A1 vocabulary gives beginners the words they need for simple introductions, everyday objects, basic questions, and first real conversations.",
+      "introParagraphs": [
+        "At A1 level, English vocabulary should be practical, clear, and immediately useful. Learners focus on words for names, countries, family members, numbers, food, rooms, common places, and daily routines. The goal is not to speak perfectly, but to understand and use simple words in predictable situations such as greeting someone, ordering a drink, or saying where you live.",
+        "This level is the foundation for all later English learning. When you know enough A1 words, you can recognize short instructions, answer basic questions, read simple signs, and build short sentences about yourself. Regular vocabulary practice helps you remember these words faster and use them more confidently instead of only recognizing them passively."
+      ],
+      "levelDescription": "A1 is the beginner level in the CEFR system. It is for learners who are starting English and need essential words for simple communication.",
+      "ctaText": "Start practicing English A1 words and build the vocabulary you need for your first conversations.",
+      "levelExplanation": {
+        "heading": "What English A1 means for a beginner learner",
+        "paragraph": "English A1 means you can understand and use very common words in simple, familiar situations. You can introduce yourself, ask and answer basic questions, talk about your family, say what you like, name everyday objects, and understand short phrases when people speak slowly and clearly. A1 vocabulary is limited, but it gives you the building blocks for real communication.",
+        "bullets": [
+          "You can use basic English words for greetings, names, numbers, countries, family, food, and simple places.",
+          "You can understand short sentences when the topic is familiar and the language is clear.",
+          "You can begin forming simple questions and answers about yourself, your routine, and your needs."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Everyday English words you need at A1 level",
+        "topics": [
+          "Introductions, family, food, numbers, time, places, objects, daily routines, and simple travel situations",
+          "Basic personal information, classroom language, shopping words, colors, common verbs, and simple descriptions"
+        ],
+        "wordTypes": [
+          "Common nouns, beginner verbs, basic adjectives, question words, numbers, pronouns, and short everyday phrases",
+          "High-frequency words used in simple sentences about people, things, places, habits, likes, and needs"
+        ],
+        "groups": [
+          {
+            "heading": "Words for people, places, and daily objects",
+            "items": [
+              "Family words such as mother, father, sister, and brother",
+              "Place words such as school, home, shop, street, and station",
+              "Object words such as book, phone, table, bag, and chair",
+              "Food and drink words such as water, bread, milk, apple, and coffee"
+            ]
+          },
+          {
+            "heading": "Words for simple actions and first sentences",
+            "items": [
+              "Basic verbs such as be, have, go, like, want, eat, and drink",
+              "Question words such as what, where, who, when, and how",
+              "Simple adjectives such as good, bad, big, small, new, and old",
+              "Time and routine words such as morning, today, night, work, and sleep"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many English words are useful at A1 level?",
+        "text": "A typical English A1 learner usually works with about 500 to 1000 useful words. The exact number is less important than knowing the most common words well. At this stage, strong memory of basic vocabulary matters more than collecting many rare words you cannot use in simple sentences.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Useful English A1 vocabulary examples for beginners",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "hello",
+            "meaning": "used when greeting someone"
+          },
+          {
+            "word": "name",
+            "meaning": "the word people use to call a person or thing"
+          },
+          {
+            "word": "family",
+            "meaning": "parents, children, and close relatives"
+          },
+          {
+            "word": "mother",
+            "meaning": "a female parent"
+          },
+          {
+            "word": "father",
+            "meaning": "a male parent"
+          },
+          {
+            "word": "friend",
+            "meaning": "a person you know and like"
+          },
+          {
+            "word": "house",
+            "meaning": "a building where people live"
+          },
+          {
+            "word": "school",
+            "meaning": "a place where students learn"
+          },
+          {
+            "word": "water",
+            "meaning": "a clear liquid that people drink"
+          },
+          {
+            "word": "bread",
+            "meaning": "a common food made from flour"
+          },
+          {
+            "word": "eat",
+            "meaning": "to put food in your mouth and swallow it"
+          },
+          {
+            "word": "drink",
+            "meaning": "to take liquid into your mouth"
+          },
+          {
+            "word": "go",
+            "meaning": "to move or travel to another place"
+          },
+          {
+            "word": "come",
+            "meaning": "to move toward a place or person"
+          },
+          {
+            "word": "like",
+            "meaning": "to enjoy something or think it is good"
+          },
+          {
+            "word": "want",
+            "meaning": "to wish to have or do something"
+          },
+          {
+            "word": "big",
+            "meaning": "large in size"
+          },
+          {
+            "word": "small",
+            "meaning": "not large in size"
+          },
+          {
+            "word": "today",
+            "meaning": "this day"
+          },
+          {
+            "word": "where",
+            "meaning": "used to ask about a place"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Choose another level"
+      },
+      "bottomCta": {
+        "heading": "Practice English A1 words for your first real sentences",
+        "text": "A1 vocabulary is where usable English begins. Practice these words until you can recognize them quickly, understand them in short sentences, and use them to talk about yourself, your family, your routine, and simple everyday needs."
+      }
+    }
+  },
+  {
+    "uiLanguage": "en",
+    "targetLanguage": "en",
+    "targetLanguageDisplayName": "English",
+    "level": "a2",
+    "content": {
+      "title": "English A2 Vocabulary for Travel, Plans, and Everyday Conversations",
+      "metaTitle": "English A2 Vocabulary for Everyday Communication",
+      "metaDescription": "Build practical English A2 vocabulary for travel, shopping, hobbies, work, transport, simple past events, and everyday conversations.",
+      "intro": "English A2 vocabulary helps you move beyond basic words and handle common daily situations with more independence.",
+      "introParagraphs": [
+        "At A2 level, English learners start using vocabulary for real-life tasks: asking for help, buying things, talking about free time, describing yesterday, and making simple plans. The goal is not to sound advanced yet, but to understand and use enough words to manage predictable conversations.",
+        "This level is especially useful for travel, work routines, short messages, shopping, transport, appointments, and casual conversations. A2 vocabulary gives learners the words needed to explain what happened, say what they need, compare simple choices, and keep a basic conversation going without stopping after every sentence."
+      ],
+      "levelDescription": "A2 is the elementary CEFR level where learners can communicate in simple everyday situations using familiar words, short phrases, and basic sentence patterns.",
+      "ctaText": "Practice English A2 words and build confidence for everyday communication.",
+      "levelExplanation": {
+        "heading": "What changes when you reach English A2",
+        "paragraph": "At English A2 level, you can do more than introduce yourself or name basic objects. You can describe routines, talk about recent events, ask simple questions, understand common signs and messages, and explain needs in familiar situations. Vocabulary becomes more practical: transport, shopping, weather, hobbies, health, work, and simple opinions all become part of your active language.",
+        "bullets": [
+          "You can talk about yesterday, today, and simple future plans using common verbs and time phrases.",
+          "You can manage short conversations in shops, cafés, hotels, stations, and other everyday places.",
+          "You can describe people, places, problems, preferences, and activities with clear elementary vocabulary."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "English A2 word areas for daily life, travel, and simple stories",
+        "topics": [
+          "Travel, transport, shopping, food, weather, health, hobbies, work, family, and everyday services.",
+          "Simple past experiences, future plans, directions, appointments, invitations, preferences, and basic problem solving."
+        ],
+        "wordTypes": [
+          "Common verbs, nouns, adjectives, adverbs, question words, time expressions, and useful phrase chunks.",
+          "Words for describing actions, places, quantities, feelings, prices, movement, frequency, and simple opinions."
+        ],
+        "groups": [
+          {
+            "heading": "Situations learners can handle",
+            "items": [
+              "Buying tickets, asking prices, and choosing between simple options.",
+              "Talking about hobbies, weekends, holidays, and free-time activities.",
+              "Explaining small problems in hotels, shops, transport, or appointments.",
+              "Describing what happened yesterday or what they plan to do later."
+            ]
+          },
+          {
+            "heading": "Vocabulary that becomes important",
+            "items": [
+              "Transport words such as station, bus stop, ticket, and journey.",
+              "Shopping words for sizes, prices, payment, receipts, and returns.",
+              "Work and study words for tasks, meetings, schedules, and simple responsibilities.",
+              "Everyday adjectives for describing comfort, quality, distance, speed, and preference."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many English words an A2 learner usually knows",
+        "text": "A realistic English A2 vocabulary range is about 1,000 to 2,000 words, depending on how actively the learner can use them. At this stage, knowing a word should mean more than recognizing it: learners should practice using it in short questions, answers, descriptions, and simple stories.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Useful English A2 vocabulary examples",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "journey",
+            "meaning": "travel from one place to another"
+          },
+          {
+            "word": "ticket",
+            "meaning": "paper or digital proof that you paid to travel or enter"
+          },
+          {
+            "word": "station",
+            "meaning": "a place where trains or buses stop"
+          },
+          {
+            "word": "receipt",
+            "meaning": "proof that you paid for something"
+          },
+          {
+            "word": "appointment",
+            "meaning": "an arranged time to meet someone"
+          },
+          {
+            "word": "cheap",
+            "meaning": "not expensive"
+          },
+          {
+            "word": "expensive",
+            "meaning": "costing a lot of money"
+          },
+          {
+            "word": "comfortable",
+            "meaning": "pleasant and easy to use, wear, or sit in"
+          },
+          {
+            "word": "busy",
+            "meaning": "having many things to do"
+          },
+          {
+            "word": "careful",
+            "meaning": "trying not to make mistakes or cause danger"
+          },
+          {
+            "word": "invite",
+            "meaning": "to ask someone to come to an event or place"
+          },
+          {
+            "word": "decide",
+            "meaning": "to choose what to do"
+          },
+          {
+            "word": "explain",
+            "meaning": "to make something clear"
+          },
+          {
+            "word": "arrive",
+            "meaning": "to reach a place"
+          },
+          {
+            "word": "leave",
+            "meaning": "to go away from a place"
+          },
+          {
+            "word": "borrow",
+            "meaning": "to use something and give it back later"
+          },
+          {
+            "word": "return",
+            "meaning": "to give, send, or go back"
+          },
+          {
+            "word": "usually",
+            "meaning": "in most situations or most of the time"
+          },
+          {
+            "word": "maybe",
+            "meaning": "possibly, but not certainly"
+          },
+          {
+            "word": "because",
+            "meaning": "for the reason that"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "More vocabulary levels"
+      },
+      "bottomCta": {
+        "heading": "Practice English A2 vocabulary before moving to B1",
+        "text": "A2 practice is important because it turns basic words into usable communication. When you can quickly understand and use common English words for travel, shopping, routines, plans, and simple stories, B1 conversations become much easier to start."
+      }
+    }
+  },
+  {
+    "uiLanguage": "en",
+    "targetLanguage": "en",
     "targetLanguageDisplayName": "English",
     "level": "b1",
-    "pathname": "/en/english-b1-vocabulary-practice"
-  },
-  "seo": {
-    "metaTitle": "English B1 Vocabulary Practice - Intermediate English Vocabulary",
-    "metaDescription": "Strengthen your skills with English B1 vocabulary practice. Learn key intermediate words, meanings, and examples for confident communication."
-  },
-  "content": {
-    "heroTitle": "English B1 Vocabulary: Mastering the 2500 Essential Words",
-    "heroQuestion": "How many words are in English B1?",
-    "heroAnswer": "To reach B1 proficiency, you need approximately 2500 words. However, simply knowing the list is not enough; you need to master the usage and pronunciation.",
-    "heroCta": "Start Practice",
-    "practiceUrl": "/languages/filters/exercises/en-en/practice?levels=B1",
-    "introParagraphs": [
-      "English B1 vocabulary practice helps you develop stronger communication skills and move beyond basic conversations. At this intermediate stage, you learn to express opinions, describe experiences, and handle everyday challenges more independently.",
-      "With intermediate English vocabulary, you expand your ability to understand texts, participate in discussions, and write clear messages. A structured B1 English word list supports steady progress and practical language use."
-    ],
-    "levelExplanation": {
-      "heading": "What Does B1 Level Mean?",
-      "paragraph": "The B1 level marks the transition to independent language use. When you learn English vocabulary B1 level, you can understand the main points of clear standard input on familiar topics and manage most situations while traveling or working.",
-      "bullets": [
-        "You can describe experiences, events, and goals in detail.",
-        "You can explain reasons and give simple arguments.",
-        "You can write connected texts on familiar subjects."
-      ]
-    },
-    "vocabularyScope": {
-      "heading": "What Vocabulary Is Included?",
-      "groups": [
-        {
-          "heading": "Everyday and Social Topics",
-          "items": [
-            "Work and career development",
-            "Education and learning",
-            "Travel and cultural experiences",
-            "Health and lifestyle choices"
-          ]
-        },
-        {
-          "heading": "Opinions and Problem Solving",
-          "items": [
-            "Expressing agreement and disagreement",
-            "Making suggestions and recommendations",
-            "Describing advantages and disadvantages",
-            "Discussing plans and future intentions"
-          ]
-        }
-      ]
-    },
-    "wordCount": {
-      "heading": "How Many Words Are in B1?",
-      "text": "At B1, learners typically control around 2,000-2,500 words. Regular English B1 vocabulary practice strengthens retention, improves accuracy, and prepares you for more advanced communication.",
-      "value": 2500,
-      "wordUnit": "words"
-    },
-    "sampleVocabulary": {
-      "heading": "Sample B1 Vocabulary",
-      "columns": {
-        "word": "Word",
-        "meaning": "Meaning"
+    "content": {
+      "title": "English B1 Vocabulary for Confident Opinions and Real Conversations",
+      "metaTitle": "English B1 Vocabulary Practice for Real Conversations",
+      "metaDescription": "Build English B1 vocabulary for opinions, work, study, experiences, problem solving, goals, and everyday conversations with confidence.",
+      "intro": "Practice English B1 vocabulary for real conversations where you explain opinions, describe experiences, solve problems, and talk about work, study, and goals.",
+      "introParagraphs": [
+        "At B1 level, English vocabulary becomes much more flexible and useful for independent communication. You are no longer only naming objects or handling simple situations; you begin to explain what happened, give reasons, describe plans, express opinions, and keep a conversation going on familiar topics.",
+        "English B1 vocabulary helps you discuss everyday life with more detail. You can talk about education, work, travel experiences, personal goals, health, technology, social situations, and simple problems. This level is important because it connects basic survival English with more natural, confident communication."
+      ],
+      "levelDescription": "B1 English vocabulary helps learners explain ideas, opinions, experiences, and plans in familiar real-life situations.",
+      "ctaText": "Start practicing English B1 words and build vocabulary for stronger independent communication.",
+      "levelExplanation": {
+        "heading": "How English B1 vocabulary changes your communication",
+        "paragraph": "At English B1 level, you start using vocabulary to explain more than basic facts. You can describe experiences, compare choices, give simple opinions, explain reasons, and talk about goals or problems. Your vocabulary becomes useful for longer conversations, short written messages, travel situations, workplace needs, study topics, and everyday discussions where you need to say not only what happened, but also why it matters.",
+        "bullets": [
+          "You can explain personal experiences, give reasons, and describe events with clearer detail.",
+          "You can discuss familiar topics such as work, education, travel, health, hobbies, and future goals.",
+          "You can handle common problems by asking questions, suggesting solutions, and explaining what you need."
+        ]
       },
-      "rows": [
-        {
-          "word": "achieve",
-          "meaning": "to successfully reach a goal"
+      "vocabularyScope": {
+        "heading": "English B1 vocabulary topics for independent learners",
+        "topics": [
+          "Work, study, travel, health, technology, relationships, everyday problems, personal experiences, plans, goals, and opinions.",
+          "Conversations about advantages, disadvantages, preferences, simple arguments, past events, future decisions, and practical problem solving."
+        ],
+        "wordTypes": [
+          "Useful verbs for explaining, deciding, suggesting, agreeing, comparing, planning, improving, and describing change.",
+          "Adjectives, nouns, connectors, phrasal verbs, opinion phrases, time expressions, and common collocations used in natural conversation."
+        ],
+        "groups": [
+          {
+            "heading": "Words for opinions and explanations",
+            "items": [
+              "Phrases for agreeing, disagreeing, giving reasons, and explaining personal views.",
+              "Vocabulary for comparing options, describing advantages, and talking about disadvantages.",
+              "Connectors for building clearer sentences, such as however, although, therefore, and instead.",
+              "Words for describing feelings, reactions, expectations, decisions, and personal experiences."
+            ]
+          },
+          {
+            "heading": "Words for work, study, and daily problems",
+            "items": [
+              "Workplace vocabulary for tasks, meetings, schedules, colleagues, responsibilities, and simple reports.",
+              "Study vocabulary for courses, exams, progress, mistakes, explanations, and learning goals.",
+              "Problem-solving words for delays, repairs, mistakes, complaints, advice, and possible solutions.",
+              "Travel and service vocabulary for reservations, changes, directions, documents, and unexpected situations."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many English words are usually known at B1",
+        "text": "A typical English B1 learner often knows around 2,750 useful words, although the exact number depends on learning method and exposure. At this stage, vocabulary should help you do more than understand simple sentences. You need words for explaining opinions, describing experiences, asking follow-up questions, and managing common real-life situations.",
+        "value": 2750
+      },
+      "sampleVocabulary": {
+        "heading": "Useful English B1 words for stronger conversations",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
         },
-        {
-          "word": "argument",
-          "meaning": "a disagreement or discussion with different opinions"
+        "rows": [
+          {
+            "word": "experience",
+            "meaning": "something that happened to you and affected you"
+          },
+          {
+            "word": "opinion",
+            "meaning": "what someone thinks or believes about something"
+          },
+          {
+            "word": "suggest",
+            "meaning": "to give someone an idea or possible plan"
+          },
+          {
+            "word": "improve",
+            "meaning": "to become better or make something better"
+          },
+          {
+            "word": "decision",
+            "meaning": "a choice that you make after thinking"
+          },
+          {
+            "word": "reason",
+            "meaning": "why something happens or why someone does something"
+          },
+          {
+            "word": "although",
+            "meaning": "used to contrast two ideas in one sentence"
+          },
+          {
+            "word": "however",
+            "meaning": "used to introduce a different or opposite idea"
+          },
+          {
+            "word": "advantage",
+            "meaning": "something good or useful about a situation"
+          },
+          {
+            "word": "disadvantage",
+            "meaning": "something that makes a situation worse or harder"
+          },
+          {
+            "word": "responsibility",
+            "meaning": "something you must do or take care of"
+          },
+          {
+            "word": "goal",
+            "meaning": "something you want to achieve"
+          },
+          {
+            "word": "choice",
+            "meaning": "an option or the act of choosing"
+          },
+          {
+            "word": "avoid",
+            "meaning": "to stay away from something or prevent it"
+          },
+          {
+            "word": "prepare",
+            "meaning": "to get ready for something"
+          },
+          {
+            "word": "complain",
+            "meaning": "to say that something is wrong or not good"
+          },
+          {
+            "word": "support",
+            "meaning": "to help someone or agree with an idea"
+          },
+          {
+            "word": "depend",
+            "meaning": "to be affected or decided by something else"
+          },
+          {
+            "word": "opportunity",
+            "meaning": "a good chance to do something"
+          },
+          {
+            "word": "solution",
+            "meaning": "a way to fix a problem"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "More English vocabulary levels"
+      },
+      "bottomCta": {
+        "heading": "Practice English B1 vocabulary for independent communication",
+        "text": "B1 is the level where vocabulary starts to make conversations feel more natural and useful. Practice these words so you can explain your thoughts, describe real experiences, understand common topics, and prepare for stronger B2-level communication."
+      }
+    }
+  },
+  {
+    "uiLanguage": "en",
+    "targetLanguage": "en",
+    "targetLanguageDisplayName": "English",
+    "level": "b2",
+    "content": {
+      "title": "English B2 Vocabulary for Clear Opinions, Work, and Real Conversations",
+      "metaTitle": "English B2 Vocabulary for Confident Communication",
+      "metaDescription": "Learn English B2 vocabulary for opinions, work, study, media, culture, arguments, and more confident real-world conversations.",
+      "intro": "English B2 vocabulary helps learners express opinions, compare ideas, explain reasons, and take part in more natural conversations.",
+      "introParagraphs": [
+        "At B2 level, English learners move from basic communication to more independent and flexible language use. Vocabulary becomes less limited to daily needs and more useful for discussing opinions, work situations, study topics, news, culture, technology, and personal experiences in greater detail.",
+        "This level is important because it allows learners to explain why they agree or disagree, describe advantages and disadvantages, support opinions with examples, and understand longer texts or conversations. B2 vocabulary gives you the words needed to sound clearer, more precise, and more confident in real communication."
+      ],
+      "levelDescription": "B2 is an upper-intermediate CEFR level where learners can communicate with independence, understand the main ideas of complex topics, and express opinions with supporting details.",
+      "ctaText": "Practice English B2 words and build stronger confidence for real conversations.",
+      "levelExplanation": {
+        "heading": "What English B2 vocabulary allows you to express",
+        "paragraph": "At English B2 level, vocabulary becomes much more useful for explaining ideas, not only naming things. You can discuss work, education, media, culture, travel, technology, problems, solutions, and abstract topics with more control. You also begin to choose words more carefully, using vocabulary for contrast, emphasis, cause and effect, uncertainty, and polite disagreement.",
+        "bullets": [
+          "You can explain opinions clearly and support them with reasons, examples, and comparisons.",
+          "You can discuss familiar professional, academic, social, and cultural topics with more natural detail.",
+          "You can understand and use vocabulary from articles, interviews, reports, reviews, and longer discussions."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "English B2 word areas for arguments, media, work, and abstract topics",
+        "topics": [
+          "Work, study, media, culture, technology, travel, society, lifestyle, communication, and personal development.",
+          "Opinions, advantages and disadvantages, causes and results, problem solving, comparisons, decisions, and future possibilities."
+        ],
+        "wordTypes": [
+          "Precise verbs, abstract nouns, descriptive adjectives, linking adverbs, phrasal verbs, and collocations.",
+          "Words for argumentation, evaluation, probability, contrast, agreement, disagreement, explanation, and professional communication."
+        ],
+        "groups": [
+          {
+            "heading": "Situations learners can handle",
+            "items": [
+              "Explaining the advantages and disadvantages of different choices.",
+              "Taking part in discussions about work, study, media, or society.",
+              "Writing clearer emails, comments, reviews, summaries, and short reports.",
+              "Supporting opinions with examples instead of giving only simple answers."
+            ]
+          },
+          {
+            "heading": "Vocabulary that becomes important",
+            "items": [
+              "Opinion words such as perspective, attitude, argument, and evidence.",
+              "Work and study vocabulary for tasks, deadlines, performance, and responsibility.",
+              "Media and culture words for articles, reviews, content, trends, and audiences.",
+              "Abstract vocabulary for causes, effects, solutions, risks, benefits, and priorities."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many English words a B2 learner usually knows",
+        "text": "A realistic English B2 vocabulary range is about 3,500 to 5,000 words. At this level, learners should not only recognize many words, but also use them accurately in context. Strong B2 vocabulary helps you speak and write with more detail, nuance, and independence.",
+        "value": 4500
+      },
+      "sampleVocabulary": {
+        "heading": "Useful English B2 vocabulary examples",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
         },
-        {
-          "word": "benefit",
-          "meaning": "an advantage or positive result"
+        "rows": [
+          {
+            "word": "approach",
+            "meaning": "a way of dealing with a situation or problem"
+          },
+          {
+            "word": "benefit",
+            "meaning": "an advantage or positive result"
+          },
+          {
+            "word": "challenge",
+            "meaning": "something difficult that requires effort"
+          },
+          {
+            "word": "consequence",
+            "meaning": "a result of an action or situation"
+          },
+          {
+            "word": "evidence",
+            "meaning": "facts or information that support an idea"
+          },
+          {
+            "word": "impact",
+            "meaning": "a strong effect or influence"
+          },
+          {
+            "word": "issue",
+            "meaning": "an important topic or problem"
+          },
+          {
+            "word": "priority",
+            "meaning": "something more important than other things"
+          },
+          {
+            "word": "reliable",
+            "meaning": "able to be trusted or depended on"
+          },
+          {
+            "word": "significant",
+            "meaning": "important or large enough to notice"
+          },
+          {
+            "word": "affect",
+            "meaning": "to influence or change something"
+          },
+          {
+            "word": "assume",
+            "meaning": "to believe something is true without full proof"
+          },
+          {
+            "word": "compare",
+            "meaning": "to examine similarities and differences"
+          },
+          {
+            "word": "consider",
+            "meaning": "to think carefully about something"
+          },
+          {
+            "word": "contribute",
+            "meaning": "to help cause or achieve something"
+          },
+          {
+            "word": "debate",
+            "meaning": "to discuss different opinions about a topic"
+          },
+          {
+            "word": "improve",
+            "meaning": "to make something better"
+          },
+          {
+            "word": "influence",
+            "meaning": "to affect how someone thinks or what happens"
+          },
+          {
+            "word": "therefore",
+            "meaning": "for that reason"
+          },
+          {
+            "word": "whereas",
+            "meaning": "used to compare two different facts or ideas"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "More vocabulary levels"
+      },
+      "bottomCta": {
+        "heading": "Practice English B2 vocabulary for stronger independent communication",
+        "text": "B2 practice helps you move from simple answers to clearer explanations, stronger opinions, and more natural conversations. When you can use English words for arguments, work, media, culture, and abstract ideas, advanced learning becomes much more effective."
+      }
+    }
+  },
+  {
+    "uiLanguage": "en",
+    "targetLanguage": "en",
+    "targetLanguageDisplayName": "English",
+    "level": "c1",
+    "content": {
+      "title": "English C1 Vocabulary for Nuanced, Academic, and Professional Expression",
+      "metaTitle": "English C1 Vocabulary for Advanced Fluency",
+      "metaDescription": "Build English C1 vocabulary for academic reading, professional precision, nuanced discussion, implied meaning, and advanced expression.",
+      "intro": "English C1 vocabulary helps advanced learners express complex ideas with precision, flexibility, and a more natural sense of tone.",
+      "introParagraphs": [
+        "At C1 level, English learners need vocabulary that goes beyond everyday fluency. The focus shifts toward nuance, register, implication, argument structure, professional communication, academic reading, and the ability to understand meaning that is not always stated directly.",
+        "This level is especially important for university study, advanced workplace communication, formal writing, presentations, interviews, research, and serious discussions. C1 vocabulary helps learners choose words more accurately, avoid vague phrasing, and express subtle differences between similar ideas, attitudes, and arguments."
+      ],
+      "levelDescription": "C1 is an advanced CEFR level where learners can communicate fluently and precisely across academic, professional, and complex social situations.",
+      "ctaText": "Practice English C1 words and develop more precise advanced expression.",
+      "levelExplanation": {
+        "heading": "How English C1 vocabulary changes your communication",
+        "paragraph": "At English C1 level, vocabulary is not only about knowing more words. It is about choosing the right word for the context, tone, and purpose. Learners begin to handle abstract arguments, implied meaning, formal and informal register, complex reading material, and professional or academic discussions. Strong C1 vocabulary allows you to sound clearer, more persuasive, and more precise without becoming unnatural.",
+        "bullets": [
+          "You can discuss complex topics with nuance, supporting ideas with precise vocabulary and well-structured reasoning.",
+          "You can understand academic texts, professional documents, interviews, lectures, and longer analytical discussions.",
+          "You can adjust tone and register depending on whether the situation is formal, neutral, persuasive, or conversational."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "English C1 word areas for precision, nuance, and advanced discussion",
+        "topics": [
+          "Academic study, professional communication, research, policy, culture, psychology, technology, society, and complex personal experiences.",
+          "Implied meaning, argumentation, abstract relationships, formal writing, critical evaluation, persuasive language, and register control."
+        ],
+        "wordTypes": [
+          "Advanced verbs, abstract nouns, evaluative adjectives, discourse markers, idiomatic phrases, collocations, and register-sensitive expressions.",
+          "Words for inference, emphasis, limitation, contrast, evaluation, causation, speculation, concession, and precise professional explanation."
+        ],
+        "groups": [
+          {
+            "heading": "Situations learners can handle",
+            "items": [
+              "Explaining complex arguments in essays, meetings, presentations, and academic discussions.",
+              "Understanding implied attitudes, indirect criticism, cautious claims, and subtle disagreement.",
+              "Writing formal emails, reports, proposals, summaries, and analytical texts with precise wording.",
+              "Adapting vocabulary for professional, academic, persuasive, or neutral communication."
+            ]
+          },
+          {
+            "heading": "Vocabulary that becomes important",
+            "items": [
+              "Academic words for analysis, interpretation, evidence, methodology, and evaluation.",
+              "Professional vocabulary for strategy, implementation, accountability, outcomes, and constraints.",
+              "Nuanced adjectives for describing reliability, relevance, complexity, importance, and uncertainty.",
+              "Discourse phrases for concession, contrast, clarification, emphasis, and logical development."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many English words a C1 learner usually knows",
+        "text": "A realistic English C1 vocabulary range is about 5,000 to 8,000 words, but the number alone is not enough. At this level, learners need strong control over collocations, register, word families, and subtle differences in meaning so they can use advanced vocabulary naturally.",
+        "value": 6500
+      },
+      "sampleVocabulary": {
+        "heading": "Useful English C1 vocabulary examples",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
         },
-        {
-          "word": "challenge",
-          "meaning": "a difficult task or situation"
+        "rows": [
+          {
+            "word": "ambiguous",
+            "meaning": "having more than one possible meaning or interpretation"
+          },
+          {
+            "word": "coherent",
+            "meaning": "clear, logical, and well organized"
+          },
+          {
+            "word": "conclusive",
+            "meaning": "strong enough to prove that something is true"
+          },
+          {
+            "word": "credible",
+            "meaning": "able to be believed or trusted"
+          },
+          {
+            "word": "deliberate",
+            "meaning": "done intentionally and carefully"
+          },
+          {
+            "word": "implicit",
+            "meaning": "suggested without being directly stated"
+          },
+          {
+            "word": "inherent",
+            "meaning": "existing as a natural or basic part of something"
+          },
+          {
+            "word": "subtle",
+            "meaning": "not obvious, but important or meaningful"
+          },
+          {
+            "word": "substantial",
+            "meaning": "large, important, or serious"
+          },
+          {
+            "word": "viable",
+            "meaning": "able to work successfully or be effective"
+          },
+          {
+            "word": "assess",
+            "meaning": "to judge the value, quality, or importance of something"
+          },
+          {
+            "word": "clarify",
+            "meaning": "to make something easier to understand"
+          },
+          {
+            "word": "convey",
+            "meaning": "to communicate an idea, feeling, or meaning"
+          },
+          {
+            "word": "derive",
+            "meaning": "to get something from a particular source"
+          },
+          {
+            "word": "emphasize",
+            "meaning": "to give special importance to something"
+          },
+          {
+            "word": "imply",
+            "meaning": "to suggest something without saying it directly"
+          },
+          {
+            "word": "justify",
+            "meaning": "to give good reasons for a decision, action, or belief"
+          },
+          {
+            "word": "undermine",
+            "meaning": "to make something weaker or less effective"
+          },
+          {
+            "word": "nevertheless",
+            "meaning": "despite what has just been said"
+          },
+          {
+            "word": "whereby",
+            "meaning": "by which method or through which process"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "More vocabulary levels"
+      },
+      "bottomCta": {
+        "heading": "Practice English C1 vocabulary for precise advanced communication",
+        "text": "C1 practice helps you move from fluent communication to controlled, nuanced expression. When you can use advanced English vocabulary for analysis, evaluation, implication, and register, you become more effective in academic, professional, and complex real-world situations."
+      }
+    }
+  },
+  {
+    "uiLanguage": "en",
+    "targetLanguage": "en",
+    "targetLanguageDisplayName": "English",
+    "level": "c2",
+    "content": {
+      "title": "English C2 Vocabulary for Near-Native Precision, Style, and Control",
+      "metaTitle": "English C2 Vocabulary for Near-Native Fluency",
+      "metaDescription": "Master English C2 vocabulary for sophisticated expression, idioms, subtle tone, rhetorical control, and near-native communication.",
+      "intro": "English C2 vocabulary helps advanced learners communicate with exceptional precision, natural style, and strong control over tone and meaning.",
+      "introParagraphs": [
+        "At C2 level, English vocabulary is no longer only about understanding difficult words. The focus is on choosing the most accurate, natural, and context-sensitive expression for academic, professional, creative, social, and rhetorical situations where small differences in tone can change the meaning.",
+        "This level is useful for expert writing, advanced debate, leadership communication, academic research, literary reading, public speaking, negotiation, and subtle interpersonal communication. C2 vocabulary allows learners to understand idioms, irony, implied criticism, stylistic choices, and highly nuanced arguments with near-native confidence."
+      ],
+      "levelDescription": "C2 is the highest CEFR level, where learners can understand almost everything they read or hear and express themselves with precision, flexibility, and stylistic control.",
+      "ctaText": "Practice English C2 words and refine your control of advanced expression.",
+      "levelExplanation": {
+        "heading": "What English C2 vocabulary adds beyond advanced fluency",
+        "paragraph": "At English C2 level, vocabulary becomes a tool for precision, persuasion, elegance, and control. Learners can understand highly complex texts, recognize implied meaning, shift between formal and informal registers, and choose words that match purpose, audience, and tone. The challenge is not only knowing rare or advanced words, but using sophisticated vocabulary naturally, accurately, and appropriately.",
+        "bullets": [
+          "You can understand nuanced arguments, idiomatic language, irony, understatement, emphasis, and subtle changes in tone.",
+          "You can choose precise vocabulary for academic, professional, persuasive, creative, or socially sensitive communication.",
+          "You can express complex ideas smoothly without sounding forced, vague, overly formal, or unnaturally translated."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "English C2 word areas for idiom, rhetoric, nuance, and expert communication",
+        "topics": [
+          "Academic research, professional leadership, literature, politics, ethics, philosophy, culture, media, law, and complex social issues.",
+          "Rhetorical control, stylistic nuance, idiomatic expression, implied meaning, persuasion, criticism, diplomacy, irony, and register shifts."
+        ],
+        "wordTypes": [
+          "Sophisticated verbs, abstract nouns, idioms, collocations, discourse markers, evaluative adjectives, and register-sensitive expressions.",
+          "Words for rhetorical emphasis, subtle criticism, concession, precision, implication, ambiguity, persuasion, refinement, and stylistic effect."
+        ],
+        "groups": [
+          {
+            "heading": "Situations learners can handle",
+            "items": [
+              "Reading complex academic, literary, legal, journalistic, or professional texts with high accuracy.",
+              "Writing polished essays, reports, proposals, speeches, analyses, and persuasive arguments.",
+              "Recognizing irony, understatement, indirect disagreement, implied criticism, and subtle emotional tone.",
+              "Adapting vocabulary to sound diplomatic, authoritative, concise, expressive, or deliberately informal."
+            ]
+          },
+          {
+            "heading": "Vocabulary that becomes important",
+            "items": [
+              "Idiomatic and figurative expressions that native speakers use in advanced conversation and writing.",
+              "Rhetorical vocabulary for persuasion, contrast, emphasis, framing, and argument development.",
+              "Precise academic and professional terms for analysis, interpretation, accountability, and evaluation.",
+              "Style-sensitive alternatives that help avoid vagueness, repetition, exaggeration, or inappropriate formality."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many English words a C2 learner usually knows",
+        "text": "A realistic English C2 vocabulary range is 8,000 words or more, but C2 ability depends heavily on control, not just quantity. Learners need to understand idioms, collocations, register, connotation, word families, figurative meaning, and subtle differences between near-synonyms.",
+        "value": 10000
+      },
+      "sampleVocabulary": {
+        "heading": "Useful English C2 vocabulary examples",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
         },
-        {
-          "word": "solution",
-          "meaning": "an answer to a problem"
-        }
-      ]
-    },
-    "browseWords": {
-      "heading": "Browse B1 English Words",
-      "description": "Explore common vocabulary words for this level. Click a word to learn its meaning, see example sentences, and practice it with exercises.",
-      "items": [
-        "achieve",
-        "argument",
-        "benefit",
-        "challenge",
-        "opinion",
-        "solution"
-      ]
-    },
-    "internalNavigation": {
-      "heading": "Explore Other Levels",
-      "items": [
-        {
-          "label": "English A2 Vocabulary Practice",
-          "href": "/en/english-a2-vocabulary-practice"
+        "rows": [
+          {
+            "word": "arbitrary",
+            "meaning": "based on personal choice rather than a clear reason or system"
+          },
+          {
+            "word": "compelling",
+            "meaning": "very convincing, interesting, or powerful"
+          },
+          {
+            "word": "contentious",
+            "meaning": "likely to cause disagreement or argument"
+          },
+          {
+            "word": "eloquent",
+            "meaning": "expressing ideas or feelings clearly and beautifully"
+          },
+          {
+            "word": "meticulous",
+            "meaning": "extremely careful and attentive to detail"
+          },
+          {
+            "word": "pragmatic",
+            "meaning": "focused on practical results rather than theory or ideals"
+          },
+          {
+            "word": "profound",
+            "meaning": "very deep, serious, or important"
+          },
+          {
+            "word": "resilient",
+            "meaning": "able to recover after difficulty or pressure"
+          },
+          {
+            "word": "scrupulous",
+            "meaning": "very careful to do what is honest, fair, or correct"
+          },
+          {
+            "word": "tenuous",
+            "meaning": "weak, uncertain, or not strongly supported"
+          },
+          {
+            "word": "articulate",
+            "meaning": "to express an idea clearly and effectively"
+          },
+          {
+            "word": "concede",
+            "meaning": "to admit that something is true, often unwillingly"
+          },
+          {
+            "word": "discern",
+            "meaning": "to notice or understand something that is not obvious"
+          },
+          {
+            "word": "elaborate",
+            "meaning": "to explain something in more detail"
+          },
+          {
+            "word": "exacerbate",
+            "meaning": "to make a problem worse"
+          },
+          {
+            "word": "reconcile",
+            "meaning": "to make different ideas, facts, or people agree or work together"
+          },
+          {
+            "word": "substantiate",
+            "meaning": "to support a claim with evidence or proof"
+          },
+          {
+            "word": "undermine",
+            "meaning": "to gradually weaken confidence, authority, or effectiveness"
+          },
+          {
+            "word": "albeit",
+            "meaning": "although"
+          },
+          {
+            "word": "notwithstanding",
+            "meaning": "despite something"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "More vocabulary levels"
+      },
+      "bottomCta": {
+        "heading": "Practice English C2 vocabulary for refined near-native expression",
+        "text": "C2 practice helps you sharpen the difference between fluent and truly controlled English. By working with precise vocabulary, idioms, register, and subtle meaning, you can communicate complex ideas with authority, clarity, and natural stylistic confidence."
+      }
+    }
+  },
+  {
+    "uiLanguage": "de",
+    "targetLanguage": "en",
+    "targetLanguageDisplayName": "English",
+    "level": "a1",
+    "content": {
+      "title": "Englischer A1-Wortschatz für erste Sätze und einfache Gespräche",
+      "metaTitle": "Englischer A1-Wortschatz für Anfänger",
+      "metaDescription": "Lerne englische A1-Wörter für Begrüßungen, Familie, Essen, Zahlen, Alltag, Reisen und einfache erste Gespräche.",
+      "intro": "Englischer A1-Wortschatz hilft Anfängern, die ersten einfachen Sätze zu verstehen und in sehr vertrauten Situationen zu antworten.",
+      "introParagraphs": [
+        "Auf A1-Niveau geht es um die wichtigsten Wörter für den Anfang: Namen, Zahlen, Familie, Essen, Getränke, Orte, einfache Gegenstände und tägliche Routinen. Lernende müssen noch keine langen Gespräche führen, aber sie sollten kurze Fragen verstehen und einfache Antworten geben können.",
+        "Dieser Wortschatz ist besonders nützlich für Begrüßungen, Unterricht, Reisen, Einkaufen, einfache Wegfragen und persönliche Informationen. Mit englischem A1-Wortschatz kann man sagen, wer man ist, was man braucht, was man mag und wo sich etwas befindet."
+      ],
+      "levelDescription": "A1 ist das erste CEFR-Niveau. Lernende verstehen und verwenden sehr einfache Wörter, kurze Sätze und vertraute Ausdrücke aus dem Alltag.",
+      "ctaText": "Übe englische A1-Wörter und baue eine sichere Grundlage für einfache Kommunikation auf.",
+      "levelExplanation": {
+        "heading": "Was du mit englischem A1-Wortschatz ausdrücken kannst",
+        "paragraph": "Auf Englisch A1 lernst du Wörter, die sofort im Alltag brauchbar sind. Du kannst dich vorstellen, über Familie sprechen, einfache Dinge bestellen, Zahlen verstehen, nach Orten fragen und sehr kurze Informationen austauschen. Das Ziel ist nicht perfekte Sprache, sondern ein sicherer Anfang mit klaren, häufigen Wörtern.",
+        "bullets": [
+          "Du kannst einfache persönliche Informationen geben, zum Beispiel Name, Herkunft, Alter und Beruf.",
+          "Du kannst in sehr einfachen Situationen nach Preisen, Orten, Essen oder Hilfe fragen.",
+          "Du kannst kurze Sätze über Familie, Alltag, Vorlieben und bekannte Gegenstände bilden."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Englische A1-Wortbereiche für Alltag, Reisen und erste Gespräche",
+        "topics": [
+          "Begrüßungen, Familie, Zahlen, Essen, Getränke, Farben, Orte, Schule, Zuhause und einfache Reisen.",
+          "Persönliche Informationen, tägliche Routinen, einfache Fragen, Vorlieben, Besitz und grundlegende Bedürfnisse."
+        ],
+        "wordTypes": [
+          "Häufige Nomen, einfache Verben, grundlegende Adjektive, Zahlen, Pronomen und Fragewörter.",
+          "Wörter für Personen, Dinge, Orte, Zeit, Mengen, einfache Handlungen und sehr kurze Antworten."
+        ],
+        "groups": [
+          {
+            "heading": "Situationen, die Anfänger bewältigen können",
+            "items": [
+              "Sich begrüßen, verabschieden und den eigenen Namen sagen.",
+              "Einfache Informationen über Familie, Zuhause und Herkunft geben.",
+              "Essen oder Getränke mit einfachen Wörtern bestellen.",
+              "Nach Preisen, Orten oder bekannten Gegenständen fragen."
+            ]
+          },
+          {
+            "heading": "Wortschatz, der am Anfang wichtig ist",
+            "items": [
+              "Familienwörter wie mother, father, sister und brother.",
+              "Alltagsverben wie be, have, go und like.",
+              "Ortswörter wie home, school, shop und station.",
+              "Einfache Adjektive wie good, bad, big und small."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele englische Wörter man auf A1 normalerweise kennt",
+        "text": "Ein realistischer englischer A1-Wortschatz liegt ungefähr zwischen 500 und 1.000 Wörtern. Wichtiger als die genaue Zahl ist, dass Lernende diese Wörter in sehr einfachen Sätzen aktiv verwenden können, nicht nur passiv erkennen.",
+        "value": 750
+      },
+      "sampleVocabulary": {
+        "heading": "Nützliche englische A1-Wörter",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
         },
-        {
-          "label": "English B2 Vocabulary Practice",
-          "href": "/en/english-b2-vocabulary-practice"
+        "rows": [
+          {
+            "word": "hello",
+            "meaning": "hallo"
+          },
+          {
+            "word": "goodbye",
+            "meaning": "auf Wiedersehen"
+          },
+          {
+            "word": "please",
+            "meaning": "bitte"
+          },
+          {
+            "word": "thank you",
+            "meaning": "danke"
+          },
+          {
+            "word": "name",
+            "meaning": "Name"
+          },
+          {
+            "word": "family",
+            "meaning": "Familie"
+          },
+          {
+            "word": "mother",
+            "meaning": "Mutter"
+          },
+          {
+            "word": "father",
+            "meaning": "Vater"
+          },
+          {
+            "word": "friend",
+            "meaning": "Freund oder Freundin"
+          },
+          {
+            "word": "house",
+            "meaning": "Haus"
+          },
+          {
+            "word": "school",
+            "meaning": "Schule"
+          },
+          {
+            "word": "shop",
+            "meaning": "Geschäft"
+          },
+          {
+            "word": "food",
+            "meaning": "Essen"
+          },
+          {
+            "word": "water",
+            "meaning": "Wasser"
+          },
+          {
+            "word": "small",
+            "meaning": "klein"
+          },
+          {
+            "word": "big",
+            "meaning": "groß"
+          },
+          {
+            "word": "good",
+            "meaning": "gut"
+          },
+          {
+            "word": "bad",
+            "meaning": "schlecht"
+          },
+          {
+            "word": "go",
+            "meaning": "gehen"
+          },
+          {
+            "word": "like",
+            "meaning": "mögen"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Wortschatz-Niveaus"
+      },
+      "bottomCta": {
+        "heading": "Übe englischen A1-Wortschatz für einen sicheren Start",
+        "text": "A1-Übung ist wichtig, weil sie die Grundlage für alle weiteren Englisch-Niveaus bildet. Wenn du häufige Wörter für Menschen, Orte, Essen, Zahlen und einfache Handlungen sicher kennst, werden kurze Gespräche viel leichter."
+      }
+    }
+  },
+  {
+    "uiLanguage": "de",
+    "targetLanguage": "en",
+    "targetLanguageDisplayName": "en",
+    "level": "a2",
+    "content": {
+      "title": "Englischer A2-Wortschatz für Reisen, Pläne und Alltagsgespräche",
+      "metaTitle": "Englischer A2-Wortschatz für Alltag und Reisen",
+      "metaDescription": "Lerne englische A2-Wörter für Reisen, Einkaufen, Hobbys, Arbeit, Verkehr, einfache Pläne und alltägliche Gespräche.",
+      "intro": "Englischer A2-Wortschatz hilft dir, einfache Alltagssituationen selbstständiger zu verstehen und mit mehr Sicherheit zu reagieren.",
+      "introParagraphs": [
+        "Auf A2-Niveau gehst du über einzelne Grundwörter hinaus und beginnst, kurze Gespräche besser zu führen. Du lernst Wörter für Reisen, Einkaufen, Verkehr, Hobbys, Arbeit, Termine, Wetter und einfache Probleme, die im Alltag wirklich vorkommen.",
+        "Dieser Wortschatz ist besonders wichtig, wenn du sagen möchtest, was gestern passiert ist, was du später planst oder was du brauchst. Mit englischem A2-Wortschatz kannst du einfache Erklärungen geben, kurze Nachrichten verstehen und in bekannten Situationen weniger oft nach einzelnen Wörtern suchen."
+      ],
+      "levelDescription": "A2 ist ein elementares CEFR-Niveau. Lernende können vertraute Alltagssituationen mit einfachen Sätzen, häufigen Wörtern und kurzen Gesprächen bewältigen.",
+      "ctaText": "Übe englische A2-Wörter und werde sicherer in praktischen Alltagssituationen.",
+      "levelExplanation": {
+        "heading": "Was auf Englisch A2 neu dazukommt",
+        "paragraph": "Auf Englisch A2 kannst du nicht nur Namen, Zahlen und sehr einfache Dinge nennen. Du lernst, über Routinen, vergangene Ereignisse, einfache Pläne, Vorlieben, Wege, Preise und kleine Probleme zu sprechen. Der Wortschatz wird praktischer und hilft dir, kurze Gespräche in Geschäften, Cafés, Hotels, Bahnhöfen, bei Terminen und im Alltag besser zu verstehen.",
+        "bullets": [
+          "Du kannst einfache Gespräche über Reisen, Einkaufen, Freizeit, Arbeit und tägliche Routinen führen.",
+          "Du kannst sagen, was gestern passiert ist, was du normalerweise machst und was du planst.",
+          "Du kannst einfache Probleme erklären, nach Hilfe fragen und bekannte Situationen besser verstehen."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Englische A2-Wortbereiche für Alltag, Reisen und einfache Erklärungen",
+        "topics": [
+          "Reisen, Verkehr, Einkaufen, Essen, Wetter, Gesundheit, Hobbys, Arbeit, Familie und alltägliche Dienstleistungen.",
+          "Vergangene Erlebnisse, einfache Pläne, Wegbeschreibungen, Termine, Einladungen, Vorlieben und kleine Probleme."
+        ],
+        "wordTypes": [
+          "Häufige Verben, Nomen, Adjektive, Adverbien, Fragewörter, Zeitangaben und einfache Redewendungen.",
+          "Wörter für Handlungen, Orte, Mengen, Gefühle, Preise, Bewegung, Häufigkeit und einfache Meinungen."
+        ],
+        "groups": [
+          {
+            "heading": "Situationen, die du auf A2 bewältigen kannst",
+            "items": [
+              "Tickets kaufen, Preise erfragen und einfache Optionen vergleichen.",
+              "Über Hobbys, Wochenenden, Urlaub und Freizeitaktivitäten sprechen.",
+              "Kleine Probleme im Hotel, im Geschäft oder beim Reisen erklären.",
+              "Sagen, was gestern passiert ist oder was du später machen willst."
+            ]
+          },
+          {
+            "heading": "Wortschatz, der auf A2 wichtig wird",
+            "items": [
+              "Verkehrswörter wie station, bus stop, ticket und journey.",
+              "Einkaufswörter für Größen, Preise, Zahlung, Quittungen und Rückgabe.",
+              "Arbeits- und Lernwörter für Aufgaben, Termine, Zeitpläne und einfache Pflichten.",
+              "Alltagsadjektive für Qualität, Entfernung, Komfort, Geschwindigkeit und Vorlieben."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele englische Wörter man auf A2 normalerweise kennt",
+        "text": "Ein realistischer englischer A2-Wortschatz liegt ungefähr zwischen 1.000 und 2.000 Wörtern. Wichtig ist nicht nur, Wörter zu erkennen, sondern sie in kurzen Fragen, Antworten, Beschreibungen und einfachen Geschichten aktiv zu verwenden.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Nützliche englische A2-Wörter",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
         },
-        {
-          "label": "English C1 Vocabulary Practice",
-          "href": "/en/english-c1-vocabulary-practice"
-        }
-      ]
-    },
-    "crossLanguageLinks": {
-      "heading": "Practice B1 vocabulary in other languages",
-      "items": [
-        {
-          "label": "Spanish B1 vocabulary list",
-          "href": "/en/spanish-b1-vocabulary-practice"
-        },
-        {
-          "label": "French B1 vocabulary list",
-          "href": "/en/french-b1-vocabulary-practice"
-        },
-        {
-          "label": "German B1 vocabulary list",
-          "href": "/en/german-b1-vocabulary-practice"
-        }
-      ]
-    },
-    "relatedPages": {
-      "heading": "Related pages",
-      "items": [
-        {
-          "label": "Take the English level test",
-          "href": "/en/english-level-test"
-        },
-        {
-          "label": "Browse all SEO pages",
-          "href": "/en/seo-pages"
-        }
-      ]
-    },
-    "faq": {
-      "heading": "Frequently Asked Questions",
-      "items": [
-        {
-          "question": "What vocabulary is included in the English B1 word list?",
-          "answer": "The B1 level marks the transition to independent language use. When you learn English vocabulary B1 level, you can understand the main points of clear standard input on familiar topics and manage most situations while traveling or working."
-        },
-        {
-          "question": "How many English B1 words should I know?",
-          "answer": "At B1, learners typically control around 2,000-2,500 words. Regular English B1 vocabulary practice strengthens retention, improves accuracy, and prepares you for more advanced communication. 2500+ words."
-        },
-        {
-          "question": "What topics does the English B1 vocabulary list cover?",
-          "answer": "Work and career development, education and learning, travel and cultural experiences, health and lifestyle choices, expressing agreement and disagreement, making suggestions and recommendations."
-        }
-      ]
-    },
-    "bottomCta": {
-      "heading": "Start Practicing Now",
-      "text": "Improve fluency and confidence with consistent English B1 vocabulary practice. Strengthen your intermediate skills and prepare for higher levels of communication.",
-      "buttonLabel": "Start B1 Practice"
+        "rows": [
+          {
+            "word": "journey",
+            "meaning": "Reise oder Fahrt von einem Ort zu einem anderen"
+          },
+          {
+            "word": "ticket",
+            "meaning": "Fahrkarte, Eintrittskarte oder Ticket"
+          },
+          {
+            "word": "station",
+            "meaning": "Bahnhof oder Station"
+          },
+          {
+            "word": "receipt",
+            "meaning": "Quittung oder Kassenbon"
+          },
+          {
+            "word": "appointment",
+            "meaning": "Termin"
+          },
+          {
+            "word": "cheap",
+            "meaning": "günstig oder billig"
+          },
+          {
+            "word": "expensive",
+            "meaning": "teuer"
+          },
+          {
+            "word": "comfortable",
+            "meaning": "bequem oder angenehm"
+          },
+          {
+            "word": "busy",
+            "meaning": "beschäftigt oder viel los"
+          },
+          {
+            "word": "careful",
+            "meaning": "vorsichtig"
+          },
+          {
+            "word": "invite",
+            "meaning": "einladen"
+          },
+          {
+            "word": "decide",
+            "meaning": "entscheiden"
+          },
+          {
+            "word": "explain",
+            "meaning": "erklären"
+          },
+          {
+            "word": "arrive",
+            "meaning": "ankommen"
+          },
+          {
+            "word": "leave",
+            "meaning": "weggehen, verlassen oder abreisen"
+          },
+          {
+            "word": "borrow",
+            "meaning": "ausleihen"
+          },
+          {
+            "word": "return",
+            "meaning": "zurückgeben oder zurückkehren"
+          },
+          {
+            "word": "usually",
+            "meaning": "normalerweise"
+          },
+          {
+            "word": "maybe",
+            "meaning": "vielleicht"
+          },
+          {
+            "word": "because",
+            "meaning": "weil"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Wortschatz-Niveaus"
+      },
+      "bottomCta": {
+        "heading": "Übe englischen A2-Wortschatz vor dem nächsten Niveau",
+        "text": "A2-Übung ist wichtig, weil aus einfachen Grundwörtern echte Kommunikation wird. Wenn du Wörter für Reisen, Einkaufen, Routinen, Pläne und kurze Geschichten sicher verwenden kannst, wird der Übergang zu B1 deutlich leichter."
+      }
     }
   }
-}
+]

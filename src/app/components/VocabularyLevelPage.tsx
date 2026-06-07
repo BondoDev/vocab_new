@@ -143,6 +143,20 @@ const CURIOSITY_TRANSLATIONS: Record<
   },
 };
 
+const HERO_TITLE_SUFFIX: Record<
+  UiLanguageCode,
+  (args: CuriosityArgs) => string
+> = {
+  en: ({ language, words }) => `Mastering ${words} ${language} words`,
+  es: ({ language, words }) => `domina ${words} palabras de ${language}`,
+  fr: ({ language, words }) => `maitrisez ${words} mots de ${language}`,
+  de: ({ language, words }) => `${words} ${language} Worter meistern`,
+  it: ({ language, words }) => `padroneggia ${words} parole di ${language}`,
+  pt: ({ language, words }) => `domine ${words} palavras de ${language}`,
+  ru: ({ language, level, words }) =>
+    `освойте ${words} слов уровня ${level} по ${language}`,
+};
+
 const WORDS_UNIT_BY_UI_LANG: Record<UiLanguageCode, string> = {
   en: "words",
   es: "palabras",
@@ -152,6 +166,45 @@ const WORDS_UNIT_BY_UI_LANG: Record<UiLanguageCode, string> = {
   pt: "palavras",
   ru: "слов",
 };
+
+const TARGET_LANGUAGE_DISPLAY_FALLBACKS: Record<TargetLanguageSlug, string> = {
+  english: "English",
+  german: "German",
+  spanish: "Spanish",
+  french: "French",
+  italian: "Italian",
+  portuguese: "Portuguese",
+  russian: "Russian",
+};
+
+const TARGET_LANGUAGE_CODE_TO_SLUG: Record<UiLanguageCode, TargetLanguageSlug> = {
+  en: "english",
+  es: "spanish",
+  de: "german",
+  fr: "french",
+  it: "italian",
+  pt: "portuguese",
+  ru: "russian",
+};
+
+function resolveTargetLanguageDisplayName(
+  targetLanguage: TargetLanguageSlug,
+  rawDisplayName: string,
+): string {
+  const trimmed = rawDisplayName.trim();
+  const normalized = trimmed.toLowerCase();
+  const slugFromCode = TARGET_LANGUAGE_CODE_TO_SLUG[normalized as UiLanguageCode];
+
+  if (slugFromCode) {
+    return TARGET_LANGUAGE_DISPLAY_FALLBACKS[slugFromCode];
+  }
+
+  if (trimmed.length > 0) {
+    return trimmed;
+  }
+
+  return TARGET_LANGUAGE_DISPLAY_FALLBACKS[targetLanguage];
+}
 
 const SAMPLE_TABLE_HEADERS_BY_UI_LANG: Record<
   UiLanguageCode,
@@ -338,6 +391,8 @@ export function VocabularyLevelPage({
   const levelDisplay = LEVEL_DISPLAY[level];
   const wordMapCount = WORD_MAP[levelDisplay] ?? levelContent.wordCount.value;
   const curiosityT = CURIOSITY_TRANSLATIONS[uiLang] ?? CURIOSITY_TRANSLATIONS.en;
+  const heroTitleSuffixBuilder =
+    HERO_TITLE_SUFFIX[uiLang] ?? HERO_TITLE_SUFFIX.en;
   const seoMetadata =
     seoMetadataOverride ??
     buildVocabularySeoMetadata({
@@ -375,7 +430,10 @@ export function VocabularyLevelPage({
     },
   );
   const levelTestHref = getLevelTestSeoPath(uiLang, targetLanguage);
-  const targetLanguageDisplayName = contentBundle.file.targetLanguageDisplayName;
+  const targetLanguageDisplayName = resolveTargetLanguageDisplayName(
+    targetLanguage,
+    contentBundle.file.targetLanguageDisplayName,
+  );
   const seoHubHref = getSeoHubPath(uiLang);
   const crossLangCopy = CROSS_LANGUAGE_COPY[uiLang] ?? CROSS_LANGUAGE_COPY.en;
   const browseWordsCopy = BROWSE_WORDS_COPY[uiLang] ?? BROWSE_WORDS_COPY.en;
@@ -398,6 +456,19 @@ export function VocabularyLevelPage({
     levelContent,
     wordsUnit,
   );
+  const heroTitleSuffix = heroTitleSuffixBuilder({
+    language: targetLanguageDisplayName,
+    level: levelDisplay,
+    words: wordMapCount,
+  });
+  const heroTitleSuffixWithoutLevel = heroTitleSuffix
+    .replace(` ${levelDisplay} `, " ")
+    .replace(`${levelDisplay} `, "")
+    .replace(` ${levelDisplay}`, "")
+    .replace(`уровня ${levelDisplay} `, "");
+  const heroTitle = levelContent.title.includes(String(wordMapCount))
+    ? levelContent.title
+    : `${levelContent.title} - ${heroTitleSuffixWithoutLevel}`;
 
   const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
   const [browsePage, setBrowsePage] = useState(0);
@@ -451,11 +522,7 @@ export function VocabularyLevelPage({
       <div className="mx-auto w-full max-w-5xl space-y-8">
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <h1 className="text-3xl text-foreground md:text-4xl">
-            {curiosityT.h1({
-              language: targetLanguageDisplayName,
-              level: levelDisplay,
-              words: wordMapCount,
-            })}
+            {heroTitle}
           </h1>
 
           <div className="mt-5 rounded-xl border border-primary/15 bg-primary/5 p-5 shadow-sm">

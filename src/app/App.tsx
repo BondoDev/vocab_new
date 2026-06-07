@@ -21,6 +21,7 @@ import { WordSeoPage } from "./components/WordSeoPage";
 import {
   DevSeoCefrPlaceholderPage,
   DEV_CEFR_PREVIEW_PATH,
+  findSeoCefrPreviewItem,
 } from "./components/DevSeoCefrPlaceholderPage";
 import { ScrollToTopButton } from "./components/ScrollToTopButton";
 import {
@@ -2121,7 +2122,16 @@ function AppContent() {
   }
 
   if (resolvedPage === "devSeoCefrPlaceholder") {
-    if (!parseDevSeoCefrPlaceholderRoute(location.pathname)) {
+    const devPreviewRoute = parseDevSeoCefrPlaceholderRoute(location.pathname);
+    const devPreviewItem = devPreviewRoute
+      ? findSeoCefrPreviewItem({
+          uiLanguage: devPreviewRoute.uiLang,
+          targetLanguage: devPreviewRoute.targetLanguage,
+          level: devPreviewRoute.level,
+        })
+      : null;
+
+    if (!devPreviewRoute || !devPreviewItem) {
       return (
         <div className="min-h-screen flex flex-col bg-background">
           <Header
@@ -2151,7 +2161,10 @@ function AppContent() {
           onExercises={() => handleRequireLanguages("exerciseSelection")}
           onExplore={() => navigate(ROUTES.explore)}
         />
-        <DevSeoCefrPlaceholderPage onStartPractice={handleStartVocabularyPractice} />
+        <DevSeoCefrPlaceholderPage
+          item={devPreviewItem}
+          onStartPractice={handleStartVocabularyPractice}
+        />
       </div>
     );
   }
@@ -2474,7 +2487,6 @@ export default function App({
     </SeoProvider>
   );
 }
-
 
 
 
