@@ -12,7 +12,7 @@ const WORD_SITEMAP_OFFSET = Number.parseInt(process.env.WORD_SITEMAP_OFFSET || "
 const WORD_SITEMAP_TARGET_LANGUAGE = (process.env.WORD_SITEMAP_TARGET_LANGUAGE || "ALL").trim().toLowerCase();
 const WORD_SITEMAP_LEVEL = (process.env.WORD_SITEMAP_LEVEL || "ALL").trim().toUpperCase();
 const WORD_SITEMAP_ALL_LEVELS = WORD_SITEMAP_LEVEL === "ALL";
-const WORD_SITEMAP_UI_LANG = (process.env.WORD_SITEMAP_UI_LANG || "en").trim().toLowerCase();
+const WORD_SITEMAP_UI_LANG = (process.env.WORD_SITEMAP_UI_LANG || "ALL").trim().toLowerCase();
 const SITEMAP_CHUNK_SIZE = Number.parseInt(process.env.SITEMAP_CHUNK_SIZE || "50000", 10);
 
 const CORE_ROUTES = [
@@ -117,7 +117,20 @@ const SLUG_PATTERNS = {
 };
 
 const UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"];
-const ALLOWED_WORD_SITEMAP_PAIRS = new Set(["en:english", "en:spanish"]);
+const UI_LANGUAGE_NAMES = {
+  en: "english",
+  es: "spanish",
+  fr: "french",
+  de: "german",
+  it: "italian",
+  pt: "portuguese",
+  ru: "russian",
+};
+const WORD_SITEMAP_DEFINITIONS = [
+  { fileWordCode: "en", fileUiCode: "en", uiLang: "en", targetLanguage: "english" },
+  { fileWordCode: "en", fileUiCode: "sp", uiLang: "es", targetLanguage: "english" },
+  { fileWordCode: "en", fileUiCode: "ru", uiLang: "ru", targetLanguage: "english" },
+];
 const WORD_SITEMAP_PAIR_LIMITS = {};
 
 function wordToSlug(lemma) {
@@ -135,23 +148,39 @@ const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "
 
 async function collectWordRoutes() {
   const routesByPair = new Map();
-  const selectedTargetLanguages =
-    !WORD_SITEMAP_TARGET_LANGUAGE || WORD_SITEMAP_TARGET_LANGUAGE === "all"
-      ? TARGET_LANGUAGES
-      : TARGET_LANGUAGES.filter((lang) => lang === WORD_SITEMAP_TARGET_LANGUAGE);
-  const selectedUiLanguages =
-    WORD_SITEMAP_UI_LANG && UI_LANGUAGES.includes(WORD_SITEMAP_UI_LANG)
-      ? [WORD_SITEMAP_UI_LANG]
-      : UI_LANGUAGES;
+  const selectedDefinitions = WORD_SITEMAP_DEFINITIONS.filter(({ targetLanguage, uiLang }) => {
+    const targetMatches =
+      !WORD_SITEMAP_TARGET_LANGUAGE ||
+      WORD_SITEMAP_TARGET_LANGUAGE === "all" ||
+      targetLanguage === WORD_SITEMAP_TARGET_LANGUAGE;
+    const uiMatches =
+      !WORD_SITEMAP_UI_LANG ||
+      WORD_SITEMAP_UI_LANG === "all" ||
+      uiLang === WORD_SITEMAP_UI_LANG;
+    return targetMatches && uiMatches;
+  });
+
+  const selectedTargetLanguages = Array.from(
+    new Set(selectedDefinitions.map(({ targetLanguage }) => targetLanguage)),
+  );
+  const definitionsByTargetLanguage = new Map();
+  for (const definition of selectedDefinitions) {
+    const definitions = definitionsByTargetLanguage.get(definition.targetLanguage) || [];
+    definitions.push(definition);
+    definitionsByTargetLanguage.set(definition.targetLanguage, definitions);
+  }
 
   for (const targetLanguage of selectedTargetLanguages) {
+    const definitions = definitionsByTargetLanguage.get(targetLanguage) || [];
+    if (definitions.length === 0) continue;
     const vocabPath = path.join(ROOT_DIR, "src", "data", "vocabulary", targetLanguage, "vocabulary.json");
     const raw = await fs.readFile(vocabPath, "utf8");
     const vocab = JSON.parse(raw.replace(/^\uFEFF/, ""));
     const seen = new Set();
     const pairRoutes = new Map();
-    for (const uiLang of selectedUiLanguages) {
-      pairRoutes.set(uiLang, []);
+    for (const definition of definitions) {
+      const pairKey = `${definition.fileWordCode}:${definition.fileUiCode}`;
+      pairRoutes.set(pairKey, []);
     }
     for (const entry of vocab) {
       if (!WORD_SITEMAP_ALL_LEVELS && WORD_SITEMAP_LEVEL && entry.level !== WORD_SITEMAP_LEVEL) continue;
@@ -164,15 +193,15 @@ async function collectWordRoutes() {
       if (seen.has(uniqueWordKey)) continue;
       seen.add(uniqueWordKey);
       const wordPathSuffix = conceptId ? `${slug}--${conceptId}` : slug;
-      for (const uiLang of selectedUiLanguages) {
-        pairRoutes.get(uiLang).push(`/${uiLang}/${targetLanguage}-word-${wordPathSuffix}`);
+      for (const definition of definitions) {
+        const pairKey = `${definition.fileWordCode}:${definition.fileUiCode}`;
+        pairRoutes.get(pairKey).push(`/${definition.uiLang}/${targetLanguage}-word-${wordPathSuffix}`);
       }
     }
 
-    for (const uiLang of selectedUiLanguages) {
-      const pairKey = `${uiLang}:${targetLanguage}`;
-      if (!ALLOWED_WORD_SITEMAP_PAIRS.has(pairKey)) continue;
-      const baseRoutes = pairRoutes.get(uiLang) || [];
+    for (const definition of definitions) {
+      const pairKey = `${definition.fileWordCode}:${definition.fileUiCode}`;
+      const baseRoutes = pairRoutes.get(pairKey) || [];
       const pairLimit = WORD_SITEMAP_PAIR_LIMITS[pairKey];
       const limitedRoutes =
         Number.isFinite(pairLimit) && pairLimit > 0
@@ -185,10 +214,16 @@ async function collectWordRoutes() {
             : 0;
         routesByPair.set(
           pairKey,
-          limitedRoutes.slice(offset, offset + WORD_SITEMAP_LIMIT),
+          {
+            ...definition,
+            routes: limitedRoutes.slice(offset, offset + WORD_SITEMAP_LIMIT),
+          },
         );
       } else {
-        routesByPair.set(pairKey, limitedRoutes);
+        routesByPair.set(pairKey, {
+          ...definition,
+          routes: limitedRoutes,
+        });
       }
     }
   }
@@ -328,15 +363,6 @@ async function main() {
 
   const vocabularyRoutes = await collectVocabularyRoutes();
   const wordRoutesByPair = await collectWordRoutes();
-  const targetLangCodeByName = {
-    english: "en",
-    german: "de",
-    spanish: "sp",
-    french: "fr",
-    italian: "it",
-    portuguese: "pt",
-    russian: "ru",
-  };
 
   const sitemapFiles = [];
 
@@ -355,20 +381,20 @@ async function main() {
 
   const pairKeys = Array.from(wordRoutesByPair.keys()).sort();
   for (const pairKey of pairKeys) {
-    const [uiLang, targetLanguage] = pairKey.split(":");
-    const pairRoutes = wordRoutesByPair.get(pairKey) || [];
+    const pairData = wordRoutesByPair.get(pairKey);
+    if (!pairData) continue;
+    const { fileWordCode, fileUiCode, uiLang, targetLanguage, routes: pairRoutes } = pairData;
     if (pairRoutes.length === 0) continue;
-    const targetCode = targetLangCodeByName[targetLanguage] || targetLanguage.slice(0, 2);
     const wordChunks = chunkArray(pairRoutes, SITEMAP_CHUNK_SIZE);
     for (let i = 0; i < wordChunks.length; i += 1) {
       const wordsName =
         wordChunks.length === 1
-          ? `sitemap-words-${uiLang}-${targetCode}.xml`
-          : `sitemap-words-${uiLang}-${targetCode}-${String(i + 1).padStart(4, "0")}.xml`;
+          ? `sitemap-words-${fileWordCode}-${fileUiCode}.xml`
+          : `sitemap-words-${fileWordCode}-${fileUiCode}-${String(i + 1).padStart(4, "0")}.xml`;
       await fs.writeFile(
         path.join(sitemapsDir, wordsName),
         buildSitemapXml(wordChunks[i], {
-          comment: `Word SEO URLs for UI language ${uiLang} and target language ${targetLanguage}.`,
+          comment: `Word SEO URLs for word language ${targetLanguage} and UI language ${UI_LANGUAGE_NAMES[uiLang] || uiLang}.`,
         }),
         "utf8",
       );
@@ -381,7 +407,7 @@ async function main() {
   await fs.writeFile(indexPath, indexXml, "utf8");
 
   const totalWordUrls = Array.from(wordRoutesByPair.values()).reduce(
-    (sum, routes) => sum + routes.length,
+    (sum, pairData) => sum + pairData.routes.length,
     0,
   );
   const totalUrls = coreRoutes.length + vocabularyRoutes.length + totalWordUrls;

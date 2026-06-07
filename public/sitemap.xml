@@ -3,22 +3,27 @@
 
   <sitemap>
     <loc>https://www.fluentstellar.com/sitemaps/sitemap-core.xml</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-07</lastmod>
   </sitemap>
 
   <sitemap>
     <loc>https://www.fluentstellar.com/sitemaps/sitemap-cefr.xml</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-07</lastmod>
   </sitemap>
 
   <sitemap>
     <loc>https://www.fluentstellar.com/sitemaps/sitemap-words-en-en.xml</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-07</lastmod>
+  </sitemap>
+
+  <sitemap>
+    <loc>https://www.fluentstellar.com/sitemaps/sitemap-words-en-ru.xml</loc>
+    <lastmod>2026-06-07</lastmod>
   </sitemap>
 
   <sitemap>
     <loc>https://www.fluentstellar.com/sitemaps/sitemap-words-en-sp.xml</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-07</lastmod>
   </sitemap>
 
 </sitemapindex>
