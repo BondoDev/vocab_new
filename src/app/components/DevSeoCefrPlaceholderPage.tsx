@@ -7,6 +7,7 @@ import type {
   VocabularyLevelContent,
 } from "../../data/vocabularyLevels";
 import { buildLocalizedVocabularyPath } from "../../data/seo/slugs";
+import { buildVocabularyFaqSection } from "../../seo/metadata";
 
 export const DEV_CEFR_PREVIEW_PATH =
   `/test${buildLocalizedVocabularyPath(
@@ -16,12 +17,50 @@ export const DEV_CEFR_PREVIEW_PATH =
   ) ?? "/en/english-b1-vocabulary-practice"}`;
 
 function buildSeoMetadata(): SeoMetadata {
+  const wordsUnitByUiLang = {
+    en: "words",
+    es: "palabras",
+    de: "Worter",
+    fr: "mots",
+    it: "parole",
+    pt: "palavras",
+    ru: "слов",
+  } as const;
+  const wordsUnit = wordsUnitByUiLang[sampleContent.route.uiLang] ?? wordsUnitByUiLang.en;
+  const faqSection = buildVocabularyFaqSection(
+    sampleContent.route.uiLang,
+    sampleContent.route.targetLanguageDisplayName,
+    sampleContent.route.level.toUpperCase(),
+    buildLevelContent(),
+    wordsUnit,
+  );
+
   return {
     title: sampleContent.seo.metaTitle,
     description: sampleContent.seo.metaDescription,
-    canonical: sampleContent.seo.canonicalUrl,
-    alternates: sampleContent.seo.alternates,
-    jsonLd: JSON.stringify(sampleContent.seo.faqJsonLd),
+    canonical: `https://www.fluentstellar.com${DEV_CEFR_PREVIEW_PATH}`,
+    alternates: [
+      {
+        hreflang: sampleContent.route.uiLang,
+        href: `https://www.fluentstellar.com${DEV_CEFR_PREVIEW_PATH}`,
+      },
+      {
+        hreflang: "x-default",
+        href: `https://www.fluentstellar.com${DEV_CEFR_PREVIEW_PATH}`,
+      },
+    ],
+    jsonLd: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqSection.items.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    }),
   };
 }
 

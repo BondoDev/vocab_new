@@ -8,36 +8,7 @@
   },
   "seo": {
     "metaTitle": "English B1 Vocabulary Practice - Intermediate English Vocabulary",
-    "metaDescription": "Strengthen your skills with English B1 vocabulary practice. Learn key intermediate words, meanings, and examples for confident communication.",
-    "canonicalUrl": "https://www.fluentstellar.com/en/english-b1-vocabulary-practice",
-    "alternates": [
-      {
-        "hreflang": "en",
-        "href": "https://www.fluentstellar.com/en/english-b1-vocabulary-practice"
-      },
-      {
-        "hreflang": "es",
-        "href": "https://www.fluentstellar.com/es/vocabulario-ingles-b1-practica"
-      },
-      {
-        "hreflang": "x-default",
-        "href": "https://www.fluentstellar.com/en/english-b1-vocabulary-practice"
-      }
-    ],
-    "faqJsonLd": {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What vocabulary is included in the English B1 word list?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The B1 level marks the transition to independent language use. When you learn English vocabulary B1 level, you can understand the main points of clear standard input on familiar topics and manage most situations while traveling or working."
-          }
-        }
-      ]
-    }
+    "metaDescription": "Strengthen your skills with English B1 vocabulary practice. Learn key intermediate words, meanings, and examples for confident communication."
   },
   "content": {
     "heroTitle": "English B1 Vocabulary: Mastering the 2500 Essential Words",
