@@ -28,6 +28,9 @@ interface VocabularyLevelPageProps {
     levelContent: VocabularyLevelContent;
   };
   seoMetadataOverride?: SeoMetadata | null;
+  heroTitleOverride?: string | null;
+  browseLanguageNameOverride?: string | null;
+  faqLanguageNameOverride?: string | null;
 }
 
 type VocabEntry = { concept_id: string; word_lemma: string; level: string };
@@ -177,6 +180,75 @@ const TARGET_LANGUAGE_DISPLAY_FALLBACKS: Record<TargetLanguageSlug, string> = {
   russian: "Russian",
 };
 
+const HERO_SUFFIX_LANGUAGE_NAMES: Record<
+  UiLanguageCode,
+  Record<TargetLanguageSlug, string>
+> = {
+  en: {
+    english: "English",
+    german: "German",
+    spanish: "Spanish",
+    french: "French",
+    italian: "Italian",
+    portuguese: "Portuguese",
+    russian: "Russian",
+  },
+  es: {
+    english: "inglés",
+    german: "alemán",
+    spanish: "español",
+    french: "francés",
+    italian: "italiano",
+    portuguese: "portugués",
+    russian: "ruso",
+  },
+  de: {
+    english: "Englisch",
+    german: "Deutsch",
+    spanish: "Spanisch",
+    french: "Französisch",
+    italian: "Italienisch",
+    portuguese: "Portugiesisch",
+    russian: "Russisch",
+  },
+  fr: {
+    english: "anglais",
+    german: "allemand",
+    spanish: "espagnol",
+    french: "français",
+    italian: "italien",
+    portuguese: "portugais",
+    russian: "russe",
+  },
+  it: {
+    english: "inglese",
+    german: "tedesco",
+    spanish: "spagnolo",
+    french: "francese",
+    italian: "italiano",
+    portuguese: "portoghese",
+    russian: "russo",
+  },
+  pt: {
+    english: "inglês",
+    german: "alemão",
+    spanish: "espanhol",
+    french: "francês",
+    italian: "italiano",
+    portuguese: "português",
+    russian: "russo",
+  },
+  ru: {
+    english: "английскому",
+    german: "немецкому",
+    spanish: "испанскому",
+    french: "французскому",
+    italian: "итальянскому",
+    portuguese: "португальскому",
+    russian: "русскому",
+  },
+};
+
 const TARGET_LANGUAGE_CODE_TO_SLUG: Record<UiLanguageCode, TargetLanguageSlug> = {
   en: "english",
   es: "spanish",
@@ -204,6 +276,14 @@ function resolveTargetLanguageDisplayName(
   }
 
   return TARGET_LANGUAGE_DISPLAY_FALLBACKS[targetLanguage];
+}
+
+function resolveHeroSuffixLanguageName(
+  uiLang: UiLanguageCode,
+  targetLanguage: TargetLanguageSlug,
+  displayName: string,
+): string {
+  return HERO_SUFFIX_LANGUAGE_NAMES[uiLang]?.[targetLanguage] ?? displayName;
 }
 
 const SAMPLE_TABLE_HEADERS_BY_UI_LANG: Record<
@@ -366,6 +446,9 @@ export function VocabularyLevelPage({
   onStartPractice,
   contentOverride,
   seoMetadataOverride,
+  heroTitleOverride,
+  browseLanguageNameOverride,
+  faqLanguageNameOverride,
 }: VocabularyLevelPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
@@ -391,8 +474,6 @@ export function VocabularyLevelPage({
   const levelDisplay = LEVEL_DISPLAY[level];
   const wordMapCount = WORD_MAP[levelDisplay] ?? levelContent.wordCount.value;
   const curiosityT = CURIOSITY_TRANSLATIONS[uiLang] ?? CURIOSITY_TRANSLATIONS.en;
-  const heroTitleSuffixBuilder =
-    HERO_TITLE_SUFFIX[uiLang] ?? HERO_TITLE_SUFFIX.en;
   const seoMetadata =
     seoMetadataOverride ??
     buildVocabularySeoMetadata({
@@ -451,21 +532,18 @@ export function VocabularyLevelPage({
     .filter((item): item is NonNullable<typeof item> => item !== null);
   const faqSection = buildVocabularyFaqSection(
     uiLang,
-    targetLanguageDisplayName,
+    faqLanguageNameOverride ?? targetLanguageDisplayName,
     levelDisplay,
     levelContent,
     wordsUnit,
   );
-  const heroTitleSuffix = heroTitleSuffixBuilder({
-    language: targetLanguageDisplayName,
-    level: levelDisplay,
-    words: wordMapCount,
-  });
+  const heroTitleSuffix = "";
   const heroTitleSuffixWithoutLevel = heroTitleSuffix
     .replace(` ${levelDisplay} `, " ")
     .replace(`${levelDisplay} `, "")
     .replace(` ${levelDisplay}`, "")
-    .replace(`уровня ${levelDisplay} `, "");
+    .replace(`уровня ${levelDisplay} `, "")
+    .replace("уровня ", "");
   const heroTitle = levelContent.title.includes(String(wordMapCount))
     ? levelContent.title
     : `${levelContent.title} - ${heroTitleSuffixWithoutLevel}`;
@@ -522,7 +600,12 @@ export function VocabularyLevelPage({
       <div className="mx-auto w-full max-w-5xl space-y-8">
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <h1 className="text-3xl text-foreground md:text-4xl">
-            {heroTitle}
+            {heroTitleOverride ??
+              curiosityT.h1({
+                language: targetLanguageDisplayName,
+                level: levelDisplay,
+                words: wordMapCount,
+              })}
           </h1>
 
           <div className="mt-5 rounded-xl border border-primary/15 bg-primary/5 p-5 shadow-sm">
@@ -638,7 +721,10 @@ export function VocabularyLevelPage({
 
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <h2 className="text-2xl text-foreground">
-            {browseWordsCopy.heading({ level: levelDisplay, language: targetLanguageDisplayName })}
+            {browseWordsCopy.heading({
+              level: levelDisplay,
+              language: browseLanguageNameOverride ?? targetLanguageDisplayName,
+            })}
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">{browseWordsCopy.description}</p>
           <input

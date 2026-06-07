@@ -34,8 +34,243 @@ const TARGET_LANGUAGE_CODE_TO_SLUG: Record<UiLanguageCode, TargetLanguageSlug> =
   ru: "russian",
 };
 
+const PREVIEW_HERO_SUFFIX_LANGUAGE_NAMES: Record<
+  UiLanguageCode,
+  Record<TargetLanguageSlug, string>
+> = {
+  en: {
+    english: "English",
+    german: "German",
+    spanish: "Spanish",
+    french: "French",
+    italian: "Italian",
+    portuguese: "Portuguese",
+    russian: "Russian",
+  },
+  es: {
+    english: "inglés",
+    german: "alemán",
+    spanish: "español",
+    french: "francés",
+    italian: "italiano",
+    portuguese: "portugués",
+    russian: "ruso",
+  },
+  de: {
+    english: "Englisch",
+    german: "Deutsch",
+    spanish: "Spanisch",
+    french: "Französisch",
+    italian: "Italienisch",
+    portuguese: "Portugiesisch",
+    russian: "Russisch",
+  },
+  fr: {
+    english: "anglais",
+    german: "allemand",
+    spanish: "espagnol",
+    french: "français",
+    italian: "italien",
+    portuguese: "portugais",
+    russian: "russe",
+  },
+  it: {
+    english: "inglese",
+    german: "tedesco",
+    spanish: "spagnolo",
+    french: "francese",
+    italian: "italiano",
+    portuguese: "portoghese",
+    russian: "russo",
+  },
+  pt: {
+    english: "inglês",
+    german: "alemão",
+    spanish: "espanhol",
+    french: "francês",
+    italian: "italiano",
+    portuguese: "português",
+    russian: "russo",
+  },
+  ru: {
+    english: "английскому",
+    german: "немецкому",
+    spanish: "испанскому",
+    french: "французскому",
+    italian: "итальянскому",
+    portuguese: "португальскому",
+    russian: "русскому",
+  },
+};
+
+const PREVIEW_BROWSE_LANGUAGE_NAMES: Record<
+  UiLanguageCode,
+  Record<TargetLanguageSlug, string>
+> = {
+  en: {
+    english: "English",
+    german: "German",
+    spanish: "Spanish",
+    french: "French",
+    italian: "Italian",
+    portuguese: "Portuguese",
+    russian: "Russian",
+  },
+  es: {
+    english: "inglés",
+    german: "alemán",
+    spanish: "español",
+    french: "francés",
+    italian: "italiano",
+    portuguese: "portugués",
+    russian: "ruso",
+  },
+  de: {
+    english: "Englisch",
+    german: "Deutsch",
+    spanish: "Spanisch",
+    french: "Französisch",
+    italian: "Italienisch",
+    portuguese: "Portugiesisch",
+    russian: "Russisch",
+  },
+  fr: {
+    english: "anglais",
+    german: "allemand",
+    spanish: "espagnol",
+    french: "français",
+    italian: "italien",
+    portuguese: "portugais",
+    russian: "russe",
+  },
+  it: {
+    english: "inglese",
+    german: "tedesco",
+    spanish: "spagnolo",
+    french: "francese",
+    italian: "italiano",
+    portuguese: "portoghese",
+    russian: "russo",
+  },
+  pt: {
+    english: "inglês",
+    german: "alemão",
+    spanish: "espanhol",
+    french: "francês",
+    italian: "italiano",
+    portuguese: "português",
+    russian: "russo",
+  },
+  ru: {
+    english: "английского",
+    german: "немецкого",
+    spanish: "испанского",
+    french: "французского",
+    italian: "итальянского",
+    portuguese: "португальского",
+    russian: "русского",
+  },
+};
+
+const PREVIEW_FAQ_LANGUAGE_NAMES: Record<
+  UiLanguageCode,
+  Record<TargetLanguageSlug, string>
+> = {
+  en: {
+    english: "English",
+    german: "German",
+    spanish: "Spanish",
+    french: "French",
+    italian: "Italian",
+    portuguese: "Portuguese",
+    russian: "Russian",
+  },
+  es: {
+    english: "inglés",
+    german: "alemán",
+    spanish: "español",
+    french: "francés",
+    italian: "italiano",
+    portuguese: "portugués",
+    russian: "ruso",
+  },
+  de: {
+    english: "englischen",
+    german: "deutschen",
+    spanish: "spanischen",
+    french: "französischen",
+    italian: "italienischen",
+    portuguese: "portugiesischen",
+    russian: "russischen",
+  },
+  fr: {
+    english: "anglais",
+    german: "allemand",
+    spanish: "espagnol",
+    french: "français",
+    italian: "italien",
+    portuguese: "portugais",
+    russian: "russe",
+  },
+  it: {
+    english: "inglese",
+    german: "tedesco",
+    spanish: "spagnolo",
+    french: "francese",
+    italian: "italiano",
+    portuguese: "portoghese",
+    russian: "russo",
+  },
+  pt: {
+    english: "inglês",
+    german: "alemão",
+    spanish: "espanhol",
+    french: "francês",
+    italian: "italiano",
+    portuguese: "português",
+    russian: "russo",
+  },
+  ru: {
+    english: "английского",
+    german: "немецкого",
+    spanish: "испанского",
+    french: "французского",
+    italian: "итальянского",
+    portuguese: "португальского",
+    russian: "русского",
+  },
+};
+
+const PREVIEW_HERO_SUFFIX_TEMPLATES: Record<
+  UiLanguageCode,
+  (args: { words: number; language: string }) => string
+> = {
+  en: ({ words, language }) => `Mastering ${words} ${language} words`,
+  es: ({ words, language }) => `domina ${words} palabras de ${language}`,
+  de: ({ words, language }) => `${words} ${language} Wörter meistern`,
+  fr: ({ words, language }) => `maîtrisez ${words} mots de ${language}`,
+  it: ({ words, language }) => `padroneggia ${words} parole di ${language}`,
+  pt: ({ words, language }) => `domine ${words} palavras de ${language}`,
+  ru: ({ words, language }) => `освойте ${words} слов по ${language}`,
+};
+
 function normalizeTargetLanguage(targetLanguage: PreviewTargetLanguage): TargetLanguageSlug {
   return TARGET_LANGUAGE_CODE_TO_SLUG[targetLanguage as UiLanguageCode] ?? targetLanguage;
+}
+
+function buildPreviewHeroTitle(item: SeoCefrContentItem): string {
+  const normalizedTargetLanguage = normalizeTargetLanguage(item.targetLanguage);
+  const words = item.content.wordCount.value;
+  const suffixLanguage =
+    PREVIEW_HERO_SUFFIX_LANGUAGE_NAMES[item.uiLanguage]?.[normalizedTargetLanguage] ??
+    item.targetLanguageDisplayName;
+  const suffixTemplate =
+    PREVIEW_HERO_SUFFIX_TEMPLATES[item.uiLanguage] ?? PREVIEW_HERO_SUFFIX_TEMPLATES.en;
+  const suffix = suffixTemplate({ words, language: suffixLanguage });
+
+  return item.content.title.includes(String(words))
+    ? item.content.title
+    : `${item.content.title} - ${suffix}`;
 }
 
 export const DEV_CEFR_PREVIEW_PATH =
@@ -81,9 +316,13 @@ function buildSeoMetadata(item: SeoCefrContentItem, previewPath: string): SeoMet
     ru: "slov",
   } as const;
   const wordsUnit = wordsUnitByUiLang[item.uiLanguage] ?? wordsUnitByUiLang.en;
+  const normalizedTargetLanguage = normalizeTargetLanguage(item.targetLanguage);
+  const faqLanguageName =
+    PREVIEW_FAQ_LANGUAGE_NAMES[item.uiLanguage]?.[normalizedTargetLanguage] ??
+    item.targetLanguageDisplayName;
   const faqSection = buildVocabularyFaqSection(
     item.uiLanguage,
-    item.targetLanguageDisplayName,
+    faqLanguageName,
     item.level.toUpperCase(),
     item.content,
     wordsUnit,
@@ -131,6 +370,19 @@ export function DevSeoCefrPlaceholderPage({
     () => normalizeTargetLanguage(item.targetLanguage),
     [item.targetLanguage],
   );
+  const heroTitleOverride = useMemo(() => buildPreviewHeroTitle(item), [item]);
+  const browseLanguageNameOverride = useMemo(
+    () =>
+      PREVIEW_BROWSE_LANGUAGE_NAMES[item.uiLanguage]?.[normalizedTargetLanguage] ??
+      item.targetLanguageDisplayName,
+    [item.targetLanguageDisplayName, item.uiLanguage, normalizedTargetLanguage],
+  );
+  const faqLanguageNameOverride = useMemo(
+    () =>
+      PREVIEW_FAQ_LANGUAGE_NAMES[item.uiLanguage]?.[normalizedTargetLanguage] ??
+      item.targetLanguageDisplayName,
+    [item.targetLanguageDisplayName, item.uiLanguage, normalizedTargetLanguage],
+  );
 
   return (
     <VocabularyLevelPage
@@ -138,6 +390,9 @@ export function DevSeoCefrPlaceholderPage({
       targetLanguage={normalizedTargetLanguage}
       level={item.level}
       onStartPractice={onStartPractice}
+      heroTitleOverride={heroTitleOverride}
+      browseLanguageNameOverride={browseLanguageNameOverride}
+      faqLanguageNameOverride={faqLanguageNameOverride}
       contentOverride={{
         file: {
           targetLanguage: normalizedTargetLanguage,
