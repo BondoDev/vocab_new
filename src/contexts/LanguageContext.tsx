@@ -1,11 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import englishInterface from "../data/interface/english_interface.json";
-import spanishInterface from "../data/interface/spanish_interface.json";
-import frenchInterface from "../data/interface/french_interface.json";
-import portugueseInterface from "../data/interface/portuguese_interface.json";
-import italianInterface from "../data/interface/italian_interface.json";
-import germanInterface from "../data/interface/german_interface.json";
-import russianInterface from "../data/interface/russian_interface.json";
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 export type UILanguage = "en" | "es" | "fr" | "pt" | "it" | "de" | "ru";
 
@@ -21,9 +14,14 @@ interface TranslationObject {
 
 type TranslationNode = string | TranslationObject;
 
-function normalizeTranslationRoot(
-  source: unknown,
-): Record<string, TranslationNode> {
+type LoadedTranslationData = {
+  flat: Record<string, string>;
+  root: Record<string, TranslationNode>;
+};
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+function normalizeTranslationRoot(source: unknown): Record<string, TranslationNode> {
   const candidate =
     source &&
     typeof source === "object" &&
@@ -37,10 +35,6 @@ function normalizeTranslationRoot(
 
   return candidate as Record<string, TranslationNode>;
 }
-
-const LanguageContext = createContext<LanguageContextType | undefined>(
-  undefined,
-);
 
 function flattenTranslations(
   node: Record<string, TranslationNode>,
@@ -90,16 +84,12 @@ function getAliasKey(key: string): string | null {
 
   const aliases: Record<string, string> = {
     "levelCategory.levelsSelected": "levelCategory.selection.levelsSelected",
-    "levelCategory.levelsSelectedPlural":
-      "levelCategory.selection.levelsSelectedPlural",
-    "levelCategory.allLevelsSelected":
-      "levelCategory.selection.allLevelsSelected",
+    "levelCategory.levelsSelectedPlural": "levelCategory.selection.levelsSelectedPlural",
+    "levelCategory.allLevelsSelected": "levelCategory.selection.allLevelsSelected",
     "levelCategory.topicsSelected": "levelCategory.selection.topicsSelected",
-    "levelCategory.topicsSelectedPlural":
-      "levelCategory.selection.topicsSelectedPlural",
+    "levelCategory.topicsSelectedPlural": "levelCategory.selection.topicsSelectedPlural",
     "levelCategory.typesSelected": "levelCategory.selection.typesSelected",
-    "levelCategory.typesSelectedPlural":
-      "levelCategory.selection.typesSelectedPlural",
+    "levelCategory.typesSelectedPlural": "levelCategory.selection.typesSelectedPlural",
     "levelCategory.skipAllTopics": "levelCategory.topics.skipAll",
     "levelCategory.skipAllTypes": "levelCategory.types.skipAll",
     "levelCategory.showAllTopics": "levelCategory.topics.showAll",
@@ -111,25 +101,34 @@ function getAliasKey(key: string): string | null {
   return aliases[key] ?? null;
 }
 
-const translations: Record<UILanguage, Record<string, string>> = {
-  en: flattenTranslations(normalizeTranslationRoot(englishInterface)),
-  es: flattenTranslations(normalizeTranslationRoot(spanishInterface)),
-  fr: flattenTranslations(normalizeTranslationRoot(frenchInterface)),
-  pt: flattenTranslations(normalizeTranslationRoot(portugueseInterface)),
-  it: flattenTranslations(normalizeTranslationRoot(italianInterface)),
-  de: flattenTranslations(normalizeTranslationRoot(germanInterface)),
-  ru: flattenTranslations(normalizeTranslationRoot(russianInterface)),
-};
+function prepareTranslationData(source: unknown): LoadedTranslationData {
+  const root = normalizeTranslationRoot(source);
+  return {
+    flat: flattenTranslations(root),
+    root,
+  };
+}
 
-const translationRoots: Record<UILanguage, Record<string, TranslationNode>> = {
-  en: normalizeTranslationRoot(englishInterface),
-  es: normalizeTranslationRoot(spanishInterface),
-  fr: normalizeTranslationRoot(frenchInterface),
-  pt: normalizeTranslationRoot(portugueseInterface),
-  it: normalizeTranslationRoot(italianInterface),
-  de: normalizeTranslationRoot(germanInterface),
-  ru: normalizeTranslationRoot(russianInterface),
-};
+async function loadLanguageData(lang: UILanguage): Promise<LoadedTranslationData> {
+  switch (lang) {
+    case "en":
+      return prepareTranslationData((await import("../data/interface/english_interface.json")).default);
+    case "es":
+      return prepareTranslationData((await import("../data/interface/spanish_interface.json")).default);
+    case "fr":
+      return prepareTranslationData((await import("../data/interface/french_interface.json")).default);
+    case "pt":
+      return prepareTranslationData((await import("../data/interface/portuguese_interface.json")).default);
+    case "it":
+      return prepareTranslationData((await import("../data/interface/italian_interface.json")).default);
+    case "de":
+      return prepareTranslationData((await import("../data/interface/german_interface.json")).default);
+    case "ru":
+      return prepareTranslationData((await import("../data/interface/russian_interface.json")).default);
+    default:
+      return prepareTranslationData({});
+  }
+}
 
 interface LanguageProviderProps {
   children: ReactNode;
@@ -147,24 +146,54 @@ function readStoredUiLanguage(): UILanguage | null {
     : null;
 }
 
+function getInitialUiLanguage(initialUILanguage?: UILanguage): UILanguage {
+  return initialUILanguage ?? readStoredUiLanguage() ?? "en";
+}
+
 export function LanguageProvider({
   children,
   initialUILanguage,
 }: LanguageProviderProps) {
-  const [uiLanguage, setUILanguage] = useState<UILanguage>(
-    () => initialUILanguage ?? "en",
-  );
+  const [uiLanguage, setUILanguage] = useState<UILanguage>(() => getInitialUiLanguage(initialUILanguage));
+  const [loadedLanguages, setLoadedLanguages] = useState<Partial<Record<UILanguage, LoadedTranslationData>>>({});
 
   useEffect(() => {
-    if (initialUILanguage) {
+    if (!initialUILanguage) {
       return;
     }
 
-    const storedLanguage = readStoredUiLanguage();
-    if (storedLanguage && storedLanguage !== uiLanguage) {
-      setUILanguage(storedLanguage);
+    setUILanguage(initialUILanguage);
+  }, [initialUILanguage]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (loadedLanguages[uiLanguage]) {
+      return () => {
+        cancelled = true;
+      };
     }
-  }, [initialUILanguage, uiLanguage]);
+
+    void loadLanguageData(uiLanguage).then((data) => {
+      if (cancelled) {
+        return;
+      }
+
+      setLoadedLanguages((current) => {
+        if (current[uiLanguage]) {
+          return current;
+        }
+        return {
+          ...current,
+          [uiLanguage]: data,
+        };
+      });
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [loadedLanguages, uiLanguage]);
 
   const handleSetUILanguage = (lang: UILanguage) => {
     setUILanguage(lang);
@@ -173,30 +202,30 @@ export function LanguageProvider({
     }
   };
 
-  const t = (key: string): string => {
-    const selectedTranslations = translations[uiLanguage];
-    const fallbackTranslations = translations.en;
-    const aliasKey = getAliasKey(key);
-    const selectedRoot = translationRoots[uiLanguage];
-    const fallbackRoot = translationRoots.en;
+  const currentLanguageData = loadedLanguages[uiLanguage];
 
-    return (
-      selectedTranslations[key] ||
-      (aliasKey ? selectedTranslations[aliasKey] : undefined) ||
-      lookupNestedTranslation(selectedRoot, key) ||
-      (aliasKey ? lookupNestedTranslation(selectedRoot, aliasKey) : undefined) ||
-      fallbackTranslations[key] ||
-      (aliasKey ? fallbackTranslations[aliasKey] : undefined) ||
-      lookupNestedTranslation(fallbackRoot, key) ||
-      (aliasKey ? lookupNestedTranslation(fallbackRoot, aliasKey) : undefined) ||
-      key
-    );
-  };
+  const t = useMemo(() => {
+    return (key: string): string => {
+      const aliasKey = getAliasKey(key);
+      const selectedTranslations = currentLanguageData?.flat ?? {};
+      const selectedRoot = currentLanguageData?.root ?? {};
+
+      return (
+        selectedTranslations[key] ||
+        (aliasKey ? selectedTranslations[aliasKey] : undefined) ||
+        lookupNestedTranslation(selectedRoot, key) ||
+        (aliasKey ? lookupNestedTranslation(selectedRoot, aliasKey) : undefined) ||
+        key
+      );
+    };
+  }, [currentLanguageData]);
+
+  if (!currentLanguageData) {
+    return null;
+  }
 
   return (
-    <LanguageContext.Provider
-      value={{ uiLanguage, setUILanguage: handleSetUILanguage, t }}
-    >
+    <LanguageContext.Provider value={{ uiLanguage, setUILanguage: handleSetUILanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -205,16 +234,12 @@ export function LanguageProvider({
 export function useLanguage() {
   const context = useContext(LanguageContext);
   if (context === undefined) {
-    console.warn(
-      "useLanguage called outside of LanguageProvider, using fallback",
-    );
-    const fallbackRoot = translationRoots.en;
+    console.warn("useLanguage called outside of LanguageProvider, using fallback");
     return {
       uiLanguage: "en" as UILanguage,
       setUILanguage: () => {},
-      t: (key: string) => lookupNestedTranslation(fallbackRoot, key) || key,
+      t: (key: string) => key,
     };
   }
   return context;
 }
-

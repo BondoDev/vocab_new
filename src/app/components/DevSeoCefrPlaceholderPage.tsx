@@ -1,38 +1,18 @@
 import { useMemo } from "react";
-import sampleContent from "../../../guidelines/seo-cefr-content-sample.json";
 import { VocabularyLevelPage } from "./VocabularyLevelPage";
 import type { SeoMetadata } from "../../seo/SeoContext";
 import type {
-  CefrLevelCode,
   TargetLanguageSlug,
-  VocabularyLevelContent,
   UiLanguageCode,
 } from "../../data/vocabularyLevels";
 import { buildLocalizedVocabularyPath } from "../../data/seo/slugs";
 import { buildVocabularyFaqSection } from "../../seo/metadata";
-
-type PreviewTargetLanguage = TargetLanguageSlug | UiLanguageCode;
-
-export type SeoCefrContentItem = {
-  uiLanguage: UiLanguageCode;
-  targetLanguage: PreviewTargetLanguage;
-  targetLanguageDisplayName: string;
-  level: CefrLevelCode;
-  content: VocabularyLevelContent;
-};
-
-const previewItems = sampleContent as SeoCefrContentItem[];
-const defaultPreviewItem = previewItems[0];
-
-const TARGET_LANGUAGE_CODE_TO_SLUG: Record<UiLanguageCode, TargetLanguageSlug> = {
-  en: "english",
-  es: "spanish",
-  de: "german",
-  fr: "french",
-  it: "italian",
-  pt: "portuguese",
-  ru: "russian",
-};
+import {
+  DEV_CEFR_PREVIEW_PATH,
+  findSeoCefrPreviewItem,
+  normalizeTargetLanguage,
+  type SeoCefrContentItem,
+} from "./devSeoCefrPreviewData";
 
 const PREVIEW_HERO_SUFFIX_LANGUAGE_NAMES: Record<
   UiLanguageCode,
@@ -254,10 +234,6 @@ const PREVIEW_HERO_SUFFIX_TEMPLATES: Record<
   ru: ({ words, language }) => `освойте ${words} слов по ${language}`,
 };
 
-function normalizeTargetLanguage(targetLanguage: PreviewTargetLanguage): TargetLanguageSlug {
-  return TARGET_LANGUAGE_CODE_TO_SLUG[targetLanguage as UiLanguageCode] ?? targetLanguage;
-}
-
 function buildPreviewHeroTitle(item: SeoCefrContentItem): string {
   const normalizedTargetLanguage = normalizeTargetLanguage(item.targetLanguage);
   const words = item.content.wordCount.value;
@@ -271,28 +247,6 @@ function buildPreviewHeroTitle(item: SeoCefrContentItem): string {
   return item.content.title.includes(String(words))
     ? item.content.title
     : `${item.content.title} - ${suffix}`;
-}
-
-export const DEV_CEFR_PREVIEW_PATH =
-  `/test${buildLocalizedVocabularyPath(
-    defaultPreviewItem?.uiLanguage ?? "en",
-    normalizeTargetLanguage(defaultPreviewItem?.targetLanguage ?? "english"),
-    defaultPreviewItem?.level ?? "b1",
-  ) ?? "/en/english-b1-vocabulary-practice"}`;
-
-export function findSeoCefrPreviewItem(params: {
-  uiLanguage: UiLanguageCode;
-  targetLanguage: TargetLanguageSlug;
-  level: CefrLevelCode;
-}): SeoCefrContentItem | null {
-  return (
-    previewItems.find(
-      (item) =>
-        item.uiLanguage === params.uiLanguage &&
-        normalizeTargetLanguage(item.targetLanguage) === params.targetLanguage &&
-        item.level === params.level,
-    ) ?? null
-  );
 }
 
 function buildPreviewPath(item: SeoCefrContentItem): string {
@@ -359,46 +313,69 @@ function buildSeoMetadata(item: SeoCefrContentItem, previewPath: string): SeoMet
 
 export function DevSeoCefrPlaceholderPage({
   item,
+  routeParams,
   onStartPractice,
 }: {
-  item: SeoCefrContentItem;
+  item?: SeoCefrContentItem | null;
+  routeParams?: {
+    uiLanguage: UiLanguageCode;
+    targetLanguage: TargetLanguageSlug;
+    level: CefrLevelCode;
+  } | null;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
 }) {
-  const previewPath = useMemo(() => buildPreviewPath(item), [item]);
-  const seoMetadata = useMemo(() => buildSeoMetadata(item, previewPath), [item, previewPath]);
-  const normalizedTargetLanguage = useMemo(
-    () => normalizeTargetLanguage(item.targetLanguage),
-    [item.targetLanguage],
+  const resolvedItem = useMemo(() => {
+    if (item) {
+      return item;
+    }
+    if (!routeParams) {
+      return null;
+    }
+    return findSeoCefrPreviewItem(routeParams);
+  }, [item, routeParams]);
+
+  if (!resolvedItem) {
+    return <div className="p-6 text-sm text-muted-foreground">Invalid preview page. Try {DEV_CEFR_PREVIEW_PATH}</div>;
+  }
+
+  const previewPath = useMemo(() => buildPreviewPath(resolvedItem), [resolvedItem]);
+  const seoMetadata = useMemo(
+    () => buildSeoMetadata(resolvedItem, previewPath),
+    [resolvedItem, previewPath],
   );
-  const heroTitleOverride = useMemo(() => buildPreviewHeroTitle(item), [item]);
+  const normalizedTargetLanguage = useMemo(
+    () => normalizeTargetLanguage(resolvedItem.targetLanguage),
+    [resolvedItem.targetLanguage],
+  );
   const browseLanguageNameOverride = useMemo(
     () =>
-      PREVIEW_BROWSE_LANGUAGE_NAMES[item.uiLanguage]?.[normalizedTargetLanguage] ??
-      item.targetLanguageDisplayName,
-    [item.targetLanguageDisplayName, item.uiLanguage, normalizedTargetLanguage],
+      PREVIEW_BROWSE_LANGUAGE_NAMES[resolvedItem.uiLanguage]?.[normalizedTargetLanguage] ??
+      resolvedItem.targetLanguageDisplayName,
+    [resolvedItem.targetLanguageDisplayName, resolvedItem.uiLanguage, normalizedTargetLanguage],
   );
   const faqLanguageNameOverride = useMemo(
     () =>
-      PREVIEW_FAQ_LANGUAGE_NAMES[item.uiLanguage]?.[normalizedTargetLanguage] ??
-      item.targetLanguageDisplayName,
-    [item.targetLanguageDisplayName, item.uiLanguage, normalizedTargetLanguage],
+      PREVIEW_FAQ_LANGUAGE_NAMES[resolvedItem.uiLanguage]?.[normalizedTargetLanguage] ??
+      resolvedItem.targetLanguageDisplayName,
+    [resolvedItem.targetLanguageDisplayName, resolvedItem.uiLanguage, normalizedTargetLanguage],
   );
+  const heroTitle = useMemo(() => buildPreviewHeroTitle(resolvedItem), [resolvedItem]);
 
   return (
     <VocabularyLevelPage
-      uiLang={item.uiLanguage}
+      uiLang={resolvedItem.uiLanguage}
       targetLanguage={normalizedTargetLanguage}
-      level={item.level}
+      level={resolvedItem.level}
       onStartPractice={onStartPractice}
-      heroTitleOverride={heroTitleOverride}
+      heroTitleOverride={heroTitle}
       browseLanguageNameOverride={browseLanguageNameOverride}
       faqLanguageNameOverride={faqLanguageNameOverride}
       contentOverride={{
         file: {
           targetLanguage: normalizedTargetLanguage,
-          targetLanguageDisplayName: item.targetLanguageDisplayName,
+          targetLanguageDisplayName: resolvedItem.targetLanguageDisplayName,
         },
-        levelContent: item.content,
+        levelContent: resolvedItem.content,
       }}
       seoMetadataOverride={seoMetadata}
     />

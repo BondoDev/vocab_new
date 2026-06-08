@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import "../styles/index.css";
@@ -7,22 +7,7 @@ import { ArrowLeftRight, ChevronDown, Search } from "lucide-react";
 import { Header } from "./components/Header";
 import { LanguageSelector } from "./components/LanguageSelector";
 import { FloatingWords } from "./components/FloatingWords";
-import { LevelCategorySelection } from "./components/LevelCategorySelection";
-import { ExerciseSelection } from "./components/ExerciseSelection";
-import { VocabularyPractice } from "./components/VocabularyPractice";
-import { VocabularyLevelExam } from "./components/VocabularyLevelExam";
-import { About } from "./components/About";
-import { Help } from "./components/Help";
-import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
-import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { NotFoundPage } from "./components/NotFoundPage";
-import { SeoHubPage } from "./components/SeoHubPage";
-import { WordSeoPage } from "./components/WordSeoPage";
-import {
-  DevSeoCefrPlaceholderPage,
-  DEV_CEFR_PREVIEW_PATH,
-  findSeoCefrPreviewItem,
-} from "./components/DevSeoCefrPlaceholderPage";
 import { ScrollToTopButton } from "./components/ScrollToTopButton";
 import {
   LanguageContinuePopup,
@@ -30,21 +15,74 @@ import {
 } from "./components/LanguageContinuePopup";
 import { LanguageProvider, useLanguage, type UILanguage } from "../contexts/LanguageContext";
 import {
-  getVocabularyLevelContent,
-  type CefrLevelCode,
-  type TargetLanguageSlug,
-  type UiLanguageCode,
-} from "../data/vocabularyLevels";
-import {
   buildLocalizedVocabularyPath,
   isSupportedUiLanguage,
   resolveVocabularyRoute,
+  type Level as CefrLevelCode,
+  type TargetLanguageSlug,
+  type UiLanguageCode,
 } from "../data/seo/slugs";
 import { resolveWordRoute, type WordRouteMatch } from "../data/seo/wordSlugs";
 import { resolveSeoHubRoute } from "../data/seo/hub";
 import { SeoProvider, type SeoManager } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../data/levelTests";
+
+const LevelCategorySelection = lazy(() =>
+  import("./components/LevelCategorySelection").then((module) => ({
+    default: module.LevelCategorySelection,
+  })),
+);
+const ExerciseSelection = lazy(() =>
+  import("./components/ExerciseSelection").then((module) => ({
+    default: module.ExerciseSelection,
+  })),
+);
+const VocabularyPractice = lazy(() =>
+  import("./components/VocabularyPractice").then((module) => ({
+    default: module.VocabularyPractice,
+  })),
+);
+const VocabularyLevelExam = lazy(() =>
+  import("./components/VocabularyLevelExam").then((module) => ({
+    default: module.VocabularyLevelExam,
+  })),
+);
+const About = lazy(() =>
+  import("./components/About").then((module) => ({
+    default: module.About,
+  })),
+);
+const Help = lazy(() =>
+  import("./components/Help").then((module) => ({
+    default: module.Help,
+  })),
+);
+const VocabularyLevelPage = lazy(() =>
+  import("./components/VocabularyLevelPage").then((module) => ({
+    default: module.VocabularyLevelPage,
+  })),
+);
+const LevelTestSeoPage = lazy(() =>
+  import("./components/LevelTestSeoPage").then((module) => ({
+    default: module.LevelTestSeoPage,
+  })),
+);
+const SeoHubPage = lazy(() =>
+  import("./components/SeoHubPage").then((module) => ({
+    default: module.SeoHubPage,
+  })),
+);
+const WordSeoPage = lazy(() =>
+  import("./components/WordSeoPage").then((module) => ({
+    default: module.WordSeoPage,
+  })),
+);
+const DevSeoCefrPlaceholderPage = lazy(() =>
+  import("./components/DevSeoCefrPlaceholderPage").then((module) => ({
+    default: module.DevSeoCefrPlaceholderPage,
+  })),
+);
 
 const supportedLanguages = [
   { code: "en", flagCode: "gb" },
@@ -75,6 +113,14 @@ const STORAGE_KEYS = {
 } as const;
 
 const VALID_LEVEL_CODES = new Set(["A1", "A2", "B1", "B2", "C1", "C2"]);
+
+function RouteLoadingFallback() {
+  return (
+    <div className="flex-1 flex items-center justify-center px-6 py-12 text-sm text-muted-foreground">
+      Loading...
+    </div>
+  );
+}
 
 function canUseLocalStorage(): boolean {
   return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
@@ -165,16 +211,6 @@ function parseVocabularyRoute(path: string): ParsedVocabularyRoute | null {
   const [, uiLangRaw, slug] = match;
   const resolved = resolveVocabularyRoute(uiLangRaw, slug);
   if (!resolved) {
-    return null;
-  }
-
-  const hasContent = getVocabularyLevelContent(
-    resolved.uiLang,
-    resolved.targetLanguage,
-    resolved.level,
-  );
-
-  if (!hasContent) {
     return null;
   }
 
@@ -1526,17 +1562,19 @@ function AppContent() {
 
   if (resolvedPage === "practice") {
     return (
-      <VocabularyPractice
-        practiceLanguage={practiceLanguage}
-        yourLanguage={yourLanguage}
-        selectedLevel={selectedLevel}
-        selectedLevels={selectedLevels}
-        selectedCategories={selectedCategories}
-        selectedWordTypes={selectedWordTypes}
-        selectedExercises={selectedExercises}
-        onBack={() => navigate(ROUTES.exerciseSelection)}
-        onGoFilters={() => navigate(ROUTES.levelCategory)}
-      />
+      <Suspense fallback={<RouteLoadingFallback />}>
+        <VocabularyPractice
+          practiceLanguage={practiceLanguage}
+          yourLanguage={yourLanguage}
+          selectedLevel={selectedLevel}
+          selectedLevels={selectedLevels}
+          selectedCategories={selectedCategories}
+          selectedWordTypes={selectedWordTypes}
+          selectedExercises={selectedExercises}
+          onBack={() => navigate(ROUTES.exerciseSelection)}
+          onGoFilters={() => navigate(ROUTES.levelCategory)}
+        />
+      </Suspense>
     );
   }
 
@@ -1553,12 +1591,14 @@ function AppContent() {
           onExercises={() => handleRequireLanguages("exerciseSelection")}
           onExplore={() => navigate(ROUTES.explore)}
         />
-        <ExerciseSelection
-          selectedExercises={selectedExercises}
-          setSelectedExercises={setSelectedExercises}
-          onBack={() => navigate(ROUTES.levelCategory)}
-          onContinue={handleContinueToPractice}
-        />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <ExerciseSelection
+            selectedExercises={selectedExercises}
+            setSelectedExercises={setSelectedExercises}
+            onBack={() => navigate(ROUTES.levelCategory)}
+            onContinue={handleContinueToPractice}
+          />
+        </Suspense>
       </div>
     );
   }
@@ -1577,20 +1617,22 @@ function AppContent() {
           onExplore={() => navigate(ROUTES.explore)}
         />
         <div className="flex-1 min-h-0">
-          <LevelCategorySelection
-            selectedLevel={selectedLevel}
-            setSelectedLevel={setSelectedLevel}
-            practiceLanguage={practiceLanguage}
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
-            selectedLevels={selectedLevels}
-            setSelectedLevels={setSelectedLevels}
-            selectedWordTypes={selectedWordTypes}
-            setSelectedWordTypes={setSelectedWordTypes}
-            onBack={() => navigate(ROUTES.language)}
-            onContinue={handleContinueToExerciseSelection}
-            onTakeLevelTest={handleStartExam}
-          />
+          <Suspense fallback={<RouteLoadingFallback />}>
+            <LevelCategorySelection
+              selectedLevel={selectedLevel}
+              setSelectedLevel={setSelectedLevel}
+              practiceLanguage={practiceLanguage}
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
+              selectedLevels={selectedLevels}
+              setSelectedLevels={setSelectedLevels}
+              selectedWordTypes={selectedWordTypes}
+              setSelectedWordTypes={setSelectedWordTypes}
+              onBack={() => navigate(ROUTES.language)}
+              onContinue={handleContinueToExerciseSelection}
+              onTakeLevelTest={handleStartExam}
+            />
+          </Suspense>
         </div>
       </div>
     );
@@ -1598,12 +1640,14 @@ function AppContent() {
 
   if (resolvedPage === "exam") {
     return (
-      <VocabularyLevelExam
-        practiceLanguage={practiceLanguage}
-        yourLanguage={yourLanguage}
-        onComplete={handleExamComplete}
-        onCancel={() => navigate(ROUTES.levelCategory)}
-      />
+      <Suspense fallback={<RouteLoadingFallback />}>
+        <VocabularyLevelExam
+          practiceLanguage={practiceLanguage}
+          yourLanguage={yourLanguage}
+          onComplete={handleExamComplete}
+          onCancel={() => navigate(ROUTES.levelCategory)}
+        />
+      </Suspense>
     );
   }
 
@@ -1620,7 +1664,9 @@ function AppContent() {
           onExercises={() => handleRequireLanguages("exerciseSelection")}
           onExplore={() => navigate(ROUTES.explore)}
         />
-        <About onBack={() => navigate(ROUTES.language)} />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <About onBack={() => navigate(ROUTES.language)} />
+        </Suspense>
       </div>
     );
   }
@@ -1951,7 +1997,9 @@ function AppContent() {
           onExercises={() => handleRequireLanguages("exerciseSelection")}
           onExplore={() => navigate(ROUTES.explore)}
         />
-        <Help onBack={() => navigate(ROUTES.language)} />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <Help onBack={() => navigate(ROUTES.language)} />
+        </Suspense>
       </div>
     );
   }
@@ -1987,15 +2035,17 @@ function AppContent() {
           onExercises={() => handleRequireLanguages("exerciseSelection")}
           onExplore={() => navigate(ROUTES.explore)}
         />
-        <LevelTestSeoPage
-          uiLang={levelTestSeoRoute.uiLang}
-          targetLanguage={levelTestSeoRoute.targetLanguage}
-          onStartTest={() =>
-            handleStartSeoLevelTest(
-              TARGET_LANGUAGE_TO_UI_CODE[levelTestSeoRoute.targetLanguage],
-            )
-          }
-        />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <LevelTestSeoPage
+            uiLang={levelTestSeoRoute.uiLang}
+            targetLanguage={levelTestSeoRoute.targetLanguage}
+            onStartTest={() =>
+              handleStartSeoLevelTest(
+                TARGET_LANGUAGE_TO_UI_CODE[levelTestSeoRoute.targetLanguage],
+              )
+            }
+          />
+        </Suspense>
         {levelTestLanguageModal}
       </div>
     );
@@ -2033,13 +2083,15 @@ function AppContent() {
           onExercises={() => handleRequireLanguages("exerciseSelection")}
           onExplore={() => navigate(ROUTES.explore)}
         />
-        <WordSeoPage
-          uiLang={wordRoute.uiLang}
-          targetLanguage={wordRoute.targetLanguage}
-          wordSlug={wordRoute.wordSlug}
-          conceptId={wordRoute.conceptId}
-          onStartPractice={handleStartVocabularyPractice}
-        />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <WordSeoPage
+            uiLang={wordRoute.uiLang}
+            targetLanguage={wordRoute.targetLanguage}
+            wordSlug={wordRoute.wordSlug}
+            conceptId={wordRoute.conceptId}
+            onStartPractice={handleStartVocabularyPractice}
+          />
+        </Suspense>
       </div>
     );
   }
@@ -2075,12 +2127,14 @@ function AppContent() {
           onExercises={() => handleRequireLanguages("exerciseSelection")}
           onExplore={() => navigate(ROUTES.explore)}
         />
-        <VocabularyLevelPage
-          uiLang={vocabularyRoute.uiLang}
-          targetLanguage={vocabularyRoute.targetLanguage}
-          level={vocabularyRoute.level}
-          onStartPractice={handleStartVocabularyPractice}
-        />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <VocabularyLevelPage
+            uiLang={vocabularyRoute.uiLang}
+            targetLanguage={vocabularyRoute.targetLanguage}
+            level={vocabularyRoute.level}
+            onStartPractice={handleStartVocabularyPractice}
+          />
+        </Suspense>
       </div>
     );
   }
@@ -2116,22 +2170,17 @@ function AppContent() {
           onExercises={() => handleRequireLanguages("exerciseSelection")}
           onExplore={() => navigate(ROUTES.explore)}
         />
-        <SeoHubPage uiLang={seoHubRoute} />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <SeoHubPage uiLang={seoHubRoute} />
+        </Suspense>
       </div>
     );
   }
 
   if (resolvedPage === "devSeoCefrPlaceholder") {
     const devPreviewRoute = parseDevSeoCefrPlaceholderRoute(location.pathname);
-    const devPreviewItem = devPreviewRoute
-      ? findSeoCefrPreviewItem({
-          uiLanguage: devPreviewRoute.uiLang,
-          targetLanguage: devPreviewRoute.targetLanguage,
-          level: devPreviewRoute.level,
-        })
-      : null;
 
-    if (!devPreviewRoute || !devPreviewItem) {
+    if (!devPreviewRoute) {
       return (
         <div className="min-h-screen flex flex-col bg-background">
           <Header
@@ -2144,7 +2193,7 @@ function AppContent() {
             onExercises={() => handleRequireLanguages("exerciseSelection")}
             onExplore={() => navigate(ROUTES.explore)}
           />
-          <NotFoundPage message={`Invalid preview page. Try ${DEV_CEFR_PREVIEW_PATH}`} />
+          <NotFoundPage message="Invalid preview page." />
         </div>
       );
     }
@@ -2161,10 +2210,16 @@ function AppContent() {
           onExercises={() => handleRequireLanguages("exerciseSelection")}
           onExplore={() => navigate(ROUTES.explore)}
         />
-        <DevSeoCefrPlaceholderPage
-          item={devPreviewItem}
-          onStartPractice={handleStartVocabularyPractice}
-        />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <DevSeoCefrPlaceholderPage
+            routeParams={{
+              uiLanguage: devPreviewRoute.uiLang,
+              targetLanguage: devPreviewRoute.targetLanguage,
+              level: devPreviewRoute.level,
+            }}
+            onStartPractice={handleStartVocabularyPractice}
+          />
+        </Suspense>
       </div>
     );
   }
@@ -2487,8 +2542,3 @@ export default function App({
     </SeoProvider>
   );
 }
-
-
-
-
-

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, buildLocalizedVocabularyPath } from "../../data/seo/slugs";
@@ -34,6 +34,13 @@ interface VocabularyLevelPageProps {
 }
 
 type VocabEntry = { concept_id: string; word_lemma: string; level: string };
+type BrowsePreviewData = {
+  targetLanguage: TargetLanguageSlug;
+  level: string;
+  totalWords: number;
+  totalPages: number;
+  words: Array<Pick<VocabEntry, "concept_id" | "word_lemma">>;
+};
 const vocabModules = import.meta.glob("../../data/vocabulary/*/vocabulary.json") as Record<
   string,
   () => Promise<{ default: VocabEntry[] }>
@@ -439,6 +446,17 @@ function buildVocabularyUrl(
   return buildLocalizedVocabularyPath(uiLang, targetLanguage, level) ?? "/";
 }
 
+async function loadBrowsePreviewByPath(
+  targetLanguage: TargetLanguageSlug,
+  level: CefrLevelCode,
+): Promise<BrowsePreviewData | null> {
+  const response = await fetch(`/src/data/seo/level-browse-preview/${targetLanguage}-${level}.json`);
+  if (!response.ok) {
+    return null;
+  }
+  return (await response.json()) as BrowsePreviewData;
+}
+
 export function VocabularyLevelPage({
   uiLang,
   targetLanguage,
@@ -547,46 +565,97 @@ export function VocabularyLevelPage({
   const heroTitle = levelContent.title.includes(String(wordMapCount))
     ? levelContent.title
     : `${levelContent.title} - ${heroTitleSuffixWithoutLevel}`;
-
   const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
   const [browsePage, setBrowsePage] = useState(0);
   const [browseSearch, setBrowseSearch] = useState("");
+  const [isBrowseLoading, setIsBrowseLoading] = useState(false);
+  const browseLoadPromiseRef = useRef<Promise<VocabEntry[]> | null>(null);
+  const [browsePreview, setBrowsePreview] = useState<BrowsePreviewData | null>(null);
 
   useEffect(() => {
-    setBrowseWords([]);
     setBrowsePage(0);
     setBrowseSearch("");
-    const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
-    const loader = vocabModules[key];
-    if (!loader) return;
+    setBrowseWords([]);
+    setBrowsePreview(null);
+    setIsBrowseLoading(false);
+    browseLoadPromiseRef.current = null;
+  }, [targetLanguage, level]);
+
+  useEffect(() => {
     let cancelled = false;
-    loader().then((mod) => {
+
+    void loadBrowsePreviewByPath(targetLanguage, level).then((preview) => {
       if (cancelled) return;
-      const levelUp = LEVEL_DISPLAY[level];
-      const seen = new Set<string>();
-      const words: VocabEntry[] = [];
-      for (const w of mod.default) {
-        if (w.level === levelUp && w.word_lemma.length > 2 && !seen.has(w.concept_id)) {
-          seen.add(w.concept_id);
-          words.push(w);
-        }
-      }
-      setBrowseWords(words);
+      setBrowsePreview(preview);
     });
+
     return () => {
       cancelled = true;
     };
-  }, [targetLanguage, level]);
+  }, [level, targetLanguage]);
+
+  const activateBrowse = async () => {
+    if (browseWords.length > 0) {
+      return browseWords;
+    }
+
+    if (browseLoadPromiseRef.current) {
+      return browseLoadPromiseRef.current;
+    }
+
+    const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
+    const loader = vocabModules[key];
+    if (!loader) {
+      return [];
+    }
+
+    setIsBrowseLoading(true);
+    const loadPromise = loader()
+      .then((mod) => {
+        const levelUp = LEVEL_DISPLAY[level];
+        const seen = new Set<string>();
+        const words: VocabEntry[] = [];
+        for (const w of mod.default) {
+          if (w.level !== levelUp) continue;
+          if (w.word_lemma.length <= 2 || seen.has(w.concept_id)) continue;
+          seen.add(w.concept_id);
+          words.push(w);
+        }
+        setBrowseWords(words);
+        return words;
+      })
+      .finally(() => {
+        setIsBrowseLoading(false);
+        browseLoadPromiseRef.current = null;
+      });
+
+    browseLoadPromiseRef.current = loadPromise;
+    return loadPromise;
+  };
 
   const normalizedSearch = browseSearch.trim().toLowerCase();
-  const filteredBrowseWords = normalizedSearch
-    ? browseWords.filter((word) =>
+  const activeBrowsePreview =
+    browsePreview?.targetLanguage === targetLanguage &&
+    browsePreview.level === levelDisplay
+      ? browsePreview
+      : null;
+  const previewBrowseWords = activeBrowsePreview?.words ?? [];
+  const currentBrowseWords = browseWords.length > 0 ? browseWords : previewBrowseWords;
+  const canFilterFullBrowseWords = browseWords.length > 0;
+  const filteredBrowseWords =
+    normalizedSearch && canFilterFullBrowseWords
+      ? currentBrowseWords.filter((word) =>
         word.word_lemma.toLowerCase().includes(normalizedSearch),
       )
-    : browseWords;
+      : currentBrowseWords;
+  const totalBrowseWords = canFilterFullBrowseWords
+    ? currentBrowseWords.length
+    : (activeBrowsePreview?.totalWords ?? currentBrowseWords.length);
   const totalBrowsePages = Math.max(
     1,
-    Math.ceil(filteredBrowseWords.length / WORDS_PER_PAGE),
+    normalizedSearch && canFilterFullBrowseWords
+      ? Math.ceil(filteredBrowseWords.length / WORDS_PER_PAGE)
+      : (activeBrowsePreview?.totalPages ?? Math.ceil(totalBrowseWords / WORDS_PER_PAGE) ?? 1),
   );
   const safeBrowsePage = Math.min(browsePage, Math.max(totalBrowsePages - 1, 0));
   const pageWords = filteredBrowseWords.slice(
@@ -730,13 +799,26 @@ export function VocabularyLevelPage({
           <input
             type="text"
             value={browseSearch}
+            onFocus={() => {
+              void activateBrowse();
+            }}
             onChange={(e) => {
+              if (browseWords.length === 0) {
+                void activateBrowse();
+              }
               setBrowseSearch(e.target.value);
               setBrowsePage(0);
             }}
             placeholder={browseWordsCopy.searchPlaceholder(levelDisplay)}
             className="mt-4 w-full rounded-xl border-2 border-primary/35 bg-primary/[0.06] px-4 py-3 text-base font-medium text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/35"
           />
+          <div className="mt-2 h-4">
+            {isBrowseLoading ? (
+              <p className="text-xs text-muted-foreground">
+                Loading full word list...
+              </p>
+            ) : null}
+          </div>
           {pageWords.length > 0 ? (
             <>
               <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
@@ -764,11 +846,17 @@ export function VocabularyLevelPage({
                       <button
                         key={item}
                         type="button"
-                        onClick={() => setBrowsePage(item)}
+                        onClick={async () => {
+                          if (item > 0 && browseWords.length === 0) {
+                            await activateBrowse();
+                          }
+                          setBrowsePage(item);
+                        }}
+                        disabled={isBrowseLoading && item !== safeBrowsePage}
                         className={
                           item === safeBrowsePage
                             ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
-                            : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
+                            : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground disabled:cursor-wait disabled:opacity-60"
                         }
                       >
                         {item + 1}
@@ -778,6 +866,10 @@ export function VocabularyLevelPage({
                 </div>
               )}
             </>
+          ) : currentBrowseWords.length > 0 ? (
+            <p className="mt-5 text-sm text-muted-foreground">
+              No words found for this search.
+            </p>
           ) : (
             <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
               {Array.from({ length: 12 }).map((_, i) => (
