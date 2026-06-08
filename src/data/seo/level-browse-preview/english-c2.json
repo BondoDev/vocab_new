@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "english",
+    "level":  "C2",
+    "totalWords":  1091,
+    "totalPages":  21,
+    "words":  [
+                  {
+                      "concept_id":  "C2-00001",
+                      "word_lemma":  "aberration"
+                  },
+                  {
+                      "concept_id":  "C2-00002",
+                      "word_lemma":  "abhor"
+                  },
+                  {
+                      "concept_id":  "C2-00003",
+                      "word_lemma":  "abhorrent"
+                  },
+                  {
+                      "concept_id":  "C2-00004",
+                      "word_lemma":  "abhorrently"
+                  },
+                  {
+                      "concept_id":  "C2-00005",
+                      "word_lemma":  "abject"
+                  },
+                  {
+                      "concept_id":  "C2-00006",
+                      "word_lemma":  "abundantly"
+                  },
+                  {
+                      "concept_id":  "C2-00007",
+                      "word_lemma":  "accountability"
+                  },
+                  {
+                      "concept_id":  "C2-00008",
+                      "word_lemma":  "accrue"
+                  },
+                  {
+                      "concept_id":  "C2-00009",
+                      "word_lemma":  "acreage"
+                  },
+                  {
+                      "concept_id":  "C2-00010",
+                      "word_lemma":  "acrobatic"
+                  },
+                  {
+                      "concept_id":  "C2-00011",
+                      "word_lemma":  "acrobatically"
+                  },
+                  {
+                      "concept_id":  "C2-00013",
+                      "word_lemma":  "acrobatics"
+                  },
+                  {
+                      "concept_id":  "C2-00014",
+                      "word_lemma":  "acrobatics"
+                  },
+                  {
+                      "concept_id":  "C2-00015",
+                      "word_lemma":  "ad lib"
+                  },
+                  {
+                      "concept_id":  "C2-00016",
+                      "word_lemma":  "additive"
+                  },
+                  {
+                      "concept_id":  "C2-00017",
+                      "word_lemma":  "adept"
+                  },
+                  {
+                      "concept_id":  "C2-00018",
+                      "word_lemma":  "adhere"
+                  },
+                  {
+                      "concept_id":  "C2-00019",
+                      "word_lemma":  "adhere"
+                  },
+                  {
+                      "concept_id":  "C2-00020",
+                      "word_lemma":  "adhesion"
+                  },
+                  {
+                      "concept_id":  "C2-00021",
+                      "word_lemma":  "ad-lib"
+                  },
+                  {
+                      "concept_id":  "C2-00022",
+                      "word_lemma":  "adornment"
+                  },
+                  {
+                      "concept_id":  "C2-00023",
+                      "word_lemma":  "adulterate"
+                  },
+                  {
+                      "concept_id":  "C2-00024",
+                      "word_lemma":  "affectation"
+                  },
+                  {
+                      "concept_id":  "C2-00025",
+                      "word_lemma":  "aghast"
+                  },
+                  {
+                      "concept_id":  "C2-00026",
+                      "word_lemma":  "agile"
+                  },
+                  {
+                      "concept_id":  "C2-00027",
+                      "word_lemma":  "agility"
+                  },
+                  {
+                      "concept_id":  "C2-00028",
+                      "word_lemma":  "allegorical"
+                  },
+                  {
+                      "concept_id":  "C2-00029",
+                      "word_lemma":  "allegory"
+                  },
+                  {
+                      "concept_id":  "C2-00030",
+                      "word_lemma":  "all-encompassing"
+                  },
+                  {
+                      "concept_id":  "C2-00031",
+                      "word_lemma":  "allot"
+                  },
+                  {
+                      "concept_id":  "C2-00032",
+                      "word_lemma":  "allotment"
+                  },
+                  {
+                      "concept_id":  "C2-00034",
+                      "word_lemma":  "allude"
+                  },
+                  {
+                      "concept_id":  "C2-00035",
+                      "word_lemma":  "allusion"
+                  },
+                  {
+                      "concept_id":  "C2-00036",
+                      "word_lemma":  "amorphous"
+                  },
+                  {
+                      "concept_id":  "C2-00037",
+                      "word_lemma":  "amorphously"
+                  },
+                  {
+                      "concept_id":  "C2-00038",
+                      "word_lemma":  "anarchic"
+                  },
+                  {
+                      "concept_id":  "C2-00039",
+                      "word_lemma":  "angst"
+                  },
+                  {
+                      "concept_id":  "C2-00040",
+                      "word_lemma":  "angsty"
+                  },
+                  {
+                      "concept_id":  "C2-00041",
+                      "word_lemma":  "angular"
+                  },
+                  {
+                      "concept_id":  "C2-00042",
+                      "word_lemma":  "angularity"
+                  },
+                  {
+                      "concept_id":  "C2-00043",
+                      "word_lemma":  "annex"
+                  },
+                  {
+                      "concept_id":  "C2-00044",
+                      "word_lemma":  "annex"
+                  },
+                  {
+                      "concept_id":  "C2-00045",
+                      "word_lemma":  "anonymity"
+                  },
+                  {
+                      "concept_id":  "C2-00046",
+                      "word_lemma":  "antediluvian"
+                  },
+                  {
+                      "concept_id":  "C2-00047",
+                      "word_lemma":  "anthology"
+                  },
+                  {
+                      "concept_id":  "C2-00048",
+                      "word_lemma":  "anthropological"
+                  },
+                  {
+                      "concept_id":  "C2-00049",
+                      "word_lemma":  "anthropologically"
+                  },
+                  {
+                      "concept_id":  "C2-00050",
+                      "word_lemma":  "anticlimactically"
+                  },
+                  {
+                      "concept_id":  "C2-00051",
+                      "word_lemma":  "antidote"
+                  },
+                  {
+                      "concept_id":  "C2-00052",
+                      "word_lemma":  "antidote"
+                  },
+                  {
+                      "concept_id":  "C2-00053",
+                      "word_lemma":  "antithesis"
+                  },
+                  {
+                      "concept_id":  "C2-00054",
+                      "word_lemma":  "antithetical"
+                  },
+                  {
+                      "concept_id":  "C2-00055",
+                      "word_lemma":  "apostle"
+                  },
+                  {
+                      "concept_id":  "C2-00056",
+                      "word_lemma":  "apostle"
+                  }
+              ]
+}

@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "german",
+    "level":  "A2",
+    "totalWords":  1218,
+    "totalPages":  23,
+    "words":  [
+                  {
+                      "concept_id":  "A2-00001",
+                      "word_lemma":  "Fähigkeit"
+                  },
+                  {
+                      "concept_id":  "A2-00002",
+                      "word_lemma":  "im Ausland"
+                  },
+                  {
+                      "concept_id":  "A2-00003",
+                      "word_lemma":  "akzeptieren"
+                  },
+                  {
+                      "concept_id":  "A2-00005",
+                      "word_lemma":  "Unfall"
+                  },
+                  {
+                      "concept_id":  "A2-00006",
+                      "word_lemma":  "Konto"
+                  },
+                  {
+                      "concept_id":  "A2-00009",
+                      "word_lemma":  "gegenüber"
+                  },
+                  {
+                      "concept_id":  "A2-00011",
+                      "word_lemma":  "Akt"
+                  },
+                  {
+                      "concept_id":  "A2-00012",
+                      "word_lemma":  "spielen"
+                  },
+                  {
+                      "concept_id":  "A2-00013",
+                      "word_lemma":  "eigentlich"
+                  },
+                  {
+                      "concept_id":  "A2-00014",
+                      "word_lemma":  "Addition"
+                  },
+                  {
+                      "concept_id":  "A2-00017",
+                      "word_lemma":  "Adjektiv"
+                  },
+                  {
+                      "concept_id":  "A2-00021",
+                      "word_lemma":  "Erwachsener"
+                  },
+                  {
+                      "concept_id":  "A2-00024",
+                      "word_lemma":  "Abenteuer"
+                  },
+                  {
+                      "concept_id":  "A2-00025",
+                      "word_lemma":  "Werbung"
+                  },
+                  {
+                      "concept_id":  "A2-00027",
+                      "word_lemma":  "Rat"
+                  },
+                  {
+                      "concept_id":  "A2-00030",
+                      "word_lemma":  "gegen"
+                  },
+                  {
+                      "concept_id":  "A2-00034",
+                      "word_lemma":  "voraus"
+                  },
+                  {
+                      "concept_id":  "A2-00035",
+                      "word_lemma":  "Luft"
+                  },
+                  {
+                      "concept_id":  "A2-00037",
+                      "word_lemma":  "Alarm"
+                  },
+                  {
+                      "concept_id":  "A2-00038",
+                      "word_lemma":  "Wecker"
+                  },
+                  {
+                      "concept_id":  "A2-00039",
+                      "word_lemma":  "lebendig"
+                  },
+                  {
+                      "concept_id":  "A2-00040",
+                      "word_lemma":  "erlauben"
+                  },
+                  {
+                      "concept_id":  "A2-00041",
+                      "word_lemma":  "in Ordnung"
+                  },
+                  {
+                      "concept_id":  "A2-00044",
+                      "word_lemma":  "unter"
+                  },
+                  {
+                      "concept_id":  "A2-00045",
+                      "word_lemma":  "Amsterdam"
+                  },
+                  {
+                      "concept_id":  "A2-00049",
+                      "word_lemma":  "antik"
+                  },
+                  {
+                      "concept_id":  "A2-00051",
+                      "word_lemma":  "wütend"
+                  },
+                  {
+                      "concept_id":  "A2-00052",
+                      "word_lemma":  "Knöchel"
+                  },
+                  {
+                      "concept_id":  "A2-00055",
+                      "word_lemma":  "nervig"
+                  },
+                  {
+                      "concept_id":  "A2-00057",
+                      "word_lemma":  "nicht mehr"
+                  },
+                  {
+                      "concept_id":  "A2-00058",
+                      "word_lemma":  "trotzdem"
+                  },
+                  {
+                      "concept_id":  "A2-00059",
+                      "word_lemma":  "überall"
+                  },
+                  {
+                      "concept_id":  "A2-00061",
+                      "word_lemma":  "Wohnung"
+                  },
+                  {
+                      "concept_id":  "A2-00062",
+                      "word_lemma":  "sich entschuldigen"
+                  },
+                  {
+                      "concept_id":  "A2-00067",
+                      "word_lemma":  "Termin"
+                  },
+                  {
+                      "concept_id":  "A2-00071",
+                      "word_lemma":  "Gebiet"
+                  },
+                  {
+                      "concept_id":  "A2-00072",
+                      "word_lemma":  "streiten"
+                  },
+                  {
+                      "concept_id":  "A2-00073",
+                      "word_lemma":  "Streit"
+                  },
+                  {
+                      "concept_id":  "A2-00074",
+                      "word_lemma":  "Sessel"
+                  },
+                  {
+                      "concept_id":  "A2-00077",
+                      "word_lemma":  "eingeschlafen"
+                  },
+                  {
+                      "concept_id":  "A2-00078",
+                      "word_lemma":  "Assistent"
+                  },
+                  {
+                      "concept_id":  "A2-00080",
+                      "word_lemma":  "Astronaut"
+                  },
+                  {
+                      "concept_id":  "A2-00081",
+                      "word_lemma":  "Athen"
+                  },
+                  {
+                      "concept_id":  "A2-00082",
+                      "word_lemma":  "Sportler"
+                  },
+                  {
+                      "concept_id":  "A2-00085",
+                      "word_lemma":  "angreifen"
+                  },
+                  {
+                      "concept_id":  "A2-00088",
+                      "word_lemma":  "Aufmerksamkeit"
+                  },
+                  {
+                      "concept_id":  "A2-00091",
+                      "word_lemma":  "Publikum"
+                  },
+                  {
+                      "concept_id":  "A2-00093",
+                      "word_lemma":  "Australien"
+                  },
+                  {
+                      "concept_id":  "A2-00094",
+                      "word_lemma":  "Australier"
+                  },
+                  {
+                      "concept_id":  "A2-00096",
+                      "word_lemma":  "Autor"
+                  },
+                  {
+                      "concept_id":  "A2-00099",
+                      "word_lemma":  "durchschnittlich"
+                  },
+                  {
+                      "concept_id":  "A2-00100",
+                      "word_lemma":  "Durchschnitt"
+                  },
+                  {
+                      "concept_id":  "A2-00101",
+                      "word_lemma":  "vermeiden"
+                  },
+                  {
+                      "concept_id":  "A2-00104",
+                      "word_lemma":  "schrecklich"
+                  }
+              ]
+}

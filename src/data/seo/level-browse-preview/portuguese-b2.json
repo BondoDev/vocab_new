@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "portuguese",
+    "level":  "B2",
+    "totalWords":  3055,
+    "totalPages":  57,
+    "words":  [
+                  {
+                      "concept_id":  "B2-00001",
+                      "word_lemma":  "abandonado"
+                  },
+                  {
+                      "concept_id":  "B2-00002",
+                      "word_lemma":  "anormalmente"
+                  },
+                  {
+                      "concept_id":  "B2-00003",
+                      "word_lemma":  "abolir"
+                  },
+                  {
+                      "concept_id":  "B2-00004",
+                      "word_lemma":  "aborígene"
+                  },
+                  {
+                      "concept_id":  "B2-00005",
+                      "word_lemma":  "abruptamente"
+                  },
+                  {
+                      "concept_id":  "B2-00006",
+                      "word_lemma":  "faltoso"
+                  },
+                  {
+                      "concept_id":  "B2-00007",
+                      "word_lemma":  "absurdo"
+                  },
+                  {
+                      "concept_id":  "B2-00012",
+                      "word_lemma":  "acessibilidade"
+                  },
+                  {
+                      "concept_id":  "B2-00013",
+                      "word_lemma":  "acomodação"
+                  },
+                  {
+                      "concept_id":  "B2-00014",
+                      "word_lemma":  "em conformidade"
+                  },
+                  {
+                      "concept_id":  "B2-00015",
+                      "word_lemma":  "acumular"
+                  },
+                  {
+                      "concept_id":  "B2-00016",
+                      "word_lemma":  "acusação"
+                  },
+                  {
+                      "concept_id":  "B2-00017",
+                      "word_lemma":  "alcançável"
+                  },
+                  {
+                      "concept_id":  "B2-00018",
+                      "word_lemma":  "ácido"
+                  },
+                  {
+                      "concept_id":  "B2-00019",
+                      "word_lemma":  "aquisição"
+                  },
+                  {
+                      "concept_id":  "B2-00020",
+                      "word_lemma":  "ativamente"
+                  },
+                  {
+                      "concept_id":  "B2-00021",
+                      "word_lemma":  "real"
+                  },
+                  {
+                      "concept_id":  "B2-00022",
+                      "word_lemma":  "agudo"
+                  },
+                  {
+                      "concept_id":  "B2-00024",
+                      "word_lemma":  "adaptável"
+                  },
+                  {
+                      "concept_id":  "B2-00025",
+                      "word_lemma":  "viciado"
+                  },
+                  {
+                      "concept_id":  "B2-00026",
+                      "word_lemma":  "viciado"
+                  },
+                  {
+                      "concept_id":  "B2-00027",
+                      "word_lemma":  "vício"
+                  },
+                  {
+                      "concept_id":  "B2-00028",
+                      "word_lemma":  "adicionalmente"
+                  },
+                  {
+                      "concept_id":  "B2-00029",
+                      "word_lemma":  "adequado"
+                  },
+                  {
+                      "concept_id":  "B2-00030",
+                      "word_lemma":  "adequadamente"
+                  },
+                  {
+                      "concept_id":  "B2-00031",
+                      "word_lemma":  "ajuste"
+                  },
+                  {
+                      "concept_id":  "B2-00032",
+                      "word_lemma":  "administrativo"
+                  },
+                  {
+                      "concept_id":  "B2-00033",
+                      "word_lemma":  "admirável"
+                  },
+                  {
+                      "concept_id":  "B2-00034",
+                      "word_lemma":  "admiradamente"
+                  },
+                  {
+                      "concept_id":  "B2-00035",
+                      "word_lemma":  "admitidamente"
+                  },
+                  {
+                      "concept_id":  "B2-00036",
+                      "word_lemma":  "adotado"
+                  },
+                  {
+                      "concept_id":  "B2-00037",
+                      "word_lemma":  "adoção"
+                  },
+                  {
+                      "concept_id":  "B2-00038",
+                      "word_lemma":  "adorar"
+                  },
+                  {
+                      "concept_id":  "B2-00040",
+                      "word_lemma":  "avanço"
+                  },
+                  {
+                      "concept_id":  "B2-00042",
+                      "word_lemma":  "aventureiro"
+                  },
+                  {
+                      "concept_id":  "B2-00043",
+                      "word_lemma":  "adverso"
+                  },
+                  {
+                      "concept_id":  "B2-00044",
+                      "word_lemma":  "adversamente"
+                  },
+                  {
+                      "concept_id":  "B2-00045",
+                      "word_lemma":  "adversidade"
+                  },
+                  {
+                      "concept_id":  "B2-00046",
+                      "word_lemma":  "afetuoso"
+                  },
+                  {
+                      "concept_id":  "B2-00047",
+                      "word_lemma":  "afetuosamente"
+                  },
+                  {
+                      "concept_id":  "B2-00048",
+                      "word_lemma":  "acessível"
+                  },
+                  {
+                      "concept_id":  "B2-00049",
+                      "word_lemma":  "que não envelhece"
+                  },
+                  {
+                      "concept_id":  "B2-00050",
+                      "word_lemma":  "agressivamente"
+                  },
+                  {
+                      "concept_id":  "B2-00051",
+                      "word_lemma":  "angustiar-se"
+                  },
+                  {
+                      "concept_id":  "B2-00052",
+                      "word_lemma":  "agonia"
+                  },
+                  {
+                      "concept_id":  "B2-00053",
+                      "word_lemma":  "aeronave"
+                  },
+                  {
+                      "concept_id":  "B2-00054",
+                      "word_lemma":  "tripulação aérea"
+                  },
+                  {
+                      "concept_id":  "B2-00055",
+                      "word_lemma":  "alcoolismo"
+                  },
+                  {
+                      "concept_id":  "B2-00058",
+                      "word_lemma":  "alegação"
+                  },
+                  {
+                      "concept_id":  "B2-00059",
+                      "word_lemma":  "aliança"
+                  },
+                  {
+                      "concept_id":  "B2-00062",
+                      "word_lemma":  "ao lado de"
+                  },
+                  {
+                      "concept_id":  "B2-00063",
+                      "word_lemma":  "alfabético"
+                  },
+                  {
+                      "concept_id":  "B2-00064",
+                      "word_lemma":  "altar"
+                  },
+                  {
+                      "concept_id":  "B2-00065",
+                      "word_lemma":  "alterar"
+                  }
+              ]
+}

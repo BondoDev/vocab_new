@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "italian",
+    "level":  "A1",
+    "totalWords":  938,
+    "totalPages":  18,
+    "words":  [
+                  {
+                      "concept_id":  "A1-00002",
+                      "word_lemma":  "sopra"
+                  },
+                  {
+                      "concept_id":  "A1-00003",
+                      "word_lemma":  "azione"
+                  },
+                  {
+                      "concept_id":  "A1-00004",
+                      "word_lemma":  "attività"
+                  },
+                  {
+                      "concept_id":  "A1-00005",
+                      "word_lemma":  "attore"
+                  },
+                  {
+                      "concept_id":  "A1-00006",
+                      "word_lemma":  "aggiungere"
+                  },
+                  {
+                      "concept_id":  "A1-00007",
+                      "word_lemma":  "indirizzo"
+                  },
+                  {
+                      "concept_id":  "A1-00009",
+                      "word_lemma":  "spaventato"
+                  },
+                  {
+                      "concept_id":  "A1-00010",
+                      "word_lemma":  "dopo"
+                  },
+                  {
+                      "concept_id":  "A1-00011",
+                      "word_lemma":  "pomeriggio"
+                  },
+                  {
+                      "concept_id":  "A1-00012",
+                      "word_lemma":  "di nuovo"
+                  },
+                  {
+                      "concept_id":  "A1-00013",
+                      "word_lemma":  "età"
+                  },
+                  {
+                      "concept_id":  "A1-00015",
+                      "word_lemma":  "essere d\u0027accordo"
+                  },
+                  {
+                      "concept_id":  "A1-00016",
+                      "word_lemma":  "aereo"
+                  },
+                  {
+                      "concept_id":  "A1-00017",
+                      "word_lemma":  "aeroporto"
+                  },
+                  {
+                      "concept_id":  "A1-00018",
+                      "word_lemma":  "album"
+                  },
+                  {
+                      "concept_id":  "A1-00019",
+                      "word_lemma":  "tutto"
+                  },
+                  {
+                      "concept_id":  "A1-00020",
+                      "word_lemma":  "a posto"
+                  },
+                  {
+                      "concept_id":  "A1-00025",
+                      "word_lemma":  "anche"
+                  },
+                  {
+                      "concept_id":  "A1-00026",
+                      "word_lemma":  "sempre"
+                  },
+                  {
+                      "concept_id":  "A1-00027",
+                      "word_lemma":  "sono"
+                  },
+                  {
+                      "concept_id":  "A1-00028",
+                      "word_lemma":  "americano"
+                  },
+                  {
+                      "concept_id":  "A1-00030",
+                      "word_lemma":  "arrabbiato"
+                  },
+                  {
+                      "concept_id":  "A1-00031",
+                      "word_lemma":  "animale"
+                  },
+                  {
+                      "concept_id":  "A1-00032",
+                      "word_lemma":  "un altro"
+                  },
+                  {
+                      "concept_id":  "A1-00033",
+                      "word_lemma":  "risposta"
+                  },
+                  {
+                      "concept_id":  "A1-00034",
+                      "word_lemma":  "rispondere"
+                  },
+                  {
+                      "concept_id":  "A1-00035",
+                      "word_lemma":  "qualsiasi"
+                  },
+                  {
+                      "concept_id":  "A1-00036",
+                      "word_lemma":  "qualcuno"
+                  },
+                  {
+                      "concept_id":  "A1-00037",
+                      "word_lemma":  "chiunque"
+                  },
+                  {
+                      "concept_id":  "A1-00038",
+                      "word_lemma":  "qualsiasi cosa"
+                  },
+                  {
+                      "concept_id":  "A1-00039",
+                      "word_lemma":  "mela"
+                  },
+                  {
+                      "concept_id":  "A1-00040",
+                      "word_lemma":  "aprile"
+                  },
+                  {
+                      "concept_id":  "A1-00042",
+                      "word_lemma":  "cugina"
+                  },
+                  {
+                      "concept_id":  "A1-00043",
+                      "word_lemma":  "braccio"
+                  },
+                  {
+                      "concept_id":  "A1-00044",
+                      "word_lemma":  "intorno a"
+                  },
+                  {
+                      "concept_id":  "A1-00045",
+                      "word_lemma":  "arrivare"
+                  },
+                  {
+                      "concept_id":  "A1-00046",
+                      "word_lemma":  "arte"
+                  },
+                  {
+                      "concept_id":  "A1-00048",
+                      "word_lemma":  "vasca"
+                  },
+                  {
+                      "concept_id":  "A1-00049",
+                      "word_lemma":  "chiedere"
+                  },
+                  {
+                      "concept_id":  "A1-00051",
+                      "word_lemma":  "agosto"
+                  },
+                  {
+                      "concept_id":  "A1-00052",
+                      "word_lemma":  "zia"
+                  },
+                  {
+                      "concept_id":  "A1-00053",
+                      "word_lemma":  "autunno"
+                  },
+                  {
+                      "concept_id":  "A1-00056",
+                      "word_lemma":  "via"
+                  },
+                  {
+                      "concept_id":  "A1-00057",
+                      "word_lemma":  "bambino"
+                  },
+                  {
+                      "concept_id":  "A1-00058",
+                      "word_lemma":  "schiena"
+                  },
+                  {
+                      "concept_id":  "A1-00059",
+                      "word_lemma":  "indietro"
+                  },
+                  {
+                      "concept_id":  "A1-00060",
+                      "word_lemma":  "cattivo"
+                  },
+                  {
+                      "concept_id":  "A1-00061",
+                      "word_lemma":  "borsa"
+                  },
+                  {
+                      "concept_id":  "A1-00062",
+                      "word_lemma":  "palla"
+                  },
+                  {
+                      "concept_id":  "A1-00063",
+                      "word_lemma":  "banana"
+                  },
+                  {
+                      "concept_id":  "A1-00064",
+                      "word_lemma":  "gruppo"
+                  },
+                  {
+                      "concept_id":  "A1-00065",
+                      "word_lemma":  "banca"
+                  },
+                  {
+                      "concept_id":  "A1-00070",
+                      "word_lemma":  "pallacanestro"
+                  },
+                  {
+                      "concept_id":  "A1-00072",
+                      "word_lemma":  "bagno"
+                  }
+              ]
+}

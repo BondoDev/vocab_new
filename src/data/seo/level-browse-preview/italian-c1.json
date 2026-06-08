@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "italian",
+    "level":  "C1",
+    "totalWords":  1480,
+    "totalPages":  28,
+    "words":  [
+                  {
+                      "concept_id":  "C1-00001",
+                      "word_lemma":  "abbondare"
+                  },
+                  {
+                      "concept_id":  "C1-00002",
+                      "word_lemma":  "astrazione"
+                  },
+                  {
+                      "concept_id":  "C1-00004",
+                      "word_lemma":  "acido"
+                  },
+                  {
+                      "concept_id":  "C1-00005",
+                      "word_lemma":  "acustico"
+                  },
+                  {
+                      "concept_id":  "C1-00006",
+                      "word_lemma":  "acusticamente"
+                  },
+                  {
+                      "concept_id":  "C1-00007",
+                      "word_lemma":  "acustica"
+                  },
+                  {
+                      "concept_id":  "C1-00009",
+                      "word_lemma":  "acutamente"
+                  },
+                  {
+                      "concept_id":  "C1-00010",
+                      "word_lemma":  "confinare"
+                  },
+                  {
+                      "concept_id":  "C1-00013",
+                      "word_lemma":  "adrenalina"
+                  },
+                  {
+                      "concept_id":  "C1-00014",
+                      "word_lemma":  "vantaggioso"
+                  },
+                  {
+                      "concept_id":  "C1-00015",
+                      "word_lemma":  "avversario"
+                  },
+                  {
+                      "concept_id":  "C1-00016",
+                      "word_lemma":  "consultivo"
+                  },
+                  {
+                      "concept_id":  "C1-00017",
+                      "word_lemma":  "estetico"
+                  },
+                  {
+                      "concept_id":  "C1-00018",
+                      "word_lemma":  "esteticamente"
+                  },
+                  {
+                      "concept_id":  "C1-00022",
+                      "word_lemma":  "alienare"
+                  },
+                  {
+                      "concept_id":  "C1-00023",
+                      "word_lemma":  "allineare"
+                  },
+                  {
+                      "concept_id":  "C1-00024",
+                      "word_lemma":  "allinearsi"
+                  },
+                  {
+                      "concept_id":  "C1-00025",
+                      "word_lemma":  "allineamento"
+                  },
+                  {
+                      "concept_id":  "C1-00026",
+                      "word_lemma":  "allineamento"
+                  },
+                  {
+                      "concept_id":  "C1-00027",
+                      "word_lemma":  "allegare"
+                  },
+                  {
+                      "concept_id":  "C1-00028",
+                      "word_lemma":  "alleviare"
+                  },
+                  {
+                      "concept_id":  "C1-00029",
+                      "word_lemma":  "Almaty"
+                  },
+                  {
+                      "concept_id":  "C1-00030",
+                      "word_lemma":  "altruismo"
+                  },
+                  {
+                      "concept_id":  "C1-00031",
+                      "word_lemma":  "altruista"
+                  },
+                  {
+                      "concept_id":  "C1-00033",
+                      "word_lemma":  "in mezzo a"
+                  },
+                  {
+                      "concept_id":  "C1-00034",
+                      "word_lemma":  "Amman"
+                  },
+                  {
+                      "concept_id":  "C1-00035",
+                      "word_lemma":  "amplificazione"
+                  },
+                  {
+                      "concept_id":  "C1-00036",
+                      "word_lemma":  "ampiamente"
+                  },
+                  {
+                      "concept_id":  "C1-00037",
+                      "word_lemma":  "ancorato"
+                  },
+                  {
+                      "concept_id":  "C1-00038",
+                      "word_lemma":  "ancorato"
+                  },
+                  {
+                      "concept_id":  "C1-00039",
+                      "word_lemma":  "animatamente"
+                  },
+                  {
+                      "concept_id":  "C1-00040",
+                      "word_lemma":  "antropologo"
+                  },
+                  {
+                      "concept_id":  "C1-00041",
+                      "word_lemma":  "antropologia"
+                  },
+                  {
+                      "concept_id":  "C1-00042",
+                      "word_lemma":  "anticlimatico"
+                  },
+                  {
+                      "concept_id":  "C1-00044",
+                      "word_lemma":  "antiquato"
+                  },
+                  {
+                      "concept_id":  "C1-00045",
+                      "word_lemma":  "antichità"
+                  },
+                  {
+                      "concept_id":  "C1-00046",
+                      "word_lemma":  "inorridire"
+                  },
+                  {
+                      "concept_id":  "C1-00047",
+                      "word_lemma":  "agghiacciante"
+                  },
+                  {
+                      "concept_id":  "C1-00048",
+                      "word_lemma":  "in modo agghiacciante"
+                  },
+                  {
+                      "concept_id":  "C1-00050",
+                      "word_lemma":  "apprensivo"
+                  },
+                  {
+                      "concept_id":  "C1-00053",
+                      "word_lemma":  "portato"
+                  },
+                  {
+                      "concept_id":  "C1-00054",
+                      "word_lemma":  "azzeccato"
+                  },
+                  {
+                      "concept_id":  "C1-00058",
+                      "word_lemma":  "artisticamente"
+                  },
+                  {
+                      "concept_id":  "C1-00059",
+                      "word_lemma":  "affermazione"
+                  },
+                  {
+                      "concept_id":  "C1-00061",
+                      "word_lemma":  "atmosferico"
+                  },
+                  {
+                      "concept_id":  "C1-00062",
+                      "word_lemma":  "atmosferico"
+                  },
+                  {
+                      "concept_id":  "C1-00063",
+                      "word_lemma":  "accanito"
+                  },
+                  {
+                      "concept_id":  "C1-00064",
+                      "word_lemma":  "Azerbaigian"
+                  },
+                  {
+                      "concept_id":  "C1-00065",
+                      "word_lemma":  "azero"
+                  },
+                  {
+                      "concept_id":  "C1-00066",
+                      "word_lemma":  "Baku"
+                  },
+                  {
+                      "concept_id":  "C1-00067",
+                      "word_lemma":  "senza mezzi termini"
+                  },
+                  {
+                      "concept_id":  "C1-00072",
+                      "word_lemma":  "ammaliante"
+                  },
+                  {
+                      "concept_id":  "C1-00073",
+                      "word_lemma":  "in modo ammaliante"
+                  },
+                  {
+                      "concept_id":  "C1-00074",
+                      "word_lemma":  "Beirut"
+                  }
+              ]
+}

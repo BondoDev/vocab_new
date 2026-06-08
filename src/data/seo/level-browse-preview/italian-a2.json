@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "italian",
+    "level":  "A2",
+    "totalWords":  1220,
+    "totalPages":  23,
+    "words":  [
+                  {
+                      "concept_id":  "A2-00001",
+                      "word_lemma":  "abilità"
+                  },
+                  {
+                      "concept_id":  "A2-00002",
+                      "word_lemma":  "all\u0027estero"
+                  },
+                  {
+                      "concept_id":  "A2-00003",
+                      "word_lemma":  "accettare"
+                  },
+                  {
+                      "concept_id":  "A2-00005",
+                      "word_lemma":  "incidente"
+                  },
+                  {
+                      "concept_id":  "A2-00006",
+                      "word_lemma":  "conto"
+                  },
+                  {
+                      "concept_id":  "A2-00009",
+                      "word_lemma":  "dall\u0027altra parte di"
+                  },
+                  {
+                      "concept_id":  "A2-00011",
+                      "word_lemma":  "atto"
+                  },
+                  {
+                      "concept_id":  "A2-00012",
+                      "word_lemma":  "recitare"
+                  },
+                  {
+                      "concept_id":  "A2-00013",
+                      "word_lemma":  "in realtà"
+                  },
+                  {
+                      "concept_id":  "A2-00014",
+                      "word_lemma":  "addizione"
+                  },
+                  {
+                      "concept_id":  "A2-00017",
+                      "word_lemma":  "aggettivo"
+                  },
+                  {
+                      "concept_id":  "A2-00021",
+                      "word_lemma":  "adulto"
+                  },
+                  {
+                      "concept_id":  "A2-00024",
+                      "word_lemma":  "avventura"
+                  },
+                  {
+                      "concept_id":  "A2-00025",
+                      "word_lemma":  "pubblicità"
+                  },
+                  {
+                      "concept_id":  "A2-00027",
+                      "word_lemma":  "consiglio"
+                  },
+                  {
+                      "concept_id":  "A2-00030",
+                      "word_lemma":  "contro"
+                  },
+                  {
+                      "concept_id":  "A2-00034",
+                      "word_lemma":  "avanti"
+                  },
+                  {
+                      "concept_id":  "A2-00035",
+                      "word_lemma":  "aria"
+                  },
+                  {
+                      "concept_id":  "A2-00037",
+                      "word_lemma":  "allarme"
+                  },
+                  {
+                      "concept_id":  "A2-00038",
+                      "word_lemma":  "sveglia"
+                  },
+                  {
+                      "concept_id":  "A2-00039",
+                      "word_lemma":  "vivo"
+                  },
+                  {
+                      "concept_id":  "A2-00040",
+                      "word_lemma":  "permettere"
+                  },
+                  {
+                      "concept_id":  "A2-00041",
+                      "word_lemma":  "a posto"
+                  },
+                  {
+                      "concept_id":  "A2-00044",
+                      "word_lemma":  "tra"
+                  },
+                  {
+                      "concept_id":  "A2-00045",
+                      "word_lemma":  "Amsterdam"
+                  },
+                  {
+                      "concept_id":  "A2-00049",
+                      "word_lemma":  "antico"
+                  },
+                  {
+                      "concept_id":  "A2-00051",
+                      "word_lemma":  "rabbiosamente"
+                  },
+                  {
+                      "concept_id":  "A2-00052",
+                      "word_lemma":  "caviglia"
+                  },
+                  {
+                      "concept_id":  "A2-00055",
+                      "word_lemma":  "fastidioso"
+                  },
+                  {
+                      "concept_id":  "A2-00057",
+                      "word_lemma":  "più"
+                  },
+                  {
+                      "concept_id":  "A2-00058",
+                      "word_lemma":  "comunque"
+                  },
+                  {
+                      "concept_id":  "A2-00059",
+                      "word_lemma":  "ovunque"
+                  },
+                  {
+                      "concept_id":  "A2-00061",
+                      "word_lemma":  "appartamento"
+                  },
+                  {
+                      "concept_id":  "A2-00062",
+                      "word_lemma":  "scusarsi"
+                  },
+                  {
+                      "concept_id":  "A2-00067",
+                      "word_lemma":  "appuntamento"
+                  },
+                  {
+                      "concept_id":  "A2-00071",
+                      "word_lemma":  "zona"
+                  },
+                  {
+                      "concept_id":  "A2-00072",
+                      "word_lemma":  "litigare"
+                  },
+                  {
+                      "concept_id":  "A2-00073",
+                      "word_lemma":  "litigio"
+                  },
+                  {
+                      "concept_id":  "A2-00074",
+                      "word_lemma":  "poltrona"
+                  },
+                  {
+                      "concept_id":  "A2-00077",
+                      "word_lemma":  "addormentato"
+                  },
+                  {
+                      "concept_id":  "A2-00078",
+                      "word_lemma":  "assistente"
+                  },
+                  {
+                      "concept_id":  "A2-00080",
+                      "word_lemma":  "astronauta"
+                  },
+                  {
+                      "concept_id":  "A2-00081",
+                      "word_lemma":  "Atene"
+                  },
+                  {
+                      "concept_id":  "A2-00082",
+                      "word_lemma":  "atleta"
+                  },
+                  {
+                      "concept_id":  "A2-00085",
+                      "word_lemma":  "attaccare"
+                  },
+                  {
+                      "concept_id":  "A2-00088",
+                      "word_lemma":  "attenzione"
+                  },
+                  {
+                      "concept_id":  "A2-00091",
+                      "word_lemma":  "pubblico"
+                  },
+                  {
+                      "concept_id":  "A2-00093",
+                      "word_lemma":  "Australia"
+                  },
+                  {
+                      "concept_id":  "A2-00094",
+                      "word_lemma":  "australiano"
+                  },
+                  {
+                      "concept_id":  "A2-00096",
+                      "word_lemma":  "autore"
+                  },
+                  {
+                      "concept_id":  "A2-00099",
+                      "word_lemma":  "media"
+                  },
+                  {
+                      "concept_id":  "A2-00100",
+                      "word_lemma":  "media"
+                  },
+                  {
+                      "concept_id":  "A2-00101",
+                      "word_lemma":  "evitare"
+                  },
+                  {
+                      "concept_id":  "A2-00104",
+                      "word_lemma":  "terribile"
+                  }
+              ]
+}

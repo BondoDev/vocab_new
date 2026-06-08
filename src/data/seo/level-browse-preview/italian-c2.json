@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "italian",
+    "level":  "C2",
+    "totalWords":  1090,
+    "totalPages":  21,
+    "words":  [
+                  {
+                      "concept_id":  "C2-00001",
+                      "word_lemma":  "aberrazione"
+                  },
+                  {
+                      "concept_id":  "C2-00002",
+                      "word_lemma":  "aborrire"
+                  },
+                  {
+                      "concept_id":  "C2-00003",
+                      "word_lemma":  "abominevole"
+                  },
+                  {
+                      "concept_id":  "C2-00004",
+                      "word_lemma":  "abominevolmente"
+                  },
+                  {
+                      "concept_id":  "C2-00005",
+                      "word_lemma":  "abietto"
+                  },
+                  {
+                      "concept_id":  "C2-00006",
+                      "word_lemma":  "abbondantemente"
+                  },
+                  {
+                      "concept_id":  "C2-00007",
+                      "word_lemma":  "responsabilità"
+                  },
+                  {
+                      "concept_id":  "C2-00008",
+                      "word_lemma":  "accumulare"
+                  },
+                  {
+                      "concept_id":  "C2-00009",
+                      "word_lemma":  "superficie in acri"
+                  },
+                  {
+                      "concept_id":  "C2-00010",
+                      "word_lemma":  "acrobatico"
+                  },
+                  {
+                      "concept_id":  "C2-00011",
+                      "word_lemma":  "acrobaticamente"
+                  },
+                  {
+                      "concept_id":  "C2-00013",
+                      "word_lemma":  "acrobazie"
+                  },
+                  {
+                      "concept_id":  "C2-00014",
+                      "word_lemma":  "acrobazie"
+                  },
+                  {
+                      "concept_id":  "C2-00015",
+                      "word_lemma":  "improvvisazione"
+                  },
+                  {
+                      "concept_id":  "C2-00016",
+                      "word_lemma":  "additivo"
+                  },
+                  {
+                      "concept_id":  "C2-00017",
+                      "word_lemma":  "abile"
+                  },
+                  {
+                      "concept_id":  "C2-00018",
+                      "word_lemma":  "attenersi"
+                  },
+                  {
+                      "concept_id":  "C2-00019",
+                      "word_lemma":  "aderire"
+                  },
+                  {
+                      "concept_id":  "C2-00020",
+                      "word_lemma":  "adesione"
+                  },
+                  {
+                      "concept_id":  "C2-00021",
+                      "word_lemma":  "improvvisare"
+                  },
+                  {
+                      "concept_id":  "C2-00022",
+                      "word_lemma":  "ornamento"
+                  },
+                  {
+                      "concept_id":  "C2-00023",
+                      "word_lemma":  "adulterare"
+                  },
+                  {
+                      "concept_id":  "C2-00024",
+                      "word_lemma":  "affettazione"
+                  },
+                  {
+                      "concept_id":  "C2-00025",
+                      "word_lemma":  "inorridito"
+                  },
+                  {
+                      "concept_id":  "C2-00026",
+                      "word_lemma":  "agile"
+                  },
+                  {
+                      "concept_id":  "C2-00027",
+                      "word_lemma":  "agilità"
+                  },
+                  {
+                      "concept_id":  "C2-00028",
+                      "word_lemma":  "allegorico"
+                  },
+                  {
+                      "concept_id":  "C2-00029",
+                      "word_lemma":  "allegoria"
+                  },
+                  {
+                      "concept_id":  "C2-00030",
+                      "word_lemma":  "onnicomprensivo"
+                  },
+                  {
+                      "concept_id":  "C2-00031",
+                      "word_lemma":  "destinare"
+                  },
+                  {
+                      "concept_id":  "C2-00032",
+                      "word_lemma":  "quota"
+                  },
+                  {
+                      "concept_id":  "C2-00034",
+                      "word_lemma":  "alludere"
+                  },
+                  {
+                      "concept_id":  "C2-00035",
+                      "word_lemma":  "allusione"
+                  },
+                  {
+                      "concept_id":  "C2-00036",
+                      "word_lemma":  "amorfo"
+                  },
+                  {
+                      "concept_id":  "C2-00037",
+                      "word_lemma":  "amorficamente"
+                  },
+                  {
+                      "concept_id":  "C2-00038",
+                      "word_lemma":  "anarchico"
+                  },
+                  {
+                      "concept_id":  "C2-00039",
+                      "word_lemma":  "angoscia"
+                  },
+                  {
+                      "concept_id":  "C2-00040",
+                      "word_lemma":  "angosciato"
+                  },
+                  {
+                      "concept_id":  "C2-00041",
+                      "word_lemma":  "angolare"
+                  },
+                  {
+                      "concept_id":  "C2-00042",
+                      "word_lemma":  "angolosità"
+                  },
+                  {
+                      "concept_id":  "C2-00043",
+                      "word_lemma":  "annesso"
+                  },
+                  {
+                      "concept_id":  "C2-00044",
+                      "word_lemma":  "annettere"
+                  },
+                  {
+                      "concept_id":  "C2-00045",
+                      "word_lemma":  "anonimato"
+                  },
+                  {
+                      "concept_id":  "C2-00046",
+                      "word_lemma":  "antidiluviano"
+                  },
+                  {
+                      "concept_id":  "C2-00047",
+                      "word_lemma":  "antologia"
+                  },
+                  {
+                      "concept_id":  "C2-00048",
+                      "word_lemma":  "antropologico"
+                  },
+                  {
+                      "concept_id":  "C2-00049",
+                      "word_lemma":  "antropologicamente"
+                  },
+                  {
+                      "concept_id":  "C2-00050",
+                      "word_lemma":  "anticlimaticamente"
+                  },
+                  {
+                      "concept_id":  "C2-00051",
+                      "word_lemma":  "antidoto"
+                  },
+                  {
+                      "concept_id":  "C2-00052",
+                      "word_lemma":  "antidoto"
+                  },
+                  {
+                      "concept_id":  "C2-00053",
+                      "word_lemma":  "antitesi"
+                  },
+                  {
+                      "concept_id":  "C2-00054",
+                      "word_lemma":  "antitetico"
+                  },
+                  {
+                      "concept_id":  "C2-00055",
+                      "word_lemma":  "apostolo"
+                  },
+                  {
+                      "concept_id":  "C2-00056",
+                      "word_lemma":  "apostolo"
+                  }
+              ]
+}
