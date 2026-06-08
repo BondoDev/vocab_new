@@ -1,0 +1,3557 @@
+{
+  "language": "french",
+  "wordTypes": [
+    "preposition",
+    "noun",
+    "verb",
+    "adjective",
+    "adverb",
+    "determiner",
+    "conjunction",
+    "pronoun",
+    "exclamation",
+    "expression"
+  ],
+  "counts": [
+    {
+      "level": "A1",
+      "category": "connectors",
+      "type": "preposition",
+      "count": 10
+    },
+    {
+      "level": "A1",
+      "category": "places",
+      "type": "preposition",
+      "count": 13
+    },
+    {
+      "level": "A1",
+      "category": "abstract",
+      "type": "noun",
+      "count": 10
+    },
+    {
+      "level": "A1",
+      "category": "daily life",
+      "type": "noun",
+      "count": 21
+    },
+    {
+      "level": "A1",
+      "category": "people",
+      "type": "noun",
+      "count": 52
+    },
+    {
+      "level": "A1",
+      "category": "daily life",
+      "type": "verb",
+      "count": 54
+    },
+    {
+      "level": "A1",
+      "category": "places",
+      "type": "noun",
+      "count": 48
+    },
+    {
+      "level": "A1",
+      "category": "emotions",
+      "type": "adjective",
+      "count": 23
+    },
+    {
+      "level": "A1",
+      "category": "time",
+      "type": "preposition",
+      "count": 2
+    },
+    {
+      "level": "A1",
+      "category": "time",
+      "type": "noun",
+      "count": 47
+    },
+    {
+      "level": "A1",
+      "category": "time",
+      "type": "adverb",
+      "count": 14
+    },
+    {
+      "level": "A1",
+      "category": "communication",
+      "type": "verb",
+      "count": 14
+    },
+    {
+      "level": "A1",
+      "category": "transport",
+      "type": "noun",
+      "count": 14
+    },
+    {
+      "level": "A1",
+      "category": "art",
+      "type": "noun",
+      "count": 19
+    },
+    {
+      "level": "A1",
+      "category": "abstract",
+      "type": "determiner",
+      "count": 7
+    },
+    {
+      "level": "A1",
+      "category": "connectors",
+      "type": "adverb",
+      "count": 7
+    },
+    {
+      "level": "A1",
+      "category": "abstract",
+      "type": "verb",
+      "count": 11
+    },
+    {
+      "level": "A1",
+      "category": "geography",
+      "type": "adjective",
+      "count": 10
+    },
+    {
+      "level": "A1",
+      "category": "connectors",
+      "type": "conjunction",
+      "count": 5
+    },
+    {
+      "level": "A1",
+      "category": "animals",
+      "type": "noun",
+      "count": 27
+    },
+    {
+      "level": "A1",
+      "category": "communication",
+      "type": "noun",
+      "count": 15
+    },
+    {
+      "level": "A1",
+      "category": "people",
+      "type": "pronoun",
+      "count": 28
+    },
+    {
+      "level": "A1",
+      "category": "abstract",
+      "type": "pronoun",
+      "count": 10
+    },
+    {
+      "level": "A1",
+      "category": "food",
+      "type": "noun",
+      "count": 53
+    },
+    {
+      "level": "A1",
+      "category": "relationships",
+      "type": "noun",
+      "count": 9
+    },
+    {
+      "level": "A1",
+      "category": "body",
+      "type": "noun",
+      "count": 20
+    },
+    {
+      "level": "A1",
+      "category": "travel",
+      "type": "verb",
+      "count": 4
+    },
+    {
+      "level": "A1",
+      "category": "household",
+      "type": "noun",
+      "count": 46
+    },
+    {
+      "level": "A1",
+      "category": "places",
+      "type": "adverb",
+      "count": 12
+    },
+    {
+      "level": "A1",
+      "category": "abstract",
+      "type": "adjective",
+      "count": 45
+    },
+    {
+      "level": "A1",
+      "category": "clothes & accessories",
+      "type": "noun",
+      "count": 20
+    },
+    {
+      "level": "A1",
+      "category": "sport",
+      "type": "noun",
+      "count": 17
+    },
+    {
+      "level": "A1",
+      "category": "money",
+      "type": "noun",
+      "count": 7
+    },
+    {
+      "level": "A1",
+      "category": "time",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "A1",
+      "category": "geography",
+      "type": "noun",
+      "count": 25
+    },
+    {
+      "level": "A1",
+      "category": "colors",
+      "type": "adjective",
+      "count": 10
+    },
+    {
+      "level": "A1",
+      "category": "education",
+      "type": "noun",
+      "count": 22
+    },
+    {
+      "level": "A1",
+      "category": "work",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "A1",
+      "category": "work",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "A1",
+      "category": "money",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "A1",
+      "category": "communication",
+      "type": "exclamation",
+      "count": 4
+    },
+    {
+      "level": "A1",
+      "category": "technology",
+      "type": "noun",
+      "count": 12
+    },
+    {
+      "level": "A1",
+      "category": "household",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "A1",
+      "category": "household",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "daily life",
+      "type": "adjective",
+      "count": 5
+    },
+    {
+      "level": "A1",
+      "category": "weather",
+      "type": "noun",
+      "count": 6
+    },
+    {
+      "level": "A1",
+      "category": "weather",
+      "type": "adjective",
+      "count": 9
+    },
+    {
+      "level": "A1",
+      "category": "drinks",
+      "type": "noun",
+      "count": 14
+    },
+    {
+      "level": "A1",
+      "category": "health",
+      "type": "noun",
+      "count": 6
+    },
+    {
+      "level": "A1",
+      "category": "colors",
+      "type": "noun",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "food",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "A1",
+      "category": "education",
+      "type": "verb",
+      "count": 7
+    },
+    {
+      "level": "A1",
+      "category": "education",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "emotions",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "A1",
+      "category": "art",
+      "type": "verb",
+      "count": 5
+    },
+    {
+      "level": "A1",
+      "category": "food",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "A1",
+      "category": "clothes & accessories",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "A1",
+      "category": "transport",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "A1",
+      "category": "relationships",
+      "type": "pronoun",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "time",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "A1",
+      "category": "numbers",
+      "type": "noun",
+      "count": 30
+    },
+    {
+      "level": "A1",
+      "category": "abstract",
+      "type": "adverb",
+      "count": 11
+    },
+    {
+      "level": "A1",
+      "category": "sport",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "A1",
+      "category": "money",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "nature",
+      "type": "noun",
+      "count": 9
+    },
+    {
+      "level": "A1",
+      "category": "places",
+      "type": "adjective",
+      "count": 5
+    },
+    {
+      "level": "A1",
+      "category": "plants",
+      "type": "noun",
+      "count": 5
+    },
+    {
+      "level": "A1",
+      "category": "emotions",
+      "type": "noun",
+      "count": 3
+    },
+    {
+      "level": "A1",
+      "category": "communication",
+      "type": "expression",
+      "count": 3
+    },
+    {
+      "level": "A1",
+      "category": "nature",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "health",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "A1",
+      "category": "travel",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "A1",
+      "category": "health",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "A1",
+      "category": "relationships",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "numbers",
+      "type": "determiner",
+      "count": 4
+    },
+    {
+      "level": "A1",
+      "category": "astronomy",
+      "type": "noun",
+      "count": 3
+    },
+    {
+      "level": "A1",
+      "category": "science",
+      "type": "noun",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "relationships",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "body",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "work",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "daily life",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "numbers",
+      "type": "pronoun",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "numbers",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "animals",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A1",
+      "category": "numbers",
+      "type": "preposition",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "abstract",
+      "type": "noun",
+      "count": 34
+    },
+    {
+      "level": "A2",
+      "category": "travel",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "daily life",
+      "type": "verb",
+      "count": 68
+    },
+    {
+      "level": "A2",
+      "category": "daily life",
+      "type": "noun",
+      "count": 31
+    },
+    {
+      "level": "A2",
+      "category": "money",
+      "type": "noun",
+      "count": 19
+    },
+    {
+      "level": "A2",
+      "category": "connectors",
+      "type": "preposition",
+      "count": 11
+    },
+    {
+      "level": "A2",
+      "category": "art",
+      "type": "noun",
+      "count": 35
+    },
+    {
+      "level": "A2",
+      "category": "art",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "connectors",
+      "type": "adverb",
+      "count": 10
+    },
+    {
+      "level": "A2",
+      "category": "education",
+      "type": "noun",
+      "count": 32
+    },
+    {
+      "level": "A2",
+      "category": "people",
+      "type": "noun",
+      "count": 46
+    },
+    {
+      "level": "A2",
+      "category": "travel",
+      "type": "noun",
+      "count": 22
+    },
+    {
+      "level": "A2",
+      "category": "communication",
+      "type": "noun",
+      "count": 25
+    },
+    {
+      "level": "A2",
+      "category": "time",
+      "type": "adverb",
+      "count": 14
+    },
+    {
+      "level": "A2",
+      "category": "environment",
+      "type": "noun",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "household",
+      "type": "noun",
+      "count": 77
+    },
+    {
+      "level": "A2",
+      "category": "abstract",
+      "type": "adjective",
+      "count": 62
+    },
+    {
+      "level": "A2",
+      "category": "geography",
+      "type": "noun",
+      "count": 48
+    },
+    {
+      "level": "A2",
+      "category": "time",
+      "type": "adjective",
+      "count": 7
+    },
+    {
+      "level": "A2",
+      "category": "emotions",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "body",
+      "type": "noun",
+      "count": 22
+    },
+    {
+      "level": "A2",
+      "category": "emotions",
+      "type": "adjective",
+      "count": 42
+    },
+    {
+      "level": "A2",
+      "category": "places",
+      "type": "adverb",
+      "count": 6
+    },
+    {
+      "level": "A2",
+      "category": "places",
+      "type": "noun",
+      "count": 49
+    },
+    {
+      "level": "A2",
+      "category": "communication",
+      "type": "verb",
+      "count": 25
+    },
+    {
+      "level": "A2",
+      "category": "body",
+      "type": "adjective",
+      "count": 14
+    },
+    {
+      "level": "A2",
+      "category": "work",
+      "type": "noun",
+      "count": 20
+    },
+    {
+      "level": "A2",
+      "category": "astronomy",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "A2",
+      "category": "sport",
+      "type": "noun",
+      "count": 34
+    },
+    {
+      "level": "A2",
+      "category": "abstract",
+      "type": "verb",
+      "count": 19
+    },
+    {
+      "level": "A2",
+      "category": "abstract",
+      "type": "adverb",
+      "count": 11
+    },
+    {
+      "level": "A2",
+      "category": "food",
+      "type": "verb",
+      "count": 12
+    },
+    {
+      "level": "A2",
+      "category": "food",
+      "type": "noun",
+      "count": 52
+    },
+    {
+      "level": "A2",
+      "category": "technology",
+      "type": "noun",
+      "count": 21
+    },
+    {
+      "level": "A2",
+      "category": "relationships",
+      "type": "noun",
+      "count": 10
+    },
+    {
+      "level": "A2",
+      "category": "drinks",
+      "type": "noun",
+      "count": 13
+    },
+    {
+      "level": "A2",
+      "category": "time",
+      "type": "noun",
+      "count": 18
+    },
+    {
+      "level": "A2",
+      "category": "relationships",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "clothes & accessories",
+      "type": "noun",
+      "count": 35
+    },
+    {
+      "level": "A2",
+      "category": "food",
+      "type": "adjective",
+      "count": 9
+    },
+    {
+      "level": "A2",
+      "category": "emotions",
+      "type": "verb",
+      "count": 11
+    },
+    {
+      "level": "A2",
+      "category": "plants",
+      "type": "noun",
+      "count": 7
+    },
+    {
+      "level": "A2",
+      "category": "weather",
+      "type": "noun",
+      "count": 8
+    },
+    {
+      "level": "A2",
+      "category": "animals",
+      "type": "noun",
+      "count": 20
+    },
+    {
+      "level": "A2",
+      "category": "transport",
+      "type": "noun",
+      "count": 17
+    },
+    {
+      "level": "A2",
+      "category": "numbers",
+      "type": "noun",
+      "count": 14
+    },
+    {
+      "level": "A2",
+      "category": "money",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "emotions",
+      "type": "noun",
+      "count": 9
+    },
+    {
+      "level": "A2",
+      "category": "technology",
+      "type": "verb",
+      "count": 4
+    },
+    {
+      "level": "A2",
+      "category": "colors",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "money",
+      "type": "verb",
+      "count": 10
+    },
+    {
+      "level": "A2",
+      "category": "numbers",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "places",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "A2",
+      "category": "health",
+      "type": "noun",
+      "count": 15
+    },
+    {
+      "level": "A2",
+      "category": "nature",
+      "type": "noun",
+      "count": 15
+    },
+    {
+      "level": "A2",
+      "category": "body",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "A2",
+      "category": "numbers",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "A2",
+      "category": "clothes & accessories",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "household",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "A2",
+      "category": "geography",
+      "type": "adjective",
+      "count": 11
+    },
+    {
+      "level": "A2",
+      "category": "people",
+      "type": "adjective",
+      "count": 5
+    },
+    {
+      "level": "A2",
+      "category": "technology",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "abstract",
+      "type": "determiner",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "travel",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "A2",
+      "category": "numbers",
+      "type": "determiner",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "science",
+      "type": "noun",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "communication",
+      "type": "exclamation",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "sport",
+      "type": "verb",
+      "count": 7
+    },
+    {
+      "level": "A2",
+      "category": "health",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "relationships",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "A2",
+      "category": "communication",
+      "type": "adverb",
+      "count": 4
+    },
+    {
+      "level": "A2",
+      "category": "numbers",
+      "type": "adverb",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "connectors",
+      "type": "noun",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "abstract",
+      "type": "pronoun",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "nature",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "sport",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "connectors",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "people",
+      "type": "preposition",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "people",
+      "type": "pronoun",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "emotions",
+      "type": "pronoun",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "education",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "A2",
+      "category": "work",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "connectors",
+      "type": "pronoun",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "work",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "environment",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "health",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "daily life",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "weather",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "communication",
+      "type": "preposition",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "places",
+      "type": "preposition",
+      "count": 2
+    },
+    {
+      "level": "A2",
+      "category": "connectors",
+      "type": "conjunction",
+      "count": 3
+    },
+    {
+      "level": "A2",
+      "category": "numbers",
+      "type": "pronoun",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "education",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "plants",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "clothes & accessories",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "daily life",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "animals",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "A2",
+      "category": "transport",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "abstract",
+      "type": "verb",
+      "count": 99
+    },
+    {
+      "level": "B1",
+      "category": "travel",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "travel",
+      "type": "preposition",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "places",
+      "type": "adverb",
+      "count": 10
+    },
+    {
+      "level": "B1",
+      "category": "places",
+      "type": "adjective",
+      "count": 14
+    },
+    {
+      "level": "B1",
+      "category": "abstract",
+      "type": "noun",
+      "count": 208
+    },
+    {
+      "level": "B1",
+      "category": "abstract",
+      "type": "adjective",
+      "count": 201
+    },
+    {
+      "level": "B1",
+      "category": "connectors",
+      "type": "adverb",
+      "count": 21
+    },
+    {
+      "level": "B1",
+      "category": "communication",
+      "type": "noun",
+      "count": 71
+    },
+    {
+      "level": "B1",
+      "category": "daily life",
+      "type": "noun",
+      "count": 90
+    },
+    {
+      "level": "B1",
+      "category": "daily life",
+      "type": "verb",
+      "count": 133
+    },
+    {
+      "level": "B1",
+      "category": "clothes & accessories",
+      "type": "noun",
+      "count": 23
+    },
+    {
+      "level": "B1",
+      "category": "abstract",
+      "type": "adverb",
+      "count": 66
+    },
+    {
+      "level": "B1",
+      "category": "connectors",
+      "type": "preposition",
+      "count": 17
+    },
+    {
+      "level": "B1",
+      "category": "work",
+      "type": "noun",
+      "count": 84
+    },
+    {
+      "level": "B1",
+      "category": "communication",
+      "type": "verb",
+      "count": 60
+    },
+    {
+      "level": "B1",
+      "category": "body",
+      "type": "noun",
+      "count": 47
+    },
+    {
+      "level": "B1",
+      "category": "body",
+      "type": "verb",
+      "count": 11
+    },
+    {
+      "level": "B1",
+      "category": "body",
+      "type": "adjective",
+      "count": 16
+    },
+    {
+      "level": "B1",
+      "category": "art",
+      "type": "noun",
+      "count": 72
+    },
+    {
+      "level": "B1",
+      "category": "education",
+      "type": "noun",
+      "count": 65
+    },
+    {
+      "level": "B1",
+      "category": "relationships",
+      "type": "verb",
+      "count": 10
+    },
+    {
+      "level": "B1",
+      "category": "emotions",
+      "type": "adjective",
+      "count": 130
+    },
+    {
+      "level": "B1",
+      "category": "sport",
+      "type": "noun",
+      "count": 48
+    },
+    {
+      "level": "B1",
+      "category": "money",
+      "type": "verb",
+      "count": 13
+    },
+    {
+      "level": "B1",
+      "category": "connectors",
+      "type": "conjunction",
+      "count": 12
+    },
+    {
+      "level": "B1",
+      "category": "time",
+      "type": "adverb",
+      "count": 21
+    },
+    {
+      "level": "B1",
+      "category": "travel",
+      "type": "noun",
+      "count": 32
+    },
+    {
+      "level": "B1",
+      "category": "emotions",
+      "type": "noun",
+      "count": 62
+    },
+    {
+      "level": "B1",
+      "category": "drinks",
+      "type": "noun",
+      "count": 11
+    },
+    {
+      "level": "B1",
+      "category": "health",
+      "type": "adjective",
+      "count": 17
+    },
+    {
+      "level": "B1",
+      "category": "money",
+      "type": "noun",
+      "count": 42
+    },
+    {
+      "level": "B1",
+      "category": "communication",
+      "type": "adverb",
+      "count": 4
+    },
+    {
+      "level": "B1",
+      "category": "art",
+      "type": "adjective",
+      "count": 9
+    },
+    {
+      "level": "B1",
+      "category": "time",
+      "type": "adjective",
+      "count": 19
+    },
+    {
+      "level": "B1",
+      "category": "animals",
+      "type": "noun",
+      "count": 35
+    },
+    {
+      "level": "B1",
+      "category": "emotions",
+      "type": "verb",
+      "count": 36
+    },
+    {
+      "level": "B1",
+      "category": "geography",
+      "type": "noun",
+      "count": 57
+    },
+    {
+      "level": "B1",
+      "category": "people",
+      "type": "noun",
+      "count": 119
+    },
+    {
+      "level": "B1",
+      "category": "people",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "B1",
+      "category": "health",
+      "type": "noun",
+      "count": 39
+    },
+    {
+      "level": "B1",
+      "category": "work",
+      "type": "verb",
+      "count": 24
+    },
+    {
+      "level": "B1",
+      "category": "sport",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "B1",
+      "category": "geography",
+      "type": "adjective",
+      "count": 27
+    },
+    {
+      "level": "B1",
+      "category": "education",
+      "type": "verb",
+      "count": 10
+    },
+    {
+      "level": "B1",
+      "category": "places",
+      "type": "noun",
+      "count": 58
+    },
+    {
+      "level": "B1",
+      "category": "health",
+      "type": "verb",
+      "count": 15
+    },
+    {
+      "level": "B1",
+      "category": "plants",
+      "type": "noun",
+      "count": 25
+    },
+    {
+      "level": "B1",
+      "category": "household",
+      "type": "noun",
+      "count": 77
+    },
+    {
+      "level": "B1",
+      "category": "sport",
+      "type": "verb",
+      "count": 13
+    },
+    {
+      "level": "B1",
+      "category": "education",
+      "type": "adjective",
+      "count": 8
+    },
+    {
+      "level": "B1",
+      "category": "science",
+      "type": "noun",
+      "count": 18
+    },
+    {
+      "level": "B1",
+      "category": "food",
+      "type": "adjective",
+      "count": 14
+    },
+    {
+      "level": "B1",
+      "category": "food",
+      "type": "noun",
+      "count": 37
+    },
+    {
+      "level": "B1",
+      "category": "food",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "B1",
+      "category": "technology",
+      "type": "noun",
+      "count": 50
+    },
+    {
+      "level": "B1",
+      "category": "technology",
+      "type": "verb",
+      "count": 16
+    },
+    {
+      "level": "B1",
+      "category": "emotions",
+      "type": "adverb",
+      "count": 21
+    },
+    {
+      "level": "B1",
+      "category": "colors",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "B1",
+      "category": "relationships",
+      "type": "noun",
+      "count": 28
+    },
+    {
+      "level": "B1",
+      "category": "numbers",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "B1",
+      "category": "numbers",
+      "type": "noun",
+      "count": 15
+    },
+    {
+      "level": "B1",
+      "category": "transport",
+      "type": "noun",
+      "count": 32
+    },
+    {
+      "level": "B1",
+      "category": "people",
+      "type": "adjective",
+      "count": 12
+    },
+    {
+      "level": "B1",
+      "category": "environment",
+      "type": "noun",
+      "count": 11
+    },
+    {
+      "level": "B1",
+      "category": "household",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "B1",
+      "category": "nature",
+      "type": "noun",
+      "count": 20
+    },
+    {
+      "level": "B1",
+      "category": "astronomy",
+      "type": "noun",
+      "count": 6
+    },
+    {
+      "level": "B1",
+      "category": "art",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "B1",
+      "category": "transport",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "B1",
+      "category": "environment",
+      "type": "adjective",
+      "count": 5
+    },
+    {
+      "level": "B1",
+      "category": "time",
+      "type": "noun",
+      "count": 16
+    },
+    {
+      "level": "B1",
+      "category": "travel",
+      "type": "verb",
+      "count": 5
+    },
+    {
+      "level": "B1",
+      "category": "technology",
+      "type": "adjective",
+      "count": 8
+    },
+    {
+      "level": "B1",
+      "category": "relationships",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "B1",
+      "category": "money",
+      "type": "adjective",
+      "count": 6
+    },
+    {
+      "level": "B1",
+      "category": "people",
+      "type": "pronoun",
+      "count": 2
+    },
+    {
+      "level": "B1",
+      "category": "numbers",
+      "type": "adjective",
+      "count": 6
+    },
+    {
+      "level": "B1",
+      "category": "places",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "B1",
+      "category": "communication",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "B1",
+      "category": "clothes & accessories",
+      "type": "adjective",
+      "count": 5
+    },
+    {
+      "level": "B1",
+      "category": "weather",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "B1",
+      "category": "education",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "weather",
+      "type": "noun",
+      "count": 9
+    },
+    {
+      "level": "B1",
+      "category": "work",
+      "type": "adjective",
+      "count": 9
+    },
+    {
+      "level": "B1",
+      "category": "animals",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "B1",
+      "category": "geography",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "B1",
+      "category": "weather",
+      "type": "adjective",
+      "count": 5
+    },
+    {
+      "level": "B1",
+      "category": "geography",
+      "type": "adverb",
+      "count": 4
+    },
+    {
+      "level": "B1",
+      "category": "time",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "B1",
+      "category": "science",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "B1",
+      "category": "daily life",
+      "type": "adjective",
+      "count": 10
+    },
+    {
+      "level": "B1",
+      "category": "health",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "numbers",
+      "type": "preposition",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "numbers",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "abstract",
+      "type": "pronoun",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "art",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "connectors",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "daily life",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "B1",
+      "category": "household",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "B1",
+      "category": "numbers",
+      "type": "pronoun",
+      "count": 2
+    },
+    {
+      "level": "B1",
+      "category": "environment",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "B1",
+      "category": "clothes & accessories",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "connectors",
+      "type": "pronoun",
+      "count": 2
+    },
+    {
+      "level": "B1",
+      "category": "technology",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "B1",
+      "category": "plants",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "science",
+      "type": "verb",
+      "count": 4
+    },
+    {
+      "level": "B1",
+      "category": "body",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "travel",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "nature",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "B1",
+      "category": "work",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "colors",
+      "type": "noun",
+      "count": 3
+    },
+    {
+      "level": "B1",
+      "category": "transport",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "plants",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "abstract",
+      "type": "determiner",
+      "count": 1
+    },
+    {
+      "level": "B1",
+      "category": "drinks",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "abstract",
+      "type": "adjective",
+      "count": 345
+    },
+    {
+      "level": "B2",
+      "category": "abstract",
+      "type": "adverb",
+      "count": 122
+    },
+    {
+      "level": "B2",
+      "category": "work",
+      "type": "verb",
+      "count": 91
+    },
+    {
+      "level": "B2",
+      "category": "people",
+      "type": "adjective",
+      "count": 6
+    },
+    {
+      "level": "B2",
+      "category": "people",
+      "type": "noun",
+      "count": 140
+    },
+    {
+      "level": "B2",
+      "category": "abstract",
+      "type": "noun",
+      "count": 374
+    },
+    {
+      "level": "B2",
+      "category": "travel",
+      "type": "noun",
+      "count": 16
+    },
+    {
+      "level": "B2",
+      "category": "connectors",
+      "type": "adverb",
+      "count": 20
+    },
+    {
+      "level": "B2",
+      "category": "abstract",
+      "type": "verb",
+      "count": 197
+    },
+    {
+      "level": "B2",
+      "category": "communication",
+      "type": "noun",
+      "count": 62
+    },
+    {
+      "level": "B2",
+      "category": "science",
+      "type": "noun",
+      "count": 64
+    },
+    {
+      "level": "B2",
+      "category": "work",
+      "type": "noun",
+      "count": 145
+    },
+    {
+      "level": "B2",
+      "category": "health",
+      "type": "adjective",
+      "count": 21
+    },
+    {
+      "level": "B2",
+      "category": "health",
+      "type": "noun",
+      "count": 68
+    },
+    {
+      "level": "B2",
+      "category": "work",
+      "type": "adjective",
+      "count": 22
+    },
+    {
+      "level": "B2",
+      "category": "emotions",
+      "type": "adverb",
+      "count": 29
+    },
+    {
+      "level": "B2",
+      "category": "relationships",
+      "type": "adjective",
+      "count": 8
+    },
+    {
+      "level": "B2",
+      "category": "relationships",
+      "type": "noun",
+      "count": 26
+    },
+    {
+      "level": "B2",
+      "category": "emotions",
+      "type": "verb",
+      "count": 42
+    },
+    {
+      "level": "B2",
+      "category": "emotions",
+      "type": "adjective",
+      "count": 94
+    },
+    {
+      "level": "B2",
+      "category": "money",
+      "type": "adjective",
+      "count": 14
+    },
+    {
+      "level": "B2",
+      "category": "emotions",
+      "type": "noun",
+      "count": 72
+    },
+    {
+      "level": "B2",
+      "category": "transport",
+      "type": "noun",
+      "count": 16
+    },
+    {
+      "level": "B2",
+      "category": "connectors",
+      "type": "preposition",
+      "count": 9
+    },
+    {
+      "level": "B2",
+      "category": "education",
+      "type": "adjective",
+      "count": 14
+    },
+    {
+      "level": "B2",
+      "category": "places",
+      "type": "noun",
+      "count": 47
+    },
+    {
+      "level": "B2",
+      "category": "geography",
+      "type": "noun",
+      "count": 50
+    },
+    {
+      "level": "B2",
+      "category": "technology",
+      "type": "noun",
+      "count": 24
+    },
+    {
+      "level": "B2",
+      "category": "technology",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "B2",
+      "category": "education",
+      "type": "noun",
+      "count": 64
+    },
+    {
+      "level": "B2",
+      "category": "art",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "B2",
+      "category": "environment",
+      "type": "adjective",
+      "count": 6
+    },
+    {
+      "level": "B2",
+      "category": "technology",
+      "type": "adjective",
+      "count": 10
+    },
+    {
+      "level": "B2",
+      "category": "art",
+      "type": "noun",
+      "count": 53
+    },
+    {
+      "level": "B2",
+      "category": "geography",
+      "type": "adjective",
+      "count": 27
+    },
+    {
+      "level": "B2",
+      "category": "numbers",
+      "type": "noun",
+      "count": 18
+    },
+    {
+      "level": "B2",
+      "category": "nature",
+      "type": "noun",
+      "count": 15
+    },
+    {
+      "level": "B2",
+      "category": "communication",
+      "type": "verb",
+      "count": 75
+    },
+    {
+      "level": "B2",
+      "category": "astronomy",
+      "type": "noun",
+      "count": 12
+    },
+    {
+      "level": "B2",
+      "category": "sport",
+      "type": "noun",
+      "count": 21
+    },
+    {
+      "level": "B2",
+      "category": "food",
+      "type": "noun",
+      "count": 22
+    },
+    {
+      "level": "B2",
+      "category": "household",
+      "type": "noun",
+      "count": 34
+    },
+    {
+      "level": "B2",
+      "category": "clothes & accessories",
+      "type": "noun",
+      "count": 12
+    },
+    {
+      "level": "B2",
+      "category": "money",
+      "type": "noun",
+      "count": 45
+    },
+    {
+      "level": "B2",
+      "category": "nature",
+      "type": "adjective",
+      "count": 5
+    },
+    {
+      "level": "B2",
+      "category": "animals",
+      "type": "noun",
+      "count": 26
+    },
+    {
+      "level": "B2",
+      "category": "daily life",
+      "type": "noun",
+      "count": 28
+    },
+    {
+      "level": "B2",
+      "category": "relationships",
+      "type": "verb",
+      "count": 13
+    },
+    {
+      "level": "B2",
+      "category": "science",
+      "type": "adjective",
+      "count": 14
+    },
+    {
+      "level": "B2",
+      "category": "plants",
+      "type": "noun",
+      "count": 11
+    },
+    {
+      "level": "B2",
+      "category": "body",
+      "type": "verb",
+      "count": 22
+    },
+    {
+      "level": "B2",
+      "category": "weather",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "weather",
+      "type": "noun",
+      "count": 7
+    },
+    {
+      "level": "B2",
+      "category": "body",
+      "type": "adjective",
+      "count": 6
+    },
+    {
+      "level": "B2",
+      "category": "drinks",
+      "type": "noun",
+      "count": 13
+    },
+    {
+      "level": "B2",
+      "category": "places",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "B2",
+      "category": "daily life",
+      "type": "verb",
+      "count": 83
+    },
+    {
+      "level": "B2",
+      "category": "environment",
+      "type": "noun",
+      "count": 18
+    },
+    {
+      "level": "B2",
+      "category": "money",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "communication",
+      "type": "adjective",
+      "count": 12
+    },
+    {
+      "level": "B2",
+      "category": "environment",
+      "type": "verb",
+      "count": 5
+    },
+    {
+      "level": "B2",
+      "category": "nature",
+      "type": "verb",
+      "count": 4
+    },
+    {
+      "level": "B2",
+      "category": "science",
+      "type": "verb",
+      "count": 11
+    },
+    {
+      "level": "B2",
+      "category": "education",
+      "type": "verb",
+      "count": 17
+    },
+    {
+      "level": "B2",
+      "category": "health",
+      "type": "verb",
+      "count": 14
+    },
+    {
+      "level": "B2",
+      "category": "sport",
+      "type": "verb",
+      "count": 5
+    },
+    {
+      "level": "B2",
+      "category": "geography",
+      "type": "adverb",
+      "count": 4
+    },
+    {
+      "level": "B2",
+      "category": "environment",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "technology",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "time",
+      "type": "adjective",
+      "count": 14
+    },
+    {
+      "level": "B2",
+      "category": "art",
+      "type": "adjective",
+      "count": 8
+    },
+    {
+      "level": "B2",
+      "category": "body",
+      "type": "noun",
+      "count": 24
+    },
+    {
+      "level": "B2",
+      "category": "time",
+      "type": "adverb",
+      "count": 15
+    },
+    {
+      "level": "B2",
+      "category": "time",
+      "type": "noun",
+      "count": 11
+    },
+    {
+      "level": "B2",
+      "category": "places",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "transport",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "B2",
+      "category": "money",
+      "type": "verb",
+      "count": 10
+    },
+    {
+      "level": "B2",
+      "category": "numbers",
+      "type": "adjective",
+      "count": 6
+    },
+    {
+      "level": "B2",
+      "category": "communication",
+      "type": "adverb",
+      "count": 3
+    },
+    {
+      "level": "B2",
+      "category": "travel",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "B2",
+      "category": "numbers",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "work",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "time",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "household",
+      "type": "verb",
+      "count": 4
+    },
+    {
+      "level": "B2",
+      "category": "animals",
+      "type": "verb",
+      "count": 5
+    },
+    {
+      "level": "B2",
+      "category": "food",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "B2",
+      "category": "colors",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "science",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "food",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "daily life",
+      "type": "adjective",
+      "count": 9
+    },
+    {
+      "level": "B2",
+      "category": "astronomy",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "colors",
+      "type": "noun",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "clothes & accessories",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "B2",
+      "category": "places",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "B2",
+      "category": "health",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "connectors",
+      "type": "conjunction",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "geography",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "B2",
+      "category": "plants",
+      "type": "verb",
+      "count": 4
+    },
+    {
+      "level": "B2",
+      "category": "weather",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "people",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "astronomy",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "numbers",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "animals",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "B2",
+      "category": "daily life",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "B2",
+      "category": "travel",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "abstract",
+      "type": "verb",
+      "count": 106
+    },
+    {
+      "level": "C1",
+      "category": "abstract",
+      "type": "noun",
+      "count": 170
+    },
+    {
+      "level": "C1",
+      "category": "science",
+      "type": "adjective",
+      "count": 12
+    },
+    {
+      "level": "C1",
+      "category": "art",
+      "type": "adjective",
+      "count": 17
+    },
+    {
+      "level": "C1",
+      "category": "art",
+      "type": "adverb",
+      "count": 6
+    },
+    {
+      "level": "C1",
+      "category": "art",
+      "type": "noun",
+      "count": 36
+    },
+    {
+      "level": "C1",
+      "category": "abstract",
+      "type": "adverb",
+      "count": 74
+    },
+    {
+      "level": "C1",
+      "category": "places",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "body",
+      "type": "noun",
+      "count": 20
+    },
+    {
+      "level": "C1",
+      "category": "abstract",
+      "type": "adjective",
+      "count": 154
+    },
+    {
+      "level": "C1",
+      "category": "relationships",
+      "type": "noun",
+      "count": 6
+    },
+    {
+      "level": "C1",
+      "category": "work",
+      "type": "adjective",
+      "count": 14
+    },
+    {
+      "level": "C1",
+      "category": "relationships",
+      "type": "verb",
+      "count": 9
+    },
+    {
+      "level": "C1",
+      "category": "communication",
+      "type": "verb",
+      "count": 35
+    },
+    {
+      "level": "C1",
+      "category": "health",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "C1",
+      "category": "geography",
+      "type": "noun",
+      "count": 41
+    },
+    {
+      "level": "C1",
+      "category": "connectors",
+      "type": "preposition",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "science",
+      "type": "noun",
+      "count": 24
+    },
+    {
+      "level": "C1",
+      "category": "emotions",
+      "type": "adjective",
+      "count": 79
+    },
+    {
+      "level": "C1",
+      "category": "emotions",
+      "type": "adverb",
+      "count": 43
+    },
+    {
+      "level": "C1",
+      "category": "emotions",
+      "type": "verb",
+      "count": 25
+    },
+    {
+      "level": "C1",
+      "category": "health",
+      "type": "adjective",
+      "count": 13
+    },
+    {
+      "level": "C1",
+      "category": "health",
+      "type": "adverb",
+      "count": 6
+    },
+    {
+      "level": "C1",
+      "category": "money",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "C1",
+      "category": "money",
+      "type": "noun",
+      "count": 15
+    },
+    {
+      "level": "C1",
+      "category": "drinks",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "technology",
+      "type": "noun",
+      "count": 14
+    },
+    {
+      "level": "C1",
+      "category": "work",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "transport",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "health",
+      "type": "noun",
+      "count": 17
+    },
+    {
+      "level": "C1",
+      "category": "communication",
+      "type": "adjective",
+      "count": 9
+    },
+    {
+      "level": "C1",
+      "category": "communication",
+      "type": "adverb",
+      "count": 6
+    },
+    {
+      "level": "C1",
+      "category": "transport",
+      "type": "noun",
+      "count": 8
+    },
+    {
+      "level": "C1",
+      "category": "work",
+      "type": "noun",
+      "count": 63
+    },
+    {
+      "level": "C1",
+      "category": "work",
+      "type": "verb",
+      "count": 32
+    },
+    {
+      "level": "C1",
+      "category": "weather",
+      "type": "noun",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "weather",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "C1",
+      "category": "body",
+      "type": "adjective",
+      "count": 7
+    },
+    {
+      "level": "C1",
+      "category": "daily life",
+      "type": "verb",
+      "count": 35
+    },
+    {
+      "level": "C1",
+      "category": "education",
+      "type": "noun",
+      "count": 18
+    },
+    {
+      "level": "C1",
+      "category": "people",
+      "type": "noun",
+      "count": 61
+    },
+    {
+      "level": "C1",
+      "category": "education",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "C1",
+      "category": "clothes & accessories",
+      "type": "noun",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "daily life",
+      "type": "noun",
+      "count": 7
+    },
+    {
+      "level": "C1",
+      "category": "household",
+      "type": "noun",
+      "count": 17
+    },
+    {
+      "level": "C1",
+      "category": "household",
+      "type": "verb",
+      "count": 7
+    },
+    {
+      "level": "C1",
+      "category": "communication",
+      "type": "noun",
+      "count": 19
+    },
+    {
+      "level": "C1",
+      "category": "money",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "people",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "environment",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "money",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "C1",
+      "category": "emotions",
+      "type": "noun",
+      "count": 42
+    },
+    {
+      "level": "C1",
+      "category": "food",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "C1",
+      "category": "food",
+      "type": "noun",
+      "count": 5
+    },
+    {
+      "level": "C1",
+      "category": "places",
+      "type": "noun",
+      "count": 15
+    },
+    {
+      "level": "C1",
+      "category": "art",
+      "type": "verb",
+      "count": 13
+    },
+    {
+      "level": "C1",
+      "category": "science",
+      "type": "adverb",
+      "count": 4
+    },
+    {
+      "level": "C1",
+      "category": "technology",
+      "type": "verb",
+      "count": 5
+    },
+    {
+      "level": "C1",
+      "category": "science",
+      "type": "verb",
+      "count": 5
+    },
+    {
+      "level": "C1",
+      "category": "animals",
+      "type": "verb",
+      "count": 5
+    },
+    {
+      "level": "C1",
+      "category": "animals",
+      "type": "noun",
+      "count": 11
+    },
+    {
+      "level": "C1",
+      "category": "time",
+      "type": "noun",
+      "count": 8
+    },
+    {
+      "level": "C1",
+      "category": "people",
+      "type": "adjective",
+      "count": 3
+    },
+    {
+      "level": "C1",
+      "category": "body",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "C1",
+      "category": "travel",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "C1",
+      "category": "education",
+      "type": "adjective",
+      "count": 9
+    },
+    {
+      "level": "C1",
+      "category": "places",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "numbers",
+      "type": "noun",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "weather",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "nature",
+      "type": "noun",
+      "count": 3
+    },
+    {
+      "level": "C1",
+      "category": "daily life",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "time",
+      "type": "adverb",
+      "count": 5
+    },
+    {
+      "level": "C1",
+      "category": "body",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "relationships",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "C1",
+      "category": "animals",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "geography",
+      "type": "adjective",
+      "count": 14
+    },
+    {
+      "level": "C1",
+      "category": "clothes & accessories",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "plants",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "C1",
+      "category": "food",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "sport",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "C1",
+      "category": "sport",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "geography",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "plants",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "food",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "connectors",
+      "type": "adverb",
+      "count": 4
+    },
+    {
+      "level": "C1",
+      "category": "technology",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "connectors",
+      "type": "conjunction",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "drinks",
+      "type": "noun",
+      "count": 6
+    },
+    {
+      "level": "C1",
+      "category": "environment",
+      "type": "noun",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "plants",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "nature",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "travel",
+      "type": "noun",
+      "count": 2
+    },
+    {
+      "level": "C1",
+      "category": "time",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "astronomy",
+      "type": "noun",
+      "count": 3
+    },
+    {
+      "level": "C1",
+      "category": "colors",
+      "type": "noun",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "numbers",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "C1",
+      "category": "geography",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "abstract",
+      "type": "noun",
+      "count": 122
+    },
+    {
+      "level": "C2",
+      "category": "emotions",
+      "type": "verb",
+      "count": 15
+    },
+    {
+      "level": "C2",
+      "category": "emotions",
+      "type": "adjective",
+      "count": 62
+    },
+    {
+      "level": "C2",
+      "category": "emotions",
+      "type": "adverb",
+      "count": 35
+    },
+    {
+      "level": "C2",
+      "category": "abstract",
+      "type": "adjective",
+      "count": 117
+    },
+    {
+      "level": "C2",
+      "category": "abstract",
+      "type": "adverb",
+      "count": 57
+    },
+    {
+      "level": "C2",
+      "category": "work",
+      "type": "noun",
+      "count": 24
+    },
+    {
+      "level": "C2",
+      "category": "abstract",
+      "type": "verb",
+      "count": 60
+    },
+    {
+      "level": "C2",
+      "category": "geography",
+      "type": "noun",
+      "count": 26
+    },
+    {
+      "level": "C2",
+      "category": "sport",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "sport",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "sport",
+      "type": "noun",
+      "count": 6
+    },
+    {
+      "level": "C2",
+      "category": "art",
+      "type": "noun",
+      "count": 31
+    },
+    {
+      "level": "C2",
+      "category": "food",
+      "type": "noun",
+      "count": 5
+    },
+    {
+      "level": "C2",
+      "category": "daily life",
+      "type": "verb",
+      "count": 29
+    },
+    {
+      "level": "C2",
+      "category": "art",
+      "type": "verb",
+      "count": 7
+    },
+    {
+      "level": "C2",
+      "category": "clothes & accessories",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "C2",
+      "category": "food",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "body",
+      "type": "adjective",
+      "count": 12
+    },
+    {
+      "level": "C2",
+      "category": "body",
+      "type": "noun",
+      "count": 8
+    },
+    {
+      "level": "C2",
+      "category": "art",
+      "type": "adjective",
+      "count": 13
+    },
+    {
+      "level": "C2",
+      "category": "work",
+      "type": "verb",
+      "count": 18
+    },
+    {
+      "level": "C2",
+      "category": "communication",
+      "type": "verb",
+      "count": 24
+    },
+    {
+      "level": "C2",
+      "category": "communication",
+      "type": "noun",
+      "count": 28
+    },
+    {
+      "level": "C2",
+      "category": "emotions",
+      "type": "noun",
+      "count": 39
+    },
+    {
+      "level": "C2",
+      "category": "places",
+      "type": "noun",
+      "count": 11
+    },
+    {
+      "level": "C2",
+      "category": "places",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "science",
+      "type": "adjective",
+      "count": 13
+    },
+    {
+      "level": "C2",
+      "category": "science",
+      "type": "adverb",
+      "count": 7
+    },
+    {
+      "level": "C2",
+      "category": "art",
+      "type": "adverb",
+      "count": 5
+    },
+    {
+      "level": "C2",
+      "category": "health",
+      "type": "noun",
+      "count": 13
+    },
+    {
+      "level": "C2",
+      "category": "people",
+      "type": "noun",
+      "count": 35
+    },
+    {
+      "level": "C2",
+      "category": "work",
+      "type": "adjective",
+      "count": 16
+    },
+    {
+      "level": "C2",
+      "category": "health",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "C2",
+      "category": "education",
+      "type": "adjective",
+      "count": 6
+    },
+    {
+      "level": "C2",
+      "category": "technology",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "C2",
+      "category": "technology",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "C2",
+      "category": "animals",
+      "type": "adjective",
+      "count": 4
+    },
+    {
+      "level": "C2",
+      "category": "household",
+      "type": "noun",
+      "count": 14
+    },
+    {
+      "level": "C2",
+      "category": "plants",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "C2",
+      "category": "sport",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "animals",
+      "type": "noun",
+      "count": 13
+    },
+    {
+      "level": "C2",
+      "category": "body",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "C2",
+      "category": "geography",
+      "type": "adjective",
+      "count": 11
+    },
+    {
+      "level": "C2",
+      "category": "science",
+      "type": "noun",
+      "count": 25
+    },
+    {
+      "level": "C2",
+      "category": "animals",
+      "type": "verb",
+      "count": 6
+    },
+    {
+      "level": "C2",
+      "category": "health",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "C2",
+      "category": "science",
+      "type": "verb",
+      "count": 8
+    },
+    {
+      "level": "C2",
+      "category": "time",
+      "type": "adverb",
+      "count": 3
+    },
+    {
+      "level": "C2",
+      "category": "time",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "C2",
+      "category": "travel",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "travel",
+      "type": "noun",
+      "count": 3
+    },
+    {
+      "level": "C2",
+      "category": "places",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "daily life",
+      "type": "noun",
+      "count": 7
+    },
+    {
+      "level": "C2",
+      "category": "communication",
+      "type": "adjective",
+      "count": 12
+    },
+    {
+      "level": "C2",
+      "category": "communication",
+      "type": "adverb",
+      "count": 10
+    },
+    {
+      "level": "C2",
+      "category": "education",
+      "type": "noun",
+      "count": 8
+    },
+    {
+      "level": "C2",
+      "category": "money",
+      "type": "noun",
+      "count": 9
+    },
+    {
+      "level": "C2",
+      "category": "work",
+      "type": "adverb",
+      "count": 4
+    },
+    {
+      "level": "C2",
+      "category": "astronomy",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "relationships",
+      "type": "verb",
+      "count": 5
+    },
+    {
+      "level": "C2",
+      "category": "relationships",
+      "type": "noun",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "household",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "astronomy",
+      "type": "noun",
+      "count": 4
+    },
+    {
+      "level": "C2",
+      "category": "people",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "people",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "education",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "money",
+      "type": "verb",
+      "count": 3
+    },
+    {
+      "level": "C2",
+      "category": "nature",
+      "type": "noun",
+      "count": 5
+    },
+    {
+      "level": "C2",
+      "category": "environment",
+      "type": "noun",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "weather",
+      "type": "noun",
+      "count": 3
+    },
+    {
+      "level": "C2",
+      "category": "transport",
+      "type": "noun",
+      "count": 5
+    },
+    {
+      "level": "C2",
+      "category": "time",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "transport",
+      "type": "verb",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "numbers",
+      "type": "noun",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "money",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "money",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "food",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "health",
+      "type": "adverb",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "relationships",
+      "type": "adjective",
+      "count": 2
+    },
+    {
+      "level": "C2",
+      "category": "time",
+      "type": "verb",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "numbers",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "numbers",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "technology",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "geography",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "weather",
+      "type": "adjective",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "animals",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "body",
+      "type": "adverb",
+      "count": 1
+    },
+    {
+      "level": "C2",
+      "category": "connectors",
+      "type": "preposition",
+      "count": 1
+    }
+  ]
+}

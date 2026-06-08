@@ -46,15 +46,15 @@ const DEFAULT_WORD_TYPES: string[] = [
   "exclamation",
   "expression",
 ];
-type VocabularyWord = {
-  type?: string | null;
-  level?: string | null;
-  category?: string | null;
-};
-type FilterWord = {
+type FilterCount = {
   type: string;
   level: string;
   category: string;
+  count: number;
+};
+type VocabularyMetadata = {
+  wordTypes: string[];
+  counts: FilterCount[];
 };
 
 const navbarColorRgb = "74, 43, 130";
@@ -77,6 +77,36 @@ const levelSubTextColors = [
 ];
 
 const allLevelCodes = levels.map((level) => level.code);
+
+async function loadVocabularyMetadata(
+  practiceLanguage: string,
+): Promise<VocabularyMetadata | null> {
+  switch (practiceLanguage) {
+    case "en":
+      return (await import("../../data/vocabularyMetadata/english.json"))
+        .default as VocabularyMetadata;
+    case "es":
+      return (await import("../../data/vocabularyMetadata/spanish.json"))
+        .default as VocabularyMetadata;
+    case "fr":
+      return (await import("../../data/vocabularyMetadata/french.json"))
+        .default as VocabularyMetadata;
+    case "de":
+      return (await import("../../data/vocabularyMetadata/german.json"))
+        .default as VocabularyMetadata;
+    case "it":
+      return (await import("../../data/vocabularyMetadata/italian.json"))
+        .default as VocabularyMetadata;
+    case "pt":
+      return (await import("../../data/vocabularyMetadata/portuguese.json"))
+        .default as VocabularyMetadata;
+    case "ru":
+      return (await import("../../data/vocabularyMetadata/russian.json"))
+        .default as VocabularyMetadata;
+    default:
+      return null;
+  }
+}
 
 function randomBetween(min: number, max: number): number {
   return Math.random() * (max - min) + min;
@@ -143,7 +173,7 @@ export function LevelCategorySelection({
   const [pendingWordTypes, setPendingWordTypes] = useState<string[]>([]);
   const [allWordTypes, setAllWordTypes] =
     useState<string[]>(DEFAULT_WORD_TYPES);
-  const [filterWords, setFilterWords] = useState<FilterWord[]>([]);
+  const [filterCounts, setFilterCounts] = useState<FilterCount[]>([]);
   const [isVocabularyMetadataReady, setIsVocabularyMetadataReady] =
     useState(false);
   const { t } = useLanguage();
@@ -298,21 +328,21 @@ export function LevelCategorySelection({
     if (typeof cached === "number") {
       return cached;
     }
-    const count = filterWords.filter((word) => {
+    const count = filterCounts.reduce((total, word) => {
       if (levelsToUse.length > 0 && !levelsToUse.includes(word.level)) {
-        return false;
+        return total;
       }
       if (
         categoriesToUse.length > 0 &&
         !categoriesToUse.includes(word.category)
       ) {
-        return false;
+        return total;
       }
       if (wordTypesToUse.length > 0 && !wordTypesToUse.includes(word.type)) {
-        return false;
+        return total;
       }
-      return true;
-    }).length;
+      return total + word.count;
+    }, 0);
     filteredCountCacheRef.current.set(key, count);
     return count;
   };
@@ -417,7 +447,7 @@ export function LevelCategorySelection({
 
   useEffect(() => {
     filteredCountCacheRef.current.clear();
-  }, [filterWords]);
+  }, [filterCounts]);
 
   useEffect(() => {
     let isMounted = true;
@@ -425,60 +455,24 @@ export function LevelCategorySelection({
 
     const loadWordTypes = async () => {
       try {
-        const vocabularyMap: Record<string, () => Promise<any>> = {
-          en: () => import("../../data/vocabulary/english/vocabulary.json"),
-          es: () => import("../../data/vocabulary/spanish/vocabulary.json"),
-          fr: () => import("../../data/vocabulary/french/vocabulary.json"),
-          de: () => import("../../data/vocabulary/german/vocabulary.json"),
-          it: () => import("../../data/vocabulary/italian/vocabulary.json"),
-          pt: () => import("../../data/vocabulary/portuguese/vocabulary.json"),
-          ru: () => import("../../data/vocabulary/russian/vocabulary.json"),
-        };
-
-        const loadVocabulary = vocabularyMap[practiceLanguage];
-        if (!loadVocabulary) {
+        const metadata = await loadVocabularyMetadata(practiceLanguage);
+        if (!metadata) {
           if (isMounted) setAllWordTypes(DEFAULT_WORD_TYPES);
           return;
         }
 
-        const module = await loadVocabulary();
-        const words: VocabularyWord[] = Array.isArray(module.default)
-          ? (module.default as VocabularyWord[])
-          : [];
-        const normalizedFilterWords: FilterWord[] = words
-          .map((word) => ({
-            type:
-              typeof word?.type === "string" ? word.type.trim().toLowerCase() : "",
-            level:
-              typeof word?.level === "string" ? word.level.trim().toUpperCase() : "",
-            category:
-              typeof word?.category === "string"
-                ? word.category.trim().toLowerCase()
-                : "",
-          }))
-          .filter((word) => word.type && word.level && word.category);
-        const discoveredTypes: string[] = [
-          ...new Set(
-            words
-              .map((word) => word?.type)
-              .filter((type): type is string => typeof type === "string")
-              .map((type) => type.trim())
-              .filter((type): type is string => type.length > 0),
-          ),
-        ];
-
         if (!isMounted) return;
         const nextWordTypes: string[] =
-          discoveredTypes.length > 0
-            ? [...discoveredTypes]
+          metadata.wordTypes.length > 0
+            ? [...metadata.wordTypes]
             : [...DEFAULT_WORD_TYPES];
         setAllWordTypes(nextWordTypes);
-        setFilterWords(normalizedFilterWords);
+        setFilterCounts(Array.isArray(metadata.counts) ? metadata.counts : []);
         setIsVocabularyMetadataReady(true);
       } catch {
         if (isMounted) {
           setAllWordTypes(DEFAULT_WORD_TYPES);
-          setFilterWords([]);
+          setFilterCounts([]);
           setIsVocabularyMetadataReady(true);
         }
       }
