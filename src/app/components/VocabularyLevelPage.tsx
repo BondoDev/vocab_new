@@ -472,27 +472,39 @@ export function VocabularyLevelPage({
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
   const wordsUnit = WORDS_UNIT_BY_UI_LANG[uiLang] ?? WORDS_UNIT_BY_UI_LANG.en;
-  const [contentBundle, setContentBundle] = useState(
-    () => contentOverride ?? getVocabularyLevelContent(uiLang, targetLanguage, level),
+  const initialContentBundle =
+    contentOverride ?? getVocabularyLevelContent(uiLang, targetLanguage, level);
+  const [contentBundle, setContentBundle] = useState(initialContentBundle);
+  const [isContentLoading, setIsContentLoading] = useState(
+    () => !initialContentBundle,
   );
+  const [contentLoadFailed, setContentLoadFailed] = useState(false);
 
   useEffect(() => {
     if (contentOverride) {
       setContentBundle(contentOverride);
+      setIsContentLoading(false);
+      setContentLoadFailed(false);
       return;
     }
 
     const cachedContent = getVocabularyLevelContent(uiLang, targetLanguage, level);
     if (cachedContent) {
       setContentBundle(cachedContent);
+      setIsContentLoading(false);
+      setContentLoadFailed(false);
       return;
     }
 
     let cancelled = false;
+    setIsContentLoading(true);
+    setContentLoadFailed(false);
 
     void loadVocabularyLevelContent(uiLang, targetLanguage, level).then((nextContent) => {
       if (!cancelled) {
         setContentBundle(nextContent);
+        setIsContentLoading(false);
+        setContentLoadFailed(!nextContent);
       }
     });
 
@@ -509,12 +521,95 @@ export function VocabularyLevelPage({
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [location.pathname]);
 
+  const levelDisplay = LEVEL_DISPLAY[level];
+  const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
+  const [browsePage, setBrowsePage] = useState(0);
+  const [browseSearch, setBrowseSearch] = useState("");
+  const [isBrowseLoading, setIsBrowseLoading] = useState(false);
+  const browseLoadPromiseRef = useRef<Promise<VocabEntry[]> | null>(null);
+  const [browsePreview, setBrowsePreview] = useState<BrowsePreviewData | null>(null);
+
+  useEffect(() => {
+    setBrowsePage(0);
+    setBrowseSearch("");
+    setBrowseWords([]);
+    setBrowsePreview(null);
+    setIsBrowseLoading(false);
+    browseLoadPromiseRef.current = null;
+  }, [targetLanguage, level]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void loadBrowsePreviewByPath(targetLanguage, level).then((preview) => {
+      if (cancelled) return;
+      setBrowsePreview(preview);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [level, targetLanguage]);
+
+  const activateBrowse = async () => {
+    if (browseWords.length > 0) {
+      return browseWords;
+    }
+
+    if (browseLoadPromiseRef.current) {
+      return browseLoadPromiseRef.current;
+    }
+
+    const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
+    const loader = vocabModules[key];
+    if (!loader) {
+      return [];
+    }
+
+    setIsBrowseLoading(true);
+    const loadPromise = loader()
+      .then((mod) => {
+        const seen = new Set<string>();
+        const words: VocabEntry[] = [];
+        for (const w of mod.default) {
+          if (w.level !== levelDisplay) continue;
+          if (w.word_lemma.length <= 2 || seen.has(w.concept_id)) continue;
+          seen.add(w.concept_id);
+          words.push(w);
+        }
+        setBrowseWords(words);
+        return words;
+      })
+      .finally(() => {
+        setIsBrowseLoading(false);
+        browseLoadPromiseRef.current = null;
+      });
+
+    browseLoadPromiseRef.current = loadPromise;
+    return loadPromise;
+  };
+
   if (!contentBundle) {
+    if (isContentLoading) {
+      return (
+        <div className="flex-1 flex items-center justify-center px-6 py-12 text-sm text-muted-foreground">
+          Loading...
+        </div>
+      );
+    }
+
+    if (contentLoadFailed) {
+      return (
+        <div className="flex-1 flex items-center justify-center px-6 py-12 text-sm text-muted-foreground">
+          Content unavailable.
+        </div>
+      );
+    }
+
     return null;
   }
 
   const { levelContent } = contentBundle;
-  const levelDisplay = LEVEL_DISPLAY[level];
   const wordMapCount = WORD_MAP[levelDisplay] ?? levelContent.wordCount.value;
   const curiosityT = CURIOSITY_TRANSLATIONS[uiLang] ?? CURIOSITY_TRANSLATIONS.en;
   const seoMetadata =
@@ -588,74 +683,6 @@ export function VocabularyLevelPage({
   const heroTitle = levelContent.title.includes(String(wordMapCount))
     ? levelContent.title
     : `${levelContent.title} - ${heroTitleSuffixWithoutLevel}`;
-  const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
-  const [browsePage, setBrowsePage] = useState(0);
-  const [browseSearch, setBrowseSearch] = useState("");
-  const [isBrowseLoading, setIsBrowseLoading] = useState(false);
-  const browseLoadPromiseRef = useRef<Promise<VocabEntry[]> | null>(null);
-  const [browsePreview, setBrowsePreview] = useState<BrowsePreviewData | null>(null);
-
-  useEffect(() => {
-    setBrowsePage(0);
-    setBrowseSearch("");
-    setBrowseWords([]);
-    setBrowsePreview(null);
-    setIsBrowseLoading(false);
-    browseLoadPromiseRef.current = null;
-  }, [targetLanguage, level]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    void loadBrowsePreviewByPath(targetLanguage, level).then((preview) => {
-      if (cancelled) return;
-      setBrowsePreview(preview);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [level, targetLanguage]);
-
-  const activateBrowse = async () => {
-    if (browseWords.length > 0) {
-      return browseWords;
-    }
-
-    if (browseLoadPromiseRef.current) {
-      return browseLoadPromiseRef.current;
-    }
-
-    const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
-    const loader = vocabModules[key];
-    if (!loader) {
-      return [];
-    }
-
-    setIsBrowseLoading(true);
-    const loadPromise = loader()
-      .then((mod) => {
-        const levelUp = LEVEL_DISPLAY[level];
-        const seen = new Set<string>();
-        const words: VocabEntry[] = [];
-        for (const w of mod.default) {
-          if (w.level !== levelUp) continue;
-          if (w.word_lemma.length <= 2 || seen.has(w.concept_id)) continue;
-          seen.add(w.concept_id);
-          words.push(w);
-        }
-        setBrowseWords(words);
-        return words;
-      })
-      .finally(() => {
-        setIsBrowseLoading(false);
-        browseLoadPromiseRef.current = null;
-      });
-
-    browseLoadPromiseRef.current = loadPromise;
-    return loadPromise;
-  };
-
   const normalizedSearch = browseSearch.trim().toLowerCase();
   const activeBrowsePreview =
     browsePreview?.targetLanguage === targetLanguage &&
