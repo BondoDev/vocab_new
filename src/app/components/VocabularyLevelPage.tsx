@@ -6,6 +6,7 @@ import { getLevelTestSeoPath } from "../../data/levelTests";
 import { getSeoHubPath } from "../../data/seo/hub";
 import {
   getVocabularyLevelContent,
+  loadVocabularyLevelContent,
   type CefrLevelCode,
   type TargetLanguageSlug,
   type UiLanguageCode,
@@ -471,10 +472,34 @@ export function VocabularyLevelPage({
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
   const wordsUnit = WORDS_UNIT_BY_UI_LANG[uiLang] ?? WORDS_UNIT_BY_UI_LANG.en;
-  const contentBundle = useMemo(
+  const [contentBundle, setContentBundle] = useState(
     () => contentOverride ?? getVocabularyLevelContent(uiLang, targetLanguage, level),
-    [contentOverride, uiLang, targetLanguage, level],
   );
+
+  useEffect(() => {
+    if (contentOverride) {
+      setContentBundle(contentOverride);
+      return;
+    }
+
+    const cachedContent = getVocabularyLevelContent(uiLang, targetLanguage, level);
+    if (cachedContent) {
+      setContentBundle(cachedContent);
+      return;
+    }
+
+    let cancelled = false;
+
+    void loadVocabularyLevelContent(uiLang, targetLanguage, level).then((nextContent) => {
+      if (!cancelled) {
+        setContentBundle(nextContent);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [contentOverride, level, targetLanguage, uiLang]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -517,34 +542,32 @@ export function VocabularyLevelPage({
     levelContent.introParagraphs && levelContent.introParagraphs.length > 0
       ? levelContent.introParagraphs
       : [levelContent.intro];
-  const internalNavigationLinks = SUPPORTED_LEVELS.filter((item) => item !== level).map(
-    (nextLevel) => {
-      const nextLevelContent = getVocabularyLevelContent(uiLang, targetLanguage, nextLevel);
-
-      return {
-        level: nextLevel,
-        href: buildVocabularyUrl(uiLang, targetLanguage, nextLevel),
-        label: nextLevelContent?.levelContent.title ?? LEVEL_DISPLAY[nextLevel],
-      };
-    },
-  );
-  const levelTestHref = getLevelTestSeoPath(uiLang, targetLanguage);
   const targetLanguageDisplayName = resolveTargetLanguageDisplayName(
     targetLanguage,
     contentBundle.file.targetLanguageDisplayName,
   );
+  const internalNavigationLinks = SUPPORTED_LEVELS.filter((item) => item !== level).map(
+    (nextLevel) => ({
+      level: nextLevel,
+      href: buildVocabularyUrl(uiLang, targetLanguage, nextLevel),
+      label: `${targetLanguageDisplayName} ${LEVEL_DISPLAY[nextLevel]}`,
+    }),
+  );
+  const levelTestHref = getLevelTestSeoPath(uiLang, targetLanguage);
   const seoHubHref = getSeoHubPath(uiLang);
   const crossLangCopy = CROSS_LANGUAGE_COPY[uiLang] ?? CROSS_LANGUAGE_COPY.en;
   const browseWordsCopy = BROWSE_WORDS_COPY[uiLang] ?? BROWSE_WORDS_COPY.en;
   const crossLanguageLinks = SUPPORTED_TARGET_LANGUAGES.filter((lang) => lang !== targetLanguage)
     .map((lang) => {
-      const content = getVocabularyLevelContent(uiLang, lang, level);
       const href = buildLocalizedVocabularyPath(uiLang, lang, level);
-      if (!href || !content) return null;
+      if (!href) return null;
+      const languageLabel =
+        HERO_SUFFIX_LANGUAGE_NAMES[uiLang]?.[lang] ??
+        TARGET_LANGUAGE_DISPLAY_FALLBACKS[lang];
       return {
         lang,
         href,
-        label: `${content.file.targetLanguageDisplayName} ${levelDisplay} ${crossLangCopy.linkSuffix}`,
+        label: `${languageLabel} ${levelDisplay} ${crossLangCopy.linkSuffix}`,
       };
     })
     .filter((item): item is NonNullable<typeof item> => item !== null);

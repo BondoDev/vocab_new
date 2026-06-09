@@ -63,9 +63,11 @@ interface VocabularyFile {
   levels: Partial<Record<Level, VocabularyLevelContent>>;
 }
 
-const vocabularyFileModules = import.meta.glob("./*/**/*.json", {
-  eager: true,
-}) as Record<string, { default: VocabularyFile }>;
+const vocabularyFileModules = import.meta.glob("./*/**/*.json") as Record<
+  string,
+  () => Promise<{ default: VocabularyFile }>
+>;
+const vocabularyFileCache = new Map<string, VocabularyFile>();
 
 export function isSupportedLevel(value: string): value is Level {
   return (SUPPORTED_LEVELS as readonly string[]).includes(value);
@@ -83,7 +85,8 @@ export function getVocabularyLevelContent(
   level: Level,
 ): { file: VocabularyFile; levelContent: VocabularyLevelContent } | null {
   const key = `./${uiLanguage}/${targetLanguage}.json`;
-  const loadedFile = vocabularyFileModules[key]?.default;
+  const loadedFile =
+    vocabularyFileCache.get(key) ?? loadVocabularyFileSync(uiLanguage, targetLanguage);
 
   if (!loadedFile) {
     return null;
@@ -98,4 +101,61 @@ export function getVocabularyLevelContent(
     file: loadedFile,
     levelContent,
   };
+}
+
+export async function loadVocabularyLevelContent(
+  uiLanguage: UiLanguageCode,
+  targetLanguage: TargetLanguageSlug,
+  level: Level,
+): Promise<{ file: VocabularyFile; levelContent: VocabularyLevelContent } | null> {
+  const key = `./${uiLanguage}/${targetLanguage}.json`;
+  const cachedFile = vocabularyFileCache.get(key);
+  const loadedFile =
+    cachedFile ??
+    ((await vocabularyFileModules[key]?.())?.default ?? null);
+
+  if (!loadedFile) {
+    return null;
+  }
+
+  vocabularyFileCache.set(key, loadedFile);
+  const levelContent = loadedFile.levels[level];
+
+  if (!levelContent) {
+    return null;
+  }
+
+  return {
+    file: loadedFile,
+    levelContent,
+  };
+}
+
+function loadVocabularyFileSync(
+  uiLanguage: UiLanguageCode,
+  targetLanguage: TargetLanguageSlug,
+): VocabularyFile | null {
+  if (!import.meta.env.SSR) {
+    return null;
+  }
+
+  const key = `./${uiLanguage}/${targetLanguage}.json`;
+  const cachedFile = vocabularyFileCache.get(key);
+  if (cachedFile) {
+    return cachedFile;
+  }
+
+  try {
+    const nodeRequire = (0, eval)("require") as NodeRequire;
+    const { readFileSync } = nodeRequire("node:fs") as typeof import("node:fs");
+    const { fileURLToPath } = nodeRequire("node:url") as typeof import("node:url");
+    const filePath = fileURLToPath(
+      new URL(`./${uiLanguage}/${targetLanguage}.json`, import.meta.url),
+    );
+    const loadedFile = JSON.parse(readFileSync(filePath, "utf8")) as VocabularyFile;
+    vocabularyFileCache.set(key, loadedFile);
+    return loadedFile;
+  } catch {
+    return null;
+  }
 }
