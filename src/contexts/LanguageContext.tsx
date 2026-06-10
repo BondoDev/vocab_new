@@ -19,6 +19,10 @@ type LoadedTranslationData = {
   root: Record<string, TranslationNode>;
 };
 
+const interfaceModules = import.meta.glob("../data/interface/*_interface.json", {
+  eager: true,
+}) as Record<string, { default: unknown }>;
+
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 function normalizeTranslationRoot(source: unknown): Record<string, TranslationNode> {
@@ -130,6 +134,21 @@ async function loadLanguageData(lang: UILanguage): Promise<LoadedTranslationData
   }
 }
 
+function loadLanguageDataSync(lang: UILanguage): LoadedTranslationData | null {
+  const filenameByLang: Record<UILanguage, string> = {
+    en: "english_interface.json",
+    es: "spanish_interface.json",
+    fr: "french_interface.json",
+    pt: "portuguese_interface.json",
+    it: "italian_interface.json",
+    de: "german_interface.json",
+    ru: "russian_interface.json",
+  };
+
+  const module = interfaceModules[`../data/interface/${filenameByLang[lang]}`];
+  return module ? prepareTranslationData(module.default) : null;
+}
+
 interface LanguageProviderProps {
   children: ReactNode;
   initialUILanguage?: UILanguage;
@@ -155,7 +174,13 @@ export function LanguageProvider({
   initialUILanguage,
 }: LanguageProviderProps) {
   const [uiLanguage, setUILanguage] = useState<UILanguage>(() => getInitialUiLanguage(initialUILanguage));
-  const [loadedLanguages, setLoadedLanguages] = useState<Partial<Record<UILanguage, LoadedTranslationData>>>({});
+  const [loadedLanguages, setLoadedLanguages] = useState<Partial<Record<UILanguage, LoadedTranslationData>>>(
+    () => {
+      const initialLang = getInitialUiLanguage(initialUILanguage);
+      const initialData = loadLanguageDataSync(initialLang);
+      return initialData ? { [initialLang]: initialData } : {};
+    },
+  );
 
   useEffect(() => {
     if (!initialUILanguage) {

@@ -9,6 +9,11 @@ import { LanguageSelector } from "./components/LanguageSelector";
 import { FloatingWords } from "./components/FloatingWords";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { ScrollToTopButton } from "./components/ScrollToTopButton";
+import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
+import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
+import { SeoHubPage } from "./components/SeoHubPage";
+import { WordSeoPage } from "./components/WordSeoPage";
+import { DevSeoCefrPlaceholderPage } from "./components/DevSeoCefrPlaceholderPage";
 import {
   LanguageContinuePopup,
   type LanguageContinuePopupHandle,
@@ -27,6 +32,7 @@ import { resolveSeoHubRoute } from "../data/seo/hub";
 import { SeoProvider, type SeoManager } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../data/levelTests";
+import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
 
 const LevelCategorySelection = lazy(() =>
   import("./components/LevelCategorySelection").then((module) => ({
@@ -58,32 +64,6 @@ const Help = lazy(() =>
     default: module.Help,
   })),
 );
-const VocabularyLevelPage = lazy(() =>
-  import("./components/VocabularyLevelPage").then((module) => ({
-    default: module.VocabularyLevelPage,
-  })),
-);
-const LevelTestSeoPage = lazy(() =>
-  import("./components/LevelTestSeoPage").then((module) => ({
-    default: module.LevelTestSeoPage,
-  })),
-);
-const SeoHubPage = lazy(() =>
-  import("./components/SeoHubPage").then((module) => ({
-    default: module.SeoHubPage,
-  })),
-);
-const WordSeoPage = lazy(() =>
-  import("./components/WordSeoPage").then((module) => ({
-    default: module.WordSeoPage,
-  })),
-);
-const DevSeoCefrPlaceholderPage = lazy(() =>
-  import("./components/DevSeoCefrPlaceholderPage").then((module) => ({
-    default: module.DevSeoCefrPlaceholderPage,
-  })),
-);
-
 const supportedLanguages = [
   { code: "en", flagCode: "gb" },
   { code: "es", flagCode: "es" },
@@ -2115,6 +2095,12 @@ function AppContent() {
       );
     }
 
+    const jsonBackedVocabularyItem = findSeoCefrPreviewItem({
+      uiLanguage: vocabularyRoute.uiLang,
+      targetLanguage: vocabularyRoute.targetLanguage,
+      level: vocabularyRoute.level,
+    });
+
   return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header
@@ -2128,12 +2114,20 @@ function AppContent() {
           onExplore={() => navigate(ROUTES.explore)}
         />
         <Suspense fallback={<RouteLoadingFallback />}>
-          <VocabularyLevelPage
-            uiLang={vocabularyRoute.uiLang}
-            targetLanguage={vocabularyRoute.targetLanguage}
-            level={vocabularyRoute.level}
-            onStartPractice={handleStartVocabularyPractice}
-          />
+          {jsonBackedVocabularyItem ? (
+            <DevSeoCefrPlaceholderPage
+              item={jsonBackedVocabularyItem}
+              onStartPractice={handleStartVocabularyPractice}
+              pathPrefix=""
+            />
+          ) : (
+            <VocabularyLevelPage
+              uiLang={vocabularyRoute.uiLang}
+              targetLanguage={vocabularyRoute.targetLanguage}
+              level={vocabularyRoute.level}
+              onStartPractice={handleStartVocabularyPractice}
+            />
+          )}
         </Suspense>
       </div>
     );

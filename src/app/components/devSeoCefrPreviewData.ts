@@ -19,6 +19,10 @@ export type SeoCefrContentItem = {
 const previewItems = sampleContent as SeoCefrContentItem[];
 const defaultPreviewItem = previewItems[0];
 
+export function getSeoCefrPreviewItems(): SeoCefrContentItem[] {
+  return previewItems;
+}
+
 const TARGET_LANGUAGE_CODE_TO_SLUG: Record<UiLanguageCode, TargetLanguageSlug> = {
   en: "english",
   es: "spanish",

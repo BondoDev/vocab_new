@@ -10,6 +10,7 @@ import { buildVocabularyFaqSection } from "../../seo/metadata";
 import {
   DEV_CEFR_PREVIEW_PATH,
   findSeoCefrPreviewItem,
+  getSeoCefrPreviewItems,
   normalizeTargetLanguage,
   type SeoCefrContentItem,
 } from "./devSeoCefrPreviewData";
@@ -249,9 +250,9 @@ function buildPreviewHeroTitle(item: SeoCefrContentItem): string {
     : `${item.content.title} - ${suffix}`;
 }
 
-function buildPreviewPath(item: SeoCefrContentItem): string {
+function buildItemPath(item: SeoCefrContentItem, pathPrefix: string): string {
   return (
-    `/test${buildLocalizedVocabularyPath(
+    `${pathPrefix}${buildLocalizedVocabularyPath(
       item.uiLanguage,
       normalizeTargetLanguage(item.targetLanguage),
       item.level,
@@ -259,7 +260,7 @@ function buildPreviewPath(item: SeoCefrContentItem): string {
   );
 }
 
-function buildSeoMetadata(item: SeoCefrContentItem, previewPath: string): SeoMetadata {
+function buildSeoMetadata(item: SeoCefrContentItem, pathPrefix: string): SeoMetadata {
   const wordsUnitByUiLang = {
     en: "words",
     es: "palabras",
@@ -281,19 +282,27 @@ function buildSeoMetadata(item: SeoCefrContentItem, previewPath: string): SeoMet
     item.content,
     wordsUnit,
   );
+  const canonicalPath = buildItemPath(item, pathPrefix);
+  const alternateItems = getSeoCefrPreviewItems().filter(
+    (candidate) =>
+      normalizeTargetLanguage(candidate.targetLanguage) === normalizedTargetLanguage &&
+      candidate.level === item.level,
+  );
+  const xDefaultItem =
+    alternateItems.find((candidate) => candidate.uiLanguage === "en") ?? item;
 
   return {
     title: item.content.metaTitle ?? item.content.title,
     description: item.content.metaDescription ?? "",
-    canonical: `https://www.fluentstellar.com${previewPath}`,
+    canonical: `https://www.fluentstellar.com${canonicalPath}`,
     alternates: [
-      {
-        hreflang: item.uiLanguage,
-        href: `https://www.fluentstellar.com${previewPath}`,
-      },
+      ...alternateItems.map((candidate) => ({
+        hreflang: candidate.uiLanguage,
+        href: `https://www.fluentstellar.com${buildItemPath(candidate, pathPrefix)}`,
+      })),
       {
         hreflang: "x-default",
-        href: `https://www.fluentstellar.com${previewPath}`,
+        href: `https://www.fluentstellar.com${buildItemPath(xDefaultItem, pathPrefix)}`,
       },
     ],
     jsonLd: JSON.stringify({
@@ -315,6 +324,7 @@ export function DevSeoCefrPlaceholderPage({
   item,
   routeParams,
   onStartPractice,
+  pathPrefix = "/test",
 }: {
   item?: SeoCefrContentItem | null;
   routeParams?: {
@@ -323,6 +333,7 @@ export function DevSeoCefrPlaceholderPage({
     level: CefrLevelCode;
   } | null;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
+  pathPrefix?: string;
 }) {
   const resolvedItem = useMemo(() => {
     if (item) {
@@ -338,10 +349,9 @@ export function DevSeoCefrPlaceholderPage({
     return <div className="p-6 text-sm text-muted-foreground">Invalid preview page. Try {DEV_CEFR_PREVIEW_PATH}</div>;
   }
 
-  const previewPath = useMemo(() => buildPreviewPath(resolvedItem), [resolvedItem]);
   const seoMetadata = useMemo(
-    () => buildSeoMetadata(resolvedItem, previewPath),
-    [resolvedItem, previewPath],
+    () => buildSeoMetadata(resolvedItem, pathPrefix),
+    [resolvedItem, pathPrefix],
   );
   const normalizedTargetLanguage = useMemo(
     () => normalizeTargetLanguage(resolvedItem.targetLanguage),
