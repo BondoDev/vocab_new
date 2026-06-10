@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "french",
+    "level":  "B1",
+    "totalWords":  2752,
+    "totalPages":  51,
+    "words":  [
+                  {
+                      "concept_id":  "B1-00001",
+                      "word_lemma":  "abandonner"
+                  },
+                  {
+                      "concept_id":  "B1-00004",
+                      "word_lemma":  "à bord"
+                  },
+                  {
+                      "concept_id":  "B1-00005",
+                      "word_lemma":  "à bord de"
+                  },
+                  {
+                      "concept_id":  "B1-00007",
+                      "word_lemma":  "au-dessus"
+                  },
+                  {
+                      "concept_id":  "B1-00008",
+                      "word_lemma":  "ci-dessus"
+                  },
+                  {
+                      "concept_id":  "B1-00009",
+                      "word_lemma":  "absence"
+                  },
+                  {
+                      "concept_id":  "B1-00010",
+                      "word_lemma":  "absent"
+                  },
+                  {
+                      "concept_id":  "B1-00012",
+                      "word_lemma":  "absolument"
+                  },
+                  {
+                      "concept_id":  "B1-00021",
+                      "word_lemma":  "accent"
+                  },
+                  {
+                      "concept_id":  "B1-00023",
+                      "word_lemma":  "accès"
+                  },
+                  {
+                      "concept_id":  "B1-00024",
+                      "word_lemma":  "accéder"
+                  },
+                  {
+                      "concept_id":  "B1-00026",
+                      "word_lemma":  "accessoire"
+                  },
+                  {
+                      "concept_id":  "B1-00027",
+                      "word_lemma":  "accidentel"
+                  },
+                  {
+                      "concept_id":  "B1-00028",
+                      "word_lemma":  "accidentellement"
+                  },
+                  {
+                      "concept_id":  "B1-00031",
+                      "word_lemma":  "selon"
+                  },
+                  {
+                      "concept_id":  "B1-00033",
+                      "word_lemma":  "comptable"
+                  },
+                  {
+                      "concept_id":  "B1-00035",
+                      "word_lemma":  "précis"
+                  },
+                  {
+                      "concept_id":  "B1-00037",
+                      "word_lemma":  "accuser"
+                  },
+                  {
+                      "concept_id":  "B1-00039",
+                      "word_lemma":  "douleur"
+                  },
+                  {
+                      "concept_id":  "B1-00040",
+                      "word_lemma":  "avoir mal"
+                  },
+                  {
+                      "concept_id":  "B1-00041",
+                      "word_lemma":  "réalisation"
+                  },
+                  {
+                      "concept_id":  "B1-00046",
+                      "word_lemma":  "se comporter"
+                  },
+                  {
+                      "concept_id":  "B1-00047",
+                      "word_lemma":  "actif"
+                  },
+                  {
+                      "concept_id":  "B1-00048",
+                      "word_lemma":  "actrice"
+                  },
+                  {
+                      "concept_id":  "B1-00049",
+                      "word_lemma":  "pub"
+                  },
+                  {
+                      "concept_id":  "B1-00054",
+                      "word_lemma":  "entrée"
+                  },
+                  {
+                      "concept_id":  "B1-00056",
+                      "word_lemma":  "adopter"
+                  },
+                  {
+                      "concept_id":  "B1-00057",
+                      "word_lemma":  "adorable"
+                  },
+                  {
+                      "concept_id":  "B1-00061",
+                      "word_lemma":  "adverbe"
+                  },
+                  {
+                      "concept_id":  "B1-00063",
+                      "word_lemma":  "publicité"
+                  },
+                  {
+                      "concept_id":  "B1-00064",
+                      "word_lemma":  "faire de la publicité"
+                  },
+                  {
+                      "concept_id":  "B1-00065",
+                      "word_lemma":  "conseiller"
+                  },
+                  {
+                      "concept_id":  "B1-00066",
+                      "word_lemma":  "aérobic"
+                  },
+                  {
+                      "concept_id":  "B1-00067",
+                      "word_lemma":  "affecter"
+                  },
+                  {
+                      "concept_id":  "B1-00069",
+                      "word_lemma":  "se permettre"
+                  },
+                  {
+                      "concept_id":  "B1-00070",
+                      "word_lemma":  "après"
+                  },
+                  {
+                      "concept_id":  "B1-00071",
+                      "word_lemma":  "après"
+                  },
+                  {
+                      "concept_id":  "B1-00072",
+                      "word_lemma":  "après"
+                  },
+                  {
+                      "concept_id":  "B1-00073",
+                      "word_lemma":  "ensuite"
+                  },
+                  {
+                      "concept_id":  "B1-00075",
+                      "word_lemma":  "agressif"
+                  },
+                  {
+                      "concept_id":  "B1-00076",
+                      "word_lemma":  "accord"
+                  },
+                  {
+                      "concept_id":  "B1-00081",
+                      "word_lemma":  "but"
+                  },
+                  {
+                      "concept_id":  "B1-00082",
+                      "word_lemma":  "viser"
+                  },
+                  {
+                      "concept_id":  "B1-00085",
+                      "word_lemma":  "compagnie aérienne"
+                  },
+                  {
+                      "concept_id":  "B1-00086",
+                      "word_lemma":  "alarme"
+                  },
+                  {
+                      "concept_id":  "B1-00088",
+                      "word_lemma":  "alcool"
+                  },
+                  {
+                      "concept_id":  "B1-00089",
+                      "word_lemma":  "alcoolisé"
+                  },
+                  {
+                      "concept_id":  "B1-00091",
+                      "word_lemma":  "semblable"
+                  },
+                  {
+                      "concept_id":  "B1-00092",
+                      "word_lemma":  "de la même manière"
+                  },
+                  {
+                      "concept_id":  "B1-00093",
+                      "word_lemma":  "allergique"
+                  },
+                  {
+                      "concept_id":  "B1-00094",
+                      "word_lemma":  "argent de poche"
+                  },
+                  {
+                      "concept_id":  "B1-00095",
+                      "word_lemma":  "à haute voix"
+                  },
+                  {
+                      "concept_id":  "B1-00097",
+                      "word_lemma":  "alternatif"
+                  },
+                  {
+                      "concept_id":  "B1-00098",
+                      "word_lemma":  "alternative"
+                  }
+              ]
+}

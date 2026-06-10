@@ -1,0 +1,690 @@
+﻿{
+  "targetLanguage": "german",
+  "targetLanguageDisplayName": "Alemão",
+  "levels": {
+    "a1": {
+      "title": "Prática de vocabulário de alemão A1 – Lista de palavras para iniciantes",
+      "intro": "O vocabulário de alemão A1 representa o primeiro passo para iniciantes.",
+      "levelDescription": "Iniciante",
+      "ctaText": "Iniciar prática A1",
+      "levelExplanation": {
+        "heading": "O que significa o nível A1 em alemão?",
+        "paragraph": "O nível A1 corresponde ao nível iniciante segundo o Quadro Europeu Comum de Referência para Línguas (QECR). Os alunos conseguem compreender e usar expressões familiares e frases simples para necessidades concretas.",
+        "bullets": [
+          "Cumprimentar e se apresentar.",
+          "Fazer e responder perguntas simples.",
+          "Compreender instruções curtas e claras."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "O que inclui o vocabulário de alemão A1?",
+        "topics": [
+          "Comunicação cotidiana",
+          "Temas pessoais"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Comunicação cotidiana",
+            "items": [
+              "Cumprimentos e formas de cortesia",
+              "Números, dias da semana e meses",
+              "Verbos comuns no presente",
+              "Perguntas simples"
+            ]
+          },
+          {
+            "heading": "Temas pessoais",
+            "items": [
+              "Família e amigos",
+              "Comida e bebidas",
+              "Casa e ambiente",
+              "Adjetivos básicos"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras inclui o vocabulário de alemão A1?",
+        "text": "O nível A1 normalmente inclui entre 500 e 800 palavras essenciais. O objetivo não é apenas memorizar, mas usar ativamente em frases simples. Exercícios de alemão A1 ajudam a consolidar o aprendizado.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário de alemão A1",
+        "columns": {
+          "word": "Palavra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "hallo",
+            "meaning": "olá"
+          },
+          {
+            "word": "tschüss",
+            "meaning": "tchau"
+          },
+          {
+            "word": "danke",
+            "meaning": "obrigado"
+          },
+          {
+            "word": "Familie",
+            "meaning": "família"
+          },
+          {
+            "word": "Haus",
+            "meaning": "casa"
+          },
+          {
+            "word": "essen",
+            "meaning": "comer"
+          },
+          {
+            "word": "trinken",
+            "meaning": "beber"
+          },
+          {
+            "word": "Freund",
+            "meaning": "amigo"
+          },
+          {
+            "word": "groß",
+            "meaning": "grande"
+          },
+          {
+            "word": "klein",
+            "meaning": "pequeno"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Outros níveis de alemão"
+      },
+      "metaTitle": "Prática de vocabulário de alemão A1 – Palavras para iniciantes",
+      "metaDescription": "Aprenda o vocabulário de alemão A1 com palavras essenciais e exemplos simples. Construa uma base sólida para se comunicar em alemão.",
+      "introParagraphs": [
+        "O vocabulário de alemão A1 representa o primeiro passo para iniciantes. Neste nível, aprende-se palavras e expressões simples para se comunicar no dia a dia.",
+        "Palavras básicas alemão A1 incluem cumprimentos, números, verbos comuns e perguntas simples. Uma lista de vocabulário alemão A1 bem estruturada ajuda a expandir gradualmente o vocabulário e ganhar confiança ao falar."
+      ],
+      "bottomCta": {
+        "heading": "Comece a aprender agora",
+        "text": "O vocabulário de alemão A1 oferece uma base sólida. Pratique regularmente, forme frases simples e ouça diálogos curtos para fortalecer suas habilidades."
+      }
+    },
+    "a2": {
+      "title": "Prática de vocabulário de alemão A2 – Lista de palavras nível básico",
+      "intro": "O vocabulário de alemão A2 desenvolve os conhecimentos do nível A1.",
+      "levelDescription": "Elementar",
+      "ctaText": "Iniciar prática A2",
+      "levelExplanation": {
+        "heading": "O que significa o nível A2 em alemão?",
+        "paragraph": "O nível A2 corresponde a uma competência elementar. Os alunos conseguem compreender expressões de uso frequente e interagir em tarefas simples e rotineiras.",
+        "bullets": [
+          "Descrever rotinas e atividades diárias.",
+          "Falar sobre experiências passadas simples.",
+          "Trocar informações em situações familiares."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "O que inclui o vocabulário de alemão A2?",
+        "topics": [
+          "Vida cotidiana e serviços",
+          "Comunicação expandida"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Vida cotidiana e serviços",
+            "items": [
+              "Transportes e viagens",
+              "Compras e dinheiro",
+              "Saúde e bem-estar",
+              "Trabalho e compromissos"
+            ]
+          },
+          {
+            "heading": "Comunicação expandida",
+            "items": [
+              "Conectores simples",
+              "Expressões de tempo",
+              "Adjetivos de opinião",
+              "Verbos no passado (Perfekt)"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras inclui o vocabulário de alemão A2?",
+        "text": "O nível A2 geralmente inclui entre 1.000 e 1.500 palavras úteis. A prática regular ajuda a consolidar o aprendizado e melhorar a fluência.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário de alemão A2",
+        "columns": {
+          "word": "Palavra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "Reise",
+            "meaning": "viagem"
+          },
+          {
+            "word": "Fahrkarte",
+            "meaning": "bilhete"
+          },
+          {
+            "word": "Geschäft",
+            "meaning": "loja"
+          },
+          {
+            "word": "Geld",
+            "meaning": "dinheiro"
+          },
+          {
+            "word": "Arbeit",
+            "meaning": "trabalho"
+          },
+          {
+            "word": "krank",
+            "meaning": "doente"
+          },
+          {
+            "word": "gestern",
+            "meaning": "ontem"
+          },
+          {
+            "word": "morgen",
+            "meaning": "amanhã"
+          },
+          {
+            "word": "oft",
+            "meaning": "frequentemente"
+          },
+          {
+            "word": "wichtig",
+            "meaning": "importante"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Outros níveis de alemão"
+      },
+      "metaTitle": "Prática de vocabulário de alemão A2 – Lista de palavras básicas",
+      "metaDescription": "Aprenda o vocabulário de alemão A2 com palavras comuns e exemplos práticos. Melhore a compreensão e comunicação no nível elementar.",
+      "introParagraphs": [
+        "O vocabulário de alemão A2 desenvolve os conhecimentos do nível A1. Neste nível, os alunos conseguem formar frases mais longas e se comunicar com mais facilidade em situações do dia a dia.",
+        "O vocabulário cotidiano alemão abrange temas como trabalho, lazer, viagens e saúde. Uma lista de vocabulário alemão A2 bem organizada ajuda a aprender novas palavras de forma progressiva."
+      ],
+      "bottomCta": {
+        "heading": "Continue aprendendo",
+        "text": "O vocabulário de alemão A2 permite comunicação mais independente. Leia textos simples, ouça diálogos e revise regularmente novas palavras."
+      }
+    },
+    "b1": {
+      "title": "Prática de vocabulário de alemão B1 – Lista de palavras nível intermediário",
+      "intro": "O vocabulário de alemão B1 representa o nível intermediário.",
+      "levelDescription": "Intermediário",
+      "ctaText": "Iniciar prática B1",
+      "levelExplanation": {
+        "heading": "O que significa o nível B1 em alemão?",
+        "paragraph": "O nível B1 corresponde ao uso independente da língua em nível intermediário. Os alunos podem lidar com a maioria das situações cotidianas e produzir textos simples, mas coerentes.",
+        "bullets": [
+          "Expressar opiniões pessoais.",
+          "Descrever experiências e acontecimentos.",
+          "Compreender textos informativos de forma clara."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "O que inclui o vocabulário de alemão B1?",
+        "topics": [
+          "Trabalho e sociedade",
+          "Argumentação e narrativa"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Trabalho e sociedade",
+            "items": [
+              "Profissões e responsabilidades",
+              "Educação e formação",
+              "Tecnologia e mídia",
+              "Temas sociais"
+            ]
+          },
+          {
+            "heading": "Argumentação e narrativa",
+            "items": [
+              "Conectores lógicos",
+              "Expressões de concordância e discordância",
+              "Adjetivos comparativos",
+              "Palavras abstratas alemão B1"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras inclui o vocabulário de alemão B1?",
+        "text": "O nível B1 normalmente inclui entre 2.000 e 3.000 palavras. Para expandir o vocabulário B1 alemão, recomenda-se ler artigos, ouvir podcasts e praticar conversação regularmente.",
+        "value": 3000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário alemão B1",
+        "columns": {
+          "word": "Palavra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "erfolgen",
+            "meaning": "ocorrer / ter sucesso"
+          },
+          {
+            "word": "Misserfolg",
+            "meaning": "fracasso"
+          },
+          {
+            "word": "Arbeitgeber",
+            "meaning": "empregador"
+          },
+          {
+            "word": "Kandidat",
+            "meaning": "candidato"
+          },
+          {
+            "word": "entwickeln",
+            "meaning": "desenvolver"
+          },
+          {
+            "word": "Umwelt",
+            "meaning": "meio ambiente"
+          },
+          {
+            "word": "Vorteil",
+            "meaning": "vantagem"
+          },
+          {
+            "word": "Nachteil",
+            "meaning": "desvantagem"
+          },
+          {
+            "word": "vorschlagen",
+            "meaning": "propor"
+          },
+          {
+            "word": "Ziel",
+            "meaning": "objetivo"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Outros níveis de alemão"
+      },
+      "metaTitle": "Prática de vocabulário de alemão B1 – Palavras nível intermediário",
+      "metaDescription": "Aprenda o vocabulário de alemão B1 com palavras intermediárias e exemplos detalhados. Melhore expressão e compreensão na língua alemã.",
+      "introParagraphs": [
+        "O vocabulário de alemão B1 representa o nível intermediário. Os alunos conseguem compreender os pontos principais de mensagens claras e se expressar com mais detalhes.",
+        "Palavras intermediárias alemão B1 permitem expressar opiniões, relatar experiências e participar de conversas mais complexas. Uma lista de vocabulário alemão B1 bem estruturada ajuda a expandir o vocabulário e fortalecer habilidades linguísticas."
+      ],
+      "bottomCta": {
+        "heading": "Fortaleça seu nível intermediário",
+        "text": "Com um vocabulário de alemão B1 sólido, você pode se comunicar de forma clara e estruturada. Pratique regularmente, discuta temas atuais e leia textos mais complexos para aprofundar seu vocabulário."
+      }
+    },
+    "b2": {
+      "title": "Prática de vocabulário de alemão B2 – Lista de palavras nível intermediário avançado",
+      "intro": "O vocabulário de alemão B2 é destinado a quem já consegue se comunicar com fluência e deseja abordar temas mais complexos.",
+      "levelDescription": "Intermediário avançado",
+      "ctaText": "Iniciar prática B2",
+      "levelExplanation": {
+        "heading": "O que significa o nível B2?",
+        "paragraph": "No nível B2, você pode interagir espontaneamente com falantes nativos. Palavras alemãs nível B2 incluem termos abstratos, conectores lógicos e expressões úteis para debates ou contextos profissionais.",
+        "bullets": [
+          "Compreensão das ideias principais de textos complexos.",
+          "Expressão e defesa de opiniões de forma estruturada.",
+          "Uso de conectores variados para organizar o discurso."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Escopo do vocabulário B2",
+        "topics": [
+          "Discussão e argumentação",
+          "Trabalho e sociedade"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Discussão e argumentação",
+            "items": [
+              "Expressões para concordar ou discordar.",
+              "Conectores para comparação e contraste.",
+              "Vocabulário para justificar opiniões.",
+              "Termos para analisar problemas e soluções."
+            ]
+          },
+          {
+            "heading": "Trabalho e sociedade",
+            "items": [
+              "Palavras relacionadas ao trabalho e estudo.",
+              "Vocabulário sobre temas sociais atuais.",
+              "Expressões formais para relatórios e e-mails.",
+              "Termos sobre responsabilidades e projetos."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras o B2 contém?",
+        "text": "O vocabulário de alemão B2 geralmente inclui várias milhares de palavras ativas. É importante usá-las corretamente ao falar e escrever.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário B2",
+        "columns": {
+          "word": "Palavra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "jedoch",
+            "meaning": "no entanto"
+          },
+          {
+            "word": "verbessern",
+            "meaning": "melhorar"
+          },
+          {
+            "word": "Herausforderung",
+            "meaning": "desafio"
+          },
+          {
+            "word": "somit",
+            "meaning": "portanto"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "alcançar"
+          },
+          {
+            "word": "überzeugen",
+            "meaning": "convencer"
+          },
+          {
+            "word": "Fortschritt",
+            "meaning": "progresso"
+          },
+          {
+            "word": "Verantwortung",
+            "meaning": "responsabilidade"
+          },
+          {
+            "word": "bewerten",
+            "meaning": "avaliar"
+          },
+          {
+            "word": "Problem",
+            "meaning": "problema"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Outros níveis CEFR"
+      },
+      "metaTitle": "Prática de vocabulário de alemão B2 – Vocabulário intermediário avançado",
+      "metaDescription": "Amplie seu vocabulário de alemão B2 com palavras, significados e exemplos para comunicar-se com confiança no dia a dia e no trabalho.",
+      "introParagraphs": [
+        "O vocabulário de alemão B2 é destinado a quem já consegue se comunicar com fluência e deseja abordar temas mais complexos. Neste nível, você consegue participar de discussões e expressar suas ideias de forma clara.",
+        "O vocabulário intermediário alemão permite construir argumentos, avaliar prós e contras e compreender textos longos e mais complexos. O objetivo é melhorar a precisão e a fluência na comunicação."
+      ],
+      "bottomCta": {
+        "heading": "Continue expandindo seu vocabulário",
+        "text": "Para dominar o vocabulário B2, leia textos, ouça debates e pratique a fala e a escrita. O uso ativo fortalece as palavras aprendidas."
+      }
+    },
+    "c1": {
+      "title": "Prática de vocabulário de alemão C1 – Lista de palavras avançadas",
+      "intro": "O vocabulário de alemão C1 corresponde a um nível avançado, no qual você domina expressões complexas e termos abstratos.",
+      "levelDescription": "Avançado",
+      "ctaText": "Iniciar prática C1",
+      "levelExplanation": {
+        "heading": "Características do nível C1",
+        "paragraph": "Palavras alemãs nível C1 incluem termos técnicos, expressões formais e conectores lógicos variados.",
+        "bullets": [
+          "Compreensão de textos complexos e especializados.",
+          "Expressão fluida e estruturada de pensamentos abstratos.",
+          "Adaptação do registro linguístico ao contexto."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Escopo do vocabulário C1",
+        "topics": [
+          "Linguagem acadêmica",
+          "Comunicação profissional"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Linguagem acadêmica",
+            "items": [
+              "Termos para análise e avaliação.",
+              "Expressões para estruturar argumentos complexos.",
+              "Vocabulário para apresentações formais.",
+              "Palavras relacionadas a pesquisa e pensamento crítico."
+            ]
+          },
+          {
+            "heading": "Comunicação profissional",
+            "items": [
+              "Expressões formais para relatórios e documentos.",
+              "Verbos precisos para argumentação e negociação.",
+              "Adjetivos avançados para descrever situações.",
+              "Terminologia para gestão e organização."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras o C1 contém?",
+        "text": "O vocabulário de alemão C1 geralmente inclui várias milhares de palavras ativas. A chave é usá-las corretamente e fluentemente.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário C1",
+        "columns": {
+          "word": "Palavra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "dennoch",
+            "meaning": "no entanto"
+          },
+          {
+            "word": "vertiefen",
+            "meaning": "aprofundar"
+          },
+          {
+            "word": "kohärent",
+            "meaning": "coerente; lógico"
+          },
+          {
+            "word": "relevant",
+            "meaning": "relevante; apropriado"
+          },
+          {
+            "word": "erarbeiten",
+            "meaning": "elaborar; desenvolver"
+          },
+          {
+            "word": "in Frage stellen",
+            "meaning": "colocar em questão"
+          },
+          {
+            "word": "beträchtlich",
+            "meaning": "considerável"
+          },
+          {
+            "word": "jedoch",
+            "meaning": "no entanto"
+          },
+          {
+            "word": "Schlüsselfragen",
+            "meaning": "questões-chave"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "alcançar"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Outros níveis CEFR"
+      },
+      "metaTitle": "Prática de vocabulário de alemão C1 – Palavras avançadas alemão",
+      "metaDescription": "Melhore seu vocabulário de alemão C1 com palavras avançadas, exemplos e explicações para se comunicar de forma precisa e nuanceada.",
+      "introParagraphs": [
+        "O vocabulário de alemão C1 corresponde a um nível avançado, no qual você domina expressões complexas e termos abstratos. É possível compreender textos longos e comunicar-se de forma precisa e espontânea.",
+        "O vocabulário avançado alemão permite analisar, argumentar e usar nuances linguísticas em contextos acadêmicos ou profissionais. O objetivo é expandir o vocabulário mantendo registro apropriado."
+      ],
+      "bottomCta": {
+        "heading": "Continue aprimorando seu alemão",
+        "text": "Para dominar o vocabulário C1, leia textos complexos, participe de debates e escreva ensaios estruturados. A prática regular aumenta precisão e confiança."
+      }
+    },
+    "c2": {
+      "title": "Prática de vocabulário de alemão C2 – Lista de palavras nível proficiente",
+      "intro": "O vocabulário de alemão C2 representa o domínio completo da língua segundo o CEFR.",
+      "levelDescription": "Proficiência",
+      "ctaText": "Iniciar prática C2",
+      "levelExplanation": {
+        "heading": "Características do nível C2",
+        "paragraph": "Palavras alemãs nível C2 abrangem áreas acadêmicas, literárias e técnicas, com foco em sutilezas de significado.",
+        "bullets": [
+          "Compreensão de textos especializados e literários.",
+          "Uso preciso de sinônimos com diferenças sutis.",
+          "Adaptação perfeita aos registros formais e informais."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Escopo do vocabulário C2",
+        "topics": [
+          "Linguagem acadêmica e literária",
+          "Nuances e estilo"
+        ],
+        "wordTypes": [
+          "Substantivos",
+          "Verbos",
+          "Adjetivos"
+        ],
+        "groups": [
+          {
+            "heading": "Linguagem acadêmica e literária",
+            "items": [
+              "Terminologia especializada em diversas áreas.",
+              "Recursos estilísticos e expressões literárias.",
+              "Vocabulário literário avançado.",
+              "Verbos precisos para análises críticas."
+            ]
+          },
+          {
+            "heading": "Nuances e estilo",
+            "items": [
+              "Sinônimos com diferenças sutis de significado.",
+              "Diferenciação clara entre registros linguísticos.",
+              "Expressões idiomáticas autênticas.",
+              "Adaptação cultural da linguagem."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quantas palavras o C2 contém?",
+        "text": "O vocabulário de alemão C2 pode ultrapassar 6.000 palavras ativas. O domínio real é demonstrado pela capacidade de usá-las naturalmente e com precisão.",
+        "value": 6500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemplos de vocabulário C2",
+        "columns": {
+          "word": "Palavra",
+          "meaning": "Significado"
+        },
+        "rows": [
+          {
+            "word": "unabdingbar",
+            "meaning": "indispensável; inevitável"
+          },
+          {
+            "word": "Feinheit",
+            "meaning": "subtileza; refinamento"
+          },
+          {
+            "word": "unvermeidlich",
+            "meaning": "inevitável"
+          },
+          {
+            "word": "nuancieren",
+            "meaning": "nuancear; precisar"
+          },
+          {
+            "word": "Beredsamkeit",
+            "meaning": "eloquência; oratória"
+          },
+          {
+            "word": "Urteilsvermögen",
+            "meaning": "capacidade de julgamento; discernimento"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "atingir um resultado"
+          },
+          {
+            "word": "ambivalent",
+            "meaning": "ambivalente; com aspectos opostos"
+          },
+          {
+            "word": "plausibel",
+            "meaning": "plausível"
+          },
+          {
+            "word": "begründen",
+            "meaning": "fundamentar; justificar"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Outros níveis CEFR"
+      },
+      "metaTitle": "Prática de vocabulário de alemão C2 – Vocabulário avançado alemão",
+      "metaDescription": "Descubra o vocabulário de alemão C2 com palavras raras e precisas para atingir domínio completo da língua.",
+      "introParagraphs": [
+        "O vocabulário de alemão C2 representa o domínio completo da língua segundo o CEFR. Você compreende praticamente tudo que lê ou ouve e pode se expressar com precisão, nuances e espontaneidade.",
+        "O vocabulário muito avançado alemão inclui palavras raras, expressões idiomáticas e sutilezas estilísticas. Permite adaptar perfeitamente a linguagem a qualquer contexto."
+      ],
+      "bottomCta": {
+        "heading": "Alcance a proficiência completa",
+        "text": "Para dominar o vocabulário de alemão C2, leia obras literárias, participe de conferências especializadas e escreva textos complexos. A prática intensiva e variada é essencial para consolidar a excelência linguística."
+      }
+    }
+  }
+}

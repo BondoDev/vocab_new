@@ -450,12 +450,16 @@ function buildVocabularyUrl(
 async function loadBrowsePreviewByPath(
   targetLanguage: TargetLanguageSlug,
   level: CefrLevelCode,
-): Promise<BrowsePreviewData | null> {
-  const response = await fetch(`/src/data/seo/level-browse-preview/${targetLanguage}-${level}.json`);
-  if (!response.ok) {
+) : Promise<BrowsePreviewData | null> {
+  try {
+    const response = await fetch(`/seo/level-browse-preview/${targetLanguage}-${level}.json`);
+    if (!response.ok) {
+      return null;
+    }
+    return (await response.json()) as BrowsePreviewData;
+  } catch {
     return null;
   }
-  return (await response.json()) as BrowsePreviewData;
 }
 
 export function VocabularyLevelPage({

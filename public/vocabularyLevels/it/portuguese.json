@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "portuguese",
+  "targetLanguageDisplayName": "Portoghese",
+  "levels": {
+    "a1": {
+      "title": "Pratica del vocabolario portoghese A1",
+      "intro": "Il vocabolario di portoghese A1 corrisponde al livello principiante.",
+      "levelDescription": "Principiante",
+      "ctaText": "Inizia pratica A1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello A1 in portoghese?",
+        "paragraph": "Il livello A1 corrisponde al livello principiante secondo il QCER. Gli studenti possono comprendere ed usare espressioni familiari e frasi semplici per bisogni concreti.",
+        "bullets": [
+          "Saluti e presentazioni.",
+          "Fare e rispondere a domande semplici.",
+          "Comprendere istruzioni brevi e chiare."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Cosa comprende il vocabolario portoghese A1?",
+        "topics": [
+          "Comunicazione quotidiana",
+          "Argomenti personali"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Comunicazione quotidiana",
+            "items": [
+              "Saluti e formule di cortesia",
+              "Numeri, giorni della settimana e mesi",
+              "Verbi comuni al presente",
+              "Domande semplici"
+            ]
+          },
+          {
+            "heading": "Argomenti personali",
+            "items": [
+              "Famiglia e amici",
+              "Cibo e bevande",
+              "Casa e ambiente",
+              "Aggettivi di base"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole contiene il vocabolario portoghese A1?",
+        "text": "Il livello A1 comprende generalmente tra 500 e 800 parole essenziali. L?obiettivo non ? solo memorizzare, ma usare attivamente le parole in frasi semplici. Gli esercizi di portoghese A1 aiutano a consolidare l?apprendimento.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario portoghese A1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "ol?",
+            "meaning": "ciao"
+          },
+          {
+            "word": "adeus",
+            "meaning": "arrivederci"
+          },
+          {
+            "word": "obrigado",
+            "meaning": "grazie"
+          },
+          {
+            "word": "fam?lia",
+            "meaning": "famiglia"
+          },
+          {
+            "word": "casa",
+            "meaning": "casa"
+          },
+          {
+            "word": "comer",
+            "meaning": "mangiare"
+          },
+          {
+            "word": "beber",
+            "meaning": "bere"
+          },
+          {
+            "word": "amigo",
+            "meaning": "amico"
+          },
+          {
+            "word": "grande",
+            "meaning": "grande"
+          },
+          {
+            "word": "pequeno",
+            "meaning": "piccolo"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli di portoghese"
+      },
+      "metaTitle": "Pratica del vocabolario portoghese A1 – Parole per principianti",
+      "metaDescription": "Impara il vocabolario di portoghese A1 con parole semplici ed esempi. Costruisci una solida base per la comunicazione quotidiana in portoghese.",
+      "introParagraphs": [
+        "Il vocabolario di portoghese A1 corrisponde al livello principiante. Gli studenti imparano parole e frasi semplici per comunicare nella vita quotidiana.",
+        "Le parole portoghesi di base A1 comprendono saluti, numeri, verbi comuni e domande semplici. Una lista di parole portoghesi A1 ben organizzata aiuta a espandere gradualmente il vocabolario e a sviluppare fiducia nel parlare."
+      ],
+      "bottomCta": {
+        "heading": "Inizia a imparare ora",
+        "text": "Il vocabolario portoghese A1 offre una base solida. Esercitati regolarmente, forma frasi semplici e ascolta brevi dialoghi per rafforzare le tue competenze linguistiche."
+      }
+    },
+    "a2": {
+      "title": "Pratica del vocabolario portoghese A2",
+      "intro": "Il vocabolario di portoghese A2 sviluppa le conoscenze del livello A1.",
+      "levelDescription": "Elementare",
+      "ctaText": "Inizia pratica A2",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello A2 in portoghese?",
+        "paragraph": "Il livello A2 corrisponde a un utente elementare della lingua. Gli studenti possono comprendere espressioni frequentemente utilizzate e interagire in compiti semplici e di routine.",
+        "bullets": [
+          "Descrivere le attivit? quotidiane e le routine.",
+          "Parlare di esperienze passate semplici.",
+          "Scambiare informazioni in contesti noti."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Cosa comprende il vocabolario portoghese A2?",
+        "topics": [
+          "Vita quotidiana e servizi",
+          "Comunicazione estesa"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Vita quotidiana e servizi",
+            "items": [
+              "Trasporti e spostamenti",
+              "Acquisti e denaro",
+              "Salute e benessere",
+              "Lavoro e appuntamenti"
+            ]
+          },
+          {
+            "heading": "Comunicazione estesa",
+            "items": [
+              "Connettori semplici",
+              "Espressioni temporali",
+              "Aggettivi per esprimere opinioni",
+              "Verbi al passato prossimo"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole contiene il vocabolario portoghese A2?",
+        "text": "Il livello A2 comprende generalmente tra 1.000 e 1.500 parole utili. La pratica regolare consolida le conoscenze e migliora la fluidit?.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario portoghese A2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "viagem",
+            "meaning": "viaggio"
+          },
+          {
+            "word": "bilhete",
+            "meaning": "biglietto"
+          },
+          {
+            "word": "loja",
+            "meaning": "negozio"
+          },
+          {
+            "word": "dinheiro",
+            "meaning": "denaro"
+          },
+          {
+            "word": "trabalho",
+            "meaning": "lavoro"
+          },
+          {
+            "word": "doente",
+            "meaning": "malato"
+          },
+          {
+            "word": "ontem",
+            "meaning": "Ieri"
+          },
+          {
+            "word": "amanh?",
+            "meaning": "domani"
+          },
+          {
+            "word": "frequentemente",
+            "meaning": "spesso"
+          },
+          {
+            "word": "importante",
+            "meaning": "importante"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli di portoghese"
+      },
+      "metaTitle": "Pratica del vocabolario portoghese A2 – Vocabolario livello elementare",
+      "metaDescription": "Impara il vocabolario di portoghese A2 con parole comuni ed esempi pratici. Migliora comprensione e comunicazione a livello elementare.",
+      "introParagraphs": [
+        "Il vocabolario di portoghese A2 sviluppa le conoscenze del livello A1. Gli studenti possono formare frasi pi? lunghe e comunicare pi? facilmente in situazioni quotidiane.",
+        "Il vocabolario quotidiano portoghese comprende temi come lavoro, tempo libero, viaggi e salute. Una lista di parole portoghesi A2 ben strutturata aiuta ad acquisire nuovi termini gradualmente."
+      ],
+      "bottomCta": {
+        "heading": "Continua a imparare",
+        "text": "Il vocabolario portoghese A2 permette una comunicazione pi? autonoma. Leggi testi semplici, ascolta dialoghi e ripeti le nuove parole regolarmente."
+      }
+    },
+    "b1": {
+      "title": "Pratica del vocabolario portoghese B1",
+      "intro": "Il vocabolario di portoghese B1 corrisponde al livello intermedio.",
+      "levelDescription": "Intermedio",
+      "ctaText": "Inizia pratica B1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello B1 in portoghese?",
+        "paragraph": "Il livello B1 corrisponde a un utilizzatore indipendente di lingua a livello intermedio. Gli studenti possono gestire la maggior parte delle situazioni quotidiane e produrre testi semplici e coerenti.",
+        "bullets": [
+          "Esprimere opinioni personali.",
+          "Descrivere esperienze ed eventi.",
+          "Comprendere testi informativi chiari."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Cosa comprende il vocabolario portoghese B1?",
+        "topics": [
+          "Lavoro e societ?",
+          "Argomentazione e narrazione"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Lavoro e societ?",
+            "items": [
+              "Professioni e responsabilit?",
+              "Istruzione e formazione",
+              "Tecnologia e media",
+              "Argomenti sociali"
+            ]
+          },
+          {
+            "heading": "Argomentazione e narrazione",
+            "items": [
+              "Connettori logici",
+              "Espressioni di accordo e disaccordo",
+              "Aggettivi comparativi",
+              "Parole astratte portoghesi B1"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole contiene il vocabolario portoghese B1?",
+        "text": "Il livello B1 comprende generalmente tra 2.000 e 3.000 parole. Per ampliare il vocabolario portoghese B1, si consiglia di leggere articoli, ascoltare podcast e praticare conversazioni regolarmente.",
+        "value": 3000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario portoghese B1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "acontecer",
+            "meaning": "succedere"
+          },
+          {
+            "word": "fracasso",
+            "meaning": "fallimento"
+          },
+          {
+            "word": "empregador",
+            "meaning": "datore di lavoro"
+          },
+          {
+            "word": "candidato",
+            "meaning": "candidato"
+          },
+          {
+            "word": "desenvolver",
+            "meaning": "sviluppare"
+          },
+          {
+            "word": "ambiente",
+            "meaning": "ambiente"
+          },
+          {
+            "word": "vantagem",
+            "meaning": "vantaggio"
+          },
+          {
+            "word": "desvantagem",
+            "meaning": "svantaggio"
+          },
+          {
+            "word": "propor",
+            "meaning": "proporre"
+          },
+          {
+            "word": "objetivo",
+            "meaning": "obiettivo"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli di portoghese"
+      },
+      "metaTitle": "Pratica del vocabolario portoghese B1 – Vocabolario livello intermedio",
+      "metaDescription": "Impara il vocabolario di portoghese B1 con parole intermedie ed esempi dettagliati. Migliora espressione e comprensione in portoghese.",
+      "introParagraphs": [
+        "Il vocabolario di portoghese B1 corrisponde al livello intermedio. Gli studenti possono comprendere i punti principali di messaggi chiari e comunicare in modo pi? dettagliato.",
+        "Le parole intermedie portoghesi B1 permettono di esprimere opinioni, descrivere esperienze e partecipare a conversazioni pi? complesse. Una lista di parole portoghesi B1 ben strutturata aiuta a espandere il vocabolario e rafforzare le competenze linguistiche."
+      ],
+      "bottomCta": {
+        "heading": "Rafforza il tuo livello intermedio",
+        "text": "Con un vocabolario portoghese B1 solido, puoi comunicare in modo chiaro e strutturato. Esercitati regolarmente, discuti argomenti attuali e leggi testi pi? complessi per arricchire il tuo vocabolario."
+      }
+    },
+    "b2": {
+      "title": "Pratica del vocabolario portoghese B2",
+      "intro": "Il vocabolario di portoghese B2 ? pensato per chi desidera comunicare con fluidit? e affrontare argomenti pi? complessi.",
+      "levelDescription": "Intermedio avanzato",
+      "ctaText": "Inizia pratica B2",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello B2?",
+        "paragraph": "Al livello B2, puoi interagire spontaneamente con madrelingua. Il vocabolario di portoghese B2 include termini astratti, connettori logici ed espressioni utili per dibattiti e contesti professionali.",
+        "bullets": [
+          "Comprendere le idee principali in testi complessi.",
+          "Esprimere e sostenere le proprie opinioni chiaramente.",
+          "Usare connettori per organizzare il discorso."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario B2",
+        "topics": [
+          "Discussione e argomentazione",
+          "Lavoro e societ?"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Discussione e argomentazione",
+            "items": [
+              "Espressioni per concordare o dissentire.",
+              "Connettori per confronto e contrasto.",
+              "Vocabolario per giustificare opinioni.",
+              "Termini per analizzare problemi e soluzioni."
+            ]
+          },
+          {
+            "heading": "Lavoro e societ?",
+            "items": [
+              "Parole legate al lavoro e agli studi.",
+              "Vocabolario su temi sociali attuali.",
+              "Espressioni formali per rapporti e email.",
+              "Termini legati a responsabilit? e progetti."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole contiene B2?",
+        "text": "Il vocabolario di portoghese B2 include generalmente diverse migliaia di parole attive. L?uso corretto sia orale che scritto ? fondamentale.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario B2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "no entanto",
+            "meaning": "tuttavia / comunque"
+          },
+          {
+            "word": "melhorar",
+            "meaning": "migliorare"
+          },
+          {
+            "word": "desafio",
+            "meaning": "sfida"
+          },
+          {
+            "word": "portanto",
+            "meaning": "quindi / pertanto"
+          },
+          {
+            "word": "alcan?ar",
+            "meaning": "raggiungere / realizzare"
+          },
+          {
+            "word": "convencer",
+            "meaning": "convincere"
+          },
+          {
+            "word": "progresso",
+            "meaning": "progresso"
+          },
+          {
+            "word": "responsabilidade",
+            "meaning": "responsabilit?"
+          },
+          {
+            "word": "avaliar",
+            "meaning": "valutare"
+          },
+          {
+            "word": "problema",
+            "meaning": "problema"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli CEFR"
+      },
+      "metaTitle": "Pratica del vocabolario portoghese B2 – Vocabolario intermedio avanzato",
+      "metaDescription": "Migliora il tuo vocabolario di portoghese B2 con parole chiave, significati ed esempi per comunicare con sicurezza nella vita quotidiana e nel lavoro.",
+      "introParagraphs": [
+        "Il vocabolario di portoghese B2 ? pensato per chi desidera comunicare con fluidit? e affrontare argomenti pi? complessi. A questo livello, puoi partecipare a discussioni e esprimere chiaramente le tue idee.",
+        "Il vocabolario portoghese intermedio ti aiuta a costruire argomentazioni, valutare vantaggi e svantaggi e comprendere testi pi? lunghi e dettagliati. L?obiettivo ? migliorare precisione e scorrevolezza sia nell?espressione orale che scritta."
+      ],
+      "bottomCta": {
+        "heading": "Continua ad arricchire il tuo vocabolario",
+        "text": "Per padroneggiare il B2, leggi testi, ascolta discussioni e pratica l?orale e lo scritto. L?uso attivo consolida l?apprendimento."
+      }
+    },
+    "c1": {
+      "title": "Pratica del vocabolario portoghese C1",
+      "intro": "Il vocabolario di portoghese C1 corrisponde a un livello avanzato, dove si padroneggiano espressioni complesse e termini astratti.",
+      "levelDescription": "Avanzato",
+      "ctaText": "Inizia pratica C1",
+      "levelExplanation": {
+        "heading": "Caratteristiche del livello C1",
+        "paragraph": "Le parole C1 comprendono termini tecnici, espressioni formali e diversi connettori logici.",
+        "bullets": [
+          "Comprensione di testi complessi e specialistici.",
+          "Espressione fluida e strutturata di idee astratte.",
+          "Adattamento del registro linguistico al contesto."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario C1",
+        "topics": [
+          "Linguaggio accademico",
+          "Comunicazione professionale"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Linguaggio accademico",
+            "items": [
+              "Parole per analisi e valutazione.",
+              "Espressioni per costruire argomentazioni complesse.",
+              "Vocabolario per presentazioni formali.",
+              "Termini legati alla ricerca e al pensiero critico."
+            ]
+          },
+          {
+            "heading": "Comunicazione professionale",
+            "items": [
+              "Espressioni formali per rapporti e documenti.",
+              "Verbi precisi per argomentazioni e negoziazioni.",
+              "Aggettivi avanzati per descrivere situazioni.",
+              "Terminologia per gestione e organizzazione."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole contiene C1?",
+        "text": "Il vocabolario di portoghese C1 comprende diverse migliaia di parole attive. L?uso corretto e fluido ? essenziale.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario C1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "no entanto",
+            "meaning": "tuttavia / comunque"
+          },
+          {
+            "word": "aprofundar",
+            "meaning": "approfondire"
+          },
+          {
+            "word": "coerente",
+            "meaning": "coerente; logico"
+          },
+          {
+            "word": "pertinente",
+            "meaning": "pertinente; appropriato"
+          },
+          {
+            "word": "elaborar",
+            "meaning": "elaborare; sviluppare"
+          },
+          {
+            "word": "colocar em quest?o",
+            "meaning": "mettere in discussione"
+          },
+          {
+            "word": "consider?vel",
+            "meaning": "notevole"
+          },
+          {
+            "word": "essencialmente",
+            "meaning": "essenzialmente"
+          },
+          {
+            "word": "quest?es-chave",
+            "meaning": "questioni chiave"
+          },
+          {
+            "word": "alcan?ar",
+            "meaning": "raggiungere / realizzare"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli CEFR"
+      },
+      "metaTitle": "Pratica del vocabolario portoghese C1 – Parole avanzate portoghesi",
+      "metaDescription": "Migliora il tuo vocabolario di portoghese C1 con parole avanzate, esempi ed esercizi per comunicare con precisione e sicurezza.",
+      "introParagraphs": [
+        "Il vocabolario di portoghese C1 corrisponde a un livello avanzato, dove si padroneggiano espressioni complesse e termini astratti. Puoi comprendere testi lunghi e comunicare con precisione e spontaneit?.",
+        "Il vocabolario portoghese avanzato permette analisi, argomentazioni e l?uso di sfumature linguistiche in contesti accademici o professionali. L?obiettivo ? ampliare il lessico mantenendo un registro appropriato."
+      ],
+      "bottomCta": {
+        "heading": "Continua a migliorare il tuo portoghese",
+        "text": "Per padroneggiare il vocabolario C1, leggi testi complessi, partecipa a dibattiti e scrivi saggi strutturati. La pratica regolare aumenta precisione e fiducia."
+      }
+    },
+    "c2": {
+      "title": "Pratica del vocabolario portoghese C2",
+      "intro": "Il vocabolario di portoghese C2 rappresenta la padronanza completa secondo il CEFR.",
+      "levelDescription": "Padronanza",
+      "ctaText": "Inizia pratica C2",
+      "levelExplanation": {
+        "heading": "Caratteristiche del livello C2",
+        "paragraph": "Le parole C2 coprono ambiti accademici, letterari e tecnici, con attenzione alle differenze sottili di significato.",
+        "bullets": [
+          "Comprensione di testi specialistici e letterari.",
+          "Uso preciso di sinonimi con sfumature.",
+          "Adattamento perfetto ai registri formali e informali."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario C2",
+        "topics": [
+          "Linguaggio accademico e letterario",
+          "Sfumature e stile"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Linguaggio accademico e letterario",
+            "items": [
+              "Terminologia specialistica in diversi ambiti.",
+              "Figure retoriche ed espressioni letterarie.",
+              "Vocabolario letterario avanzato.",
+              "Verbi precisi per analisi critica."
+            ]
+          },
+          {
+            "heading": "Sfumature e stile",
+            "items": [
+              "Sinonimi con differenze sottili di significato.",
+              "Distinzione chiara dei registri linguistici.",
+              "Espressioni idiomatiche autentiche.",
+              "Linguaggio culturalmente adattato."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole contiene C2?",
+        "text": "Il vocabolario di portoghese C2 pu? superare le 6.000 parole attive. La padronanza si manifesta in un uso naturale e preciso.",
+        "value": 6500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario C2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "indispens?vel",
+            "meaning": "indispensabile; inevitabile"
+          },
+          {
+            "word": "sofistica??o",
+            "meaning": "sofisticazione; raffinatezza"
+          },
+          {
+            "word": "inevit?vel",
+            "meaning": "inevitabile"
+          },
+          {
+            "word": "nuancear",
+            "meaning": "sfumare; chiarire"
+          },
+          {
+            "word": "eloqu?ncia",
+            "meaning": "eloquenza / capacit? oratoria"
+          },
+          {
+            "word": "julgamento",
+            "meaning": "giudizio; discernimento"
+          },
+          {
+            "word": "alcan?ar",
+            "meaning": "raggiungere un risultato"
+          },
+          {
+            "word": "ambivalente",
+            "meaning": "ambivalente; con aspetti opposti"
+          },
+          {
+            "word": "plaus?vel",
+            "meaning": "plausibile"
+          },
+          {
+            "word": "motivar",
+            "meaning": "motivare; giustificare"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli CEFR"
+      },
+      "metaTitle": "Pratica del vocabolario portoghese C2 – Vocabolario portoghese avanzato",
+      "metaDescription": "Scopri il vocabolario di portoghese C2 con parole rare e precise per raggiungere una completa padronanza della lingua.",
+      "introParagraphs": [
+        "Il vocabolario di portoghese C2 rappresenta la padronanza completa secondo il CEFR. Comprendi quasi tutto ci? che leggi o ascolti e puoi esprimerti con precisione, sfumature e spontaneit?.",
+        "Il vocabolario molto avanzato include parole rare, espressioni idiomatiche e sottigliezze stilistiche. Permette di adattare perfettamente la lingua a qualsiasi contesto."
+      ],
+      "bottomCta": {
+        "heading": "Raggiungi la padronanza completa del portoghese",
+        "text": "Per padroneggiare il vocabolario C2, leggi opere letterarie, partecipa a conferenze specialistiche e scrivi testi complessi. Una pratica intensiva e varia ? essenziale per il pieno controllo della lingua."
+      }
+    }
+  }
+}

@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "russian",
+  "targetLanguageDisplayName": "Russian",
+  "levels": {
+    "a1": {
+      "title": "Russian A1 Vocabulary Practice",
+      "intro": "Russian Vocabulary A1 corresponds to the beginner level.",
+      "levelDescription": "Beginner",
+      "ctaText": "Start A1 Practice",
+      "levelExplanation": {
+        "heading": "What does A1 level mean in Russian?",
+        "paragraph": "The A1 level represents a beginner according to CEFR. Learners can understand and use familiar expressions and simple sentences for concrete needs.",
+        "bullets": [
+          "Greetings and introductions.",
+          "Asking and answering simple questions.",
+          "Understanding short and clear instructions."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "What does Russian Vocabulary A1 include?",
+        "topics": [
+          "Everyday Communication",
+          "Personal Topics"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Everyday Communication",
+            "items": [
+              "Greetings and polite expressions",
+              "Numbers, days of the week, and months",
+              "Common verbs in the present tense",
+              "Simple questions"
+            ]
+          },
+          {
+            "heading": "Personal Topics",
+            "items": [
+              "Family and friends",
+              "Food and drinks",
+              "Home and surroundings",
+              "Basic adjectives"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words are in Russian Vocabulary A1?",
+        "text": "The A1 level usually contains 500-800 essential words. The goal is not just memorization but active usage in simple sentences. Russian exercises A1 help consolidate knowledge.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Russian Vocabulary A1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "привет",
+            "meaning": "hello"
+          },
+          {
+            "word": "пока",
+            "meaning": "goodbye"
+          },
+          {
+            "word": "спасибо",
+            "meaning": "thank you"
+          },
+          {
+            "word": "семья",
+            "meaning": "family"
+          },
+          {
+            "word": "дом",
+            "meaning": "house"
+          },
+          {
+            "word": "есть",
+            "meaning": "to eat"
+          },
+          {
+            "word": "пить",
+            "meaning": "to drink"
+          },
+          {
+            "word": "друг",
+            "meaning": "friend"
+          },
+          {
+            "word": "большой",
+            "meaning": "big"
+          },
+          {
+            "word": "маленький",
+            "meaning": "small"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Other Russian Levels"
+      },
+      "metaTitle": "Russian A1 Vocabulary Practice – Beginner Words",
+      "metaDescription": "Learn Russian Vocabulary A1 with simple words and examples. Build a solid foundation for daily communication in Russian.",
+      "introParagraphs": [
+        "Russian Vocabulary A1 corresponds to the beginner level. Learners acquire simple words and phrases for everyday communication.",
+        "Basic Russian words A1 include greetings, numbers, common verbs, and simple questions. A Russian word list A1 helps gradually expand vocabulary and gain confidence in speaking."
+      ],
+      "bottomCta": {
+        "heading": "Start learning now",
+        "text": "Russian Vocabulary A1 provides a solid foundation. Practice regularly, form simple sentences, and listen to short dialogues to strengthen language skills."
+      }
+    },
+    "a2": {
+      "title": "Russian A2 Vocabulary Practice",
+      "intro": "Russian Vocabulary A2 expands knowledge from the A1 level.",
+      "levelDescription": "Elementary",
+      "ctaText": "Start A2 Practice",
+      "levelExplanation": {
+        "heading": "What does A2 level mean in Russian?",
+        "paragraph": "A2 level corresponds to an elementary language user. Learners can understand frequently used expressions and interact in simple, routine tasks.",
+        "bullets": [
+          "Describe daily activities and routines.",
+          "Talk about simple past experiences.",
+          "Exchange information in familiar contexts."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "What does Russian Vocabulary A2 include?",
+        "topics": [
+          "Daily Life and Services",
+          "Expanded Communication"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Daily Life and Services",
+            "items": [
+              "Transportation and commuting",
+              "Shopping and money",
+              "Health and well-being",
+              "Work and appointments"
+            ]
+          },
+          {
+            "heading": "Expanded Communication",
+            "items": [
+              "Simple connectors",
+              "Time expressions",
+              "Adjectives for opinions",
+              "Verbs in past tense"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words are in Russian Vocabulary A2?",
+        "text": "The A2 level usually includes around 1,000-1,500 useful words. Regular practice consolidates learning and improves fluency.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Russian Vocabulary A2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "путешествие",
+            "meaning": "travel"
+          },
+          {
+            "word": "билет",
+            "meaning": "ticket"
+          },
+          {
+            "word": "магазин",
+            "meaning": "shop"
+          },
+          {
+            "word": "деньги",
+            "meaning": "money"
+          },
+          {
+            "word": "работа",
+            "meaning": "work"
+          },
+          {
+            "word": "больной",
+            "meaning": "sick"
+          },
+          {
+            "word": "вчера",
+            "meaning": "yesterday"
+          },
+          {
+            "word": "завтра",
+            "meaning": "tomorrow"
+          },
+          {
+            "word": "часто",
+            "meaning": "frequently"
+          },
+          {
+            "word": "важно",
+            "meaning": "important"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Other Russian Levels"
+      },
+      "metaTitle": "Russian A2 Vocabulary Practice – Elementary Vocabulary",
+      "metaDescription": "Learn Russian Vocabulary A2 with common words and practical examples. Improve understanding and communication at the elementary level.",
+      "introParagraphs": [
+        "Russian Vocabulary A2 expands knowledge from the A1 level. Learners can form longer sentences and communicate more easily in everyday situations.",
+        "Everyday Russian vocabulary covers topics like work, leisure, travel, and health. A Russian word list A2 organized helps gradually acquire new terms."
+      ],
+      "bottomCta": {
+        "heading": "Keep learning",
+        "text": "Russian Vocabulary A2 allows more independent communication. Read simple texts, listen to dialogues, and repeat new words regularly."
+      }
+    },
+    "b1": {
+      "title": "Russian B1 Vocabulary Practice",
+      "intro": "Russian Vocabulary B1 corresponds to the intermediate level.",
+      "levelDescription": "Intermediate",
+      "ctaText": "Start B1 Practice",
+      "levelExplanation": {
+        "heading": "What does B1 level mean in Russian?",
+        "paragraph": "B1 level represents an independent intermediate user. Learners can handle most everyday situations and produce simple coherent texts.",
+        "bullets": [
+          "Express personal opinions.",
+          "Describe events and experiences.",
+          "Understand clear informational texts."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "What does Russian Vocabulary B1 include?",
+        "topics": [
+          "Work and Society",
+          "Argumentation and Narrative"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Work and Society",
+            "items": [
+              "Professions and responsibilities",
+              "Education and training",
+              "Technology and media",
+              "Social topics"
+            ]
+          },
+          {
+            "heading": "Argumentation and Narrative",
+            "items": [
+              "Logical connectors",
+              "Expressions of agreement and disagreement",
+              "Comparative adjectives",
+              "Abstract Russian words B1"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words are in Russian Vocabulary B1?",
+        "text": "The B1 level usually includes 2,000-3,000 words. To expand Russian Vocabulary B1, read articles, listen to podcasts, and practice speaking regularly.",
+        "value": 3000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Russian Vocabulary B1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "происходить",
+            "meaning": "to happen"
+          },
+          {
+            "word": "неудача",
+            "meaning": "failure"
+          },
+          {
+            "word": "работодатель",
+            "meaning": "employer"
+          },
+          {
+            "word": "кандидат",
+            "meaning": "candidate"
+          },
+          {
+            "word": "развивать",
+            "meaning": "to develop"
+          },
+          {
+            "word": "окружающая среда",
+            "meaning": "environment"
+          },
+          {
+            "word": "преимущество",
+            "meaning": "advantage"
+          },
+          {
+            "word": "недостаток",
+            "meaning": "disadvantage"
+          },
+          {
+            "word": "предлагать",
+            "meaning": "to propose"
+          },
+          {
+            "word": "цель",
+            "meaning": "goal"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Other Russian Levels"
+      },
+      "metaTitle": "Russian B1 Vocabulary Practice – Intermediate Vocabulary",
+      "metaDescription": "Learn Russian Vocabulary B1 with intermediate words and detailed examples. Improve expression and comprehension in Russian.",
+      "introParagraphs": [
+        "Russian Vocabulary B1 corresponds to the intermediate level. Learners can understand the main points of clear messages and communicate in more detail.",
+        "Intermediate Russian words B1 allow expressing opinions, describing experiences, and participating in more complex conversations. A Russian word list B1 organized helps expand vocabulary and strengthen language skills."
+      ],
+      "bottomCta": {
+        "heading": "Strengthen your intermediate level",
+        "text": "With a solid Russian Vocabulary B1, you can communicate clearly and structured. Practice regularly, discuss current topics, and read more complex texts to enrich your vocabulary."
+      }
+    },
+    "b2": {
+      "title": "Russian B2 Vocabulary Practice",
+      "intro": "Russian Vocabulary B2 is designed for learners aiming to communicate fluently and handle more complex topics.",
+      "levelDescription": "Upper-Intermediate",
+      "ctaText": "Start B2 Practice",
+      "levelExplanation": {
+        "heading": "What does the B2 level mean?",
+        "paragraph": "At B2, you can interact spontaneously with native speakers. Russian Vocabulary B2 includes abstract terms, logical connectors, and useful expressions for debates and professional contexts.",
+        "bullets": [
+          "Understand the main ideas in complex texts.",
+          "Express and defend your opinions clearly.",
+          "Use connectors to structure your speech."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary scope for B2",
+        "topics": [
+          "Discussion and argumentation",
+          "Work and society"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Discussion and argumentation",
+            "items": [
+              "Expressions to agree or disagree.",
+              "Connectors for comparison and contrast.",
+              "Vocabulary for justifying opinions.",
+              "Terms to analyze problems and solutions."
+            ]
+          },
+          {
+            "heading": "Work and society",
+            "items": [
+              "Words related to work and study.",
+              "Vocabulary about current social topics.",
+              "Formal expressions for reports and emails.",
+              "Terms related to responsibilities and projects."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words does B2 include?",
+        "text": "Russian Vocabulary B2 usually covers several thousand active words. Correct usage in speech and writing is crucial.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Vocabulary B2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "однако",
+            "meaning": "however / nevertheless"
+          },
+          {
+            "word": "улучшать",
+            "meaning": "to improve"
+          },
+          {
+            "word": "вызов",
+            "meaning": "challenge"
+          },
+          {
+            "word": "поэтому",
+            "meaning": "therefore / so"
+          },
+          {
+            "word": "достигать",
+            "meaning": "to achieve"
+          },
+          {
+            "word": "убеждать",
+            "meaning": "to convince"
+          },
+          {
+            "word": "прогресс",
+            "meaning": "progress"
+          },
+          {
+            "word": "ответственность",
+            "meaning": "responsibility"
+          },
+          {
+            "word": "оценивать",
+            "meaning": "to evaluate"
+          },
+          {
+            "word": "проблема",
+            "meaning": "problem"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Other CEFR Levels"
+      },
+      "metaTitle": "Russian B2 Vocabulary Practice – Upper-Intermediate Vocabulary",
+      "metaDescription": "Expand your Russian B2 vocabulary with key words, meanings, and examples to communicate effectively in daily and professional contexts.",
+      "introParagraphs": [
+        "Russian Vocabulary B2 is designed for learners aiming to communicate fluently and handle more complex topics. At this level, you can participate in discussions and clearly express your ideas.",
+        "Intermediate Russian vocabulary helps build arguments, assess pros and cons, and understand longer, more detailed texts. The goal is to improve accuracy and fluency in both speaking and writing."
+      ],
+      "bottomCta": {
+        "heading": "Continue expanding your vocabulary",
+        "text": "To master B2, read texts, listen to discussions, and practice speaking and writing. Active application consolidates your learning."
+      }
+    },
+    "c1": {
+      "title": "Russian C1 Vocabulary Practice",
+      "intro": "Russian Vocabulary C1 corresponds to an advanced level, where complex expressions and abstract terms are mastered.",
+      "levelDescription": "Advanced",
+      "ctaText": "Start C1 Practice",
+      "levelExplanation": {
+        "heading": "C1 Level Features",
+        "paragraph": "C1 words include technical terms, formal expressions, and various logical connectors.",
+        "bullets": [
+          "Understanding complex and specialized texts.",
+          "Fluent and structured expression of abstract ideas.",
+          "Adapting language style to context."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary scope for C1",
+        "topics": [
+          "Academic language",
+          "Professional communication"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Academic language",
+            "items": [
+              "Terms for analysis and evaluation.",
+              "Expressions for complex argumentation.",
+              "Vocabulary for formal presentations.",
+              "Terms related to research and critical thinking."
+            ]
+          },
+          {
+            "heading": "Professional communication",
+            "items": [
+              "Formal expressions for reports and documents.",
+              "Precise verbs for argumentation and negotiation.",
+              "Advanced adjectives to describe situations.",
+              "Terminology for management and organization."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words does C1 include?",
+        "text": "Russian Vocabulary C1 includes several thousand active words. Correct and fluent usage is essential.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Vocabulary C1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "однако",
+            "meaning": "however / nevertheless"
+          },
+          {
+            "word": "углублять",
+            "meaning": "to deepen / elaborate"
+          },
+          {
+            "word": "логичный",
+            "meaning": "logical / coherent"
+          },
+          {
+            "word": "уместный",
+            "meaning": "relevant / appropriate"
+          },
+          {
+            "word": "разрабатывать",
+            "meaning": "to develop / elaborate"
+          },
+          {
+            "word": "ставить под вопрос",
+            "meaning": "to question / challenge"
+          },
+          {
+            "word": "значительный",
+            "meaning": "considerable / significant"
+          },
+          {
+            "word": "по сути",
+            "meaning": "essentially / fundamentally"
+          },
+          {
+            "word": "ключевые вопросы",
+            "meaning": "key issues"
+          },
+          {
+            "word": "достигать",
+            "meaning": "to achieve"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Other CEFR Levels"
+      },
+      "metaTitle": "Russian C1 Vocabulary Practice – Advanced Russian Words",
+      "metaDescription": "Expand your Russian C1 vocabulary with advanced words, examples, and exercises to communicate with precision and confidence.",
+      "introParagraphs": [
+        "Russian Vocabulary C1 corresponds to an advanced level, where complex expressions and abstract terms are mastered. You can understand long texts and communicate with accuracy and spontaneity.",
+        "Advanced Russian vocabulary enables analysis, argumentation, and nuanced language use in academic or professional contexts. The goal is to expand your lexicon while maintaining proper register."
+      ],
+      "bottomCta": {
+        "heading": "Keep improving your Russian",
+        "text": "To master C1, read complex texts, participate in debates, and write structured essays. Regular practice increases accuracy and confidence."
+      }
+    },
+    "c2": {
+      "title": "Russian C2 Vocabulary Practice",
+      "intro": "Russian Vocabulary C2 represents complete mastery according to the CEFR.",
+      "levelDescription": "Proficient",
+      "ctaText": "Start C2 Practice",
+      "levelExplanation": {
+        "heading": "C2 Level Features",
+        "paragraph": "C2 words cover academic, literary, and technical domains, with attention to subtle distinctions in meaning.",
+        "bullets": [
+          "Understanding specialized and literary texts.",
+          "Precise use of synonyms with nuances.",
+          "Perfect adaptation to formal and informal registers."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary scope for C2",
+        "topics": [
+          "Academic and literary language",
+          "Nuance and style"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Academic and literary language",
+            "items": [
+              "Specialized terminology in different fields.",
+              "Rhetorical and literary expressions.",
+              "Advanced literary vocabulary.",
+              "Precise verbs for critical analysis."
+            ]
+          },
+          {
+            "heading": "Nuance and style",
+            "items": [
+              "Synonyms with subtle differences in meaning.",
+              "Clear distinction of language registers.",
+              "Authentic idiomatic expressions.",
+              "Culturally adapted language."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How many words does C2 include?",
+        "text": "Russian Vocabulary C2 may include over 6,000 active words. Mastery is demonstrated through natural and precise usage.",
+        "value": 6500
+      },
+      "sampleVocabulary": {
+        "heading": "Sample Vocabulary C2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "необходимый",
+            "meaning": "indispensable / inevitable"
+          },
+          {
+            "word": "утонченность",
+            "meaning": "sophistication / refinement"
+          },
+          {
+            "word": "неизбежный",
+            "meaning": "inevitable"
+          },
+          {
+            "word": "уточнять",
+            "meaning": "to nuance / clarify"
+          },
+          {
+            "word": "красноречие",
+            "meaning": "eloquence / art of speaking"
+          },
+          {
+            "word": "суждение",
+            "meaning": "judgment / discernment"
+          },
+          {
+            "word": "достигать",
+            "meaning": "to achieve a result"
+          },
+          {
+            "word": "амбивалентный",
+            "meaning": "ambivalent / having opposing aspects"
+          },
+          {
+            "word": "правдоподобный",
+            "meaning": "plausible"
+          },
+          {
+            "word": "мотивировать",
+            "meaning": "to motivate / justify"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Other CEFR Levels"
+      },
+      "metaTitle": "Russian C2 Vocabulary Practice – Proficient Russian Vocabulary",
+      "metaDescription": "Discover Russian C2 vocabulary with rare and precise words to achieve full mastery of the language.",
+      "introParagraphs": [
+        "Russian Vocabulary C2 represents complete mastery according to the CEFR. You can understand almost everything you read or hear and express yourself with precision, nuance, and spontaneity.",
+        "Highly advanced vocabulary includes rare words, idiomatic expressions, and stylistic subtleties. It allows perfect adaptation to any context."
+      ],
+      "bottomCta": {
+        "heading": "Achieve full mastery of Russian",
+        "text": "To master C2 vocabulary, read literary works, participate in specialized conferences, and write complex texts. Intense and varied practice is essential for complete control of the language."
+      }
+    }
+  }
+}

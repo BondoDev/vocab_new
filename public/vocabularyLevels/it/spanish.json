@@ -1,0 +1,510 @@
+{
+  "targetLanguage": "spanish",
+  "targetLanguageDisplayName": "Spagnolo",
+  "levels": {
+    "a1": {
+      "title": "Pratica del vocabolario spagnolo A1 – Lista di parole per principianti",
+      "intro": "Il Vocabolario di spagnolo A1 rappresenta il primo passo per iniziare a comunicare in modo semplice ed efficace.",
+      "introParagraphs": [
+        "Il Vocabolario di spagnolo A1 rappresenta il primo passo per iniziare a comunicare in modo semplice ed efficace. In questo livello impari le parole più frequenti e le espressioni di base utilizzate nella vita quotidiana.",
+        "Con un buon insieme di parole base in spagnolo puoi presentarti, fare domande semplici e comprendere informazioni essenziali in contesti familiari."
+      ],
+      "levelDescription": "Principiante",
+      "ctaText": "Inizia pratica A1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello A1?",
+        "paragraph": "Il livello A1 corrisponde al livello principiante secondo il Quadro Comune Europeo di Riferimento. Permette di utilizzare espressioni molto semplici legate a bisogni immediati.",
+        "bullets": [
+          "Puoi presentarti e parlare di informazioni personali.",
+          "Comprendi domande semplici su famiglia o lavoro.",
+          "Usi frasi brevi e strutture grammaticali basilari."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ampiezza del vocabolario A1",
+        "topics": [
+          "Saluti e formule di cortesia",
+          "Numeri, date e orari",
+          "Famiglia e amici",
+          "Cibo e bevande"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Temi fondamentali",
+            "items": [
+              "Saluti e formule di cortesia",
+              "Numeri, date e orari",
+              "Famiglia e amici",
+              "Cibo e bevande"
+            ]
+          },
+          {
+            "heading": "Competenze comunicative",
+            "items": [
+              "Fare e rispondere a domande semplici",
+              "Esprimere gusti e preferenze",
+              "Descrivere oggetti comuni",
+              "Usare il presente indicativo"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole servono?",
+        "text": "Nel livello A1 si apprendono generalmente alcune centinaia di parole. Con esercizi vocabolario spagnolo A1 regolari puoi consolidare il vocabolario spagnolo base A1 e migliorare rapidamente.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          { "word": "hola", "meaning": "ciao" },
+          { "word": "gracias", "meaning": "grazie" },
+          { "word": "casa", "meaning": "casa" },
+          { "word": "comer", "meaning": "mangiare" },
+          { "word": "agua", "meaning": "acqua" },
+          { "word": "amigo", "meaning": "amico" },
+          { "word": "escuela", "meaning": "scuola" },
+          { "word": "trabajo", "meaning": "lavoro" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora gli altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario spagnolo A1 – Parole per principianti",
+      "metaDescription": "Scopri il vocabolario di spagnolo A1 con parole essenziali, temi quotidiani ed esercizi semplici per iniziare a comunicare subito.",
+      "bottomCta": {
+        "heading": "Inizia a praticare",
+        "text": "Lo spagnolo per principianti vocabolario deve essere ripetuto ogni giorno e utilizzato in piccoli dialoghi per diventare attivo."
+      }
+    },
+    "a2": {
+      "title": "Pratica del vocabolario spagnolo A2 – Lista di parole livello elementare",
+      "intro": "Il Vocabolario di spagnolo A2 amplia le basi acquisite nel livello iniziale e ti permette di comunicare con maggiore autonomia.",
+      "introParagraphs": [
+        "Il Vocabolario di spagnolo A2 amplia le basi acquisite nel livello iniziale e ti permette di comunicare con maggiore autonomia.",
+        "Imparare il vocabolario spagnolo A2 significa saper descrivere la propria routine, raccontare esperienze semplici e comprendere conversazioni su argomenti familiari."
+      ],
+      "levelDescription": "Elementare",
+      "ctaText": "Inizia pratica A2",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello A2?",
+        "paragraph": "Il livello A2 corrisponde a una competenza elementare più sviluppata rispetto all’A1.",
+        "bullets": [
+          "Puoi descrivere attività quotidiane.",
+          "Comprendi testi brevi e chiari.",
+          "Partecipi a conversazioni semplici."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ampiezza del vocabolario A2",
+        "topics": [
+          "Trasporti e indicazioni stradali",
+          "Salute e benessere",
+          "Tempo libero",
+          "Acquisti e servizi"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Temi frequenti",
+            "items": [
+              "Trasporti e indicazioni stradali",
+              "Salute e benessere",
+              "Tempo libero",
+              "Acquisti e servizi"
+            ]
+          },
+          {
+            "heading": "Sviluppo linguistico",
+            "items": [
+              "Parlare del passato recente",
+              "Esprimere progetti futuri",
+              "Usare espressioni comuni spagnolo A2",
+              "Formulare opinioni semplici"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole servono?",
+        "text": "Nel livello A2 si padroneggiano in media tra 1000 e 1500 parole. Con esercizi vocabolario spagnolo A2 puoi ampliare vocabolario spagnolo A2 in modo costante.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          { "word": "viajar", "meaning": "viaggiare" },
+          { "word": "comprar", "meaning": "comprare" },
+          { "word": "difícil", "meaning": "difficile" },
+          { "word": "ayer", "meaning": "ieri" },
+          { "word": "mañana", "meaning": "domani / mattina" },
+          { "word": "empezar", "meaning": "iniziare" },
+          { "word": "ciudad", "meaning": "città" },
+          { "word": "preguntar", "meaning": "chiedere" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora gli altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario spagnolo A2 – Lista di parole base",
+      "metaDescription": "Amplia il tuo vocabolario di spagnolo A2 con temi pratici, espressioni comuni ed esercizi per comunicare con maggiore sicurezza.",
+      "bottomCta": {
+        "heading": "Continua a migliorare",
+        "text": "Per imparare il vocabolario spagnolo A2 in modo efficace, pratica con dialoghi e brevi testi autentici."
+      }
+    },
+    "b1": {
+      "title": "Pratica del vocabolario spagnolo B1 – Lista di parole livello intermedio",
+      "intro": "Il Vocabolario di spagnolo B1 segna il passaggio a un livello intermedio, dove puoi comunicare con maggiore sicurezza e autonomia.",
+      "introParagraphs": [
+        "Il Vocabolario di spagnolo B1 segna il passaggio a un livello intermedio, dove puoi comunicare con maggiore sicurezza e autonomia.",
+        "Imparare il vocabolario spagnolo livello B1 ti consente di esprimere opinioni, raccontare esperienze e comprendere testi più articolati."
+      ],
+      "levelDescription": "Intermedio",
+      "ctaText": "Inizia pratica B1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello B1?",
+        "paragraph": "Nel livello B1 puoi gestire la maggior parte delle situazioni che si presentano durante un viaggio o in un contesto lavorativo semplice.",
+        "bullets": [
+          "Comprendi i punti principali di conversazioni chiare.",
+          "Descrivi eventi e progetti futuri.",
+          "Argomenti opinioni in modo semplice."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ampiezza del vocabolario B1",
+        "topics": [
+          "Istruzione e lavoro",
+          "Tecnologia e media",
+          "Società e ambiente",
+          "Viaggi e cultura"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Aree tematiche",
+            "items": [
+              "Istruzione e lavoro",
+              "Tecnologia e media",
+              "Società e ambiente",
+              "Viaggi e cultura"
+            ]
+          },
+          {
+            "heading": "Competenze linguistiche",
+            "items": [
+              "Usare connettivi come “perché”, “tuttavia”, “quindi”",
+              "Applicare parole spagnole livello intermedio in contesto",
+              "Scrivere testi brevi e coerenti",
+              "Partecipare a conversazioni più lunghe"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole servono?",
+        "text": "Nel livello B1 il vocabolario attivo raggiunge circa 2000-2500 parole. Con esercizi vocabolario spagnolo B1 puoi ampliare vocabolario spagnolo B1 e migliorare la fluidità.",
+        "value": 2500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          { "word": "experiencia", "meaning": "esperienza" },
+          { "word": "decidir", "meaning": "decidere" },
+          { "word": "resultado", "meaning": "risultato" },
+          { "word": "oportunidad", "meaning": "opportunità" },
+          { "word": "mejorar", "meaning": "migliorare" },
+          { "word": "acuerdo", "meaning": "accordo" },
+          { "word": "sociedad", "meaning": "società" },
+          { "word": "ambiente", "meaning": "ambiente" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora gli altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario spagnolo B1 – Parole di livello intermedio",
+      "metaDescription": "Rafforza il tuo vocabolario di spagnolo B1 con temi vari, parole intermedie ed esercizi strutturati per parlare con più fluidità.",
+      "bottomCta": {
+        "heading": "Preparati al livello successivo",
+        "text": "Per raggiungere il B2, continua a lavorare su testi autentici e su un uso più preciso del lessico."
+      }
+    },
+    "b2": {
+      "title": "Pratica del vocabolario spagnolo B2 – Lista di parole livello intermedio avanzato",
+      "intro": "Il vocabolario di spagnolo B2 rappresenta una fase cruciale nello sviluppo della competenza linguistica.",
+      "introParagraphs": [
+        "Il vocabolario di spagnolo B2 rappresenta una fase cruciale nello sviluppo della competenza linguistica. A questo livello, lo studente non si limita più a comunicare in situazioni quotidiane, ma è in grado di affrontare temi più complessi, discutere opinioni e comprendere testi articolati. La padronanza lessicale diventa più precisa e consente di esprimersi con maggiore sicurezza.",
+        "Una lista di vocaboli spagnoli B2 ben organizzata permette di consolidare le basi costruite nei livelli precedenti e di ampliare il repertorio linguistico in ambiti come attualità, studio e lavoro. L’obiettivo è sviluppare un lessico flessibile, capace di adattarsi a diversi contesti comunicativi."
+      ],
+      "levelDescription": "Intermedio avanzato",
+      "ctaText": "Inizia pratica B2",
+      "levelExplanation": {
+        "heading": "Cosa significa livello B2 in spagnolo?",
+        "paragraph": "Il livello B2 del Quadro Comune Europeo di Riferimento indica un utente indipendente avanzato. Chi raggiunge questo livello comprende testi complessi su argomenti concreti e astratti, partecipa attivamente a discussioni e sa argomentare in modo chiaro e strutturato.",
+        "bullets": [
+          "Comprendere articoli di giornale e testi informativi complessi.",
+          "Interagire con parlanti nativi con relativa spontaneità.",
+          "Esprimere opinioni dettagliate e sostenere un punto di vista."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambiti lessicali del livello B2",
+        "topics": [
+          "Opinione e argomentazione",
+          "Società e mondo del lavoro"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Opinione e argomentazione",
+            "items": [
+              "Esprimere accordo e disaccordo in modo formale.",
+              "Formulare ipotesi e conseguenze.",
+              "Utilizzare connettori complessi.",
+              "Strutturare un discorso argomentativo."
+            ]
+          },
+          {
+            "heading": "Società e mondo del lavoro",
+            "items": [
+              "Descrivere fenomeni sociali.",
+              "Parlare di economia e politica.",
+              "Analizzare situazioni professionali.",
+              "Comprendere dibattiti pubblici."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il livello B2?",
+        "text": "Un lessico spagnolo B2 completo può includere diverse migliaia di parole attive e passive. Non si tratta solo di quantità, ma di precisione nell’uso: lo studente deve scegliere il termine più adatto al contesto e comprendere sfumature di significato.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario B2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          { "word": "desafío", "meaning": "sfida" },
+          { "word": "lograr", "meaning": "raggiungere" },
+          { "word": "plantear", "meaning": "proporre, sollevare" },
+          { "word": "desarrollar", "meaning": "sviluppare" },
+          { "word": "enfoque", "meaning": "approccio" },
+          { "word": "supuesto", "meaning": "ipotesi" },
+          { "word": "destacar", "meaning": "mettere in evidenza" },
+          { "word": "ámbito", "meaning": "ambito" },
+          { "word": "sin embargo", "meaning": "tuttavia" },
+          { "word": "llevar a cabo", "meaning": "portare a termine" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora gli altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario spagnolo B2 – Vocabolario intermedio avanzato",
+      "metaDescription": "Amplia il tuo vocabolario di spagnolo B2 con liste strutturate, parole chiave ed esempi utili per studio, lavoro e certificazioni linguistiche.",
+      "bottomCta": {
+        "heading": "Inizia a praticare",
+        "text": "Per consolidare le nuove conoscenze, utilizza regolarmente esercizi di vocabolario spagnolo B2 e metti in pratica le parole apprese in contesti reali, scritti e orali."
+      }
+    },
+    "c1": {
+      "title": "Pratica del vocabolario spagnolo C1 – Lista di parole avanzate",
+      "intro": "Il vocabolario di spagnolo C1 indica una competenza avanzata, in cui lo studente padroneggia strutture complesse e un lessico ricco e variegato.",
+      "introParagraphs": [
+        "Il vocabolario di spagnolo C1 indica una competenza avanzata, in cui lo studente padroneggia strutture complesse e un lessico ricco e variegato. A questo livello si comprendono testi lunghi e specialistici, e si è in grado di esprimere idee articolate con precisione.",
+        "Una lista di vocaboli spagnoli C1 consente di sviluppare una comunicazione efficace in ambito accademico e professionale, migliorando la capacità di analisi e di argomentazione."
+      ],
+      "levelDescription": "Avanzato",
+      "ctaText": "Inizia pratica C1",
+      "levelExplanation": {
+        "heading": "Cosa caratterizza il livello C1?",
+        "paragraph": "Chi raggiunge il C1 è capace di comprendere significati impliciti e di utilizzare la lingua in modo flessibile. L’espressione è fluida e naturale, con un controllo consapevole delle sfumature lessicali.",
+        "bullets": [
+          "Analizzare testi complessi e specialistici.",
+          "Produrre discorsi strutturati e coerenti.",
+          "Adattare il registro linguistico al contesto."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Estensione del lessico a C1",
+        "topics": [
+          "Comunicazione accademica",
+          "Ambito professionale"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Comunicazione accademica",
+            "items": [
+              "Formulare tesi e argomentazioni.",
+              "Utilizzare connettori formali.",
+              "Esprimere giudizi critici.",
+              "Riassumere e sintetizzare informazioni."
+            ]
+          },
+          {
+            "heading": "Ambito professionale",
+            "items": [
+              "Redigere relazioni dettagliate.",
+              "Valutare strategie e progetti.",
+              "Discutere temi economici e politici.",
+              "Presentare dati e analisi."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole al livello C1?",
+        "text": "Un lessico spagnolo C1 completo comprende migliaia di termini che permettono una comunicazione sofisticata e precisa, sia scritta sia orale.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario C1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          { "word": "planteamiento", "meaning": "impostazione, approccio" },
+          { "word": "perspectiva", "meaning": "prospettiva" },
+          { "word": "reivindicar", "meaning": "rivendicare" },
+          { "word": "subyacente", "meaning": "sottostante" },
+          { "word": "desempeñar", "meaning": "svolgere (un ruolo)" },
+          { "word": "incidir", "meaning": "incidere su" },
+          { "word": "consenso", "meaning": "consenso" },
+          { "word": "envergadura", "meaning": "portata" },
+          { "word": "conllevar", "meaning": "comportare" },
+          { "word": "matizar", "meaning": "sfumare" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora gli altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario spagnolo C1 – Parole avanzate di spagnolo",
+      "metaDescription": "Approfondisci il vocabolario di spagnolo C1 con termini avanzati e lessico accademico per studio, lavoro e comunicazione professionale.",
+      "bottomCta": {
+        "heading": "Metti alla prova il tuo livello",
+        "text": "Allenati con esercizi di vocabolario spagnolo C1 per consolidare il lessico e migliorare la tua sicurezza comunicativa."
+      }
+    },
+    "c2": {
+      "title": "Pratica del vocabolario spagnolo C2 – Lista di parole livello padronanza",
+      "intro": "Il vocabolario di spagnolo C2 rappresenta il livello più alto di competenza linguistica.",
+      "introParagraphs": [
+        "Il vocabolario di spagnolo C2 rappresenta il livello più alto di competenza linguistica. Lo studente comprende quasi tutto ciò che legge o ascolta e sa esprimersi con estrema precisione e naturalezza.",
+        "Una lista di vocaboli spagnoli C2 permette di perfezionare il lessico in ambiti specialistici, letterari e accademici, consolidando una padronanza simile a quella di un madrelingua istruito."
+      ],
+      "levelDescription": "Padronanza",
+      "ctaText": "Inizia pratica C2",
+      "levelExplanation": {
+        "heading": "Cosa implica il livello C2?",
+        "paragraph": "Il livello C2 richiede una conoscenza approfondita delle sfumature linguistiche, delle espressioni idiomatiche e dei registri stilistici. La comunicazione è fluida e sofisticata.",
+        "bullets": [
+          "Comprendere testi letterari e scientifici complessi.",
+          "Argomentare con precisione e coerenza.",
+          "Adattare stile e tono con grande flessibilità."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Estensione del lessico a C2",
+        "topics": [
+          "Ambito accademico e scientifico",
+          "Stile e sfumature"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Ambito accademico e scientifico",
+            "items": [
+              "Utilizzare terminologia tecnica.",
+              "Analizzare teorie complesse.",
+              "Interpretare testi specialistici.",
+              "Sintetizzare fonti multiple."
+            ]
+          },
+          {
+            "heading": "Stile e sfumature",
+            "items": [
+              "Comprendere ironia e sottintesi.",
+              "Usare espressioni idiomatiche rare.",
+              "Gestire registri formali e informali.",
+              "Comunicare con massima precisione."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole al livello C2?",
+        "text": "Un lessico spagnolo C2 completo comprende un numero molto elevato di parole e locuzioni, sufficienti per una comunicazione sofisticata in qualsiasi ambito.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario C2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          { "word": "idiosincrasia", "meaning": "idiosincrasia" },
+          { "word": "esgrimir", "meaning": "sostenere (un argomento)" },
+          { "word": "paradigma", "meaning": "paradigma" },
+          { "word": "conjetura", "meaning": "congettura" },
+          { "word": "elucidar", "meaning": "chiarire" },
+          { "word": "trascendental", "meaning": "fondamentale" },
+          { "word": "menospreciar", "meaning": "sottovalutare" },
+          { "word": "verosímil", "meaning": "verosimile" },
+          { "word": "inherente", "meaning": "inerente" },
+          { "word": "sobresaliente", "meaning": "eccellente" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora gli altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario spagnolo C2 – Vocabolario avanzato spagnolo",
+      "metaDescription": "Raggiungi la padronanza con il vocabolario di spagnolo C2: termini specialistici, lessico avanzato e parole per uso accademico e professionale.",
+      "bottomCta": {
+        "heading": "Raggiungi la padronanza",
+        "text": "Esercitati con esercizi di vocabolario spagnolo C2 per perfezionare il tuo controllo linguistico e consolidare una competenza avanzata e completa."
+      }
+    }
+  }
+}

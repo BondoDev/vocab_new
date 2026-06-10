@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "russian",
+  "targetLanguageDisplayName": "Russisch",
+  "levels": {
+    "a1": {
+      "title": "Russisch A1 Wortschatz üben",
+      "intro": "Der Russisch Wortschatz A1 entspricht dem Anfängerlevel.",
+      "levelDescription": "Anfänger",
+      "ctaText": "A1-Training starten",
+      "levelExplanation": {
+        "heading": "Was bedeutet das Niveau A1 in Russisch?",
+        "paragraph": "Das Niveau A1 steht für Anfänger gemäß dem GER. Lernende können bekannte Ausdrücke und einfache Sätze für konkrete Bedürfnisse verstehen und anwenden.",
+        "bullets": [
+          "Begrüßungen und Vorstellung.",
+          "Einfach Fragen stellen und beantworten.",
+          "Kurze und klare Anweisungen verstehen."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Was beinhaltet der Russisch Wortschatz A1?",
+        "topics": [
+          "Alltägliche Kommunikation",
+          "Persönliche Themen"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Alltägliche Kommunikation",
+            "items": [
+              "Begrüßungen und Höflichkeitsformen",
+              "Zahlen, Wochentage und Monate",
+              "Häufige Verben im Präsens",
+              "Einfache Fragen"
+            ]
+          },
+          {
+            "heading": "Persönliche Themen",
+            "items": [
+              "Familie und Freunde",
+              "Essen und Trinken",
+              "Zuhause und Umgebung",
+              "Grundlegende Adjektive"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter enthält der Russisch Wortschatz A1?",
+        "text": "Das Niveau A1 umfasst in der Regel 500-800 essentielle Wörter. Ziel ist nicht nur das Auswendiglernen, sondern die aktive Anwendung in einfachen Sätzen. Russisch Übungen A1 helfen, das Gelernte zu festigen.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Beispiele für Russisch Wortschatz A1",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "привет",
+            "meaning": "hallo"
+          },
+          {
+            "word": "пока",
+            "meaning": "tschüss"
+          },
+          {
+            "word": "спасибо",
+            "meaning": "danke"
+          },
+          {
+            "word": "семья",
+            "meaning": "Familie"
+          },
+          {
+            "word": "дом",
+            "meaning": "Haus"
+          },
+          {
+            "word": "есть",
+            "meaning": "essen"
+          },
+          {
+            "word": "пить",
+            "meaning": "trinken"
+          },
+          {
+            "word": "друг",
+            "meaning": "Freund"
+          },
+          {
+            "word": "большой",
+            "meaning": "groß"
+          },
+          {
+            "word": "маленький",
+            "meaning": "klein"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Russisch-Level"
+      },
+      "metaTitle": "Russisch A1 Wortschatz üben – Wörter für Anfänger",
+      "metaDescription": "Lerne den Russisch Wortschatz A1 mit einfachen Wörtern und praktischen Beispielen. Baue eine solide Basis für die alltägliche Kommunikation auf.",
+      "introParagraphs": [
+        "Der Russisch Wortschatz A1 entspricht dem Anfängerlevel. Lernende erwerben einfache Wörter und Sätze für die alltägliche Kommunikation.",
+        "Grundlegende russische Wörter A1 beinhalten Begrüßungen, Zahlen, häufige Verben und einfache Fragen. Die russische Wörterliste A1 hilft, den Wortschatz schrittweise zu erweitern und Vertrauen beim Sprechen zu gewinnen."
+      ],
+      "bottomCta": {
+        "heading": "Beginne jetzt zu lernen",
+        "text": "Der Russisch Wortschatz A1 bietet eine solide Basis. Übe regelmäßig, bilde einfache Sätze und höre kurze Dialoge, um deine Sprachfertigkeiten zu stärken."
+      }
+    },
+    "a2": {
+      "title": "Russisch A2 Wortschatz üben",
+      "intro": "Der Russisch Wortschatz A2 erweitert die Kenntnisse aus A1.",
+      "levelDescription": "Elementares Niveau",
+      "ctaText": "A2-Training starten",
+      "levelExplanation": {
+        "heading": "Was bedeutet das Niveau A2 in Russisch?",
+        "paragraph": "Das Niveau A2 entspricht einem elementaren Sprachanwender. Lernende verstehen häufig gebrauchte Ausdrücke und können in einfachen, routinemäßigen Situationen interagieren.",
+        "bullets": [
+          "Tägliche Aktivitäten und Routinen beschreiben.",
+          "Einfach vergangene Erfahrungen erzählen.",
+          "Informationen in bekannten Kontexten austauschen."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Was beinhaltet der Russisch Wortschatz A2?",
+        "topics": [
+          "Alltag und Dienstleistungen",
+          "Erweiterte Kommunikation"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Alltag und Dienstleistungen",
+            "items": [
+              "Transport und Fortbewegung",
+              "Einkaufen und Geld",
+              "Gesundheit und Wohlbefinden",
+              "Arbeit und Termine"
+            ]
+          },
+          {
+            "heading": "Erweiterte Kommunikation",
+            "items": [
+              "Einfache Bindewörter",
+              "Zeitangaben",
+              "Adjektive zur Meinungsäußerung",
+              "Verben in der Vergangenheit"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter enthält der Russisch Wortschatz A2?",
+        "text": "Das Niveau A2 umfasst etwa 1.000-1.500 nützliche Wörter. Regelmäßiges Üben festigt das Gelernte und verbessert die Sprachflüssigkeit.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Beispiele für Russisch Wortschatz A2",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "путешествие",
+            "meaning": "Reise"
+          },
+          {
+            "word": "билет",
+            "meaning": "Fahrkarte"
+          },
+          {
+            "word": "магазин",
+            "meaning": "Geschäft"
+          },
+          {
+            "word": "деньги",
+            "meaning": "Geld"
+          },
+          {
+            "word": "работа",
+            "meaning": "Arbeit"
+          },
+          {
+            "word": "больной",
+            "meaning": "krank"
+          },
+          {
+            "word": "вчера",
+            "meaning": "gestern"
+          },
+          {
+            "word": "завтра",
+            "meaning": "morgen"
+          },
+          {
+            "word": "часто",
+            "meaning": "oft"
+          },
+          {
+            "word": "важно",
+            "meaning": "wichtig"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Russisch-Level"
+      },
+      "metaTitle": "Russisch A2 Wortschatz üben – Wortschatz Grundstufe",
+      "metaDescription": "Lerne den Russisch Wortschatz A2 mit häufigen Wörtern und praktischen Beispielen. Verbessere dein Verständnis und deine Kommunikation auf elementarem Niveau.",
+      "introParagraphs": [
+        "Der Russisch Wortschatz A2 erweitert die Kenntnisse aus A1. Lernende können längere Sätze bilden und sich in alltäglichen Situationen leichter verständigen.",
+        "Alltagsvokabular Russisch umfasst Themen wie Arbeit, Freizeit, Reisen und Gesundheit. Die russische Wörterliste A2 ermöglicht den schrittweisen Erwerb komplexerer Wörter."
+      ],
+      "bottomCta": {
+        "heading": "Setze dein Lernen fort",
+        "text": "Der Russisch Wortschatz A2 ermöglicht eine selbstständigere Kommunikation. Lies einfache Texte, höre Dialoge und wiederhole neue Wörter regelmäßig."
+      }
+    },
+    "b1": {
+      "title": "Russisch B1 Wortschatz üben",
+      "intro": "Der Russisch Wortschatz B1 entspricht dem Mittelstufenlevel.",
+      "levelDescription": "Mittelstufe",
+      "ctaText": "B1-Training starten",
+      "levelExplanation": {
+        "heading": "Was bedeutet das Niveau B1 in Russisch?",
+        "paragraph": "Das Niveau B1 steht für einen selbstständigen Mittelstufenanwender. Lernende bewältigen die meisten Alltagssituationen und können einfache, zusammenhängende Texte erstellen.",
+        "bullets": [
+          "Persönliche Meinungen ausdrücken.",
+          "Ereignisse und Erfahrungen beschreiben.",
+          "Klare informative Texte verstehen."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Was beinhaltet der Russisch Wortschatz B1?",
+        "topics": [
+          "Arbeit und Gesellschaft",
+          "Argumentation und Erzählung"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Arbeit und Gesellschaft",
+            "items": [
+              "Berufe und Verantwortlichkeiten",
+              "Bildung und Ausbildung",
+              "Technologie und Medien",
+              "Gesellschaftliche Themen"
+            ]
+          },
+          {
+            "heading": "Argumentation und Erzählung",
+            "items": [
+              "Logische Verbindungswörter",
+              "Ausdrücke für Zustimmung und Ablehnung",
+              "Komparative Adjektive",
+              "Abstrakte russische Wörter B1"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter enthält der Russisch Wortschatz B1?",
+        "text": "Das Niveau B1 umfasst in der Regel 2.000-3.000 Wörter. Um den Russisch Wortschatz B1 zu erweitern, lies Artikel, höre Podcasts und Übe regelmäßig Konversation.",
+        "value": 3000
+      },
+      "sampleVocabulary": {
+        "heading": "Beispiele für Russisch Wortschatz B1",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "происходить",
+            "meaning": "geschehen"
+          },
+          {
+            "word": "неудача",
+            "meaning": "Misserfolg"
+          },
+          {
+            "word": "работодатель",
+            "meaning": "Arbeitgeber"
+          },
+          {
+            "word": "кандидат",
+            "meaning": "Kandidat"
+          },
+          {
+            "word": "развивать",
+            "meaning": "entwickeln"
+          },
+          {
+            "word": "окружающая среда",
+            "meaning": "Umwelt"
+          },
+          {
+            "word": "преимущество",
+            "meaning": "Vorteil"
+          },
+          {
+            "word": "недостаток",
+            "meaning": "Nachteil"
+          },
+          {
+            "word": "предлагать",
+            "meaning": "vorschlagen"
+          },
+          {
+            "word": "цель",
+            "meaning": "Ziel"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere Russisch-Level"
+      },
+      "metaTitle": "Russisch B1 Wortschatz üben – Wortschatz Mittelstufe",
+      "metaDescription": "Lerne den Russisch Wortschatz B1 mit mittleren Wörtern und detaillierten Beispielen. Verbessere Ausdruck und Verständnis auf Russisch.",
+      "introParagraphs": [
+        "Der Russisch Wortschatz B1 entspricht dem Mittelstufenlevel. Lernende können die Hauptpunkte klarer Nachrichten verstehen und detaillierter kommunizieren.",
+        "Russische Wörter Mittelstufe B1 ermöglichen Meinungsäußerungen, das Beschreiben von Erfahrungen und die Teilnahme an komplexeren Gesprächen. Die russische Wörterliste B1 erweitert den Wortschatz und stärkt die sprachlichen Fähigkeiten."
+      ],
+      "bottomCta": {
+        "heading": "Stärke dein Mittelstufenlevel",
+        "text": "Mit einem soliden Russisch Wortschatz B1 kannst du klar und strukturiert kommunizieren. Übe regelmäßig, diskutiere aktuelle Themen und lese komplexere Texte, um deinen Wortschatz zu erweitern."
+      }
+    },
+    "b2": {
+      "title": "Russisch B2 Wortschatz üben",
+      "intro": "Der Russisch Wortschatz B2 ist für Lernende konzipiert, die flüssig kommunizieren und komplexere Themen behandeln möchten.",
+      "levelDescription": "Gehobene Mittelstufe",
+      "ctaText": "B2-Training starten",
+      "levelExplanation": {
+        "heading": "Was bedeutet das B2-Niveau?",
+        "paragraph": "Auf B2-Niveau können Sie spontan mit Muttersprachlern interagieren. Der Russisch Wortschatz B2 enthält abstrakte Begriffe, logische Verknüpfungen und nützliche Ausdrücke für Debatten und berufliche Kontexte.",
+        "bullets": [
+          "Die Hauptideen komplexer Texte verstehen.",
+          "Meinungen klar ausdrücken und verteidigen.",
+          "Verknüpfungen verwenden, um den Diskurs zu strukturieren."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Umfang des B2-Wortschatzes",
+        "topics": [
+          "Diskussion und Argumentation",
+          "Arbeit und Gesellschaft"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Diskussion und Argumentation",
+            "items": [
+              "Ausdrücke, um Zustimmung oder Ablehnung zu zeigen.",
+              "Verknüpfungen für Vergleich und Gegensatz.",
+              "Wortschatz zur Begründung von Meinungen.",
+              "Begriffe zur Analyse von Problemen und Lösungen."
+            ]
+          },
+          {
+            "heading": "Arbeit und Gesellschaft",
+            "items": [
+              "Wörter im Zusammenhang mit Arbeit und Studium.",
+              "Vokabular zu aktuellen gesellschaftlichen Themen.",
+              "Formelle Ausdrücke für Berichte und E-Mails.",
+              "Begriffe zu Verantwortlichkeiten und Projekten."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter umfasst B2?",
+        "text": "Der Russisch Wortschatz B2 deckt in der Regel mehrere Tausend aktive Wörter ab. Ihre korrekte Anwendung in Sprechen und Schreiben ist entscheidend.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Beispiele B2-Wortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "однако",
+            "meaning": "jedoch / dennoch"
+          },
+          {
+            "word": "улучшать",
+            "meaning": "verbessern"
+          },
+          {
+            "word": "вызов",
+            "meaning": "Herausforderung"
+          },
+          {
+            "word": "поэтому",
+            "meaning": "deshalb / daher"
+          },
+          {
+            "word": "достигать",
+            "meaning": "erreichen / erzielen"
+          },
+          {
+            "word": "убеждать",
+            "meaning": "Überzeugen"
+          },
+          {
+            "word": "прогресс",
+            "meaning": "Fortschritt"
+          },
+          {
+            "word": "ответственность",
+            "meaning": "Verantwortung"
+          },
+          {
+            "word": "оценивать",
+            "meaning": "bewerten"
+          },
+          {
+            "word": "проблема",
+            "meaning": "Problem"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere CEFR-Niveaus"
+      },
+      "metaTitle": "Russisch B2 Wortschatz üben – Wortschatz obere Mittelstufe",
+      "metaDescription": "Verbessern Sie Ihren Russisch Wortschatz B2 mit Schlüsselwörtern, Bedeutungen und Beispielen für effektive Kommunikation im Alltag und Beruf.",
+      "introParagraphs": [
+        "Der Russisch Wortschatz B2 ist für Lernende konzipiert, die flüssig kommunizieren und komplexere Themen behandeln möchten. Auf diesem Niveau können Sie an Diskussionen teilnehmen und Ihre Gedanken klar ausdrücken.",
+        "Der russische Mittelstufen-Wortschatz hilft, Argumente zu bilden, Vor- und Nachteile abzuwägen und längere, detaillierte Texte zu verstehen. Ziel ist es, die Präzision und Flüssigkeit sowohl im Sprechen als auch im Schreiben zu verbessern."
+      ],
+      "bottomCta": {
+        "heading": "Setzen Sie Ihre Wortschatzentwicklung fort",
+        "text": "Um B2 zu meistern, lesen Sie Texte, hören Sie Diskussionen und Üben Sie mündlich sowie schriftlich. Aktives Anwenden festigt das Gelernte."
+      }
+    },
+    "c1": {
+      "title": "Russisch C1 Wortschatz üben",
+      "intro": "Der Russisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, bei dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden.",
+      "levelDescription": "Fortgeschritten",
+      "ctaText": "C1-Training starten",
+      "levelExplanation": {
+        "heading": "Merkmale des Niveaus C1",
+        "paragraph": "Die C1-Wörter beinhalten technische Begriffe, formelle Ausdrücke und verschiedene logische Verknüpfungen.",
+        "bullets": [
+          "Verständnis komplexer und fachlicher Texte.",
+          "Flüssige und strukturierte Darstellung abstrakter Ideen.",
+          "Anpassung des Sprachstils an den Kontext."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Umfang des C1-Wortschatzes",
+        "topics": [
+          "Akademische Sprache",
+          "Berufliche Kommunikation"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Akademische Sprache",
+            "items": [
+              "Begriffe für Analyse und Bewertung.",
+              "Ausdrücke für komplexe Argumentation.",
+              "Vokabular für formelle Präsentationen.",
+              "Begriffe zur Forschung und kritischem Denken."
+            ]
+          },
+          {
+            "heading": "Berufliche Kommunikation",
+            "items": [
+              "Formelle Ausdrücke für Berichte und Dokumente.",
+              "Präzise Verben für Argumentation und Verhandlung.",
+              "Fortgeschrittene Adjektive zur Beschreibung von Situationen.",
+              "Terminologie für Management und Organisation."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter umfasst C1?",
+        "text": "Der Russisch Wortschatz C1 umfasst mehrere Tausend aktive Wörter. Eine korrekte und flüssige Anwendung ist entscheidend.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Beispiele C1-Wortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "однако",
+            "meaning": "jedoch / dennoch"
+          },
+          {
+            "word": "углублять",
+            "meaning": "vertiefen / ausarbeiten"
+          },
+          {
+            "word": "логичный",
+            "meaning": "logisch / kohörent"
+          },
+          {
+            "word": "уместный",
+            "meaning": "relevant / angemessen"
+          },
+          {
+            "word": "разрабатывать",
+            "meaning": "entwickeln / ausarbeiten"
+          },
+          {
+            "word": "ставить под вопрос",
+            "meaning": "in Frage stellen / hinterfragen"
+          },
+          {
+            "word": "значительный",
+            "meaning": "beträchtlich / bedeutend"
+          },
+          {
+            "word": "по сути",
+            "meaning": "im Wesentlichen / im Kern"
+          },
+          {
+            "word": "ключевые вопросы",
+            "meaning": "Schlüsselfragen"
+          },
+          {
+            "word": "достигать",
+            "meaning": "erreichen / erzielen"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere CEFR-Niveaus"
+      },
+      "metaTitle": "Russisch C1 Wortschatz üben – Fortgeschrittene russische Wörter",
+      "metaDescription": "Verbessern Sie Ihren Russisch Wortschatz C1 mit fortgeschrittenen Wörtern, Beispielen und Übungen für präzise und sichere Kommunikation.",
+      "introParagraphs": [
+        "Der Russisch Wortschatz C1 entspricht einem fortgeschrittenen Niveau, bei dem komplexe Ausdrücke und abstrakte Begriffe beherrscht werden. Sie können lange Texte verstehen und präzise sowie spontan kommunizieren.",
+        "Der fortgeschrittene Wortschatz ermöglicht Analyse, Argumentation und Nutzung sprachlicher Nuancen in akademischen oder beruflichen Kontexten. Ziel ist es, den Wortschatz zu erweitern und gleichzeitig einen angemessenen Stil zu wahren."
+      ],
+      "bottomCta": {
+        "heading": "Verbessern Sie weiterhin Ihr Russisch",
+        "text": "Um C1 zu meistern, lesen Sie komplexe Texte, nehmen Sie an Diskussionen teil und schreiben Sie strukturierte Aufsätze. Regelmäßige Praxis erhöht Präzision und Selbstvertrauen."
+      }
+    },
+    "c2": {
+      "title": "Russisch C2 Wortschatz üben",
+      "intro": "Der Russisch Wortschatz C2 repräsentiert laut CEFR die vollständige Beherrschung.",
+      "levelDescription": "Meisterschaft",
+      "ctaText": "C2-Training starten",
+      "levelExplanation": {
+        "heading": "Merkmale des C2-Niveaus",
+        "paragraph": "Die C2-Wörter decken akademische, literarische und technische Bereiche ab, wobei subtile Bedeutungsunterschiede beachtet werden.",
+        "bullets": [
+          "Verständnis von Fach- und literarischen Texten.",
+          "Präzise Verwendung von Synonymen mit Nuancen.",
+          "Perfekte Anpassung an formelle und informelle Register."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Umfang des C2-Wortschatzes",
+        "topics": [
+          "Akademische und literarische Sprache",
+          "Nuancen und Stil"
+        ],
+        "wordTypes": [
+          "Nomen",
+          "Verben",
+          "Adjektive"
+        ],
+        "groups": [
+          {
+            "heading": "Akademische und literarische Sprache",
+            "items": [
+              "Spezialisierte Terminologie in verschiedenen Bereichen.",
+              "Stilistische Figuren und literarische Ausdrücke.",
+              "Fortgeschrittener literarischer Wortschatz.",
+              "Präzise Verben für kritische Analysen."
+            ]
+          },
+          {
+            "heading": "Nuancen und Stil",
+            "items": [
+              "Synonyme mit subtilen Bedeutungsunterschieden.",
+              "Klare Unterscheidung der Sprachregister.",
+              "Authentische idiomatische Ausdrücke.",
+              "Kulturell angepasste Sprache."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Wie viele Wörter umfasst C2?",
+        "text": "Der Russisch Wortschatz C2 kann Über 6 000 aktive Wörter enthalten. Die Beherrschung zeigt sich durch natürliche und präzise Anwendung.",
+        "value": 6500
+      },
+      "sampleVocabulary": {
+        "heading": "Beispiele C2-Wortschatz",
+        "columns": {
+          "word": "Wort",
+          "meaning": "Bedeutung"
+        },
+        "rows": [
+          {
+            "word": "необходимый",
+            "meaning": "unentbehrlich / unvermeidlich"
+          },
+          {
+            "word": "утонченность",
+            "meaning": "Feinsinn / Raffinesse"
+          },
+          {
+            "word": "неизбежный",
+            "meaning": "unvermeidlich"
+          },
+          {
+            "word": "уточнять",
+            "meaning": "präzisieren / nuancieren"
+          },
+          {
+            "word": "красноречие",
+            "meaning": "Redekunst / Eloquenz"
+          },
+          {
+            "word": "суждение",
+            "meaning": "Urteil / Erkenntnis"
+          },
+          {
+            "word": "достигать",
+            "meaning": "ein Ergebnis erreichen"
+          },
+          {
+            "word": "амбивалентный",
+            "meaning": "ambivalent / widersprüchlich"
+          },
+          {
+            "word": "правдоподобный",
+            "meaning": "plausibel"
+          },
+          {
+            "word": "мотивировать",
+            "meaning": "motivieren / begründen"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Weitere CEFR-Niveaus"
+      },
+      "metaTitle": "Russisch C2 Wortschatz üben – Sehr fortgeschrittene Wörter",
+      "metaDescription": "Entdecken Sie den Russisch Wortschatz C2 mit seltenen und präzisen Wörtern, um eine vollständige Beherrschung der Sprache zu erreichen.",
+      "introParagraphs": [
+        "Der Russisch Wortschatz C2 repräsentiert laut CEFR die vollständige Beherrschung. Sie können nahezu alles, was Sie lesen oder hören, verstehen und sich präzise, nuanciert und spontan ausdrücken.",
+        "Der sehr fortgeschrittene Wortschatz umfasst seltene Wörter, idiomatische Ausdrücke und stilistische Feinheiten. Er ermöglicht die perfekte Anpassung der Sprache an jeden Kontext."
+      ],
+      "bottomCta": {
+        "heading": "Erreichen Sie die vollständige Russisch-Beherrschung",
+        "text": "Um den C2-Wortschatz zu meistern, lesen Sie literarische Werke, nehmen Sie an Fachkonferenzen teil und verfassen Sie komplexe Texte. Intensive und vielseitige Praxis ist entscheidend für die volle Kontrolle der Sprache."
+      }
+    }
+  }
+}

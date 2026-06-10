@@ -62,6 +62,75 @@ interface VocabularyFile {
   targetLanguageDisplayName: string;
   levels: Partial<Record<Level, VocabularyLevelContent>>;
 }
+
+const vocabularyFileModules: Record<
+  UiLanguageCode,
+  Record<TargetLanguageSlug, () => Promise<{ default: VocabularyFile }>>
+> = {
+  de: {
+    english: () => import("./de/english.json"),
+    french: () => import("./de/french.json"),
+    german: () => import("./de/german.json"),
+    italian: () => import("./de/italian.json"),
+    portuguese: () => import("./de/portuguese.json"),
+    russian: () => import("./de/russian.json"),
+    spanish: () => import("./de/spanish.json"),
+  },
+  en: {
+    english: () => import("./en/english.json"),
+    french: () => import("./en/french.json"),
+    german: () => import("./en/german.json"),
+    italian: () => import("./en/italian.json"),
+    portuguese: () => import("./en/portuguese.json"),
+    russian: () => import("./en/russian.json"),
+    spanish: () => import("./en/spanish.json"),
+  },
+  es: {
+    english: () => import("./es/english.json"),
+    french: () => import("./es/french.json"),
+    german: () => import("./es/german.json"),
+    italian: () => import("./es/italian.json"),
+    portuguese: () => import("./es/portuguese.json"),
+    russian: () => import("./es/russian.json"),
+    spanish: () => import("./es/spanish.json"),
+  },
+  fr: {
+    english: () => import("./fr/english.json"),
+    french: () => import("./fr/french.json"),
+    german: () => import("./fr/german.json"),
+    italian: () => import("./fr/italian.json"),
+    portuguese: () => import("./fr/portuguese.json"),
+    russian: () => import("./fr/russian.json"),
+    spanish: () => import("./fr/spanish.json"),
+  },
+  it: {
+    english: () => import("./it/english.json"),
+    french: () => import("./it/french.json"),
+    german: () => import("./it/german.json"),
+    italian: () => import("./it/italian.json"),
+    portuguese: () => import("./it/portuguese.json"),
+    russian: () => import("./it/russian.json"),
+    spanish: () => import("./it/spanish.json"),
+  },
+  pt: {
+    english: () => import("./pt/english.json"),
+    french: () => import("./pt/french.json"),
+    german: () => import("./pt/german.json"),
+    italian: () => import("./pt/italian.json"),
+    portuguese: () => import("./pt/portuguese.json"),
+    russian: () => import("./pt/russian.json"),
+    spanish: () => import("./pt/spanish.json"),
+  },
+  ru: {
+    english: () => import("./ru/english.json"),
+    french: () => import("./ru/french.json"),
+    german: () => import("./ru/german.json"),
+    italian: () => import("./ru/italian.json"),
+    portuguese: () => import("./ru/portuguese.json"),
+    russian: () => import("./ru/russian.json"),
+    spanish: () => import("./ru/spanish.json"),
+  },
+};
 const vocabularyFileCache = new Map<string, VocabularyFile>();
 
 export function isSupportedLevel(value: string): value is Level {
@@ -105,9 +174,10 @@ export async function loadVocabularyLevelContent(
 ): Promise<{ file: VocabularyFile; levelContent: VocabularyLevelContent } | null> {
   const key = `./${uiLanguage}/${targetLanguage}.json`;
   const cachedFile = vocabularyFileCache.get(key);
+  const loader = vocabularyFileModules[uiLanguage]?.[targetLanguage];
   const loadedFile =
     cachedFile ??
-    (await fetchVocabularyFile(uiLanguage, targetLanguage));
+    ((await loader?.())?.default ?? null);
 
   if (!loadedFile) {
     return null;
@@ -124,25 +194,6 @@ export async function loadVocabularyLevelContent(
     file: loadedFile,
     levelContent,
   };
-}
-
-async function fetchVocabularyFile(
-  uiLanguage: UiLanguageCode,
-  targetLanguage: TargetLanguageSlug,
-): Promise<VocabularyFile | null> {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  try {
-    const response = await fetch(`/vocabularyLevels/${uiLanguage}/${targetLanguage}.json`);
-    if (!response.ok) {
-      return null;
-    }
-    return (await response.json()) as VocabularyFile;
-  } catch {
-    return null;
-  }
 }
 
 function loadVocabularyFileSync(
@@ -162,14 +213,9 @@ function loadVocabularyFileSync(
   try {
     const nodeRequire = (0, eval)("require") as NodeRequire;
     const { readFileSync } = nodeRequire("node:fs") as typeof import("node:fs");
-    const path = nodeRequire("node:path") as typeof import("node:path");
-    const filePath = path.resolve(
-      process.cwd(),
-      "src",
-      "data",
-      "vocabularyLevels",
-      uiLanguage,
-      `${targetLanguage}.json`,
+    const { fileURLToPath } = nodeRequire("node:url") as typeof import("node:url");
+    const filePath = fileURLToPath(
+      new URL(`./${uiLanguage}/${targetLanguage}.json`, import.meta.url),
     );
     const loadedFile = JSON.parse(readFileSync(filePath, "utf8")) as VocabularyFile;
     vocabularyFileCache.set(key, loadedFile);

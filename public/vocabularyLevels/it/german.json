@@ -1,0 +1,690 @@
+﻿{
+  "targetLanguage": "german",
+  "targetLanguageDisplayName": "Tedesco",
+  "levels": {
+    "a1": {
+      "title": "Pratica del vocabolario tedesco A1 – Lista di parole per principianti",
+      "intro": "Il vocabolario di tedesco A1 rappresenta il primo passo per i principianti.",
+      "levelDescription": "Principiante",
+      "ctaText": "Inizia pratica A1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello A1 in tedesco?",
+        "paragraph": "Il livello A1 corrisponde al livello principiante secondo il Quadro Comune Europeo di Riferimento per le Lingue (QCER). Gli studenti possono comprendere e usare espressioni familiari e frasi semplici per bisogni concreti.",
+        "bullets": [
+          "Salutare e presentarsi.",
+          "Fare e rispondere a domande semplici.",
+          "Comprendere brevi istruzioni chiare."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Cosa comprende il vocabolario di tedesco A1?",
+        "topics": [
+          "Comunicazione quotidiana",
+          "Argomenti personali"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Comunicazione quotidiana",
+            "items": [
+              "Saluti e formule di cortesia",
+              "Numeri, giorni della settimana e mesi",
+              "Verbi comuni al presente",
+              "Domande semplici"
+            ]
+          },
+          {
+            "heading": "Argomenti personali",
+            "items": [
+              "Famiglia e amici",
+              "Cibo e bevande",
+              "Casa e ambiente",
+              "Aggettivi di base"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il vocabolario tedesco A1?",
+        "text": "Il livello A1 comprende generalmente tra 500 e 800 parole essenziali. L’obiettivo non è solo memorizzarle, ma usarle attivamente in frasi semplici. Gli esercizi tedesco A1 aiutano a consolidare l’apprendimento.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario di tedesco A1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "hallo",
+            "meaning": "ciao"
+          },
+          {
+            "word": "tschüss",
+            "meaning": "arrivederci"
+          },
+          {
+            "word": "danke",
+            "meaning": "grazie"
+          },
+          {
+            "word": "Familie",
+            "meaning": "famiglia"
+          },
+          {
+            "word": "Haus",
+            "meaning": "casa"
+          },
+          {
+            "word": "essen",
+            "meaning": "mangiare"
+          },
+          {
+            "word": "trinken",
+            "meaning": "bere"
+          },
+          {
+            "word": "Freund",
+            "meaning": "amico"
+          },
+          {
+            "word": "groß",
+            "meaning": "grande"
+          },
+          {
+            "word": "klein",
+            "meaning": "piccolo"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli di tedesco"
+      },
+      "metaTitle": "Pratica del vocabolario tedesco A1 – Parole per principianti",
+      "metaDescription": "Impara il vocabolario di tedesco A1 con parole essenziali ed esempi semplici. Costruisci una base solida per comunicare in tedesco.",
+      "introParagraphs": [
+        "Il vocabolario di tedesco A1 rappresenta il primo passo per i principianti. A questo livello si apprendono parole ed espressioni semplici per comunicare nella vita quotidiana.",
+        "Le parole di base tedesco A1 includono saluti, numeri, verbi comuni e domande semplici. Una lista di vocaboli tedesco A1 ben strutturata aiuta ad ampliare gradualmente il vocabolario e a acquisire sicurezza nell’uso della lingua."
+      ],
+      "bottomCta": {
+        "heading": "Inizia subito a imparare",
+        "text": "Il vocabolario di tedesco A1 fornisce una solida base. Pratica regolarmente, forma frasi semplici e ascolta brevi dialoghi per rafforzare le tue competenze."
+      }
+    },
+    "a2": {
+      "title": "Pratica del vocabolario tedesco A2 – Lista di parole livello elementare",
+      "intro": "Il vocabolario di tedesco A2 sviluppa le conoscenze acquisite nel livello A1.",
+      "levelDescription": "Elementare",
+      "ctaText": "Inizia pratica A2",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello A2 in tedesco?",
+        "paragraph": "Il livello A2 corrisponde a una competenza elementare. Gli studenti possono comprendere espressioni di uso frequente e interagire in compiti semplici e abituali.",
+        "bullets": [
+          "Descrivere attività quotidiane e routine.",
+          "Parlare di esperienze passate semplici.",
+          "Scambiare informazioni in contesti familiari."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Cosa comprende il vocabolario di tedesco A2?",
+        "topics": [
+          "Vita quotidiana e servizi",
+          "Comunicazione estesa"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Vita quotidiana e servizi",
+            "items": [
+              "Trasporti e spostamenti",
+              "Acquisti e denaro",
+              "Salute e benessere",
+              "Lavoro e appuntamenti"
+            ]
+          },
+          {
+            "heading": "Comunicazione estesa",
+            "items": [
+              "Connettori semplici",
+              "Espressioni temporali",
+              "Aggettivi di opinione",
+              "Verbi al passato (Perfekt)"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il vocabolario tedesco A2?",
+        "text": "Il livello A2 comprende generalmente tra 1.000 e 1.500 parole utili. La pratica regolare aiuta a consolidarle e a migliorare la fluidità.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario tedesco A2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "Reise",
+            "meaning": "viaggio"
+          },
+          {
+            "word": "Fahrkarte",
+            "meaning": "biglietto"
+          },
+          {
+            "word": "Geschäft",
+            "meaning": "negozio"
+          },
+          {
+            "word": "Geld",
+            "meaning": "denaro"
+          },
+          {
+            "word": "Arbeit",
+            "meaning": "lavoro"
+          },
+          {
+            "word": "krank",
+            "meaning": "malato"
+          },
+          {
+            "word": "gestern",
+            "meaning": "Ieri"
+          },
+          {
+            "word": "morgen",
+            "meaning": "domani"
+          },
+          {
+            "word": "oft",
+            "meaning": "spesso"
+          },
+          {
+            "word": "wichtig",
+            "meaning": "importante"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli di tedesco"
+      },
+      "metaTitle": "Pratica del vocabolario tedesco A2 – Lista di parole base",
+      "metaDescription": "Impara il vocabolario di tedesco A2 con parole comuni ed esempi pratici. Migliora la comprensione e la comunicazione a livello elementare.",
+      "introParagraphs": [
+        "Il vocabolario di tedesco A2 sviluppa le conoscenze acquisite nel livello A1. A questo livello, gli studenti possono formare frasi più lunghe e comunicare più facilmente nelle situazioni quotidiane.",
+        "Il vocabolario quotidiano tedesco comprende temi come lavoro, tempo libero, viaggi e salute. Una lista di vocaboli tedesco A2 ben strutturata aiuta a padroneggiare progressivamente nuove parole."
+      ],
+      "bottomCta": {
+        "heading": "Continua ad apprendere",
+        "text": "Il vocabolario di tedesco A2 permette una comunicazione più autonoma. Leggi testi semplici, ascolta dialoghi e ripeti regolarmente le nuove parole."
+      }
+    },
+    "b1": {
+      "title": "Pratica del vocabolario tedesco B1 – Lista di parole livello intermedio",
+      "intro": "Il vocabolario di tedesco B1 rappresenta il livello intermedio.",
+      "levelDescription": "Intermedio",
+      "ctaText": "Inizia pratica B1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello B1 in tedesco?",
+        "paragraph": "Il livello B1 corrisponde a un uso indipendente del tedesco a livello intermedio. Gli studenti possono gestire la maggior parte delle situazioni quotidiane e produrre testi semplici ma coerenti.",
+        "bullets": [
+          "Esprimere punti di vista personali.",
+          "Descrivere esperienze ed eventi.",
+          "Comprendere testi informativi in modo chiaro."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Cosa comprende il vocabolario di tedesco B1?",
+        "topics": [
+          "Lavoro e società",
+          "Argomentazione e narrazione"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Lavoro e società",
+            "items": [
+              "Professioni e responsabilità",
+              "Istruzione e formazione",
+              "Tecnologia e media",
+              "Temi sociali"
+            ]
+          },
+          {
+            "heading": "Argomentazione e narrazione",
+            "items": [
+              "Connettori logici",
+              "Espressioni di accordo e disaccordo",
+              "Aggettivi comparativi",
+              "Parole astratte tedesco B1"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il vocabolario tedesco B1?",
+        "text": "Il livello B1 comprende generalmente tra 2.000 e 3.000 parole. Per ampliare il vocabolario B1 tedesco, si consiglia di leggere articoli, ascoltare podcast e praticare regolarmente la conversazione.",
+        "value": 3000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario tedesco B1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "erfolgen",
+            "meaning": "avvenire / riuscire"
+          },
+          {
+            "word": "Misserfolg",
+            "meaning": "insuccesso"
+          },
+          {
+            "word": "Arbeitgeber",
+            "meaning": "datore di lavoro"
+          },
+          {
+            "word": "Kandidat",
+            "meaning": "candidato"
+          },
+          {
+            "word": "entwickeln",
+            "meaning": "sviluppare"
+          },
+          {
+            "word": "Umwelt",
+            "meaning": "ambiente"
+          },
+          {
+            "word": "Vorteil",
+            "meaning": "vantaggio"
+          },
+          {
+            "word": "Nachteil",
+            "meaning": "svantaggio"
+          },
+          {
+            "word": "vorschlagen",
+            "meaning": "proporre"
+          },
+          {
+            "word": "Ziel",
+            "meaning": "obiettivo"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli di tedesco"
+      },
+      "metaTitle": "Pratica del vocabolario tedesco B1 – Parole livello intermedio",
+      "metaDescription": "Impara il vocabolario di tedesco B1 con parole intermedie ed esempi dettagliati. Migliora espressione e comprensione in tedesco.",
+      "introParagraphs": [
+        "Il vocabolario di tedesco B1 rappresenta il livello intermedio. Gli studenti possono comprendere i punti principali di messaggi chiari ed esprimersi con maggiore dettaglio.",
+        "Le parole intermedie tedesco B1 consentono di esprimere opinioni, raccontare esperienze e partecipare a conversazioni più complesse. Una lista di vocaboli tedesco B1 ben strutturata aiuta ad ampliare il vocabolario e rafforzare le competenze linguistiche."
+      ],
+      "bottomCta": {
+        "heading": "Rafforza il tuo livello intermedio",
+        "text": "Con un vocabolario tedesco B1 solido, puoi comunicare in modo chiaro e strutturato. Pratica regolarmente, discuti temi attuali e leggi testi più complessi per approfondire il tuo vocabolario."
+      }
+    },
+    "b2": {
+      "title": "Pratica del vocabolario tedesco B2 – Lista di parole livello intermedio avanzato",
+      "intro": "Il vocabolario di tedesco B2 è pensato per chi già comunica fluentemente e vuole affrontare argomenti più complessi.",
+      "levelDescription": "Intermedio avanzato",
+      "ctaText": "Inizia pratica B2",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello B2?",
+        "paragraph": "Al livello B2 puoi interagire spontaneamente con parlanti madrelingua. Le parole tedesche livello B2 includono termini astratti, connettori logici ed espressioni utili per dibattiti o contesti professionali.",
+        "bullets": [
+          "Comprensione delle idee principali di testi complessi.",
+          "Espressione e difesa delle opinioni in modo strutturato.",
+          "Uso di connettori vari per organizzare il discorso."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario B2",
+        "topics": [
+          "Discussione e argomentazione",
+          "Lavoro e società"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Discussione e argomentazione",
+            "items": [
+              "Espressioni per concordare o dissentire.",
+              "Connettori per confronto e contrasto.",
+              "Vocabolario per giustificare opinioni.",
+              "Termini per analizzare problemi e soluzioni."
+            ]
+          },
+          {
+            "heading": "Lavoro e società",
+            "items": [
+              "Parole relative a lavoro e studio.",
+              "Vocabolario su temi sociali attuali.",
+              "Espressioni formali per relazioni e e-mail.",
+              "Termini per responsabilità e progetti."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende B2?",
+        "text": "Il vocabolario tedesco B2 include generalmente diverse migliaia di parole attive. L’importante è saperle usare correttamente a voce e per iscritto.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocaboli B2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "jedoch",
+            "meaning": "tuttavia"
+          },
+          {
+            "word": "verbessern",
+            "meaning": "migliorare"
+          },
+          {
+            "word": "Herausforderung",
+            "meaning": "sfida"
+          },
+          {
+            "word": "somit",
+            "meaning": "quindi"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "raggiungere"
+          },
+          {
+            "word": "überzeugen",
+            "meaning": "convincere"
+          },
+          {
+            "word": "Fortschritt",
+            "meaning": "progresso"
+          },
+          {
+            "word": "Verantwortung",
+            "meaning": "responsabilità"
+          },
+          {
+            "word": "bewerten",
+            "meaning": "valutare"
+          },
+          {
+            "word": "Problem",
+            "meaning": "problema"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli CEFR"
+      },
+      "metaTitle": "Pratica del vocabolario tedesco B2 – Vocabolario intermedio avanzato",
+      "metaDescription": "Espandi il tuo vocabolario di tedesco B2 con parole chiave, significati ed esempi per comunicare con sicurezza nella vita quotidiana e professionale.",
+      "introParagraphs": [
+        "Il vocabolario di tedesco B2 è pensato per chi già comunica fluentemente e vuole affrontare argomenti più complessi. A questo livello puoi partecipare a discussioni e esprimere chiaramente le tue idee.",
+        "Il vocabolario intermedio tedesco consente di costruire argomentazioni, valutare pro e contro e comprendere testi lunghi e complessi. L’obiettivo è migliorare precisione e fluidità nella comunicazione."
+      ],
+      "bottomCta": {
+        "heading": "Continua ad ampliare il tuo vocabolario",
+        "text": "Per padroneggiare il vocabolario B2, leggi testi, ascolta dibattiti e pratica espressione orale e scritta. L’uso attivo consolida le parole apprese."
+      }
+    },
+    "c1": {
+      "title": "Pratica del vocabolario tedesco C1 – Lista di parole avanzate",
+      "intro": "Il vocabolario di tedesco C1 corrisponde a un livello avanzato in cui padroneggi espressioni complesse e termini astratti.",
+      "levelDescription": "Avanzato",
+      "ctaText": "Inizia pratica C1",
+      "levelExplanation": {
+        "heading": "Caratteristiche del livello C1",
+        "paragraph": "Le parole tedesche livello C1 includono termini specialistici, espressioni formali e connettori logici vari.",
+        "bullets": [
+          "Comprensione di testi complessi e specialistici.",
+          "Espressione fluida e strutturata di idee astratte.",
+          "Adattamento del registro linguistico in base al contesto."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario C1",
+        "topics": [
+          "Linguaggio accademico",
+          "Comunicazione professionale"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Linguaggio accademico",
+            "items": [
+              "Termini per analisi e valutazione.",
+              "Espressioni per strutturare un ragionamento complesso.",
+              "Vocabolario per presentazioni formali.",
+              "Parole legate a ricerca e pensiero critico."
+            ]
+          },
+          {
+            "heading": "Comunicazione professionale",
+            "items": [
+              "Espressioni formali per report e documenti.",
+              "Verbi precisi per argomentazione e negoziazione.",
+              "Aggettivi avanzati per descrivere situazioni.",
+              "Terminologia per gestione e organizzazione."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende C1?",
+        "text": "Il vocabolario tedesco C1 contiene generalmente diverse migliaia di parole attive. La chiave è usarle correttamente e fluentemente.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocaboli C1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "dennoch",
+            "meaning": "tuttavia"
+          },
+          {
+            "word": "vertiefen",
+            "meaning": "approfondire"
+          },
+          {
+            "word": "kohärent",
+            "meaning": "coerente; logico"
+          },
+          {
+            "word": "relevant",
+            "meaning": "rilevante; appropriato"
+          },
+          {
+            "word": "erarbeiten",
+            "meaning": "elaborare; sviluppare"
+          },
+          {
+            "word": "in Frage stellen",
+            "meaning": "mettere in discussione"
+          },
+          {
+            "word": "beträchtlich",
+            "meaning": "considerevole"
+          },
+          {
+            "word": "jedoch",
+            "meaning": "tuttavia"
+          },
+          {
+            "word": "Schlüsselfragen",
+            "meaning": "questioni chiave"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "raggiungere"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli CEFR"
+      },
+      "metaTitle": "Pratica del vocabolario tedesco C1 – Parole avanzate di tedesco",
+      "metaDescription": "Migliora il tuo vocabolario di tedesco C1 con parole avanzate, esempi e spiegazioni per comunicare in modo preciso e sfumato.",
+      "introParagraphs": [
+        "Il vocabolario di tedesco C1 corrisponde a un livello avanzato in cui padroneggi espressioni complesse e termini astratti. Puoi comprendere testi lunghi e comunicare con precisione e spontaneità.",
+        "Il vocabolario avanzato tedesco permette di analizzare, argomentare e usare sfumature linguistiche in contesti accademici o professionali. L’obiettivo è ampliare il lessico mantenendo un registro appropriato."
+      ],
+      "bottomCta": {
+        "heading": "Continua a migliorare il tuo tedesco",
+        "text": "Per padroneggiare il vocabolario C1, leggi testi complessi, partecipa a dibattiti e scrivi saggi strutturati. La pratica regolare aumenta precisione e sicurezza."
+      }
+    },
+    "c2": {
+      "title": "Pratica del vocabolario tedesco C2 – Lista di parole livello padronanza",
+      "intro": "Il vocabolario di tedesco C2 rappresenta la padronanza completa della lingua secondo il CEFR.",
+      "levelDescription": "Padronanza",
+      "ctaText": "Inizia pratica C2",
+      "levelExplanation": {
+        "heading": "Caratteristiche del livello C2",
+        "paragraph": "Le parole tedesche livello C2 coprono ambiti accademici, letterari e tecnici, con enfasi sulle sfumature di significato.",
+        "bullets": [
+          "Comprensione di testi specialistici e letterari.",
+          "Uso preciso di sinonimi con differenze sottili.",
+          "Adattamento perfetto ai registri formali e informali."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambito del vocabolario C2",
+        "topics": [
+          "Linguaggio accademico e letterario",
+          "Sfumature e stile"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Linguaggio accademico e letterario",
+            "items": [
+              "Terminologia specialistica in diversi campi.",
+              "Figure retoriche ed espressioni letterarie.",
+              "Vocabolario letterario avanzato.",
+              "Verbi precisi per analisi critiche."
+            ]
+          },
+          {
+            "heading": "Sfumature e stile",
+            "items": [
+              "Sinonimi con differenze sottili di significato.",
+              "Chiara distinzione tra registri linguistici.",
+              "Espressioni idiomatiche autentiche.",
+              "Adattamento culturale del linguaggio."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende C2?",
+        "text": "Il vocabolario tedesco C2 può superare le 6.000 parole attive. La padronanza reale si misura dalla capacità di usarle naturalmente e con precisione.",
+        "value": 6500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocaboli C2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "unabdingbar",
+            "meaning": "indispensabile; inevitabile"
+          },
+          {
+            "word": "Feinheit",
+            "meaning": "subtilità; finezza"
+          },
+          {
+            "word": "unvermeidlich",
+            "meaning": "inevitabile"
+          },
+          {
+            "word": "nuancieren",
+            "meaning": "sfumare; precisare"
+          },
+          {
+            "word": "Beredsamkeit",
+            "meaning": "eloquenza; capacità oratoria"
+          },
+          {
+            "word": "Urteilsvermögen",
+            "meaning": "giudizio; discernimento"
+          },
+          {
+            "word": "erreichen",
+            "meaning": "raggiungere un risultato"
+          },
+          {
+            "word": "ambivalent",
+            "meaning": "ambivalente; con aspetti opposti"
+          },
+          {
+            "word": "plausibel",
+            "meaning": "plausibile"
+          },
+          {
+            "word": "begründen",
+            "meaning": "motivare; giustificare"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli CEFR"
+      },
+      "metaTitle": "Pratica del vocabolario tedesco C2 – Vocabolario avanzato tedesco",
+      "metaDescription": "Scopri il vocabolario di tedesco C2 con parole rare e precise per raggiungere una padronanza completa della lingua.",
+      "introParagraphs": [
+        "Il vocabolario di tedesco C2 rappresenta la padronanza completa della lingua secondo il CEFR. Comprendi praticamente tutto ciò che leggi o ascolti e puoi esprimerti con precisione, sfumature e spontaneità.",
+        "Il vocabolario molto avanzato tedesco include termini rari, espressioni idiomatiche e sottigliezze stilistiche. Permette di adattare perfettamente il linguaggio a qualsiasi contesto."
+      ],
+      "bottomCta": {
+        "heading": "Raggiungi la padronanza completa",
+        "text": "Per padroneggiare il vocabolario tedesco C2, leggi opere letterarie, partecipa a conferenze specialistiche e scrivi testi complessi. La pratica intensiva e varia è essenziale per consolidare l’eccellenza linguistica."
+      }
+    }
+  }
+}

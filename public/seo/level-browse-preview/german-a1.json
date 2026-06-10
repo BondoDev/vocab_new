@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "german",
+    "level":  "A1",
+    "totalWords":  948,
+    "totalPages":  18,
+    "words":  [
+                  {
+                      "concept_id":  "A1-00001",
+                      "word_lemma":  "über"
+                  },
+                  {
+                      "concept_id":  "A1-00002",
+                      "word_lemma":  "über"
+                  },
+                  {
+                      "concept_id":  "A1-00003",
+                      "word_lemma":  "Handlung"
+                  },
+                  {
+                      "concept_id":  "A1-00004",
+                      "word_lemma":  "Aktivität"
+                  },
+                  {
+                      "concept_id":  "A1-00005",
+                      "word_lemma":  "Schauspieler"
+                  },
+                  {
+                      "concept_id":  "A1-00006",
+                      "word_lemma":  "hinzufügen"
+                  },
+                  {
+                      "concept_id":  "A1-00007",
+                      "word_lemma":  "Adresse"
+                  },
+                  {
+                      "concept_id":  "A1-00009",
+                      "word_lemma":  "ängstlich"
+                  },
+                  {
+                      "concept_id":  "A1-00010",
+                      "word_lemma":  "nach"
+                  },
+                  {
+                      "concept_id":  "A1-00011",
+                      "word_lemma":  "Nachmittag"
+                  },
+                  {
+                      "concept_id":  "A1-00012",
+                      "word_lemma":  "wieder"
+                  },
+                  {
+                      "concept_id":  "A1-00013",
+                      "word_lemma":  "Alter"
+                  },
+                  {
+                      "concept_id":  "A1-00014",
+                      "word_lemma":  "vor"
+                  },
+                  {
+                      "concept_id":  "A1-00015",
+                      "word_lemma":  "zustimmen"
+                  },
+                  {
+                      "concept_id":  "A1-00016",
+                      "word_lemma":  "Flugzeug"
+                  },
+                  {
+                      "concept_id":  "A1-00017",
+                      "word_lemma":  "Flughafen"
+                  },
+                  {
+                      "concept_id":  "A1-00018",
+                      "word_lemma":  "Album"
+                  },
+                  {
+                      "concept_id":  "A1-00019",
+                      "word_lemma":  "alle"
+                  },
+                  {
+                      "concept_id":  "A1-00020",
+                      "word_lemma":  "in Ordnung"
+                  },
+                  {
+                      "concept_id":  "A1-00025",
+                      "word_lemma":  "auch"
+                  },
+                  {
+                      "concept_id":  "A1-00026",
+                      "word_lemma":  "immer"
+                  },
+                  {
+                      "concept_id":  "A1-00027",
+                      "word_lemma":  "bin"
+                  },
+                  {
+                      "concept_id":  "A1-00028",
+                      "word_lemma":  "amerikanisch"
+                  },
+                  {
+                      "concept_id":  "A1-00029",
+                      "word_lemma":  "und"
+                  },
+                  {
+                      "concept_id":  "A1-00030",
+                      "word_lemma":  "wütend"
+                  },
+                  {
+                      "concept_id":  "A1-00031",
+                      "word_lemma":  "Tier"
+                  },
+                  {
+                      "concept_id":  "A1-00032",
+                      "word_lemma":  "noch ein"
+                  },
+                  {
+                      "concept_id":  "A1-00033",
+                      "word_lemma":  "Antwort"
+                  },
+                  {
+                      "concept_id":  "A1-00034",
+                      "word_lemma":  "antworten"
+                  },
+                  {
+                      "concept_id":  "A1-00035",
+                      "word_lemma":  "irgendein"
+                  },
+                  {
+                      "concept_id":  "A1-00036",
+                      "word_lemma":  "irgendjemand"
+                  },
+                  {
+                      "concept_id":  "A1-00037",
+                      "word_lemma":  "irgendwer"
+                  },
+                  {
+                      "concept_id":  "A1-00038",
+                      "word_lemma":  "irgendetwas"
+                  },
+                  {
+                      "concept_id":  "A1-00039",
+                      "word_lemma":  "Apfel"
+                  },
+                  {
+                      "concept_id":  "A1-00040",
+                      "word_lemma":  "April"
+                  },
+                  {
+                      "concept_id":  "A1-00042",
+                      "word_lemma":  "Cousine"
+                  },
+                  {
+                      "concept_id":  "A1-00043",
+                      "word_lemma":  "Arm"
+                  },
+                  {
+                      "concept_id":  "A1-00045",
+                      "word_lemma":  "ankommen"
+                  },
+                  {
+                      "concept_id":  "A1-00046",
+                      "word_lemma":  "Kunst"
+                  },
+                  {
+                      "concept_id":  "A1-00048",
+                      "word_lemma":  "Badewanne"
+                  },
+                  {
+                      "concept_id":  "A1-00049",
+                      "word_lemma":  "fragen"
+                  },
+                  {
+                      "concept_id":  "A1-00050",
+                      "word_lemma":  "bei"
+                  },
+                  {
+                      "concept_id":  "A1-00051",
+                      "word_lemma":  "August"
+                  },
+                  {
+                      "concept_id":  "A1-00052",
+                      "word_lemma":  "Tante"
+                  },
+                  {
+                      "concept_id":  "A1-00053",
+                      "word_lemma":  "Herbst"
+                  },
+                  {
+                      "concept_id":  "A1-00056",
+                      "word_lemma":  "weg"
+                  },
+                  {
+                      "concept_id":  "A1-00057",
+                      "word_lemma":  "Baby"
+                  },
+                  {
+                      "concept_id":  "A1-00058",
+                      "word_lemma":  "Rücken"
+                  },
+                  {
+                      "concept_id":  "A1-00059",
+                      "word_lemma":  "zurück"
+                  },
+                  {
+                      "concept_id":  "A1-00060",
+                      "word_lemma":  "schlecht"
+                  },
+                  {
+                      "concept_id":  "A1-00061",
+                      "word_lemma":  "Tasche"
+                  },
+                  {
+                      "concept_id":  "A1-00062",
+                      "word_lemma":  "Ball"
+                  },
+                  {
+                      "concept_id":  "A1-00063",
+                      "word_lemma":  "Banane"
+                  },
+                  {
+                      "concept_id":  "A1-00064",
+                      "word_lemma":  "Band"
+                  }
+              ]
+}

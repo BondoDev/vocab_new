@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "french",
+  "targetLanguageDisplayName": "French",
+  "levels": {
+    "a1": {
+      "title": "French A1 Vocabulary Practice – Beginner Word List",
+      "intro": "French Vocabulary A1 is the first step for anyone starting to learn French.",
+      "levelDescription": "Beginner",
+      "ctaText": "Start A1 Practice",
+      "levelExplanation": {
+        "heading": "What Does A1 Level Mean in French?",
+        "paragraph": "The A1 level is the beginner stage in the Common European Framework of Reference for Languages (CEFR). It describes learners who can understand and use familiar everyday expressions and very basic phrases. The focus of essential French words A1 is simple communication.",
+        "bullets": [
+          "Understand and use simple greetings and introductions.",
+          "Ask and answer basic questions about personal details.",
+          "Interact in a simple way when the other person speaks slowly and clearly."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "What Is Included in French Vocabulary A1?",
+        "topics": [
+          "Everyday Communication",
+          "Personal and Practical Topics"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Everyday Communication",
+            "items": [
+              "Greetings and polite expressions",
+              "Numbers, days, and months",
+              "Common verbs in the present tense",
+              "Basic question words"
+            ]
+          },
+          {
+            "heading": "Personal and Practical Topics",
+            "items": [
+              "Family members and relationships",
+              "Food and drinks",
+              "Places in town",
+              "Common adjectives for description"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in French Vocabulary A1?",
+        "text": "The A1 French language word list usually includes around 500 to 800 words. The exact number can vary depending on the curriculum or textbook. At this stage, quality is more important than quantity. Learners should focus on understanding meaning, pronunciation, and basic usage rather than memorizing long lists without context. Regular French vocabulary exercises for beginners can help reinforce these words and make them easier to remember.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Sample French Vocabulary A1 List",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "bonjour",
+            "meaning": "hello / good morning"
+          },
+          {
+            "word": "au revoir",
+            "meaning": "goodbye"
+          },
+          {
+            "word": "merci",
+            "meaning": "thank you"
+          },
+          {
+            "word": "s'il vous plait",
+            "meaning": "please"
+          },
+          {
+            "word": "maison",
+            "meaning": "house"
+          },
+          {
+            "word": "ecole",
+            "meaning": "school"
+          },
+          {
+            "word": "manger",
+            "meaning": "to eat"
+          },
+          {
+            "word": "boire",
+            "meaning": "to drink"
+          },
+          {
+            "word": "ami",
+            "meaning": "friend"
+          },
+          {
+            "word": "petit",
+            "meaning": "small"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other French Levels"
+      },
+      "metaTitle": "French A1 Vocabulary Practice – Beginner Words & Exercises",
+      "metaDescription": "Learn French Vocabulary A1 with essential beginner words, meanings, and examples. Build a strong foundation with practical everyday terms.",
+      "introParagraphs": [
+        "French Vocabulary A1 is the first step for anyone starting to learn French. At this level, you focus on everyday words and simple expressions that help you communicate in basic situations. Whether you are studying for school, travel, or personal growth, mastering A1 vocabulary gives you the foundation you need.",
+        "This level introduces basic French words for beginners that are used in daily life. You learn how to greet people, introduce yourself, talk about your family, order food, and ask simple questions. With consistent beginner French vocabulary practice, you will quickly gain confidence in understanding and using common words."
+      ],
+      "bottomCta": {
+        "heading": "Start Learning and Practicing Today",
+        "text": "Building a strong base with French Vocabulary A1 makes future learning much easier. Once you are comfortable with these core words, you can begin forming simple sentences and understanding short texts. Practice regularly, review words in context, and use them in real conversations whenever possible. Step by step, your confidence and fluency will grow."
+      }
+    },
+    "a2": {
+      "title": "French A2 Vocabulary Practice – Elementary Word List",
+      "intro": "French Vocabulary A2 builds on the basics you learned at beginner level and helps you communicate more comfortably in daily life.",
+      "levelDescription": "Elementary",
+      "ctaText": "Start A2 Practice",
+      "levelExplanation": {
+        "heading": "What Does A2 Level Mean in French?",
+        "paragraph": "The A2 level represents elementary ability according to the CEFR scale. Learners can understand sentences and frequently used expressions related to areas of immediate relevance. The focus of French Vocabulary A2 is practical communication in predictable situations.",
+        "bullets": [
+          "Understand common phrases about personal and family information.",
+          "Communicate in simple and routine tasks requiring direct exchange of information.",
+          "Describe in simple terms aspects of background and immediate environment."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "What Is Included in French Vocabulary A2?",
+        "topics": [
+          "Daily Life and Services",
+          "Communication and Description"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Daily Life and Services",
+            "items": [
+              "Shopping and money terms",
+              "Public transport vocabulary",
+              "Basic workplace words",
+              "Health and body vocabulary"
+            ]
+          },
+          {
+            "heading": "Communication and Description",
+            "items": [
+              "Past tense expressions",
+              "Common connectors (because, then, but)",
+              "Adjectives for opinions and feelings",
+              "Time and frequency expressions"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in French Vocabulary A2?",
+        "text": "At A2 level, learners typically know between 1,000 and 1,500 words. These common French words at A2 level help students manage real-life tasks such as booking a hotel, ordering at a restaurant, or explaining a simple problem. Consistent exposure and review are essential to strengthen retention and fluency.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Sample French Vocabulary A2 List",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "voyage",
+            "meaning": "trip"
+          },
+          {
+            "word": "billet",
+            "meaning": "ticket"
+          },
+          {
+            "word": "magasin",
+            "meaning": "shop"
+          },
+          {
+            "word": "argent",
+            "meaning": "money"
+          },
+          {
+            "word": "travail",
+            "meaning": "work"
+          },
+          {
+            "word": "malade",
+            "meaning": "sick"
+          },
+          {
+            "word": "hier",
+            "meaning": "yesterday"
+          },
+          {
+            "word": "demain",
+            "meaning": "tomorrow"
+          },
+          {
+            "word": "toujours",
+            "meaning": "always"
+          },
+          {
+            "word": "souvent",
+            "meaning": "often"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other French Levels"
+      },
+      "metaTitle": "French A2 Vocabulary Practice – Elementary Word List & Practice",
+      "metaDescription": "Learn French Vocabulary A2 with practical everyday words and meanings. Expand your skills with an essential elementary French word list.",
+      "introParagraphs": [
+        "French Vocabulary A2 builds on the basics you learned at beginner level and helps you communicate more comfortably in daily life. At this stage, you move beyond simple greetings and start forming longer sentences about familiar topics such as work, hobbies, shopping, and travel.",
+        "This level introduces elementary French words that allow you to describe experiences, give short explanations, and handle routine tasks. With regular A2 French vocabulary practice, learners gain confidence and can participate in simple conversations without relying only on memorized phrases."
+      ],
+      "bottomCta": {
+        "heading": "Continue Expanding Your Skills",
+        "text": "Mastering French Vocabulary A2 prepares you for more independent communication. At this stage, learners can discuss daily routines, share simple stories, and manage common travel situations. Keep reviewing your French A2 word list regularly and use new words in speaking and writing to improve French vocabulary A2 effectively."
+      }
+    },
+    "b1": {
+      "title": "French B1 Vocabulary Practice – Intermediate Word List",
+      "intro": "French Vocabulary B1 marks the transition from basic to independent language use.",
+      "levelDescription": "Intermediate",
+      "ctaText": "Start B1 Practice",
+      "levelExplanation": {
+        "heading": "What Does B1 Level Mean in French?",
+        "paragraph": "The B1 level represents intermediate proficiency according to the CEFR. Learners can deal with most situations likely to arise while traveling and can produce simple connected text on topics of personal interest. French Vocabulary B1 supports more natural and spontaneous interaction.",
+        "bullets": [
+          "Understand the main points of clear speech on familiar topics.",
+          "Describe experiences, events, dreams, and ambitions.",
+          "Give brief explanations and reasons for opinions and plans."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "What Is Included in French Vocabulary B1?",
+        "topics": [
+          "Work, Education, and Society",
+          "Opinions and Narratives"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Work, Education, and Society",
+            "items": [
+              "Career and professional terms",
+              "Education system vocabulary",
+              "Media and technology words",
+              "Social issues and community terms"
+            ]
+          },
+          {
+            "heading": "Opinions and Narratives",
+            "items": [
+              "Expressions for agreement and disagreement",
+              "Connectors for structured speech",
+              "Descriptive and comparative adjectives",
+              "Common abstract nouns"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in French Vocabulary B1?",
+        "text": "At B1 level, learners often know between 2,000 and 3,000 words. This range allows them to participate actively in discussions and manage daily life in a French-speaking environment. To expand French vocabulary B1 efficiently, learners should read short articles, listen to podcasts, and engage in structured speaking activities.",
+        "value": 3000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample French Vocabulary B1 List",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "reussir",
+            "meaning": "to succeed"
+          },
+          {
+            "word": "echec",
+            "meaning": "failure"
+          },
+          {
+            "word": "employeur",
+            "meaning": "employer"
+          },
+          {
+            "word": "candidat",
+            "meaning": "candidate"
+          },
+          {
+            "word": "developper",
+            "meaning": "to develop"
+          },
+          {
+            "word": "environnement",
+            "meaning": "environment"
+          },
+          {
+            "word": "avantage",
+            "meaning": "advantage"
+          },
+          {
+            "word": "inconvenient",
+            "meaning": "disadvantage"
+          },
+          {
+            "word": "proposer",
+            "meaning": "to suggest"
+          },
+          {
+            "word": "opinion",
+            "meaning": "opinion"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other French Levels"
+      },
+      "metaTitle": "French B1 Vocabulary Practice – Intermediate French Words",
+      "metaDescription": "Learn French Vocabulary B1 with intermediate words for conversations and daily life. Strengthen communication with practical examples and meanings.",
+      "introParagraphs": [
+        "French Vocabulary B1 marks the transition from basic to independent language use. At this intermediate stage, learners can express opinions, describe experiences in more detail, and understand the main points of clear standard speech on familiar matters.",
+        "The focus shifts to intermediate French words that allow for deeper discussions about work, education, travel, and personal interests. With consistent B1 French vocabulary practice, students become more flexible in conversations and can handle unexpected situations more effectively."
+      ],
+      "bottomCta": {
+        "heading": "Strengthen Your Intermediate Communication",
+        "text": "French Vocabulary B1 allows you to move beyond survival language and engage in meaningful interaction. By regularly reviewing your French B1 word list and using new expressions in conversation, you will steadily expand French vocabulary B1 and gain greater fluency. Consistency, exposure, and active use remain the key factors for long-term progress."
+      }
+    },
+    "b2": {
+      "title": "French B2 Vocabulary Practice – Upper-Intermediate Word List",
+      "intro": "The French B2 vocabulary list is designed for learners who have moved beyond basic communication and are ready to express more complex ideas.",
+      "levelDescription": "Upper-Intermediate",
+      "ctaText": "Start B2 Practice",
+      "levelExplanation": {
+        "heading": "What Does B2 Vocabulary Mean?",
+        "paragraph": "At the B2 level, learners can interact with fluency and spontaneity. French vocabulary for B2 level includes abstract terms, connectors for structured speech, and topic-specific words often used in education, work, and social discussions.",
+        "bullets": [
+          "Ability to understand main ideas of complex texts.",
+          "Participation in detailed discussions on familiar and unfamiliar topics.",
+          "Use of varied vocabulary to express advantages, disadvantages, and opinions."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Scope of B2 French Vocabulary",
+        "topics": [
+          "Discussion and Argumentation",
+          "Work and Society"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Discussion and Argumentation",
+            "items": [
+              "Vocabulary for expressing agreement and disagreement.",
+              "Words to compare ideas and highlight contrasts.",
+              "Expressions to introduce examples and explanations.",
+              "Terms used to evaluate situations critically."
+            ]
+          },
+          {
+            "heading": "Work and Society",
+            "items": [
+              "Language related to employment and workplace communication.",
+              "Vocabulary for social issues and current events.",
+              "Terms describing responsibilities and obligations.",
+              "Expressions for formal and semi-formal situations."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in B2?",
+        "text": "There is no fixed number, but learners at B2 typically know several thousand words. An intermediate upper French word list may include around 2,500-4,000 commonly used words and expressions. At this stage, the goal is not just to recognize vocabulary but to use it accurately in speech and writing.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample B2 Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "cependant",
+            "meaning": "however; nevertheless"
+          },
+          {
+            "word": "ameliorer",
+            "meaning": "to improve"
+          },
+          {
+            "word": "enjeu",
+            "meaning": "issue; stake; challenge"
+          },
+          {
+            "word": "ainsi",
+            "meaning": "thus; therefore"
+          },
+          {
+            "word": "reussir",
+            "meaning": "to succeed"
+          },
+          {
+            "word": "convaincre",
+            "meaning": "to convince"
+          },
+          {
+            "word": "progres",
+            "meaning": "progress"
+          },
+          {
+            "word": "responsabilite",
+            "meaning": "responsibility"
+          },
+          {
+            "word": "evaluer",
+            "meaning": "to assess; evaluate"
+          },
+          {
+            "word": "defi",
+            "meaning": "challenge"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other CEFR Levels"
+      },
+      "metaTitle": "French B2 Vocabulary Practice – Upper-Intermediate French Vocabulary",
+      "metaDescription": "Discover essential French B2 vocabulary with practical word lists, meanings, and examples to improve fluency and confidence at upper-intermediate level.",
+      "introParagraphs": [
+        "The French B2 vocabulary list is designed for learners who have moved beyond basic communication and are ready to express more complex ideas. At this upper-intermediate stage, you can discuss a wide range of topics, understand detailed texts, and participate actively in conversations with native speakers.",
+        "With consistent B2 French vocabulary practice, you strengthen your ability to argue a point of view, describe situations precisely, and understand authentic media. This level focuses on expanding your active vocabulary and mastering more advanced structures."
+      ],
+      "bottomCta": {
+        "heading": "Continue Developing Your Skills",
+        "text": "To learn French B2 words effectively, combine reading, listening, and active speaking practice. Focus on collocations and context, not just isolated words. Regular review and practical use will help you gain confidence and prepare for advanced levels."
+      }
+    },
+    "c1": {
+      "title": "French C1 Vocabulary Practice – Advanced Word List",
+      "intro": "The French C1 vocabulary guide supports learners who want to reach an advanced level of fluency and precision.",
+      "levelDescription": "Advanced",
+      "ctaText": "Start C1 Practice",
+      "levelExplanation": {
+        "heading": "What Characterizes C1 Vocabulary?",
+        "paragraph": "French vocabulary for advanced learners includes abstract concepts, formal expressions, and precise verbs that allow you to analyze and evaluate complex topics.",
+        "bullets": [
+          "Understanding implicit meaning in long texts.",
+          "Using sophisticated connectors and transitions.",
+          "Expressing nuanced opinions with clarity."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Scope of C1 French Vocabulary",
+        "topics": [
+          "Academic and Analytical Language",
+          "Professional Communication"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Academic and Analytical Language",
+            "items": [
+              "Vocabulary for argumentation and critical thinking.",
+              "Terms used in research and analysis.",
+              "Expressions to structure formal presentations.",
+              "Words describing complex processes and systems."
+            ]
+          },
+          {
+            "heading": "Professional Communication",
+            "items": [
+              "Formal expressions used in official documents.",
+              "Advanced verbs for negotiation and persuasion.",
+              "Nuanced adjectives for precise description.",
+              "Terminology related to policy and governance."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in C1?",
+        "text": "An advanced French word list C1 typically involves several thousand active words and many more passive ones. Learners at this level focus on expanding lexical range while mastering style and appropriateness.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample C1 Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "neanmoins",
+            "meaning": "nevertheless"
+          },
+          {
+            "word": "parvenir",
+            "meaning": "to manage to; succeed in"
+          },
+          {
+            "word": "approfondir",
+            "meaning": "to deepen; examine in depth"
+          },
+          {
+            "word": "enjeux",
+            "meaning": "stakes; issues"
+          },
+          {
+            "word": "coherent",
+            "meaning": "coherent; consistent"
+          },
+          {
+            "word": "pertinent",
+            "meaning": "relevant; appropriate"
+          },
+          {
+            "word": "elaborer",
+            "meaning": "to develop; elaborate"
+          },
+          {
+            "word": "remettre en question",
+            "meaning": "to question; challenge"
+          },
+          {
+            "word": "considerable",
+            "meaning": "considerable; significant"
+          },
+          {
+            "word": "toutefois",
+            "meaning": "however"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other CEFR Levels"
+      },
+      "metaTitle": "French C1 Vocabulary Practice – Advanced French Words & Exercises",
+      "metaDescription": "Master French C1 vocabulary with advanced word lists, meanings, and examples. Improve precision, fluency, and confidence in complex communication.",
+      "introParagraphs": [
+        "The French C1 vocabulary guide supports learners who want to reach an advanced level of fluency and precision. At C1, you can understand demanding texts and express yourself clearly in academic, professional, and social contexts.",
+        "Through structured C1 French vocabulary practice, you refine your ability to use subtle expressions, idiomatic language, and specialized terminology. This level focuses on depth of meaning, register awareness, and accurate usage."
+      ],
+      "bottomCta": {
+        "heading": "Strengthen Your Advanced French",
+        "text": "To expand French vocabulary C1, engage with authentic materials such as academic articles, debates, and formal presentations. Practice using new terms in writing and speech to ensure long-term retention and natural fluency."
+      }
+    },
+    "c2": {
+      "title": "French C2 Vocabulary Practice – Proficient Word List",
+      "intro": "The French C2 vocabulary list represents near-native mastery of the language.",
+      "levelDescription": "Proficient",
+      "ctaText": "Start C2 Practice",
+      "levelExplanation": {
+        "heading": "What Defines C2 Vocabulary?",
+        "paragraph": "French vocabulary for C2 level includes rare words, refined stylistic variations, and culturally embedded expressions.",
+        "bullets": [
+          "Understanding complex literary and technical texts.",
+          "Expressing ideas with fine shades of meaning.",
+          "Adapting register perfectly to context."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Scope of C2 French Vocabulary",
+        "topics": [
+          "Academic and Literary Language",
+          "Nuance and Style"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Academic and Literary Language",
+            "items": [
+              "Specialized research terminology.",
+              "Advanced rhetorical expressions.",
+              "Literary vocabulary and stylistic devices.",
+              "Precise verbs for critical analysis."
+            ]
+          },
+          {
+            "heading": "Nuance and Style",
+            "items": [
+              "Subtle synonyms with different connotations.",
+              "Formal and informal register distinctions.",
+              "Idiomatic expressions used by native speakers.",
+              "Context-sensitive phraseology."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in C2?",
+        "text": "A proficiency level French word list may include 6,000 words or more. However, the defining feature of C2 is not just the number of words, but the ability to use them flexibly, accurately, and appropriately in any situation.",
+        "value": 6000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample C2 Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "peremptoire",
+            "meaning": "peremptory; leaving no room for doubt"
+          },
+          {
+            "word": "subtilite",
+            "meaning": "subtlety"
+          },
+          {
+            "word": "ineluctable",
+            "meaning": "inescapable; inevitable"
+          },
+          {
+            "word": "nuancer",
+            "meaning": "to nuance; to qualify"
+          },
+          {
+            "word": "plausible",
+            "meaning": "plausible; believable"
+          },
+          {
+            "word": "eloquence",
+            "meaning": "eloquence"
+          },
+          {
+            "word": "discernement",
+            "meaning": "discernment; good judgment"
+          },
+          {
+            "word": "aboutir",
+            "meaning": "to lead to; result in"
+          },
+          {
+            "word": "ambivalent",
+            "meaning": "ambivalent"
+          },
+          {
+            "word": "fonder",
+            "meaning": "to base; to establish"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other CEFR Levels"
+      },
+      "metaTitle": "French C2 Vocabulary Practice – Proficient French Vocabulary Practice",
+      "metaDescription": "Explore French C2 vocabulary with advanced word lists and meanings. Achieve near-native precision and mastery in academic and professional contexts.",
+      "introParagraphs": [
+        "The French C2 vocabulary list represents near-native mastery of the language. At this proficiency level, learners can understand virtually everything heard or read and express themselves spontaneously with precision.",
+        "C2 French vocabulary practice focuses on subtle distinctions in meaning, idiomatic expressions, and specialized terminology across academic and professional domains."
+      ],
+      "bottomCta": {
+        "heading": "Achieve Full Mastery",
+        "text": "To master French vocabulary C2, immerse yourself in literature, academic discourse, and professional communication. Active production-writing essays, delivering presentations, and debating complex topics-solidifies your command of advanced language."
+      }
+    }
+  }
+}

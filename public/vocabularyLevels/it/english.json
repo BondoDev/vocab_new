@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "english",
+  "targetLanguageDisplayName": "Inglese",
+  "levels": {
+    "a1": {
+      "title": "Pratica del vocabolario inglese A1",
+      "intro": "Il vocabolario di inglese A1 rappresenta il primo passo nell’apprendimento della lingua. A questo livello impari parole semplici e molto frequenti, utili per le situazioni quotidiane.",
+      "levelDescription": "Principiante",
+      "ctaText": "Inizia pratica A1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello A1?",
+        "paragraph": "Il livello A1 è la fase iniziale dell’apprendimento. Quando inizi a imparare il vocabolario inglese A1, ti concentri sulle parole più comuni e sulle espressioni essenziali.",
+        "bullets": [
+          "Puoi presentarti e fare domande semplici.",
+          "Puoi capire frasi molto brevi e parole familiari.",
+          "Puoi comunicare in modo basilare in situazioni quotidiane."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Quali temi vengono trattati?",
+        "topics": [
+          "Informazioni personali",
+          "Vita quotidiana"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Informazioni personali",
+            "items": [
+              "Nome ed età",
+              "Paesi e nazionalità",
+              "Membri della famiglia",
+              "Professioni semplici"
+            ]
+          },
+          {
+            "heading": "Vita quotidiana",
+            "items": [
+              "Cibo e bevande",
+              "Numeri e orari",
+              "Giorni e mesi",
+              "Verbi comuni (go, eat, live, work)"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende l’A1?",
+        "text": "Al livello A1 si conoscono in genere tra 500 e 800 parole. Una pratica costante del vocabolario di inglese A1 rafforza sicurezza e memoria.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario A1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "name",
+            "meaning": "nome di una persona"
+          },
+          {
+            "word": "city",
+            "meaning": "città"
+          },
+          {
+            "word": "mother",
+            "meaning": "madre"
+          },
+          {
+            "word": "house",
+            "meaning": "casa"
+          },
+          {
+            "word": "water",
+            "meaning": "acqua"
+          },
+          {
+            "word": "book",
+            "meaning": "libro"
+          },
+          {
+            "word": "small",
+            "meaning": "piccolo"
+          },
+          {
+            "word": "happy",
+            "meaning": "felice"
+          },
+          {
+            "word": "work",
+            "meaning": "lavorare"
+          },
+          {
+            "word": "school",
+            "meaning": "scuola"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario inglese A1 – Parole per principianti",
+      "metaDescription": "Inizia con il vocabolario di inglese A1. Scopri parole essenziali, significati ed esempi semplici per muovere i primi passi in inglese.",
+      "introParagraphs": [
+        "Il vocabolario di inglese A1 rappresenta il primo passo nell’apprendimento della lingua. A questo livello impari parole semplici e molto frequenti, utili per le situazioni quotidiane.",
+        "Con il vocabolario inglese per principianti puoi presentarti, parlare della tua famiglia e descrivere attività di base. Una lista di parole inglese A1 ben organizzata ti aiuta a costruire fondamenta solide."
+      ],
+      "bottomCta": {
+        "heading": "Inizia subito",
+        "text": "Costruisci le basi con il vocabolario di inglese A1 e procedi passo dopo passo verso livelli più avanzati."
+      }
+    },
+    "a2": {
+      "title": "Pratica del vocabolario inglese A2",
+      "intro": "Il vocabolario di inglese A2 amplia le basi e ti permette di comunicare in modo più sicuro. A questo livello puoi parlare di esperienze, routine e progetti semplici.",
+      "levelDescription": "Elementare",
+      "ctaText": "Inizia pratica A2",
+      "levelExplanation": {
+        "heading": "Cosa indica il livello A2?",
+        "paragraph": "Il livello A2 corrisponde alla fase elementare. Quando scegli di imparare il vocabolario inglese A2, lavori su parole e frasi comuni in contesti abituali.",
+        "bullets": [
+          "Puoi descrivere attività quotidiane.",
+          "Puoi comprendere testi brevi e semplici.",
+          "Puoi scrivere messaggi chiari e brevi."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Temi principali",
+        "topics": [
+          "Attività quotidiane",
+          "Comunicazione"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Attività quotidiane",
+            "items": [
+              "Acquisti e prezzi",
+              "Viaggi e trasporti",
+              "Tempo atmosferico",
+              "Tempo libero"
+            ]
+          },
+          {
+            "heading": "Comunicazione",
+            "items": [
+              "Parlare del passato",
+              "Fare confronti",
+              "Esprimere preferenze",
+              "Descrivere problemi semplici"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende l’A2?",
+        "text": "Al livello A2 si conoscono circa 1.000–1.500 parole. La pratica del vocabolario di inglese A2 migliora fluidità e comprensione.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario A2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "arrive",
+            "meaning": "arrivare"
+          },
+          {
+            "word": "borrow",
+            "meaning": "prendere in prestito"
+          },
+          {
+            "word": "choose",
+            "meaning": "scegliere"
+          },
+          {
+            "word": "different",
+            "meaning": "diverso"
+          },
+          {
+            "word": "invite",
+            "meaning": "invitare"
+          },
+          {
+            "word": "learn",
+            "meaning": "imparare"
+          },
+          {
+            "word": "return",
+            "meaning": "ritornare"
+          },
+          {
+            "word": "save",
+            "meaning": "risparmiare"
+          },
+          {
+            "word": "travel",
+            "meaning": "viaggiare"
+          },
+          {
+            "word": "visit",
+            "meaning": "visitare"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario inglese A2 – Vocabolario livello elementare",
+      "metaDescription": "Migliora il tuo inglese con il vocabolario di inglese A2. Scopri parole utili e significati per comunicare con più sicurezza.",
+      "introParagraphs": [
+        "Il vocabolario di inglese A2 amplia le basi e ti permette di comunicare in modo più sicuro. A questo livello puoi parlare di esperienze, routine e progetti semplici.",
+        "Con il vocabolario inglese elementare impari espressioni frequenti per la vita quotidiana. Una lista di parole inglese A2 facilita un apprendimento progressivo."
+      ],
+      "bottomCta": {
+        "heading": "Continua a imparare",
+        "text": "Rafforza le tue competenze con il vocabolario di inglese A2 e preparati al livello intermedio."
+      }
+    },
+    "b1": {
+      "title": "Pratica del vocabolario inglese B1",
+      "intro": "Il vocabolario di inglese B1 ti permette di comunicare in modo più autonomo e chiaro. A questo livello intermedio puoi parlare di esperienze, opinioni e progetti in modo più dettagliato.",
+      "levelDescription": "Intermedio",
+      "ctaText": "Inizia pratica B1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello B1?",
+        "paragraph": "Il livello B1 indica una competenza intermedia. Quando scegli di imparare il vocabolario inglese B1, puoi comprendere i punti principali di conversazioni su argomenti familiari.",
+        "bullets": [
+          "Puoi descrivere esperienze ed eventi.",
+          "Puoi esprimere e giustificare opinioni.",
+          "Puoi scrivere testi semplici ma coerenti."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Aree di vocabolario",
+        "topics": [
+          "Vita quotidiana e lavoro",
+          "Comunicazione e argomentazione"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Vita quotidiana e lavoro",
+            "items": [
+              "Studio e carriera",
+              "Viaggi e cultura",
+              "Salute e stile di vita",
+              "Relazioni personali"
+            ]
+          },
+          {
+            "heading": "Comunicazione e argomentazione",
+            "items": [
+              "Vantaggi e svantaggi",
+              "Suggerimenti",
+              "Cause ed effetti",
+              "Discussioni semplici"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il B1?",
+        "text": "Al livello B1 si conoscono circa 2.000–2.500 parole. La pratica regolare del vocabolario di inglese B1 migliora fluidità e precisione.",
+        "value": 2500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario B1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "achieve",
+            "meaning": "raggiungere un obiettivo"
+          },
+          {
+            "word": "benefit",
+            "meaning": "vantaggio"
+          },
+          {
+            "word": "decision",
+            "meaning": "decisione"
+          },
+          {
+            "word": "experience",
+            "meaning": "esperienza"
+          },
+          {
+            "word": "improve",
+            "meaning": "migliorare"
+          },
+          {
+            "word": "opinion",
+            "meaning": "opinione"
+          },
+          {
+            "word": "prepare",
+            "meaning": "preparare"
+          },
+          {
+            "word": "reason",
+            "meaning": "motivo"
+          },
+          {
+            "word": "result",
+            "meaning": "risultato"
+          },
+          {
+            "word": "suggest",
+            "meaning": "suggerire"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario inglese B1 – Vocabolario livello intermedio",
+      "metaDescription": "Migliora il tuo livello con il vocabolario di inglese B1. Scopri parole intermedie, significati ed esempi per comunicare con sicurezza.",
+      "introParagraphs": [
+        "Il vocabolario di inglese B1 ti permette di comunicare in modo più autonomo e chiaro. A questo livello intermedio puoi parlare di esperienze, opinioni e progetti in modo più dettagliato.",
+        "Con il vocabolario inglese intermedio ampli le tue capacità espressive e comprendi testi più articolati. Una lista di parole inglese B1 ben organizzata favorisce un apprendimento costante."
+      ],
+      "bottomCta": {
+        "heading": "Continua a progredire",
+        "text": "Consolida le tue competenze con il vocabolario di inglese B1 e preparati ai livelli più avanzati."
+      }
+    },
+    "b2": {
+      "title": "Pratica del vocabolario inglese B2",
+      "intro": "Il vocabolario di inglese B2 ti consente di comunicare con maggiore precisione e sicurezza. Puoi comprendere testi complessi e partecipare a discussioni articolate.",
+      "levelDescription": "Intermedio avanzato",
+      "ctaText": "Inizia pratica B2",
+      "levelExplanation": {
+        "heading": "Cosa indica il livello B2?",
+        "paragraph": "Il livello B2 rappresenta una competenza indipendente e fluente. Quando scegli di imparare il vocabolario inglese B2, puoi esprimere argomentazioni strutturate.",
+        "bullets": [
+          "Puoi sostenere un’opinione con esempi.",
+          "Puoi comprendere articoli e conferenze più lunghi.",
+          "Puoi interagire con naturalezza."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambiti principali",
+        "topics": [
+          "Contesto professionale",
+          "Temi astratti"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Contesto professionale",
+            "items": [
+              "Analisi e valutazione",
+              "Tecnologia",
+              "Economia",
+              "Media"
+            ]
+          },
+          {
+            "heading": "Temi astratti",
+            "items": [
+              "Probabilità",
+              "Conseguenze",
+              "Strategie",
+              "Discussioni complesse"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il B2?",
+        "text": "Al livello B2 si conoscono circa 3.000–4.000 parole. La pratica del vocabolario di inglese B2 aumenta la sicurezza comunicativa.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario B2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "assess",
+            "meaning": "valutare"
+          },
+          {
+            "word": "consequence",
+            "meaning": "conseguenza"
+          },
+          {
+            "word": "efficient",
+            "meaning": "efficiente"
+          },
+          {
+            "word": "evidence",
+            "meaning": "prova"
+          },
+          {
+            "word": "maintain",
+            "meaning": "mantenere"
+          },
+          {
+            "word": "perspective",
+            "meaning": "prospettiva"
+          },
+          {
+            "word": "reliable",
+            "meaning": "affidabile"
+          },
+          {
+            "word": "significant",
+            "meaning": "significativo"
+          },
+          {
+            "word": "strategy",
+            "meaning": "strategia"
+          },
+          {
+            "word": "trend",
+            "meaning": "tendenza"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario inglese B2 – Vocabolario intermedio avanzato",
+      "metaDescription": "Amplia le tue competenze con il vocabolario di inglese B2. Impara parole avanzate per studio, lavoro e discussioni complesse.",
+      "introParagraphs": [
+        "Il vocabolario di inglese B2 ti consente di comunicare con maggiore precisione e sicurezza. Puoi comprendere testi complessi e partecipare a discussioni articolate.",
+        "Con il vocabolario inglese intermedio avanzato sviluppi una maggiore padronanza lessicale. Una lista di parole inglese B2 ti aiuta a organizzare lo studio in modo efficace."
+      ],
+      "bottomCta": {
+        "heading": "Approfondisci il tuo livello",
+        "text": "Rafforza il tuo vocabolario di inglese B2 e sviluppa maggiore precisione espressiva."
+      }
+    },
+    "c1": {
+      "title": "Pratica del vocabolario inglese C1",
+      "intro": "Il vocabolario di inglese C1 è destinato a chi desidera un controllo avanzato della lingua. Puoi comprendere testi impegnativi ed esprimerti con precisione e sfumature.",
+      "levelDescription": "Avanzato",
+      "ctaText": "Inizia pratica C1",
+      "levelExplanation": {
+        "heading": "Cosa rappresenta il livello C1?",
+        "paragraph": "Il livello C1 indica una competenza avanzata. Quando scegli di imparare il vocabolario inglese C1, puoi formulare argomentazioni complesse in modo chiaro.",
+        "bullets": [
+          "Puoi comprendere significati impliciti.",
+          "Puoi produrre testi strutturati e dettagliati.",
+          "Puoi adattare il registro linguistico."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Ambiti di studio",
+        "topics": [
+          "Contesto accademico",
+          "Sfumature linguistiche"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Contesto accademico",
+            "items": [
+              "Analisi critica",
+              "Ipotesi",
+              "Argomentazione",
+              "Terminologia specialistica"
+            ]
+          },
+          {
+            "heading": "Sfumature linguistiche",
+            "items": [
+              "Concetti astratti",
+              "Implicazioni",
+              "Variazioni di registro",
+              "Differenze semantiche"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il C1?",
+        "text": "Al livello C1 si padroneggiano oltre 5.000 parole. La pratica del vocabolario di inglese C1 aumenta precisione e flessibilità.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario C1",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "allocate",
+            "meaning": "assegnare"
+          },
+          {
+            "word": "coherent",
+            "meaning": "coerente"
+          },
+          {
+            "word": "comprehensive",
+            "meaning": "completo"
+          },
+          {
+            "word": "derive",
+            "meaning": "derivare"
+          },
+          {
+            "word": "facilitate",
+            "meaning": "facilitare"
+          },
+          {
+            "word": "implication",
+            "meaning": "implicazione"
+          },
+          {
+            "word": "notion",
+            "meaning": "concetto"
+          },
+          {
+            "word": "substantial",
+            "meaning": "sostanziale"
+          },
+          {
+            "word": "validate",
+            "meaning": "convalidare"
+          },
+          {
+            "word": "constrain",
+            "meaning": "limitare"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario inglese C1 – Parole avanzate inglesi",
+      "metaDescription": "Perfeziona il tuo inglese con il vocabolario di inglese C1. Scopri parole avanzate e sfumature per contesti accademici e professionali.",
+      "introParagraphs": [
+        "Il vocabolario di inglese C1 è destinato a chi desidera un controllo avanzato della lingua. Puoi comprendere testi impegnativi ed esprimerti con precisione e sfumature.",
+        "Con il vocabolario inglese avanzato sviluppi maggiore consapevolezza stilistica. Una lista di parole inglese C1 facilita un ampliamento mirato del lessico."
+      ],
+      "bottomCta": {
+        "heading": "Perfeziona la tua padronanza",
+        "text": "Sviluppa una comunicazione precisa con il vocabolario di inglese C1."
+      }
+    },
+    "c2": {
+      "title": "Pratica del vocabolario inglese C2",
+      "intro": "Il vocabolario di inglese C2 rappresenta il livello di competenza più alto. Puoi comprendere quasi ogni testo e comunicare con grande precisione stilistica.",
+      "levelDescription": "Padronanza",
+      "ctaText": "Inizia pratica C2",
+      "levelExplanation": {
+        "heading": "Cosa caratterizza il livello C2?",
+        "paragraph": "Il livello C2 indica padronanza quasi madrelingua. Quando scegli di imparare il vocabolario inglese C2, puoi interpretare sfumature sottili e riferimenti complessi.",
+        "bullets": [
+          "Puoi comprendere testi specialistici.",
+          "Puoi esprimerti con estrema precisione.",
+          "Puoi riformulare concetti complessi con naturalezza."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Aree di approfondimento",
+        "topics": [
+          "Contesti specialistici",
+          "Precisione semantica"
+        ],
+        "wordTypes": [
+          "Sostantivi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Contesti specialistici",
+            "items": [
+              "Terminologia accademica",
+              "Concetti teorici",
+              "Analisi avanzata",
+              "Retorica"
+            ]
+          },
+          {
+            "heading": "Precisione semantica",
+            "items": [
+              "Connotazioni",
+              "Espressioni idiomatiche",
+              "Significati impliciti",
+              "Argomentazione complessa"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il C2?",
+        "text": "Al livello C2 si conoscono oltre 8.000 parole. La pratica del vocabolario di inglese C2 consolida una competenza quasi madrelingua.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario C2",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "ambiguous",
+            "meaning": "ambiguo"
+          },
+          {
+            "word": "convoluted",
+            "meaning": "complesso e articolato"
+          },
+          {
+            "word": "discern",
+            "meaning": "discernere"
+          },
+          {
+            "word": "eloquent",
+            "meaning": "eloquente"
+          },
+          {
+            "word": "meticulous",
+            "meaning": "meticoloso"
+          },
+          {
+            "word": "pragmatic",
+            "meaning": "pragmatico"
+          },
+          {
+            "word": "resilient",
+            "meaning": "resiliente"
+          },
+          {
+            "word": "scrutinize",
+            "meaning": "esaminare attentamente"
+          },
+          {
+            "word": "substantiate",
+            "meaning": "sostenere con prove"
+          },
+          {
+            "word": "ubiquitous",
+            "meaning": "onnipresente"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Esplora altri livelli"
+      },
+      "metaTitle": "Pratica del vocabolario inglese C2 – Vocabolario inglese avanzato",
+      "metaDescription": "Raggiungi la padronanza con il vocabolario di inglese C2. Scopri termini complessi e sfumature per una competenza quasi madrelingua.",
+      "introParagraphs": [
+        "Il vocabolario di inglese C2 rappresenta il livello di competenza più alto. Puoi comprendere quasi ogni testo e comunicare con grande precisione stilistica.",
+        "Un vocabolario inglese livello esperto ti permette di adattare tono e registro in ogni contesto. Una lista di parole inglese C2 sostiene uno studio approfondito."
+      ],
+      "bottomCta": {
+        "heading": "Raggiungi la padronanza completa",
+        "text": "Perfeziona la tua espressione con il vocabolario di inglese C2 e raggiungi un livello di competenza esperto."
+      }
+    }
+  }
+}

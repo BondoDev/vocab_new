@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "french",
+  "targetLanguageDisplayName": "Francese",
+  "levels": {
+    "a1": {
+      "title": "Pratica del vocabolario francese A1 – Lista di parole per principianti",
+      "intro": "Il vocabolario di francese A1 rappresenta il primo passo per chi inizia a imparare la lingua.",
+      "levelDescription": "Principiante",
+      "ctaText": "Inizia pratica A1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello A1 in francese?",
+        "paragraph": "Il livello A1 corrisponde allo stadio introduttivo del Quadro Comune Europeo di Riferimento per le lingue (QCER). Lo studente può comprendere ed utilizzare espressioni familiari e frasi molto semplici per soddisfare bisogni concreti.",
+        "bullets": [
+          "Salutare e presentarsi.",
+          "Fare e rispondere a domande semplici.",
+          "Comprendere istruzioni brevi e chiare."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Cosa comprende il vocabolario di francese A1?",
+        "topics": [
+          "Comunicazione quotidiana",
+          "Temi personali"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Comunicazione quotidiana",
+            "items": [
+              "Saluti e formule di cortesia",
+              "Numeri, giorni della settimana e mesi",
+              "Verbi comuni al presente",
+              "Domande semplici"
+            ]
+          },
+          {
+            "heading": "Temi personali",
+            "items": [
+              "Famiglia e amici",
+              "Cibo e bevande",
+              "Casa e luoghi comuni",
+              "Aggettivi semplici"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il vocabolario di francese A1?",
+        "text": "In genere, il livello A1 include circa 500-800 parole essenziali. L’obiettivo non è solo memorizzare, ma usare attivamente le parole in frasi semplici. Esercizi di vocabolario francese A1 regolari aiutano a consolidare l’apprendimento.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario di francese A1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "bonjour",
+            "meaning": "buongiorno"
+          },
+          {
+            "word": "au revoir",
+            "meaning": "arrivederci"
+          },
+          {
+            "word": "merci",
+            "meaning": "grazie"
+          },
+          {
+            "word": "famille",
+            "meaning": "famiglia"
+          },
+          {
+            "word": "maison",
+            "meaning": "casa"
+          },
+          {
+            "word": "manger",
+            "meaning": "mangiare"
+          },
+          {
+            "word": "boire",
+            "meaning": "bere"
+          },
+          {
+            "word": "ami",
+            "meaning": "amico"
+          },
+          {
+            "word": "grand",
+            "meaning": "grande"
+          },
+          {
+            "word": "petit",
+            "meaning": "piccolo"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli di francese"
+      },
+      "metaTitle": "Pratica del vocabolario francese A1 – Parole per principianti",
+      "metaDescription": "Scopri il vocabolario di francese A1 con parole essenziali ed esempi semplici. Costruisci una base solida per iniziare a imparare il francese.",
+      "introParagraphs": [
+        "Il vocabolario di francese A1 rappresenta il primo passo per chi inizia a imparare la lingua. A questo livello, si apprendono parole e frasi semplici che permettono di comunicare in situazioni quotidiane molto comuni.",
+        "Le parole francesi per principianti includono saluti, numeri, verbi di base e domande semplici. Con una lista di vocaboli francese A1 ben strutturata, è possibile imparare il vocabolario di francese A1 gradualmente e acquisire sicurezza nella comunicazione."
+      ],
+      "bottomCta": {
+        "heading": "Inizia a imparare subito",
+        "text": "Conoscere il vocabolario di francese A1 ti permette di costruire una base solida. Pratica regolarmente, usa le parole in frasi semplici e ascolta dialoghi brevi per rinforzare l’apprendimento."
+      }
+    },
+    "a2": {
+      "title": "Pratica del vocabolario francese A2 – Lista di parole livello elementare",
+      "intro": "Il vocabolario di francese A2 amplia le basi acquisite a livello A1.",
+      "levelDescription": "Elementare",
+      "ctaText": "Inizia pratica A2",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello A2 in francese?",
+        "paragraph": "Il livello A2 corrisponde a una competenza elementare. Lo studente può comprendere espressioni di uso frequente e comunicare in compiti semplici e abituali.",
+        "bullets": [
+          "Descrivere attività quotidiane.",
+          "Raccontare esperienze passate semplici.",
+          "Interagire in situazioni pratiche."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Cosa comprende il vocabolario di francese A2?",
+        "topics": [
+          "Vita quotidiana e servizi",
+          "Comunicazione ampliata"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Vita quotidiana e servizi",
+            "items": [
+              "Trasporti e spostamenti",
+              "Acquisti e denaro",
+              "Salute e benessere",
+              "Mondo del lavoro"
+            ]
+          },
+          {
+            "heading": "Comunicazione ampliata",
+            "items": [
+              "Connettori semplici",
+              "Espressioni temporali",
+              "Aggettivi di opinione",
+              "Verbi al passato composto"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il vocabolario di francese A2?",
+        "text": "Il livello A2 comprende generalmente tra 1.000 e 1.500 parole utili francese A2. Esercizi regolari aiutano a consolidare queste conoscenze e a migliorare la fluidità.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario di francese A2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "voyage",
+            "meaning": "viaggio"
+          },
+          {
+            "word": "billet",
+            "meaning": "biglietto"
+          },
+          {
+            "word": "magasin",
+            "meaning": "negozio"
+          },
+          {
+            "word": "argent",
+            "meaning": "denaro"
+          },
+          {
+            "word": "travail",
+            "meaning": "lavoro"
+          },
+          {
+            "word": "malade",
+            "meaning": "malato"
+          },
+          {
+            "word": "hier",
+            "meaning": "ieri"
+          },
+          {
+            "word": "demain",
+            "meaning": "domani"
+          },
+          {
+            "word": "souvent",
+            "meaning": "spesso"
+          },
+          {
+            "word": "important",
+            "meaning": "importante"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli di francese"
+      },
+      "metaTitle": "Pratica del vocabolario francese A2 – Lista di parole base",
+      "metaDescription": "Scopri il vocabolario di francese A2 con parole comuni ed esempi pratici. Migliora il tuo livello elementare in francese.",
+      "introParagraphs": [
+        "Il vocabolario di francese A2 amplia le basi acquisite a livello A1. A questo stadio, lo studente può esprimersi con maggiore scioltezza in situazioni quotidiane e comprendere frasi più varie.",
+        "Il vocabolario francese quotidiano copre temi come lavoro, tempo libero, viaggi e salute. Una lista di vocaboli francese A2 ben strutturata aiuta ad imparare il vocabolario A2 francese in modo progressivo ed efficace."
+      ],
+      "bottomCta": {
+        "heading": "Prosegui con lo studio",
+        "text": "Il vocabolario di francese A2 ti permette di comunicare con maggiore autonomia. Leggi testi semplici, ascolta dialoghi e ripeti regolarmente nuove parole."
+      }
+    },
+    "b1": {
+      "title": "Pratica del vocabolario francese B1 – Lista di parole livello intermedio",
+      "intro": "Il vocabolario di francese B1 segna l’ingresso nel livello intermedio.",
+      "levelDescription": "Intermedio",
+      "ctaText": "Inizia pratica B1",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello B1 in francese?",
+        "paragraph": "Il livello B1 corrisponde a un uso autonomo della lingua a livello intermedio. Lo studente può gestire la maggior parte delle situazioni quotidiane e produrre testi semplici ma coerenti.",
+        "bullets": [
+          "Esprimere punti di vista personali.",
+          "Descrivere esperienze e progetti.",
+          "Comprendere testi informativi chiari."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Cosa comprende il vocabolario di francese B1?",
+        "topics": [
+          "Lavoro e società",
+          "Argomentazione e narrazione"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Lavoro e società",
+            "items": [
+              "Occupazione e responsabilità",
+              "Studi e formazione",
+              "Tecnologia e media",
+              "Temi sociali"
+            ]
+          },
+          {
+            "heading": "Argomentazione e narrazione",
+            "items": [
+              "Connettori logici",
+              "Espressioni di accordo e disaccordo",
+              "Aggettivi comparativi",
+              "Vocaboli astratti livello B1"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende il vocabolario di francese B1?",
+        "text": "Il livello B1 include generalmente tra 2.000 e 3.000 parole. Per ampliare vocabolario B1 francese, è consigliato leggere articoli, ascoltare podcast e praticare regolarmente la conversazione.",
+        "value": 3000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario di francese B1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "réussir",
+            "meaning": "riuscire"
+          },
+          {
+            "word": "échec",
+            "meaning": "fallimento"
+          },
+          {
+            "word": "employeur",
+            "meaning": "datore di lavoro"
+          },
+          {
+            "word": "candidat",
+            "meaning": "candidato"
+          },
+          {
+            "word": "développer",
+            "meaning": "sviluppare"
+          },
+          {
+            "word": "environnement",
+            "meaning": "ambiente"
+          },
+          {
+            "word": "avantage",
+            "meaning": "vantaggio"
+          },
+          {
+            "word": "inconvénient",
+            "meaning": "svantaggio"
+          },
+          {
+            "word": "proposer",
+            "meaning": "proporre"
+          },
+          {
+            "word": "objectif",
+            "meaning": "obiettivo"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Altri livelli di francese"
+      },
+      "metaTitle": "Pratica del vocabolario francese B1 – Parole livello intermedio",
+      "metaDescription": "Scopri il vocabolario di francese B1 con parole intermedie ed esempi dettagliati. Migliora la tua espressione e comprensione.",
+      "introParagraphs": [
+        "Il vocabolario di francese B1 segna l’ingresso nel livello intermedio. Gli studenti possono comprendere i punti principali di un discorso chiaro e esprimersi in modo più articolato.",
+        "Le parole intermedie francese B1 permettono di esprimere opinioni, raccontare esperienze e partecipare a conversazioni più complesse. Una lista di vocabolario francese B1 strutturata aiuta a imparare il vocabolario B1 francese e ad ampliare il tuo repertorio."
+      ],
+      "bottomCta": {
+        "heading": "Rafforza il tuo livello intermedio",
+        "text": "Con un vocabolario di francese B1 consolidato, puoi comunicare in modo chiaro e strutturato. Pratica regolarmente, discuti argomenti attuali e leggi testi più complessi per approfondire il tuo vocabolario."
+      }
+    },
+    "b2": {
+      "title": "Pratica del vocabolario francese B2 – Lista di parole livello intermedio avanzato",
+      "intro": "Il vocabolario di francese B2 rappresenta un livello intermedio-avanzato in cui lo studente è capace di comunicare con disinvoltura in molte situazioni quotidiane, lavorative o di studio.",
+      "levelDescription": "Intermedio avanzato",
+      "ctaText": "Inizia pratica B2",
+      "levelExplanation": {
+        "heading": "Cosa significa il livello B2?",
+        "paragraph": "Al livello B2, puoi interagire spontaneamente con madrelingua senza grandi difficoltà. Il vocabolario francese per il livello B2 include termini astratti, connettori logici ed espressioni utili nei dibattiti o in contesti professionali.",
+        "bullets": [
+          "Comprendere le idee principali di testi complessi.",
+          "Esprimere e difendere un punto di vista in maniera strutturata.",
+          "Usare connettori vari per organizzare un discorso."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Estensione del vocabolario B2",
+        "topics": [
+          "Argomentazione e opinione",
+          "Vita professionale e sociale"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Argomentazione e opinione",
+            "items": [
+              "Espressioni per concordare o dissentire.",
+              "Connettori per confrontare e opporre idee.",
+              "Vocabolario per giustificare una posizione.",
+              "Termini per analizzare vantaggi e svantaggi."
+            ]
+          },
+          {
+            "heading": "Vita professionale e sociale",
+            "items": [
+              "Parole legate a lavoro e studio.",
+              "Vocabolario su questioni sociali attuali.",
+              "Espressioni formali per contesti professionali.",
+              "Termini che descrivono responsabilità e progetti."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole contiene il livello B2?",
+        "text": "Il vocabolario francese livello B2 comprende generalmente diverse migliaia di unità lessicali attive. L’importante è saperle usare correttamente sia oralmente che per iscritto.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario B2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "cependant",
+            "meaning": "tuttavia"
+          },
+          {
+            "word": "améliorer",
+            "meaning": "migliorare"
+          },
+          {
+            "word": "enjeu",
+            "meaning": "questione centrale; sfida"
+          },
+          {
+            "word": "ainsi",
+            "meaning": "così; in questo modo"
+          },
+          {
+            "word": "réussir",
+            "meaning": "riuscire"
+          },
+          {
+            "word": "convaincre",
+            "meaning": "convincere"
+          },
+          {
+            "word": "progrès",
+            "meaning": "progresso"
+          },
+          {
+            "word": "responsabilité",
+            "meaning": "responsabilità"
+          },
+          {
+            "word": "évaluer",
+            "meaning": "valutare"
+          },
+          {
+            "word": "défi",
+            "meaning": "sfida"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Scopri gli altri livelli del QCER"
+      },
+      "metaTitle": "Pratica del vocabolario francese B2 – Vocabolario intermedio avanzato",
+      "metaDescription": "Migliora il tuo vocabolario di francese B2 con parole chiave, definizioni chiare ed esempi per parlare e scrivere con sicurezza.",
+      "introParagraphs": [
+        "Il vocabolario di francese B2 rappresenta un livello intermedio-avanzato in cui lo studente è capace di comunicare con disinvoltura in molte situazioni quotidiane, lavorative o di studio. A questo livello, puoi esprimere idee complesse e partecipare attivamente a discussioni articolate.",
+        "Il vocabolario intermedio avanzato francese ti permette di argomentare, sfumare i concetti e comprendere testi più lunghi e dettagliati. L’obiettivo è ampliare il tuo repertorio lessicale migliorando precisione e fluidità."
+      ],
+      "bottomCta": {
+        "heading": "Prosegui con il tuo apprendimento",
+        "text": "Per imparare il vocabolario francese B2, leggi articoli, ascolta dibattiti e pratica regolarmente l’espressione orale e scritta. L’uso attivo è essenziale per consolidare le conoscenze."
+      }
+    },
+    "c1": {
+      "title": "Pratica del vocabolario francese C1 – Lista di parole avanzate",
+      "intro": "Il vocabolario di francese C1 corrisponde a un livello avanzato in cui si padroneggiano espressioni complesse e termini astratti.",
+      "levelDescription": "Avanzato",
+      "ctaText": "Inizia pratica C1",
+      "levelExplanation": {
+        "heading": "Caratteristiche del livello C1",
+        "paragraph": "Le parole francesi livello C1 includono termini specializzati, espressioni formali e un’ampia gamma di connettori logici.",
+        "bullets": [
+          "Comprensione di testi complessi e specializzati.",
+          "Espressione fluente e strutturata di idee astratte.",
+          "Adattamento del registro in base alla situazione."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Estensione del vocabolario C1",
+        "topics": [
+          "Linguaggio accademico",
+          "Comunicazione professionale"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Linguaggio accademico",
+            "items": [
+              "Termini per analisi e valutazione.",
+              "Espressioni per strutturare ragionamenti complessi.",
+              "Vocabolario per presentazioni formali.",
+              "Parole relative alla ricerca e al pensiero critico."
+            ]
+          },
+          {
+            "heading": "Comunicazione professionale",
+            "items": [
+              "Espressioni formali per relazioni e documenti ufficiali.",
+              "Verbi precisi per argomentare e negoziare.",
+              "Aggettivi sfumati per descrivere situazioni complesse.",
+              "Terminologia per gestione e organizzazione."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende C1?",
+        "text": "Il vocabolario francese per il livello C1 include generalmente diverse migliaia di parole attive. L’importante è saperle usare con esattezza e fluidità.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario C1",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "néanmoins",
+            "meaning": "tuttavia"
+          },
+          {
+            "word": "approfondir",
+            "meaning": "approfondire"
+          },
+          {
+            "word": "cohérent",
+            "meaning": "coerente; logico"
+          },
+          {
+            "word": "pertinent",
+            "meaning": "pertinente; adeguato"
+          },
+          {
+            "word": "élaborer",
+            "meaning": "elaborare"
+          },
+          {
+            "word": "remettre en question",
+            "meaning": "mettere in discussione"
+          },
+          {
+            "word": "considérable",
+            "meaning": "considerevole"
+          },
+          {
+            "word": "toutefois",
+            "meaning": "tuttavia"
+          },
+          {
+            "word": "enjeux",
+            "meaning": "questioni cruciali"
+          },
+          {
+            "word": "parvenir",
+            "meaning": "raggiungere un obiettivo"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Scopri gli altri livelli del QCER"
+      },
+      "metaTitle": "Pratica del vocabolario francese C1 – Parole avanzate di francese",
+      "metaDescription": "Approfondisci il vocabolario di francese C1 con parole avanzate, definizioni ed esempi per comunicare con precisione e sfumature.",
+      "introParagraphs": [
+        "Il vocabolario di francese C1 corrisponde a un livello avanzato in cui si padroneggiano espressioni complesse e termini astratti. Puoi comprendere testi lunghi e impegnativi e comunicare con spontaneità e precisione.",
+        "Il vocabolario avanzato francese consente di analizzare, argomentare e sfumare i propri interventi in contesti accademici o professionali. L’obiettivo è ampliare il lessico rispettando il registro adatto."
+      ],
+      "bottomCta": {
+        "heading": "Perfeziona la tua padronanza",
+        "text": "Per apprendere il vocabolario francese C1, leggi testi impegnativi, partecipa a dibattiti e scrivi saggi strutturati. La pratica regolare consolida le competenze e la sicurezza nell’uso della lingua."
+      }
+    },
+    "c2": {
+      "title": "Pratica del vocabolario francese C2 – Lista di parole livello padronanza",
+      "intro": "Il vocabolario di francese C2 corrisponde al livello di padronanza completa del QCER.",
+      "levelDescription": "Padronanza completa",
+      "ctaText": "Inizia pratica C2",
+      "levelExplanation": {
+        "heading": "Caratteristiche del livello C2",
+        "paragraph": "Le parole francesi livello C2 coprono ambiti accademici, letterari e tecnici, con particolare attenzione alle sfumature di significato.",
+        "bullets": [
+          "Comprensione di testi specializzati e letterari.",
+          "Uso preciso dei sinonimi con sfumature sottili.",
+          "Adattamento perfetto al registro formale o informale."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Estensione del vocabolario C2",
+        "topics": [
+          "Linguaggio accademico e letterario",
+          "Sfumature e stile"
+        ],
+        "wordTypes": [
+          "Nomi",
+          "Verbi",
+          "Aggettivi"
+        ],
+        "groups": [
+          {
+            "heading": "Linguaggio accademico e letterario",
+            "items": [
+              "Terminologia specializzata in diversi settori.",
+              "Figure retoriche e espressioni stilistiche.",
+              "Vocabolario letterario avanzato.",
+              "Verbi precisi per l’analisi critica."
+            ]
+          },
+          {
+            "heading": "Sfumature e stile",
+            "items": [
+              "Sinonimi con differenze sottili.",
+              "Distinzione chiara tra registri linguistici.",
+              "Espressioni idiomatiche autentiche.",
+              "Adattamento culturale del linguaggio."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Quante parole comprende C2?",
+        "text": "Il vocabolario francese per il livello C2 può superare le 6.000 parole attive. La vera padronanza si misura nella capacità di usarle con naturalezza e precisione.",
+        "value": 6500
+      },
+      "sampleVocabulary": {
+        "heading": "Esempi di vocabolario C2",
+        "columns": {
+          "word": "Parola",
+          "meaning": "Significato"
+        },
+        "rows": [
+          {
+            "word": "péremptoire",
+            "meaning": "deciso; che non ammette discussione"
+          },
+          {
+            "word": "subtilité",
+            "meaning": "finezza; sottigliezza"
+          },
+          {
+            "word": "inéluctable",
+            "meaning": "inevitabile"
+          },
+          {
+            "word": "nuancer",
+            "meaning": "sfumare; distinguere"
+          },
+          {
+            "word": "éloquence",
+            "meaning": "eloquenza"
+          },
+          {
+            "word": "discernement",
+            "meaning": "giudizio critico"
+          },
+          {
+            "word": "aboutir",
+            "meaning": "arrivare a un risultato"
+          },
+          {
+            "word": "ambivalent",
+            "meaning": "ambivalente; con due aspetti opposti"
+          },
+          {
+            "word": "plausible",
+            "meaning": "plausibile"
+          },
+          {
+            "word": "fonder",
+            "meaning": "fondare; basare su basi solide"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Scopri gli altri livelli del QCER"
+      },
+      "metaTitle": "Pratica del vocabolario francese C2 – Vocabolario avanzato francese",
+      "metaDescription": "Scopri il vocabolario di francese C2 con parole rare, precise e sfumate per raggiungere una padronanza completa della lingua.",
+      "introParagraphs": [
+        "Il vocabolario di francese C2 corrisponde al livello di padronanza completa del QCER. A questo livello comprendi praticamente tutto ciò che leggi o ascolti e puoi esprimerti con precisione, sfumature e spontaneità.",
+        "Il vocabolario francese molto avanzato include termini rari, espressioni idiomatiche complesse e sottigliezze stilistiche. Permette di adattare perfettamente il discorso a qualsiasi contesto."
+      ],
+      "bottomCta": {
+        "heading": "Raggiungi la padronanza completa",
+        "text": "Per padroneggiare il vocabolario francese C2, leggi opere letterarie, segui conferenze specialistiche e scrivi testi elaborati. Una pratica intensiva e varia è essenziale per consolidare l’eccellenza linguistica."
+      }
+    }
+  }
+}

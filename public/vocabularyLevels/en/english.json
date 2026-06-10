@@ -1,0 +1,690 @@
+{
+  "targetLanguage": "english",
+  "targetLanguageDisplayName": "English",
+  "levels": {
+    "a1": {
+      "title": "English A1 Vocabulary Practice",
+      "intro": "English A1 vocabulary practice is the first step for beginners who want to build a strong foundation.",
+      "levelDescription": "Beginner",
+      "ctaText": "Start A1 Practice",
+      "levelExplanation": {
+        "heading": "What Is A1 Level?",
+        "paragraph": "The A1 level is the starting point in language learning. When you study an A1 English word list, you learn the most common and essential words used in daily communication.",
+        "bullets": [
+          "You can introduce yourself and ask simple questions.",
+          "You can understand familiar words and very basic phrases.",
+          "You can communicate in simple situations if the other person speaks slowly."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "What Vocabulary Do You Learn?",
+        "topics": [
+          "Personal Information",
+          "Daily Life"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Personal Information",
+            "items": [
+              "Name and age",
+              "Countries and nationalities",
+              "Family members",
+              "Jobs and occupations"
+            ]
+          },
+          {
+            "heading": "Daily Life",
+            "items": [
+              "Food and drinks",
+              "Numbers and time",
+              "Days and months",
+              "Common verbs (go, eat, work, live)"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in A1?",
+        "text": "At A1, learners usually know around 500-800 words. Regular English A1 vocabulary practice helps you remember words faster and use them with confidence in short conversations.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Sample A1 Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "hello",
+            "meaning": "a greeting"
+          },
+          {
+            "word": "friend",
+            "meaning": "a person you like and know well"
+          },
+          {
+            "word": "family",
+            "meaning": "people related to you"
+          },
+          {
+            "word": "home",
+            "meaning": "the place where you live"
+          },
+          {
+            "word": "eat",
+            "meaning": "to have food"
+          },
+          {
+            "word": "drink",
+            "meaning": "to take liquid into your mouth"
+          },
+          {
+            "word": "work",
+            "meaning": "to do a job"
+          },
+          {
+            "word": "school",
+            "meaning": "a place where students learn"
+          },
+          {
+            "word": "big",
+            "meaning": "large in size"
+          },
+          {
+            "word": "happy",
+            "meaning": "feeling good or pleased"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "English A1 Vocabulary Practice – Beginner Words & Exercises",
+      "metaDescription": "Start learning with English A1 vocabulary practice. Discover basic words, meanings, and simple examples designed for true beginners.",
+      "introParagraphs": [
+        "English A1 vocabulary practice is the first step for beginners who want to build a strong foundation. At this level, you learn simple and useful words that help you speak about yourself, your family, and everyday life.",
+        "With beginner English vocabulary, you focus on short sentences and clear meanings. The goal is to understand and use basic English words for beginners in real and practical situations."
+      ],
+      "bottomCta": {
+        "heading": "Start Practicing Today",
+        "text": "Begin your journey with structured English A1 vocabulary practice. Learn simple words step by step and build the confidence to speak and understand basic English."
+      }
+    },
+    "a2": {
+      "title": "English A2 Vocabulary Practice",
+      "intro": "English A2 vocabulary practice helps you move beyond very basic phrases and start speaking in longer, clearer sentences.",
+      "levelDescription": "Elementary",
+      "ctaText": "Start A2 Practice",
+      "levelExplanation": {
+        "heading": "What Is A2 Level?",
+        "paragraph": "The A2 level is often called elementary or pre-intermediate. When you learn English vocabulary A2 level, you can understand frequently used expressions related to areas of immediate relevance.",
+        "bullets": [
+          "You can describe your background and daily routine.",
+          "You can communicate in simple and direct exchanges of information.",
+          "You can write short messages and basic descriptions."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "What Vocabulary Do You Learn?",
+        "topics": [
+          "Daily Activities and Routines",
+          "Communication and Experiences"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Daily Activities and Routines",
+            "items": [
+              "Household tasks and chores",
+              "Shopping and prices",
+              "Travel and directions",
+              "Weather and seasons"
+            ]
+          },
+          {
+            "heading": "Communication and Experiences",
+            "items": [
+              "Past events and memories",
+              "Plans and arrangements",
+              "Preferences and comparisons",
+              "Simple problem situations"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in A2?",
+        "text": "At A2, learners usually know around 1,000-1,500 words. Structured English A2 vocabulary practice strengthens your active vocabulary and prepares you for more complex language at higher levels.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Sample A2 Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "borrow",
+            "meaning": "to take something and return it later"
+          },
+          {
+            "word": "decide",
+            "meaning": "to choose after thinking"
+          },
+          {
+            "word": "difference",
+            "meaning": "the way in which things are not the same"
+          },
+          {
+            "word": "invite",
+            "meaning": "to ask someone to come somewhere"
+          },
+          {
+            "word": "journey",
+            "meaning": "a trip from one place to another"
+          },
+          {
+            "word": "receive",
+            "meaning": "to get something"
+          },
+          {
+            "word": "return",
+            "meaning": "to go back"
+          },
+          {
+            "word": "share",
+            "meaning": "to use something together"
+          },
+          {
+            "word": "spend",
+            "meaning": "to use money or time"
+          },
+          {
+            "word": "suggestion",
+            "meaning": "an idea offered for consideration"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "English A2 Vocabulary Practice – Elementary Vocabulary & Practice",
+      "metaDescription": "Improve your skills with English A2 vocabulary practice. Learn essential elementary words, meanings, and examples for everyday communication.",
+      "introParagraphs": [
+        "English A2 vocabulary practice helps you move beyond very basic phrases and start speaking in longer, clearer sentences. At this level, you expand your vocabulary for everyday situations such as shopping, travel, work, and free time.",
+        "With elementary English vocabulary, you learn to describe past events, make simple plans, and express opinions in a basic way. Regular A2 English vocabulary exercises support better understanding and more natural communication."
+      ],
+      "bottomCta": {
+        "heading": "Start Practicing Now",
+        "text": "Continue building confidence with consistent English A2 vocabulary practice. Strengthen your elementary skills and prepare for more independent communication."
+      }
+    },
+    "b1": {
+      "title": "English B1 Vocabulary Practice",
+      "intro": "English B1 vocabulary practice helps you develop stronger communication skills and move beyond basic conversations.",
+      "levelDescription": "Intermediate",
+      "ctaText": "Start B1 Practice",
+      "levelExplanation": {
+        "heading": "What Does B1 Level Mean?",
+        "paragraph": "The B1 level marks the transition to independent language use. When you learn English vocabulary B1 level, you can understand the main points of clear standard input on familiar topics and manage most situations while traveling or working.",
+        "bullets": [
+          "You can describe experiences, events, and goals in detail.",
+          "You can explain reasons and give simple arguments.",
+          "You can write connected texts on familiar subjects."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "What Vocabulary Is Included?",
+        "topics": [
+          "Everyday and Social Topics",
+          "Opinions and Problem Solving"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Everyday and Social Topics",
+            "items": [
+              "Work and career development",
+              "Education and learning",
+              "Travel and cultural experiences",
+              "Health and lifestyle choices"
+            ]
+          },
+          {
+            "heading": "Opinions and Problem Solving",
+            "items": [
+              "Expressing agreement and disagreement",
+              "Making suggestions and recommendations",
+              "Describing advantages and disadvantages",
+              "Discussing plans and future intentions"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in B1?",
+        "text": "At B1, learners typically control around 2,000-2,500 words. Regular English B1 vocabulary practice strengthens retention, improves accuracy, and prepares you for more advanced communication.",
+        "value": 2500
+      },
+      "sampleVocabulary": {
+        "heading": "Sample B1 Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "achieve",
+            "meaning": "to successfully reach a goal"
+          },
+          {
+            "word": "argument",
+            "meaning": "a disagreement or discussion with different opinions"
+          },
+          {
+            "word": "benefit",
+            "meaning": "an advantage or positive result"
+          },
+          {
+            "word": "challenge",
+            "meaning": "a difficult task or situation"
+          },
+          {
+            "word": "consider",
+            "meaning": "to think carefully about something"
+          },
+          {
+            "word": "environment",
+            "meaning": "the natural world or surroundings"
+          },
+          {
+            "word": "increase",
+            "meaning": "to become larger in number or amount"
+          },
+          {
+            "word": "opinion",
+            "meaning": "a personal belief or idea"
+          },
+          {
+            "word": "responsible",
+            "meaning": "having a duty or obligation"
+          },
+          {
+            "word": "solution",
+            "meaning": "an answer to a problem"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "English B1 Vocabulary Practice – Intermediate English Vocabulary",
+      "metaDescription": "Strengthen your skills with English B1 vocabulary practice. Learn key intermediate words, meanings, and examples for confident communication.",
+      "introParagraphs": [
+        "English B1 vocabulary practice helps you develop stronger communication skills and move beyond basic conversations. At this intermediate stage, you learn to express opinions, describe experiences, and handle everyday challenges more independently.",
+        "With intermediate English vocabulary, you expand your ability to understand texts, participate in discussions, and write clear messages. A structured B1 English word list supports steady progress and practical language use."
+      ],
+      "bottomCta": {
+        "heading": "Start Practicing Now",
+        "text": "Improve fluency and confidence with consistent English B1 vocabulary practice. Strengthen your intermediate skills and prepare for higher levels of communication."
+      }
+    },
+    "b2": {
+      "title": "English B2 Vocabulary Practice",
+      "intro": "English B2 vocabulary practice helps you communicate with greater precision and flexibility.",
+      "levelDescription": "Upper-Intermediate",
+      "ctaText": "Start B2 Practice",
+      "levelExplanation": {
+        "heading": "What Does B2 Level Involve?",
+        "paragraph": "The B2 level represents confident independent language use. When you learn English vocabulary B2 level, you are able to follow extended speech, express viewpoints clearly, and respond appropriately in various contexts.",
+        "bullets": [
+          "You can argue for or against a point of view with supporting details.",
+          "You can understand the main ideas of complex texts.",
+          "You can interact fluently with native speakers without major strain."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary Areas at B2",
+        "topics": [
+          "Professional and Academic Topics",
+          "Abstract and Analytical Language"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Professional and Academic Topics",
+            "items": [
+              "Workplace communication and collaboration",
+              "Research and education",
+              "Technology and innovation",
+              "Media and communication"
+            ]
+          },
+          {
+            "heading": "Abstract and Analytical Language",
+            "items": [
+              "Cause and effect relationships",
+              "Evaluating advantages and disadvantages",
+              "Expressing probability and speculation",
+              "Negotiation and compromise"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in B2?",
+        "text": "At B2, learners typically control around 3,000-4,000 words. Consistent English B2 vocabulary practice increases accuracy, improves collocation use, and prepares you for advanced communication tasks.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample B2 Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "assess",
+            "meaning": "to evaluate or judge the quality of something"
+          },
+          {
+            "word": "consequence",
+            "meaning": "a result or effect of an action"
+          },
+          {
+            "word": "contribute",
+            "meaning": "to give or add something to a common effort"
+          },
+          {
+            "word": "efficient",
+            "meaning": "working in a well-organized and effective way"
+          },
+          {
+            "word": "evidence",
+            "meaning": "information that proves something"
+          },
+          {
+            "word": "maintain",
+            "meaning": "to continue or keep something in good condition"
+          },
+          {
+            "word": "perspective",
+            "meaning": "a particular way of thinking about something"
+          },
+          {
+            "word": "reliable",
+            "meaning": "able to be trusted or depended on"
+          },
+          {
+            "word": "significant",
+            "meaning": "important or meaningful"
+          },
+          {
+            "word": "strategy",
+            "meaning": "a plan designed to achieve a goal"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "English B2 Vocabulary Practice – Upper-Intermediate English Vocabulary",
+      "metaDescription": "Advance your skills with English B2 vocabulary practice. Learn upper intermediate words, meanings, and examples for fluent communication.",
+      "introParagraphs": [
+        "English B2 vocabulary practice helps you communicate with greater precision and flexibility. At this upper intermediate stage, you can discuss abstract topics, explain complex ideas, and interact more confidently in professional and academic settings.",
+        "By developing upper intermediate English vocabulary, you strengthen your ability to understand longer texts and participate in detailed conversations. A structured B2 English word list ensures steady and measurable progress."
+      ],
+      "bottomCta": {
+        "heading": "Continue Your Progress",
+        "text": "Deepen your fluency and control through structured English B2 vocabulary practice. Expand your lexical range and prepare for advanced study, work, or international communication."
+      }
+    },
+    "c1": {
+      "title": "English C1 Vocabulary Practice",
+      "intro": "English C1 vocabulary practice focuses on precision, nuance, and stylistic control.",
+      "levelDescription": "Advanced",
+      "ctaText": "Start C1 Practice",
+      "levelExplanation": {
+        "heading": "What Does C1 Level Represent?",
+        "paragraph": "The C1 level reflects effective operational proficiency. When you learn English vocabulary C1 level, you are expected to understand demanding texts and use language flexibly for social, academic, and professional purposes.",
+        "bullets": [
+          "You can produce clear, well-structured, and detailed discourse.",
+          "You can express ideas fluently without obvious searching for words.",
+          "You can recognize implicit meaning and subtle stylistic differences."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary Scope at C1",
+        "topics": [
+          "Academic and Professional Contexts",
+          "Abstract and Nuanced Expression"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Academic and Professional Contexts",
+            "items": [
+              "Research and analytical terminology",
+              "Policy and governance discussions",
+              "Corporate and organizational language",
+              "Critical evaluation and reporting"
+            ]
+          },
+          {
+            "heading": "Abstract and Nuanced Expression",
+            "items": [
+              "Conveying subtle distinctions",
+              "Expressing probability and hypothesis",
+              "Formulating structured arguments",
+              "Describing complex relationships"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in C1?",
+        "text": "At C1, learners typically command 5,000 words or more, including idiomatic expressions and specialized terminology. Consistent English C1 vocabulary practice enhances precision, collocational accuracy, and stylistic flexibility.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample C1 Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "allocate",
+            "meaning": "to distribute resources for a specific purpose"
+          },
+          {
+            "word": "coherent",
+            "meaning": "logically connected and well organized"
+          },
+          {
+            "word": "comprehensive",
+            "meaning": "complete and including all important details"
+          },
+          {
+            "word": "constrain",
+            "meaning": "to limit or restrict"
+          },
+          {
+            "word": "derive",
+            "meaning": "to obtain from a specific source"
+          },
+          {
+            "word": "emerge",
+            "meaning": "to become apparent or visible"
+          },
+          {
+            "word": "facilitate",
+            "meaning": "to make a process easier"
+          },
+          {
+            "word": "implication",
+            "meaning": "a possible effect or indirect meaning"
+          },
+          {
+            "word": "notion",
+            "meaning": "a belief or idea"
+          },
+          {
+            "word": "substantial",
+            "meaning": "large in amount or importance"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "English C1 Vocabulary Practice – Advanced English Words",
+      "metaDescription": "Refine your skills with English C1 vocabulary practice. Learn advanced words, nuanced meanings, and examples for academic and professional fluency.",
+      "introParagraphs": [
+        "English C1 vocabulary practice focuses on precision, nuance, and stylistic control. At this advanced stage, learners can engage with complex texts, express subtle distinctions, and adapt language appropriately across academic, professional, and social contexts.",
+        "Developing advanced English vocabulary enables you to articulate arguments clearly, interpret implicit meaning, and participate confidently in high-level discussions. A structured C1 English word list supports systematic lexical expansion."
+      ],
+      "bottomCta": {
+        "heading": "Advance Your Mastery",
+        "text": "Strengthen your command of advanced language through consistent English C1 vocabulary practice. Refine nuance, accuracy, and fluency to perform effectively in demanding communicative situations."
+      }
+    },
+    "c2": {
+      "title": "English C2 Vocabulary Practice",
+      "intro": "English C2 vocabulary practice is designed for learners aiming at full mastery and near-native fluency.",
+      "levelDescription": "Proficient",
+      "ctaText": "Start C2 Practice",
+      "levelExplanation": {
+        "heading": "What Does C2 Level Signify?",
+        "paragraph": "The C2 level represents mastery. When you learn English vocabulary C2 level, you are capable of understanding virtually all forms of spoken and written language and expressing yourself spontaneously with exact nuance.",
+        "bullets": [
+          "You can interpret implicit and culturally embedded meaning.",
+          "You can reformulate ideas with stylistic variation.",
+          "You can handle highly abstract and specialized topics with ease."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Vocabulary Scope at C2",
+        "topics": [
+          "Academic and Intellectual Discourse",
+          "Stylistic and Nuanced Language"
+        ],
+        "wordTypes": [
+          "Nouns",
+          "Verbs",
+          "Adjectives"
+        ],
+        "groups": [
+          {
+            "heading": "Academic and Intellectual Discourse",
+            "items": [
+              "Theoretical and conceptual terminology",
+              "Advanced evaluative language",
+              "Critical and analytical expression",
+              "Specialized subject vocabulary"
+            ]
+          },
+          {
+            "heading": "Stylistic and Nuanced Language",
+            "items": [
+              "Subtle distinctions in meaning",
+              "Idiomatic and figurative usage",
+              "Formal and rhetorical structures",
+              "Context-sensitive lexical choices"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "How Many Words Are in C2?",
+        "text": "At C2, learners typically command 8,000 words or more, including rare, technical, and idiomatic expressions. Consistent English C2 vocabulary practice refines accuracy, deepens nuance, and ensures mastery-level fluency.",
+        "value": 8000
+      },
+      "sampleVocabulary": {
+        "heading": "Sample C2 Vocabulary",
+        "columns": {
+          "word": "Word",
+          "meaning": "Meaning"
+        },
+        "rows": [
+          {
+            "word": "ambivalent",
+            "meaning": "having mixed or contradictory feelings"
+          },
+          {
+            "word": "convoluted",
+            "meaning": "extremely complex and difficult to follow"
+          },
+          {
+            "word": "discerning",
+            "meaning": "having good judgment and insight"
+          },
+          {
+            "word": "equivocal",
+            "meaning": "open to more than one interpretation"
+          },
+          {
+            "word": "meticulous",
+            "meaning": "showing great attention to detail"
+          },
+          {
+            "word": "pragmatic",
+            "meaning": "dealing with matters realistically and practically"
+          },
+          {
+            "word": "resilient",
+            "meaning": "able to recover quickly from difficulties"
+          },
+          {
+            "word": "scrutinize",
+            "meaning": "to examine closely and critically"
+          },
+          {
+            "word": "substantiate",
+            "meaning": "to provide evidence to support a claim"
+          },
+          {
+            "word": "ubiquitous",
+            "meaning": "present or found everywhere"
+          }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Explore Other Levels"
+      },
+      "metaTitle": "English C2 Vocabulary Practice – Proficient English Vocabulary",
+      "metaDescription": "Perfect your skills with English C2 vocabulary practice. Master nuanced words, precise meanings, and advanced usage for near-native fluency.",
+      "introParagraphs": [
+        "English C2 vocabulary practice is designed for learners aiming at full mastery and near-native fluency. At this level, you refine stylistic control, interpret subtle meaning shifts, and use language with precision across academic, professional, and literary contexts.",
+        "Developing near native English vocabulary enables you to adapt tone, register, and nuance effortlessly. A carefully structured C2 English word list supports the highest level of lexical sophistication and expressive flexibility."
+      ],
+      "bottomCta": {
+        "heading": "Achieve Full Mastery",
+        "text": "Refine your command of the language through consistent English C2 vocabulary practice. Strengthen nuance, precision, and stylistic flexibility to communicate at a near-native level."
+      }
+    }
+  }
+}

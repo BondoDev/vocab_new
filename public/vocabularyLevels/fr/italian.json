@@ -1,0 +1,510 @@
+﻿{
+  "targetLanguage": "italian",
+  "targetLanguageDisplayName": "Italien",
+  "levels": {
+    "a1": {
+      "title": "Pratique du vocabulaire italien A1 – Liste de mots pour débutants",
+      "intro": "Le vocabulaire d’italien A1 est le premier niveau pour les débutants.",
+      "levelDescription": "Débutant",
+      "ctaText": "Commencer la pratique A1",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau A1 en italien ?",
+        "paragraph": "Le niveau A1 correspond au niveau débutant selon le CECR. Les apprenants peuvent comprendre et utiliser des expressions familières et des phrases simples pour des besoins concrets.",
+        "bullets": [
+          "Saluer et se présenter.",
+          "Poser et répondre à des questions simples.",
+          "Comprendre des instructions courtes et claires."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Que comprend le vocabulaire d’italien A1 ?",
+        "topics": [
+          "Communication quotidienne",
+          "Thèmes personnels"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Communication quotidienne",
+            "items": [
+              "Salutations et formules de politesse",
+              "Chiffres, jours de la semaine et mois",
+              "Verbes courants au présent",
+              "Questions simples"
+            ]
+          },
+          {
+            "heading": "Thèmes personnels",
+            "items": [
+              "Famille et amis",
+              "Nourriture et boissons",
+              "Maison et environnement",
+              "Adjectifs de base"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots comprend le vocabulaire d’italien A1 ?",
+        "text": "Le niveau A1 inclut généralement entre 500 et 800 mots essentiels. L’objectif n’est pas seulement de mémoriser, mais d’utiliser activement les mots dans des phrases simples. Les exercices d’italien A1 aident à consolider l’apprentissage.",
+        "value": 800
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire italien A1",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          { "word": "ciao", "meaning": "salut" },
+          { "word": "arrivederci", "meaning": "au revoir" },
+          { "word": "grazie", "meaning": "merci" },
+          { "word": "famiglia", "meaning": "famille" },
+          { "word": "casa", "meaning": "maison" },
+          { "word": "mangiare", "meaning": "manger" },
+          { "word": "bere", "meaning": "boire" },
+          { "word": "amico", "meaning": "ami" },
+          { "word": "grande", "meaning": "grand" },
+          { "word": "piccolo", "meaning": "petit" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Autres niveaux d’italien"
+      },
+      "metaTitle": "Pratique du vocabulaire italien A1 – Mots pour débutants",
+      "metaDescription": "Apprenez le vocabulaire d’italien A1 avec des mots simples et des exemples faciles. Construisez une base solide pour communiquer en italien.",
+      "introParagraphs": [
+        "Le vocabulaire d’italien A1 est le premier niveau pour les débutants. À ce stade, les apprenants étudient des mots et expressions simples pour communiquer dans la vie quotidienne.",
+        "Les mots de base italien A1 incluent les salutations, les chiffres, les verbes courants et les questions simples. Une liste de mots italien A1 bien organisée permet d’élargir progressivement le vocabulaire et de gagner en confiance à l’oral."
+      ],
+      "bottomCta": {
+        "heading": "Commencez à apprendre maintenant",
+        "text": "Le vocabulaire d’italien A1 fournit une base solide. Pratiquez régulièrement, formez des phrases simples et écoutez des dialogues courts pour renforcer vos compétences."
+      }
+    },
+    "a2": {
+      "title": "Pratique du vocabulaire italien A2 – Liste de mots niveau élémentaire",
+      "intro": "Le vocabulaire d’italien A2 complète les connaissances du niveau A1.",
+      "levelDescription": "Élémentaire",
+      "ctaText": "Commencer la pratique A2",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau A2 en italien ?",
+        "paragraph": "Le niveau A2 correspond à un utilisateur élémentaire. Les apprenants peuvent comprendre des expressions fréquemment utilisées et interagir dans des tâches simples et routinières.",
+        "bullets": [
+          "Décrire des routines et activités quotidiennes.",
+          "Parler d’expériences simples passées.",
+          "Échanger des informations dans des contextes familiers."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Que comprend le vocabulaire d’italien A2 ?",
+        "topics": [
+          "Vie quotidienne et services",
+          "Communication élargie"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Vie quotidienne et services",
+            "items": [
+              "Transports et déplacements",
+              "Achats et argent",
+              "Santé et bien-être",
+              "Travail et rendez-vous"
+            ]
+          },
+          {
+            "heading": "Communication élargie",
+            "items": [
+              "Connecteurs simples",
+              "Expressions temporelles",
+              "Adjectifs d’opinion",
+              "Verbes au passé (Passato Prossimo)"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots comprend le vocabulaire d’italien A2 ?",
+        "text": "Le niveau A2 inclut généralement entre 1 000 et 1 500 mots utiles. La pratique régulière permet de consolider les connaissances et d’améliorer la fluidité.",
+        "value": 1500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire italien A2",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          { "word": "viaggio", "meaning": "voyage" },
+          { "word": "biglietto", "meaning": "billet" },
+          { "word": "negozio", "meaning": "magasin" },
+          { "word": "soldi", "meaning": "argent" },
+          { "word": "lavoro", "meaning": "travail" },
+          { "word": "malato", "meaning": "malade" },
+          { "word": "Ieri", "meaning": "hier" },
+          { "word": "domani", "meaning": "demain" },
+          { "word": "spesso", "meaning": "souvent" },
+          { "word": "importante", "meaning": "important" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Autres niveaux d’italien"
+      },
+      "metaTitle": "Pratique du vocabulaire italien A2 – Liste de mots élémentaire",
+      "metaDescription": "Apprenez le vocabulaire d’italien A2 avec des mots courants et des exemples pratiques. Améliorez votre compréhension et votre communication au niveau élémentaire.",
+      "introParagraphs": [
+        "Le vocabulaire d’italien A2 complète les connaissances du niveau A1. Les apprenants peuvent former des phrases plus longues et communiquer plus facilement dans des situations quotidiennes.",
+        "Le vocabulaire quotidien italien couvre des sujets comme le travail, les loisirs, les voyages et la santé. Une liste structurée de mots italien A2 aide à acquérir progressivement de nouveaux termes."
+      ],
+      "bottomCta": {
+        "heading": "Poursuivez votre apprentissage",
+        "text": "Le vocabulaire d’italien A2 permet de communiquer plus indépendamment. Lisez des textes simples, écoutez des dialogues et révisez régulièrement de nouveaux mots."
+      }
+    },
+    "b1": {
+      "title": "Pratique du vocabulaire italien B1 – Liste de mots niveau intermédiaire",
+      "intro": "Le vocabulaire d’italien B1 correspond au niveau intermédiaire.",
+      "levelDescription": "Intermédiaire",
+      "ctaText": "Commencer la pratique B1",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau B1 en italien ?",
+        "paragraph": "Le niveau B1 correspond à une utilisation indépendante de la langue à un niveau intermédiaire. Les apprenants peuvent gérer la plupart des situations courantes et produire des textes simples et cohérents.",
+        "bullets": [
+          "Exprimer des opinions personnelles.",
+          "Décrire des expériences et événements.",
+          "Comprendre des textes informatifs clairs."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Que comprend le vocabulaire d’italien B1 ?",
+        "topics": [
+          "Travail et société",
+          "Argumentation et narration"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Travail et société",
+            "items": [
+              "Professions et responsabilités",
+              "Éducation et formation",
+              "Technologie et médias",
+              "Sujets sociaux"
+            ]
+          },
+          {
+            "heading": "Argumentation et narration",
+            "items": [
+              "Connecteurs logiques",
+              "Expressions d’accord et de désaccord",
+              "Adjectifs comparatifs",
+              "Mots abstraits italien B1"
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots comprend le vocabulaire d’italien B1 ?",
+        "text": "Le niveau B1 inclut généralement entre 2 000 et 3 000 mots. Pour élargir le vocabulaire italien B1, il est recommandé de lire des articles, écouter des podcasts et pratiquer la conversation régulièrement.",
+        "value": 3000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire italien B1",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          { "word": "succedere", "meaning": "arriver / réussir" },
+          { "word": "fallimento", "meaning": "échec" },
+          { "word": "datore di lavoro", "meaning": "employeur" },
+          { "word": "candidato", "meaning": "candidat" },
+          { "word": "sviluppare", "meaning": "développer" },
+          { "word": "ambiente", "meaning": "environnement" },
+          { "word": "vantaggio", "meaning": "avantage" },
+          { "word": "svantaggio", "meaning": "désavantage" },
+          { "word": "proporre", "meaning": "proposer" },
+          { "word": "obiettivo", "meaning": "objectif" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Autres niveaux d’italien"
+      },
+      "metaTitle": "Pratique du vocabulaire italien B1 – Mots niveau intermédiaire",
+      "metaDescription": "Apprenez le vocabulaire d’italien B1 avec des mots intermédiaires et des exemples détaillés. Améliorez votre expression et compréhension en italien.",
+      "introParagraphs": [
+        "Le vocabulaire d’italien B1 correspond au niveau intermédiaire. Les apprenants peuvent comprendre les points principaux de messages clairs et s’exprimer avec plus de détails.",
+        "Les mots intermédiaires italien B1 permettent de donner des opinions, décrire des expériences et participer à des conversations plus complexes. Une liste structurée de mots italien B1 aide à enrichir le vocabulaire et renforcer les compétences linguistiques."
+      ],
+      "bottomCta": {
+        "heading": "Renforcez votre niveau intermédiaire",
+        "text": "Avec un vocabulaire italien B1 solide, vous pouvez communiquer de façon claire et structurée. Pratiquez régulièrement, discutez de sujets d’actualité et lisez des textes plus complexes pour enrichir votre vocabulaire."
+      }
+    },
+    "b2": {
+      "title": "Pratique du vocabulaire italien B2 – Liste de mots niveau intermédiaire supérieur",
+      "intro": "Le vocabulaire d’italien B2 s’adresse aux apprenants capables de communiquer avec fluidité et souhaitant aborder des sujets plus complexes.",
+      "levelDescription": "Intermédiaire avancé",
+      "ctaText": "Commencer la pratique B2",
+      "levelExplanation": {
+        "heading": "Que signifie le niveau B2 ?",
+        "paragraph": "Au niveau B2, vous pouvez interagir spontanément avec des locuteurs natifs. Le vocabulaire italien B2 inclut des termes abstraits, des connecteurs logiques et des expressions utiles pour les débats ou les contextes professionnels.",
+        "bullets": [
+          "Comprendre les idées principales dans des textes complexes.",
+          "Exprimer et défendre ses opinions de manière structurée.",
+          "Utiliser divers connecteurs pour organiser le discours."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portée du vocabulaire B2",
+        "topics": [
+          "Discussion et argumentation",
+          "Travail et société"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Discussion et argumentation",
+            "items": [
+              "Expressions pour être d’accord ou en désaccord.",
+              "Connecteurs pour comparer et contraster.",
+              "Vocabulaire pour justifier ses opinions.",
+              "Termes pour analyser problèmes et solutions."
+            ]
+          },
+          {
+            "heading": "Travail et société",
+            "items": [
+              "Mots liés au travail et aux études.",
+              "Vocabulaire sur des sujets sociaux actuels.",
+              "Expressions formelles pour rapports et courriels.",
+              "Termes relatifs aux responsabilités et projets."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots inclut le niveau B2 ?",
+        "text": "Le vocabulaire italien B2 comporte généralement plusieurs milliers de mots actifs. L’utilisation correcte à l’oral et à l’écrit est primordiale.",
+        "value": 4000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire B2",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          { "word": "tuttavia", "meaning": "cependant" },
+          { "word": "migliorare", "meaning": "améliorer" },
+          { "word": "sfida", "meaning": "défi" },
+          { "word": "pertanto", "meaning": "par conséquent" },
+          { "word": "raggiungere", "meaning": "atteindre" },
+          { "word": "convincere", "meaning": "convaincre" },
+          { "word": "progresso", "meaning": "progrès" },
+          { "word": "responsabilità", "meaning": "responsabilité" },
+          { "word": "valutare", "meaning": "évaluer" },
+          { "word": "problema", "meaning": "problème" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Autres niveaux CEFR"
+      },
+      "metaTitle": "Pratique du vocabulaire italien B2 – Vocabulaire intermédiaire supérieur",
+      "metaDescription": "Développez votre vocabulaire d’italien B2 avec des mots essentiels, leurs significations et exemples pour communiquer avec assurance au quotidien et au travail.",
+      "introParagraphs": [
+        "Le vocabulaire d’italien B2 s’adresse aux apprenants capables de communiquer avec fluidité et souhaitant aborder des sujets plus complexes. À ce niveau, vous pouvez participer à des discussions et exprimer vos idées clairement.",
+        "Les mots italiens intermédiaires permettent de construire des arguments, d’évaluer des avantages et des inconvénients et de comprendre des textes plus longs et complexes. L’objectif est d’améliorer la précision et la fluidité de la communication."
+      ],
+      "bottomCta": {
+        "heading": "Poursuivez l’expansion de votre vocabulaire",
+        "text": "Pour maîtriser le vocabulaire B2, lisez des textes, écoutez des discussions et pratiquez l’expression orale et écrite. L’usage actif renforce les mots appris."
+      }
+    },
+    "c1": {
+      "title": "Pratique du vocabulaire italien C1 – Liste de mots avancés",
+      "intro": "Le vocabulaire d’italien C1 correspond à un niveau avancé où vous maîtrisez des expressions complexes et des termes abstraits.",
+      "levelDescription": "Avancé",
+      "ctaText": "Commencer la pratique C1",
+      "levelExplanation": {
+        "heading": "Caractéristiques du niveau C1",
+        "paragraph": "Les mots italiens C1 incluent des termes techniques, des expressions formelles et une variété de connecteurs logiques.",
+        "bullets": [
+          "Compréhension de textes complexes et spécialisés.",
+          "Expression fluide et structurée de pensées abstraites.",
+          "Adaptation du registre de langue au contexte."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portée du vocabulaire C1",
+        "topics": [
+          "Langage académique",
+          "Communication professionnelle"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Langage académique",
+            "items": [
+              "Termes pour analyse et évaluation.",
+              "Expressions pour structurer des arguments complexes.",
+              "Vocabulaire pour présentations formelles.",
+              "Mots liés à la recherche et à la pensée critique."
+            ]
+          },
+          {
+            "heading": "Communication professionnelle",
+            "items": [
+              "Expressions formelles pour rapports et documents.",
+              "Verbes précis pour argumentation et négociation.",
+              "Adjectifs avancés pour décrire des situations.",
+              "Terminologie pour gestion et organisation."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots inclut C1 ?",
+        "text": "Le vocabulaire italien C1 comprend généralement plusieurs milliers de mots actifs. L’essentiel est de les utiliser correctement et avec fluidité.",
+        "value": 5000
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire C1",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          { "word": "tuttavia", "meaning": "cependant" },
+          { "word": "approfondire", "meaning": "approfondir" },
+          { "word": "coerente", "meaning": "cohérent; logique" },
+          { "word": "pertinente", "meaning": "pertinent; approprié" },
+          { "word": "elaborare", "meaning": "élaborer; développer" },
+          { "word": "mettere in discussione", "meaning": "mettre en question" },
+          { "word": "considerevole", "meaning": "considérable" },
+          { "word": "essenzialmente", "meaning": "essentiellement" },
+          { "word": "questioni chiave", "meaning": "questions clés" },
+          { "word": "raggiungere", "meaning": "atteindre" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Autres niveaux CEFR"
+      },
+      "metaTitle": "Pratique du vocabulaire italien C1 – Mots avancés italiens",
+      "metaDescription": "Améliorez votre vocabulaire d’italien C1 avec des mots avancés, exemples et explications pour communiquer avec précision et nuances.",
+      "introParagraphs": [
+        "Le vocabulaire d’italien C1 correspond à un niveau avancé où vous maîtrisez des expressions complexes et des termes abstraits. Vous pouvez comprendre des textes longs et communiquer de manière précise et spontanée.",
+        "Les mots italiens avancés permettent d’analyser, d’argumenter et d’utiliser les nuances linguistiques dans des contextes académiques ou professionnels. L’objectif est d’élargir le vocabulaire tout en maintenant un registre approprié."
+      ],
+      "bottomCta": {
+        "heading": "Poursuivez l’amélioration de votre italien",
+        "text": "Pour maîtriser le vocabulaire C1, lisez des textes complexes, participez à des débats et rédigez des essais structurés. La pratique régulière augmente précision et confiance."
+      }
+    },
+    "c2": {
+      "title": "Pratique du vocabulaire italien C2 – Liste de mots niveau maîtrise",
+      "intro": "Le vocabulaire d’italien C2 représente la maîtrise complète selon le CEFR.",
+      "levelDescription": "Maîtrise",
+      "ctaText": "Commencer la pratique C2",
+      "levelExplanation": {
+        "heading": "Caractéristiques du niveau C2",
+        "paragraph": "Les mots italiens C2 couvrent les domaines académique, littéraire et technique, avec un accent sur les nuances de sens.",
+        "bullets": [
+          "Compréhension de textes spécialisés et littéraires.",
+          "Usage précis de synonymes avec des différences subtiles.",
+          "Adaptation parfaite aux registres formels et informels."
+        ]
+      },
+      "vocabularyScope": {
+        "heading": "Portée du vocabulaire C2",
+        "topics": [
+          "Langage académique et littéraire",
+          "Nuances et style"
+        ],
+        "wordTypes": [
+          "Noms",
+          "Verbes",
+          "Adjectifs"
+        ],
+        "groups": [
+          {
+            "heading": "Langage académique et littéraire",
+            "items": [
+              "Terminologie spécialisée dans divers domaines.",
+              "Figures de style et expressions littéraires.",
+              "Vocabulaire littéraire avancé.",
+              "Verbes précis pour l’analyse critique."
+            ]
+          },
+          {
+            "heading": "Nuances et style",
+            "items": [
+              "Synonymes avec différences subtiles de sens.",
+              "Différenciation claire des registres.",
+              "Expressions idiomatiques authentiques.",
+              "Adaptation culturelle de la langue."
+            ]
+          }
+        ]
+      },
+      "wordCount": {
+        "heading": "Combien de mots inclut C2 ?",
+        "text": "Le vocabulaire italien C2 peut dépasser 6 000 mots actifs. La maîtrise se reflète par la capacité à les utiliser naturellement et précisément.",
+        "value": 6500
+      },
+      "sampleVocabulary": {
+        "heading": "Exemples de vocabulaire C2",
+        "columns": {
+          "word": "Mot",
+          "meaning": "Signification"
+        },
+        "rows": [
+          { "word": "indispensabile", "meaning": "indispensable; inévitable" },
+          { "word": "finezza", "meaning": "subtilité; raffinement" },
+          { "word": "inevitabile", "meaning": "inévitable" },
+          { "word": "sfumare", "meaning": "nuancer; préciser" },
+          { "word": "eloquenza", "meaning": "éloquence" },
+          { "word": "giudizio", "meaning": "jugement; discernement" },
+          { "word": "raggiungere", "meaning": "atteindre un résultat" },
+          { "word": "ambivalente", "meaning": "ambivalent; avec aspects opposés" },
+          { "word": "plausibile", "meaning": "plausible" },
+          { "word": "motivare", "meaning": "justifier; étayer" }
+        ]
+      },
+      "internalNavigation": {
+        "heading": "Autres niveaux CEFR"
+      },
+      "metaTitle": "Pratique du vocabulaire italien C2 – Vocabulaire italien avancé",
+      "metaDescription": "Découvrez le vocabulaire d’italien C2 avec des mots rares et précis pour atteindre une maîtrise complète de la langue.",
+      "introParagraphs": [
+        "Le vocabulaire d’italien C2 représente la maîtrise complète selon le CEFR. Vous comprenez presque tout ce que vous lisez ou entendez et pouvez vous exprimer avec précision, nuance et spontanéité.",
+        "Le vocabulaire très avancé inclut des mots rares, des expressions idiomatiques et des subtilités stylistiques. Il permet d’adapter parfaitement le langage à tout contexte."
+      ],
+      "bottomCta": {
+        "heading": "Atteignez la maîtrise complète de l’italien",
+        "text": "Pour maîtriser le vocabulaire C2, lisez des œuvres littéraires, assistez à des conférences spécialisées et rédigez des textes complexes. Une pratique intensive et variée est essentielle pour une maîtrise totale de la langue."
+      }
+    }
+  }
+}

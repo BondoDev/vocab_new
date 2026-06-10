@@ -1,0 +1,224 @@
+{
+    "targetLanguage":  "french",
+    "level":  "A1",
+    "totalWords":  944,
+    "totalPages":  18,
+    "words":  [
+                  {
+                      "concept_id":  "A1-00001",
+                      "word_lemma":  "à propos de"
+                  },
+                  {
+                      "concept_id":  "A1-00002",
+                      "word_lemma":  "au-dessus de"
+                  },
+                  {
+                      "concept_id":  "A1-00003",
+                      "word_lemma":  "action"
+                  },
+                  {
+                      "concept_id":  "A1-00004",
+                      "word_lemma":  "activité"
+                  },
+                  {
+                      "concept_id":  "A1-00005",
+                      "word_lemma":  "acteur"
+                  },
+                  {
+                      "concept_id":  "A1-00006",
+                      "word_lemma":  "ajouter"
+                  },
+                  {
+                      "concept_id":  "A1-00007",
+                      "word_lemma":  "adresse"
+                  },
+                  {
+                      "concept_id":  "A1-00009",
+                      "word_lemma":  "effrayé"
+                  },
+                  {
+                      "concept_id":  "A1-00010",
+                      "word_lemma":  "après"
+                  },
+                  {
+                      "concept_id":  "A1-00011",
+                      "word_lemma":  "après-midi"
+                  },
+                  {
+                      "concept_id":  "A1-00012",
+                      "word_lemma":  "encore"
+                  },
+                  {
+                      "concept_id":  "A1-00013",
+                      "word_lemma":  "âge"
+                  },
+                  {
+                      "concept_id":  "A1-00014",
+                      "word_lemma":  "il y a"
+                  },
+                  {
+                      "concept_id":  "A1-00015",
+                      "word_lemma":  "être d\u0027accord"
+                  },
+                  {
+                      "concept_id":  "A1-00016",
+                      "word_lemma":  "avion"
+                  },
+                  {
+                      "concept_id":  "A1-00017",
+                      "word_lemma":  "aéroport"
+                  },
+                  {
+                      "concept_id":  "A1-00018",
+                      "word_lemma":  "album"
+                  },
+                  {
+                      "concept_id":  "A1-00019",
+                      "word_lemma":  "tout"
+                  },
+                  {
+                      "concept_id":  "A1-00020",
+                      "word_lemma":  "bien"
+                  },
+                  {
+                      "concept_id":  "A1-00025",
+                      "word_lemma":  "aussi"
+                  },
+                  {
+                      "concept_id":  "A1-00026",
+                      "word_lemma":  "toujours"
+                  },
+                  {
+                      "concept_id":  "A1-00027",
+                      "word_lemma":  "suis"
+                  },
+                  {
+                      "concept_id":  "A1-00028",
+                      "word_lemma":  "américain"
+                  },
+                  {
+                      "concept_id":  "A1-00030",
+                      "word_lemma":  "en colère"
+                  },
+                  {
+                      "concept_id":  "A1-00031",
+                      "word_lemma":  "animal"
+                  },
+                  {
+                      "concept_id":  "A1-00032",
+                      "word_lemma":  "un autre"
+                  },
+                  {
+                      "concept_id":  "A1-00033",
+                      "word_lemma":  "réponse"
+                  },
+                  {
+                      "concept_id":  "A1-00034",
+                      "word_lemma":  "répondre"
+                  },
+                  {
+                      "concept_id":  "A1-00036",
+                      "word_lemma":  "n\u0027importe qui"
+                  },
+                  {
+                      "concept_id":  "A1-00037",
+                      "word_lemma":  "n\u0027importe qui"
+                  },
+                  {
+                      "concept_id":  "A1-00038",
+                      "word_lemma":  "quelque chose"
+                  },
+                  {
+                      "concept_id":  "A1-00039",
+                      "word_lemma":  "pomme"
+                  },
+                  {
+                      "concept_id":  "A1-00040",
+                      "word_lemma":  "avril"
+                  },
+                  {
+                      "concept_id":  "A1-00042",
+                      "word_lemma":  "cousine"
+                  },
+                  {
+                      "concept_id":  "A1-00043",
+                      "word_lemma":  "bras"
+                  },
+                  {
+                      "concept_id":  "A1-00044",
+                      "word_lemma":  "autour de"
+                  },
+                  {
+                      "concept_id":  "A1-00045",
+                      "word_lemma":  "arriver"
+                  },
+                  {
+                      "concept_id":  "A1-00046",
+                      "word_lemma":  "art"
+                  },
+                  {
+                      "concept_id":  "A1-00048",
+                      "word_lemma":  "baignoire"
+                  },
+                  {
+                      "concept_id":  "A1-00049",
+                      "word_lemma":  "demander"
+                  },
+                  {
+                      "concept_id":  "A1-00051",
+                      "word_lemma":  "août"
+                  },
+                  {
+                      "concept_id":  "A1-00052",
+                      "word_lemma":  "tante"
+                  },
+                  {
+                      "concept_id":  "A1-00053",
+                      "word_lemma":  "automne"
+                  },
+                  {
+                      "concept_id":  "A1-00056",
+                      "word_lemma":  "loin"
+                  },
+                  {
+                      "concept_id":  "A1-00057",
+                      "word_lemma":  "bébé"
+                  },
+                  {
+                      "concept_id":  "A1-00058",
+                      "word_lemma":  "dos"
+                  },
+                  {
+                      "concept_id":  "A1-00059",
+                      "word_lemma":  "de retour"
+                  },
+                  {
+                      "concept_id":  "A1-00060",
+                      "word_lemma":  "mauvais"
+                  },
+                  {
+                      "concept_id":  "A1-00061",
+                      "word_lemma":  "sac"
+                  },
+                  {
+                      "concept_id":  "A1-00062",
+                      "word_lemma":  "ballon"
+                  },
+                  {
+                      "concept_id":  "A1-00063",
+                      "word_lemma":  "banane"
+                  },
+                  {
+                      "concept_id":  "A1-00064",
+                      "word_lemma":  "groupe"
+                  },
+                  {
+                      "concept_id":  "A1-00065",
+                      "word_lemma":  "banque"
+                  },
+                  {
+                      "concept_id":  "A1-00070",
+                      "word_lemma":  "basket-ball"
+                  }
+              ]
+}
