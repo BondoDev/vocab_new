@@ -33,6 +33,7 @@ import { SeoProvider, type SeoManager } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../data/levelTests";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
+import type { ResolvedWordPageData } from "../data/seo/wordPageData";
 
 const LevelCategorySelection = lazy(() =>
   import("./components/LevelCategorySelection").then((module) => ({
@@ -368,7 +369,7 @@ function createDistributedStarFieldImage(starCount: number, seed = starCount): s
   return layers.join(",\n    ");
 }
 
-function AppContent() {
+function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWordPageData | null }) {
   const { t, uiLanguage, setUILanguage } = useLanguage();
   const supportedLanguageCodes = useMemo(
     () => new Set(supportedLanguages.map((language) => language.code)),
@@ -2075,6 +2076,7 @@ function AppContent() {
             wordSlug={wordRoute.wordSlug}
             conceptId={wordRoute.conceptId}
             onStartPractice={handleStartVocabularyPractice}
+            initialData={initialWordPageData}
           />
         </Suspense>
       </div>
@@ -2523,18 +2525,20 @@ interface AppProps {
   initialUILanguage?: UILanguage;
   seoManager?: SeoManager;
   siteOrigin?: string;
+  initialWordPageData?: ResolvedWordPageData | null;
 }
 
 export default function App({
   initialUILanguage,
   seoManager,
   siteOrigin = DEFAULT_SITE_ORIGIN,
+  initialWordPageData,
 }: AppProps) {
   return (
     <SeoProvider manager={seoManager} siteOrigin={siteOrigin}>
       <LanguageProvider initialUILanguage={initialUILanguage}>
         <>
-          <AppContent />
+          <AppContent initialWordPageData={initialWordPageData} />
           <ScrollToTopButton />
         </>
       </LanguageProvider>

@@ -6,7 +6,13 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../data/seo/slugs";
-import { buildWordPath, wordToSlug } from "../../data/seo/wordSlugs";
+import { buildWordPath } from "../../data/seo/wordSlugs";
+import {
+  buildResolvedWordPageData,
+  getUiVocabularyLanguage,
+  type ResolvedWordPageData,
+  type WordPageVocabEntry,
+} from "../../data/seo/wordPageData";
 import { buildWordSeoMetadata } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import englishInterface from "../../data/interface/english_interface.json";
@@ -17,14 +23,17 @@ import italianInterface from "../../data/interface/italian_interface.json";
 import portugueseInterface from "../../data/interface/portuguese_interface.json";
 import russianInterface from "../../data/interface/russian_interface.json";
 
-interface VocabEntry {
-  concept_id: string;
-  word_lemma: string;
-  definiton: string;
-  sentence: string;
-  type: string;
-  category: string;
-  level: string;
+type VocabEntry = WordPageVocabEntry;
+
+interface WordPageHydrationPayload {
+  pathname: string;
+  data: ResolvedWordPageData | null;
+}
+
+declare global {
+  interface Window {
+    __WORD_PAGE_DATA__?: WordPageHydrationPayload;
+  }
 }
 
 const WORDS_PER_PAGE = 54;
@@ -42,16 +51,6 @@ function getPaginationRange(current: number, total: number): (number | "...")[] 
   }
   return result;
 }
-
-const UI_LANG_TO_VOCAB: Record<UiLanguageCode, TargetLanguageSlug> = {
-  en: "english",
-  es: "spanish",
-  fr: "french",
-  de: "german",
-  it: "italian",
-  pt: "portuguese",
-  ru: "russian",
-};
 
 const wordVocabModules = import.meta.glob(
   "../../data/vocabulary/*/vocabulary.json",
@@ -237,15 +236,6 @@ interface WordPageT {
   topicQuestion: (word: string) => string;
   notFoundTitle: string;
   notFoundBody: string;
-}
-
-function normalizeLemma(value: unknown): string {
-  if (typeof value !== "string") return "";
-  return value
-    .normalize("NFC")
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, " ");
 }
 
 const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
@@ -455,6 +445,20 @@ interface WordSeoPageProps {
   wordSlug: string;
   conceptId?: string | null;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
+  initialData?: ResolvedWordPageData | null;
+}
+
+function getHydratedWordPageData(pathname: string): ResolvedWordPageData | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const payload = window.__WORD_PAGE_DATA__;
+  if (!payload || payload.pathname !== pathname) {
+    return null;
+  }
+
+  return payload.data ?? null;
 }
 
 export function WordSeoPage({
@@ -463,6 +467,7 @@ export function WordSeoPage({
   wordSlug,
   conceptId,
   onStartPractice,
+  initialData,
 }: WordSeoPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
@@ -470,18 +475,38 @@ export function WordSeoPage({
   const targetLangName = (TARGET_LANG_NAMES[uiLang] ?? TARGET_LANG_NAMES.en)[
     targetLanguage
   ];
+  const hydratedData = useMemo(
+    () => initialData ?? getHydratedWordPageData(location.pathname),
+    [initialData, location.pathname],
+  );
+  const initialRouteKey = `${location.pathname}|${uiLang}|${targetLanguage}|${conceptId ?? ""}|${wordSlug}`;
 
   const exerciseInputRef = useRef<HTMLInputElement>(null);
+  const hydratedRouteKeyRef = useRef(hydratedData ? initialRouteKey : null);
   const [wordEntry, setWordEntry] = useState<VocabEntry | null | undefined>(
-    undefined,
+    hydratedData ? hydratedData.wordEntry : undefined,
   );
-  const [displayDefinition, setDisplayDefinition] = useState<string>("");
-  const [displayWordLemma, setDisplayWordLemma] = useState<string>("");
-  const [displayWordType, setDisplayWordType] = useState<string>("");
-  const [displayCategory, setDisplayCategory] = useState<string>("");
-  const [relatedWords, setRelatedWords] = useState<VocabEntry[]>([]);
-  const [browseWords, setBrowseWords] = useState<VocabEntry[]>([]);
-  const [otherMeanings, setOtherMeanings] = useState<VocabEntry[]>([]);
+  const [displayDefinition, setDisplayDefinition] = useState<string>(
+    hydratedData?.displayDefinition ?? "",
+  );
+  const [displayWordLemma, setDisplayWordLemma] = useState<string>(
+    hydratedData?.displayWordLemma ?? "",
+  );
+  const [displayWordType, setDisplayWordType] = useState<string>(
+    hydratedData?.displayWordType ?? "",
+  );
+  const [displayCategory, setDisplayCategory] = useState<string>(
+    hydratedData?.displayCategory ?? "",
+  );
+  const [relatedWords, setRelatedWords] = useState<VocabEntry[]>(
+    hydratedData?.relatedWords ?? [],
+  );
+  const [browseWords, setBrowseWords] = useState<VocabEntry[]>(
+    hydratedData?.browseWords ?? [],
+  );
+  const [otherMeanings, setOtherMeanings] = useState<VocabEntry[]>(
+    hydratedData?.otherMeanings ?? [],
+  );
   const [browsePage, setBrowsePage] = useState(0);
   const [browseSearch, setBrowseSearch] = useState("");
   const [isBrowseLoading, setIsBrowseLoading] = useState(false);
@@ -499,6 +524,11 @@ export function WordSeoPage({
   }, [location.pathname]);
 
   useEffect(() => {
+    if (hydratedRouteKeyRef.current === initialRouteKey) {
+      hydratedRouteKeyRef.current = null;
+      return;
+    }
+
     setWordEntry(undefined);
     setDisplayDefinition("");
     setDisplayWordLemma("");
@@ -522,97 +552,35 @@ export function WordSeoPage({
     let cancelled = false;
     loader().then(async (mod) => {
       if (cancelled) return;
-      const entry =
-        (conceptId
-          ? mod.default.find((w) => String(w.concept_id) === conceptId)
-          : undefined) ??
-        mod.default.find(
-          (w) =>
-            typeof w.word_lemma === "string" &&
-            wordToSlug(w.word_lemma) === wordSlug,
-        );
-      setWordEntry(entry ?? null);
-
-      if (!entry) {
-        setIsBrowseLoading(false);
-        return;
-      }
-
-      // Load definition in UI language when it differs from the target language
-      const uiVocabLang = UI_LANG_TO_VOCAB[uiLang];
-      let uiByConceptId: Map<string, VocabEntry> | null = null;
+      const uiVocabLang = getUiVocabularyLanguage(uiLang);
+      let uiVocabulary: VocabEntry[] | null = null;
       if (uiVocabLang !== targetLanguage) {
         const uiKey = `../../data/vocabulary/${uiVocabLang}/vocabulary.json`;
         const uiLoader = wordVocabModules[uiKey];
         if (uiLoader) {
           const uiMod = await uiLoader();
           if (cancelled) return;
-          uiByConceptId = new Map(uiMod.default.map((w) => [w.concept_id, w]));
-          const uiEntry = uiMod.default.find(
-            (w) => w.concept_id === entry.concept_id,
-          );
-          setDisplayDefinition(uiEntry?.definiton ?? entry.definiton);
-          setDisplayWordLemma(uiEntry?.word_lemma ?? entry.word_lemma);
-          setDisplayWordType(uiEntry?.type ?? entry.type);
-          setDisplayCategory(uiEntry?.category ?? entry.category);
-        } else {
-          setDisplayDefinition(entry.definiton);
-          setDisplayWordLemma(entry.word_lemma);
-          setDisplayWordType(entry.type);
-          setDisplayCategory(entry.category);
-        }
-      } else {
-        setDisplayDefinition(entry.definiton);
-        setDisplayWordLemma(entry.word_lemma);
-        setDisplayWordType(entry.type);
-        setDisplayCategory(entry.category);
-      }
-
-      const currentNormalizedLemma = normalizeLemma(entry.word_lemma);
-      const alternatives = mod.default.filter(
-        (w) =>
-          w.concept_id !== entry.concept_id &&
-          normalizeLemma(w.word_lemma) === currentNormalizedLemma,
-      );
-      setOtherMeanings(
-        alternatives.map((w) => {
-          if (!uiByConceptId) return w;
-          return uiByConceptId.get(w.concept_id) ?? w;
-        }),
-      );
-
-      const seen = new Set<string>([entry.concept_id]);
-      const related: VocabEntry[] = [];
-      for (const w of mod.default) {
-        if (typeof w.word_lemma !== "string" || w.word_lemma.length <= 2) {
-          continue;
-        }
-        if (
-          w.category === entry.category &&
-          w.level === entry.level &&
-          !seen.has(w.concept_id)
-        ) {
-          seen.add(w.concept_id);
-          related.push(w);
-          if (related.length >= 20) break;
+          uiVocabulary = uiMod.default;
         }
       }
-      setRelatedWords(related);
 
-      const browseSeen = new Set<string>();
-      const levelWords: VocabEntry[] = [];
-      for (const w of mod.default) {
-        if (
-          w.level === entry.level &&
-          typeof w.word_lemma === "string" &&
-          w.word_lemma.length > 2 &&
-          !browseSeen.has(w.concept_id)
-        ) {
-          browseSeen.add(w.concept_id);
-          levelWords.push(w);
-        }
-      }
-      setBrowseWords(levelWords);
+      const resolved = buildResolvedWordPageData({
+        uiLang,
+        targetLanguage,
+        wordSlug,
+        conceptId,
+        vocabulary: mod.default,
+        uiVocabulary,
+      });
+
+      setWordEntry(resolved.wordEntry);
+      setDisplayDefinition(resolved.displayDefinition);
+      setDisplayWordLemma(resolved.displayWordLemma);
+      setDisplayWordType(resolved.displayWordType);
+      setDisplayCategory(resolved.displayCategory);
+      setOtherMeanings(resolved.otherMeanings);
+      setRelatedWords(resolved.relatedWords);
+      setBrowseWords(resolved.browseWords);
       setIsBrowseLoading(false);
     }).catch(() => {
       if (cancelled) return;
@@ -622,7 +590,7 @@ export function WordSeoPage({
     return () => {
       cancelled = true;
     };
-  }, [targetLanguage, wordSlug, conceptId, uiLang]);
+  }, [conceptId, initialRouteKey, targetLanguage, uiLang, wordSlug]);
 
   const seoMetadata = useMemo(() => {
     const fallbackWord = slugToDisplayWord(wordSlug) || wordSlug;
