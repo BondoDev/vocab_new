@@ -1,4 +1,4 @@
-import sampleContent from "../../../guidelines/seo-cefr-content-sample.json";
+import sampleContent from "../../../guidelines/seo-cefr-content.json";
 import { buildLocalizedVocabularyPath, type TargetLanguageSlug } from "../../data/seo/slugs";
 import type {
   CefrLevelCode,
