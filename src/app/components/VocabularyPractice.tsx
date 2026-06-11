@@ -36,6 +36,26 @@ interface VocabularyPracticeProps {
   onGoFilters: () => void;
 }
 
+const VOCABULARY_IMPORTERS: Record<string, () => Promise<any>> = {
+  en: () => import("../../data/vocabulary/english/vocabulary.json"),
+  es: () => import("../../data/vocabulary/spanish/vocabulary.json"),
+  fr: () => import("../../data/vocabulary/french/vocabulary.json"),
+  de: () => import("../../data/vocabulary/german/vocabulary.json"),
+  it: () => import("../../data/vocabulary/italian/vocabulary.json"),
+  pt: () => import("../../data/vocabulary/portuguese/vocabulary.json"),
+  ru: () => import("../../data/vocabulary/russian/vocabulary.json"),
+};
+
+const INFLECTED_IMPORTERS: Record<string, () => Promise<any>> = {
+  en: () => import("../../data/inflected/english/inflected.json"),
+  es: () => import("../../data/inflected/spanish/inflected.json"),
+  fr: () => import("../../data/inflected/french/inflected.json"),
+  de: () => import("../../data/inflected/german/inflected.json"),
+  it: () => import("../../data/inflected/italian/inflected.json"),
+  pt: () => import("../../data/inflected/portuguese/inflected.json"),
+  ru: () => import("../../data/inflected/russian/inflected.json"),
+};
+
 export function VocabularyPractice({
   practiceLanguage,
   yourLanguage,
@@ -186,20 +206,9 @@ export function VocabularyPractice({
           return;
         }
 
-        // Use a static map for imports to ensure Vite can resolve them correctly
-        const wordsMap: Record<string, () => Promise<any>> = {
-          en: () => import("../../data/vocabulary/english/vocabulary.json"),
-          es: () => import("../../data/vocabulary/spanish/vocabulary.json"),
-          fr: () => import("../../data/vocabulary/french/vocabulary.json"),
-          de: () => import("../../data/vocabulary/german/vocabulary.json"),
-          it: () => import("../../data/vocabulary/italian/vocabulary.json"),
-          pt: () => import("../../data/vocabulary/portuguese/vocabulary.json"),
-          ru: () => import("../../data/vocabulary/russian/vocabulary.json"),
-        };
-
         if (
-          !wordsMap[normalizedPracticeLanguage] ||
-          !wordsMap[normalizedYourLanguage]
+          !VOCABULARY_IMPORTERS[normalizedPracticeLanguage] ||
+          !VOCABULARY_IMPORTERS[normalizedYourLanguage]
         ) {
           console.warn(
             `Unsupported language: ${normalizedPracticeLanguage} or ${normalizedYourLanguage}`,
@@ -208,12 +217,17 @@ export function VocabularyPractice({
           return;
         }
 
-        const practiceModule = await wordsMap[normalizedPracticeLanguage]();
+        const [practiceModule, yourLangModule, inflectedModule] = await Promise.all([
+          VOCABULARY_IMPORTERS[normalizedPracticeLanguage](),
+          VOCABULARY_IMPORTERS[normalizedYourLanguage](),
+          (INFLECTED_IMPORTERS[normalizedPracticeLanguage]
+            ? INFLECTED_IMPORTERS[normalizedPracticeLanguage]!().catch(() => ({ default: [] }))
+            : Promise.resolve({ default: [] })),
+        ]);
+
         let loadedWords = Array.isArray(practiceModule.default)
           ? practiceModule.default
           : [];
-
-        const yourLangModule = await wordsMap[normalizedYourLanguage]();
         const yourLangWords = Array.isArray(yourLangModule.default)
           ? yourLangModule.default
           : [];
@@ -249,40 +263,18 @@ export function VocabularyPractice({
             isUsableLemma(word?.word_lemma),
         );
 
-        // Load inflected entries for sentence highlighting
-        let loadedInflectedEntries: any[] = [];
-        try {
-          const inflectedMap: Record<string, () => Promise<any>> = {
-            en: () => import("../../data/inflected/english/inflected.json"),
-            es: () => import("../../data/inflected/spanish/inflected.json"),
-            fr: () => import("../../data/inflected/french/inflected.json"),
-            de: () => import("../../data/inflected/german/inflected.json"),
-            it: () => import("../../data/inflected/italian/inflected.json"),
-            pt: () => import("../../data/inflected/portuguese/inflected.json"),
-            ru: () => import("../../data/inflected/russian/inflected.json"),
-          };
-
-          if (inflectedMap[normalizedPracticeLanguage]) {
-            const inflectedModule =
-              await inflectedMap[normalizedPracticeLanguage]();
-            loadedInflectedEntries = Array.isArray(inflectedModule.default)
-              ? inflectedModule.default
-              : [];
-            setInflectedEntries(loadedInflectedEntries);
-          } else {
-            setInflectedEntries([]);
-          }
-        } catch (error) {
-          console.log("No inflected entries available");
-          setInflectedEntries([]);
-        }
+        const loadedInflectedEntries = Array.isArray(inflectedModule.default)
+          ? inflectedModule.default
+          : [];
+        setInflectedEntries(loadedInflectedEntries);
 
         // Apply inflected forms to loadedWords if available (especially for English)
         if (loadedInflectedEntries.length > 0) {
+          const inflectedByConceptId = new Map(
+            loadedInflectedEntries.map((entry: any) => [entry.concept_id, entry]),
+          );
           loadedWords = loadedWords.map((word: any) => {
-            const inflected = loadedInflectedEntries.find(
-              (inf: any) => inf.concept_id === word.concept_id,
-            );
+            const inflected = inflectedByConceptId.get(word.concept_id);
             return {
               ...word,
               word_inflected: inflected?.word_inflected || word.word_lemma,

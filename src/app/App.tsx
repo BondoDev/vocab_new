@@ -940,9 +940,14 @@ function AppContent() {
     }),
     [starFieldStyle],
   );
-  const [yourLanguage, setYourLanguage] = useState("");
-  const [practiceLanguage, setPracticeLanguage] = useState("");
   const location = useLocation();
+  const initialPracticeRouteRef = useRef(parsePracticeRoute(location.pathname));
+  const [yourLanguage, setYourLanguage] = useState(
+    () => initialPracticeRouteRef.current?.yourLanguage ?? "",
+  );
+  const [practiceLanguage, setPracticeLanguage] = useState(
+    () => initialPracticeRouteRef.current?.practiceLanguage ?? "",
+  );
   const navigate = useNavigate();
   const levelTestSeoRoute = useMemo(
     () => parseLevelTestSeoRoute(location.pathname),

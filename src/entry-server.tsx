@@ -23,6 +23,7 @@ const CORE_PRERENDER_ROUTES = [
   "/about",
   "/help",
 ] as const;
+const PRACTICE_ROUTE_UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"] as const;
 
 const CORE_ROUTE_SEO: Record<string, { title: string; description: string }> = {
   "/": {
@@ -68,8 +69,17 @@ const CORE_ROUTE_SEO: Record<string, { title: string; description: string }> = {
 };
 
 export function getPrerenderRoutes(): string[] {
+  const practiceRoutes = PRACTICE_ROUTE_UI_LANGUAGES.flatMap((yourLanguage) =>
+    PRACTICE_ROUTE_UI_LANGUAGES.flatMap((practiceLanguage) =>
+      yourLanguage === practiceLanguage
+        ? []
+        : [`/languages/filters/exercises/${yourLanguage}-${practiceLanguage}/practice`],
+    ),
+  );
+
   return [...new Set([
     ...CORE_PRERENDER_ROUTES,
+    ...practiceRoutes,
     ...getAllLocalizedVocabularyRoutes().map((route) => route.path),
     ...getAllSeoHubPaths(),
     ...(["en", "es", "fr", "de", "it", "pt", "ru"] as const)
