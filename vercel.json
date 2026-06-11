@@ -55,7 +55,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!sitemap\\.xml$|robots\\.txt$|sitemaps/.*\\.xml$).*)",
+      "source": "/((?!.*\\.[^/]+$|sitemap\\.xml$|robots\\.txt$|sitemaps/.*\\.xml$).*)",
       "destination": "/index.html"
     }
   ]
