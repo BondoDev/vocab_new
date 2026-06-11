@@ -11,15 +11,15 @@ const TEMPLATE_PATH = path.join(DIST_DIR, "index.html");
 const SITE_ORIGIN = process.env.SITE_ORIGIN || "https://www.fluentstellar.com";
 const WORD_PRERENDER_LIMIT = Number.parseInt(process.env.WORD_PRERENDER_LIMIT || "0", 10);
 const WORD_PRERENDER_OFFSET = Number.parseInt(process.env.WORD_PRERENDER_OFFSET || "0", 10);
-const UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"];
-const TARGET_LANGUAGES = [
-  "english",
-  "german",
-  "spanish",
-  "french",
-  "italian",
-  "portuguese",
-  "russian",
+const PRERENDER_BATCH_SIZE = Number.parseInt(process.env.PRERENDER_BATCH_SIZE || "50", 10);
+const WORD_PRERENDER_DEFINITIONS = [
+  { uiLang: "en", targetLanguage: "english" },
+  { uiLang: "es", targetLanguage: "english" },
+  { uiLang: "fr", targetLanguage: "english" },
+  { uiLang: "de", targetLanguage: "english" },
+  { uiLang: "it", targetLanguage: "english" },
+  { uiLang: "pt", targetLanguage: "english" },
+  { uiLang: "ru", targetLanguage: "english" },
 ];
 
 function wordToSlug(lemma) {
@@ -33,37 +33,39 @@ function wordToSlug(lemma) {
 }
 
 async function collectWordRoutesSubset(limit, offset) {
-  if (!Number.isFinite(limit) || limit <= 0) return [];
+  if (WORD_PRERENDER_DEFINITIONS.length === 0) return [];
   const normalizedOffset = Number.isFinite(offset) && offset > 0 ? offset : 0;
+  const selectedTargetLanguages = Array.from(
+    new Set(WORD_PRERENDER_DEFINITIONS.map(({ targetLanguage }) => targetLanguage)),
+  );
   const uniqueWords = [];
-  const seen = new Set();
 
-  for (const targetLanguage of TARGET_LANGUAGES) {
-    const vocabPath = path.join(
-      ROOT_DIR,
-      "src",
-      "data",
-      "vocabulary",
-      targetLanguage,
-      "vocabulary.json",
-    );
+  for (const targetLanguage of selectedTargetLanguages) {
+    const seen = new Set();
+    const vocabPath = path.join(ROOT_DIR, "src", "data", "vocabulary", targetLanguage, "vocabulary.json");
     const raw = await fs.readFile(vocabPath, "utf8");
     const vocab = JSON.parse(raw.replace(/^\uFEFF/, ""));
     for (const entry of vocab) {
       const slug = wordToSlug(entry.word_lemma || "");
       if (!slug) continue;
-      const key = `${targetLanguage}:${slug}`;
+      const conceptId = String(entry.concept_id ?? "").trim();
+      const key = conceptId ? `${targetLanguage}:${conceptId}` : `${targetLanguage}:${slug}`;
       if (seen.has(key)) continue;
       seen.add(key);
-      uniqueWords.push({ targetLanguage, slug });
+      uniqueWords.push({ targetLanguage, slug, conceptId });
     }
   }
 
-  const selected = uniqueWords.slice(normalizedOffset, normalizedOffset + limit);
+  const selected =
+    Number.isFinite(limit) && limit > 0
+      ? uniqueWords.slice(normalizedOffset, normalizedOffset + limit)
+      : uniqueWords.slice(normalizedOffset);
   const routes = [];
   for (const item of selected) {
-    for (const uiLang of UI_LANGUAGES) {
-      routes.push(`/${uiLang}/${item.targetLanguage}-word-${item.slug}`);
+    const wordPathSuffix = item.conceptId ? `${item.slug}--${item.conceptId}` : item.slug;
+    for (const { uiLang, targetLanguage } of WORD_PRERENDER_DEFINITIONS) {
+      if (targetLanguage !== item.targetLanguage) continue;
+      routes.push(`/${uiLang}/${targetLanguage}-word-${wordPathSuffix}`);
     }
   }
   return routes;
@@ -116,14 +118,20 @@ async function main() {
     WORD_PRERENDER_OFFSET,
   );
   const routes = [...new Set([...baseRoutes, ...wordRoutes])];
+  const batchSize = Number.isFinite(PRERENDER_BATCH_SIZE) && PRERENDER_BATCH_SIZE > 0
+    ? PRERENDER_BATCH_SIZE
+    : 50;
 
-  await Promise.all(
-    routes.map(async (route) => {
+  for (let index = 0; index < routes.length; index += batchSize) {
+    const batch = routes.slice(index, index + batchSize);
+    await Promise.all(
+      batch.map(async (route) => {
       const page = render(route, SITE_ORIGIN);
       const html = injectRenderedPage(template, page);
       await writeRouteHtml(route, html);
-    }),
-  );
+      }),
+    );
+  }
 
   await fs.rm(SSR_DIR, { recursive: true, force: true });
   console.log(

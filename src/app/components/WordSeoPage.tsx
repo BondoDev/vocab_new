@@ -635,6 +635,7 @@ export function WordSeoPage({
       targetLanguage,
       targetLanguageDisplayName: targetLangName,
       wordLemma,
+      conceptId,
       cefrLevel,
       pathname: location.pathname,
       siteOrigin,

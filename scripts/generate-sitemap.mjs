@@ -129,6 +129,10 @@ const UI_LANGUAGE_NAMES = {
 const WORD_SITEMAP_DEFINITIONS = [
   { fileWordCode: "en", fileUiCode: "en", uiLang: "en", targetLanguage: "english" },
   { fileWordCode: "en", fileUiCode: "sp", uiLang: "es", targetLanguage: "english" },
+  { fileWordCode: "en", fileUiCode: "fr", uiLang: "fr", targetLanguage: "english" },
+  { fileWordCode: "en", fileUiCode: "de", uiLang: "de", targetLanguage: "english" },
+  { fileWordCode: "en", fileUiCode: "it", uiLang: "it", targetLanguage: "english" },
+  { fileWordCode: "en", fileUiCode: "pt", uiLang: "pt", targetLanguage: "english" },
   { fileWordCode: "en", fileUiCode: "ru", uiLang: "ru", targetLanguage: "english" },
 ];
 const WORD_SITEMAP_PAIR_LIMITS = {};

@@ -389,14 +389,23 @@ export interface WordSeoMetadataParams {
   targetLanguage: TargetLanguageSlug;
   targetLanguageDisplayName: string;
   wordLemma: string;
+  conceptId?: string | null;
   cefrLevel: string;
   pathname: string;
   siteOrigin: string;
 }
 
 export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata {
-  const { uiLang, targetLanguage, targetLanguageDisplayName, wordLemma, cefrLevel, pathname, siteOrigin } =
-    params;
+  const {
+    uiLang,
+    targetLanguage,
+    targetLanguageDisplayName,
+    wordLemma,
+    conceptId,
+    cefrLevel,
+    pathname,
+    siteOrigin,
+  } = params;
   const origin = siteOrigin.replace(/\/$/, "");
   const title = (WORD_META_TITLE[uiLang] ?? WORD_META_TITLE.en)(targetLanguageDisplayName, wordLemma);
   const description = (WORD_META_DESC[uiLang] ?? WORD_META_DESC.en)(
@@ -407,11 +416,11 @@ export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata
   const alternates = [
     ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
       hreflang: lang,
-      href: `${origin}${buildWordPath(lang, targetLanguage, wordLemma)}`,
+      href: `${origin}${buildWordPath(lang, targetLanguage, wordLemma, conceptId)}`,
     })),
     {
       hreflang: "x-default",
-      href: `${origin}${buildWordPath("en", targetLanguage, wordLemma)}`,
+      href: `${origin}${buildWordPath("en", targetLanguage, wordLemma, conceptId)}`,
     },
   ];
 
@@ -420,7 +429,7 @@ export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata
     "@type": "DefinedTerm",
     name: wordLemma,
     description,
-    url: `${origin}${buildWordPath(uiLang, targetLanguage, wordLemma)}`,
+    url: `${origin}${buildWordPath(uiLang, targetLanguage, wordLemma, conceptId)}`,
     inDefinedTermSet: {
       "@type": "DefinedTermSet",
       name: `${targetLanguageDisplayName} ${cefrLevel} Vocabulary`,
