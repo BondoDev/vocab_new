@@ -15,6 +15,7 @@ import {
 import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin, type SeoMetadata } from "../../seo/SeoContext";
 import { buildWordPath } from "../../data/seo/wordSlugs";
+import { isValidBrowseWordLemma } from "../../data/seo/browseWordValidation";
 
 interface VocabularyLevelPageProps {
   uiLang: UiLanguageCode;
@@ -577,7 +578,7 @@ export function VocabularyLevelPage({
         const words: VocabEntry[] = [];
         for (const w of mod.default) {
           if (w.level !== levelDisplay) continue;
-          if (w.word_lemma.length <= 2 || seen.has(w.concept_id)) continue;
+          if (!isValidBrowseWordLemma(w.word_lemma) || seen.has(w.concept_id)) continue;
           seen.add(w.concept_id);
           words.push(w);
         }
@@ -693,7 +694,9 @@ export function VocabularyLevelPage({
     browsePreview.level === levelDisplay
       ? browsePreview
       : null;
-  const previewBrowseWords = activeBrowsePreview?.words ?? [];
+  const previewBrowseWords = (activeBrowsePreview?.words ?? []).filter((word) =>
+    isValidBrowseWordLemma(word.word_lemma),
+  );
   const currentBrowseWords = browseWords.length > 0 ? browseWords : previewBrowseWords;
   const canFilterFullBrowseWords = browseWords.length > 0;
   const filteredBrowseWords =

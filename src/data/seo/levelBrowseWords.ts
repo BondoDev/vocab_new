@@ -1,6 +1,7 @@
 import type { TargetLanguageSlug, UiLanguageCode } from "./slugs";
 import type { CefrLevelCode } from "../vocabularyLevels";
 import { buildWordPath } from "./wordSlugs";
+import { isValidBrowseWordLemma } from "./browseWordValidation";
 
 interface VocabEntry {
   concept_id: string;
@@ -36,7 +37,7 @@ export function getLevelBrowseWordLinks(
 
   for (const entry of entries) {
     if (entry.level !== normalizedLevel) continue;
-    if (typeof entry.word_lemma !== "string" || entry.word_lemma.length <= 2) continue;
+    if (!isValidBrowseWordLemma(entry.word_lemma)) continue;
     if (typeof entry.concept_id !== "string" || seen.has(entry.concept_id)) continue;
 
     seen.add(entry.concept_id);

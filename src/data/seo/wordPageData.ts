@@ -1,5 +1,6 @@
 import type { TargetLanguageSlug, UiLanguageCode } from "./slugs";
 import { wordToSlug } from "./wordSlugs";
+import { isValidBrowseWordLemma } from "./browseWordValidation";
 
 export interface WordPageVocabEntry {
   concept_id: string;
@@ -118,7 +119,7 @@ export function buildResolvedWordPageData({
   const seen = new Set<string>([entry.concept_id]);
   const relatedWords: WordPageVocabEntry[] = [];
   for (const word of vocabulary) {
-    if (typeof word.word_lemma !== "string" || word.word_lemma.length <= 2) {
+    if (!isValidBrowseWordLemma(word.word_lemma)) {
       continue;
     }
     if (
@@ -137,8 +138,7 @@ export function buildResolvedWordPageData({
   for (const word of vocabulary) {
     if (
       word.level === entry.level &&
-      typeof word.word_lemma === "string" &&
-      word.word_lemma.length > 2 &&
+      isValidBrowseWordLemma(word.word_lemma) &&
       !browseSeen.has(word.concept_id)
     ) {
       browseSeen.add(word.concept_id);
