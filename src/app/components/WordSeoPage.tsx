@@ -8,8 +8,10 @@ import {
 } from "../../data/seo/slugs";
 import { buildWordPath } from "../../data/seo/wordSlugs";
 import {
+  WORD_PAGE_BROWSE_WORDS_PER_PAGE,
   buildResolvedWordPageData,
   getUiVocabularyLanguage,
+  type HydrationWordPageData,
   type ResolvedWordPageData,
   type WordPageVocabEntry,
 } from "../../data/seo/wordPageData";
@@ -27,7 +29,7 @@ type VocabEntry = WordPageVocabEntry;
 
 interface WordPageHydrationPayload {
   pathname: string;
-  data: ResolvedWordPageData | null;
+  data: HydrationWordPageData | null;
 }
 
 declare global {
@@ -36,7 +38,7 @@ declare global {
   }
 }
 
-const WORDS_PER_PAGE = 54;
+const WORDS_PER_PAGE = WORD_PAGE_BROWSE_WORDS_PER_PAGE;
 
 function getPaginationRange(current: number, total: number): (number | "...")[] {
   if (total <= 9) return Array.from({ length: total }, (_, i) => i);
@@ -448,7 +450,7 @@ interface WordSeoPageProps {
   initialData?: ResolvedWordPageData | null;
 }
 
-function getHydratedWordPageData(pathname: string): ResolvedWordPageData | null {
+function getHydratedWordPageData(pathname: string): HydrationWordPageData | null {
   if (typeof window === "undefined") {
     return null;
   }
@@ -504,6 +506,9 @@ export function WordSeoPage({
   const [browseWords, setBrowseWords] = useState<VocabEntry[]>(
     hydratedData?.browseWords ?? [],
   );
+  const [browseWordsTotalCount, setBrowseWordsTotalCount] = useState(
+    hydratedData?.browseWordsTotalCount ?? hydratedData?.browseWords.length ?? 0,
+  );
   const [otherMeanings, setOtherMeanings] = useState<VocabEntry[]>(
     hydratedData?.otherMeanings ?? [],
   );
@@ -524,28 +529,38 @@ export function WordSeoPage({
   }, [location.pathname]);
 
   useEffect(() => {
-    if (hydratedRouteKeyRef.current === initialRouteKey) {
+    const isHydratedInitialRoute = hydratedRouteKeyRef.current === initialRouteKey;
+    const shouldUpgradePartialHydration = Boolean(
+      isHydratedInitialRoute && hydratedData?.browseWordsPartial,
+    );
+
+    if (isHydratedInitialRoute && !shouldUpgradePartialHydration) {
       hydratedRouteKeyRef.current = null;
       return;
     }
+    hydratedRouteKeyRef.current = null;
 
-    setWordEntry(undefined);
-    setDisplayDefinition("");
-    setDisplayWordLemma("");
-    setDisplayWordType("");
-    setDisplayCategory("");
-    setRelatedWords([]);
-    setBrowseWords([]);
-    setOtherMeanings([]);
-    setBrowsePage(0);
-    setBrowseSearch("");
-    setIsBrowseLoading(true);
-    setPracticeInput("");
-    setPracticeResult(null);
+    if (!shouldUpgradePartialHydration) {
+      setWordEntry(undefined);
+      setDisplayDefinition("");
+      setDisplayWordLemma("");
+      setDisplayWordType("");
+      setDisplayCategory("");
+      setRelatedWords([]);
+      setBrowseWords([]);
+      setBrowseWordsTotalCount(0);
+      setOtherMeanings([]);
+      setBrowsePage(0);
+      setBrowseSearch("");
+      setIsBrowseLoading(true);
+      setPracticeInput("");
+      setPracticeResult(null);
+    }
     const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
     const loader = wordVocabModules[key];
     if (!loader) {
       setWordEntry(null);
+      setBrowseWordsTotalCount(0);
       setIsBrowseLoading(false);
       return;
     }
@@ -581,16 +596,18 @@ export function WordSeoPage({
       setOtherMeanings(resolved.otherMeanings);
       setRelatedWords(resolved.relatedWords);
       setBrowseWords(resolved.browseWords);
+      setBrowseWordsTotalCount(resolved.browseWords.length);
       setIsBrowseLoading(false);
     }).catch(() => {
       if (cancelled) return;
       setBrowseWords([]);
+      setBrowseWordsTotalCount(0);
       setIsBrowseLoading(false);
     });
     return () => {
       cancelled = true;
     };
-  }, [conceptId, initialRouteKey, targetLanguage, uiLang, wordSlug]);
+  }, [conceptId, hydratedData?.browseWordsPartial, initialRouteKey, targetLanguage, uiLang, wordSlug]);
 
   const seoMetadata = useMemo(() => {
     const fallbackWord = slugToDisplayWord(wordSlug) || wordSlug;
@@ -695,9 +712,12 @@ export function WordSeoPage({
         browseWord.word_lemma.toLowerCase().includes(normalizedBrowseSearch),
       )
     : browseWords;
+  const browseWordCountForPagination = normalizedBrowseSearch
+    ? filteredBrowseWords.length
+    : Math.max(browseWordsTotalCount, filteredBrowseWords.length);
   const totalBrowsePages = Math.max(
     1,
-    Math.ceil(filteredBrowseWords.length / WORDS_PER_PAGE),
+    Math.ceil(browseWordCountForPagination / WORDS_PER_PAGE),
   );
   const safeBrowsePage = Math.min(browsePage, Math.max(totalBrowsePages - 1, 0));
   const pageWords = filteredBrowseWords.slice(

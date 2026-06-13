@@ -15,6 +15,7 @@ import { DEFAULT_SITE_ORIGIN } from "./seo/site";
 import { resolveWordRoute } from "./data/seo/wordSlugs";
 import type { SeoMetadata } from "./seo/SeoContext";
 import {
+  buildHydrationWordPageData,
   buildResolvedWordPageData,
   getUiVocabularyLanguage,
   type ResolvedWordPageData,
@@ -207,8 +208,9 @@ export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
       />
     </StaticRouter>,
   );
+  const hydrationWordPageData = buildHydrationWordPageData(initialWordPageData);
   const routeDataScript = initialWordPageData
-    ? `\n    <script>window.__WORD_PAGE_DATA__=${escapeJsonForHtml({ pathname: url, data: initialWordPageData })}</script>`
+    ? `\n    <script>window.__WORD_PAGE_DATA__=${escapeJsonForHtml({ pathname: url, data: hydrationWordPageData })}</script>`
     : "";
 
   return {

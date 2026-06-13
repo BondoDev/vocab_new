@@ -23,6 +23,13 @@ export interface ResolvedWordPageData {
   otherMeanings: WordPageVocabEntry[];
 }
 
+export interface HydrationWordPageData extends ResolvedWordPageData {
+  browseWordsTotalCount?: number;
+  browseWordsPartial?: boolean;
+}
+
+export const WORD_PAGE_BROWSE_WORDS_PER_PAGE = 54;
+
 interface ResolveWordPageDataParams {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
@@ -155,5 +162,23 @@ export function buildResolvedWordPageData({
     relatedWords,
     browseWords,
     otherMeanings,
+  };
+}
+
+export function buildHydrationWordPageData(
+  data: ResolvedWordPageData | null,
+): HydrationWordPageData | null {
+  if (!data) {
+    return null;
+  }
+
+  const totalCount = data.browseWords.length;
+  const initialBrowseWords = data.browseWords.slice(0, WORD_PAGE_BROWSE_WORDS_PER_PAGE);
+
+  return {
+    ...data,
+    browseWords: initialBrowseWords,
+    browseWordsTotalCount: totalCount,
+    browseWordsPartial: totalCount > initialBrowseWords.length,
   };
 }
