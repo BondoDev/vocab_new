@@ -112,6 +112,11 @@ async function writeRouteHtml(route, html) {
 async function main() {
   const template = await fs.readFile(TEMPLATE_PATH, "utf8");
   const { getPrerenderRoutes, render } = await loadServerBundle();
+
+  // Once the SSR entry has been loaded into memory, the on-disk bundle is only
+  // consuming build-container space that the generated HTML also needs.
+  await fs.rm(SSR_DIR, { recursive: true, force: true });
+
   const baseRoutes = getPrerenderRoutes();
   const wordRoutes = await collectWordRoutesSubset(
     WORD_PRERENDER_LIMIT,
@@ -132,8 +137,6 @@ async function main() {
       }),
     );
   }
-
-  await fs.rm(SSR_DIR, { recursive: true, force: true });
   console.log(
     `Prerendered ${routes.length} SEO pages (${baseRoutes.length} base + ${wordRoutes.length} word routes).`,
   );
