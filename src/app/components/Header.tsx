@@ -1,5 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  CircleHelp,
+  Compass,
+  Dumbbell,
+  GraduationCap,
+  Info,
+  Languages,
+  Menu,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 import { UILanguageSwitcher } from "../components/UILanguageSwitcher";
 import { useLanguage } from "../../contexts/LanguageContext";
 
@@ -169,6 +181,7 @@ export function Header({
   activePage,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDesktopMoreOpen, setIsDesktopMoreOpen] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const lastScrollYRef = useRef(0);
   const starSeeds = useMemo(
@@ -188,6 +201,7 @@ export function Header({
     [starSeeds],
   );
   const { t } = useLanguage();
+  const moreLabel = t("header.more") === "header.more" ? "More" : t("header.more");
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof document === "undefined") {
@@ -255,12 +269,9 @@ export function Header({
   useEffect(() => {
     if (isMenuOpen) {
       setIsHeaderHidden(false);
+      setIsDesktopMoreOpen(false);
     }
   }, [isMenuOpen]);
-  const handleMenuAction = (action?: () => void) => () => {
-    setIsMenuOpen(false);
-    action?.();
-  };
   const isActive = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
     activePage ? pages.includes(activePage) : false;
   const getDesktopNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
@@ -269,8 +280,6 @@ export function Header({
         ? "rounded-full border-white/45 bg-white/18 text-white shadow-[0_8px_18px_rgba(12,10,24,0.18)]"
         : "bg-transparent text-white/90 hover:text-white hover:bg-white/10"
     }`;
-  const getMobileNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
-    isActive(...pages) ? "is-active text-white" : undefined;
   const createNavClickHandler = (action?: () => void) => (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (!action) {
       return;
@@ -278,8 +287,67 @@ export function Header({
 
     event.preventDefault();
     setIsMenuOpen(false);
+    setIsDesktopMoreOpen(false);
     action();
   };
+  const mobileNavItems = [
+    {
+      id: "about",
+      href: NAV_HREFS.about,
+      label: t("header.about"),
+      onClick: onAbout,
+      activePages: ["about"] as const,
+      icon: Info,
+    },
+    {
+      id: "language",
+      href: NAV_HREFS.language,
+      label: t("header.languages"),
+      onClick: onLanguages,
+      activePages: ["language"] as const,
+      icon: Languages,
+    },
+    {
+      id: "levelCategory",
+      href: NAV_HREFS.levelCategory,
+      label: t("header.filters"),
+      onClick: onFilters,
+      activePages: ["levelCategory"] as const,
+      icon: SlidersHorizontal,
+    },
+    {
+      id: "exerciseSelection",
+      href: NAV_HREFS.exerciseSelection,
+      label: t("header.exercises"),
+      onClick: onExercises,
+      activePages: ["exerciseSelection"] as const,
+      icon: Dumbbell,
+    },
+    {
+      id: "explore",
+      href: NAV_HREFS.explore,
+      label: t("header.explore"),
+      onClick: onExplore,
+      activePages: ["explore", "vocabularyLevel"] as const,
+      icon: Compass,
+    },
+    {
+      id: "help",
+      href: NAV_HREFS.help,
+      label: t("header.help"),
+      onClick: onHelp,
+      activePages: ["help"] as const,
+      icon: CircleHelp,
+    },
+    {
+      id: "exam",
+      href: NAV_HREFS.exam,
+      label: t("header.levelTest"),
+      onClick: onLevelTest,
+      activePages: ["exam"] as const,
+      icon: GraduationCap,
+    },
+  ] as const;
 
   return (
     <>
@@ -298,8 +366,8 @@ export function Header({
           }}
         />
 
-        <nav className="header-nav relative flex items-center justify-between max-w-7xl mx-auto">
-          <div className="header-logo-wrap order-2 md:order-1">
+        <nav className="header-nav relative flex items-center justify-between max-w-7xl mx-auto md:grid md:grid-cols-[1fr_auto_1fr] md:items-center">
+          <div className="header-logo-wrap order-2 md:order-1 md:justify-self-start">
             <div className="site-logo text-lg font-black tracking-[0.3em] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
               <a
                 href={NAV_HREFS.language}
@@ -312,64 +380,100 @@ export function Header({
             </div>
           </div>
 
-          <div className="header-desktop-nav hidden md:flex order-2 items-center gap-8">
-            <div className="flex gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/90">
-              <a
-                href={NAV_HREFS.about}
-                onClick={createNavClickHandler(onAbout)}
-                className={getDesktopNavClassName("about")}
-              >
-                {t("header.about")}
-              </a>
+          <div className="header-desktop-nav hidden md:flex order-2 items-center gap-6 md:justify-self-center">
+            <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/90">
               <a
                 href={NAV_HREFS.language}
                 onClick={createNavClickHandler(onLanguages)}
-                className={getDesktopNavClassName("language")}
+                className={`${getDesktopNavClassName("language")} gap-1.5`}
               >
+                <Languages size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.languages")}
               </a>
               <a
                 href={NAV_HREFS.levelCategory}
                 onClick={createNavClickHandler(onFilters)}
-                className={getDesktopNavClassName("levelCategory")}
+                className={`${getDesktopNavClassName("levelCategory")} gap-1.5`}
               >
+                <SlidersHorizontal size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.filters")}
               </a>
               <a
                 href={NAV_HREFS.exerciseSelection}
                 onClick={createNavClickHandler(onExercises)}
-                className={getDesktopNavClassName("exerciseSelection")}
+                className={`${getDesktopNavClassName("exerciseSelection")} gap-1.5`}
               >
+                <Dumbbell size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.exercises")}
               </a>
-              <a
-                href={NAV_HREFS.explore}
-                onClick={createNavClickHandler(onExplore)}
-                className={getDesktopNavClassName("explore", "vocabularyLevel")}
+              <div
+                className="relative pb-2 -mb-2"
+                onMouseLeave={() => setIsDesktopMoreOpen(false)}
               >
-                {t("header.explore")}
-              </a>
-              <a
-                href={NAV_HREFS.help}
-                onClick={createNavClickHandler(onHelp)}
-                className={getDesktopNavClassName("help")}
-              >
-                {t("header.help")}
-              </a>
+                <button
+                  type="button"
+                  onClick={() => setIsDesktopMoreOpen((open) => !open)}
+                  className={`${getDesktopNavClassName("about", "help")} gap-1.5`}
+                  aria-haspopup="menu"
+                  aria-expanded={isDesktopMoreOpen}
+                >
+                  {moreLabel}
+                  <ChevronDown
+                    size={12}
+                    className={`transition-transform ${isDesktopMoreOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {isDesktopMoreOpen ? (
+                  <div className="absolute right-0 top-full z-50 min-w-[12rem] rounded-2xl border border-white/20 bg-[#2f155b]/95 p-2 shadow-[0_14px_30px_rgba(8,6,24,0.35)] backdrop-blur-sm">
+                    <a
+                      href={NAV_HREFS.about}
+                      onClick={createNavClickHandler(onAbout)}
+                      className={`flex items-center gap-2 rounded-xl px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] transition hover:bg-white/10 hover:text-white ${
+                        isActive("about") ? "bg-white/12 text-white" : "text-white/90"
+                      }`}
+                    >
+                      <Info size={12} strokeWidth={1.8} aria-hidden="true" />
+                      {t("header.about")}
+                    </a>
+                    <a
+                      href={NAV_HREFS.help}
+                      onClick={createNavClickHandler(onHelp)}
+                      className={`flex items-center gap-2 rounded-xl px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] transition hover:bg-white/10 hover:text-white ${
+                        isActive("help") ? "bg-white/12 text-white" : "text-white/90"
+                      }`}
+                    >
+                      <CircleHelp size={12} strokeWidth={1.8} aria-hidden="true" />
+                      {t("header.help")}
+                    </a>
+                    <a
+                      href={NAV_HREFS.explore}
+                      onClick={createNavClickHandler(onExplore)}
+                      className={`flex items-center gap-2 rounded-xl px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] transition hover:bg-white/10 hover:text-white ${
+                        isActive("explore", "vocabularyLevel") ? "bg-white/12 text-white" : "text-white/90"
+                      }`}
+                    >
+                      <Compass size={12} strokeWidth={1.8} aria-hidden="true" />
+                      {t("header.explore")}
+                    </a>
+                  </div>
+                ) : null}
+              </div>
               <a
                 href={NAV_HREFS.exam}
                 onClick={createNavClickHandler(onLevelTest)}
-                className={`header-level-test-nav inline-flex items-center leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 border px-3 py-1 rounded-full shadow-sm appearance-none ${
+                className={`header-level-test-nav inline-flex items-center gap-1.5 leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 border px-3 py-1 rounded-full shadow-sm appearance-none ${
                   isActive("exam") ? "is-active" : ""
                 }`}
               >
+                <GraduationCap size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.levelTest")}
               </a>
             </div>
 
-            <div className="pl-5 border-l border-white/20 scale-90">
-              <UILanguageSwitcher />
-            </div>
+          </div>
+
+          <div className="hidden md:flex order-3 justify-self-end pl-5 border-l border-white/20 scale-90">
+            <UILanguageSwitcher />
           </div>
 
           <button
@@ -385,56 +489,34 @@ export function Header({
           aria-hidden={!isMenuOpen}
         >
           <div className="header-mobile-menu-inner">
-            <a
-              href={NAV_HREFS.about}
-              onClick={createNavClickHandler(onAbout)}
-              className={getMobileNavClassName("about")}
-            >
-              {t("header.about")}
-            </a>
-            <a
-              href={NAV_HREFS.language}
-              onClick={createNavClickHandler(onLanguages)}
-              className={getMobileNavClassName("language")}
-            >
-              {t("header.languages")}
-            </a>
-            <a
-              href={NAV_HREFS.levelCategory}
-              onClick={createNavClickHandler(onFilters)}
-              className={getMobileNavClassName("levelCategory")}
-            >
-              {t("header.filters")}
-            </a>
-            <a
-              href={NAV_HREFS.exerciseSelection}
-              onClick={createNavClickHandler(onExercises)}
-              className={getMobileNavClassName("exerciseSelection")}
-            >
-              {t("header.exercises")}
-            </a>
-            <a
-              href={NAV_HREFS.explore}
-              onClick={createNavClickHandler(onExplore)}
-              className={getMobileNavClassName("explore", "vocabularyLevel")}
-            >
-              {t("header.explore")}
-            </a>
-            <a
-              href={NAV_HREFS.help}
-              onClick={createNavClickHandler(onHelp)}
-              className={getMobileNavClassName("help")}
-            >
-              {t("header.help")}
-            </a>
-            <a
-              href={NAV_HREFS.exam}
-              onClick={createNavClickHandler(onLevelTest)}
-              className={getMobileNavClassName("exam")}
-            >
-              {t("header.levelTest")}
-            </a>
+            <div className="header-mobile-nav-list">
+              {mobileNavItems.map((item) => {
+                const Icon = item.icon;
+                const itemIsActive = isActive(...item.activePages);
+
+                return (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    onClick={createNavClickHandler(item.onClick)}
+                    className={`header-mobile-nav-item ${
+                      item.id === "exam" ? "header-mobile-nav-item--exam" : ""
+                    } ${itemIsActive ? "is-active" : ""}`}
+                  >
+                    <span className="header-mobile-nav-item__accent" aria-hidden="true" />
+                    <span className="header-mobile-nav-item__icon" aria-hidden="true">
+                      <Icon size={17} strokeWidth={1.8} />
+                    </span>
+                    <span className="header-mobile-nav-item__label">{item.label}</span>
+                    <span className="header-mobile-nav-item__chevron" aria-hidden="true">
+                      <ChevronRight size={16} strokeWidth={1.7} />
+                    </span>
+                  </a>
+                );
+              })}
+            </div>
             <div className="header-mobile-lang-wrap">
+              <div className="header-mobile-lang-label">{t("header.languages")}</div>
               <UILanguageSwitcher variant="centered-modal" />
             </div>
           </div>
