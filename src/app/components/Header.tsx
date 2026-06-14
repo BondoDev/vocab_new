@@ -272,6 +272,26 @@ export function Header({
       setIsDesktopMoreOpen(false);
     }
   }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    const { body } = document;
+    const previousOverflow = body.style.overflow;
+    const previousTouchAction = body.style.touchAction;
+
+    if (isMenuOpen) {
+      body.style.overflow = "hidden";
+      body.style.touchAction = "none";
+    }
+
+    return () => {
+      body.style.overflow = previousOverflow;
+      body.style.touchAction = previousTouchAction;
+    };
+  }, [isMenuOpen]);
   const isActive = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
     activePage ? pages.includes(activePage) : false;
   const getDesktopNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
@@ -366,7 +386,7 @@ export function Header({
           }}
         />
 
-        <nav className="header-nav relative flex items-center justify-between max-w-7xl mx-auto md:grid md:grid-cols-[1fr_auto_1fr] md:items-center">
+        <nav className="header-nav relative z-[70] flex items-center justify-between max-w-7xl mx-auto md:grid md:grid-cols-[1fr_auto_1fr] md:items-center">
           <div className="header-logo-wrap order-2 md:order-1 md:justify-self-start">
             <div className="site-logo text-lg font-black tracking-[0.3em] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
               <a
@@ -484,44 +504,49 @@ export function Header({
           </button>
         </nav>
 
-        <div
-          className={`header-mobile-menu ${isMenuOpen ? "is-open" : ""}`}
-          aria-hidden={!isMenuOpen}
-        >
-          <div className="header-mobile-menu-inner">
-            <div className="header-mobile-nav-list">
-              {mobileNavItems.map((item) => {
-                const Icon = item.icon;
-                const itemIsActive = isActive(...item.activePages);
+      </header>
 
-                return (
-                  <a
-                    key={item.id}
-                    href={item.href}
-                    onClick={createNavClickHandler(item.onClick)}
-                    className={`header-mobile-nav-item ${
-                      item.id === "exam" ? "header-mobile-nav-item--exam" : ""
-                    } ${itemIsActive ? "is-active" : ""}`}
-                  >
-                    <span className="header-mobile-nav-item__accent" aria-hidden="true" />
-                    <span className="header-mobile-nav-item__icon" aria-hidden="true">
-                      <Icon size={17} strokeWidth={1.8} />
-                    </span>
-                    <span className="header-mobile-nav-item__label">{item.label}</span>
-                    <span className="header-mobile-nav-item__chevron" aria-hidden="true">
-                      <ChevronRight size={16} strokeWidth={1.7} />
-                    </span>
-                  </a>
-                );
-              })}
-            </div>
-            <div className="header-mobile-lang-wrap">
-              <div className="header-mobile-lang-label">{t("header.languages")}</div>
-              <UILanguageSwitcher variant="centered-modal" />
-            </div>
+      <div
+        className={`header-mobile-menu ${isMenuOpen ? "is-open" : ""}`}
+        aria-hidden={!isMenuOpen}
+        onClick={() => setIsMenuOpen(false)}
+      >
+        <div
+          className="header-mobile-menu-inner"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className="header-mobile-nav-list">
+            {mobileNavItems.map((item) => {
+              const Icon = item.icon;
+              const itemIsActive = isActive(...item.activePages);
+
+              return (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={createNavClickHandler(item.onClick)}
+                  className={`header-mobile-nav-item ${
+                    item.id === "exam" ? "header-mobile-nav-item--exam" : ""
+                  } ${itemIsActive ? "is-active" : ""}`}
+                >
+                  <span className="header-mobile-nav-item__accent" aria-hidden="true" />
+                  <span className="header-mobile-nav-item__icon" aria-hidden="true">
+                    <Icon size={17} strokeWidth={1.8} />
+                  </span>
+                  <span className="header-mobile-nav-item__label">{item.label}</span>
+                  <span className="header-mobile-nav-item__chevron" aria-hidden="true">
+                    <ChevronRight size={16} strokeWidth={1.7} />
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+          <div className="header-mobile-lang-wrap">
+            <div className="header-mobile-lang-label">{t("header.languages")}</div>
+            <UILanguageSwitcher variant="centered-modal" />
           </div>
         </div>
-      </header>
+      </div>
     </>
   );
 }
