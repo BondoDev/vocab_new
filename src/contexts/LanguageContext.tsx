@@ -221,6 +221,20 @@ export function LanguageProvider({
   }, [loadedLanguages, uiLanguage]);
 
   const handleSetUILanguage = (lang: UILanguage) => {
+    const syncData = loadLanguageDataSync(lang);
+    if (syncData) {
+      setLoadedLanguages((current) => {
+        if (current[lang]) {
+          return current;
+        }
+
+        return {
+          ...current,
+          [lang]: syncData,
+        };
+      });
+    }
+
     setUILanguage(lang);
     if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
       window.localStorage.setItem("uiLanguage", lang);
