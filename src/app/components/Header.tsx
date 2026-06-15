@@ -263,6 +263,7 @@ export function Header({
   const moreLabel = t("header.more") === "header.more" ? "More" : t("header.more");
   const loginLabel = "Log in";
   const signupLabel = "Sign up";
+  const showAuthButton = false;
   const googleLabel =
     authMode === "login" ? "Continue with Google" : "Sign up with Google";
   const authButtonLabel = authSession ? "Account" : loginLabel;
@@ -713,14 +714,16 @@ export function Header({
                 <GraduationCap size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.levelTest")}
               </a>
-              <button
-                type="button"
-                onClick={openLoginDialog}
-                className="inline-flex cursor-pointer items-center gap-1.5 leading-none rounded-full border border-white/35 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 transition hover:bg-white/10"
-              >
-                <LogIn size={12} strokeWidth={1.8} aria-hidden="true" />
-                {authButtonLabel}
-              </button>
+              {showAuthButton ? (
+                <button
+                  type="button"
+                  onClick={openLoginDialog}
+                  className="inline-flex cursor-pointer items-center gap-1.5 leading-none rounded-full border border-white/35 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 transition hover:bg-white/10"
+                >
+                  <LogIn size={12} strokeWidth={1.8} aria-hidden="true" />
+                  {authButtonLabel}
+                </button>
+              ) : null}
             </div>
 
           </div>
@@ -773,20 +776,22 @@ export function Header({
                 </a>
               );
             })}
-            <button
-              type="button"
-              onClick={openLoginDialog}
-              className="header-mobile-nav-item text-left"
-            >
-              <span className="header-mobile-nav-item__accent" aria-hidden="true" />
-              <span className="header-mobile-nav-item__icon" aria-hidden="true">
-                <LogIn size={17} strokeWidth={1.8} />
-              </span>
-              <span className="header-mobile-nav-item__label">{authButtonLabel}</span>
-              <span className="header-mobile-nav-item__chevron" aria-hidden="true">
-                <ChevronRight size={16} strokeWidth={1.7} />
-              </span>
-            </button>
+            {showAuthButton ? (
+              <button
+                type="button"
+                onClick={openLoginDialog}
+                className="header-mobile-nav-item text-left"
+              >
+                <span className="header-mobile-nav-item__accent" aria-hidden="true" />
+                <span className="header-mobile-nav-item__icon" aria-hidden="true">
+                  <LogIn size={17} strokeWidth={1.8} />
+                </span>
+                <span className="header-mobile-nav-item__label">{authButtonLabel}</span>
+                <span className="header-mobile-nav-item__chevron" aria-hidden="true">
+                  <ChevronRight size={16} strokeWidth={1.7} />
+                </span>
+              </button>
+            ) : null}
           </div>
           <div className="header-mobile-lang-wrap">
             <div className="header-mobile-lang-label">{t("header.languages")}</div>
