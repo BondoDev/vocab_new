@@ -8,12 +8,21 @@ import {
   GraduationCap,
   Info,
   Languages,
+  LogIn,
   Menu,
   SlidersHorizontal,
   X,
 } from "lucide-react";
 import { UILanguageSwitcher } from "../components/UILanguageSwitcher";
 import { useLanguage } from "../../contexts/LanguageContext";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 const NAV_HREFS = {
   about: "/about",
@@ -150,6 +159,37 @@ function createSparkleFieldImage(sparkleCount: number, seed: number): string {
   return layers.join(",\n    ");
 }
 
+function GoogleMark() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="size-4 shrink-0"
+    >
+      <path
+        fill="#EA4335"
+        d="M12 10.2v3.9h5.5c-.2 1.3-1.5 3.9-5.5 3.9-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.9 1.5l2.7-2.6C16.9 3.3 14.7 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12S6.7 21.6 12 21.6c6.9 0 9.2-4.8 9.2-7.3 0-.5-.1-.9-.1-1.3H12Z"
+      />
+      <path
+        fill="#4285F4"
+        d="M21.1 14.3c0-.5-.1-.9-.1-1.3H12v3.9h5.5c-.3 1.4-1.6 2.8-3.5 3.3l2.7 2.1c3.1-2.8 4.4-6.8 4.4-8Z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M6 14.3c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9L3.2 8.3C2.6 9.5 2.4 10.7 2.4 12s.2 2.5.8 3.7L6 14.3Z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 21.6c2.7 0 4.9-.9 6.5-2.5l-2.7-2.1c-.8.6-1.9 1-3.8 1-3.2 0-5.8-2.1-6.7-5.1l-2.8 2.2c1.6 3.1 4.9 5.5 9.5 5.5Z"
+      />
+      <path
+        fill="#1976D2"
+        d="M5.3 12.9c-.1-.3-.1-.6-.1-.9s0-.6.1-.9L2.4 8.9A9.7 9.7 0 0 0 1.8 12c0 1.1.2 2.1.6 3.1l2.9-2.2Z"
+      />
+    </svg>
+  );
+}
+
 interface HeaderProps {
   onAbout?: () => void;
   onHelp?: () => void;
@@ -183,6 +223,8 @@ export function Header({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktopMoreOpen, setIsDesktopMoreOpen] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const lastScrollYRef = useRef(0);
   const starSeeds = useMemo(
     () => ({
@@ -202,6 +244,22 @@ export function Header({
   );
   const { t } = useLanguage();
   const moreLabel = t("header.more") === "header.more" ? "More" : t("header.more");
+  const loginLabel = "Log in";
+  const signupLabel = "Sign up";
+  const googleLabel =
+    authMode === "login" ? "Continue with Google" : "Sign up with Google";
+
+  const openLoginDialog = () => {
+    setAuthMode("login");
+    setIsMenuOpen(false);
+    setIsDesktopMoreOpen(false);
+    setIsAuthDialogOpen(true);
+  };
+
+  const openSignupDialog = () => {
+    setAuthMode("signup");
+    setIsAuthDialogOpen(true);
+  };
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof document === "undefined") {
@@ -488,6 +546,14 @@ export function Header({
                 <GraduationCap size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.levelTest")}
               </a>
+              <button
+                type="button"
+                onClick={openLoginDialog}
+                className="inline-flex cursor-pointer items-center gap-1.5 leading-none rounded-full border border-white/35 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 transition hover:bg-white/10"
+              >
+                <LogIn size={12} strokeWidth={1.8} aria-hidden="true" />
+                {loginLabel}
+              </button>
             </div>
 
           </div>
@@ -540,6 +606,20 @@ export function Header({
                 </a>
               );
             })}
+            <button
+              type="button"
+              onClick={openLoginDialog}
+              className="header-mobile-nav-item text-left"
+            >
+              <span className="header-mobile-nav-item__accent" aria-hidden="true" />
+              <span className="header-mobile-nav-item__icon" aria-hidden="true">
+                <LogIn size={17} strokeWidth={1.8} />
+              </span>
+              <span className="header-mobile-nav-item__label">{loginLabel}</span>
+              <span className="header-mobile-nav-item__chevron" aria-hidden="true">
+                <ChevronRight size={16} strokeWidth={1.7} />
+              </span>
+            </button>
           </div>
           <div className="header-mobile-lang-wrap">
             <div className="header-mobile-lang-label">{t("header.languages")}</div>
@@ -547,6 +627,158 @@ export function Header({
           </div>
         </div>
       </div>
+
+      <Dialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen}>
+        <DialogContent className="w-[min(92vw,28rem)] max-w-none rounded-3xl border-white/15 bg-[#fffdfd] p-0 shadow-[0_24px_80px_rgba(18,12,38,0.32)] sm:w-[26rem]">
+          <div className="overflow-hidden rounded-3xl">
+            <div className="bg-[radial-gradient(circle_at_top,rgba(120,90,255,0.18),rgba(255,255,255,0)_58%),linear-gradient(135deg,#ffffff_0%,#f7f2ff_100%)] px-6 pb-6 pt-7">
+              <DialogHeader className="gap-2 text-left">
+                <DialogTitle className="text-2xl font-semibold tracking-tight text-[#261943]">
+                  {authMode === "login"
+                    ? "Welcome back"
+                    : "Create your FluentStellar account"}
+                </DialogTitle>
+              </DialogHeader>
+
+              <form className="mt-6 space-y-4" onSubmit={(event) => event.preventDefault()}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="h-11 w-full rounded-xl border-[#d9cffd] bg-white font-semibold text-[#2c2344] hover:bg-[#f8f4ff]"
+                >
+                  <GoogleMark />
+                  {googleLabel}
+                </Button>
+
+                <div className="flex items-center gap-3 py-1">
+                  <div className="h-px flex-1 bg-[#ddd4fb]" />
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8b7fb0]">
+                    Or
+                  </span>
+                  <div className="h-px flex-1 bg-[#ddd4fb]" />
+                </div>
+
+                {authMode === "signup" ? (
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="auth-full-name"
+                      className="text-sm font-medium text-[#342456]"
+                    >
+                      Full name
+                    </label>
+                    <Input
+                      id="auth-full-name"
+                      type="text"
+                      placeholder="Your name"
+                      className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
+                    />
+                  </div>
+                ) : null}
+
+                <div className="space-y-2">
+                  <label
+                    htmlFor="auth-email"
+                    className="text-sm font-medium text-[#342456]"
+                  >
+                    Email
+                  </label>
+                  <Input
+                    id="auth-email"
+                    type="email"
+                    placeholder="you@example.com"
+                    autoComplete="email"
+                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label
+                    htmlFor="auth-password"
+                    className="text-sm font-medium text-[#342456]"
+                  >
+                    Password
+                  </label>
+                  <Input
+                    id="auth-password"
+                    type="password"
+                    placeholder="Enter your password"
+                    autoComplete={authMode === "login" ? "current-password" : "new-password"}
+                    className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
+                  />
+                </div>
+
+                {authMode === "login" ? (
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      className="text-sm font-medium text-[#5a4ad1] transition hover:text-[#4938c8] hover:underline"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+                ) : null}
+
+                {authMode === "signup" ? (
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="auth-confirm-password"
+                      className="text-sm font-medium text-[#342456]"
+                    >
+                      Confirm password
+                    </label>
+                    <Input
+                      id="auth-confirm-password"
+                      type="password"
+                      placeholder="Repeat your password"
+                      autoComplete="new-password"
+                      className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
+                    />
+                  </div>
+                ) : null}
+
+                <Button
+                  type="submit"
+                  className="mt-2 h-11 w-full rounded-xl bg-[#6558f5] text-base font-semibold text-white hover:bg-[#5647f0]"
+                >
+                  {authMode === "login" ? loginLabel : signupLabel}
+                </Button>
+              </form>
+            </div>
+
+            <div className="border-t border-[#ebe4f7] bg-white px-6 py-5">
+              {authMode === "login" ? (
+                <div className="space-y-3 text-center">
+                  <p className="text-sm text-[#70658b]">
+                    Don&apos;t have an account yet?
+                  </p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={openSignupDialog}
+                    className="h-11 w-full rounded-xl border-[#d9cffd] bg-[#faf7ff] font-semibold text-[#49368f] hover:bg-[#f3ecff]"
+                  >
+                    {signupLabel}
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-3 text-center">
+                  <p className="text-sm text-[#70658b]">
+                    Already have an account?
+                  </p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setAuthMode("login")}
+                    className="h-11 w-full rounded-xl border-[#d9cffd] bg-[#faf7ff] font-semibold text-[#49368f] hover:bg-[#f3ecff]"
+                  >
+                    {loginLabel}
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
