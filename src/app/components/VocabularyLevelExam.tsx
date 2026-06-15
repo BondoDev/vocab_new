@@ -2,6 +2,16 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "./ui/alert-dialog";
 
 interface VocabularyLevelExamProps {
   practiceLanguage: string;
@@ -21,9 +31,41 @@ interface Word {
   level: string;
 }
 
+type QuestionMode = "multipleChoice" | "chunkAssemble";
+
+interface ExamQuestion {
+  mode: QuestionMode;
+  word: Word;
+  prompt: string;
+  options: string[];
+  correctAnswer: string;
+  shuffledChunks: string[];
+}
+
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const QUESTIONS_PER_LEVEL = 6;
 const MAX_WRONG_ANSWERS = 3;
+
+function shuffleArray<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function splitWordIntoChunks(word: string): string[] {
+  const chunks: string[] = [];
+  for (let i = 0; i < word.length; i += 2) {
+    if (i + 1 < word.length) {
+      chunks.push(word.substring(i, i + 2));
+    } else {
+      chunks.push(word.substring(i));
+    }
+  }
+  return chunks;
+}
 
 export function VocabularyLevelExam({
   practiceLanguage,
@@ -32,6 +74,10 @@ export function VocabularyLevelExam({
   onCancel,
 }: VocabularyLevelExamProps) {
   const { t } = useLanguage();
+  const getText = (key: string, fallback: string) => {
+    const value = t(key);
+    return value === key ? fallback : value;
+  };
   const isUsableLemma = (value: unknown): value is string =>
     typeof value === "string" && value.trim().length > 0 && value.trim() !== "-";
   const [allWords, setAllWords] = useState<Word[]>([]);
@@ -44,13 +90,14 @@ export function VocabularyLevelExam({
   const [examComplete, setExamComplete] = useState(false);
   const [finalLevel, setFinalLevel] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [currentQuestion, setCurrentQuestion] = useState<{
-    word: Word;
-    options: string[];
-    correctAnswer: string;
-  } | null>(null);
+  const [currentQuestion, setCurrentQuestion] = useState<ExamQuestion | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
+  const [placedChunks, setPlacedChunks] = useState<string[]>([]);
+  const [placedChunkIndices, setPlacedChunkIndices] = useState<number[]>([]);
+  const [usedChunks, setUsedChunks] = useState<boolean[]>([]);
+  const [showAssemblyIncorrect, setShowAssemblyIncorrect] = useState(false);
 
   // Load words on mount
   useEffect(() => {
@@ -136,6 +183,7 @@ export function VocabularyLevelExam({
 
   const generateQuestion = () => {
     const levelName = LEVELS[currentLevel];
+    const isChunkMode = currentLevel >= 2;
 
     // Get words for current level that have 4+ characters
     const wordsForLevel = allWords.filter(
@@ -157,63 +205,139 @@ export function VocabularyLevelExam({
       return;
     }
 
-    // Generate 5 wrong options from the same level
-    const wrongOptions: string[] = [];
-    const usedConceptIds = new Set([randomWord.concept_id]);
+    if (isChunkMode) {
+      const chunks = splitWordIntoChunks(randomWord.word_lemma);
+      let shuffledChunks = shuffleArray(chunks);
+      if (
+        chunks.length > 1 &&
+        shuffledChunks.join("|") === chunks.join("|")
+      ) {
+        shuffledChunks = shuffleArray(chunks);
+      }
 
-    while (wrongOptions.length < 5 && wordsForLevel.length > 1) {
-      const randomWrongWord =
-        wordsForLevel[Math.floor(Math.random() * wordsForLevel.length)];
+      setCurrentQuestion({
+        mode: "chunkAssemble",
+        word: randomWord,
+        prompt: correctAnswer,
+        options: [],
+        correctAnswer: randomWord.word_lemma,
+        shuffledChunks,
+      });
+      setPlacedChunks([]);
+      setPlacedChunkIndices([]);
+      setUsedChunks(new Array(shuffledChunks.length).fill(false));
+      setShowAssemblyIncorrect(false);
+    } else {
+      // Generate 5 wrong options from the same level
+      const wrongOptions: string[] = [];
+      const usedConceptIds = new Set([randomWord.concept_id]);
 
-      if (!usedConceptIds.has(randomWrongWord.concept_id)) {
-        const wrongAnswer = translationMap[randomWrongWord.concept_id];
-        if (wrongAnswer && wrongAnswer !== correctAnswer) {
-          wrongOptions.push(wrongAnswer);
-          usedConceptIds.add(randomWrongWord.concept_id);
+      while (wrongOptions.length < 5 && wordsForLevel.length > 1) {
+        const randomWrongWord =
+          wordsForLevel[Math.floor(Math.random() * wordsForLevel.length)];
+
+        if (!usedConceptIds.has(randomWrongWord.concept_id)) {
+          const wrongAnswer = translationMap[randomWrongWord.concept_id];
+          if (wrongAnswer && wrongAnswer !== correctAnswer) {
+            wrongOptions.push(wrongAnswer);
+            usedConceptIds.add(randomWrongWord.concept_id);
+          }
         }
       }
+
+      const shuffledOptions = shuffleArray([correctAnswer, ...wrongOptions]);
+
+      setCurrentQuestion({
+        mode: "multipleChoice",
+        word: randomWord,
+        prompt: randomWord.word_lemma,
+        options: shuffledOptions,
+        correctAnswer,
+        shuffledChunks: [],
+      });
     }
 
-    // Combine and shuffle all options
-    const allOptions = [correctAnswer, ...wrongOptions];
-    const shuffledOptions = allOptions.sort(() => Math.random() - 0.5);
-
-    setCurrentQuestion({
-      word: randomWord,
-      options: shuffledOptions,
-      correctAnswer,
-    });
     setSelectedAnswer(null);
     setShowFeedback(false);
   };
 
-  const handleAnswerSelect = (answer: string) => {
-    if (showFeedback) return; // Prevent selecting again during feedback
-
-    setSelectedAnswer(answer);
+  const resolveQuestionResult = (isCorrect: boolean) => {
     setShowFeedback(true);
 
-    const isCorrect = answer === currentQuestion?.correctAnswer;
-
-    // Wait 1 second to show feedback, then move to next question
     setTimeout(() => {
       if (isCorrect) {
-        // Correct answer - move to next question
         moveToNextQuestion();
       } else {
-        // Wrong answer - increment wrong count
         const newWrongCount = wrongAnswersInLevel + 1;
         setWrongAnswersInLevel(newWrongCount);
 
         if (newWrongCount >= MAX_WRONG_ANSWERS) {
-          // Failed this level - exam ends
           endExam();
         } else {
-          // Continue with next question
           moveToNextQuestion();
         }
       }
     }, 1000);
+  };
+
+  const handleAnswerSelect = (answer: string) => {
+    if (showFeedback || currentQuestion?.mode !== "multipleChoice") return;
+
+    setSelectedAnswer(answer);
+    const isCorrect = answer === currentQuestion?.correctAnswer;
+    resolveQuestionResult(isCorrect);
+  };
+
+  const handleChunkSelect = (chunkIndex: number) => {
+    if (
+      !currentQuestion ||
+      currentQuestion.mode !== "chunkAssemble" ||
+      showFeedback ||
+      usedChunks[chunkIndex]
+    ) {
+      return;
+    }
+
+    const nextPlacedChunks = [...placedChunks, currentQuestion.shuffledChunks[chunkIndex]];
+    const nextPlacedChunkIndices = [...placedChunkIndices, chunkIndex];
+    const nextUsedChunks = [...usedChunks];
+    nextUsedChunks[chunkIndex] = true;
+
+    setPlacedChunks(nextPlacedChunks);
+    setPlacedChunkIndices(nextPlacedChunkIndices);
+    setUsedChunks(nextUsedChunks);
+
+    if (nextPlacedChunks.length === currentQuestion.shuffledChunks.length) {
+      const isCorrect = nextPlacedChunks.join("") === currentQuestion.correctAnswer;
+      setShowAssemblyIncorrect(!isCorrect);
+      resolveQuestionResult(isCorrect);
+    }
+  };
+
+  const handlePlacedChunkRemove = (slotIndex: number) => {
+    if (
+      !currentQuestion ||
+      currentQuestion.mode !== "chunkAssemble" ||
+      showFeedback ||
+      slotIndex !== placedChunks.length - 1
+    ) {
+      return;
+    }
+
+    const sourceChunkIndex = placedChunkIndices[slotIndex];
+    if (sourceChunkIndex === undefined) return;
+
+    const nextPlacedChunks = placedChunks.filter((_, index) => index !== slotIndex);
+    const nextPlacedChunkIndices = placedChunkIndices.filter(
+      (_, index) => index !== slotIndex,
+    );
+    const nextUsedChunks = [...usedChunks];
+    nextUsedChunks[sourceChunkIndex] = false;
+
+    setPlacedChunks(nextPlacedChunks);
+    setPlacedChunkIndices(nextPlacedChunkIndices);
+    setUsedChunks(nextUsedChunks);
+    setShowAssemblyIncorrect(false);
   };
 
   const moveToNextQuestion = () => {
@@ -246,6 +370,34 @@ export function VocabularyLevelExam({
   const handleStartPractice = () => {
     onComplete(finalLevel);
   };
+
+  const handleRequestCancel = () => {
+    setIsExitDialogOpen(true);
+  };
+
+  const confirmExitTitle = getText("exam.confirmExitTitle", "Leave the level test?");
+  const confirmExitDescription = getText(
+    "exam.confirmExitDescription",
+    "Your current progress in the test will be lost.",
+  );
+  const confirmExitStay = getText("exam.confirmExitStay", "Stay in test");
+  const confirmExitLeave = getText("exam.confirmExitLeave", "Leave test");
+  const chooseOptionLabel = getText("exam.chooseOption", "Choose correct option");
+  const buildWordLabel = getText(
+    "practice.brokenWordInstruction",
+    "Build the correct word from the given chunks.",
+  );
+  const incorrectOrderLabel = getText(
+    "practice.incorrectOrderTryAgain",
+    "Incorrect order.",
+  );
+  const grammarTypeLabel =
+    currentQuestion?.mode === "chunkAssemble"
+      ? getText(
+          `wordType.${String(currentQuestion.word.type ?? "").toLowerCase()}`,
+          String(currentQuestion.word.type ?? ""),
+        )
+      : "";
 
   if (isLoading) {
     return (
@@ -327,12 +479,13 @@ export function VocabularyLevelExam({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <>
+      <div className="min-h-screen flex flex-col bg-background">
       {/* Top Bar */}
       <div className="px-4 py-2 md:px-8 md:py-4 border-b border-border">
         <div className="relative flex items-center justify-between mb-2">
           <button
-            onClick={onCancel}
+            onClick={handleRequestCancel}
             className="p-2 hover:bg-muted rounded-lg transition-colors"
             aria-label={t("exam.close")}
           >
@@ -369,12 +522,22 @@ export function VocabularyLevelExam({
         <div className="w-full max-w-2xl">
           <div className="text-center mb-8">
             <h1 className="text-xl font-medium text-muted-foreground mb-6 max-[640px]:pb-8 max-[380px]:pb-0">
-              {t("exam.chooseOption")}
+              {currentQuestion.mode === "chunkAssemble"
+                ? buildWordLabel
+                : chooseOptionLabel}
             </h1>
+
+            {currentQuestion.mode === "chunkAssemble" && grammarTypeLabel ? (
+              <div className="mb-5 flex justify-center">
+                <div className="rounded-full border border-border bg-muted/50 px-4 py-1 text-sm font-medium text-muted-foreground">
+                  {grammarTypeLabel}
+                </div>
+              </div>
+            ) : null}
 
             {/* Target Word */}
             <motion.div
-              key={currentQuestion.word.id}
+              key={`${currentQuestion.word.id}-${currentQuestion.mode}`}
               className="mb-10"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -384,54 +547,137 @@ export function VocabularyLevelExam({
               }}
             >
               <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-                {currentQuestion.word.word_lemma}
+                {currentQuestion.prompt}
               </h2>
             </motion.div>
           </div>
 
-          {/* Answer Options */}
-          <div className="grid grid-cols-1 gap-3 md:grid-rows-3 md:grid-flow-col md:auto-cols-fr">
-            <AnimatePresence mode="wait">
-              {currentQuestion.options.map((option, index) => {
-                const isSelected = selectedAnswer === option;
-                const isCorrect = option === currentQuestion.correctAnswer;
-                const showAsCorrect = showFeedback && isCorrect;
-                const showAsWrong = showFeedback && isSelected && !isCorrect;
+          {currentQuestion.mode === "multipleChoice" ? (
+            <div className="grid grid-cols-1 gap-3 md:grid-rows-3 md:grid-flow-col md:auto-cols-fr">
+              <AnimatePresence mode="wait">
+                {currentQuestion.options.map((option, index) => {
+                  const isSelected = selectedAnswer === option;
+                  const isCorrect = option === currentQuestion.correctAnswer;
+                  const showAsCorrect = showFeedback && isCorrect;
+                  const showAsWrong = showFeedback && isSelected && !isCorrect;
 
-                return (
-                  <motion.button
-                    key={`${currentQuestion.word.id}-${option}`}
-                    onClick={() => handleAnswerSelect(option)}
-                    disabled={showFeedback}
-                    className={`w-full px-6 py-4 max-[380px]:py-2 text-lg rounded-xl border-2 transition-all font-medium text-left ${
-                      showAsCorrect
-                        ? "bg-green-50 border-green-500 text-green-700"
-                        : showAsWrong
-                          ? "bg-red-50 border-red-500 text-red-700"
-                          : isSelected
-                            ? "bg-primary/10 border-primary text-foreground"
-                            : "bg-background border-border text-foreground hover:bg-muted hover:border-muted-foreground/30"
-                    } ${showFeedback ? "cursor-not-allowed" : "cursor-pointer"}`}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      opacity: {
-                        duration: 0.2,
-                        delay: index * 0.05,
-                      },
-                      y: { duration: 0.2, delay: index * 0.05 },
-                    }}
-                  >
-                    {option}
-                  </motion.button>
-                );
-              })}
-            </AnimatePresence>
-          </div>
+                  return (
+                    <motion.button
+                      key={`${currentQuestion.word.id}-${option}`}
+                      onClick={() => handleAnswerSelect(option)}
+                      disabled={showFeedback}
+                      className={`w-full px-6 py-4 max-[380px]:py-2 text-lg rounded-xl border-2 transition-all font-medium text-left ${
+                        showAsCorrect
+                          ? "bg-green-50 border-green-500 text-green-700"
+                          : showAsWrong
+                            ? "bg-red-50 border-red-500 text-red-700"
+                            : isSelected
+                              ? "bg-primary/10 border-primary text-foreground"
+                              : "bg-background border-border text-foreground hover:bg-muted hover:border-muted-foreground/30"
+                      } ${showFeedback ? "cursor-not-allowed" : "cursor-pointer"}`}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        opacity: {
+                          duration: 0.2,
+                          delay: index * 0.05,
+                        },
+                        y: { duration: 0.2, delay: index * 0.05 },
+                      }}
+                    >
+                      {option}
+                    </motion.button>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+          ) : (
+            <div className="space-y-5">
+              <div
+                className={`min-h-16 rounded-2xl border-2 px-4 py-4 transition-colors ${
+                  showAssemblyIncorrect
+                    ? "border-red-500 bg-red-50/60"
+                    : showFeedback
+                      ? "border-green-500 bg-green-50/60"
+                      : "border-border bg-background"
+                }`}
+              >
+                <div className="flex flex-wrap justify-center gap-2">
+                  {currentQuestion.shuffledChunks.map((_, slotIndex) => {
+                    const chunk = placedChunks[slotIndex];
+                    const isRemovable =
+                      !showFeedback && slotIndex === placedChunks.length - 1;
+
+                    return (
+                      <button
+                        key={`slot-${currentQuestion.word.id}-${slotIndex}`}
+                        type="button"
+                        onClick={() =>
+                          chunk ? handlePlacedChunkRemove(slotIndex) : undefined
+                        }
+                        disabled={!chunk || !isRemovable}
+                        className={`min-w-12 rounded-lg border px-3 py-2 text-lg font-medium transition-colors ${
+                          chunk
+                            ? "border-primary/35 bg-primary/10 text-foreground"
+                            : "border-dashed border-border text-muted-foreground/45"
+                        } ${isRemovable ? "cursor-pointer" : "cursor-default"}`}
+                      >
+                        {chunk ?? "…"}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <div className="flex max-w-md flex-wrap justify-center gap-2">
+                  {currentQuestion.shuffledChunks.map((chunk, chunkIndex) => (
+                    <button
+                      key={`chunk-${currentQuestion.word.id}-${chunkIndex}`}
+                      type="button"
+                      onClick={() => handleChunkSelect(chunkIndex)}
+                      disabled={usedChunks[chunkIndex] || showFeedback}
+                      className={`rounded-lg border-2 px-3 py-2 text-lg font-medium transition-all ${
+                        usedChunks[chunkIndex]
+                          ? "cursor-not-allowed border-muted bg-muted text-muted-foreground opacity-35"
+                          : "border-[#34205f] bg-[#34205f] text-white hover:bg-[#46307a] active:bg-[#28174a]"
+                      }`}
+                    >
+                      {chunk.toLocaleLowerCase()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {showAssemblyIncorrect && (
+                <div className="text-center text-sm font-medium text-red-600">
+                  {incorrectOrderLabel}
+                </div>
+              )}
+            </div>
+          )}
 
         </div>
       </main>
-    </div>
+      </div>
+
+      <AlertDialog open={isExitDialogOpen} onOpenChange={setIsExitDialogOpen}>
+        <AlertDialogContent className="w-[90vw] max-w-[90vw] gap-3 px-5 py-5 sm:w-fit sm:max-w-fit">
+          <AlertDialogHeader className="gap-2">
+            <AlertDialogTitle>{confirmExitTitle}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {confirmExitDescription}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="sm:justify-end">
+            <AlertDialogCancel className="sm:flex-none">{confirmExitStay}</AlertDialogCancel>
+            <AlertDialogAction onClick={onCancel} className="sm:flex-none">
+              {confirmExitLeave}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
 

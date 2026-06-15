@@ -429,7 +429,11 @@
     "breakdown": "Repartition par niveau",
     "correctAnswers": "reponses correctes",
     "startPracticing": "Commencer la pratique a ce niveau",
-    "backToSelection": "Retour a la selection du niveau"
+    "backToSelection": "Retour a la selection du niveau",
+    "confirmExitTitle": "Quitter le test de niveau ?",
+    "confirmExitDescription": "Votre progression actuelle dans le test sera perdue.",
+    "confirmExitStay": "Rester dans le test",
+    "confirmExitLeave": "Quitter le test"
   }
 }
 

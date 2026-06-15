@@ -424,7 +424,11 @@
     "breakdown": "Niveau-Aufschlüsselung",
     "correctAnswers": "richtige Antworten",
     "startPracticing": "Auf diesem Niveau starten",
-    "backToSelection": "Zurück zur Niveauauswahl"
+    "backToSelection": "Zurück zur Niveauauswahl",
+    "confirmExitTitle": "Leveltest verlassen?",
+    "confirmExitDescription": "Dein aktueller Fortschritt im Test geht verloren.",
+    "confirmExitStay": "Im Test bleiben",
+    "confirmExitLeave": "Test verlassen"
   }
 }
 

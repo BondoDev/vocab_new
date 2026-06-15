@@ -424,7 +424,11 @@
     "breakdown": "Dettaglio per livello",
     "correctAnswers": "risposte corrette",
     "startPracticing": "Inizia a praticare a questo livello",
-    "backToSelection": "Torna alla selezione livello"
+    "backToSelection": "Torna alla selezione livello",
+    "confirmExitTitle": "Uscire dal test di livello?",
+    "confirmExitDescription": "I tuoi progressi attuali nel test andranno persi.",
+    "confirmExitStay": "Resta nel test",
+    "confirmExitLeave": "Esci dal test"
   }
 }
 

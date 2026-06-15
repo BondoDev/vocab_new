@@ -429,7 +429,11 @@
     "breakdown": "Level Breakdown",
     "correctAnswers": "correct answers",
     "startPracticing": "Start Practicing at This Level",
-    "backToSelection": "Back to Level Selection"
+    "backToSelection": "Back to Level Selection",
+    "confirmExitTitle": "Leave the level test?",
+    "confirmExitDescription": "Your current progress in the test will be lost.",
+    "confirmExitStay": "Stay in test",
+    "confirmExitLeave": "Leave test"
   }
 }
 
