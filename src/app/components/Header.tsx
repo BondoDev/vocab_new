@@ -23,6 +23,15 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import {
+  getStoredSupabaseSession,
+  handleSupabaseAuthRedirect,
+  sendPasswordRecoveryEmail,
+  signInWithGoogleOAuth,
+  signInWithPassword,
+  signUpWithPassword,
+  type StoredSupabaseSession,
+} from "../../lib/supabaseAuth";
 
 const NAV_HREFS = {
   about: "/about",
@@ -225,6 +234,14 @@ export function Header({
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
+  const [authEmail, setAuthEmail] = useState("");
+  const [authPassword, setAuthPassword] = useState("");
+  const [authFullName, setAuthFullName] = useState("");
+  const [authConfirmPassword, setAuthConfirmPassword] = useState("");
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [authInfo, setAuthInfo] = useState<string | null>(null);
+  const [isAuthSubmitting, setIsAuthSubmitting] = useState(false);
+  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(null);
   const lastScrollYRef = useRef(0);
   const starSeeds = useMemo(
     () => ({
@@ -248,9 +265,21 @@ export function Header({
   const signupLabel = "Sign up";
   const googleLabel =
     authMode === "login" ? "Continue with Google" : "Sign up with Google";
+  const authButtonLabel = authSession ? "Account" : loginLabel;
+
+  const resetAuthForm = () => {
+    setAuthEmail("");
+    setAuthPassword("");
+    setAuthFullName("");
+    setAuthConfirmPassword("");
+    setAuthError(null);
+    setAuthInfo(null);
+    setIsAuthSubmitting(false);
+  };
 
   const openLoginDialog = () => {
     setAuthMode("login");
+    resetAuthForm();
     setIsMenuOpen(false);
     setIsDesktopMoreOpen(false);
     setIsAuthDialogOpen(true);
@@ -258,8 +287,45 @@ export function Header({
 
   const openSignupDialog = () => {
     setAuthMode("signup");
+    setAuthError(null);
+    setAuthInfo(null);
     setIsAuthDialogOpen(true);
   };
+
+  useEffect(() => {
+    setAuthSession(getStoredSupabaseSession());
+
+    let cancelled = false;
+
+    void handleSupabaseAuthRedirect()
+      .then((result) => {
+        if (cancelled) return;
+        if (result.error) {
+          setAuthError(result.error);
+          setAuthMode("login");
+          setIsAuthDialogOpen(true);
+          return;
+        }
+        if (result.session) {
+          setAuthSession(result.session);
+          setAuthInfo("Signed in successfully.");
+          setAuthMode("login");
+          setIsAuthDialogOpen(true);
+        }
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setAuthError(
+          error instanceof Error ? error.message : "Google sign-in failed.",
+        );
+        setAuthMode("login");
+        setIsAuthDialogOpen(true);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof document === "undefined") {
@@ -350,6 +416,107 @@ export function Header({
       body.style.touchAction = previousTouchAction;
     };
   }, [isMenuOpen]);
+
+  const handleGoogleAuth = async () => {
+    try {
+      setAuthError(null);
+      setAuthInfo(null);
+      setIsAuthSubmitting(true);
+      const redirectTo = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+      await signInWithGoogleOAuth(redirectTo);
+    } catch (error) {
+      setAuthError(
+        error instanceof Error ? error.message : "Google sign-in failed.",
+      );
+      setIsAuthSubmitting(false);
+    }
+  };
+
+  const handlePasswordAuthSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setAuthError(null);
+    setAuthInfo(null);
+
+    if (!authEmail.trim()) {
+      setAuthError("Email is required.");
+      return;
+    }
+
+    if (!authPassword) {
+      setAuthError("Password is required.");
+      return;
+    }
+
+    if (authMode === "signup") {
+      if (!authFullName.trim()) {
+        setAuthError("Full name is required.");
+        return;
+      }
+
+      if (authPassword !== authConfirmPassword) {
+        setAuthError("Passwords do not match.");
+        return;
+      }
+    }
+
+    try {
+      setIsAuthSubmitting(true);
+
+      if (authMode === "login") {
+        const session = await signInWithPassword(authEmail.trim(), authPassword);
+        setAuthSession(session);
+        setIsAuthDialogOpen(false);
+        resetAuthForm();
+        return;
+      }
+
+      const result = await signUpWithPassword({
+        email: authEmail.trim(),
+        password: authPassword,
+        fullName: authFullName.trim(),
+      });
+
+      if (result.session) {
+        setAuthSession(result.session);
+        setIsAuthDialogOpen(false);
+        resetAuthForm();
+        return;
+      }
+
+      setAuthInfo("Account created. Check your email to confirm your sign up.");
+      setAuthPassword("");
+      setAuthConfirmPassword("");
+    } catch (error) {
+      setAuthError(
+        error instanceof Error ? error.message : "Authentication failed.",
+      );
+    } finally {
+      setIsAuthSubmitting(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    setAuthError(null);
+    setAuthInfo(null);
+
+    if (!authEmail.trim()) {
+      setAuthError("Enter your email first.");
+      return;
+    }
+
+    try {
+      setIsAuthSubmitting(true);
+      const redirectTo = `${window.location.origin}${window.location.pathname}`;
+      await sendPasswordRecoveryEmail(authEmail.trim(), redirectTo);
+      setAuthInfo("Password reset email sent. Check your inbox.");
+    } catch (error) {
+      setAuthError(
+        error instanceof Error ? error.message : "Password reset failed.",
+      );
+    } finally {
+      setIsAuthSubmitting(false);
+    }
+  };
   const isActive = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
     activePage ? pages.includes(activePage) : false;
   const getDesktopNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
@@ -552,7 +719,7 @@ export function Header({
                 className="inline-flex cursor-pointer items-center gap-1.5 leading-none rounded-full border border-white/35 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 transition hover:bg-white/10"
               >
                 <LogIn size={12} strokeWidth={1.8} aria-hidden="true" />
-                {loginLabel}
+                {authButtonLabel}
               </button>
             </div>
 
@@ -615,7 +782,7 @@ export function Header({
               <span className="header-mobile-nav-item__icon" aria-hidden="true">
                 <LogIn size={17} strokeWidth={1.8} />
               </span>
-              <span className="header-mobile-nav-item__label">{loginLabel}</span>
+              <span className="header-mobile-nav-item__label">{authButtonLabel}</span>
               <span className="header-mobile-nav-item__chevron" aria-hidden="true">
                 <ChevronRight size={16} strokeWidth={1.7} />
               </span>
@@ -640,10 +807,12 @@ export function Header({
                 </DialogTitle>
               </DialogHeader>
 
-              <form className="mt-6 space-y-4" onSubmit={(event) => event.preventDefault()}>
+              <form className="mt-6 space-y-4" onSubmit={handlePasswordAuthSubmit}>
                 <Button
                   type="button"
                   variant="outline"
+                  disabled={isAuthSubmitting}
+                  onClick={() => void handleGoogleAuth()}
                   className="h-11 w-full rounded-xl border-[#d9cffd] bg-white font-semibold text-[#2c2344] hover:bg-[#f8f4ff]"
                 >
                   <GoogleMark />
@@ -658,6 +827,18 @@ export function Header({
                   <div className="h-px flex-1 bg-[#ddd4fb]" />
                 </div>
 
+                {authError ? (
+                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {authError}
+                  </div>
+                ) : null}
+
+                {authInfo ? (
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                    {authInfo}
+                  </div>
+                ) : null}
+
                 {authMode === "signup" ? (
                   <div className="space-y-2">
                     <label
@@ -669,7 +850,11 @@ export function Header({
                     <Input
                       id="auth-full-name"
                       type="text"
+                      value={authFullName}
+                      onChange={(event) => setAuthFullName(event.target.value)}
                       placeholder="Your name"
+                      autoComplete="name"
+                      disabled={isAuthSubmitting}
                       className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
                     />
                   </div>
@@ -685,8 +870,11 @@ export function Header({
                   <Input
                     id="auth-email"
                     type="email"
+                    value={authEmail}
+                    onChange={(event) => setAuthEmail(event.target.value)}
                     placeholder="you@example.com"
                     autoComplete="email"
+                    disabled={isAuthSubmitting}
                     className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
                   />
                 </div>
@@ -701,8 +889,11 @@ export function Header({
                   <Input
                     id="auth-password"
                     type="password"
+                    value={authPassword}
+                    onChange={(event) => setAuthPassword(event.target.value)}
                     placeholder="Enter your password"
                     autoComplete={authMode === "login" ? "current-password" : "new-password"}
+                    disabled={isAuthSubmitting}
                     className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
                   />
                 </div>
@@ -711,6 +902,8 @@ export function Header({
                   <div className="flex justify-end">
                     <button
                       type="button"
+                      onClick={() => void handleForgotPassword()}
+                      disabled={isAuthSubmitting}
                       className="text-sm font-medium text-[#5a4ad1] transition hover:text-[#4938c8] hover:underline"
                     >
                       Forgot password?
@@ -729,8 +922,13 @@ export function Header({
                     <Input
                       id="auth-confirm-password"
                       type="password"
+                      value={authConfirmPassword}
+                      onChange={(event) =>
+                        setAuthConfirmPassword(event.target.value)
+                      }
                       placeholder="Repeat your password"
                       autoComplete="new-password"
+                      disabled={isAuthSubmitting}
                       className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
                     />
                   </div>
@@ -738,9 +936,14 @@ export function Header({
 
                 <Button
                   type="submit"
+                  disabled={isAuthSubmitting}
                   className="mt-2 h-11 w-full rounded-xl bg-[#6558f5] text-base font-semibold text-white hover:bg-[#5647f0]"
                 >
-                  {authMode === "login" ? loginLabel : signupLabel}
+                  {isAuthSubmitting
+                    ? "Please wait..."
+                    : authMode === "login"
+                      ? loginLabel
+                      : signupLabel}
                 </Button>
               </form>
             </div>
