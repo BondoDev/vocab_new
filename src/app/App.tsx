@@ -47,6 +47,7 @@ import {
   normalizeUserProfile,
   readSupabaseUserProfile,
   readStoredUserProfile,
+  startsWithLetter,
   writeSupabaseUserProfile,
   writeStoredUserProfile,
   type UserProfile,
@@ -1489,6 +1490,11 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
       return;
     }
 
+    if (!startsWithLetter(nickname)) {
+      setAccountOnboardingError("Nickname must start with a letter.");
+      return;
+    }
+
     if (!userProfile.languageLevel) {
       setAccountOnboardingError("Please choose your language level.");
       return;
@@ -1555,6 +1561,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     onExercises: () => handleRequireLanguages("exerciseSelection"),
     onExplore: () => navigate(ROUTES.explore),
     authSession,
+    accountNickname: userProfile.nickname,
     onAuthSessionChange: handleAuthSessionChange,
   };
 

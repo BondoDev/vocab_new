@@ -231,6 +231,7 @@ interface HeaderProps {
     | "vocabularyLevel"
     | "notFound";
   authSession?: StoredSupabaseSession | null;
+  accountNickname?: string;
   onAuthSessionChange?: (session: StoredSupabaseSession | null) => void;
 }
 
@@ -244,6 +245,7 @@ export function Header({
   onExplore,
   activePage,
   authSession: controlledAuthSession,
+  accountNickname,
   onAuthSessionChange,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -285,7 +287,10 @@ export function Header({
   const showAuthButton = true;
   const googleLabel =
     authMode === "login" ? "Continue with Google" : "Sign up with Google";
-  const authButtonLabel = authSession ? "Account" : loginLabel;
+  const nicknameInitial = accountNickname?.trim().charAt(0).toUpperCase() ?? "";
+  const authButtonLabel = authSession
+    ? nicknameInitial || "Account"
+    : loginLabel;
 
   useEffect(() => {
     if (controlledAuthSession === undefined) {

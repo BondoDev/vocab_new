@@ -35,6 +35,10 @@ export const EMPTY_USER_PROFILE: UserProfile = {
   updatedAt: null,
 };
 
+export function startsWithLetter(value: string): boolean {
+  return /^\p{L}/u.test(value.trim());
+}
+
 function canUseLocalStorage(): boolean {
   return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
 }
