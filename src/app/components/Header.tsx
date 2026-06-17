@@ -283,7 +283,7 @@ export function Header({
   const moreLabel = t("header.more") === "header.more" ? "More" : t("header.more");
   const loginLabel = "Log in";
   const signupLabel = "Sign up";
-  const showAuthButton = Boolean(authSession);
+  const showAuthButton = true;
   const googleLabel =
     authMode === "login" ? "Continue with Google" : "Sign up with Google";
   const authButtonLabel = authSession ? "Account" : loginLabel;
