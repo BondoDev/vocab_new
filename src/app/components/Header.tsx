@@ -230,6 +230,8 @@ interface HeaderProps {
     | "explore"
     | "vocabularyLevel"
     | "notFound";
+  authSession?: StoredSupabaseSession | null;
+  onAuthSessionChange?: (session: StoredSupabaseSession | null) => void;
 }
 
 export function Header({
@@ -241,6 +243,8 @@ export function Header({
   onExercises,
   onExplore,
   activePage,
+  authSession: controlledAuthSession,
+  onAuthSessionChange,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileAccountMenuOpen, setIsMobileAccountMenuOpen] = useState(false);
@@ -255,7 +259,9 @@ export function Header({
   const [authError, setAuthError] = useState<string | null>(null);
   const [authInfo, setAuthInfo] = useState<string | null>(null);
   const [isAuthSubmitting, setIsAuthSubmitting] = useState(false);
-  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(null);
+  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(
+    () => controlledAuthSession ?? getStoredSupabaseSession(),
+  );
   const lastScrollYRef = useRef(0);
   const starSeeds = useMemo(
     () => ({
@@ -277,10 +283,18 @@ export function Header({
   const moreLabel = t("header.more") === "header.more" ? "More" : t("header.more");
   const loginLabel = "Log in";
   const signupLabel = "Sign up";
-  const showAuthButton = true;
+  const showAuthButton = Boolean(authSession);
   const googleLabel =
     authMode === "login" ? "Continue with Google" : "Sign up with Google";
   const authButtonLabel = authSession ? "Account" : loginLabel;
+
+  useEffect(() => {
+    if (controlledAuthSession === undefined) {
+      return;
+    }
+
+    setAuthSession(controlledAuthSession);
+  }, [controlledAuthSession]);
 
   const resetAuthForm = () => {
     setAuthEmail("");
@@ -315,6 +329,7 @@ export function Header({
       setAuthError(null);
       setAuthInfo(null);
       setAuthSession(null);
+      onAuthSessionChange?.(null);
       setIsAuthDialogOpen(false);
       setIsMenuOpen(false);
       setIsMobileAccountMenuOpen(false);
@@ -328,8 +343,6 @@ export function Header({
   };
 
   useEffect(() => {
-    setAuthSession(getStoredSupabaseSession());
-
     let cancelled = false;
 
     void handleSupabaseAuthRedirect()
@@ -343,6 +356,7 @@ export function Header({
         }
         if (result.session) {
           setAuthSession(result.session);
+          onAuthSessionChange?.(result.session);
           setAuthMode("login");
           resetAuthForm();
           setIsAuthDialogOpen(false);
@@ -360,7 +374,7 @@ export function Header({
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [onAuthSessionChange]);
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof document === "undefined") {
@@ -502,6 +516,7 @@ export function Header({
       if (authMode === "login") {
         const session = await signInWithPassword(authEmail.trim(), authPassword);
         setAuthSession(session);
+        onAuthSessionChange?.(session);
         setIsAuthDialogOpen(false);
         resetAuthForm();
         return;
@@ -515,6 +530,7 @@ export function Header({
 
       if (result.session) {
         setAuthSession(result.session);
+        onAuthSessionChange?.(result.session);
         setIsAuthDialogOpen(false);
         resetAuthForm();
         return;

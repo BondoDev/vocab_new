@@ -54,6 +54,12 @@ export function getLevelTestSeoPath(
   return LEVEL_TEST_PATHS[uiLang]?.[targetLanguage] ?? null;
 }
 
+export function getAllLevelTestSeoPaths(): string[] {
+  return levelTestEntries
+    .map((entry) => entry.path)
+    .filter((path, index, array) => Boolean(path) && array.indexOf(path) === index);
+}
+
 export function resolveLevelTestSeoRoute(path: string): {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;

@@ -165,8 +165,19 @@ function readStoredUiLanguage(): UILanguage | null {
     : null;
 }
 
+function readDocumentUiLanguage(): UILanguage | null {
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  const lang = document.documentElement.lang?.trim().toLowerCase();
+  return lang === "en" || lang === "es" || lang === "fr" || lang === "pt" || lang === "it" || lang === "de" || lang === "ru"
+    ? lang
+    : null;
+}
+
 function getInitialUiLanguage(initialUILanguage?: UILanguage): UILanguage {
-  return initialUILanguage ?? readStoredUiLanguage() ?? "en";
+  return initialUILanguage ?? readDocumentUiLanguage() ?? readStoredUiLanguage() ?? "en";
 }
 
 export function LanguageProvider({
@@ -189,6 +200,14 @@ export function LanguageProvider({
 
     setUILanguage(initialUILanguage);
   }, [initialUILanguage]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    document.documentElement.lang = uiLanguage;
+  }, [uiLanguage]);
 
   useEffect(() => {
     let cancelled = false;

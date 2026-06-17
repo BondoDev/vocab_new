@@ -1,10 +1,11 @@
-import { Suspense, lazy, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import "../styles/index.css";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowLeftRight, ChevronDown, Search } from "lucide-react";
 import { Header } from "./components/Header";
+import { AccountOnboardingDialog } from "./components/AccountOnboardingDialog";
 import { LanguageSelector } from "./components/LanguageSelector";
 import { FloatingWords } from "./components/FloatingWords";
 import { NotFoundPage } from "./components/NotFoundPage";
@@ -34,6 +35,22 @@ import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../data/levelTests";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPageData";
+import {
+  getStoredSupabaseSession,
+  handleSupabaseAuthRedirect,
+  subscribeToSupabaseSessionChanges,
+  type StoredSupabaseSession,
+} from "../lib/supabaseAuth";
+import {
+  EMPTY_USER_PROFILE,
+  isUserProfileComplete,
+  normalizeUserProfile,
+  readSupabaseUserProfile,
+  readStoredUserProfile,
+  writeSupabaseUserProfile,
+  writeStoredUserProfile,
+  type UserProfile,
+} from "../lib/userProfile";
 
 const LevelCategorySelection = lazy(() =>
   import("./components/LevelCategorySelection").then((module) => ({
@@ -147,6 +164,12 @@ function readStoredStringArray(
   } catch {
     return null;
   }
+}
+
+function getSessionUserId(session: StoredSupabaseSession | null): string | null {
+  return typeof session?.user?.id === "string" && session.user.id.trim()
+    ? session.user.id
+    : null;
 }
 
 interface ParsedVocabularyRoute {
@@ -949,6 +972,13 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   const [practiceLanguage, setPracticeLanguage] = useState(
     () => initialPracticeRouteRef.current?.practiceLanguage ?? "",
   );
+  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(() =>
+    getStoredSupabaseSession(),
+  );
+  const [userProfile, setUserProfile] = useState<UserProfile>(EMPTY_USER_PROFILE);
+  const [isAccountOnboardingOpen, setIsAccountOnboardingOpen] = useState(false);
+  const [isAccountOnboardingSubmitting, setIsAccountOnboardingSubmitting] = useState(false);
+  const [accountOnboardingError, setAccountOnboardingError] = useState<string | null>(null);
   const navigate = useNavigate();
   const levelTestSeoRoute = useMemo(
     () => parseLevelTestSeoRoute(location.pathname),
@@ -994,6 +1024,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const resolvedPage = currentPage;
+  const authUserId = getSessionUserId(authSession);
 
   useEffect(() => {
     const persistedYourLanguage = readStoredString(
@@ -1053,6 +1084,120 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   }, [supportedLanguageCodes]);
 
   useEffect(() => {
+    const unsubscribe = subscribeToSupabaseSessionChanges(setAuthSession);
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    if (resolvedPage !== "practice" && resolvedPage !== "exam") {
+      return;
+    }
+
+    let cancelled = false;
+
+    void handleSupabaseAuthRedirect()
+      .then((result) => {
+        if (cancelled || !result.session) {
+          return;
+        }
+
+        setAuthSession(result.session);
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
+  }, [resolvedPage]);
+
+  useEffect(() => {
+    if (!authUserId) {
+      setUserProfile(EMPTY_USER_PROFILE);
+      setIsAccountOnboardingOpen(false);
+      setAccountOnboardingError(null);
+      return;
+    }
+
+    let cancelled = false;
+    const storedProfile = readStoredUserProfile(authUserId);
+
+    void (async () => {
+      try {
+        const supabaseProfile = authSession
+          ? await readSupabaseUserProfile(authSession)
+          : null;
+        const hasSupabaseProfileRow = Boolean(supabaseProfile);
+        if (cancelled) {
+          return;
+        }
+
+        const nextProfile = normalizeUserProfile({
+          ...storedProfile,
+          ...supabaseProfile,
+          nickname: supabaseProfile?.nickname || storedProfile?.nickname || "",
+          nativeLanguage:
+            supabaseProfile?.nativeLanguage ||
+            storedProfile?.nativeLanguage ||
+            yourLanguage ||
+            "",
+          practiceLanguage:
+            supabaseProfile?.practiceLanguage ||
+            storedProfile?.practiceLanguage ||
+            practiceLanguage ||
+            "",
+        });
+
+        if (!yourLanguage && nextProfile.nativeLanguage) {
+          setYourLanguage(nextProfile.nativeLanguage);
+        }
+        if (!practiceLanguage && nextProfile.practiceLanguage) {
+          setPracticeLanguage(nextProfile.practiceLanguage);
+        }
+
+        setUserProfile(nextProfile);
+        setIsAccountOnboardingOpen(
+          !hasSupabaseProfileRow || !isUserProfileComplete(nextProfile),
+        );
+        setAccountOnboardingError(null);
+      } catch {
+        if (cancelled) {
+          return;
+        }
+
+        const fallbackProfile = normalizeUserProfile({
+          ...storedProfile,
+          nativeLanguage: storedProfile?.nativeLanguage || yourLanguage || "",
+          practiceLanguage: storedProfile?.practiceLanguage || practiceLanguage || "",
+        });
+
+        setUserProfile(fallbackProfile);
+        setIsAccountOnboardingOpen(!isUserProfileComplete(fallbackProfile));
+        setAccountOnboardingError(null);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [authSession, authUserId, practiceLanguage, yourLanguage]);
+
+  useEffect(() => {
+    if (!authUserId) {
+      return;
+    }
+
+    setUserProfile((current) => {
+      const nextProfile = normalizeUserProfile({
+        ...current,
+        nativeLanguage: yourLanguage || current.nativeLanguage,
+        practiceLanguage: practiceLanguage || current.practiceLanguage,
+      });
+
+      return JSON.stringify(nextProfile) === JSON.stringify(current) ? current : nextProfile;
+    });
+  }, [authUserId, practiceLanguage, yourLanguage]);
+
+  useEffect(() => {
     if (!canUseLocalStorage()) {
       return;
     }
@@ -1065,6 +1210,34 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     }
     window.localStorage.setItem(STORAGE_KEYS.practiceLanguage, practiceLanguage);
   }, [practiceLanguage]);
+
+  useEffect(() => {
+    if (
+      !authSession ||
+      !authUserId ||
+      !userProfile.onboardingCompleted ||
+      !yourLanguage ||
+      !practiceLanguage
+    ) {
+      return;
+    }
+
+    if (
+      userProfile.nativeLanguage === yourLanguage &&
+      userProfile.practiceLanguage === practiceLanguage
+    ) {
+      return;
+    }
+
+    const nextProfile = writeStoredUserProfile(authUserId, {
+      ...userProfile,
+      nativeLanguage: yourLanguage as UILanguage,
+      practiceLanguage: practiceLanguage as UILanguage,
+    });
+
+    setUserProfile(nextProfile);
+    void writeSupabaseUserProfile(authSession, nextProfile).catch(() => {});
+  }, [authSession, authUserId, practiceLanguage, userProfile, yourLanguage]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {
@@ -1279,6 +1452,110 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     }
 
     navigate(buildPracticeRoute(yourLanguage as UILanguage, practiceLanguage as UILanguage));
+  };
+
+  const handleAuthSessionChange = useCallback((session: StoredSupabaseSession | null) => {
+    setAuthSession(session);
+  }, []);
+
+  const handleUserProfileChange = (patch: Partial<UserProfile>) => {
+    setAccountOnboardingError(null);
+    setUserProfile((current) => normalizeUserProfile({ ...current, ...patch }));
+
+    if (patch.nativeLanguage !== undefined) {
+      setYourLanguage(patch.nativeLanguage);
+    }
+
+    if (patch.practiceLanguage !== undefined) {
+      setPracticeLanguage(patch.practiceLanguage);
+    }
+  };
+
+  const handleAccountOnboardingSubmit = async () => {
+    const nickname = userProfile.nickname.trim();
+    const age = userProfile.age;
+    const birthMonth = userProfile.birthMonth;
+    const birthDay = userProfile.birthDay;
+    const nativeLanguage = (userProfile.nativeLanguage || yourLanguage) as UserProfile["nativeLanguage"];
+    const nextPracticeLanguage = (userProfile.practiceLanguage || practiceLanguage) as UserProfile["practiceLanguage"];
+
+    if (!authUserId) {
+      setAccountOnboardingError("Sign in again to finish your profile.");
+      return;
+    }
+
+    if (!nickname) {
+      setAccountOnboardingError("Please choose a nickname.");
+      return;
+    }
+
+    if (!userProfile.languageLevel) {
+      setAccountOnboardingError("Please choose your language level.");
+      return;
+    }
+
+    if (age === null) {
+      setAccountOnboardingError("Please set your age.");
+      return;
+    }
+
+    if (!birthMonth || !birthDay) {
+      setAccountOnboardingError("Please choose your birth month and day.");
+      return;
+    }
+
+    if (!nativeLanguage || !nextPracticeLanguage) {
+      setAccountOnboardingError("Please choose both languages.");
+      return;
+    }
+
+    setIsAccountOnboardingSubmitting(true);
+
+    try {
+      const profileToSave = {
+        ...userProfile,
+        nickname,
+        age,
+        birthMonth,
+        birthDay,
+        nativeLanguage,
+        practiceLanguage: nextPracticeLanguage,
+        onboardingCompleted: true,
+      };
+      const supabaseProfile = authSession
+        ? await writeSupabaseUserProfile(authSession, profileToSave)
+        : {};
+      const nextProfile = writeStoredUserProfile(authUserId, {
+        ...profileToSave,
+        ...supabaseProfile,
+      });
+
+      setUserProfile(nextProfile);
+      setYourLanguage(nativeLanguage);
+      setPracticeLanguage(nextPracticeLanguage);
+      setIsAccountOnboardingOpen(false);
+      setAccountOnboardingError(null);
+    } catch (error) {
+      const message =
+        error instanceof Error && error.message.trim()
+          ? error.message
+          : "We could not save your profile. Please try again.";
+      setAccountOnboardingError(message);
+    } finally {
+      setIsAccountOnboardingSubmitting(false);
+    }
+  };
+
+  const sharedHeaderProps = {
+    onAbout: () => navigate(ROUTES.about),
+    onHelp: () => navigate(ROUTES.help),
+    onLevelTest: () => handleRequireLanguages("exam"),
+    onLanguages: () => navigate(ROUTES.language),
+    onFilters: () => handleRequireLanguages("levelCategory"),
+    onExercises: () => handleRequireLanguages("exerciseSelection"),
+    onExplore: () => navigate(ROUTES.explore),
+    authSession,
+    onAuthSessionChange: handleAuthSessionChange,
   };
 
   const handleStartExam = () => {
@@ -1546,37 +1823,44 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     </div>
   ) : null;
 
+  const accountOnboardingDialog = authUserId ? (
+    <AccountOnboardingDialog
+      open={isAccountOnboardingOpen}
+      onOpenChange={setIsAccountOnboardingOpen}
+      profile={userProfile}
+      languages={languages}
+      isSubmitting={isAccountOnboardingSubmitting}
+      error={accountOnboardingError}
+      onProfileChange={handleUserProfileChange}
+      onSubmit={handleAccountOnboardingSubmit}
+    />
+  ) : null;
+
   if (resolvedPage === "practice") {
     return (
-      <Suspense fallback={<RouteLoadingFallback />}>
-        <VocabularyPractice
-          practiceLanguage={practiceLanguage}
-          yourLanguage={yourLanguage}
-          selectedLevel={selectedLevel}
-          selectedLevels={selectedLevels}
-          selectedCategories={selectedCategories}
-          selectedWordTypes={selectedWordTypes}
-          selectedExercises={selectedExercises}
-          onBack={() => navigate(ROUTES.exerciseSelection)}
-          onGoFilters={() => navigate(ROUTES.levelCategory)}
-        />
-      </Suspense>
+      <>
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <VocabularyPractice
+            practiceLanguage={practiceLanguage}
+            yourLanguage={yourLanguage}
+            selectedLevel={selectedLevel}
+            selectedLevels={selectedLevels}
+            selectedCategories={selectedCategories}
+            selectedWordTypes={selectedWordTypes}
+            selectedExercises={selectedExercises}
+            onBack={() => navigate(ROUTES.exerciseSelection)}
+            onGoFilters={() => navigate(ROUTES.levelCategory)}
+          />
+        </Suspense>
+        {accountOnboardingDialog}
+      </>
     );
   }
 
   if (resolvedPage === "exerciseSelection") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="exerciseSelection"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="exerciseSelection" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <ExerciseSelection
             selectedExercises={selectedExercises}
@@ -1585,6 +1869,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
             onContinue={handleContinueToPractice}
           />
         </Suspense>
+        {accountOnboardingDialog}
       </div>
     );
   }
@@ -1592,16 +1877,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "levelCategory") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="levelCategory"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="levelCategory" />
         <div className="flex-1 min-h-0">
           <Suspense fallback={<RouteLoadingFallback />}>
             <LevelCategorySelection
@@ -1620,39 +1896,35 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
             />
           </Suspense>
         </div>
+        {accountOnboardingDialog}
       </div>
     );
   }
 
   if (resolvedPage === "exam") {
     return (
-      <Suspense fallback={<RouteLoadingFallback />}>
-        <VocabularyLevelExam
-          practiceLanguage={practiceLanguage}
-          yourLanguage={yourLanguage}
-          onComplete={handleExamComplete}
-          onCancel={() => navigate(ROUTES.levelCategory)}
-        />
-      </Suspense>
+      <>
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <VocabularyLevelExam
+            practiceLanguage={practiceLanguage}
+            yourLanguage={yourLanguage}
+            onComplete={handleExamComplete}
+            onCancel={() => navigate(ROUTES.levelCategory)}
+          />
+        </Suspense>
+        {accountOnboardingDialog}
+      </>
     );
   }
 
   if (resolvedPage === "about") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="about"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="about" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <About onBack={() => navigate(ROUTES.language)} />
         </Suspense>
+        {accountOnboardingDialog}
       </div>
     );
   }
@@ -1660,16 +1932,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "explore") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="explore"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="explore" />
         <main className="flex-1 px-4 py-8 md:px-8 md:py-12">
           <div className="mx-auto w-full max-w-5xl">
             <div className="mb-5">
@@ -1966,6 +2229,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
             </div>
           </div>
         </main>
+        {accountOnboardingDialog}
       </div>
     );
   }
@@ -1973,19 +2237,11 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "help") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="help"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="help" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <Help onBack={() => navigate(ROUTES.language)} />
         </Suspense>
+        {accountOnboardingDialog}
       </div>
     );
   }
@@ -1994,33 +2250,16 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     if (!levelTestSeoRoute) {
       return (
         <div className="min-h-screen flex flex-col bg-background">
-          <Header
-            activePage="notFound"
-            onAbout={() => navigate(ROUTES.about)}
-            onHelp={() => navigate(ROUTES.help)}
-            onLevelTest={() => handleRequireLanguages("exam")}
-            onLanguages={() => navigate(ROUTES.language)}
-            onFilters={() => handleRequireLanguages("levelCategory")}
-            onExercises={() => handleRequireLanguages("exerciseSelection")}
-            onExplore={() => navigate(ROUTES.explore)}
-          />
+          <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid level test page." />
+          {accountOnboardingDialog}
         </div>
       );
     }
 
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="vocabularyLevel"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <LevelTestSeoPage
             uiLang={levelTestSeoRoute.uiLang}
@@ -2033,6 +2272,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
           />
         </Suspense>
         {levelTestLanguageModal}
+        {accountOnboardingDialog}
       </div>
     );
   }
@@ -2042,33 +2282,16 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     if (!wordRoute) {
       return (
         <div className="min-h-screen flex flex-col bg-background">
-          <Header
-            activePage="notFound"
-            onAbout={() => navigate(ROUTES.about)}
-            onHelp={() => navigate(ROUTES.help)}
-            onLevelTest={() => handleRequireLanguages("exam")}
-            onLanguages={() => navigate(ROUTES.language)}
-            onFilters={() => handleRequireLanguages("levelCategory")}
-            onExercises={() => handleRequireLanguages("exerciseSelection")}
-            onExplore={() => navigate(ROUTES.explore)}
-          />
+          <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid word page." />
+          {accountOnboardingDialog}
         </div>
       );
     }
 
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="vocabularyLevel"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <WordSeoPage
             uiLang={wordRoute.uiLang}
@@ -2079,6 +2302,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
             initialData={initialWordPageData}
           />
         </Suspense>
+        {accountOnboardingDialog}
       </div>
     );
   }
@@ -2087,17 +2311,9 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     if (!vocabularyRoute) {
       return (
         <div className="min-h-screen flex flex-col bg-background">
-          <Header
-            activePage="notFound"
-            onAbout={() => navigate(ROUTES.about)}
-            onHelp={() => navigate(ROUTES.help)}
-            onLevelTest={() => handleRequireLanguages("exam")}
-            onLanguages={() => navigate(ROUTES.language)}
-            onFilters={() => handleRequireLanguages("levelCategory")}
-            onExercises={() => handleRequireLanguages("exerciseSelection")}
-            onExplore={() => navigate(ROUTES.explore)}
-          />
+          <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid vocabulary practice page." />
+          {accountOnboardingDialog}
         </div>
       );
     }
@@ -2110,16 +2326,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
 
   return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="vocabularyLevel"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
         <Suspense fallback={<RouteLoadingFallback />}>
           {jsonBackedVocabularyItem ? (
             <DevSeoCefrPlaceholderPage
@@ -2136,6 +2343,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
             />
           )}
         </Suspense>
+        {accountOnboardingDialog}
       </div>
     );
   }
@@ -2144,36 +2352,20 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     if (!seoHubRoute) {
       return (
         <div className="min-h-screen flex flex-col bg-background">
-          <Header
-            activePage="notFound"
-            onAbout={() => navigate(ROUTES.about)}
-            onHelp={() => navigate(ROUTES.help)}
-            onLevelTest={() => handleRequireLanguages("exam")}
-            onLanguages={() => navigate(ROUTES.language)}
-            onFilters={() => handleRequireLanguages("levelCategory")}
-            onExercises={() => handleRequireLanguages("exerciseSelection")}
-            onExplore={() => navigate(ROUTES.explore)}
-          />
+          <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid SEO page index." />
+          {accountOnboardingDialog}
         </div>
       );
     }
 
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="explore"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="explore" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <SeoHubPage uiLang={seoHubRoute} />
         </Suspense>
+        {accountOnboardingDialog}
       </div>
     );
   }
@@ -2184,33 +2376,16 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     if (!devPreviewRoute) {
       return (
         <div className="min-h-screen flex flex-col bg-background">
-          <Header
-            activePage="notFound"
-            onAbout={() => navigate(ROUTES.about)}
-            onHelp={() => navigate(ROUTES.help)}
-            onLevelTest={() => handleRequireLanguages("exam")}
-            onLanguages={() => navigate(ROUTES.language)}
-            onFilters={() => handleRequireLanguages("levelCategory")}
-            onExercises={() => handleRequireLanguages("exerciseSelection")}
-            onExplore={() => navigate(ROUTES.explore)}
-          />
+          <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid preview page." />
+          {accountOnboardingDialog}
         </div>
       );
     }
 
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="vocabularyLevel"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <DevSeoCefrPlaceholderPage
             routeParams={{
@@ -2221,6 +2396,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
             onStartPractice={handleStartVocabularyPractice}
           />
         </Suspense>
+        {accountOnboardingDialog}
       </div>
     );
   }
@@ -2228,33 +2404,16 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "notFound") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header
-          activePage="notFound"
-          onAbout={() => navigate(ROUTES.about)}
-          onHelp={() => navigate(ROUTES.help)}
-          onLevelTest={() => handleRequireLanguages("exam")}
-          onLanguages={() => navigate(ROUTES.language)}
-          onFilters={() => handleRequireLanguages("levelCategory")}
-          onExercises={() => handleRequireLanguages("exerciseSelection")}
-          onExplore={() => navigate(ROUTES.explore)}
-        />
+        <Header {...sharedHeaderProps} activePage="notFound" />
         <NotFoundPage />
+        {accountOnboardingDialog}
       </div>
     );
   }
 
   return (
     <div className="language-page min-h-[100svh] w-full min-w-0 flex flex-col overflow-x-hidden bg-background">
-      <Header
-        activePage="language"
-        onAbout={() => navigate(ROUTES.about)}
-        onHelp={() => navigate(ROUTES.help)}
-        onLevelTest={() => handleRequireLanguages("exam")}
-        onLanguages={() => navigate(ROUTES.language)}
-        onFilters={() => handleRequireLanguages("levelCategory")}
-        onExercises={() => handleRequireLanguages("exerciseSelection")}
-        onExplore={() => navigate(ROUTES.explore)}
-      />
+      <Header {...sharedHeaderProps} activePage="language" />
 
       <main className="flex-1 min-h-0 flex flex-col items-center justify-center px-[clamp(1rem,3vw,2.5rem)] pt-[clamp(0.5rem,2vw,1.5rem)] pb-[clamp(2.5rem,6vw,5rem)] relative">
         <FloatingWords />
@@ -2517,6 +2676,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
           </motion.div>
         </div>
       </main>
+      {accountOnboardingDialog}
     </div>
   );
 }

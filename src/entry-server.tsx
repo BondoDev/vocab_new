@@ -9,7 +9,7 @@ import {
   type UiLanguageCode,
 } from "./data/seo/slugs";
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
-import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "./data/levelTests";
+import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/levelTests";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
 import { resolveWordRoute } from "./data/seo/wordSlugs";
@@ -149,9 +149,7 @@ export function getPrerenderRoutes(): string[] {
     ...practiceRoutes,
     ...getAllLocalizedVocabularyRoutes().map((route) => route.path),
     ...getAllSeoHubPaths(),
-    ...(["en", "es", "fr", "de", "it", "pt", "ru"] as const)
-      .map((uiLang) => getLevelTestSeoPath(uiLang, "english"))
-      .filter((route): route is string => Boolean(route)),
+    ...getAllLevelTestSeoPaths(),
   ])];
 }
 

@@ -6,6 +6,8 @@ const STORAGE_KEYS = {
   pkceVerifier: "supabase.auth.pkce.verifier",
 } as const;
 
+const AUTH_SESSION_CHANGED_EVENT = "supabase-auth-session-changed";
+
 export interface StoredSupabaseSession {
   access_token: string;
   refresh_token: string;
@@ -32,13 +34,20 @@ type AuthResponse = {
   msg?: string;
 };
 
+export interface SupabaseAuthUser {
+  id: string;
+  email?: string;
+  user_metadata?: Record<string, unknown> | null;
+  [key: string]: unknown;
+}
+
 function ensureSupabaseConfig() {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     throw new Error("Supabase environment variables are missing.");
   }
 }
 
-function getAuthHeaders() {
+export function getAuthHeaders() {
   ensureSupabaseConfig();
   return {
     apikey: SUPABASE_ANON_KEY,
@@ -51,10 +60,15 @@ function storeSession(session: StoredSupabaseSession | null) {
 
   if (!session) {
     window.localStorage.removeItem(STORAGE_KEYS.session);
-    return;
+  } else {
+    window.localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(session));
   }
 
-  window.localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(session));
+  window.dispatchEvent(
+    new CustomEvent<StoredSupabaseSession | null>(AUTH_SESSION_CHANGED_EVENT, {
+      detail: session,
+    }),
+  );
 }
 
 function normalizeSession(payload: AuthResponse): StoredSupabaseSession | null {
@@ -76,7 +90,38 @@ function normalizeSession(payload: AuthResponse): StoredSupabaseSession | null {
   };
 }
 
-async function authRequest<TResponse>(
+async function populateSessionUser(
+  session: StoredSupabaseSession | null,
+): Promise<StoredSupabaseSession | null> {
+  if (!session?.access_token) {
+    return session;
+  }
+
+  if (session.user?.id) {
+    return session;
+  }
+
+  try {
+    const user = await fetchSupabaseAuthUser(session);
+    return {
+      ...session,
+      user,
+    };
+  } catch {
+    return session;
+  }
+}
+
+function isSessionExpiringSoon(session: StoredSupabaseSession | null | undefined) {
+  if (!session?.expires_at) {
+    return false;
+  }
+
+  const expiresAtMs = session.expires_at * 1000;
+  return Date.now() >= expiresAtMs - 60_000;
+}
+
+export async function supabaseRequest<TResponse>(
   path: string,
   options: RequestInit,
 ): Promise<TResponse> {
@@ -116,8 +161,69 @@ export function getStoredSupabaseSession(): StoredSupabaseSession | null {
   }
 }
 
+export async function refreshSupabaseSession(
+  session: StoredSupabaseSession,
+): Promise<StoredSupabaseSession> {
+  if (!session.refresh_token) {
+    throw new Error("Missing refresh token. Sign in again.");
+  }
+
+  const payload = await supabaseRequest<AuthResponse>(
+    "/auth/v1/token?grant_type=refresh_token",
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        refresh_token: session.refresh_token,
+      }),
+    },
+  );
+
+  const nextSession = normalizeSession(payload);
+  if (!nextSession) {
+    throw new Error("Could not refresh session. Sign in again.");
+  }
+
+  const mergedSession: StoredSupabaseSession = {
+    ...session,
+    ...nextSession,
+    user: nextSession.user ?? session.user ?? null,
+  };
+
+  const hydratedSession = await populateSessionUser(mergedSession);
+  storeSession(hydratedSession);
+  return hydratedSession ?? mergedSession;
+}
+
+export async function ensureFreshSupabaseSession(
+  session: StoredSupabaseSession,
+): Promise<StoredSupabaseSession> {
+  if (!isSessionExpiringSoon(session)) {
+    return session;
+  }
+
+  return refreshSupabaseSession(session);
+}
+
+export function subscribeToSupabaseSessionChanges(
+  listener: (session: StoredSupabaseSession | null) => void,
+) {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
+
+  const handleSessionChanged = (event: Event) => {
+    listener((event as CustomEvent<StoredSupabaseSession | null>).detail ?? null);
+  };
+
+  window.addEventListener(AUTH_SESSION_CHANGED_EVENT, handleSessionChanged);
+  return () => {
+    window.removeEventListener(AUTH_SESSION_CHANGED_EVENT, handleSessionChanged);
+  };
+}
+
 export async function signInWithPassword(email: string, password: string) {
-  const payload = await authRequest<AuthResponse>(
+  const payload = await supabaseRequest<AuthResponse>(
     "/auth/v1/token?grant_type=password",
     {
       method: "POST",
@@ -126,7 +232,7 @@ export async function signInWithPassword(email: string, password: string) {
     },
   );
 
-  const session = normalizeSession(payload);
+  const session = await populateSessionUser(normalizeSession(payload));
   storeSession(session);
   return session;
 }
@@ -136,7 +242,7 @@ export async function signOutSupabase(
 ): Promise<void> {
   try {
     if (session?.access_token) {
-      await authRequest<AuthResponse>("/auth/v1/logout", {
+      await supabaseRequest<AuthResponse>("/auth/v1/logout", {
         method: "POST",
         headers: {
           ...getAuthHeaders(),
@@ -157,7 +263,7 @@ export async function signUpWithPassword(input: {
   password: string;
   fullName?: string;
 }) {
-  const payload = await authRequest<AuthResponse>(
+  const payload = await supabaseRequest<AuthResponse>(
     "/auth/v1/signup",
     {
       method: "POST",
@@ -170,7 +276,7 @@ export async function signUpWithPassword(input: {
     },
   );
 
-  const session = normalizeSession(payload);
+  const session = await populateSessionUser(normalizeSession(payload));
   if (session) {
     storeSession(session);
   }
@@ -185,7 +291,7 @@ export async function sendPasswordRecoveryEmail(
   email: string,
   redirectTo: string,
 ) {
-  await authRequest<AuthResponse>("/auth/v1/recover", {
+  await supabaseRequest<AuthResponse>("/auth/v1/recover", {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify({ email, redirect_to: redirectTo }),
@@ -241,7 +347,7 @@ async function exchangeCodeForSession(code: string) {
     throw new Error("Missing OAuth verifier. Try signing in with Google again.");
   }
 
-  const payload = await authRequest<AuthResponse>("/auth/v1/token?grant_type=pkce", {
+  const payload = await supabaseRequest<AuthResponse>("/auth/v1/token?grant_type=pkce", {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify({
@@ -252,7 +358,7 @@ async function exchangeCodeForSession(code: string) {
 
   window.localStorage.removeItem(STORAGE_KEYS.pkceVerifier);
 
-  const session = normalizeSession(payload);
+  const session = await populateSessionUser(normalizeSession(payload));
   storeSession(session);
   return session;
 }
@@ -294,9 +400,10 @@ export async function handleSupabaseAuthRedirect() {
       token_type: hashParams.get("token_type"),
       user: null,
     };
-    storeSession(session);
+    const hydratedSession = await populateSessionUser(session);
+    storeSession(hydratedSession);
     clearAuthParamsFromUrl();
-    return { changed: true, session, error: null };
+    return { changed: true, session: hydratedSession, error: null };
   }
 
   if (errorDescription) {
@@ -316,4 +423,32 @@ export async function handleSupabaseAuthRedirect() {
   }
 
   return { changed: false, session: null, error: null };
+}
+
+export async function fetchSupabaseAuthUser(
+  session: StoredSupabaseSession,
+): Promise<SupabaseAuthUser> {
+  return supabaseRequest<SupabaseAuthUser>("/auth/v1/user", {
+    method: "GET",
+    headers: {
+      ...getAuthHeaders(),
+      Authorization: `Bearer ${session.access_token}`,
+    },
+  });
+}
+
+export async function updateSupabaseAuthUserMetadata(
+  session: StoredSupabaseSession,
+  metadata: Record<string, unknown>,
+): Promise<SupabaseAuthUser> {
+  return supabaseRequest<SupabaseAuthUser>("/auth/v1/user", {
+    method: "PUT",
+    headers: {
+      ...getAuthHeaders(),
+      Authorization: `Bearer ${session.access_token}`,
+    },
+    body: JSON.stringify({
+      data: metadata,
+    }),
+  });
 }
