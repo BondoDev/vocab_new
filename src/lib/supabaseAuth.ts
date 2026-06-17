@@ -131,6 +131,27 @@ export async function signInWithPassword(email: string, password: string) {
   return session;
 }
 
+export async function signOutSupabase(
+  session?: StoredSupabaseSession | null,
+): Promise<void> {
+  try {
+    if (session?.access_token) {
+      await authRequest<AuthResponse>("/auth/v1/logout", {
+        method: "POST",
+        headers: {
+          ...getAuthHeaders(),
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+    }
+  } finally {
+    storeSession(null);
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem(STORAGE_KEYS.pkceVerifier);
+    }
+  }
+}
+
 export async function signUpWithPassword(input: {
   email: string;
   password: string;
@@ -189,6 +210,14 @@ function createRandomVerifier() {
   return base64UrlEncode(bytes);
 }
 
+function getStoredPkceVerifier() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return window.localStorage.getItem(STORAGE_KEYS.pkceVerifier);
+}
+
 export async function signInWithGoogleOAuth(redirectTo: string) {
   ensureSupabaseConfig();
 
@@ -206,10 +235,7 @@ export async function signInWithGoogleOAuth(redirectTo: string) {
 }
 
 async function exchangeCodeForSession(code: string) {
-  const verifier =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem(STORAGE_KEYS.pkceVerifier)
-      : null;
+  const verifier = getStoredPkceVerifier();
 
   if (!verifier) {
     throw new Error("Missing OAuth verifier. Try signing in with Google again.");
@@ -279,6 +305,11 @@ export async function handleSupabaseAuthRedirect() {
   }
 
   if (authCode) {
+    if (!getStoredPkceVerifier()) {
+      clearAuthParamsFromUrl();
+      return { changed: false, session: null, error: null };
+    }
+
     const session = await exchangeCodeForSession(authCode);
     clearAuthParamsFromUrl();
     return { changed: true, session, error: null };

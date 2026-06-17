@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  BookOpen,
   ChevronDown,
   ChevronRight,
   CircleHelp,
@@ -9,8 +10,11 @@ import {
   Info,
   Languages,
   LogIn,
+  LogOut,
   Menu,
   SlidersHorizontal,
+  UserRound,
+  Settings,
   X,
 } from "lucide-react";
 import { UILanguageSwitcher } from "../components/UILanguageSwitcher";
@@ -24,11 +28,20 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import {
   getStoredSupabaseSession,
   handleSupabaseAuthRedirect,
   sendPasswordRecoveryEmail,
   signInWithGoogleOAuth,
   signInWithPassword,
+  signOutSupabase,
   signUpWithPassword,
   type StoredSupabaseSession,
 } from "../../lib/supabaseAuth";
@@ -230,6 +243,7 @@ export function Header({
   activePage,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileAccountMenuOpen, setIsMobileAccountMenuOpen] = useState(false);
   const [isDesktopMoreOpen, setIsDesktopMoreOpen] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
@@ -263,7 +277,7 @@ export function Header({
   const moreLabel = t("header.more") === "header.more" ? "More" : t("header.more");
   const loginLabel = "Log in";
   const signupLabel = "Sign up";
-  const showAuthButton = false;
+  const showAuthButton = true;
   const googleLabel =
     authMode === "login" ? "Continue with Google" : "Sign up with Google";
   const authButtonLabel = authSession ? "Account" : loginLabel;
@@ -282,6 +296,7 @@ export function Header({
     setAuthMode("login");
     resetAuthForm();
     setIsMenuOpen(false);
+    setIsMobileAccountMenuOpen(false);
     setIsDesktopMoreOpen(false);
     setIsAuthDialogOpen(true);
   };
@@ -291,6 +306,25 @@ export function Header({
     setAuthError(null);
     setAuthInfo(null);
     setIsAuthDialogOpen(true);
+  };
+
+  const handleSignOut = async () => {
+    const currentSession = authSession;
+
+    try {
+      setAuthError(null);
+      setAuthInfo(null);
+      setAuthSession(null);
+      setIsAuthDialogOpen(false);
+      setIsMenuOpen(false);
+      setIsMobileAccountMenuOpen(false);
+      setIsDesktopMoreOpen(false);
+      resetAuthForm();
+      await signOutSupabase(currentSession);
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : "Sign out failed.");
+      setIsAuthDialogOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -309,9 +343,9 @@ export function Header({
         }
         if (result.session) {
           setAuthSession(result.session);
-          setAuthInfo("Signed in successfully.");
           setAuthMode("login");
-          setIsAuthDialogOpen(true);
+          resetAuthForm();
+          setIsAuthDialogOpen(false);
         }
       })
       .catch((error) => {
@@ -395,6 +429,8 @@ export function Header({
     if (isMenuOpen) {
       setIsHeaderHidden(false);
       setIsDesktopMoreOpen(false);
+    } else {
+      setIsMobileAccountMenuOpen(false);
     }
   }, [isMenuOpen]);
 
@@ -485,8 +521,8 @@ export function Header({
       }
 
       setAuthInfo("Account created. Check your email to confirm your sign up.");
-      setAuthPassword("");
-      setAuthConfirmPassword("");
+      setIsAuthDialogOpen(false);
+      resetAuthForm();
     } catch (error) {
       setAuthError(
         error instanceof Error ? error.message : "Authentication failed.",
@@ -521,11 +557,9 @@ export function Header({
   const isActive = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
     activePage ? pages.includes(activePage) : false;
   const getDesktopNavClassName = (...pages: NonNullable<HeaderProps["activePage"]>[]) =>
-    `relative inline-flex items-center leading-none cursor-pointer rounded-md transition text-[10px] font-bold uppercase tracking-[0.2em] border border-transparent px-3 py-1.5 appearance-none ${
-      isActive(...pages)
-        ? "rounded-full border-white/45 bg-white/18 text-white shadow-[0_8px_18px_rgba(12,10,24,0.18)]"
-        : "bg-transparent text-white/90 hover:text-white hover:bg-white/10"
-    }`;
+    `header-desktop-link ${isActive(...pages) ? "is-active" : ""}`;
+  const desktopAuthButtonClassName =
+    "header-desktop-control header-auth-nav";
   const createNavClickHandler = (action?: () => void) => (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (!action) {
       return;
@@ -612,7 +646,7 @@ export function Header({
           }}
         />
 
-        <nav className="header-nav relative z-[70] flex items-center justify-between max-w-7xl mx-auto md:grid md:grid-cols-[1fr_auto_1fr] md:items-center">
+        <nav className="header-nav relative z-[70] flex items-center justify-between max-w-7xl mx-auto md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center">
           <div className="header-logo-wrap order-2 md:order-1 md:justify-self-start">
             <div className="site-logo text-lg font-black tracking-[0.3em] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
               <a
@@ -626,12 +660,12 @@ export function Header({
             </div>
           </div>
 
-          <div className="header-desktop-nav hidden md:flex order-2 items-center gap-6 md:justify-self-center">
-            <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/90">
+          <div className="header-desktop-nav hidden md:flex order-2 items-center md:justify-self-center">
+            <div className="header-desktop-nav-group">
               <a
                 href={NAV_HREFS.language}
                 onClick={createNavClickHandler(onLanguages)}
-                className={`${getDesktopNavClassName("language")} gap-1.5`}
+                className={getDesktopNavClassName("language")}
               >
                 <Languages size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.languages")}
@@ -639,7 +673,7 @@ export function Header({
               <a
                 href={NAV_HREFS.levelCategory}
                 onClick={createNavClickHandler(onFilters)}
-                className={`${getDesktopNavClassName("levelCategory")} gap-1.5`}
+                className={getDesktopNavClassName("levelCategory")}
               >
                 <SlidersHorizontal size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.filters")}
@@ -647,34 +681,34 @@ export function Header({
               <a
                 href={NAV_HREFS.exerciseSelection}
                 onClick={createNavClickHandler(onExercises)}
-                className={`${getDesktopNavClassName("exerciseSelection")} gap-1.5`}
+                className={getDesktopNavClassName("exerciseSelection")}
               >
                 <Dumbbell size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.exercises")}
               </a>
               <div
-                className="relative pb-2 -mb-2"
+                className="header-desktop-more relative"
                 onMouseLeave={() => setIsDesktopMoreOpen(false)}
               >
                 <button
                   type="button"
                   onClick={() => setIsDesktopMoreOpen((open) => !open)}
-                  className={`${getDesktopNavClassName("about", "help")} gap-1.5`}
+                  className={getDesktopNavClassName("about", "help")}
                   aria-haspopup="menu"
                   aria-expanded={isDesktopMoreOpen}
                 >
                   {moreLabel}
                   <ChevronDown
-                    size={12}
+                    size={14}
                     className={`transition-transform ${isDesktopMoreOpen ? "rotate-180" : ""}`}
                   />
                 </button>
                 {isDesktopMoreOpen ? (
-                  <div className="absolute right-0 top-full z-50 min-w-[12rem] rounded-2xl border border-white/20 bg-[#2f155b]/95 p-2 shadow-[0_14px_30px_rgba(8,6,24,0.35)] backdrop-blur-sm">
+                  <div className="header-desktop-more-panel absolute left-1/2 z-50 w-40 -translate-x-1/2 rounded-2xl border border-white/20 bg-[#2f155b]/95 p-2 shadow-[0_14px_30px_rgba(8,6,24,0.35)] backdrop-blur-sm">
                     <a
                       href={NAV_HREFS.about}
                       onClick={createNavClickHandler(onAbout)}
-                      className={`flex items-center gap-2 rounded-xl px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] transition hover:bg-white/10 hover:text-white ${
+                      className={`header-desktop-more-item ${
                         isActive("about") ? "bg-white/12 text-white" : "text-white/90"
                       }`}
                     >
@@ -684,7 +718,7 @@ export function Header({
                     <a
                       href={NAV_HREFS.help}
                       onClick={createNavClickHandler(onHelp)}
-                      className={`flex items-center gap-2 rounded-xl px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] transition hover:bg-white/10 hover:text-white ${
+                      className={`header-desktop-more-item ${
                         isActive("help") ? "bg-white/12 text-white" : "text-white/90"
                       }`}
                     >
@@ -694,7 +728,7 @@ export function Header({
                     <a
                       href={NAV_HREFS.explore}
                       onClick={createNavClickHandler(onExplore)}
-                      className={`flex items-center gap-2 rounded-xl px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] transition hover:bg-white/10 hover:text-white ${
+                      className={`header-desktop-more-item ${
                         isActive("explore", "vocabularyLevel") ? "bg-white/12 text-white" : "text-white/90"
                       }`}
                     >
@@ -707,28 +741,81 @@ export function Header({
               <a
                 href={NAV_HREFS.exam}
                 onClick={createNavClickHandler(onLevelTest)}
-                className={`header-level-test-nav inline-flex items-center gap-1.5 leading-none cursor-pointer transition text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 border px-3 py-1 rounded-full shadow-sm appearance-none ${
+                className={`header-desktop-control header-level-test-nav ${
                   isActive("exam") ? "is-active" : ""
                 }`}
               >
                 <GraduationCap size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.levelTest")}
               </a>
-              {showAuthButton ? (
+            </div>
+          </div>
+
+          <div className="header-desktop-actions hidden md:flex order-3 items-center md:justify-self-end">
+            {showAuthButton ? (
+              authSession ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      type="button"
+                      className={desktopAuthButtonClassName}
+                    >
+                      <UserRound size={12} strokeWidth={1.8} aria-hidden="true" />
+                      {authButtonLabel}
+                      <ChevronDown size={12} strokeWidth={1.8} aria-hidden="true" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="center"
+                    sideOffset={8}
+                    className="w-44 rounded-2xl border border-white/15 bg-[#fffdfd] p-2 text-[#261943] shadow-[0_18px_42px_rgba(18,12,38,0.2)]"
+                  >
+                    <DropdownMenuLabel className="px-3 py-2 text-center text-xs font-semibold uppercase tracking-[0.18em] text-[#7c6ca6]">
+                      Account
+                    </DropdownMenuLabel>
+                    <DropdownMenuItem
+                      disabled
+                      className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
+                    >
+                      <UserRound size={16} strokeWidth={1.8} aria-hidden="true" />
+                      <span className="block w-full text-center">Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      disabled
+                      className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
+                    >
+                      <BookOpen size={16} strokeWidth={1.8} aria-hidden="true" />
+                      <span className="block w-full text-center">Practice</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      disabled
+                      className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
+                    >
+                      <Settings size={16} strokeWidth={1.8} aria-hidden="true" />
+                      <span className="block w-full text-center">Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="mx-1 my-2 bg-[#ebe4f7]" />
+                    <DropdownMenuItem
+                      onSelect={() => void handleSignOut()}
+                      className="rounded-xl px-3 py-2.5 text-sm text-[#b42318] hover:bg-[#fff1f2] hover:text-[#b42318] focus:bg-[#fff1f2] focus:text-[#b42318] [&_svg]:absolute [&_svg]:left-3"
+                    >
+                      <LogOut size={16} strokeWidth={1.8} aria-hidden="true" />
+                      <span className="block w-full text-center">Sign out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
                 <button
                   type="button"
                   onClick={openLoginDialog}
-                  className="inline-flex cursor-pointer items-center gap-1.5 leading-none rounded-full border border-white/35 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/95 transition hover:bg-white/10"
+                  className={desktopAuthButtonClassName}
                 >
                   <LogIn size={12} strokeWidth={1.8} aria-hidden="true" />
                   {authButtonLabel}
                 </button>
-              ) : null}
-            </div>
-
-          </div>
-
-          <div className="hidden md:flex order-3 justify-self-end pl-5 border-l border-white/20 scale-90">
+              )
+            ) : null}
+            <div className="header-desktop-actions-divider" aria-hidden="true" />
             <UILanguageSwitcher />
           </div>
 
@@ -777,26 +864,106 @@ export function Header({
               );
             })}
             {showAuthButton ? (
-              <button
-                type="button"
-                onClick={openLoginDialog}
-                className="header-mobile-nav-item text-left"
-              >
-                <span className="header-mobile-nav-item__accent" aria-hidden="true" />
-                <span className="header-mobile-nav-item__icon" aria-hidden="true">
-                  <LogIn size={17} strokeWidth={1.8} />
-                </span>
-                <span className="header-mobile-nav-item__label">{authButtonLabel}</span>
-                <span className="header-mobile-nav-item__chevron" aria-hidden="true">
-                  <ChevronRight size={16} strokeWidth={1.7} />
-                </span>
-              </button>
+              authSession ? (
+                <button
+                  type="button"
+                  onClick={() => setIsMobileAccountMenuOpen(true)}
+                  className="header-mobile-nav-item text-left"
+                >
+                  <span className="header-mobile-nav-item__accent" aria-hidden="true" />
+                  <span className="header-mobile-nav-item__icon" aria-hidden="true">
+                    <UserRound size={17} strokeWidth={1.8} />
+                  </span>
+                  <span className="header-mobile-nav-item__label">Account</span>
+                  <span className="header-mobile-nav-item__chevron" aria-hidden="true">
+                    <ChevronRight size={16} strokeWidth={1.7} />
+                  </span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={openLoginDialog}
+                  className="header-mobile-nav-item text-left"
+                >
+                  <span className="header-mobile-nav-item__accent" aria-hidden="true" />
+                  <span className="header-mobile-nav-item__icon" aria-hidden="true">
+                    <LogIn size={17} strokeWidth={1.8} />
+                  </span>
+                  <span className="header-mobile-nav-item__label">{authButtonLabel}</span>
+                  <span className="header-mobile-nav-item__chevron" aria-hidden="true">
+                    <ChevronRight size={16} strokeWidth={1.7} />
+                  </span>
+                </button>
+              )
             ) : null}
           </div>
           <div className="header-mobile-lang-wrap">
             <div className="header-mobile-lang-label">{t("header.languages")}</div>
             <UILanguageSwitcher variant="centered-modal" />
           </div>
+
+          {authSession && isMobileAccountMenuOpen ? (
+            <div className="header-mobile-account-menu" onClick={(event) => event.stopPropagation()}>
+              <div className="header-mobile-account-menu__panel">
+                <button
+                  type="button"
+                  className="header-mobile-account-menu__back"
+                  onClick={() => setIsMobileAccountMenuOpen(false)}
+                >
+                  <ChevronRight
+                    size={16}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                    className="rotate-180"
+                  />
+                  Account
+                </button>
+
+                <div className="header-mobile-account-menu__list">
+                  <button
+                    type="button"
+                    className="header-mobile-account-item"
+                    aria-disabled="true"
+                  >
+                    <span className="header-mobile-account-item__icon" aria-hidden="true">
+                      <UserRound size={17} strokeWidth={1.8} />
+                    </span>
+                    <span className="header-mobile-account-item__label">Profile</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="header-mobile-account-item"
+                    aria-disabled="true"
+                  >
+                    <span className="header-mobile-account-item__icon" aria-hidden="true">
+                      <BookOpen size={17} strokeWidth={1.8} />
+                    </span>
+                    <span className="header-mobile-account-item__label">Practice</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="header-mobile-account-item"
+                    aria-disabled="true"
+                  >
+                    <span className="header-mobile-account-item__icon" aria-hidden="true">
+                      <Settings size={17} strokeWidth={1.8} />
+                    </span>
+                    <span className="header-mobile-account-item__label">Settings</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void handleSignOut()}
+                    className="header-mobile-account-item header-mobile-account-item--danger"
+                  >
+                    <span className="header-mobile-account-item__icon" aria-hidden="true">
+                      <LogOut size={17} strokeWidth={1.8} />
+                    </span>
+                    <span className="header-mobile-account-item__label">Sign out</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
 
