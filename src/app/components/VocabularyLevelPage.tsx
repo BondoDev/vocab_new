@@ -16,6 +16,7 @@ import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../seo
 import { SEOHead, useSeoSiteOrigin, type SeoMetadata } from "../../seo/SeoContext";
 import { buildWordPath } from "../../data/seo/wordSlugs";
 import { isValidBrowseWordLemma } from "../../data/seo/browseWordValidation";
+import type { LevelBrowsePreviewData } from "../../data/seo/levelBrowseWords";
 
 interface VocabularyLevelPageProps {
   uiLang: UiLanguageCode;
@@ -33,16 +34,11 @@ interface VocabularyLevelPageProps {
   heroTitleOverride?: string | null;
   browseLanguageNameOverride?: string | null;
   faqLanguageNameOverride?: string | null;
+  initialBrowsePreview?: LevelBrowsePreviewData | null;
 }
 
 type VocabEntry = { concept_id: string; word_lemma: string; level: string };
-type BrowsePreviewData = {
-  targetLanguage: TargetLanguageSlug;
-  level: string;
-  totalWords: number;
-  totalPages: number;
-  words: Array<Pick<VocabEntry, "concept_id" | "word_lemma">>;
-};
+type BrowsePreviewData = LevelBrowsePreviewData;
 const vocabModules = import.meta.glob("../../data/vocabulary/*/vocabulary.json") as Record<
   string,
   () => Promise<{ default: VocabEntry[] }>
@@ -473,6 +469,7 @@ export function VocabularyLevelPage({
   heroTitleOverride,
   browseLanguageNameOverride,
   faqLanguageNameOverride,
+  initialBrowsePreview,
 }: VocabularyLevelPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
@@ -532,16 +529,18 @@ export function VocabularyLevelPage({
   const [browseSearch, setBrowseSearch] = useState("");
   const [isBrowseLoading, setIsBrowseLoading] = useState(false);
   const browseLoadPromiseRef = useRef<Promise<VocabEntry[]> | null>(null);
-  const [browsePreview, setBrowsePreview] = useState<BrowsePreviewData | null>(null);
+  const [browsePreview, setBrowsePreview] = useState<BrowsePreviewData | null>(
+    initialBrowsePreview ?? null,
+  );
 
   useEffect(() => {
     setBrowsePage(0);
     setBrowseSearch("");
     setBrowseWords([]);
-    setBrowsePreview(null);
+    setBrowsePreview(initialBrowsePreview ?? null);
     setIsBrowseLoading(false);
     browseLoadPromiseRef.current = null;
-  }, [targetLanguage, level]);
+  }, [initialBrowsePreview, targetLanguage, level]);
 
   useEffect(() => {
     let cancelled = false;

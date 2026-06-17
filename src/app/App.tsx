@@ -29,6 +29,7 @@ import {
   type UiLanguageCode,
 } from "../data/seo/slugs";
 import { resolveWordRoute, type WordRouteMatch } from "../data/seo/wordSlugs";
+import { getLevelBrowsePreviewData } from "../data/seo/levelBrowseWords";
 import { resolveSeoHubRoute } from "../data/seo/hub";
 import { SeoProvider, type SeoManager } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
@@ -2347,6 +2348,10 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
               targetLanguage={vocabularyRoute.targetLanguage}
               level={vocabularyRoute.level}
               onStartPractice={handleStartVocabularyPractice}
+              initialBrowsePreview={getLevelBrowsePreviewData(
+                vocabularyRoute.targetLanguage,
+                vocabularyRoute.level,
+              )}
             />
           )}
         </Suspense>

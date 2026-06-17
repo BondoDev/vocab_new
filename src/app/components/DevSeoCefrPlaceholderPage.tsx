@@ -14,6 +14,7 @@ import {
   normalizeTargetLanguage,
   type SeoCefrContentItem,
 } from "./devSeoCefrPreviewData";
+import { getLevelBrowsePreviewData } from "../../data/seo/levelBrowseWords";
 
 const PREVIEW_HERO_SUFFIX_LANGUAGE_NAMES: Record<
   UiLanguageCode,
@@ -370,6 +371,10 @@ export function DevSeoCefrPlaceholderPage({
     [resolvedItem.targetLanguageDisplayName, resolvedItem.uiLanguage, normalizedTargetLanguage],
   );
   const heroTitle = useMemo(() => buildPreviewHeroTitle(resolvedItem), [resolvedItem]);
+  const initialBrowsePreview = useMemo(
+    () => getLevelBrowsePreviewData(normalizedTargetLanguage, resolvedItem.level),
+    [normalizedTargetLanguage, resolvedItem.level],
+  );
 
   return (
     <VocabularyLevelPage
@@ -380,6 +385,7 @@ export function DevSeoCefrPlaceholderPage({
       heroTitleOverride={heroTitle}
       browseLanguageNameOverride={browseLanguageNameOverride}
       faqLanguageNameOverride={faqLanguageNameOverride}
+      initialBrowsePreview={initialBrowsePreview}
       contentOverride={{
         file: {
           targetLanguage: normalizedTargetLanguage,

@@ -19,6 +19,19 @@ export interface BrowseWordLink {
   word: string;
 }
 
+export interface LevelBrowsePreviewWord {
+  concept_id: string;
+  word_lemma: string;
+}
+
+export interface LevelBrowsePreviewData {
+  targetLanguage: TargetLanguageSlug;
+  level: string;
+  totalWords: number;
+  totalPages: number;
+  words: LevelBrowsePreviewWord[];
+}
+
 export function getLevelBrowseWordLinks(
   uiLang: UiLanguageCode,
   targetLanguage: TargetLanguageSlug,
@@ -53,4 +66,40 @@ export function getLevelBrowseWordLinks(
   }
 
   return links;
+}
+
+export function getLevelBrowsePreviewData(
+  targetLanguage: TargetLanguageSlug,
+  level: CefrLevelCode,
+  wordsPerPage = 54,
+): LevelBrowsePreviewData | null {
+  const key = `../vocabulary/${targetLanguage}/vocabulary.json`;
+  const entries = vocabularyModules[key]?.default;
+  if (!entries) {
+    return null;
+  }
+
+  const normalizedLevel = level.toUpperCase();
+  const seen = new Set<string>();
+  const words: LevelBrowsePreviewWord[] = [];
+
+  for (const entry of entries) {
+    if (entry.level !== normalizedLevel) continue;
+    if (!isValidBrowseWordLemma(entry.word_lemma)) continue;
+    if (typeof entry.concept_id !== "string" || seen.has(entry.concept_id)) continue;
+
+    seen.add(entry.concept_id);
+    words.push({
+      concept_id: entry.concept_id,
+      word_lemma: entry.word_lemma,
+    });
+  }
+
+  return {
+    targetLanguage,
+    level: normalizedLevel,
+    totalWords: words.length,
+    totalPages: Math.max(1, Math.ceil(words.length / wordsPerPage)),
+    words: wordsPerPage > 0 ? words.slice(0, wordsPerPage) : words,
+  };
 }
