@@ -261,7 +261,6 @@ export async function signOutSupabase(
 export async function signUpWithPassword(input: {
   email: string;
   password: string;
-  fullName?: string;
 }) {
   const payload = await supabaseRequest<AuthResponse>(
     "/auth/v1/signup",
@@ -271,7 +270,6 @@ export async function signUpWithPassword(input: {
       body: JSON.stringify({
         email: input.email,
         password: input.password,
-        data: input.fullName ? { full_name: input.fullName } : undefined,
       }),
     },
   );

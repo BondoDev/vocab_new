@@ -102,26 +102,6 @@ export function AccountOnboardingDialog({
     setAgeInputValue(String(profile.age ?? 18));
   }, [profile.age]);
 
-  const normalizeBirthField = (
-    value: string,
-    min: number,
-    max: number,
-    field: "birthMonth" | "birthDay",
-  ) => {
-    if (!value) {
-      return;
-    }
-
-    const parsed = Number(value);
-    if (!Number.isFinite(parsed)) {
-      onProfileChange({ [field]: "" });
-      return;
-    }
-
-    const clamped = Math.min(max, Math.max(min, Math.round(parsed)));
-    onProfileChange({ [field]: String(clamped).padStart(2, "0") });
-  };
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[min(94vw,38rem)] max-w-none rounded-[2rem] border-white/15 bg-[#fffdfd] p-0 shadow-[0_28px_90px_rgba(21,14,44,0.38)] [&_[data-slot=dialog-close]]:hidden">
@@ -141,6 +121,9 @@ export function AccountOnboardingDialog({
                 <DialogTitle className="text-[1.9rem] font-semibold leading-tight tracking-tight text-[#261943]">
                   Finish your profile
                 </DialogTitle>
+                <p className="max-w-[24rem] text-sm leading-6 text-[#6f6290]">
+                  You can update these details anytime.
+                </p>
               </div>
             </DialogHeader>
 
@@ -328,40 +311,58 @@ export function AccountOnboardingDialog({
                     Birth Date
                   </Label>
                   <div className="grid grid-cols-[1.3fr_0.7fr] gap-3">
-                    <div className="relative">
-                      <select
-                        value={profile.birthMonth}
-                        onChange={(event) =>
-                          onProfileChange({ birthMonth: event.target.value })
-                        }
-                        className="h-11 w-full appearance-none rounded-2xl border border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-[22px] text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-[#8f7dff]/35"
+                    <Select
+                      value={profile.birthMonth}
+                      onValueChange={(value) =>
+                        onProfileChange({ birthMonth: value })
+                      }
+                    >
+                      <SelectTrigger className="h-11 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-[22px] text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 [&_svg]:size-4 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
+                        <SelectValue placeholder="Month" />
+                      </SelectTrigger>
+                      <SelectContent
+                        position="popper"
+                        align="start"
+                        sideOffset={6}
+                        className="w-[var(--radix-select-trigger-width)] rounded-2xl border-[#dcd1ff] bg-white p-1 shadow-[0_16px_36px_-24px_rgba(74,43,130,0.9)]"
                       >
-                        <option value="">Month</option>
                         {BIRTH_MONTH_OPTIONS.map((month) => (
-                          <option key={month.value} value={month.value}>
+                          <SelectItem
+                            key={month.value}
+                            value={month.value}
+                            className="rounded-xl px-3 py-2.5 text-sm text-[#261943]"
+                          >
                             {month.label}
-                          </option>
+                          </SelectItem>
                         ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-1.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6f6290]" />
-                    </div>
-                    <div className="relative">
-                      <select
-                        value={profile.birthDay}
-                        onChange={(event) =>
-                          onProfileChange({ birthDay: event.target.value })
-                        }
-                        className="h-11 w-full appearance-none rounded-2xl border border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-[22px] text-center text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-[#8f7dff]/35"
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={profile.birthDay}
+                      onValueChange={(value) =>
+                        onProfileChange({ birthDay: value })
+                      }
+                    >
+                      <SelectTrigger className="h-11 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-[22px] text-center text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 [&_svg]:size-4 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
+                        <SelectValue placeholder="day" />
+                      </SelectTrigger>
+                      <SelectContent
+                        position="popper"
+                        align="start"
+                        sideOffset={6}
+                        className="w-[var(--radix-select-trigger-width)] rounded-2xl border-[#dcd1ff] bg-white p-1 shadow-[0_16px_36px_-24px_rgba(74,43,130,0.9)]"
                       >
-                        <option value="">day</option>
                         {BIRTH_DAY_OPTIONS.map((day) => (
-                          <option key={day.value} value={day.value}>
+                          <SelectItem
+                            key={day.value}
+                            value={day.value}
+                            className="rounded-xl px-3 py-2.5 text-center text-sm text-[#261943]"
+                          >
                             {day.label}
-                          </option>
+                          </SelectItem>
                         ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-1.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6f6290]" />
-                    </div>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               </div>

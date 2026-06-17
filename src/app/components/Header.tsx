@@ -254,7 +254,6 @@ export function Header({
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const [authEmail, setAuthEmail] = useState("");
   const [authPassword, setAuthPassword] = useState("");
-  const [authFullName, setAuthFullName] = useState("");
   const [authConfirmPassword, setAuthConfirmPassword] = useState("");
   const [authError, setAuthError] = useState<string | null>(null);
   const [authInfo, setAuthInfo] = useState<string | null>(null);
@@ -299,7 +298,6 @@ export function Header({
   const resetAuthForm = () => {
     setAuthEmail("");
     setAuthPassword("");
-    setAuthFullName("");
     setAuthConfirmPassword("");
     setAuthError(null);
     setAuthInfo(null);
@@ -499,11 +497,6 @@ export function Header({
     }
 
     if (authMode === "signup") {
-      if (!authFullName.trim()) {
-        setAuthError("Full name is required.");
-        return;
-      }
-
       if (authPassword !== authConfirmPassword) {
         setAuthError("Passwords do not match.");
         return;
@@ -525,7 +518,6 @@ export function Header({
       const result = await signUpWithPassword({
         email: authEmail.trim(),
         password: authPassword,
-        fullName: authFullName.trim(),
       });
 
       if (result.session) {
@@ -536,9 +528,10 @@ export function Header({
         return;
       }
 
+      setAuthMode("login");
+      setAuthPassword("");
+      setAuthConfirmPassword("");
       setAuthInfo("Account created. Check your email to confirm your sign up.");
-      setIsAuthDialogOpen(false);
-      resetAuthForm();
     } catch (error) {
       setAuthError(
         error instanceof Error ? error.message : "Authentication failed.",
@@ -1024,27 +1017,6 @@ export function Header({
                 {authInfo ? (
                   <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
                     {authInfo}
-                  </div>
-                ) : null}
-
-                {authMode === "signup" ? (
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="auth-full-name"
-                      className="text-sm font-medium text-[#342456]"
-                    >
-                      Full name
-                    </label>
-                    <Input
-                      id="auth-full-name"
-                      type="text"
-                      value={authFullName}
-                      onChange={(event) => setAuthFullName(event.target.value)}
-                      placeholder="Your name"
-                      autoComplete="name"
-                      disabled={isAuthSubmitting}
-                      className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
-                    />
                   </div>
                 ) : null}
 
