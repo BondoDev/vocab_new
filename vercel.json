@@ -60,11 +60,7 @@
   ],
   "functions": {
     "api/word-ssr-internal.ts": {
-      "includeFiles": [
-        "dist/index.html",
-        "server-build/entry-server.js",
-        "src/data/vocabulary/**/*.json"
-      ]
+      "includeFiles": "{dist/index.html,server-build/entry-server.js,src/data/vocabulary/**/*.json}"
     }
   },
   "rewrites": [
