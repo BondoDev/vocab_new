@@ -6,7 +6,7 @@
   "scripts": {
     "sitemap": "node scripts/generate-sitemap.mjs",
     "prebuild": "npm run -s sitemap",
-    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir server-build && node scripts/prerender.mjs && node ./scripts/verify-word-ssr-package.mjs",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir server-build && node scripts/cleanup-word-build-artifacts.mjs && node scripts/prerender.mjs && node ./scripts/verify-word-ssr-package.mjs",
     "dev": "vite",
     "test:word-seo": "node scripts/test-word-seo-routes.mjs",
     "test:word-ssr-http": "node scripts/test-word-ssr-http.mjs",
