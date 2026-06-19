@@ -9,7 +9,8 @@ export interface SeoAlternateLink {
 export interface SeoMetadata {
   title: string;
   description: string;
-  canonical: string;
+  canonical?: string;
+  robots?: string;
   alternates?: SeoAlternateLink[];
   jsonLd?: string;
 }
@@ -57,20 +58,34 @@ function removeManagedAlternateTags() {
   existing.forEach((element) => element.remove());
 }
 
-function upsertMetaDescription(content: string) {
-  let tag = document.querySelector("meta[name='description']") as HTMLMetaElement | null;
+function upsertMetaName(name: string, content: string | undefined) {
+  let tag = document.querySelector(`meta[name='${name}']`) as HTMLMetaElement | null;
+
+  if (!content) {
+    tag?.remove();
+    return;
+  }
 
   if (!tag) {
     tag = document.createElement("meta");
-    tag.setAttribute("name", "description");
+    tag.setAttribute("name", name);
     document.head.appendChild(tag);
   }
 
   tag.setAttribute("content", content);
 }
 
-function upsertMetaProperty(property: string, content: string) {
+function upsertMetaDescription(content: string) {
+  upsertMetaName("description", content);
+}
+
+function upsertMetaProperty(property: string, content: string | undefined) {
   let tag = document.querySelector(`meta[property='${property}']`) as HTMLMetaElement | null;
+
+  if (!content) {
+    tag?.remove();
+    return;
+  }
 
   if (!tag) {
     tag = document.createElement("meta");
@@ -81,8 +96,13 @@ function upsertMetaProperty(property: string, content: string) {
   tag.setAttribute("content", content);
 }
 
-function upsertCanonical(href: string) {
+function upsertCanonical(href: string | undefined) {
   let tag = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+
+  if (!href) {
+    tag?.remove();
+    return;
+  }
 
   if (!tag) {
     tag = document.createElement("link");
@@ -101,10 +121,11 @@ export function applySeoMetadata(metadata: SeoMetadata) {
   document.title = metadata.title;
   upsertMetaDescription(metadata.description);
   upsertCanonical(metadata.canonical);
-  upsertMetaProperty("og:type", "website");
+  upsertMetaName("robots", metadata.robots);
+  upsertMetaProperty("og:type", metadata.canonical ? "website" : undefined);
   upsertMetaProperty("og:url", metadata.canonical);
-  upsertMetaProperty("og:title", metadata.title);
-  upsertMetaProperty("og:description", metadata.description);
+  upsertMetaProperty("og:title", metadata.canonical ? metadata.title : undefined);
+  upsertMetaProperty("og:description", metadata.canonical ? metadata.description : undefined);
   upsertManagedJsonLd(metadata.jsonLd);
   removeManagedAlternateTags();
 
@@ -129,11 +150,24 @@ export function renderSeoTags(metadata: SeoMetadata): string {
   return [
     `<title>${escapeHtml(metadata.title)}</title>`,
     `<meta name="description" content="${escapeHtml(metadata.description)}">`,
-    `<link rel="canonical" href="${escapeHtml(metadata.canonical)}">`,
-    `<meta property="og:type" content="website">`,
-    `<meta property="og:url" content="${escapeHtml(metadata.canonical)}">`,
-    `<meta property="og:title" content="${escapeHtml(metadata.title)}">`,
-    `<meta property="og:description" content="${escapeHtml(metadata.description)}">`,
+    metadata.robots
+      ? `<meta name="robots" content="${escapeHtml(metadata.robots)}">`
+      : "",
+    metadata.canonical
+      ? `<link rel="canonical" href="${escapeHtml(metadata.canonical)}">`
+      : "",
+    metadata.canonical
+      ? `<meta property="og:type" content="website">`
+      : "",
+    metadata.canonical
+      ? `<meta property="og:url" content="${escapeHtml(metadata.canonical)}">`
+      : "",
+    metadata.canonical
+      ? `<meta property="og:title" content="${escapeHtml(metadata.title)}">`
+      : "",
+    metadata.canonical
+      ? `<meta property="og:description" content="${escapeHtml(metadata.description)}">`
+      : "",
     alternates,
     metadata.jsonLd
       ? `<script type="application/ld+json" data-managed-jsonld="true">${metadata.jsonLd}</script>`

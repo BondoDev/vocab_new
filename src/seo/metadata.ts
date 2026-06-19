@@ -389,7 +389,9 @@ export interface WordSeoMetadataParams {
   targetLanguage: TargetLanguageSlug;
   targetLanguageDisplayName: string;
   wordLemma: string;
-  conceptId?: string | null;
+  conceptId: string;
+  definition: string;
+  wordType: string;
   cefrLevel: string;
   pathname: string;
   siteOrigin: string;
@@ -402,17 +404,27 @@ export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata
     targetLanguageDisplayName,
     wordLemma,
     conceptId,
+    definition,
+    wordType,
     cefrLevel,
     pathname,
     siteOrigin,
   } = params;
   const origin = siteOrigin.replace(/\/$/, "");
-  const title = (WORD_META_TITLE[uiLang] ?? WORD_META_TITLE.en)(targetLanguageDisplayName, wordLemma);
-  const description = (WORD_META_DESC[uiLang] ?? WORD_META_DESC.en)(
+  const baseTitle = (WORD_META_TITLE[uiLang] ?? WORD_META_TITLE.en)(
     targetLanguageDisplayName,
     wordLemma,
   );
-
+  const title = `${baseTitle} (${cefrLevel} ${wordType})`;
+  const baseDescription = (WORD_META_DESC[uiLang] ?? WORD_META_DESC.en)(
+    targetLanguageDisplayName,
+    wordLemma,
+  );
+  const trimmedDefinition = definition.trim().replace(/\s+/g, " ");
+  const descriptionPrefix = trimmedDefinition
+    ? `${trimmedDefinition} `
+    : "";
+  const description = `${descriptionPrefix}${baseDescription}`.trim();
   const alternates = [
     ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
       hreflang: lang,

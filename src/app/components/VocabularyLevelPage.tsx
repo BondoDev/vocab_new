@@ -881,7 +881,12 @@ export function VocabularyLevelPage({
                 {pageWords.map((word) => (
                   <Link
                     key={word.concept_id}
-                    to={buildWordPath(uiLang, targetLanguage, word.word_lemma, word.concept_id)}
+                    to={buildWordPath(
+                      uiLang,
+                      targetLanguage,
+                      word.word_lemma,
+                      word.concept_id,
+                    )}
                     className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                   >
                     {word.word_lemma}

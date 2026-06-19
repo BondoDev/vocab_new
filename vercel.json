@@ -22,6 +22,11 @@
       ],
       "destination": "https://www.fluentstellar.com/:path*",
       "permanent": true
+    },
+    {
+      "source": "/:uiLang(en|es|fr|de|it|pt|ru)/:target(english|spanish|french|german|italian|portuguese|russian)-word-:wordSlug([^/]+)-:cefr(A1|A2|B1|B2|C1|C2)-:wordId([0-9]{5})",
+      "destination": "/:uiLang/:target-word-:wordSlug--:cefr-:wordId",
+      "permanent": true
     }
   ],
   "headers": [
@@ -53,9 +58,30 @@
       ]
     }
   ],
+  "functions": {
+    "api/word-ssr-internal.ts": {
+      "includeFiles": [
+        "dist/index.html",
+        "server-build/entry-server.js",
+        "src/data/vocabulary/**/*.json"
+      ]
+    }
+  },
   "rewrites": [
     {
-      "source": "/((?!.*\\.[^/]+$|sitemap\\.xml$|robots\\.txt$|sitemaps/.*\\.xml$).*)",
+      "source": "/api/word-ssr-internal",
+      "destination": "/api/word-ssr"
+    },
+    {
+      "source": "/:uiLang([a-z]{2})/:wordRoute([^/]*-word-[^/]+)",
+      "destination": "/api/word-ssr-internal?pathname=/:uiLang/:wordRoute"
+    },
+    {
+      "source": "/profile",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/languages/filters/exercises/practice",
       "destination": "/index.html"
     }
   ]

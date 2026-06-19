@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 const DIST_DIR = path.join(ROOT_DIR, "dist");
-const SSR_DIR = path.join(ROOT_DIR, ".prerender");
+const SSR_DIR = path.join(ROOT_DIR, "server-build");
 const TEMPLATE_PATH = path.join(DIST_DIR, "index.html");
 const SITE_ORIGIN = process.env.SITE_ORIGIN || "https://www.fluentstellar.com";
 const WORD_PRERENDER_LIMIT = Number.parseInt(process.env.WORD_PRERENDER_LIMIT || "0", 10);
@@ -34,6 +34,7 @@ function wordToSlug(lemma) {
 
 async function collectWordRoutesSubset(limit, offset) {
   if (WORD_PRERENDER_DEFINITIONS.length === 0) return [];
+  if (!Number.isFinite(limit) || limit <= 0) return [];
   const normalizedOffset = Number.isFinite(offset) && offset > 0 ? offset : 0;
   const selectedTargetLanguages = Array.from(
     new Set(WORD_PRERENDER_DEFINITIONS.map(({ targetLanguage }) => targetLanguage)),
@@ -56,10 +57,7 @@ async function collectWordRoutesSubset(limit, offset) {
     }
   }
 
-  const selected =
-    Number.isFinite(limit) && limit > 0
-      ? uniqueWords.slice(normalizedOffset, normalizedOffset + limit)
-      : uniqueWords.slice(normalizedOffset);
+  const selected = uniqueWords.slice(normalizedOffset, normalizedOffset + limit);
   const routes = [];
   for (const item of selected) {
     const wordPathSuffix = item.conceptId ? `${item.slug}--${item.conceptId}` : item.slug;
@@ -113,10 +111,6 @@ async function main() {
   const template = await fs.readFile(TEMPLATE_PATH, "utf8");
   const { getPrerenderRoutes, render } = await loadServerBundle();
 
-  // Once the SSR entry has been loaded into memory, the on-disk bundle is only
-  // consuming build-container space that the generated HTML also needs.
-  await fs.rm(SSR_DIR, { recursive: true, force: true });
-
   const baseRoutes = getPrerenderRoutes();
   const wordRoutes = await collectWordRoutesSubset(
     WORD_PRERENDER_LIMIT,
@@ -144,6 +138,5 @@ async function main() {
 
 main().catch(async (error) => {
   console.error("Failed to prerender SEO pages:", error);
-  await fs.rm(SSR_DIR, { recursive: true, force: true });
   process.exitCode = 1;
 });

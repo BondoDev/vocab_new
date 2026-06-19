@@ -29,7 +29,11 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../data/seo/slugs";
-import { resolveWordRoute, type WordRouteMatch } from "../data/seo/wordSlugs";
+import {
+  parseWordRoute as parseSeoWordRoute,
+  resolveWordRoute,
+  type WordRouteMatch,
+} from "../data/seo/wordSlugs";
 import { getLevelBrowsePreviewData } from "../data/seo/levelBrowseWords";
 import { resolveSeoHubRoute } from "../data/seo/hub";
 import { SeoProvider, type SeoManager } from "../seo/SeoContext";
@@ -250,6 +254,13 @@ function parseWordRoute(path: string): WordRouteMatch | null {
   const [, uiLangRaw, slug] = match;
   return resolveWordRoute(uiLangRaw, slug);
 }
+
+function parseAnyWordRoute(path: string) {
+  const match = path.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+  if (!match) return null;
+  const [, uiLangRaw, slug] = match;
+  return parseSeoWordRoute(uiLangRaw, slug);
+}
 const ROUTES = {
   language: "/languages",
   levelCategory: "/languages/filters",
@@ -328,7 +339,7 @@ const pageFromPath = (path: string): PageKey => {
       if (parseLevelTestSeoRoute(path)) {
         return "levelTestSeo";
       }
-      if (parseWordRoute(path)) {
+      if (parseAnyWordRoute(path)) {
         return "wordPage";
       }
       if (parseVocabularyRoute(path)) {

@@ -3,4 +3,7 @@ node_modules
 node_modules/
 
 dist/
+server-build/
+dist-retry-*/
+server-build-retry-*/
 .env

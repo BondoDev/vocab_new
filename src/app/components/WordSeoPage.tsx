@@ -610,27 +610,39 @@ export function WordSeoPage({
   }, [conceptId, hydratedData?.browseWordsPartial, initialRouteKey, targetLanguage, uiLang, wordSlug]);
 
   const seoMetadata = useMemo(() => {
-    const fallbackWord = slugToDisplayWord(wordSlug) || wordSlug;
-    const wordLemma =
-      wordEntry && wordEntry !== null ? wordEntry.word_lemma : fallbackWord;
-    const cefrLevel = wordEntry && wordEntry !== null ? wordEntry.level : "";
+    if (!conceptId || !wordEntry) {
+      return null;
+    }
 
     return buildWordSeoMetadata({
       uiLang,
       targetLanguage,
       targetLanguageDisplayName: targetLangName,
-      wordLemma,
+      wordLemma: wordEntry.word_lemma,
       conceptId,
-      cefrLevel,
+      definition: displayDefinition || wordEntry.definiton,
+      wordType: displayWordType || wordEntry.type,
+      cefrLevel: wordEntry.level,
       pathname: location.pathname,
       siteOrigin,
     });
-  }, [wordEntry, wordSlug, uiLang, targetLanguage, targetLangName, location.pathname, siteOrigin]);
+  }, [
+    conceptId,
+    displayDefinition,
+    displayWordType,
+    wordEntry,
+    wordSlug,
+    uiLang,
+    targetLanguage,
+    targetLangName,
+    location.pathname,
+    siteOrigin,
+  ]);
 
   if (wordEntry === undefined) {
     return (
       <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
-        <SEOHead metadata={seoMetadata} />
+        {seoMetadata ? <SEOHead metadata={seoMetadata} /> : null}
         <div className="mx-auto w-full max-w-2xl space-y-6">
           {Array.from({ length: 4 }).map((_, i) => (
             <div
@@ -652,7 +664,7 @@ export function WordSeoPage({
   if (wordEntry === null) {
     return (
       <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
-        <SEOHead metadata={seoMetadata} />
+        {seoMetadata ? <SEOHead metadata={seoMetadata} /> : null}
         <div className="mx-auto w-full max-w-2xl">
           <div className="rounded-2xl border border-border bg-card p-6">
             <h1 className="text-2xl text-foreground">{t.notFoundTitle}</h1>
@@ -740,7 +752,7 @@ export function WordSeoPage({
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
-      <SEOHead metadata={seoMetadata} />
+      {seoMetadata ? <SEOHead metadata={seoMetadata} /> : null}
       <div className="mx-auto w-full max-w-[1200px] space-y-6">
         {/* HERO — two-column card */}
         <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">

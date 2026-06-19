@@ -1,6 +1,7 @@
 import ReactDOMServer from "react-dom/server";
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { StaticRouter } from "react-router-dom/server";
 import App from "./app/App";
 import {
@@ -12,7 +13,11 @@ import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/levelTests";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
-import { resolveWordRoute } from "./data/seo/wordSlugs";
+import {
+  buildWordPathFromSlug,
+  parseWordRoute,
+  resolveWordRoute,
+} from "./data/seo/wordSlugs";
 import type { SeoMetadata } from "./seo/SeoContext";
 import {
   buildHydrationWordPageData,
@@ -21,6 +26,27 @@ import {
   type ResolvedWordPageData,
   type WordPageVocabEntry,
 } from "./data/seo/wordPageData";
+
+export type WordSeoRequestResolution =
+  | {
+      kind: "canonical";
+      pathname: string;
+      initialWordPageData: ResolvedWordPageData;
+    }
+  | {
+      kind: "redirect";
+      pathname: string;
+      location: string;
+    }
+  | {
+      kind: "not-found";
+      pathname: string;
+      reason:
+        | "not-word-route"
+        | "invalid-route"
+        | "slug-only-route"
+        | "missing-record";
+    };
 
 const CORE_PRERENDER_ROUTES = [
   "/",
@@ -33,6 +59,8 @@ const CORE_PRERENDER_ROUTES = [
   "/help",
 ] as const;
 const PRACTICE_ROUTE_UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"] as const;
+const ENTRY_SERVER_DIR = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT_DIR = path.resolve(ENTRY_SERVER_DIR, "..");
 
 const CORE_ROUTE_SEO: Record<string, { title: string; description: string }> = {
   "/": {
@@ -86,7 +114,7 @@ function loadVocabularySync(language: string): WordPageVocabEntry[] {
   }
 
   const vocabPath = path.join(
-    process.cwd(),
+    PROJECT_ROOT_DIR,
     "src",
     "data",
     "vocabulary",
@@ -100,32 +128,20 @@ function loadVocabularySync(language: string): WordPageVocabEntry[] {
 }
 
 function getInitialWordPageData(url: string): ResolvedWordPageData | null {
-  const match = url.match(/^\/([a-z]{2})\/([^/?#]+)$/);
-  if (!match) {
+  const resolution = resolveWordSeoRequest(url);
+  if (resolution.kind !== "canonical") {
     return null;
   }
+  return resolution.initialWordPageData;
+}
 
-  const [, uiLangRaw, slug] = match;
-  const wordRoute = resolveWordRoute(uiLangRaw, slug);
-  if (!wordRoute) {
-    return null;
-  }
-
-  const vocabulary = loadVocabularySync(wordRoute.targetLanguage);
-  const uiVocabLanguage = getUiVocabularyLanguage(wordRoute.uiLang);
-  const uiVocabulary =
-    uiVocabLanguage !== wordRoute.targetLanguage
-      ? loadVocabularySync(uiVocabLanguage)
-      : null;
-
-  return buildResolvedWordPageData({
-    uiLang: wordRoute.uiLang,
-    targetLanguage: wordRoute.targetLanguage,
-    wordSlug: wordRoute.wordSlug,
-    conceptId: wordRoute.conceptId,
-    vocabulary,
-    uiVocabulary,
-  });
+function buildNotFoundSeoMetadata(): SeoMetadata {
+  return {
+    title: "Page Not Found | FluentStellar",
+    description:
+      "The requested page could not be found on FluentStellar. Explore vocabulary routes and learning tools from valid pages instead.",
+    robots: "noindex, follow",
+  };
 }
 
 function escapeJsonForHtml(value: unknown): string {
@@ -151,6 +167,87 @@ export function getPrerenderRoutes(): string[] {
     ...getAllSeoHubPaths(),
     ...getAllLevelTestSeoPaths(),
   ])];
+}
+
+export function resolveWordSeoRequest(url: string): WordSeoRequestResolution {
+  const pathname = url.split(/[?#]/, 1)[0] || "/";
+  const match = pathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+  if (!match) {
+    return {
+      kind: "not-found",
+      pathname,
+      reason: "not-word-route",
+    };
+  }
+
+  const [, uiLangRaw, slug] = match;
+  if (!slug.includes("-word-")) {
+    return {
+      kind: "not-found",
+      pathname,
+      reason: "not-word-route",
+    };
+  }
+
+  const parsedWordRoute = parseWordRoute(uiLangRaw, slug);
+  if (!parsedWordRoute) {
+    return {
+      kind: "not-found",
+      pathname,
+      reason: "invalid-route",
+    };
+  }
+
+  if (parsedWordRoute.routeKind === "legacy-single-hyphen") {
+    return {
+      kind: "redirect",
+      pathname,
+      location: buildWordPathFromSlug(
+        parsedWordRoute.uiLang,
+        parsedWordRoute.targetLanguage,
+        parsedWordRoute.wordSlug,
+        parsedWordRoute.conceptId,
+      ),
+    };
+  }
+
+  if (parsedWordRoute.routeKind !== "canonical") {
+    return {
+      kind: "not-found",
+      pathname,
+      reason: "slug-only-route",
+    };
+  }
+
+  const vocabulary = loadVocabularySync(parsedWordRoute.targetLanguage);
+  const uiVocabLanguage = getUiVocabularyLanguage(parsedWordRoute.uiLang);
+  const uiVocabulary =
+    uiVocabLanguage !== parsedWordRoute.targetLanguage
+      ? loadVocabularySync(uiVocabLanguage)
+      : null;
+
+  const initialWordPageData = buildResolvedWordPageData({
+    uiLang: parsedWordRoute.uiLang,
+    targetLanguage: parsedWordRoute.targetLanguage,
+    wordSlug: parsedWordRoute.wordSlug,
+    conceptId: parsedWordRoute.conceptId,
+    vocabulary,
+    uiVocabulary,
+  });
+
+  if (!initialWordPageData.wordEntry) {
+    return {
+      kind: "not-found",
+      pathname,
+      reason: "missing-record",
+    };
+  }
+
+  return {
+    kind: "canonical",
+    pathname,
+    initialWordPageData,
+  };
 }
 
 function getInitialUiLanguage(url: string): UiLanguageCode {
@@ -194,8 +291,15 @@ function buildFallbackSeoMetadata(url: string, siteOrigin: string): SeoMetadata 
 
 export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const seoManager: SeoManager = { metadata: null };
+  const wordSeoResolution = resolveWordSeoRequest(url);
+  const pathname = url.split(/[?#]/, 1)[0] || "/";
+  const shouldUseWordNotFoundMetadata =
+    wordSeoResolution.kind === "not-found" &&
+    (pathname.startsWith("/api/word-ssr") ||
+      (/^\/[a-z]{2}\/[^/?#]+$/.test(pathname) && pathname.includes("-word-")));
   const initialUILanguage = getInitialUiLanguage(url);
-  const initialWordPageData = getInitialWordPageData(url);
+  const initialWordPageData =
+    wordSeoResolution.kind === "canonical" ? wordSeoResolution.initialWordPageData : null;
   const appHtml = ReactDOMServer.renderToString(
     <StaticRouter location={url}>
       <App
@@ -214,11 +318,17 @@ export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   return {
     appHtml,
     headTags:
-      renderSeoTags(seoManager.metadata ?? buildFallbackSeoMetadata(url, siteOrigin) ?? {
-        title: "FluentStellar - Structured Vocabulary Learning Platform",
-        description: "Structured CEFR vocabulary system with interactive exercises and intelligent learning tools.",
-        canonical: `${siteOrigin.replace(/\/$/, "")}/`,
-      }) + routeDataScript,
+      renderSeoTags(
+        seoManager.metadata ??
+          (shouldUseWordNotFoundMetadata
+            ? buildNotFoundSeoMetadata()
+            : buildFallbackSeoMetadata(url, siteOrigin) ?? {
+                title: "FluentStellar - Structured Vocabulary Learning Platform",
+                description:
+                  "Structured CEFR vocabulary system with interactive exercises and intelligent learning tools.",
+                canonical: `${siteOrigin.replace(/\/$/, "")}/`,
+              }),
+      ) + routeDataScript,
     htmlLang: initialUILanguage,
   };
 }

@@ -1,0 +1,135 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import fsp from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const rootDir = path.resolve(__dirname, "..");
+const stageDir = path.join(rootDir, ".tmp-word-ssr-package");
+
+const requiredFiles = [
+  "dist/index.html",
+  "server/word-ssr-runtime.mjs",
+  "server-build/entry-server.js",
+  "src/data/vocabulary/english/vocabulary.json",
+  "src/data/vocabulary/spanish/vocabulary.json",
+  "src/data/vocabulary/french/vocabulary.json",
+  "src/data/vocabulary/german/vocabulary.json",
+  "src/data/vocabulary/italian/vocabulary.json",
+  "src/data/vocabulary/portuguese/vocabulary.json",
+  "src/data/vocabulary/russian/vocabulary.json",
+];
+
+function readText(relativePath) {
+  return fs.readFileSync(path.join(rootDir, relativePath), "utf8");
+}
+
+async function ensureRequiredFiles() {
+  for (const relativePath of requiredFiles) {
+    const absolutePath = path.join(rootDir, relativePath);
+    await fsp.access(absolutePath);
+  }
+}
+
+async function copyFileToStage(relativePath) {
+  const sourcePath = path.join(rootDir, relativePath);
+  const destinationPath = path.join(stageDir, relativePath);
+  await fsp.mkdir(path.dirname(destinationPath), { recursive: true });
+  await fsp.copyFile(sourcePath, destinationPath);
+}
+
+async function copyDirectoryToStage(relativePath) {
+  const sourcePath = path.join(rootDir, relativePath);
+  const destinationPath = path.join(stageDir, relativePath);
+  await fsp.mkdir(path.dirname(destinationPath), { recursive: true });
+  await fsp.cp(sourcePath, destinationPath, { recursive: true });
+}
+
+async function prepareStageDirectory() {
+  await fsp.rm(stageDir, { recursive: true, force: true });
+  await fsp.mkdir(stageDir, { recursive: true });
+
+  await copyFileToStage("package.json");
+  await copyFileToStage("dist/index.html");
+  await copyFileToStage("server/word-ssr-runtime.mjs");
+  await copyDirectoryToStage("server-build");
+  await copyDirectoryToStage("src/data/vocabulary");
+}
+
+async function verifyStageImport() {
+  const runtimeUrl = pathToFileURL(path.join(stageDir, "server", "word-ssr-runtime.mjs")).href;
+  const runtimeModule = await import(runtimeUrl);
+
+  assert.equal(typeof runtimeModule.handleWordSsrPathname, "function");
+
+  const response = await runtimeModule.handleWordSsrPathname(
+    "/en/english-word-about--A1-00001",
+    "https://www.fluentstellar.com",
+  );
+
+  assert.equal(response.status, 200);
+  assert.match(response.body, /<title>.*about.*<\/title>/i);
+  assert.match(response.body, /<link rel="canonical" href="https:\/\/www\.fluentstellar\.com\/en\/english-word-about--A1-00001"/i);
+}
+
+function verifyNoRetryPathDependencies() {
+  const filesToCheck = [
+    readText("server/word-ssr-runtime.mjs"),
+    readText("src/entry-server.tsx"),
+  ];
+
+  for (const content of filesToCheck) {
+    assert.ok(!/dist-retry-|server-build-retry-/i.test(content));
+  }
+}
+
+function getDirectorySize(directoryPath) {
+  let total = 0;
+
+  for (const entry of fs.readdirSync(directoryPath, { withFileTypes: true })) {
+    const absolutePath = path.join(directoryPath, entry.name);
+    if (entry.isDirectory()) {
+      total += getDirectorySize(absolutePath);
+      continue;
+    }
+
+    total += fs.statSync(absolutePath).size;
+  }
+
+  return total;
+}
+
+async function main() {
+  await ensureRequiredFiles();
+  verifyNoRetryPathDependencies();
+  await prepareStageDirectory();
+  await verifyStageImport();
+
+  const packagedSizeBytes = getDirectorySize(stageDir);
+  const serverBuildSizeBytes = getDirectorySize(path.join(rootDir, "server-build"));
+  const vocabularySizeBytes = getDirectorySize(path.join(rootDir, "src", "data", "vocabulary"));
+
+  console.log(
+    JSON.stringify(
+      {
+        verified: true,
+        requiredFiles,
+        packagedSizeBytes,
+        serverBuildSizeBytes,
+        vocabularySizeBytes,
+        stageDir,
+      },
+      null,
+      2,
+    ),
+  );
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+}).finally(async () => {
+  await fsp.rm(stageDir, { recursive: true, force: true });
+});

@@ -28,6 +28,11 @@ export interface HydrationWordPageData extends ResolvedWordPageData {
   browseWordsPartial?: boolean;
 }
 
+export interface CanonicalWordRecordMatch {
+  entry: WordPageVocabEntry;
+  slugMatches: boolean;
+}
+
 export const WORD_PAGE_BROWSE_WORDS_PER_PAGE = 54;
 
 interface ResolveWordPageDataParams {
@@ -71,6 +76,33 @@ function createEmptyResolvedWordPageData(): ResolvedWordPageData {
   };
 }
 
+export function findWordEntriesBySlug(
+  vocabulary: WordPageVocabEntry[],
+  wordSlug: string,
+): WordPageVocabEntry[] {
+  return vocabulary.filter(
+    (word) =>
+      typeof word.word_lemma === "string" &&
+      wordToSlug(word.word_lemma) === wordSlug,
+  );
+}
+
+export function findCanonicalWordRecord(
+  vocabulary: WordPageVocabEntry[],
+  wordSlug: string,
+  conceptId: string,
+): CanonicalWordRecordMatch | null {
+  const entry = vocabulary.find((word) => String(word.concept_id) === conceptId);
+  if (!entry) {
+    return null;
+  }
+
+  return {
+    entry,
+    slugMatches: wordToSlug(entry.word_lemma) === wordSlug,
+  };
+}
+
 export function getUiVocabularyLanguage(uiLang: UiLanguageCode): TargetLanguageSlug {
   return UI_LANG_TO_VOCAB[uiLang];
 }
@@ -83,15 +115,12 @@ export function buildResolvedWordPageData({
   vocabulary,
   uiVocabulary,
 }: ResolveWordPageDataParams): ResolvedWordPageData {
-  const entry =
-    (conceptId
-      ? vocabulary.find((word) => String(word.concept_id) === conceptId)
-      : undefined) ??
-    vocabulary.find(
-      (word) =>
-        typeof word.word_lemma === "string" &&
-        wordToSlug(word.word_lemma) === wordSlug,
-    );
+  if (!conceptId) {
+    return createEmptyResolvedWordPageData();
+  }
+
+  const canonicalRecord = findCanonicalWordRecord(vocabulary, wordSlug, conceptId);
+  const entry = canonicalRecord?.slugMatches ? canonicalRecord.entry : null;
 
   if (!entry) {
     return createEmptyResolvedWordPageData();
