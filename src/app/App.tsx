@@ -10,6 +10,7 @@ import { LanguageSelector } from "./components/LanguageSelector";
 import { FloatingWords } from "./components/FloatingWords";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { ScrollToTopButton } from "./components/ScrollToTopButton";
+import { UserProfileDashboardPage } from "./components/user-profile/UserProfileDashboardPage";
 import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { SeoHubPage } from "./components/SeoHubPage";
@@ -258,6 +259,7 @@ const ROUTES = {
   exam: "/languages/level-test",
   about: "/about",
   help: "/help",
+  profile: "/profile",
 } as const;
 
 type RouteKey = keyof typeof ROUTES;
@@ -314,6 +316,8 @@ const pageFromPath = (path: string): PageKey => {
       return "about";
     case ROUTES.help:
       return "help";
+    case ROUTES.profile:
+      return "profile";
     default: {
       if (import.meta.env.DEV && parseDevSeoCefrPlaceholderRoute(path)) {
         return "devSeoCefrPlaceholder";
@@ -1023,6 +1027,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
         ),
   );
   const shouldAutoRedirectFromStoredLanguagesRef = useRef(false);
+  const previousAuthUserIdRef = useRef<string | null>(getSessionUserId(getStoredSupabaseSession()));
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const resolvedPage = currentPage;
@@ -1460,6 +1465,17 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     setAuthSession(session);
   }, []);
 
+  useEffect(() => {
+    const previousAuthUserId = previousAuthUserIdRef.current;
+
+    // Redirect only on a live login transition, not on initial page load with an existing session.
+    if (!previousAuthUserId && authUserId && resolvedPage !== "profile") {
+      navigate(ROUTES.profile);
+    }
+
+    previousAuthUserIdRef.current = authUserId;
+  }, [authUserId, navigate, resolvedPage]);
+
   const handleUserProfileChange = (patch: Partial<UserProfile>) => {
     setAccountOnboardingError(null);
     setUserProfile((current) => normalizeUserProfile({ ...current, ...patch }));
@@ -1561,6 +1577,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
     onFilters: () => handleRequireLanguages("levelCategory"),
     onExercises: () => handleRequireLanguages("exerciseSelection"),
     onExplore: () => navigate(ROUTES.explore),
+    onProfile: () => navigate(ROUTES.profile),
     authSession,
     accountNickname: userProfile.nickname,
     onAuthSessionChange: handleAuthSessionChange,
@@ -1932,6 +1949,20 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
         <Suspense fallback={<RouteLoadingFallback />}>
           <About onBack={() => navigate(ROUTES.language)} />
         </Suspense>
+        {accountOnboardingDialog}
+      </div>
+    );
+  }
+
+  if (resolvedPage === "profile") {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header {...sharedHeaderProps} activePage="profile" />
+        <UserProfileDashboardPage
+          nickname={userProfile.nickname}
+          practiceLanguage={userProfile.practiceLanguage}
+          languageLevel={userProfile.languageLevel}
+        />
         {accountOnboardingDialog}
       </div>
     );

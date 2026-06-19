@@ -321,7 +321,22 @@
   .header-mobile-account-menu__list {
     display: flex;
     flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .header-mobile-account-group {
+    display: flex;
+    flex-direction: column;
     gap: 0.38rem;
+  }
+
+  .header-mobile-account-group__label {
+    padding: 0 0.2rem;
+    color: rgba(228, 221, 255, 0.52);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
   }
 
   .header-mobile-account-item {

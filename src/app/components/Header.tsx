@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   BookOpen,
+  BookOpenText,
+  ChartSpline,
   ChevronDown,
   ChevronRight,
   CircleHelp,
@@ -12,9 +14,11 @@ import {
   LogIn,
   LogOut,
   Menu,
+  ListPlus,
   SlidersHorizontal,
-  UserRound,
   Settings,
+  Target,
+  UserRound,
   X,
 } from "lucide-react";
 import { UILanguageSwitcher } from "../components/UILanguageSwitcher";
@@ -54,7 +58,33 @@ const NAV_HREFS = {
   explore: "/explore",
   help: "/help",
   exam: "/languages/level-test",
+  profile: "/profile",
 } as const;
+
+const ACCOUNT_NAV_GROUPS = [
+  {
+    label: "Main",
+    items: [
+      { id: "dashboard", label: "Dashboard", icon: UserRound, action: "profile" as const },
+      { id: "practice", label: "Practice", icon: Target, disabled: true },
+    ],
+  },
+  {
+    label: "Learning",
+    items: [
+      { id: "vocabulary", label: "Vocabulary", icon: BookOpenText, disabled: true },
+      { id: "my-lists", label: "My Lists", icon: ListPlus, disabled: true },
+    ],
+  },
+  {
+    label: "Insights",
+    items: [{ id: "progress", label: "Progress", icon: ChartSpline, disabled: true }],
+  },
+  {
+    label: "System",
+    items: [{ id: "settings", label: "Settings", icon: Settings, disabled: true }],
+  },
+] as const;
 
 function createSeededRandom(seed: number): () => number {
   let state = seed >>> 0;
@@ -220,6 +250,7 @@ interface HeaderProps {
   onFilters?: () => void;
   onExercises?: () => void;
   onExplore?: () => void;
+  onProfile?: () => void;
   activePage?:
     | "about"
     | "help"
@@ -228,6 +259,7 @@ interface HeaderProps {
     | "levelCategory"
     | "exerciseSelection"
     | "explore"
+    | "profile"
     | "vocabularyLevel"
     | "notFound";
   authSession?: StoredSupabaseSession | null;
@@ -243,6 +275,7 @@ export function Header({
   onFilters,
   onExercises,
   onExplore,
+  onProfile,
   activePage,
   authSession: controlledAuthSession,
   accountNickname,
@@ -287,10 +320,18 @@ export function Header({
   const showAuthButton = true;
   const googleLabel =
     authMode === "login" ? "Continue with Google" : "Sign up with Google";
+  const accountDisplayName = accountNickname?.trim() || "Account";
   const nicknameInitial = accountNickname?.trim().charAt(0).toUpperCase() ?? "";
   const authButtonLabel = authSession
     ? nicknameInitial || "Account"
     : loginLabel;
+  const goToProfile = () => {
+    setIsMenuOpen(false);
+    setIsMobileAccountMenuOpen(false);
+    setIsDesktopMoreOpen(false);
+    setIsAuthDialogOpen(false);
+    onProfile?.();
+  };
 
   useEffect(() => {
     if (controlledAuthSession === undefined) {
@@ -574,6 +615,11 @@ export function Header({
     `header-desktop-link ${isActive(...pages) ? "is-active" : ""}`;
   const desktopAuthButtonClassName =
     "header-desktop-control header-auth-nav";
+  const handleAccountNavItemSelect = (action?: "profile") => {
+    if (action === "profile") {
+      goToProfile();
+    }
+  };
   const createNavClickHandler = (action?: () => void) => (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (!action) {
       return;
@@ -782,32 +828,33 @@ export function Header({
                   <DropdownMenuContent
                     align="center"
                     sideOffset={8}
-                    className="w-44 rounded-2xl border border-white/15 bg-[#fffdfd] p-2 text-[#261943] shadow-[0_18px_42px_rgba(18,12,38,0.2)]"
+                    className="w-56 rounded-2xl border border-white/15 bg-[#fffdfd] p-2 text-[#261943] shadow-[0_18px_42px_rgba(18,12,38,0.2)]"
                   >
                     <DropdownMenuLabel className="px-3 py-2 text-center text-xs font-semibold uppercase tracking-[0.18em] text-[#7c6ca6]">
-                      Account
+                      {accountDisplayName}
                     </DropdownMenuLabel>
-                    <DropdownMenuItem
-                      disabled
-                      className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
-                    >
-                      <UserRound size={16} strokeWidth={1.8} aria-hidden="true" />
-                      <span className="block w-full text-center">Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      disabled
-                      className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
-                    >
-                      <BookOpen size={16} strokeWidth={1.8} aria-hidden="true" />
-                      <span className="block w-full text-center">Practice</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      disabled
-                      className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
-                    >
-                      <Settings size={16} strokeWidth={1.8} aria-hidden="true" />
-                      <span className="block w-full text-center">Settings</span>
-                    </DropdownMenuItem>
+                    {ACCOUNT_NAV_GROUPS.map((group) => (
+                      <div key={group.label}>
+                        <div className="px-3 pb-1 pt-2 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[#8b7fb0]">
+                          {group.label}
+                        </div>
+                        {group.items.map((item) => {
+                          const Icon = item.icon;
+
+                          return (
+                            <DropdownMenuItem
+                              key={item.id}
+                              disabled={Boolean(item.disabled)}
+                              onSelect={() => handleAccountNavItemSelect(item.action)}
+                              className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
+                            >
+                              <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
+                              <span className="block w-full text-center">{item.label}</span>
+                            </DropdownMenuItem>
+                          );
+                        })}
+                      </div>
+                    ))}
                     <DropdownMenuSeparator className="mx-1 my-2 bg-[#ebe4f7]" />
                     <DropdownMenuItem
                       onSelect={() => void handleSignOut()}
@@ -934,36 +981,31 @@ export function Header({
                 </button>
 
                 <div className="header-mobile-account-menu__list">
-                  <button
-                    type="button"
-                    className="header-mobile-account-item"
-                    aria-disabled="true"
-                  >
-                    <span className="header-mobile-account-item__icon" aria-hidden="true">
-                      <UserRound size={17} strokeWidth={1.8} />
-                    </span>
-                    <span className="header-mobile-account-item__label">Profile</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="header-mobile-account-item"
-                    aria-disabled="true"
-                  >
-                    <span className="header-mobile-account-item__icon" aria-hidden="true">
-                      <BookOpen size={17} strokeWidth={1.8} />
-                    </span>
-                    <span className="header-mobile-account-item__label">Practice</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="header-mobile-account-item"
-                    aria-disabled="true"
-                  >
-                    <span className="header-mobile-account-item__icon" aria-hidden="true">
-                      <Settings size={17} strokeWidth={1.8} />
-                    </span>
-                    <span className="header-mobile-account-item__label">Settings</span>
-                  </button>
+                  {ACCOUNT_NAV_GROUPS.map((group) => (
+                    <div key={group.label} className="header-mobile-account-group">
+                      <div className="header-mobile-account-group__label">{group.label}</div>
+                      {group.items.map((item) => {
+                        const Icon = item.icon;
+                        const itemAction =
+                          item.action === "profile" ? goToProfile : undefined;
+
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            className="header-mobile-account-item"
+                            aria-disabled={item.disabled ? "true" : undefined}
+                            onClick={itemAction}
+                          >
+                            <span className="header-mobile-account-item__icon" aria-hidden="true">
+                              <Icon size={17} strokeWidth={1.8} />
+                            </span>
+                            <span className="header-mobile-account-item__label">{item.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
                   <button
                     type="button"
                     onClick={() => void handleSignOut()}
