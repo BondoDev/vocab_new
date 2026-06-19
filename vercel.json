@@ -24,8 +24,8 @@
       "permanent": true
     },
     {
-      "source": "/:uiLang(en|es|fr|de|it|pt|ru)/:target(english|spanish|french|german|italian|portuguese|russian)-word-:wordSlug([^/]+)-:cefr(A1|A2|B1|B2|C1|C2)-:wordId([0-9]{5})",
-      "destination": "/:uiLang/:target-word-:wordSlug--:cefr-:wordId",
+      "source": "^/(en|es|fr|de|it|pt|ru)/(english|spanish|french|german|italian|portuguese|russian)-word-([^/]+)-(A1|A2|B1|B2|C1|C2)-([0-9]{5})$",
+      "destination": "/$1/$2-word-$3--$4-$5",
       "permanent": true
     }
   ],
@@ -73,8 +73,8 @@
       "destination": "/api/word-ssr"
     },
     {
-      "source": "/:uiLang([a-z]{2})/:wordRoute([^/]*-word-[^/]+)",
-      "destination": "/api/word-ssr-internal?pathname=/:uiLang/:wordRoute"
+      "source": "^/([a-z]{2})/([^/]*-word-[^/]+)$",
+      "destination": "/api/word-ssr-internal?pathname=/$1/$2"
     },
     {
       "source": "/profile",
