@@ -22,11 +22,6 @@
       ],
       "destination": "https://www.fluentstellar.com/:path*",
       "permanent": true
-    },
-    {
-      "source": "/:uiLanguage(en|es|fr|de|it|pt|ru)/:targetLanguage(english|spanish|french|german|italian|portuguese|russian)-word-:wordSlug(.+)-:level(A1|A2|B1|B2|C1|C2)-:id([0-9]{5})",
-      "destination": "/:uiLanguage/:targetLanguage-word-:wordSlug--:level-:id",
-      "permanent": true
     }
   ],
   "headers": [
