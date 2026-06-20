@@ -17,6 +17,7 @@ import {
 } from "../../data/seo/wordPageData";
 import { buildWordSeoMetadata } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
+import { fixMojibake } from "../../utils/fixMojibake";
 import englishInterface from "../../data/interface/english_interface.json";
 import spanishInterface from "../../data/interface/spanish_interface.json";
 import frenchInterface from "../../data/interface/french_interface.json";
@@ -136,6 +137,40 @@ const TARGET_LANG_NAMES: Record<
     russian: "Русский",
   },
 };
+
+function sanitizeCopy(value: string): string {
+  return fixMojibake(value);
+}
+
+function sanitizeWordPageTranslations(copy: WordPageT): WordPageT {
+  return {
+    h1: (word, targetLang) => sanitizeCopy(copy.h1(word, targetLang)),
+    definitionHeading: sanitizeCopy(copy.definitionHeading),
+    exampleSentenceHeading: sanitizeCopy(copy.exampleSentenceHeading),
+    wordInfoHeading: sanitizeCopy(copy.wordInfoHeading),
+    typeLabel: sanitizeCopy(copy.typeLabel),
+    levelLabel: sanitizeCopy(copy.levelLabel),
+    categoryLabel: sanitizeCopy(copy.categoryLabel),
+    relatedWordsHeading: sanitizeCopy(copy.relatedWordsHeading),
+    otherMeaningsHeading: sanitizeCopy(copy.otherMeaningsHeading),
+    openWordPageCta: sanitizeCopy(copy.openWordPageCta),
+    pronounceLabel: sanitizeCopy(copy.pronounceLabel),
+    practiceHeading: sanitizeCopy(copy.practiceHeading),
+    practiceInstruction: sanitizeCopy(copy.practiceInstruction),
+    definitionLabel: sanitizeCopy(copy.definitionLabel),
+    checkButtonLabel: sanitizeCopy(copy.checkButtonLabel),
+    correctMessage: sanitizeCopy(copy.correctMessage),
+    tryAgainMessage: sanitizeCopy(copy.tryAgainMessage),
+    practiceCta: (level) => sanitizeCopy(copy.practiceCta(level)),
+    browseMoreHeading: (level, targetLang) =>
+      sanitizeCopy(copy.browseMoreHeading(level, targetLang)),
+    levelQuestion: (word) => sanitizeCopy(copy.levelQuestion(word)),
+    grammarQuestion: (word) => sanitizeCopy(copy.grammarQuestion(word)),
+    topicQuestion: (word) => sanitizeCopy(copy.topicQuestion(word)),
+    notFoundTitle: sanitizeCopy(copy.notFoundTitle),
+    notFoundBody: sanitizeCopy(copy.notFoundBody),
+  };
+}
 
 function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -473,10 +508,10 @@ export function WordSeoPage({
 }: WordSeoPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
-  const t = TRANSLATIONS[uiLang] ?? TRANSLATIONS.en;
-  const targetLangName = (TARGET_LANG_NAMES[uiLang] ?? TARGET_LANG_NAMES.en)[
-    targetLanguage
-  ];
+  const t = sanitizeWordPageTranslations(TRANSLATIONS[uiLang] ?? TRANSLATIONS.en);
+  const targetLangName = sanitizeCopy(
+    (TARGET_LANG_NAMES[uiLang] ?? TARGET_LANG_NAMES.en)[targetLanguage],
+  );
   const hydratedData = useMemo(
     () => initialData ?? getHydratedWordPageData(location.pathname),
     [initialData, location.pathname],
@@ -691,16 +726,16 @@ export function WordSeoPage({
     `wordTypes.${wordType}`;
   const localizedWordType =
     translatedWordType && translatedWordType !== `wordTypes.${wordType}`
-      ? translatedWordType
-      : formatKeyLabel(wordType);
+      ? sanitizeCopy(translatedWordType)
+      : sanitizeCopy(formatKeyLabel(wordType));
   const translatedLevel =
     lookupNestedTranslation(uiRoot, `levels.${level.toLowerCase()}`) ??
     lookupNestedTranslation(enRoot, `levels.${level.toLowerCase()}`) ??
     `levels.${level.toLowerCase()}`;
   const localizedLevel =
     translatedLevel && translatedLevel !== `levels.${level.toLowerCase()}`
-      ? translatedLevel
-      : level;
+      ? sanitizeCopy(translatedLevel)
+      : sanitizeCopy(level);
   const translatedCategory = category
     ? (lookupNestedTranslation(uiRoot, `levelCategory.topicNames.${category}`) ??
       lookupNestedTranslation(enRoot, `levelCategory.topicNames.${category}`) ??
@@ -710,9 +745,9 @@ export function WordSeoPage({
     category &&
     translatedCategory &&
     translatedCategory !== `levelCategory.topicNames.${category}`
-      ? translatedCategory
+      ? sanitizeCopy(translatedCategory)
       : category
-        ? formatKeyLabel(category)
+        ? sanitizeCopy(formatKeyLabel(category))
         : "";
   const levelQuestion = t.levelQuestion(word);
   const typeQuestion = t.grammarQuestion(word);
