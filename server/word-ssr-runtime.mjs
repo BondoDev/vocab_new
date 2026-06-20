@@ -153,6 +153,21 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
     };
   }
 
+  const staticHtml = await readStaticHtmlForPath(normalizedPathname);
+  if (staticHtml) {
+    return {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": buildCacheHeaders(200),
+      },
+      body: staticHtml,
+      routeKind: resolution.kind,
+      pathname: normalizedPathname,
+      source: "static-fallback",
+    };
+  }
+
   const body = await renderHtmlResponse(normalizedPathname, siteOrigin);
   return {
     status: 404,

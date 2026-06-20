@@ -65,8 +65,8 @@
   },
   "rewrites": [
     {
-      "source": "/:uiLanguage(en|es|fr|de|it|pt|ru)/:targetLanguage(english|spanish|french|german|italian|portuguese|russian)-word-:wordRoute*",
-      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:targetLanguage-word-:wordRoute*"
+      "source": "/:uiLanguage/:slug",
+      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:slug"
     },
     {
       "source": "/profile",
