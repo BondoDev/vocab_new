@@ -24,8 +24,8 @@
       "permanent": true
     },
     {
-      "source": "^/(en|es|fr|de|it|pt|ru)/(english|spanish|french|german|italian|portuguese|russian)-word-([^/]+)-(A1|A2|B1|B2|C1|C2)-([0-9]{5})$",
-      "destination": "/$1/$2-word-$3--$4-$5",
+      "source": "/:uiLanguage(en|es|fr|de|it|pt|ru)/:targetLanguage(english|spanish|french|german|italian|portuguese|russian)-word-:wordSlug(.+)-:level(A1|A2|B1|B2|C1|C2)-:id([0-9]{5})",
+      "destination": "/:uiLanguage/:targetLanguage-word-:wordSlug--:level-:id",
       "permanent": true
     }
   ],
