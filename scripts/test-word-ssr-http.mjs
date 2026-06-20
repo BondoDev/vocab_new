@@ -181,22 +181,6 @@ function isWordLikeRoute(pathname) {
   return /^\/[a-z]{2}\/[^/]*-word-[^/]+$/i.test(pathname);
 }
 
-function getLegacyRedirectLocation(pathname) {
-  if (pathname.includes("--")) {
-    return null;
-  }
-
-  const match = pathname.match(
-    /^\/([a-z]{2})\/((?:english|spanish|french|german|italian|portuguese|russian)-word-[^/]+)-((?:A1|A2|B1|B2|C1|C2)-\d{5})$/i,
-  );
-
-  if (!match || match[2].includes("--")) {
-    return null;
-  }
-
-  return `/${match[1]}/${match[2]}--${match[3]}`;
-}
-
 async function createVerificationServer() {
   return http.createServer(async (req, res) => {
     const url = new URL(req.url ?? "/", "http://127.0.0.1");
@@ -210,14 +194,6 @@ async function createVerificationServer() {
           res.setHeader(headerName, headerValue);
         }
         res.end(response.body);
-        return;
-      }
-
-      const legacyLocation = getLegacyRedirectLocation(pathname);
-      if (legacyLocation) {
-        res.statusCode = 308;
-        res.setHeader("Location", legacyLocation);
-        res.end("");
         return;
       }
 

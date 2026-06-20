@@ -1,10 +1,38 @@
 import { handleWordSsrPathname } from "../server/word-ssr-runtime.mjs";
+import {
+  buildWordPathFromSlug,
+  parseWordRoute,
+} from "../src/data/seo/wordSlugs";
 
 export default async function handler(req: any, res: any) {
-  const pathname = req.query?.pathname ?? req.url ?? "/";
+  const pathnameValue = req.query?.pathname ?? req.url ?? "/";
+  const pathname = Array.isArray(pathnameValue) ? pathnameValue[0] : pathnameValue;
+  const normalizedPathname = `/${String(pathname ?? "/").replace(/^\/+/, "")}`.split(/[?#]/, 1)[0] || "/";
+  const routeMatch = normalizedPathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+
+  if (routeMatch) {
+    const [, uiLangRaw, slug] = routeMatch;
+    const parsedRoute = parseWordRoute(uiLangRaw, slug);
+
+    if (parsedRoute?.routeKind === "legacy-single-hyphen") {
+      res.statusCode = 308;
+      res.setHeader(
+        "Location",
+        buildWordPathFromSlug(
+          parsedRoute.uiLang,
+          parsedRoute.targetLanguage,
+          parsedRoute.wordSlug,
+          parsedRoute.conceptId,
+        ),
+      );
+      res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
+      res.end("");
+      return;
+    }
+  }
 
   try {
-    const response = await handleWordSsrPathname(pathname);
+    const response = await handleWordSsrPathname(normalizedPathname);
 
     res.statusCode = response.status;
 
