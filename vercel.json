@@ -69,8 +69,8 @@
       "destination": "/api/word-ssr"
     },
     {
-      "source": "^/([a-z]{2})/([^/]*-word-[^/]+)$",
-      "destination": "/api/word-ssr-internal?pathname=/$1/$2"
+      "source": "/:uiLanguage(en|es|fr|de|it|pt|ru)/:wordRoute((english|spanish|french|german|italian|portuguese|russian)-word-[^/]+)",
+      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:wordRoute"
     },
     {
       "source": "/profile",
