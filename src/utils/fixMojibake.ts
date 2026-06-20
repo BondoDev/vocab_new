@@ -21,7 +21,22 @@ function getWindows1251ReverseMap(): Map<string, number> {
 }
 
 function looksLikeMojibake(value: string): boolean {
-  return /[ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿРрГгвЂ™]/.test(value);
+  for (const char of value) {
+    const codePoint = char.codePointAt(0) ?? 0;
+
+    // Common mojibake output from UTF-8 text misread as Windows-1251.
+    if (
+      (codePoint >= 0x00C0 && codePoint <= 0x00FF) ||
+      (codePoint >= 0x0400 && codePoint <= 0x04FF) ||
+      (codePoint >= 0x2018 && codePoint <= 0x201E) ||
+      codePoint === 0x20AC ||
+      codePoint === 0x2122
+    ) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export function fixMojibake(value: string): string {
