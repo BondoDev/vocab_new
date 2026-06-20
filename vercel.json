@@ -69,8 +69,8 @@
       "destination": "/api/word-ssr"
     },
     {
-      "source": "/:uiLanguage(en|es|fr|de|it|pt|ru)/:wordRoute((english|spanish|french|german|italian|portuguese|russian)-word-[^/]+)",
-      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:wordRoute"
+      "source": "/:uiLanguage(en|es|fr|de|it|pt|ru)/:targetLanguage(english|spanish|french|german|italian|portuguese|russian)-word-:wordRoute*",
+      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:targetLanguage-word-:wordRoute*"
     },
     {
       "source": "/profile",
