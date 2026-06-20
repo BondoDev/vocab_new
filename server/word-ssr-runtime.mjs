@@ -47,7 +47,7 @@ function injectRenderedPage(template, { appHtml, headTags, htmlLang }) {
   );
 
   return withHead.replace(
-    /<div id="root">(?:<!--app-html-->)?<\/div>/i,
+    /<div id="root">[\s\S]*?<\/div>/i,
     `<div id="root">${appHtml}</div>`,
   );
 }
