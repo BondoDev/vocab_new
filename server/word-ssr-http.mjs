@@ -6,6 +6,10 @@ const SERVER_ERROR_HTML =
 
 const PAGE_METHODS = "GET, HEAD, OPTIONS";
 const API_METHODS = "GET, HEAD, OPTIONS";
+const TRUSTED_WORD_REWRITE_PATTERNS = new Set([
+  "/:uiLanguage/:slug",
+  "/:uiLanguage(en|es|fr|de|it|pt|ru)/:targetLanguage(english|spanish|french|german|italian|portuguese|russian)-word-:wordRoute*",
+]);
 
 function getHeaderValue(req, headerName) {
   const rawValue = req?.headers?.[headerName];
@@ -30,6 +34,16 @@ export function normalizeWordSsrPathname(pathname) {
 
 export function getRequestMethod(req) {
   return String(req?.method ?? "GET").toUpperCase();
+}
+
+function isApiPathname(pathname) {
+  return pathname === "/api/word-ssr" || pathname === "/api/word-ssr-internal" || pathname.startsWith("/api/");
+}
+
+function isSupportedWordRoute(pathname) {
+  return /^\/[a-z]{2}\/(english|spanish|french|german|italian|portuguese|russian)-word-[^/?#]+$/i.test(
+    pathname,
+  );
 }
 
 export function buildBlockedWordApiResponse(status = 404) {
@@ -86,17 +100,20 @@ export function requestHasTrustedWordRewrite(req, expectedPathname) {
   const invokePathname = normalizeWordSsrPathname(getHeaderValue(req, "x-invoke-path"));
   const normalizedExpectedPathname = normalizeWordSsrPathname(expectedPathname);
 
-  const candidatePathnames = [matchedPathname, invokePathname].filter(
-    (pathname) => pathname !== "/",
-  );
+  if (matchedPathname !== "/" && !isApiPathname(matchedPathname)) {
+    if (matchedPathname === normalizedExpectedPathname) {
+      return true;
+    }
 
-  return candidatePathnames.some(
-    (pathname) =>
-      pathname === normalizedExpectedPathname &&
-      pathname !== "/api/word-ssr" &&
-      pathname !== "/api/word-ssr-internal" &&
-      !pathname.startsWith("/api/"),
-  );
+    if (
+      TRUSTED_WORD_REWRITE_PATTERNS.has(matchedPathname) &&
+      isSupportedWordRoute(normalizedExpectedPathname)
+    ) {
+      return true;
+    }
+  }
+
+  return invokePathname === normalizedExpectedPathname && !isApiPathname(invokePathname);
 }
 
 export function sendNodeResponse(res, response, method = "GET") {
