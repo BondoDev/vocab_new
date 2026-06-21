@@ -186,7 +186,7 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": buildCacheHeaders(404),
-      "X-Robots-Tag": "noindex",
+      "X-Robots-Tag": "noindex, nofollow",
     },
     body,
     routeKind: resolution.kind,

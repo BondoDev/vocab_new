@@ -56,25 +56,56 @@
           "value": "text/plain; charset=utf-8"
         }
       ]
+    },
+    {
+      "source": "/profile",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/languages/filters/exercises/:source([a-z]{2})-:target([a-z]{2})/practice",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/languages/filters/exercises/practice",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
     }
   ],
   "functions": {
     "api/word-ssr-internal.ts": {
-      "includeFiles": "{dist/index.html,server-build/entry-server.js,src/data/vocabulary/**/*.json}"
+      "includeFiles": "{dist/index.html,server-build/entry-server.js,src/data/interface/**/*.json,src/data/vocabulary/**/*.json}"
     }
   },
   "rewrites": [
     {
       "source": "/:uiLanguage/:slug",
       "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:slug"
-    },
-    {
-      "source": "/profile",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/languages/filters/exercises/practice",
-      "destination": "/index.html"
     }
   ]
 }

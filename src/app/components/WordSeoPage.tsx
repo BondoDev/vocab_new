@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Volume2 } from "lucide-react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import {
   type TargetLanguageSlug,
   type UiLanguageCode,
@@ -18,13 +19,6 @@ import {
 import { buildWordSeoMetadata } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import { fixMojibake } from "../../utils/fixMojibake";
-import englishInterface from "../../data/interface/english_interface.json";
-import spanishInterface from "../../data/interface/spanish_interface.json";
-import frenchInterface from "../../data/interface/french_interface.json";
-import germanInterface from "../../data/interface/german_interface.json";
-import italianInterface from "../../data/interface/italian_interface.json";
-import portugueseInterface from "../../data/interface/portuguese_interface.json";
-import russianInterface from "../../data/interface/russian_interface.json";
 
 type VocabEntry = WordPageVocabEntry;
 
@@ -197,29 +191,6 @@ function slugToDisplayWord(slug: string): string {
     .replace(/-/g, " ")
     .trim();
 }
-
-function lookupNestedTranslation(root: unknown, key: string): string | undefined {
-  if (!root || typeof root !== "object") return undefined;
-  const parts = key.split(".");
-  let current: unknown = root as Record<string, unknown>;
-  for (const part of parts) {
-    if (!current || typeof current !== "object" || !(part in (current as Record<string, unknown>))) {
-      return undefined;
-    }
-    current = (current as Record<string, unknown>)[part];
-  }
-  return typeof current === "string" ? current : undefined;
-}
-
-const UI_INTERFACE_MAP: Record<UiLanguageCode, unknown> = {
-  en: englishInterface,
-  es: spanishInterface,
-  fr: frenchInterface,
-  de: germanInterface,
-  it: italianInterface,
-  pt: portugueseInterface,
-  ru: russianInterface,
-};
 
 function highlightWord(sentence: string, word: string): React.ReactNode {
   const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -508,6 +479,7 @@ export function WordSeoPage({
 }: WordSeoPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
+  const { t: translateInterface } = useLanguage();
   const t = sanitizeWordPageTranslations(TRANSLATIONS[uiLang] ?? TRANSLATIONS.en);
   const targetLangName = sanitizeCopy(
     (TARGET_LANG_NAMES[uiLang] ?? TARGET_LANG_NAMES.en)[targetLanguage],
@@ -718,28 +690,18 @@ export function WordSeoPage({
   const category = displayCategory || wordEntry.category;
   const level = wordEntry.level;
   const speechLang = SPEECH_LANG[targetLanguage] ?? "en-US";
-  const uiRoot = UI_INTERFACE_MAP[uiLang] ?? UI_INTERFACE_MAP.en;
-  const enRoot = UI_INTERFACE_MAP.en;
-  const translatedWordType =
-    lookupNestedTranslation(uiRoot, `wordTypes.${wordType}`) ??
-    lookupNestedTranslation(enRoot, `wordTypes.${wordType}`) ??
-    `wordTypes.${wordType}`;
+  const translatedWordType = translateInterface(`wordTypes.${wordType}`);
   const localizedWordType =
     translatedWordType && translatedWordType !== `wordTypes.${wordType}`
       ? sanitizeCopy(translatedWordType)
       : sanitizeCopy(formatKeyLabel(wordType));
-  const translatedLevel =
-    lookupNestedTranslation(uiRoot, `levels.${level.toLowerCase()}`) ??
-    lookupNestedTranslation(enRoot, `levels.${level.toLowerCase()}`) ??
-    `levels.${level.toLowerCase()}`;
+  const translatedLevel = translateInterface(`levels.${level.toLowerCase()}`);
   const localizedLevel =
     translatedLevel && translatedLevel !== `levels.${level.toLowerCase()}`
       ? sanitizeCopy(translatedLevel)
       : sanitizeCopy(level);
   const translatedCategory = category
-    ? (lookupNestedTranslation(uiRoot, `levelCategory.topicNames.${category}`) ??
-      lookupNestedTranslation(enRoot, `levelCategory.topicNames.${category}`) ??
-      `levelCategory.topicNames.${category}`)
+    ? translateInterface(`levelCategory.topicNames.${category}`)
     : "";
   const localizedCategory =
     category &&
@@ -857,10 +819,7 @@ export function WordSeoPage({
             </h2>
             <div className="mt-4 divide-y divide-border rounded-xl border-2 border-primary/20 bg-primary/[0.03]">
               {otherMeanings.map((meaning) => {
-                const translatedOtherType =
-                  lookupNestedTranslation(uiRoot, `wordTypes.${meaning.type}`) ??
-                  lookupNestedTranslation(enRoot, `wordTypes.${meaning.type}`) ??
-                  `wordTypes.${meaning.type}`;
+                const translatedOtherType = translateInterface(`wordTypes.${meaning.type}`);
                 const localizedOtherType =
                   translatedOtherType &&
                   translatedOtherType !== `wordTypes.${meaning.type}`

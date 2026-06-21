@@ -6,7 +6,11 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { handleWordSsrPathname } from "../server/word-ssr-runtime.mjs";
+import { sendNodeResponse } from "../server/word-ssr-http.mjs";
+import {
+  handleBlockedWordApiRequest,
+  handleInternalWordSsrRequest,
+} from "../server/word-ssr-handler.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,8 +18,6 @@ const rootDir = path.resolve(__dirname, "..");
 const distDir = path.join(rootDir, "dist");
 const siteOrigin = "https://www.fluentstellar.com";
 const tempDir = path.join(rootDir, ".tmp-word-ssr-http-test");
-const blockedApiHtml =
-  '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Page Not Found | FluentStellar</title><meta name="description" content="The requested page could not be found on FluentStellar."><meta name="robots" content="noindex, nofollow"></head><body><main><h1>Page Not Found</h1><p>The requested page could not be found.</p></main></body></html>';
 const require = createRequire(import.meta.url);
 
 function readJson(relativePath) {
@@ -129,33 +131,34 @@ function countLinks(html) {
   return Array.from(html.matchAll(/<a\b/gi)).length;
 }
 
-function buildBlockedApiResponse() {
-  return {
-    status: 404,
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      "Cache-Control": "public, max-age=0, s-maxage=300",
-      "X-Robots-Tag": "noindex, nofollow",
-    },
-    body: blockedApiHtml,
-  };
-}
-
 async function resolveStaticResponse(pathname) {
   const normalizedPath = pathname === "/" ? "/index.html" : pathname;
   const fileCandidate = path.join(distDir, normalizedPath.replace(/^\/+/, ""));
   const htmlCandidate = path.join(distDir, pathname.replace(/^\/+/, ""), "index.html");
+  const isNoindexAppRoute =
+    pathname === "/profile" ||
+    pathname === "/languages/filters/exercises/practice" ||
+    /^\/languages\/filters\/exercises\/[a-z]{2}-[a-z]{2}\/practice$/i.test(pathname);
+  const routeHeaders = isNoindexAppRoute
+    ? {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
+        "X-Robots-Tag": "noindex, nofollow",
+      }
+    : null;
 
   try {
     const stat = await fsp.stat(fileCandidate);
     if (stat.isFile()) {
       return {
         status: 200,
-        headers: {
-          "Content-Type": fileCandidate.endsWith(".html")
-            ? "text/html; charset=utf-8"
-            : "application/octet-stream",
-        },
+        headers:
+          routeHeaders ??
+          {
+            "Content-Type": fileCandidate.endsWith(".html")
+              ? "text/html; charset=utf-8"
+              : "application/octet-stream",
+          },
         body: await fsp.readFile(fileCandidate, "utf8"),
       };
     }
@@ -166,9 +169,11 @@ async function resolveStaticResponse(pathname) {
     if (stat.isFile()) {
       return {
         status: 200,
-        headers: {
-          "Content-Type": "text/html; charset=utf-8",
-        },
+        headers:
+          routeHeaders ??
+          {
+            "Content-Type": "text/html; charset=utf-8",
+          },
         body: await fsp.readFile(htmlCandidate, "utf8"),
       };
     }
@@ -185,33 +190,34 @@ async function createVerificationServer() {
   return http.createServer(async (req, res) => {
     const url = new URL(req.url ?? "/", "http://127.0.0.1");
     const pathname = url.pathname;
+    const requestState = {
+      method: req.method,
+      url: req.url,
+      headers: req.headers,
+      query: Object.fromEntries(url.searchParams.entries()),
+    };
 
     try {
       if (pathname === "/api/word-ssr" || pathname === "/api/word-ssr-internal") {
-        const response = buildBlockedApiResponse();
-        res.statusCode = response.status;
-        for (const [headerName, headerValue] of Object.entries(response.headers)) {
-          res.setHeader(headerName, headerValue);
-        }
-        res.end(response.body);
+        const response =
+          pathname === "/api/word-ssr"
+            ? await handleBlockedWordApiRequest(requestState)
+            : await handleInternalWordSsrRequest(requestState);
+        sendNodeResponse(res, response, String(req.method ?? "GET").toUpperCase());
         return;
       }
 
       if (isWordLikeRoute(pathname)) {
-        const response = await handleWordSsrPathname(pathname, siteOrigin);
-        res.statusCode = response.status;
-        for (const [headerName, headerValue] of Object.entries(response.headers)) {
-          res.setHeader(headerName, headerValue);
-        }
-        res.end(response.body);
-        return;
-      }
-
-      if (pathname === "/profile" || pathname === "/languages/filters/exercises/practice") {
-        const body = await fsp.readFile(path.join(distDir, "index.html"), "utf8");
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "text/html; charset=utf-8");
-        res.end(body);
+        const response = await handleInternalWordSsrRequest({
+          method: req.method,
+          url: `/api/word-ssr-internal?pathname=${encodeURIComponent(pathname)}`,
+          query: { pathname },
+          headers: {
+            ...req.headers,
+            "x-matched-path": pathname,
+          },
+        });
+        sendNodeResponse(res, response, String(req.method ?? "GET").toUpperCase());
         return;
       }
 
@@ -248,6 +254,7 @@ async function listen(server) {
 
 async function request(baseUrl, pathname, options = {}) {
   const response = await fetch(`${baseUrl}${pathname}`, {
+    method: options.method ?? "GET",
     redirect: "manual",
     headers: options.headers,
   });
@@ -296,6 +303,47 @@ function assertNotFoundWordHtml(response, pathname) {
   );
 }
 
+function assertBlockedApiResponse(response, pathname, expectedStatus = 404) {
+  assert.equal(response.status, expectedStatus, `wrong status for ${pathname}`);
+  assert.match(
+    response.headers["x-robots-tag"] ?? "",
+    /noindex,\s*nofollow/i,
+    `missing noindex nofollow header for ${pathname}`,
+  );
+  assert.equal(response.headers["cache-control"], "no-store", `wrong cache control for ${pathname}`);
+  assert.equal(extractCanonical(response.body), null, `blocked API must not emit canonical for ${pathname}`);
+  assert.ok(!response.body.includes("hreflang="), `blocked API must not emit hreflang for ${pathname}`);
+  assert.ok(
+    !response.body.includes("application/ld+json"),
+    `blocked API must not emit JSON-LD for ${pathname}`,
+  );
+  assert.ok(
+    !/FluentStellar - Structured Vocabulary Learning Platform/i.test(response.body),
+    `blocked API must not emit homepage metadata for ${pathname}`,
+  );
+}
+
+function assertRouteMetadata(response, pathname, expectations) {
+  assert.equal(response.status, expectations.status ?? 200, `wrong status for ${pathname}`);
+  if (expectations.title) {
+    assert.equal(extractTagContent(response.body, "title"), expectations.title, `wrong title for ${pathname}`);
+  }
+  if (expectations.robots) {
+    assert.equal(
+      extractMetaContent(response.body, "robots"),
+      expectations.robots,
+      `wrong robots for ${pathname}`,
+    );
+  }
+  assert.equal(
+    extractCanonical(response.body),
+    expectations.canonical ?? null,
+    `wrong canonical for ${pathname}`,
+  );
+  assert.ok(!response.body.includes("hreflang="), `unexpected hreflang for ${pathname}`);
+  assert.ok(!response.body.includes("application/ld+json"), `unexpected JSON-LD for ${pathname}`);
+}
+
 async function main() {
   const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
   const germanVocabulary = readJson("src/data/vocabulary/german/vocabulary.json");
@@ -330,6 +378,33 @@ async function main() {
     const englishCanonicalResponse = await request(baseUrl, englishCanonicalPath);
     assertWordHtml(englishCanonicalResponse, representativeEntries.english, englishCanonicalPath);
     assert.equal(extractHtmlLang(englishCanonicalResponse.body), "en");
+    assert.equal(
+      englishCanonicalResponse.headers["cache-control"],
+      "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800",
+    );
+
+    const englishCanonicalHeadResponse = await request(baseUrl, englishCanonicalPath, {
+      method: "HEAD",
+    });
+    assert.equal(englishCanonicalHeadResponse.status, 200);
+    assert.equal(
+      englishCanonicalHeadResponse.headers["cache-control"],
+      englishCanonicalResponse.headers["cache-control"],
+    );
+    assert.equal(englishCanonicalHeadResponse.body, "");
+
+    const englishCanonicalOptionsResponse = await request(baseUrl, englishCanonicalPath, {
+      method: "OPTIONS",
+    });
+    assert.equal(englishCanonicalOptionsResponse.status, 204);
+    assert.equal(englishCanonicalOptionsResponse.headers.allow, "GET, HEAD, OPTIONS");
+
+    const englishCanonicalPostResponse = await request(baseUrl, englishCanonicalPath, {
+      method: "POST",
+    });
+    assert.equal(englishCanonicalPostResponse.status, 405);
+    assert.equal(englishCanonicalPostResponse.headers.allow, "GET, HEAD, OPTIONS");
+    assert.equal(englishCanonicalPostResponse.headers["cache-control"], "no-store");
 
     const englishDeVariantPath = buildCanonicalPath("de", "english", representativeEntries.english);
     const englishDeVariantResponse = await request(baseUrl, englishDeVariantPath);
@@ -393,37 +468,100 @@ async function main() {
       baseUrl,
       "/api/word-ssr?pathname=/en/english-word-about--A1-00001",
     );
-    assert.equal(directApiResponse.status, 404);
-    assert.equal(directApiResponse.headers["x-robots-tag"], "noindex, nofollow");
-    assert.equal(extractCanonical(directApiResponse.body), null);
+    assertBlockedApiResponse(
+      directApiResponse,
+      "/api/word-ssr?pathname=/en/english-word-about--A1-00001",
+    );
 
     const directHiddenApiResponse = await request(
       baseUrl,
       "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
     );
-    assert.equal(directHiddenApiResponse.status, 404);
-    assert.equal(directHiddenApiResponse.headers["x-robots-tag"], "noindex, nofollow");
+    assertBlockedApiResponse(
+      directHiddenApiResponse,
+      "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
+    );
 
     const directInvalidApiResponse = await request(baseUrl, "/api/word-ssr");
-    assertNotFoundWordHtml(directInvalidApiResponse, "/api/word-ssr");
-    assert.equal(directInvalidApiResponse.headers["x-robots-tag"], "noindex, nofollow");
+    assertBlockedApiResponse(directInvalidApiResponse, "/api/word-ssr");
+
+    const directMalformedApiResponse = await request(
+      baseUrl,
+      "/api/word-ssr-internal?pathname=../../etc/passwd",
+    );
+    assertBlockedApiResponse(directMalformedApiResponse, "/api/word-ssr-internal?pathname=../../etc/passwd");
+
+    const directApiHeadResponse = await request(
+      baseUrl,
+      "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
+      { method: "HEAD" },
+    );
+    assert.equal(directApiHeadResponse.status, 404);
+    assert.equal(directApiHeadResponse.body, "");
+    assert.equal(directApiHeadResponse.headers["cache-control"], "no-store");
+
+    const directApiOptionsResponse = await request(
+      baseUrl,
+      "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
+      { method: "OPTIONS" },
+    );
+    assert.equal(directApiOptionsResponse.status, 204);
+    assert.equal(directApiOptionsResponse.headers.allow, "GET, HEAD, OPTIONS");
+
+    for (const method of ["POST", "PUT", "PATCH", "DELETE"]) {
+      const blockedMethodResponse = await request(
+        baseUrl,
+        "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
+        { method },
+      );
+      assert.equal(blockedMethodResponse.status, 405, `expected 405 for ${method} direct API`);
+      assert.equal(blockedMethodResponse.headers.allow, "GET, HEAD, OPTIONS");
+      assert.equal(blockedMethodResponse.headers["cache-control"], "no-store");
+    }
 
     const canonicalAfterApiResponse = await request(baseUrl, englishCanonicalPath);
     assertWordHtml(canonicalAfterApiResponse, representativeEntries.english, englishCanonicalPath);
     assert.equal(extractCanonical(canonicalAfterApiResponse.body), `${siteOrigin}${englishCanonicalPath}`);
+    assert.ok(
+      !canonicalAfterApiResponse.body.includes("/api/word-ssr"),
+      "canonical word page must not link to internal API routes",
+    );
+
+    const homepageResponse = await request(baseUrl, "/");
+    assertRouteMetadata(homepageResponse, "/", {
+      title: "FluentStellar - Structured Vocabulary Learning Platform",
+      canonical: `${siteOrigin}/`,
+    });
 
     const profileResponse = await request(baseUrl, "/profile");
-    assert.equal(profileResponse.status, 200);
+    assertRouteMetadata(profileResponse, "/profile", {
+      title: "Profile | FluentStellar",
+      robots: "noindex, nofollow",
+    });
+    assert.equal(profileResponse.headers["x-robots-tag"], "noindex, nofollow");
+    assert.equal(profileResponse.headers["cache-control"], "no-store");
     assert.ok(profileResponse.body.includes(`<div id="root">`));
 
-    const practiceResponse = await request(baseUrl, "/languages/filters/exercises/en-es/practice");
-    assert.equal(practiceResponse.status, 200);
-    assert.ok(practiceResponse.body.includes(`<div id="root">`));
+    for (const practicePath of [
+      "/languages/filters/exercises/en-es/practice",
+      "/languages/filters/exercises/de-en/practice",
+      "/languages/filters/exercises/fr-it/practice",
+    ]) {
+      const practiceResponse = await request(baseUrl, practicePath);
+      assertRouteMetadata(practiceResponse, practicePath, {
+        title: "Vocabulary Practice | FluentStellar",
+        robots: "noindex, nofollow",
+      });
+      assert.equal(practiceResponse.headers["x-robots-tag"], "noindex, nofollow");
+      assert.equal(practiceResponse.headers["cache-control"], "no-store");
+      assert.ok(practiceResponse.body.includes(`<div id="root">`));
+    }
 
     const sitemapXml = fs.readFileSync(
       path.join(rootDir, "public", "sitemaps", "sitemap-words-en-en.xml"),
       "utf8",
     );
+    assert.ok(!/api\/word-ssr/i.test(sitemapXml), "API URLs must not appear in word sitemap");
     const sitemapUrlMatch = sitemapXml.match(/<loc>https:\/\/www\.fluentstellar\.com([^<]+)<\/loc>/);
     assert.ok(sitemapUrlMatch, "missing sitemap word URL");
     const sitemapWordResponse = await request(baseUrl, sitemapUrlMatch[1]);

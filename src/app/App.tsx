@@ -34,10 +34,11 @@ import {
   resolveWordRoute,
   type WordRouteMatch,
 } from "../data/seo/wordSlugs";
-import { getLevelBrowsePreviewData } from "../data/seo/levelBrowseWords";
+import type { LevelBrowsePreviewData } from "../data/seo/levelBrowseWords";
 import { resolveSeoHubRoute } from "../data/seo/hub";
-import { SeoProvider, type SeoManager } from "../seo/SeoContext";
+import { SEOHead, SeoProvider, type SeoManager, useSeoSiteOrigin } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
+import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../data/levelTests";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPageData";
@@ -409,7 +410,13 @@ function createDistributedStarFieldImage(starCount: number, seed = starCount): s
   return layers.join(",\n    ");
 }
 
-function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWordPageData | null }) {
+function AppContent({
+  initialWordPageData,
+  initialBrowsePreviewData,
+}: {
+  initialWordPageData?: ResolvedWordPageData | null;
+  initialBrowsePreviewData?: LevelBrowsePreviewData | null;
+}) {
   const { t, uiLanguage, setUILanguage } = useLanguage();
   const supportedLanguageCodes = useMemo(
     () => new Set(supportedLanguages.map((language) => language.code)),
@@ -1043,6 +1050,19 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   const shouldReduceMotion = useReducedMotion();
   const resolvedPage = currentPage;
   const authUserId = getSessionUserId(authSession);
+  const siteOrigin = useSeoSiteOrigin();
+  const routeMetadata = useMemo(() => {
+    switch (resolvedPage) {
+      case "wordPage":
+      case "vocabularyLevel":
+      case "levelTestSeo":
+      case "seoHub":
+      case "devSeoCefrPlaceholder":
+        return null;
+      default:
+        return buildRouteMetadata(location.pathname, siteOrigin);
+    }
+  }, [location.pathname, resolvedPage, siteOrigin]);
 
   useEffect(() => {
     const persistedYourLanguage = readStoredString(
@@ -1875,6 +1895,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "practice") {
     return (
       <>
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Suspense fallback={<RouteLoadingFallback />}>
           <VocabularyPractice
             practiceLanguage={practiceLanguage}
@@ -1896,6 +1917,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "exerciseSelection") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Header {...sharedHeaderProps} activePage="exerciseSelection" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <ExerciseSelection
@@ -1913,6 +1935,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "levelCategory") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Header {...sharedHeaderProps} activePage="levelCategory" />
         <div className="flex-1 min-h-0">
           <Suspense fallback={<RouteLoadingFallback />}>
@@ -1940,6 +1963,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "exam") {
     return (
       <>
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Suspense fallback={<RouteLoadingFallback />}>
           <VocabularyLevelExam
             practiceLanguage={practiceLanguage}
@@ -1956,6 +1980,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "about") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Header {...sharedHeaderProps} activePage="about" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <About onBack={() => navigate(ROUTES.language)} />
@@ -1968,6 +1993,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "profile") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Header {...sharedHeaderProps} activePage="profile" />
         <UserProfileDashboardPage
           nickname={userProfile.nickname}
@@ -1982,6 +2008,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "explore") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Header {...sharedHeaderProps} activePage="explore" />
         <main className="flex-1 px-4 py-8 md:px-8 md:py-12">
           <div className="mx-auto w-full max-w-5xl">
@@ -2287,6 +2314,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "help") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Header {...sharedHeaderProps} activePage="help" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <Help onBack={() => navigate(ROUTES.language)} />
@@ -2383,6 +2411,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
               item={jsonBackedVocabularyItem}
               onStartPractice={handleStartVocabularyPractice}
               pathPrefix=""
+              initialBrowsePreview={initialBrowsePreviewData}
             />
           ) : (
             <VocabularyLevelPage
@@ -2390,10 +2419,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
               targetLanguage={vocabularyRoute.targetLanguage}
               level={vocabularyRoute.level}
               onStartPractice={handleStartVocabularyPractice}
-              initialBrowsePreview={getLevelBrowsePreviewData(
-                vocabularyRoute.targetLanguage,
-                vocabularyRoute.level,
-              )}
+              initialBrowsePreview={initialBrowsePreviewData}
             />
           )}
         </Suspense>
@@ -2458,6 +2484,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
   if (resolvedPage === "notFound") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Header {...sharedHeaderProps} activePage="notFound" />
         <NotFoundPage />
         {accountOnboardingDialog}
@@ -2467,6 +2494,7 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
 
   return (
     <div className="language-page min-h-[100svh] w-full min-w-0 flex flex-col overflow-x-hidden bg-background">
+      {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
       <Header {...sharedHeaderProps} activePage="language" />
 
       <main className="flex-1 min-h-0 flex flex-col items-center justify-center px-[clamp(1rem,3vw,2.5rem)] pt-[clamp(0.5rem,2vw,1.5rem)] pb-[clamp(2.5rem,6vw,5rem)] relative">
@@ -2737,22 +2765,32 @@ function AppContent({ initialWordPageData }: { initialWordPageData?: ResolvedWor
 
 interface AppProps {
   initialUILanguage?: UILanguage;
+  initialTranslationData?: unknown;
   seoManager?: SeoManager;
   siteOrigin?: string;
   initialWordPageData?: ResolvedWordPageData | null;
+  initialBrowsePreviewData?: LevelBrowsePreviewData | null;
 }
 
 export default function App({
   initialUILanguage,
+  initialTranslationData,
   seoManager,
   siteOrigin = DEFAULT_SITE_ORIGIN,
   initialWordPageData,
+  initialBrowsePreviewData,
 }: AppProps) {
   return (
     <SeoProvider manager={seoManager} siteOrigin={siteOrigin}>
-      <LanguageProvider initialUILanguage={initialUILanguage}>
+      <LanguageProvider
+        initialUILanguage={initialUILanguage}
+        initialTranslationData={initialTranslationData}
+      >
         <>
-          <AppContent initialWordPageData={initialWordPageData} />
+          <AppContent
+            initialWordPageData={initialWordPageData}
+            initialBrowsePreviewData={initialBrowsePreviewData}
+          />
           <ScrollToTopButton />
         </>
       </LanguageProvider>

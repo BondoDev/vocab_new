@@ -73,6 +73,7 @@ function stripManagedHeadTags(template) {
   return template
     .replace(/<title>[\s\S]*?<\/title>/i, "")
     .replace(/<meta\s+name="description"[\s\S]*?>/i, "")
+    .replace(/<meta\s+name="robots"[\s\S]*?>/gi, "")
     .replace(/<link\s+rel="canonical"[\s\S]*?>/i, "")
     .replace(/<meta\s+property="og:type"[\s\S]*?>/i, "")
     .replace(/<meta\s+property="og:url"[\s\S]*?>/i, "")
