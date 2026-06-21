@@ -24,8 +24,8 @@
       "permanent": true
     },
     {
-      "source": "^/(en|es|fr|de|it|pt|ru)/(english|spanish|french|german|italian|portuguese|russian)-word-([^/]+)-(A1|A2|B1|B2|C1|C2)-([0-9]{5})$",
-      "destination": "/$1/$2-word-$3--$4-$5",
+      "source": "/:uiLanguage(en|es|fr|de|it|pt|ru)/:targetLanguage(english|spanish|french|german|italian|portuguese|russian)-word-:wordSlug([^/]*[^-])-:level(A1|A2|B1|B2|C1|C2)-:id([0-9]{5})",
+      "destination": "/:uiLanguage/:targetLanguage-word-:wordSlug--:level-:id",
       "permanent": true
     }
   ],
@@ -56,29 +56,56 @@
           "value": "text/plain; charset=utf-8"
         }
       ]
+    },
+    {
+      "source": "/profile",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/languages/filters/exercises/:source([a-z]{2})-:target([a-z]{2})/practice",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/languages/filters/exercises/practice",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
     }
   ],
   "functions": {
     "api/word-ssr-internal.ts": {
-      "includeFiles": "{dist/index.html,server-build/entry-server.js,src/data/vocabulary/**/*.json}"
+      "includeFiles": "{dist/index.html,server-build/entry-server.js,src/data/interface/**/*.json,src/data/vocabulary/**/*.json}"
     }
   },
   "rewrites": [
     {
-      "source": "/api/word-ssr-internal",
-      "destination": "/api/word-ssr"
-    },
-    {
-      "source": "/:uiLanguage(en|es|fr|de|it|pt|ru)/:targetLanguage(english|spanish|french|german|italian|portuguese|russian)-word-:wordRoute*",
-      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:targetLanguage-word-:wordRoute*"
-    },
-    {
-      "source": "/profile",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/languages/filters/exercises/practice",
-      "destination": "/index.html"
+      "source": "/:uiLanguage/:slug",
+      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:slug"
     }
   ]
 }

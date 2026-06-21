@@ -11,8 +11,17 @@ const stageDir = path.join(rootDir, ".tmp-word-ssr-package");
 
 const requiredFiles = [
   "dist/index.html",
+  "server/word-ssr-handler.mjs",
+  "server/word-ssr-http.mjs",
   "server/word-ssr-runtime.mjs",
   "server-build/entry-server.js",
+  "src/data/interface/english_interface.json",
+  "src/data/interface/spanish_interface.json",
+  "src/data/interface/french_interface.json",
+  "src/data/interface/german_interface.json",
+  "src/data/interface/italian_interface.json",
+  "src/data/interface/portuguese_interface.json",
+  "src/data/interface/russian_interface.json",
   "src/data/vocabulary/english/vocabulary.json",
   "src/data/vocabulary/spanish/vocabulary.json",
   "src/data/vocabulary/french/vocabulary.json",
@@ -53,16 +62,22 @@ async function prepareStageDirectory() {
 
   await copyFileToStage("package.json");
   await copyFileToStage("dist/index.html");
+  await copyFileToStage("server/word-ssr-handler.mjs");
+  await copyFileToStage("server/word-ssr-http.mjs");
   await copyFileToStage("server/word-ssr-runtime.mjs");
   await copyDirectoryToStage("server-build");
+  await copyDirectoryToStage("src/data/interface");
   await copyDirectoryToStage("src/data/vocabulary");
 }
 
 async function verifyStageImport() {
   const runtimeUrl = pathToFileURL(path.join(stageDir, "server", "word-ssr-runtime.mjs")).href;
   const runtimeModule = await import(runtimeUrl);
+  const handlerUrl = pathToFileURL(path.join(stageDir, "server", "word-ssr-handler.mjs")).href;
+  const handlerModule = await import(handlerUrl);
 
   assert.equal(typeof runtimeModule.handleWordSsrPathname, "function");
+  assert.equal(typeof handlerModule.handleInternalWordSsrRequest, "function");
 
   const response = await runtimeModule.handleWordSsrPathname(
     "/en/english-word-about--A1-00001",
@@ -72,6 +87,30 @@ async function verifyStageImport() {
   assert.equal(response.status, 200);
   assert.match(response.body, /<title>.*about.*<\/title>/i);
   assert.match(response.body, /<link rel="canonical" href="https:\/\/www\.fluentstellar\.com\/en\/english-word-about--A1-00001"/i);
+
+  const blockedApiResponse = await handlerModule.handleInternalWordSsrRequest({
+    method: "GET",
+    url: "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
+    query: {
+      pathname: "/en/english-word-about--A1-00001",
+    },
+    headers: {},
+  });
+  assert.equal(blockedApiResponse.status, 404);
+  assert.equal(blockedApiResponse.headers["X-Robots-Tag"], "noindex, nofollow");
+
+  const canonicalApiResponse = await handlerModule.handleInternalWordSsrRequest({
+    method: "GET",
+    url: "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
+    query: {
+      pathname: "/en/english-word-about--A1-00001",
+    },
+    headers: {
+      "x-matched-path": "/en/english-word-about--A1-00001",
+    },
+  });
+  assert.equal(canonicalApiResponse.status, 200);
+  assert.match(canonicalApiResponse.body, /<link rel="canonical" href="https:\/\/www\.fluentstellar\.com\/en\/english-word-about--A1-00001"/i);
 }
 
 function verifyNoRetryPathDependencies() {

@@ -19,11 +19,16 @@ type LoadedTranslationData = {
   root: Record<string, TranslationNode>;
 };
 
-const interfaceModules = import.meta.glob("../data/interface/*_interface.json", {
-  eager: true,
-}) as Record<string, { default: unknown }>;
-
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+declare global {
+  interface Window {
+    __INITIAL_INTERFACE_DATA__?: {
+      lang: UILanguage;
+      data: unknown;
+    };
+  }
+}
 
 function normalizeTranslationRoot(source: unknown): Record<string, TranslationNode> {
   const candidate =
@@ -134,24 +139,10 @@ async function loadLanguageData(lang: UILanguage): Promise<LoadedTranslationData
   }
 }
 
-function loadLanguageDataSync(lang: UILanguage): LoadedTranslationData | null {
-  const filenameByLang: Record<UILanguage, string> = {
-    en: "english_interface.json",
-    es: "spanish_interface.json",
-    fr: "french_interface.json",
-    pt: "portuguese_interface.json",
-    it: "italian_interface.json",
-    de: "german_interface.json",
-    ru: "russian_interface.json",
-  };
-
-  const module = interfaceModules[`../data/interface/${filenameByLang[lang]}`];
-  return module ? prepareTranslationData(module.default) : null;
-}
-
 interface LanguageProviderProps {
   children: ReactNode;
   initialUILanguage?: UILanguage;
+  initialTranslationData?: unknown;
 }
 
 function readStoredUiLanguage(): UILanguage | null {
@@ -180,15 +171,34 @@ function getInitialUiLanguage(initialUILanguage?: UILanguage): UILanguage {
   return initialUILanguage ?? readDocumentUiLanguage() ?? readStoredUiLanguage() ?? "en";
 }
 
+function readInitialInterfaceData(initialUILanguage?: UILanguage): LoadedTranslationData | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const initialPayload = window.__INITIAL_INTERFACE_DATA__;
+  const initialLang = getInitialUiLanguage(initialUILanguage);
+
+  if (!initialPayload || initialPayload.lang !== initialLang) {
+    return null;
+  }
+
+  return prepareTranslationData(initialPayload.data);
+}
+
 export function LanguageProvider({
   children,
   initialUILanguage,
+  initialTranslationData,
 }: LanguageProviderProps) {
   const [uiLanguage, setUILanguage] = useState<UILanguage>(() => getInitialUiLanguage(initialUILanguage));
   const [loadedLanguages, setLoadedLanguages] = useState<Partial<Record<UILanguage, LoadedTranslationData>>>(
     () => {
       const initialLang = getInitialUiLanguage(initialUILanguage);
-      const initialData = loadLanguageDataSync(initialLang);
+      const initialData =
+        initialTranslationData
+          ? prepareTranslationData(initialTranslationData)
+          : readInitialInterfaceData(initialUILanguage);
       return initialData ? { [initialLang]: initialData } : {};
     },
   );
@@ -240,24 +250,24 @@ export function LanguageProvider({
   }, [loadedLanguages, uiLanguage]);
 
   const handleSetUILanguage = (lang: UILanguage) => {
-    const syncData = loadLanguageDataSync(lang);
-    if (syncData) {
-      setLoadedLanguages((current) => {
-        if (current[lang]) {
-          return current;
-        }
-
-        return {
-          ...current,
-          [lang]: syncData,
-        };
-      });
+    if (loadedLanguages[lang]) {
+      setUILanguage(lang);
+      if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
+        window.localStorage.setItem("uiLanguage", lang);
+      }
+      return;
     }
 
-    setUILanguage(lang);
-    if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
-      window.localStorage.setItem("uiLanguage", lang);
-    }
+    void loadLanguageData(lang).then((data) => {
+      setLoadedLanguages((current) => ({
+        ...current,
+        [lang]: current[lang] ?? data,
+      }));
+      setUILanguage(lang);
+      if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
+        window.localStorage.setItem("uiLanguage", lang);
+      }
+    });
   };
 
   const currentLanguageData = loadedLanguages[uiLanguage];

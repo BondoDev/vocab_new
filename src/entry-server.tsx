@@ -12,6 +12,7 @@ import {
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/levelTests";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
+import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
 import {
   buildWordPathFromSlug,
@@ -26,6 +27,7 @@ import {
   type ResolvedWordPageData,
   type WordPageVocabEntry,
 } from "./data/seo/wordPageData";
+import { getLevelBrowsePreviewData, type LevelBrowsePreviewData } from "./data/seo/levelBrowseWords";
 
 export type WordSeoRequestResolution =
   | {
@@ -50,9 +52,11 @@ export type WordSeoRequestResolution =
 
 const CORE_PRERENDER_ROUTES = [
   "/",
+  "/profile",
   "/languages",
   "/languages/filters",
   "/languages/filters/exercises",
+  "/languages/filters/exercises/practice",
   "/explore",
   "/languages/level-test",
   "/about",
@@ -61,48 +65,14 @@ const CORE_PRERENDER_ROUTES = [
 const PRACTICE_ROUTE_UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"] as const;
 const ENTRY_SERVER_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT_DIR = path.resolve(ENTRY_SERVER_DIR, "..");
-
-const CORE_ROUTE_SEO: Record<string, { title: string; description: string }> = {
-  "/": {
-    title: "FluentStellar - Structured Vocabulary Learning Platform",
-    description:
-      "Structured CEFR vocabulary system with interactive exercises and intelligent learning tools.",
-  },
-  "/languages": {
-    title: "Choose Your Language Pair - FluentStellar",
-    description:
-      "Choose your interface language and practice language to start structured vocabulary learning on FluentStellar.",
-  },
-  "/languages/filters": {
-    title: "Vocabulary Filters and Levels - FluentStellar",
-    description:
-      "Browse CEFR vocabulary by level and topic, then open targeted practice pages built around the words you need next.",
-  },
-  "/languages/filters/exercises": {
-    title: "Vocabulary Exercises - FluentStellar",
-    description:
-      "Start vocabulary exercises with your selected language pair and practice route on FluentStellar.",
-  },
-  "/languages/level-test": {
-    title: "English Level Test - FluentStellar",
-    description:
-      "Take the FluentStellar English level test to estimate your CEFR level and jump into the right vocabulary practice.",
-  },
-  "/explore": {
-    title: "Explore Languages and Vocabulary - FluentStellar",
-    description:
-      "Explore FluentStellar language-learning tools, vocabulary routes, and practice pages from one hub.",
-  },
-  "/about": {
-    title: "About FluentStellar",
-    description:
-      "Learn what FluentStellar is building and how the platform approaches structured vocabulary learning.",
-  },
-  "/help": {
-    title: "FluentStellar Help",
-    description:
-      "Get help using FluentStellar, including navigation, practice routes, and core vocabulary features.",
-  },
+const INTERFACE_FILENAME_BY_UI_LANGUAGE: Record<UiLanguageCode, string> = {
+  en: "english_interface.json",
+  es: "spanish_interface.json",
+  fr: "french_interface.json",
+  de: "german_interface.json",
+  it: "italian_interface.json",
+  pt: "portuguese_interface.json",
+  ru: "russian_interface.json",
 };
 
 const vocabCache = new Map<string, WordPageVocabEntry[]>();
@@ -127,6 +97,13 @@ function loadVocabularySync(language: string): WordPageVocabEntry[] {
   return parsed;
 }
 
+function loadInterfaceDataSync(uiLanguage: UiLanguageCode): unknown {
+  const interfaceFilename = INTERFACE_FILENAME_BY_UI_LANGUAGE[uiLanguage] ?? INTERFACE_FILENAME_BY_UI_LANGUAGE.en;
+  const interfacePath = path.join(PROJECT_ROOT_DIR, "src", "data", "interface", interfaceFilename);
+  const raw = fs.readFileSync(interfacePath, "utf8").replace(/^\uFEFF/, "");
+  return JSON.parse(raw);
+}
+
 function getInitialWordPageData(url: string): ResolvedWordPageData | null {
   const resolution = resolveWordSeoRequest(url);
   if (resolution.kind !== "canonical") {
@@ -135,13 +112,23 @@ function getInitialWordPageData(url: string): ResolvedWordPageData | null {
   return resolution.initialWordPageData;
 }
 
+function getInitialBrowsePreviewData(url: string): LevelBrowsePreviewData | null {
+  const match = url.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+  if (!match) {
+    return null;
+  }
+
+  const [, uiLang, slug] = match;
+  const vocabularyRoute = resolveVocabularyRoute(uiLang, slug);
+  if (!vocabularyRoute) {
+    return null;
+  }
+
+  return getLevelBrowsePreviewData(vocabularyRoute.targetLanguage, vocabularyRoute.level);
+}
+
 function buildNotFoundSeoMetadata(): SeoMetadata {
-  return {
-    title: "Page Not Found | FluentStellar",
-    description:
-      "The requested page could not be found on FluentStellar. Explore vocabulary routes and learning tools from valid pages instead.",
-    robots: "noindex, follow",
-  };
+  return buildRouteMetadata("/__invalid__", DEFAULT_SITE_ORIGIN);
 }
 
 function escapeJsonForHtml(value: unknown): string {
@@ -274,21 +261,6 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
   );
 }
 
-function buildFallbackSeoMetadata(url: string, siteOrigin: string): SeoMetadata | null {
-  const pathname = url.split(/[?#]/, 1)[0] || "/";
-  const routeSeo = CORE_ROUTE_SEO[pathname];
-  if (!routeSeo) {
-    return null;
-  }
-
-  const origin = siteOrigin.replace(/\/$/, "");
-  return {
-    title: routeSeo.title,
-    description: routeSeo.description,
-    canonical: `${origin}${pathname}`,
-  };
-}
-
 export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const seoManager: SeoManager = { metadata: null };
   const wordSeoResolution = resolveWordSeoRequest(url);
@@ -298,12 +270,16 @@ export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
     (pathname.startsWith("/api/word-ssr") ||
       (/^\/[a-z]{2}\/[^/?#]+$/.test(pathname) && pathname.includes("-word-")));
   const initialUILanguage = getInitialUiLanguage(url);
+  const initialInterfaceData = loadInterfaceDataSync(initialUILanguage);
   const initialWordPageData =
     wordSeoResolution.kind === "canonical" ? wordSeoResolution.initialWordPageData : null;
+  const initialBrowsePreviewData = getInitialBrowsePreviewData(url);
   const appHtml = ReactDOMServer.renderToString(
     <StaticRouter location={url}>
       <App
         initialUILanguage={initialUILanguage}
+        initialTranslationData={initialInterfaceData}
+        initialBrowsePreviewData={initialBrowsePreviewData}
         initialWordPageData={initialWordPageData}
         seoManager={seoManager}
         siteOrigin={siteOrigin}
@@ -314,21 +290,18 @@ export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const routeDataScript = initialWordPageData
     ? `\n    <script>window.__WORD_PAGE_DATA__=${escapeJsonForHtml({ pathname: url, data: hydrationWordPageData })}</script>`
     : "";
+  const interfaceDataScript = `\n    <script>window.__INITIAL_INTERFACE_DATA__=${escapeJsonForHtml({ lang: initialUILanguage, data: initialInterfaceData })}</script>`;
+  const fallbackMetadata =
+    shouldUseWordNotFoundMetadata || classifyRouteMetadata(pathname) === "invalid"
+      ? buildNotFoundSeoMetadata()
+      : buildRouteMetadata(pathname, siteOrigin);
 
   return {
     appHtml,
     headTags:
       renderSeoTags(
-        seoManager.metadata ??
-          (shouldUseWordNotFoundMetadata
-            ? buildNotFoundSeoMetadata()
-            : buildFallbackSeoMetadata(url, siteOrigin) ?? {
-                title: "FluentStellar - Structured Vocabulary Learning Platform",
-                description:
-                  "Structured CEFR vocabulary system with interactive exercises and intelligent learning tools.",
-                canonical: `${siteOrigin.replace(/\/$/, "")}/`,
-              }),
-      ) + routeDataScript,
+        seoManager.metadata ?? fallbackMetadata,
+      ) + routeDataScript + interfaceDataScript,
     htmlLang: initialUILanguage,
   };
 }

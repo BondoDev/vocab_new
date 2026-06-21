@@ -14,7 +14,7 @@ import {
   normalizeTargetLanguage,
   type SeoCefrContentItem,
 } from "./devSeoCefrPreviewData";
-import { getLevelBrowsePreviewData } from "../../data/seo/levelBrowseWords";
+import type { LevelBrowsePreviewData } from "../../data/seo/levelBrowseWords";
 
 const PREVIEW_HERO_SUFFIX_LANGUAGE_NAMES: Record<
   UiLanguageCode,
@@ -326,6 +326,7 @@ export function DevSeoCefrPlaceholderPage({
   routeParams,
   onStartPractice,
   pathPrefix = "/test",
+  initialBrowsePreview = null,
 }: {
   item?: SeoCefrContentItem | null;
   routeParams?: {
@@ -335,6 +336,7 @@ export function DevSeoCefrPlaceholderPage({
   } | null;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
   pathPrefix?: string;
+  initialBrowsePreview?: LevelBrowsePreviewData | null;
 }) {
   const resolvedItem = useMemo(() => {
     if (item) {
@@ -371,10 +373,6 @@ export function DevSeoCefrPlaceholderPage({
     [resolvedItem.targetLanguageDisplayName, resolvedItem.uiLanguage, normalizedTargetLanguage],
   );
   const heroTitle = useMemo(() => buildPreviewHeroTitle(resolvedItem), [resolvedItem]);
-  const initialBrowsePreview = useMemo(
-    () => getLevelBrowsePreviewData(normalizedTargetLanguage, resolvedItem.level),
-    [normalizedTargetLanguage, resolvedItem.level],
-  );
 
   return (
     <VocabularyLevelPage
