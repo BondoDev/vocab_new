@@ -102,10 +102,17 @@
       "includeFiles": "{dist/index.html,server-build/entry-server.js,src/data/interface/**/*.json,src/data/vocabulary/**/*.json}"
     }
   },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/:uiLanguage(en|es|fr|de|it|pt|ru)/:targetLanguage(english|spanish|french|german|italian|portuguese|russian)-word-:wordRoute*",
-      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:targetLanguage-word-:wordRoute*"
+      "src": "^/api/word-ssr-internal$",
+      "dest": "/api/word-ssr"
+    },
+    {
+      "src": "^/(en|es|fr|de|it|pt|ru)/((?:english|spanish|french|german|italian|portuguese|russian)-word-[^/]+)$",
+      "dest": "/api/word-ssr-internal?pathname=/$1/$2"
+    },
+    {
+      "handle": "filesystem"
     }
   ]
 }

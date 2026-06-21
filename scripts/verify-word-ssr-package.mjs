@@ -88,26 +88,13 @@ async function verifyStageImport() {
   assert.match(response.body, /<title>.*about.*<\/title>/i);
   assert.match(response.body, /<link rel="canonical" href="https:\/\/www\.fluentstellar\.com\/en\/english-word-about--A1-00001"/i);
 
-  const blockedApiResponse = await handlerModule.handleInternalWordSsrRequest({
-    method: "GET",
-    url: "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
-    query: {
-      pathname: "/en/english-word-about--A1-00001",
-    },
-    headers: {},
-  });
-  assert.equal(blockedApiResponse.status, 404);
-  assert.equal(blockedApiResponse.headers["X-Robots-Tag"], "noindex, nofollow");
-
   const canonicalApiResponse = await handlerModule.handleInternalWordSsrRequest({
     method: "GET",
     url: "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
     query: {
       pathname: "/en/english-word-about--A1-00001",
     },
-    headers: {
-      "x-matched-path": "/en/english-word-about--A1-00001",
-    },
+    headers: {},
   });
   assert.equal(canonicalApiResponse.status, 200);
   assert.match(canonicalApiResponse.body, /<link rel="canonical" href="https:\/\/www\.fluentstellar\.com\/en\/english-word-about--A1-00001"/i);

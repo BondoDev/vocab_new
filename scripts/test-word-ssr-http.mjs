@@ -215,10 +215,7 @@ async function createVerificationServer() {
 
     try {
       if (pathname === "/api/word-ssr" || pathname === "/api/word-ssr-internal") {
-        const response =
-          pathname === "/api/word-ssr"
-            ? await handleBlockedWordApiRequest(requestState)
-            : await handleInternalWordSsrRequest(requestState);
+        const response = await handleBlockedWordApiRequest(requestState);
         sendNodeResponse(res, response, String(req.method ?? "GET").toUpperCase());
         return;
       }
@@ -236,14 +233,7 @@ async function createVerificationServer() {
           method: req.method,
           url: `/api/word-ssr-internal?pathname=${encodeURIComponent(pathname)}`,
           query: { pathname },
-          headers: {
-            ...req.headers,
-            "x-matched-path":
-              req.headers["x-test-rewrite-mode"] === "pattern"
-                ? "/:uiLanguage(en|es|fr|de|it|pt|ru)/:targetLanguage(english|spanish|french|german|italian|portuguese|russian)-word-:wordRoute*"
-                : pathname,
-            "x-invoke-path": "/api/word-ssr-internal",
-          },
+          headers: req.headers,
         });
         sendNodeResponse(res, response, String(req.method ?? "GET").toUpperCase());
         return;
@@ -409,17 +399,6 @@ async function main() {
     assert.equal(
       englishCanonicalResponse.headers["cache-control"],
       "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800",
-    );
-
-    const englishCanonicalPatternRewriteResponse = await request(baseUrl, englishCanonicalPath, {
-      headers: {
-        "x-test-rewrite-mode": "pattern",
-      },
-    });
-    assertWordHtml(
-      englishCanonicalPatternRewriteResponse,
-      representativeEntries.english,
-      englishCanonicalPath,
     );
 
     const englishCanonicalHeadResponse = await request(baseUrl, englishCanonicalPath, {

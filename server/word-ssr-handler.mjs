@@ -8,7 +8,6 @@ import {
   buildServerErrorResponse,
   getRequestMethod,
   normalizeWordSsrPathname,
-  requestHasTrustedWordRewrite,
 } from "./word-ssr-http.mjs";
 
 const SUPPORTED_TARGET_LANGUAGES = [
@@ -93,17 +92,16 @@ export async function handleBlockedWordApiRequest(req) {
 export async function handleInternalWordSsrRequest(req) {
   const { method, pathname, normalizedPathname } = buildWordSsrRequest(req);
   const routeMatch = normalizedPathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
-  const isTrustedRewrite = requestHasTrustedWordRewrite(req, normalizedPathname);
 
   if (method === "OPTIONS") {
-    return buildOptionsResponse(isTrustedRewrite ? PAGE_METHODS : API_METHODS);
+    return buildOptionsResponse(PAGE_METHODS);
   }
 
   if (method !== "GET" && method !== "HEAD") {
-    return buildMethodNotAllowedResponse(isTrustedRewrite ? PAGE_METHODS : API_METHODS);
+    return buildMethodNotAllowedResponse(PAGE_METHODS);
   }
 
-  if (isTrustedRewrite && routeMatch) {
+  if (routeMatch) {
     const [, uiLangRaw, slug] = routeMatch;
     const parsedRoute = parseLegacyWordRoute(uiLangRaw, slug);
 
@@ -122,10 +120,6 @@ export async function handleInternalWordSsrRequest(req) {
         body: "",
       };
     }
-  }
-
-  if (!isTrustedRewrite) {
-    return buildBlockedWordApiResponse();
   }
 
   try {
