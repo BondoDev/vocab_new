@@ -13,6 +13,24 @@ const DEFAULT_SITE_ORIGIN = process.env.SITE_ORIGIN || "https://www.fluentstella
 let templatePromise = null;
 let entryServerPromise = null;
 
+function summarizeHtmlBody(body) {
+  const text = String(body ?? "");
+
+  return {
+    hasHomepageHeadline: text.includes("Practice Vocabulary"),
+    hasHomepageSubheadline: text.includes("No lessons - Just practice."),
+    hasWordPageHeading:
+      text.includes("Meaning of the Italian Word") ||
+      text.includes("Meaning of the English Word") ||
+      text.includes("Meaning of the German Word") ||
+      text.includes("Meaning of the Spanish Word") ||
+      text.includes("Meaning of the French Word") ||
+      text.includes("Meaning of the Portuguese Word") ||
+      text.includes("Meaning of the Russian Word"),
+    hasWordPayload: text.includes("window.__WORD_PAGE_DATA__"),
+  };
+}
+
 function normalizePathname(pathname) {
   const rawValue = Array.isArray(pathname) ? pathname[0] : pathname;
   const withLeadingSlash = `/${String(rawValue ?? "/").replace(/^\/+/, "")}`;
@@ -128,6 +146,12 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
   if (resolution.kind === "canonical") {
     const staticHtml = await readStaticHtmlForPath(normalizedPathname);
     if (staticHtml) {
+      console.log("[word-ssr-runtime] canonical static hit", {
+        pathname: normalizedPathname,
+        routeKind: resolution.kind,
+        source: "static",
+        ...summarizeHtmlBody(staticHtml),
+      });
       return {
         status: 200,
         headers: {
@@ -142,6 +166,12 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
     }
 
     const body = await renderHtmlResponse(normalizedPathname, siteOrigin);
+    console.log("[word-ssr-runtime] canonical dynamic render", {
+      pathname: normalizedPathname,
+      routeKind: resolution.kind,
+      source: "dynamic",
+      ...summarizeHtmlBody(body),
+    });
     return {
       status: 200,
       headers: {
@@ -156,6 +186,13 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
   }
 
   const body = await renderHtmlResponse(normalizedPathname, siteOrigin);
+  console.log("[word-ssr-runtime] not-found dynamic render", {
+    pathname: normalizedPathname,
+    routeKind: resolution.kind,
+    reason: resolution.reason,
+    source: "dynamic-404",
+    ...summarizeHtmlBody(body),
+  });
   return {
     status: 404,
     headers: {

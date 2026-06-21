@@ -93,6 +93,12 @@ export async function handleInternalWordSsrRequest(req) {
   const { method, pathname, normalizedPathname } = buildWordSsrRequest(req);
   const routeMatch = normalizedPathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
 
+  console.log("[word-ssr-handler] request", {
+    method,
+    pathname,
+    normalizedPathname,
+  });
+
   if (method === "OPTIONS") {
     return buildOptionsResponse(PAGE_METHODS);
   }
