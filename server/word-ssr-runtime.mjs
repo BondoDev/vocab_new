@@ -36,7 +36,9 @@ function stripManagedHeadTags(template) {
     .replace(/<meta\s+property="og:title"[\s\S]*?>/i, "")
     .replace(/<meta\s+property="og:description"[\s\S]*?>/i, "")
     .replace(/<link\s+rel="alternate"[\s\S]*?data-vocab-hreflang="true"[\s\S]*?>/gi, "")
-    .replace(/<script\s[^>]*data-managed-jsonld="true"[^>]*>[\s\S]*?<\/script>/gi, "");
+    .replace(/<script\s[^>]*data-managed-jsonld="true"[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<script>\s*window\.__WORD_PAGE_DATA__=[\s\S]*?<\/script>/gi, "")
+    .replace(/<script>\s*window\.__INITIAL_INTERFACE_DATA__=[\s\S]*?<\/script>/gi, "");
 }
 
 function injectRenderedPage(template, { appHtml, headTags, htmlLang }) {
