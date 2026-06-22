@@ -5,6 +5,7 @@ import {
   type UiLanguageCode,
   type TargetLanguageSlug,
 } from "./slugs";
+import { fixMojibake } from "../../utils/fixMojibake";
 
 export interface WordRouteMatch {
   uiLang: UiLanguageCode;
@@ -66,7 +67,7 @@ export function buildWordPath(
   return buildWordPathFromSlug(
     uiLang,
     targetLanguage,
-    wordToSlug(wordLemma),
+    wordToSlug(fixMojibake(wordLemma)),
     conceptId,
   );
 }
@@ -87,10 +88,16 @@ export function parseWordRoute(
   slug: string,
 ): ParsedWordRoute | null {
   if (!isSupportedUiLanguage(uiLangRaw)) return null;
+  let decodedSlug = slug;
+  try {
+    decodedSlug = decodeURIComponent(slug);
+  } catch {
+    return null;
+  }
   for (const targetLanguage of SUPPORTED_TARGET_LANGUAGES) {
     const prefix = `${targetLanguage}-word-`;
-    if (slug.startsWith(prefix)) {
-      const suffix = slug.slice(prefix.length);
+    if (decodedSlug.startsWith(prefix)) {
+      const suffix = decodedSlug.slice(prefix.length);
       if (!suffix) {
         return null;
       }

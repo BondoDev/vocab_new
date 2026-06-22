@@ -33,20 +33,30 @@ function getWindows1252ReverseMap(): Map<string, number> {
   return windows1252ReverseMap;
 }
 
+const MOJIBAKE_PATTERNS = [
+  /Ã./g,
+  /Â./g,
+  /â[\u0080-\u00BF]/g,
+  /Ð./g,
+  /Ñ./g,
+  /Р./g,
+  /С./g,
+  /вЂ./g,
+  /в„./g,
+  /в€./g,
+  /в[\u0400-\u04FF]/g,
+  /Г./g,
+  /\uFFFD/g,
+];
+
 function countSuspiciousChars(value: string): number {
   let suspicious = 0;
 
-  for (const char of value) {
-    const codePoint = char.codePointAt(0) ?? 0;
-
-    if (
-      (codePoint >= 0x00C0 && codePoint <= 0x00FF) ||
-      (codePoint >= 0x0400 && codePoint <= 0x04FF) ||
-      (codePoint >= 0x2018 && codePoint <= 0x201E) ||
-      codePoint === 0x20AC ||
-      codePoint === 0x2122
-    ) {
-      suspicious += 1;
+  for (const pattern of MOJIBAKE_PATTERNS) {
+    pattern.lastIndex = 0;
+    const matches = value.match(pattern);
+    if (matches) {
+      suspicious += matches.length;
     }
   }
 

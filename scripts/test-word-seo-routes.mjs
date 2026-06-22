@@ -18,6 +18,7 @@ function compileTestModules() {
   const rootNames = [
     path.join(rootDir, "src", "data", "seo", "wordSlugs.ts"),
     path.join(rootDir, "src", "data", "seo", "wordPageData.ts"),
+    path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
 
   const program = ts.createProgram({
@@ -61,6 +62,7 @@ compileTestModules();
 
 const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
 const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPageData.js"));
+const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
 function readJson(relativePath) {
   return JSON.parse(
@@ -69,6 +71,7 @@ function readJson(relativePath) {
 }
 
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
+const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 
 const aboutMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "about");
 const answerMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "answer");
@@ -176,6 +179,61 @@ for (const sitemapFile of sitemapFiles) {
 assert.equal(
   wordSlugs.buildWordPath("en", "english", "about", "A1-00001"),
   "/en/english-word-about--A1-00001",
+);
+
+const russianFirstEntry = russianVocabulary[0];
+const russianCanonicalPath = wordSlugs.buildWordPath(
+  "en",
+  "russian",
+  russianFirstEntry.word_lemma,
+  russianFirstEntry.concept_id,
+);
+const russianEncodedSlug = encodeURIComponent(
+  wordSlugs.wordToSlug(russianFirstEntry.word_lemma),
+);
+const russianResolvedRoute = wordSlugs.resolveWordRoute(
+  "en",
+  russianCanonicalPath.replace(/^\/en\//, ""),
+);
+assert.deepEqual(russianResolvedRoute, {
+  routeKind: "canonical",
+  uiLang: "en",
+  targetLanguage: "russian",
+  wordSlug: wordSlugs.wordToSlug(russianFirstEntry.word_lemma),
+  conceptId: russianFirstEntry.concept_id,
+});
+const russianEncodedResolvedRoute = wordSlugs.resolveWordRoute(
+  "en",
+  `russian-word-${russianEncodedSlug}--${russianFirstEntry.concept_id}`,
+);
+assert.deepEqual(russianEncodedResolvedRoute, {
+  routeKind: "canonical",
+  uiLang: "en",
+  targetLanguage: "russian",
+  wordSlug: wordSlugs.wordToSlug(russianFirstEntry.word_lemma),
+  conceptId: russianFirstEntry.concept_id,
+});
+
+const russianWordPageData = wordPageData.buildResolvedWordPageData({
+  uiLang: "en",
+  targetLanguage: "russian",
+  wordSlug: russianResolvedRoute.wordSlug,
+  conceptId: russianFirstEntry.concept_id,
+  vocabulary: russianVocabulary,
+  uiVocabulary: englishVocabulary,
+});
+assert.equal(russianWordPageData.wordEntry?.concept_id, russianFirstEntry.concept_id);
+assert.equal(
+  fixMojibake('Italienisches Wort "anticlimatico" вЂ“ Bedeutung und Beispiel (C1 adjective)'),
+  'Italienisches Wort "anticlimatico" – Bedeutung und Beispiel (C1 adjective)',
+);
+assert.equal(
+  fixMojibake("EnttГ¤uschung verursachend, weil weniger aufregend als erwartet."),
+  "Enttäuschung verursachend, weil weniger aufregend als erwartet.",
+);
+assert.equal(
+  fixMojibake("Р СѓСЃСЃРєРёР№"),
+  "Русский",
 );
 
 const vocabularyLevelPageSource = fs.readFileSync(
