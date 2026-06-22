@@ -357,6 +357,17 @@ function assertBlockedApiResponse(response, pathname, expectedStatus = 404) {
   );
 }
 
+function assertWordHtmlViaInternalApi(response, pathname) {
+  assert.equal(response.status, 200, `wrong status for ${pathname}`);
+  assert.equal(
+    response.headers["cache-control"],
+    "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800",
+    `wrong cache control for ${pathname}`,
+  );
+  assert.equal(extractCanonical(response.body), `${siteOrigin}${pathname}`, `wrong canonical for ${pathname}`);
+  assert.ok(response.body.includes("window.__WORD_PAGE_DATA__"), `missing word payload for ${pathname}`);
+}
+
 function assertRouteMetadata(response, pathname, expectations) {
   assert.equal(response.status, expectations.status ?? 200, `wrong status for ${pathname}`);
   if (expectations.title) {
@@ -446,6 +457,11 @@ async function main() {
     assertWordHtml(englishDeVariantResponse, representativeEntries.english, englishDeVariantPath);
     assert.equal(extractHtmlLang(englishDeVariantResponse.body), "de");
 
+    const englishRuVariantPath = buildCanonicalPath("ru", "english", representativeEntries.english);
+    const englishRuVariantResponse = await request(baseUrl, englishRuVariantPath);
+    assertWordHtml(englishRuVariantResponse, representativeEntries.english, englishRuVariantPath);
+    assert.equal(extractHtmlLang(englishRuVariantResponse.body), "ru");
+
     for (const [targetLanguage, entry] of Object.entries(representativeEntries).filter(
       ([targetLanguage]) => targetLanguage !== "english",
     )) {
@@ -512,9 +528,9 @@ async function main() {
       baseUrl,
       "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
     );
-    assertBlockedApiResponse(
+    assertWordHtmlViaInternalApi(
       directHiddenApiResponse,
-      "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
+      "/en/english-word-about--A1-00001",
     );
 
     const directInvalidApiResponse = await request(baseUrl, "/api/word-ssr");
@@ -524,16 +540,22 @@ async function main() {
       baseUrl,
       "/api/word-ssr-internal?pathname=../../etc/passwd",
     );
-    assertBlockedApiResponse(directMalformedApiResponse, "/api/word-ssr-internal?pathname=../../etc/passwd");
+    assertNotFoundWordHtml(
+      directMalformedApiResponse,
+      "/api/word-ssr-internal?pathname=../../etc/passwd",
+    );
 
     const directApiHeadResponse = await request(
       baseUrl,
       "/api/word-ssr-internal?pathname=/en/english-word-about--A1-00001",
       { method: "HEAD" },
     );
-    assert.equal(directApiHeadResponse.status, 404);
+    assert.equal(directApiHeadResponse.status, 200);
     assert.equal(directApiHeadResponse.body, "");
-    assert.equal(directApiHeadResponse.headers["cache-control"], "no-store");
+    assert.equal(
+      directApiHeadResponse.headers["cache-control"],
+      "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800",
+    );
 
     const directApiOptionsResponse = await request(
       baseUrl,

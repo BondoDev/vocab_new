@@ -124,10 +124,6 @@ export async function handleInternalWordSsrRequest(req) {
     }
   }
 
-  if (!isTrustedRewrite) {
-    return buildBlockedWordApiResponse();
-  }
-
   try {
     return await handleWordSsrPathname(normalizedPathname);
   } catch (error) {

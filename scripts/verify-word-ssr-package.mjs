@@ -96,8 +96,12 @@ async function verifyStageImport() {
     },
     headers: {},
   });
-  assert.equal(blockedApiResponse.status, 404);
-  assert.equal(blockedApiResponse.headers["X-Robots-Tag"], "noindex, nofollow");
+  assert.equal(blockedApiResponse.status, 200);
+  assert.match(blockedApiResponse.body, /<title>.*about.*<\/title>/i);
+  assert.match(
+    blockedApiResponse.body,
+    /<link rel="canonical" href="https:\/\/www\.fluentstellar\.com\/en\/english-word-about--A1-00001"/i,
+  );
 
   const canonicalApiResponse = await handlerModule.handleInternalWordSsrRequest({
     method: "GET",
