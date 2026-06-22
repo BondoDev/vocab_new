@@ -69,6 +69,7 @@ function readJson(relativePath) {
 }
 
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
+const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 
 const aboutMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "about");
 const answerMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "answer");
@@ -177,6 +178,49 @@ assert.equal(
   wordSlugs.buildWordPath("en", "english", "about", "A1-00001"),
   "/en/english-word-about--A1-00001",
 );
+
+const russianFirstEntry = russianVocabulary[0];
+const russianCanonicalPath = wordSlugs.buildWordPath(
+  "en",
+  "russian",
+  russianFirstEntry.word_lemma,
+  russianFirstEntry.concept_id,
+);
+const russianEncodedSlug = encodeURIComponent(
+  wordSlugs.wordToSlug(russianFirstEntry.word_lemma),
+);
+const russianResolvedRoute = wordSlugs.resolveWordRoute(
+  "en",
+  russianCanonicalPath.replace(/^\/en\//, ""),
+);
+assert.deepEqual(russianResolvedRoute, {
+  routeKind: "canonical",
+  uiLang: "en",
+  targetLanguage: "russian",
+  wordSlug: wordSlugs.wordToSlug(russianFirstEntry.word_lemma),
+  conceptId: russianFirstEntry.concept_id,
+});
+const russianEncodedResolvedRoute = wordSlugs.resolveWordRoute(
+  "en",
+  `russian-word-${russianEncodedSlug}--${russianFirstEntry.concept_id}`,
+);
+assert.deepEqual(russianEncodedResolvedRoute, {
+  routeKind: "canonical",
+  uiLang: "en",
+  targetLanguage: "russian",
+  wordSlug: wordSlugs.wordToSlug(russianFirstEntry.word_lemma),
+  conceptId: russianFirstEntry.concept_id,
+});
+
+const russianWordPageData = wordPageData.buildResolvedWordPageData({
+  uiLang: "en",
+  targetLanguage: "russian",
+  wordSlug: russianResolvedRoute.wordSlug,
+  conceptId: russianFirstEntry.concept_id,
+  vocabulary: russianVocabulary,
+  uiVocabulary: englishVocabulary,
+});
+assert.equal(russianWordPageData.wordEntry?.concept_id, russianFirstEntry.concept_id);
 
 const vocabularyLevelPageSource = fs.readFileSync(
   path.join(rootDir, "src", "app", "components", "VocabularyLevelPage.tsx"),
