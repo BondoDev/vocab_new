@@ -48,10 +48,11 @@ export function hasCrawlableWordSeoFamily(
 
 export function wordToSlug(lemma: string): string {
   return lemma
-    .normalize("NFC")
+    .normalize("NFKD")
     .toLowerCase()
-    .replace(/['’‘`]/gu, "")
-    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/['’‘`]/g, "")
+    .replace(/[^a-z0-9\u0400-\u04ff\s-]/gi, "")
     .trim()
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");
