@@ -8,6 +8,7 @@ import {
   buildServerErrorResponse,
   getRequestMethod,
   normalizeWordSsrPathname,
+  requestHasTrustedWordRewrite,
 } from "./word-ssr-http.mjs";
 
 const SUPPORTED_TARGET_LANGUAGES = [
@@ -92,22 +93,17 @@ export async function handleBlockedWordApiRequest(req) {
 export async function handleInternalWordSsrRequest(req) {
   const { method, pathname, normalizedPathname } = buildWordSsrRequest(req);
   const routeMatch = normalizedPathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
-
-  console.log("[word-ssr-handler] request", {
-    method,
-    pathname,
-    normalizedPathname,
-  });
+  const isTrustedRewrite = requestHasTrustedWordRewrite(req, normalizedPathname);
 
   if (method === "OPTIONS") {
-    return buildOptionsResponse(PAGE_METHODS);
+    return buildOptionsResponse(isTrustedRewrite ? PAGE_METHODS : API_METHODS);
   }
 
   if (method !== "GET" && method !== "HEAD") {
-    return buildMethodNotAllowedResponse(PAGE_METHODS);
+    return buildMethodNotAllowedResponse(isTrustedRewrite ? PAGE_METHODS : API_METHODS);
   }
 
-  if (routeMatch) {
+  if (isTrustedRewrite && routeMatch) {
     const [, uiLangRaw, slug] = routeMatch;
     const parsedRoute = parseLegacyWordRoute(uiLangRaw, slug);
 
@@ -128,6 +124,9 @@ export async function handleInternalWordSsrRequest(req) {
     }
   }
 
+  if (!isTrustedRewrite) {
+    return buildBlockedWordApiResponse();
+  }
   try {
     return await handleWordSsrPathname(normalizedPathname);
   } catch (error) {

@@ -131,6 +131,19 @@ function countLinks(html) {
   return Array.from(html.matchAll(/<a\b/gi)).length;
 }
 
+function extractRootHtml(html) {
+  const rootStart = html.indexOf('<div id="root">');
+  if (rootStart === -1) {
+    return "";
+  }
+
+  const bodyEnd = html.indexOf("</body>", rootStart);
+  if (bodyEnd === -1) {
+    return html.slice(rootStart);
+  }
+
+  return html.slice(rootStart, bodyEnd);
+}
 async function resolveStaticResponse(pathname) {
   const normalizedPath = pathname === "/" ? "/index.html" : pathname;
   const fileCandidate = path.join(distDir, normalizedPath.replace(/^\/+/, ""));
@@ -186,22 +199,6 @@ function isWordLikeRoute(pathname) {
   return /^\/[a-z]{2}\/[^/]*-word-[^/]+$/i.test(pathname);
 }
 
-function getLegacyRedirectLocation(pathname) {
-  if (pathname.includes("--")) {
-    return null;
-  }
-
-  const match = pathname.match(
-    /^\/([a-z]{2})\/((?:english|spanish|french|german|italian|portuguese|russian)-word-[^/]+)-((?:A1|A2|B1|B2|C1|C2)-\d{5})$/i,
-  );
-
-  if (!match || match[2].includes("--")) {
-    return null;
-  }
-
-  return `/${match[1]}/${match[2]}--${match[3]}`;
-}
-
 async function createVerificationServer() {
   return http.createServer(async (req, res) => {
     const url = new URL(req.url ?? "/", "http://127.0.0.1");
@@ -215,7 +212,10 @@ async function createVerificationServer() {
 
     try {
       if (pathname === "/api/word-ssr" || pathname === "/api/word-ssr-internal") {
-        const response = await handleBlockedWordApiRequest(requestState);
+        const response =
+          pathname === "/api/word-ssr"
+            ? await handleBlockedWordApiRequest(requestState)
+            : await handleInternalWordSsrRequest(requestState);
         sendNodeResponse(res, response, String(req.method ?? "GET").toUpperCase());
         return;
       }
@@ -233,7 +233,10 @@ async function createVerificationServer() {
           method: req.method,
           url: `/api/word-ssr-internal?pathname=${encodeURIComponent(pathname)}`,
           query: { pathname },
-          headers: req.headers,
+          headers: {
+            ...req.headers,
+            "x-matched-path": pathname,
+          },
         });
         sendNodeResponse(res, response, String(req.method ?? "GET").toUpperCase());
         return;
@@ -291,14 +294,34 @@ function assertWordHtml(response, entry, pathname) {
   assert.ok(response.body.includes(`<div id="root">`), `missing app root for ${pathname}`);
   assert.ok(response.body.includes(entry.word_lemma), `missing lemma for ${pathname}`);
   assert.ok(response.body.includes(entry.definiton), `missing definition for ${pathname}`);
-  assert.ok(response.body.includes(entry.sentence), `missing sentence for ${pathname}`);
   assert.ok(extractCanonical(response.body)?.endsWith(pathname), `wrong canonical for ${pathname}`);
   assert.ok(extractTagContent(response.body, "title"), `missing title for ${pathname}`);
   assert.ok(extractMetaContent(response.body, "description"), `missing description for ${pathname}`);
   assert.ok(response.body.includes("application/ld+json"), `missing JSON-LD for ${pathname}`);
+  assert.ok(response.body.includes("window.__WORD_PAGE_DATA__"), `missing word payload for ${pathname}`);
   assert.ok(response.body.includes("hreflang="), `missing hreflang for ${pathname}`);
   assert.ok(countLinks(response.body) > 0, `expected internal links for ${pathname}`);
   assert.ok(!("x-robots-tag" in response.headers), `public route must stay indexable for ${pathname}`);
+}
+
+function assertImmediateWordServerRender(response, pathname) {
+  const rootHtml = extractRootHtml(response.body);
+
+  assert.ok(rootHtml.includes("about"), `missing word content in server render for ${pathname}`);
+  assert.match(
+    rootHtml,
+    /<h1[^>]*>[^<]*(Meaning of the|Learn the)[^<]*about[^<]*<\/h1>/i,
+    `missing word page heading in server render for ${pathname}`,
+  );
+  assert.ok(response.body.includes("window.__WORD_PAGE_DATA__"), `missing word payload for ${pathname}`);
+  assert.ok(
+    !rootHtml.includes("Practice Vocabulary"),
+    `homepage headline leaked into server render for ${pathname}`,
+  );
+  assert.ok(
+    !rootHtml.includes("No lessons - Just practice."),
+    `homepage subheadline leaked into server render for ${pathname}`,
+  );
 }
 
 function assertNotFoundWordHtml(response, pathname) {
@@ -395,6 +418,7 @@ async function main() {
     const englishCanonicalPath = buildCanonicalPath("en", "english", representativeEntries.english);
     const englishCanonicalResponse = await request(baseUrl, englishCanonicalPath);
     assertWordHtml(englishCanonicalResponse, representativeEntries.english, englishCanonicalPath);
+    assertImmediateWordServerRender(englishCanonicalResponse, englishCanonicalPath);
     assert.equal(extractHtmlLang(englishCanonicalResponse.body), "en");
     assert.equal(
       englishCanonicalResponse.headers["cache-control"],

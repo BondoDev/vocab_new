@@ -1,6 +1,7 @@
 import type { TargetLanguageSlug, UiLanguageCode } from "./slugs";
 import { wordToSlug } from "./wordSlugs";
 import { isValidBrowseWordLemma } from "./browseWordValidation";
+import { fixMojibake } from "../../utils/fixMojibake";
 
 export interface WordPageVocabEntry {
   concept_id: string;
@@ -54,6 +55,18 @@ const UI_LANG_TO_VOCAB: Record<UiLanguageCode, TargetLanguageSlug> = {
   ru: "russian",
 };
 
+function sanitizeWordPageEntry(entry: WordPageVocabEntry): WordPageVocabEntry {
+  return {
+    ...entry,
+    word_lemma: fixMojibake(entry.word_lemma),
+    definiton: fixMojibake(entry.definiton),
+    sentence: fixMojibake(entry.sentence),
+    type: fixMojibake(entry.type),
+    category: fixMojibake(entry.category),
+    level: fixMojibake(entry.level),
+  };
+}
+
 function normalizeLemma(value: unknown): string {
   if (typeof value !== "string") return "";
   return value
@@ -83,7 +96,7 @@ export function findWordEntriesBySlug(
   return vocabulary.filter(
     (word) =>
       typeof word.word_lemma === "string" &&
-      wordToSlug(word.word_lemma) === wordSlug,
+      wordToSlug(fixMojibake(word.word_lemma)) === wordSlug,
   );
 }
 
@@ -98,8 +111,8 @@ export function findCanonicalWordRecord(
   }
 
   return {
-    entry,
-    slugMatches: wordToSlug(entry.word_lemma) === wordSlug,
+    entry: sanitizeWordPageEntry(entry),
+    slugMatches: wordToSlug(fixMojibake(entry.word_lemma)) === wordSlug,
   };
 }
 
@@ -136,10 +149,11 @@ export function buildResolvedWordPageData({
     uiByConceptId = new Map(uiVocabulary.map((word) => [word.concept_id, word]));
     const uiEntry = uiByConceptId.get(entry.concept_id);
     if (uiEntry) {
-      displayDefinition = uiEntry.definiton || displayDefinition;
-      displayWordLemma = uiEntry.word_lemma || displayWordLemma;
-      displayWordType = uiEntry.type || displayWordType;
-      displayCategory = uiEntry.category || displayCategory;
+      const sanitizedUiEntry = sanitizeWordPageEntry(uiEntry);
+      displayDefinition = sanitizedUiEntry.definiton || displayDefinition;
+      displayWordLemma = sanitizedUiEntry.word_lemma || displayWordLemma;
+      displayWordType = sanitizedUiEntry.type || displayWordType;
+      displayCategory = sanitizedUiEntry.category || displayCategory;
     }
   }
 
@@ -148,9 +162,9 @@ export function buildResolvedWordPageData({
     .filter(
       (word) =>
         word.concept_id !== entry.concept_id &&
-        normalizeLemma(word.word_lemma) === currentNormalizedLemma,
+        normalizeLemma(fixMojibake(word.word_lemma)) === currentNormalizedLemma,
     )
-    .map((word) => (uiByConceptId?.get(word.concept_id) ?? word));
+    .map((word) => sanitizeWordPageEntry(uiByConceptId?.get(word.concept_id) ?? word));
 
   const seen = new Set<string>([entry.concept_id]);
   const relatedWords: WordPageVocabEntry[] = [];
@@ -164,7 +178,7 @@ export function buildResolvedWordPageData({
       !seen.has(word.concept_id)
     ) {
       seen.add(word.concept_id);
-      relatedWords.push(word);
+      relatedWords.push(sanitizeWordPageEntry(word));
       if (relatedWords.length >= 20) break;
     }
   }
@@ -178,7 +192,7 @@ export function buildResolvedWordPageData({
       !browseSeen.has(word.concept_id)
     ) {
       browseSeen.add(word.concept_id);
-      browseWords.push(word);
+      browseWords.push(sanitizeWordPageEntry(word));
     }
   }
 

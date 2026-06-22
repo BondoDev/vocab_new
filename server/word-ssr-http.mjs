@@ -7,6 +7,14 @@ const SERVER_ERROR_HTML =
 const PAGE_METHODS = "GET, HEAD, OPTIONS";
 const API_METHODS = "GET, HEAD, OPTIONS";
 
+function getHeaderValue(req, headerName) {
+  const rawValue = req?.headers?.[headerName];
+  if (Array.isArray(rawValue)) {
+    return rawValue[0] ?? "";
+  }
+
+  return typeof rawValue === "string" ? rawValue : "";
+}
 export function normalizeWordSsrPathname(pathname) {
   const rawValue = Array.isArray(pathname) ? pathname[0] : pathname;
   const withLeadingSlash = `/${String(rawValue ?? "/").replace(/^\/+/, "")}`;
@@ -72,6 +80,23 @@ export function buildServerErrorResponse() {
   };
 }
 
+export function requestHasTrustedWordRewrite(req, expectedPathname) {
+  const matchedPathname = normalizeWordSsrPathname(getHeaderValue(req, "x-matched-path"));
+  const invokePathname = normalizeWordSsrPathname(getHeaderValue(req, "x-invoke-path"));
+  const normalizedExpectedPathname = normalizeWordSsrPathname(expectedPathname);
+
+  const candidatePathnames = [matchedPathname, invokePathname].filter(
+    (pathname) => pathname !== "/",
+  );
+
+  return candidatePathnames.some(
+    (pathname) =>
+      pathname === normalizedExpectedPathname &&
+      pathname !== "/api/word-ssr" &&
+      pathname !== "/api/word-ssr-internal" &&
+      !pathname.startsWith("/api/"),
+  );
+}
 export function sendNodeResponse(res, response, method = "GET") {
   res.statusCode = response.status;
 

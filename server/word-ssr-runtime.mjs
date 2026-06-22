@@ -65,10 +65,22 @@ function injectRenderedPage(template, { appHtml, headTags, htmlLang }) {
     "</head>",
     `    ${headTags}\n  </head>`,
   );
+  const rootStart = withHead.indexOf('<div id="root">');
+  const bodyClose = withHead.lastIndexOf("</body>");
 
-  return withHead.replace(
-    /<div id="root">(?:<!--app-html-->)?<\/div>/i,
-    `<div id="root">${appHtml}</div>`,
+  if (rootStart === -1 || bodyClose === -1 || bodyClose <= rootStart) {
+    return withHead;
+  }
+
+  const rootClose = withHead.lastIndexOf("</div>", bodyClose);
+  if (rootClose === -1 || rootClose <= rootStart) {
+    return withHead;
+  }
+
+  return (
+    withHead.slice(0, rootStart) +
+    `<div id="root">${appHtml}</div>` +
+    withHead.slice(rootClose + "</div>".length)
   );
 }
 
@@ -182,6 +194,21 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
       routeKind: resolution.kind,
       pathname: normalizedPathname,
       source: "dynamic",
+    };
+  }
+
+  const staticHtml = await readStaticHtmlForPath(normalizedPathname);
+  if (staticHtml) {
+    return {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": buildCacheHeaders(200),
+      },
+      body: staticHtml,
+      routeKind: resolution.kind,
+      pathname: normalizedPathname,
+      source: "static-fallback",
     };
   }
 

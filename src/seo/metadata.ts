@@ -10,6 +10,7 @@ import { getAllSeoHubPaths, getSeoHubPath } from "../data/seo/hub";
 import { getLevelTestContent, getLevelTestSeoPath } from "../data/levelTests";
 import { getVocabularyLevelContent, type VocabularyLevelContent } from "../data/vocabularyLevels";
 import type { SeoMetadata } from "./SeoContext";
+import { fixMojibake } from "../utils/fixMojibake";
 
 const LEVEL_DISPLAY: Record<Level, string> = {
   a1: "A1",
@@ -208,6 +209,10 @@ function normalizeOrigin(siteOrigin: string): string {
   return siteOrigin.endsWith("/") ? siteOrigin.slice(0, -1) : siteOrigin;
 }
 
+function sanitizeMetadataText(value: string): string {
+  return fixMojibake(value);
+}
+
 export function buildVocabularySeoMetadata({
   uiLang,
   targetLanguage,
@@ -247,12 +252,14 @@ export function buildVocabularySeoMetadata({
   });
 
   return {
-    title:
+    title: sanitizeMetadataText(
       levelContent.metaTitle ??
       titleTemplate(languageName, levelDisplay, levelContent.wordCount.value, wordsUnit),
-    description:
+    ),
+    description: sanitizeMetadataText(
       levelContent.metaDescription ??
       descTemplate(languageName, levelDisplay, levelContent.wordCount.value, wordsUnit, benefit),
+    ),
     canonical,
     jsonLd,
     alternates: [
@@ -298,8 +305,8 @@ export function buildLevelTestSeoMetadata({
   const canonical = `${origin}${pathname}`;
 
   return {
-    title: content.metaTitle,
-    description: content.metaDescription,
+    title: sanitizeMetadataText(content.metaTitle),
+    description: sanitizeMetadataText(content.metaDescription),
     canonical,
     alternates: [
       ...SUPPORTED_UI_LANGUAGES.flatMap((lang) => {
@@ -339,8 +346,8 @@ export function buildSeoHubMetadata({
   const copy = SEO_HUB_METADATA[uiLang] ?? SEO_HUB_METADATA.en;
 
   return {
-    title: copy.title,
-    description: copy.description,
+    title: sanitizeMetadataText(copy.title),
+    description: sanitizeMetadataText(copy.description),
     canonical,
     alternates: [
       ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
@@ -415,7 +422,7 @@ export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata
     targetLanguageDisplayName,
     wordLemma,
   );
-  const title = `${baseTitle} (${cefrLevel} ${wordType})`;
+  const title = sanitizeMetadataText(`${baseTitle} (${cefrLevel} ${wordType})`);
   const baseDescription = (WORD_META_DESC[uiLang] ?? WORD_META_DESC.en)(
     targetLanguageDisplayName,
     wordLemma,
@@ -424,7 +431,7 @@ export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata
   const descriptionPrefix = trimmedDefinition
     ? `${trimmedDefinition} `
     : "";
-  const description = `${descriptionPrefix}${baseDescription}`.trim();
+  const description = sanitizeMetadataText(`${descriptionPrefix}${baseDescription}`.trim());
   const alternates = [
     ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
       hreflang: lang,
@@ -439,12 +446,12 @@ export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata
   const jsonLd = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "DefinedTerm",
-    name: wordLemma,
+    name: sanitizeMetadataText(wordLemma),
     description,
     url: `${origin}${buildWordPath(uiLang, targetLanguage, wordLemma, conceptId)}`,
     inDefinedTermSet: {
       "@type": "DefinedTermSet",
-      name: `${targetLanguageDisplayName} ${cefrLevel} Vocabulary`,
+      name: sanitizeMetadataText(`${targetLanguageDisplayName} ${cefrLevel} Vocabulary`),
     },
   });
 
