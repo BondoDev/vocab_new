@@ -18,6 +18,7 @@ function compileTestModules() {
   const rootNames = [
     path.join(rootDir, "src", "data", "seo", "wordSlugs.ts"),
     path.join(rootDir, "src", "data", "seo", "wordPageData.ts"),
+    path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
 
   const program = ts.createProgram({
@@ -61,6 +62,7 @@ compileTestModules();
 
 const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
 const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPageData.js"));
+const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
 function readJson(relativePath) {
   return JSON.parse(
@@ -221,6 +223,18 @@ const russianWordPageData = wordPageData.buildResolvedWordPageData({
   uiVocabulary: englishVocabulary,
 });
 assert.equal(russianWordPageData.wordEntry?.concept_id, russianFirstEntry.concept_id);
+assert.equal(
+  fixMojibake('Italienisches Wort "anticlimatico" вЂ“ Bedeutung und Beispiel (C1 adjective)'),
+  'Italienisches Wort "anticlimatico" – Bedeutung und Beispiel (C1 adjective)',
+);
+assert.equal(
+  fixMojibake("EnttГ¤uschung verursachend, weil weniger aufregend als erwartet."),
+  "Enttäuschung verursachend, weil weniger aufregend als erwartet.",
+);
+assert.equal(
+  fixMojibake("Р СѓСЃСЃРєРёР№"),
+  "Русский",
+);
 
 const vocabularyLevelPageSource = fs.readFileSync(
   path.join(rootDir, "src", "app", "components", "VocabularyLevelPage.tsx"),

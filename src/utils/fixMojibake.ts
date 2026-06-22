@@ -33,41 +33,30 @@ function getWindows1252ReverseMap(): Map<string, number> {
   return windows1252ReverseMap;
 }
 
+const MOJIBAKE_PATTERNS = [
+  /Ã./g,
+  /Â./g,
+  /â[\u0080-\u00BF]/g,
+  /Ð./g,
+  /Ñ./g,
+  /Р./g,
+  /С./g,
+  /вЂ./g,
+  /в„./g,
+  /в€./g,
+  /в[\u0400-\u04FF]/g,
+  /Г./g,
+  /\uFFFD/g,
+];
+
 function countSuspiciousChars(value: string): number {
   let suspicious = 0;
-  const suspiciousLatin1 = new Set([
-    0x00C2, // Â
-    0x00C3, // Ã
-    0x00D0, // Ð
-    0x00D1, // Ñ
-    0x00D2,
-    0x00D3,
-    0x00D4,
-    0x00D5,
-    0x00D6,
-    0x00D7,
-    0x00D8,
-    0x00D9,
-    0x00DA,
-    0x00DB,
-    0x00DC,
-    0x00DD,
-    0x00DE,
-    0x00DF,
-    0x00E2, // â
-  ]);
 
-  for (const char of value) {
-    const codePoint = char.codePointAt(0) ?? 0;
-
-    if (
-      suspiciousLatin1.has(codePoint) ||
-      (codePoint >= 0x0400 && codePoint <= 0x04FF) ||
-      (codePoint >= 0x2018 && codePoint <= 0x201E) ||
-      codePoint === 0x20AC ||
-      codePoint === 0x2122
-    ) {
-      suspicious += 1;
+  for (const pattern of MOJIBAKE_PATTERNS) {
+    pattern.lastIndex = 0;
+    const matches = value.match(pattern);
+    if (matches) {
+      suspicious += matches.length;
     }
   }
 
