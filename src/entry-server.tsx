@@ -18,6 +18,7 @@ import {
   buildWordPathFromSlug,
   parseWordRoute,
   resolveWordRoute,
+  type WordRouteMatch,
 } from "./data/seo/wordSlugs";
 import type { SeoMetadata } from "./seo/SeoContext";
 import {
@@ -274,6 +275,30 @@ export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const initialWordPageData =
     wordSeoResolution.kind === "canonical" ? wordSeoResolution.initialWordPageData : null;
   const initialBrowsePreviewData = getInitialBrowsePreviewData(url);
+  const ssrWordRouteMatch = (() => {
+    const routeMatch = pathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+    if (!routeMatch) {
+      return null;
+    }
+
+    return resolveWordRoute(routeMatch[1], routeMatch[2]);
+  })();
+  const ssrRouteOverride:
+    | {
+        page: "wordPage" | "notFound";
+        wordRoute?: WordRouteMatch | null;
+      }
+    | undefined =
+    wordSeoResolution.kind === "canonical" && ssrWordRouteMatch
+      ? {
+          page: "wordPage",
+          wordRoute: ssrWordRouteMatch,
+        }
+      : shouldUseWordNotFoundMetadata
+        ? {
+            page: "notFound",
+          }
+        : undefined;
   const appHtml = ReactDOMServer.renderToString(
     <StaticRouter location={url}>
       <App
@@ -281,6 +306,7 @@ export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
         initialTranslationData={initialInterfaceData}
         initialBrowsePreviewData={initialBrowsePreviewData}
         initialWordPageData={initialWordPageData}
+        ssrRouteOverride={ssrRouteOverride}
         seoManager={seoManager}
         siteOrigin={siteOrigin}
       />

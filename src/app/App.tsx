@@ -413,9 +413,14 @@ function createDistributedStarFieldImage(starCount: number, seed = starCount): s
 function AppContent({
   initialWordPageData,
   initialBrowsePreviewData,
+  ssrRouteOverride,
 }: {
   initialWordPageData?: ResolvedWordPageData | null;
   initialBrowsePreviewData?: LevelBrowsePreviewData | null;
+  ssrRouteOverride?: {
+    page: "wordPage" | "notFound";
+    wordRoute?: WordRouteMatch | null;
+  };
 }) {
   const { t, uiLanguage, setUILanguage } = useLanguage();
   const supportedLanguageCodes = useMemo(
@@ -1010,7 +1015,7 @@ function AppContent({
   );
   const seoHubRoute = useMemo(() => parseSeoHubRoute(location.pathname), [location.pathname]);
   const vocabularyRoute = useMemo(() => parseVocabularyRoute(location.pathname), [location.pathname]);
-  const wordRoute = useMemo(() => parseWordRoute(location.pathname), [location.pathname]);
+  const detectedWordRoute = useMemo(() => parseWordRoute(location.pathname), [location.pathname]);
   const practiceRoute = useMemo(() => parsePracticeRoute(location.pathname), [location.pathname]);
   const currentPage = useMemo(() => pageFromPath(location.pathname), [location.pathname]);
   const [selectedLevel, setSelectedLevel] = useState("A1");
@@ -1048,7 +1053,8 @@ function AppContent({
   const previousAuthUserIdRef = useRef<string | null>(getSessionUserId(getStoredSupabaseSession()));
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
-  const resolvedPage = currentPage;
+  const resolvedPage = ssrRouteOverride?.page ?? currentPage;
+  const wordRoute = ssrRouteOverride?.wordRoute ?? detectedWordRoute;
   const authUserId = getSessionUserId(authSession);
   const siteOrigin = useSeoSiteOrigin();
   const routeMetadata = useMemo(() => {
@@ -2770,6 +2776,10 @@ interface AppProps {
   siteOrigin?: string;
   initialWordPageData?: ResolvedWordPageData | null;
   initialBrowsePreviewData?: LevelBrowsePreviewData | null;
+  ssrRouteOverride?: {
+    page: "wordPage" | "notFound";
+    wordRoute?: WordRouteMatch | null;
+  };
 }
 
 export default function App({
@@ -2779,6 +2789,7 @@ export default function App({
   siteOrigin = DEFAULT_SITE_ORIGIN,
   initialWordPageData,
   initialBrowsePreviewData,
+  ssrRouteOverride,
 }: AppProps) {
   return (
     <SeoProvider manager={seoManager} siteOrigin={siteOrigin}>
@@ -2790,6 +2801,7 @@ export default function App({
           <AppContent
             initialWordPageData={initialWordPageData}
             initialBrowsePreviewData={initialBrowsePreviewData}
+            ssrRouteOverride={ssrRouteOverride}
           />
           <ScrollToTopButton />
         </>
