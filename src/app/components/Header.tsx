@@ -730,6 +730,7 @@ export function Header({
                 href={NAV_HREFS.language}
                 onClick={createNavClickHandler(onLanguages)}
                 className={getDesktopNavClassName("language")}
+                suppressHydrationWarning
               >
                 <Languages size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.languages")}
@@ -738,6 +739,7 @@ export function Header({
                 href={NAV_HREFS.levelCategory}
                 onClick={createNavClickHandler(onFilters)}
                 className={getDesktopNavClassName("levelCategory")}
+                suppressHydrationWarning
               >
                 <SlidersHorizontal size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.filters")}
@@ -746,6 +748,7 @@ export function Header({
                 href={NAV_HREFS.exerciseSelection}
                 onClick={createNavClickHandler(onExercises)}
                 className={getDesktopNavClassName("exerciseSelection")}
+                suppressHydrationWarning
               >
                 <Dumbbell size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.exercises")}
@@ -760,6 +763,7 @@ export function Header({
                   className={getDesktopNavClassName("about", "help")}
                   aria-haspopup="menu"
                   aria-expanded={isDesktopMoreOpen}
+                  suppressHydrationWarning
                 >
                   {moreLabel}
                   <ChevronDown
@@ -808,6 +812,7 @@ export function Header({
                 className={`header-desktop-control header-level-test-nav ${
                   isActive("exam") ? "is-active" : ""
                 }`}
+                suppressHydrationWarning
               >
                 <GraduationCap size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.levelTest")}
@@ -921,7 +926,7 @@ export function Header({
                   <span className="header-mobile-nav-item__icon" aria-hidden="true">
                     <Icon size={17} strokeWidth={1.8} />
                   </span>
-                  <span className="header-mobile-nav-item__label">{item.label}</span>
+                  <span suppressHydrationWarning className="header-mobile-nav-item__label">{item.label}</span>
                   <span className="header-mobile-nav-item__chevron" aria-hidden="true">
                     <ChevronRight size={16} strokeWidth={1.7} />
                   </span>
@@ -963,7 +968,7 @@ export function Header({
             ) : null}
           </div>
           <div className="header-mobile-lang-wrap">
-            <div className="header-mobile-lang-label">{t("header.languages")}</div>
+            <div suppressHydrationWarning className="header-mobile-lang-label">{t("header.languages")}</div>
             <UILanguageSwitcher variant="centered-modal" />
           </div>
 

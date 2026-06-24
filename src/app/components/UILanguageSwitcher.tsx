@@ -152,13 +152,13 @@ export function UILanguageSwitcher({
         type="button"
       >
         <Globe className="w-4 h-4 text-white/80" />
-        <span className="ui-lang-code-mobile text-[11px] font-semibold tracking-[0.2em] text-white/90 md:hidden">
+        <span suppressHydrationWarning className="ui-lang-code-mobile text-[11px] font-semibold tracking-[0.2em] text-white/90 md:hidden">
           {currentLanguage.code.toUpperCase()}
         </span>
-        <span className="ui-lang-name hidden md:inline text-sm font-semibold text-white/90">
+        <span suppressHydrationWarning className="ui-lang-name hidden md:inline text-sm font-semibold text-white/90">
           {currentLanguage.name}
         </span>
-        <span className="ui-lang-code-tablet hidden text-sm font-semibold tracking-[0.12em] text-white/90">
+        <span suppressHydrationWarning className="ui-lang-code-tablet hidden text-sm font-semibold tracking-[0.12em] text-white/90">
           {currentLanguage.code.toUpperCase()}
         </span>
         <ChevronDown
