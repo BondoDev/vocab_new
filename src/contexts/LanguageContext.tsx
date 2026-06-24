@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 export type UILanguage = "en" | "es" | "fr" | "pt" | "it" | "de" | "ru";
 
@@ -224,11 +224,15 @@ export function LanguageProvider({
     setUILanguage(initialUILanguage);
   }, [initialUILanguage]);
 
+  const didMountRef = useRef(false);
   useEffect(() => {
     if (typeof document === "undefined") {
       return;
     }
-
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
     document.documentElement.lang = uiLanguage;
   }, [uiLanguage]);
 
