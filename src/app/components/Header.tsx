@@ -293,21 +293,25 @@ export function Header({
   const [authError, setAuthError] = useState<string | null>(null);
   const [authInfo, setAuthInfo] = useState<string | null>(null);
   const [isAuthSubmitting, setIsAuthSubmitting] = useState(false);
-  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(
-    () => controlledAuthSession ?? getStoredSupabaseSession(),
-  );
+  // Start null to match SSR output; the stored session propagates via the
+  // controlledAuthSession prop after AppContent's mount useEffect runs.
+  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(null);
   const lastScrollYRef = useRef(0);
-  const starSeeds = useMemo(
-    () => ({
+  const [starSeeds, setStarSeeds] = useState<{ sparkle: number; dots: number } | null>(null);
+  useEffect(() => {
+    setStarSeeds({
       sparkle: Math.floor(Math.random() * 0xffffffff),
       dots: Math.floor(Math.random() * 0xffffffff),
-    }),
-    [],
-  );
+    });
+  }, []);
   const starFieldStyle = useMemo(
     () => ({
       backgroundColor: "#4a2b82",
-      backgroundImage: `${createSparkleFieldImage(6, starSeeds.sparkle)},\n${createRandomStarFieldImage(22, starSeeds.dots)}`,
+      ...(starSeeds
+        ? {
+            backgroundImage: `${createSparkleFieldImage(6, starSeeds.sparkle)},\n${createRandomStarFieldImage(22, starSeeds.dots)}`,
+          }
+        : {}),
       backgroundSize: "100% 100%",
       backgroundRepeat: "no-repeat",
     }),
