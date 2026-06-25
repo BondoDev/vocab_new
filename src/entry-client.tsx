@@ -3,12 +3,9 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./app/App";
 import "flag-icons/css/flag-icons.min.css";
 import "./styles/index.css";
-import "./styles/filters_page.scss";
 import "./styles/language_page.scss";
-import "./styles/exercise_page.scss";
 import "./styles/about_help_page.scss";
 import "./styles/header.scss";
-import "./styles/exercises.scss";
 
 const rootElement = document.getElementById("root");
 
