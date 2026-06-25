@@ -890,10 +890,13 @@ export function Header({
           </div>
 
           <button
+            type="button"
             className="header-menu-toggle md:hidden order-1 p-1 text-white"
             onClick={() => setIsMenuOpen((v) => !v)}
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMenuOpen}
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </nav>
 
