@@ -10,7 +10,8 @@
     "dev": "vite",
     "test:word-seo": "node scripts/test-word-seo-routes.mjs",
     "test:word-ssr-http": "node scripts/test-word-ssr-http.mjs",
-    "test:word-ssr-package": "node ./scripts/verify-word-ssr-package.mjs"
+    "test:word-ssr-package": "node ./scripts/verify-word-ssr-package.mjs",
+    "test:homepage-visibility": "node scripts/test-homepage-visibility.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
