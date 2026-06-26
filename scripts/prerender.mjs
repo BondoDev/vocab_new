@@ -122,9 +122,37 @@ async function writeRouteHtml(route, html) {
   await fs.writeFile(path.join(targetDir, "index.html"), html, "utf8");
 }
 
+async function buildLazyPreloadMap() {
+  const assetsDir = path.join(DIST_DIR, "assets");
+  const files = await fs.readdir(assetsDir);
+  const find = (prefix) =>
+    files.find((f) => f.startsWith(prefix) && f.endsWith(".js")) ?? null;
+  return {
+    About: find("About-"),
+    Help: find("Help-"),
+    ExerciseSelection: find("ExerciseSelection-"),
+    LevelCategorySelection: find("LevelCategorySelection-"),
+    VocabularyPractice: find("VocabularyPractice-"),
+    VocabularyLevelExam: find("VocabularyLevelExam-"),
+  };
+}
+
+function getLazyChunkForRoute(route, chunkMap) {
+  if (route === "/about" || route.startsWith("/about/")) return chunkMap.About;
+  if (route === "/help" || route.startsWith("/help/")) return chunkMap.Help;
+  if (route.includes("/languages/filters/exercises") && route.includes("/practice")) return chunkMap.VocabularyPractice;
+  if (route.startsWith("/languages/filters/exercises")) return chunkMap.ExerciseSelection;
+  if (route === "/languages/filters" || route === "/languages/filters/") return chunkMap.LevelCategorySelection;
+  if (route.startsWith("/languages/level-test")) return chunkMap.VocabularyLevelExam;
+  return null;
+}
+
 async function main() {
   const template = await fs.readFile(TEMPLATE_PATH, "utf8");
-  const { getPrerenderRoutes, render } = await loadServerBundle();
+  const [{ getPrerenderRoutes, render }, chunkMap] = await Promise.all([
+    loadServerBundle(),
+    buildLazyPreloadMap(),
+  ]);
 
   const baseRoutes = getPrerenderRoutes();
   const wordRoutes = await collectWordRoutesSubset(
@@ -141,7 +169,14 @@ async function main() {
     await Promise.all(
       batch.map(async (route) => {
       const page = await render(route, SITE_ORIGIN);
-      const html = injectRenderedPage(template, page);
+      let html = injectRenderedPage(template, page);
+      const lazyChunk = getLazyChunkForRoute(route, chunkMap);
+      if (lazyChunk) {
+        html = html.replace(
+          "</head>",
+          `  <link rel="modulepreload" href="/assets/${lazyChunk}">\n  </head>`,
+        );
+      }
       await writeRouteHtml(route, html);
       }),
     );
