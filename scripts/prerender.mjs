@@ -140,7 +140,7 @@ async function main() {
     const batch = routes.slice(index, index + batchSize);
     await Promise.all(
       batch.map(async (route) => {
-      const page = render(route, SITE_ORIGIN);
+      const page = await render(route, SITE_ORIGIN);
       const html = injectRenderedPage(template, page);
       await writeRouteHtml(route, html);
       }),

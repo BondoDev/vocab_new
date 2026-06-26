@@ -103,7 +103,7 @@ async function renderHtmlResponse(pathname, siteOrigin) {
     getTemplate(),
     loadEntryServerBundle(),
   ]);
-  const renderedPage = entryServer.render(pathname, siteOrigin);
+  const renderedPage = await entryServer.render(pathname, siteOrigin);
   return injectRenderedPage(template, renderedPage);
 }
 
