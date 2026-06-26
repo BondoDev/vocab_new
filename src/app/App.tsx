@@ -2733,7 +2733,7 @@ function AppContent({
           <motion.div
             className="md:hidden w-full max-w-2xl text-center space-y-[clamp(0.5rem,1.2vw,1rem)] z-10 -mt-4 mb-[clamp(1rem,3vw,1.5rem)]"
             initial={false}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h2 className="text-[clamp(2rem,7vw,3rem)] text-foreground leading-tight">
@@ -2746,7 +2746,7 @@ function AppContent({
           <motion.div
             className="hidden md:block text-center space-y-[clamp(0.75rem,1.6vw,1.25rem)]"
             initial={false}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h2 className="text-[clamp(2.25rem,4vw,3.5rem)] text-foreground leading-tight">
@@ -2760,13 +2760,13 @@ function AppContent({
           <motion.div
             className="language-form-stack space-y-[clamp(1.25rem,3vw,2.5rem)] mt-[clamp(1.5rem,4vw,2rem)]"
             initial={false}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
             <motion.div
               className="language-selectors-shell max-w-4xl mx-auto pt-[clamp(0.5rem,2vw,1rem)]"
               initial={false}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <div className="md:hidden relative space-y-10">
@@ -2825,7 +2825,7 @@ function AppContent({
             <motion.div
               className="language-continue-wrap language-continue-wrap-inside flex justify-center pt-[clamp(0.75rem,2vw,1rem)]"
               initial={false}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.7 }}
             >
               <motion.button
@@ -2857,7 +2857,7 @@ function AppContent({
             <motion.div
               className="language-stats-grid hidden md:grid md:grid-cols-3 gap-[clamp(1.5rem,4vw,2rem)] pt-[clamp(2.5rem,6vw,3.5rem)] text-center"
               initial={false}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.9 }}
             >
               <div className="space-y-2">
@@ -2889,7 +2889,7 @@ function AppContent({
             <motion.div
               className="md:hidden fixed bottom-5 left-0 right-0 flex items-center justify-center gap-[clamp(1rem,3vw,1.75rem)] text-[clamp(0.75rem,2.5vw,0.9rem)] text-muted-foreground/80 pointer-events-none"
               initial={false}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
               <span className="flex items-baseline gap-1">
@@ -2913,7 +2913,7 @@ function AppContent({
           <motion.div
             className="language-continue-wrap language-continue-wrap-outside justify-center pt-[clamp(0.75rem,2vw,1rem)]"
             initial={false}
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
           >
             <motion.button
