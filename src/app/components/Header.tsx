@@ -941,13 +941,13 @@ export function Header({
                 <button
                   type="button"
                   onClick={() => setIsMobileAccountMenuOpen(true)}
-                  className="header-mobile-nav-item text-left"
+                  className="header-mobile-nav-item header-mobile-nav-item--account text-left"
                 >
                   <span className="header-mobile-nav-item__accent" aria-hidden="true" />
                   <span className="header-mobile-nav-item__icon" aria-hidden="true">
                     <UserRound size={17} strokeWidth={1.8} />
                   </span>
-                  <span className="header-mobile-nav-item__label">Account</span>
+                  <span className="header-mobile-nav-item__label">{accountDisplayName}</span>
                   <span className="header-mobile-nav-item__chevron" aria-hidden="true">
                     <ChevronRight size={16} strokeWidth={1.7} />
                   </span>
