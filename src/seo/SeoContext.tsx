@@ -36,6 +36,15 @@ function escapeHtml(value: string): string {
     .replace(/>/g, "&gt;");
 }
 
+function escapeJsonScriptContent(value: string): string {
+  return value
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+}
+
 function upsertManagedJsonLd(jsonLd: string | undefined) {
   const existing = document.querySelector('script[data-managed-jsonld="true"]');
   if (existing) existing.remove();
@@ -170,7 +179,7 @@ export function renderSeoTags(metadata: SeoMetadata): string {
       : "",
     alternates,
     metadata.jsonLd
-      ? `<script type="application/ld+json" data-managed-jsonld="true">${metadata.jsonLd}</script>`
+      ? `<script type="application/ld+json" data-managed-jsonld="true">${escapeJsonScriptContent(metadata.jsonLd)}</script>`
       : "",
   ]
     .filter(Boolean)
