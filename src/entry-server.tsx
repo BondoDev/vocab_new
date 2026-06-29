@@ -52,6 +52,12 @@ export type WordSeoRequestResolution =
         | "missing-record";
     };
 
+export interface MinimalWordSeoNotFoundResponse {
+  body: string;
+  contentType: "text/plain; charset=utf-8";
+  status: 404;
+}
+
 const CORE_PRERENDER_ROUTES = [
   "/",
   "/profile",
@@ -138,6 +144,14 @@ function escapeJsonForHtml(value: unknown): string {
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026");
+}
+
+export function buildMinimalWordSeoNotFoundResponse(): MinimalWordSeoNotFoundResponse {
+  return {
+    status: 404,
+    contentType: "text/plain; charset=utf-8",
+    body: "404 Not Found",
+  };
 }
 
 export function getPrerenderRoutes(): string[] {

@@ -319,22 +319,12 @@ function assertImmediateWordServerRender(response, pathname) {
 
 function assertNotFoundWordHtml(response, pathname) {
   assert.equal(response.status, 404, `expected 404 for ${pathname}`);
-  assert.equal(
-    extractTagContent(response.body, "title"),
-    "Page Not Found | FluentStellar",
-    `wrong not-found title for ${pathname}`,
-  );
-  assert.match(
-    extractMetaContent(response.body, "robots") ?? "",
-    /noindex/i,
-    `missing noindex robots meta for ${pathname}`,
-  );
+  assert.equal(response.headers["content-type"], "text/plain; charset=utf-8");
+  assert.equal(response.body, "404 Not Found", `wrong 404 body for ${pathname}`);
   assert.equal(extractCanonical(response.body), null, `404 must not emit canonical for ${pathname}`);
-  assert.ok(!response.body.includes('hreflang='), `404 must not emit hreflang for ${pathname}`);
-  assert.ok(
-    !response.body.includes("application/ld+json"),
-    `404 must not emit word JSON-LD for ${pathname}`,
-  );
+  assert.ok(!response.body.includes("hreflang="), `404 must not emit hreflang for ${pathname}`);
+  assert.ok(!response.body.includes("application/ld+json"), `404 must not emit word JSON-LD for ${pathname}`);
+  assert.ok(!response.body.includes('<div id="root">'), `404 must not render app shell for ${pathname}`);
 }
 
 function assertBlockedApiResponse(response, pathname, expectedStatus = 404) {
