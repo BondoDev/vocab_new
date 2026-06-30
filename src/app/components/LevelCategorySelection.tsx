@@ -1,5 +1,6 @@
 ﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
+import "../../styles/filters_page.scss";
 import { ChevronLeft, ChevronDown, Check, X } from "lucide-react";
 import categoriesData from "../../data/categories.json";
 import { useLanguage } from "../../contexts/LanguageContext";

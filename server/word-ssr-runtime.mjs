@@ -121,7 +121,7 @@ async function renderHtmlResponse(pathname, siteOrigin) {
     getTemplate(),
     loadEntryServerBundle(),
   ]);
-  const renderedPage = entryServer.render(pathname, siteOrigin);
+  const renderedPage = await entryServer.render(pathname, siteOrigin);
   return injectRenderedPage(template, renderedPage);
 }
 
@@ -135,6 +135,14 @@ function buildCacheHeaders(status) {
   }
 
   return "no-store";
+}
+
+function buildMinimalNotFoundResponse() {
+  return {
+    status: 404,
+    contentType: "text/plain; charset=utf-8",
+    body: "404 Not Found",
+  };
 }
 
 export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_ORIGIN) {
@@ -197,37 +205,15 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
     };
   }
 
-  const staticHtml = await readStaticHtmlForPath(normalizedPathname);
-  if (staticHtml) {
-    return {
-      status: 200,
-      headers: {
-        "Content-Type": "text/html; charset=utf-8",
-        "Cache-Control": buildCacheHeaders(200),
-      },
-      body: staticHtml,
-      routeKind: resolution.kind,
-      pathname: normalizedPathname,
-      source: "static-fallback",
-    };
-  }
-
-  const body = await renderHtmlResponse(normalizedPathname, siteOrigin);
-  console.log("[word-ssr-runtime] not-found dynamic render", {
-    pathname: normalizedPathname,
-    routeKind: resolution.kind,
-    reason: resolution.reason,
-    source: "dynamic-404",
-    ...summarizeHtmlBody(body),
-  });
+  const minimalNotFound = buildMinimalNotFoundResponse();
   return {
-    status: 404,
+    status: minimalNotFound.status,
     headers: {
-      "Content-Type": "text/html; charset=utf-8",
+      "Content-Type": minimalNotFound.contentType,
       "Cache-Control": buildCacheHeaders(404),
       "X-Robots-Tag": "noindex, nofollow",
     },
-    body,
+    body: minimalNotFound.body,
     routeKind: resolution.kind,
     pathname: normalizedPathname,
     reason: resolution.reason,

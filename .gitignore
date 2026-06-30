@@ -7,3 +7,7 @@ server-build/
 dist-retry-*/
 server-build-retry-*/
 .env
+service-account.json
+indexed-progress.json
+
+.vercel

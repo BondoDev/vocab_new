@@ -293,21 +293,25 @@ export function Header({
   const [authError, setAuthError] = useState<string | null>(null);
   const [authInfo, setAuthInfo] = useState<string | null>(null);
   const [isAuthSubmitting, setIsAuthSubmitting] = useState(false);
-  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(
-    () => controlledAuthSession ?? getStoredSupabaseSession(),
-  );
+  // Start null to match SSR output; the stored session propagates via the
+  // controlledAuthSession prop after AppContent's mount useEffect runs.
+  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(null);
   const lastScrollYRef = useRef(0);
-  const starSeeds = useMemo(
-    () => ({
+  const [starSeeds, setStarSeeds] = useState<{ sparkle: number; dots: number } | null>(null);
+  useEffect(() => {
+    setStarSeeds({
       sparkle: Math.floor(Math.random() * 0xffffffff),
       dots: Math.floor(Math.random() * 0xffffffff),
-    }),
-    [],
-  );
+    });
+  }, []);
   const starFieldStyle = useMemo(
     () => ({
       backgroundColor: "#4a2b82",
-      backgroundImage: `${createSparkleFieldImage(6, starSeeds.sparkle)},\n${createRandomStarFieldImage(22, starSeeds.dots)}`,
+      ...(starSeeds
+        ? {
+            backgroundImage: `${createSparkleFieldImage(6, starSeeds.sparkle)},\n${createRandomStarFieldImage(22, starSeeds.dots)}`,
+          }
+        : {}),
       backgroundSize: "100% 100%",
       backgroundRepeat: "no-repeat",
     }),
@@ -726,6 +730,7 @@ export function Header({
                 href={NAV_HREFS.language}
                 onClick={createNavClickHandler(onLanguages)}
                 className={getDesktopNavClassName("language")}
+                suppressHydrationWarning
               >
                 <Languages size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.languages")}
@@ -734,6 +739,7 @@ export function Header({
                 href={NAV_HREFS.levelCategory}
                 onClick={createNavClickHandler(onFilters)}
                 className={getDesktopNavClassName("levelCategory")}
+                suppressHydrationWarning
               >
                 <SlidersHorizontal size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.filters")}
@@ -742,6 +748,7 @@ export function Header({
                 href={NAV_HREFS.exerciseSelection}
                 onClick={createNavClickHandler(onExercises)}
                 className={getDesktopNavClassName("exerciseSelection")}
+                suppressHydrationWarning
               >
                 <Dumbbell size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.exercises")}
@@ -756,6 +763,7 @@ export function Header({
                   className={getDesktopNavClassName("about", "help")}
                   aria-haspopup="menu"
                   aria-expanded={isDesktopMoreOpen}
+                  suppressHydrationWarning
                 >
                   {moreLabel}
                   <ChevronDown
@@ -804,6 +812,7 @@ export function Header({
                 className={`header-desktop-control header-level-test-nav ${
                   isActive("exam") ? "is-active" : ""
                 }`}
+                suppressHydrationWarning
               >
                 <GraduationCap size={12} strokeWidth={1.8} aria-hidden="true" />
                 {t("header.levelTest")}
@@ -881,10 +890,13 @@ export function Header({
           </div>
 
           <button
+            type="button"
             className="header-menu-toggle md:hidden order-1 p-1 text-white"
             onClick={() => setIsMenuOpen((v) => !v)}
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMenuOpen}
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </nav>
 
@@ -917,7 +929,7 @@ export function Header({
                   <span className="header-mobile-nav-item__icon" aria-hidden="true">
                     <Icon size={17} strokeWidth={1.8} />
                   </span>
-                  <span className="header-mobile-nav-item__label">{item.label}</span>
+                  <span suppressHydrationWarning className="header-mobile-nav-item__label">{item.label}</span>
                   <span className="header-mobile-nav-item__chevron" aria-hidden="true">
                     <ChevronRight size={16} strokeWidth={1.7} />
                   </span>
@@ -929,13 +941,13 @@ export function Header({
                 <button
                   type="button"
                   onClick={() => setIsMobileAccountMenuOpen(true)}
-                  className="header-mobile-nav-item text-left"
+                  className="header-mobile-nav-item header-mobile-nav-item--account text-left"
                 >
                   <span className="header-mobile-nav-item__accent" aria-hidden="true" />
                   <span className="header-mobile-nav-item__icon" aria-hidden="true">
                     <UserRound size={17} strokeWidth={1.8} />
                   </span>
-                  <span className="header-mobile-nav-item__label">Account</span>
+                  <span className="header-mobile-nav-item__label">{accountDisplayName}</span>
                   <span className="header-mobile-nav-item__chevron" aria-hidden="true">
                     <ChevronRight size={16} strokeWidth={1.7} />
                   </span>
@@ -959,7 +971,7 @@ export function Header({
             ) : null}
           </div>
           <div className="header-mobile-lang-wrap">
-            <div className="header-mobile-lang-label">{t("header.languages")}</div>
+            <div suppressHydrationWarning className="header-mobile-lang-label">{t("header.languages")}</div>
             <UILanguageSwitcher variant="centered-modal" />
           </div>
 

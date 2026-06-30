@@ -1,4 +1,12 @@
-import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Suspense,
+  lazy,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import "../styles/index.css";
@@ -20,7 +28,11 @@ import {
   LanguageContinuePopup,
   type LanguageContinuePopupHandle,
 } from "./components/LanguageContinuePopup";
-import { LanguageProvider, useLanguage, type UILanguage } from "../contexts/LanguageContext";
+import {
+  LanguageProvider,
+  useLanguage,
+  type UILanguage,
+} from "../contexts/LanguageContext";
 import {
   buildLocalizedVocabularyPath,
   isSupportedUiLanguage,
@@ -36,10 +48,18 @@ import {
 } from "../data/seo/wordSlugs";
 import type { LevelBrowsePreviewData } from "../data/seo/levelBrowseWords";
 import { resolveSeoHubRoute } from "../data/seo/hub";
-import { SEOHead, SeoProvider, type SeoManager, useSeoSiteOrigin } from "../seo/SeoContext";
+import {
+  SEOHead,
+  SeoProvider,
+  type SeoManager,
+  useSeoSiteOrigin,
+} from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
-import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../data/levelTests";
+import {
+  getLevelTestSeoPath,
+  resolveLevelTestSeoRoute,
+} from "../data/levelTests";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPageData";
 import {
@@ -129,7 +149,9 @@ function RouteLoadingFallback() {
 }
 
 function canUseLocalStorage(): boolean {
-  return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+  return (
+    typeof window !== "undefined" && typeof window.localStorage !== "undefined"
+  );
 }
 
 function readStoredString(
@@ -167,14 +189,18 @@ function readStoredStringArray(
       return null;
     }
 
-    const normalized = parsed.filter((item): item is string => typeof item === "string");
+    const normalized = parsed.filter(
+      (item): item is string => typeof item === "string",
+    );
     return isValidItem ? normalized.filter(isValidItem) : normalized;
   } catch {
     return null;
   }
 }
 
-function getSessionUserId(session: StoredSupabaseSession | null): string | null {
+function getSessionUserId(
+  session: StoredSupabaseSession | null,
+): string | null {
   return typeof session?.user?.id === "string" && session.user.id.trim()
     ? session.user.id
     : null;
@@ -233,7 +259,9 @@ function parseVocabularyRoute(path: string): ParsedVocabularyRoute | null {
   };
 }
 
-function parseDevSeoCefrPlaceholderRoute(path: string): ParsedVocabularyRoute | null {
+function parseDevSeoCefrPlaceholderRoute(
+  path: string,
+): ParsedVocabularyRoute | null {
   if (!path.startsWith("/test/")) {
     return null;
   }
@@ -284,18 +312,26 @@ type PageKey =
   | "devSeoCefrPlaceholder"
   | "notFound";
 
-function buildPracticeRoute(yourLanguage: UILanguage, practiceLanguage: UILanguage): string {
+function buildPracticeRoute(
+  yourLanguage: UILanguage,
+  practiceLanguage: UILanguage,
+): string {
   return `${ROUTES.exerciseSelection}/${yourLanguage}-${practiceLanguage}/practice`;
 }
 
 function parsePracticeRoute(path: string): ParsedPracticeRoute | null {
-  const match = path.match(/^\/languages\/filters\/exercises\/([a-z]{2})-([a-z]{2})\/practice$/);
+  const match = path.match(
+    /^\/languages\/filters\/exercises\/([a-z]{2})-([a-z]{2})\/practice$/,
+  );
   if (!match) {
     return null;
   }
 
   const [, yourLanguageRaw, practiceLanguageRaw] = match;
-  if (!isSupportedUiLanguage(yourLanguageRaw) || !isSupportedUiLanguage(practiceLanguageRaw)) {
+  if (
+    !isSupportedUiLanguage(yourLanguageRaw) ||
+    !isSupportedUiLanguage(practiceLanguageRaw)
+  ) {
     return null;
   }
 
@@ -364,7 +400,10 @@ function createSeededRandom(seed: number): () => number {
   };
 }
 
-function createDistributedStarFieldImage(starCount: number, seed = starCount): string {
+function createDistributedStarFieldImage(
+  starCount: number,
+  seed = starCount,
+): string {
   const cols = Math.ceil(Math.sqrt(starCount));
   const rows = Math.ceil(starCount / cols);
   const sparkleScaleOptions = [0.8, 1, 1.2, 1.4];
@@ -388,16 +427,25 @@ function createDistributedStarFieldImage(starCount: number, seed = starCount): s
     const yMin = row * cellHeight + 14;
     const yMax = (row + 1) * cellHeight - 14;
     const x = (
-      Math.max(5, xMin) + (Math.min(95, xMax) - Math.max(5, xMin)) * nextRandom()
+      Math.max(5, xMin) +
+      (Math.min(95, xMax) - Math.max(5, xMin)) * nextRandom()
     ).toFixed(1);
     const y = (
-      Math.max(8, yMin) + (Math.min(92, yMax) - Math.max(8, yMin)) * nextRandom()
+      Math.max(8, yMin) +
+      (Math.min(92, yMax) - Math.max(8, yMin)) * nextRandom()
     ).toFixed(1);
     const sparkleScale =
-      sparkleScaleOptions[Math.floor(nextRandom() * sparkleScaleOptions.length)];
+      sparkleScaleOptions[
+        Math.floor(nextRandom() * sparkleScaleOptions.length)
+      ];
     const color = colorOptions[Math.floor(nextRandom() * colorOptions.length)];
-    const longArm = ((4.8 + (6.6 - 4.8) * nextRandom()) * sparkleScale).toFixed(1);
-    const shortArm = ((1.05 + (1.45 - 1.05) * nextRandom()) * sparkleScale).toFixed(2);
+    const longArm = ((4.8 + (6.6 - 4.8) * nextRandom()) * sparkleScale).toFixed(
+      1,
+    );
+    const shortArm = (
+      (1.05 + (1.45 - 1.05) * nextRandom()) *
+      sparkleScale
+    ).toFixed(2);
     const core = ((0.9 + (1.3 - 0.9) * nextRandom()) * sparkleScale).toFixed(2);
 
     layers.push(
@@ -451,7 +499,11 @@ function AppContent({
   };
 
   const withLevelTestExploreTopic = (
-    topics: Array<{ level: CefrLevelCode; label: string; path: string | null | undefined }>,
+    topics: Array<{
+      level: CefrLevelCode;
+      label: string;
+      path: string | null | undefined;
+    }>,
     targetLanguage: TargetLanguageSlug,
   ): ExploreTopic[] => [
     ...topics.map((topic) => ({
@@ -1001,23 +1053,42 @@ function AppContent({
   const [practiceLanguage, setPracticeLanguage] = useState(
     () => initialPracticeRouteRef.current?.practiceLanguage ?? "",
   );
-  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(() =>
-    getStoredSupabaseSession(),
+  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(
+    null,
   );
-  const [userProfile, setUserProfile] = useState<UserProfile>(EMPTY_USER_PROFILE);
+  const [userProfile, setUserProfile] =
+    useState<UserProfile>(EMPTY_USER_PROFILE);
   const [isAccountOnboardingOpen, setIsAccountOnboardingOpen] = useState(false);
-  const [isAccountOnboardingSubmitting, setIsAccountOnboardingSubmitting] = useState(false);
-  const [accountOnboardingError, setAccountOnboardingError] = useState<string | null>(null);
+  const [isAccountOnboardingSubmitting, setIsAccountOnboardingSubmitting] =
+    useState(false);
+  const [accountOnboardingError, setAccountOnboardingError] = useState<
+    string | null
+  >(null);
   const navigate = useNavigate();
   const levelTestSeoRoute = useMemo(
     () => parseLevelTestSeoRoute(location.pathname),
     [location.pathname],
   );
-  const seoHubRoute = useMemo(() => parseSeoHubRoute(location.pathname), [location.pathname]);
-  const vocabularyRoute = useMemo(() => parseVocabularyRoute(location.pathname), [location.pathname]);
-  const detectedWordRoute = useMemo(() => parseWordRoute(location.pathname), [location.pathname]);
-  const practiceRoute = useMemo(() => parsePracticeRoute(location.pathname), [location.pathname]);
-  const currentPage = useMemo(() => pageFromPath(location.pathname), [location.pathname]);
+  const seoHubRoute = useMemo(
+    () => parseSeoHubRoute(location.pathname),
+    [location.pathname],
+  );
+  const vocabularyRoute = useMemo(
+    () => parseVocabularyRoute(location.pathname),
+    [location.pathname],
+  );
+  const detectedWordRoute = useMemo(
+    () => parseWordRoute(location.pathname),
+    [location.pathname],
+  );
+  const practiceRoute = useMemo(
+    () => parsePracticeRoute(location.pathname),
+    [location.pathname],
+  );
+  const currentPage = useMemo(
+    () => pageFromPath(location.pathname),
+    [location.pathname],
+  );
   const [selectedLevel, setSelectedLevel] = useState("A1");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
@@ -1029,13 +1100,19 @@ function AppContent({
   const [isItalianExploreOpen, setIsItalianExploreOpen] = useState(false);
   const [isPortugueseExploreOpen, setIsPortugueseExploreOpen] = useState(false);
   const [isRussianExploreOpen, setIsRussianExploreOpen] = useState(false);
-  const [selectedExercises, setSelectedExercises] = useState<string[]>([...DEFAULT_EXERCISES]);
+  const [selectedExercises, setSelectedExercises] = useState<string[]>([
+    ...DEFAULT_EXERCISES,
+  ]);
   const isContinueDisabled = !yourLanguage || !practiceLanguage;
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
-  const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] = useState(false);
-  const [levelTestDraftYourLanguage, setLevelTestDraftYourLanguage] = useState("");
-  const [levelTestDraftPracticeLanguage, setLevelTestDraftPracticeLanguage] = useState("");
-  const [levelTestModalSwapRotation, setLevelTestModalSwapRotation] = useState(0);
+  const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] =
+    useState(false);
+  const [levelTestDraftYourLanguage, setLevelTestDraftYourLanguage] =
+    useState("");
+  const [levelTestDraftPracticeLanguage, setLevelTestDraftPracticeLanguage] =
+    useState("");
+  const [levelTestModalSwapRotation, setLevelTestModalSwapRotation] =
+    useState(0);
   const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
   const hasAutoRedirectedRef = useRef(false);
   const initialPathRef = useRef(location.pathname);
@@ -1050,7 +1127,7 @@ function AppContent({
         ),
   );
   const shouldAutoRedirectFromStoredLanguagesRef = useRef(false);
-  const previousAuthUserIdRef = useRef<string | null>(getSessionUserId(getStoredSupabaseSession()));
+  const previousAuthUserIdRef = useRef<string | null>(null);
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const resolvedPage = ssrRouteOverride?.page ?? currentPage;
@@ -1085,13 +1162,11 @@ function AppContent({
     );
     const persistedSelectedCategories =
       readStoredStringArray(STORAGE_KEYS.selectedCategories) ?? [];
-    const persistedSelectedLevels =
-      (
-        readStoredStringArray(
-          STORAGE_KEYS.selectedLevels,
-          (value) => VALID_LEVEL_CODES.has(value.toUpperCase()),
-        ) ?? []
-      ).map((value) => value.toUpperCase());
+    const persistedSelectedLevels = (
+      readStoredStringArray(STORAGE_KEYS.selectedLevels, (value) =>
+        VALID_LEVEL_CODES.has(value.toUpperCase()),
+      ) ?? []
+    ).map((value) => value.toUpperCase());
     const persistedSelectedWordTypes =
       readStoredStringArray(STORAGE_KEYS.selectedWordTypes) ?? [];
     const allowedExercises = new Set(DEFAULT_EXERCISES);
@@ -1128,6 +1203,9 @@ function AppContent({
   }, [supportedLanguageCodes]);
 
   useEffect(() => {
+    // Initialize auth session from storage on client side only (after hydration)
+    setAuthSession(getStoredSupabaseSession());
+
     const unsubscribe = subscribeToSupabaseSessionChanges(setAuthSession);
     return unsubscribe;
   }, []);
@@ -1211,7 +1289,8 @@ function AppContent({
         const fallbackProfile = normalizeUserProfile({
           ...storedProfile,
           nativeLanguage: storedProfile?.nativeLanguage || yourLanguage || "",
-          practiceLanguage: storedProfile?.practiceLanguage || practiceLanguage || "",
+          practiceLanguage:
+            storedProfile?.practiceLanguage || practiceLanguage || "",
         });
 
         setUserProfile(fallbackProfile);
@@ -1237,7 +1316,9 @@ function AppContent({
         practiceLanguage: practiceLanguage || current.practiceLanguage,
       });
 
-      return JSON.stringify(nextProfile) === JSON.stringify(current) ? current : nextProfile;
+      return JSON.stringify(nextProfile) === JSON.stringify(current)
+        ? current
+        : nextProfile;
     });
   }, [authUserId, practiceLanguage, yourLanguage]);
 
@@ -1252,7 +1333,10 @@ function AppContent({
     if (!canUseLocalStorage()) {
       return;
     }
-    window.localStorage.setItem(STORAGE_KEYS.practiceLanguage, practiceLanguage);
+    window.localStorage.setItem(
+      STORAGE_KEYS.practiceLanguage,
+      practiceLanguage,
+    );
   }, [practiceLanguage]);
 
   useEffect(() => {
@@ -1337,7 +1421,6 @@ function AppContent({
     }
     navigate(ROUTES.levelCategory);
   };
-
 
   const handleStartVocabularyPractice = (
     _targetLanguage: TargetLanguageSlug,
@@ -1424,7 +1507,13 @@ function AppContent({
     if (location.pathname !== expectedPath) {
       navigate(expectedPath, { replace: true });
     }
-  }, [location.pathname, navigate, practiceLanguage, resolvedPage, yourLanguage]);
+  }, [
+    location.pathname,
+    navigate,
+    practiceLanguage,
+    resolvedPage,
+    yourLanguage,
+  ]);
 
   useEffect(() => {
     if (hasAutoRedirectedRef.current) {
@@ -1437,7 +1526,8 @@ function AppContent({
 
     const initialPage = pageFromPath(initialPathRef.current);
     const startedOnLanguagePage = initialPage === "language";
-    const startedOnLegacyPracticePage = initialPathRef.current === ROUTES.practice;
+    const startedOnLegacyPracticePage =
+      initialPathRef.current === ROUTES.practice;
 
     if (
       resolvedPage === "language" &&
@@ -1450,7 +1540,11 @@ function AppContent({
       return;
     }
 
-    if (!isContinueDisabled && startedOnLegacyPracticePage && resolvedPage === "practice") {
+    if (
+      !isContinueDisabled &&
+      startedOnLegacyPracticePage &&
+      resolvedPage === "practice"
+    ) {
       hasAutoRedirectedRef.current = true;
       navigate(ROUTES.exerciseSelection, { replace: true });
     }
@@ -1495,23 +1589,34 @@ function AppContent({
       return;
     }
 
-    navigate(buildPracticeRoute(yourLanguage as UILanguage, practiceLanguage as UILanguage));
+    navigate(
+      buildPracticeRoute(
+        yourLanguage as UILanguage,
+        practiceLanguage as UILanguage,
+      ),
+    );
   };
 
-  const handleAuthSessionChange = useCallback((session: StoredSupabaseSession | null) => {
-    setAuthSession(session);
-  }, []);
+  const handleAuthSessionChange = useCallback(
+    (session: StoredSupabaseSession | null) => {
+      setAuthSession(session);
+    },
+    [],
+  );
 
   useEffect(() => {
     const previousAuthUserId = previousAuthUserIdRef.current;
 
-    // Redirect only on a live login transition, not on initial page load with an existing session.
-    if (!previousAuthUserId && authUserId && resolvedPage !== "profile") {
+    // Only redirect to profile if user actually logged in during this session.
+    // On initial load, previousAuthUserId is null (initial state) and authUserId becomes truthy from
+    // the stored session. This is NOT a login action, so we skip the redirect.
+    // We only redirect when authUserId changed from one user to another user (actual login during session).
+    if (previousAuthUserId && previousAuthUserId !== authUserId && authUserId) {
       navigate(ROUTES.profile);
     }
 
     previousAuthUserIdRef.current = authUserId;
-  }, [authUserId, navigate, resolvedPage]);
+  }, [authUserId, navigate]);
 
   const handleUserProfileChange = (patch: Partial<UserProfile>) => {
     setAccountOnboardingError(null);
@@ -1531,8 +1636,10 @@ function AppContent({
     const age = userProfile.age;
     const birthMonth = userProfile.birthMonth;
     const birthDay = userProfile.birthDay;
-    const nativeLanguage = (userProfile.nativeLanguage || yourLanguage) as UserProfile["nativeLanguage"];
-    const nextPracticeLanguage = (userProfile.practiceLanguage || practiceLanguage) as UserProfile["practiceLanguage"];
+    const nativeLanguage = (userProfile.nativeLanguage ||
+      yourLanguage) as UserProfile["nativeLanguage"];
+    const nextPracticeLanguage = (userProfile.practiceLanguage ||
+      practiceLanguage) as UserProfile["practiceLanguage"];
 
     if (!authUserId) {
       setAccountOnboardingError("Sign in again to finish your profile.");
@@ -1708,7 +1815,9 @@ function AppContent({
           onClick={() => {
             closeAllExploreDropdowns();
             if (topic.path === ROUTES.exam) {
-              setPracticeLanguage(TARGET_LANGUAGE_TO_UI_CODE[topic.targetLanguage]);
+              setPracticeLanguage(
+                TARGET_LANGUAGE_TO_UI_CODE[topic.targetLanguage],
+              );
               handleStartExam();
               return;
             }
@@ -1780,7 +1889,11 @@ function AppContent({
       whileTap={{ scale: 0.95 }}
     >
       <motion.span
-        animate={shouldReduceMotion ? undefined : { rotate: levelTestModalSwapRotation }}
+        animate={
+          shouldReduceMotion
+            ? undefined
+            : { rotate: levelTestModalSwapRotation }
+        }
         transition={
           shouldReduceMotion
             ? { duration: 0 }
@@ -1809,9 +1922,12 @@ function AppContent({
       <div className="relative z-10 w-full max-w-2xl rounded-3xl border border-border bg-card p-6 shadow-2xl md:p-8">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-2xl text-foreground">{t("languageContinuePopup.title")}</h2>
+            <h2 className="text-2xl text-foreground">
+              {t("languageContinuePopup.title")}
+            </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              {t("home.selectYourLanguage")} and {t("home.selectPracticeLanguage").toLowerCase()}.
+              {t("home.selectYourLanguage")} and{" "}
+              {t("home.selectPracticeLanguage").toLowerCase()}.
             </p>
           </div>
           <button
@@ -1855,7 +1971,9 @@ function AppContent({
               languages={languages}
               disabledLanguages={[levelTestDraftPracticeLanguage]}
             />
-            <div className="flex justify-center mt-8">{levelTestModalSwapButton}</div>
+            <div className="flex justify-center mt-8">
+              {levelTestModalSwapButton}
+            </div>
             <LanguageSelector
               label={t("home.practiceLanguage")}
               value={levelTestDraftPracticeLanguage}
@@ -2019,10 +2137,7 @@ function AppContent({
         <main className="flex-1 px-4 py-8 md:px-8 md:py-12">
           <div className="mx-auto w-full max-w-5xl">
             <div className="mb-5">
-              <label
-                htmlFor="explore-language-search"
-                className="sr-only"
-              >
+              <label htmlFor="explore-language-search" className="sr-only">
                 {t("languageSelector.search")}
               </label>
               <div className="relative">
@@ -2038,7 +2153,10 @@ function AppContent({
             <div className="columns-1 gap-4 space-y-4 sm:columns-2 lg:columns-3">
               {languages.map((language) =>
                 language.code === "en" ? (
-                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                  <div
+                    key={language.code}
+                    className="mb-4 break-inside-avoid space-y-2"
+                  >
                     <button
                       type="button"
                       onClick={() => {
@@ -2055,7 +2173,10 @@ function AppContent({
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
                       <span className="flex items-center gap-3">
                         <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
-                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                          <span
+                            className={`fi fi-${language.flagCode}`}
+                            aria-hidden="true"
+                          />
                         </span>
                         <span className="text-base text-foreground relative">
                           {language.name}
@@ -2063,7 +2184,9 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isEnglishExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                          isEnglishExploreOpen
+                            ? "rotate-180"
+                            : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
@@ -2074,7 +2197,10 @@ function AppContent({
                     ) : null}
                   </div>
                 ) : language.code === "es" ? (
-                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                  <div
+                    key={language.code}
+                    className="mb-4 break-inside-avoid space-y-2"
+                  >
                     <button
                       type="button"
                       onClick={() => {
@@ -2091,7 +2217,10 @@ function AppContent({
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
                       <span className="flex items-center gap-3">
                         <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
-                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                          <span
+                            className={`fi fi-${language.flagCode}`}
+                            aria-hidden="true"
+                          />
                         </span>
                         <span className="text-base text-foreground relative">
                           {language.name}
@@ -2099,7 +2228,9 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isSpanishExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                          isSpanishExploreOpen
+                            ? "rotate-180"
+                            : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
@@ -2110,7 +2241,10 @@ function AppContent({
                     ) : null}
                   </div>
                 ) : language.code === "fr" ? (
-                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                  <div
+                    key={language.code}
+                    className="mb-4 break-inside-avoid space-y-2"
+                  >
                     <button
                       type="button"
                       onClick={() => {
@@ -2127,7 +2261,10 @@ function AppContent({
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
                       <span className="flex items-center gap-3">
                         <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
-                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                          <span
+                            className={`fi fi-${language.flagCode}`}
+                            aria-hidden="true"
+                          />
                         </span>
                         <span className="text-base text-foreground relative">
                           {language.name}
@@ -2135,7 +2272,9 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isFrenchExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                          isFrenchExploreOpen
+                            ? "rotate-180"
+                            : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
@@ -2146,7 +2285,10 @@ function AppContent({
                     ) : null}
                   </div>
                 ) : language.code === "de" ? (
-                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                  <div
+                    key={language.code}
+                    className="mb-4 break-inside-avoid space-y-2"
+                  >
                     <button
                       type="button"
                       onClick={() => {
@@ -2163,7 +2305,10 @@ function AppContent({
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
                       <span className="flex items-center gap-3">
                         <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
-                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                          <span
+                            className={`fi fi-${language.flagCode}`}
+                            aria-hidden="true"
+                          />
                         </span>
                         <span className="text-base text-foreground relative">
                           {language.name}
@@ -2171,7 +2316,9 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isGermanExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                          isGermanExploreOpen
+                            ? "rotate-180"
+                            : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
@@ -2182,7 +2329,10 @@ function AppContent({
                     ) : null}
                   </div>
                 ) : language.code === "it" ? (
-                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                  <div
+                    key={language.code}
+                    className="mb-4 break-inside-avoid space-y-2"
+                  >
                     <button
                       type="button"
                       onClick={() => {
@@ -2199,7 +2349,10 @@ function AppContent({
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
                       <span className="flex items-center gap-3">
                         <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
-                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                          <span
+                            className={`fi fi-${language.flagCode}`}
+                            aria-hidden="true"
+                          />
                         </span>
                         <span className="text-base text-foreground relative">
                           {language.name}
@@ -2207,7 +2360,9 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isItalianExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                          isItalianExploreOpen
+                            ? "rotate-180"
+                            : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
@@ -2218,7 +2373,10 @@ function AppContent({
                     ) : null}
                   </div>
                 ) : language.code === "pt" ? (
-                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                  <div
+                    key={language.code}
+                    className="mb-4 break-inside-avoid space-y-2"
+                  >
                     <button
                       type="button"
                       onClick={() => {
@@ -2235,7 +2393,10 @@ function AppContent({
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
                       <span className="flex items-center gap-3">
                         <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
-                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                          <span
+                            className={`fi fi-${language.flagCode}`}
+                            aria-hidden="true"
+                          />
                         </span>
                         <span className="text-base text-foreground relative">
                           {language.name}
@@ -2243,7 +2404,9 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isPortugueseExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                          isPortugueseExploreOpen
+                            ? "rotate-180"
+                            : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
@@ -2254,7 +2417,10 @@ function AppContent({
                     ) : null}
                   </div>
                 ) : language.code === "ru" ? (
-                  <div key={language.code} className="mb-4 break-inside-avoid space-y-2">
+                  <div
+                    key={language.code}
+                    className="mb-4 break-inside-avoid space-y-2"
+                  >
                     <button
                       type="button"
                       onClick={() => {
@@ -2271,7 +2437,10 @@ function AppContent({
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
                       <span className="flex items-center gap-3">
                         <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
-                          <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                          <span
+                            className={`fi fi-${language.flagCode}`}
+                            aria-hidden="true"
+                          />
                         </span>
                         <span className="text-base text-foreground relative">
                           {language.name}
@@ -2279,7 +2448,9 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isRussianExploreOpen ? "rotate-180" : "group-hover:translate-y-0.5"
+                          isRussianExploreOpen
+                            ? "rotate-180"
+                            : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
@@ -2291,21 +2462,24 @@ function AppContent({
                   </div>
                 ) : (
                   <div key={language.code} className="mb-4 break-inside-avoid">
-                  <button
-                    type="button"
-                    className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
-                  >
-                    <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
-                    <span className="flex items-center gap-3">
-                      <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
-                        <span className={`fi fi-${language.flagCode}`} aria-hidden="true" />
+                    <button
+                      type="button"
+                      className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
+                    >
+                      <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex h-5 w-7 items-center justify-center overflow-hidden rounded-sm">
+                          <span
+                            className={`fi fi-${language.flagCode}`}
+                            aria-hidden="true"
+                          />
+                        </span>
+                        <span className="text-base text-foreground relative">
+                          {language.name}
+                        </span>
                       </span>
-                      <span className="text-base text-foreground relative">
-                        {language.name}
-                      </span>
-                    </span>
-                    <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-y-0.5" />
-                  </button>
+                      <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-y-0.5" />
+                    </button>
                   </div>
                 ),
               )}
@@ -2361,7 +2535,6 @@ function AppContent({
     );
   }
 
-
   if (resolvedPage === "wordPage") {
     if (!wordRoute) {
       return (
@@ -2408,7 +2581,7 @@ function AppContent({
       level: vocabularyRoute.level,
     });
 
-  return (
+    return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
         <Suspense fallback={<RouteLoadingFallback />}>
@@ -2559,8 +2732,8 @@ function AppContent({
         <div className="language-content-container w-full max-w-2xl relative z-10">
           <motion.div
             className="md:hidden w-full max-w-2xl text-center space-y-[clamp(0.5rem,1.2vw,1rem)] z-10 -mt-4 mb-[clamp(1rem,3vw,1.5rem)]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={false}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h2 className="text-[clamp(2rem,7vw,3rem)] text-foreground leading-tight">
@@ -2572,8 +2745,8 @@ function AppContent({
           </motion.div>
           <motion.div
             className="hidden md:block text-center space-y-[clamp(0.75rem,1.6vw,1.25rem)]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={false}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h2 className="text-[clamp(2.25rem,4vw,3.5rem)] text-foreground leading-tight">
@@ -2586,14 +2759,14 @@ function AppContent({
 
           <motion.div
             className="language-form-stack space-y-[clamp(1.25rem,3vw,2.5rem)] mt-[clamp(1.5rem,4vw,2rem)]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={false}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
             <motion.div
               className="language-selectors-shell max-w-4xl mx-auto pt-[clamp(0.5rem,2vw,1rem)]"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={false}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <div className="md:hidden relative space-y-10">
@@ -2626,7 +2799,9 @@ function AppContent({
                   languages={languages}
                   disabledLanguages={[practiceLanguage]}
                 />
-                <div className="language-swap-wrap flex justify-center mt-8">{swapButton}</div>
+                <div className="language-swap-wrap flex justify-center mt-8">
+                  {swapButton}
+                </div>
                 <LanguageSelector
                   label={t("home.practiceLanguage")}
                   value={practiceLanguage}
@@ -2640,7 +2815,7 @@ function AppContent({
 
             <motion.p
               className="language-change-note text-[clamp(0.75rem,1.6vw,0.95rem)] text-center text-muted-foreground pt-[clamp(0.25rem,1vw,0.5rem)]"
-              initial={{ opacity: 0 }}
+              initial={false}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
@@ -2649,8 +2824,8 @@ function AppContent({
 
             <motion.div
               className="language-continue-wrap language-continue-wrap-inside flex justify-center pt-[clamp(0.75rem,2vw,1rem)]"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={false}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.7 }}
             >
               <motion.button
@@ -2681,8 +2856,8 @@ function AppContent({
 
             <motion.div
               className="language-stats-grid hidden md:grid md:grid-cols-3 gap-[clamp(1.5rem,4vw,2rem)] pt-[clamp(2.5rem,6vw,3.5rem)] text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={false}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.9 }}
             >
               <div className="space-y-2">
@@ -2713,8 +2888,8 @@ function AppContent({
 
             <motion.div
               className="md:hidden fixed bottom-5 left-0 right-0 flex items-center justify-center gap-[clamp(1rem,3vw,1.75rem)] text-[clamp(0.75rem,2.5vw,0.9rem)] text-muted-foreground/80 pointer-events-none"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={false}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
               <span className="flex items-baseline gap-1">
@@ -2737,8 +2912,8 @@ function AppContent({
 
           <motion.div
             className="language-continue-wrap language-continue-wrap-outside justify-center pt-[clamp(0.75rem,2vw,1rem)]"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={false}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
           >
             <motion.button
@@ -2746,7 +2921,9 @@ function AppContent({
               aria-disabled={isContinueDisabled}
               style={nextButtonStarFieldStyle}
               className={`language-continue-button text-white px-12 py-4 text-lg rounded-lg shadow-lg shadow-primary/30 ${
-                isContinueDisabled ? "opacity-60 cursor-not-allowed shadow-none" : ""
+                isContinueDisabled
+                  ? "opacity-60 cursor-not-allowed shadow-none"
+                  : ""
               }`}
               whileHover={{
                 scale: 1.05,

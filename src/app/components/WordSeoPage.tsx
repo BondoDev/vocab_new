@@ -485,7 +485,7 @@ export function WordSeoPage({
     (TARGET_LANG_NAMES[uiLang] ?? TARGET_LANG_NAMES.en)[targetLanguage],
   );
   const hydratedData = useMemo(
-    () => initialData ?? getHydratedWordPageData(location.pathname),
+    () => (initialData as HydrationWordPageData | null | undefined) ?? getHydratedWordPageData(location.pathname),
     [initialData, location.pathname],
   );
   const initialRouteKey = `${location.pathname}|${uiLang}|${targetLanguage}|${conceptId ?? ""}|${wordSlug}`;
@@ -839,7 +839,7 @@ export function WordSeoPage({
                         {meaning.level}
                       </span>
                       {meaning.type ? (
-                        <span className="rounded-full border border-border/80 bg-muted/70 px-2 py-0.5 text-xs font-medium text-foreground/80">
+                        <span suppressHydrationWarning className="rounded-full border border-border/80 bg-muted/70 px-2 py-0.5 text-xs font-medium text-foreground/80">
                           {localizedOtherType}
                         </span>
                       ) : null}
@@ -924,7 +924,7 @@ export function WordSeoPage({
                 <h3 className="text-sm font-semibold leading-5 text-foreground">
                   {levelQuestion}
                 </h3>
-                <p className="mt-2 inline-flex rounded-md border border-primary/25 bg-background px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-primary">
+                <p suppressHydrationWarning className="mt-2 inline-flex rounded-md border border-primary/25 bg-background px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-primary">
                   {localizedLevel}
                 </p>
               </div>
@@ -932,7 +932,7 @@ export function WordSeoPage({
                 <h3 className="text-sm font-semibold leading-5 text-foreground">
                   {typeQuestion}
                 </h3>
-                <p className="mt-2 text-sm font-semibold capitalize text-foreground">
+                <p suppressHydrationWarning className="mt-2 text-sm font-semibold capitalize text-foreground">
                   {localizedWordType}
                 </p>
               </div>
@@ -941,7 +941,7 @@ export function WordSeoPage({
                   <h3 className="text-sm font-semibold leading-5 text-foreground">
                     {categoryQuestion}
                   </h3>
-                  <p className="mt-2 text-sm font-semibold capitalize text-foreground">
+                  <p suppressHydrationWarning className="mt-2 text-sm font-semibold capitalize text-foreground">
                     {localizedCategory}
                   </p>
                 </div>

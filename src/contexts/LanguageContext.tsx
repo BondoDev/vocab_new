@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 export type UILanguage = "en" | "es" | "fr" | "pt" | "it" | "de" | "ru";
 
@@ -168,7 +168,20 @@ function readDocumentUiLanguage(): UILanguage | null {
 }
 
 function getInitialUiLanguage(initialUILanguage?: UILanguage): UILanguage {
-  return initialUILanguage ?? readDocumentUiLanguage() ?? readStoredUiLanguage() ?? "en";
+  if (initialUILanguage) return initialUILanguage;
+  // On client, the SSR injects window.__INITIAL_INTERFACE_DATA__ with the page's lang.
+  // Prefer that over document.lang / localStorage to prevent a mismatch when the user
+  // has a different language stored locally than the prerendered page's language.
+  if (typeof window !== "undefined") {
+    const payloadLang = window.__INITIAL_INTERFACE_DATA__?.lang;
+    if (
+      payloadLang === "en" || payloadLang === "es" || payloadLang === "fr" ||
+      payloadLang === "pt" || payloadLang === "it" || payloadLang === "de" || payloadLang === "ru"
+    ) {
+      return payloadLang;
+    }
+  }
+  return readDocumentUiLanguage() ?? readStoredUiLanguage() ?? "en";
 }
 
 function readInitialInterfaceData(initialUILanguage?: UILanguage): LoadedTranslationData | null {
@@ -211,11 +224,15 @@ export function LanguageProvider({
     setUILanguage(initialUILanguage);
   }, [initialUILanguage]);
 
+  const didMountRef = useRef(false);
   useEffect(() => {
     if (typeof document === "undefined") {
       return;
     }
-
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
     document.documentElement.lang = uiLanguage;
   }, [uiLanguage]);
 
@@ -287,10 +304,6 @@ export function LanguageProvider({
       );
     };
   }, [currentLanguageData]);
-
-  if (!currentLanguageData) {
-    return null;
-  }
 
   return (
     <LanguageContext.Provider value={{ uiLanguage, setUILanguage: handleSetUILanguage, t }}>

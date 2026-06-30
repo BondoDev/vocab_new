@@ -1,4 +1,5 @@
-import ReactDOMServer from "react-dom/server";
+import { renderToPipeableStream } from "react-dom/server";
+import { Writable } from "node:stream";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -50,6 +51,12 @@ export type WordSeoRequestResolution =
         | "slug-only-route"
         | "missing-record";
     };
+
+export interface MinimalWordSeoNotFoundResponse {
+  body: string;
+  contentType: "text/plain; charset=utf-8";
+  status: 404;
+}
 
 const CORE_PRERENDER_ROUTES = [
   "/",
@@ -137,6 +144,14 @@ function escapeJsonForHtml(value: unknown): string {
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026");
+}
+
+export function buildMinimalWordSeoNotFoundResponse(): MinimalWordSeoNotFoundResponse {
+  return {
+    status: 404,
+    contentType: "text/plain; charset=utf-8",
+    body: "404 Not Found",
+  };
 }
 
 export function getPrerenderRoutes(): string[] {
@@ -262,7 +277,7 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
   );
 }
 
-export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
+export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const seoManager: SeoManager = { metadata: null };
   const wordSeoResolution = resolveWordSeoRequest(url);
   const pathname = url.split(/[?#]/, 1)[0] || "/";
@@ -299,19 +314,41 @@ export function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
             page: "notFound",
           }
         : undefined;
-  const appHtml = ReactDOMServer.renderToString(
-    <StaticRouter location={url}>
-      <App
-        initialUILanguage={initialUILanguage}
-        initialTranslationData={initialInterfaceData}
-        initialBrowsePreviewData={initialBrowsePreviewData}
-        initialWordPageData={initialWordPageData}
-        ssrRouteOverride={ssrRouteOverride}
-        seoManager={seoManager}
-        siteOrigin={siteOrigin}
-      />
-    </StaticRouter>,
-  );
+  const appHtml = await new Promise<string>((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    const { pipe, abort } = renderToPipeableStream(
+      <StaticRouter location={url}>
+        <App
+          initialUILanguage={initialUILanguage}
+          initialTranslationData={initialInterfaceData}
+          initialBrowsePreviewData={initialBrowsePreviewData}
+          initialWordPageData={initialWordPageData}
+          ssrRouteOverride={ssrRouteOverride}
+          seoManager={seoManager}
+          siteOrigin={siteOrigin}
+        />
+      </StaticRouter>,
+      {
+        onAllReady() {
+          const writable = new Writable({
+            write(chunk, _enc, cb) {
+              chunks.push(chunk as Buffer);
+              cb();
+            },
+            final(cb) {
+              cb();
+              resolve(Buffer.concat(chunks).toString("utf8"));
+            },
+          });
+          pipe(writable);
+        },
+        onError(err) {
+          reject(err);
+        },
+      },
+    );
+    setTimeout(abort, 30_000);
+  });
   const hydrationWordPageData = buildHydrationWordPageData(initialWordPageData);
   const routeDataScript = initialWordPageData
     ? `\n    <script>window.__WORD_PAGE_DATA__=${escapeJsonForHtml({ pathname: url, data: hydrationWordPageData })}</script>`
