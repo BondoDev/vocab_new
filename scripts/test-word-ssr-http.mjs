@@ -69,6 +69,9 @@ function compileWordSlugModule() {
 
 const wordSlugs = compileWordSlugModule();
 const wordToSlug = wordSlugs.wordToSlug;
+// slugs.ts is emitted transitively (wordSlugs.ts imports from it)
+const slugsModule = require(path.join(tempDir, "src", "data", "seo", "slugs.js"));
+const buildLocalizedVocabularyPath = slugsModule.buildLocalizedVocabularyPath;
 
 function buildCanonicalPath(uiLang, targetLanguage, entry) {
   return wordSlugs.buildWordPath(
@@ -358,6 +361,172 @@ function assertWordHtmlViaInternalApi(response, pathname) {
   assert.ok(response.body.includes("window.__WORD_PAGE_DATA__"), `missing word payload for ${pathname}`);
 }
 
+// ── JSON-LD graph assertion helpers ──────────────────────────────────────────
+
+function decodeHtmlEntities(str) {
+  return str
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'");
+}
+
+function extractJsonLdContent(html) {
+  const openMatch = /<script\s[^>]*type=["']application\/ld\+json["'][^>]*>/i.exec(html);
+  if (!openMatch) return null;
+  const start = openMatch.index + openMatch[0].length;
+  const end = html.indexOf("</script>", start);
+  if (end === -1) return null;
+  return html.slice(start, end);
+}
+
+function assertWordGraphStructure(html, canonicalPath, { wordLemma, canonicalRoot, vocabLevelPath }) {
+  const canonical = `${canonicalRoot}${canonicalPath}`;
+
+  // Exactly one managed JSON-LD script tag
+  const managedCount = (html.match(/data-managed-jsonld/g) ?? []).length;
+  assert.equal(managedCount, 1, `Expected exactly 1 managed JSON-LD script at ${canonicalPath}`);
+
+  // Extract raw content
+  const rawContent = extractJsonLdContent(html);
+  assert.ok(rawContent !== null, `JSON-LD script tag not found for ${canonicalPath}`);
+
+  // Safety: no raw </script> or U+2028/U+2029 inside the script block
+  assert.ok(!rawContent.includes("</script>"), `Raw </script> inside JSON-LD for ${canonicalPath}`);
+  assert.ok(
+    !rawContent.includes("\u2028") && !rawContent.includes("\u2029"),
+    `U+2028/U+2029 in JSON-LD for ${canonicalPath}`,
+  );
+
+  // Must parse
+  let parsed;
+  try {
+    parsed = JSON.parse(rawContent);
+  } catch (e) {
+    assert.fail(`JSON-LD parse failed for ${canonicalPath}: ${e.message}`);
+  }
+
+  // Top-level @context and @graph
+  assert.equal(parsed["@context"], "https://schema.org", `Wrong @context for ${canonicalPath}`);
+  assert.ok(Array.isArray(parsed["@graph"]), `@graph must be array for ${canonicalPath}`);
+
+  // Exactly one node of each required type
+  const webPages = parsed["@graph"].filter((n) => n["@type"] === "WebPage");
+  const terms = parsed["@graph"].filter((n) => n["@type"] === "DefinedTerm");
+  const breadcrumbs = parsed["@graph"].filter((n) => n["@type"] === "BreadcrumbList");
+  assert.equal(webPages.length, 1, `Expected 1 WebPage for ${canonicalPath}, got ${webPages.length}`);
+  assert.equal(terms.length, 1, `Expected 1 DefinedTerm for ${canonicalPath}, got ${terms.length}`);
+  assert.equal(breadcrumbs.length, 1, `Expected 1 BreadcrumbList for ${canonicalPath}, got ${breadcrumbs.length}`);
+
+  // No forbidden schema types
+  const graphStr = JSON.stringify(parsed["@graph"]);
+  assert.ok(!graphStr.includes('"Course"'), `Forbidden type "Course" in graph for ${canonicalPath}`);
+  assert.ok(!graphStr.includes('"Quiz"'), `Forbidden type "Quiz" in graph for ${canonicalPath}`);
+  assert.ok(!graphStr.includes('"EducationalOccupationalProgram"'), `Forbidden type in graph for ${canonicalPath}`);
+
+  // ── WebPage ──────────────────────────────────────────────────────────────
+  const wp = webPages[0];
+  assert.equal(wp["@id"], `${canonical}#webpage`, `WebPage @id for ${canonicalPath}`);
+  assert.equal(wp.url, canonical, `WebPage.url for ${canonicalPath}`);
+  assert.ok(typeof wp.name === "string" && wp.name.length > 0, `WebPage.name missing for ${canonicalPath}`);
+  assert.ok(typeof wp.description === "string" && wp.description.length > 0, `WebPage.description missing for ${canonicalPath}`);
+  assert.ok(typeof wp.inLanguage === "string" && wp.inLanguage.length > 0, `WebPage.inLanguage missing for ${canonicalPath}`);
+  assert.equal(wp.mainEntity?.["@id"], `${canonical}#term`, `WebPage.mainEntity @id for ${canonicalPath}`);
+  assert.equal(wp.breadcrumb?.["@id"], `${canonical}#breadcrumb`, `WebPage.breadcrumb @id for ${canonicalPath}`);
+
+  // name matches HTML title (after decoding HTML entities in title tag)
+  const htmlTitle = decodeHtmlEntities(extractTagContent(html, "title") ?? "");
+  assert.ok(htmlTitle.length > 0, `Missing HTML title for ${canonicalPath}`);
+  assert.equal(wp.name, htmlTitle, `WebPage.name must match page title for ${canonicalPath}`);
+
+  // description matches meta description (after decoding HTML entities)
+  const htmlDesc = decodeHtmlEntities(extractMetaContent(html, "description") ?? "");
+  assert.ok(htmlDesc.length > 0, `Missing meta description for ${canonicalPath}`);
+  assert.equal(wp.description, htmlDesc, `WebPage.description must match meta description for ${canonicalPath}`);
+
+  // ── DefinedTerm ──────────────────────────────────────────────────────────
+  const dt = terms[0];
+  assert.equal(dt["@id"], `${canonical}#term`, `DefinedTerm @id for ${canonicalPath}`);
+  assert.equal(dt.name, wordLemma, `DefinedTerm.name must be "${wordLemma}" for ${canonicalPath}`);
+  assert.ok(typeof dt.description === "string" && dt.description.length > 0, `DefinedTerm.description missing for ${canonicalPath}`);
+  assert.ok(dt.inDefinedTermSet?.["@type"] === "DefinedTermSet", `DefinedTerm.inDefinedTermSet type for ${canonicalPath}`);
+  assert.ok(dt.inDefinedTermSet?.name?.length > 0, `DefinedTerm.inDefinedTermSet.name missing for ${canonicalPath}`);
+
+  // ── BreadcrumbList ───────────────────────────────────────────────────────
+  const bc = breadcrumbs[0];
+  assert.equal(bc["@id"], `${canonical}#breadcrumb`, `BreadcrumbList @id for ${canonicalPath}`);
+  assert.ok(
+    Array.isArray(bc.itemListElement) && bc.itemListElement.length >= 2,
+    `BreadcrumbList needs ≥2 items for ${canonicalPath}`,
+  );
+
+  // Sequential positions; non-empty names; production-hosted URLs
+  bc.itemListElement.forEach((item, idx) => {
+    assert.equal(item.position, idx + 1, `BreadcrumbList item ${idx} position for ${canonicalPath}`);
+    assert.ok(item.name?.length > 0, `BreadcrumbList item ${idx} name empty for ${canonicalPath}`);
+    assert.ok(
+      item.item?.startsWith("https://www.fluentstellar.com"),
+      `BreadcrumbList item ${idx} not production-hosted for ${canonicalPath}`,
+    );
+  });
+
+  // First item: Home at root
+  assert.equal(bc.itemListElement[0].item, `${canonicalRoot}/`, `First breadcrumb must be homepage for ${canonicalPath}`);
+  assert.equal(bc.itemListElement[0].name, "Home", `First breadcrumb name must be "Home" for ${canonicalPath}`);
+
+  // Last item: the current page's canonical
+  const lastItem = bc.itemListElement[bc.itemListElement.length - 1];
+  assert.equal(lastItem.item, canonical, `Last breadcrumb item must be canonical URL for ${canonicalPath}`);
+  assert.equal(lastItem.name, wordLemma, `Last breadcrumb name must be word lemma for ${canonicalPath}`);
+
+  // Intermediate items: not forbidden routes
+  const forbiddenPatterns = [/\/profile($|\/)/, /\/practice($|\/)/, /\/api\//, /\/account($|\/)/, /[?#]/];
+  bc.itemListElement.slice(1, -1).forEach((item, idx) => {
+    for (const pattern of forbiddenPatterns) {
+      assert.ok(
+        !pattern.test(item.item),
+        `Intermediate breadcrumb item ${idx} uses forbidden route "${item.item}" for ${canonicalPath}`,
+      );
+    }
+  });
+
+  // Intermediate item URL matches the expected vocab-level page
+  if (bc.itemListElement.length === 3 && vocabLevelPath) {
+    assert.equal(
+      bc.itemListElement[1].item,
+      `${canonicalRoot}${vocabLevelPath}`,
+      `Intermediate breadcrumb must be vocab-level page for ${canonicalPath}`,
+    );
+  }
+
+  // ── Graph integrity ───────────────────────────────────────────────────────
+  const allIds = parsed["@graph"].map((n) => n["@id"]).filter(Boolean);
+  const allIdsSet = new Set(allIds);
+
+  // No duplicate @ids
+  assert.equal(allIdsSet.size, allIds.length, `Duplicate @ids in @graph for ${canonicalPath}`);
+
+  // Referenced @ids exist as nodes in the same graph
+  assert.ok(
+    allIdsSet.has(wp.mainEntity?.["@id"]),
+    `mainEntity @id "${wp.mainEntity?.["@id"]}" not found in @graph for ${canonicalPath}`,
+  );
+  assert.ok(
+    allIdsSet.has(wp.breadcrumb?.["@id"]),
+    `breadcrumb @id "${wp.breadcrumb?.["@id"]}" not found in @graph for ${canonicalPath}`,
+  );
+
+  // All node @ids share the canonical URL as prefix
+  for (const id of allIdsSet) {
+    assert.ok(
+      id.startsWith(canonical),
+      `@id "${id}" does not share canonical prefix for ${canonicalPath}`,
+    );
+  }
+}
+
 function assertRouteMetadata(response, pathname, expectations) {
   assert.equal(response.status, expectations.status ?? 200, `wrong status for ${pathname}`);
   if (expectations.title) {
@@ -414,6 +583,13 @@ async function main() {
     assertWordHtml(englishCanonicalResponse, representativeEntries.english, englishCanonicalPath);
     assertImmediateWordServerRender(englishCanonicalResponse, englishCanonicalPath);
     assert.equal(extractHtmlLang(englishCanonicalResponse.body), "en");
+
+    // ── Word-page @graph structural assertions ─────────────────────────────
+    assertWordGraphStructure(englishCanonicalResponse.body, englishCanonicalPath, {
+      wordLemma: representativeEntries.english.word_lemma,
+      canonicalRoot: siteOrigin,
+      vocabLevelPath: buildLocalizedVocabularyPath("en", "english", "a1"),
+    });
     assert.equal(
       englishCanonicalResponse.headers["cache-control"],
       "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800",
@@ -446,6 +622,13 @@ async function main() {
     const englishDeVariantResponse = await request(baseUrl, englishDeVariantPath);
     assertWordHtml(englishDeVariantResponse, representativeEntries.english, englishDeVariantPath);
     assert.equal(extractHtmlLang(englishDeVariantResponse.body), "de");
+
+    // Graph assertions for the German UI-language variant
+    assertWordGraphStructure(englishDeVariantResponse.body, englishDeVariantPath, {
+      wordLemma: representativeEntries.english.word_lemma,
+      canonicalRoot: siteOrigin,
+      vocabLevelPath: buildLocalizedVocabularyPath("de", "english", "a1"),
+    });
 
     const englishRuVariantPath = buildCanonicalPath("ru", "english", representativeEntries.english);
     const englishRuVariantResponse = await request(baseUrl, englishRuVariantPath);
