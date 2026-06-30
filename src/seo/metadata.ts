@@ -213,18 +213,105 @@ function sanitizeMetadataText(value: string): string {
   return fixMojibake(value);
 }
 
+/**
+ * Shared @graph assembly (WebPage + BreadcrumbList + FAQPage + optional ItemList) for
+ * vocabulary-level pages. Used by both `buildVocabularySeoMetadata` and
+ * `DevSeoCefrPlaceholderPage`, which currently serves the populated CEFR levels and
+ * builds its own SeoMetadata via `seoMetadataOverride` rather than calling
+ * `buildVocabularySeoMetadata` directly.
+ */
+export function buildVocabularyJsonLdGraph({
+  uiLang,
+  targetLanguage,
+  canonical,
+  origin,
+  title,
+  description,
+  breadcrumbLabel,
+  faqItems,
+  browsePreviewWords,
+}: {
+  uiLang: UiLanguageCode;
+  targetLanguage: TargetLanguageSlug;
+  canonical: string;
+  origin: string;
+  title: string;
+  description: string;
+  breadcrumbLabel: string;
+  faqItems: ReadonlyArray<FaqItem>;
+  browsePreviewWords?: ReadonlyArray<{ concept_id: string; word_lemma: string }>;
+}): string {
+  const sanitizedBreadcrumbLabel = sanitizeMetadataText(breadcrumbLabel);
+
+  const faqNode = {
+    "@type": "FAQPage",
+    "@id": `${canonical}#faq`,
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer },
+    })),
+  };
+
+  const breadcrumbNode = {
+    "@type": "BreadcrumbList",
+    "@id": `${canonical}#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
+      { "@type": "ListItem", position: 2, name: sanitizedBreadcrumbLabel, item: canonical },
+    ],
+  };
+
+  const hasItemList = browsePreviewWords && browsePreviewWords.length > 0;
+
+  const webPageNode = {
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    inLanguage: uiLang,
+    mainEntity: { "@id": hasItemList ? `${canonical}#word-list` : `${canonical}#faq` },
+    breadcrumb: { "@id": `${canonical}#breadcrumb` },
+  };
+
+  const graph: object[] = [webPageNode];
+
+  if (hasItemList) {
+    graph.push({
+      "@type": "ItemList",
+      "@id": `${canonical}#word-list`,
+      name: sanitizedBreadcrumbLabel,
+      numberOfItems: browsePreviewWords!.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: browsePreviewWords!.map((word, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: sanitizeMetadataText(word.word_lemma),
+        url: `${origin}${buildWordPath(uiLang, targetLanguage, word.word_lemma, word.concept_id)}`,
+      })),
+    });
+  }
+
+  graph.push(faqNode, breadcrumbNode);
+
+  return JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+}
+
 export function buildVocabularySeoMetadata({
   uiLang,
   targetLanguage,
   level,
   pathname,
   siteOrigin,
+  browsePreviewWords,
 }: {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
   level: Level;
   pathname: string;
   siteOrigin: string;
+  browsePreviewWords?: ReadonlyArray<{ concept_id: string; word_lemma: string }>;
 }): SeoMetadata | null {
   const contentBundle = getVocabularyLevelContent(uiLang, targetLanguage, level);
   if (!contentBundle) {
@@ -240,26 +327,34 @@ export function buildVocabularySeoMetadata({
   const benefit = levelContent.levelExplanation.bullets[0] ?? "";
   const titleTemplate = META_TITLE_TEMPLATE[uiLang] ?? META_TITLE_TEMPLATE.en;
   const descTemplate = META_DESC_TEMPLATE[uiLang] ?? META_DESC_TEMPLATE.en;
+
+  const title = sanitizeMetadataText(
+    levelContent.metaTitle ??
+    titleTemplate(languageName, levelDisplay, levelContent.wordCount.value, wordsUnit),
+  );
+  const description = sanitizeMetadataText(
+    levelContent.metaDescription ??
+    descTemplate(languageName, levelDisplay, levelContent.wordCount.value, wordsUnit, benefit),
+  );
+
   const faqSection = buildVocabularyFaqSection(uiLang, languageName, levelDisplay, levelContent, wordsUnit);
-  const jsonLd = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqSection.items.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: { "@type": "Answer", text: item.answer },
-    })),
+  const breadcrumbLabel = `${languageName} ${levelDisplay} Vocabulary`;
+
+  const jsonLd = buildVocabularyJsonLdGraph({
+    uiLang,
+    targetLanguage,
+    canonical,
+    origin,
+    title,
+    description,
+    breadcrumbLabel,
+    faqItems: faqSection.items,
+    browsePreviewWords,
   });
 
   return {
-    title: sanitizeMetadataText(
-      levelContent.metaTitle ??
-      titleTemplate(languageName, levelDisplay, levelContent.wordCount.value, wordsUnit),
-    ),
-    description: sanitizeMetadataText(
-      levelContent.metaDescription ??
-      descTemplate(languageName, levelDisplay, levelContent.wordCount.value, wordsUnit, benefit),
-    ),
+    title,
+    description,
     canonical,
     jsonLd,
     alternates: [
@@ -443,16 +538,64 @@ export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata
     },
   ];
 
+  const canonical = `${origin}${pathname}`;
+
+  // Vocabulary-level page for this word's CEFR level — used as breadcrumb parent
+  const vocabLevel = cefrLevel.toLowerCase() as Level;
+  const vocabLevelPath = buildLocalizedVocabularyPath(uiLang, targetLanguage, vocabLevel);
+  const vocabLevelUrl = vocabLevelPath ? `${origin}${vocabLevelPath}` : null;
+  const vocabLevelLabel = sanitizeMetadataText(
+    `${targetLanguageDisplayName} ${cefrLevel} Vocabulary`,
+  );
+
+  const breadcrumbItems: object[] = [
+    { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
+  ];
+  if (vocabLevelUrl) {
+    breadcrumbItems.push({
+      "@type": "ListItem",
+      position: 2,
+      name: vocabLevelLabel,
+      item: vocabLevelUrl,
+    });
+  }
+  breadcrumbItems.push({
+    "@type": "ListItem",
+    position: vocabLevelUrl ? 3 : 2,
+    name: sanitizeMetadataText(wordLemma),
+    item: canonical,
+  });
+
   const jsonLd = JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "DefinedTerm",
-    name: sanitizeMetadataText(wordLemma),
-    description,
-    url: `${origin}${buildWordPath(uiLang, targetLanguage, wordLemma, conceptId)}`,
-    inDefinedTermSet: {
-      "@type": "DefinedTermSet",
-      name: sanitizeMetadataText(`${targetLanguageDisplayName} ${cefrLevel} Vocabulary`),
-    },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${canonical}#webpage`,
+        url: canonical,
+        name: title,
+        description,
+        inLanguage: uiLang,
+        mainEntity: { "@id": `${canonical}#term` },
+        breadcrumb: { "@id": `${canonical}#breadcrumb` },
+      },
+      {
+        "@type": "DefinedTerm",
+        "@id": `${canonical}#term`,
+        name: sanitizeMetadataText(wordLemma),
+        description,
+        url: canonical,
+        inDefinedTermSet: {
+          "@type": "DefinedTermSet",
+          name: sanitizeMetadataText(`${targetLanguageDisplayName} ${cefrLevel} Vocabulary`),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${canonical}#breadcrumb`,
+        itemListElement: breadcrumbItems,
+      },
+    ],
   });
 
   return { title, description, canonical: `${origin}${pathname}`, alternates, jsonLd };

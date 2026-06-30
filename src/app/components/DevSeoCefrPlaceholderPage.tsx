@@ -6,7 +6,7 @@ import type {
   UiLanguageCode,
 } from "../../data/vocabularyLevels";
 import { buildLocalizedVocabularyPath } from "../../data/seo/slugs";
-import { buildVocabularyFaqSection } from "../../seo/metadata";
+import { buildVocabularyFaqSection, buildVocabularyJsonLdGraph } from "../../seo/metadata";
 import {
   DEV_CEFR_PREVIEW_PATH,
   findSeoCefrPreviewItem,
@@ -291,32 +291,35 @@ function buildSeoMetadata(item: SeoCefrContentItem, pathPrefix: string): SeoMeta
   );
   const xDefaultItem =
     alternateItems.find((candidate) => candidate.uiLanguage === "en") ?? item;
+  const origin = "https://www.fluentstellar.com";
+  const canonical = `${origin}${canonicalPath}`;
+  const title = item.content.metaTitle ?? item.content.title;
+  const description = item.content.metaDescription ?? "";
+  const breadcrumbLabel = `${item.targetLanguageDisplayName} ${item.level.toUpperCase()} Vocabulary`;
 
   return {
-    title: item.content.metaTitle ?? item.content.title,
-    description: item.content.metaDescription ?? "",
-    canonical: `https://www.fluentstellar.com${canonicalPath}`,
+    title,
+    description,
+    canonical,
     alternates: [
       ...alternateItems.map((candidate) => ({
         hreflang: candidate.uiLanguage,
-        href: `https://www.fluentstellar.com${buildItemPath(candidate, pathPrefix)}`,
+        href: `${origin}${buildItemPath(candidate, pathPrefix)}`,
       })),
       {
         hreflang: "x-default",
-        href: `https://www.fluentstellar.com${buildItemPath(xDefaultItem, pathPrefix)}`,
+        href: `${origin}${buildItemPath(xDefaultItem, pathPrefix)}`,
       },
     ],
-    jsonLd: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: faqSection.items.map((faqItem) => ({
-        "@type": "Question",
-        name: faqItem.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: faqItem.answer,
-        },
-      })),
+    jsonLd: buildVocabularyJsonLdGraph({
+      uiLang: item.uiLanguage,
+      targetLanguage: normalizedTargetLanguage,
+      canonical,
+      origin,
+      title,
+      description,
+      breadcrumbLabel,
+      faqItems: faqSection.items,
     }),
   };
 }

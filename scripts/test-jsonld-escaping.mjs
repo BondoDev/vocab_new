@@ -714,6 +714,36 @@ console.log("\n[10] Schema @type values in metadata.ts (not removed)");
   test('"DefinedTermSet" @type still present', () => {
     assert.ok(metadataSource.includes('"DefinedTermSet"'));
   });
+
+  test('"WebPage" @type present in both builders', () => {
+    assert.ok(metadataSource.includes('"WebPage"'));
+  });
+
+  test('"BreadcrumbList" @type present in both builders', () => {
+    assert.ok(metadataSource.includes('"BreadcrumbList"'));
+  });
+
+  test('"@graph" key present in both builders', () => {
+    assert.ok(metadataSource.includes('"@graph"'));
+  });
+
+  test('"Course" is NOT present in source (forbidden type)', () => {
+    assert.ok(!metadataSource.includes('"Course"'));
+  });
+
+  test('"EducationalOccupationalProgram" is NOT present in source (forbidden type)', () => {
+    assert.ok(!metadataSource.includes('"EducationalOccupationalProgram"'));
+  });
+
+  test('"#breadcrumb" ID fragment present in both builders', () => {
+    const count = (metadataSource.match(/#breadcrumb/g) ?? []).length;
+    assert.ok(count >= 2, `Expected #breadcrumb in both builders, found ${count}`);
+  });
+
+  test('"#webpage" ID fragment present in both builders', () => {
+    const count = (metadataSource.match(/#webpage/g) ?? []).length;
+    assert.ok(count >= 2, `Expected #webpage in both builders, found ${count}`);
+  });
 }
 
 // ── [11] dist/ HTML checks (conditional — requires prior npm run build) ───────
@@ -763,9 +793,63 @@ if (distExists) {
         assert.ok(typeof parsed === "object");
       });
 
-      test("Prerendered word page schema @type is DefinedTerm", () => {
+      test("Prerendered word page JSON-LD uses @graph", () => {
         const parsed = JSON.parse(jsonLdScripts[0].content);
-        assert.equal(parsed["@type"], "DefinedTerm");
+        assert.ok(Array.isArray(parsed["@graph"]), "@graph must be an array");
+      });
+
+      test("Prerendered word page @graph contains exactly 1 WebPage", () => {
+        const parsed = JSON.parse(jsonLdScripts[0].content);
+        const nodes = parsed["@graph"].filter((n) => n["@type"] === "WebPage");
+        assert.equal(nodes.length, 1, `Found ${nodes.length} WebPage nodes`);
+      });
+
+      test("Prerendered word page @graph contains exactly 1 DefinedTerm", () => {
+        const parsed = JSON.parse(jsonLdScripts[0].content);
+        const nodes = parsed["@graph"].filter((n) => n["@type"] === "DefinedTerm");
+        assert.equal(nodes.length, 1, `Found ${nodes.length} DefinedTerm nodes`);
+      });
+
+      test("Prerendered word page @graph contains exactly 1 BreadcrumbList", () => {
+        const parsed = JSON.parse(jsonLdScripts[0].content);
+        const nodes = parsed["@graph"].filter((n) => n["@type"] === "BreadcrumbList");
+        assert.equal(nodes.length, 1, `Found ${nodes.length} BreadcrumbList nodes`);
+      });
+
+      test("Prerendered word page WebPage.mainEntity points to DefinedTerm", () => {
+        const parsed = JSON.parse(jsonLdScripts[0].content);
+        const webPage = parsed["@graph"].find((n) => n["@type"] === "WebPage");
+        assert.ok(webPage?.mainEntity?.["@id"]?.includes("#term"), "mainEntity @id must include #term");
+      });
+
+      test("Prerendered word page WebPage.breadcrumb points to BreadcrumbList", () => {
+        const parsed = JSON.parse(jsonLdScripts[0].content);
+        const webPage = parsed["@graph"].find((n) => n["@type"] === "WebPage");
+        assert.ok(webPage?.breadcrumb?.["@id"]?.includes("#breadcrumb"), "breadcrumb @id must include #breadcrumb");
+      });
+
+      test("Prerendered word page BreadcrumbList has sequential positions", () => {
+        const parsed = JSON.parse(jsonLdScripts[0].content);
+        const bc = parsed["@graph"].find((n) => n["@type"] === "BreadcrumbList");
+        const positions = bc.itemListElement.map((i) => i.position);
+        positions.forEach((pos, idx) => assert.equal(pos, idx + 1, `position ${pos} at index ${idx}`));
+      });
+
+      test("Prerendered word page breadcrumb URLs are production-hosted", () => {
+        const parsed = JSON.parse(jsonLdScripts[0].content);
+        const bc = parsed["@graph"].find((n) => n["@type"] === "BreadcrumbList");
+        bc.itemListElement.forEach((item) => {
+          assert.ok(
+            item.item.startsWith("https://www.fluentstellar.com"),
+            `breadcrumb item URL not production-hosted: ${item.item}`,
+          );
+        });
+      });
+
+      test("Prerendered word page has no Course or EducationalOccupationalProgram", () => {
+        const content = jsonLdScripts[0].content;
+        assert.ok(!content.includes("Course"), "Course found in word page JSON-LD");
+        assert.ok(!content.includes("EducationalOccupationalProgram"), "EducationalOccupationalProgram found");
       });
 
       test("Prerendered word page has canonical", () => {
@@ -788,7 +872,7 @@ if (distExists) {
 
   // Check vocab-level pages for FAQPage
   const vocabDirs = fs.existsSync(enDir)
-    ? fs.readdirSync(enDir).filter((d) => /^learn-/.test(d))
+    ? fs.readdirSync(enDir).filter((d) => /-vocabulary-practice$/.test(d))
     : [];
 
   if (vocabDirs.length > 0) {
@@ -809,9 +893,39 @@ if (distExists) {
       JSON.parse(vocabJsonLd[0].content);
     });
 
-    test("Prerendered vocab page schema @type is FAQPage", () => {
+    test("Prerendered vocab page uses @graph", () => {
       const parsed = JSON.parse(vocabJsonLd[0].content);
-      assert.equal(parsed["@type"], "FAQPage");
+      assert.ok(Array.isArray(parsed["@graph"]), "@graph must be an array");
+    });
+
+    test("Prerendered vocab page @graph contains 1 WebPage", () => {
+      const parsed = JSON.parse(vocabJsonLd[0].content);
+      const nodes = parsed["@graph"].filter((n) => n["@type"] === "WebPage");
+      assert.equal(nodes.length, 1, `Found ${nodes.length}`);
+    });
+
+    test("Prerendered vocab page @graph contains 1 BreadcrumbList", () => {
+      const parsed = JSON.parse(vocabJsonLd[0].content);
+      const nodes = parsed["@graph"].filter((n) => n["@type"] === "BreadcrumbList");
+      assert.equal(nodes.length, 1, `Found ${nodes.length}`);
+    });
+
+    test("Prerendered vocab page @graph contains 1 FAQPage", () => {
+      const parsed = JSON.parse(vocabJsonLd[0].content);
+      const nodes = parsed["@graph"].filter((n) => n["@type"] === "FAQPage");
+      assert.equal(nodes.length, 1, `Found ${nodes.length}`);
+    });
+
+    test("Prerendered vocab page BreadcrumbList has sequential positions", () => {
+      const parsed = JSON.parse(vocabJsonLd[0].content);
+      const bc = parsed["@graph"].find((n) => n["@type"] === "BreadcrumbList");
+      const positions = bc.itemListElement.map((i) => i.position);
+      positions.forEach((pos, idx) => assert.equal(pos, idx + 1));
+    });
+
+    test("Prerendered vocab page has no Course or EducationalOccupationalProgram", () => {
+      assert.ok(!vocabJsonLd[0].content.includes("Course"));
+      assert.ok(!vocabJsonLd[0].content.includes("EducationalOccupationalProgram"));
     });
   } else {
     console.log("       (no prerendered vocab pages in dist/ — may need full build)");

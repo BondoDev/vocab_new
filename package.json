@@ -12,7 +12,8 @@
     "test:word-ssr-http": "node scripts/test-word-ssr-http.mjs",
     "test:word-ssr-package": "node ./scripts/verify-word-ssr-package.mjs",
     "test:homepage-visibility": "node scripts/test-homepage-visibility.mjs",
-    "test:jsonld-escaping": "node scripts/test-jsonld-escaping.mjs"
+    "test:jsonld-escaping": "node scripts/test-jsonld-escaping.mjs",
+    "test:schema-graph": "node scripts/test-schema-graph.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
