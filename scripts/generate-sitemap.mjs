@@ -127,6 +127,7 @@ const UI_LANGUAGE_NAMES = {
   ru: "russian",
 };
 const WORD_SITEMAP_DEFINITIONS = [
+  { fileWordCode: "de", fileUiCode: "en", uiLang: "en", targetLanguage: "german" },
   { fileWordCode: "en", fileUiCode: "en", uiLang: "en", targetLanguage: "english" },
   { fileWordCode: "en", fileUiCode: "sp", uiLang: "es", targetLanguage: "english" },
   { fileWordCode: "en", fileUiCode: "fr", uiLang: "fr", targetLanguage: "english" },
