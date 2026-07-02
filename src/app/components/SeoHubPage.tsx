@@ -9,6 +9,7 @@ import {
 } from "../../data/seo/slugs";
 import { getLevelTestSeoPath } from "../../data/levelTests";
 import { getSeoHubPath } from "../../data/seo/hub";
+import { getEnglishVerbListContent, getEnglishVerbListPath } from "../../data/englishVerbList";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import { buildSeoHubMetadata } from "../../seo/metadata";
 import { useLanguage, type UILanguage } from "../../contexts/LanguageContext";
@@ -140,7 +141,17 @@ export function SeoHubPage({ uiLang }: SeoHubPageProps) {
         return {
           targetLanguage,
           displayName,
-          levelLinks,
+          levelLinks:
+            targetLanguage === "english"
+              ? [
+                  ...levelLinks,
+                  {
+                    href: getEnglishVerbListPath(contentUiLang),
+                    label: getEnglishVerbListContent(contentUiLang).title,
+                    level: "verbs",
+                  },
+                ]
+              : levelLinks,
         };
       }),
     [contentUiLang, copy, t, vocabularyPracticeLabel],

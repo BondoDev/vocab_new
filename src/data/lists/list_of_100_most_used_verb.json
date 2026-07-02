@@ -1,0 +1,402 @@
+[
+  {
+    "id": "A1-00008",
+    "verb": "be"
+  },
+  {
+    "id": "A1-00487",
+    "verb": "have"
+  },
+  {
+    "id": "A2-01701",
+    "verb": "become"
+  },
+  {
+    "id": "A1-00167",
+    "verb": "can"
+  },
+  {
+    "id": "A1-00687",
+    "verb": "must"
+  },
+  {
+    "id": "A1-01120",
+    "verb": "want"
+  },
+  {
+    "id": "A2-01787",
+    "verb": "should"
+  },
+  {
+    "id": "A1-00643",
+    "verb": "may"
+  },
+  {
+    "id": "A1-00607",
+    "verb": "like"
+  },
+  {
+    "id": "A1-00633",
+    "verb": "make"
+  },
+  {
+    "id": "A1-00292",
+    "verb": "do"
+  },
+  {
+    "id": "A1-00441",
+    "verb": "go"
+  },
+  {
+    "id": "A1-00231",
+    "verb": "come"
+  },
+  {
+    "id": "A1-00871",
+    "verb": "say"
+  },
+  {
+    "id": "A1-00956",
+    "verb": "speak"
+  },
+  {
+    "id": "A1-01012",
+    "verb": "reden"
+  },
+  {
+    "id": "A1-00049",
+    "verb": "ask"
+  },
+  {
+    "id": "A1-00034",
+    "verb": "answer"
+  },
+  {
+    "id": "A1-00494",
+    "verb": "hear"
+  },
+  {
+    "id": "A1-00879",
+    "verb": "see"
+  },
+  {
+    "id": "A1-00621",
+    "verb": "look"
+  },
+  {
+    "id": "A1-00383",
+    "verb": "find"
+  },
+  {
+    "id": "A2-01107",
+    "verb": "search"
+  },
+  {
+    "id": "A1-00584",
+    "verb": "know"
+  },
+  {
+    "id": "A1-01117",
+    "verb": "wake up"
+  },
+  {
+    "id": "A1-01043",
+    "verb": "think"
+  },
+  {
+    "id": "A2-01482",
+    "verb": "believe"
+  },
+  {
+    "id": "A2-01361",
+    "verb": "understand"
+  },
+  {
+    "id": "A2-01558",
+    "verb": "study"
+  },
+  {
+    "id": "A2-00950",
+    "verb": "prepare"
+  },
+  {
+    "id": "A1-01160",
+    "verb": "work"
+  },
+  {
+    "id": "A1-00614",
+    "verb": "live"
+  },
+  {
+    "id": "A1-00615",
+    "verb": "live"
+  },
+  {
+    "id": "A1-00973",
+    "verb": "stay"
+  },
+  {
+    "id": "B1-02233",
+    "verb": "rest"
+  },
+  {
+    "id": "A1-00693",
+    "verb": "need"
+  },
+  {
+    "id": "A1-01011",
+    "verb": "take"
+  },
+  {
+    "id": "A1-00436",
+    "verb": "give"
+  },
+  {
+    "id": "A1-00431",
+    "verb": "get"
+  },
+  {
+    "id": "A1-00139",
+    "verb": "bring"
+  },
+  {
+    "id": "B1-01043",
+    "verb": "fetch"
+  },
+  {
+    "id": "A1-00158",
+    "verb": "buy"
+  },
+  {
+    "id": "A1-00881",
+    "verb": "sell"
+  },
+  {
+    "id": "A1-00762",
+    "verb": "pay"
+  },
+  {
+    "id": "A2-00296",
+    "verb": "cost"
+  },
+  {
+    "id": "A1-00322",
+    "verb": "eat"
+  },
+  {
+    "id": "A1-00308",
+    "verb": "drink"
+  },
+  {
+    "id": "A1-00237",
+    "verb": "cook"
+  },
+  {
+    "id": "A2-00108",
+    "verb": "bake"
+  },
+  {
+    "id": "A1-00925",
+    "verb": "sleep"
+  },
+  {
+    "id": "A1-00021",
+    "verb": "get up"
+  },
+  {
+    "id": "A1-00916",
+    "verb": "sit"
+  },
+  {
+    "id": "A1-00968",
+    "verb": "stand"
+  },
+  {
+    "id": "A2-00717",
+    "verb": "lie"
+  },
+  {
+    "id": "A1-00932",
+    "verb": "smile"
+  },
+  {
+    "id": "A1-00817",
+    "verb": "put"
+  },
+  {
+    "id": "B1-04098",
+    "verb": "set"
+  },
+  {
+    "id": "A1-00309",
+    "verb": "drive"
+  },
+  {
+    "id": "A2-01805",
+    "verb": "travel"
+  },
+  {
+    "id": "A1-00591",
+    "verb": "laugh"
+  },
+  {
+    "id": "A1-00859",
+    "verb": "run"
+  },
+  {
+    "id": "A1-00785",
+    "verb": "play"
+  },
+  {
+    "id": "A1-00828",
+    "verb": "read"
+  },
+  {
+    "id": "A1-01167",
+    "verb": "write"
+  },
+  {
+    "id": "A1-00731",
+    "verb": "open"
+  },
+  {
+    "id": "A1-00210",
+    "verb": "close"
+  },
+  {
+    "id": "A1-00970",
+    "verb": "start"
+  },
+  {
+    "id": "A1-00088",
+    "verb": "begin"
+  },
+  {
+    "id": "B1-03271",
+    "verb": "quit"
+  },
+  {
+    "id": "A1-01114",
+    "verb": "wait"
+  },
+  {
+    "id": "A1-00498",
+    "verb": "help"
+  },
+  {
+    "id": "A1-00903",
+    "verb": "show"
+  },
+  {
+    "id": "A2-00460",
+    "verb": "explain"
+  },
+  {
+    "id": "A1-01022",
+    "verb": "tell"
+  },
+  {
+    "id": "A1-01104",
+    "verb": "use"
+  },
+  {
+    "id": "B2-02656",
+    "verb": "utilize"
+  },
+  {
+    "id": "A1-01130",
+    "verb": "wear"
+  },
+  {
+    "id": "A2-00977",
+    "verb": "pull"
+  },
+  {
+    "id": "A2-01535",
+    "verb": "mail"
+  },
+  {
+    "id": "A2-01117",
+    "verb": "send"
+  },
+  {
+    "id": "B1-04034",
+    "verb": "call"
+  },
+  {
+    "id": "A1-00163",
+    "verb": "call"
+  },
+  {
+    "id": "A1-00650",
+    "verb": "meet"
+  },
+  {
+    "id": "A1-01111",
+    "verb": "visit"
+  },
+  {
+    "id": "A1-00623",
+    "verb": "love"
+  },
+  {
+    "id": "B1-03033",
+    "verb": "please"
+  },
+  {
+    "id": "A1-00371",
+    "verb": "feel"
+  },
+  {
+    "id": "A2-01742",
+    "verb": "happen"
+  },
+  {
+    "id": "A2-00133",
+    "verb": "belong"
+  },
+  {
+    "id": "A2-01814",
+    "verb": "win"
+  },
+  {
+    "id": "B1-01577",
+    "verb": "lose"
+  },
+  {
+    "id": "B2-00065",
+    "verb": "alter"
+  },
+  {
+    "id": "A1-00186",
+    "verb": "change"
+  },
+  {
+    "id": "A1-01083",
+    "verb": "try"
+  },
+  {
+    "id": "A1-00257",
+    "verb": "cry"
+  },
+  {
+    "id": "A1-00406",
+    "verb": "forget"
+  },
+  {
+    "id": "A1-00836",
+    "verb": "remember"
+  },
+  {
+    "id": "A1-00600",
+    "verb": "let"
+  },
+  {
+    "id": "A1-00511",
+    "verb": "hold"
+  },
+  {
+    "id": "A1-00596",
+    "verb": "leave"
+  }
+]

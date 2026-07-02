@@ -12,6 +12,10 @@ import {
 } from "./data/seo/slugs";
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/levelTests";
+import {
+  getAllEnglishVerbListPaths,
+  resolveEnglishVerbListRoute,
+} from "./data/englishVerbList";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
@@ -169,6 +173,7 @@ export function getPrerenderRoutes(): string[] {
     ...getAllLocalizedVocabularyRoutes().map((route) => route.path),
     ...getAllSeoHubPaths(),
     ...getAllLevelTestSeoPaths(),
+    ...getAllEnglishVerbListPaths(),
   ])];
 }
 
@@ -257,6 +262,11 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
   const levelTestRoute = resolveLevelTestSeoRoute(url);
   if (levelTestRoute) {
     return levelTestRoute.uiLang;
+  }
+
+  const englishVerbListRoute = resolveEnglishVerbListRoute(url);
+  if (englishVerbListRoute) {
+    return englishVerbListRoute;
   }
 
   const seoHubRoute = resolveSeoHubRoute(url);
