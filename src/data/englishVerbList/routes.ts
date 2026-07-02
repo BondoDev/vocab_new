@@ -181,9 +181,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Numero",
-      verb: "Verbo",
+      verb: "Verb",
       definition: "Definicion",
-      wordPage: "Traduccion",
+      wordPage: "Translation",
       noResults: "Ningun verbo coincide con los filtros actuales.",
     },
     learningTips: [
@@ -266,7 +266,7 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
       number: "Nummer",
       verb: "Verb",
       definition: "Bedeutung",
-      wordPage: "Ubersetzung",
+      wordPage: "Translation",
       noResults: "Keine Verben passen zu den aktuellen Filtern.",
     },
     learningTips: [
@@ -347,9 +347,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Numero",
-      verb: "Verbe",
+      verb: "Verb",
       definition: "Definition",
-      wordPage: "Traduction",
+      wordPage: "Translation",
       noResults: "Aucun verbe ne correspond aux filtres actuels.",
     },
     learningTips: [
@@ -430,9 +430,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Numero",
-      verb: "Verbo",
+      verb: "Verb",
       definition: "Definizione",
-      wordPage: "Traduzione",
+      wordPage: "Translation",
       noResults: "Nessun verbo corrisponde ai filtri attuali.",
     },
     learningTips: [
@@ -513,9 +513,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Numero",
-      verb: "Verbo",
+      verb: "Verb",
       definition: "Definicao",
-      wordPage: "Traducao",
+      wordPage: "Translation",
       noResults: "Nenhum verbo corresponde aos filtros atuais.",
     },
     learningTips: [
@@ -596,9 +596,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Nomer",
-      verb: "Glagol",
+      verb: "Verb",
       definition: "Znachenie",
-      wordPage: "Perevod",
+      wordPage: "Translation",
       noResults: "Po tekushchim filtrom nichego ne naideno.",
     },
     learningTips: [

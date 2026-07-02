@@ -6,6 +6,7 @@ import {
   canLinkEnglishVerbListItem,
   getEnglishVerbListContent,
   getEnglishVerbDefinition,
+  getEnglishVerbTranslation,
   getEnglishVerbWordLemma,
 } from "../../data/englishVerbList";
 import { getSeoHubPath } from "../../data/seo/hub";
@@ -27,7 +28,7 @@ export function EnglishVerbListSeoPage({
 }: EnglishVerbListSeoPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
-  const content = getEnglishVerbListContent(uiLang);
+  const content = getEnglishVerbListContent("en");
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
@@ -75,8 +76,8 @@ export function EnglishVerbListSeoPage({
         index: index + 1,
         id: item.id,
         verb: item.verb,
-        wordPageLabel: getEnglishVerbWordLemma(item.id),
-        definition: getEnglishVerbDefinition(item.id),
+        translation: getEnglishVerbTranslation(item.id, uiLang),
+        definition: getEnglishVerbDefinition(item.id, uiLang),
         href: canLinkEnglishVerbListItem(item.id)
           ? buildWordPath(uiLang, TARGET_LANGUAGE, getEnglishVerbWordLemma(item.id), item.id)
           : null,
@@ -174,9 +175,9 @@ export function EnglishVerbListSeoPage({
                       {row.verb}
                     </td>
                     <td className="border-b border-border/70 py-3 pr-4 align-top text-sm">
-                      {row.href ? (
+                      {row.href && row.translation ? (
                         <Link className="text-primary transition hover:underline" to={row.href}>
-                          {row.wordPageLabel}
+                          {row.translation}
                         </Link>
                       ) : (
                         <span className="text-muted-foreground">-</span>
