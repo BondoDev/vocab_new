@@ -98,9 +98,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Number",
-      verb: "English verb",
+      verb: "Verb",
       definition: "Definition",
-      wordPage: "Word page",
+      wordPage: "Translation",
       noResults: "No verbs match the current filters.",
     },
     learningTips: [
@@ -181,9 +181,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Numero",
-      verb: "Verbo en ingles",
+      verb: "Verbo",
       definition: "Definicion",
-      wordPage: "Pagina de palabra",
+      wordPage: "Traduccion",
       noResults: "Ningun verbo coincide con los filtros actuales.",
     },
     learningTips: [
@@ -264,9 +264,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Nummer",
-      verb: "Englisches Verb",
+      verb: "Verb",
       definition: "Bedeutung",
-      wordPage: "Wortseite",
+      wordPage: "Ubersetzung",
       noResults: "Keine Verben passen zu den aktuellen Filtern.",
     },
     learningTips: [
@@ -347,9 +347,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Numero",
-      verb: "Verbe anglais",
+      verb: "Verbe",
       definition: "Definition",
-      wordPage: "Page du mot",
+      wordPage: "Traduction",
       noResults: "Aucun verbe ne correspond aux filtres actuels.",
     },
     learningTips: [
@@ -430,9 +430,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Numero",
-      verb: "Verbo inglese",
+      verb: "Verbo",
       definition: "Definizione",
-      wordPage: "Pagina parola",
+      wordPage: "Traduzione",
       noResults: "Nessun verbo corrisponde ai filtri attuali.",
     },
     learningTips: [
@@ -513,9 +513,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Numero",
-      verb: "Verbo em ingles",
+      verb: "Verbo",
       definition: "Definicao",
-      wordPage: "Pagina da palavra",
+      wordPage: "Traducao",
       noResults: "Nenhum verbo corresponde aos filtros atuais.",
     },
     learningTips: [
@@ -596,9 +596,9 @@ const ENGLISH_VERB_LIST_CONTENT: Record<UiLanguageCode, EnglishVerbListContent> 
     },
     table: {
       number: "Nomer",
-      verb: "Angliiskii glagol",
+      verb: "Glagol",
       definition: "Znachenie",
-      wordPage: "Stranitsa slova",
+      wordPage: "Perevod",
       noResults: "Po tekushchim filtrom nichego ne naideno.",
     },
     learningTips: [

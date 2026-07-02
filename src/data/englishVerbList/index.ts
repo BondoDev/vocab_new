@@ -18,24 +18,32 @@ export interface EnglishVerbListItem {
 interface EnglishVocabularyItem {
   concept_id?: string | null;
   definiton?: string | null;
+  word_lemma?: string | null;
 }
 
 export const ENGLISH_VERB_LIST_ITEMS = englishVerbListJson as EnglishVerbListItem[];
 const ENGLISH_VOCABULARY_ITEMS = englishVocabularyJson as EnglishVocabularyItem[];
-const UNRESOLVED_WORD_PAGE_IDS = new Set(["A1-00008", "A1-00021"]);
-const definitionById = new Map(
+const vocabularyById = new Map(
   ENGLISH_VOCABULARY_ITEMS.map((item) => [
     String(item.concept_id ?? "").trim(),
-    String(item.definiton ?? "").trim(),
+    {
+      definition: String(item.definiton ?? "").trim(),
+      wordLemma: String(item.word_lemma ?? "").trim(),
+    },
   ]).filter(([conceptId]) => conceptId.length > 0),
+);
+const definitionById = new Map(
+  Array.from(vocabularyById.entries(), ([conceptId, item]) => [conceptId, item.definition]),
 );
 
 export function canLinkEnglishVerbListItem(id: string): boolean {
-  // These two source rows do not match a current English vocabulary concept_id,
-  // so we intentionally avoid emitting broken word-page links for them.
-  return !UNRESOLVED_WORD_PAGE_IDS.has(String(id).trim());
+  return Boolean(vocabularyById.get(String(id).trim())?.wordLemma);
 }
 
 export function getEnglishVerbDefinition(id: string): string {
   return definitionById.get(String(id).trim()) ?? "";
+}
+
+export function getEnglishVerbWordLemma(id: string): string {
+  return vocabularyById.get(String(id).trim())?.wordLemma ?? "";
 }

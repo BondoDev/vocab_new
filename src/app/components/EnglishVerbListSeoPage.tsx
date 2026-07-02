@@ -6,6 +6,7 @@ import {
   canLinkEnglishVerbListItem,
   getEnglishVerbListContent,
   getEnglishVerbDefinition,
+  getEnglishVerbWordLemma,
 } from "../../data/englishVerbList";
 import { getSeoHubPath } from "../../data/seo/hub";
 import { buildLocalizedVocabularyPath, type TargetLanguageSlug, type UiLanguageCode } from "../../data/seo/slugs";
@@ -74,9 +75,10 @@ export function EnglishVerbListSeoPage({
         index: index + 1,
         id: item.id,
         verb: item.verb,
+        wordPageLabel: getEnglishVerbWordLemma(item.id),
         definition: getEnglishVerbDefinition(item.id),
         href: canLinkEnglishVerbListItem(item.id)
-          ? buildWordPath(uiLang, TARGET_LANGUAGE, item.verb, item.id)
+          ? buildWordPath(uiLang, TARGET_LANGUAGE, getEnglishVerbWordLemma(item.id), item.id)
           : null,
       })),
     [uiLang],
@@ -174,10 +176,9 @@ export function EnglishVerbListSeoPage({
                     <td className="border-b border-border/70 py-3 pr-4 align-top text-sm">
                       {row.href ? (
                         <Link className="text-primary transition hover:underline" to={row.href}>
-                          {row.verb}
+                          {row.wordPageLabel}
                         </Link>
                       ) : (
-                        // TODO: restore shared word-page links here if the source list IDs are aligned with vocabulary.json.
                         <span className="text-muted-foreground">-</span>
                       )}
                     </td>
