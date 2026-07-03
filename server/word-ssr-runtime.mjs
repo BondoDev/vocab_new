@@ -112,7 +112,7 @@ function buildCacheHeaders(status) {
     return "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800";
   }
 
-  if (status === 404 || status === 308) {
+  if (status === 410 || status === 404 || status === 308) {
     return "public, max-age=0, s-maxage=300";
   }
 
@@ -121,9 +121,9 @@ function buildCacheHeaders(status) {
 
 function buildMinimalNotFoundResponse() {
   return {
-    status: 404,
+    status: 410,
     contentType: "text/plain; charset=utf-8",
-    body: "404 Not Found",
+    body: "410 Gone",
   };
 }
 
@@ -180,7 +180,7 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
     status: minimalNotFound.status,
     headers: {
       "Content-Type": minimalNotFound.contentType,
-      "Cache-Control": buildCacheHeaders(404),
+      "Cache-Control": buildCacheHeaders(minimalNotFound.status),
       "X-Robots-Tag": "noindex, nofollow",
     },
     body: minimalNotFound.body,

@@ -320,14 +320,14 @@ function assertImmediateWordServerRender(response, pathname) {
   );
 }
 
-function assertNotFoundWordHtml(response, pathname) {
-  assert.equal(response.status, 404, `expected 404 for ${pathname}`);
+function assertGoneWordHtml(response, pathname) {
+  assert.equal(response.status, 410, `expected 410 for ${pathname}`);
   assert.equal(response.headers["content-type"], "text/plain; charset=utf-8");
-  assert.equal(response.body, "404 Not Found", `wrong 404 body for ${pathname}`);
-  assert.equal(extractCanonical(response.body), null, `404 must not emit canonical for ${pathname}`);
-  assert.ok(!response.body.includes("hreflang="), `404 must not emit hreflang for ${pathname}`);
-  assert.ok(!response.body.includes("application/ld+json"), `404 must not emit word JSON-LD for ${pathname}`);
-  assert.ok(!response.body.includes('<div id="root">'), `404 must not render app shell for ${pathname}`);
+  assert.equal(response.body, "410 Gone", `wrong 410 body for ${pathname}`);
+  assert.equal(extractCanonical(response.body), null, `410 must not emit canonical for ${pathname}`);
+  assert.ok(!response.body.includes("hreflang="), `410 must not emit hreflang for ${pathname}`);
+  assert.ok(!response.body.includes("application/ld+json"), `410 must not emit word JSON-LD for ${pathname}`);
+  assert.ok(!response.body.includes('<div id="root">'), `410 must not render app shell for ${pathname}`);
 }
 
 function assertBlockedApiResponse(response, pathname, expectedStatus = 404) {
@@ -671,22 +671,22 @@ async function main() {
       baseUrl,
       `/en/english-word-${wordToSlug(representativeEntries.english.word_lemma)}`,
     );
-    assertNotFoundWordHtml(slugOnlyResponse, slugOnlyResponse.finalUrl.replace(baseUrl, ""));
+    assertGoneWordHtml(slugOnlyResponse, slugOnlyResponse.finalUrl.replace(baseUrl, ""));
 
     const invalidConceptResponse = await request(baseUrl, "/en/english-word-about--Z9-99999");
-    assertNotFoundWordHtml(invalidConceptResponse, "/en/english-word-about--Z9-99999");
+    assertGoneWordHtml(invalidConceptResponse, "/en/english-word-about--Z9-99999");
 
     const mismatchResponse = await request(baseUrl, "/en/english-word-bank--A1-00001");
-    assertNotFoundWordHtml(mismatchResponse, "/en/english-word-bank--A1-00001");
+    assertGoneWordHtml(mismatchResponse, "/en/english-word-bank--A1-00001");
 
     const malformedResponse = await request(baseUrl, "/en/english-word-about----A1-00001");
-    assertNotFoundWordHtml(malformedResponse, "/en/english-word-about----A1-00001");
+    assertGoneWordHtml(malformedResponse, "/en/english-word-about----A1-00001");
 
     const unsupportedUiResponse = await request(baseUrl, "/xx/english-word-about--A1-00001");
-    assertNotFoundWordHtml(unsupportedUiResponse, "/xx/english-word-about--A1-00001");
+    assertGoneWordHtml(unsupportedUiResponse, "/xx/english-word-about--A1-00001");
 
     const unsupportedTargetResponse = await request(baseUrl, "/en/japanese-word-about--A1-00001");
-    assertNotFoundWordHtml(unsupportedTargetResponse, "/en/japanese-word-about--A1-00001");
+    assertGoneWordHtml(unsupportedTargetResponse, "/en/japanese-word-about--A1-00001");
 
     const directApiResponse = await request(
       baseUrl,
@@ -713,7 +713,7 @@ async function main() {
       baseUrl,
       "/api/word-ssr-internal?pathname=../../etc/passwd",
     );
-    assertNotFoundWordHtml(
+    assertGoneWordHtml(
       directMalformedApiResponse,
       "/api/word-ssr-internal?pathname=../../etc/passwd",
     );

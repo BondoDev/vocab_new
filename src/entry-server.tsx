@@ -59,7 +59,7 @@ export type WordSeoRequestResolution =
 export interface MinimalWordSeoNotFoundResponse {
   body: string;
   contentType: "text/plain; charset=utf-8";
-  status: 404;
+  status: 410;
 }
 
 const CORE_PRERENDER_ROUTES = [
@@ -152,9 +152,9 @@ function escapeJsonForHtml(value: unknown): string {
 
 export function buildMinimalWordSeoNotFoundResponse(): MinimalWordSeoNotFoundResponse {
   return {
-    status: 404,
+    status: 410,
     contentType: "text/plain; charset=utf-8",
-    body: "404 Not Found",
+    body: "410 Gone",
   };
 }
 
