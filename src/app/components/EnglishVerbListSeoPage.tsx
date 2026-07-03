@@ -172,16 +172,16 @@ export function EnglishVerbListSeoPage({
                       {row.index}
                     </td>
                     <td className="border-b border-border/70 py-3 pr-4 align-top text-sm font-medium text-foreground">
-                      {row.verb}
-                    </td>
-                    <td className="border-b border-border/70 py-3 pr-4 align-top text-sm">
-                      {row.href && row.translation ? (
+                      {row.href ? (
                         <Link className="text-primary transition hover:underline" to={row.href}>
-                          {row.translation}
+                          {row.verb}
                         </Link>
                       ) : (
-                        <span className="text-muted-foreground">-</span>
+                        row.verb
                       )}
+                    </td>
+                    <td className="border-b border-border/70 py-3 pr-4 align-top text-sm">
+                      {row.translation ? <span className="text-muted-foreground">{row.translation}</span> : <span className="text-muted-foreground">-</span>}
                     </td>
                     <td className="border-b border-border/70 py-3 align-top text-sm text-muted-foreground">
                       {row.definition || "-"}
