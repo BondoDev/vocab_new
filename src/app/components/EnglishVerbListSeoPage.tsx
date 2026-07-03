@@ -28,7 +28,7 @@ export function EnglishVerbListSeoPage({
 }: EnglishVerbListSeoPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
-  const content = getEnglishVerbListContent("en");
+  const content = getEnglishVerbListContent(uiLang);
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
