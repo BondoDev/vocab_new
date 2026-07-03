@@ -4,6 +4,7 @@ import { Globe, ChevronDown } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
+import { getEnglishVerbListPath, resolveEnglishVerbListRoute } from "../../data/englishVerbList";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordSlugs";
@@ -132,6 +133,18 @@ export function UILanguageSwitcher({
           }
         }
       }
+
+      const englishVerbListRoute = resolveEnglishVerbListRoute(location.pathname);
+      if (englishVerbListRoute) {
+        const nextPath = getEnglishVerbListPath(code);
+        if (nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+        setUILanguage(code);
+        setIsOpen(false);
+        return;
+      }
+
       setUILanguage(code);
     }
     setIsOpen(false);
@@ -247,7 +260,6 @@ export function UILanguageSwitcher({
     </>
   );
 }
-
 
 
 

@@ -8,6 +8,13 @@ import {
 import { buildWordPath } from "../data/seo/wordSlugs";
 import { getAllSeoHubPaths, getSeoHubPath } from "../data/seo/hub";
 import { getLevelTestContent, getLevelTestSeoPath } from "../data/levelTests";
+import {
+  ENGLISH_VERB_LIST_ITEMS,
+  canLinkEnglishVerbListItem,
+  getAllEnglishVerbListPaths,
+  getEnglishVerbListContent,
+  getEnglishVerbListPath,
+} from "../data/englishVerbList";
 import { getVocabularyLevelContent, type VocabularyLevelContent } from "../data/vocabularyLevels";
 import type { SeoMetadata } from "./SeoContext";
 import { fixMojibake } from "../utils/fixMojibake";
@@ -155,6 +162,94 @@ export function buildVocabularyFaqSection(
         answer: topics.join(", ") + ".",
       },
     ],
+  };
+}
+
+export function buildEnglishVerbListSeoMetadata({
+  uiLang,
+  pathname,
+  siteOrigin,
+}: {
+  uiLang: UiLanguageCode;
+  pathname: string;
+  siteOrigin: string;
+}): SeoMetadata {
+  const origin = normalizeOrigin(siteOrigin);
+  const canonical = `${origin}${pathname}`;
+  const content = getEnglishVerbListContent(uiLang);
+  const title = sanitizeMetadataText(content.metaTitle);
+  const description = sanitizeMetadataText(content.metaDescription);
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${canonical}#webpage`,
+        url: canonical,
+        name: title,
+        description,
+        inLanguage: uiLang,
+        mainEntity: { "@id": `${canonical}#verb-list` },
+        breadcrumb: { "@id": `${canonical}#breadcrumb` },
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${canonical}#verb-list`,
+        name: sanitizeMetadataText(content.title),
+        numberOfItems: ENGLISH_VERB_LIST_ITEMS.length,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        itemListElement: ENGLISH_VERB_LIST_ITEMS.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: sanitizeMetadataText(item.verb),
+          ...(canLinkEnglishVerbListItem(item.id)
+            ? { url: `${origin}${buildWordPath(uiLang, "english", item.verb, item.id)}` }
+            : {}),
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${canonical}#faq`,
+        mainEntity: content.faq.map((item) => ({
+          "@type": "Question",
+          name: sanitizeMetadataText(item.question),
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: sanitizeMetadataText(item.answer),
+          },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${canonical}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: sanitizeMetadataText(content.title),
+            item: canonical,
+          },
+        ],
+      },
+    ],
+  });
+
+  return {
+    title,
+    description,
+    canonical,
+    alternates: [
+      ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
+        hreflang: lang,
+        href: `${origin}${getEnglishVerbListPath(lang)}`,
+      })),
+      {
+        hreflang: "x-default",
+        href: `${origin}${getAllEnglishVerbListPaths()[0]}`,
+      },
+    ],
+    jsonLd,
   };
 }
 

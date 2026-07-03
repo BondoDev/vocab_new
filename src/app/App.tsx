@@ -21,6 +21,7 @@ import { ScrollToTopButton } from "./components/ScrollToTopButton";
 import { UserProfileDashboardPage } from "./components/user-profile/UserProfileDashboardPage";
 import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
+import { EnglishVerbListSeoPage } from "./components/EnglishVerbListSeoPage";
 import { SeoHubPage } from "./components/SeoHubPage";
 import { WordSeoPage } from "./components/WordSeoPage";
 import { DevSeoCefrPlaceholderPage } from "./components/DevSeoCefrPlaceholderPage";
@@ -60,6 +61,11 @@ import {
   getLevelTestSeoPath,
   resolveLevelTestSeoRoute,
 } from "../data/levelTests";
+import {
+  getEnglishVerbListContent,
+  getEnglishVerbListPath,
+  resolveEnglishVerbListRoute,
+} from "../data/englishVerbList";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPageData";
 import {
@@ -217,16 +223,21 @@ interface ParsedLevelTestSeoRoute {
   targetLanguage: TargetLanguageSlug;
 }
 
+interface ParsedEnglishVerbListSeoRoute {
+  uiLang: UiLanguageCode;
+}
+
 interface ParsedPracticeRoute {
   yourLanguage: UILanguage;
   practiceLanguage: UILanguage;
 }
 
 interface ExploreTopic {
-  level: CefrLevelCode | "test";
+  id: string;
+  level: CefrLevelCode | "test" | "verbs";
   label: string;
   path: string;
-  kind: "level" | "test";
+  kind: "level" | "test" | "custom";
   targetLanguage: TargetLanguageSlug;
 }
 
@@ -273,6 +284,11 @@ function parseLevelTestSeoRoute(path: string): ParsedLevelTestSeoRoute | null {
   return resolveLevelTestSeoRoute(path);
 }
 
+function parseEnglishVerbListSeoRoute(path: string): ParsedEnglishVerbListSeoRoute | null {
+  const uiLang = resolveEnglishVerbListRoute(path);
+  return uiLang ? { uiLang } : null;
+}
+
 function parseSeoHubRoute(path: string): UiLanguageCode | null {
   return resolveSeoHubRoute(path);
 }
@@ -307,6 +323,7 @@ type PageKey =
   | RouteKey
   | "vocabularyLevel"
   | "levelTestSeo"
+  | "englishVerbListSeo"
   | "seoHub"
   | "wordPage"
   | "devSeoCefrPlaceholder"
@@ -375,6 +392,9 @@ const pageFromPath = (path: string): PageKey => {
       }
       if (parseLevelTestSeoRoute(path)) {
         return "levelTestSeo";
+      }
+      if (parseEnglishVerbListSeoRoute(path)) {
+        return "englishVerbListSeo";
       }
       if (parseAnyWordRoute(path)) {
         return "wordPage";
@@ -507,6 +527,7 @@ function AppContent({
     targetLanguage: TargetLanguageSlug,
   ): ExploreTopic[] => [
     ...topics.map((topic) => ({
+      id: topic.level,
       level: topic.level,
       label: topic.label,
       path: topic.path ?? "#",
@@ -514,6 +535,7 @@ function AppContent({
       targetLanguage,
     })),
     {
+      id: "test",
       level: "test",
       label: buildExploreLevelTestLabel(targetLanguage),
       path: getLevelTestSeoPath(uiLanguage, targetLanguage) ?? ROUTES.exam,
@@ -991,8 +1013,18 @@ function AppContent({
       .filter((topic) => Boolean(topic.path));
   }, [uiLanguage]);
   const englishExploreItems = useMemo(
-    () => withLevelTestExploreTopic(englishExploreTopics, "english"),
-    [englishExploreTopics],
+    () => [
+      ...withLevelTestExploreTopic(englishExploreTopics, "english"),
+      {
+        id: "verbs",
+        level: "verbs" as const,
+        label: getEnglishVerbListContent(uiLanguage).title,
+        path: getEnglishVerbListPath(uiLanguage),
+        kind: "custom" as const,
+        targetLanguage: "english" as const,
+      },
+    ],
+    [englishExploreTopics, uiLanguage],
   );
   const spanishExploreItems = useMemo(
     () => withLevelTestExploreTopic(spanishExploreTopics, "spanish"),
@@ -1069,6 +1101,10 @@ function AppContent({
     () => parseLevelTestSeoRoute(location.pathname),
     [location.pathname],
   );
+  const englishVerbListSeoRoute = useMemo(
+    () => parseEnglishVerbListSeoRoute(location.pathname),
+    [location.pathname],
+  );
   const seoHubRoute = useMemo(
     () => parseSeoHubRoute(location.pathname),
     [location.pathname],
@@ -1139,6 +1175,7 @@ function AppContent({
       case "wordPage":
       case "vocabularyLevel":
       case "levelTestSeo":
+      case "englishVerbListSeo":
       case "seoHub":
       case "devSeoCefrPlaceholder":
         return null;
@@ -1460,6 +1497,16 @@ function AppContent({
       setUILanguage(levelTestSeoRoute.uiLang);
     }
   }, [levelTestSeoRoute, resolvedPage, setUILanguage, uiLanguage]);
+
+  useEffect(() => {
+    if (resolvedPage !== "englishVerbListSeo" || !englishVerbListSeoRoute) {
+      return;
+    }
+
+    if (uiLanguage !== englishVerbListSeoRoute.uiLang) {
+      setUILanguage(englishVerbListSeoRoute.uiLang);
+    }
+  }, [englishVerbListSeoRoute, resolvedPage, setUILanguage, uiLanguage]);
 
   useEffect(() => {
     if (resolvedPage !== "seoHub" || !seoHubRoute) {
@@ -1798,7 +1845,7 @@ function AppContent({
       if (topic.path !== ROUTES.exam) {
         return (
           <Link
-            key={`${topic.targetLanguage}-${topic.level}`}
+            key={`${topic.targetLanguage}-${topic.id}`}
             to={topic.path}
             onClick={closeAllExploreDropdowns}
             className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
@@ -1810,7 +1857,7 @@ function AppContent({
 
       return (
         <button
-          key={`${topic.targetLanguage}-${topic.level}`}
+          key={`${topic.targetLanguage}-${topic.id}`}
           type="button"
           onClick={() => {
             closeAllExploreDropdowns();
@@ -1833,7 +1880,7 @@ function AppContent({
 
     return (
       <Link
-        key={`${topic.targetLanguage}-${topic.level}`}
+        key={`${topic.targetLanguage}-${topic.id}`}
         to={topic.path}
         onClick={closeAllExploreDropdowns}
         className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
@@ -2530,6 +2577,31 @@ function AppContent({
           />
         </Suspense>
         {levelTestLanguageModal}
+        {accountOnboardingDialog}
+      </div>
+    );
+  }
+
+  if (resolvedPage === "englishVerbListSeo") {
+    if (!englishVerbListSeoRoute) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header {...sharedHeaderProps} activePage="notFound" />
+          <NotFoundPage message="Invalid English verbs page." />
+          {accountOnboardingDialog}
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <EnglishVerbListSeoPage
+            uiLang={englishVerbListSeoRoute.uiLang}
+            onStartPractice={handleStartVocabularyPractice}
+          />
+        </Suspense>
         {accountOnboardingDialog}
       </div>
     );

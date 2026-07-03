@@ -18,6 +18,7 @@ function compileTestModules() {
   const rootNames = [
     path.join(rootDir, "src", "data", "seo", "wordSlugs.ts"),
     path.join(rootDir, "src", "data", "seo", "wordPageData.ts"),
+    path.join(rootDir, "src", "data", "englishVerbList", "routes.ts"),
     path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
 
@@ -62,6 +63,7 @@ compileTestModules();
 
 const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
 const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPageData.js"));
+const englishVerbListRoutes = require(path.join(tempDir, "src", "data", "englishVerbList", "routes.js"));
 const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
 function readJson(relativePath) {
@@ -72,6 +74,8 @@ function readJson(relativePath) {
 
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
+const englishVerbList = readJson("src/data/lists/list_of_100_most_used_verb.json");
+const unresolvedEnglishVerbListIds = new Set(["A1-00008", "A1-00021"]);
 
 const aboutMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "about");
 const answerMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "answer");
@@ -130,6 +134,48 @@ const mismatchRecord = wordPageData.findCanonicalWordRecord(
   "A1-00001",
 );
 assert.equal(mismatchRecord?.slugMatches, false);
+
+assert.equal(englishVerbList.length, 100, "English verb list should contain 100 rows");
+assert.equal(
+  new Set(englishVerbList.map((item) => item.id)).size,
+  100,
+  "English verb list IDs should be unique",
+);
+assert.equal(
+  englishVerbListRoutes.getAllEnglishVerbListPaths().length,
+  7,
+  "English verb list should expose 7 localized routes",
+);
+assert.equal(
+  englishVerbListRoutes.resolveEnglishVerbListRoute("/en/100-most-common-english-verbs"),
+  "en",
+);
+assert.equal(
+  englishVerbListRoutes.resolveEnglishVerbListRoute("/ru/100-samykh-chastykh-angliiskikh-glagolov"),
+  "ru",
+);
+assert.ok(
+  englishVerbListRoutes.getEnglishVerbListContent("de").title.length > 0,
+  "German localized verb-list title should exist",
+);
+
+const missingEnglishVerbEntries = [];
+for (const item of englishVerbList) {
+  assert.match(item.id, /^(A1|A2|B1|B2|C1|C2)-\d{5}$/, `Invalid CEFR ID: ${item.id}`);
+  const matchingEntry = englishVocabulary.find((entry) => entry.concept_id === item.id);
+  if (!matchingEntry) {
+    missingEnglishVerbEntries.push(item.id);
+  }
+  assert.equal(
+    wordSlugs.buildWordPath("en", "english", item.verb, item.id),
+    `/en/english-word-${wordSlugs.wordToSlug(item.verb)}--${item.id}`,
+  );
+}
+assert.deepEqual(
+  missingEnglishVerbEntries.sort(),
+  Array.from(unresolvedEnglishVerbListIds).sort(),
+  "Unexpected unresolved English verb list IDs",
+);
 
 const canonicalWordPageData = wordPageData.buildResolvedWordPageData({
   uiLang: "en",
@@ -251,7 +297,15 @@ const wordSeoPageSource = fs.readFileSync(
   path.join(rootDir, "src", "app", "components", "WordSeoPage.tsx"),
   "utf8",
 );
+const englishVerbListPageSource = fs.readFileSync(
+  path.join(rootDir, "src", "app", "components", "EnglishVerbListSeoPage.tsx"),
+  "utf8",
+);
 const metadataSource = fs.readFileSync(path.join(rootDir, "src", "seo", "metadata.ts"), "utf8");
+const coreSitemapXml = fs.readFileSync(
+  path.join(rootDir, "public", "sitemaps", "sitemap-core.xml"),
+  "utf8",
+);
 
 assert.ok(
   /href:\s*`\$\{origin\}\$\{buildWordPath\(lang,\s*targetLanguage,\s*wordLemma,\s*conceptId\)\}`/m.test(
@@ -276,6 +330,28 @@ assert.ok(
     wordSeoPageSource,
   ),
   "browse word links should use canonical concept IDs",
+);
+assert.ok(
+  /ENGLISH_VERB_LIST_ITEMS\.map/m.test(englishVerbListPageSource),
+  "English verb list page should render rows from the imported JSON list",
+);
+assert.ok(
+  /buildWordPath\(\s*uiLang,\s*TARGET_LANGUAGE,\s*item\.verb,\s*item\.id\s*\)/m.test(
+    englishVerbListPageSource,
+  ),
+  "English verb list page should link rows with the shared word-path helper",
+);
+assert.ok(
+  metadataSource.includes("buildEnglishVerbListSeoMetadata"),
+  "metadata builder for the English verb list should exist",
+);
+assert.ok(
+  coreSitemapXml.includes("/en/100-most-common-english-verbs"),
+  "core sitemap should include the English verb list route",
+);
+assert.ok(
+  coreSitemapXml.includes("/ru/100-samykh-chastykh-angliiskikh-glagolov"),
+  "core sitemap should include localized English verb list routes",
 );
 
 console.log("word SEO route tests passed");
