@@ -27,6 +27,7 @@ export interface ResolvedWordPageData {
 export interface HydrationWordPageData extends ResolvedWordPageData {
   browseWordsTotalCount?: number;
   browseWordsPartial?: boolean;
+  browsePage?: number;
 }
 
 export interface CanonicalWordRecordMatch {
@@ -210,18 +211,25 @@ export function buildResolvedWordPageData({
 
 export function buildHydrationWordPageData(
   data: ResolvedWordPageData | null,
+  browsePage = 1,
 ): HydrationWordPageData | null {
   if (!data) {
     return null;
   }
 
   const totalCount = data.browseWords.length;
-  const initialBrowseWords = data.browseWords.slice(0, WORD_PAGE_BROWSE_WORDS_PER_PAGE);
+  const safeBrowsePage = Number.isFinite(browsePage) && browsePage > 0 ? Math.floor(browsePage) : 1;
+  const startIndex = (safeBrowsePage - 1) * WORD_PAGE_BROWSE_WORDS_PER_PAGE;
+  const initialBrowseWords = data.browseWords.slice(
+    startIndex,
+    startIndex + WORD_PAGE_BROWSE_WORDS_PER_PAGE,
+  );
 
   return {
     ...data,
     browseWords: initialBrowseWords,
     browseWordsTotalCount: totalCount,
     browseWordsPartial: totalCount > initialBrowseWords.length,
+    browsePage: safeBrowsePage,
   };
 }

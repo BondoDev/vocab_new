@@ -20,26 +20,30 @@ import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
 import {
-  buildWordPathFromSlug,
+  buildWordBrowsePagePathFromSlug,
   parseWordRoute,
-  resolveWordRoute,
-  type WordRouteMatch,
+  resolveWordPageRoute,
+  type CanonicalWordPageRouteMatch,
 } from "./data/seo/wordSlugs";
 import type { SeoMetadata } from "./seo/SeoContext";
 import {
   buildHydrationWordPageData,
   buildResolvedWordPageData,
   getUiVocabularyLanguage,
+  WORD_PAGE_BROWSE_WORDS_PER_PAGE,
   type ResolvedWordPageData,
   type WordPageVocabEntry,
 } from "./data/seo/wordPageData";
 import { getLevelBrowsePreviewData, type LevelBrowsePreviewData } from "./data/seo/levelBrowseWords";
+import { getAllWordSeoHubPaths } from "./data/seo/wordHubData";
+import { resolveWordSeoHubRoute } from "./data/seo/wordHubRoutes";
 
 export type WordSeoRequestResolution =
   | {
       kind: "canonical";
       pathname: string;
       initialWordPageData: ResolvedWordPageData;
+      wordRoute: CanonicalWordPageRouteMatch;
     }
   | {
       kind: "redirect";
@@ -124,6 +128,11 @@ function getInitialWordPageData(url: string): ResolvedWordPageData | null {
   return resolution.initialWordPageData;
 }
 
+function getInitialWordBrowsePage(url: string): number {
+  const resolution = resolveWordSeoRequest(url);
+  return resolution.kind === "canonical" ? resolution.wordRoute.browsePage : 1;
+}
+
 function getInitialBrowsePreviewData(url: string): LevelBrowsePreviewData | null {
   const match = url.match(/^\/([a-z]{2})\/([^/?#]+)$/);
   if (!match) {
@@ -172,6 +181,7 @@ export function getPrerenderRoutes(): string[] {
     ...practiceRoutes,
     ...getAllLocalizedVocabularyRoutes().map((route) => route.path),
     ...getAllSeoHubPaths(),
+    ...getAllWordSeoHubPaths(),
     ...getAllLevelTestSeoPaths(),
     ...getAllEnglishVerbListPaths(),
   ])];
@@ -179,7 +189,7 @@ export function getPrerenderRoutes(): string[] {
 
 export function resolveWordSeoRequest(url: string): WordSeoRequestResolution {
   const pathname = url.split(/[?#]/, 1)[0] || "/";
-  const match = pathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+  const match = pathname.match(/^\/([a-z]{2})\/([^/?#]+)(?:\/browse\/page\/(\d+))?$/);
   if (!match) {
     return {
       kind: "not-found",
@@ -188,12 +198,21 @@ export function resolveWordSeoRequest(url: string): WordSeoRequestResolution {
     };
   }
 
-  const [, uiLangRaw, slug] = match;
+  const [, uiLangRaw, slug, browsePageRaw] = match;
   if (!slug.includes("-word-")) {
     return {
       kind: "not-found",
       pathname,
       reason: "not-word-route",
+    };
+  }
+
+  const browsePage = browsePageRaw ? Number.parseInt(browsePageRaw, 10) : 1;
+  if (!Number.isFinite(browsePage) || browsePage < 1) {
+    return {
+      kind: "not-found",
+      pathname,
+      reason: "invalid-route",
     };
   }
 
@@ -210,11 +229,12 @@ export function resolveWordSeoRequest(url: string): WordSeoRequestResolution {
     return {
       kind: "redirect",
       pathname,
-      location: buildWordPathFromSlug(
+      location: buildWordBrowsePagePathFromSlug(
         parsedWordRoute.uiLang,
         parsedWordRoute.targetLanguage,
         parsedWordRoute.wordSlug,
         parsedWordRoute.conceptId,
+        browsePage,
       ),
     };
   }
@@ -251,10 +271,26 @@ export function resolveWordSeoRequest(url: string): WordSeoRequestResolution {
     };
   }
 
+  const totalBrowsePages = Math.max(
+    1,
+    Math.ceil(initialWordPageData.browseWords.length / WORD_PAGE_BROWSE_WORDS_PER_PAGE),
+  );
+  if (browsePage > totalBrowsePages) {
+    return {
+      kind: "not-found",
+      pathname,
+      reason: "missing-record",
+    };
+  }
+
   return {
     kind: "canonical",
     pathname,
     initialWordPageData,
+    wordRoute: {
+      ...parsedWordRoute,
+      browsePage,
+    },
   };
 }
 
@@ -274,17 +310,23 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
     return seoHubRoute;
   }
 
+  const wordSeoHubRoute = resolveWordSeoHubRoute(url);
+  if (wordSeoHubRoute) {
+    return wordSeoHubRoute.uiLang;
+  }
+
+  const wordPageRoute = resolveWordPageRoute(url);
+  if (wordPageRoute) {
+    return wordPageRoute.uiLang;
+  }
+
   const match = url.match(/^\/([a-z]{2})\/([^/?#]+)$/);
   if (!match) {
     return "en";
   }
 
   const [, uiLang, slug] = match;
-  return (
-    resolveVocabularyRoute(uiLang, slug)?.uiLang ??
-    resolveWordRoute(uiLang, slug)?.uiLang ??
-    "en"
-  );
+  return resolveVocabularyRoute(uiLang, slug)?.uiLang ?? "en";
 }
 
 export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
@@ -294,24 +336,21 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const shouldUseWordNotFoundMetadata =
     wordSeoResolution.kind === "not-found" &&
     (pathname.startsWith("/api/word-ssr") ||
-      (/^\/[a-z]{2}\/[^/?#]+$/.test(pathname) && pathname.includes("-word-")));
+      (/^\/[a-z]{2}\/[^/?#]+(?:\/browse\/page\/\d+)?$/.test(pathname) &&
+        pathname.includes("-word-")));
   const initialUILanguage = getInitialUiLanguage(url);
   const initialInterfaceData = loadInterfaceDataSync(initialUILanguage);
   const initialWordPageData =
     wordSeoResolution.kind === "canonical" ? wordSeoResolution.initialWordPageData : null;
+  const initialWordBrowsePage = getInitialWordBrowsePage(url);
   const initialBrowsePreviewData = getInitialBrowsePreviewData(url);
   const ssrWordRouteMatch = (() => {
-    const routeMatch = pathname.match(/^\/([a-z]{2})\/([^/?#]+)$/);
-    if (!routeMatch) {
-      return null;
-    }
-
-    return resolveWordRoute(routeMatch[1], routeMatch[2]);
+    return resolveWordPageRoute(pathname);
   })();
   const ssrRouteOverride:
     | {
         page: "wordPage" | "notFound";
-        wordRoute?: WordRouteMatch | null;
+        wordRoute?: CanonicalWordPageRouteMatch | null;
       }
     | undefined =
     wordSeoResolution.kind === "canonical" && ssrWordRouteMatch
@@ -359,7 +398,10 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
     );
     setTimeout(abort, 30_000);
   });
-  const hydrationWordPageData = buildHydrationWordPageData(initialWordPageData);
+  const hydrationWordPageData = buildHydrationWordPageData(
+    initialWordPageData,
+    initialWordBrowsePage,
+  );
   const routeDataScript = initialWordPageData
     ? `\n    <script>window.__WORD_PAGE_DATA__=${escapeJsonForHtml({ pathname: url, data: hydrationWordPageData })}</script>`
     : "";
