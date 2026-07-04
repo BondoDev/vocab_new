@@ -108,6 +108,10 @@
       "dest": "/api/word-ssr"
     },
     {
+      "src": "^/(en|es|fr|de|it|pt|ru)/((?:english|spanish|french|german|italian|portuguese|russian)-word-[^/]+)/browse/page/(\\d+)$",
+      "dest": "/api/word-ssr-internal?pathname=/$1/$2/browse/page/$3"
+    },
+    {
       "src": "^/(en|es|fr|de|it|pt|ru)/((?:english|spanish|french|german|italian|portuguese|russian)-word-[^/]+)$",
       "dest": "/api/word-ssr-internal?pathname=/$1/$2"
     },
