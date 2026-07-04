@@ -146,6 +146,8 @@ function sanitizeWordPageTranslations(copy: WordPageT): WordPageT {
     levelLabel: sanitizeCopy(copy.levelLabel),
     categoryLabel: sanitizeCopy(copy.categoryLabel),
     relatedWordsHeading: sanitizeCopy(copy.relatedWordsHeading),
+    discoveryWordsHeading: (level, targetLang) =>
+      sanitizeCopy(copy.discoveryWordsHeading(level, targetLang)),
     otherMeaningsHeading: sanitizeCopy(copy.otherMeaningsHeading),
     openWordPageCta: sanitizeCopy(copy.openWordPageCta),
     pronounceLabel: sanitizeCopy(copy.pronounceLabel),
@@ -228,6 +230,7 @@ interface WordPageT {
   levelLabel: string;
   categoryLabel: string;
   relatedWordsHeading: string;
+  discoveryWordsHeading: (level: string, targetLang: string) => string;
   otherMeaningsHeading: string;
   openWordPageCta: string;
   pronounceLabel: string;
@@ -256,6 +259,7 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "CEFR level",
     categoryLabel: "Category",
     relatedWordsHeading: "Related Words",
+    discoveryWordsHeading: (level, lang) => `Explore More ${level} ${lang} Word Pages`,
     otherMeaningsHeading: "Other Meanings of This Word",
     openWordPageCta: "Open Word Page",
     pronounceLabel: "Hear pronunciation",
@@ -284,6 +288,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Nivel MCER",
     categoryLabel: "Categoría",
     relatedWordsHeading: "Palabras relacionadas",
+    discoveryWordsHeading: (level, lang) =>
+      `Explora más páginas de palabras ${lang} de nivel ${level}`,
     otherMeaningsHeading: "Otros significados de esta palabra",
     openWordPageCta: "Abrir página de la palabra",
     pronounceLabel: "Escuchar pronunciación",
@@ -312,6 +318,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Niveau CECR",
     categoryLabel: "Catégorie",
     relatedWordsHeading: "Mots associés",
+    discoveryWordsHeading: (level, lang) =>
+      `Explorer plus de pages de mots ${lang} de niveau ${level}`,
     otherMeaningsHeading: "Autres significations de ce mot",
     openWordPageCta: "Ouvrir la page du mot",
     pronounceLabel: "Écouter la prononciation",
@@ -341,6 +349,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "GER-Niveau",
     categoryLabel: "Kategorie",
     relatedWordsHeading: "Verwandte Wörter",
+    discoveryWordsHeading: (level, lang) =>
+      `Mehr ${level}-Wortseiten auf ${lang} entdecken`,
     otherMeaningsHeading: "Andere Bedeutungen dieses Wortes",
     openWordPageCta: "Wortseite öffnen",
     pronounceLabel: "Aussprache anhören",
@@ -370,6 +380,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Livello QCER",
     categoryLabel: "Categoria",
     relatedWordsHeading: "Parole correlate",
+    discoveryWordsHeading: (level, lang) =>
+      `Scopri più pagine di parole ${lang} di livello ${level}`,
     otherMeaningsHeading: "Altri significati di questa parola",
     openWordPageCta: "Apri la pagina della parola",
     pronounceLabel: "Ascolta la pronuncia",
@@ -398,6 +410,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Nível QECR",
     categoryLabel: "Categoria",
     relatedWordsHeading: "Palavras relacionadas",
+    discoveryWordsHeading: (level, lang) =>
+      `Explore mais páginas de palavras ${lang} de nível ${level}`,
     otherMeaningsHeading: "Outros significados desta palavra",
     openWordPageCta: "Abrir página da palavra",
     pronounceLabel: "Ouvir pronúncia",
@@ -426,6 +440,8 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelLabel: "Уровень CEFR",
     categoryLabel: "Категория",
     relatedWordsHeading: "Связанные слова",
+    discoveryWordsHeading: (level, lang) =>
+      `Изучайте больше страниц ${lang} слов уровня ${level}`,
     otherMeaningsHeading: "Другие значения этого слова",
     openWordPageCta: "Открыть страницу слова",
     pronounceLabel: "Услышать произношение",
@@ -512,6 +528,9 @@ export function WordSeoPage({
   const [relatedWords, setRelatedWords] = useState<VocabEntry[]>(
     hydratedData?.relatedWords ?? [],
   );
+  const [discoveryWords, setDiscoveryWords] = useState<VocabEntry[]>(
+    hydratedData?.discoveryWords ?? [],
+  );
   const [browseWords, setBrowseWords] = useState<VocabEntry[]>(
     hydratedData?.browseWords ?? [],
   );
@@ -558,6 +577,7 @@ export function WordSeoPage({
       setDisplayWordType("");
       setDisplayCategory("");
       setRelatedWords([]);
+      setDiscoveryWords([]);
       setBrowseWords([]);
       setBrowseWordsTotalCount(0);
       setOtherMeanings([]);
@@ -606,11 +626,13 @@ export function WordSeoPage({
       setDisplayCategory(resolved.displayCategory);
       setOtherMeanings(resolved.otherMeanings);
       setRelatedWords(resolved.relatedWords);
+      setDiscoveryWords(resolved.discoveryWords);
       setBrowseWords(resolved.browseWords);
       setBrowseWordsTotalCount(resolved.browseWords.length);
       setIsBrowseLoading(false);
     }).catch(() => {
       if (cancelled) return;
+      setDiscoveryWords([]);
       setBrowseWords([]);
       setBrowseWordsTotalCount(0);
       setIsBrowseLoading(false);
@@ -721,6 +743,7 @@ export function WordSeoPage({
   const typeQuestion = t.grammarQuestion(word);
   const categoryQuestion = t.topicQuestion(word);
   const browseHeading = t.browseMoreHeading(level, targetLangName);
+  const discoveryHeading = t.discoveryWordsHeading(level, targetLangName);
   const normalizedBrowseSearch = browseSearch.trim().toLowerCase();
   const filteredBrowseWords = normalizedBrowseSearch
     ? browseWords.filter((browseWord) =>
@@ -974,6 +997,30 @@ export function WordSeoPage({
                   className="rounded-lg border border-border px-3 py-1.5 text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                 >
                   {relWord.word_lemma}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {discoveryWords.length > 0 && (
+          <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
+            <h2 className="text-base font-semibold text-foreground">
+              {discoveryHeading}
+            </h2>
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+              {discoveryWords.map((discoveryWord) => (
+                <Link
+                  key={discoveryWord.concept_id}
+                  to={buildWordPath(
+                    uiLang,
+                    targetLanguage,
+                    discoveryWord.word_lemma,
+                    discoveryWord.concept_id,
+                  )}
+                  className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                >
+                  {discoveryWord.word_lemma}
                 </Link>
               ))}
             </div>

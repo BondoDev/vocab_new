@@ -20,6 +20,7 @@ export interface ResolvedWordPageData {
   displayWordType: string;
   displayCategory: string;
   relatedWords: WordPageVocabEntry[];
+  discoveryWords: WordPageVocabEntry[];
   browseWords: WordPageVocabEntry[];
   otherMeanings: WordPageVocabEntry[];
 }
@@ -36,6 +37,7 @@ export interface CanonicalWordRecordMatch {
 }
 
 export const WORD_PAGE_BROWSE_WORDS_PER_PAGE = 54;
+export const WORD_PAGE_DISCOVERY_LINK_COUNT = 12;
 
 interface ResolveWordPageDataParams {
   uiLang: UiLanguageCode;
@@ -85,9 +87,55 @@ function createEmptyResolvedWordPageData(): ResolvedWordPageData {
     displayWordType: "",
     displayCategory: "",
     relatedWords: [],
+    discoveryWords: [],
     browseWords: [],
     otherMeanings: [],
   };
+}
+
+function gcd(a: number, b: number): number {
+  let x = Math.abs(a);
+  let y = Math.abs(b);
+  while (y !== 0) {
+    const next = x % y;
+    x = y;
+    y = next;
+  }
+  return x || 1;
+}
+
+function hashString(value: string): number {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+function buildDiscoveryWords(
+  entry: WordPageVocabEntry,
+  browseWords: WordPageVocabEntry[],
+): WordPageVocabEntry[] {
+  const candidates = browseWords.filter((word) => word.concept_id !== entry.concept_id);
+  if (candidates.length <= WORD_PAGE_DISCOVERY_LINK_COUNT) {
+    return candidates;
+  }
+
+  const seed = hashString(entry.concept_id);
+  const startIndex = seed % candidates.length;
+  let step = (seed % Math.max(candidates.length - 1, 1)) + 1;
+  while (gcd(step, candidates.length) !== 1) {
+    step += 1;
+  }
+
+  const selected: WordPageVocabEntry[] = [];
+  let index = startIndex;
+  while (selected.length < WORD_PAGE_DISCOVERY_LINK_COUNT) {
+    selected.push(candidates[index]);
+    index = (index + step) % candidates.length;
+  }
+
+  return selected;
 }
 
 export function findWordEntriesBySlug(
@@ -196,6 +244,7 @@ export function buildResolvedWordPageData({
       browseWords.push(sanitizeWordPageEntry(word));
     }
   }
+  const discoveryWords = buildDiscoveryWords(entry, browseWords);
 
   return {
     wordEntry: entry,
@@ -204,6 +253,7 @@ export function buildResolvedWordPageData({
     displayWordType,
     displayCategory,
     relatedWords,
+    discoveryWords,
     browseWords,
     otherMeanings,
   };

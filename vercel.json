@@ -104,6 +104,10 @@
   },
   "rewrites": [
     {
+      "source": "/:uiLanguage/:slug/browse/page/:page(\\d+)",
+      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:slug/browse/page/:page"
+    },
+    {
       "source": "/:uiLanguage/:slug",
       "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:slug"
     }
