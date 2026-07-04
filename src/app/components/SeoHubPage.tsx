@@ -8,8 +8,8 @@ import {
   type UiLanguageCode,
 } from "../../data/seo/slugs";
 import { getLevelTestSeoPath } from "../../data/levelTests";
-import { getSeoHubPath } from "../../data/seo/hub";
 import { getEnglishVerbListContent, getEnglishVerbListPath } from "../../data/englishVerbList";
+import { getWordSeoHubSummaryPath } from "../../data/seo/wordHubRoutes";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import { buildSeoHubMetadata } from "../../seo/metadata";
 import { useLanguage, type UILanguage } from "../../contexts/LanguageContext";
@@ -34,6 +34,9 @@ const SEO_HUB_COPY: Record<
     title: string;
     intro: string;
     levelsHeading: string;
+    wordPagesHeading: string;
+    wordPagesIntro: string;
+    wordPagesLinkLabel: string;
     levelTestsHeading: string;
     vocabularyLinkLabel: (languageName: string, level: string, practiceLabel: string) => string;
     levelTestLabel: (languageName: string, levelTestLabel: string) => string;
@@ -43,16 +46,24 @@ const SEO_HUB_COPY: Record<
     title: "SEO Pages",
     intro: "Browse all vocabulary practice pages and available level tests in one place.",
     levelsHeading: "Vocabulary practice pages",
+    wordPagesHeading: "Word SEO page indexes",
+    wordPagesIntro:
+      "Open the English word index hub to browse all canonical word SEO URLs through smaller paginated pages.",
+    wordPagesLinkLabel: "English word SEO pages",
     levelTestsHeading: "Level test pages",
     vocabularyLinkLabel: (languageName, level, practiceLabel) =>
       `${languageName} ${level} ${practiceLabel}`,
     levelTestLabel: (languageName, levelTestLabel) => `${languageName} ${levelTestLabel}`,
   },
   es: {
-    title: "Páginas SEO",
-    intro: "Consulta todas las páginas de práctica de vocabulario y los tests de nivel disponibles en un solo lugar.",
-    levelsHeading: "Páginas de práctica de vocabulario",
-    levelTestsHeading: "Páginas de test de nivel",
+    title: "Paginas SEO",
+    intro: "Consulta todas las paginas de practica de vocabulario y los tests de nivel disponibles en un solo lugar.",
+    levelsHeading: "Paginas de practica de vocabulario",
+    wordPagesHeading: "Indices de palabras SEO",
+    wordPagesIntro:
+      "Abre el hub de palabras en ingles para ver todas las URLs canonicas en paginas mas pequenas y paginadas.",
+    wordPagesLinkLabel: "Paginas SEO de palabras en ingles",
+    levelTestsHeading: "Paginas de test de nivel",
     vocabularyLinkLabel: (languageName, level, practiceLabel) =>
       `${practiceLabel} de ${languageName.toLowerCase()} ${level}`,
     levelTestLabel: (languageName, levelTestLabel) =>
@@ -60,8 +71,12 @@ const SEO_HUB_COPY: Record<
   },
   fr: {
     title: "Pages SEO",
-    intro: "Consultez toutes les pages de pratique du vocabulaire et les tests de niveau disponibles au même endroit.",
+    intro: "Consultez toutes les pages de pratique du vocabulaire et les tests de niveau disponibles au meme endroit.",
     levelsHeading: "Pages de pratique du vocabulaire",
+    wordPagesHeading: "Index de pages SEO de mots",
+    wordPagesIntro:
+      "Ouvrez le hub des mots anglais pour parcourir toutes les URL canoniques sur des pages plus petites et paginees.",
+    wordPagesLinkLabel: "Pages SEO des mots anglais",
     levelTestsHeading: "Pages de test de niveau",
     vocabularyLinkLabel: (languageName, level, practiceLabel) =>
       `${practiceLabel} de ${languageName.toLowerCase()} ${level}`,
@@ -70,8 +85,12 @@ const SEO_HUB_COPY: Record<
   },
   de: {
     title: "SEO-Seiten",
-    intro: "Hier finden Sie alle Wortschatzseiten und verfügbaren Niveau-Tests an einem Ort.",
+    intro: "Hier finden Sie alle Wortschatzseiten und verfugbaren Niveau-Tests an einem Ort.",
     levelsHeading: "Wortschatzseiten",
+    wordPagesHeading: "Wort-SEO-Indizes",
+    wordPagesIntro:
+      "Offnen Sie den Index fur englische Worter, um alle kanonischen Wort-URLs uber kleinere paginierte Seiten zu durchsuchen.",
+    wordPagesLinkLabel: "SEO-Seiten fur englische Worter",
     levelTestsHeading: "Niveau-Test-Seiten",
     vocabularyLinkLabel: (languageName, level, practiceLabel) =>
       `${languageName} ${level} ${practiceLabel}`,
@@ -81,6 +100,10 @@ const SEO_HUB_COPY: Record<
     title: "Pagine SEO",
     intro: "Consulta tutte le pagine di pratica del vocabolario e i test di livello disponibili in un unico posto.",
     levelsHeading: "Pagine di pratica del vocabolario",
+    wordPagesHeading: "Indici delle parole SEO",
+    wordPagesIntro:
+      "Apri l'hub delle parole inglesi per sfogliare tutti gli URL canonici in pagine piu piccole e paginate.",
+    wordPagesLinkLabel: "Pagine SEO delle parole inglesi",
     levelTestsHeading: "Pagine del test di livello",
     vocabularyLinkLabel: (languageName, level, practiceLabel) =>
       `${practiceLabel} di ${languageName.toLowerCase()} ${level}`,
@@ -88,20 +111,28 @@ const SEO_HUB_COPY: Record<
       `${levelTestLabel} di ${languageName.toLowerCase()}`,
   },
   pt: {
-    title: "Páginas SEO",
-    intro: "Consulte todas as páginas de prática de vocabulário e os testes de nível disponíveis em um só lugar.",
-    levelsHeading: "Páginas de prática de vocabulário",
-    levelTestsHeading: "Páginas de teste de nível",
+    title: "Paginas SEO",
+    intro: "Consulte todas as paginas de pratica de vocabulario e os testes de nivel disponiveis em um so lugar.",
+    levelsHeading: "Paginas de pratica de vocabulario",
+    wordPagesHeading: "Indices de palavras SEO",
+    wordPagesIntro:
+      "Abra o hub de palavras em ingles para navegar por todas as URLs canonicas em paginas menores e paginadas.",
+    wordPagesLinkLabel: "Paginas SEO de palavras em ingles",
+    levelTestsHeading: "Paginas de teste de nivel",
     vocabularyLinkLabel: (languageName, level, practiceLabel) =>
       `${practiceLabel} de ${languageName.toLowerCase()} ${level}`,
     levelTestLabel: (languageName, levelTestLabel) =>
       `${levelTestLabel} de ${languageName.toLowerCase()}`,
   },
   ru: {
-    title: "SEO-страницы",
-    intro: "Здесь собраны все страницы для практики словарного запаса и доступные тесты уровня.",
-    levelsHeading: "Страницы практики словарного запаса",
-    levelTestsHeading: "Страницы тестов уровня",
+    title: "SEO-stranicy",
+    intro: "Zdes sobrany vse stranicy dlya praktiki slovarnogo zapasa i dostupnye testy urovnya.",
+    levelsHeading: "Stranicy praktiki slovarnogo zapasa",
+    wordPagesHeading: "Indeksy SEO-stranic slov",
+    wordPagesIntro:
+      "Otkroyte hab angliiskih slov, chtoby prosmotret vse kanonicheskie URL na nebolshih stranicah s paginaciei.",
+    wordPagesLinkLabel: "SEO-stranicy angliiskih slov",
+    levelTestsHeading: "Stranicy testov urovnya",
     vocabularyLinkLabel: (languageName, level, practiceLabel) =>
       `${practiceLabel} ${languageName.toLowerCase()} ${level}`,
     levelTestLabel: (languageName, levelTestLabel) =>
@@ -202,6 +233,21 @@ export function SeoHubPage({ uiLang }: SeoHubPageProps) {
               </section>
             ))}
           </div>
+        </section>
+
+        <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
+          <h2 className="text-2xl text-foreground">{copy.wordPagesHeading}</h2>
+          <p className="mt-3 text-sm text-muted-foreground">{copy.wordPagesIntro}</p>
+          <ul className="mt-4 list-disc space-y-2 pl-5">
+            <li>
+              <Link
+                className="text-primary transition hover:underline"
+                to={getWordSeoHubSummaryPath(contentUiLang)}
+              >
+                {copy.wordPagesLinkLabel}
+              </Link>
+            </li>
+          </ul>
         </section>
 
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">

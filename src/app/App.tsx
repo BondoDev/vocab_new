@@ -44,11 +44,12 @@ import {
 } from "../data/seo/slugs";
 import {
   parseWordRoute as parseSeoWordRoute,
-  resolveWordRoute,
-  type WordRouteMatch,
+  type CanonicalWordPageRouteMatch,
+  resolveWordPageRoute,
 } from "../data/seo/wordSlugs";
 import type { LevelBrowsePreviewData } from "../data/seo/levelBrowseWords";
 import { resolveSeoHubRoute } from "../data/seo/hub";
+import { resolveWordSeoHubRoute, type WordSeoHubRoute } from "../data/seo/wordHubRoutes";
 import {
   SEOHead,
   SeoProvider,
@@ -114,6 +115,11 @@ const About = lazy(() =>
 const Help = lazy(() =>
   import("./components/Help").then((module) => ({
     default: module.Help,
+  })),
+);
+const WordSeoHubPage = lazy(() =>
+  import("./components/WordSeoHubPage").then((module) => ({
+    default: module.WordSeoHubPage,
   })),
 );
 const supportedLanguages = [
@@ -227,6 +233,8 @@ interface ParsedEnglishVerbListSeoRoute {
   uiLang: UiLanguageCode;
 }
 
+type ParsedWordSeoHubRoute = WordSeoHubRoute;
+
 interface ParsedPracticeRoute {
   yourLanguage: UILanguage;
   practiceLanguage: UILanguage;
@@ -293,15 +301,16 @@ function parseSeoHubRoute(path: string): UiLanguageCode | null {
   return resolveSeoHubRoute(path);
 }
 
-function parseWordRoute(path: string): WordRouteMatch | null {
-  const match = path.match(/^\/([a-z]{2})\/([^/?#]+)$/);
-  if (!match) return null;
-  const [, uiLangRaw, slug] = match;
-  return resolveWordRoute(uiLangRaw, slug);
+function parseWordSeoHubRoute(path: string): ParsedWordSeoHubRoute | null {
+  return resolveWordSeoHubRoute(path);
+}
+
+function parseWordRoute(path: string): CanonicalWordPageRouteMatch | null {
+  return resolveWordPageRoute(path);
 }
 
 function parseAnyWordRoute(path: string) {
-  const match = path.match(/^\/([a-z]{2})\/([^/?#]+)$/);
+  const match = path.match(/^\/([a-z]{2})\/([^/?#]+)(?:\/browse\/page\/(\d+))?$/);
   if (!match) return null;
   const [, uiLangRaw, slug] = match;
   return parseSeoWordRoute(uiLangRaw, slug);
@@ -325,6 +334,7 @@ type PageKey =
   | "levelTestSeo"
   | "englishVerbListSeo"
   | "seoHub"
+  | "wordSeoHub"
   | "wordPage"
   | "devSeoCefrPlaceholder"
   | "notFound";
@@ -389,6 +399,9 @@ const pageFromPath = (path: string): PageKey => {
       }
       if (parseSeoHubRoute(path)) {
         return "seoHub";
+      }
+      if (parseWordSeoHubRoute(path)) {
+        return "wordSeoHub";
       }
       if (parseLevelTestSeoRoute(path)) {
         return "levelTestSeo";
@@ -487,7 +500,7 @@ function AppContent({
   initialBrowsePreviewData?: LevelBrowsePreviewData | null;
   ssrRouteOverride?: {
     page: "wordPage" | "notFound";
-    wordRoute?: WordRouteMatch | null;
+    wordRoute?: CanonicalWordPageRouteMatch | null;
   };
 }) {
   const { t, uiLanguage, setUILanguage } = useLanguage();
@@ -1109,6 +1122,10 @@ function AppContent({
     () => parseSeoHubRoute(location.pathname),
     [location.pathname],
   );
+  const wordSeoHubRoute = useMemo(
+    () => parseWordSeoHubRoute(location.pathname),
+    [location.pathname],
+  );
   const vocabularyRoute = useMemo(
     () => parseVocabularyRoute(location.pathname),
     [location.pathname],
@@ -1177,6 +1194,7 @@ function AppContent({
       case "levelTestSeo":
       case "englishVerbListSeo":
       case "seoHub":
+      case "wordSeoHub":
       case "devSeoCefrPlaceholder":
         return null;
       default:
@@ -1517,6 +1535,16 @@ function AppContent({
       setUILanguage(seoHubRoute);
     }
   }, [resolvedPage, seoHubRoute, setUILanguage, uiLanguage]);
+
+  useEffect(() => {
+    if (resolvedPage !== "wordSeoHub" || !wordSeoHubRoute) {
+      return;
+    }
+
+    if (uiLanguage !== wordSeoHubRoute.uiLang) {
+      setUILanguage(wordSeoHubRoute.uiLang);
+    }
+  }, [resolvedPage, setUILanguage, uiLanguage, wordSeoHubRoute]);
 
   useEffect(() => {
     if (resolvedPage !== "wordPage" || !wordRoute) {
@@ -2627,6 +2655,7 @@ function AppContent({
             targetLanguage={wordRoute.targetLanguage}
             wordSlug={wordRoute.wordSlug}
             conceptId={wordRoute.conceptId}
+            browsePage={wordRoute.browsePage}
             onStartPractice={handleStartVocabularyPractice}
             initialData={initialWordPageData}
           />
@@ -2695,6 +2724,28 @@ function AppContent({
         <Header {...sharedHeaderProps} activePage="explore" />
         <Suspense fallback={<RouteLoadingFallback />}>
           <SeoHubPage uiLang={seoHubRoute} />
+        </Suspense>
+        {accountOnboardingDialog}
+      </div>
+    );
+  }
+
+  if (resolvedPage === "wordSeoHub") {
+    if (!wordSeoHubRoute) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header {...sharedHeaderProps} activePage="notFound" />
+          <NotFoundPage message="Invalid word SEO page index." />
+          {accountOnboardingDialog}
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header {...sharedHeaderProps} activePage="explore" />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <WordSeoHubPage route={wordSeoHubRoute} uiLang={wordSeoHubRoute.uiLang} />
         </Suspense>
         {accountOnboardingDialog}
       </div>
@@ -3027,7 +3078,7 @@ interface AppProps {
   initialBrowsePreviewData?: LevelBrowsePreviewData | null;
   ssrRouteOverride?: {
     page: "wordPage" | "notFound";
-    wordRoute?: WordRouteMatch | null;
+    wordRoute?: CanonicalWordPageRouteMatch | null;
   };
 }
 

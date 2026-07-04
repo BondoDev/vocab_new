@@ -7,7 +7,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../data/seo/slugs";
-import { buildWordPath } from "../../data/seo/wordSlugs";
+import { buildWordBrowsePagePathFromSlug, buildWordPath } from "../../data/seo/wordSlugs";
 import {
   WORD_PAGE_BROWSE_WORDS_PER_PAGE,
   buildResolvedWordPageData,
@@ -452,6 +452,7 @@ interface WordSeoPageProps {
   targetLanguage: TargetLanguageSlug;
   wordSlug: string;
   conceptId?: string | null;
+  browsePage?: number;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
   initialData?: ResolvedWordPageData | null;
 }
@@ -474,6 +475,7 @@ export function WordSeoPage({
   targetLanguage,
   wordSlug,
   conceptId,
+  browsePage = 1,
   onStartPractice,
   initialData,
 }: WordSeoPageProps) {
@@ -519,7 +521,9 @@ export function WordSeoPage({
   const [otherMeanings, setOtherMeanings] = useState<VocabEntry[]>(
     hydratedData?.otherMeanings ?? [],
   );
-  const [browsePage, setBrowsePage] = useState(0);
+  const [browsePageIndex, setBrowsePageIndex] = useState(
+    Math.max((hydratedData?.browsePage ?? browsePage) - 1, 0),
+  );
   const [browseSearch, setBrowseSearch] = useState("");
   const [isBrowseLoading, setIsBrowseLoading] = useState(false);
   const [practiceInput, setPracticeInput] = useState("");
@@ -557,7 +561,7 @@ export function WordSeoPage({
       setBrowseWords([]);
       setBrowseWordsTotalCount(0);
       setOtherMeanings([]);
-      setBrowsePage(0);
+      setBrowsePageIndex(Math.max(browsePage - 1, 0));
       setBrowseSearch("");
       setIsBrowseLoading(true);
       setPracticeInput("");
@@ -614,7 +618,7 @@ export function WordSeoPage({
     return () => {
       cancelled = true;
     };
-  }, [conceptId, hydratedData?.browseWordsPartial, initialRouteKey, targetLanguage, uiLang, wordSlug]);
+  }, [browsePage, conceptId, hydratedData?.browseWordsPartial, initialRouteKey, targetLanguage, uiLang, wordSlug]);
 
   const seoMetadata = useMemo(() => {
     if (!conceptId || !wordEntry) {
@@ -632,8 +636,10 @@ export function WordSeoPage({
       cefrLevel: wordEntry.level,
       pathname: location.pathname,
       siteOrigin,
+      browsePage,
     });
   }, [
+    browsePage,
     conceptId,
     displayDefinition,
     displayWordType,
@@ -721,6 +727,8 @@ export function WordSeoPage({
         browseWord.word_lemma.toLowerCase().includes(normalizedBrowseSearch),
       )
     : browseWords;
+  const hasFullBrowseWordList =
+    browseWordsTotalCount === 0 || browseWords.length >= browseWordsTotalCount;
   const browseWordCountForPagination = normalizedBrowseSearch
     ? filteredBrowseWords.length
     : Math.max(browseWordsTotalCount, filteredBrowseWords.length);
@@ -728,11 +736,14 @@ export function WordSeoPage({
     1,
     Math.ceil(browseWordCountForPagination / WORDS_PER_PAGE),
   );
-  const safeBrowsePage = Math.min(browsePage, Math.max(totalBrowsePages - 1, 0));
-  const pageWords = filteredBrowseWords.slice(
-    safeBrowsePage * WORDS_PER_PAGE,
-    (safeBrowsePage + 1) * WORDS_PER_PAGE,
-  );
+  const safeBrowsePage = Math.min(browsePageIndex, Math.max(totalBrowsePages - 1, 0));
+  const pageWords =
+    normalizedBrowseSearch || hasFullBrowseWordList
+      ? filteredBrowseWords.slice(
+          safeBrowsePage * WORDS_PER_PAGE,
+          (safeBrowsePage + 1) * WORDS_PER_PAGE,
+        )
+      : filteredBrowseWords;
 
   function checkAnswer() {
     const correct = practiceInput.trim().toLowerCase() === word.toLowerCase();
@@ -987,7 +998,7 @@ export function WordSeoPage({
             value={browseSearch}
             onChange={(e) => {
               setBrowseSearch(e.target.value);
-              setBrowsePage(0);
+              setBrowsePageIndex(0);
             }}
             placeholder={`Search ${level} words...`}
             className="mt-4 w-full rounded-xl border-2 border-primary/35 bg-primary/[0.06] px-4 py-3 text-base font-medium text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/35"
@@ -1025,18 +1036,38 @@ export function WordSeoPage({
                         ...
                       </span>
                     ) : (
-                      <button
-                        key={item}
-                        type="button"
-                        onClick={() => setBrowsePage(item)}
-                        className={
-                          item === safeBrowsePage
-                            ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
-                            : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
-                        }
-                      >
-                        {item + 1}
-                      </button>
+                      normalizedBrowseSearch ? (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => setBrowsePageIndex(item)}
+                          className={
+                            item === safeBrowsePage
+                              ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
+                              : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
+                          }
+                        >
+                          {item + 1}
+                        </button>
+                      ) : (
+                        <Link
+                          key={item}
+                          to={buildWordBrowsePagePathFromSlug(
+                            uiLang,
+                            targetLanguage,
+                            wordSlug,
+                            conceptId ?? "",
+                            item + 1,
+                          )}
+                          className={
+                            item === safeBrowsePage
+                              ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
+                              : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
+                          }
+                        >
+                          {item + 1}
+                        </Link>
+                      )
                     ),
                   )}
                 </div>

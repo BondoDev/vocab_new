@@ -199,7 +199,7 @@ async function resolveStaticResponse(pathname) {
 }
 
 function isWordLikeRoute(pathname) {
-  return /^\/[a-z]{2}\/[^/]*-word-[^/]+$/i.test(pathname);
+  return /^\/[a-z]{2}\/[^/]*-word-[^/]+(?:\/browse\/page\/\d+)?$/i.test(pathname);
 }
 
 async function createVerificationServer() {

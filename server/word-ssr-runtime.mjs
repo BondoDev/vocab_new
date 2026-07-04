@@ -221,5 +221,5 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
 }
 
 export function getWordRouteRewritePattern() {
-  return "/:uiLang([a-z]{2})/:wordRoute([^/]*-word-[^/]+)";
+  return "/:uiLang([a-z]{2})/:wordRoute([^/]*-word-[^/]+)(/browse/page/:page(\\d+))?";
 }

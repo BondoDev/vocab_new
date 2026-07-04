@@ -29,6 +29,10 @@ export interface SlugOnlyWordRouteMatch extends WordRouteMatch {
   conceptId: null;
 }
 
+export interface CanonicalWordPageRouteMatch extends CanonicalWordRouteMatch {
+  browsePage: number;
+}
+
 export type ParsedWordRoute =
   | CanonicalWordRouteMatch
   | LegacyWordRouteMatch
@@ -82,6 +86,33 @@ export function buildWordPathFromSlug(
   const base = `/${uiLang}/${targetLanguage}-word-${wordSlug}`;
   if (!conceptId || !conceptId.trim()) return base;
   return `${base}--${conceptId.trim()}`;
+}
+
+export function buildWordBrowsePagePathFromSlug(
+  uiLang: UiLanguageCode,
+  targetLanguage: TargetLanguageSlug,
+  wordSlug: string,
+  conceptId: string,
+  page: number,
+): string {
+  const canonicalPath = buildWordPathFromSlug(uiLang, targetLanguage, wordSlug, conceptId);
+  return page <= 1 ? canonicalPath : `${canonicalPath}/browse/page/${page}`;
+}
+
+export function buildWordBrowsePagePath(
+  uiLang: UiLanguageCode,
+  targetLanguage: TargetLanguageSlug,
+  wordLemma: string,
+  conceptId: string,
+  page: number,
+): string {
+  return buildWordBrowsePagePathFromSlug(
+    uiLang,
+    targetLanguage,
+    wordToSlug(fixMojibake(wordLemma)),
+    conceptId,
+    page,
+  );
 }
 
 export function parseWordRoute(
@@ -157,6 +188,29 @@ export function resolveWordRoute(
 ): CanonicalWordRouteMatch | null {
   const parsedRoute = parseWordRoute(uiLangRaw, slug);
   return parsedRoute?.routeKind === "canonical" ? parsedRoute : null;
+}
+
+export function resolveWordPageRoute(path: string): CanonicalWordPageRouteMatch | null {
+  const match = path.match(/^\/([a-z]{2})\/([^/?#]+)(?:\/browse\/page\/(\d+))?$/);
+  if (!match) {
+    return null;
+  }
+
+  const [, uiLangRaw, slug, browsePageRaw] = match;
+  const resolvedRoute = resolveWordRoute(uiLangRaw, slug);
+  if (!resolvedRoute) {
+    return null;
+  }
+
+  const browsePage = browsePageRaw ? Number.parseInt(browsePageRaw, 10) : 1;
+  if (!Number.isFinite(browsePage) || browsePage < 1) {
+    return null;
+  }
+
+  return {
+    ...resolvedRoute,
+    browsePage,
+  };
 }
 
 export function getAllWordPaths(
