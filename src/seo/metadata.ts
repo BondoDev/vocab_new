@@ -710,7 +710,7 @@ const WORD_META_TITLE: Record<UiLanguageCode, (lang: string, word: string) => st
 
 const WORD_META_DESC: Record<UiLanguageCode, (lang: string, word: string) => string> = {
   en: (lang, word) =>
-    `Learn how to use "${word}" with simple examples, synonyms, CEFR level, and quick practice. Build real English vocabulary for daily speaking and writing.`,
+    `Learn how to use "${word}" with simple examples, synonyms, CEFR level, and quick practice.`,
   es: (lang, word) =>
     `Aprende el significado de la palabra ${lang} "${word}", ve oraciones de ejemplo y practica este vocabulario con ejercicios interactivos.`,
   fr: (lang, word) =>
