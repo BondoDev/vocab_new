@@ -725,6 +725,19 @@ const WORD_META_DESC: Record<UiLanguageCode, (lang: string, word: string) => str
     `Узнайте значение слова "${word}" на ${lang}, посмотрите примеры предложений и потренируйтесь с интерактивными упражнениями.`,
 };
 
+WORD_META_DESC.es = (lang, word) =>
+  `Aprende el significado de la palabra ${lang} "${word}" y ve oraciones de ejemplo.`;
+WORD_META_DESC.fr = (lang, word) =>
+  `Apprenez le sens du mot ${lang} "${word}" et découvrez des exemples de phrases.`;
+WORD_META_DESC.de = (lang, word) =>
+  `Lerne die Bedeutung des ${lang}en Wortes "${word}" und sieh Beispielsätze.`;
+WORD_META_DESC.it = (lang, word) =>
+  `Impara il significato della parola ${lang} "${word}" e vedi frasi di esempio.`;
+WORD_META_DESC.pt = (lang, word) =>
+  `Aprenda o significado da palavra ${lang} "${word}" e veja frases de exemplo.`;
+WORD_META_DESC.ru = (lang, word) =>
+  `Узнайте значение слова "${word}" на ${lang} и посмотрите примеры предложений.`;
+
 export interface WordSeoMetadataParams {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
