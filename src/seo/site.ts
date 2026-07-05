@@ -1,5 +1,7 @@
 export const DEFAULT_SITE_ORIGIN = "https://www.fluentstellar.com";
 
+export const DEFAULT_OG_IMAGE = `${DEFAULT_SITE_ORIGIN}/favicon.png`;
+
 export const DEFAULT_SEO_METADATA = {
   title: "FluentStellar - Structured Vocabulary Learning Platform",
   description:
