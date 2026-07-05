@@ -153,7 +153,8 @@ function wordToSlug(lemma) {
     .replace(/[^a-z0-9À-ɏЀ-ӿ\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "portuguese", "russian"];

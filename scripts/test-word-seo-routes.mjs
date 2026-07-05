@@ -226,6 +226,16 @@ assert.equal(
   wordSlugs.buildWordPath("en", "english", "about", "A1-00001"),
   "/en/english-word-about--A1-00001",
 );
+assert.equal(
+  wordSlugs.buildWordPath("en", "german", "Hightech-", "B1-03527"),
+  "/en/german-word-hightech--B1-03527",
+  "trailing source hyphens must be removed before the canonical concept separator is appended",
+);
+assert.equal(
+  wordSlugs.wordToSlug("Hightech-"),
+  "hightech",
+  "slug normalization should strip edge hyphens from source lemmas",
+);
 
 const russianFirstEntry = russianVocabulary[0];
 const russianCanonicalPath = wordSlugs.buildWordPath(

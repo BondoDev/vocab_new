@@ -29,7 +29,8 @@ function wordToSlug(lemma) {
     .replace(/[^a-z0-9À-ӿ\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 async function collectWordRoutesSubset(limit, offset) {
