@@ -444,21 +444,6 @@ function buildVocabularyUrl(
   return buildLocalizedVocabularyPath(uiLang, targetLanguage, level) ?? "/";
 }
 
-async function loadBrowsePreviewByPath(
-  targetLanguage: TargetLanguageSlug,
-  level: CefrLevelCode,
-) : Promise<BrowsePreviewData | null> {
-  try {
-    const response = await fetch(`/seo/level-browse-preview/${targetLanguage}-${level}.json`);
-    if (!response.ok) {
-      return null;
-    }
-    return (await response.json()) as BrowsePreviewData;
-  } catch {
-    return null;
-  }
-}
-
 export function VocabularyLevelPage({
   uiLang,
   targetLanguage,
@@ -543,36 +528,35 @@ export function VocabularyLevelPage({
   }, [initialBrowsePreview, targetLanguage, level]);
 
   useEffect(() => {
-    let cancelled = false;
-
-    void loadBrowsePreviewByPath(targetLanguage, level).then((preview) => {
-      if (cancelled) return;
-      setBrowsePreview(preview);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [level, targetLanguage]);
-
-  const activateBrowse = async () => {
-    if (browseWords.length > 0) {
-      return browseWords;
-    }
-
-    if (browseLoadPromiseRef.current) {
-      return browseLoadPromiseRef.current;
+    const activeInitialBrowsePreview =
+      initialBrowsePreview?.targetLanguage === targetLanguage &&
+      initialBrowsePreview.level === levelDisplay
+        ? initialBrowsePreview
+        : null;
+    const hasFullInitialBrowseData = Boolean(
+      activeInitialBrowsePreview &&
+      activeInitialBrowsePreview.words.length >= activeInitialBrowsePreview.totalWords,
+    );
+    if (hasFullInitialBrowseData) {
+      setBrowseWords(activeInitialBrowsePreview?.words as VocabEntry[]);
+      setIsBrowseLoading(false);
+      return;
     }
 
     const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
     const loader = vocabModules[key];
     if (!loader) {
-      return [];
+      setBrowseWords([]);
+      setIsBrowseLoading(false);
+      return;
     }
-
+    let cancelled = false;
     setIsBrowseLoading(true);
     const loadPromise = loader()
       .then((mod) => {
+        if (cancelled) {
+          return [];
+        }
         const seen = new Set<string>();
         const words: VocabEntry[] = [];
         for (const w of mod.default) {
@@ -582,16 +566,27 @@ export function VocabularyLevelPage({
           words.push(w);
         }
         setBrowseWords(words);
+        setBrowsePreview({
+          targetLanguage,
+          level: levelDisplay,
+          totalWords: words.length,
+          totalPages: Math.max(1, Math.ceil(words.length / WORDS_PER_PAGE)),
+          words,
+        });
         return words;
       })
       .finally(() => {
-        setIsBrowseLoading(false);
+        if (!cancelled) {
+          setIsBrowseLoading(false);
+        }
         browseLoadPromiseRef.current = null;
       });
 
     browseLoadPromiseRef.current = loadPromise;
-    return loadPromise;
-  };
+    return () => {
+      cancelled = true;
+    };
+  }, [initialBrowsePreview, levelDisplay, targetLanguage]);
 
   if (!contentBundle) {
     if (isContentLoading) {
@@ -697,7 +692,9 @@ export function VocabularyLevelPage({
     isValidBrowseWordLemma(word.word_lemma),
   );
   const currentBrowseWords = browseWords.length > 0 ? browseWords : previewBrowseWords;
-  const canFilterFullBrowseWords = browseWords.length > 0;
+  const canFilterFullBrowseWords =
+    browseWords.length > 0 ||
+    (activeBrowsePreview?.words.length ?? 0) >= (activeBrowsePreview?.totalWords ?? 0);
   const filteredBrowseWords =
     normalizedSearch && canFilterFullBrowseWords
       ? currentBrowseWords.filter((word) =>
@@ -855,13 +852,7 @@ export function VocabularyLevelPage({
           <input
             type="text"
             value={browseSearch}
-            onFocus={() => {
-              void activateBrowse();
-            }}
             onChange={(e) => {
-              if (browseWords.length === 0) {
-                void activateBrowse();
-              }
               setBrowseSearch(e.target.value);
               setBrowsePage(0);
             }}
@@ -907,10 +898,7 @@ export function VocabularyLevelPage({
                       <button
                         key={item}
                         type="button"
-                        onClick={async () => {
-                          if (item > 0 && browseWords.length === 0) {
-                            await activateBrowse();
-                          }
+                        onClick={() => {
                           setBrowsePage(item);
                         }}
                         disabled={isBrowseLoading && item !== safeBrowsePage}
