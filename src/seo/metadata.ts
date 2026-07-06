@@ -871,6 +871,9 @@ WORD_META_DESC.pt = (lang, word) =>
 WORD_META_DESC.ru = (lang, word) =>
   `РЈР·РЅР°Р№С‚Рµ Р·РЅР°С‡РµРЅРёРµ СЃР»РѕРІР° "${word}" РЅР° ${lang} Рё РїРѕСЃРјРѕС‚СЂРёС‚Рµ РїСЂРёРјРµСЂС‹.`;
 
+WORD_META_DESC.ru = (lang, word) =>
+  `\u0423\u0437\u043d\u0430\u0439\u0442\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u0441\u043b\u043e\u0432\u0430 "${word}" \u043d\u0430 ${lang} \u0438 \u043f\u043e\u0441\u043c\u043e\u0442\u0440\u0438\u0442\u0435 \u043f\u0440\u0438\u043c\u0435\u0440\u044b.`;
+
 export interface WordSeoMetadataParams {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
