@@ -152,11 +152,10 @@ const WORD_SITEMAP_PAIR_LIMITS = {};
 function wordToSlug(lemma) {
   if (typeof lemma !== "string") return "";
   return lemma
-    .normalize("NFKD")
+    .normalize("NFC")
     .toLowerCase()
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/['’‘`]/g, "")
-    .replace(/[^a-z0-9Ѐ-ӿ\s-]/gi, "")
+    .replace(/['’‘`]/gu, "")
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
     .trim()
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")

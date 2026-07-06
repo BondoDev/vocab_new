@@ -59,15 +59,25 @@ export function hasCrawlableWordSeoFamily(
 
 export function wordToSlug(lemma: string): string {
   return lemma
-    .normalize("NFKD")
+    .normalize("NFC")
     .toLowerCase()
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/['’‘`]/g, "")
-    .replace(/[^a-z0-9\u0400-\u04ff\s-]/gi, "")
+    .replace(/['’‘`]/gu, "")
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
     .trim()
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+// Accent-insensitive comparison only, never used to build a real URL. Lets
+// old accent-free links (generated while wordToSlug briefly stripped
+// diacritics between 2026-06-22 and this revert) still find the right word
+// instead of dead-ending on a 410.
+export function stripDiacriticsForComparison(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
 }
 
 export function buildWordPath(
@@ -152,9 +162,9 @@ export function parseWordRoute(
           return null;
         }
 
-        // Older builds preserved accents/diacritics in slugs; wordToSlug now
-        // strips them. Treat any mismatch as a stale slug format to redirect,
-        // rather than a dead link, so previously indexed URLs keep working.
+        // Catches drift like stray casing/punctuation that never round-trips
+        // through wordToSlug. Redirect to the normalized form instead of a
+        // dead link. This no longer fires for accents, which wordToSlug keeps.
         const normalizedWordSlug = wordToSlug(rawWordSlug);
         if (normalizedWordSlug.length === 0) {
           return null;

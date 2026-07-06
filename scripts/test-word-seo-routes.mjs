@@ -78,6 +78,7 @@ function readJson(relativePath) {
 
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
+const spanishVocabulary = readJson("src/data/vocabulary/spanish/vocabulary.json");
 const englishVerbList = readJson("src/data/lists/list_of_100_most_used_verb.json");
 const unresolvedEnglishVerbListIds = new Set();
 
@@ -125,6 +126,8 @@ assert.equal(
   "malformed canonical separators should be invalid",
 );
 
+// Accents are canonical (wordToSlug preserves them) - an accented URL must
+// resolve directly, with no redirect involved.
 const accentedCanonicalRoute = wordSlugs.parseWordRoute(
   "en",
   `spanish-word-${encodeURIComponent("amplificación")}--C1-00035`,
@@ -132,13 +135,27 @@ const accentedCanonicalRoute = wordSlugs.parseWordRoute(
 assert.deepEqual(
   accentedCanonicalRoute,
   {
-    routeKind: "legacy-slug-format",
+    routeKind: "canonical",
     uiLang: "en",
     targetLanguage: "spanish",
-    wordSlug: "amplificacion",
+    wordSlug: "amplificación",
     conceptId: "C1-00035",
   },
-  "stale accented slugs must redirect to the normalized canonical slug, not 410",
+  "accented slugs are canonical and must resolve directly, not redirect",
+);
+
+// Non-accent drift (stray casing) still needs to redirect to the normalized form.
+const caseDriftRoute = wordSlugs.parseWordRoute("en", "english-word-ABOUT--A1-00001");
+assert.deepEqual(
+  caseDriftRoute,
+  {
+    routeKind: "legacy-slug-format",
+    uiLang: "en",
+    targetLanguage: "english",
+    wordSlug: "about",
+    conceptId: "A1-00001",
+  },
+  "non-accent slug drift (casing) should still redirect to the normalized slug",
 );
 
 const accentedLegacySingleHyphenRoute = wordSlugs.parseWordRoute(
@@ -148,9 +165,19 @@ const accentedLegacySingleHyphenRoute = wordSlugs.parseWordRoute(
 assert.equal(accentedLegacySingleHyphenRoute?.routeKind, "legacy-single-hyphen");
 assert.equal(
   accentedLegacySingleHyphenRoute?.wordSlug,
-  "amplificacion",
-  "legacy single-hyphen redirects must also normalize accented slugs",
+  "amplificación",
+  "legacy single-hyphen redirects must preserve accents in the target slug",
 );
+
+// Recovery path: a link built while wordToSlug briefly stripped accents
+// (2026-06-22 to the revert) must still find the real word via fallback,
+// rather than 410ing, even though it's not an exact slug match.
+const spanishAmplificacion = spanishVocabulary.find((e) => e.concept_id === "C1-00035");
+assert.equal(spanishAmplificacion?.word_lemma, "amplificación");
+const exactMatch = wordPageData.findCanonicalWordRecord(spanishVocabulary, "amplificacion", "C1-00035");
+assert.equal(exactMatch?.slugMatches, false, "accent-free slug must not exact-match the accented canonical entry");
+const fallbackMatch = wordPageData.findWordEntryIgnoringAccents(spanishVocabulary, "amplificacion", "C1-00035");
+assert.equal(fallbackMatch?.word_lemma, "amplificación", "accent-insensitive fallback must still find the real word");
 
 const aboutRecord = wordPageData.findCanonicalWordRecord(
   englishVocabulary,

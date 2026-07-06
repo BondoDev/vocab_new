@@ -1,5 +1,5 @@
 import type { TargetLanguageSlug, UiLanguageCode } from "./slugs";
-import { wordToSlug } from "./wordSlugs";
+import { wordToSlug, stripDiacriticsForComparison } from "./wordSlugs";
 import { isValidBrowseWordLemma } from "./browseWordValidation";
 import { fixMojibake } from "../../utils/fixMojibake";
 
@@ -163,6 +163,31 @@ export function findCanonicalWordRecord(
     entry: sanitizeWordPageEntry(entry),
     slugMatches: wordToSlug(fixMojibake(entry.word_lemma)) === wordSlug,
   };
+}
+
+// Recovery path for links built while wordToSlug briefly stripped accents
+// (2026-06-22 to this revert): if the exact accented slug doesn't match but
+// the accent-insensitive form does, the word still exists under a different
+// URL. Callers should redirect there instead of treating it as missing.
+export function findWordEntryIgnoringAccents(
+  vocabulary: WordPageVocabEntry[],
+  wordSlug: string,
+  conceptId: string,
+): WordPageVocabEntry | null {
+  const entry = vocabulary.find((word) => String(word.concept_id) === conceptId);
+  if (!entry) {
+    return null;
+  }
+
+  const entrySlug = wordToSlug(fixMojibake(entry.word_lemma));
+  if (
+    entrySlug !== wordSlug &&
+    stripDiacriticsForComparison(entrySlug) === stripDiacriticsForComparison(wordSlug)
+  ) {
+    return sanitizeWordPageEntry(entry);
+  }
+
+  return null;
 }
 
 export function getUiVocabularyLanguage(uiLang: UiLanguageCode): TargetLanguageSlug {

@@ -17,6 +17,7 @@ import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
 import {
+  buildWordBrowsePagePath,
   buildWordBrowsePagePathFromSlug,
   parseWordRoute,
   resolveWordPageRoute,
@@ -26,6 +27,7 @@ import type { SeoMetadata } from "./seo/SeoContext";
 import {
   buildHydrationWordPageData,
   buildResolvedWordPageData,
+  findWordEntryIgnoringAccents,
   getUiVocabularyLanguage,
   WORD_PAGE_BROWSE_WORDS_PER_PAGE,
   type ResolvedWordPageData,
@@ -271,6 +273,29 @@ export async function resolveWordSeoRequest(url: string): Promise<WordSeoRequest
   });
 
   if (!initialWordPageData.wordEntry) {
+    // The exact (accented) slug didn't match. Before giving up, check whether
+    // this is an old link built while wordToSlug briefly stripped accents
+    // (2026-06-22 to this revert) - if so the word still exists, just under
+    // its accented URL, so redirect there instead of 410ing a real word.
+    const accentInsensitiveMatch = findWordEntryIgnoringAccents(
+      vocabulary,
+      parsedWordRoute.wordSlug,
+      parsedWordRoute.conceptId,
+    );
+    if (accentInsensitiveMatch) {
+      return {
+        kind: "redirect",
+        pathname,
+        location: buildWordBrowsePagePath(
+          parsedWordRoute.uiLang,
+          parsedWordRoute.targetLanguage,
+          accentInsensitiveMatch.word_lemma,
+          parsedWordRoute.conceptId,
+          browsePage,
+        ),
+      };
+    }
+
     return {
       kind: "not-found",
       pathname,
