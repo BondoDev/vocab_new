@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Volume2 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { getLevelTestSeoPath } from "../../data/levelTests";
 import {
@@ -21,6 +22,27 @@ interface EnglishVerbListSeoPageProps {
 }
 
 const TARGET_LANGUAGE: TargetLanguageSlug = "english";
+const ENGLISH_SPEECH_LANG = "en-US";
+const PRONOUNCE_LABEL_BY_UI_LANG: Record<UiLanguageCode, string> = {
+  en: "Hear pronunciation",
+  es: "Escuchar pronunciacion",
+  de: "Aussprache anhoren",
+  fr: "Ecouter la prononciation",
+  it: "Ascolta la pronuncia",
+  pt: "Ouvir pronuncia",
+  ru: "Uslyshat proiznoshenie",
+};
+
+function speakVerb(verb: string) {
+  if (typeof window === "undefined" || !window.speechSynthesis) {
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(verb);
+  utterance.lang = ENGLISH_SPEECH_LANG;
+  window.speechSynthesis.speak(utterance);
+}
 
 export function EnglishVerbListSeoPage({
   uiLang,
@@ -29,6 +51,7 @@ export function EnglishVerbListSeoPage({
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
   const content = getEnglishVerbListContent(uiLang);
+  const pronounceLabel = PRONOUNCE_LABEL_BY_UI_LANG[uiLang] ?? PRONOUNCE_LABEL_BY_UI_LANG.en;
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
@@ -171,14 +194,24 @@ export function EnglishVerbListSeoPage({
                     <td className="border-b border-border/70 py-3 pr-4 align-top text-sm text-muted-foreground">
                       {row.index}
                     </td>
-                    <td className="border-b border-border/70 py-3 pr-4 align-top text-sm font-medium text-foreground">
-                      {row.href ? (
-                        <Link className="text-primary transition hover:underline" to={row.href}>
-                          {row.verb}
-                        </Link>
-                      ) : (
-                        row.verb
-                      )}
+                    <td className="border-b border-border/70 py-3 pr-4 align-middle text-sm font-medium text-foreground">
+                      <div className="inline-flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          aria-label={`${pronounceLabel}: ${row.verb}`}
+                          onClick={() => speakVerb(row.verb)}
+                          className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-primary/80 transition hover:bg-primary/10 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        >
+                          <Volume2 className="h-3.5 w-3.5" />
+                        </button>
+                        {row.href ? (
+                          <Link className="text-primary transition hover:underline" to={row.href}>
+                            {row.verb}
+                          </Link>
+                        ) : (
+                          row.verb
+                        )}
+                      </div>
                     </td>
                     <td className="border-b border-border/70 py-3 pr-4 align-top text-sm">
                       {row.translation ? <span className="text-muted-foreground">{row.translation}</span> : <span className="text-muted-foreground">-</span>}

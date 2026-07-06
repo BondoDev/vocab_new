@@ -23,7 +23,17 @@ export interface LocalizedVocabularyRoute {
   slug: string;
 }
 
-const TARGET_NAME_SLUGS: Record<UiLanguageCode, Record<TargetLanguageSlug, string>> = {
+export const TARGET_LANGUAGE_TO_UI_LANGUAGE: Record<TargetLanguageSlug, UiLanguageCode> = {
+  english: "en",
+  german: "de",
+  spanish: "es",
+  french: "fr",
+  italian: "it",
+  portuguese: "pt",
+  russian: "ru",
+};
+
+export const TARGET_NAME_SLUGS: Record<UiLanguageCode, Record<TargetLanguageSlug, string>> = {
   en: {
     english: "english",
     german: "german",

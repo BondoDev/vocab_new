@@ -326,20 +326,20 @@ const WORD_SEO_HUB_METADATA: Record<
         : `Browse the canonical English ${level} word SEO URL index.`,
   },
   es: {
-    summaryTitle: "Paginas SEO de palabras en ingles",
+    summaryTitle: "Páginas SEO de palabras en inglés",
     summaryDescription:
-      "Consulta paginas indexadas y paginadas que enlazan a todas las URLs canonicas de palabras en ingles en FluentStellar.",
+      "Consulta páginas indexadas y paginadas que enlazan a todas las URLs canónicas de palabras en inglés en FluentStellar.",
     levelTitle: (level, page) =>
-      page > 1 ? `Paginas SEO de palabras en ingles ${level} - Pagina ${page}` : `Paginas SEO de palabras en ingles ${level}`,
+      page > 1 ? `Páginas SEO de palabras en inglés ${level} - Página ${page}` : `Páginas SEO de palabras en inglés ${level}`,
     levelDescription: (level, page) =>
       page > 1
-        ? `Consulta la pagina ${page} del indice canonico de URLs de palabras en ingles ${level}.`
-        : `Consulta el indice canonico de URLs de palabras en ingles ${level}.`,
+        ? `Consulta la página ${page} del índice canónico de URLs de palabras en inglés ${level}.`
+        : `Consulta el índice canónico de URLs de palabras en inglés ${level}.`,
   },
   fr: {
     summaryTitle: "Pages SEO des mots anglais",
     summaryDescription:
-      "Consultez des pages d'index paginees qui relient a toutes les URL canoniques des mots anglais sur FluentStellar.",
+      "Consultez des pages d'index paginées qui relient à toutes les URL canoniques des mots anglais sur FluentStellar.",
     levelTitle: (level, page) =>
       page > 1 ? `Pages SEO des mots anglais ${level} - Page ${page}` : `Pages SEO des mots anglais ${level}`,
     levelDescription: (level, page) =>
@@ -348,15 +348,15 @@ const WORD_SEO_HUB_METADATA: Record<
         : `Consultez l'index canonique des URL de mots anglais ${level}.`,
   },
   de: {
-    summaryTitle: "SEO-Seiten fur englische Worter",
+    summaryTitle: "SEO-Seiten für englische Wörter",
     summaryDescription:
       "Durchsuchen Sie paginierte Indexseiten mit Links zu allen kanonischen englischen Wort-SEO-URLs auf FluentStellar.",
     levelTitle: (level, page) =>
-      page > 1 ? `SEO-Seiten fur englische Worter ${level} - Seite ${page}` : `SEO-Seiten fur englische Worter ${level}`,
+      page > 1 ? `SEO-Seiten für englische Wörter ${level} - Seite ${page}` : `SEO-Seiten für englische Wörter ${level}`,
     levelDescription: (level, page) =>
       page > 1
-        ? `Durchsuchen Sie Seite ${page} des kanonischen URL-Index fur englische Wortseiten ${level}.`
-        : `Durchsuchen Sie den kanonischen URL-Index fur englische Wortseiten ${level}.`,
+        ? `Durchsuchen Sie Seite ${page} des kanonischen URL-Index für englische Wortseiten ${level}.`
+        : `Durchsuchen Sie den kanonischen URL-Index für englische Wortseiten ${level}.`,
   },
   it: {
     summaryTitle: "Pagine SEO delle parole inglesi",
@@ -370,26 +370,128 @@ const WORD_SEO_HUB_METADATA: Record<
         : `Consulta l'indice canonico degli URL delle parole inglesi ${level}.`,
   },
   pt: {
-    summaryTitle: "Paginas SEO de palavras em ingles",
+    summaryTitle: "Páginas SEO de palavras em inglês",
     summaryDescription:
-      "Consulte paginas de indice paginadas que ligam para todas as URLs canonicas de palavras em ingles no FluentStellar.",
+      "Consulte páginas de índice paginadas que ligam para todas as URLs canônicas de palavras em inglês no FluentStellar.",
     levelTitle: (level, page) =>
-      page > 1 ? `Paginas SEO de palavras em ingles ${level} - Pagina ${page}` : `Paginas SEO de palavras em ingles ${level}`,
+      page > 1 ? `Páginas SEO de palavras em inglês ${level} - Página ${page}` : `Páginas SEO de palavras em inglês ${level}`,
     levelDescription: (level, page) =>
       page > 1
-        ? `Consulte a pagina ${page} do indice canonico de URLs de palavras em ingles ${level}.`
-        : `Consulte o indice canonico de URLs de palavras em ingles ${level}.`,
+        ? `Consulte a página ${page} do índice canônico de URLs de palavras em inglês ${level}.`
+        : `Consulte o índice canônico de URLs de palavras em inglês ${level}.`,
   },
   ru: {
-    summaryTitle: "SEO-stranicy angliiskih slov",
+    summaryTitle: "SEO-страницы английских слов",
     summaryDescription:
       "Просматривайте постраничные индексные страницы со ссылками на все канонические URL английских слов на FluentStellar.",
     levelTitle: (level, page) =>
-      page > 1 ? `SEO-stranicy angliiskih slov ${level} - stranica ${page}` : `SEO-stranicy angliiskih slov ${level}`,
+      page > 1 ? `SEO-страницы английских слов ${level} - страница ${page}` : `SEO-страницы английских слов ${level}`,
     levelDescription: (level, page) =>
       page > 1
         ? `Просматривайте страницу ${page} канонического индекса URL английских слов уровня ${level}.`
         : `Просматривайте канонический индекс URL английских слов уровня ${level}.`,
+  },
+};
+
+// Generic templates for target languages other than English. Simple concatenation,
+// no per-language grammatical inflection (kept consistent with the rest of the app).
+const GENERIC_WORD_SEO_HUB_METADATA: Record<
+  UiLanguageCode,
+  {
+    summaryTitle: (languageName: string) => string;
+    summaryDescription: (languageName: string) => string;
+    levelTitle: (languageName: string, level: string, page: number) => string;
+    levelDescription: (languageName: string, level: string, page: number) => string;
+  }
+> = {
+  en: {
+    summaryTitle: (languageName) => `${languageName} Word SEO Pages - Browse Canonical Word URLs`,
+    summaryDescription: (languageName) =>
+      `Browse paginated index pages that link to all canonical ${languageName} word SEO URLs on FluentStellar.`,
+    levelTitle: (languageName, level, page) =>
+      page > 1 ? `${languageName} ${level} Word SEO Pages - Page ${page}` : `${languageName} ${level} Word SEO Pages`,
+    levelDescription: (languageName, level, page) =>
+      page > 1
+        ? `Browse page ${page} of the canonical ${languageName} ${level} word SEO URL index.`
+        : `Browse the canonical ${languageName} ${level} word SEO URL index.`,
+  },
+  es: {
+    summaryTitle: (languageName) => `Páginas SEO de palabras en ${languageName.toLowerCase()}`,
+    summaryDescription: (languageName) =>
+      `Consulta páginas indexadas y paginadas que enlazan a todas las URLs canónicas de palabras en ${languageName.toLowerCase()} en FluentStellar.`,
+    levelTitle: (languageName, level, page) =>
+      page > 1
+        ? `Páginas SEO de palabras en ${languageName.toLowerCase()} ${level} - Página ${page}`
+        : `Páginas SEO de palabras en ${languageName.toLowerCase()} ${level}`,
+    levelDescription: (languageName, level, page) =>
+      page > 1
+        ? `Consulta la página ${page} del índice canónico de URLs de palabras en ${languageName.toLowerCase()} ${level}.`
+        : `Consulta el índice canónico de URLs de palabras en ${languageName.toLowerCase()} ${level}.`,
+  },
+  fr: {
+    summaryTitle: (languageName) => `Pages SEO des mots ${languageName.toLowerCase()}`,
+    summaryDescription: (languageName) =>
+      `Consultez des pages d'index paginées qui relient à toutes les URL canoniques des mots ${languageName.toLowerCase()} sur FluentStellar.`,
+    levelTitle: (languageName, level, page) =>
+      page > 1
+        ? `Pages SEO des mots ${languageName.toLowerCase()} ${level} - Page ${page}`
+        : `Pages SEO des mots ${languageName.toLowerCase()} ${level}`,
+    levelDescription: (languageName, level, page) =>
+      page > 1
+        ? `Consultez la page ${page} de l'index canonique des URL de mots ${languageName.toLowerCase()} ${level}.`
+        : `Consultez l'index canonique des URL de mots ${languageName.toLowerCase()} ${level}.`,
+  },
+  de: {
+    summaryTitle: (languageName) => `SEO-Seiten für ${languageName.toLowerCase()}e Wörter`,
+    summaryDescription: (languageName) =>
+      `Durchsuchen Sie paginierte Indexseiten mit Links zu allen kanonischen ${languageName.toLowerCase()}en Wort-SEO-URLs auf FluentStellar.`,
+    levelTitle: (languageName, level, page) =>
+      page > 1
+        ? `SEO-Seiten für ${languageName.toLowerCase()}e Wörter ${level} - Seite ${page}`
+        : `SEO-Seiten für ${languageName.toLowerCase()}e Wörter ${level}`,
+    levelDescription: (languageName, level, page) =>
+      page > 1
+        ? `Durchsuchen Sie Seite ${page} des kanonischen URL-Index für ${languageName.toLowerCase()}e Wortseiten ${level}.`
+        : `Durchsuchen Sie den kanonischen URL-Index für ${languageName.toLowerCase()}e Wortseiten ${level}.`,
+  },
+  it: {
+    summaryTitle: (languageName) => `Pagine SEO delle parole ${languageName.toLowerCase()}`,
+    summaryDescription: (languageName) =>
+      `Consulta pagine indice paginate che collegano a tutti gli URL canonici delle parole ${languageName.toLowerCase()} su FluentStellar.`,
+    levelTitle: (languageName, level, page) =>
+      page > 1
+        ? `Pagine SEO delle parole ${languageName.toLowerCase()} ${level} - Pagina ${page}`
+        : `Pagine SEO delle parole ${languageName.toLowerCase()} ${level}`,
+    levelDescription: (languageName, level, page) =>
+      page > 1
+        ? `Consulta la pagina ${page} dell'indice canonico degli URL delle parole ${languageName.toLowerCase()} ${level}.`
+        : `Consulta l'indice canonico degli URL delle parole ${languageName.toLowerCase()} ${level}.`,
+  },
+  pt: {
+    summaryTitle: (languageName) => `Páginas SEO de palavras em ${languageName.toLowerCase()}`,
+    summaryDescription: (languageName) =>
+      `Consulte páginas de índice paginadas que ligam para todas as URLs canônicas de palavras em ${languageName.toLowerCase()} no FluentStellar.`,
+    levelTitle: (languageName, level, page) =>
+      page > 1
+        ? `Páginas SEO de palavras em ${languageName.toLowerCase()} ${level} - Página ${page}`
+        : `Páginas SEO de palavras em ${languageName.toLowerCase()} ${level}`,
+    levelDescription: (languageName, level, page) =>
+      page > 1
+        ? `Consulte a página ${page} do índice canônico de URLs de palavras em ${languageName.toLowerCase()} ${level}.`
+        : `Consulte o índice canônico de URLs de palavras em ${languageName.toLowerCase()} ${level}.`,
+  },
+  ru: {
+    summaryTitle: (languageName) => `SEO-страницы слов: ${languageName.toLowerCase()}`,
+    summaryDescription: (languageName) =>
+      `Просматривайте постраничные индексные страницы со ссылками на все канонические URL слов (${languageName.toLowerCase()}) на FluentStellar.`,
+    levelTitle: (languageName, level, page) =>
+      page > 1
+        ? `SEO-страницы слов: ${languageName.toLowerCase()} ${level} - страница ${page}`
+        : `SEO-страницы слов: ${languageName.toLowerCase()} ${level}`,
+    levelDescription: (languageName, level, page) =>
+      page > 1
+        ? `Просматривайте страницу ${page} канонического индекса URL слов (${languageName.toLowerCase()}) уровня ${level}.`
+        : `Просматривайте канонический индекс URL слов (${languageName.toLowerCase()}) уровня ${level}.`,
   },
 };
 
@@ -650,31 +752,39 @@ export function buildSeoHubMetadata({
 export function buildWordSeoHubMetadata({
   uiLang,
   route,
+  languageName,
   pathname,
   siteOrigin,
 }: {
   uiLang: UiLanguageCode;
   route: WordSeoHubRoute;
+  languageName: string;
   pathname: string;
   siteOrigin: string;
 }): SeoMetadata {
   const origin = normalizeOrigin(siteOrigin);
   const canonical = `${origin}${pathname}`;
-  const copy = WORD_SEO_HUB_METADATA[uiLang] ?? WORD_SEO_HUB_METADATA.en;
+  const isEnglishTarget = route.targetLanguage === "english";
+  const englishCopy = WORD_SEO_HUB_METADATA[uiLang] ?? WORD_SEO_HUB_METADATA.en;
+  const genericCopy = GENERIC_WORD_SEO_HUB_METADATA[uiLang] ?? GENERIC_WORD_SEO_HUB_METADATA.en;
 
   if (route.kind === "summary") {
     return {
-      title: sanitizeMetadataText(copy.summaryTitle),
-      description: sanitizeMetadataText(copy.summaryDescription),
+      title: sanitizeMetadataText(
+        isEnglishTarget ? englishCopy.summaryTitle : genericCopy.summaryTitle(languageName),
+      ),
+      description: sanitizeMetadataText(
+        isEnglishTarget ? englishCopy.summaryDescription : genericCopy.summaryDescription(languageName),
+      ),
       canonical,
       alternates: [
         ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
           hreflang: lang,
-          href: `${origin}${getWordSeoHubSummaryPath(lang)}`,
+          href: `${origin}${getWordSeoHubSummaryPath(lang, route.targetLanguage)}`,
         })),
         {
           hreflang: "x-default",
-          href: `${origin}${getWordSeoHubSummaryPath("en")}`,
+          href: `${origin}${getWordSeoHubSummaryPath("en", route.targetLanguage)}`,
         },
       ],
     };
@@ -682,17 +792,25 @@ export function buildWordSeoHubMetadata({
 
   const levelLabel = route.level.toUpperCase();
   return {
-    title: sanitizeMetadataText(copy.levelTitle(levelLabel, route.page)),
-    description: sanitizeMetadataText(copy.levelDescription(levelLabel, route.page)),
+    title: sanitizeMetadataText(
+      isEnglishTarget
+        ? englishCopy.levelTitle(levelLabel, route.page)
+        : genericCopy.levelTitle(languageName, levelLabel, route.page),
+    ),
+    description: sanitizeMetadataText(
+      isEnglishTarget
+        ? englishCopy.levelDescription(levelLabel, route.page)
+        : genericCopy.levelDescription(languageName, levelLabel, route.page),
+    ),
     canonical,
     alternates: [
       ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
         hreflang: lang,
-        href: `${origin}${getWordSeoHubLevelPath(lang, route.level, route.page)}`,
+        href: `${origin}${getWordSeoHubLevelPath(lang, route.targetLanguage, route.level, route.page)}`,
       })),
       {
         hreflang: "x-default",
-        href: `${origin}${getWordSeoHubLevelPath("en", route.level, route.page)}`,
+        href: `${origin}${getWordSeoHubLevelPath("en", route.targetLanguage, route.level, route.page)}`,
       },
     ],
   };
@@ -710,7 +828,7 @@ const WORD_META_TITLE: Record<UiLanguageCode, (lang: string, word: string) => st
 
 const WORD_META_DESC: Record<UiLanguageCode, (lang: string, word: string) => string> = {
   en: (lang, word) =>
-    `Learn how to use "${word}" with simple examples, synonyms, CEFR level, and quick practice. Build real English vocabulary for daily speaking and writing.`,
+    `Learn how to use "${word}" with simple examples, synonyms, CEFR level, and quick practice.`,
   es: (lang, word) =>
     `Aprende el significado de la palabra ${lang} "${word}", ve oraciones de ejemplo y practica este vocabulario con ejercicios interactivos.`,
   fr: (lang, word) =>
@@ -724,6 +842,37 @@ const WORD_META_DESC: Record<UiLanguageCode, (lang: string, word: string) => str
   ru: (lang, word) =>
     `Узнайте значение слова "${word}" на ${lang}, посмотрите примеры предложений и потренируйтесь с интерактивными упражнениями.`,
 };
+
+WORD_META_DESC.es = (lang, word) =>
+  `Aprende el significado de la palabra ${lang} "${word}" y ve oraciones de ejemplo.`;
+WORD_META_DESC.fr = (lang, word) =>
+  `Apprenez le sens du mot ${lang} "${word}" et découvrez des exemples de phrases.`;
+WORD_META_DESC.de = (lang, word) =>
+  `Lerne die Bedeutung des ${lang}en Wortes "${word}" und sieh Beispielsätze.`;
+WORD_META_DESC.it = (lang, word) =>
+  `Impara il significato della parola ${lang} "${word}" e vedi frasi di esempio.`;
+WORD_META_DESC.pt = (lang, word) =>
+  `Aprenda o significado da palavra ${lang} "${word}" e veja frases de exemplo.`;
+WORD_META_DESC.ru = (lang, word) =>
+  `Узнайте значение слова "${word}" на ${lang} и посмотрите примеры предложений.`;
+
+WORD_META_DESC.en = (lang, word) =>
+  `Learn "${word}" with examples, synonyms, CEFR level, and practice.`;
+WORD_META_DESC.es = (lang, word) =>
+  `Aprende la palabra ${lang} "${word}" y ve ejemplos.`;
+WORD_META_DESC.fr = (lang, word) =>
+  `Apprenez le mot ${lang} "${word}" et voyez des exemples.`;
+WORD_META_DESC.de = (lang, word) =>
+  `Lerne das Wort "${word}" auf ${lang} und sieh Beispiele.`;
+WORD_META_DESC.it = (lang, word) =>
+  `Impara la parola ${lang} "${word}" e vedi esempi.`;
+WORD_META_DESC.pt = (lang, word) =>
+  `Aprenda a palavra ${lang} "${word}" e veja exemplos.`;
+WORD_META_DESC.ru = (lang, word) =>
+  `РЈР·РЅР°Р№С‚Рµ Р·РЅР°С‡РµРЅРёРµ СЃР»РѕРІР° "${word}" РЅР° ${lang} Рё РїРѕСЃРјРѕС‚СЂРёС‚Рµ РїСЂРёРјРµСЂС‹.`;
+
+WORD_META_DESC.ru = (lang, word) =>
+  `\u0423\u0437\u043d\u0430\u0439\u0442\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u0441\u043b\u043e\u0432\u0430 "${word}" \u043d\u0430 ${lang} \u0438 \u043f\u043e\u0441\u043c\u043e\u0442\u0440\u0438\u0442\u0435 \u043f\u0440\u0438\u043c\u0435\u0440\u044b.`;
 
 export interface WordSeoMetadataParams {
   uiLang: UiLanguageCode;

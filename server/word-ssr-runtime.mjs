@@ -5,31 +5,12 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
-const DIST_DIR = path.join(ROOT_DIR, "dist");
 const SERVER_BUILD_DIR = path.join(ROOT_DIR, "server-build");
-const TEMPLATE_PATH = path.join(DIST_DIR, "index.html");
+const TEMPLATE_PATH = path.join(SERVER_BUILD_DIR, "ssr-template.html");
 const DEFAULT_SITE_ORIGIN = process.env.SITE_ORIGIN || "https://www.fluentstellar.com";
 
 let templatePromise = null;
 let entryServerPromise = null;
-
-function summarizeHtmlBody(body) {
-  const text = String(body ?? "");
-
-  return {
-    hasHomepageHeadline: text.includes("Practice Vocabulary"),
-    hasHomepageSubheadline: text.includes("No lessons - Just practice."),
-    hasWordPageHeading:
-      text.includes("Meaning of the Italian Word") ||
-      text.includes("Meaning of the English Word") ||
-      text.includes("Meaning of the German Word") ||
-      text.includes("Meaning of the Spanish Word") ||
-      text.includes("Meaning of the French Word") ||
-      text.includes("Meaning of the Portuguese Word") ||
-      text.includes("Meaning of the Russian Word"),
-    hasWordPayload: text.includes("window.__WORD_PAGE_DATA__"),
-  };
-}
 
 function normalizePathname(pathname) {
   const rawValue = Array.isArray(pathname) ? pathname[0] : pathname;
@@ -101,21 +82,6 @@ async function loadEntryServerBundle() {
   return entryServerPromise;
 }
 
-async function readStaticHtmlForPath(pathname) {
-  const normalizedRoute = pathname.replace(/^\/+/, "");
-  const htmlPath = path.join(DIST_DIR, normalizedRoute, "index.html");
-
-  try {
-    return await fs.readFile(htmlPath, "utf8");
-  } catch (error) {
-    if (error && typeof error === "object" && error.code === "ENOENT") {
-      return null;
-    }
-
-    throw error;
-  }
-}
-
 async function renderHtmlResponse(pathname, siteOrigin) {
   const [template, entryServer] = await Promise.all([
     getTemplate(),
@@ -130,7 +96,7 @@ function buildCacheHeaders(status) {
     return "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800";
   }
 
-  if (status === 404 || status === 308) {
+  if (status === 410 || status === 404 || status === 308) {
     return "public, max-age=0, s-maxage=300";
   }
 
@@ -139,16 +105,16 @@ function buildCacheHeaders(status) {
 
 function buildMinimalNotFoundResponse() {
   return {
-    status: 404,
+    status: 410,
     contentType: "text/plain; charset=utf-8",
-    body: "404 Not Found",
+    body: "410 Gone",
   };
 }
 
 export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const normalizedPathname = normalizePathname(pathname);
   const entryServer = await loadEntryServerBundle();
-  const resolution = entryServer.resolveWordSeoRequest(normalizedPathname);
+  const resolution = await entryServer.resolveWordSeoRequest(normalizedPathname);
 
   if (resolution.kind === "redirect") {
     return {
@@ -164,34 +130,7 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
   }
 
   if (resolution.kind === "canonical") {
-    const staticHtml = await readStaticHtmlForPath(normalizedPathname);
-    if (staticHtml) {
-      console.log("[word-ssr-runtime] canonical static hit", {
-        pathname: normalizedPathname,
-        routeKind: resolution.kind,
-        source: "static",
-        ...summarizeHtmlBody(staticHtml),
-      });
-      return {
-        status: 200,
-        headers: {
-          "Content-Type": "text/html; charset=utf-8",
-          "Cache-Control": buildCacheHeaders(200),
-        },
-        body: staticHtml,
-        routeKind: resolution.kind,
-        pathname: normalizedPathname,
-        source: "static",
-      };
-    }
-
     const body = await renderHtmlResponse(normalizedPathname, siteOrigin);
-    console.log("[word-ssr-runtime] canonical dynamic render", {
-      pathname: normalizedPathname,
-      routeKind: resolution.kind,
-      source: "dynamic",
-      ...summarizeHtmlBody(body),
-    });
     return {
       status: 200,
       headers: {
@@ -201,7 +140,6 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
       body,
       routeKind: resolution.kind,
       pathname: normalizedPathname,
-      source: "dynamic",
     };
   }
 
@@ -210,7 +148,7 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
     status: minimalNotFound.status,
     headers: {
       "Content-Type": minimalNotFound.contentType,
-      "Cache-Control": buildCacheHeaders(404),
+      "Cache-Control": buildCacheHeaders(minimalNotFound.status),
       "X-Robots-Tag": "noindex, nofollow",
     },
     body: minimalNotFound.body,

@@ -99,24 +99,17 @@
   ],
   "functions": {
     "api/word-ssr-internal.ts": {
-      "includeFiles": "{dist/index.html,server-build/entry-server.js,src/data/interface/**/*.json,src/data/vocabulary/**/*.json}"
+      "includeFiles": "{server-build/**}"
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "^/api/word-ssr-internal$",
-      "dest": "/api/word-ssr"
+      "source": "/:uiLanguage/:slug/browse/page/:page(\\d+)",
+      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:slug/browse/page/:page"
     },
     {
-      "src": "^/(en|es|fr|de|it|pt|ru)/((?:english|spanish|french|german|italian|portuguese|russian)-word-[^/]+)/browse/page/(\\d+)$",
-      "dest": "/api/word-ssr-internal?pathname=/$1/$2/browse/page/$3"
-    },
-    {
-      "src": "^/(en|es|fr|de|it|pt|ru)/((?:english|spanish|french|german|italian|portuguese|russian)-word-[^/]+)$",
-      "dest": "/api/word-ssr-internal?pathname=/$1/$2"
-    },
-    {
-      "handle": "filesystem"
+      "source": "/:uiLanguage/:slug",
+      "destination": "/api/word-ssr-internal?pathname=/:uiLanguage/:slug"
     }
   ]
 }

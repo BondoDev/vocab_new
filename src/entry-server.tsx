@@ -1,8 +1,5 @@
 import { renderToPipeableStream } from "react-dom/server";
 import { Writable } from "node:stream";
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { StaticRouter } from "react-router-dom/server";
 import App from "./app/App";
 import {
@@ -63,7 +60,7 @@ export type WordSeoRequestResolution =
 export interface MinimalWordSeoNotFoundResponse {
   body: string;
   contentType: "text/plain; charset=utf-8";
-  status: 404;
+  status: 410;
 }
 
 const CORE_PRERENDER_ROUTES = [
@@ -79,57 +76,64 @@ const CORE_PRERENDER_ROUTES = [
   "/help",
 ] as const;
 const PRACTICE_ROUTE_UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"] as const;
-const ENTRY_SERVER_DIR = path.dirname(fileURLToPath(import.meta.url));
-const PROJECT_ROOT_DIR = path.resolve(ENTRY_SERVER_DIR, "..");
-const INTERFACE_FILENAME_BY_UI_LANGUAGE: Record<UiLanguageCode, string> = {
-  en: "english_interface.json",
-  es: "spanish_interface.json",
-  fr: "french_interface.json",
-  de: "german_interface.json",
-  it: "italian_interface.json",
-  pt: "portuguese_interface.json",
-  ru: "russian_interface.json",
-};
+const vocabularyModules = import.meta.glob("./data/vocabulary/*/vocabulary.json") as Record<
+  string,
+  () => Promise<{ default: WordPageVocabEntry[] }>
+>;
+const interfaceModules = import.meta.glob("./data/interface/*.json") as Record<
+  string,
+  () => Promise<{ default: unknown }>
+>;
 
-const vocabCache = new Map<string, WordPageVocabEntry[]>();
+const vocabCache = new Map<string, Promise<WordPageVocabEntry[]>>();
+const interfaceCache = new Map<UiLanguageCode, Promise<unknown>>();
 
-function loadVocabularySync(language: string): WordPageVocabEntry[] {
+async function loadVocabulary(language: string): Promise<WordPageVocabEntry[]> {
   const cached = vocabCache.get(language);
   if (cached) {
     return cached;
   }
 
-  const vocabPath = path.join(
-    PROJECT_ROOT_DIR,
-    "src",
-    "data",
-    "vocabulary",
-    language,
-    "vocabulary.json",
-  );
-  const raw = fs.readFileSync(vocabPath, "utf8").replace(/^\uFEFF/, "");
-  const parsed = JSON.parse(raw) as WordPageVocabEntry[];
-  vocabCache.set(language, parsed);
-  return parsed;
-}
-
-function loadInterfaceDataSync(uiLanguage: UiLanguageCode): unknown {
-  const interfaceFilename = INTERFACE_FILENAME_BY_UI_LANGUAGE[uiLanguage] ?? INTERFACE_FILENAME_BY_UI_LANGUAGE.en;
-  const interfacePath = path.join(PROJECT_ROOT_DIR, "src", "data", "interface", interfaceFilename);
-  const raw = fs.readFileSync(interfacePath, "utf8").replace(/^\uFEFF/, "");
-  return JSON.parse(raw);
-}
-
-function getInitialWordPageData(url: string): ResolvedWordPageData | null {
-  const resolution = resolveWordSeoRequest(url);
-  if (resolution.kind !== "canonical") {
-    return null;
+  const modulePath = `./data/vocabulary/${language}/vocabulary.json`;
+  const loadModule = vocabularyModules[modulePath];
+  if (!loadModule) {
+    throw new Error(`Missing vocabulary module for language "${language}"`);
   }
-  return resolution.initialWordPageData;
+
+  const pending = loadModule().then((module) => module.default);
+  vocabCache.set(language, pending);
+  return pending;
 }
 
-function getInitialWordBrowsePage(url: string): number {
-  const resolution = resolveWordSeoRequest(url);
+async function loadInterfaceData(uiLanguage: UiLanguageCode): Promise<unknown> {
+  const cached = interfaceCache.get(uiLanguage);
+  if (cached) {
+    return cached;
+  }
+
+  const languageName =
+    {
+      en: "english",
+      es: "spanish",
+      fr: "french",
+      de: "german",
+      it: "italian",
+      pt: "portuguese",
+      ru: "russian",
+    }[uiLanguage] ?? "english";
+  const modulePath = `./data/interface/${languageName}_interface.json`;
+  const loadModule =
+    interfaceModules[modulePath] ?? interfaceModules["./data/interface/english_interface.json"];
+  if (!loadModule) {
+    throw new Error(`Missing interface module for ui language "${uiLanguage}"`);
+  }
+
+  const pending = loadModule().then((module) => module.default);
+  interfaceCache.set(uiLanguage, pending);
+  return pending;
+}
+
+function getInitialWordBrowsePage(resolution: WordSeoRequestResolution): number {
   return resolution.kind === "canonical" ? resolution.wordRoute.browsePage : 1;
 }
 
@@ -161,9 +165,9 @@ function escapeJsonForHtml(value: unknown): string {
 
 export function buildMinimalWordSeoNotFoundResponse(): MinimalWordSeoNotFoundResponse {
   return {
-    status: 404,
+    status: 410,
     contentType: "text/plain; charset=utf-8",
-    body: "404 Not Found",
+    body: "410 Gone",
   };
 }
 
@@ -187,7 +191,7 @@ export function getPrerenderRoutes(): string[] {
   ])];
 }
 
-export function resolveWordSeoRequest(url: string): WordSeoRequestResolution {
+export async function resolveWordSeoRequest(url: string): Promise<WordSeoRequestResolution> {
   const pathname = url.split(/[?#]/, 1)[0] || "/";
   const match = pathname.match(/^\/([a-z]{2})\/([^/?#]+)(?:\/browse\/page\/(\d+))?$/);
   if (!match) {
@@ -247,11 +251,11 @@ export function resolveWordSeoRequest(url: string): WordSeoRequestResolution {
     };
   }
 
-  const vocabulary = loadVocabularySync(parsedWordRoute.targetLanguage);
+  const vocabulary = await loadVocabulary(parsedWordRoute.targetLanguage);
   const uiVocabLanguage = getUiVocabularyLanguage(parsedWordRoute.uiLang);
   const uiVocabulary =
     uiVocabLanguage !== parsedWordRoute.targetLanguage
-      ? loadVocabularySync(uiVocabLanguage)
+      ? await loadVocabulary(uiVocabLanguage)
       : null;
 
   const initialWordPageData = buildResolvedWordPageData({
@@ -331,7 +335,7 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
 
 export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const seoManager: SeoManager = { metadata: null };
-  const wordSeoResolution = resolveWordSeoRequest(url);
+  const wordSeoResolution = await resolveWordSeoRequest(url);
   const pathname = url.split(/[?#]/, 1)[0] || "/";
   const shouldUseWordNotFoundMetadata =
     wordSeoResolution.kind === "not-found" &&
@@ -339,10 +343,10 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
       (/^\/[a-z]{2}\/[^/?#]+(?:\/browse\/page\/\d+)?$/.test(pathname) &&
         pathname.includes("-word-")));
   const initialUILanguage = getInitialUiLanguage(url);
-  const initialInterfaceData = loadInterfaceDataSync(initialUILanguage);
+  const initialInterfaceData = await loadInterfaceData(initialUILanguage);
   const initialWordPageData =
     wordSeoResolution.kind === "canonical" ? wordSeoResolution.initialWordPageData : null;
-  const initialWordBrowsePage = getInitialWordBrowsePage(url);
+  const initialWordBrowsePage = getInitialWordBrowsePage(wordSeoResolution);
   const initialBrowsePreviewData = getInitialBrowsePreviewData(url);
   const ssrWordRouteMatch = (() => {
     return resolveWordPageRoute(pathname);

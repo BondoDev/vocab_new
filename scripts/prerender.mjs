@@ -29,7 +29,8 @@ function wordToSlug(lemma) {
     .replace(/[^a-z0-9À-ӿ\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 async function collectWordRoutesSubset(limit, offset) {
@@ -79,6 +80,9 @@ function stripManagedHeadTags(template) {
     .replace(/<meta\s+property="og:url"[\s\S]*?>/i, "")
     .replace(/<meta\s+property="og:title"[\s\S]*?>/i, "")
     .replace(/<meta\s+property="og:description"[\s\S]*?>/i, "")
+    .replace(/<meta\s+property="og:image"[\s\S]*?>/i, "")
+    .replace(/<meta\s+property="og:image:width"[\s\S]*?>/i, "")
+    .replace(/<meta\s+property="og:image:height"[\s\S]*?>/i, "")
     .replace(/<link\s+rel="alternate"[\s\S]*?data-vocab-hreflang="true"[\s\S]*?>/gi, "")
     .replace(/<script\s[^>]*data-managed-jsonld="true"[^>]*>[\s\S]*?<\/script>/gi, "")
     .replace(/<script>\s*window\.__WORD_PAGE_DATA__=[\s\S]*?<\/script>/gi, "")

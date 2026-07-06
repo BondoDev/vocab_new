@@ -18,6 +18,9 @@ function compileTestModules() {
   const rootNames = [
     path.join(rootDir, "src", "data", "seo", "wordSlugs.ts"),
     path.join(rootDir, "src", "data", "seo", "wordPageData.ts"),
+    path.join(rootDir, "src", "data", "seo", "slugs.ts"),
+    path.join(rootDir, "src", "data", "seo", "hub.ts"),
+    path.join(rootDir, "src", "data", "seo", "wordHubRoutes.ts"),
     path.join(rootDir, "src", "data", "englishVerbList", "routes.ts"),
     path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
@@ -63,6 +66,7 @@ compileTestModules();
 
 const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
 const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPageData.js"));
+const wordHubRoutes = require(path.join(tempDir, "src", "data", "seo", "wordHubRoutes.js"));
 const englishVerbListRoutes = require(path.join(tempDir, "src", "data", "englishVerbList", "routes.js"));
 const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
@@ -75,7 +79,7 @@ function readJson(relativePath) {
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 const englishVerbList = readJson("src/data/lists/list_of_100_most_used_verb.json");
-const unresolvedEnglishVerbListIds = new Set(["A1-00008", "A1-00021"]);
+const unresolvedEnglishVerbListIds = new Set();
 
 const aboutMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "about");
 const answerMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "answer");
@@ -177,6 +181,37 @@ assert.deepEqual(
   "Unexpected unresolved English verb list IDs",
 );
 
+assert.equal(
+  wordHubRoutes.getWordSeoHubSummaryPath("en", "english"),
+  "/en/seo-pages/english-word-pages",
+);
+assert.equal(
+  wordHubRoutes.getWordSeoHubSummaryPath("es", "german"),
+  "/es/paginas-seo/paginas-palabras-aleman",
+);
+assert.equal(
+  wordHubRoutes.getWordSeoHubLevelPath("ru", "spanish", "b2", 3),
+  "/ru/seo-stranicy/stranicy-slov-ispanskii/b2/page/3",
+);
+assert.deepEqual(
+  wordHubRoutes.resolveWordSeoHubRoute("/fr/pages-seo/pages-mots-russe/c1/page/2"),
+  {
+    kind: "level",
+    uiLang: "fr",
+    targetLanguage: "russian",
+    level: "c1",
+    page: 2,
+  },
+);
+assert.deepEqual(
+  wordHubRoutes.resolveWordSeoHubRoute("/de/seo-seiten/franzoesische-wortseiten"),
+  {
+    kind: "summary",
+    uiLang: "de",
+    targetLanguage: "french",
+  },
+);
+
 const canonicalWordPageData = wordPageData.buildResolvedWordPageData({
   uiLang: "en",
   targetLanguage: "english",
@@ -225,6 +260,16 @@ for (const sitemapFile of sitemapFiles) {
 assert.equal(
   wordSlugs.buildWordPath("en", "english", "about", "A1-00001"),
   "/en/english-word-about--A1-00001",
+);
+assert.equal(
+  wordSlugs.buildWordPath("en", "german", "Hightech-", "B1-03527"),
+  "/en/german-word-hightech--B1-03527",
+  "trailing source hyphens must be removed before the canonical concept separator is appended",
+);
+assert.equal(
+  wordSlugs.wordToSlug("Hightech-"),
+  "hightech",
+  "slug normalization should strip edge hyphens from source lemmas",
 );
 
 const russianFirstEntry = russianVocabulary[0];
@@ -302,11 +347,77 @@ const englishVerbListPageSource = fs.readFileSync(
   "utf8",
 );
 const metadataSource = fs.readFileSync(path.join(rootDir, "src", "seo", "metadata.ts"), "utf8");
+const wordHubDataSource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "seo", "wordHubData.ts"),
+  "utf8",
+);
+const englishVerbListSource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "englishVerbList", "index.ts"),
+  "utf8",
+);
+const levelBrowseWordsSource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "seo", "levelBrowseWords.ts"),
+  "utf8",
+);
+const entryServerSource = fs.readFileSync(path.join(rootDir, "src", "entry-server.tsx"), "utf8");
+const vercelConfigSource = fs.readFileSync(path.join(rootDir, "vercel.json"), "utf8");
 const coreSitemapXml = fs.readFileSync(
   path.join(rootDir, "public", "sitemaps", "sitemap-core.xml"),
   "utf8",
 );
 
+assert.ok(
+  wordHubDataSource.includes('import.meta.glob("./word-hub-pages/*.json"'),
+  "word hub data should read compact generated hub JSON files",
+);
+assert.ok(
+  !wordHubDataSource.includes('import.meta.glob("../vocabulary/*/vocabulary.json"'),
+  "word hub data should not eagerly import full vocabulary JSON files",
+);
+assert.ok(
+  englishVerbListSource.includes('import.meta.glob("./lookup/*.json"'),
+  "English verb list data should read compact generated lookup JSON files",
+);
+assert.ok(
+  !englishVerbListSource.includes('../vocabulary/english/vocabulary.json'),
+  "English verb list data should not statically import full vocabulary JSON files",
+);
+assert.ok(
+  levelBrowseWordsSource.includes('import.meta.glob("./level-browse-preview/*.json"'),
+  "level browse data should read compact preview JSON files",
+);
+assert.ok(
+  !levelBrowseWordsSource.includes('import.meta.glob("../vocabulary/*/vocabulary.json"'),
+  "level browse data should not eagerly import full vocabulary JSON files",
+);
+assert.ok(
+  entryServerSource.includes('import.meta.glob("./data/vocabulary/*/vocabulary.json"'),
+  "SSR entry server should load vocabulary via bundled JSON modules",
+);
+assert.ok(
+  entryServerSource.includes('import.meta.glob("./data/interface/*.json"'),
+  "SSR entry server should load interface data via bundled JSON modules",
+);
+assert.ok(
+  !entryServerSource.includes("readFileSync("),
+  "SSR entry server should not filesystem-read source JSON files at runtime",
+);
+assert.ok(
+  vercelConfigSource.includes('"includeFiles": "{server-build/**}"'),
+  "Vercel SSR function should include compiled server-build assets",
+);
+assert.ok(
+  !vercelConfigSource.includes("src/data/vocabulary"),
+  "Vercel SSR function should not force raw vocabulary JSON into the package",
+);
+assert.ok(
+  !vercelConfigSource.includes("src/data/interface"),
+  "Vercel SSR function should not force raw interface JSON into the package",
+);
+assert.ok(
+  !vercelConfigSource.includes("dist/index.html"),
+  "Vercel SSR function should not trace the dist directory",
+);
 assert.ok(
   /href:\s*`\$\{origin\}\$\{buildWordPath\(lang,\s*targetLanguage,\s*wordLemma,\s*conceptId\)\}`/m.test(
     metadataSource,
@@ -314,7 +425,7 @@ assert.ok(
   "hreflang entries should preserve concept IDs in metadata",
 );
 assert.ok(
-  /return\s*\{\s*title,\s*description,\s*canonical:\s*`\$\{origin\}\$\{pathname\}`,\s*alternates,\s*jsonLd\s*\};/m.test(
+  /return\s*\{\s*title,\s*description,\s*canonical:\s*`\$\{origin\}\$\{pathname\}`,\s*alternates,\s*jsonLd,[\s\S]*\};/m.test(
     metadataSource,
   ),
   "canonical metadata should use the current ID-based pathname",
@@ -336,7 +447,7 @@ assert.ok(
   "English verb list page should render rows from the imported JSON list",
 );
 assert.ok(
-  /buildWordPath\(\s*uiLang,\s*TARGET_LANGUAGE,\s*item\.verb,\s*item\.id\s*\)/m.test(
+  /buildWordPath\(\s*uiLang,\s*TARGET_LANGUAGE,\s*getEnglishVerbWordLemma\(item\.id\),\s*item\.id\s*\)/m.test(
     englishVerbListPageSource,
   ),
   "English verb list page should link rows with the shared word-path helper",

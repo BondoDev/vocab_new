@@ -60,7 +60,8 @@ export function wordToSlug(lemma: string): string {
     .replace(/[^a-z0-9\u0400-\u04ff\s-]/gi, "")
     .trim()
     .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 export function buildWordPath(

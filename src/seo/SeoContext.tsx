@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, type ReactNode } from "react";
-import { DEFAULT_SEO_METADATA, DEFAULT_SITE_ORIGIN } from "./site";
+import { DEFAULT_OG_IMAGE, DEFAULT_SEO_METADATA, DEFAULT_SITE_ORIGIN } from "./site";
 
 export interface SeoAlternateLink {
   href: string;
@@ -135,6 +135,9 @@ export function applySeoMetadata(metadata: SeoMetadata) {
   upsertMetaProperty("og:url", metadata.canonical);
   upsertMetaProperty("og:title", metadata.canonical ? metadata.title : undefined);
   upsertMetaProperty("og:description", metadata.canonical ? metadata.description : undefined);
+  upsertMetaProperty("og:image", metadata.canonical ? DEFAULT_OG_IMAGE : undefined);
+  upsertMetaProperty("og:image:width", metadata.canonical ? "1200" : undefined);
+  upsertMetaProperty("og:image:height", metadata.canonical ? "630" : undefined);
   upsertManagedJsonLd(metadata.jsonLd);
   removeManagedAlternateTags();
 
@@ -176,6 +179,15 @@ export function renderSeoTags(metadata: SeoMetadata): string {
       : "",
     metadata.canonical
       ? `<meta property="og:description" content="${escapeHtml(metadata.description)}">`
+      : "",
+    metadata.canonical
+      ? `<meta property="og:image" content="${escapeHtml(DEFAULT_OG_IMAGE)}">`
+      : "",
+    metadata.canonical
+      ? `<meta property="og:image:width" content="1200">`
+      : "",
+    metadata.canonical
+      ? `<meta property="og:image:height" content="630">`
       : "",
     alternates,
     metadata.jsonLd

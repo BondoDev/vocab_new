@@ -1,14 +1,6 @@
 import englishVerbListJson from "../lists/list_of_100_most_used_verb.json";
-import englishVocabularyJson from "../vocabulary/english/vocabulary.json";
-import frenchVocabularyJson from "../vocabulary/french/vocabulary.json";
-import germanVocabularyJson from "../vocabulary/german/vocabulary.json";
-import italianVocabularyJson from "../vocabulary/italian/vocabulary.json";
-import portugueseVocabularyJson from "../vocabulary/portuguese/vocabulary.json";
-import russianVocabularyJson from "../vocabulary/russian/vocabulary.json";
-import spanishVocabularyJson from "../vocabulary/spanish/vocabulary.json";
 import { getUiVocabularyLanguage } from "../seo/wordPageData";
 import type { TargetLanguageSlug, UiLanguageCode } from "../seo/slugs";
-import { fixMojibake } from "../../utils/fixMojibake";
 
 export {
   getAllEnglishVerbListPaths,
@@ -24,46 +16,27 @@ export interface EnglishVerbListItem {
   verb: string;
 }
 
-interface EnglishVocabularyItem {
-  concept_id?: string | null;
-  definiton?: string | null;
-  word_lemma?: string | null;
+interface CompactVocabularyItem {
+  definition: string;
+  wordLemma: string;
 }
 
 export const ENGLISH_VERB_LIST_ITEMS = englishVerbListJson as EnglishVerbListItem[];
-const VOCABULARY_BY_LANGUAGE: Record<TargetLanguageSlug, EnglishVocabularyItem[]> = {
-  english: englishVocabularyJson as EnglishVocabularyItem[],
-  french: frenchVocabularyJson as EnglishVocabularyItem[],
-  german: germanVocabularyJson as EnglishVocabularyItem[],
-  italian: italianVocabularyJson as EnglishVocabularyItem[],
-  portuguese: portugueseVocabularyJson as EnglishVocabularyItem[],
-  russian: russianVocabularyJson as EnglishVocabularyItem[],
-  spanish: spanishVocabularyJson as EnglishVocabularyItem[],
-};
+const vocabularyModules = import.meta.glob("./lookup/*.json", {
+  eager: true,
+}) as Record<
+  string,
+  { default: { targetLanguage: TargetLanguageSlug; byId: Record<string, CompactVocabularyItem> } }
+>;
 
-function normalizeVocabularyItem(item: EnglishVocabularyItem) {
-  return {
-    definition: fixMojibake(String(item.definiton ?? "").trim()),
-    wordLemma: fixMojibake(String(item.word_lemma ?? "").trim()),
-  };
-}
-
-function createVocabularyById(items: EnglishVocabularyItem[]) {
-  return new Map(
-    items
-      .map((item) => [String(item.concept_id ?? "").trim(), normalizeVocabularyItem(item)] as const)
-      .filter(([conceptId]) => conceptId.length > 0),
-  );
-}
-
-const vocabularyByLanguageAndId: Record<TargetLanguageSlug, Map<string, ReturnType<typeof normalizeVocabularyItem>>> = {
-  english: createVocabularyById(VOCABULARY_BY_LANGUAGE.english),
-  french: createVocabularyById(VOCABULARY_BY_LANGUAGE.french),
-  german: createVocabularyById(VOCABULARY_BY_LANGUAGE.german),
-  italian: createVocabularyById(VOCABULARY_BY_LANGUAGE.italian),
-  portuguese: createVocabularyById(VOCABULARY_BY_LANGUAGE.portuguese),
-  russian: createVocabularyById(VOCABULARY_BY_LANGUAGE.russian),
-  spanish: createVocabularyById(VOCABULARY_BY_LANGUAGE.spanish),
+const vocabularyByLanguageAndId: Record<TargetLanguageSlug, Map<string, CompactVocabularyItem>> = {
+  english: new Map(Object.entries(vocabularyModules["./lookup/english.json"]?.default.byId ?? {})),
+  french: new Map(Object.entries(vocabularyModules["./lookup/french.json"]?.default.byId ?? {})),
+  german: new Map(Object.entries(vocabularyModules["./lookup/german.json"]?.default.byId ?? {})),
+  italian: new Map(Object.entries(vocabularyModules["./lookup/italian.json"]?.default.byId ?? {})),
+  portuguese: new Map(Object.entries(vocabularyModules["./lookup/portuguese.json"]?.default.byId ?? {})),
+  russian: new Map(Object.entries(vocabularyModules["./lookup/russian.json"]?.default.byId ?? {})),
+  spanish: new Map(Object.entries(vocabularyModules["./lookup/spanish.json"]?.default.byId ?? {})),
 };
 
 function getVocabularyEntryForUiLanguage(id: string, uiLang: UiLanguageCode) {

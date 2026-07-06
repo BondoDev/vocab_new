@@ -8,6 +8,11 @@ import { getEnglishVerbListPath, resolveEnglishVerbListRoute } from "../../data/
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordSlugs";
+import {
+  resolveWordSeoHubRoute,
+  getWordSeoHubSummaryPath,
+  getWordSeoHubLevelPath,
+} from "../../data/seo/wordHubRoutes";
 
 interface UILanguageSwitcherProps {
   variant?: "default" | "centered-modal";
@@ -85,6 +90,25 @@ export function UILanguageSwitcher({
       const seoHubRoute = resolveSeoHubRoute(location.pathname);
       if (seoHubRoute) {
         const nextPath = getSeoHubPath(code);
+        if (nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+        setUILanguage(code);
+        setIsOpen(false);
+        return;
+      }
+
+      const wordSeoHubRoute = resolveWordSeoHubRoute(location.pathname);
+      if (wordSeoHubRoute) {
+        const nextPath =
+          wordSeoHubRoute.kind === "summary"
+            ? getWordSeoHubSummaryPath(code, wordSeoHubRoute.targetLanguage)
+            : getWordSeoHubLevelPath(
+                code,
+                wordSeoHubRoute.targetLanguage,
+                wordSeoHubRoute.level,
+                wordSeoHubRoute.page,
+              );
         if (nextPath !== location.pathname) {
           navigate(nextPath);
         }

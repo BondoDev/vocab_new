@@ -10,25 +10,11 @@ const rootDir = path.resolve(__dirname, "..");
 const stageDir = path.join(rootDir, ".tmp-word-ssr-package");
 
 const requiredFiles = [
-  "dist/index.html",
   "server/word-ssr-handler.mjs",
   "server/word-ssr-http.mjs",
   "server/word-ssr-runtime.mjs",
   "server-build/entry-server.js",
-  "src/data/interface/english_interface.json",
-  "src/data/interface/spanish_interface.json",
-  "src/data/interface/french_interface.json",
-  "src/data/interface/german_interface.json",
-  "src/data/interface/italian_interface.json",
-  "src/data/interface/portuguese_interface.json",
-  "src/data/interface/russian_interface.json",
-  "src/data/vocabulary/english/vocabulary.json",
-  "src/data/vocabulary/spanish/vocabulary.json",
-  "src/data/vocabulary/french/vocabulary.json",
-  "src/data/vocabulary/german/vocabulary.json",
-  "src/data/vocabulary/italian/vocabulary.json",
-  "src/data/vocabulary/portuguese/vocabulary.json",
-  "src/data/vocabulary/russian/vocabulary.json",
+  "server-build/ssr-template.html",
 ];
 
 function readText(relativePath) {
@@ -61,13 +47,10 @@ async function prepareStageDirectory() {
   await fsp.mkdir(stageDir, { recursive: true });
 
   await copyFileToStage("package.json");
-  await copyFileToStage("dist/index.html");
   await copyFileToStage("server/word-ssr-handler.mjs");
   await copyFileToStage("server/word-ssr-http.mjs");
   await copyFileToStage("server/word-ssr-runtime.mjs");
   await copyDirectoryToStage("server-build");
-  await copyDirectoryToStage("src/data/interface");
-  await copyDirectoryToStage("src/data/vocabulary");
 }
 
 async function verifyStageImport() {
@@ -152,7 +135,6 @@ async function main() {
 
   const packagedSizeBytes = getDirectorySize(stageDir);
   const serverBuildSizeBytes = getDirectorySize(path.join(rootDir, "server-build"));
-  const vocabularySizeBytes = getDirectorySize(path.join(rootDir, "src", "data", "vocabulary"));
 
   console.log(
     JSON.stringify(
@@ -161,7 +143,6 @@ async function main() {
         requiredFiles,
         packagedSizeBytes,
         serverBuildSizeBytes,
-        vocabularySizeBytes,
         stageDir,
       },
       null,
