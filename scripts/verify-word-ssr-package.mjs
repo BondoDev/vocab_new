@@ -15,20 +15,6 @@ const requiredFiles = [
   "server/word-ssr-http.mjs",
   "server/word-ssr-runtime.mjs",
   "server-build/entry-server.js",
-  "src/data/interface/english_interface.json",
-  "src/data/interface/spanish_interface.json",
-  "src/data/interface/french_interface.json",
-  "src/data/interface/german_interface.json",
-  "src/data/interface/italian_interface.json",
-  "src/data/interface/portuguese_interface.json",
-  "src/data/interface/russian_interface.json",
-  "src/data/vocabulary/english/vocabulary.json",
-  "src/data/vocabulary/spanish/vocabulary.json",
-  "src/data/vocabulary/french/vocabulary.json",
-  "src/data/vocabulary/german/vocabulary.json",
-  "src/data/vocabulary/italian/vocabulary.json",
-  "src/data/vocabulary/portuguese/vocabulary.json",
-  "src/data/vocabulary/russian/vocabulary.json",
 ];
 
 function readText(relativePath) {
@@ -66,8 +52,6 @@ async function prepareStageDirectory() {
   await copyFileToStage("server/word-ssr-http.mjs");
   await copyFileToStage("server/word-ssr-runtime.mjs");
   await copyDirectoryToStage("server-build");
-  await copyDirectoryToStage("src/data/interface");
-  await copyDirectoryToStage("src/data/vocabulary");
 }
 
 async function verifyStageImport() {
@@ -152,7 +136,6 @@ async function main() {
 
   const packagedSizeBytes = getDirectorySize(stageDir);
   const serverBuildSizeBytes = getDirectorySize(path.join(rootDir, "server-build"));
-  const vocabularySizeBytes = getDirectorySize(path.join(rootDir, "src", "data", "vocabulary"));
 
   console.log(
     JSON.stringify(
@@ -161,7 +144,6 @@ async function main() {
         requiredFiles,
         packagedSizeBytes,
         serverBuildSizeBytes,
-        vocabularySizeBytes,
         stageDir,
       },
       null,

@@ -351,6 +351,16 @@ const wordHubDataSource = fs.readFileSync(
   path.join(rootDir, "src", "data", "seo", "wordHubData.ts"),
   "utf8",
 );
+const englishVerbListSource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "englishVerbList", "index.ts"),
+  "utf8",
+);
+const levelBrowseWordsSource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "seo", "levelBrowseWords.ts"),
+  "utf8",
+);
+const entryServerSource = fs.readFileSync(path.join(rootDir, "src", "entry-server.tsx"), "utf8");
+const vercelConfigSource = fs.readFileSync(path.join(rootDir, "vercel.json"), "utf8");
 const coreSitemapXml = fs.readFileSync(
   path.join(rootDir, "public", "sitemaps", "sitemap-core.xml"),
   "utf8",
@@ -363,6 +373,46 @@ assert.ok(
 assert.ok(
   !wordHubDataSource.includes('import.meta.glob("../vocabulary/*/vocabulary.json"'),
   "word hub data should not eagerly import full vocabulary JSON files",
+);
+assert.ok(
+  englishVerbListSource.includes('import.meta.glob("./lookup/*.json"'),
+  "English verb list data should read compact generated lookup JSON files",
+);
+assert.ok(
+  !englishVerbListSource.includes('../vocabulary/english/vocabulary.json'),
+  "English verb list data should not statically import full vocabulary JSON files",
+);
+assert.ok(
+  levelBrowseWordsSource.includes('import.meta.glob("./level-browse-preview/*.json"'),
+  "level browse data should read compact preview JSON files",
+);
+assert.ok(
+  !levelBrowseWordsSource.includes('import.meta.glob("../vocabulary/*/vocabulary.json"'),
+  "level browse data should not eagerly import full vocabulary JSON files",
+);
+assert.ok(
+  entryServerSource.includes('import.meta.glob("./data/vocabulary/*/vocabulary.json"'),
+  "SSR entry server should load vocabulary via bundled JSON modules",
+);
+assert.ok(
+  entryServerSource.includes('import.meta.glob("./data/interface/*.json"'),
+  "SSR entry server should load interface data via bundled JSON modules",
+);
+assert.ok(
+  !entryServerSource.includes("readFileSync("),
+  "SSR entry server should not filesystem-read source JSON files at runtime",
+);
+assert.ok(
+  vercelConfigSource.includes('"includeFiles": "{dist/index.html,server-build/**}"'),
+  "Vercel SSR function should include compiled server-build assets",
+);
+assert.ok(
+  !vercelConfigSource.includes("src/data/vocabulary"),
+  "Vercel SSR function should not force raw vocabulary JSON into the package",
+);
+assert.ok(
+  !vercelConfigSource.includes("src/data/interface"),
+  "Vercel SSR function should not force raw interface JSON into the package",
 );
 assert.ok(
   /href:\s*`\$\{origin\}\$\{buildWordPath\(lang,\s*targetLanguage,\s*wordLemma,\s*conceptId\)\}`/m.test(

@@ -130,7 +130,7 @@ function buildMinimalNotFoundResponse() {
 export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const normalizedPathname = normalizePathname(pathname);
   const entryServer = await loadEntryServerBundle();
-  const resolution = entryServer.resolveWordSeoRequest(normalizedPathname);
+  const resolution = await entryServer.resolveWordSeoRequest(normalizedPathname);
 
   if (resolution.kind === "redirect") {
     return {

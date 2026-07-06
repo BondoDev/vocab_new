@@ -9,6 +9,20 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "portuguese", "russian"];
 const SUPPORTED_LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"];
 const OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "word-hub-pages");
+const ENGLISH_VERB_LIST_PATH = path.join(
+  ROOT_DIR,
+  "src",
+  "data",
+  "lists",
+  "list_of_100_most_used_verb.json",
+);
+const ENGLISH_VERB_LOOKUP_DIR = path.join(
+  ROOT_DIR,
+  "src",
+  "data",
+  "englishVerbList",
+  "lookup",
+);
 
 const UTF8_DECODER = new TextDecoder("utf-8", { fatal: false });
 const WINDOWS_1251_DECODER = new TextDecoder("windows-1251", { fatal: false });
@@ -203,6 +217,56 @@ async function buildWordHubFile(targetLanguage) {
   );
 }
 
+async function buildEnglishVerbLookupFiles() {
+  const rawVerbList = await fs.readFile(ENGLISH_VERB_LIST_PATH, "utf8");
+  const englishVerbList = JSON.parse(rawVerbList.replace(/^\uFEFF/, ""));
+  const verbIds = new Set(
+    englishVerbList
+      .map((item) => String(item?.id ?? "").trim())
+      .filter((id) => id.length > 0),
+  );
+
+  await fs.mkdir(ENGLISH_VERB_LOOKUP_DIR, { recursive: true });
+  const existingFiles = await fs.readdir(ENGLISH_VERB_LOOKUP_DIR);
+  await Promise.all(
+    existingFiles
+      .filter((name) => name.endsWith(".json"))
+      .map((name) => fs.rm(path.join(ENGLISH_VERB_LOOKUP_DIR, name), { force: true })),
+  );
+
+  for (const targetLanguage of TARGET_LANGUAGES) {
+    const vocabPath = path.join(
+      ROOT_DIR,
+      "src",
+      "data",
+      "vocabulary",
+      targetLanguage,
+      "vocabulary.json",
+    );
+    const raw = await fs.readFile(vocabPath, "utf8");
+    const vocabulary = JSON.parse(raw.replace(/^\uFEFF/, ""));
+    const byId = {};
+
+    for (const entry of vocabulary) {
+      const conceptId = String(entry.concept_id ?? "").trim();
+      if (!verbIds.has(conceptId) || byId[conceptId]) {
+        continue;
+      }
+
+      byId[conceptId] = {
+        definition: fixMojibake(String(entry.definiton ?? "").trim()),
+        wordLemma: fixMojibake(String(entry.word_lemma ?? "").trim()),
+      };
+    }
+
+    await fs.writeFile(
+      path.join(ENGLISH_VERB_LOOKUP_DIR, `${targetLanguage}.json`),
+      `${JSON.stringify({ targetLanguage, byId })}\n`,
+      "utf8",
+    );
+  }
+}
+
 async function main() {
   await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
@@ -216,6 +280,8 @@ async function main() {
   for (const targetLanguage of TARGET_LANGUAGES) {
     await buildWordHubFile(targetLanguage);
   }
+
+  await buildEnglishVerbLookupFiles();
 
   console.log(`Generated compact word hub data in ${OUTPUT_DIR}`);
 }
