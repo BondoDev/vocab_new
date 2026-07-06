@@ -24,6 +24,11 @@ export interface LegacyWordRouteMatch extends WordRouteMatch {
   conceptId: string;
 }
 
+export interface LegacySlugFormatWordRouteMatch extends WordRouteMatch {
+  routeKind: "legacy-slug-format";
+  conceptId: string;
+}
+
 export interface SlugOnlyWordRouteMatch extends WordRouteMatch {
   routeKind: "slug-only";
   conceptId: null;
@@ -36,6 +41,7 @@ export interface CanonicalWordPageRouteMatch extends CanonicalWordRouteMatch {
 export type ParsedWordRoute =
   | CanonicalWordRouteMatch
   | LegacyWordRouteMatch
+  | LegacySlugFormatWordRouteMatch
   | SlugOnlyWordRouteMatch;
 
 // Only these word-page families are emitted as crawlable HTML today.
@@ -140,25 +146,42 @@ export function parseWordRoute(
         return null;
       }
       if (canonicalParts.length === 2) {
-        const [wordSlug, conceptIdRaw] = canonicalParts;
+        const [rawWordSlug, conceptIdRaw] = canonicalParts;
         const conceptId = conceptIdRaw.trim();
-        if (wordSlug.length === 0 || !CONCEPT_ID_PATTERN.test(conceptId)) {
+        if (rawWordSlug.length === 0 || !CONCEPT_ID_PATTERN.test(conceptId)) {
           return null;
+        }
+
+        // Older builds preserved accents/diacritics in slugs; wordToSlug now
+        // strips them. Treat any mismatch as a stale slug format to redirect,
+        // rather than a dead link, so previously indexed URLs keep working.
+        const normalizedWordSlug = wordToSlug(rawWordSlug);
+        if (normalizedWordSlug.length === 0) {
+          return null;
+        }
+        if (normalizedWordSlug !== rawWordSlug) {
+          return {
+            routeKind: "legacy-slug-format",
+            uiLang: uiLangRaw,
+            targetLanguage,
+            wordSlug: normalizedWordSlug,
+            conceptId,
+          };
         }
 
         return {
           routeKind: "canonical",
           uiLang: uiLangRaw,
           targetLanguage,
-          wordSlug,
+          wordSlug: rawWordSlug,
           conceptId,
         };
       }
 
       const legacyMatch = suffix.match(/^(.*)-((?:A1|A2|B1|B2|C1|C2)-\d{5})$/);
       if (legacyMatch) {
-        const [, wordSlug, conceptId] = legacyMatch;
-        if (wordSlug.length === 0) {
+        const [, rawWordSlug, conceptId] = legacyMatch;
+        if (rawWordSlug.length === 0) {
           return null;
         }
 
@@ -166,7 +189,7 @@ export function parseWordRoute(
           routeKind: "legacy-single-hyphen",
           uiLang: uiLangRaw,
           targetLanguage,
-          wordSlug,
+          wordSlug: wordToSlug(rawWordSlug) || rawWordSlug,
           conceptId,
         };
       }

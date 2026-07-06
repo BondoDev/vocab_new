@@ -229,7 +229,10 @@ export async function resolveWordSeoRequest(url: string): Promise<WordSeoRequest
     };
   }
 
-  if (parsedWordRoute.routeKind === "legacy-single-hyphen") {
+  if (
+    parsedWordRoute.routeKind === "legacy-single-hyphen" ||
+    parsedWordRoute.routeKind === "legacy-slug-format"
+  ) {
     return {
       kind: "redirect",
       pathname,

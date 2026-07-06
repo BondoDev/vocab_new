@@ -145,12 +145,18 @@ const WORD_SITEMAP_DEFINITIONS = [
 ];
 const WORD_SITEMAP_PAIR_LIMITS = {};
 
+// Must stay byte-for-byte in sync with wordToSlug in src/data/seo/wordSlugs.ts.
+// This script runs as plain Node ESM (no TS loader), so it can't import that
+// module directly. A divergence here silently generates sitemap URLs the SSR
+// resolver can never match, which 410s them permanently once indexed.
 function wordToSlug(lemma) {
   if (typeof lemma !== "string") return "";
   return lemma
+    .normalize("NFKD")
     .toLowerCase()
-    .replace(/[''']/g, "")
-    .replace(/[^a-z0-9À-ɏЀ-ӿ\s-]/g, "")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/['’‘`]/g, "")
+    .replace(/[^a-z0-9Ѐ-ӿ\s-]/gi, "")
     .trim()
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")

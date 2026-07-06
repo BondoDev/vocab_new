@@ -125,6 +125,33 @@ assert.equal(
   "malformed canonical separators should be invalid",
 );
 
+const accentedCanonicalRoute = wordSlugs.parseWordRoute(
+  "en",
+  `spanish-word-${encodeURIComponent("amplificación")}--C1-00035`,
+);
+assert.deepEqual(
+  accentedCanonicalRoute,
+  {
+    routeKind: "legacy-slug-format",
+    uiLang: "en",
+    targetLanguage: "spanish",
+    wordSlug: "amplificacion",
+    conceptId: "C1-00035",
+  },
+  "stale accented slugs must redirect to the normalized canonical slug, not 410",
+);
+
+const accentedLegacySingleHyphenRoute = wordSlugs.parseWordRoute(
+  "en",
+  `spanish-word-${encodeURIComponent("amplificación")}-C1-00035`,
+);
+assert.equal(accentedLegacySingleHyphenRoute?.routeKind, "legacy-single-hyphen");
+assert.equal(
+  accentedLegacySingleHyphenRoute?.wordSlug,
+  "amplificacion",
+  "legacy single-hyphen redirects must also normalize accented slugs",
+);
+
 const aboutRecord = wordPageData.findCanonicalWordRecord(
   englishVocabulary,
   "about",
