@@ -10,9 +10,8 @@ import { isValidBrowseWordLemma } from "./browseWordValidation";
 import { fixMojibake } from "../../utils/fixMojibake";
 
 interface VocabularyEntry {
-  concept_id: string;
-  word_lemma: string;
-  level: string;
+  targetLanguage: TargetLanguageSlug;
+  levels: Record<Level, Array<[conceptId: string, word: string]>>;
 }
 
 export interface WordSeoHubWordLink {
@@ -42,53 +41,34 @@ export interface WordSeoHubLevelPageData {
   words: WordSeoHubWordLink[];
 }
 
-const vocabularyModules = import.meta.glob("../vocabulary/*/vocabulary.json", {
+const vocabularyModules = import.meta.glob("./word-hub-pages/*.json", {
   eager: true,
-}) as Record<string, { default: VocabularyEntry[] }>;
-
-const LEVEL_DISPLAY: Record<Level, string> = {
-  a1: "A1",
-  a2: "A2",
-  b1: "B1",
-  b2: "B2",
-  c1: "C1",
-  c2: "C2",
-};
+}) as Record<string, { default: VocabularyEntry }>;
 
 function loadWordsByLevel(targetLanguage: TargetLanguageSlug): Map<Level, Array<{ conceptId: string; word: string }>> {
   const rawVocabulary =
-    vocabularyModules[`../vocabulary/${targetLanguage}/vocabulary.json`]?.default ?? [];
-
+    vocabularyModules[`./word-hub-pages/${targetLanguage}.json`]?.default ??
+    { targetLanguage, levels: {} as VocabularyEntry["levels"] };
   const buckets = new Map<Level, Array<{ conceptId: string; word: string }>>();
   for (const level of SUPPORTED_LEVELS) {
-    buckets.set(level, []);
-  }
+    const words = rawVocabulary.levels[level] ?? [];
+    buckets.set(
+      level,
+      words
+        .map(([conceptId, wordLemma]) => {
+          const normalizedConceptId = String(conceptId ?? "").trim();
+          const normalizedWord = fixMojibake(String(wordLemma ?? "")).trim();
+          if (!normalizedConceptId || !isValidBrowseWordLemma(normalizedWord)) {
+            return null;
+          }
 
-  const seen = new Set<string>();
-  for (const entry of rawVocabulary) {
-    const level = SUPPORTED_LEVELS.find(
-      (item) => LEVEL_DISPLAY[item] === String(entry.level).toUpperCase(),
+          return {
+            conceptId: normalizedConceptId,
+            word: normalizedWord,
+          };
+        })
+        .filter((word): word is { conceptId: string; word: string } => Boolean(word)),
     );
-    if (!level) {
-      continue;
-    }
-
-    const conceptId = String(entry.concept_id ?? "").trim();
-    const wordLemma = fixMojibake(String(entry.word_lemma ?? "")).trim();
-    if (!conceptId || !isValidBrowseWordLemma(wordLemma)) {
-      continue;
-    }
-
-    const key = `${targetLanguage}:${conceptId}`;
-    if (seen.has(key)) {
-      continue;
-    }
-
-    seen.add(key);
-    buckets.get(level)?.push({
-      conceptId,
-      word: wordLemma,
-    });
   }
 
   return buckets;

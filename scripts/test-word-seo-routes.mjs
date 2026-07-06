@@ -347,11 +347,23 @@ const englishVerbListPageSource = fs.readFileSync(
   "utf8",
 );
 const metadataSource = fs.readFileSync(path.join(rootDir, "src", "seo", "metadata.ts"), "utf8");
+const wordHubDataSource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "seo", "wordHubData.ts"),
+  "utf8",
+);
 const coreSitemapXml = fs.readFileSync(
   path.join(rootDir, "public", "sitemaps", "sitemap-core.xml"),
   "utf8",
 );
 
+assert.ok(
+  wordHubDataSource.includes('import.meta.glob("./word-hub-pages/*.json"'),
+  "word hub data should read compact generated hub JSON files",
+);
+assert.ok(
+  !wordHubDataSource.includes('import.meta.glob("../vocabulary/*/vocabulary.json"'),
+  "word hub data should not eagerly import full vocabulary JSON files",
+);
 assert.ok(
   /href:\s*`\$\{origin\}\$\{buildWordPath\(lang,\s*targetLanguage,\s*wordLemma,\s*conceptId\)\}`/m.test(
     metadataSource,
