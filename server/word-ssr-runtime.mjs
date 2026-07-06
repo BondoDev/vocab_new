@@ -83,21 +83,6 @@ async function loadEntryServerBundle() {
   return entryServerPromise;
 }
 
-async function readStaticHtmlForPath(pathname) {
-  const normalizedRoute = pathname.replace(/^\/+/, "");
-  const htmlPath = path.join(DIST_DIR, normalizedRoute, "index.html");
-
-  try {
-    return await fs.readFile(htmlPath, "utf8");
-  } catch (error) {
-    if (error && typeof error === "object" && error.code === "ENOENT") {
-      return null;
-    }
-
-    throw error;
-  }
-}
-
 async function renderHtmlResponse(pathname, siteOrigin) {
   const [template, entryServer] = await Promise.all([
     getTemplate(),
@@ -146,21 +131,6 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
   }
 
   if (resolution.kind === "canonical") {
-    const staticHtml = await readStaticHtmlForPath(normalizedPathname);
-    if (staticHtml) {
-      return {
-        status: 200,
-        headers: {
-          "Content-Type": "text/html; charset=utf-8",
-          "Cache-Control": buildCacheHeaders(200),
-        },
-        body: staticHtml,
-        routeKind: resolution.kind,
-        pathname: normalizedPathname,
-        source: "static",
-      };
-    }
-
     const body = await renderHtmlResponse(normalizedPathname, siteOrigin);
     return {
       status: 200,
@@ -171,7 +141,6 @@ export async function handleWordSsrPathname(pathname, siteOrigin = DEFAULT_SITE_
       body,
       routeKind: resolution.kind,
       pathname: normalizedPathname,
-      source: "dynamic",
     };
   }
 
