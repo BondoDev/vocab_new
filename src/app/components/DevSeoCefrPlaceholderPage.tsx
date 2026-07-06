@@ -265,11 +265,11 @@ function buildSeoMetadata(item: SeoCefrContentItem, pathPrefix: string): SeoMeta
   const wordsUnitByUiLang = {
     en: "words",
     es: "palabras",
-    de: "Worter",
+    de: "Wörter",
     fr: "mots",
     it: "parole",
     pt: "palavras",
-    ru: "slov",
+    ru: "слов",
   } as const;
   const wordsUnit = wordsUnitByUiLang[item.uiLanguage] ?? wordsUnitByUiLang.en;
   const normalizedTargetLanguage = normalizeTargetLanguage(item.targetLanguage);

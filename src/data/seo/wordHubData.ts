@@ -1,9 +1,8 @@
-import type { Level, UiLanguageCode } from "./slugs";
-import { SUPPORTED_LEVELS, SUPPORTED_UI_LANGUAGES } from "./slugs";
+import type { Level, TargetLanguageSlug, UiLanguageCode } from "./slugs";
+import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, SUPPORTED_UI_LANGUAGES } from "./slugs";
 import { buildWordPath } from "./wordSlugs";
 import {
   WORD_HUB_PAGE_SIZE,
-  WORD_HUB_TARGET_LANGUAGE,
   getWordSeoHubLevelPath,
   getWordSeoHubSummaryPath,
 } from "./wordHubRoutes";
@@ -43,7 +42,7 @@ export interface WordSeoHubLevelPageData {
   words: WordSeoHubWordLink[];
 }
 
-const vocabularyModules = import.meta.glob("../vocabulary/english/vocabulary.json", {
+const vocabularyModules = import.meta.glob("../vocabulary/*/vocabulary.json", {
   eager: true,
 }) as Record<string, { default: VocabularyEntry[] }>;
 
@@ -56,12 +55,11 @@ const LEVEL_DISPLAY: Record<Level, string> = {
   c2: "C2",
 };
 
-const rawVocabulary =
-  vocabularyModules["../vocabulary/english/vocabulary.json"]?.default ?? [];
+function loadWordsByLevel(targetLanguage: TargetLanguageSlug): Map<Level, Array<{ conceptId: string; word: string }>> {
+  const rawVocabulary =
+    vocabularyModules[`../vocabulary/${targetLanguage}/vocabulary.json`]?.default ?? [];
 
-const WORDS_BY_LEVEL = (() => {
   const buckets = new Map<Level, Array<{ conceptId: string; word: string }>>();
-
   for (const level of SUPPORTED_LEVELS) {
     buckets.set(level, []);
   }
@@ -81,7 +79,7 @@ const WORDS_BY_LEVEL = (() => {
       continue;
     }
 
-    const key = `${WORD_HUB_TARGET_LANGUAGE}:${conceptId}`;
+    const key = `${targetLanguage}:${conceptId}`;
     if (seen.has(key)) {
       continue;
     }
@@ -94,15 +92,31 @@ const WORDS_BY_LEVEL = (() => {
   }
 
   return buckets;
-})();
+}
+
+const WORDS_BY_LEVEL_BY_TARGET_LANGUAGE = new Map<
+  TargetLanguageSlug,
+  Map<Level, Array<{ conceptId: string; word: string }>>
+>();
+
+function getWordsByLevel(targetLanguage: TargetLanguageSlug): Map<Level, Array<{ conceptId: string; word: string }>> {
+  let wordsByLevel = WORDS_BY_LEVEL_BY_TARGET_LANGUAGE.get(targetLanguage);
+  if (!wordsByLevel) {
+    wordsByLevel = loadWordsByLevel(targetLanguage);
+    WORDS_BY_LEVEL_BY_TARGET_LANGUAGE.set(targetLanguage, wordsByLevel);
+  }
+  return wordsByLevel;
+}
 
 export function getWordSeoHubSummaryPageData(
   uiLang: UiLanguageCode,
+  targetLanguage: TargetLanguageSlug,
 ): WordSeoHubSummaryPageData {
+  const wordsByLevel = getWordsByLevel(targetLanguage);
   return {
-    summaryPath: getWordSeoHubSummaryPath(uiLang),
+    summaryPath: getWordSeoHubSummaryPath(uiLang, targetLanguage),
     levels: SUPPORTED_LEVELS.map((level) => {
-      const words = WORDS_BY_LEVEL.get(level) ?? [];
+      const words = wordsByLevel.get(level) ?? [];
       return {
         level,
         totalWords: words.length,
@@ -114,10 +128,12 @@ export function getWordSeoHubSummaryPageData(
 
 export function getWordSeoHubLevelPageData(
   uiLang: UiLanguageCode,
+  targetLanguage: TargetLanguageSlug,
   level: Level,
   page: number,
 ): WordSeoHubLevelPageData | null {
-  const words = WORDS_BY_LEVEL.get(level) ?? [];
+  const wordsByLevel = getWordsByLevel(targetLanguage);
+  const words = wordsByLevel.get(level) ?? [];
   const totalPages = Math.max(1, Math.ceil(words.length / WORD_HUB_PAGE_SIZE));
   if (page < 1 || page > totalPages) {
     return null;
@@ -131,27 +147,33 @@ export function getWordSeoHubLevelPageData(
     page,
     totalPages,
     totalWords: words.length,
-    summaryPath: getWordSeoHubSummaryPath(uiLang),
-    pagePath: getWordSeoHubLevelPath(uiLang, level, page),
+    summaryPath: getWordSeoHubSummaryPath(uiLang, targetLanguage),
+    pagePath: getWordSeoHubLevelPath(uiLang, targetLanguage, level, page),
     words: pageWords.map((word) => ({
       conceptId: word.conceptId,
-      href: buildWordPath(uiLang, WORD_HUB_TARGET_LANGUAGE, word.word, word.conceptId),
+      href: buildWordPath(uiLang, targetLanguage, word.word, word.conceptId),
       word: word.word,
     })),
   };
 }
 
-export function getAllWordSeoHubPaths(): string[] {
+export function getAllWordSeoHubPaths(
+  targetLanguages: TargetLanguageSlug[] = [...SUPPORTED_TARGET_LANGUAGES],
+): string[] {
   const paths: string[] = [];
 
-  for (const uiLang of SUPPORTED_UI_LANGUAGES) {
-    paths.push(getWordSeoHubSummaryPath(uiLang));
+  for (const targetLanguage of targetLanguages) {
+    const wordsByLevel = getWordsByLevel(targetLanguage);
 
-    for (const level of SUPPORTED_LEVELS) {
-      const words = WORDS_BY_LEVEL.get(level) ?? [];
-      const totalPages = Math.max(1, Math.ceil(words.length / WORD_HUB_PAGE_SIZE));
-      for (let page = 1; page <= totalPages; page += 1) {
-        paths.push(getWordSeoHubLevelPath(uiLang, level, page));
+    for (const uiLang of SUPPORTED_UI_LANGUAGES) {
+      paths.push(getWordSeoHubSummaryPath(uiLang, targetLanguage));
+
+      for (const level of SUPPORTED_LEVELS) {
+        const words = wordsByLevel.get(level) ?? [];
+        const totalPages = Math.max(1, Math.ceil(words.length / WORD_HUB_PAGE_SIZE));
+        for (let page = 1; page <= totalPages; page += 1) {
+          paths.push(getWordSeoHubLevelPath(uiLang, targetLanguage, level, page));
+        }
       }
     }
   }

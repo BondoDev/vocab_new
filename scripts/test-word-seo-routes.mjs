@@ -18,6 +18,9 @@ function compileTestModules() {
   const rootNames = [
     path.join(rootDir, "src", "data", "seo", "wordSlugs.ts"),
     path.join(rootDir, "src", "data", "seo", "wordPageData.ts"),
+    path.join(rootDir, "src", "data", "seo", "slugs.ts"),
+    path.join(rootDir, "src", "data", "seo", "hub.ts"),
+    path.join(rootDir, "src", "data", "seo", "wordHubRoutes.ts"),
     path.join(rootDir, "src", "data", "englishVerbList", "routes.ts"),
     path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
@@ -63,6 +66,7 @@ compileTestModules();
 
 const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
 const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPageData.js"));
+const wordHubRoutes = require(path.join(tempDir, "src", "data", "seo", "wordHubRoutes.js"));
 const englishVerbListRoutes = require(path.join(tempDir, "src", "data", "englishVerbList", "routes.js"));
 const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
@@ -75,7 +79,7 @@ function readJson(relativePath) {
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 const englishVerbList = readJson("src/data/lists/list_of_100_most_used_verb.json");
-const unresolvedEnglishVerbListIds = new Set(["A1-00008", "A1-00021"]);
+const unresolvedEnglishVerbListIds = new Set();
 
 const aboutMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "about");
 const answerMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "answer");
@@ -175,6 +179,37 @@ assert.deepEqual(
   missingEnglishVerbEntries.sort(),
   Array.from(unresolvedEnglishVerbListIds).sort(),
   "Unexpected unresolved English verb list IDs",
+);
+
+assert.equal(
+  wordHubRoutes.getWordSeoHubSummaryPath("en", "english"),
+  "/en/seo-pages/english-word-pages",
+);
+assert.equal(
+  wordHubRoutes.getWordSeoHubSummaryPath("es", "german"),
+  "/es/paginas-seo/paginas-palabras-aleman",
+);
+assert.equal(
+  wordHubRoutes.getWordSeoHubLevelPath("ru", "spanish", "b2", 3),
+  "/ru/seo-stranicy/stranicy-slov-ispanskii/b2/page/3",
+);
+assert.deepEqual(
+  wordHubRoutes.resolveWordSeoHubRoute("/fr/pages-seo/pages-mots-russe/c1/page/2"),
+  {
+    kind: "level",
+    uiLang: "fr",
+    targetLanguage: "russian",
+    level: "c1",
+    page: 2,
+  },
+);
+assert.deepEqual(
+  wordHubRoutes.resolveWordSeoHubRoute("/de/seo-seiten/franzoesische-wortseiten"),
+  {
+    kind: "summary",
+    uiLang: "de",
+    targetLanguage: "french",
+  },
 );
 
 const canonicalWordPageData = wordPageData.buildResolvedWordPageData({
@@ -324,7 +359,7 @@ assert.ok(
   "hreflang entries should preserve concept IDs in metadata",
 );
 assert.ok(
-  /return\s*\{\s*title,\s*description,\s*canonical:\s*`\$\{origin\}\$\{pathname\}`,\s*alternates,\s*jsonLd\s*\};/m.test(
+  /return\s*\{\s*title,\s*description,\s*canonical:\s*`\$\{origin\}\$\{pathname\}`,\s*alternates,\s*jsonLd,[\s\S]*\};/m.test(
     metadataSource,
   ),
   "canonical metadata should use the current ID-based pathname",
@@ -346,7 +381,7 @@ assert.ok(
   "English verb list page should render rows from the imported JSON list",
 );
 assert.ok(
-  /buildWordPath\(\s*uiLang,\s*TARGET_LANGUAGE,\s*item\.verb,\s*item\.id\s*\)/m.test(
+  /buildWordPath\(\s*uiLang,\s*TARGET_LANGUAGE,\s*getEnglishVerbWordLemma\(item\.id\),\s*item\.id\s*\)/m.test(
     englishVerbListPageSource,
   ),
   "English verb list page should link rows with the shared word-path helper",

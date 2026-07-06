@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getSeoHubPath } from "../../data/seo/hub";
-import type { Level, UiLanguageCode } from "../../data/seo/slugs";
+import { TARGET_LANGUAGE_TO_UI_LANGUAGE, type Level, type UiLanguageCode } from "../../data/seo/slugs";
 import {
   getWordSeoHubLevelPageData,
   getWordSeoHubSummaryPageData,
@@ -46,8 +46,7 @@ const COPY: Record<
 > = {
   en: {
     summaryTitle: "English Word SEO Pages",
-    summaryIntro:
-      "Browse prerendered index pages for all canonical English word SEO URLs. Each level is split into smaller pages so the hub stays crawlable without becoming too heavy.",
+    summaryIntro: "",
     levelLabel: "Level",
     wordCountLabel: "Words",
     pageCountLabel: "Pages",
@@ -62,60 +61,56 @@ const COPY: Record<
     notFound: "Word index page not found.",
   },
   es: {
-    summaryTitle: "Paginas SEO de palabras en ingles",
-    summaryIntro:
-      "Consulta paginas indice prerenderizadas para todas las URLs canonicas de palabras en ingles. Cada nivel se divide en paginas pequenas para mantener el hub ligero y rastreable.",
+    summaryTitle: "Páginas SEO de palabras en inglés",
+    summaryIntro: "",
     levelLabel: "Nivel",
     wordCountLabel: "Palabras",
-    pageCountLabel: "Paginas",
-    openLevelLabel: "Abrir indice",
+    pageCountLabel: "Páginas",
+    openLevelLabel: "Abrir índice",
     levelTitle: (level, page) =>
-      page > 1 ? `Paginas SEO de palabras en ingles ${level} - Pagina ${page}` : `Paginas SEO de palabras en ingles ${level}`,
+      page > 1 ? `Páginas SEO de palabras en inglés ${level} - Página ${page}` : `Páginas SEO de palabras en inglés ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
-      `Este indice muestra paginas canonicas de palabras en ingles ${level}. Pagina ${page} de ${totalPages}, ${totalWords.toLocaleString("es-ES")} URLs en total.`,
-    backToSeoHub: "Volver a paginas SEO",
-    backToWordIndex: "Volver al indice de palabras en ingles",
-    paginationLabel: "Mas paginas del indice",
-    notFound: "No se encontro la pagina del indice.",
+      `Este índice muestra páginas canónicas de palabras en inglés ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("es-ES")} URLs en total.`,
+    backToSeoHub: "Volver a páginas SEO",
+    backToWordIndex: "Volver al índice de palabras en inglés",
+    paginationLabel: "Más páginas del índice",
+    notFound: "No se encontró la página del índice.",
   },
   fr: {
     summaryTitle: "Pages SEO des mots anglais",
-    summaryIntro:
-      "Parcourez des pages index pre-rendues pour toutes les URL canoniques des mots anglais. Chaque niveau est divise en petites pages pour garder le hub leger et explorable.",
+    summaryIntro: "",
     levelLabel: "Niveau",
     wordCountLabel: "Mots",
     pageCountLabel: "Pages",
-    openLevelLabel: "Ouvrir l index",
+    openLevelLabel: "Ouvrir l'index",
     levelTitle: (level, page) =>
       page > 1 ? `Pages SEO des mots anglais ${level} - Page ${page}` : `Pages SEO des mots anglais ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Cet index liste les pages canoniques des mots anglais ${level}. Page ${page} sur ${totalPages}, ${totalWords.toLocaleString("fr-FR")} URL au total.`,
     backToSeoHub: "Retour aux pages SEO",
-    backToWordIndex: "Retour a l index des mots anglais",
-    paginationLabel: "Autres pages d index",
-    notFound: "Page d index introuvable.",
+    backToWordIndex: "Retour à l'index des mots anglais",
+    paginationLabel: "Autres pages d'index",
+    notFound: "Page d'index introuvable.",
   },
   de: {
-    summaryTitle: "SEO-Seiten fur englische Worter",
-    summaryIntro:
-      "Durchsuchen Sie vorgerenderte Indexseiten fur alle kanonischen englischen Wort-URLs. Jede Stufe ist in kleinere Seiten aufgeteilt, damit der Hub crawlbar und leicht bleibt.",
+    summaryTitle: "SEO-Seiten für englische Wörter",
+    summaryIntro: "",
     levelLabel: "Niveau",
-    wordCountLabel: "Worter",
+    wordCountLabel: "Wörter",
     pageCountLabel: "Seiten",
-    openLevelLabel: "Index offnen",
+    openLevelLabel: "Index öffnen",
     levelTitle: (level, page) =>
-      page > 1 ? `SEO-Seiten fur englische Worter ${level} - Seite ${page}` : `SEO-Seiten fur englische Worter ${level}`,
+      page > 1 ? `SEO-Seiten für englische Wörter ${level} - Seite ${page}` : `SEO-Seiten für englische Wörter ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
-      `Dieser Index listet kanonische englische Wortseiten fur ${level}. Seite ${page} von ${totalPages}, insgesamt ${totalWords.toLocaleString("de-DE")} URLs.`,
-    backToSeoHub: "Zuruck zu SEO-Seiten",
-    backToWordIndex: "Zuruck zum Index englischer Worter",
+      `Dieser Index listet kanonische englische Wortseiten für ${level}. Seite ${page} von ${totalPages}, insgesamt ${totalWords.toLocaleString("de-DE")} URLs.`,
+    backToSeoHub: "Zurück zu SEO-Seiten",
+    backToWordIndex: "Zurück zum Index englischer Wörter",
     paginationLabel: "Weitere Indexseiten",
     notFound: "Indexseite nicht gefunden.",
   },
   it: {
     summaryTitle: "Pagine SEO delle parole inglesi",
-    summaryIntro:
-      "Sfoglia pagine indice prerenderizzate per tutti gli URL canonici delle parole inglesi. Ogni livello e suddiviso in pagine piu piccole per mantenere l hub leggero e crawlable.",
+    summaryIntro: "",
     levelLabel: "Livello",
     wordCountLabel: "Parole",
     pageCountLabel: "Pagine",
@@ -125,43 +120,136 @@ const COPY: Record<
     levelIntro: (level, totalWords, page, totalPages) =>
       `Questo indice elenca le pagine canoniche delle parole inglesi ${level}. Pagina ${page} di ${totalPages}, ${totalWords.toLocaleString("it-IT")} URL totali.`,
     backToSeoHub: "Torna alle pagine SEO",
-    backToWordIndex: "Torna all indice parole inglesi",
-    paginationLabel: "Altre pagine indice",
+    backToWordIndex: "Torna all'indice delle parole inglesi",
+    paginationLabel: "Altre pagine dell'indice",
     notFound: "Pagina indice non trovata.",
   },
   pt: {
-    summaryTitle: "Paginas SEO de palavras em ingles",
-    summaryIntro:
-      "Navegue por paginas indice prerenderizadas para todas as URLs canonicas de palavras em ingles. Cada nivel e dividido em paginas menores para manter o hub leve e rastreavel.",
-    levelLabel: "Nivel",
+    summaryTitle: "Páginas SEO de palavras em inglês",
+    summaryIntro: "",
+    levelLabel: "Nível",
     wordCountLabel: "Palavras",
-    pageCountLabel: "Paginas",
-    openLevelLabel: "Abrir indice",
+    pageCountLabel: "Páginas",
+    openLevelLabel: "Abrir índice",
     levelTitle: (level, page) =>
-      page > 1 ? `Paginas SEO de palavras em ingles ${level} - Pagina ${page}` : `Paginas SEO de palavras em ingles ${level}`,
+      page > 1 ? `Páginas SEO de palavras em inglês ${level} - Página ${page}` : `Páginas SEO de palavras em inglês ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
-      `Este indice lista paginas canonicas de palavras em ingles ${level}. Pagina ${page} de ${totalPages}, ${totalWords.toLocaleString("pt-BR")} URLs no total.`,
-    backToSeoHub: "Voltar para paginas SEO",
-    backToWordIndex: "Voltar ao indice de palavras em ingles",
-    paginationLabel: "Mais paginas do indice",
-    notFound: "Pagina de indice nao encontrada.",
+      `Este índice lista páginas canônicas de palavras em inglês ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("pt-BR")} URLs no total.`,
+    backToSeoHub: "Voltar para páginas SEO",
+    backToWordIndex: "Voltar ao índice de palavras em inglês",
+    paginationLabel: "Mais páginas do índice",
+    notFound: "Página de índice não encontrada.",
   },
   ru: {
-    summaryTitle: "SEO-stranicy angliiskih slov",
-    summaryIntro:
-      "Zdes sobrany predvaritelno otrenderennye indeksnye stranicy dlya vseh kanonicheskih URL angliiskih slov. Kazhdyi uroven razbit na nebolshie stranicy, chtoby hab ostavalsya legkim i udobnym dlya obhoda.",
-    levelLabel: "Uroven",
-    wordCountLabel: "Slova",
-    pageCountLabel: "Stranicy",
-    openLevelLabel: "Otkryt indeks",
+    summaryTitle: "SEO-страницы английских слов",
+    summaryIntro: "",
+    levelLabel: "Уровень",
+    wordCountLabel: "Слова",
+    pageCountLabel: "Страницы",
+    openLevelLabel: "Открыть индекс",
     levelTitle: (level, page) =>
-      page > 1 ? `SEO-stranicy angliiskih slov ${level} - stranica ${page}` : `SEO-stranicy angliiskih slov ${level}`,
+      page > 1 ? `SEO-страницы английских слов ${level} - страница ${page}` : `SEO-страницы английских слов ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
-      `Etot indeks soderzhit kanonicheskie stranicy angliiskih slov urovnya ${level}. Stranica ${page} iz ${totalPages}, vsego ${totalWords.toLocaleString("ru-RU")} URL.`,
-    backToSeoHub: "Nazad k SEO-stranicam",
-    backToWordIndex: "Nazad k indeksu angliiskih slov",
-    paginationLabel: "Drugie stranicy indeksa",
-    notFound: "Stranica indeksa ne naidena.",
+      `Этот индекс содержит канонические страницы английских слов уровня ${level}. Страница ${page} из ${totalPages}, всего ${totalWords.toLocaleString("ru-RU")} URL.`,
+    backToSeoHub: "Назад к SEO-страницам",
+    backToWordIndex: "Назад к индексу английских слов",
+    paginationLabel: "Другие страницы индекса",
+    notFound: "Страница индекса не найдена.",
+  },
+};
+
+// Generic templates for target languages other than English. Simple concatenation,
+// no per-language grammatical inflection (kept consistent with the rest of the app).
+const GENERIC_COPY: Record<
+  UiLanguageCode,
+  {
+    summaryTitle: (languageName: string) => string;
+    summaryIntro: (languageName: string) => string;
+    levelTitle: (languageName: string, level: string, page: number) => string;
+    levelIntro: (
+      languageName: string,
+      level: string,
+      totalWords: number,
+      page: number,
+      totalPages: number,
+    ) => string;
+    backToWordIndex: (languageName: string) => string;
+  }
+> = {
+  en: {
+    summaryTitle: (name) => `${name} Word SEO Pages`,
+    summaryIntro: () => "",
+    levelTitle: (name, level, page) =>
+      page > 1 ? `${name} ${level} Word SEO Pages - Page ${page}` : `${name} ${level} Word SEO Pages`,
+    levelIntro: (name, level, totalWords, page, totalPages) =>
+      `This index lists canonical ${name} ${level} word pages. Page ${page} of ${totalPages}, ${totalWords.toLocaleString("en-US")} total URLs.`,
+    backToWordIndex: (name) => `Back to ${name} word SEO index`,
+  },
+  es: {
+    summaryTitle: (name) => `Páginas SEO de palabras en ${name.toLowerCase()}`,
+    summaryIntro: () => "",
+    levelTitle: (name, level, page) =>
+      page > 1
+        ? `Páginas SEO de palabras en ${name.toLowerCase()} ${level} - Página ${page}`
+        : `Páginas SEO de palabras en ${name.toLowerCase()} ${level}`,
+    levelIntro: (name, level, totalWords, page, totalPages) =>
+      `Este índice muestra páginas canónicas de palabras en ${name.toLowerCase()} ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("es-ES")} URLs en total.`,
+    backToWordIndex: (name) => `Volver al índice de palabras en ${name.toLowerCase()}`,
+  },
+  fr: {
+    summaryTitle: (name) => `Pages SEO des mots ${name.toLowerCase()}`,
+    summaryIntro: () => "",
+    levelTitle: (name, level, page) =>
+      page > 1
+        ? `Pages SEO des mots ${name.toLowerCase()} ${level} - Page ${page}`
+        : `Pages SEO des mots ${name.toLowerCase()} ${level}`,
+    levelIntro: (name, level, totalWords, page, totalPages) =>
+      `Cet index liste les pages canoniques des mots ${name.toLowerCase()} ${level}. Page ${page} sur ${totalPages}, ${totalWords.toLocaleString("fr-FR")} URL au total.`,
+    backToWordIndex: (name) => `Retour à l'index des mots ${name.toLowerCase()}`,
+  },
+  de: {
+    summaryTitle: (name) => `SEO-Seiten für ${name.toLowerCase()}e Wörter`,
+    summaryIntro: () => "",
+    levelTitle: (name, level, page) =>
+      page > 1
+        ? `SEO-Seiten für ${name.toLowerCase()}e Wörter ${level} - Seite ${page}`
+        : `SEO-Seiten für ${name.toLowerCase()}e Wörter ${level}`,
+    levelIntro: (name, level, totalWords, page, totalPages) =>
+      `Dieser Index listet kanonische ${name.toLowerCase()}e Wortseiten für ${level}. Seite ${page} von ${totalPages}, insgesamt ${totalWords.toLocaleString("de-DE")} URLs.`,
+    backToWordIndex: (name) => `Zurück zum Index ${name.toLowerCase()}er Wörter`,
+  },
+  it: {
+    summaryTitle: (name) => `Pagine SEO delle parole ${name.toLowerCase()}`,
+    summaryIntro: () => "",
+    levelTitle: (name, level, page) =>
+      page > 1
+        ? `Pagine SEO delle parole ${name.toLowerCase()} ${level} - Pagina ${page}`
+        : `Pagine SEO delle parole ${name.toLowerCase()} ${level}`,
+    levelIntro: (name, level, totalWords, page, totalPages) =>
+      `Questo indice elenca le pagine canoniche delle parole ${name.toLowerCase()} ${level}. Pagina ${page} di ${totalPages}, ${totalWords.toLocaleString("it-IT")} URL totali.`,
+    backToWordIndex: (name) => `Torna all'indice delle parole ${name.toLowerCase()}`,
+  },
+  pt: {
+    summaryTitle: (name) => `Páginas SEO de palavras em ${name.toLowerCase()}`,
+    summaryIntro: () => "",
+    levelTitle: (name, level, page) =>
+      page > 1
+        ? `Páginas SEO de palavras em ${name.toLowerCase()} ${level} - Página ${page}`
+        : `Páginas SEO de palavras em ${name.toLowerCase()} ${level}`,
+    levelIntro: (name, level, totalWords, page, totalPages) =>
+      `Este índice lista páginas canônicas de palavras em ${name.toLowerCase()} ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("pt-BR")} URLs no total.`,
+    backToWordIndex: (name) => `Voltar ao índice de palavras em ${name.toLowerCase()}`,
+  },
+  ru: {
+    summaryTitle: (name) => `SEO-страницы слов: ${name.toLowerCase()}`,
+    summaryIntro: () => "",
+    levelTitle: (name, level, page) =>
+      page > 1
+        ? `SEO-страницы слов: ${name.toLowerCase()} ${level} - страница ${page}`
+        : `SEO-страницы слов: ${name.toLowerCase()} ${level}`,
+    levelIntro: (name, level, totalWords, page, totalPages) =>
+      `Этот индекс содержит канонические страницы слов (${name.toLowerCase()}) уровня ${level}. Страница ${page} из ${totalPages}, всего ${totalWords.toLocaleString("ru-RU")} URL.`,
+    backToWordIndex: (name) => `Назад к индексу слов (${name.toLowerCase()})`,
   },
 };
 
@@ -177,18 +265,33 @@ function getPaginationRange(current: number, total: number): number[] {
 export function WordSeoHubPage({ route, uiLang }: WordSeoHubPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
-  const { uiLanguage } = useLanguage();
+  const { t, uiLanguage } = useLanguage();
   const contentUiLang = uiLanguage;
-  const copy = COPY[contentUiLang] ?? COPY.en;
+  const isEnglishTarget = route.targetLanguage === "english";
+  const languageName = t(`languageNames.${TARGET_LANGUAGE_TO_UI_LANGUAGE[route.targetLanguage]}`);
+  const englishCopy = COPY[contentUiLang] ?? COPY.en;
+  const genericCopy = GENERIC_COPY[contentUiLang] ?? GENERIC_COPY.en;
+  const copy = isEnglishTarget
+    ? englishCopy
+    : {
+        ...englishCopy,
+        summaryTitle: genericCopy.summaryTitle(languageName),
+        summaryIntro: genericCopy.summaryIntro(languageName),
+        levelTitle: (level: string, page: number) => genericCopy.levelTitle(languageName, level, page),
+        levelIntro: (level: string, totalWords: number, page: number, totalPages: number) =>
+          genericCopy.levelIntro(languageName, level, totalWords, page, totalPages),
+        backToWordIndex: genericCopy.backToWordIndex(languageName),
+      };
   const seoMetadata = buildWordSeoHubMetadata({
     uiLang,
     route,
+    languageName,
     pathname: location.pathname,
     siteOrigin,
   });
 
   if (route.kind === "summary") {
-    const data = getWordSeoHubSummaryPageData(uiLang);
+    const data = getWordSeoHubSummaryPageData(uiLang, route.targetLanguage);
 
     return (
       <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
@@ -196,7 +299,9 @@ export function WordSeoHubPage({ route, uiLang }: WordSeoHubPageProps) {
         <div className="mx-auto w-full max-w-5xl space-y-8">
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
             <h1 className="text-3xl text-foreground md:text-4xl">{copy.summaryTitle}</h1>
-            <p className="mt-3 text-base text-muted-foreground">{copy.summaryIntro}</p>
+            {copy.summaryIntro ? (
+              <p className="mt-3 text-base text-muted-foreground">{copy.summaryIntro}</p>
+            ) : null}
           </section>
 
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
@@ -223,7 +328,7 @@ export function WordSeoHubPage({ route, uiLang }: WordSeoHubPageProps) {
                   </p>
                   <Link
                     className="mt-4 inline-flex text-sm font-medium text-primary transition hover:underline"
-                    to={getWordSeoHubLevelPath(uiLang, level.level)}
+                    to={getWordSeoHubLevelPath(uiLang, route.targetLanguage, level.level)}
                   >
                     {copy.openLevelLabel}
                   </Link>
@@ -236,7 +341,7 @@ export function WordSeoHubPage({ route, uiLang }: WordSeoHubPageProps) {
     );
   }
 
-  const data = getWordSeoHubLevelPageData(uiLang, route.level, route.page);
+  const data = getWordSeoHubLevelPageData(uiLang, route.targetLanguage, route.level, route.page);
   if (!data) {
     return (
       <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
@@ -302,7 +407,7 @@ export function WordSeoHubPage({ route, uiLang }: WordSeoHubPageProps) {
                         ? "rounded-lg border border-primary bg-primary/10 px-3 py-1.5 text-sm text-primary"
                         : "rounded-lg border border-border px-3 py-1.5 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
                     }
-                    to={getWordSeoHubLevelPath(uiLang, data.level, page)}
+                    to={getWordSeoHubLevelPath(uiLang, route.targetLanguage, data.level, page)}
                   >
                     {page}
                   </Link>
