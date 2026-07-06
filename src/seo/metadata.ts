@@ -856,6 +856,21 @@ WORD_META_DESC.pt = (lang, word) =>
 WORD_META_DESC.ru = (lang, word) =>
   `Узнайте значение слова "${word}" на ${lang} и посмотрите примеры предложений.`;
 
+WORD_META_DESC.en = (lang, word) =>
+  `Learn "${word}" with examples, synonyms, CEFR level, and practice.`;
+WORD_META_DESC.es = (lang, word) =>
+  `Aprende la palabra ${lang} "${word}" y ve ejemplos.`;
+WORD_META_DESC.fr = (lang, word) =>
+  `Apprenez le mot ${lang} "${word}" et voyez des exemples.`;
+WORD_META_DESC.de = (lang, word) =>
+  `Lerne das Wort "${word}" auf ${lang} und sieh Beispiele.`;
+WORD_META_DESC.it = (lang, word) =>
+  `Impara la parola ${lang} "${word}" e vedi esempi.`;
+WORD_META_DESC.pt = (lang, word) =>
+  `Aprenda a palavra ${lang} "${word}" e veja exemplos.`;
+WORD_META_DESC.ru = (lang, word) =>
+  `РЈР·РЅР°Р№С‚Рµ Р·РЅР°С‡РµРЅРёРµ СЃР»РѕРІР° "${word}" РЅР° ${lang} Рё РїРѕСЃРјРѕС‚СЂРёС‚Рµ РїСЂРёРјРµСЂС‹.`;
+
 export interface WordSeoMetadataParams {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
