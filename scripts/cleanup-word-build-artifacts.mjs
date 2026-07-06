@@ -16,3 +16,6 @@ await Promise.all(
     fs.rm(artifactPath, { force: true }),
   ),
 );
+
+const serverTemplatePath = path.join(rootDir, "server-build", "ssr-template.html");
+await fs.copyFile(path.join(rootDir, "dist", "index.html"), serverTemplatePath);

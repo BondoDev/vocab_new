@@ -5,9 +5,8 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
-const DIST_DIR = path.join(ROOT_DIR, "dist");
 const SERVER_BUILD_DIR = path.join(ROOT_DIR, "server-build");
-const TEMPLATE_PATH = path.join(DIST_DIR, "index.html");
+const TEMPLATE_PATH = path.join(SERVER_BUILD_DIR, "ssr-template.html");
 const DEFAULT_SITE_ORIGIN = process.env.SITE_ORIGIN || "https://www.fluentstellar.com";
 
 let templatePromise = null;

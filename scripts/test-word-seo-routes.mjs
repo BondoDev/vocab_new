@@ -403,7 +403,7 @@ assert.ok(
   "SSR entry server should not filesystem-read source JSON files at runtime",
 );
 assert.ok(
-  vercelConfigSource.includes('"includeFiles": "{dist/index.html,server-build/**}"'),
+  vercelConfigSource.includes('"includeFiles": "{server-build/**}"'),
   "Vercel SSR function should include compiled server-build assets",
 );
 assert.ok(
@@ -413,6 +413,10 @@ assert.ok(
 assert.ok(
   !vercelConfigSource.includes("src/data/interface"),
   "Vercel SSR function should not force raw interface JSON into the package",
+);
+assert.ok(
+  !vercelConfigSource.includes("dist/index.html"),
+  "Vercel SSR function should not trace the dist directory",
 );
 assert.ok(
   /href:\s*`\$\{origin\}\$\{buildWordPath\(lang,\s*targetLanguage,\s*wordLemma,\s*conceptId\)\}`/m.test(

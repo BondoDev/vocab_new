@@ -99,7 +99,7 @@
   ],
   "functions": {
     "api/word-ssr-internal.ts": {
-      "includeFiles": "{dist/index.html,server-build/**}"
+      "includeFiles": "{server-build/**}"
     }
   },
   "rewrites": [

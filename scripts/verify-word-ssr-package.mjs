@@ -10,11 +10,11 @@ const rootDir = path.resolve(__dirname, "..");
 const stageDir = path.join(rootDir, ".tmp-word-ssr-package");
 
 const requiredFiles = [
-  "dist/index.html",
   "server/word-ssr-handler.mjs",
   "server/word-ssr-http.mjs",
   "server/word-ssr-runtime.mjs",
   "server-build/entry-server.js",
+  "server-build/ssr-template.html",
 ];
 
 function readText(relativePath) {
@@ -47,7 +47,6 @@ async function prepareStageDirectory() {
   await fsp.mkdir(stageDir, { recursive: true });
 
   await copyFileToStage("package.json");
-  await copyFileToStage("dist/index.html");
   await copyFileToStage("server/word-ssr-handler.mjs");
   await copyFileToStage("server/word-ssr-http.mjs");
   await copyFileToStage("server/word-ssr-runtime.mjs");
