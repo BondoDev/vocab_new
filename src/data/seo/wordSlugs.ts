@@ -1,84 +1,49 @@
 import {
+  CRAWLABLE_WORD_TARGET_LANGUAGES,
+  buildCanonicalWordPathFromSlug,
+  buildWordBrowsePagePathFromSlug,
+  buildWordRouteLookupKey,
+  hasCrawlableWordSeoFamily,
+  parseWordRoute as parseWordRouteFromManifest,
+  parseWordRoutePathname,
+  resolveWordPageRoute,
+  resolveWordRoute,
+  stripDiacriticsForComparison,
+  wordToSlug,
+  type CanonicalWordPageRouteMatch,
+  type CanonicalWordRouteMatch,
+  type LegacySlugFormatWordRouteMatch,
+  type LegacyWordRouteMatch,
+  type ParsedWordRoute,
+  type SlugOnlyWordRouteMatch,
+  type WordRouteMatch,
+} from "./wordRouteManifest";
+import {
   SUPPORTED_UI_LANGUAGES,
-  SUPPORTED_TARGET_LANGUAGES,
-  isSupportedUiLanguage,
-  type UiLanguageCode,
   type TargetLanguageSlug,
+  type UiLanguageCode,
 } from "./slugs";
 import { fixMojibake } from "../../utils/fixMojibake";
 
-export interface WordRouteMatch {
-  uiLang: UiLanguageCode;
-  targetLanguage: TargetLanguageSlug;
-  wordSlug: string;
-  conceptId: string | null;
-}
+export type {
+  CanonicalWordPageRouteMatch,
+  CanonicalWordRouteMatch,
+  LegacySlugFormatWordRouteMatch,
+  LegacyWordRouteMatch,
+  ParsedWordRoute,
+  SlugOnlyWordRouteMatch,
+  WordRouteMatch,
+};
 
-export interface CanonicalWordRouteMatch extends WordRouteMatch {
-  routeKind: "canonical";
-  conceptId: string;
-}
+export {
+  CRAWLABLE_WORD_TARGET_LANGUAGES,
+  hasCrawlableWordSeoFamily,
+  parseWordRoutePathname,
+  resolveWordPageRoute,
+  resolveWordRoute,
+};
 
-export interface LegacyWordRouteMatch extends WordRouteMatch {
-  routeKind: "legacy-single-hyphen";
-  conceptId: string;
-}
-
-export interface LegacySlugFormatWordRouteMatch extends WordRouteMatch {
-  routeKind: "legacy-slug-format";
-  conceptId: string;
-}
-
-export interface SlugOnlyWordRouteMatch extends WordRouteMatch {
-  routeKind: "slug-only";
-  conceptId: null;
-}
-
-export interface CanonicalWordPageRouteMatch extends CanonicalWordRouteMatch {
-  browsePage: number;
-}
-
-export type ParsedWordRoute =
-  | CanonicalWordRouteMatch
-  | LegacyWordRouteMatch
-  | LegacySlugFormatWordRouteMatch
-  | SlugOnlyWordRouteMatch;
-
-// Only these word-page families are emitted as crawlable HTML today.
-export const CRAWLABLE_WORD_TARGET_LANGUAGES = ["english"] as const;
-
-const CONCEPT_ID_PATTERN = /^(A1|A2|B1|B2|C1|C2)-\d{5}$/;
-
-export function hasCrawlableWordSeoFamily(
-  targetLanguage: TargetLanguageSlug,
-): boolean {
-  return (
-    CRAWLABLE_WORD_TARGET_LANGUAGES as readonly TargetLanguageSlug[]
-  ).includes(targetLanguage);
-}
-
-export function wordToSlug(lemma: string): string {
-  return lemma
-    .normalize("NFC")
-    .toLowerCase()
-    .replace(/['’‘`]/gu, "")
-    .replace(/[^\p{L}\p{N}\s-]/gu, "")
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-// Accent-insensitive comparison only, never used to build a real URL. Lets
-// old accent-free links (generated while wordToSlug briefly stripped
-// diacritics between 2026-06-22 and this revert) still find the right word
-// instead of dead-ending on a 410.
-export function stripDiacriticsForComparison(value: string): string {
-  return value
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-}
+export { stripDiacriticsForComparison, wordToSlug };
 
 export function buildWordPath(
   uiLang: UiLanguageCode,
@@ -86,7 +51,7 @@ export function buildWordPath(
   wordLemma: string,
   conceptId?: string | null,
 ): string {
-  return buildWordPathFromSlug(
+  return buildCanonicalWordPathFromSlug(
     uiLang,
     targetLanguage,
     wordToSlug(fixMojibake(wordLemma)),
@@ -100,20 +65,7 @@ export function buildWordPathFromSlug(
   wordSlug: string,
   conceptId?: string | null,
 ): string {
-  const base = `/${uiLang}/${targetLanguage}-word-${wordSlug}`;
-  if (!conceptId || !conceptId.trim()) return base;
-  return `${base}--${conceptId.trim()}`;
-}
-
-export function buildWordBrowsePagePathFromSlug(
-  uiLang: UiLanguageCode,
-  targetLanguage: TargetLanguageSlug,
-  wordSlug: string,
-  conceptId: string,
-  page: number,
-): string {
-  const canonicalPath = buildWordPathFromSlug(uiLang, targetLanguage, wordSlug, conceptId);
-  return page <= 1 ? canonicalPath : `${canonicalPath}/browse/page/${page}`;
+  return buildCanonicalWordPathFromSlug(uiLang, targetLanguage, wordSlug, conceptId);
 }
 
 export function buildWordBrowsePagePath(
@@ -132,119 +84,13 @@ export function buildWordBrowsePagePath(
   );
 }
 
+export { buildWordBrowsePagePathFromSlug };
+
 export function parseWordRoute(
   uiLangRaw: string,
   slug: string,
 ): ParsedWordRoute | null {
-  if (!isSupportedUiLanguage(uiLangRaw)) return null;
-  let decodedSlug = slug;
-  try {
-    decodedSlug = decodeURIComponent(slug);
-  } catch {
-    return null;
-  }
-  for (const targetLanguage of SUPPORTED_TARGET_LANGUAGES) {
-    const prefix = `${targetLanguage}-word-`;
-    if (decodedSlug.startsWith(prefix)) {
-      const suffix = decodedSlug.slice(prefix.length);
-      if (!suffix) {
-        return null;
-      }
-
-      const canonicalParts = suffix.split("--");
-      if (suffix.includes("--") && canonicalParts.length !== 2) {
-        return null;
-      }
-      if (canonicalParts.length === 2) {
-        const [rawWordSlug, conceptIdRaw] = canonicalParts;
-        const conceptId = conceptIdRaw.trim();
-        if (rawWordSlug.length === 0 || !CONCEPT_ID_PATTERN.test(conceptId)) {
-          return null;
-        }
-
-        // Catches drift like stray casing/punctuation that never round-trips
-        // through wordToSlug. Redirect to the normalized form instead of a
-        // dead link. This no longer fires for accents, which wordToSlug keeps.
-        const normalizedWordSlug = wordToSlug(rawWordSlug);
-        if (normalizedWordSlug.length === 0) {
-          return null;
-        }
-        if (normalizedWordSlug !== rawWordSlug) {
-          return {
-            routeKind: "legacy-slug-format",
-            uiLang: uiLangRaw,
-            targetLanguage,
-            wordSlug: normalizedWordSlug,
-            conceptId,
-          };
-        }
-
-        return {
-          routeKind: "canonical",
-          uiLang: uiLangRaw,
-          targetLanguage,
-          wordSlug: rawWordSlug,
-          conceptId,
-        };
-      }
-
-      const legacyMatch = suffix.match(/^(.*)-((?:A1|A2|B1|B2|C1|C2)-\d{5})$/);
-      if (legacyMatch) {
-        const [, rawWordSlug, conceptId] = legacyMatch;
-        if (rawWordSlug.length === 0) {
-          return null;
-        }
-
-        return {
-          routeKind: "legacy-single-hyphen",
-          uiLang: uiLangRaw,
-          targetLanguage,
-          wordSlug: wordToSlug(rawWordSlug) || rawWordSlug,
-          conceptId,
-        };
-      }
-
-      return {
-        routeKind: "slug-only",
-        uiLang: uiLangRaw,
-        targetLanguage,
-        wordSlug: suffix,
-        conceptId: null,
-      };
-    }
-  }
-  return null;
-}
-
-export function resolveWordRoute(
-  uiLangRaw: string,
-  slug: string,
-): CanonicalWordRouteMatch | null {
-  const parsedRoute = parseWordRoute(uiLangRaw, slug);
-  return parsedRoute?.routeKind === "canonical" ? parsedRoute : null;
-}
-
-export function resolveWordPageRoute(path: string): CanonicalWordPageRouteMatch | null {
-  const match = path.match(/^\/([a-z]{2})\/([^/?#]+)(?:\/browse\/page\/(\d+))?$/);
-  if (!match) {
-    return null;
-  }
-
-  const [, uiLangRaw, slug, browsePageRaw] = match;
-  const resolvedRoute = resolveWordRoute(uiLangRaw, slug);
-  if (!resolvedRoute) {
-    return null;
-  }
-
-  const browsePage = browsePageRaw ? Number.parseInt(browsePageRaw, 10) : 1;
-  if (!Number.isFinite(browsePage) || browsePage < 1) {
-    return null;
-  }
-
-  return {
-    ...resolvedRoute,
-    browsePage,
-  };
+  return parseWordRouteFromManifest(uiLangRaw, slug);
 }
 
 export function getAllWordPaths(
@@ -256,8 +102,7 @@ export function getAllWordPaths(
   for (const { targetLanguage, wordLemma, conceptId } of entries) {
     const slug = wordToSlug(wordLemma);
     if (!slug) continue;
-    const conceptKey = conceptId?.trim();
-    const key = conceptKey ? `${targetLanguage}:${conceptKey}` : `${targetLanguage}:${slug}`;
+    const key = buildWordRouteLookupKey(targetLanguage, conceptId, slug);
     if (seen.has(key)) continue;
     seen.add(key);
 

@@ -19,7 +19,7 @@ import { DEFAULT_SITE_ORIGIN } from "./seo/site";
 import {
   buildWordBrowsePagePath,
   buildWordBrowsePagePathFromSlug,
-  parseWordRoute,
+  parseWordRoutePathname,
   resolveWordPageRoute,
   type CanonicalWordPageRouteMatch,
 } from "./data/seo/wordSlugs";
@@ -195,8 +195,8 @@ export function getPrerenderRoutes(): string[] {
 
 export async function resolveWordSeoRequest(url: string): Promise<WordSeoRequestResolution> {
   const pathname = url.split(/[?#]/, 1)[0] || "/";
-  const match = pathname.match(/^\/([a-z]{2})\/([^/?#]+)(?:\/browse\/page\/(\d+))?$/);
-  if (!match) {
+  const parsedWordRoute = parseWordRoutePathname(pathname);
+  if (parsedWordRoute.kind === "not-word-route") {
     return {
       kind: "not-found",
       pathname,
@@ -204,37 +204,7 @@ export async function resolveWordSeoRequest(url: string): Promise<WordSeoRequest
     };
   }
 
-  const [, uiLangRaw, slug, browsePageRaw] = match;
-  if (!slug.includes("-word-")) {
-    return {
-      kind: "not-found",
-      pathname,
-      reason: "not-word-route",
-    };
-  }
-
-  const browsePage = browsePageRaw ? Number.parseInt(browsePageRaw, 10) : 1;
-  if (!Number.isFinite(browsePage) || browsePage < 1) {
-    return {
-      kind: "not-found",
-      pathname,
-      reason: "invalid-route",
-    };
-  }
-
-  const parsedWordRoute = parseWordRoute(uiLangRaw, slug);
-  if (!parsedWordRoute) {
-    return {
-      kind: "not-found",
-      pathname,
-      reason: "invalid-route",
-    };
-  }
-
-  if (
-    parsedWordRoute.routeKind === "legacy-single-hyphen" ||
-    parsedWordRoute.routeKind === "legacy-slug-format"
-  ) {
+  if (parsedWordRoute.kind === "legacy-single-hyphen" || parsedWordRoute.kind === "legacy-slug-format") {
     return {
       kind: "redirect",
       pathname,
@@ -243,16 +213,17 @@ export async function resolveWordSeoRequest(url: string): Promise<WordSeoRequest
         parsedWordRoute.targetLanguage,
         parsedWordRoute.wordSlug,
         parsedWordRoute.conceptId,
-        browsePage,
+        parsedWordRoute.browsePage,
       ),
     };
   }
 
-  if (parsedWordRoute.routeKind !== "canonical") {
+  if (parsedWordRoute.kind !== "canonical") {
+    const reason = parsedWordRoute.kind === "slug-only" ? "slug-only-route" : "invalid-route";
     return {
       kind: "not-found",
       pathname,
-      reason: "slug-only-route",
+      reason,
     };
   }
 
@@ -291,7 +262,7 @@ export async function resolveWordSeoRequest(url: string): Promise<WordSeoRequest
           parsedWordRoute.targetLanguage,
           accentInsensitiveMatch.word_lemma,
           parsedWordRoute.conceptId,
-          browsePage,
+          parsedWordRoute.browsePage,
         ),
       };
     }
@@ -307,7 +278,7 @@ export async function resolveWordSeoRequest(url: string): Promise<WordSeoRequest
     1,
     Math.ceil(initialWordPageData.browseWords.length / WORD_PAGE_BROWSE_WORDS_PER_PAGE),
   );
-  if (browsePage > totalBrowsePages) {
+  if (parsedWordRoute.browsePage > totalBrowsePages) {
     return {
       kind: "not-found",
       pathname,
@@ -320,8 +291,12 @@ export async function resolveWordSeoRequest(url: string): Promise<WordSeoRequest
     pathname,
     initialWordPageData,
     wordRoute: {
-      ...parsedWordRoute,
-      browsePage,
+      routeKind: "canonical",
+      uiLang: parsedWordRoute.uiLang,
+      targetLanguage: parsedWordRoute.targetLanguage,
+      wordSlug: parsedWordRoute.wordSlug,
+      conceptId: parsedWordRoute.conceptId,
+      browsePage: parsedWordRoute.browsePage,
     },
   };
 }

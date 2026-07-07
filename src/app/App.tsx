@@ -43,7 +43,7 @@ import {
   type UiLanguageCode,
 } from "../data/seo/slugs";
 import {
-  parseWordRoute as parseSeoWordRoute,
+  parseWordRoutePathname,
   type CanonicalWordPageRouteMatch,
   resolveWordPageRoute,
 } from "../data/seo/wordSlugs";
@@ -310,10 +310,8 @@ function parseWordRoute(path: string): CanonicalWordPageRouteMatch | null {
 }
 
 function parseAnyWordRoute(path: string) {
-  const match = path.match(/^\/([a-z]{2})\/([^/?#]+)(?:\/browse\/page\/(\d+))?$/);
-  if (!match) return null;
-  const [, uiLangRaw, slug] = match;
-  return parseSeoWordRoute(uiLangRaw, slug);
+  const result = parseWordRoutePathname(path);
+  return result.kind === "not-word-route" ? null : result;
 }
 const ROUTES = {
   language: "/languages",

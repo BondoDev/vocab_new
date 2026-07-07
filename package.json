@@ -9,6 +9,7 @@
     "prebuild": "npm run -s generate:word-hub-data && npm run -s sitemap",
     "build": "vite build && vite build --ssr src/entry-server.tsx --outDir server-build && node scripts/cleanup-word-build-artifacts.mjs && node scripts/prerender.mjs && node ./scripts/verify-word-ssr-package.mjs",
     "dev": "vite",
+    "test:word-route-manifest": "node scripts/test-word-route-manifest.mjs",
     "test:word-seo": "node scripts/test-word-seo-routes.mjs",
     "test:level-browse-preview": "node scripts/test-level-browse-preview-completeness.mjs",
     "test:word-ssr-http": "node scripts/test-word-ssr-http.mjs",
