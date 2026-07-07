@@ -1,0 +1,731 @@
+{
+  "A1-00001": {
+    "conceptId": "A1-00001",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "about",
+    "definition": "On the subject of; concerning.",
+    "grammarType": "preposition",
+    "category": "connectors"
+  },
+  "A1-00002": {
+    "conceptId": "A1-00002",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "above",
+    "definition": "In a higher position than something else.",
+    "grammarType": "preposition",
+    "category": "places"
+  },
+  "A1-00003": {
+    "conceptId": "A1-00003",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "action",
+    "definition": "The process of doing something to achieve a result.",
+    "grammarType": "noun",
+    "category": "abstract"
+  },
+  "A1-00004": {
+    "conceptId": "A1-00004",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "activity",
+    "definition": "Something that you do for interest or enjoyment.",
+    "grammarType": "noun",
+    "category": "daily life"
+  },
+  "A1-00005": {
+    "conceptId": "A1-00005",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "actor",
+    "definition": "A person whose job is to perform in plays, films, or television.",
+    "grammarType": "noun",
+    "category": "people"
+  },
+  "A1-00006": {
+    "conceptId": "A1-00006",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "add",
+    "definition": "To put something with another thing or group.",
+    "grammarType": "verb",
+    "category": "daily life"
+  },
+  "A1-00007": {
+    "conceptId": "A1-00007",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "address",
+    "definition": "The details of where a building is located.",
+    "grammarType": "noun",
+    "category": "places"
+  },
+  "A1-00008": {
+    "conceptId": "A1-00008",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "be",
+    "definition": "To exist or to have a particular state, quality, identity, or position.",
+    "grammarType": "verb",
+    "category": "daily life"
+  },
+  "A1-00009": {
+    "conceptId": "A1-00009",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "afraid",
+    "definition": "Feeling fear or worry.",
+    "grammarType": "adjective",
+    "category": "emotions"
+  },
+  "A1-00010": {
+    "conceptId": "A1-00010",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "after",
+    "definition": "Later than something; following in time.",
+    "grammarType": "preposition",
+    "category": "time"
+  },
+  "A1-00011": {
+    "conceptId": "A1-00011",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "afternoon",
+    "definition": "The time of day between noon and evening.",
+    "grammarType": "noun",
+    "category": "time"
+  },
+  "A1-00012": {
+    "conceptId": "A1-00012",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "again",
+    "definition": "One more time; once more.",
+    "grammarType": "adverb",
+    "category": "time"
+  },
+  "A1-00013": {
+    "conceptId": "A1-00013",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "age",
+    "definition": "The number of years a person has lived.",
+    "grammarType": "noun",
+    "category": "time"
+  },
+  "A1-00014": {
+    "conceptId": "A1-00014",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "ago",
+    "definition": "In the past; before now.",
+    "grammarType": "adverb",
+    "category": "time"
+  },
+  "A1-00015": {
+    "conceptId": "A1-00015",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "agree",
+    "definition": "To have the same opinion as someone else.",
+    "grammarType": "verb",
+    "category": "communication"
+  },
+  "A1-00016": {
+    "conceptId": "A1-00016",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "airplane",
+    "definition": "A vehicle with wings that flies through the air.",
+    "grammarType": "noun",
+    "category": "transport"
+  },
+  "A1-00017": {
+    "conceptId": "A1-00017",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "airport",
+    "definition": "A place where airplanes take off and land.",
+    "grammarType": "noun",
+    "category": "places"
+  },
+  "A1-00018": {
+    "conceptId": "A1-00018",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "album",
+    "definition": "A collection of songs or photographs in one book or CD.",
+    "grammarType": "noun",
+    "category": "art"
+  },
+  "A1-00019": {
+    "conceptId": "A1-00019",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "all",
+    "definition": "The whole amount or every part of something.",
+    "grammarType": "determiner",
+    "category": "abstract"
+  },
+  "A1-00020": {
+    "conceptId": "A1-00020",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "all right",
+    "definition": "Acceptable or satisfactory; okay.",
+    "grammarType": "adjective",
+    "category": "emotions"
+  },
+  "A1-00021": {
+    "conceptId": "A1-00021",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "get up",
+    "definition": "To rise from bed after sleeping or resting.",
+    "grammarType": "verb",
+    "category": "daily life"
+  },
+  "A1-00025": {
+    "conceptId": "A1-00025",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "also",
+    "definition": "In addition; too.",
+    "grammarType": "adverb",
+    "category": "connectors"
+  },
+  "A1-00026": {
+    "conceptId": "A1-00026",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "always",
+    "definition": "At all times; every time.",
+    "grammarType": "adverb",
+    "category": "time"
+  },
+  "A1-00027": {
+    "conceptId": "A1-00027",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "am",
+    "definition": "The form of 'be' used with 'I' in the present tense.",
+    "grammarType": "verb",
+    "category": "abstract"
+  },
+  "A1-00028": {
+    "conceptId": "A1-00028",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "American",
+    "definition": "A person from the United States of America.",
+    "grammarType": "adjective",
+    "category": "geography"
+  },
+  "A1-00029": {
+    "conceptId": "A1-00029",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "and",
+    "definition": "A word used to join two words or parts of a sentence.",
+    "grammarType": "conjunction",
+    "category": "connectors"
+  },
+  "A1-00030": {
+    "conceptId": "A1-00030",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "angry",
+    "definition": "Having a strong feeling of being upset or annoyed.",
+    "grammarType": "adjective",
+    "category": "emotions"
+  },
+  "A1-00031": {
+    "conceptId": "A1-00031",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "animal",
+    "definition": "A living creature that is not a plant, like a dog or cat.",
+    "grammarType": "noun",
+    "category": "animals"
+  },
+  "A1-00032": {
+    "conceptId": "A1-00032",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "another",
+    "definition": "One more of the same kind; a different one.",
+    "grammarType": "determiner",
+    "category": "abstract"
+  },
+  "A1-00033": {
+    "conceptId": "A1-00033",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "answer",
+    "definition": "A reply to a question.",
+    "grammarType": "noun",
+    "category": "communication"
+  },
+  "A1-00034": {
+    "conceptId": "A1-00034",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "answer",
+    "definition": "To reply to a question.",
+    "grammarType": "verb",
+    "category": "communication"
+  },
+  "A1-00035": {
+    "conceptId": "A1-00035",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "any",
+    "definition": "Used to refer to one or some of a thing, when it doesn't matter which.",
+    "grammarType": "determiner",
+    "category": "abstract"
+  },
+  "A1-00036": {
+    "conceptId": "A1-00036",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "anybody",
+    "definition": "Any person; anyone.",
+    "grammarType": "pronoun",
+    "category": "people"
+  },
+  "A1-00037": {
+    "conceptId": "A1-00037",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "anyone",
+    "definition": "Any person at all.",
+    "grammarType": "pronoun",
+    "category": "people"
+  },
+  "A1-00038": {
+    "conceptId": "A1-00038",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "anything",
+    "definition": "Used to refer to a thing, no matter what.",
+    "grammarType": "pronoun",
+    "category": "abstract"
+  },
+  "A1-00039": {
+    "conceptId": "A1-00039",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "apple",
+    "definition": "A round fruit with red, green, or yellow skin.",
+    "grammarType": "noun",
+    "category": "food"
+  },
+  "A1-00040": {
+    "conceptId": "A1-00040",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "April",
+    "definition": "The fourth month of the year.",
+    "grammarType": "noun",
+    "category": "time"
+  },
+  "A1-00042": {
+    "conceptId": "A1-00042",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "cousin",
+    "definition": "The daughter of your uncle or aunt.",
+    "grammarType": "noun",
+    "category": "relationships"
+  },
+  "A1-00043": {
+    "conceptId": "A1-00043",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "arm",
+    "definition": "The part of the body from the shoulder to the hand.",
+    "grammarType": "noun",
+    "category": "body"
+  },
+  "A1-00044": {
+    "conceptId": "A1-00044",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "around",
+    "definition": "On every side of; surrounding.",
+    "grammarType": "preposition",
+    "category": "places"
+  },
+  "A1-00045": {
+    "conceptId": "A1-00045",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "arrive",
+    "definition": "To reach a place.",
+    "grammarType": "verb",
+    "category": "travel"
+  },
+  "A1-00046": {
+    "conceptId": "A1-00046",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "art",
+    "definition": "The creation of beautiful or interesting things, like paintings.",
+    "grammarType": "noun",
+    "category": "art"
+  },
+  "A1-00048": {
+    "conceptId": "A1-00048",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bath",
+    "definition": "a large container in a bathroom used for washing the body.",
+    "grammarType": "noun",
+    "category": "household"
+  },
+  "A1-00049": {
+    "conceptId": "A1-00049",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "ask",
+    "definition": "To say a question to someone.",
+    "grammarType": "verb",
+    "category": "communication"
+  },
+  "A1-00050": {
+    "conceptId": "A1-00050",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "at",
+    "definition": "Used to show a location or time.",
+    "grammarType": "preposition",
+    "category": "places"
+  },
+  "A1-00051": {
+    "conceptId": "A1-00051",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "August",
+    "definition": "The eighth month of the year.",
+    "grammarType": "noun",
+    "category": "time"
+  },
+  "A1-00052": {
+    "conceptId": "A1-00052",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "aunt",
+    "definition": "The sister of your mother or father.",
+    "grammarType": "noun",
+    "category": "people"
+  },
+  "A1-00053": {
+    "conceptId": "A1-00053",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "autumn",
+    "definition": "The season of the year between summer and winter; fall.",
+    "grammarType": "noun",
+    "category": "time"
+  },
+  "A1-00056": {
+    "conceptId": "A1-00056",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "away",
+    "definition": "To a different place.",
+    "grammarType": "adverb",
+    "category": "places"
+  },
+  "A1-00057": {
+    "conceptId": "A1-00057",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "baby",
+    "definition": "A very young child.",
+    "grammarType": "noun",
+    "category": "people"
+  },
+  "A1-00058": {
+    "conceptId": "A1-00058",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "back",
+    "definition": "The part of the body from the neck to the bottom of the spine.",
+    "grammarType": "noun",
+    "category": "body"
+  },
+  "A1-00059": {
+    "conceptId": "A1-00059",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "back",
+    "definition": "In the direction you came from; returning.",
+    "grammarType": "adverb",
+    "category": "places"
+  },
+  "A1-00060": {
+    "conceptId": "A1-00060",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bad",
+    "definition": "Not good; of low quality.",
+    "grammarType": "adjective",
+    "category": "abstract"
+  },
+  "A1-00061": {
+    "conceptId": "A1-00061",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bag",
+    "definition": "A container made of paper, cloth, or plastic to carry things.",
+    "grammarType": "noun",
+    "category": "clothes & accessories"
+  },
+  "A1-00062": {
+    "conceptId": "A1-00062",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "ball",
+    "definition": "A round object used in games like soccer or tennis.",
+    "grammarType": "noun",
+    "category": "sport"
+  },
+  "A1-00063": {
+    "conceptId": "A1-00063",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "banana",
+    "definition": "A long, curved fruit with a yellow skin.",
+    "grammarType": "noun",
+    "category": "food"
+  },
+  "A1-00064": {
+    "conceptId": "A1-00064",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "band",
+    "definition": "A group of musicians who play together.",
+    "grammarType": "noun",
+    "category": "art"
+  },
+  "A1-00065": {
+    "conceptId": "A1-00065",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bank",
+    "definition": "A place where people keep their money.",
+    "grammarType": "noun",
+    "category": "money"
+  },
+  "A1-00070": {
+    "conceptId": "A1-00070",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "basketball",
+    "definition": "A game where two teams try to throw a ball through a high hoop.",
+    "grammarType": "noun",
+    "category": "sport"
+  },
+  "A1-00072": {
+    "conceptId": "A1-00072",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bath",
+    "definition": "The act of washing your body in a tub of water.",
+    "grammarType": "noun",
+    "category": "household"
+  },
+  "A1-00073": {
+    "conceptId": "A1-00073",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bathroom",
+    "definition": "A room with a toilet and sink, and often a bath or shower.",
+    "grammarType": "noun",
+    "category": "places"
+  },
+  "A1-00074": {
+    "conceptId": "A1-00074",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "American",
+    "definition": "A thing from the United States of America. ",
+    "grammarType": "adjective",
+    "category": "geography"
+  },
+  "A1-00075": {
+    "conceptId": "A1-00075",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "beach",
+    "definition": "An area of sand or stones next to the sea.",
+    "grammarType": "noun",
+    "category": "places"
+  },
+  "A1-00076": {
+    "conceptId": "A1-00076",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bean",
+    "definition": "A seed from certain plants, often eaten as food.",
+    "grammarType": "noun",
+    "category": "food"
+  },
+  "A1-00077": {
+    "conceptId": "A1-00077",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bear",
+    "definition": "A large, strong wild animal with thick fur.",
+    "grammarType": "noun",
+    "category": "animals"
+  },
+  "A1-00080": {
+    "conceptId": "A1-00080",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "beautiful",
+    "definition": "Very pleasing to look at.",
+    "grammarType": "adjective",
+    "category": "abstract"
+  },
+  "A1-00081": {
+    "conceptId": "A1-00081",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "because",
+    "definition": "For the reason that.",
+    "grammarType": "conjunction",
+    "category": "connectors"
+  },
+  "A1-00083": {
+    "conceptId": "A1-00083",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bed",
+    "definition": "A piece of furniture for sleeping on.",
+    "grammarType": "noun",
+    "category": "household"
+  },
+  "A1-00084": {
+    "conceptId": "A1-00084",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bedroom",
+    "definition": "A room for sleeping.",
+    "grammarType": "noun",
+    "category": "places"
+  },
+  "A1-00085": {
+    "conceptId": "A1-00085",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bee",
+    "definition": "A flying insect that makes honey.",
+    "grammarType": "noun",
+    "category": "animals"
+  },
+  "A1-00086": {
+    "conceptId": "A1-00086",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "beef",
+    "definition": "The meat from a cow.",
+    "grammarType": "noun",
+    "category": "food"
+  },
+  "A1-00087": {
+    "conceptId": "A1-00087",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "before",
+    "definition": "Earlier than something.",
+    "grammarType": "preposition",
+    "category": "time"
+  },
+  "A1-00088": {
+    "conceptId": "A1-00088",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "begin",
+    "definition": "To start doing something.",
+    "grammarType": "verb",
+    "category": "time"
+  },
+  "A1-00089": {
+    "conceptId": "A1-00089",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "behind",
+    "definition": "At the back of something.",
+    "grammarType": "preposition",
+    "category": "places"
+  },
+  "A1-00090": {
+    "conceptId": "A1-00090",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "Beijing",
+    "definition": "The capital city of China.",
+    "grammarType": "noun",
+    "category": "geography"
+  },
+  "A1-00092": {
+    "conceptId": "A1-00092",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "bell",
+    "definition": "A metal object that makes a ringing sound.",
+    "grammarType": "noun",
+    "category": "household"
+  },
+  "A1-00093": {
+    "conceptId": "A1-00093",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "below",
+    "definition": "In a lower position than something else.",
+    "grammarType": "preposition",
+    "category": "places"
+  },
+  "A1-00094": {
+    "conceptId": "A1-00094",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "Berlin",
+    "definition": "The capital city of Germany.",
+    "grammarType": "noun",
+    "category": "geography"
+  },
+  "A1-00095": {
+    "conceptId": "A1-00095",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "beside",
+    "definition": "Next to something.",
+    "grammarType": "preposition",
+    "category": "places"
+  },
+  "A1-00096": {
+    "conceptId": "A1-00096",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "best",
+    "definition": "Of the highest quality; better than all others.",
+    "grammarType": "adjective",
+    "category": "abstract"
+  },
+  "A1-00161": {
+    "conceptId": "A1-00161",
+    "uiLanguage": "en",
+    "targetLanguage": "english",
+    "wordLemma": "café",
+    "definition": "A small restaurant where you can buy drinks and simple meals.",
+    "grammarType": "noun",
+    "category": "places"
+  }
+}

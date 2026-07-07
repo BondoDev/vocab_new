@@ -11,3 +11,5 @@ service-account.json
 indexed-progress.json
 
 .vercel
+
+poc/cloudflare-word-renderer/.compiled/
