@@ -10,6 +10,7 @@
     "build": "vite build && vite build --ssr src/entry-server.tsx --outDir server-build && node scripts/cleanup-word-build-artifacts.mjs && node scripts/prerender.mjs && node ./scripts/verify-word-ssr-package.mjs",
     "dev": "vite",
     "test:word-seo": "node scripts/test-word-seo-routes.mjs",
+    "test:level-browse-preview": "node scripts/test-level-browse-preview-completeness.mjs",
     "test:word-ssr-http": "node scripts/test-word-ssr-http.mjs",
     "test:word-ssr-package": "node ./scripts/verify-word-ssr-package.mjs",
     "test:homepage-visibility": "node scripts/test-homepage-visibility.mjs",
@@ -21,7 +22,7 @@
     "test:seo-core-routes": "node scripts/test-seo-core-routes.mjs",
     "test:seo-output": "npm run -s test:word-ssr-http && npm run -s test:word-ssr-package && npm run -s test:homepage-visibility && npm run -s test:jsonld-escaping && npm run -s test:schema-graph && npm run -s test:word-browse-pagination && npm run -s test:prerender-parity && npm run -s test:sitemap-structure && npm run -s test:seo-core-routes",
     "test:seo-baseline": "npm run -s test:seo-output",
-    "test:architecture-guards": "npm run -s test:word-seo",
+    "test:architecture-guards": "npm run -s test:word-seo && npm run -s test:level-browse-preview",
     "seo-baseline:capture": "node scripts/seo-baseline/capture.mjs",
     "seo-baseline:compare": "node scripts/seo-baseline/compare.mjs",
     "benchmark:word-render": "node scripts/benchmark-word-render.mjs"

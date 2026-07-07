@@ -139,7 +139,7 @@ function getInitialWordBrowsePage(resolution: WordSeoRequestResolution): number 
   return resolution.kind === "canonical" ? resolution.wordRoute.browsePage : 1;
 }
 
-function getInitialBrowsePreviewData(url: string): LevelBrowsePreviewData | null {
+async function getInitialBrowsePreviewData(url: string): Promise<LevelBrowsePreviewData | null> {
   const match = url.match(/^\/([a-z]{2})\/([^/?#]+)$/);
   if (!match) {
     return null;
@@ -375,7 +375,7 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const initialWordPageData =
     wordSeoResolution.kind === "canonical" ? wordSeoResolution.initialWordPageData : null;
   const initialWordBrowsePage = getInitialWordBrowsePage(wordSeoResolution);
-  const initialBrowsePreviewData = getInitialBrowsePreviewData(url);
+  const initialBrowsePreviewData = await getInitialBrowsePreviewData(url);
   const ssrWordRouteMatch = (() => {
     return resolveWordPageRoute(pathname);
   })();
