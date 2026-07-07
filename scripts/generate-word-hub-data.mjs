@@ -9,6 +9,7 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "portuguese", "russian"];
 const SUPPORTED_LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"];
 const OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "word-hub-pages");
+const BROWSE_SHARD_OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "word-browse-shards");
 const ENGLISH_VERB_LIST_PATH = path.join(
   ROOT_DIR,
   "src",
@@ -217,6 +218,61 @@ async function buildWordHubFile(targetLanguage) {
   );
 }
 
+async function buildWordBrowseShardFiles(targetLanguage) {
+  const vocabPath = path.join(
+    ROOT_DIR,
+    "src",
+    "data",
+    "vocabulary",
+    targetLanguage,
+    "vocabulary.json",
+  );
+  const raw = await fs.readFile(vocabPath, "utf8");
+  const vocabulary = JSON.parse(raw.replace(/^\uFEFF/, ""));
+
+  const levels = Object.fromEntries(SUPPORTED_LEVELS.map((level) => [level, []]));
+  const seenByLevel = new Map(SUPPORTED_LEVELS.map((level) => [level, new Set()]));
+
+  for (const entry of vocabulary) {
+    const level = normalizeLevel(entry.level);
+    if (!level) {
+      continue;
+    }
+
+    const conceptId = String(entry.concept_id ?? "").trim();
+    const wordLemma = fixMojibake(String(entry.word_lemma ?? "")).trim();
+    if (!conceptId || !isValidBrowseWordLemma(wordLemma)) {
+      continue;
+    }
+
+    const seenConceptIds = seenByLevel.get(level);
+    if (!seenConceptIds || seenConceptIds.has(conceptId)) {
+      continue;
+    }
+
+    seenConceptIds.add(conceptId);
+    levels[level].push({
+      conceptId,
+      wordLemma,
+    });
+  }
+
+  for (const level of SUPPORTED_LEVELS) {
+    const words = levels[level];
+    await fs.writeFile(
+      path.join(BROWSE_SHARD_OUTPUT_DIR, `${targetLanguage}-${level}.json`),
+      `${JSON.stringify({
+        targetLanguage,
+        level,
+        totalWords: words.length,
+        totalPages: Math.max(1, Math.ceil(words.length / 54)),
+        words,
+      })}\n`,
+      "utf8",
+    );
+  }
+}
+
 async function buildEnglishVerbLookupFiles() {
   const rawVerbList = await fs.readFile(ENGLISH_VERB_LIST_PATH, "utf8");
   const englishVerbList = JSON.parse(rawVerbList.replace(/^\uFEFF/, ""));
@@ -269,6 +325,7 @@ async function buildEnglishVerbLookupFiles() {
 
 async function main() {
   await fs.mkdir(OUTPUT_DIR, { recursive: true });
+  await fs.mkdir(BROWSE_SHARD_OUTPUT_DIR, { recursive: true });
 
   const existingFiles = await fs.readdir(OUTPUT_DIR);
   await Promise.all(
@@ -276,9 +333,16 @@ async function main() {
       .filter((name) => name.endsWith(".json"))
       .map((name) => fs.rm(path.join(OUTPUT_DIR, name), { force: true })),
   );
+  const existingBrowseShardFiles = await fs.readdir(BROWSE_SHARD_OUTPUT_DIR);
+  await Promise.all(
+    existingBrowseShardFiles
+      .filter((name) => name.endsWith(".json"))
+      .map((name) => fs.rm(path.join(BROWSE_SHARD_OUTPUT_DIR, name), { force: true })),
+  );
 
   for (const targetLanguage of TARGET_LANGUAGES) {
     await buildWordHubFile(targetLanguage);
+    await buildWordBrowseShardFiles(targetLanguage);
   }
 
   await buildEnglishVerbLookupFiles();

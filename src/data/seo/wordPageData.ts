@@ -25,10 +25,41 @@ export interface ResolvedWordPageData {
   otherMeanings: WordPageVocabEntry[];
 }
 
-export interface HydrationWordPageData extends ResolvedWordPageData {
-  browseWordsTotalCount?: number;
-  browseWordsPartial?: boolean;
-  browsePage?: number;
+export interface HydrationCurrentWordEntry {
+  conceptId: string;
+  wordLemma: string;
+  definition: string;
+  sentence: string;
+  grammarType: string;
+  category: string;
+  level: string;
+}
+
+export interface HydrationWordLinkEntry {
+  conceptId: string;
+  wordLemma: string;
+}
+
+export interface HydrationOtherMeaningEntry {
+  conceptId: string;
+  wordLemma: string;
+  definition: string;
+  level: string;
+  grammarType: string;
+}
+
+export interface HydrationWordPageData {
+  wordEntry: HydrationCurrentWordEntry | null;
+  displayDefinition: string;
+  displayWordLemma: string;
+  displayWordType: string;
+  displayCategory: string;
+  relatedWords: HydrationWordLinkEntry[];
+  discoveryWords: HydrationWordLinkEntry[];
+  browseWords: HydrationWordLinkEntry[];
+  otherMeanings: HydrationOtherMeaningEntry[];
+  browseWordsTotalCount: number;
+  browsePage: number;
 }
 
 export interface CanonicalWordRecordMatch {
@@ -301,10 +332,41 @@ export function buildHydrationWordPageData(
   );
 
   return {
-    ...data,
-    browseWords: initialBrowseWords,
+    wordEntry: data.wordEntry
+      ? {
+          conceptId: data.wordEntry.concept_id,
+          wordLemma: data.wordEntry.word_lemma,
+          definition: data.wordEntry.definiton,
+          sentence: data.wordEntry.sentence,
+          grammarType: data.wordEntry.type,
+          category: data.wordEntry.category,
+          level: data.wordEntry.level,
+        }
+      : null,
+    displayDefinition: data.displayDefinition,
+    displayWordLemma: data.displayWordLemma,
+    displayWordType: data.displayWordType,
+    displayCategory: data.displayCategory,
+    relatedWords: data.relatedWords.map((word) => ({
+      conceptId: word.concept_id,
+      wordLemma: word.word_lemma,
+    })),
+    discoveryWords: data.discoveryWords.map((word) => ({
+      conceptId: word.concept_id,
+      wordLemma: word.word_lemma,
+    })),
+    browseWords: initialBrowseWords.map((word) => ({
+      conceptId: word.concept_id,
+      wordLemma: word.word_lemma,
+    })),
+    otherMeanings: data.otherMeanings.map((word) => ({
+      conceptId: word.concept_id,
+      wordLemma: word.word_lemma,
+      definition: word.definiton,
+      level: word.level,
+      grammarType: word.type,
+    })),
     browseWordsTotalCount: totalCount,
-    browseWordsPartial: totalCount > initialBrowseWords.length,
     browsePage: safeBrowsePage,
   };
 }

@@ -485,13 +485,13 @@ assert.ok(
   "canonical metadata should use the current ID-based pathname",
 );
 assert.ok(
-  /buildWordPath\(\s*uiLang,\s*targetLanguage,\s*relWord\.word_lemma,\s*relWord\.concept_id\s*\)/m.test(
+  /buildWordPath\(\s*uiLang,\s*targetLanguage,\s*relWord\.wordLemma,\s*relWord\.conceptId\s*\)/m.test(
     wordSeoPageSource,
   ),
   "related word links should use canonical concept IDs",
 );
 assert.ok(
-  /buildWordPath\(\s*uiLang,\s*targetLanguage,\s*browseWord\.word_lemma,\s*browseWord\.concept_id\s*\)/m.test(
+  /buildWordPath\(\s*uiLang,\s*targetLanguage,\s*browseWord\.wordLemma,\s*browseWord\.conceptId\s*\)/m.test(
     wordSeoPageSource,
   ),
   "browse word links should use canonical concept IDs",

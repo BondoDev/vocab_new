@@ -9,9 +9,16 @@ import {
 } from "../../data/seo/slugs";
 import { buildWordBrowsePagePathFromSlug, buildWordPath } from "../../data/seo/wordSlugs";
 import {
+  getWordBrowseSearchData,
+  getWordBrowseSearchShardKey,
+  type WordBrowseSearchWordEntry,
+} from "../../data/seo/wordBrowseSearchData";
+import {
   WORD_PAGE_BROWSE_WORDS_PER_PAGE,
+  buildHydrationWordPageData,
   buildResolvedWordPageData,
   getUiVocabularyLanguage,
+  type HydrationWordLinkEntry,
   type HydrationWordPageData,
   type ResolvedWordPageData,
   type WordPageVocabEntry,
@@ -20,7 +27,7 @@ import { buildWordSeoMetadata } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import { fixMojibake } from "../../utils/fixMojibake";
 
-type VocabEntry = WordPageVocabEntry;
+type FullVocabEntry = WordPageVocabEntry;
 
 interface WordPageHydrationPayload {
   pathname: string;
@@ -51,7 +58,7 @@ function getPaginationRange(current: number, total: number): (number | "...")[] 
 
 const wordVocabModules = import.meta.glob(
   "../../data/vocabulary/*/vocabulary.json",
-) as Record<string, () => Promise<{ default: VocabEntry[] }>>;
+) as Record<string, () => Promise<{ default: FullVocabEntry[] }>>;
 
 const SPEECH_LANG: Record<TargetLanguageSlug, string> = {
   english: "en-US",
@@ -486,6 +493,87 @@ function getHydratedWordPageData(pathname: string): HydrationWordPageData | null
   return payload.data ?? null;
 }
 
+function normalizeWordPageDataForRender(
+  data: ResolvedWordPageData | HydrationWordPageData | null | undefined,
+  browsePage: number,
+): HydrationWordPageData | null {
+  if (!data) {
+    return null;
+  }
+
+  if ("browseWordsTotalCount" in data) {
+    return data;
+  }
+
+  return buildHydrationWordPageData(data, browsePage);
+}
+
+function createEmptyHydrationWordPageData(browsePage: number): HydrationWordPageData {
+  const safeBrowsePage = Number.isFinite(browsePage) && browsePage > 0 ? Math.floor(browsePage) : 1;
+  return {
+    wordEntry: null,
+    displayDefinition: "",
+    displayWordLemma: "",
+    displayWordType: "",
+    displayCategory: "",
+    relatedWords: [],
+    discoveryWords: [],
+    browseWords: [],
+    otherMeanings: [],
+    browseWordsTotalCount: 0,
+    browsePage: safeBrowsePage,
+  };
+}
+
+export function getWordSeoBrowsePresentationState({
+  browseWords,
+  browseWordsTotalCount,
+  browsePageIndex,
+  browseSearch,
+  browseSearchWords,
+  canUseBrowseSearchResults,
+}: {
+  browseWords: HydrationWordLinkEntry[];
+  browseWordsTotalCount: number;
+  browsePageIndex: number;
+  browseSearch: string;
+  browseSearchWords: WordBrowseSearchWordEntry[] | null;
+  canUseBrowseSearchResults: boolean;
+}) {
+  const normalizedBrowseSearch = browseSearch.trim().toLowerCase();
+  const filteredBrowseWords = canUseBrowseSearchResults
+    ? (browseSearchWords ?? []).filter((browseWord) =>
+        browseWord.wordLemma.toLowerCase().includes(normalizedBrowseSearch),
+      )
+    : browseWords;
+  const hasFullBrowseWordList =
+    canUseBrowseSearchResults || browseWordsTotalCount === 0 || browseWords.length >= browseWordsTotalCount;
+  const browseWordCountForPagination = canUseBrowseSearchResults
+    ? filteredBrowseWords.length
+    : Math.max(browseWordsTotalCount, filteredBrowseWords.length);
+  const totalBrowsePages = Math.max(
+    1,
+    Math.ceil(browseWordCountForPagination / WORDS_PER_PAGE),
+  );
+  const safeBrowsePage = Math.min(browsePageIndex, Math.max(totalBrowsePages - 1, 0));
+  const pageWords =
+    canUseBrowseSearchResults || hasFullBrowseWordList
+      ? filteredBrowseWords.slice(
+          safeBrowsePage * WORDS_PER_PAGE,
+          (safeBrowsePage + 1) * WORDS_PER_PAGE,
+        )
+      : filteredBrowseWords;
+
+  return {
+    normalizedBrowseSearch,
+    filteredBrowseWords,
+    hasFullBrowseWordList,
+    totalBrowsePages,
+    safeBrowsePage,
+    pageWords,
+  };
+}
+
 export function WordSeoPage({
   uiLang,
   targetLanguage,
@@ -502,104 +590,115 @@ export function WordSeoPage({
   const targetLangName = sanitizeCopy(
     (TARGET_LANG_NAMES[uiLang] ?? TARGET_LANG_NAMES.en)[targetLanguage],
   );
-  const hydratedData = useMemo(
-    () => (initialData as HydrationWordPageData | null | undefined) ?? getHydratedWordPageData(location.pathname),
-    [initialData, location.pathname],
+  const routeHydrationData = useMemo(
+    () =>
+      normalizeWordPageDataForRender(
+        initialData ?? getHydratedWordPageData(location.pathname),
+        browsePage,
+      ),
+    [browsePage, initialData, location.pathname],
   );
-  const initialRouteKey = `${location.pathname}|${uiLang}|${targetLanguage}|${conceptId ?? ""}|${wordSlug}`;
 
   const exerciseInputRef = useRef<HTMLInputElement>(null);
-  const hydratedRouteKeyRef = useRef(hydratedData ? initialRouteKey : null);
-  const [wordEntry, setWordEntry] = useState<VocabEntry | null | undefined>(
-    hydratedData ? hydratedData.wordEntry : undefined,
-  );
-  const [displayDefinition, setDisplayDefinition] = useState<string>(
-    hydratedData?.displayDefinition ?? "",
-  );
-  const [displayWordLemma, setDisplayWordLemma] = useState<string>(
-    hydratedData?.displayWordLemma ?? "",
-  );
-  const [displayWordType, setDisplayWordType] = useState<string>(
-    hydratedData?.displayWordType ?? "",
-  );
-  const [displayCategory, setDisplayCategory] = useState<string>(
-    hydratedData?.displayCategory ?? "",
-  );
-  const [relatedWords, setRelatedWords] = useState<VocabEntry[]>(
-    hydratedData?.relatedWords ?? [],
-  );
-  const [discoveryWords, setDiscoveryWords] = useState<VocabEntry[]>(
-    hydratedData?.discoveryWords ?? [],
-  );
-  const [browseWords, setBrowseWords] = useState<VocabEntry[]>(
-    hydratedData?.browseWords ?? [],
-  );
-  const [browseWordsTotalCount, setBrowseWordsTotalCount] = useState(
-    hydratedData?.browseWordsTotalCount ?? hydratedData?.browseWords.length ?? 0,
-  );
-  const [otherMeanings, setOtherMeanings] = useState<VocabEntry[]>(
-    hydratedData?.otherMeanings ?? [],
+  const [pageData, setPageData] = useState<HydrationWordPageData | null | undefined>(
+    routeHydrationData ?? undefined,
   );
   const [browsePageIndex, setBrowsePageIndex] = useState(
-    Math.max((hydratedData?.browsePage ?? browsePage) - 1, 0),
+    Math.max((routeHydrationData?.browsePage ?? browsePage) - 1, 0),
   );
   const [browseSearch, setBrowseSearch] = useState("");
   const [isBrowseLoading, setIsBrowseLoading] = useState(false);
+  const [browseSearchWords, setBrowseSearchWords] = useState<WordBrowseSearchWordEntry[] | null>(null);
+  const [loadedBrowseSearchShardKey, setLoadedBrowseSearchShardKey] = useState<string | null>(null);
+  const [isBrowseSearchLoading, setIsBrowseSearchLoading] = useState(false);
+  const [browseSearchError, setBrowseSearchError] = useState<string | null>(null);
   const [practiceInput, setPracticeInput] = useState("");
   const [practiceResult, setPracticeResult] = useState<
     "correct" | "incorrect" | null
   >(null);
 
+  const wordEntry = pageData?.wordEntry;
+  const displayDefinition = pageData?.displayDefinition ?? "";
+  const displayWordLemma = pageData?.displayWordLemma ?? "";
+  const displayWordType = pageData?.displayWordType ?? "";
+  const displayCategory = pageData?.displayCategory ?? "";
+  const relatedWords = pageData?.relatedWords ?? [];
+  const discoveryWords = pageData?.discoveryWords ?? [];
+  const browseWords = pageData?.browseWords ?? [];
+  const browseWordsTotalCount = pageData?.browseWordsTotalCount ?? browseWords.length;
+  const otherMeanings = pageData?.otherMeanings ?? [];
+  const browseSearchShardKey = wordEntry
+    ? getWordBrowseSearchShardKey(targetLanguage, wordEntry.level)
+    : null;
+
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (browseSearchShardKey && browseSearchShardKey === loadedBrowseSearchShardKey) {
+      return;
+    }
+    setBrowseSearchWords(null);
+    setLoadedBrowseSearchShardKey(null);
+    setIsBrowseSearchLoading(false);
+    setBrowseSearchError(null);
+  }, [browseSearchShardKey, loadedBrowseSearchShardKey]);
+
+  async function ensureBrowseSearchDataLoaded() {
+    if (!wordEntry || !browseSearchShardKey) {
+      return;
+    }
+    if (browseSearchWords && loadedBrowseSearchShardKey === browseSearchShardKey) {
+      return;
+    }
+    if (isBrowseSearchLoading) {
       return;
     }
 
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [location.pathname]);
+    setIsBrowseSearchLoading(true);
+    setBrowseSearchError(null);
+
+    try {
+      const data = await getWordBrowseSearchData(targetLanguage, wordEntry.level);
+      if (!data || data.words.length === 0) {
+        setBrowseSearchError("Search is temporarily unavailable. Browse links still work.");
+        return;
+      }
+      setBrowseSearchWords(data.words);
+      setLoadedBrowseSearchShardKey(browseSearchShardKey);
+    } catch {
+      setBrowseSearchError("Search is temporarily unavailable. Browse links still work.");
+    } finally {
+      setIsBrowseSearchLoading(false);
+    }
+  }
 
   useEffect(() => {
-    const isHydratedInitialRoute = hydratedRouteKeyRef.current === initialRouteKey;
-    const shouldUpgradePartialHydration = Boolean(
-      isHydratedInitialRoute && hydratedData?.browseWordsPartial,
-    );
+    setBrowseSearch("");
+    setPracticeInput("");
+    setPracticeResult(null);
 
-    if (isHydratedInitialRoute && !shouldUpgradePartialHydration) {
-      hydratedRouteKeyRef.current = null;
-      return;
-    }
-    hydratedRouteKeyRef.current = null;
-
-    if (!shouldUpgradePartialHydration) {
-      setWordEntry(undefined);
-      setDisplayDefinition("");
-      setDisplayWordLemma("");
-      setDisplayWordType("");
-      setDisplayCategory("");
-      setRelatedWords([]);
-      setDiscoveryWords([]);
-      setBrowseWords([]);
-      setBrowseWordsTotalCount(0);
-      setOtherMeanings([]);
-      setBrowsePageIndex(Math.max(browsePage - 1, 0));
-      setBrowseSearch("");
-      setIsBrowseLoading(true);
-      setPracticeInput("");
-      setPracticeResult(null);
-    }
-    const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
-    const loader = wordVocabModules[key];
-    if (!loader) {
-      setWordEntry(null);
-      setBrowseWordsTotalCount(0);
+    if (routeHydrationData) {
+      setPageData(routeHydrationData);
+      setBrowsePageIndex(Math.max(routeHydrationData.browsePage - 1, 0));
       setIsBrowseLoading(false);
       return;
     }
+
+    setPageData(undefined);
+    setBrowsePageIndex(Math.max(browsePage - 1, 0));
+    setIsBrowseLoading(true);
+
+    const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
+    const loader = wordVocabModules[key];
+    if (!loader) {
+      setPageData(createEmptyHydrationWordPageData(browsePage));
+      setIsBrowseLoading(false);
+      return;
+    }
+
     let cancelled = false;
     loader().then(async (mod) => {
       if (cancelled) return;
       const uiVocabLang = getUiVocabularyLanguage(uiLang);
-      let uiVocabulary: VocabEntry[] | null = null;
+      let uiVocabulary: FullVocabEntry[] | null = null;
       if (uiVocabLang !== targetLanguage) {
         const uiKey = `../../data/vocabulary/${uiVocabLang}/vocabulary.json`;
         const uiLoader = wordVocabModules[uiKey];
@@ -618,29 +717,25 @@ export function WordSeoPage({
         vocabulary: mod.default,
         uiVocabulary,
       });
-
-      setWordEntry(resolved.wordEntry);
-      setDisplayDefinition(resolved.displayDefinition);
-      setDisplayWordLemma(resolved.displayWordLemma);
-      setDisplayWordType(resolved.displayWordType);
-      setDisplayCategory(resolved.displayCategory);
-      setOtherMeanings(resolved.otherMeanings);
-      setRelatedWords(resolved.relatedWords);
-      setDiscoveryWords(resolved.discoveryWords);
-      setBrowseWords(resolved.browseWords);
-      setBrowseWordsTotalCount(resolved.browseWords.length);
+      setPageData(buildHydrationWordPageData(resolved, browsePage));
       setIsBrowseLoading(false);
     }).catch(() => {
       if (cancelled) return;
-      setDiscoveryWords([]);
-      setBrowseWords([]);
-      setBrowseWordsTotalCount(0);
+      setPageData(createEmptyHydrationWordPageData(browsePage));
       setIsBrowseLoading(false);
     });
     return () => {
       cancelled = true;
     };
-  }, [browsePage, conceptId, hydratedData?.browseWordsPartial, initialRouteKey, targetLanguage, uiLang, wordSlug]);
+  }, [browsePage, conceptId, routeHydrationData, targetLanguage, uiLang, wordSlug]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
 
   const seoMetadata = useMemo(() => {
     if (!conceptId || !wordEntry) {
@@ -651,10 +746,10 @@ export function WordSeoPage({
       uiLang,
       targetLanguage,
       targetLanguageDisplayName: targetLangName,
-      wordLemma: wordEntry.word_lemma,
+      wordLemma: wordEntry.wordLemma,
       conceptId,
-      definition: displayDefinition || wordEntry.definiton,
-      wordType: displayWordType || wordEntry.type,
+      definition: displayDefinition || wordEntry.definition,
+      wordType: displayWordType || wordEntry.grammarType,
       cefrLevel: wordEntry.level,
       pathname: location.pathname,
       siteOrigin,
@@ -710,11 +805,11 @@ export function WordSeoPage({
     );
   }
 
-  const word = wordEntry.word_lemma;
-  const localizedWordLemma = displayWordLemma || wordEntry.word_lemma;
-  const definition = displayDefinition || wordEntry.definiton;
+  const word = wordEntry.wordLemma;
+  const localizedWordLemma = displayWordLemma || wordEntry.wordLemma;
+  const definition = displayDefinition || wordEntry.definition;
   const sentence = wordEntry.sentence;
-  const wordType = displayWordType || wordEntry.type;
+  const wordType = displayWordType || wordEntry.grammarType;
   const category = displayCategory || wordEntry.category;
   const level = wordEntry.level;
   const speechLang = SPEECH_LANG[targetLanguage] ?? "en-US";
@@ -745,28 +840,18 @@ export function WordSeoPage({
   const browseHeading = t.browseMoreHeading(level, targetLangName);
   const discoveryHeading = t.discoveryWordsHeading(level, targetLangName);
   const normalizedBrowseSearch = browseSearch.trim().toLowerCase();
-  const filteredBrowseWords = normalizedBrowseSearch
-    ? browseWords.filter((browseWord) =>
-        browseWord.word_lemma.toLowerCase().includes(normalizedBrowseSearch),
-      )
-    : browseWords;
-  const hasFullBrowseWordList =
-    browseWordsTotalCount === 0 || browseWords.length >= browseWordsTotalCount;
-  const browseWordCountForPagination = normalizedBrowseSearch
-    ? filteredBrowseWords.length
-    : Math.max(browseWordsTotalCount, filteredBrowseWords.length);
-  const totalBrowsePages = Math.max(
-    1,
-    Math.ceil(browseWordCountForPagination / WORDS_PER_PAGE),
+  const canUseBrowseSearchResults = Boolean(
+    normalizedBrowseSearch && browseSearchWords && loadedBrowseSearchShardKey === browseSearchShardKey,
   );
-  const safeBrowsePage = Math.min(browsePageIndex, Math.max(totalBrowsePages - 1, 0));
-  const pageWords =
-    normalizedBrowseSearch || hasFullBrowseWordList
-      ? filteredBrowseWords.slice(
-          safeBrowsePage * WORDS_PER_PAGE,
-          (safeBrowsePage + 1) * WORDS_PER_PAGE,
-        )
-      : filteredBrowseWords;
+  const { totalBrowsePages, safeBrowsePage, pageWords } =
+    getWordSeoBrowsePresentationState({
+      browseWords,
+      browseWordsTotalCount,
+      browsePageIndex,
+      browseSearch,
+      browseSearchWords,
+      canUseBrowseSearchResults,
+    });
 
   function checkAnswer() {
     const correct = practiceInput.trim().toLowerCase() === word.toLowerCase();
@@ -853,26 +938,26 @@ export function WordSeoPage({
             </h2>
             <div className="mt-4 divide-y divide-border rounded-xl border-2 border-primary/20 bg-primary/[0.03]">
               {otherMeanings.map((meaning) => {
-                const translatedOtherType = translateInterface(`wordTypes.${meaning.type}`);
+                const translatedOtherType = translateInterface(`wordTypes.${meaning.grammarType}`);
                 const localizedOtherType =
                   translatedOtherType &&
-                  translatedOtherType !== `wordTypes.${meaning.type}`
+                  translatedOtherType !== `wordTypes.${meaning.grammarType}`
                     ? translatedOtherType
-                    : formatKeyLabel(meaning.type);
+                    : formatKeyLabel(meaning.grammarType);
 
                 return (
                   <div
-                    key={meaning.concept_id}
+                    key={meaning.conceptId}
                     className="flex flex-col gap-3 bg-card/80 p-3 sm:flex-row sm:items-center sm:gap-4"
                   >
                     <p className="min-w-0 flex-1 break-words text-sm text-foreground">
-                      {meaning.definiton}
+                      {meaning.definition}
                     </p>
                     <div className="flex flex-wrap items-center gap-2 sm:shrink-0">
                       <span className="rounded-full border border-primary/35 bg-primary/[0.14] px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary">
                         {meaning.level}
                       </span>
-                      {meaning.type ? (
+                      {meaning.grammarType ? (
                         <span suppressHydrationWarning className="rounded-full border border-border/80 bg-muted/70 px-2 py-0.5 text-xs font-medium text-foreground/80">
                           {localizedOtherType}
                         </span>
@@ -882,8 +967,8 @@ export function WordSeoPage({
                       to={buildWordPath(
                         uiLang,
                         targetLanguage,
-                        meaning.word_lemma,
-                        meaning.concept_id,
+                        meaning.wordLemma,
+                        meaning.conceptId,
                       )}
                       className="inline-flex shrink-0 items-center justify-center rounded-lg border-2 border-primary/50 bg-primary/15 px-3 py-1.5 text-xs font-bold text-primary shadow-sm transition hover:bg-primary/25 hover:border-primary/70"
                     >
@@ -992,11 +1077,11 @@ export function WordSeoPage({
             <div className="mt-4 flex flex-wrap gap-2">
               {relatedWords.map((relWord) => (
                 <Link
-                  key={relWord.concept_id}
-                  to={buildWordPath(uiLang, targetLanguage, relWord.word_lemma, relWord.concept_id)}
+                  key={relWord.conceptId}
+                  to={buildWordPath(uiLang, targetLanguage, relWord.wordLemma, relWord.conceptId)}
                   className="rounded-lg border border-border px-3 py-1.5 text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                 >
-                  {relWord.word_lemma}
+                  {relWord.wordLemma}
                 </Link>
               ))}
             </div>
@@ -1011,16 +1096,16 @@ export function WordSeoPage({
             <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {discoveryWords.map((discoveryWord) => (
                 <Link
-                  key={discoveryWord.concept_id}
+                  key={discoveryWord.conceptId}
                   to={buildWordPath(
                     uiLang,
                     targetLanguage,
-                    discoveryWord.word_lemma,
-                    discoveryWord.concept_id,
+                    discoveryWord.wordLemma,
+                    discoveryWord.conceptId,
                   )}
                   className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                 >
-                  {discoveryWord.word_lemma}
+                  {discoveryWord.wordLemma}
                 </Link>
               ))}
             </div>
@@ -1043,13 +1128,29 @@ export function WordSeoPage({
           <input
             type="text"
             value={browseSearch}
+            onFocus={() => {
+              void ensureBrowseSearchDataLoaded();
+            }}
             onChange={(e) => {
               setBrowseSearch(e.target.value);
               setBrowsePageIndex(0);
+              if (e.target.value.trim()) {
+                void ensureBrowseSearchDataLoaded();
+              }
             }}
             placeholder={`Search ${level} words...`}
             className="mt-4 w-full rounded-xl border-2 border-primary/35 bg-primary/[0.06] px-4 py-3 text-base font-medium text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/35"
           />
+          {normalizedBrowseSearch && isBrowseSearchLoading && !canUseBrowseSearchResults ? (
+            <div className="mt-3 text-sm text-muted-foreground">
+              Loading more words for search...
+            </div>
+          ) : null}
+          {normalizedBrowseSearch && browseSearchError && !canUseBrowseSearchResults ? (
+            <div className="mt-3 text-sm text-muted-foreground">
+              {browseSearchError}
+            </div>
+          ) : null}
           {isBrowseLoading ? (
             <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
               {Array.from({ length: 12 }).map((_, i) => (
@@ -1064,11 +1165,11 @@ export function WordSeoPage({
               <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 {pageWords.map((browseWord) => (
                   <Link
-                    key={browseWord.concept_id}
-                    to={buildWordPath(uiLang, targetLanguage, browseWord.word_lemma, browseWord.concept_id)}
+                    key={browseWord.conceptId}
+                    to={buildWordPath(uiLang, targetLanguage, browseWord.wordLemma, browseWord.conceptId)}
                     className="rounded-lg border border-border px-3 py-1.5 text-center text-sm text-foreground transition hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                   >
-                    {browseWord.word_lemma}
+                    {browseWord.wordLemma}
                   </Link>
                 ))}
               </div>
@@ -1083,7 +1184,7 @@ export function WordSeoPage({
                         ...
                       </span>
                     ) : (
-                      normalizedBrowseSearch ? (
+                      canUseBrowseSearchResults ? (
                         <button
                           key={item}
                           type="button"
