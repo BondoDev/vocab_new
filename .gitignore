@@ -13,3 +13,6 @@ indexed-progress.json
 .vercel
 
 poc/cloudflare-word-renderer/.compiled/
+
+staging/cloudflare-word-worker/.wrangler/
+staging/cloudflare-word-worker/worker-dist/

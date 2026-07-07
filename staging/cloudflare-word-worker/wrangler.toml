@@ -1,0 +1,24 @@
+# STAGING-ONLY Wrangler configuration.
+# No routes, no custom domains, no production bindings — local `wrangler dev`
+# verification only. Name is deliberately distinct from any production Worker.
+name = "fluentstellar-word-staging"
+main = "worker-dist/index.js"
+compatibility_date = "2024-09-23"
+
+# The entry is pre-bundled by Vite (see vite.worker.config.mjs / package.json
+# "build" script), which resolves import.meta.glob into code-split dynamic
+# import() targets and inlines npm dependencies (react, react-dom,
+# react-router-dom, lucide-react). no_bundle tells Wrangler to upload that
+# output as-is instead of re-bundling (and re-inlining) it — without this,
+# Wrangler's own bundler inlines every reachable dynamic import() target,
+# which pulled in ~27MB of per-language vocabulary/interface chunks that are
+# never actually read during a pure-SSR render (see the final report's
+# "Performance and bundle sizes" section for the measured before/after).
+no_bundle = true
+
+# Serves the EXISTING production client bundle (already built by `npm run
+# build` at the repo root) so the staging page's <script>/<link> tags point
+# at real, hydration-compatible JS/CSS instead of a duplicated asset tree.
+[assets]
+directory = "../../dist"
+binding = "ASSETS"
