@@ -223,14 +223,13 @@ async function createVerificationServer() {
         return;
       }
 
-      const legacyLocation = getLegacyRedirectLocation(pathname);
-      if (legacyLocation) {
-        res.statusCode = 308;
-        res.setHeader("Location", legacyLocation);
-        res.end("");
-        return;
-      }
-
+      // Legacy single-hyphen word URLs are intentionally NOT special-cased
+      // here: they match isWordLikeRoute below just like canonical URLs, and
+      // handleInternalWordSsrRequest's own parseLegacyWordRoute check (in
+      // server/word-ssr-handler.mjs) already returns the 308 for them. Routing
+      // them through the same call as canonical URLs (rather than a
+      // test-local duplicate of that redirect regex) exercises the actual
+      // production redirect implementation instead of a second copy of it.
       if (isWordLikeRoute(pathname)) {
         const response = await handleInternalWordSsrRequest({
           method: req.method,

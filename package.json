@@ -14,7 +14,17 @@
     "test:word-ssr-package": "node ./scripts/verify-word-ssr-package.mjs",
     "test:homepage-visibility": "node scripts/test-homepage-visibility.mjs",
     "test:jsonld-escaping": "node scripts/test-jsonld-escaping.mjs",
-    "test:schema-graph": "node scripts/test-schema-graph.mjs"
+    "test:schema-graph": "node scripts/test-schema-graph.mjs",
+    "test:word-browse-pagination": "node scripts/test-word-browse-pagination.mjs",
+    "test:prerender-parity": "node scripts/test-prerender-parity.mjs",
+    "test:sitemap-structure": "node scripts/test-sitemap-structure.mjs",
+    "test:seo-core-routes": "node scripts/test-seo-core-routes.mjs",
+    "test:seo-output": "npm run -s test:word-ssr-http && npm run -s test:word-ssr-package && npm run -s test:homepage-visibility && npm run -s test:jsonld-escaping && npm run -s test:schema-graph && npm run -s test:word-browse-pagination && npm run -s test:prerender-parity && npm run -s test:sitemap-structure && npm run -s test:seo-core-routes",
+    "test:seo-baseline": "npm run -s test:seo-output",
+    "test:architecture-guards": "npm run -s test:word-seo",
+    "seo-baseline:capture": "node scripts/seo-baseline/capture.mjs",
+    "seo-baseline:compare": "node scripts/seo-baseline/compare.mjs",
+    "benchmark:word-render": "node scripts/benchmark-word-render.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
