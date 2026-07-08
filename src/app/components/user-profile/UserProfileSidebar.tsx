@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   BookOpenText,
   ChartSpline,
-  Flame,
   Home,
   ListPlus,
   Settings,
@@ -90,13 +89,6 @@ function SidebarInner({
               {learningLanguageLabel} <span aria-hidden="true">&bull;</span> {learningLevelLabel}
             </p>
           </div>
-        </div>
-
-        <div className="user-profile-sidebar__streak" aria-label="12 day streak">
-          <span className="user-profile-sidebar__streak-icon" aria-hidden="true">
-            <Flame size={14} strokeWidth={2} />
-          </span>
-          <span>12 Day Streak</span>
         </div>
       </section>
 
