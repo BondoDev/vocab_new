@@ -1,0 +1,953 @@
+{
+  "generatedAt": "2026-07-08T18:28:58.112Z",
+  "targetLanguages": {
+    "english": {
+      "totalConceptRecords": 10572,
+      "browseEligibleRecords": 10532,
+      "grammarTypeCounts": {
+        "preposition": 71,
+        "noun": 5492,
+        "verb": 2003,
+        "adjective": 2151,
+        "adverb": 751,
+        "determiner": 17,
+        "conjunction": 24,
+        "pronoun": 54,
+        "exclamation": 6,
+        "expression": 3
+      },
+      "byLevel": {
+        "A1": {
+          "conceptCount": 962,
+          "browseEligible": 935,
+          "grammarTypes": {
+            "preposition": 26,
+            "noun": 570,
+            "verb": 133,
+            "adjective": 124,
+            "adverb": 46,
+            "determiner": 11,
+            "conjunction": 5,
+            "pronoun": 40,
+            "exclamation": 4,
+            "expression": 3
+          },
+          "browseTotalPages": 18
+        },
+        "A2": {
+          "conceptCount": 1224,
+          "browseEligible": 1219,
+          "grammarTypes": {
+            "noun": 760,
+            "adverb": 50,
+            "verb": 200,
+            "preposition": 14,
+            "adjective": 181,
+            "determiner": 5,
+            "exclamation": 2,
+            "pronoun": 7,
+            "conjunction": 5
+          },
+          "browseTotalPages": 23
+        },
+        "B1": {
+          "conceptCount": 2758,
+          "browseEligible": 2753,
+          "grammarTypes": {
+            "verb": 502,
+            "adverb": 161,
+            "preposition": 19,
+            "adjective": 547,
+            "noun": 1511,
+            "conjunction": 10,
+            "pronoun": 7,
+            "determiner": 1
+          },
+          "browseTotalPages": 51
+        },
+        "B2": {
+          "conceptCount": 3057,
+          "browseEligible": 3054,
+          "grammarTypes": {
+            "adjective": 660,
+            "adverb": 207,
+            "verb": 640,
+            "noun": 1539,
+            "preposition": 9,
+            "conjunction": 2
+          },
+          "browseTotalPages": 57
+        },
+        "C1": {
+          "conceptCount": 1480,
+          "browseEligible": 1480,
+          "grammarTypes": {
+            "verb": 319,
+            "noun": 647,
+            "adjective": 354,
+            "adverb": 156,
+            "preposition": 2,
+            "conjunction": 2
+          },
+          "browseTotalPages": 28
+        },
+        "C2": {
+          "conceptCount": 1091,
+          "browseEligible": 1091,
+          "grammarTypes": {
+            "noun": 465,
+            "verb": 209,
+            "adjective": 285,
+            "adverb": 131,
+            "preposition": 1
+          },
+          "browseTotalPages": 21
+        }
+      },
+      "ambiguousSlugGroupCount": 1535,
+      "ambiguousSlugRecordCount": 3307,
+      "levelsPresent": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "missingLevels": [],
+      "isCrawlable": true
+    },
+    "german": {
+      "totalConceptRecords": 10572,
+      "browseEligibleRecords": 10531,
+      "grammarTypeCounts": {
+        "preposition": 70,
+        "noun": 5493,
+        "verb": 2003,
+        "adjective": 2160,
+        "adverb": 742,
+        "determiner": 17,
+        "conjunction": 24,
+        "pronoun": 54,
+        "exclamation": 6,
+        "expression": 3
+      },
+      "byLevel": {
+        "A1": {
+          "conceptCount": 962,
+          "browseEligible": 947,
+          "grammarTypes": {
+            "preposition": 26,
+            "noun": 570,
+            "verb": 133,
+            "adjective": 124,
+            "adverb": 46,
+            "determiner": 11,
+            "conjunction": 5,
+            "pronoun": 40,
+            "exclamation": 4,
+            "expression": 3
+          },
+          "browseTotalPages": 18
+        },
+        "A2": {
+          "conceptCount": 1224,
+          "browseEligible": 1217,
+          "grammarTypes": {
+            "noun": 760,
+            "adverb": 49,
+            "verb": 200,
+            "preposition": 14,
+            "adjective": 182,
+            "determiner": 5,
+            "exclamation": 2,
+            "pronoun": 7,
+            "conjunction": 5
+          },
+          "browseTotalPages": 23
+        },
+        "B1": {
+          "conceptCount": 2758,
+          "browseEligible": 2751,
+          "grammarTypes": {
+            "verb": 502,
+            "adverb": 161,
+            "preposition": 18,
+            "adjective": 547,
+            "noun": 1512,
+            "conjunction": 10,
+            "pronoun": 7,
+            "determiner": 1
+          },
+          "browseTotalPages": 51
+        },
+        "B2": {
+          "conceptCount": 3057,
+          "browseEligible": 3050,
+          "grammarTypes": {
+            "adjective": 660,
+            "adverb": 207,
+            "verb": 640,
+            "noun": 1539,
+            "preposition": 9,
+            "conjunction": 2
+          },
+          "browseTotalPages": 57
+        },
+        "C1": {
+          "conceptCount": 1480,
+          "browseEligible": 1475,
+          "grammarTypes": {
+            "verb": 319,
+            "noun": 647,
+            "adjective": 362,
+            "adverb": 148,
+            "preposition": 2,
+            "conjunction": 2
+          },
+          "browseTotalPages": 28
+        },
+        "C2": {
+          "conceptCount": 1091,
+          "browseEligible": 1091,
+          "grammarTypes": {
+            "noun": 465,
+            "verb": 209,
+            "adjective": 285,
+            "adverb": 131,
+            "preposition": 1
+          },
+          "browseTotalPages": 21
+        }
+      },
+      "ambiguousSlugGroupCount": 1740,
+      "ambiguousSlugRecordCount": 4142,
+      "levelsPresent": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "missingLevels": [],
+      "isCrawlable": false
+    },
+    "spanish": {
+      "totalConceptRecords": 10572,
+      "browseEligibleRecords": 10532,
+      "grammarTypeCounts": {
+        "preposition": 71,
+        "noun": 5490,
+        "verb": 2004,
+        "adjective": 2150,
+        "adverb": 753,
+        "determiner": 17,
+        "conjunction": 24,
+        "pronoun": 54,
+        "exclamation": 6,
+        "expression": 3
+      },
+      "byLevel": {
+        "A1": {
+          "conceptCount": 962,
+          "browseEligible": 939,
+          "grammarTypes": {
+            "preposition": 26,
+            "noun": 570,
+            "verb": 133,
+            "adjective": 124,
+            "adverb": 46,
+            "determiner": 11,
+            "conjunction": 5,
+            "pronoun": 40,
+            "exclamation": 4,
+            "expression": 3
+          },
+          "browseTotalPages": 18
+        },
+        "A2": {
+          "conceptCount": 1224,
+          "browseEligible": 1218,
+          "grammarTypes": {
+            "noun": 760,
+            "adverb": 50,
+            "verb": 200,
+            "preposition": 14,
+            "adjective": 181,
+            "determiner": 5,
+            "exclamation": 2,
+            "pronoun": 7,
+            "conjunction": 5
+          },
+          "browseTotalPages": 23
+        },
+        "B1": {
+          "conceptCount": 2758,
+          "browseEligible": 2750,
+          "grammarTypes": {
+            "verb": 503,
+            "adverb": 162,
+            "preposition": 19,
+            "adjective": 546,
+            "noun": 1510,
+            "conjunction": 10,
+            "pronoun": 7,
+            "determiner": 1
+          },
+          "browseTotalPages": 51
+        },
+        "B2": {
+          "conceptCount": 3057,
+          "browseEligible": 3054,
+          "grammarTypes": {
+            "adjective": 660,
+            "adverb": 208,
+            "verb": 640,
+            "noun": 1538,
+            "preposition": 9,
+            "conjunction": 2
+          },
+          "browseTotalPages": 57
+        },
+        "C1": {
+          "conceptCount": 1480,
+          "browseEligible": 1480,
+          "grammarTypes": {
+            "verb": 319,
+            "noun": 647,
+            "adjective": 354,
+            "adverb": 156,
+            "preposition": 2,
+            "conjunction": 2
+          },
+          "browseTotalPages": 28
+        },
+        "C2": {
+          "conceptCount": 1091,
+          "browseEligible": 1091,
+          "grammarTypes": {
+            "noun": 465,
+            "verb": 209,
+            "adjective": 285,
+            "adverb": 131,
+            "preposition": 1
+          },
+          "browseTotalPages": 21
+        }
+      },
+      "ambiguousSlugGroupCount": 1770,
+      "ambiguousSlugRecordCount": 4080,
+      "levelsPresent": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "missingLevels": [],
+      "isCrawlable": false
+    },
+    "french": {
+      "totalConceptRecords": 10572,
+      "browseEligibleRecords": 10538,
+      "grammarTypeCounts": {
+        "preposition": 72,
+        "noun": 5489,
+        "verb": 2005,
+        "adjective": 2151,
+        "adverb": 752,
+        "determiner": 16,
+        "conjunction": 24,
+        "pronoun": 54,
+        "exclamation": 6,
+        "expression": 3
+      },
+      "byLevel": {
+        "A1": {
+          "conceptCount": 962,
+          "browseEligible": 944,
+          "grammarTypes": {
+            "preposition": 26,
+            "noun": 570,
+            "verb": 133,
+            "adjective": 124,
+            "adverb": 46,
+            "determiner": 11,
+            "conjunction": 5,
+            "pronoun": 40,
+            "exclamation": 4,
+            "expression": 3
+          },
+          "browseTotalPages": 18
+        },
+        "A2": {
+          "conceptCount": 1224,
+          "browseEligible": 1220,
+          "grammarTypes": {
+            "noun": 758,
+            "adverb": 52,
+            "verb": 200,
+            "preposition": 15,
+            "adjective": 183,
+            "determiner": 4,
+            "exclamation": 2,
+            "pronoun": 7,
+            "conjunction": 3
+          },
+          "browseTotalPages": 23
+        },
+        "B1": {
+          "conceptCount": 2758,
+          "browseEligible": 2750,
+          "grammarTypes": {
+            "verb": 503,
+            "adverb": 160,
+            "preposition": 19,
+            "adjective": 546,
+            "noun": 1510,
+            "conjunction": 12,
+            "pronoun": 7,
+            "determiner": 1
+          },
+          "browseTotalPages": 51
+        },
+        "B2": {
+          "conceptCount": 3057,
+          "browseEligible": 3053,
+          "grammarTypes": {
+            "adjective": 659,
+            "adverb": 207,
+            "verb": 641,
+            "noun": 1539,
+            "preposition": 9,
+            "conjunction": 2
+          },
+          "browseTotalPages": 57
+        },
+        "C1": {
+          "conceptCount": 1480,
+          "browseEligible": 1480,
+          "grammarTypes": {
+            "verb": 319,
+            "noun": 647,
+            "adjective": 354,
+            "adverb": 156,
+            "preposition": 2,
+            "conjunction": 2
+          },
+          "browseTotalPages": 28
+        },
+        "C2": {
+          "conceptCount": 1091,
+          "browseEligible": 1091,
+          "grammarTypes": {
+            "noun": 465,
+            "verb": 209,
+            "adjective": 285,
+            "adverb": 131,
+            "preposition": 1
+          },
+          "browseTotalPages": 21
+        }
+      },
+      "ambiguousSlugGroupCount": 1760,
+      "ambiguousSlugRecordCount": 4018,
+      "levelsPresent": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "missingLevels": [],
+      "isCrawlable": false
+    },
+    "italian": {
+      "totalConceptRecords": 10572,
+      "browseEligibleRecords": 10528,
+      "grammarTypeCounts": {
+        "preposition": 68,
+        "noun": 5491,
+        "verb": 2003,
+        "adjective": 2153,
+        "adverb": 752,
+        "determiner": 17,
+        "conjunction": 25,
+        "pronoun": 53,
+        "exclamation": 6,
+        "expression": 3,
+        "interjection": 1
+      },
+      "byLevel": {
+        "A1": {
+          "conceptCount": 962,
+          "browseEligible": 936,
+          "grammarTypes": {
+            "preposition": 25,
+            "noun": 570,
+            "verb": 133,
+            "adjective": 124,
+            "adverb": 46,
+            "determiner": 11,
+            "conjunction": 6,
+            "pronoun": 40,
+            "exclamation": 4,
+            "expression": 3
+          },
+          "browseTotalPages": 18
+        },
+        "A2": {
+          "conceptCount": 1224,
+          "browseEligible": 1220,
+          "grammarTypes": {
+            "noun": 760,
+            "adverb": 51,
+            "verb": 200,
+            "preposition": 14,
+            "adjective": 180,
+            "determiner": 5,
+            "exclamation": 2,
+            "pronoun": 7,
+            "conjunction": 5
+          },
+          "browseTotalPages": 23
+        },
+        "B1": {
+          "conceptCount": 2758,
+          "browseEligible": 2747,
+          "grammarTypes": {
+            "verb": 502,
+            "adverb": 161,
+            "preposition": 18,
+            "adjective": 549,
+            "noun": 1511,
+            "conjunction": 10,
+            "pronoun": 6,
+            "determiner": 1
+          },
+          "browseTotalPages": 51
+        },
+        "B2": {
+          "conceptCount": 3057,
+          "browseEligible": 3055,
+          "grammarTypes": {
+            "adjective": 661,
+            "adverb": 207,
+            "verb": 640,
+            "noun": 1538,
+            "preposition": 8,
+            "conjunction": 2,
+            "interjection": 1
+          },
+          "browseTotalPages": 57
+        },
+        "C1": {
+          "conceptCount": 1480,
+          "browseEligible": 1479,
+          "grammarTypes": {
+            "verb": 319,
+            "noun": 647,
+            "adjective": 354,
+            "adverb": 156,
+            "preposition": 2,
+            "conjunction": 2
+          },
+          "browseTotalPages": 28
+        },
+        "C2": {
+          "conceptCount": 1091,
+          "browseEligible": 1091,
+          "grammarTypes": {
+            "noun": 465,
+            "verb": 209,
+            "adjective": 285,
+            "adverb": 131,
+            "preposition": 1
+          },
+          "browseTotalPages": 21
+        }
+      },
+      "ambiguousSlugGroupCount": 1681,
+      "ambiguousSlugRecordCount": 3845,
+      "levelsPresent": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "missingLevels": [],
+      "isCrawlable": false
+    },
+    "portuguese": {
+      "totalConceptRecords": 10572,
+      "browseEligibleRecords": 10533,
+      "grammarTypeCounts": {
+        "preposition": 72,
+        "noun": 5491,
+        "verb": 2003,
+        "adjective": 2151,
+        "adverb": 751,
+        "determiner": 17,
+        "conjunction": 24,
+        "pronoun": 54,
+        "exclamation": 6,
+        "expression": 3
+      },
+      "byLevel": {
+        "A1": {
+          "conceptCount": 962,
+          "browseEligible": 945,
+          "grammarTypes": {
+            "preposition": 26,
+            "noun": 570,
+            "verb": 133,
+            "adjective": 124,
+            "adverb": 46,
+            "determiner": 11,
+            "conjunction": 5,
+            "pronoun": 40,
+            "exclamation": 4,
+            "expression": 3
+          },
+          "browseTotalPages": 18
+        },
+        "A2": {
+          "conceptCount": 1224,
+          "browseEligible": 1216,
+          "grammarTypes": {
+            "noun": 760,
+            "adverb": 50,
+            "verb": 200,
+            "preposition": 14,
+            "adjective": 181,
+            "determiner": 5,
+            "exclamation": 2,
+            "pronoun": 7,
+            "conjunction": 5
+          },
+          "browseTotalPages": 23
+        },
+        "B1": {
+          "conceptCount": 2758,
+          "browseEligible": 2749,
+          "grammarTypes": {
+            "verb": 502,
+            "adverb": 161,
+            "preposition": 20,
+            "adjective": 547,
+            "noun": 1510,
+            "conjunction": 10,
+            "pronoun": 7,
+            "determiner": 1
+          },
+          "browseTotalPages": 51
+        },
+        "B2": {
+          "conceptCount": 3057,
+          "browseEligible": 3054,
+          "grammarTypes": {
+            "adjective": 660,
+            "adverb": 207,
+            "verb": 640,
+            "noun": 1539,
+            "preposition": 9,
+            "conjunction": 2
+          },
+          "browseTotalPages": 57
+        },
+        "C1": {
+          "conceptCount": 1480,
+          "browseEligible": 1478,
+          "grammarTypes": {
+            "verb": 319,
+            "noun": 647,
+            "adjective": 354,
+            "adverb": 156,
+            "preposition": 2,
+            "conjunction": 2
+          },
+          "browseTotalPages": 28
+        },
+        "C2": {
+          "conceptCount": 1091,
+          "browseEligible": 1091,
+          "grammarTypes": {
+            "noun": 465,
+            "verb": 209,
+            "adjective": 285,
+            "adverb": 131,
+            "preposition": 1
+          },
+          "browseTotalPages": 21
+        }
+      },
+      "ambiguousSlugGroupCount": 1782,
+      "ambiguousSlugRecordCount": 4121,
+      "levelsPresent": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "missingLevels": [],
+      "isCrawlable": false
+    },
+    "russian": {
+      "totalConceptRecords": 10572,
+      "browseEligibleRecords": 10500,
+      "grammarTypeCounts": {
+        "preposition": 70,
+        "noun": 5493,
+        "verb": 2001,
+        "adjective": 2150,
+        "adverb": 754,
+        "determiner": 17,
+        "conjunction": 24,
+        "pronoun": 54,
+        "exclamation": 6,
+        "expression": 3
+      },
+      "byLevel": {
+        "A1": {
+          "conceptCount": 962,
+          "browseEligible": 937,
+          "grammarTypes": {
+            "preposition": 25,
+            "noun": 570,
+            "verb": 133,
+            "adjective": 124,
+            "adverb": 47,
+            "determiner": 11,
+            "conjunction": 5,
+            "pronoun": 40,
+            "exclamation": 4,
+            "expression": 3
+          },
+          "browseTotalPages": 18
+        },
+        "A2": {
+          "conceptCount": 1224,
+          "browseEligible": 1212,
+          "grammarTypes": {
+            "noun": 760,
+            "adverb": 50,
+            "verb": 200,
+            "preposition": 14,
+            "adjective": 181,
+            "determiner": 5,
+            "exclamation": 2,
+            "pronoun": 7,
+            "conjunction": 5
+          },
+          "browseTotalPages": 23
+        },
+        "B1": {
+          "conceptCount": 2758,
+          "browseEligible": 2740,
+          "grammarTypes": {
+            "verb": 502,
+            "adverb": 162,
+            "preposition": 19,
+            "adjective": 546,
+            "noun": 1511,
+            "conjunction": 10,
+            "pronoun": 7,
+            "determiner": 1
+          },
+          "browseTotalPages": 51
+        },
+        "B2": {
+          "conceptCount": 3057,
+          "browseEligible": 3047,
+          "grammarTypes": {
+            "adjective": 661,
+            "adverb": 207,
+            "verb": 638,
+            "noun": 1540,
+            "preposition": 9,
+            "conjunction": 2
+          },
+          "browseTotalPages": 57
+        },
+        "C1": {
+          "conceptCount": 1480,
+          "browseEligible": 1476,
+          "grammarTypes": {
+            "verb": 319,
+            "noun": 647,
+            "adjective": 354,
+            "adverb": 156,
+            "preposition": 2,
+            "conjunction": 2
+          },
+          "browseTotalPages": 28
+        },
+        "C2": {
+          "conceptCount": 1091,
+          "browseEligible": 1088,
+          "grammarTypes": {
+            "noun": 465,
+            "verb": 209,
+            "adjective": 284,
+            "adverb": 132,
+            "preposition": 1
+          },
+          "browseTotalPages": 21
+        }
+      },
+      "ambiguousSlugGroupCount": 1515,
+      "ambiguousSlugRecordCount": 3530,
+      "levelsPresent": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "missingLevels": [],
+      "isCrawlable": false
+    }
+  },
+  "totals": {
+    "canonicalConceptRecords": 74004,
+    "browseEligibleRecords": 73694,
+    "grammarVariantGroups": 11783,
+    "grammarVariantRecords": 27043,
+    "browsePagesAllLanguageLevelPairs": 1386
+  },
+  "uiLanguages": [
+    "en",
+    "es",
+    "de",
+    "fr",
+    "ru",
+    "pt",
+    "it"
+  ],
+  "crawlableTargetLanguages": [
+    "english"
+  ],
+  "sitemapDefinitions": [
+    {
+      "fileWordCode": "de",
+      "fileUiCode": "en",
+      "uiLang": "en",
+      "targetLanguage": "german"
+    },
+    {
+      "fileWordCode": "en",
+      "fileUiCode": "en",
+      "uiLang": "en",
+      "targetLanguage": "english"
+    },
+    {
+      "fileWordCode": "en",
+      "fileUiCode": "sp",
+      "uiLang": "es",
+      "targetLanguage": "english"
+    },
+    {
+      "fileWordCode": "en",
+      "fileUiCode": "fr",
+      "uiLang": "fr",
+      "targetLanguage": "english"
+    },
+    {
+      "fileWordCode": "en",
+      "fileUiCode": "de",
+      "uiLang": "de",
+      "targetLanguage": "english"
+    },
+    {
+      "fileWordCode": "en",
+      "fileUiCode": "it",
+      "uiLang": "it",
+      "targetLanguage": "english"
+    },
+    {
+      "fileWordCode": "en",
+      "fileUiCode": "pt",
+      "uiLang": "pt",
+      "targetLanguage": "english"
+    },
+    {
+      "fileWordCode": "en",
+      "fileUiCode": "ru",
+      "uiLang": "ru",
+      "targetLanguage": "english"
+    }
+  ],
+  "derived": {
+    "sitemapPublishedRoutes": 84576,
+    "sitemapBreakdown": [
+      {
+        "fileWordCode": "de",
+        "fileUiCode": "en",
+        "uiLang": "en",
+        "targetLanguage": "german",
+        "routeCount": 10572
+      },
+      {
+        "fileWordCode": "en",
+        "fileUiCode": "en",
+        "uiLang": "en",
+        "targetLanguage": "english",
+        "routeCount": 10572
+      },
+      {
+        "fileWordCode": "en",
+        "fileUiCode": "sp",
+        "uiLang": "es",
+        "targetLanguage": "english",
+        "routeCount": 10572
+      },
+      {
+        "fileWordCode": "en",
+        "fileUiCode": "fr",
+        "uiLang": "fr",
+        "targetLanguage": "english",
+        "routeCount": 10572
+      },
+      {
+        "fileWordCode": "en",
+        "fileUiCode": "de",
+        "uiLang": "de",
+        "targetLanguage": "english",
+        "routeCount": 10572
+      },
+      {
+        "fileWordCode": "en",
+        "fileUiCode": "it",
+        "uiLang": "it",
+        "targetLanguage": "english",
+        "routeCount": 10572
+      },
+      {
+        "fileWordCode": "en",
+        "fileUiCode": "pt",
+        "uiLang": "pt",
+        "targetLanguage": "english",
+        "routeCount": 10572
+      },
+      {
+        "fileWordCode": "en",
+        "fileUiCode": "ru",
+        "uiLang": "ru",
+        "targetLanguage": "english",
+        "routeCount": 10572
+      }
+    ],
+    "totalRenderableCanonicalRoutes": 518028,
+    "aliasRedirectEligibleRoutes": 518028,
+    "uiLanguageCount": 7,
+    "targetLanguageCount": 7
+  }
+}

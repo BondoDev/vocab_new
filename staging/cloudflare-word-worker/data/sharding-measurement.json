@@ -1,0 +1,41 @@
+{
+  "measuredAt": "2026-07-08T18:48:06.397Z",
+  "results": [
+    {
+      "label": "A: targetLanguage + CEFR level (CHOSEN)",
+      "shardCount": 63,
+      "totalRawMB": 49.76041030883789,
+      "totalGzipMB": 8.610686302185059,
+      "avgRawKB": 808.8041294642857,
+      "maxRawKB": 1078.6064453125,
+      "avgGzipKB": 139.95782180059524,
+      "maxGzipKB": 212.5283203125,
+      "avgParseMs": 7.290889365079364,
+      "maxParseMs": 10.645085
+    },
+    {
+      "label": "B: targetLanguage + fixed-size groups (1000/shard)",
+      "shardCount": 77,
+      "totalRawMB": 49.76042366027832,
+      "totalGzipMB": 8.64156723022461,
+      "avgRawKB": 661.7490107548701,
+      "maxRawKB": 726.3544921875,
+      "avgGzipKB": 114.92162134740259,
+      "maxGzipKB": 146.1123046875,
+      "avgParseMs": 6.062454740259742,
+      "maxParseMs": 10.08283
+    },
+    {
+      "label": "C: targetLanguage + first slug character",
+      "shardCount": 219,
+      "totalRawMB": 49.76055908203125,
+      "totalGzipMB": 8.972545623779297,
+      "avgRawKB": 232.67037671232876,
+      "maxRawKB": 1150.123046875,
+      "avgGzipKB": 41.95382063356164,
+      "maxGzipKB": 225.93359375,
+      "avgParseMs": 2.041859520547943,
+      "maxParseMs": 10.874875
+    }
+  ]
+}

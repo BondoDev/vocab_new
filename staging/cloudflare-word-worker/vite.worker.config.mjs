@@ -16,6 +16,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  // Vite's default publicDir behavior copies the repo's public/ directory
+  // (favicon.png, robots.txt, sitemap.xml, sitemaps/*.xml, seo/, etc.) into
+  // whatever outDir this build targets. That's correct for the CLIENT build
+  // (those files belong in dist/, served as static assets) but wrong for
+  // this SSR-only build: none of that content is ever read by
+  // render-entry.tsx, yet it was being uploaded as part of the WORKER
+  // SCRIPT bundle (favicon.png alone added ~1.47MB gzip; the 8 word
+  // sitemap XML files added another ~630KB gzip) — see the bundle-size
+  // migration report's "root cause" section. Disabling it here has zero
+  // effect on what's actually served: assets-full/ (built by
+  // publish-shards.mjs from ../../dist/, which DOES get publicDir copied
+  // into it via the normal client build) already contains all of this
+  // content under the Worker's separate Static Assets binding.
+  publicDir: false,
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "..", "..", "src"),

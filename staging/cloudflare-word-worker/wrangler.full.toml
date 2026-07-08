@@ -1,0 +1,46 @@
+# STAGING-ONLY Wrangler configuration for the FULL-CORPUS Worker.
+# Separate from wrangler.toml (the original 81-word sample's config, kept
+# untouched for rollback) — see the final report's "Existing sample files
+# and retirement status" section. Same Worker NAME on purpose: only one of
+# these two configs is ever the "live" staging deployment at a time; the
+# other stays available via `wrangler dev --config <the other file>` for
+# comparison/rollback. No routes, no custom domains — local `wrangler dev`
+# (and, once explicitly requested, `wrangler deploy`) only ever touch
+# fluentstellar-word-staging.<subdomain>.workers.dev, never fluentstellar.com.
+name = "fluentstellar-word-staging"
+main = "worker-dist-full/index.full.js"
+compatibility_date = "2024-09-23"
+
+# See wrangler.toml's own comment for why no_bundle is required: the Worker
+# entry (src/index.full.ts) is pre-bundled by Vite (vite.worker.config.mjs),
+# not Wrangler's own esbuild, because it transitively imports WordSeoPage.tsx
+# which uses import.meta.glob (Vite-only syntax).
+no_bundle = true
+
+# Serves BOTH the existing production client bundle AND the generated
+# record shards from ONE combined directory (Workers supports only one
+# [assets] binding). assets-full/ is assembled by publish-shards.mjs:
+#   assets-full/<same files as ../../dist/>
+#   assets-full/records/{dataVersion}/...   (shard data)
+#   assets-full/records/latest/manifest.json (stable version pointer)
+#
+# NOTE (documented, not yet acted on): this makes the shard JSON files
+# themselves publicly fetchable at their asset path (e.g.
+# /records/{version}/concepts/english/a1.json) — the same way any other
+# static asset is. That data isn't sensitive (it's the same vocabulary
+# content the rendered pages already expose), so this is an accepted,
+# low-risk characteristic of using Assets as the primary store for a
+# staging-only, noindex deployment; it would be worth gating (e.g. via
+# `run_worker_first` + an explicit check) before any production cutover.
+[assets]
+directory = "assets-full"
+binding = "ASSETS"
+# Default html_handling ("auto-trailing-slash") 307-redirects e.g. /about to
+# /about/ before serving prerendered.../about/index.html — an extra redirect
+# hop production doesn't have (Vercel serves /about directly as 200). Also
+# present in the untouched sample's wrangler.toml (same default), confirmed
+# by testing both. drop-trailing-slash makes /about the canonical served
+# form (matching production exactly) and 307-redirects /about/ -> /about
+# instead, which is the direction that actually preserves existing status
+# codes/URLs per this task's "preserve exactly: status codes" requirement.
+html_handling = "drop-trailing-slash"

@@ -392,8 +392,14 @@ assert.ok(
   "vocabulary level links should use canonical concept IDs",
 );
 
+// The related/browse word link JSX moved from WordSeoPage.tsx into the
+// extracted, server-safe WordSeoPageView.tsx (see that file's header
+// comment for why — the split keeps the Cloudflare staging Worker's SSR
+// bundle from pulling in WordSeoPage.tsx's heavy client-only vocabulary/
+// browse-search loaders). The two checks below assert against wherever that
+// JSX actually lives now, not against WordSeoPage.tsx specifically.
 const wordSeoPageSource = fs.readFileSync(
-  path.join(rootDir, "src", "app", "components", "WordSeoPage.tsx"),
+  path.join(rootDir, "src", "app", "components", "WordSeoPageView.tsx"),
   "utf8",
 );
 const englishVerbListPageSource = fs.readFileSync(

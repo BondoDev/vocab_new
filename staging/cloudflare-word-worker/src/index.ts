@@ -72,6 +72,7 @@ function redirectResponse(location: string): Response {
     headers: {
       Location: encodeURI(location),
       "Cache-Control": buildCacheControl(308),
+      "X-Robots-Tag": "noindex, nofollow",
       "X-Staging-Data-Version": DATA_VERSION,
     },
   });
@@ -83,6 +84,7 @@ function serverErrorResponse(): Response {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "no-store",
+      "X-Robots-Tag": "noindex, nofollow",
       "X-Staging-Data-Version": DATA_VERSION,
     },
   });
@@ -218,6 +220,7 @@ async function handleWordPageRequest(request: Request): Promise<Response> {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": buildCacheControl(200),
+      "X-Robots-Tag": "noindex, nofollow",
       "X-Staging-Data-Version": DATA_VERSION,
     },
   });
