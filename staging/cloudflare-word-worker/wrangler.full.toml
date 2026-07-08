@@ -17,6 +17,13 @@ compatibility_date = "2024-09-23"
 # which uses import.meta.glob (Vite-only syntax).
 no_bundle = true
 
+[vars]
+DEPLOYMENT_ENV = "staging"
+SITE_ORIGIN = "https://fluentstellar-word-staging.bondoasanidze95.workers.dev"
+CANONICAL_HOST = "fluentstellar-word-staging.bondoasanidze95.workers.dev"
+ENABLE_CANONICAL_HOST_REDIRECT = "false"
+WORKER_LOG_LABEL = "Staging word worker"
+
 # Serves BOTH the existing production client bundle AND the generated
 # record shards from ONE combined directory (Workers supports only one
 # [assets] binding). assets-full/ is assembled by publish-shards.mjs:

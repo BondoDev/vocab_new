@@ -44,6 +44,7 @@
 // recommendation.
 import { renderToReadableStream } from "react-dom/server.browser";
 import { StaticRouter } from "react-router-dom/server";
+import { WordPageLayout } from "@/app/components/WordPageLayout";
 import { WordSeoPageView } from "@/app/components/WordSeoPageView";
 import { SeoProvider, renderSeoTags, type SeoManager } from "@/seo/SeoContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -103,6 +104,7 @@ export interface RenderWordPageParams {
 export interface RenderedWordPage {
   appHtml: string;
   headTags: string;
+  initialInterfaceData: unknown;
 }
 
 function noop() {}
@@ -115,15 +117,17 @@ export async function renderWordPage(params: RenderWordPageParams): Promise<Rend
     <StaticRouter location={params.pathname}>
       <SeoProvider manager={seoManager} siteOrigin={params.siteOrigin}>
         <LanguageProvider initialUILanguage={params.uiLang} initialTranslationData={initialTranslationData}>
-          <WordSeoPageView
-            uiLang={params.uiLang}
-            targetLanguage={params.targetLanguage}
-            wordSlug={params.wordSlug}
-            conceptId={params.conceptId}
-            browsePage={params.browsePage}
-            onStartPractice={noop as unknown as (t: TargetLanguageSlug, l: string) => void}
-            pageData={params.initialWordPageData}
-          />
+          <WordPageLayout>
+            <WordSeoPageView
+              uiLang={params.uiLang}
+              targetLanguage={params.targetLanguage}
+              wordSlug={params.wordSlug}
+              conceptId={params.conceptId}
+              browsePage={params.browsePage}
+              onStartPractice={noop as unknown as (t: TargetLanguageSlug, l: string) => void}
+              pageData={params.initialWordPageData}
+            />
+          </WordPageLayout>
         </LanguageProvider>
       </SeoProvider>
     </StaticRouter>,
@@ -137,5 +141,5 @@ export async function renderWordPage(params: RenderWordPageParams): Promise<Rend
   // no React/DOM dependency, safe to call after the stream completes.
   const headTags = seoManager.metadata ? renderSeoTags(seoManager.metadata) : "";
 
-  return { appHtml, headTags };
+  return { appHtml, headTags, initialInterfaceData: initialTranslationData };
 }

@@ -24,6 +24,7 @@ const distDir = path.join(rootDir, "dist");
 const dataDir = path.join(__dirname, "data", "full-corpus");
 const assetsFullDir = path.join(__dirname, "assets-full");
 const publishManifestPath = path.join(__dirname, "data", "publish-manifest.json");
+const clientAssetsOutputPath = path.join(__dirname, "data", "client-assets.full.json");
 
 function sha256(buffer) {
   return crypto.createHash("sha256").update(buffer).digest("hex");
@@ -60,6 +61,43 @@ function copyIfChanged(srcAbsPath, destAbsPath, previousManifest, newManifest, m
   return true;
 }
 
+function writeClientAssetsManifest() {
+  const indexHtmlPath = path.join(distDir, "index.html");
+  if (!fs.existsSync(indexHtmlPath)) {
+    throw new Error("dist/index.html not found - run `npm run build` at the repo root first.");
+  }
+
+  const indexHtml = fs.readFileSync(indexHtmlPath, "utf8");
+  const scriptMatch = indexHtml.match(/<script[^>]+type="module"[^>]+src="([^"]+)"/i);
+  const styleMatches = Array.from(
+    indexHtml.matchAll(/<link(?=[^>]*rel="stylesheet")(?=[^>]*href="([^"]+)")[^>]*>/gi),
+  );
+  const preconnectMatches = Array.from(
+    indexHtml.matchAll(/<link(?=[^>]*rel="preconnect")(?=[^>]*href="([^"]+)")[^>]*>/gi),
+  );
+  const faviconMatch = indexHtml.match(/<link[^>]+rel="icon"[^>]+href="([^"]+)"/i);
+
+  fs.writeFileSync(
+    clientAssetsOutputPath,
+    JSON.stringify(
+      {
+        scriptSrc: scriptMatch?.[1] ?? null,
+        styleHrefs: styleMatches.map((match) => ({
+          href: match[1],
+          crossorigin: /\bcrossorigin\b/i.test(match[0]),
+        })),
+        preconnects: preconnectMatches.map((match) => ({
+          href: match[1],
+          crossorigin: /\bcrossorigin\b/i.test(match[0]),
+        })),
+        faviconHref: faviconMatch?.[1] ?? null,
+      },
+      null,
+      2,
+    ) + "\n",
+  );
+}
+
 function main() {
   if (!fs.existsSync(distDir)) {
     throw new Error("dist/ not found — run `npm run build` at the repo root first.");
@@ -70,6 +108,7 @@ function main() {
   }
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
   const dataVersion = manifest.dataVersion;
+  writeClientAssetsManifest();
 
   const previousManifest = fs.existsSync(publishManifestPath)
     ? JSON.parse(fs.readFileSync(publishManifestPath, "utf8"))

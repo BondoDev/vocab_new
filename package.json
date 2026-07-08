@@ -25,6 +25,10 @@
     "test:seo-output": "npm run -s test:word-ssr-http && npm run -s test:word-ssr-package && npm run -s test:homepage-visibility && npm run -s test:jsonld-escaping && npm run -s test:schema-graph && npm run -s test:word-browse-pagination && npm run -s test:prerender-parity && npm run -s test:sitemap-structure && npm run -s test:seo-core-routes",
     "test:seo-baseline": "npm run -s test:seo-output",
     "test:architecture-guards": "npm run -s test:word-seo && npm run -s test:level-browse-preview",
+    "test:word-worker:runtime": "node scripts/test-word-worker-runtime.mjs",
+    "test:word-worker:bundle-size": "node scripts/test-word-worker-bundle-size.mjs",
+    "test:word-worker:production-safety": "npm run -s test:word-worker:runtime && npm run -s test:word-worker:bundle-size",
+    "build:word-worker:full": "node scripts/build-word-worker-full.mjs",
     "seo-baseline:capture": "node scripts/seo-baseline/capture.mjs",
     "seo-baseline:compare": "node scripts/seo-baseline/compare.mjs",
     "benchmark:word-render": "node scripts/benchmark-word-render.mjs"

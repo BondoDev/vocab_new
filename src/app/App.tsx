@@ -24,6 +24,7 @@ import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { EnglishVerbListSeoPage } from "./components/EnglishVerbListSeoPage";
 import { SeoHubPage } from "./components/SeoHubPage";
 import { WordSeoPage } from "./components/WordSeoPage";
+import { WordPageLayout } from "./components/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./components/DevSeoCefrPlaceholderPage";
 import {
   LanguageContinuePopup,
@@ -2636,30 +2637,32 @@ function AppContent({
   if (resolvedPage === "wordPage") {
     if (!wordRoute) {
       return (
-        <div className="min-h-screen flex flex-col bg-background">
-          <Header {...sharedHeaderProps} activePage="notFound" />
-          <NotFoundPage message="Invalid word page." />
+        <>
+          <WordPageLayout {...sharedHeaderProps} activePage="notFound">
+            <NotFoundPage message="Invalid word page." />
+          </WordPageLayout>
           {accountOnboardingDialog}
-        </div>
+        </>
       );
     }
 
     return (
-      <div className="min-h-screen flex flex-col bg-background">
-        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
-        <Suspense fallback={<RouteLoadingFallback />}>
-          <WordSeoPage
-            uiLang={wordRoute.uiLang}
-            targetLanguage={wordRoute.targetLanguage}
-            wordSlug={wordRoute.wordSlug}
-            conceptId={wordRoute.conceptId}
-            browsePage={wordRoute.browsePage}
-            onStartPractice={handleStartVocabularyPractice}
-            initialData={initialWordPageData}
-          />
-        </Suspense>
+      <>
+        <WordPageLayout {...sharedHeaderProps}>
+          <Suspense fallback={<RouteLoadingFallback />}>
+            <WordSeoPage
+              uiLang={wordRoute.uiLang}
+              targetLanguage={wordRoute.targetLanguage}
+              wordSlug={wordRoute.wordSlug}
+              conceptId={wordRoute.conceptId}
+              browsePage={wordRoute.browsePage}
+              onStartPractice={handleStartVocabularyPractice}
+              initialData={initialWordPageData}
+            />
+          </Suspense>
+        </WordPageLayout>
         {accountOnboardingDialog}
-      </div>
+      </>
     );
   }
 

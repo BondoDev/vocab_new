@@ -1,0 +1,24 @@
+{
+  "scriptSrc": "/assets/index-uIUi1kpA.js",
+  "styleHrefs": [
+    {
+      "href": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap",
+      "crossorigin": false
+    },
+    {
+      "href": "/assets/index-DqNgreo-.css",
+      "crossorigin": true
+    }
+  ],
+  "preconnects": [
+    {
+      "href": "https://fonts.googleapis.com",
+      "crossorigin": false
+    },
+    {
+      "href": "https://fonts.gstatic.com",
+      "crossorigin": true
+    }
+  ],
+  "faviconHref": "/favicon.png"
+}

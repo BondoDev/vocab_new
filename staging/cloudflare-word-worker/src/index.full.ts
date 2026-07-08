@@ -16,10 +16,15 @@ import {
   type ParsedWordRoutePathnameResult,
 } from "../../../src/data/seo/wordRouteManifest";
 import { renderWordPage } from "./render-entry";
+import clientAssets from "../data/client-assets.full.json";
 import { createAssetsShardStore, withInIsolateMemoization, type ShardStore } from "./shard-store";
+import {
+  getCanonicalHostRedirectLocation,
+  getGlobalRobotsHeader,
+  resolveWorkerRuntimeConfig,
+} from "./runtime-config.mjs";
 
 const BROWSE_PAGE_SIZE = 54;
-const SITE_ORIGIN_FALLBACK = "https://staging.example.internal";
 
 // Mirrors production's UI_LANG_TO_VOCAB (src/data/seo/wordPageData.ts,
 // private/not exported there) — which UI language shows which language's
@@ -88,9 +93,9 @@ function getConceptNumericId(conceptId: string): number {
   return Number.parseInt(conceptId.split("-")[1] ?? "0", 10);
 }
 
-async function loadManifest(assets: Fetcher, siteOrigin: string): Promise<Manifest> {
+async function loadManifest(assets: Fetcher, assetOrigin: string): Promise<Manifest> {
   if (!manifestStore) {
-    manifestStore = withInIsolateMemoization(createAssetsShardStore(assets, siteOrigin));
+    manifestStore = withInIsolateMemoization(createAssetsShardStore(assets, assetOrigin));
   }
   // "latest" is a stable, version-independent pointer path (see
   // publish-shards.mjs) — refetching it (subject to in-isolate memoization)
@@ -113,9 +118,9 @@ function resolveConceptShardPath(entry: ConceptShardIndexEntry, conceptId: strin
   return match?.path ?? null;
 }
 
-function getConceptStore(assets: Fetcher, siteOrigin: string): ShardStore {
+function getConceptStore(assets: Fetcher, assetOrigin: string): ShardStore {
   if (!conceptStore) {
-    conceptStore = withInIsolateMemoization(createAssetsShardStore(assets, siteOrigin));
+    conceptStore = withInIsolateMemoization(createAssetsShardStore(assets, assetOrigin));
   }
   return conceptStore;
 }
@@ -138,42 +143,85 @@ function buildCacheControl(status: number): string {
   return "no-store";
 }
 
-function textResponse(body: string, status: number, extraHeaders: Record<string, string> = {}, dataVersion = "unknown"): Response {
+function withDataVersionHeaders(
+  headers: Record<string, string>,
+  dataVersion: string,
+  runtimeConfig: ReturnType<typeof resolveWorkerRuntimeConfig>,
+  status: number,
+  responseKind: "html-page" | "json" | "redirect" | "gone" | "error",
+): Record<string, string> {
+  const nextHeaders = {
+    ...headers,
+    "X-Word-Data-Version": dataVersion,
+  };
+  const robotsHeader = getGlobalRobotsHeader(runtimeConfig, { status, responseKind });
+  if (robotsHeader) {
+    nextHeaders["X-Robots-Tag"] = robotsHeader;
+  }
+  return nextHeaders;
+}
+
+function textResponse(
+  body: string,
+  status: number,
+  runtimeConfig: ReturnType<typeof resolveWorkerRuntimeConfig>,
+  extraHeaders: Record<string, string> = {},
+  dataVersion = "unknown",
+): Response {
   return new Response(body, {
     status,
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Cache-Control": buildCacheControl(status),
-      "X-Robots-Tag": "noindex, nofollow",
-      "X-Staging-Data-Version": dataVersion,
-      ...extraHeaders,
-    },
+    headers: withDataVersionHeaders(
+      {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": buildCacheControl(status),
+        ...extraHeaders,
+      },
+      dataVersion,
+      runtimeConfig,
+      status,
+      status === 410 ? "gone" : "error",
+    ),
   });
 }
 
-function redirectResponse(location: string, dataVersion: string): Response {
+function redirectResponse(
+  location: string,
+  runtimeConfig: ReturnType<typeof resolveWorkerRuntimeConfig>,
+  dataVersion: string,
+): Response {
   // See src/index.ts for why encodeURI (not raw UTF-8) is required here —
   // the Workers Headers API enforces ISO-8859-1 for header values.
   return new Response("", {
     status: 308,
-    headers: {
-      Location: encodeURI(location),
-      "Cache-Control": buildCacheControl(308),
-      "X-Robots-Tag": "noindex, nofollow",
-      "X-Staging-Data-Version": dataVersion,
-    },
+    headers: withDataVersionHeaders(
+      {
+        Location: encodeURI(location),
+        "Cache-Control": buildCacheControl(308),
+      },
+      dataVersion,
+      runtimeConfig,
+      308,
+      "redirect",
+    ),
   });
 }
 
-function serverErrorResponse(dataVersion = "unknown"): Response {
+function serverErrorResponse(
+  runtimeConfig: ReturnType<typeof resolveWorkerRuntimeConfig>,
+  dataVersion = "unknown",
+): Response {
   return new Response("Internal Server Error", {
     status: 500,
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Cache-Control": "no-store",
-      "X-Robots-Tag": "noindex, nofollow",
-      "X-Staging-Data-Version": dataVersion,
-    },
+    headers: withDataVersionHeaders(
+      {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-store",
+      },
+      dataVersion,
+      runtimeConfig,
+      500,
+      "error",
+    ),
   });
 }
 
@@ -182,19 +230,40 @@ function buildFullHtmlDocument(params: {
   headTags: string;
   appHtml: string;
   wordPageData: unknown;
+  interfaceData: unknown;
   pathname: string;
 }): string {
   const hydrationScript = `\n    <script>window.__WORD_PAGE_DATA__=${escapeJsonForScript(
     JSON.stringify({ pathname: params.pathname, data: params.wordPageData }),
   )}</script>`;
   const interfaceScript = `\n    <script>window.__INITIAL_INTERFACE_DATA__=${escapeJsonForScript(
-    JSON.stringify({ lang: params.uiLang, data: {} }),
+    JSON.stringify({ lang: params.uiLang, data: params.interfaceData }),
   )}</script>`;
+  const scriptTag = clientAssets.scriptSrc
+    ? `<script type="module" crossorigin src="${clientAssets.scriptSrc}"></script>`
+    : "";
+  const preconnectTags = (clientAssets.preconnects ?? [])
+    .map((entry) =>
+      `<link rel="preconnect" href="${entry.href}"${entry.crossorigin ? " crossorigin" : ""}>`,
+    )
+    .join("\n    ");
+  const styleTags = (clientAssets.styleHrefs ?? [])
+    .map((entry) =>
+      `<link rel="stylesheet"${entry.crossorigin ? " crossorigin" : ""} href="${entry.href}">`,
+    )
+    .join("\n    ");
+  const faviconTag = clientAssets.faviconHref
+    ? `<link rel="icon" type="image/png" href="${clientAssets.faviconHref}">`
+    : "";
   return `<!doctype html>
 <html lang="${params.uiLang}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    ${faviconTag}
+    ${preconnectTags}
+    ${scriptTag}
+    ${styleTags}
     ${params.headTags}${hydrationScript}${interfaceScript}
   </head>
   <body>
@@ -203,7 +272,11 @@ function buildFullHtmlDocument(params: {
 </html>`;
 }
 
-function classifyAndRespondNonCanonical(parsed: ParsedWordRoutePathnameResult, dataVersion: string): Response | null {
+function classifyAndRespondNonCanonical(
+  parsed: ParsedWordRoutePathnameResult,
+  runtimeConfig: ReturnType<typeof resolveWorkerRuntimeConfig>,
+  dataVersion: string,
+): Response | null {
   if (parsed.kind === "legacy-single-hyphen" || parsed.kind === "legacy-slug-format") {
     const location = buildWordBrowsePagePathFromSlug(
       parsed.uiLang,
@@ -212,24 +285,27 @@ function classifyAndRespondNonCanonical(parsed: ParsedWordRoutePathnameResult, d
       parsed.conceptId,
       parsed.browsePage,
     );
-    return redirectResponse(location, dataVersion);
+    return redirectResponse(location, runtimeConfig, dataVersion);
   }
   if (parsed.kind !== "canonical") {
-    return textResponse("410 Gone", 410, {}, dataVersion);
+    return textResponse("410 Gone", 410, runtimeConfig, {}, dataVersion);
   }
   return null;
 }
 
-async function handleWordPageRequest(request: Request, assets: Fetcher): Promise<Response> {
+async function handleWordPageRequest(
+  request: Request,
+  assets: Fetcher,
+  runtimeConfig: ReturnType<typeof resolveWorkerRuntimeConfig>,
+): Promise<Response> {
   const url = new URL(request.url);
   const pathname = url.pathname;
-  const siteOrigin = `${url.protocol}//${url.host}` || SITE_ORIGIN_FALLBACK;
 
-  const manifest = await loadManifest(assets, siteOrigin);
+  const manifest = await loadManifest(assets, runtimeConfig.requestOrigin);
   const dataVersion = manifest.dataVersion;
 
   const parsed = parseWordRoutePathname(pathname);
-  const earlyResponse = classifyAndRespondNonCanonical(parsed, dataVersion);
+  const earlyResponse = classifyAndRespondNonCanonical(parsed, runtimeConfig, dataVersion);
   if (earlyResponse) {
     return earlyResponse;
   }
@@ -238,21 +314,21 @@ async function handleWordPageRequest(request: Request, assets: Fetcher): Promise
   const level = getConceptLevel(canonical.conceptId);
   const conceptShardIndex = manifest.shards.concepts[canonical.targetLanguage]?.[level];
   if (!conceptShardIndex) {
-    return textResponse("410 Gone", 410, { "X-Staging-Reason": "missing-shard" }, dataVersion);
+    return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "missing-shard" }, dataVersion);
   }
 
   const conceptShardPath = resolveConceptShardPath(conceptShardIndex, canonical.conceptId);
   if (!conceptShardPath) {
-    return textResponse("410 Gone", 410, { "X-Staging-Reason": "missing-shard-range" }, dataVersion);
+    return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "missing-shard-range" }, dataVersion);
   }
 
-  const store = getConceptStore(assets, siteOrigin);
+  const store = getConceptStore(assets, runtimeConfig.requestOrigin);
   const conceptShard = await store.getShard<Record<string, ConceptRecord>>(
     `records/${dataVersion}/${conceptShardPath}`,
   );
   const record = conceptShard?.[canonical.conceptId];
   if (!record) {
-    return textResponse("410 Gone", 410, { "X-Staging-Reason": "missing-record" }, dataVersion);
+    return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "missing-record" }, dataVersion);
   }
 
   if (record.canonicalSlug !== canonical.wordSlug) {
@@ -264,9 +340,9 @@ async function handleWordPageRequest(request: Request, assets: Fetcher): Promise
         canonical.conceptId,
         canonical.browsePage,
       );
-      return redirectResponse(location, dataVersion);
+      return redirectResponse(location, runtimeConfig, dataVersion);
     }
-    return textResponse("410 Gone", 410, { "X-Staging-Reason": "slug-mismatch" }, dataVersion);
+    return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "slug-mismatch" }, dataVersion);
   }
 
   const browseShardPath = manifest.shards.browse[canonical.targetLanguage]?.[level];
@@ -274,12 +350,12 @@ async function handleWordPageRequest(request: Request, assets: Fetcher): Promise
     ? await store.getShard<BrowseShard>(`records/${dataVersion}/${browseShardPath}`)
     : null;
   if (!browseShard) {
-    return textResponse("410 Gone", 410, { "X-Staging-Reason": "missing-browse-shard" }, dataVersion);
+    return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "missing-browse-shard" }, dataVersion);
   }
 
   const totalBrowsePages = Math.max(1, Math.ceil(browseShard.totalCount / BROWSE_PAGE_SIZE));
   if (canonical.browsePage > totalBrowsePages) {
-    return textResponse("410 Gone", 410, { "X-Staging-Reason": "browse-page-out-of-range" }, dataVersion);
+    return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "browse-page-out-of-range" }, dataVersion);
   }
 
   // UI overlay: only consulted when the UI language's own vocabulary
@@ -355,9 +431,9 @@ async function handleWordPageRequest(request: Request, assets: Fetcher): Promise
     browsePage: canonical.browsePage,
   };
 
-  const { appHtml, headTags } = await renderWordPage({
+  const { appHtml, headTags, initialInterfaceData } = await renderWordPage({
     pathname,
-    siteOrigin,
+    siteOrigin: runtimeConfig.siteOrigin,
     uiLang: canonical.uiLang,
     targetLanguage: canonical.targetLanguage,
     wordSlug: canonical.wordSlug,
@@ -370,16 +446,27 @@ async function handleWordPageRequest(request: Request, assets: Fetcher): Promise
     initialWordPageData: initialWordPageData as never,
   });
 
-  const html = buildFullHtmlDocument({ uiLang: canonical.uiLang, headTags, appHtml, wordPageData: initialWordPageData, pathname });
+  const html = buildFullHtmlDocument({
+    uiLang: canonical.uiLang,
+    headTags,
+    appHtml,
+    wordPageData: initialWordPageData,
+    interfaceData: initialInterfaceData,
+    pathname,
+  });
 
   return new Response(html, {
     status: 200,
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      "Cache-Control": buildCacheControl(200),
-      "X-Robots-Tag": "noindex, nofollow",
-      "X-Staging-Data-Version": dataVersion,
-    },
+    headers: withDataVersionHeaders(
+      {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": buildCacheControl(200),
+      },
+      dataVersion,
+      runtimeConfig,
+      200,
+      "html-page",
+    ),
   });
 }
 
@@ -387,26 +474,30 @@ async function handleBrowseSearchShardRequest(
   targetLanguage: string,
   level: string,
   assets: Fetcher,
-  siteOrigin: string,
+  runtimeConfig: ReturnType<typeof resolveWorkerRuntimeConfig>,
 ): Promise<Response> {
-  const manifest = await loadManifest(assets, siteOrigin);
+  const manifest = await loadManifest(assets, runtimeConfig.requestOrigin);
   const browseShardPath = manifest.shards.browse[targetLanguage]?.[level.toUpperCase()];
   if (!browseShardPath) {
-    return textResponse("Not Found", 404, {}, manifest.dataVersion);
+    return textResponse("Not Found", 404, runtimeConfig, {}, manifest.dataVersion);
   }
-  const store = getConceptStore(assets, siteOrigin);
+  const store = getConceptStore(assets, runtimeConfig.requestOrigin);
   const browseShard = await store.getShard(`records/${manifest.dataVersion}/${browseShardPath}`);
   if (!browseShard) {
-    return textResponse("Not Found", 404, {}, manifest.dataVersion);
+    return textResponse("Not Found", 404, runtimeConfig, {}, manifest.dataVersion);
   }
   return new Response(JSON.stringify(browseShard), {
     status: 200,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": buildCacheControl(200),
-      "X-Robots-Tag": "noindex, nofollow",
-      "X-Staging-Data-Version": manifest.dataVersion,
-    },
+    headers: withDataVersionHeaders(
+      {
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": buildCacheControl(200),
+      },
+      manifest.dataVersion,
+      runtimeConfig,
+      200,
+      "json",
+    ),
   });
 }
 
@@ -419,34 +510,46 @@ function buildCacheKeyRequest(request: Request, dataVersion: string): Request {
 
 interface Env {
   ASSETS: Fetcher;
+  DEPLOYMENT_ENV?: string;
+  SITE_ORIGIN?: string;
+  CANONICAL_HOST?: string;
+  ENABLE_CANONICAL_HOST_REDIRECT?: string;
+  WORKER_LOG_LABEL?: string;
 }
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const runtimeConfig = resolveWorkerRuntimeConfig(env, request.url);
     try {
       const url = new URL(request.url);
+      const hostRedirectLocation = getCanonicalHostRedirectLocation(request.url, runtimeConfig);
+      if (hostRedirectLocation) {
+        const manifest = await loadManifest(env.ASSETS, runtimeConfig.requestOrigin);
+        return redirectResponse(hostRedirectLocation, runtimeConfig, manifest.dataVersion);
+      }
+
       const browseSearchMatch = url.pathname.match(/^\/staging-assets\/browse-shard\/([a-z]+)\/([a-z0-9]+)\.json$/i);
       if (browseSearchMatch) {
         const [, targetLanguage, level] = browseSearchMatch;
-        return handleBrowseSearchShardRequest(targetLanguage, level, env.ASSETS, `${url.protocol}//${url.host}`);
+        return handleBrowseSearchShardRequest(targetLanguage, level, env.ASSETS, runtimeConfig);
       }
 
       // dataVersion for the cache key: read from the manifest via the
       // memoized store (cheap after the first request in this isolate).
-      const manifest = await loadManifest(env.ASSETS, `${url.protocol}//${url.host}`);
+      const manifest = await loadManifest(env.ASSETS, runtimeConfig.requestOrigin);
 
       const cache = caches.default;
       const cacheKeyRequest = buildCacheKeyRequest(request, manifest.dataVersion);
       const cached = await cache.match(cacheKeyRequest);
       if (cached) {
         const headers = new Headers(cached.headers);
-        headers.set("X-Staging-Cache", "HIT");
+        headers.set("X-Worker-Cache", "HIT");
         return new Response(cached.body, { status: cached.status, headers });
       }
 
-      const response = await handleWordPageRequest(request, env.ASSETS);
+      const response = await handleWordPageRequest(request, env.ASSETS, runtimeConfig);
       const headers = new Headers(response.headers);
-      headers.set("X-Staging-Cache", "MISS");
+      headers.set("X-Worker-Cache", "MISS");
       const finalResponse = new Response(response.body, { status: response.status, headers });
 
       if (response.status !== 500) {
@@ -455,8 +558,8 @@ export default {
 
       return finalResponse;
     } catch (error) {
-      console.error("Full-corpus staging word worker failed", error);
-      return serverErrorResponse();
+      console.error(`${runtimeConfig.logLabel} failed`, error);
+      return serverErrorResponse(runtimeConfig);
     }
   },
 };
