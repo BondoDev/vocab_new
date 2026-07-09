@@ -26,6 +26,7 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
@@ -1045,6 +1046,11 @@ export function Header({
                     ? "Welcome back"
                     : "Create your FluentStellar account"}
                 </DialogTitle>
+                <DialogDescription className="sr-only">
+                  {authMode === "login"
+                    ? "Log in to your FluentStellar account with Google or email and password."
+                    : "Create a FluentStellar account with Google or email and password."}
+                </DialogDescription>
               </DialogHeader>
 
               <form className="mt-6 space-y-4" onSubmit={handlePasswordAuthSubmit}>

@@ -21,6 +21,10 @@ try {
     path.join(ROOT_DIR, "src", "app", "components", "WordSeoPage.tsx"),
     "utf8",
   );
+  const wordSeoPageViewSource = fs.readFileSync(
+    path.join(ROOT_DIR, "src", "app", "components", "WordSeoPageView.tsx"),
+    "utf8",
+  );
   const browseShardPath = path.join(
     ROOT_DIR,
     "src",
@@ -144,13 +148,13 @@ try {
     "WordSeoPage should not trigger post-hydration reloads from browseWordsPartial",
   );
   assert.match(
-    wordSeoPageSource,
-    /onFocus=\{\(\) => \{\s*void ensureBrowseSearchDataLoaded\(\);\s*\}\}/m,
+    wordSeoPageViewSource,
+    /onFocus=\{\(\) => \{\s*onRequestBrowseSearchData\(\);\s*\}\}/m,
     "browse search input should lazy-load compact browse data on focus",
   );
   assert.match(
-    wordSeoPageSource,
-    /if \(e\.target\.value\.trim\(\)\) \{\s*void ensureBrowseSearchDataLoaded\(\);\s*\}/m,
+    wordSeoPageViewSource,
+    /if \(e\.target\.value\.trim\(\)\) \{\s*onRequestBrowseSearchData\(\);\s*\}/m,
     "browse search should also lazy-load compact browse data when typing starts",
   );
   assert.match(
