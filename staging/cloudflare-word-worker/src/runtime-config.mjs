@@ -1,4 +1,3 @@
-const STAGING_SITE_ORIGIN = "https://fluentstellar-word-staging.bondoasanidze95.workers.dev";
 const PRODUCTION_SITE_ORIGIN = "https://www.fluentstellar.com";
 
 function normalizeDeploymentEnv(value) {
@@ -23,9 +22,7 @@ function normalizeHostFromOrigin(origin, fallbackHost) {
 export function resolveWorkerRuntimeConfig(env, requestUrl) {
   const request = new URL(requestUrl);
   const deploymentEnv = normalizeDeploymentEnv(env?.DEPLOYMENT_ENV);
-  const siteOrigin =
-    env?.SITE_ORIGIN?.trim() ||
-    (deploymentEnv === "production" ? PRODUCTION_SITE_ORIGIN : STAGING_SITE_ORIGIN);
+  const siteOrigin = env?.SITE_ORIGIN?.trim() || (deploymentEnv === "production" ? PRODUCTION_SITE_ORIGIN : request.origin);
   const siteOriginHost = normalizeHostFromOrigin(siteOrigin, request.host);
 
   return {

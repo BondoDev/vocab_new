@@ -163,6 +163,13 @@ test("WordSeoPageView.tsx contains no vocabulary or browse-search-shard glob imp
   }
 });
 
+test("compiled Worker bundle contains no staging hostname literal", () => {
+  const bundle = fs.readFileSync(path.join(DIST_DIR, "index.full.js"), "utf8");
+  if (bundle.includes("fluentstellar-word-staging.bondoasanidze95.workers.dev")) {
+    throw new Error("Compiled Worker bundle still contains the staging hostname literal");
+  }
+});
+
 console.log(`\n─────────────────────────────────────────`);
 console.log(`  ${passed} passed, ${failed} failed`);
 console.log(`─────────────────────────────────────────\n`);
