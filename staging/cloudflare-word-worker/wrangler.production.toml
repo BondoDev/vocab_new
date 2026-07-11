@@ -8,6 +8,8 @@ name = "fluentstellar-production"
 main = "worker-dist-full/index.full.js"
 compatibility_date = "2024-09-23"
 no_bundle = true
+# workers.dev serves indexable duplicate content and bypasses zone WAF rules.
+workers_dev = false
 
 [vars]
 DEPLOYMENT_ENV = "production"
