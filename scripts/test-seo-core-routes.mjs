@@ -95,8 +95,20 @@ async function main() {
       assert.match(robotsTxt, /Allow:\s*\//i);
     });
 
-    test("robots.txt does not disallow any path (no accidental blanket block)", () => {
-      assert.ok(!/Disallow:\s*\/\s*$/im.test(robotsTxt), "robots.txt contains a blanket Disallow: /");
+    test("robots.txt catch-all group has no blanket Disallow (search engines stay allowed)", () => {
+      // Per-bot Disallow groups are an intentional crawl policy for
+      // non-search commercial crawlers (2026-07-10 Worker-quota incident;
+      // see scripts/test-crawler-policy.mjs for the full policy guards).
+      // What must never happen is the catch-all `User-agent: *` group —
+      // the one Googlebot/Bingbot fall into — gaining a `Disallow: /`.
+      const catchAllGroup = robotsTxt
+        .split(/\n(?=User-agent:)/i)
+        .find((group) => /^User-agent:\s*\*/im.test(group));
+      assert.ok(catchAllGroup, "robots.txt is missing the catch-all User-agent: * group");
+      assert.ok(
+        !/Disallow:\s*\/\s*$/im.test(catchAllGroup),
+        "the catch-all User-agent: * group contains a blanket Disallow: /",
+      );
     });
 
     test("robots.txt references the production sitemap index", () => {

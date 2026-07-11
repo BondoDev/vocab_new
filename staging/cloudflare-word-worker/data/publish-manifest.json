@@ -1,6 +1,6 @@
 {
-  "publishedAt": "2026-07-09T17:31:40.132Z",
-  "dataVersion": "staging-full-2026-07-09-01",
+  "publishedAt": "2026-07-10T20:03:36.313Z",
+  "dataVersion": "staging-full-2026-07-10-01",
   "files": {
     "client:about/index.html": {
       "checksum": "5e8b5771ab5c547920b478bb6534b44f6492ce04de92fcb8aaa05031358d1102",
@@ -12438,9 +12438,9 @@
       "publishedAt": "2026-07-09T17:32:26.521Z"
     },
     "client:robots.txt": {
-      "checksum": "2cd29ca897aec6c8f44a06ef680d0d88ab1c2e093f8737abaacaf7e4a728b7e7",
-      "sizeBytes": 75,
-      "publishedAt": "2026-07-08T18:49:50.226Z"
+      "checksum": "0b0275b86d65bf41f7d6169a1cdd5129d8963e50344500a93c1e5e44a0a554e4",
+      "sizeBytes": 644,
+      "publishedAt": "2026-07-10T19:51:04.486Z"
     },
     "client:ru/100-samykh-chastykh-angliiskikh-glagolov/index.html": {
       "checksum": "2a20ec7689a95ad87f324809e623fa28504ab516fe00db87825edfa05a1f2805",
@@ -14792,745 +14792,745 @@
       "sizeBytes": 31232,
       "publishedAt": "2026-07-08T18:49:53.363Z"
     },
-    "records/staging-full-2026-07-09-01/browse/english/a1.json": {
+    "records/staging-full-2026-07-10-01/browse/english/a1.json": {
       "checksum": "9f25f45d19166a2ac791684a94634fdfb9b9dba163f79ff20a75ead991cb6c74",
       "sizeBytes": 38729,
-      "publishedAt": "2026-07-09T17:32:32.412Z"
+      "publishedAt": "2026-07-10T20:03:43.950Z"
     },
-    "records/staging-full-2026-07-09-01/browse/english/a2.json": {
+    "records/staging-full-2026-07-10-01/browse/english/a2.json": {
       "checksum": "f4d6742ba12991b2a43feb951f2bfdc1bbb45c248ac27e44584cbf0db89229e8",
       "sizeBytes": 51547,
-      "publishedAt": "2026-07-09T17:32:32.414Z"
+      "publishedAt": "2026-07-10T20:03:43.952Z"
     },
-    "records/staging-full-2026-07-09-01/browse/english/b1.json": {
+    "records/staging-full-2026-07-10-01/browse/english/b1.json": {
       "checksum": "1bfb979f522cdfe5fabec2cf7e4b2479f62028245cadcd9fa0fe97c80c5ac32c",
       "sizeBytes": 118160,
-      "publishedAt": "2026-07-09T17:32:32.415Z"
+      "publishedAt": "2026-07-10T20:03:43.954Z"
     },
-    "records/staging-full-2026-07-09-01/browse/english/b2.json": {
+    "records/staging-full-2026-07-10-01/browse/english/b2.json": {
       "checksum": "f52dd3963ff3bb74eee7912aae25c7ef9d03adaf80bf303bf4ffbd836d9c5b95",
       "sizeBytes": 133526,
-      "publishedAt": "2026-07-09T17:32:32.418Z"
+      "publishedAt": "2026-07-10T20:03:43.958Z"
     },
-    "records/staging-full-2026-07-09-01/browse/english/c1.json": {
+    "records/staging-full-2026-07-10-01/browse/english/c1.json": {
       "checksum": "6448dfb01435d5008aa985c88151c61926c8f1bd6018882823aa6e739638f665",
       "sizeBytes": 65470,
-      "publishedAt": "2026-07-09T17:32:32.419Z"
+      "publishedAt": "2026-07-10T20:03:43.959Z"
     },
-    "records/staging-full-2026-07-09-01/browse/english/c2.json": {
+    "records/staging-full-2026-07-10-01/browse/english/c2.json": {
       "checksum": "796a270611e35f6e0ce9fda457fdc900e43236142293f6201967e2f73318d56c",
       "sizeBytes": 49036,
-      "publishedAt": "2026-07-09T17:32:32.421Z"
+      "publishedAt": "2026-07-10T20:03:43.961Z"
     },
-    "records/staging-full-2026-07-09-01/browse/french/a1.json": {
+    "records/staging-full-2026-07-10-01/browse/french/a1.json": {
       "checksum": "f43621928242cf63bec5225b0492ae31dfdf6fc29378b3c0f6bae89f00101e6d",
       "sizeBytes": 40451,
-      "publishedAt": "2026-07-09T17:32:32.422Z"
+      "publishedAt": "2026-07-10T20:03:43.962Z"
     },
-    "records/staging-full-2026-07-09-01/browse/french/a2.json": {
+    "records/staging-full-2026-07-10-01/browse/french/a2.json": {
       "checksum": "af6657736d7aea4fda8b5cf158783bc840787441727f470d34168cf0c0f97ffb",
       "sizeBytes": 53711,
-      "publishedAt": "2026-07-09T17:32:32.423Z"
+      "publishedAt": "2026-07-10T20:03:43.963Z"
     },
-    "records/staging-full-2026-07-09-01/browse/french/b1.json": {
+    "records/staging-full-2026-07-10-01/browse/french/b1.json": {
       "checksum": "c2c0cfc5ebe9f606ec8846eea59eecffbb51a827e9789cbd10a29adb0a508df2",
       "sizeBytes": 122650,
-      "publishedAt": "2026-07-09T17:32:32.426Z"
+      "publishedAt": "2026-07-10T20:03:43.965Z"
     },
-    "records/staging-full-2026-07-09-01/browse/french/b2.json": {
+    "records/staging-full-2026-07-10-01/browse/french/b2.json": {
       "checksum": "057bb084140dd77884a00cbaacc52ba04f8c5079570fb387873501886285ef65",
       "sizeBytes": 138408,
-      "publishedAt": "2026-07-09T17:32:32.429Z"
+      "publishedAt": "2026-07-10T20:03:43.967Z"
     },
-    "records/staging-full-2026-07-09-01/browse/french/c1.json": {
+    "records/staging-full-2026-07-10-01/browse/french/c1.json": {
       "checksum": "26063d4689aa02ea9371ffcad1b0681f63cadee24ec7c9f0c4355e37d331dfd5",
       "sizeBytes": 68168,
-      "publishedAt": "2026-07-09T17:32:32.431Z"
+      "publishedAt": "2026-07-10T20:03:43.968Z"
     },
-    "records/staging-full-2026-07-09-01/browse/french/c2.json": {
+    "records/staging-full-2026-07-10-01/browse/french/c2.json": {
       "checksum": "95e1a12b07135a798c3a8be4aeaa9881d6db2dbfd45ebf7ca99ede1bc73d62f0",
       "sizeBytes": 50759,
-      "publishedAt": "2026-07-09T17:32:32.432Z"
+      "publishedAt": "2026-07-10T20:03:43.969Z"
     },
-    "records/staging-full-2026-07-09-01/browse/german/a1.json": {
+    "records/staging-full-2026-07-10-01/browse/german/a1.json": {
       "checksum": "726b34ad9dba78babe445e628d47b968e725d710e33139f6c9ca5eeae528fa64",
       "sizeBytes": 40181,
-      "publishedAt": "2026-07-09T17:32:32.433Z"
+      "publishedAt": "2026-07-10T20:03:43.971Z"
     },
-    "records/staging-full-2026-07-09-01/browse/german/a2.json": {
+    "records/staging-full-2026-07-10-01/browse/german/a2.json": {
       "checksum": "9ec82a2801470f4295cf30d8c92a92620db4b296eab587bb46b871f5d3fa5fa5",
       "sizeBytes": 53139,
-      "publishedAt": "2026-07-09T17:32:32.435Z"
+      "publishedAt": "2026-07-10T20:03:43.972Z"
     },
-    "records/staging-full-2026-07-09-01/browse/german/b1.json": {
+    "records/staging-full-2026-07-10-01/browse/german/b1.json": {
       "checksum": "dc29303489305c58f984a29c1ff7dbe21294c77ca98d505231720eab09d26ce4",
       "sizeBytes": 122544,
-      "publishedAt": "2026-07-09T17:32:32.437Z"
+      "publishedAt": "2026-07-10T20:03:43.975Z"
     },
-    "records/staging-full-2026-07-09-01/browse/german/b2.json": {
+    "records/staging-full-2026-07-10-01/browse/german/b2.json": {
       "checksum": "b306a42a2a4d5921ac03692e07aeaa157164438e33b580389aacfdbcea1d9acb",
       "sizeBytes": 138198,
-      "publishedAt": "2026-07-09T17:32:32.439Z"
+      "publishedAt": "2026-07-10T20:03:43.977Z"
     },
-    "records/staging-full-2026-07-09-01/browse/german/c1.json": {
+    "records/staging-full-2026-07-10-01/browse/german/c1.json": {
       "checksum": "c89ac9e544d8ec155fadde1db93a8faba6871305b3f2284f57008d488e4abca7",
       "sizeBytes": 67601,
-      "publishedAt": "2026-07-09T17:32:32.441Z"
+      "publishedAt": "2026-07-10T20:03:43.979Z"
     },
-    "records/staging-full-2026-07-09-01/browse/german/c2.json": {
+    "records/staging-full-2026-07-10-01/browse/german/c2.json": {
       "checksum": "efe3fe123b65aad56b4f8756acbfcf097d30e56005dd4d52701e1c4998d36081",
       "sizeBytes": 50453,
-      "publishedAt": "2026-07-09T17:32:32.443Z"
+      "publishedAt": "2026-07-10T20:03:43.981Z"
     },
-    "records/staging-full-2026-07-09-01/browse/italian/a1.json": {
+    "records/staging-full-2026-07-10-01/browse/italian/a1.json": {
       "checksum": "0a27b50892ba0683ea5fa7c904b5eab70d03cb75ac60929dfa115042fa997463",
       "sizeBytes": 40173,
-      "publishedAt": "2026-07-09T17:32:32.444Z"
+      "publishedAt": "2026-07-10T20:03:43.982Z"
     },
-    "records/staging-full-2026-07-09-01/browse/italian/a2.json": {
+    "records/staging-full-2026-07-10-01/browse/italian/a2.json": {
       "checksum": "c784e43d49955a95eb010bb36bf2cc96d0b01960f0b1cefbed3871b6769b8da8",
       "sizeBytes": 53750,
-      "publishedAt": "2026-07-09T17:32:32.445Z"
+      "publishedAt": "2026-07-10T20:03:43.983Z"
     },
-    "records/staging-full-2026-07-09-01/browse/italian/b1.json": {
+    "records/staging-full-2026-07-10-01/browse/italian/b1.json": {
       "checksum": "06c36c97e3baf7b909b03469458a4d2907d4bf2d4d22b12dcadc61fa67645d08",
       "sizeBytes": 122952,
-      "publishedAt": "2026-07-09T17:32:32.447Z"
+      "publishedAt": "2026-07-10T20:03:43.985Z"
     },
-    "records/staging-full-2026-07-09-01/browse/italian/b2.json": {
+    "records/staging-full-2026-07-10-01/browse/italian/b2.json": {
       "checksum": "e6f09dc37d67d9821bcffe22c585e0f3b457b9dc9db2645091dc1d8a2ea28d37",
       "sizeBytes": 138755,
-      "publishedAt": "2026-07-09T17:32:32.450Z"
+      "publishedAt": "2026-07-10T20:03:43.987Z"
     },
-    "records/staging-full-2026-07-09-01/browse/italian/c1.json": {
+    "records/staging-full-2026-07-10-01/browse/italian/c1.json": {
       "checksum": "2dfc6094087671089a0df93e3c6fd6f5b0f4243b785491748ae009b15840fa9d",
       "sizeBytes": 68264,
-      "publishedAt": "2026-07-09T17:32:32.451Z"
+      "publishedAt": "2026-07-10T20:03:43.988Z"
     },
-    "records/staging-full-2026-07-09-01/browse/italian/c2.json": {
+    "records/staging-full-2026-07-10-01/browse/italian/c2.json": {
       "checksum": "b50d81d45b9aded30d2986c5bce64e6cee8c038db8f206693ed2fdc2861870b2",
       "sizeBytes": 50986,
-      "publishedAt": "2026-07-09T17:32:32.453Z"
+      "publishedAt": "2026-07-10T20:03:43.990Z"
     },
-    "records/staging-full-2026-07-09-01/browse/portuguese/a1.json": {
+    "records/staging-full-2026-07-10-01/browse/portuguese/a1.json": {
       "checksum": "7643a2746cbb23a4c5e45f01b2e1b5c76c97bafabae34209b19d5dff3fc28886",
       "sizeBytes": 40259,
-      "publishedAt": "2026-07-09T17:32:32.454Z"
+      "publishedAt": "2026-07-10T20:03:43.991Z"
     },
-    "records/staging-full-2026-07-09-01/browse/portuguese/a2.json": {
+    "records/staging-full-2026-07-10-01/browse/portuguese/a2.json": {
       "checksum": "ccbcf14a41b90a4ff84c84a2f4a6417fb6e3b01de5b80a9e18bf3d58451ad337",
       "sizeBytes": 53371,
-      "publishedAt": "2026-07-09T17:32:32.456Z"
+      "publishedAt": "2026-07-10T20:03:43.994Z"
     },
-    "records/staging-full-2026-07-09-01/browse/portuguese/b1.json": {
+    "records/staging-full-2026-07-10-01/browse/portuguese/b1.json": {
       "checksum": "d74ce430bdec06c1d7dd47a26be113313052b65523a54cc19b11470a9814e241",
       "sizeBytes": 122424,
-      "publishedAt": "2026-07-09T17:32:32.459Z"
+      "publishedAt": "2026-07-10T20:03:43.997Z"
     },
-    "records/staging-full-2026-07-09-01/browse/portuguese/b2.json": {
+    "records/staging-full-2026-07-10-01/browse/portuguese/b2.json": {
       "checksum": "ba5d6b6daa48601944fc297a1f90d3e5913fba6e288c2fb958691c3dd064ac45",
       "sizeBytes": 138092,
-      "publishedAt": "2026-07-09T17:32:32.461Z"
+      "publishedAt": "2026-07-10T20:03:43.999Z"
     },
-    "records/staging-full-2026-07-09-01/browse/portuguese/c1.json": {
+    "records/staging-full-2026-07-10-01/browse/portuguese/c1.json": {
       "checksum": "a19b31bf0edb6ba8213fd8da629d3fcdf691a7454018bc01a295156ecf3571c6",
       "sizeBytes": 67628,
-      "publishedAt": "2026-07-09T17:32:32.462Z"
+      "publishedAt": "2026-07-10T20:03:44.006Z"
     },
-    "records/staging-full-2026-07-09-01/browse/portuguese/c2.json": {
+    "records/staging-full-2026-07-10-01/browse/portuguese/c2.json": {
       "checksum": "12080bcb435728d2650ba507b810f78f5daca6046523b70b0ef8d5b6f8fe7ba5",
       "sizeBytes": 50530,
-      "publishedAt": "2026-07-09T17:32:32.463Z"
+      "publishedAt": "2026-07-10T20:03:44.007Z"
     },
-    "records/staging-full-2026-07-09-01/browse/russian/a1.json": {
+    "records/staging-full-2026-07-10-01/browse/russian/a1.json": {
       "checksum": "7fe548ffd9453bd67aac0489880e518a72e97edb40de9ff3c7251c1c4bd2b75a",
       "sizeBytes": 46273,
-      "publishedAt": "2026-07-09T17:32:32.465Z"
+      "publishedAt": "2026-07-10T20:03:44.009Z"
     },
-    "records/staging-full-2026-07-09-01/browse/russian/a2.json": {
+    "records/staging-full-2026-07-10-01/browse/russian/a2.json": {
       "checksum": "bd21013c4d05944bc8e4c39381a522290e35678f7e466f6360254d21528f411b",
       "sizeBytes": 62812,
-      "publishedAt": "2026-07-09T17:32:32.466Z"
+      "publishedAt": "2026-07-10T20:03:44.010Z"
     },
-    "records/staging-full-2026-07-09-01/browse/russian/b1.json": {
+    "records/staging-full-2026-07-10-01/browse/russian/b1.json": {
       "checksum": "d7423161197608f52c5ffd7006632b734a961c9e080ee77a13a293b78ab32bfe",
       "sizeBytes": 146738,
-      "publishedAt": "2026-07-09T17:32:32.468Z"
+      "publishedAt": "2026-07-10T20:03:44.012Z"
     },
-    "records/staging-full-2026-07-09-01/browse/russian/b2.json": {
+    "records/staging-full-2026-07-10-01/browse/russian/b2.json": {
       "checksum": "38ab451bf78d6dfb4c98d75ddfc7becd434f8f129d59d803b6d82a3aa7eaf8df",
       "sizeBytes": 167647,
-      "publishedAt": "2026-07-09T17:32:32.471Z"
+      "publishedAt": "2026-07-10T20:03:44.015Z"
     },
-    "records/staging-full-2026-07-09-01/browse/russian/c1.json": {
+    "records/staging-full-2026-07-10-01/browse/russian/c1.json": {
       "checksum": "7b59b7d23e964295581dd36966cd5993e72708a62782521d24d19411d61b330b",
       "sizeBytes": 82565,
-      "publishedAt": "2026-07-09T17:32:32.472Z"
+      "publishedAt": "2026-07-10T20:03:44.016Z"
     },
-    "records/staging-full-2026-07-09-01/browse/russian/c2.json": {
+    "records/staging-full-2026-07-10-01/browse/russian/c2.json": {
       "checksum": "415f19cbc88b0cd49136d344bee6e31eaf957cfb8fee4130d20a255fa9f9aa3f",
       "sizeBytes": 61477,
-      "publishedAt": "2026-07-09T17:32:32.474Z"
+      "publishedAt": "2026-07-10T20:03:44.017Z"
     },
-    "records/staging-full-2026-07-09-01/browse/spanish/a1.json": {
+    "records/staging-full-2026-07-10-01/browse/spanish/a1.json": {
       "checksum": "d5b3495c841ac1dde169a44111d4b0fecee658c01b258dbe8e9dcd231cd6159c",
       "sizeBytes": 40019,
-      "publishedAt": "2026-07-09T17:32:32.476Z"
+      "publishedAt": "2026-07-10T20:03:44.019Z"
     },
-    "records/staging-full-2026-07-09-01/browse/spanish/a2.json": {
+    "records/staging-full-2026-07-10-01/browse/spanish/a2.json": {
       "checksum": "43a14c67abf3b0d8823dbb1cbee2cdd518644df2cf65ff3ce231f07e6c1f4052",
       "sizeBytes": 53442,
-      "publishedAt": "2026-07-09T17:32:32.478Z"
+      "publishedAt": "2026-07-10T20:03:44.020Z"
     },
-    "records/staging-full-2026-07-09-01/browse/spanish/b1.json": {
+    "records/staging-full-2026-07-10-01/browse/spanish/b1.json": {
       "checksum": "a1f63beeacdcc175c5860e92ced7d23d8536f3bb7b83a3c002b23de5e47f6360",
       "sizeBytes": 122458,
-      "publishedAt": "2026-07-09T17:32:32.480Z"
+      "publishedAt": "2026-07-10T20:03:44.022Z"
     },
-    "records/staging-full-2026-07-09-01/browse/spanish/b2.json": {
+    "records/staging-full-2026-07-10-01/browse/spanish/b2.json": {
       "checksum": "f7138a10adbd2cf9de4dafa4c0865bfb3ef19915a6ed05cfbc3f6a416cc94995",
       "sizeBytes": 137991,
-      "publishedAt": "2026-07-09T17:32:32.481Z"
+      "publishedAt": "2026-07-10T20:03:44.024Z"
     },
-    "records/staging-full-2026-07-09-01/browse/spanish/c1.json": {
+    "records/staging-full-2026-07-10-01/browse/spanish/c1.json": {
       "checksum": "f3b4c6d311f6f52d350c23d3928132197dc5be651768e0051a42918ba5aa7f20",
       "sizeBytes": 67544,
-      "publishedAt": "2026-07-09T17:32:32.483Z"
+      "publishedAt": "2026-07-10T20:03:44.025Z"
     },
-    "records/staging-full-2026-07-09-01/browse/spanish/c2.json": {
+    "records/staging-full-2026-07-10-01/browse/spanish/c2.json": {
       "checksum": "b4af0fd08731a7e0f914870b81bd7f1e6c8d2334a3229604fe21d64cd1bd3ece",
       "sizeBytes": 50506,
-      "publishedAt": "2026-07-09T17:32:32.484Z"
+      "publishedAt": "2026-07-10T20:03:44.026Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/english/a1.json": {
+    "records/staging-full-2026-07-10-01/concepts/english/a1.json": {
       "checksum": "397408ed5bad6541a1031be69db918be195824a75a2abe0320648a077768694a",
       "sizeBytes": 612487,
-      "publishedAt": "2026-07-09T17:32:32.492Z"
+      "publishedAt": "2026-07-10T20:03:44.031Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/english/a2.json": {
+    "records/staging-full-2026-07-10-01/concepts/english/a2.json": {
       "checksum": "64b0fe4be8144c62305c0dcbe259bc9a11988d52186abc4496c75829caed2fbe",
       "sizeBytes": 824043,
-      "publishedAt": "2026-07-09T17:32:32.501Z"
+      "publishedAt": "2026-07-10T20:03:44.037Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/english/b1-00001-02987.json": {
+    "records/staging-full-2026-07-10-01/concepts/english/b1-00001-02987.json": {
       "checksum": "6591bd9b901e9a4442689808e2b97b419952aa5c8b6ab6fc15003e219370b09a",
       "sizeBytes": 1040041,
-      "publishedAt": "2026-07-09T17:32:32.509Z"
+      "publishedAt": "2026-07-10T20:03:44.044Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/english/b1-02988-04245.json": {
+    "records/staging-full-2026-07-10-01/concepts/english/b1-02988-04245.json": {
       "checksum": "69e93fb5ce2a501c40d3217d785aff9ff99a1a408b64d7c90d06fd9fcf581c8e",
       "sizeBytes": 862610,
-      "publishedAt": "2026-07-09T17:32:32.516Z"
+      "publishedAt": "2026-07-10T20:03:44.050Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/english/b2-00001-02710.json": {
+    "records/staging-full-2026-07-10-01/concepts/english/b2-00001-02710.json": {
       "checksum": "b74bc9d0c4ab0a936e354a26e32038dbe9a30556fcfca97f1a1358c57e0a8b7c",
       "sizeBytes": 1010208,
-      "publishedAt": "2026-07-09T17:32:32.524Z"
+      "publishedAt": "2026-07-10T20:03:44.057Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/english/b2-02712-04252.json": {
+    "records/staging-full-2026-07-10-01/concepts/english/b2-02712-04252.json": {
       "checksum": "38fdcae2500d5501bdd3d81ae499b504ad116522aa38b1188f7d4b40dd8a2d97",
       "sizeBytes": 1047589,
-      "publishedAt": "2026-07-09T17:32:32.531Z"
+      "publishedAt": "2026-07-10T20:03:44.064Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/english/b2-04253-04309.json": {
+    "records/staging-full-2026-07-10-01/concepts/english/b2-04253-04309.json": {
       "checksum": "aaf958f3367102c2ced859e8ab652dc93bd1683ed33f6d9dd707abc1ffbd8975",
       "sizeBytes": 40068,
-      "publishedAt": "2026-07-09T17:32:32.536Z"
+      "publishedAt": "2026-07-10T20:03:44.066Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/english/c1.json": {
+    "records/staging-full-2026-07-10-01/concepts/english/c1.json": {
       "checksum": "568686b5d887c1f6e8ab223ab502acf660c465b7d5109b78a282d636505bbff5",
       "sizeBytes": 999786,
-      "publishedAt": "2026-07-09T17:32:32.546Z"
+      "publishedAt": "2026-07-10T20:03:44.073Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/english/c2.json": {
+    "records/staging-full-2026-07-10-01/concepts/english/c2.json": {
       "checksum": "613a504f335121276319aac868701d3cad4a5f4693abfd13d9788a52a5b16d5d",
       "sizeBytes": 725950,
-      "publishedAt": "2026-07-09T17:32:32.552Z"
+      "publishedAt": "2026-07-10T20:03:44.081Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/french/a1.json": {
+    "records/staging-full-2026-07-10-01/concepts/french/a1.json": {
       "checksum": "f43d1746c48713f33767d1a6b91b58f8d97169e3345d44c20705d658f04a7273",
       "sizeBytes": 667230,
-      "publishedAt": "2026-07-09T17:32:32.559Z"
+      "publishedAt": "2026-07-10T20:03:44.086Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/french/a2.json": {
+    "records/staging-full-2026-07-10-01/concepts/french/a2.json": {
       "checksum": "77f68e6039f1547212d1b002f6e0b3e3f344f43995a2fff07b084a8977a009a6",
       "sizeBytes": 885038,
-      "publishedAt": "2026-07-09T17:32:32.577Z"
+      "publishedAt": "2026-07-10T20:03:44.099Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/french/b1-00001-02987.json": {
+    "records/staging-full-2026-07-10-01/concepts/french/b1-00001-02987.json": {
       "checksum": "0ea74444da17d895ef85696d6762449854a6e5df855f8aca524529dbb1c50d23",
       "sizeBytes": 1090620,
-      "publishedAt": "2026-07-09T17:32:32.586Z"
+      "publishedAt": "2026-07-10T20:03:44.107Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/french/b1-02988-04245.json": {
+    "records/staging-full-2026-07-10-01/concepts/french/b1-02988-04245.json": {
       "checksum": "b88363f2bc123f297be0eb46fcb3967c16ec968f32f7f9d1786edb4fd21eba24",
       "sizeBytes": 922845,
-      "publishedAt": "2026-07-09T17:32:32.594Z"
+      "publishedAt": "2026-07-10T20:03:44.131Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/french/b2-00001-02710.json": {
+    "records/staging-full-2026-07-10-01/concepts/french/b2-00001-02710.json": {
       "checksum": "c7147eddc2b2632ed2dc9d0d3bc5d498ae0e24c019a58c80373ec666685d2bfd",
       "sizeBytes": 1072336,
-      "publishedAt": "2026-07-09T17:32:32.601Z"
+      "publishedAt": "2026-07-10T20:03:44.144Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/french/b2-02712-04252.json": {
+    "records/staging-full-2026-07-10-01/concepts/french/b2-02712-04252.json": {
       "checksum": "2af3264a215d74ae6e27e3a7ae9a927852608c03ab9ab99eb30b1813a71b03e3",
       "sizeBytes": 1098582,
-      "publishedAt": "2026-07-09T17:32:32.610Z"
+      "publishedAt": "2026-07-10T20:03:44.154Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/french/b2-04253-04309.json": {
+    "records/staging-full-2026-07-10-01/concepts/french/b2-04253-04309.json": {
       "checksum": "e11bf6a9860abe0525000842124b515497af92f462ce801e782ca3b088f922b3",
       "sizeBytes": 39729,
-      "publishedAt": "2026-07-09T17:32:32.613Z"
+      "publishedAt": "2026-07-10T20:03:44.156Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/french/c1.json": {
+    "records/staging-full-2026-07-10-01/concepts/french/c1.json": {
       "checksum": "b7d60778dc99f07a8c55f0ee39686f256421f738ba5b62dafe407cfd2d2bb00c",
       "sizeBytes": 1043879,
-      "publishedAt": "2026-07-09T17:32:32.622Z"
+      "publishedAt": "2026-07-10T20:03:44.163Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/french/c2.json": {
+    "records/staging-full-2026-07-10-01/concepts/french/c2.json": {
       "checksum": "bf04ef02b0568a3f91b496cbb9e580b901d8a5200ad87e33ce084b99972d062d",
       "sizeBytes": 751166,
-      "publishedAt": "2026-07-09T17:32:32.628Z"
+      "publishedAt": "2026-07-10T20:03:44.168Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/german/a1.json": {
+    "records/staging-full-2026-07-10-01/concepts/german/a1.json": {
       "checksum": "e1e1e8c89597571c8985640ab64ec2c77291f181879b4cae9fb38626e0cc7d8f",
       "sizeBytes": 658348,
-      "publishedAt": "2026-07-09T17:32:32.637Z"
+      "publishedAt": "2026-07-10T20:03:44.174Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/german/a2.json": {
+    "records/staging-full-2026-07-10-01/concepts/german/a2.json": {
       "checksum": "8c7a7d0e6de00489ba1c201c24807b5091af437bcc8c7f9f30b9436b71f67660",
       "sizeBytes": 869904,
-      "publishedAt": "2026-07-09T17:32:32.644Z"
+      "publishedAt": "2026-07-10T20:03:44.180Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/german/b1-00001-02987.json": {
+    "records/staging-full-2026-07-10-01/concepts/german/b1-00001-02987.json": {
       "checksum": "1f9999c7b2a7d3cd18254f86062dff5bda8dc40c9a04e82dd9d262e5787a7ef3",
       "sizeBytes": 1103386,
-      "publishedAt": "2026-07-09T17:32:32.652Z"
+      "publishedAt": "2026-07-10T20:03:44.189Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/german/b1-02988-04245.json": {
+    "records/staging-full-2026-07-10-01/concepts/german/b1-02988-04245.json": {
       "checksum": "4fd458ea30f89aa14dfd91716ec490347e31cc9f295e4b6b908ad3354255e54e",
       "sizeBytes": 929795,
-      "publishedAt": "2026-07-09T17:32:32.660Z"
+      "publishedAt": "2026-07-10T20:03:44.198Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/german/b2-00001-02710.json": {
+    "records/staging-full-2026-07-10-01/concepts/german/b2-00001-02710.json": {
       "checksum": "8bc38225d6413899de8da2367178da80571e94f5541af7ede1795e6ce3ef2e6c",
       "sizeBytes": 1102071,
-      "publishedAt": "2026-07-09T17:32:32.668Z"
+      "publishedAt": "2026-07-10T20:03:44.209Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/german/b2-02712-04252.json": {
+    "records/staging-full-2026-07-10-01/concepts/german/b2-02712-04252.json": {
       "checksum": "5303eac7f658e57e86c6ad6f4fb703407135272c1434f84212a70f35b5cdb6f9",
       "sizeBytes": 1108010,
-      "publishedAt": "2026-07-09T17:32:32.676Z"
+      "publishedAt": "2026-07-10T20:03:44.217Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/german/b2-04253-04309.json": {
+    "records/staging-full-2026-07-10-01/concepts/german/b2-04253-04309.json": {
       "checksum": "b44bef6caf1e1428341d6e291940d818dd78a484bfd23e6cdabda7d72b85b244",
       "sizeBytes": 40546,
-      "publishedAt": "2026-07-09T17:32:32.678Z"
+      "publishedAt": "2026-07-10T20:03:44.218Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/german/c1.json": {
+    "records/staging-full-2026-07-10-01/concepts/german/c1.json": {
       "checksum": "667fb20c7ddf48fd57187d20ab52484bfbaa16475dafe1bfc46d9d65a2bf7d1a",
       "sizeBytes": 1101113,
-      "publishedAt": "2026-07-09T17:32:32.687Z"
+      "publishedAt": "2026-07-10T20:03:44.229Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/german/c2.json": {
+    "records/staging-full-2026-07-10-01/concepts/german/c2.json": {
       "checksum": "b244cdec8b8e255865ee3bb329c4db0ca1f9f1e2fbff7e7656de0a4453c7ca91",
       "sizeBytes": 797711,
-      "publishedAt": "2026-07-09T17:32:32.695Z"
+      "publishedAt": "2026-07-10T20:03:44.234Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/italian/a1.json": {
+    "records/staging-full-2026-07-10-01/concepts/italian/a1.json": {
       "checksum": "51630ecb70b0a145031e1446a6a2580d561376fbab8867936677575d8811074e",
       "sizeBytes": 660511,
-      "publishedAt": "2026-07-09T17:32:32.700Z"
+      "publishedAt": "2026-07-10T20:03:44.239Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/italian/a2.json": {
+    "records/staging-full-2026-07-10-01/concepts/italian/a2.json": {
       "checksum": "d8c2cef93f0c55004c41735cff5bc53d8c125f13cf6e32fbd9452ebf209e2828",
       "sizeBytes": 867513,
-      "publishedAt": "2026-07-09T17:32:32.707Z"
+      "publishedAt": "2026-07-10T20:03:44.246Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/italian/b1-00001-02987.json": {
+    "records/staging-full-2026-07-10-01/concepts/italian/b1-00001-02987.json": {
       "checksum": "b2aedde2a2a1804328f12488998e2135bce17f6086e75e5548d157e5e30bef97",
       "sizeBytes": 1062465,
-      "publishedAt": "2026-07-09T17:32:32.716Z"
+      "publishedAt": "2026-07-10T20:03:44.253Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/italian/b1-02988-04245.json": {
+    "records/staging-full-2026-07-10-01/concepts/italian/b1-02988-04245.json": {
       "checksum": "0b34e9eb1368d8d8740b8a78ec8cc321ba8d9be8e99e342685a9b18e0b3f00f5",
       "sizeBytes": 903653,
-      "publishedAt": "2026-07-09T17:32:32.724Z"
+      "publishedAt": "2026-07-10T20:03:44.259Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/italian/b2-00001-02710.json": {
+    "records/staging-full-2026-07-10-01/concepts/italian/b2-00001-02710.json": {
       "checksum": "36730d5802b8d6e9c36176aa7c9d5f274f2bffc85c62f2e58ff177040defddb8",
       "sizeBytes": 1073922,
-      "publishedAt": "2026-07-09T17:32:32.732Z"
+      "publishedAt": "2026-07-10T20:03:44.267Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/italian/b2-02712-04252.json": {
+    "records/staging-full-2026-07-10-01/concepts/italian/b2-02712-04252.json": {
       "checksum": "f8a5e23966949d92539af1f2f42e37f26832f73d096f0142c982c0e1b89ce4b9",
       "sizeBytes": 1081248,
-      "publishedAt": "2026-07-09T17:32:32.740Z"
+      "publishedAt": "2026-07-10T20:03:44.275Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/italian/b2-04253-04309.json": {
+    "records/staging-full-2026-07-10-01/concepts/italian/b2-04253-04309.json": {
       "checksum": "a9551ad9cc3c718988e66dd193d0220f06aafac8e2f2ed5f815978311adeb5d9",
       "sizeBytes": 39897,
-      "publishedAt": "2026-07-09T17:32:32.742Z"
+      "publishedAt": "2026-07-10T20:03:44.276Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/italian/c1.json": {
+    "records/staging-full-2026-07-10-01/concepts/italian/c1.json": {
       "checksum": "0b2bab84bdd4fc5a8fe4ffcb9845bff483d30e89ab601be90b3795b801a7fedd",
       "sizeBytes": 1041656,
-      "publishedAt": "2026-07-09T17:32:32.749Z"
+      "publishedAt": "2026-07-10T20:03:44.287Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/italian/c2.json": {
+    "records/staging-full-2026-07-10-01/concepts/italian/c2.json": {
       "checksum": "1631640980bbe4a59b454f656971d068e42857be2d43e38872f4bb03e3c4ca1b",
       "sizeBytes": 749484,
-      "publishedAt": "2026-07-09T17:32:32.755Z"
+      "publishedAt": "2026-07-10T20:03:44.292Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/portuguese/a1.json": {
+    "records/staging-full-2026-07-10-01/concepts/portuguese/a1.json": {
       "checksum": "ef34222cdc800370c6f46bcf5f03260b91aa27eccad5c60e8aec88d0e860d56f",
       "sizeBytes": 647652,
-      "publishedAt": "2026-07-09T17:32:32.760Z"
+      "publishedAt": "2026-07-10T20:03:44.298Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/portuguese/a2.json": {
+    "records/staging-full-2026-07-10-01/concepts/portuguese/a2.json": {
       "checksum": "aff7056bcc96f9a1cfbb28590dff7812c0b95e3166a22f9f6400bf3a727fe31e",
       "sizeBytes": 867846,
-      "publishedAt": "2026-07-09T17:32:32.769Z"
+      "publishedAt": "2026-07-10T20:03:44.304Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/portuguese/b1-00001-02987.json": {
+    "records/staging-full-2026-07-10-01/concepts/portuguese/b1-00001-02987.json": {
       "checksum": "65c38f0f22f183352e12d1866a26a625bff7c02c0da94ebf62d00da6dc9115bd",
       "sizeBytes": 1067034,
-      "publishedAt": "2026-07-09T17:32:32.777Z"
+      "publishedAt": "2026-07-10T20:03:44.312Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/portuguese/b1-02988-04245.json": {
+    "records/staging-full-2026-07-10-01/concepts/portuguese/b1-02988-04245.json": {
       "checksum": "16b4e18bb749fad778a7fdb38aec699605c8bb11c940d6d0c1c4ff7d37dc2b64",
       "sizeBytes": 892779,
-      "publishedAt": "2026-07-09T17:32:32.783Z"
+      "publishedAt": "2026-07-10T20:03:44.318Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/portuguese/b2-00001-02710.json": {
+    "records/staging-full-2026-07-10-01/concepts/portuguese/b2-00001-02710.json": {
       "checksum": "f0980327a6cbb6fb338f99ba33fed8fee5b452981b7f0bcfb7b06075e53e21b8",
       "sizeBytes": 1052581,
-      "publishedAt": "2026-07-09T17:32:32.791Z"
+      "publishedAt": "2026-07-10T20:03:44.326Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/portuguese/b2-02712-04252.json": {
+    "records/staging-full-2026-07-10-01/concepts/portuguese/b2-02712-04252.json": {
       "checksum": "ff6c2bef6e7a1acd4db1163c6ba976a1c34e13096de4c03fd6cf01e93abf3afe",
       "sizeBytes": 1081620,
-      "publishedAt": "2026-07-09T17:32:32.800Z"
+      "publishedAt": "2026-07-10T20:03:44.333Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/portuguese/b2-04253-04309.json": {
+    "records/staging-full-2026-07-10-01/concepts/portuguese/b2-04253-04309.json": {
       "checksum": "425021f123751aad9060756a8248217e535e7cee5078e98940372c3189205f9a",
       "sizeBytes": 39607,
-      "publishedAt": "2026-07-09T17:32:32.802Z"
+      "publishedAt": "2026-07-10T20:03:44.334Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/portuguese/c1.json": {
+    "records/staging-full-2026-07-10-01/concepts/portuguese/c1.json": {
       "checksum": "fc97c3905e7d17bf6e5f08877a28020c7e434a0bb1ef24d14c496ecf464b895b",
       "sizeBytes": 1033343,
-      "publishedAt": "2026-07-09T17:32:32.809Z"
+      "publishedAt": "2026-07-10T20:03:44.341Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/portuguese/c2.json": {
+    "records/staging-full-2026-07-10-01/concepts/portuguese/c2.json": {
       "checksum": "19691e474cb669dbff807ed4c4f1c28d25a40b3c15b1d6015b5b00bdcff21550",
       "sizeBytes": 736914,
-      "publishedAt": "2026-07-09T17:32:32.815Z"
+      "publishedAt": "2026-07-10T20:03:44.346Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/russian/a1.json": {
+    "records/staging-full-2026-07-10-01/concepts/russian/a1.json": {
       "checksum": "9487e915a7a86ed79c7677732398436ac9d764d0c04d4f3261d29c2768dbd52c",
       "sizeBytes": 734428,
-      "publishedAt": "2026-07-09T17:32:32.820Z"
+      "publishedAt": "2026-07-10T20:03:44.351Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/russian/a2.json": {
+    "records/staging-full-2026-07-10-01/concepts/russian/a2.json": {
       "checksum": "dc0b962a6cef2da9c0336e2ff458af761e7c3429bb34dfd4cbb33da751b7639b",
       "sizeBytes": 1003309,
-      "publishedAt": "2026-07-09T17:32:32.828Z"
+      "publishedAt": "2026-07-10T20:03:44.358Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/russian/b1-00001-02987.json": {
+    "records/staging-full-2026-07-10-01/concepts/russian/b1-00001-02987.json": {
       "checksum": "28121584208698255c361b2ee5dac2e3dad2c3562457454d214c71c65d466f04",
       "sizeBytes": 1237464,
-      "publishedAt": "2026-07-09T17:32:32.838Z"
+      "publishedAt": "2026-07-10T20:03:44.366Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/russian/b1-02988-04245.json": {
+    "records/staging-full-2026-07-10-01/concepts/russian/b1-02988-04245.json": {
       "checksum": "3abf897dda96d2b5b045ecfd0fd7a5549fb38207e9d91701fecfde32026cd43d",
       "sizeBytes": 1078297,
-      "publishedAt": "2026-07-09T17:32:32.847Z"
+      "publishedAt": "2026-07-10T20:03:44.374Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/russian/b2-00001-02710.json": {
+    "records/staging-full-2026-07-10-01/concepts/russian/b2-00001-02710.json": {
       "checksum": "3c24b5a42bf3415367ef8ee0ee4f195129bd6e789e37f6419b96ec559089b542",
       "sizeBytes": 1260170,
-      "publishedAt": "2026-07-09T17:32:32.857Z"
+      "publishedAt": "2026-07-10T20:03:44.383Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/russian/b2-02712-04252.json": {
+    "records/staging-full-2026-07-10-01/concepts/russian/b2-02712-04252.json": {
       "checksum": "036cf498bf53d4009d99b2057d02863367000225523093ba64c560c678a8627c",
       "sizeBytes": 1294635,
-      "publishedAt": "2026-07-09T17:32:32.868Z"
+      "publishedAt": "2026-07-10T20:03:44.393Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/russian/b2-04253-04309.json": {
+    "records/staging-full-2026-07-10-01/concepts/russian/b2-04253-04309.json": {
       "checksum": "87b6d95e2182431a1a300ced3929aef6322c147958ecc8ab7e7b878521bc2142",
       "sizeBytes": 46684,
-      "publishedAt": "2026-07-09T17:32:32.869Z"
+      "publishedAt": "2026-07-10T20:03:44.394Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/russian/c1.json": {
+    "records/staging-full-2026-07-10-01/concepts/russian/c1.json": {
       "checksum": "269a47b3f07a2e7b7adcaf4943c00fe449ada7a2f569efef40cefb72b6a83b24",
       "sizeBytes": 1227610,
-      "publishedAt": "2026-07-09T17:32:32.878Z"
+      "publishedAt": "2026-07-10T20:03:44.402Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/russian/c2.json": {
+    "records/staging-full-2026-07-10-01/concepts/russian/c2.json": {
       "checksum": "33b093730c6669fb85356a10c33c13402f0791ce19cbaaa2a0a2173a9345eee5",
       "sizeBytes": 891558,
-      "publishedAt": "2026-07-09T17:32:32.884Z"
+      "publishedAt": "2026-07-10T20:03:44.408Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/spanish/a1.json": {
+    "records/staging-full-2026-07-10-01/concepts/spanish/a1.json": {
       "checksum": "49474b7fffd270906da113c94671ecccc7228389d025815a794b657c9e89a4a9",
       "sizeBytes": 661109,
-      "publishedAt": "2026-07-09T17:32:32.889Z"
+      "publishedAt": "2026-07-10T20:03:44.413Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/spanish/a2.json": {
+    "records/staging-full-2026-07-10-01/concepts/spanish/a2.json": {
       "checksum": "f6cb99ef0c164405b7331b135c6c9652dca462f3af8f3ae3ab25eb80de46296c",
       "sizeBytes": 879246,
-      "publishedAt": "2026-07-09T17:32:32.899Z"
+      "publishedAt": "2026-07-10T20:03:44.419Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/spanish/b1-00001-02987.json": {
+    "records/staging-full-2026-07-10-01/concepts/spanish/b1-00001-02987.json": {
       "checksum": "cb2713a39f61ef294954bde9a8756b3b58ec72d3502f9f595c913a0b53f5b508",
       "sizeBytes": 1081438,
-      "publishedAt": "2026-07-09T17:32:32.907Z"
+      "publishedAt": "2026-07-10T20:03:44.426Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/spanish/b1-02988-04245.json": {
+    "records/staging-full-2026-07-10-01/concepts/spanish/b1-02988-04245.json": {
       "checksum": "49fc7e6b0c5cdfa4d7b73cf06ce52b53702af8a9ef8ea6876159803bdd77c3d9",
       "sizeBytes": 908065,
-      "publishedAt": "2026-07-09T17:32:32.914Z"
+      "publishedAt": "2026-07-10T20:03:44.451Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/spanish/b2-00001-02710.json": {
+    "records/staging-full-2026-07-10-01/concepts/spanish/b2-00001-02710.json": {
       "checksum": "68725e8e2598435a3a19af4c1340aa1b8b6464468e06182a92223ef7a7729b82",
       "sizeBytes": 1054423,
-      "publishedAt": "2026-07-09T17:32:32.923Z"
+      "publishedAt": "2026-07-10T20:03:44.458Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/spanish/b2-02712-04252.json": {
+    "records/staging-full-2026-07-10-01/concepts/spanish/b2-02712-04252.json": {
       "checksum": "cb62f5a4b0c1f8f96ff9ede23272e7ee3d9259ba1aa09ec6b4caf3e587c4e5a6",
       "sizeBytes": 1079782,
-      "publishedAt": "2026-07-09T17:32:32.931Z"
+      "publishedAt": "2026-07-10T20:03:44.466Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/spanish/b2-04253-04309.json": {
+    "records/staging-full-2026-07-10-01/concepts/spanish/b2-04253-04309.json": {
       "checksum": "9504776d8782d5cad1a4226070d4b0acaa6559d77c818446b1f038475c180e3c",
       "sizeBytes": 40039,
-      "publishedAt": "2026-07-09T17:32:32.935Z"
+      "publishedAt": "2026-07-10T20:03:44.467Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/spanish/c1.json": {
+    "records/staging-full-2026-07-10-01/concepts/spanish/c1.json": {
       "checksum": "c45e568faf66a629d21a35f83798a1f9d2622c3c64814f7dac9470456028f0d7",
       "sizeBytes": 1020486,
-      "publishedAt": "2026-07-09T17:32:32.942Z"
+      "publishedAt": "2026-07-10T20:03:44.474Z"
     },
-    "records/staging-full-2026-07-09-01/concepts/spanish/c2.json": {
+    "records/staging-full-2026-07-10-01/concepts/spanish/c2.json": {
       "checksum": "eac1ef5bfe217b7c39fcf6ee01e80b86a9c6dd5aa9a337943e1d55e43021ed83",
       "sizeBytes": 742051,
-      "publishedAt": "2026-07-09T17:32:32.948Z"
+      "publishedAt": "2026-07-10T20:03:44.479Z"
     },
-    "records/staging-full-2026-07-09-01/manifest.json": {
-      "checksum": "dc2decbe6e9419095127c755a91ec9611d19fec70b65b15ca8c6a4f485852c1c",
+    "records/staging-full-2026-07-10-01/manifest.json": {
+      "checksum": "f1e45261d7adf055a5ab53c8ce6c12a5aa5e5a19926251fc0897817a9dbc3512",
       "sizeBytes": 12731,
-      "publishedAt": "2026-07-09T17:32:32.949Z"
+      "publishedAt": "2026-07-10T20:03:44.480Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/de/a1.json": {
+    "records/staging-full-2026-07-10-01/overlays/de/a1.json": {
       "checksum": "bc27f8d429643ac3adbd284e58211ab1cecb2a2561d8050fda27564cfffa1671",
       "sizeBytes": 122169,
-      "publishedAt": "2026-07-09T17:32:32.953Z"
+      "publishedAt": "2026-07-10T20:03:44.482Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/de/a2.json": {
+    "records/staging-full-2026-07-10-01/overlays/de/a2.json": {
       "checksum": "c6384b41aeb1f2037e16c52d96973ec8dd57e48e0e6d4147eee31c94d6f65de4",
       "sizeBytes": 165636,
-      "publishedAt": "2026-07-09T17:32:32.955Z"
+      "publishedAt": "2026-07-10T20:03:44.484Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/de/b1.json": {
+    "records/staging-full-2026-07-10-01/overlays/de/b1.json": {
       "checksum": "462dabf44fb65ba55a966a2331c56aa50581e27d80f06cc60fa5ada56fe247c9",
       "sizeBytes": 381040,
-      "publishedAt": "2026-07-09T17:32:32.959Z"
+      "publishedAt": "2026-07-10T20:03:44.487Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/de/b2.json": {
+    "records/staging-full-2026-07-10-01/overlays/de/b2.json": {
       "checksum": "17f24f68fdadde5f593fdefbbb7eb28d45749ac82ea412f38e78a783b387ce05",
       "sizeBytes": 436991,
-      "publishedAt": "2026-07-09T17:32:32.965Z"
+      "publishedAt": "2026-07-10T20:03:44.491Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/de/c1.json": {
+    "records/staging-full-2026-07-10-01/overlays/de/c1.json": {
       "checksum": "24baf1f3946a2ca1c46875e11d0c31b62946785457a09a9649fbf3df9203bdd5",
       "sizeBytes": 208885,
-      "publishedAt": "2026-07-09T17:32:32.967Z"
+      "publishedAt": "2026-07-10T20:03:44.493Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/de/c2.json": {
+    "records/staging-full-2026-07-10-01/overlays/de/c2.json": {
       "checksum": "ccb7d0dc5067fbeab8c0a4139534dc6d9382817a6824f2f01cf5ad04f3019fa7",
       "sizeBytes": 157395,
-      "publishedAt": "2026-07-09T17:32:32.969Z"
+      "publishedAt": "2026-07-10T20:03:44.494Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/en/a1.json": {
+    "records/staging-full-2026-07-10-01/overlays/en/a1.json": {
       "checksum": "3f5887e78f2612be8213086bc9dad63b8f42721f43eaf25d75f0f41e96b4be76",
       "sizeBytes": 124459,
-      "publishedAt": "2026-07-09T17:32:32.972Z"
+      "publishedAt": "2026-07-10T20:03:44.496Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/en/a2.json": {
+    "records/staging-full-2026-07-10-01/overlays/en/a2.json": {
       "checksum": "eacad0fe1b393abecbfb3153fd0e04e6f41a31a30aaf39e912d8a146cca94c89",
       "sizeBytes": 164697,
-      "publishedAt": "2026-07-09T17:32:32.974Z"
+      "publishedAt": "2026-07-10T20:03:44.499Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/en/b1.json": {
+    "records/staging-full-2026-07-10-01/overlays/en/b1.json": {
       "checksum": "7a83aab927af88f9e2a7cb36226973cfff25e436b65a36c12b03cf8b01bd74f2",
       "sizeBytes": 372185,
-      "publishedAt": "2026-07-09T17:32:32.977Z"
+      "publishedAt": "2026-07-10T20:03:44.502Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/en/b2.json": {
+    "records/staging-full-2026-07-10-01/overlays/en/b2.json": {
       "checksum": "91d5dd4d114dd95e555c0c921248d8cffa730ff2b3e0e49bcf6d5462f0a5413b",
       "sizeBytes": 420971,
-      "publishedAt": "2026-07-09T17:32:32.983Z"
+      "publishedAt": "2026-07-10T20:03:44.506Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/en/c1.json": {
+    "records/staging-full-2026-07-10-01/overlays/en/c1.json": {
       "checksum": "4c040950a61bb944c78ae0a94f41a038251c6c1e273a34f6dc05ed938bcc4f3b",
       "sizeBytes": 197555,
-      "publishedAt": "2026-07-09T17:32:32.985Z"
+      "publishedAt": "2026-07-10T20:03:44.508Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/en/c2.json": {
+    "records/staging-full-2026-07-10-01/overlays/en/c2.json": {
       "checksum": "84f3dcc20d0fdca70a5418f6f2cdcd7612be03c5993b4b1d4c8f6e81e3f14506",
       "sizeBytes": 146863,
-      "publishedAt": "2026-07-09T17:32:32.987Z"
+      "publishedAt": "2026-07-10T20:03:44.510Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/es/a1.json": {
+    "records/staging-full-2026-07-10-01/overlays/es/a1.json": {
       "checksum": "795607b59a1ff72cebbb6abc6315aa748e61dc73882a19b449c4a470be606982",
       "sizeBytes": 128889,
-      "publishedAt": "2026-07-09T17:32:32.989Z"
+      "publishedAt": "2026-07-10T20:03:44.511Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/es/a2.json": {
+    "records/staging-full-2026-07-10-01/overlays/es/a2.json": {
       "checksum": "a2236a97c4340a055d47f92f6072c0cc9f2c0f5de6e4d4a6e1241e32fa17bb24",
       "sizeBytes": 170179,
-      "publishedAt": "2026-07-09T17:32:32.992Z"
+      "publishedAt": "2026-07-10T20:03:44.513Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/es/b1.json": {
+    "records/staging-full-2026-07-10-01/overlays/es/b1.json": {
       "checksum": "ce2e8a8b3ca483a405e753cb43848bd6668bfd28f4d5768b18de57a744e5d21c",
       "sizeBytes": 377580,
-      "publishedAt": "2026-07-09T17:32:32.995Z"
+      "publishedAt": "2026-07-10T20:03:44.516Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/es/b2.json": {
+    "records/staging-full-2026-07-10-01/overlays/es/b2.json": {
       "checksum": "52b8ca7fde31bba255ec13f4c197051be9454bf6356ef99b935311febbbe56f5",
       "sizeBytes": 417306,
-      "publishedAt": "2026-07-09T17:32:32.999Z"
+      "publishedAt": "2026-07-10T20:03:44.520Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/es/c1.json": {
+    "records/staging-full-2026-07-10-01/overlays/es/c1.json": {
       "checksum": "f5496372770686172d337dcb5c295e80fd5b7cb359a89d4d079993f77378cf5c",
       "sizeBytes": 191336,
-      "publishedAt": "2026-07-09T17:32:33.001Z"
+      "publishedAt": "2026-07-10T20:03:44.521Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/es/c2.json": {
+    "records/staging-full-2026-07-10-01/overlays/es/c2.json": {
       "checksum": "0a2cd4ce63d352d5f2200b3e2aca9de0a2a9e1e1df9e5ceb8564a5fd2b5dea5f",
       "sizeBytes": 143475,
-      "publishedAt": "2026-07-09T17:32:33.003Z"
+      "publishedAt": "2026-07-10T20:03:44.523Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/fr/a1.json": {
+    "records/staging-full-2026-07-10-01/overlays/fr/a1.json": {
       "checksum": "0ab7e8778f1653e83f288209ef392bb1501e0579bec3b0fd673129d3f1ecb1a3",
       "sizeBytes": 131353,
-      "publishedAt": "2026-07-09T17:32:33.005Z"
+      "publishedAt": "2026-07-10T20:03:44.525Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/fr/a2.json": {
+    "records/staging-full-2026-07-10-01/overlays/fr/a2.json": {
       "checksum": "92ca6de7de6b94ac9c63b3ca17aa5d4c5ea1faaa4f04554197f5f6ceff465f9e",
       "sizeBytes": 176098,
-      "publishedAt": "2026-07-09T17:32:33.008Z"
+      "publishedAt": "2026-07-10T20:03:44.528Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/fr/b1.json": {
+    "records/staging-full-2026-07-10-01/overlays/fr/b1.json": {
       "checksum": "0d357d950006d14119ebc0c292a14f7dd6ca793590224bce4db2f206575c86d7",
       "sizeBytes": 391057,
-      "publishedAt": "2026-07-09T17:32:33.012Z"
+      "publishedAt": "2026-07-10T20:03:44.531Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/fr/b2.json": {
+    "records/staging-full-2026-07-10-01/overlays/fr/b2.json": {
       "checksum": "bfa8b5698b18a146127349834898250ffc8992363ae8350ca2fde070be0ef355",
       "sizeBytes": 434077,
-      "publishedAt": "2026-07-09T17:32:33.018Z"
+      "publishedAt": "2026-07-10T20:03:44.535Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/fr/c1.json": {
+    "records/staging-full-2026-07-10-01/overlays/fr/c1.json": {
       "checksum": "e379c628a12a4fb043fd8e9f1a5e75b28a870e4c5d607f61d12030271cd029e9",
       "sizeBytes": 199557,
-      "publishedAt": "2026-07-09T17:32:33.021Z"
+      "publishedAt": "2026-07-10T20:03:44.537Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/fr/c2.json": {
+    "records/staging-full-2026-07-10-01/overlays/fr/c2.json": {
       "checksum": "e9632303f0354c792ba49b53c2c0660c20199e73aa3f1e22a02bcee686b8485b",
       "sizeBytes": 148194,
-      "publishedAt": "2026-07-09T17:32:33.022Z"
+      "publishedAt": "2026-07-10T20:03:44.538Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/it/a1.json": {
+    "records/staging-full-2026-07-10-01/overlays/it/a1.json": {
       "checksum": "dd31f8c93bb4af6ce1143d345963d93d714354f1000fc2fef17ad78f0bb84db6",
       "sizeBytes": 128930,
-      "publishedAt": "2026-07-09T17:32:33.025Z"
+      "publishedAt": "2026-07-10T20:03:44.540Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/it/a2.json": {
+    "records/staging-full-2026-07-10-01/overlays/it/a2.json": {
       "checksum": "54ff6e77db850df563318ffe42e2c561f17ce5133c5340f039b55ea33d60eab0",
       "sizeBytes": 165672,
-      "publishedAt": "2026-07-09T17:32:33.027Z"
+      "publishedAt": "2026-07-10T20:03:44.542Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/it/b1.json": {
+    "records/staging-full-2026-07-10-01/overlays/it/b1.json": {
       "checksum": "7d30192bcf26b951e2c30b3ced65e8c896fe3e78493ca48fbcf7e97b79553659",
       "sizeBytes": 375513,
-      "publishedAt": "2026-07-09T17:32:33.030Z"
+      "publishedAt": "2026-07-10T20:03:44.548Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/it/b2.json": {
+    "records/staging-full-2026-07-10-01/overlays/it/b2.json": {
       "checksum": "f97ac314c46201346a685674c057d34772296103e5bc75410bb3ba2db68dd0b2",
       "sizeBytes": 430196,
-      "publishedAt": "2026-07-09T17:32:33.041Z"
+      "publishedAt": "2026-07-10T20:03:44.551Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/it/c1.json": {
+    "records/staging-full-2026-07-10-01/overlays/it/c1.json": {
       "checksum": "0931d27a7aef14d518e542972a8284eb419b359dff691567bd4048667fabbaf3",
       "sizeBytes": 204523,
-      "publishedAt": "2026-07-09T17:32:33.046Z"
+      "publishedAt": "2026-07-10T20:03:44.553Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/it/c2.json": {
+    "records/staging-full-2026-07-10-01/overlays/it/c2.json": {
       "checksum": "cfce65820d9a087e94283eb5b703c69a071dad39cf08aa043069952fe1acad6b",
       "sizeBytes": 151651,
-      "publishedAt": "2026-07-09T17:32:33.050Z"
+      "publishedAt": "2026-07-10T20:03:44.555Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/pt/a1.json": {
+    "records/staging-full-2026-07-10-01/overlays/pt/a1.json": {
       "checksum": "2e7aba82e0bf1b4c81a9f9a829d058597e259e9637ba30c6822b066aaddfca95",
       "sizeBytes": 122602,
-      "publishedAt": "2026-07-09T17:32:33.052Z"
+      "publishedAt": "2026-07-10T20:03:44.557Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/pt/a2.json": {
+    "records/staging-full-2026-07-10-01/overlays/pt/a2.json": {
       "checksum": "dae99532310083589bd032d8b105dad8c8c40d13a01c5df30871d03a33d68a83",
       "sizeBytes": 162656,
-      "publishedAt": "2026-07-09T17:32:33.054Z"
+      "publishedAt": "2026-07-10T20:03:44.560Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/pt/b1.json": {
+    "records/staging-full-2026-07-10-01/overlays/pt/b1.json": {
       "checksum": "0df84a848bd857bf90b875e927248f901dd56ca15931776aed5679ff90621c9e",
       "sizeBytes": 364188,
-      "publishedAt": "2026-07-09T17:32:33.058Z"
+      "publishedAt": "2026-07-10T20:03:44.563Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/pt/b2.json": {
+    "records/staging-full-2026-07-10-01/overlays/pt/b2.json": {
       "checksum": "4cbf8b37264c16cfe405a10ab2f78f4a07ea551509c367325edcefbea2e2b79e",
       "sizeBytes": 407414,
-      "publishedAt": "2026-07-09T17:32:33.062Z"
+      "publishedAt": "2026-07-10T20:03:44.567Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/pt/c1.json": {
+    "records/staging-full-2026-07-10-01/overlays/pt/c1.json": {
       "checksum": "42f5f0f8f771e405f80693f5ac7eb6d401653669cc05db75b691a8ca9f729a43",
       "sizeBytes": 193879,
-      "publishedAt": "2026-07-09T17:32:33.064Z"
+      "publishedAt": "2026-07-10T20:03:44.569Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/pt/c2.json": {
+    "records/staging-full-2026-07-10-01/overlays/pt/c2.json": {
       "checksum": "c6a505b92acc6ff4b98127e30a214ce5ce0dac98e01ffe1f0dfac847f5b7295d",
       "sizeBytes": 141843,
-      "publishedAt": "2026-07-09T17:32:33.066Z"
+      "publishedAt": "2026-07-10T20:03:44.571Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/ru/a1.json": {
+    "records/staging-full-2026-07-10-01/overlays/ru/a1.json": {
       "checksum": "bfa5ae5e2f931e5e16962d8b79b12805da9f4fc2d32339b54c7658afc16b75c2",
       "sizeBytes": 168442,
-      "publishedAt": "2026-07-09T17:32:33.069Z"
+      "publishedAt": "2026-07-10T20:03:44.573Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/ru/a2.json": {
+    "records/staging-full-2026-07-10-01/overlays/ru/a2.json": {
       "checksum": "c6206d02e026d24cbce31ee1f597788296e7df2e05c4bda8651184d58aa220dd",
       "sizeBytes": 227775,
-      "publishedAt": "2026-07-09T17:32:33.071Z"
+      "publishedAt": "2026-07-10T20:03:44.575Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/ru/b1.json": {
+    "records/staging-full-2026-07-10-01/overlays/ru/b1.json": {
       "checksum": "780f5601791b782ba30d93fd4d9f4746789c9bcc49107e6b60d7d41a581ad9aa",
       "sizeBytes": 517828,
-      "publishedAt": "2026-07-09T17:32:33.076Z"
+      "publishedAt": "2026-07-10T20:03:44.579Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/ru/b2.json": {
+    "records/staging-full-2026-07-10-01/overlays/ru/b2.json": {
       "checksum": "f91147e58ff1de8040a23f71c9efe5ccc0b927349ee6e86ebd5dec11bfbc6c99",
       "sizeBytes": 588051,
-      "publishedAt": "2026-07-09T17:32:33.081Z"
+      "publishedAt": "2026-07-10T20:03:44.584Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/ru/c1.json": {
+    "records/staging-full-2026-07-10-01/overlays/ru/c1.json": {
       "checksum": "27cd5051dda3094901531aec09fa488829301d034aaa9a0aa7907a37f3874b45",
       "sizeBytes": 271878,
-      "publishedAt": "2026-07-09T17:32:33.083Z"
+      "publishedAt": "2026-07-10T20:03:44.586Z"
     },
-    "records/staging-full-2026-07-09-01/overlays/ru/c2.json": {
+    "records/staging-full-2026-07-10-01/overlays/ru/c2.json": {
       "checksum": "2ac1fd3d7d33c9bb0e97e6ba76d7e388bde400c18ebccddbdaccf3a723135f7f",
       "sizeBytes": 204966,
-      "publishedAt": "2026-07-09T17:32:33.085Z"
+      "publishedAt": "2026-07-10T20:03:44.588Z"
     }
   }
 }
