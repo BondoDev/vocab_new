@@ -373,10 +373,15 @@ function clearAuthParamsFromUrl() {
   window.history.replaceState({}, document.title, `${url.pathname}${url.search}`);
 }
 
+// Header and AppContent both call this on mount; the flag ensures only the
+// first caller performs the (single-use) code/token exchange per page load.
+let redirectHandledThisLoad = false;
+
 export async function handleSupabaseAuthRedirect() {
-  if (typeof window === "undefined") {
+  if (typeof window === "undefined" || redirectHandledThisLoad) {
     return { changed: false, session: null as StoredSupabaseSession | null, error: null as string | null };
   }
+  redirectHandledThisLoad = true;
 
   const url = new URL(window.location.href);
   const hashParams = new URLSearchParams(url.hash.replace(/^#/, ""));

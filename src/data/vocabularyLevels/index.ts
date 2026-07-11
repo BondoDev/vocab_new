@@ -126,6 +126,8 @@ export async function loadVocabularyLevelContent(
   };
 }
 
+const vocabularyFetchPromises = new Map<string, Promise<VocabularyFile | null>>();
+
 async function fetchVocabularyFile(
   uiLanguage: UiLanguageCode,
   targetLanguage: TargetLanguageSlug,
@@ -134,15 +136,31 @@ async function fetchVocabularyFile(
     return null;
   }
 
-  try {
-    const response = await fetch(`/vocabularyLevels/${uiLanguage}/${targetLanguage}.json`);
-    if (!response.ok) {
+  const key = `${uiLanguage}/${targetLanguage}`;
+  const inFlight = vocabularyFetchPromises.get(key);
+  if (inFlight) {
+    return inFlight;
+  }
+
+  const request = (async () => {
+    try {
+      const response = await fetch(`/vocabularyLevels/${key}.json`);
+      if (!response.ok) {
+        return null;
+      }
+      return (await response.json()) as VocabularyFile;
+    } catch {
       return null;
     }
-    return (await response.json()) as VocabularyFile;
-  } catch {
-    return null;
+  })();
+
+  vocabularyFetchPromises.set(key, request);
+  const result = await request;
+  if (!result) {
+    // Drop failed loads so a later navigation can retry.
+    vocabularyFetchPromises.delete(key);
   }
+  return result;
 }
 
 function loadVocabularyFileSync(

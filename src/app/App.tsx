@@ -1286,6 +1286,13 @@ function AppContent({
     };
   }, [resolvedPage]);
 
+  // Languages are read through a ref so language changes don't refire the
+  // profile fetch below — they are only fallbacks, not fetch inputs.
+  const languagesRef = useRef({ yourLanguage, practiceLanguage });
+  useEffect(() => {
+    languagesRef.current = { yourLanguage, practiceLanguage };
+  });
+
   useEffect(() => {
     if (!authUserId) {
       setUserProfile(EMPTY_USER_PROFILE);
@@ -1299,14 +1306,21 @@ function AppContent({
 
     void (async () => {
       try {
-        const supabaseProfile = authSession
-          ? await readSupabaseUserProfile(authSession)
+        // Read the session from storage: token refreshes replace the session
+        // object, and depending on it here would refetch the profile each time.
+        const session = getStoredSupabaseSession();
+        const supabaseProfile = session
+          ? await readSupabaseUserProfile(session)
           : null;
         const hasSupabaseProfileRow = Boolean(supabaseProfile);
         if (cancelled) {
           return;
         }
 
+        const {
+          yourLanguage: currentYourLanguage,
+          practiceLanguage: currentPracticeLanguage,
+        } = languagesRef.current;
         const nextProfile = normalizeUserProfile({
           ...storedProfile,
           ...supabaseProfile,
@@ -1314,19 +1328,19 @@ function AppContent({
           nativeLanguage:
             supabaseProfile?.nativeLanguage ||
             storedProfile?.nativeLanguage ||
-            yourLanguage ||
+            currentYourLanguage ||
             "",
           practiceLanguage:
             supabaseProfile?.practiceLanguage ||
             storedProfile?.practiceLanguage ||
-            practiceLanguage ||
+            currentPracticeLanguage ||
             "",
         });
 
-        if (!yourLanguage && nextProfile.nativeLanguage) {
+        if (!currentYourLanguage && nextProfile.nativeLanguage) {
           setYourLanguage(nextProfile.nativeLanguage);
         }
-        if (!practiceLanguage && nextProfile.practiceLanguage) {
+        if (!currentPracticeLanguage && nextProfile.practiceLanguage) {
           setPracticeLanguage(nextProfile.practiceLanguage);
         }
 
@@ -1342,9 +1356,14 @@ function AppContent({
 
         const fallbackProfile = normalizeUserProfile({
           ...storedProfile,
-          nativeLanguage: storedProfile?.nativeLanguage || yourLanguage || "",
+          nativeLanguage:
+            storedProfile?.nativeLanguage ||
+            languagesRef.current.yourLanguage ||
+            "",
           practiceLanguage:
-            storedProfile?.practiceLanguage || practiceLanguage || "",
+            storedProfile?.practiceLanguage ||
+            languagesRef.current.practiceLanguage ||
+            "",
         });
 
         setUserProfile(fallbackProfile);
@@ -1356,7 +1375,7 @@ function AppContent({
     return () => {
       cancelled = true;
     };
-  }, [authSession, authUserId, practiceLanguage, yourLanguage]);
+  }, [authUserId]);
 
   useEffect(() => {
     if (!authUserId) {
@@ -1393,6 +1412,8 @@ function AppContent({
     );
   }, [practiceLanguage]);
 
+  const lastSyncedLanguagesRef = useRef("");
+
   useEffect(() => {
     if (
       !authSession ||
@@ -1410,6 +1431,14 @@ function AppContent({
     ) {
       return;
     }
+
+    // A late profile GET can reset userProfile to stale server languages and
+    // re-run this effect; the sync key prevents re-writing the same values.
+    const syncKey = `${authUserId}:${yourLanguage}:${practiceLanguage}`;
+    if (lastSyncedLanguagesRef.current === syncKey) {
+      return;
+    }
+    lastSyncedLanguagesRef.current = syncKey;
 
     const nextProfile = writeStoredUserProfile(authUserId, {
       ...userProfile,
