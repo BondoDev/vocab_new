@@ -276,8 +276,37 @@ async function buildWordBrowseShardFiles(targetLanguage) {
 async function buildEnglishVerbLookupFiles() {
   const rawVerbList = await fs.readFile(ENGLISH_VERB_LIST_PATH, "utf8");
   const englishVerbList = JSON.parse(rawVerbList.replace(/^\uFEFF/, ""));
+  const normalizedVerbList = englishVerbList
+    .map((item) => {
+      const legacyId = String(item?.id ?? "").trim();
+      if (legacyId) {
+        return {
+          id: legacyId,
+          verb: String(item?.verb ?? "").trim(),
+        };
+      }
+
+      const conceptId = String(item?.concept_id ?? "").trim();
+      if (!conceptId) {
+        return null;
+      }
+
+      const verbEntry = Object.entries(item).find(
+        ([key, value]) => key !== "concept_id" && typeof value === "string",
+      );
+      if (!verbEntry) {
+        return null;
+      }
+
+      const [verbKey, verbValue] = verbEntry;
+      return {
+        id: conceptId,
+        verb: verbKey.trim().toLowerCase() === "verb" ? String(verbValue).trim() : verbKey.trim(),
+      };
+    })
+    .filter(Boolean);
   const verbIds = new Set(
-    englishVerbList
+    normalizedVerbList
       .map((item) => String(item?.id ?? "").trim())
       .filter((id) => id.length > 0),
   );

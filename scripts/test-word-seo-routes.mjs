@@ -80,6 +80,28 @@ const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json"
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 const spanishVocabulary = readJson("src/data/vocabulary/spanish/vocabulary.json");
 const englishVerbList = readJson("src/data/lists/list_of_100_most_used_verb.json");
+const normalizedEnglishVerbList = englishVerbList.map((item) => {
+  const legacyId = String(item?.id ?? "").trim();
+  if (legacyId) {
+    return {
+      id: legacyId,
+      verb: String(item?.verb ?? "").trim(),
+    };
+  }
+
+  const conceptId = String(item?.concept_id ?? "").trim();
+  const verbEntry = Object.entries(item).find(
+    ([key, value]) => key !== "concept_id" && typeof value === "string",
+  );
+
+  return {
+    id: conceptId,
+    verb:
+      verbEntry && verbEntry[0].trim().toLowerCase() === "verb"
+        ? String(verbEntry[1]).trim()
+        : String(verbEntry?.[0] ?? "").trim(),
+  };
+});
 const unresolvedEnglishVerbListIds = new Set();
 
 const aboutMatches = wordPageData.findWordEntriesBySlug(englishVocabulary, "about");
@@ -193,9 +215,9 @@ const mismatchRecord = wordPageData.findCanonicalWordRecord(
 );
 assert.equal(mismatchRecord?.slugMatches, false);
 
-assert.equal(englishVerbList.length, 100, "English verb list should contain 100 rows");
+assert.equal(normalizedEnglishVerbList.length, 100, "English verb list should contain 100 rows");
 assert.equal(
-  new Set(englishVerbList.map((item) => item.id)).size,
+  new Set(normalizedEnglishVerbList.map((item) => item.id)).size,
   100,
   "English verb list IDs should be unique",
 );
@@ -218,7 +240,7 @@ assert.ok(
 );
 
 const missingEnglishVerbEntries = [];
-for (const item of englishVerbList) {
+for (const item of normalizedEnglishVerbList) {
   assert.match(item.id, /^(A1|A2|B1|B2|C1|C2)-\d{5}$/, `Invalid CEFR ID: ${item.id}`);
   const matchingEntry = englishVocabulary.find((entry) => entry.concept_id === item.id);
   if (!matchingEntry) {
