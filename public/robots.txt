@@ -1,9 +1,11 @@
-# Crawl policy (2026-07-10): word pages are server-rendered per request, so
-# crawler volume consumes Worker CPU/request quota. The bots disallowed below
-# were measured (wrangler tail, 2026-07-10) consuming ~40% of production
-# Worker invocations while providing no search-ranking benefit. Search-engine
-# crawlers (Googlebot, Bingbot, YandexBot, DuckDuckBot, Applebot, ...) remain
-# fully allowed via the catch-all rule.
+# Crawl policy (updated 2026-07-12): word pages are server-rendered per
+# request, so crawler volume consumes Worker CPU/request quota. The bots
+# disallowed below were measured via wrangler tail (2026-07-10 and
+# 2026-07-12) consuming the large majority of production Worker invocations
+# while providing no search-ranking benefit (GPTBot alone was 92% of Worker
+# traffic on 2026-07-12). Search-engine crawlers (Googlebot, Bingbot,
+# YandexBot, DuckDuckBot, Applebot, ...) remain fully allowed via the
+# catch-all rule.
 
 User-agent: AhrefsBot
 Disallow: /
@@ -15,6 +17,18 @@ User-agent: DataForSeoBot
 Disallow: /
 
 User-agent: Amazonbot
+Disallow: /
+
+User-agent: Amzn-SearchBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: PetalBot
 Disallow: /
 
 User-agent: *

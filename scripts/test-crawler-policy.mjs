@@ -53,7 +53,20 @@ const groupFor = (agent) =>
   groups.find((g) => g.agents.includes(agent.toLowerCase())) ??
   groups.find((g) => g.agents.includes("*"));
 
-const MUST_DISALLOW = ["AhrefsBot", "SemrushBot", "DataForSeoBot", "Amazonbot"];
+const MUST_DISALLOW = [
+  // 2026-07-10 incident (SEO-tool and Amazon crawlers)
+  "AhrefsBot",
+  "SemrushBot",
+  "DataForSeoBot",
+  "Amazonbot",
+  // 2026-07-12 incident (verified AI crawlers; GPTBot alone was 92% of
+  // Worker invocations — Amzn-SearchBot and OAI-SearchBot are separate UA
+  // tokens NOT covered by the Amazonbot/GPTBot groups)
+  "Amzn-SearchBot",
+  "GPTBot",
+  "OAI-SearchBot",
+  "PetalBot",
+];
 for (const bot of MUST_DISALLOW) {
   const group = groupFor(bot);
   assert.ok(

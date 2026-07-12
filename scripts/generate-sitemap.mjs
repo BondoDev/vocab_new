@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadWordRouteManifest } from "./lib/load-word-route-manifest.mjs";
+import { createLastmodLedger } from "./lib/sitemap-lastmod.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -280,7 +281,13 @@ async function collectVocabularyRoutes() {
 
 function buildSitemapXml(paths, options = {}) {
   const comment = options.comment ? String(options.comment).trim() : "";
-  const lastmod = new Date().toISOString().slice(0, 10);
+  // Stable, ledger-resolved date (see scripts/lib/sitemap-lastmod.mjs) —
+  // stamping the build date here re-announces the whole corpus as changed
+  // on every deploy and triggers full recrawls (2026-07-12 incident).
+  const lastmod = options.lastmod;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod ?? "")) {
+    throw new Error(`buildSitemapXml requires a resolved lastmod, got: ${lastmod}`);
+  }
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
@@ -305,15 +312,16 @@ function buildSitemapXml(paths, options = {}) {
   return lines.join("\n");
 }
 
-function buildSitemapIndexXml(fileNames) {
-  const lastmod = new Date().toISOString().slice(0, 10);
+function buildSitemapIndexXml(fileEntries) {
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     "",
   ];
 
-  for (const fileName of fileNames) {
+  // Each child <sitemap> advertises its own stable lastmod, so an unchanged
+  // child never looks freshly modified in the index.
+  for (const { fileName, lastmod } of fileEntries) {
     lines.push("  <sitemap>");
     lines.push(`    <loc>${xmlEscape(`${SITE_URL}/${fileName}`)}</loc>`);
     lines.push(`    <lastmod>${lastmod}</lastmod>`);
@@ -359,19 +367,30 @@ async function main() {
     const vocabularyRoutes = await collectVocabularyRoutes();
     const wordRoutesByPair = await collectWordRoutes(manifestLoader.manifest);
 
+    // Manual-only lastmod: dates are frozen in the committed ledger and
+    // never advance on rebuilds or data changes. To change them, edit
+    // scripts/data/sitemap-lastmod-ledger.json or run with
+    // SITEMAP_LASTMOD_BUMP="all" / comma-separated file keys.
+    const ledger = createLastmodLedger(path.join(__dirname, "data", "sitemap-lastmod-ledger.json"), {
+      bump: process.env.SITEMAP_LASTMOD_BUMP || "",
+    });
+    const resolveLastmod = (fileName) => ledger.resolve(fileName);
+
     const sitemapFiles = [];
 
     const coreRoutes = Array.from(new Set(CORE_ROUTES));
     if (coreRoutes.length > 0) {
       const coreName = "sitemap-core.xml";
-      await fs.writeFile(path.join(sitemapsDir, coreName), buildSitemapXml(coreRoutes), "utf8");
-      sitemapFiles.push(`sitemaps/${coreName}`);
+      const lastmod = resolveLastmod(`sitemaps/${coreName}`);
+      await fs.writeFile(path.join(sitemapsDir, coreName), buildSitemapXml(coreRoutes, { lastmod }), "utf8");
+      sitemapFiles.push({ fileName: `sitemaps/${coreName}`, lastmod });
     }
 
     if (vocabularyRoutes.length > 0) {
       const cefrName = "sitemap-cefr.xml";
-      await fs.writeFile(path.join(sitemapsDir, cefrName), buildSitemapXml(vocabularyRoutes), "utf8");
-      sitemapFiles.push(`sitemaps/${cefrName}`);
+      const lastmod = resolveLastmod(`sitemaps/${cefrName}`);
+      await fs.writeFile(path.join(sitemapsDir, cefrName), buildSitemapXml(vocabularyRoutes, { lastmod }), "utf8");
+      sitemapFiles.push({ fileName: `sitemaps/${cefrName}`, lastmod });
     }
 
     const pairKeys = Array.from(wordRoutesByPair.keys()).sort();
@@ -386,20 +405,23 @@ async function main() {
           wordChunks.length === 1
             ? `sitemap-words-${fileWordCode}-${fileUiCode}.xml`
             : `sitemap-words-${fileWordCode}-${fileUiCode}-${String(i + 1).padStart(4, "0")}.xml`;
+        const lastmod = resolveLastmod(`sitemaps/${wordsName}`);
         await fs.writeFile(
           path.join(sitemapsDir, wordsName),
           buildSitemapXml(wordChunks[i], {
             comment: `Word SEO URLs for word language ${targetLanguage} and UI language ${UI_LANGUAGE_NAMES[uiLang] || uiLang}.`,
+            lastmod,
           }),
           "utf8",
         );
-        sitemapFiles.push(`sitemaps/${wordsName}`);
+        sitemapFiles.push({ fileName: `sitemaps/${wordsName}`, lastmod });
       }
     }
 
     const indexXml = buildSitemapIndexXml(sitemapFiles);
     const indexPath = path.join(publicDir, "sitemap.xml");
     await fs.writeFile(indexPath, indexXml, "utf8");
+    ledger.save();
 
     const totalWordUrls = Array.from(wordRoutesByPair.values()).reduce(
       (sum, pairData) => sum + pairData.routes.length,
