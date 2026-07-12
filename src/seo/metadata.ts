@@ -20,6 +20,14 @@ import {
   getEnglishVerbListContent,
   getEnglishVerbListPath,
 } from "../data/englishVerbList";
+import {
+  GERMAN_VERB_LIST_ITEMS,
+  canLinkGermanVerbListItem,
+  getAllGermanVerbListPaths,
+  getGermanVerbListContent,
+  getGermanVerbListPath,
+  getGermanVerbWordLemma,
+} from "../data/germanVerbList";
 import { getVocabularyLevelContent, type VocabularyLevelContent } from "../data/vocabularyLevels";
 import type { SeoMetadata } from "./SeoContext";
 import { fixMojibake } from "../utils/fixMojibake";
@@ -252,6 +260,84 @@ export function buildEnglishVerbListSeoMetadata({
       {
         hreflang: "x-default",
         href: `${origin}${getAllEnglishVerbListPaths()[0]}`,
+      },
+    ],
+    jsonLd,
+  };
+}
+
+export function buildGermanVerbListSeoMetadata({
+  uiLang,
+  pathname,
+  siteOrigin,
+}: {
+  uiLang: UiLanguageCode;
+  pathname: string;
+  siteOrigin: string;
+}): SeoMetadata {
+  const origin = normalizeOrigin(siteOrigin);
+  const canonical = `${origin}${pathname}`;
+  const content = getGermanVerbListContent(uiLang);
+  const title = sanitizeMetadataText(content.metaTitle);
+  const description = sanitizeMetadataText(content.metaDescription);
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${canonical}#webpage`,
+        url: canonical,
+        name: title,
+        description,
+        inLanguage: uiLang,
+        mainEntity: { "@id": `${canonical}#verb-list` },
+        breadcrumb: { "@id": `${canonical}#breadcrumb` },
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${canonical}#verb-list`,
+        name: sanitizeMetadataText(content.title),
+        numberOfItems: GERMAN_VERB_LIST_ITEMS.length,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        itemListElement: GERMAN_VERB_LIST_ITEMS.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: sanitizeMetadataText(getGermanVerbWordLemma(item.id) || item.verb),
+          ...(canLinkGermanVerbListItem(item.id)
+            ? {
+                url: `${origin}${buildWordPath(uiLang, "german", getGermanVerbWordLemma(item.id), item.id)}`,
+              }
+            : {}),
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${canonical}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: sanitizeMetadataText(content.title),
+            item: canonical,
+          },
+        ],
+      },
+    ],
+  });
+
+  return {
+    title,
+    description,
+    canonical,
+    alternates: [
+      ...SUPPORTED_UI_LANGUAGES.map((lang) => ({
+        hreflang: lang,
+        href: `${origin}${getGermanVerbListPath(lang)}`,
+      })),
+      {
+        hreflang: "x-default",
+        href: `${origin}${getAllGermanVerbListPaths()[0]}`,
       },
     ],
     jsonLd,

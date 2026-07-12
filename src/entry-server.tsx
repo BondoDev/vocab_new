@@ -13,6 +13,10 @@ import {
   getAllEnglishVerbListPaths,
   resolveEnglishVerbListRoute,
 } from "./data/englishVerbList";
+import {
+  getAllGermanVerbListPaths,
+  resolveGermanVerbListRoute,
+} from "./data/germanVerbList";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
@@ -190,6 +194,7 @@ export function getPrerenderRoutes(): string[] {
     ...getAllWordSeoHubPaths(),
     ...getAllLevelTestSeoPaths(),
     ...getAllEnglishVerbListPaths(),
+    ...getAllGermanVerbListPaths(),
   ])];
 }
 
@@ -310,6 +315,11 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
   const englishVerbListRoute = resolveEnglishVerbListRoute(url);
   if (englishVerbListRoute) {
     return englishVerbListRoute;
+  }
+
+  const germanVerbListRoute = resolveGermanVerbListRoute(url);
+  if (germanVerbListRoute) {
+    return germanVerbListRoute;
   }
 
   const seoHubRoute = resolveSeoHubRoute(url);

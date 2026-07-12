@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
 import { getEnglishVerbListPath, resolveEnglishVerbListRoute } from "../../data/englishVerbList";
+import { getGermanVerbListPath, resolveGermanVerbListRoute } from "../../data/germanVerbList";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordSlugs";
@@ -169,6 +170,17 @@ export function UILanguageSwitcher({
         return;
       }
 
+      const germanVerbListRoute = resolveGermanVerbListRoute(location.pathname);
+      if (germanVerbListRoute) {
+        const nextPath = getGermanVerbListPath(code);
+        if (nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+        setUILanguage(code);
+        setIsOpen(false);
+        return;
+      }
+
       setUILanguage(code);
     }
     setIsOpen(false);
@@ -284,6 +296,5 @@ export function UILanguageSwitcher({
     </>
   );
 }
-
 
 
