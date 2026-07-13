@@ -25,25 +25,18 @@ const CORE_ROUTES = [
   "/explore",
   "/languages/level-test",
   "/en/seo-pages",
-  "/en/english-level-test",
   "/en/100-most-common-english-verbs",
   "/es/paginas-seo",
-  "/es/test-de-nivel-de-ingles",
   "/es/100-verbos-ingles-mas-comunes",
   "/fr/pages-seo",
-  "/fr/test-de-niveau-d-anglais",
   "/fr/100-verbes-anglais-les-plus-courants",
   "/de/seo-seiten",
-  "/de/englisch-niveau-test",
   "/de/100-haeufigste-englische-verben",
   "/it/pagine-seo",
-  "/it/test-di-livello-di-inglese",
   "/it/100-verbi-inglesi-piu-comuni",
   "/pt/paginas-seo",
-  "/pt/teste-de-nivel-de-ingles",
   "/pt/100-verbos-ingleses-mais-comuns",
   "/ru/seo-stranicy",
-  "/ru/test-urovnya-angliiskogo",
   "/ru/100-samykh-chastykh-angliiskikh-glagolov",
   "/about",
   "/help",
@@ -279,6 +272,28 @@ async function collectVocabularyRoutes() {
   return Array.from(routes).sort();
 }
 
+async function collectLevelTestRoutes() {
+  const filePath = path.join(ROOT_DIR, "guidelines", "seo_level_test_content.json");
+  const raw = await fs.readFile(filePath, "utf8");
+  const entries = JSON.parse(raw.replace(/^\uFEFF/, ""));
+  const routes = new Set();
+
+  for (const entry of entries) {
+    if (!entry || typeof entry !== "object") {
+      continue;
+    }
+
+    const routePath = typeof entry.path === "string" ? entry.path.trim() : "";
+    if (!routePath) {
+      continue;
+    }
+
+    routes.add(routePath);
+  }
+
+  return Array.from(routes).sort();
+}
+
 function buildSitemapXml(paths, options = {}) {
   const comment = options.comment ? String(options.comment).trim() : "";
   // Stable, ledger-resolved date (see scripts/lib/sitemap-lastmod.mjs) —
@@ -365,6 +380,7 @@ async function main() {
     );
 
     const vocabularyRoutes = await collectVocabularyRoutes();
+    const levelTestRoutes = await collectLevelTestRoutes();
     const wordRoutesByPair = await collectWordRoutes(manifestLoader.manifest);
 
     // Manual-only lastmod: dates are frozen in the committed ledger and
@@ -386,10 +402,13 @@ async function main() {
       sitemapFiles.push({ fileName: `sitemaps/${coreName}`, lastmod });
     }
 
-    if (vocabularyRoutes.length > 0) {
+    const cefrRoutes = Array.from(
+      new Set([...vocabularyRoutes, ...levelTestRoutes]),
+    );
+    if (cefrRoutes.length > 0) {
       const cefrName = "sitemap-cefr.xml";
       const lastmod = resolveLastmod(`sitemaps/${cefrName}`);
-      await fs.writeFile(path.join(sitemapsDir, cefrName), buildSitemapXml(vocabularyRoutes, { lastmod }), "utf8");
+      await fs.writeFile(path.join(sitemapsDir, cefrName), buildSitemapXml(cefrRoutes, { lastmod }), "utf8");
       sitemapFiles.push({ fileName: `sitemaps/${cefrName}`, lastmod });
     }
 
@@ -427,7 +446,7 @@ async function main() {
       (sum, pairData) => sum + pairData.routes.length,
       0,
     );
-    const totalUrls = coreRoutes.length + vocabularyRoutes.length + totalWordUrls;
+    const totalUrls = coreRoutes.length + cefrRoutes.length + totalWordUrls;
     console.log(
       `Generated sitemap index (${sitemapFiles.length} files, ${totalUrls} URLs total) at ${indexPath}`,
     );
