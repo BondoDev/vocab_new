@@ -1,4 +1,4 @@
-import englishVerbListContentJson from "../seo/page-content/english-verb-list.json";
+import englishVerbListContentJson from "../seo/page-content/verb-lists/english-verb-list.json";
 import { SUPPORTED_UI_LANGUAGES, type UiLanguageCode } from "../seo/slugs";
 
 export interface EnglishVerbListFaqItem {

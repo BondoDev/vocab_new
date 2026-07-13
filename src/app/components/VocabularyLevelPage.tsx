@@ -401,37 +401,37 @@ const RELATED_LINKS_COPY: Record<
 > = {
   en: {
     heading: "Related pages",
-    seoHubLabel: "Browse all SEO pages",
+    seoHubLabel: "Browse all pages",
     levelTestLabel: (languageName) => `Take the ${languageName} level test`,
   },
   es: {
     heading: "Páginas relacionadas",
-    seoHubLabel: "Ver todas las páginas SEO",
+    seoHubLabel: "Ver todas las páginas",
     levelTestLabel: (languageName) => `Haz el test de nivel de ${languageName}`,
   },
   fr: {
     heading: "Pages associées",
-    seoHubLabel: "Voir toutes les pages SEO",
+    seoHubLabel: "Voir toutes les pages",
     levelTestLabel: (languageName) => `Passez le test de niveau de ${languageName}`,
   },
   de: {
     heading: "Verwandte Seiten",
-    seoHubLabel: "Alle SEO-Seiten ansehen",
+    seoHubLabel: "Alle Seiten ansehen",
     levelTestLabel: (languageName) => `${languageName} Niveau-Test machen`,
   },
   it: {
     heading: "Pagine correlate",
-    seoHubLabel: "Vedi tutte le pagine SEO",
+    seoHubLabel: "Vedi tutte le pagine",
     levelTestLabel: (languageName) => `Fai il test di livello di ${languageName}`,
   },
   pt: {
     heading: "Páginas relacionadas",
-    seoHubLabel: "Ver todas as páginas SEO",
+    seoHubLabel: "Ver todas as páginas",
     levelTestLabel: (languageName) => `Faça o teste de nível de ${languageName}`,
   },
   ru: {
     heading: "Связанные страницы",
-    seoHubLabel: "Посмотреть все SEO-страницы",
+    seoHubLabel: "Посмотреть все страницы",
     levelTestLabel: (languageName) => `Тест уровня ${languageName}`,
   },
 };

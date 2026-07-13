@@ -45,114 +45,114 @@ const COPY: Record<
   }
 > = {
   en: {
-    summaryTitle: "English Word SEO Pages",
+    summaryTitle: "English Word Pages",
     summaryIntro: "",
     levelLabel: "Level",
     wordCountLabel: "Words",
     pageCountLabel: "Pages",
-    openLevelLabel: "Open word index",
+    openLevelLabel: "Open words",
     levelTitle: (level, page) =>
-      page > 1 ? `English ${level} Word SEO Pages - Page ${page}` : `English ${level} Word SEO Pages`,
+      page > 1 ? `English ${level} Word Pages - Page ${page}` : `English ${level} Word Pages`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `This index lists canonical English ${level} word pages. Page ${page} of ${totalPages}, ${totalWords.toLocaleString("en-US")} total URLs.`,
-    backToSeoHub: "Back to SEO pages",
-    backToWordIndex: "Back to English word SEO index",
+    backToSeoHub: "Back to pages",
+    backToWordIndex: "Back to English words",
     paginationLabel: "More word index pages",
     notFound: "Word index page not found.",
   },
   es: {
-    summaryTitle: "Páginas SEO de palabras en inglés",
+    summaryTitle: "Páginas de palabras en inglés",
     summaryIntro: "",
     levelLabel: "Nivel",
     wordCountLabel: "Palabras",
     pageCountLabel: "Páginas",
-    openLevelLabel: "Abrir índice",
+    openLevelLabel: "Abrir palabras",
     levelTitle: (level, page) =>
-      page > 1 ? `Páginas SEO de palabras en inglés ${level} - Página ${page}` : `Páginas SEO de palabras en inglés ${level}`,
+      page > 1 ? `Páginas de palabras en inglés ${level} - Página ${page}` : `Páginas de palabras en inglés ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Este índice muestra páginas canónicas de palabras en inglés ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("es-ES")} URLs en total.`,
-    backToSeoHub: "Volver a páginas SEO",
-    backToWordIndex: "Volver al índice de palabras en inglés",
+    backToSeoHub: "Volver a páginas",
+    backToWordIndex: "Volver a palabras en inglés",
     paginationLabel: "Más páginas del índice",
     notFound: "No se encontró la página del índice.",
   },
   fr: {
-    summaryTitle: "Pages SEO des mots anglais",
+    summaryTitle: "Pages de mots anglais",
     summaryIntro: "",
     levelLabel: "Niveau",
     wordCountLabel: "Mots",
     pageCountLabel: "Pages",
-    openLevelLabel: "Ouvrir l'index",
+    openLevelLabel: "Ouvrir les mots",
     levelTitle: (level, page) =>
-      page > 1 ? `Pages SEO des mots anglais ${level} - Page ${page}` : `Pages SEO des mots anglais ${level}`,
+      page > 1 ? `Pages de mots anglais ${level} - Page ${page}` : `Pages de mots anglais ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Cet index liste les pages canoniques des mots anglais ${level}. Page ${page} sur ${totalPages}, ${totalWords.toLocaleString("fr-FR")} URL au total.`,
-    backToSeoHub: "Retour aux pages SEO",
-    backToWordIndex: "Retour à l'index des mots anglais",
+    backToSeoHub: "Retour aux pages",
+    backToWordIndex: "Retour aux mots anglais",
     paginationLabel: "Autres pages d'index",
     notFound: "Page d'index introuvable.",
   },
   de: {
-    summaryTitle: "SEO-Seiten für englische Wörter",
+    summaryTitle: "Wortseiten für englische Wörter",
     summaryIntro: "",
     levelLabel: "Niveau",
     wordCountLabel: "Wörter",
     pageCountLabel: "Seiten",
-    openLevelLabel: "Index öffnen",
+    openLevelLabel: "Wörter öffnen",
     levelTitle: (level, page) =>
-      page > 1 ? `SEO-Seiten für englische Wörter ${level} - Seite ${page}` : `SEO-Seiten für englische Wörter ${level}`,
+      page > 1 ? `Wortseiten für englische Wörter ${level} - Seite ${page}` : `Wortseiten für englische Wörter ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Dieser Index listet kanonische englische Wortseiten für ${level}. Seite ${page} von ${totalPages}, insgesamt ${totalWords.toLocaleString("de-DE")} URLs.`,
-    backToSeoHub: "Zurück zu SEO-Seiten",
-    backToWordIndex: "Zurück zum Index englischer Wörter",
+    backToSeoHub: "Zurück zu Seiten",
+    backToWordIndex: "Zurück zu englischen Wörtern",
     paginationLabel: "Weitere Indexseiten",
     notFound: "Indexseite nicht gefunden.",
   },
   it: {
-    summaryTitle: "Pagine SEO delle parole inglesi",
+    summaryTitle: "Pagine delle parole inglesi",
     summaryIntro: "",
     levelLabel: "Livello",
     wordCountLabel: "Parole",
     pageCountLabel: "Pagine",
-    openLevelLabel: "Apri indice",
+    openLevelLabel: "Apri parole",
     levelTitle: (level, page) =>
-      page > 1 ? `Pagine SEO delle parole inglesi ${level} - Pagina ${page}` : `Pagine SEO delle parole inglesi ${level}`,
+      page > 1 ? `Pagine delle parole inglesi ${level} - Pagina ${page}` : `Pagine delle parole inglesi ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Questo indice elenca le pagine canoniche delle parole inglesi ${level}. Pagina ${page} di ${totalPages}, ${totalWords.toLocaleString("it-IT")} URL totali.`,
-    backToSeoHub: "Torna alle pagine SEO",
-    backToWordIndex: "Torna all'indice delle parole inglesi",
+    backToSeoHub: "Torna alle pagine",
+    backToWordIndex: "Torna alle parole inglesi",
     paginationLabel: "Altre pagine dell'indice",
     notFound: "Pagina indice non trovata.",
   },
   pt: {
-    summaryTitle: "Páginas SEO de palavras em inglês",
+    summaryTitle: "Páginas de palavras em inglês",
     summaryIntro: "",
     levelLabel: "Nível",
     wordCountLabel: "Palavras",
     pageCountLabel: "Páginas",
-    openLevelLabel: "Abrir índice",
+    openLevelLabel: "Abrir palavras",
     levelTitle: (level, page) =>
-      page > 1 ? `Páginas SEO de palavras em inglês ${level} - Página ${page}` : `Páginas SEO de palavras em inglês ${level}`,
+      page > 1 ? `Páginas de palavras em inglês ${level} - Página ${page}` : `Páginas de palavras em inglês ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Este índice lista páginas canônicas de palavras em inglês ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("pt-BR")} URLs no total.`,
-    backToSeoHub: "Voltar para páginas SEO",
-    backToWordIndex: "Voltar ao índice de palavras em inglês",
+    backToSeoHub: "Voltar para páginas",
+    backToWordIndex: "Voltar para palavras em inglês",
     paginationLabel: "Mais páginas do índice",
     notFound: "Página de índice não encontrada.",
   },
   ru: {
-    summaryTitle: "SEO-страницы английских слов",
+    summaryTitle: "Страницы английских слов",
     summaryIntro: "",
     levelLabel: "Уровень",
     wordCountLabel: "Слова",
     pageCountLabel: "Страницы",
-    openLevelLabel: "Открыть индекс",
+    openLevelLabel: "Открыть слова",
     levelTitle: (level, page) =>
-      page > 1 ? `SEO-страницы английских слов ${level} - страница ${page}` : `SEO-страницы английских слов ${level}`,
+      page > 1 ? `Страницы английских слов ${level} - страница ${page}` : `Страницы английских слов ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Этот индекс содержит канонические страницы английских слов уровня ${level}. Страница ${page} из ${totalPages}, всего ${totalWords.toLocaleString("ru-RU")} URL.`,
-    backToSeoHub: "Назад к SEO-страницам",
-    backToWordIndex: "Назад к индексу английских слов",
+    backToSeoHub: "Назад к страницам",
+    backToWordIndex: "Назад к английским словам",
     paginationLabel: "Другие страницы индекса",
     notFound: "Страница индекса не найдена.",
   },
@@ -177,79 +177,79 @@ const GENERIC_COPY: Record<
   }
 > = {
   en: {
-    summaryTitle: (name) => `${name} Word SEO Pages`,
+    summaryTitle: (name) => `${name} Word Pages`,
     summaryIntro: () => "",
     levelTitle: (name, level, page) =>
-      page > 1 ? `${name} ${level} Word SEO Pages - Page ${page}` : `${name} ${level} Word SEO Pages`,
+      page > 1 ? `${name} ${level} Word Pages - Page ${page}` : `${name} ${level} Word Pages`,
     levelIntro: (name, level, totalWords, page, totalPages) =>
       `This index lists canonical ${name} ${level} word pages. Page ${page} of ${totalPages}, ${totalWords.toLocaleString("en-US")} total URLs.`,
-    backToWordIndex: (name) => `Back to ${name} word SEO index`,
+    backToWordIndex: (name) => `Back to ${name} words`,
   },
   es: {
-    summaryTitle: (name) => `Páginas SEO de palabras en ${name.toLowerCase()}`,
+    summaryTitle: (name) => `Páginas de palabras en ${name.toLowerCase()}`,
     summaryIntro: () => "",
     levelTitle: (name, level, page) =>
       page > 1
-        ? `Páginas SEO de palabras en ${name.toLowerCase()} ${level} - Página ${page}`
-        : `Páginas SEO de palabras en ${name.toLowerCase()} ${level}`,
+        ? `Páginas de palabras en ${name.toLowerCase()} ${level} - Página ${page}`
+        : `Páginas de palabras en ${name.toLowerCase()} ${level}`,
     levelIntro: (name, level, totalWords, page, totalPages) =>
       `Este índice muestra páginas canónicas de palabras en ${name.toLowerCase()} ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("es-ES")} URLs en total.`,
-    backToWordIndex: (name) => `Volver al índice de palabras en ${name.toLowerCase()}`,
+    backToWordIndex: (name) => `Volver a palabras en ${name.toLowerCase()}`,
   },
   fr: {
-    summaryTitle: (name) => `Pages SEO des mots ${name.toLowerCase()}`,
+    summaryTitle: (name) => `Pages de mots ${name.toLowerCase()}`,
     summaryIntro: () => "",
     levelTitle: (name, level, page) =>
       page > 1
-        ? `Pages SEO des mots ${name.toLowerCase()} ${level} - Page ${page}`
-        : `Pages SEO des mots ${name.toLowerCase()} ${level}`,
+        ? `Pages de mots ${name.toLowerCase()} ${level} - Page ${page}`
+        : `Pages de mots ${name.toLowerCase()} ${level}`,
     levelIntro: (name, level, totalWords, page, totalPages) =>
       `Cet index liste les pages canoniques des mots ${name.toLowerCase()} ${level}. Page ${page} sur ${totalPages}, ${totalWords.toLocaleString("fr-FR")} URL au total.`,
-    backToWordIndex: (name) => `Retour à l'index des mots ${name.toLowerCase()}`,
+    backToWordIndex: (name) => `Retour aux mots ${name.toLowerCase()}`,
   },
   de: {
-    summaryTitle: (name) => `SEO-Seiten für ${name.toLowerCase()}e Wörter`,
+    summaryTitle: (name) => `Wortseiten für ${name.toLowerCase()}e Wörter`,
     summaryIntro: () => "",
     levelTitle: (name, level, page) =>
       page > 1
-        ? `SEO-Seiten für ${name.toLowerCase()}e Wörter ${level} - Seite ${page}`
-        : `SEO-Seiten für ${name.toLowerCase()}e Wörter ${level}`,
+        ? `Wortseiten für ${name.toLowerCase()}e Wörter ${level} - Seite ${page}`
+        : `Wortseiten für ${name.toLowerCase()}e Wörter ${level}`,
     levelIntro: (name, level, totalWords, page, totalPages) =>
       `Dieser Index listet kanonische ${name.toLowerCase()}e Wortseiten für ${level}. Seite ${page} von ${totalPages}, insgesamt ${totalWords.toLocaleString("de-DE")} URLs.`,
-    backToWordIndex: (name) => `Zurück zum Index ${name.toLowerCase()}er Wörter`,
+    backToWordIndex: (name) => `Zurück zu ${name.toLowerCase()}en Wörtern`,
   },
   it: {
-    summaryTitle: (name) => `Pagine SEO delle parole ${name.toLowerCase()}`,
+    summaryTitle: (name) => `Pagine delle parole ${name.toLowerCase()}`,
     summaryIntro: () => "",
     levelTitle: (name, level, page) =>
       page > 1
-        ? `Pagine SEO delle parole ${name.toLowerCase()} ${level} - Pagina ${page}`
-        : `Pagine SEO delle parole ${name.toLowerCase()} ${level}`,
+        ? `Pagine delle parole ${name.toLowerCase()} ${level} - Pagina ${page}`
+        : `Pagine delle parole ${name.toLowerCase()} ${level}`,
     levelIntro: (name, level, totalWords, page, totalPages) =>
       `Questo indice elenca le pagine canoniche delle parole ${name.toLowerCase()} ${level}. Pagina ${page} di ${totalPages}, ${totalWords.toLocaleString("it-IT")} URL totali.`,
-    backToWordIndex: (name) => `Torna all'indice delle parole ${name.toLowerCase()}`,
+    backToWordIndex: (name) => `Torna alle parole ${name.toLowerCase()}`,
   },
   pt: {
-    summaryTitle: (name) => `Páginas SEO de palavras em ${name.toLowerCase()}`,
+    summaryTitle: (name) => `Páginas de palavras em ${name.toLowerCase()}`,
     summaryIntro: () => "",
     levelTitle: (name, level, page) =>
       page > 1
-        ? `Páginas SEO de palavras em ${name.toLowerCase()} ${level} - Página ${page}`
-        : `Páginas SEO de palavras em ${name.toLowerCase()} ${level}`,
+        ? `Páginas de palavras em ${name.toLowerCase()} ${level} - Página ${page}`
+        : `Páginas de palavras em ${name.toLowerCase()} ${level}`,
     levelIntro: (name, level, totalWords, page, totalPages) =>
       `Este índice lista páginas canônicas de palavras em ${name.toLowerCase()} ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("pt-BR")} URLs no total.`,
-    backToWordIndex: (name) => `Voltar ao índice de palavras em ${name.toLowerCase()}`,
+    backToWordIndex: (name) => `Voltar para palavras em ${name.toLowerCase()}`,
   },
   ru: {
-    summaryTitle: (name) => `SEO-страницы слов: ${name.toLowerCase()}`,
+    summaryTitle: (name) => `Страницы слов: ${name.toLowerCase()}`,
     summaryIntro: () => "",
     levelTitle: (name, level, page) =>
       page > 1
-        ? `SEO-страницы слов: ${name.toLowerCase()} ${level} - страница ${page}`
-        : `SEO-страницы слов: ${name.toLowerCase()} ${level}`,
+        ? `Страницы слов: ${name.toLowerCase()} ${level} - страница ${page}`
+        : `Страницы слов: ${name.toLowerCase()} ${level}`,
     levelIntro: (name, level, totalWords, page, totalPages) =>
       `Этот индекс содержит канонические страницы слов (${name.toLowerCase()}) уровня ${level}. Страница ${page} из ${totalPages}, всего ${totalWords.toLocaleString("ru-RU")} URL.`,
-    backToWordIndex: (name) => `Назад к индексу слов (${name.toLowerCase()})`,
+    backToWordIndex: (name) => `Назад к словам: ${name.toLowerCase()}`,
   },
 };
 
@@ -372,14 +372,6 @@ export function WordSeoHubPage({ route, uiLang }: WordSeoHubPageProps) {
           <h1 className="mt-4 text-3xl text-foreground md:text-4xl">
             {copy.levelTitle(LEVEL_DISPLAY[data.level], data.page)}
           </h1>
-          <p className="mt-3 text-base text-muted-foreground">
-            {copy.levelIntro(
-              LEVEL_DISPLAY[data.level],
-              data.totalWords,
-              data.page,
-              data.totalPages,
-            )}
-          </p>
         </section>
 
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
@@ -397,8 +389,7 @@ export function WordSeoHubPage({ route, uiLang }: WordSeoHubPageProps) {
 
           {data.totalPages > 1 ? (
             <div className="mt-6">
-              <h2 className="text-base font-medium text-foreground">{copy.paginationLabel}</h2>
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2">
                 {pageRange.map((page) => (
                   <Link
                     key={page}
