@@ -205,6 +205,20 @@ async function main() {
       test("sitemap-cefr.xml has no duplicate entries", () => assert.deepEqual(findDuplicates(cefrLocs), []));
       test("sitemap-cefr.xml is non-empty", () => assert.ok(cefrLocs.length > 0));
     }
+
+    const indexXml = readFile("public/sitemap.xml");
+    const indexedLocs = extractSitemapIndexEntries(indexXml);
+    test("sitemap.xml references the dedicated verb-lists sitemap", () =>
+      assert.ok(indexedLocs.includes("https://www.fluentstellar.com/sitemaps/verb-lists.xml")));
+
+    const verbListsXml = readFile("public/sitemaps/verb-lists.xml");
+    const verbListLocs = extractLocs(verbListsXml);
+    test("verb-lists.xml contains exactly 49 verb-list URLs", () => assert.equal(verbListLocs.length, 49));
+    test("verb-lists.xml has no duplicate entries", () => assert.deepEqual(findDuplicates(verbListLocs), []));
+    test("verb-lists.xml and sitemap-core.xml do not overlap", () => {
+      const overlap = verbListLocs.filter((loc) => coreLocs.includes(loc));
+      assert.deepEqual(overlap, []);
+    });
   }
 
   console.log("\n[6] vercel.json content-type headers cover sitemap routes");

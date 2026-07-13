@@ -21,7 +21,7 @@ function compileTestModules() {
     path.join(rootDir, "src", "data", "seo", "slugs.ts"),
     path.join(rootDir, "src", "data", "seo", "hub.ts"),
     path.join(rootDir, "src", "data", "seo", "wordHubRoutes.ts"),
-    path.join(rootDir, "src", "data", "verbLists.ts"),
+    path.join(rootDir, "src", "data", "verbListRegistry.ts"),
     path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
 
@@ -67,7 +67,7 @@ compileTestModules();
 const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
 const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPageData.js"));
 const wordHubRoutes = require(path.join(tempDir, "src", "data", "seo", "wordHubRoutes.js"));
-const verbListRoutes = require(path.join(tempDir, "src", "data", "verbLists.js"));
+const verbListRegistry = require(path.join(tempDir, "src", "data", "verbListRegistry.js"));
 const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
 function readJson(relativePath) {
@@ -220,19 +220,6 @@ assert.equal(
   new Set(normalizedEnglishVerbList.map((item) => item.id)).size,
   100,
   "English verb list IDs should be unique",
-);
-assert.equal(verbListRoutes.getAllVerbListPaths().length, 49, "Verb lists should expose 49 localized routes");
-assert.deepEqual(
-  verbListRoutes.resolveVerbListRoute("/en/100-most-common-english-verbs"),
-  { uiLang: "en", targetLanguage: "english" },
-);
-assert.deepEqual(
-  verbListRoutes.resolveVerbListRoute("/ru/100-samykh-chastykh-angliiskikh-glagolov"),
-  { uiLang: "ru", targetLanguage: "english" },
-);
-assert.ok(
-  verbListRoutes.getVerbListContent("english", "de").title.length > 0,
-  "German localized verb-list title should exist",
 );
 
 const missingEnglishVerbEntries = [];
@@ -429,8 +416,20 @@ const wordHubDataSource = fs.readFileSync(
   path.join(rootDir, "src", "data", "seo", "wordHubData.ts"),
   "utf8",
 );
+const verbListRegistrySource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "verbListRegistry.ts"),
+  "utf8",
+);
 const commonVerbListSource = fs.readFileSync(
   path.join(rootDir, "src", "data", "commonVerbList.ts"),
+  "utf8",
+);
+const verbListsSource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "verbLists.ts"),
+  "utf8",
+);
+const generateWordHubDataSource = fs.readFileSync(
+  path.join(rootDir, "scripts", "generate-word-hub-data.mjs"),
   "utf8",
 );
 const levelBrowseWordsSource = fs.readFileSync(
@@ -441,6 +440,10 @@ const entryServerSource = fs.readFileSync(path.join(rootDir, "src", "entry-serve
 const vercelConfigSource = fs.readFileSync(path.join(rootDir, "vercel.json"), "utf8");
 const coreSitemapXml = fs.readFileSync(
   path.join(rootDir, "public", "sitemaps", "sitemap-core.xml"),
+  "utf8",
+);
+const verbListsSitemapXml = fs.readFileSync(
+  path.join(rootDir, "public", "sitemaps", "verb-lists.xml"),
   "utf8",
 );
 
@@ -455,6 +458,57 @@ assert.ok(
 assert.ok(
   commonVerbListSource.includes('import.meta.glob("./verbListLookup/*.json"'),
   "shared verb list data should read compact generated lookup JSON files",
+);
+assert.ok(
+  verbListsSource.includes('from "./verbListRegistry"'),
+  "runtime verb list module should re-export route and content helpers from the shared registry",
+);
+assert.equal(
+  Object.keys(verbListRegistry.VERB_LIST_CONFIG).length,
+  7,
+  "verb list registry should expose 7 target-language configs",
+);
+const allVerbListPaths = verbListRegistry.getAllVerbListPaths();
+assert.equal(allVerbListPaths.length, 49, "verb list registry should expose 49 localized routes");
+assert.equal(new Set(allVerbListPaths).size, 49, "verb list registry routes should be unique");
+assert.ok(
+  allVerbListPaths.includes("/en/100-most-common-english-verbs"),
+  "verb list registry should include the English English-route slug",
+);
+assert.ok(
+  allVerbListPaths.includes("/ru/100-samykh-chastykh-angliiskikh-glagolov"),
+  "verb list registry should include the Russian UI English-route slug",
+);
+for (const [targetLanguage, config] of Object.entries(verbListRegistry.VERB_LIST_CONFIG)) {
+  assert.equal(Object.keys(config.paths).length, 7, `${targetLanguage} should expose 7 localized routes`);
+  assert.match(config.speechLang, /^[a-z]{2}-[A-Z]{2}$/, `${targetLanguage} should expose a BCP47 speech locale`);
+  for (const [uiLang, routePath] of Object.entries(config.paths)) {
+    assert.deepEqual(
+      verbListRegistry.resolveVerbListRoute(routePath),
+      { uiLang, targetLanguage },
+      `verb list route should round-trip through the shared resolver: ${routePath}`,
+    );
+    const content = verbListRegistry.getVerbListContent(targetLanguage, uiLang);
+    assert.ok(content, `verb list content should exist for ${targetLanguage}/${uiLang}`);
+    assert.ok(content.title.trim().length > 0, `verb list title should be non-empty for ${targetLanguage}/${uiLang}`);
+  }
+}
+assert.equal(
+  verbListRegistry.resolveVerbListRoute("/en/not-a-verb-list-page"),
+  null,
+  "verb list resolver should reject unrelated routes",
+);
+assert.ok(
+  verbListRegistrySource.includes("buildVerbListContentLookup("),
+  "verb list registry should build localized content lookup from shared JSON content",
+);
+assert.ok(
+  /["']verbListLookup["']/.test(generateWordHubDataSource),
+  "word hub generator should write shared verb list lookup JSON files to src/data/verbListLookup",
+);
+assert.ok(
+  !/englishVerbList["'],\s*["']lookup/.test(generateWordHubDataSource),
+  "word hub generator should not write shared verb list lookup JSON files to deleted englishVerbList/lookup",
 );
 assert.ok(
   !commonVerbListSource.includes('../vocabulary/english/vocabulary.json'),
@@ -535,12 +589,16 @@ assert.ok(
   "generic metadata builder for verb list pages should exist",
 );
 assert.ok(
-  coreSitemapXml.includes("/en/100-most-common-english-verbs"),
-  "core sitemap should include the English verb list route",
+  !coreSitemapXml.includes("/en/100-most-common-english-verbs"),
+  "core sitemap should no longer contain verb list routes",
 );
 assert.ok(
-  coreSitemapXml.includes("/ru/100-samykh-chastykh-angliiskikh-glagolov"),
-  "core sitemap should include localized English verb list routes",
+  verbListsSitemapXml.includes("/en/100-most-common-english-verbs"),
+  "dedicated verb-lists sitemap should include the English verb list route",
+);
+assert.ok(
+  verbListsSitemapXml.includes("/ru/100-samykh-chastykh-angliiskikh-glagolov"),
+  "dedicated verb-lists sitemap should include localized verb list routes",
 );
 
 console.log("word SEO route tests passed");

@@ -12,6 +12,11 @@
   </sitemap>
 
   <sitemap>
+    <loc>https://www.fluentstellar.com/sitemaps/verb-lists.xml</loc>
+    <lastmod>2026-07-12</lastmod>
+  </sitemap>
+
+  <sitemap>
     <loc>https://www.fluentstellar.com/sitemaps/sitemap-words-de-en.xml</loc>
     <lastmod>2026-07-12</lastmod>
   </sitemap>

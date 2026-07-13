@@ -2,12 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://www.fluentstellar.com/en/100-most-common-english-verbs</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/es/100-verbos-ingles-mas-comunes</loc>
+    <loc>https://www.fluentstellar.com/de/100-haeufigste-deutsche-verben</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
@@ -17,22 +12,37 @@
   </url>
 
   <url>
-    <loc>https://www.fluentstellar.com/fr/100-verbes-anglais-les-plus-courants</loc>
+    <loc>https://www.fluentstellar.com/de/100-haeufigste-franzoesische-verben</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
   <url>
-    <loc>https://www.fluentstellar.com/it/100-verbi-inglesi-piu-comuni</loc>
+    <loc>https://www.fluentstellar.com/de/100-haeufigste-italienische-verben</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
   <url>
-    <loc>https://www.fluentstellar.com/pt/100-verbos-ingleses-mais-comuns</loc>
+    <loc>https://www.fluentstellar.com/de/100-haeufigste-portugiesische-verben</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
   <url>
-    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-angliiskikh-glagolov</loc>
+    <loc>https://www.fluentstellar.com/de/100-haeufigste-russische-verben</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/de/100-haeufigste-spanische-verben</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/100-most-common-english-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/100-most-common-french-verbs</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
@@ -42,17 +52,122 @@
   </url>
 
   <url>
+    <loc>https://www.fluentstellar.com/en/100-most-common-italian-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/100-most-common-portuguese-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/100-most-common-russian-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/100-most-common-spanish-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
     <loc>https://www.fluentstellar.com/es/100-verbos-alemanes-mas-comunes</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
   <url>
-    <loc>https://www.fluentstellar.com/de/100-haeufigste-deutsche-verben</loc>
+    <loc>https://www.fluentstellar.com/es/100-verbos-espanoles-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/100-verbos-franceses-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/100-verbos-ingles-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/100-verbos-italianos-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/100-verbos-portugueses-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/100-verbos-rusos-mas-comunes</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
   <url>
     <loc>https://www.fluentstellar.com/fr/100-verbes-allemands-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/100-verbes-anglais-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/100-verbes-espagnols-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/100-verbes-francais-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/100-verbes-italiens-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/100-verbes-portugais-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/100-verbes-russes-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/100-verbi-francesi-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/100-verbi-inglesi-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/100-verbi-italiani-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/100-verbi-portoghesi-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/100-verbi-russi-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/100-verbi-spagnoli-piu-comuni</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
@@ -67,67 +182,7 @@
   </url>
 
   <url>
-    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-nemetskikh-glagolov</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/en/100-most-common-spanish-verbs</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/es/100-verbos-espanoles-mas-comunes</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/de/100-haeufigste-spanische-verben</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/fr/100-verbes-espagnols-les-plus-courants</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/it/100-verbi-spagnoli-piu-comuni</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
     <loc>https://www.fluentstellar.com/pt/100-verbos-espanhois-mais-comuns</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-ispanskikh-glagolov</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/en/100-most-common-french-verbs</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/es/100-verbos-franceses-mas-comunes</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/de/100-haeufigste-franzoesische-verben</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/fr/100-verbes-francais-les-plus-courants</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/it/100-verbi-francesi-piu-comuni</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
@@ -137,32 +192,7 @@
   </url>
 
   <url>
-    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-frantsuzskikh-glagolov</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/en/100-most-common-italian-verbs</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/es/100-verbos-italianos-mas-comunes</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/de/100-haeufigste-italienische-verben</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/fr/100-verbes-italiens-les-plus-courants</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/it/100-verbi-italiani-piu-comuni</loc>
+    <loc>https://www.fluentstellar.com/pt/100-verbos-ingleses-mais-comuns</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
@@ -172,72 +202,42 @@
   </url>
 
   <url>
-    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-italianskikh-glagolov</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/en/100-most-common-portuguese-verbs</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/es/100-verbos-portugueses-mas-comunes</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/de/100-haeufigste-portugiesische-verben</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/fr/100-verbes-portugais-les-plus-courants</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/it/100-verbi-portoghesi-piu-comuni</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
     <loc>https://www.fluentstellar.com/pt/100-verbos-portugueses-mais-comuns</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 
   <url>
-    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-portugalskikh-glagolov</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/en/100-most-common-russian-verbs</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/es/100-verbos-rusos-mas-comunes</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/de/100-haeufigste-russische-verben</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/fr/100-verbes-russes-les-plus-courants</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
-    <loc>https://www.fluentstellar.com/it/100-verbi-russi-piu-comuni</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-
-  <url>
     <loc>https://www.fluentstellar.com/pt/100-verbos-russos-mais-comuns</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-angliiskikh-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-frantsuzskikh-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-ispanskikh-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-italianskikh-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-nemetskikh-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-portugalskikh-glagolov</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 

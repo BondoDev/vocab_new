@@ -10,19 +10,13 @@ const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "
 const SUPPORTED_LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"];
 const OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "word-hub-pages");
 const BROWSE_SHARD_OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "word-browse-shards");
+const VERB_LIST_LOOKUP_OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "verbListLookup");
 const ENGLISH_VERB_LIST_PATH = path.join(
   ROOT_DIR,
   "src",
   "data",
   "lists",
   "list_of_100_most_used_verb.json",
-);
-const ENGLISH_VERB_LOOKUP_DIR = path.join(
-  ROOT_DIR,
-  "src",
-  "data",
-  "englishVerbList",
-  "lookup",
 );
 
 const UTF8_DECODER = new TextDecoder("utf-8", { fatal: false });
@@ -311,12 +305,12 @@ async function buildEnglishVerbLookupFiles() {
       .filter((id) => id.length > 0),
   );
 
-  await fs.mkdir(ENGLISH_VERB_LOOKUP_DIR, { recursive: true });
-  const existingFiles = await fs.readdir(ENGLISH_VERB_LOOKUP_DIR);
+  await fs.mkdir(VERB_LIST_LOOKUP_OUTPUT_DIR, { recursive: true });
+  const existingFiles = await fs.readdir(VERB_LIST_LOOKUP_OUTPUT_DIR);
   await Promise.all(
     existingFiles
       .filter((name) => name.endsWith(".json"))
-      .map((name) => fs.rm(path.join(ENGLISH_VERB_LOOKUP_DIR, name), { force: true })),
+      .map((name) => fs.rm(path.join(VERB_LIST_LOOKUP_OUTPUT_DIR, name), { force: true })),
   );
 
   for (const targetLanguage of TARGET_LANGUAGES) {
@@ -345,7 +339,7 @@ async function buildEnglishVerbLookupFiles() {
     }
 
     await fs.writeFile(
-      path.join(ENGLISH_VERB_LOOKUP_DIR, `${targetLanguage}.json`),
+      path.join(VERB_LIST_LOOKUP_OUTPUT_DIR, `${targetLanguage}.json`),
       `${JSON.stringify({ targetLanguage, byId })}\n`,
       "utf8",
     );

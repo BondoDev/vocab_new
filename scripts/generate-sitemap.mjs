@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadWordRouteManifest } from "./lib/load-word-route-manifest.mjs";
+import { loadVerbListRegistry } from "./lib/load-verb-list-registry.mjs";
 import { createLastmodLedger } from "./lib/sitemap-lastmod.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,19 +26,12 @@ const CORE_ROUTES = [
   "/explore",
   "/languages/level-test",
   "/en/seo-pages",
-  "/en/100-most-common-english-verbs",
   "/es/paginas-seo",
-  "/es/100-verbos-ingles-mas-comunes",
   "/fr/pages-seo",
-  "/fr/100-verbes-anglais-les-plus-courants",
   "/de/seo-seiten",
-  "/de/100-haeufigste-englische-verben",
   "/it/pagine-seo",
-  "/it/100-verbi-inglesi-piu-comuni",
   "/pt/paginas-seo",
-  "/pt/100-verbos-ingleses-mais-comuns",
   "/ru/seo-stranicy",
-  "/ru/100-samykh-chastykh-angliiskikh-glagolov",
   "/about",
   "/help",
 ];
@@ -360,6 +354,7 @@ function chunkArray(values, chunkSize) {
 
 async function main() {
   const manifestLoader = loadWordRouteManifest(".tmp-word-route-manifest-sitemap");
+  const verbListRegistryLoader = loadVerbListRegistry(".tmp-verb-list-registry-sitemap");
   const publicDir = path.join(ROOT_DIR, "public");
   const sitemapsDir = path.join(publicDir, "sitemaps");
 
@@ -369,18 +364,19 @@ async function main() {
     const existingSubSitemapFiles = await fs.readdir(sitemapsDir);
     await Promise.all(
       existingSubSitemapFiles
-        .filter((name) => /^sitemap-(core|cefr|words.*)\.xml$/.test(name))
+        .filter((name) => /^(sitemap-(core|cefr|words.*)|verb-lists)\.xml$/.test(name))
         .map((name) => fs.rm(path.join(sitemapsDir, name), { force: true })),
     );
     const existingRootFiles = await fs.readdir(publicDir);
     await Promise.all(
       existingRootFiles
-        .filter((name) => /^sitemap-(core|cefr|words.*)\.xml$/.test(name))
+        .filter((name) => /^(sitemap-(core|cefr|words.*)|verb-lists)\.xml$/.test(name))
         .map((name) => fs.rm(path.join(publicDir, name), { force: true })),
     );
 
     const vocabularyRoutes = await collectVocabularyRoutes();
     const levelTestRoutes = await collectLevelTestRoutes();
+    const verbListRoutes = Array.from(new Set(verbListRegistryLoader.registry.getAllVerbListPaths())).sort();
     const wordRoutesByPair = await collectWordRoutes(manifestLoader.manifest);
 
     // Manual-only lastmod: dates are frozen in the committed ledger and
@@ -410,6 +406,17 @@ async function main() {
       const lastmod = resolveLastmod(`sitemaps/${cefrName}`);
       await fs.writeFile(path.join(sitemapsDir, cefrName), buildSitemapXml(cefrRoutes, { lastmod }), "utf8");
       sitemapFiles.push({ fileName: `sitemaps/${cefrName}`, lastmod });
+    }
+
+    if (verbListRoutes.length > 0) {
+      const verbListsName = "verb-lists.xml";
+      const lastmod = resolveLastmod(`sitemaps/${verbListsName}`);
+      await fs.writeFile(
+        path.join(sitemapsDir, verbListsName),
+        buildSitemapXml(verbListRoutes, { lastmod }),
+        "utf8",
+      );
+      sitemapFiles.push({ fileName: `sitemaps/${verbListsName}`, lastmod });
     }
 
     const pairKeys = Array.from(wordRoutesByPair.keys()).sort();
@@ -446,11 +453,12 @@ async function main() {
       (sum, pairData) => sum + pairData.routes.length,
       0,
     );
-    const totalUrls = coreRoutes.length + cefrRoutes.length + totalWordUrls;
+    const totalUrls = coreRoutes.length + cefrRoutes.length + verbListRoutes.length + totalWordUrls;
     console.log(
       `Generated sitemap index (${sitemapFiles.length} files, ${totalUrls} URLs total) at ${indexPath}`,
     );
   } finally {
+    verbListRegistryLoader.cleanup();
     manifestLoader.cleanup();
   }
 }
