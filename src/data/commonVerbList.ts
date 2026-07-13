@@ -67,7 +67,7 @@ function normalizeVerbListItems(items: VerbListJsonItem[]): VerbListItem[] {
 
 export const BASE_VERB_LIST_ITEMS = normalizeVerbListItems(verbListJson as VerbListJsonItem[]);
 
-const vocabularyModules = import.meta.glob("./englishVerbList/lookup/*.json", {
+const vocabularyModules = import.meta.glob("./verbListLookup/*.json", {
   eager: true,
 }) as Record<
   string,
@@ -75,13 +75,13 @@ const vocabularyModules = import.meta.glob("./englishVerbList/lookup/*.json", {
 >;
 
 const vocabularyByLanguageAndId: Record<TargetLanguageSlug, Map<string, CompactVocabularyItem>> = {
-  english: new Map(Object.entries(vocabularyModules["./englishVerbList/lookup/english.json"]?.default.byId ?? {})),
-  french: new Map(Object.entries(vocabularyModules["./englishVerbList/lookup/french.json"]?.default.byId ?? {})),
-  german: new Map(Object.entries(vocabularyModules["./englishVerbList/lookup/german.json"]?.default.byId ?? {})),
-  italian: new Map(Object.entries(vocabularyModules["./englishVerbList/lookup/italian.json"]?.default.byId ?? {})),
-  portuguese: new Map(Object.entries(vocabularyModules["./englishVerbList/lookup/portuguese.json"]?.default.byId ?? {})),
-  russian: new Map(Object.entries(vocabularyModules["./englishVerbList/lookup/russian.json"]?.default.byId ?? {})),
-  spanish: new Map(Object.entries(vocabularyModules["./englishVerbList/lookup/spanish.json"]?.default.byId ?? {})),
+  english: new Map(Object.entries(vocabularyModules["./verbListLookup/english.json"]?.default.byId ?? {})),
+  french: new Map(Object.entries(vocabularyModules["./verbListLookup/french.json"]?.default.byId ?? {})),
+  german: new Map(Object.entries(vocabularyModules["./verbListLookup/german.json"]?.default.byId ?? {})),
+  italian: new Map(Object.entries(vocabularyModules["./verbListLookup/italian.json"]?.default.byId ?? {})),
+  portuguese: new Map(Object.entries(vocabularyModules["./verbListLookup/portuguese.json"]?.default.byId ?? {})),
+  russian: new Map(Object.entries(vocabularyModules["./verbListLookup/russian.json"]?.default.byId ?? {})),
+  spanish: new Map(Object.entries(vocabularyModules["./verbListLookup/spanish.json"]?.default.byId ?? {})),
 };
 
 function getVocabularyEntryForUiLanguage(id: string, uiLang: UiLanguageCode) {

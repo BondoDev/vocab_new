@@ -21,14 +21,8 @@ import { ScrollToTopButton } from "./components/ScrollToTopButton";
 import { UserProfileDashboardPage } from "./components/user-profile/UserProfileDashboardPage";
 import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
-import { EnglishVerbListSeoPage } from "./components/EnglishVerbListSeoPage";
-import { FrenchVerbListSeoPage } from "./components/FrenchVerbListSeoPage";
-import { GermanVerbListSeoPage } from "./components/GermanVerbListSeoPage";
-import { ItalianVerbListSeoPage } from "./components/ItalianVerbListSeoPage";
-import { PortugueseVerbListSeoPage } from "./components/PortugueseVerbListSeoPage";
-import { RussianVerbListSeoPage } from "./components/RussianVerbListSeoPage";
 import { SeoHubPage } from "./components/SeoHubPage";
-import { SpanishVerbListSeoPage } from "./components/SpanishVerbListSeoPage";
+import { VerbListSeoPage } from "./components/VerbListSeoPage";
 import { WordSeoPage } from "./components/WordSeoPage";
 import { WordPageLayout } from "./components/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./components/DevSeoCefrPlaceholderPage";
@@ -66,17 +60,10 @@ import {
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
 import {
+  getLevelTestContent,
   getLevelTestSeoPath,
   resolveLevelTestSeoRoute,
 } from "../data/levelTests";
-import {
-  getEnglishVerbListContent,
-  getEnglishVerbListPath,
-} from "../data/englishVerbList";
-import {
-  getGermanVerbListContent,
-  getGermanVerbListPath,
-} from "../data/germanVerbList";
 import { getVerbListPath, getVerbListTitle, resolveVerbListRoute } from "../data/verbLists";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPageData";
@@ -527,6 +514,11 @@ function AppContent({
     ru: "Практика словарного запаса",
   };
   const buildExploreLevelTestLabel = (targetLanguage: TargetLanguageSlug) => {
+    const seoContent = getLevelTestContent(uiLanguage, targetLanguage);
+    if (seoContent?.title) {
+      return seoContent.title;
+    }
+
     const languageCode = TARGET_LANGUAGE_TO_UI_CODE[targetLanguage];
     const languageName = t(`languageNames.${languageCode}`);
     const levelTestLabel = t("header.levelTest");
@@ -1040,8 +1032,8 @@ function AppContent({
       {
         id: "verbs",
         level: "verbs" as const,
-        label: getEnglishVerbListContent(uiLanguage).title,
-        path: getEnglishVerbListPath(uiLanguage),
+        label: getVerbListTitle("english", uiLanguage),
+        path: getVerbListPath("english", uiLanguage),
         kind: "custom" as const,
         targetLanguage: "english" as const,
       },
@@ -1082,8 +1074,8 @@ function AppContent({
       {
         id: "verbs",
         level: "verbs" as const,
-        label: getGermanVerbListContent(uiLanguage).title,
-        path: getGermanVerbListPath(uiLanguage),
+        label: getVerbListTitle("german", uiLanguage),
+        path: getVerbListPath("german", uiLanguage),
         kind: "custom" as const,
         targetLanguage: "german" as const,
       },
@@ -2719,65 +2711,15 @@ function AppContent({
       );
     }
 
-    const verbListPage = (() => {
-      switch (verbListSeoRoute.targetLanguage) {
-        case "english":
-          return (
-            <EnglishVerbListSeoPage
-              uiLang={verbListSeoRoute.uiLang}
-              onStartPractice={handleStartVocabularyPractice}
-            />
-          );
-        case "french":
-          return (
-            <FrenchVerbListSeoPage
-              uiLang={verbListSeoRoute.uiLang}
-              onStartPractice={handleStartVocabularyPractice}
-            />
-          );
-        case "german":
-          return (
-            <GermanVerbListSeoPage
-              uiLang={verbListSeoRoute.uiLang}
-              onStartPractice={handleStartVocabularyPractice}
-            />
-          );
-        case "italian":
-          return (
-            <ItalianVerbListSeoPage
-              uiLang={verbListSeoRoute.uiLang}
-              onStartPractice={handleStartVocabularyPractice}
-            />
-          );
-        case "portuguese":
-          return (
-            <PortugueseVerbListSeoPage
-              uiLang={verbListSeoRoute.uiLang}
-              onStartPractice={handleStartVocabularyPractice}
-            />
-          );
-        case "russian":
-          return (
-            <RussianVerbListSeoPage
-              uiLang={verbListSeoRoute.uiLang}
-              onStartPractice={handleStartVocabularyPractice}
-            />
-          );
-        case "spanish":
-          return (
-            <SpanishVerbListSeoPage
-              uiLang={verbListSeoRoute.uiLang}
-              onStartPractice={handleStartVocabularyPractice}
-            />
-          );
-      }
-    })();
-
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
         <Suspense fallback={<RouteLoadingFallback />}>
-          {verbListPage}
+          <VerbListSeoPage
+            uiLang={verbListSeoRoute.uiLang}
+            targetLanguage={verbListSeoRoute.targetLanguage}
+            onStartPractice={handleStartVocabularyPractice}
+          />
         </Suspense>
         {accountOnboardingDialog}
       </div>

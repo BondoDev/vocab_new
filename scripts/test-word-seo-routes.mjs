@@ -21,7 +21,7 @@ function compileTestModules() {
     path.join(rootDir, "src", "data", "seo", "slugs.ts"),
     path.join(rootDir, "src", "data", "seo", "hub.ts"),
     path.join(rootDir, "src", "data", "seo", "wordHubRoutes.ts"),
-    path.join(rootDir, "src", "data", "englishVerbList", "routes.ts"),
+    path.join(rootDir, "src", "data", "verbLists.ts"),
     path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
 
@@ -67,7 +67,7 @@ compileTestModules();
 const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
 const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPageData.js"));
 const wordHubRoutes = require(path.join(tempDir, "src", "data", "seo", "wordHubRoutes.js"));
-const englishVerbListRoutes = require(path.join(tempDir, "src", "data", "englishVerbList", "routes.js"));
+const verbListRoutes = require(path.join(tempDir, "src", "data", "verbLists.js"));
 const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
 function readJson(relativePath) {
@@ -221,21 +221,17 @@ assert.equal(
   100,
   "English verb list IDs should be unique",
 );
-assert.equal(
-  englishVerbListRoutes.getAllEnglishVerbListPaths().length,
-  7,
-  "English verb list should expose 7 localized routes",
+assert.equal(verbListRoutes.getAllVerbListPaths().length, 49, "Verb lists should expose 49 localized routes");
+assert.deepEqual(
+  verbListRoutes.resolveVerbListRoute("/en/100-most-common-english-verbs"),
+  { uiLang: "en", targetLanguage: "english" },
 );
-assert.equal(
-  englishVerbListRoutes.resolveEnglishVerbListRoute("/en/100-most-common-english-verbs"),
-  "en",
-);
-assert.equal(
-  englishVerbListRoutes.resolveEnglishVerbListRoute("/ru/100-samykh-chastykh-angliiskikh-glagolov"),
-  "ru",
+assert.deepEqual(
+  verbListRoutes.resolveVerbListRoute("/ru/100-samykh-chastykh-angliiskikh-glagolov"),
+  { uiLang: "ru", targetLanguage: "english" },
 );
 assert.ok(
-  englishVerbListRoutes.getEnglishVerbListContent("de").title.length > 0,
+  verbListRoutes.getVerbListContent("english", "de").title.length > 0,
   "German localized verb-list title should exist",
 );
 
@@ -424,8 +420,8 @@ const wordSeoPageSource = fs.readFileSync(
   path.join(rootDir, "src", "app", "components", "WordSeoPageView.tsx"),
   "utf8",
 );
-const englishVerbListPageSource = fs.readFileSync(
-  path.join(rootDir, "src", "app", "components", "EnglishVerbListSeoPage.tsx"),
+const verbListPageSource = fs.readFileSync(
+  path.join(rootDir, "src", "app", "components", "VerbListSeoPage.tsx"),
   "utf8",
 );
 const metadataSource = fs.readFileSync(path.join(rootDir, "src", "seo", "metadata.ts"), "utf8");
@@ -433,8 +429,8 @@ const wordHubDataSource = fs.readFileSync(
   path.join(rootDir, "src", "data", "seo", "wordHubData.ts"),
   "utf8",
 );
-const englishVerbListSource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "englishVerbList", "index.ts"),
+const commonVerbListSource = fs.readFileSync(
+  path.join(rootDir, "src", "data", "commonVerbList.ts"),
   "utf8",
 );
 const levelBrowseWordsSource = fs.readFileSync(
@@ -457,12 +453,12 @@ assert.ok(
   "word hub data should not eagerly import full vocabulary JSON files",
 );
 assert.ok(
-  englishVerbListSource.includes('import.meta.glob("./lookup/*.json"'),
-  "English verb list data should read compact generated lookup JSON files",
+  commonVerbListSource.includes('import.meta.glob("./verbListLookup/*.json"'),
+  "shared verb list data should read compact generated lookup JSON files",
 );
 assert.ok(
-  !englishVerbListSource.includes('../vocabulary/english/vocabulary.json'),
-  "English verb list data should not statically import full vocabulary JSON files",
+  !commonVerbListSource.includes('../vocabulary/english/vocabulary.json'),
+  "shared verb list data should not statically import full vocabulary JSON files",
 );
 assert.ok(
   levelBrowseWordsSource.includes('import.meta.glob("./level-browse-preview/*.json"'),
@@ -525,18 +521,18 @@ assert.ok(
   "browse word links should use canonical concept IDs",
 );
 assert.ok(
-  /ENGLISH_VERB_LIST_ITEMS\.map/m.test(englishVerbListPageSource),
-  "English verb list page should render rows from the imported JSON list",
+  /VERB_LIST_ITEMS\.map/m.test(verbListPageSource),
+  "shared verb list page should render rows from the imported JSON list",
 );
 assert.ok(
-  /buildWordPath\(\s*uiLang,\s*TARGET_LANGUAGE,\s*getEnglishVerbWordLemma\(item\.id\),\s*item\.id\s*\)/m.test(
-    englishVerbListPageSource,
+  /buildWordPath\(\s*uiLang,\s*targetLanguage,\s*wordLemma,\s*item\.id\s*\)/m.test(
+    verbListPageSource,
   ),
-  "English verb list page should link rows with the shared word-path helper",
+  "shared verb list page should link rows with the shared word-path helper",
 );
 assert.ok(
-  metadataSource.includes("buildEnglishVerbListSeoMetadata"),
-  "metadata builder for the English verb list should exist",
+  metadataSource.includes("buildVerbListSeoMetadata"),
+  "generic metadata builder for verb list pages should exist",
 );
 assert.ok(
   coreSitemapXml.includes("/en/100-most-common-english-verbs"),

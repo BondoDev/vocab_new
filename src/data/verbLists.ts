@@ -1,95 +1,195 @@
-import type { TargetLanguageSlug, UiLanguageCode } from "./seo/slugs";
+import verbListContentJson from "./seo/page-content/verb-lists/common_100_verblists_text.json";
+import {
+  BASE_VERB_LIST_ITEMS,
+  canLinkVerbListItem as canLinkCommonVerbListItem,
+  getTargetVerbWordLemma,
+  getVerbDefinition,
+  getVerbTranslation,
+  type VerbListItem,
+} from "./commonVerbList";
+import { type TargetLanguageSlug, type UiLanguageCode } from "./seo/slugs";
 import { getFallbackVerbListCopy } from "./verbListFallbackCopy";
-import { getEnglishVerbListContent, getEnglishVerbListPath, getAllEnglishVerbListPaths, resolveEnglishVerbListRoute } from "./englishVerbList";
-import { getFrenchVerbListContent, getFrenchVerbListPath, getAllFrenchVerbListPaths, resolveFrenchVerbListRoute } from "./frenchVerbList";
-import { getGermanVerbListContent, getGermanVerbListPath, getAllGermanVerbListPaths, resolveGermanVerbListRoute } from "./germanVerbList";
-import { getItalianVerbListContent, getItalianVerbListPath, getAllItalianVerbListPaths, resolveItalianVerbListRoute } from "./italianVerbList";
-import { getPortugueseVerbListContent, getPortugueseVerbListPath, getAllPortugueseVerbListPaths, resolvePortugueseVerbListRoute } from "./portugueseVerbList";
-import { getRussianVerbListContent, getRussianVerbListPath, getAllRussianVerbListPaths, resolveRussianVerbListRoute } from "./russianVerbList";
-import { getSpanishVerbListContent, getSpanishVerbListPath, getAllSpanishVerbListPaths, resolveSpanishVerbListRoute } from "./spanishVerbList";
+import {
+  buildVerbListContentLookup,
+  type VerbListContent,
+  type VerbListContentEntry,
+} from "./verbListRouteHelpers";
+
+export const VERB_LIST_ITEMS = BASE_VERB_LIST_ITEMS;
+export type SharedVerbListItem = VerbListItem;
+
+interface VerbListConfigEntry {
+  speechLang: string;
+  targetAliases: readonly string[];
+  paths: Record<UiLanguageCode, string>;
+}
 
 const VERB_LIST_CONFIG = {
   english: {
-    getPath: getEnglishVerbListPath,
-    getAllPaths: getAllEnglishVerbListPaths,
-    resolve: resolveEnglishVerbListRoute,
-    getContent: getEnglishVerbListContent,
+    speechLang: "en-US",
+    targetAliases: ["en", "english"],
+    paths: {
+      en: "/en/100-most-common-english-verbs",
+      es: "/es/100-verbos-ingles-mas-comunes",
+      de: "/de/100-haeufigste-englische-verben",
+      fr: "/fr/100-verbes-anglais-les-plus-courants",
+      it: "/it/100-verbi-inglesi-piu-comuni",
+      pt: "/pt/100-verbos-ingleses-mais-comuns",
+      ru: "/ru/100-samykh-chastykh-angliiskikh-glagolov",
+    },
   },
   french: {
-    getPath: getFrenchVerbListPath,
-    getAllPaths: getAllFrenchVerbListPaths,
-    resolve: resolveFrenchVerbListRoute,
-    getContent: getFrenchVerbListContent,
+    speechLang: "fr-FR",
+    targetAliases: ["fr", "french"],
+    paths: {
+      en: "/en/100-most-common-french-verbs",
+      es: "/es/100-verbos-franceses-mas-comunes",
+      de: "/de/100-haeufigste-franzoesische-verben",
+      fr: "/fr/100-verbes-francais-les-plus-courants",
+      it: "/it/100-verbi-francesi-piu-comuni",
+      pt: "/pt/100-verbos-franceses-mais-comuns",
+      ru: "/ru/100-samykh-chastykh-frantsuzskikh-glagolov",
+    },
   },
   german: {
-    getPath: getGermanVerbListPath,
-    getAllPaths: getAllGermanVerbListPaths,
-    resolve: resolveGermanVerbListRoute,
-    getContent: getGermanVerbListContent,
+    speechLang: "de-DE",
+    targetAliases: ["de", "german"],
+    paths: {
+      en: "/en/100-most-common-german-verbs",
+      es: "/es/100-verbos-alemanes-mas-comunes",
+      de: "/de/100-haeufigste-deutsche-verben",
+      fr: "/fr/100-verbes-allemands-les-plus-courants",
+      it: "/it/100-verbi-tedeschi-piu-comuni",
+      pt: "/pt/100-verbos-alemaes-mais-comuns",
+      ru: "/ru/100-samykh-chastykh-nemetskikh-glagolov",
+    },
   },
   italian: {
-    getPath: getItalianVerbListPath,
-    getAllPaths: getAllItalianVerbListPaths,
-    resolve: resolveItalianVerbListRoute,
-    getContent: getItalianVerbListContent,
+    speechLang: "it-IT",
+    targetAliases: ["it", "italian"],
+    paths: {
+      en: "/en/100-most-common-italian-verbs",
+      es: "/es/100-verbos-italianos-mas-comunes",
+      de: "/de/100-haeufigste-italienische-verben",
+      fr: "/fr/100-verbes-italiens-les-plus-courants",
+      it: "/it/100-verbi-italiani-piu-comuni",
+      pt: "/pt/100-verbos-italianos-mais-comuns",
+      ru: "/ru/100-samykh-chastykh-italianskikh-glagolov",
+    },
   },
   portuguese: {
-    getPath: getPortugueseVerbListPath,
-    getAllPaths: getAllPortugueseVerbListPaths,
-    resolve: resolvePortugueseVerbListRoute,
-    getContent: getPortugueseVerbListContent,
+    speechLang: "pt-PT",
+    targetAliases: ["pt", "portuguese"],
+    paths: {
+      en: "/en/100-most-common-portuguese-verbs",
+      es: "/es/100-verbos-portugueses-mas-comunes",
+      de: "/de/100-haeufigste-portugiesische-verben",
+      fr: "/fr/100-verbes-portugais-les-plus-courants",
+      it: "/it/100-verbi-portoghesi-piu-comuni",
+      pt: "/pt/100-verbos-portugueses-mais-comuns",
+      ru: "/ru/100-samykh-chastykh-portugalskikh-glagolov",
+    },
   },
   russian: {
-    getPath: getRussianVerbListPath,
-    getAllPaths: getAllRussianVerbListPaths,
-    resolve: resolveRussianVerbListRoute,
-    getContent: getRussianVerbListContent,
+    speechLang: "ru-RU",
+    targetAliases: ["ru", "russian"],
+    paths: {
+      en: "/en/100-most-common-russian-verbs",
+      es: "/es/100-verbos-rusos-mas-comunes",
+      de: "/de/100-haeufigste-russische-verben",
+      fr: "/fr/100-verbes-russes-les-plus-courants",
+      it: "/it/100-verbi-russi-piu-comuni",
+      pt: "/pt/100-verbos-russos-mais-comuns",
+      ru: "/ru/100-samykh-chastykh-russkikh-glagolov",
+    },
   },
   spanish: {
-    getPath: getSpanishVerbListPath,
-    getAllPaths: getAllSpanishVerbListPaths,
-    resolve: resolveSpanishVerbListRoute,
-    getContent: getSpanishVerbListContent,
+    speechLang: "es-ES",
+    targetAliases: ["es", "spanish"],
+    paths: {
+      en: "/en/100-most-common-spanish-verbs",
+      es: "/es/100-verbos-espanoles-mas-comunes",
+      de: "/de/100-haeufigste-spanische-verben",
+      fr: "/fr/100-verbes-espagnols-les-plus-courants",
+      it: "/it/100-verbi-spagnoli-piu-comuni",
+      pt: "/pt/100-verbos-espanhois-mais-comuns",
+      ru: "/ru/100-samykh-chastykh-ispanskikh-glagolov",
+    },
   },
-} as const satisfies Record<
-  TargetLanguageSlug,
-  {
-    getPath: (uiLang: UiLanguageCode) => string;
-    getAllPaths: () => string[];
-    resolve: (path: string) => UiLanguageCode | null;
-    getContent: (uiLang: UiLanguageCode) => { title: string } | null;
-  }
->;
+} as const satisfies Record<TargetLanguageSlug, VerbListConfigEntry>;
+
+const VERB_LIST_CONTENT = Object.fromEntries(
+  (Object.entries(VERB_LIST_CONFIG) as Array<[TargetLanguageSlug, VerbListConfigEntry]>).map(
+    ([targetLanguage, config]) => [
+      targetLanguage,
+      buildVerbListContentLookup(
+        verbListContentJson as Record<string, VerbListContent> | VerbListContentEntry[],
+        config.targetAliases,
+      ),
+    ],
+  ),
+) as Record<TargetLanguageSlug, Partial<Record<UiLanguageCode, VerbListContent>>>;
+
+export function getVerbListConfig(targetLanguage: TargetLanguageSlug): VerbListConfigEntry {
+  return VERB_LIST_CONFIG[targetLanguage];
+}
 
 export function getVerbListPath(targetLanguage: TargetLanguageSlug, uiLang: UiLanguageCode): string {
-  return VERB_LIST_CONFIG[targetLanguage].getPath(uiLang);
+  return VERB_LIST_CONFIG[targetLanguage].paths[uiLang];
 }
 
 export function getAllVerbListPaths(): string[] {
-  return Object.values(VERB_LIST_CONFIG).flatMap((config) => config.getAllPaths());
+  return (Object.values(VERB_LIST_CONFIG) as VerbListConfigEntry[]).flatMap((config) =>
+    Object.values(config.paths),
+  );
 }
 
 export function resolveVerbListRoute(
   path: string,
 ): { uiLang: UiLanguageCode; targetLanguage: TargetLanguageSlug } | null {
   for (const [targetLanguage, config] of Object.entries(VERB_LIST_CONFIG) as Array<
-    [TargetLanguageSlug, (typeof VERB_LIST_CONFIG)[TargetLanguageSlug]]
+    [TargetLanguageSlug, VerbListConfigEntry]
   >) {
-    const uiLang = config.resolve(path);
-    if (uiLang) {
-      return { uiLang, targetLanguage };
+    const entry = Object.entries(config.paths).find(([, routePath]) => routePath === path);
+    if (entry) {
+      return { uiLang: entry[0] as UiLanguageCode, targetLanguage };
     }
   }
 
   return null;
 }
 
-export function getVerbListTitle(
+export function getVerbListContent(
   targetLanguage: TargetLanguageSlug,
   uiLang: UiLanguageCode,
-): string {
+): VerbListContent | null {
+  const contentByUiLang = VERB_LIST_CONTENT[targetLanguage];
+  return contentByUiLang[uiLang] ?? contentByUiLang.en ?? null;
+}
+
+export function getVerbListTitle(targetLanguage: TargetLanguageSlug, uiLang: UiLanguageCode): string {
   return (
-    VERB_LIST_CONFIG[targetLanguage].getContent(uiLang)?.title ??
+    getVerbListContent(targetLanguage, uiLang)?.title ??
     getFallbackVerbListCopy(uiLang, targetLanguage).pageTitle
   );
+}
+
+export function getVerbListSpeechLang(targetLanguage: TargetLanguageSlug): string {
+  return VERB_LIST_CONFIG[targetLanguage].speechLang;
+}
+
+export function canLinkVerbListItem(targetLanguage: TargetLanguageSlug, id: string): boolean {
+  return canLinkCommonVerbListItem(targetLanguage, id);
+}
+
+export function getVerbListDefinition(id: string, uiLang: UiLanguageCode): string {
+  return getVerbDefinition(id, uiLang);
+}
+
+export function getVerbListTranslation(id: string, uiLang: UiLanguageCode): string {
+  return getVerbTranslation(id, uiLang);
+}
+
+export function getVerbListWordLemma(targetLanguage: TargetLanguageSlug, id: string): string {
+  return getTargetVerbWordLemma(targetLanguage, id);
 }
