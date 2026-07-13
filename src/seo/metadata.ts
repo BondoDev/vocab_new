@@ -311,6 +311,18 @@ export function buildGermanVerbListSeoMetadata({
         })),
       },
       {
+        "@type": "FAQPage",
+        "@id": `${canonical}#faq`,
+        mainEntity: content.faq.map((item) => ({
+          "@type": "Question",
+          name: sanitizeMetadataText(item.question),
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: sanitizeMetadataText(item.answer),
+          },
+        })),
+      },
+      {
         "@type": "BreadcrumbList",
         "@id": `${canonical}#breadcrumb`,
         itemListElement: [

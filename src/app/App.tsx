@@ -2722,7 +2722,10 @@ function AppContent({
       <div className="min-h-screen flex flex-col bg-background">
         <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
         <Suspense fallback={<RouteLoadingFallback />}>
-          <GermanVerbListSeoPage uiLang={germanVerbListSeoRoute.uiLang} />
+          <GermanVerbListSeoPage
+            uiLang={germanVerbListSeoRoute.uiLang}
+            onStartPractice={handleStartVocabularyPractice}
+          />
         </Suspense>
         {accountOnboardingDialog}
       </div>

@@ -1,0 +1,1094 @@
+[
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "en",
+    "title": "100 Most Common English Verbs",
+    "metaTitle": "100 Most Common English Verbs - Essential Verb List",
+    "metaDescription": "Learn the 100 most common English verbs with CEFR levels. Study essential English verbs and practice vocabulary used in everyday communication.",
+    "heroSubtitle": "Learn the essential English verbs used most often in everyday speaking, writing, reading, and listening.",
+    "introParagraphs": [
+      "Verbs are one of the most important parts of English vocabulary. They describe actions, states, habits, thoughts, and communication. By learning the most common English verbs first, you can understand more sentences and express basic ideas more clearly.",
+      "This list contains 100 frequently used English verbs selected for practical vocabulary learning. These verbs appear often in everyday conversations, simple texts, instructions, stories, and learning materials.",
+      "Use this page as a starting point for English vocabulary practice. Review the verbs, check their CEFR level, open individual word pages, and practice them regularly until they become familiar."
+    ],
+    "stats": {
+      "verbs": "100 verbs",
+      "language": "English vocabulary",
+      "level": "CEFR-based levels",
+      "practice": "Practice available"
+    },
+    "sections": {
+      "statsHeading": "Quick Summary",
+      "verbListHeading": "100 Common English Verbs List",
+      "learningTipsHeading": "How to Learn These English Verbs",
+      "relatedLinksHeading": "Related English Vocabulary Pages",
+      "faqHeading": "Common Questions About English Verbs"
+    },
+    "buttons": {
+      "startPractice": "Start English Practice",
+      "takeLevelTest": "Take English Level Test"
+    },
+    "filters": {
+      "searchPlaceholder": "Search English verbs...",
+      "cefrLabel": "CEFR filter",
+      "allLevels": "All levels"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Verb",
+      "definition": "Definition",
+      "wordPage": "Translation",
+      "noResults": "No verbs match the current filters."
+    },
+    "learningTips": [
+      "Start with 10 verbs per day instead of trying to memorize the full list at once.",
+      "Practice each verb in short example sentences, not only as an isolated word.",
+      "Review verbs you forget more often and repeat easier verbs less frequently.",
+      "Combine verbs with common nouns, adjectives, and prepositions to build useful phrases.",
+      "Use the verbs in speaking or writing practice so they become active vocabulary."
+    ],
+    "relatedLinks": {
+      "levelTest": "English Level Test",
+      "englishA1": "English A1 Vocabulary",
+      "englishA2": "English A2 Vocabulary",
+      "englishB1": "English B1 Vocabulary",
+      "seoHub": "Browse all SEO pages"
+    },
+    "faq": [
+      {
+        "question": "What are the most common English verbs?",
+        "answer": "The most common English verbs are verbs that appear very often in everyday communication, such as be, have, do, go, make, know, think, take, see, and come. Learning them helps you understand and create many basic English sentences."
+      },
+      {
+        "question": "Why should I learn common English verbs first?",
+        "answer": "Common verbs are useful because they appear in many different situations. If you learn them early, you can understand more conversations and texts, even before you know thousands of less frequent words."
+      },
+      {
+        "question": "Are these verbs enough for beginners?",
+        "answer": "These 100 verbs are not the whole English language, but they are a strong foundation. Beginners can use them to build simple sentences and understand many everyday expressions."
+      },
+      {
+        "question": "How can I practice these English verbs?",
+        "answer": "You can practice by reading the list, opening individual word pages, creating example sentences, reviewing difficult verbs, and using vocabulary exercises regularly."
+      },
+      {
+        "question": "What CEFR level are these English verbs?",
+        "answer": "Many common English verbs are A1 or A2 because they are essential for basic communication. Some verbs may belong to higher levels depending on their meaning, usage, or difficulty."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "es",
+    "title": "Los 100 verbos más comunes en inglés",
+    "metaTitle": "Los 100 verbos más comunes en inglés - Lista de verbos esenciales",
+    "metaDescription": "Aprende los 100 verbos más comunes en inglés con sus niveles del MCER. Estudia verbos esenciales en inglés y practica el vocabulario utilizado en la comunicación cotidiana.",
+    "heroSubtitle": "Aprende los verbos esenciales en inglés que se utilizan con mayor frecuencia al hablar, escribir, leer y escuchar en situaciones cotidianas.",
+    "introParagraphs": [
+      "Los verbos son una de las partes más importantes del vocabulario inglés. Describen acciones, estados, hábitos, pensamientos y formas de comunicación. Si aprendes primero los verbos más comunes en inglés, podrás comprender más oraciones y expresar ideas básicas con mayor claridad.",
+      "Esta lista contiene 100 verbos de uso frecuente en inglés seleccionados para el aprendizaje práctico de vocabulario. Estos verbos aparecen habitualmente en conversaciones cotidianas, textos sencillos, instrucciones, historias y materiales de aprendizaje.",
+      "Utiliza esta página como punto de partida para practicar vocabulario en inglés. Repasa los verbos, consulta su nivel del MCER, abre las páginas individuales de cada palabra y practícalos regularmente hasta que te resulten familiares."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Vocabulario en inglés",
+      "level": "Niveles basados en el MCER",
+      "practice": "Práctica disponible"
+    },
+    "sections": {
+      "statsHeading": "Resumen rápido",
+      "verbListHeading": "Lista de 100 verbos comunes en inglés",
+      "learningTipsHeading": "Cómo aprender estos verbos en inglés",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulario en inglés",
+      "faqHeading": "Preguntas frecuentes sobre los verbos en inglés"
+    },
+    "buttons": {
+      "startPractice": "Empezar a practicar inglés",
+      "takeLevelTest": "Hacer la prueba de nivel de inglés"
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar verbos en inglés...",
+      "cefrLabel": "Filtro del MCER",
+      "allLevels": "Todos los niveles"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Verbo",
+      "definition": "Definición",
+      "wordPage": "Traducción",
+      "noResults": "Ningún verbo coincide con los filtros actuales."
+    },
+    "learningTips": [
+      "Empieza con 10 verbos al día en lugar de intentar memorizar toda la lista de una sola vez.",
+      "Practica cada verbo en oraciones cortas de ejemplo, no solo como una palabra aislada.",
+      "Repasa con mayor frecuencia los verbos que olvidas y repite con menos frecuencia los que te resultan más fáciles.",
+      "Combina los verbos con sustantivos, adjetivos y preposiciones comunes para formar expresiones útiles.",
+      "Utiliza los verbos al hablar o escribir para que formen parte de tu vocabulario activo."
+    ],
+    "relatedLinks": {
+      "levelTest": "Prueba de nivel de inglés",
+      "englishA1": "Vocabulario de inglés A1",
+      "englishA2": "Vocabulario de inglés A2",
+      "englishB1": "Vocabulario de inglés B1",
+      "seoHub": "Explorar todas las páginas SEO"
+    },
+    "faq": [
+      {
+        "question": "¿Cuáles son los verbos más comunes en inglés?",
+        "answer": "Los verbos más comunes en inglés son aquellos que aparecen con mucha frecuencia en la comunicación cotidiana, como be, have, do, go, make, know, think, take, see y come. Aprenderlos te ayuda a comprender y formar muchas oraciones básicas en inglés."
+      },
+      {
+        "question": "¿Por qué debería aprender primero los verbos comunes en inglés?",
+        "answer": "Los verbos comunes son útiles porque aparecen en muchas situaciones diferentes. Si los aprendes desde el principio, podrás comprender más conversaciones y textos, incluso antes de conocer miles de palabras menos frecuentes."
+      },
+      {
+        "question": "¿Son suficientes estos verbos para principiantes?",
+        "answer": "Estos 100 verbos no representan todo el idioma inglés, pero constituyen una base sólida. Los principiantes pueden utilizarlos para formar oraciones sencillas y comprender muchas expresiones cotidianas."
+      },
+      {
+        "question": "¿Cómo puedo practicar estos verbos en inglés?",
+        "answer": "Puedes practicarlos leyendo la lista, abriendo las páginas individuales de cada palabra, creando oraciones de ejemplo, repasando los verbos difíciles y realizando ejercicios de vocabulario con regularidad."
+      },
+      {
+        "question": "¿A qué nivel del MCER pertenecen estos verbos en inglés?",
+        "answer": "Muchos verbos comunes en inglés pertenecen a los niveles A1 o A2 porque son esenciales para la comunicación básica. Algunos verbos pueden pertenecer a niveles superiores según su significado, uso o dificultad."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "de",
+    "title": "Die 100 häufigsten englischen Verben",
+    "metaTitle": "Die 100 häufigsten englischen Verben – Liste wichtiger Verben",
+    "metaDescription": "Lerne die 100 häufigsten englischen Verben mit CEFR-Niveaustufen. Übe wichtige englische Verben und Wortschatz für die alltägliche Kommunikation.",
+    "heroSubtitle": "Lerne die wichtigsten englischen Verben, die beim alltäglichen Sprechen, Schreiben, Lesen und Hören besonders häufig verwendet werden.",
+    "introParagraphs": [
+      "Verben gehören zu den wichtigsten Bestandteilen des englischen Wortschatzes. Sie beschreiben Handlungen, Zustände, Gewohnheiten, Gedanken und Kommunikation. Wenn du zuerst die häufigsten englischen Verben lernst, kannst du mehr Sätze verstehen und grundlegende Gedanken klarer ausdrücken.",
+      "Diese Liste enthält 100 häufig verwendete englische Verben, die für das praktische Vokabellernen ausgewählt wurden. Diese Verben kommen oft in alltäglichen Gesprächen, einfachen Texten, Anleitungen, Geschichten und Lernmaterialien vor.",
+      "Nutze diese Seite als Ausgangspunkt für das Üben des englischen Wortschatzes. Wiederhole die Verben, überprüfe ihre CEFR-Niveaustufe, öffne die einzelnen Wortseiten und übe sie regelmäßig, bis sie dir vertraut sind."
+    ],
+    "stats": {
+      "verbs": "100 Verben",
+      "language": "Englischer Wortschatz",
+      "level": "CEFR-basierte Niveaustufen",
+      "practice": "Übungen verfügbar"
+    },
+    "sections": {
+      "statsHeading": "Kurzübersicht",
+      "verbListHeading": "Liste mit 100 häufigen englischen Verben",
+      "learningTipsHeading": "So lernst du diese englischen Verben",
+      "relatedLinksHeading": "Verwandte Seiten zum englischen Wortschatz",
+      "faqHeading": "Häufige Fragen zu englischen Verben"
+    },
+    "buttons": {
+      "startPractice": "Englischübungen starten",
+      "takeLevelTest": "Englisch-Einstufungstest machen"
+    },
+    "filters": {
+      "searchPlaceholder": "Englische Verben suchen...",
+      "cefrLabel": "CEFR-Filter",
+      "allLevels": "Alle Niveaustufen"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Verb",
+      "definition": "Definition",
+      "wordPage": "Übersetzung",
+      "noResults": "Keine Verben entsprechen den aktuellen Filtern."
+    },
+    "learningTips": [
+      "Beginne mit 10 Verben pro Tag, anstatt zu versuchen, die gesamte Liste auf einmal auswendig zu lernen.",
+      "Übe jedes Verb in kurzen Beispielsätzen und nicht nur als einzelnes Wort.",
+      "Wiederhole Verben, die du häufig vergisst, öfter und einfachere Verben seltener.",
+      "Kombiniere Verben mit häufigen Substantiven, Adjektiven und Präpositionen, um nützliche Ausdrücke zu bilden.",
+      "Verwende die Verben beim Sprechen oder Schreiben, damit sie Teil deines aktiven Wortschatzes werden."
+    ],
+    "relatedLinks": {
+      "levelTest": "Englisch-Einstufungstest",
+      "englishA1": "Englischer Wortschatz A1",
+      "englishA2": "Englischer Wortschatz A2",
+      "englishB1": "Englischer Wortschatz B1",
+      "seoHub": "Alle SEO-Seiten durchsuchen"
+    },
+    "faq": [
+      {
+        "question": "Was sind die häufigsten englischen Verben?",
+        "answer": "Die häufigsten englischen Verben sind Verben, die in der alltäglichen Kommunikation besonders oft vorkommen, zum Beispiel be, have, do, go, make, know, think, take, see und come. Wenn du sie lernst, kannst du viele grundlegende englische Sätze verstehen und selbst bilden."
+      },
+      {
+        "question": "Warum sollte ich zuerst häufige englische Verben lernen?",
+        "answer": "Häufige Verben sind nützlich, weil sie in vielen verschiedenen Situationen vorkommen. Wenn du sie früh lernst, kannst du mehr Gespräche und Texte verstehen, noch bevor du Tausende seltener verwendeter Wörter kennst."
+      },
+      {
+        "question": "Reichen diese Verben für Anfänger aus?",
+        "answer": "Diese 100 Verben bilden nicht die gesamte englische Sprache ab, aber sie schaffen eine solide Grundlage. Anfänger können sie verwenden, um einfache Sätze zu bilden und viele alltägliche Ausdrücke zu verstehen."
+      },
+      {
+        "question": "Wie kann ich diese englischen Verben üben?",
+        "answer": "Du kannst sie üben, indem du die Liste liest, die einzelnen Wortseiten öffnest, Beispielsätze bildest, schwierige Verben wiederholst und regelmäßig Wortschatzübungen machst."
+      },
+      {
+        "question": "Welcher CEFR-Niveaustufe entsprechen diese englischen Verben?",
+        "answer": "Viele häufige englische Verben gehören zu den Niveaustufen A1 oder A2, weil sie für die grundlegende Kommunikation unverzichtbar sind. Einige Verben können je nach Bedeutung, Verwendung oder Schwierigkeitsgrad höheren Niveaustufen zugeordnet werden."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "fr",
+    "title": "Les 100 verbes anglais les plus courants",
+    "metaTitle": "Les 100 verbes anglais les plus courants - Liste des verbes essentiels",
+    "metaDescription": "Apprenez les 100 verbes anglais les plus courants avec leurs niveaux CECR. Étudiez les verbes anglais essentiels et pratiquez le vocabulaire utilisé dans la communication quotidienne.",
+    "heroSubtitle": "Apprenez les verbes anglais essentiels les plus souvent utilisés dans la vie quotidienne, à l’oral, à l’écrit, en lecture et en compréhension orale.",
+    "introParagraphs": [
+      "Les verbes constituent l’une des parties les plus importantes du vocabulaire anglais. Ils décrivent des actions, des états, des habitudes, des pensées et la communication. En apprenant d’abord les verbes anglais les plus courants, vous pourrez comprendre davantage de phrases et exprimer plus clairement des idées simples.",
+      "Cette liste contient 100 verbes anglais fréquemment utilisés, sélectionnés pour un apprentissage pratique du vocabulaire. Ces verbes apparaissent souvent dans les conversations quotidiennes, les textes simples, les instructions, les histoires et les supports pédagogiques.",
+      "Utilisez cette page comme point de départ pour pratiquer le vocabulaire anglais. Révisez les verbes, consultez leur niveau CECR, ouvrez les pages individuelles des mots et entraînez-vous régulièrement jusqu’à ce qu’ils vous deviennent familiers."
+    ],
+    "stats": {
+      "verbs": "100 verbes",
+      "language": "Vocabulaire anglais",
+      "level": "Niveaux basés sur le CECR",
+      "practice": "Exercices disponibles"
+    },
+    "sections": {
+      "statsHeading": "Résumé rapide",
+      "verbListHeading": "Liste de 100 verbes anglais courants",
+      "learningTipsHeading": "Comment apprendre ces verbes anglais",
+      "relatedLinksHeading": "Pages connexes sur le vocabulaire anglais",
+      "faqHeading": "Questions fréquentes sur les verbes anglais"
+    },
+    "buttons": {
+      "startPractice": "Commencer les exercices d’anglais",
+      "takeLevelTest": "Passer le test de niveau d’anglais"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher des verbes anglais...",
+      "cefrLabel": "Filtre CECR",
+      "allLevels": "Tous les niveaux"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Verbe",
+      "definition": "Définition",
+      "wordPage": "Traduction",
+      "noResults": "Aucun verbe ne correspond aux filtres actuels."
+    },
+    "learningTips": [
+      "Commencez par 10 verbes par jour au lieu d’essayer de mémoriser toute la liste en une seule fois.",
+      "Pratiquez chaque verbe dans de courtes phrases d’exemple, et pas seulement comme un mot isolé.",
+      "Révisez plus souvent les verbes que vous oubliez et moins fréquemment ceux qui vous semblent plus faciles.",
+      "Associez les verbes à des noms, adjectifs et prépositions courants afin de former des expressions utiles.",
+      "Utilisez les verbes dans des exercices d’expression orale ou écrite afin qu’ils intègrent votre vocabulaire actif."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test de niveau d’anglais",
+      "englishA1": "Vocabulaire anglais A1",
+      "englishA2": "Vocabulaire anglais A2",
+      "englishB1": "Vocabulaire anglais B1",
+      "seoHub": "Parcourir toutes les pages SEO"
+    },
+    "faq": [
+      {
+        "question": "Quels sont les verbes anglais les plus courants ?",
+        "answer": "Les verbes anglais les plus courants sont ceux qui apparaissent très fréquemment dans la communication quotidienne, comme be, have, do, go, make, know, think, take, see et come. Les apprendre vous aide à comprendre et à construire de nombreuses phrases anglaises simples."
+      },
+      {
+        "question": "Pourquoi devrais-je apprendre d’abord les verbes anglais courants ?",
+        "answer": "Les verbes courants sont utiles parce qu’ils apparaissent dans de nombreuses situations différentes. Si vous les apprenez tôt, vous pourrez comprendre davantage de conversations et de textes, même avant de connaître des milliers de mots moins fréquents."
+      },
+      {
+        "question": "Ces verbes sont-ils suffisants pour les débutants ?",
+        "answer": "Ces 100 verbes ne représentent pas toute la langue anglaise, mais ils constituent une base solide. Les débutants peuvent les utiliser pour construire des phrases simples et comprendre de nombreuses expressions courantes."
+      },
+      {
+        "question": "Comment puis-je pratiquer ces verbes anglais ?",
+        "answer": "Vous pouvez vous entraîner en consultant la liste, en ouvrant les pages individuelles des mots, en créant des phrases d’exemple, en révisant les verbes difficiles et en faisant régulièrement des exercices de vocabulaire."
+      },
+      {
+        "question": "À quel niveau du CECR correspondent ces verbes anglais ?",
+        "answer": "De nombreux verbes anglais courants appartiennent aux niveaux A1 ou A2, car ils sont essentiels à la communication de base. Certains verbes peuvent correspondre à des niveaux plus avancés selon leur sens, leur emploi ou leur difficulté."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "it",
+    "title": "I 100 verbi inglesi più comuni",
+    "metaTitle": "I 100 verbi inglesi più comuni - Elenco dei verbi essenziali",
+    "metaDescription": "Impara i 100 verbi inglesi più comuni con i livelli del QCER. Studia i verbi inglesi essenziali e pratica il vocabolario usato nella comunicazione quotidiana.",
+    "heroSubtitle": "Impara i verbi inglesi essenziali usati più spesso nel parlare, scrivere, leggere e ascoltare ogni giorno.",
+    "introParagraphs": [
+      "I verbi sono una delle parti più importanti del vocabolario inglese. Descrivono azioni, stati, abitudini, pensieri e comunicazione. Imparando prima i verbi inglesi più comuni, puoi comprendere più frasi ed esprimere idee di base con maggiore chiarezza.",
+      "Questo elenco contiene 100 verbi inglesi di uso frequente, selezionati per l'apprendimento pratico del vocabolario. Questi verbi compaiono spesso nelle conversazioni quotidiane, nei testi semplici, nelle istruzioni, nelle storie e nei materiali didattici.",
+      "Usa questa pagina come punto di partenza per esercitarti con il vocabolario inglese. Ripassa i verbi, controlla il loro livello QCER, apri le singole pagine delle parole ed esercitati regolarmente finché non ti diventano familiari."
+    ],
+    "stats": {
+      "verbs": "100 verbi",
+      "language": "Vocabolario inglese",
+      "level": "Livelli basati sul QCER",
+      "practice": "Esercizi disponibili"
+    },
+    "sections": {
+      "statsHeading": "Riepilogo rapido",
+      "verbListHeading": "Elenco di 100 verbi inglesi comuni",
+      "learningTipsHeading": "Come imparare questi verbi inglesi",
+      "relatedLinksHeading": "Pagine correlate sul vocabolario inglese",
+      "faqHeading": "Domande frequenti sui verbi inglesi"
+    },
+    "buttons": {
+      "startPractice": "Inizia a esercitarti in inglese",
+      "takeLevelTest": "Fai il test di livello di inglese"
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca verbi inglesi...",
+      "cefrLabel": "Filtro QCER",
+      "allLevels": "Tutti i livelli"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Verbo",
+      "definition": "Definizione",
+      "wordPage": "Traduzione",
+      "noResults": "Nessun verbo corrisponde ai filtri attuali."
+    },
+    "learningTips": [
+      "Inizia con 10 verbi al giorno invece di cercare di memorizzare l'intero elenco in una sola volta.",
+      "Esercitati con ogni verbo in brevi frasi di esempio, non solo come parola isolata.",
+      "Ripassa più spesso i verbi che dimentichi e meno frequentemente quelli che trovi più facili.",
+      "Combina i verbi con nomi, aggettivi e preposizioni comuni per creare espressioni utili.",
+      "Usa i verbi negli esercizi di conversazione o scrittura affinché diventino parte del tuo vocabolario attivo."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test di livello di inglese",
+      "englishA1": "Vocabolario inglese A1",
+      "englishA2": "Vocabolario inglese A2",
+      "englishB1": "Vocabolario inglese B1",
+      "seoHub": "Esplora tutte le pagine SEO"
+    },
+    "faq": [
+      {
+        "question": "Quali sono i verbi inglesi più comuni?",
+        "answer": "I verbi inglesi più comuni sono quelli che compaiono molto spesso nella comunicazione quotidiana, come be, have, do, go, make, know, think, take, see e come. Impararli ti aiuta a comprendere e creare molte frasi inglesi di base."
+      },
+      {
+        "question": "Perché dovrei imparare prima i verbi inglesi comuni?",
+        "answer": "I verbi comuni sono utili perché compaiono in molte situazioni diverse. Se li impari fin dall'inizio, puoi comprendere più conversazioni e testi, anche prima di conoscere migliaia di parole meno frequenti."
+      },
+      {
+        "question": "Questi verbi sono sufficienti per i principianti?",
+        "answer": "Questi 100 verbi non rappresentano l'intera lingua inglese, ma costituiscono una base solida. I principianti possono usarli per formare frasi semplici e comprendere molte espressioni quotidiane."
+      },
+      {
+        "question": "Come posso esercitarmi con questi verbi inglesi?",
+        "answer": "Puoi esercitarti leggendo l'elenco, aprendo le singole pagine delle parole, creando frasi di esempio, ripassando i verbi difficili e svolgendo regolarmente esercizi di vocabolario."
+      },
+      {
+        "question": "A quale livello del QCER appartengono questi verbi inglesi?",
+        "answer": "Molti verbi inglesi comuni appartengono ai livelli A1 o A2 perché sono essenziali per la comunicazione di base. Alcuni verbi possono appartenere a livelli più avanzati a seconda del significato, dell'uso o della difficoltà."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "pt",
+    "title": "Os 100 verbos mais comuns em inglês",
+    "metaTitle": "Os 100 verbos mais comuns em inglês - Lista de verbos essenciais",
+    "metaDescription": "Aprenda os 100 verbos mais comuns em inglês com os respetivos níveis do CEFR. Estude verbos essenciais em inglês e pratique o vocabulário usado na comunicação quotidiana.",
+    "heroSubtitle": "Aprenda os verbos essenciais em inglês mais utilizados no dia a dia ao falar, escrever, ler e ouvir.",
+    "introParagraphs": [
+      "Os verbos são uma das partes mais importantes do vocabulário inglês. Eles descrevem ações, estados, hábitos, pensamentos e formas de comunicação. Ao aprender primeiro os verbos mais comuns em inglês, poderá compreender mais frases e expressar ideias básicas com maior clareza.",
+      "Esta lista contém 100 verbos ingleses usados com frequência, selecionados para a aprendizagem prática de vocabulário. Estes verbos aparecem frequentemente em conversas quotidianas, textos simples, instruções, histórias e materiais de aprendizagem.",
+      "Utilize esta página como ponto de partida para praticar vocabulário em inglês. Reveja os verbos, consulte o respetivo nível do CEFR, abra as páginas individuais de cada palavra e pratique regularmente até que se tornem familiares."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Vocabulário inglês",
+      "level": "Níveis baseados no CEFR",
+      "practice": "Prática disponível"
+    },
+    "sections": {
+      "statsHeading": "Resumo rápido",
+      "verbListHeading": "Lista de 100 verbos comuns em inglês",
+      "learningTipsHeading": "Como aprender estes verbos em inglês",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulário inglês",
+      "faqHeading": "Perguntas frequentes sobre verbos em inglês"
+    },
+    "buttons": {
+      "startPractice": "Começar a praticar inglês",
+      "takeLevelTest": "Fazer o teste de nível de inglês"
+    },
+    "filters": {
+      "searchPlaceholder": "Pesquisar verbos em inglês...",
+      "cefrLabel": "Filtro CEFR",
+      "allLevels": "Todos os níveis"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Verbo",
+      "definition": "Definição",
+      "wordPage": "Tradução",
+      "noResults": "Nenhum verbo corresponde aos filtros atuais."
+    },
+    "learningTips": [
+      "Comece com 10 verbos por dia, em vez de tentar memorizar toda a lista de uma só vez.",
+      "Pratique cada verbo em frases curtas de exemplo, e não apenas como uma palavra isolada.",
+      "Reveja com maior frequência os verbos que costuma esquecer e repita com menos frequência os verbos mais fáceis.",
+      "Combine os verbos com substantivos, adjetivos e preposições comuns para formar expressões úteis.",
+      "Utilize os verbos em exercícios de expressão oral ou escrita para que passem a fazer parte do seu vocabulário ativo."
+    ],
+    "relatedLinks": {
+      "levelTest": "Teste de nível de inglês",
+      "englishA1": "Vocabulário de inglês A1",
+      "englishA2": "Vocabulário de inglês A2",
+      "englishB1": "Vocabulário de inglês B1",
+      "seoHub": "Explorar todas as páginas SEO"
+    },
+    "faq": [
+      {
+        "question": "Quais são os verbos mais comuns em inglês?",
+        "answer": "Os verbos mais comuns em inglês são aqueles que aparecem com muita frequência na comunicação quotidiana, como be, have, do, go, make, know, think, take, see e come. Aprendê-los ajuda a compreender e a construir muitas frases básicas em inglês."
+      },
+      {
+        "question": "Porque devo aprender primeiro os verbos comuns em inglês?",
+        "answer": "Os verbos comuns são úteis porque aparecem em muitas situações diferentes. Se os aprender desde cedo, poderá compreender mais conversas e textos, mesmo antes de conhecer milhares de palavras menos frequentes."
+      },
+      {
+        "question": "Estes verbos são suficientes para principiantes?",
+        "answer": "Estes 100 verbos não representam toda a língua inglesa, mas constituem uma base sólida. Os principiantes podem utilizá-los para formar frases simples e compreender muitas expressões do dia a dia."
+      },
+      {
+        "question": "Como posso praticar estes verbos em inglês?",
+        "answer": "Pode praticá-los lendo a lista, abrindo as páginas individuais das palavras, criando frases de exemplo, revendo os verbos mais difíceis e realizando exercícios de vocabulário regularmente."
+      },
+      {
+        "question": "A que nível do CEFR pertencem estes verbos em inglês?",
+        "answer": "Muitos verbos comuns em inglês pertencem aos níveis A1 ou A2, porque são essenciais para a comunicação básica. Alguns verbos podem pertencer a níveis mais avançados, dependendo do seu significado, uso ou grau de dificuldade."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "ru",
+    "title": "100 самых распространённых английских глаголов",
+    "metaTitle": "100 самых распространённых английских глаголов — список основных глаголов",
+    "metaDescription": "Изучите 100 самых распространённых английских глаголов с указанием уровней CEFR. Учите основные английские глаголы и практикуйте лексику для повседневного общения.",
+    "heroSubtitle": "Изучите основные английские глаголы, которые чаще всего используются в повседневной устной и письменной речи, чтении и аудировании.",
+    "introParagraphs": [
+      "Глаголы — одна из самых важных частей английской лексики. Они описывают действия, состояния, привычки, мысли и общение. Изучая сначала самые распространённые английские глаголы, вы сможете понимать больше предложений и яснее выражать основные мысли.",
+      "Этот список содержит 100 часто используемых английских глаголов, отобранных для практического изучения лексики. Эти глаголы часто встречаются в повседневных разговорах, простых текстах, инструкциях, рассказах и учебных материалах.",
+      "Используйте эту страницу как отправную точку для изучения английской лексики. Просматривайте глаголы, проверяйте их уровень CEFR, открывайте отдельные страницы слов и регулярно практикуйтесь, пока они не станут вам хорошо знакомы."
+    ],
+    "stats": {
+      "verbs": "100 глаголов",
+      "language": "Английская лексика",
+      "level": "Уровни по системе CEFR",
+      "practice": "Доступна практика"
+    },
+    "sections": {
+      "statsHeading": "Краткая информация",
+      "verbListHeading": "Список 100 распространённых английских глаголов",
+      "learningTipsHeading": "Как выучить эти английские глаголы",
+      "relatedLinksHeading": "Связанные страницы английской лексики",
+      "faqHeading": "Частые вопросы об английских глаголах"
+    },
+    "buttons": {
+      "startPractice": "Начать практику английского",
+      "takeLevelTest": "Пройти тест на уровень английского"
+    },
+    "filters": {
+      "searchPlaceholder": "Поиск английских глаголов...",
+      "cefrLabel": "Фильтр по уровню CEFR",
+      "allLevels": "Все уровни"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Глагол",
+      "definition": "Определение",
+      "wordPage": "Перевод",
+      "noResults": "Нет глаголов, соответствующих выбранным фильтрам."
+    },
+    "learningTips": [
+      "Начните с 10 глаголов в день, вместо того чтобы пытаться запомнить весь список сразу.",
+      "Практикуйте каждый глагол в коротких примерах предложений, а не только как отдельное слово.",
+      "Чаще повторяйте глаголы, которые вы забываете, и реже повторяйте более лёгкие глаголы.",
+      "Сочетайте глаголы с распространёнными существительными, прилагательными и предлогами, чтобы составлять полезные фразы.",
+      "Используйте глаголы в устной и письменной практике, чтобы они вошли в ваш активный словарный запас."
+    ],
+    "relatedLinks": {
+      "levelTest": "Тест на уровень английского языка",
+      "englishA1": "Английская лексика уровня A1",
+      "englishA2": "Английская лексика уровня A2",
+      "englishB1": "Английская лексика уровня B1",
+      "seoHub": "Посмотреть все SEO-страницы"
+    },
+    "faq": [
+      {
+        "question": "Какие английские глаголы являются самыми распространёнными?",
+        "answer": "Самые распространённые английские глаголы — это глаголы, которые очень часто используются в повседневном общении, например be, have, do, go, make, know, think, take, see и come. Их изучение помогает понимать и составлять множество простых предложений на английском языке."
+      },
+      {
+        "question": "Почему сначала стоит выучить распространённые английские глаголы?",
+        "answer": "Распространённые глаголы полезны, потому что они встречаются в самых разных ситуациях. Если вы выучите их на раннем этапе, то сможете понимать больше разговоров и текстов, даже если ещё не знаете тысячи менее употребительных слов."
+      },
+      {
+        "question": "Достаточно ли этих глаголов для начинающих?",
+        "answer": "Эти 100 глаголов не охватывают весь английский язык, но создают прочную основу. Начинающие могут использовать их для составления простых предложений и понимания многих повседневных выражений."
+      },
+      {
+        "question": "Как практиковать эти английские глаголы?",
+        "answer": "Вы можете практиковаться, просматривая список, открывая отдельные страницы слов, составляя примеры предложений, повторяя сложные глаголы и регулярно выполняя упражнения для изучения лексики."
+      },
+      {
+        "question": "К какому уровню CEFR относятся эти английские глаголы?",
+        "answer": "Многие распространённые английские глаголы относятся к уровням A1 или A2, поскольку они необходимы для базового общения. Некоторые глаголы могут относиться к более высоким уровням в зависимости от их значения, употребления или сложности."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "en",
+    "title": "100 Most Common German Verbs",
+    "metaTitle": "100 Most Common German Verbs with Meanings",
+    "metaDescription": "Learn 100 common German verbs with English meanings, CEFR levels, word pages, translations, and practical exercises for effective vocabulary study.",
+    "heroSubtitle": "Build stronger German sentences by mastering the verbs used in everyday speech, writing, and communication.",
+    "introParagraphs": [
+      "Verbs are essential for expressing actions, states, intentions, and opinions in German. Learning high-frequency verbs helps you form useful sentences and understand everyday conversations more quickly.",
+      "This list contains 100 frequently used German verbs selected for practical vocabulary learning. It includes important regular and irregular verbs, modal verbs such as können and müssen, separable verbs such as aufstehen, and common auxiliaries such as haben and sein.",
+      "Use the list to review meanings, compare CEFR levels, and open individual word pages for more detailed translations and information. You can also search for specific verbs, filter them by level, and practise them with FluentStellar’s learning tools."
+    ],
+    "stats": {
+      "verbs": "100 verbs",
+      "language": "German",
+      "level": "CEFR-based levels",
+      "practice": "Practice available"
+    },
+    "sections": {
+      "statsHeading": "List overview",
+      "verbListHeading": "100 Common German Verbs",
+      "learningTipsHeading": "How to Learn German Verbs",
+      "relatedLinksHeading": "Related German Vocabulary Pages",
+      "faqHeading": "Frequently Asked Questions"
+    },
+    "buttons": {
+      "startPractice": "Practise German",
+      "takeLevelTest": "Take the German Level Test"
+    },
+    "filters": {
+      "searchPlaceholder": "Search German verbs",
+      "cefrLabel": "CEFR level",
+      "allLevels": "All levels"
+    },
+    "table": {
+      "number": "No.",
+      "verb": "German verb",
+      "definition": "English meaning",
+      "wordPage": "View word",
+      "noResults": "No matching German verbs found."
+    },
+    "learningTips": [
+      "Study a small group of German verbs each day instead of trying to memorise the entire list at once.",
+      "Learn each verb in a complete sentence so that you remember its meaning, word order, and typical context.",
+      "Practise the present tense and key past forms of irregular verbs, including the auxiliary used in the Perfekt tense.",
+      "Review verbs at increasing intervals so that difficult forms return more often than verbs you already know well.",
+      "Use new verbs actively by writing short German sentences or saying them aloud with different subjects."
+    ],
+    "relatedLinks": {
+      "levelTest": "German Level Test",
+      "englishA1": "German A1 Vocabulary",
+      "englishA2": "German A2 Vocabulary",
+      "englishB1": "German B1 Vocabulary",
+      "seoHub": "All Vocabulary Pages"
+    },
+    "faq": [
+      {
+        "question": "Which verbs are among the most common in German?",
+        "answer": "Frequently used German verbs include sein, haben, werden, machen, gehen, kommen, können, müssen, sagen, and wissen. The exact order can vary by corpus, meaning, and context, so this list is intended as a practical learning selection rather than an official definitive ranking."
+      },
+      {
+        "question": "Why should I learn common German verbs first?",
+        "answer": "Common verbs appear repeatedly in conversations, instructions, stories, and everyday texts, so learning them gives you more immediate communicative value. They also help you understand important German structures, including modal constructions, the Perfekt tense, and sentences with separable prefixes."
+      },
+      {
+        "question": "Are these 100 German verbs enough for a beginner?",
+        "answer": "These 100 verbs provide a strong foundation, but they are not enough for complete beginner-level communication on their own. You will also need nouns, adjectives, prepositions, sentence patterns, and the different meanings that a single German verb can have."
+      },
+      {
+        "question": "How can I practise these German verbs effectively?",
+        "answer": "Practise each verb with its meaning, a short example sentence, and its most useful conjugated forms. Pay special attention to irregular stem changes, separable prefixes, and whether the Perfekt form uses haben or sein, then review the verbs regularly through speaking, writing, and exercises."
+      },
+      {
+        "question": "Which CEFR levels do these German verbs belong to?",
+        "answer": "Many highly frequent German verbs are introduced at A1 or A2, while additional meanings and more complex uses may appear at B1 or above. A verb does not always belong to only one CEFR level, because its level can depend on the meaning, grammatical construction, and context in which it is used."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "es",
+    "title": "Los 100 verbos más comunes en alemán",
+    "metaTitle": "100 verbos comunes en alemán con significado",
+    "metaDescription": "Aprende 100 verbos comunes en alemán con significado en español, niveles MCER, traducciones, páginas de vocabulario y ejercicios prácticos.",
+    "heroSubtitle": "Domina los verbos esenciales para comprender y formar frases útiles en alemán.",
+    "introParagraphs": [
+      "Los verbos son fundamentales para expresar acciones, estados, intenciones y opiniones en alemán. Aprender primero los verbos de uso frecuente te ayuda a construir frases útiles y a comprender mejor las conversaciones cotidianas.",
+      "Esta lista reúne 100 verbos alemanes frecuentes seleccionados por su utilidad práctica. Incluye verbos regulares e irregulares, verbos modales como können y müssen, verbos separables como aufstehen y auxiliares esenciales como haben y sein.",
+      "Utiliza la lista para consultar significados, comparar niveles del MCER y abrir la página individual de cada verbo para ver más información y traducciones. También puedes buscar verbos concretos, filtrarlos por nivel y practicarlos con las herramientas de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Alemán",
+      "level": "Niveles basados en el MCER",
+      "practice": "Práctica disponible"
+    },
+    "sections": {
+      "statsHeading": "Resumen de la lista",
+      "verbListHeading": "100 verbos comunes en alemán",
+      "learningTipsHeading": "Cómo aprender los verbos alemanes",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulario alemán",
+      "faqHeading": "Preguntas frecuentes"
+    },
+    "buttons": {
+      "startPractice": "Practicar alemán",
+      "takeLevelTest": "Hacer la prueba de nivel de alemán"
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar verbos en alemán",
+      "cefrLabel": "Nivel del MCER",
+      "allLevels": "Todos los niveles"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo en alemán",
+      "definition": "Significado en español",
+      "wordPage": "Ver ficha",
+      "noResults": "No se encontraron verbos alemanes que coincidan con la búsqueda."
+    },
+    "learningTips": [
+      "Estudia cada día un grupo pequeño de verbos alemanes en lugar de intentar memorizar toda la lista de una vez.",
+      "Aprende cada verbo dentro de una frase completa para recordar su significado, su posición y su contexto habitual.",
+      "Practica la conjugación de los verbos irregulares y memoriza qué auxiliar usan en el tiempo Perfekt.",
+      "Repasa los verbos con intervalos cada vez mayores y vuelve con más frecuencia a los que te resulten difíciles.",
+      "Usa los verbos nuevos de forma activa escribiendo frases breves o pronunciándolas con distintos sujetos."
+    ],
+    "relatedLinks": {
+      "levelTest": "Prueba de nivel de alemán",
+      "englishA1": "Vocabulario de alemán A1",
+      "englishA2": "Vocabulario de alemán A2",
+      "englishB1": "Vocabulario de alemán B1",
+      "seoHub": "Todas las páginas de vocabulario"
+    },
+    "faq": [
+      {
+        "question": "¿Qué verbos se encuentran entre los más comunes en alemán?",
+        "answer": "Entre los verbos alemanes de uso frecuente se encuentran sein, haben, werden, machen, gehen, kommen, können, müssen, sagen y wissen. El orden exacto puede variar según el corpus, el significado y el contexto, por lo que esta lista es una selección práctica y no una clasificación oficial definitiva."
+      },
+      {
+        "question": "¿Por qué conviene aprender primero los verbos alemanes más comunes?",
+        "answer": "Estos verbos aparecen constantemente en conversaciones, instrucciones, relatos y textos cotidianos, por lo que ofrecen una utilidad inmediata. Además, permiten familiarizarse con estructuras importantes del alemán, como los verbos modales, el tiempo Perfekt y los verbos con prefijos separables."
+      },
+      {
+        "question": "¿Son suficientes estos 100 verbos alemanes para un principiante?",
+        "answer": "Los 100 verbos proporcionan una base sólida, pero no bastan por sí solos para comunicarse con soltura. También es necesario aprender sustantivos, adjetivos, preposiciones, estructuras de frase y los distintos significados que puede tener un mismo verbo."
+      },
+      {
+        "question": "¿Cómo puedo practicar estos verbos alemanes de forma eficaz?",
+        "answer": "Estudia cada verbo junto con su significado, una frase breve y sus formas conjugadas más útiles. Presta especial atención a los cambios irregulares de la raíz, los prefijos separables y el uso de haben o sein en el Perfekt, y practica después mediante ejercicios, escritura y expresión oral."
+      },
+      {
+        "question": "¿A qué niveles del MCER pertenecen estos verbos alemanes?",
+        "answer": "Muchos verbos alemanes muy frecuentes se introducen en A1 o A2, mientras que algunos significados y usos más complejos aparecen en B1 o niveles superiores. Un verbo no siempre corresponde a un único nivel, ya que su clasificación puede variar según el significado, la construcción gramatical y el contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "fr",
+    "title": "Les 100 verbes allemands les plus courants",
+    "metaTitle": "100 verbes allemands courants avec leur sens",
+    "metaDescription": "Apprenez 100 verbes allemands courants avec leur sens en français, leur niveau CECRL, des traductions et des exercices pratiques.",
+    "heroSubtitle": "Maîtrisez les verbes essentiels pour comprendre l’allemand et construire des phrases utiles au quotidien.",
+    "introParagraphs": [
+      "Les verbes sont indispensables pour exprimer des actions, des états, des intentions et des opinions en allemand. Apprendre d’abord les verbes les plus fréquents permet de former rapidement des phrases utiles et de mieux comprendre les conversations courantes.",
+      "Cette liste rassemble 100 verbes allemands fréquemment employés, sélectionnés pour leur utilité pratique. Elle comprend des verbes réguliers et irréguliers, des verbes modaux comme können et müssen, des verbes à particule séparable comme aufstehen, ainsi que les auxiliaires essentiels haben et sein.",
+      "Utilisez cette page pour consulter les significations, comparer les niveaux du CECRL et ouvrir la fiche détaillée de chaque verbe afin de voir ses traductions et d’autres informations utiles. Vous pouvez également rechercher un verbe précis, filtrer la liste par niveau et vous entraîner avec les outils de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbes",
+      "language": "Allemand",
+      "level": "Niveaux fondés sur le CECRL",
+      "practice": "Exercices disponibles"
+    },
+    "sections": {
+      "statsHeading": "Aperçu de la liste",
+      "verbListHeading": "100 verbes allemands courants",
+      "learningTipsHeading": "Comment apprendre les verbes allemands",
+      "relatedLinksHeading": "Pages connexes de vocabulaire allemand",
+      "faqHeading": "Questions fréquentes"
+    },
+    "buttons": {
+      "startPractice": "Pratiquer l’allemand",
+      "takeLevelTest": "Faire le test de niveau d’allemand"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher un verbe allemand",
+      "cefrLabel": "Niveau CECRL",
+      "allLevels": "Tous les niveaux"
+    },
+    "table": {
+      "number": "N°",
+      "verb": "Verbe allemand",
+      "definition": "Sens en français",
+      "wordPage": "Voir la fiche",
+      "noResults": "Aucun verbe allemand ne correspond à votre recherche."
+    },
+    "learningTips": [
+      "Étudiez chaque jour un petit groupe de verbes allemands au lieu d’essayer de mémoriser toute la liste en une seule fois.",
+      "Apprenez chaque verbe dans une phrase complète afin de retenir son sens, sa place dans la phrase et son contexte habituel.",
+      "Entraînez-vous à conjuguer les verbes irréguliers et mémorisez l’auxiliaire utilisé avec chacun d’eux au Perfekt.",
+      "Révisez les verbes à intervalles espacés et revenez plus souvent sur ceux dont les formes ou le sens restent difficiles.",
+      "Employez activement les nouveaux verbes en écrivant de courtes phrases ou en les prononçant avec différents sujets."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test de niveau d’allemand",
+      "englishA1": "Vocabulaire allemand A1",
+      "englishA2": "Vocabulaire allemand A2",
+      "englishB1": "Vocabulaire allemand B1",
+      "seoHub": "Toutes les pages de vocabulaire"
+    },
+    "faq": [
+      {
+        "question": "Quels verbes figurent parmi les plus courants en allemand ?",
+        "answer": "Parmi les verbes allemands fréquemment utilisés, on trouve sein, haben, werden, machen, gehen, kommen, können, müssen, sagen et wissen. Leur ordre exact peut varier selon le corpus, le sens et le contexte, de sorte que cette liste constitue une sélection pratique plutôt qu’un classement officiel définitif."
+      },
+      {
+        "question": "Pourquoi apprendre d’abord les verbes allemands les plus courants ?",
+        "answer": "Ces verbes reviennent souvent dans les conversations, les consignes, les récits et les textes du quotidien, ce qui leur donne une utilité immédiate. Ils permettent aussi de se familiariser avec des structures importantes de l’allemand, comme les verbes modaux, le Perfekt et les verbes à particule séparable."
+      },
+      {
+        "question": "Ces 100 verbes allemands suffisent-ils à un débutant ?",
+        "answer": "Ces 100 verbes offrent une base solide, mais ils ne suffisent pas à eux seuls pour communiquer avec aisance. Il faut également apprendre des noms, des adjectifs, des prépositions, des structures de phrase et les différents sens qu’un même verbe peut prendre."
+      },
+      {
+        "question": "Comment pratiquer efficacement ces verbes allemands ?",
+        "answer": "Apprenez chaque verbe avec son sens, une phrase courte et ses formes conjuguées les plus utiles. Accordez une attention particulière aux changements de radical, aux particules séparables et au choix entre haben et sein au Perfekt, puis réutilisez les verbes à l’oral, à l’écrit et dans des exercices."
+      },
+      {
+        "question": "À quels niveaux du CECRL appartiennent ces verbes allemands ?",
+        "answer": "De nombreux verbes allemands très fréquents sont introduits aux niveaux A1 ou A2, tandis que certains sens et emplois plus complexes apparaissent en B1 ou au-delà. Un même verbe ne correspond pas toujours à un seul niveau, car son classement peut varier selon le sens, la construction grammaticale et le contexte."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "de",
+    "title": "Die 100 häufigsten deutschen Verben",
+    "metaTitle": "100 häufige deutsche Verben mit Bedeutungen",
+    "metaDescription": "Lerne 100 häufige deutsche Verben mit Bedeutungen, GER-Niveaus, Übersetzungen, Wortseiten und praktischen Übungen.",
+    "heroSubtitle": "Lerne zentrale Verben, mit denen du deutsche Sätze im Alltag sicher verstehen und bilden kannst.",
+    "introParagraphs": [
+      "Verben bilden das Zentrum vieler deutscher Sätze, denn sie drücken Handlungen, Zustände, Absichten und Meinungen aus. Wer häufig verwendete Verben beherrscht, kann schneller eigene Aussagen formulieren und gesprochene sowie geschriebene Sprache besser verstehen.",
+      "Diese Liste enthält 100 häufig gebrauchte deutsche Verben, die nach ihrem praktischen Nutzen für Lernende ausgewählt wurden. Dazu gehören regelmäßige und unregelmäßige Verben, Modalverben wie können und müssen, trennbare Verben wie aufstehen sowie wichtige Hilfsverben wie haben, sein und werden.",
+      "Nutze die Liste, um Bedeutungen nachzuschlagen, GER-Niveaus zu vergleichen und die einzelnen Wortseiten mit Übersetzungen und weiteren Informationen zu öffnen. Du kannst außerdem gezielt nach Verben suchen, die Liste nach Sprachniveau filtern und die Wörter mit den Übungen von FluentStellar wiederholen."
+    ],
+    "stats": {
+      "verbs": "100 Verben",
+      "language": "Deutsch",
+      "level": "Niveaus nach dem GER",
+      "practice": "Übungen verfügbar"
+    },
+    "sections": {
+      "statsHeading": "Übersicht",
+      "verbListHeading": "100 häufige deutsche Verben",
+      "learningTipsHeading": "So lernst du deutsche Verben",
+      "relatedLinksHeading": "Weitere Seiten zum deutschen Wortschatz",
+      "faqHeading": "Häufig gestellte Fragen"
+    },
+    "buttons": {
+      "startPractice": "Deutsch üben",
+      "takeLevelTest": "Deutsch-Einstufungstest machen"
+    },
+    "filters": {
+      "searchPlaceholder": "Deutsche Verben suchen",
+      "cefrLabel": "GER-Niveau",
+      "allLevels": "Alle Niveaus"
+    },
+    "table": {
+      "number": "Nr.",
+      "verb": "Deutsches Verb",
+      "definition": "Bedeutung",
+      "wordPage": "Wortseite öffnen",
+      "noResults": "Keine passenden deutschen Verben gefunden."
+    },
+    "learningTips": [
+      "Lerne täglich nur eine kleine Gruppe deutscher Verben, damit du ihre Bedeutungen und Formen zuverlässig behältst.",
+      "Merke dir jedes Verb in einem vollständigen Beispielsatz, um zugleich seine Bedeutung und Stellung im Satz zu verstehen.",
+      "Übe bei unregelmäßigen Verben die wichtigsten Stammformen und lerne, ob das Perfekt mit haben oder sein gebildet wird.",
+      "Wiederhole schwierige Verben in zunehmend größeren Abständen, während sichere Verben seltener erscheinen.",
+      "Verwende neue Verben aktiv, indem du kurze Sätze schreibst oder sie mit verschiedenen Personen laut konjugierst."
+    ],
+    "relatedLinks": {
+      "levelTest": "Deutsch-Einstufungstest",
+      "englishA1": "Deutscher Wortschatz A1",
+      "englishA2": "Deutscher Wortschatz A2",
+      "englishB1": "Deutscher Wortschatz B1",
+      "seoHub": "Alle Wortschatzseiten"
+    },
+    "faq": [
+      {
+        "question": "Welche Verben gehören zu den häufigsten deutschen Verben?",
+        "answer": "Zu den häufig gebrauchten deutschen Verben zählen sein, haben, werden, machen, gehen, kommen, können, müssen, sagen und wissen. Die genaue Reihenfolge hängt vom untersuchten Korpus, von der jeweiligen Bedeutung und vom Kontext ab, deshalb ist diese Liste als praktische Auswahl und nicht als endgültige offizielle Rangfolge zu verstehen."
+      },
+      {
+        "question": "Warum sollte ich zuerst häufige deutsche Verben lernen?",
+        "answer": "Häufige Verben begegnen dir immer wieder in Gesprächen, Anweisungen, Nachrichten und einfachen Texten. Gleichzeitig lernst du mit ihnen wichtige Strukturen des Deutschen kennen, darunter Modalverbkonstruktionen, trennbare Präfixe und die Bildung des Perfekts."
+      },
+      {
+        "question": "Reichen diese 100 deutschen Verben für Anfänger aus?",
+        "answer": "Die 100 Verben bilden eine starke Grundlage, reichen allein aber nicht für eine vollständige Kommunikation auf Anfängerniveau aus. Zusätzlich brauchst du Substantive, Adjektive, Präpositionen, grundlegende Satzmuster und Kenntnisse über die verschiedenen Bedeutungen einzelner Verben."
+      },
+      {
+        "question": "Wie kann ich diese deutschen Verben effektiv üben?",
+        "answer": "Lerne jedes Verb zusammen mit seiner Bedeutung, einem kurzen Beispielsatz und den wichtigsten konjugierten Formen. Achte besonders auf Stammvokalwechsel, trennbare Vorsilben und die Wahl zwischen haben und sein im Perfekt und verwende die Verben regelmäßig beim Sprechen und Schreiben."
+      },
+      {
+        "question": "Zu welchen GER-Niveaus gehören diese deutschen Verben?",
+        "answer": "Viele sehr häufige deutsche Verben werden bereits auf den Niveaus A1 oder A2 eingeführt, während weitere Bedeutungen und komplexere Verwendungen erst auf B1 oder höheren Stufen vorkommen können. Ein Verb gehört daher nicht immer eindeutig nur zu einem GER-Niveau, weil Bedeutung, Konstruktion und Kontext die Einstufung beeinflussen."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "it",
+    "title": "I 100 verbi tedeschi più comuni",
+    "metaTitle": "100 verbi tedeschi comuni con significato",
+    "metaDescription": "Impara 100 verbi tedeschi comuni con significato in italiano, livelli QCER, traduzioni, schede lessicali ed esercizi pratici.",
+    "heroSubtitle": "Impara i verbi essenziali per capire il tedesco e costruire frasi utili nella vita quotidiana.",
+    "introParagraphs": [
+      "I verbi sono indispensabili per esprimere azioni, stati, intenzioni e opinioni in tedesco. Conoscere quelli più frequenti permette di formare prima frasi utili e di riconoscere più facilmente le strutture ricorrenti nelle conversazioni.",
+      "Questa lista raccoglie 100 verbi tedeschi di uso frequente scelti per la loro utilità pratica. Comprende verbi regolari e irregolari, verbi modali come können e müssen, verbi separabili come aufstehen e ausiliari fondamentali come haben, sein e werden.",
+      "Usa la lista per consultare i significati, confrontare i livelli del QCER e aprire la scheda di ogni verbo con traduzioni e informazioni aggiuntive. Puoi anche cercare un verbo specifico, filtrare i risultati per livello e ripassare il lessico con gli strumenti di esercitazione di FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbi",
+      "language": "Tedesco",
+      "level": "Livelli basati sul QCER",
+      "practice": "Esercizi disponibili"
+    },
+    "sections": {
+      "statsHeading": "Panoramica della lista",
+      "verbListHeading": "100 verbi tedeschi comuni",
+      "learningTipsHeading": "Come imparare i verbi tedeschi",
+      "relatedLinksHeading": "Altre pagine di vocabolario tedesco",
+      "faqHeading": "Domande frequenti"
+    },
+    "buttons": {
+      "startPractice": "Esercitati in tedesco",
+      "takeLevelTest": "Fai il test di livello di tedesco"
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca verbi tedeschi",
+      "cefrLabel": "Livello QCER",
+      "allLevels": "Tutti i livelli"
+    },
+    "table": {
+      "number": "N.",
+      "verb": "Verbo tedesco",
+      "definition": "Significato in italiano",
+      "wordPage": "Apri la scheda",
+      "noResults": "Nessun verbo tedesco corrisponde alla ricerca."
+    },
+    "learningTips": [
+      "Studia ogni giorno un piccolo gruppo di verbi tedeschi invece di tentare di memorizzare l’intera lista in una volta.",
+      "Impara ogni verbo all’interno di una frase completa per ricordarne il significato, la posizione e il contesto d’uso.",
+      "Esercitati con le forme principali dei verbi irregolari e memorizza se il Perfekt richiede haben oppure sein.",
+      "Ripassa i verbi a intervalli progressivi e dedica più tempo a quelli che continui a confondere.",
+      "Usa attivamente i nuovi verbi scrivendo brevi frasi in tedesco o coniugandoli ad alta voce con soggetti diversi."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test di livello di tedesco",
+      "englishA1": "Vocabolario tedesco A1",
+      "englishA2": "Vocabolario tedesco A2",
+      "englishB1": "Vocabolario tedesco B1",
+      "seoHub": "Tutte le pagine di vocabolario"
+    },
+    "faq": [
+      {
+        "question": "Quali sono alcuni dei verbi più comuni in tedesco?",
+        "answer": "Tra i verbi tedeschi usati frequentemente figurano sein, haben, werden, machen, gehen, kommen, können, müssen, sagen e wissen. L’ordine preciso può cambiare in base al corpus, al significato e al contesto, quindi questa lista va considerata una selezione pratica e non una graduatoria ufficiale definitiva."
+      },
+      {
+        "question": "Perché conviene imparare prima i verbi tedeschi più comuni?",
+        "answer": "Questi verbi ricorrono spesso nelle conversazioni, nelle istruzioni, nei racconti e nei testi quotidiani, offrendo quindi un’utilità immediata. Permettono inoltre di familiarizzare con strutture tipiche del tedesco, come i verbi modali, i prefissi separabili e la formazione del Perfekt."
+      },
+      {
+        "question": "Questi 100 verbi tedeschi sono sufficienti per un principiante?",
+        "answer": "I 100 verbi costituiscono una base importante, ma da soli non bastano per comunicare in modo completo. Un principiante deve imparare anche sostantivi, aggettivi, preposizioni, modelli di frase e i diversi significati che uno stesso verbo può assumere."
+      },
+      {
+        "question": "Come posso esercitarmi efficacemente con questi verbi tedeschi?",
+        "answer": "Studia ogni verbo insieme al significato, a una frase breve e alle forme coniugate più utili. Presta particolare attenzione ai cambiamenti della radice, ai prefissi separabili e alla scelta tra haben e sein nel Perfekt, poi riutilizza i verbi parlando e scrivendo."
+      },
+      {
+        "question": "A quali livelli QCER appartengono questi verbi tedeschi?",
+        "answer": "Molti verbi tedeschi molto frequenti vengono introdotti nei livelli A1 o A2, mentre significati secondari e costruzioni più complesse possono comparire dal B1 in poi. Un verbo non appartiene necessariamente a un solo livello, perché la classificazione può variare in base al significato, alla struttura grammaticale e al contesto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "pt",
+    "title": "Os 100 verbos alemães mais comuns",
+    "metaTitle": "100 verbos alemães comuns com significados",
+    "metaDescription": "Aprenda 100 verbos alemães comuns com significados em português, níveis do QECR, traduções, páginas de palavras e exercícios práticos.",
+    "heroSubtitle": "Domine verbos essenciais para compreender alemão e formar frases úteis no dia a dia.",
+    "introParagraphs": [
+      "Os verbos são fundamentais para expressar ações, estados, intenções e opiniões em alemão. Aprender primeiro os verbos mais frequentes ajuda a construir frases úteis e a compreender com mais facilidade conversas e textos do cotidiano.",
+      "Esta lista reúne 100 verbos alemães de uso frequente, selecionados por sua utilidade prática para estudantes. Ela inclui verbos regulares e irregulares, verbos modais como können e müssen, verbos separáveis como aufstehen e auxiliares essenciais como haben, sein e werden.",
+      "Use a lista para consultar significados, comparar níveis do QECR e abrir a página individual de cada verbo para ver traduções e outras informações. Também é possível pesquisar verbos específicos, filtrar a lista por nível e praticar o vocabulário com as ferramentas do FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Alemão",
+      "level": "Níveis baseados no QECR",
+      "practice": "Exercícios disponíveis"
+    },
+    "sections": {
+      "statsHeading": "Visão geral da lista",
+      "verbListHeading": "100 verbos alemães comuns",
+      "learningTipsHeading": "Como aprender verbos alemães",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulário alemão",
+      "faqHeading": "Perguntas frequentes"
+    },
+    "buttons": {
+      "startPractice": "Praticar alemão",
+      "takeLevelTest": "Fazer o teste de nível de alemão"
+    },
+    "filters": {
+      "searchPlaceholder": "Pesquisar verbos em alemão",
+      "cefrLabel": "Nível do QECR",
+      "allLevels": "Todos os níveis"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo em alemão",
+      "definition": "Significado em português",
+      "wordPage": "Ver página",
+      "noResults": "Nenhum verbo alemão correspondente foi encontrado."
+    },
+    "learningTips": [
+      "Estude diariamente um pequeno grupo de verbos alemães em vez de tentar memorizar toda a lista de uma só vez.",
+      "Aprenda cada verbo dentro de uma frase completa para memorizar seu significado, sua posição e seu contexto habitual.",
+      "Pratique as principais formas dos verbos irregulares e memorize se o Perfekt é formado com haben ou sein.",
+      "Revise os verbos em intervalos progressivamente maiores e retome com mais frequência aqueles que ainda causam dificuldade.",
+      "Use os novos verbos ativamente escrevendo frases curtas em alemão ou conjugando-os em voz alta com diferentes sujeitos."
+    ],
+    "relatedLinks": {
+      "levelTest": "Teste de nível de alemão",
+      "englishA1": "Vocabulário de alemão A1",
+      "englishA2": "Vocabulário de alemão A2",
+      "englishB1": "Vocabulário de alemão B1",
+      "seoHub": "Todas as páginas de vocabulário"
+    },
+    "faq": [
+      {
+        "question": "Quais verbos estão entre os mais comuns em alemão?",
+        "answer": "Entre os verbos alemães usados com frequência estão sein, haben, werden, machen, gehen, kommen, können, müssen, sagen e wissen. A ordem exata pode variar conforme o corpus, o significado e o contexto, por isso esta lista é uma seleção prática e não uma classificação oficial definitiva."
+      },
+      {
+        "question": "Por que devo aprender primeiro os verbos alemães mais comuns?",
+        "answer": "Esses verbos aparecem repetidamente em conversas, instruções, histórias e textos cotidianos, oferecendo utilidade imediata para a comunicação. Eles também ajudam a compreender estruturas importantes do alemão, como construções com verbos modais, prefixos separáveis e a formação do Perfekt."
+      },
+      {
+        "question": "Estes 100 verbos alemães são suficientes para iniciantes?",
+        "answer": "Os 100 verbos oferecem uma base sólida, mas não são suficientes, por si só, para uma comunicação completa no nível iniciante. Também é necessário aprender substantivos, adjetivos, preposições, estruturas básicas de frase e os diferentes significados que um mesmo verbo pode apresentar."
+      },
+      {
+        "question": "Como posso praticar estes verbos alemães de forma eficaz?",
+        "answer": "Estude cada verbo junto com seu significado, uma frase curta e suas formas conjugadas mais úteis. Preste atenção especial às mudanças irregulares do radical, aos prefixos separáveis e à escolha entre haben e sein no Perfekt, e depois reutilize os verbos na fala, na escrita e em exercícios."
+      },
+      {
+        "question": "A quais níveis do QECR pertencem estes verbos alemães?",
+        "answer": "Muitos verbos alemães muito frequentes são apresentados nos níveis A1 ou A2, enquanto significados adicionais e usos mais complexos podem aparecer no B1 ou em níveis superiores. Um verbo não pertence necessariamente a um único nível, pois sua classificação pode variar de acordo com o significado, a construção gramatical e o contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "ru",
+    "title": "100 самых употребительных немецких глаголов",
+    "metaTitle": "100 употребительных немецких глаголов с переводом",
+    "metaDescription": "Изучайте 100 употребительных немецких глаголов с переводом на русский, уровнями CEFR, страницами слов и практическими упражнениями.",
+    "heroSubtitle": "Освойте основные глаголы, необходимые для понимания немецкой речи и построения повседневных фраз.",
+    "introParagraphs": [
+      "Глаголы необходимы для выражения действий, состояний, намерений и мнений на немецком языке. Знание часто употребляемых глаголов помогает быстрее строить полезные предложения и лучше понимать повседневную устную и письменную речь.",
+      "В этом списке представлены 100 часто используемых немецких глаголов, отобранных с учётом их практической ценности для изучающих язык. Здесь есть правильные и неправильные глаголы, модальные глаголы können и müssen, отделяемые глаголы, например aufstehen, а также важнейшие вспомогательные глаголы haben, sein и werden.",
+      "Используйте список, чтобы проверять значения, сравнивать уровни CEFR и открывать отдельные страницы глаголов с переводами и дополнительной информацией. Вы также можете искать конкретные глаголы, фильтровать их по уровню и закреплять лексику с помощью упражнений FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 глаголов",
+      "language": "Немецкий",
+      "level": "Уровни по системе CEFR",
+      "practice": "Доступны упражнения"
+    },
+    "sections": {
+      "statsHeading": "Обзор списка",
+      "verbListHeading": "100 употребительных немецких глаголов",
+      "learningTipsHeading": "Как учить немецкие глаголы",
+      "relatedLinksHeading": "Другие страницы немецкой лексики",
+      "faqHeading": "Часто задаваемые вопросы"
+    },
+    "buttons": {
+      "startPractice": "Практиковать немецкий",
+      "takeLevelTest": "Пройти тест по немецкому языку"
+    },
+    "filters": {
+      "searchPlaceholder": "Поиск немецких глаголов",
+      "cefrLabel": "Уровень CEFR",
+      "allLevels": "Все уровни"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Немецкий глагол",
+      "definition": "Значение на русском",
+      "wordPage": "Открыть страницу",
+      "noResults": "Подходящие немецкие глаголы не найдены."
+    },
+    "learningTips": [
+      "Учите ежедневно небольшую группу немецких глаголов, а не пытайтесь запомнить весь список за один раз.",
+      "Запоминайте каждый глагол в составе полного предложения, чтобы одновременно усвоить его значение, позицию и контекст.",
+      "Практикуйте основные формы неправильных глаголов и запоминайте, используется ли с ними haben или sein в Perfekt.",
+      "Повторяйте глаголы через постепенно увеличивающиеся интервалы и чаще возвращайтесь к словам, которые вызывают трудности.",
+      "Активно используйте новые глаголы, составляя короткие предложения на немецком или спрягая их вслух с разными местоимениями."
+    ],
+    "relatedLinks": {
+      "levelTest": "Тест на уровень немецкого языка",
+      "englishA1": "Немецкая лексика уровня A1",
+      "englishA2": "Немецкая лексика уровня A2",
+      "englishB1": "Немецкая лексика уровня B1",
+      "seoHub": "Все страницы словарного запаса"
+    },
+    "faq": [
+      {
+        "question": "Какие глаголы относятся к самым употребительным в немецком языке?",
+        "answer": "К часто употребляемым немецким глаголам относятся sein, haben, werden, machen, gehen, kommen, können, müssen, sagen и wissen. Точный порядок зависит от корпуса, значения и контекста, поэтому этот список представляет собой практическую подборку, а не официальный окончательный рейтинг."
+      },
+      {
+        "question": "Почему стоит сначала учить самые употребительные немецкие глаголы?",
+        "answer": "Такие глаголы регулярно встречаются в разговорах, инструкциях, рассказах и повседневных текстах, поэтому быстро приносят практическую пользу. Одновременно они помогают освоить важные особенности немецкого языка, включая модальные конструкции, отделяемые приставки и образование Perfekt."
+      },
+      {
+        "question": "Достаточно ли этих 100 немецких глаголов для начинающего?",
+        "answer": "Эти 100 глаголов создают хорошую основу, но сами по себе не обеспечивают полноценного общения на начальном уровне. Также необходимо изучать существительные, прилагательные, предлоги, основные модели предложений и разные значения, которые может иметь один и тот же глагол."
+      },
+      {
+        "question": "Как эффективно практиковать эти немецкие глаголы?",
+        "answer": "Учите каждый глагол вместе с его значением, коротким примером и наиболее полезными формами спряжения. Особое внимание уделяйте изменениям корневой гласной, отделяемым приставкам и выбору между haben и sein в Perfekt, а затем используйте глаголы в устной и письменной практике."
+      },
+      {
+        "question": "К каким уровням CEFR относятся эти немецкие глаголы?",
+        "answer": "Многие часто употребляемые немецкие глаголы вводятся уже на уровнях A1 или A2, а дополнительные значения и более сложные конструкции могут встречаться на уровне B1 и выше. Один глагол не всегда относится только к одному уровню, поскольку классификация зависит от значения, грамматической конструкции и контекста."
+      }
+    ]
+  }
+]

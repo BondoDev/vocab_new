@@ -14,6 +14,7 @@ export {
   getGermanVerbListPath,
   resolveGermanVerbListRoute,
   type GermanVerbListContent,
+  type GermanVerbListFaqItem,
 } from "./routes";
 
 export type GermanVerbListItem = VerbListItem;
