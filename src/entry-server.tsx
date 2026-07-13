@@ -9,14 +9,7 @@ import {
 } from "./data/seo/slugs";
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/levelTests";
-import {
-  getAllEnglishVerbListPaths,
-  resolveEnglishVerbListRoute,
-} from "./data/englishVerbList";
-import {
-  getAllGermanVerbListPaths,
-  resolveGermanVerbListRoute,
-} from "./data/germanVerbList";
+import { getAllVerbListPaths, resolveVerbListRoute } from "./data/verbLists";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
@@ -193,8 +186,7 @@ export function getPrerenderRoutes(): string[] {
     ...getAllSeoHubPaths(),
     ...getAllWordSeoHubPaths(),
     ...getAllLevelTestSeoPaths(),
-    ...getAllEnglishVerbListPaths(),
-    ...getAllGermanVerbListPaths(),
+    ...getAllVerbListPaths(),
   ])];
 }
 
@@ -312,14 +304,9 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
     return levelTestRoute.uiLang;
   }
 
-  const englishVerbListRoute = resolveEnglishVerbListRoute(url);
-  if (englishVerbListRoute) {
-    return englishVerbListRoute;
-  }
-
-  const germanVerbListRoute = resolveGermanVerbListRoute(url);
-  if (germanVerbListRoute) {
-    return germanVerbListRoute;
+  const verbListRoute = resolveVerbListRoute(url);
+  if (verbListRoute) {
+    return verbListRoute.uiLang;
   }
 
   const seoHubRoute = resolveSeoHubRoute(url);

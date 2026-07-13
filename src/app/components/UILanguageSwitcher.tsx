@@ -4,11 +4,10 @@ import { Globe, ChevronDown } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
-import { getEnglishVerbListPath, resolveEnglishVerbListRoute } from "../../data/englishVerbList";
-import { getGermanVerbListPath, resolveGermanVerbListRoute } from "../../data/germanVerbList";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordSlugs";
+import { getVerbListPath, resolveVerbListRoute } from "../../data/verbLists";
 import {
   resolveWordSeoHubRoute,
   getWordSeoHubSummaryPath,
@@ -159,20 +158,9 @@ export function UILanguageSwitcher({
         }
       }
 
-      const englishVerbListRoute = resolveEnglishVerbListRoute(location.pathname);
-      if (englishVerbListRoute) {
-        const nextPath = getEnglishVerbListPath(code);
-        if (nextPath !== location.pathname) {
-          navigate(nextPath);
-        }
-        setUILanguage(code);
-        setIsOpen(false);
-        return;
-      }
-
-      const germanVerbListRoute = resolveGermanVerbListRoute(location.pathname);
-      if (germanVerbListRoute) {
-        const nextPath = getGermanVerbListPath(code);
+      const verbListRoute = resolveVerbListRoute(location.pathname);
+      if (verbListRoute) {
+        const nextPath = getVerbListPath(verbListRoute.targetLanguage, code);
         if (nextPath !== location.pathname) {
           navigate(nextPath);
         }
@@ -296,5 +284,4 @@ export function UILanguageSwitcher({
     </>
   );
 }
-
 

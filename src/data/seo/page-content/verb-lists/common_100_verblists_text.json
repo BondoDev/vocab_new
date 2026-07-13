@@ -1090,5 +1090,2735 @@
         "answer": "Многие часто употребляемые немецкие глаголы вводятся уже на уровнях A1 или A2, а дополнительные значения и более сложные конструкции могут встречаться на уровне B1 и выше. Один глагол не всегда относится только к одному уровню, поскольку классификация зависит от значения, грамматической конструкции и контекста."
       }
     ]
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "en",
+    "title": "100 Most Common Spanish Verbs",
+    "metaTitle": "100 Most Common Spanish Verbs with Meanings",
+    "metaDescription": "Learn 100 common Spanish verbs with English meanings, CEFR levels, detailed word pages, translations, and practical vocabulary exercises.",
+    "heroSubtitle": "Master essential verbs for understanding everyday Spanish and expressing actions, needs, thoughts, and experiences.",
+    "introParagraphs": [
+      "Verbs are central to Spanish because they express actions, states, wishes, opinions, and experiences while also showing who performs an action. Learning frequently used verbs gives you the foundation needed to understand conversations and build useful sentences across different situations.",
+      "This list contains 100 frequently used Spanish verbs selected for practical vocabulary study. It includes regular verbs ending in -ar, -er, and -ir, essential irregular verbs such as ser, estar, ir, and tener, as well as common reflexive verbs and verbs with stem changes.",
+      "Use the list to check English meanings, compare CEFR levels, and open individual word pages for translations and additional information. You can also search for a specific Spanish verb, filter the list by level, and reinforce your knowledge with FluentStellar’s practice tools."
+    ],
+    "stats": {
+      "verbs": "100 verbs",
+      "language": "Spanish",
+      "level": "CEFR-based levels",
+      "practice": "Practice available"
+    },
+    "sections": {
+      "statsHeading": "List overview",
+      "verbListHeading": "100 Common Spanish Verbs",
+      "learningTipsHeading": "How to Learn Spanish Verbs",
+      "relatedLinksHeading": "Related Spanish Vocabulary Pages",
+      "faqHeading": "Frequently Asked Questions"
+    },
+    "buttons": {
+      "startPractice": "Practise Spanish",
+      "takeLevelTest": "Take the Spanish Level Test"
+    },
+    "filters": {
+      "searchPlaceholder": "Search Spanish verbs",
+      "cefrLabel": "CEFR level",
+      "allLevels": "All levels"
+    },
+    "table": {
+      "number": "No.",
+      "verb": "Spanish verb",
+      "definition": "English meaning",
+      "wordPage": "View word",
+      "noResults": "No matching Spanish verbs found."
+    },
+    "learningTips": [
+      "Study a manageable group of Spanish verbs each day and review them before adding new ones.",
+      "Learn every verb in a complete sentence so that you remember its meaning, required prepositions, and natural context.",
+      "Practise irregular forms and stem-changing patterns alongside the regular -ar, -er, and -ir conjugations.",
+      "Review verbs at spaced intervals and return more frequently to forms that you confuse or forget.",
+      "Use new verbs actively by speaking or writing short sentences in different persons and tenses."
+    ],
+    "relatedLinks": {
+      "levelTest": "Spanish Level Test",
+      "englishA1": "Spanish A1 Vocabulary",
+      "englishA2": "Spanish A2 Vocabulary",
+      "englishB1": "Spanish B1 Vocabulary",
+      "seoHub": "All Vocabulary Pages"
+    },
+    "faq": [
+      {
+        "question": "Which verbs are among the most common in Spanish?",
+        "answer": "Frequently used Spanish verbs include ser, estar, tener, hacer, ir, poder, querer, decir, ver, and saber. Their exact order can vary by corpus, region, meaning, and context, so this list is a practical learning selection rather than an official definitive ranking."
+      },
+      {
+        "question": "Why should I learn common Spanish verbs first?",
+        "answer": "Common verbs appear repeatedly in everyday conversations, messages, stories, instructions, and media, so they provide immediate communicative value. They also introduce important features of Spanish, including subject-based conjugation, irregular forms, stem changes, and the distinction between ser and estar."
+      },
+      {
+        "question": "Are these 100 Spanish verbs enough for a beginner?",
+        "answer": "These 100 verbs provide a strong foundation, but they are not sufficient for complete beginner-level communication on their own. Learners also need nouns, adjectives, prepositions, common expressions, and practice with verb forms in the present and past."
+      },
+      {
+        "question": "How can I practise these Spanish verbs effectively?",
+        "answer": "Learn each verb with its meaning, a short example sentence, and the forms you are most likely to use. Pay particular attention to irregular verbs, reflexive forms, the contrast between ser and estar, and the difference between the preterite and imperfect as your level develops."
+      },
+      {
+        "question": "Which CEFR levels do these Spanish verbs belong to?",
+        "answer": "Many highly frequent Spanish verbs are introduced at A1 or A2, while additional meanings, idiomatic uses, and more complex tense patterns may appear at B1 or above. A single verb can therefore be relevant at several CEFR levels depending on its meaning, construction, and context."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "es",
+    "title": "Los 100 verbos más comunes en español",
+    "metaTitle": "100 verbos comunes en español con significado",
+    "metaDescription": "Aprende 100 verbos comunes en español con significados, niveles del MCER, páginas detalladas, traducciones y ejercicios prácticos.",
+    "heroSubtitle": "Domina los verbos esenciales para comprender el español cotidiano y expresar acciones, necesidades, ideas y experiencias.",
+    "introParagraphs": [
+      "Los verbos son el núcleo de muchas oraciones en español, ya que expresan acciones, estados, deseos, opiniones y experiencias, además de indicar quién realiza la acción. Aprender los más frecuentes permite comprender antes las conversaciones y construir mensajes útiles en distintas situaciones.",
+      "Esta lista reúne 100 verbos españoles de uso frecuente seleccionados por su utilidad práctica. Incluye verbos regulares terminados en -ar, -er e -ir, verbos irregulares fundamentales como ser, estar, ir y tener, además de verbos reflexivos y verbos con cambios vocálicos.",
+      "Utiliza la lista para consultar significados, comparar niveles del MCER y abrir la página individual de cada verbo con información y traducciones adicionales. También puedes buscar un verbo concreto, filtrar la lista por nivel y reforzar lo aprendido con las herramientas de práctica de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Español",
+      "level": "Niveles basados en el MCER",
+      "practice": "Práctica disponible"
+    },
+    "sections": {
+      "statsHeading": "Resumen de la lista",
+      "verbListHeading": "100 verbos comunes en español",
+      "learningTipsHeading": "Cómo aprender los verbos españoles",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulario español",
+      "faqHeading": "Preguntas frecuentes"
+    },
+    "buttons": {
+      "startPractice": "Practicar español",
+      "takeLevelTest": "Hacer la prueba de nivel de español"
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar verbos en español",
+      "cefrLabel": "Nivel del MCER",
+      "allLevels": "Todos los niveles"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo en español",
+      "definition": "Significado",
+      "wordPage": "Ver ficha",
+      "noResults": "No se encontraron verbos españoles que coincidan con la búsqueda."
+    },
+    "learningTips": [
+      "Estudia cada día un grupo manejable de verbos españoles y repásalos antes de añadir otros nuevos.",
+      "Aprende cada verbo dentro de una oración completa para recordar su significado, las preposiciones que requiere y su contexto natural.",
+      "Practica las formas irregulares y los cambios vocálicos junto con las conjugaciones regulares en -ar, -er e -ir.",
+      "Repasa los verbos en intervalos espaciados y vuelve con mayor frecuencia a las formas que confundas u olvides.",
+      "Utiliza activamente los nuevos verbos hablando o escribiendo frases breves con distintas personas y tiempos verbales."
+    ],
+    "relatedLinks": {
+      "levelTest": "Prueba de nivel de español",
+      "englishA1": "Vocabulario de español A1",
+      "englishA2": "Vocabulario de español A2",
+      "englishB1": "Vocabulario de español B1",
+      "seoHub": "Todas las páginas de vocabulario"
+    },
+    "faq": [
+      {
+        "question": "¿Qué verbos se encuentran entre los más comunes en español?",
+        "answer": "Entre los verbos españoles de uso frecuente se encuentran ser, estar, tener, hacer, ir, poder, querer, decir, ver y saber. El orden exacto puede variar según el corpus, la región, el significado y el contexto, por lo que esta lista es una selección práctica y no una clasificación oficial definitiva."
+      },
+      {
+        "question": "¿Por qué conviene aprender primero los verbos españoles más comunes?",
+        "answer": "Estos verbos aparecen constantemente en conversaciones, mensajes, relatos, instrucciones y medios de comunicación, por lo que ofrecen una utilidad inmediata. Además, permiten familiarizarse con aspectos esenciales del español, como la conjugación según la persona, las irregularidades, los cambios vocálicos y la diferencia entre ser y estar."
+      },
+      {
+        "question": "¿Son suficientes estos 100 verbos españoles para un principiante?",
+        "answer": "Estos 100 verbos proporcionan una base sólida, pero no bastan por sí solos para comunicarse plenamente en un nivel inicial. También es necesario aprender sustantivos, adjetivos, preposiciones, expresiones frecuentes y las formas verbales básicas del presente y del pasado."
+      },
+      {
+        "question": "¿Cómo puedo practicar estos verbos españoles de forma eficaz?",
+        "answer": "Aprende cada verbo con su significado, una frase breve y las formas que vayas a utilizar con más frecuencia. Presta especial atención a los verbos irregulares, las formas reflexivas, el contraste entre ser y estar y, a medida que avances, la diferencia entre el pretérito perfecto simple y el imperfecto."
+      },
+      {
+        "question": "¿A qué niveles del MCER pertenecen estos verbos españoles?",
+        "answer": "Muchos verbos españoles muy frecuentes se introducen en A1 o A2, mientras que otros significados, usos idiomáticos y tiempos verbales más complejos pueden aparecer en B1 o niveles superiores. Un mismo verbo puede ser relevante en varios niveles del MCER según su significado, su construcción y el contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "fr",
+    "title": "Les 100 verbes espagnols les plus courants",
+    "metaTitle": "100 verbes espagnols courants avec leur sens",
+    "metaDescription": "Apprenez 100 verbes espagnols courants avec leur sens en français, leur niveau CECRL, des traductions et des exercices pratiques.",
+    "heroSubtitle": "Maîtrisez les verbes essentiels pour comprendre l’espagnol courant et exprimer des actions, des besoins et des idées.",
+    "introParagraphs": [
+      "Les verbes sont au cœur de la langue espagnole, car ils permettent d’exprimer des actions, des états, des souhaits, des opinions et des expériences. Apprendre les verbes les plus fréquents aide à comprendre plus rapidement les échanges quotidiens et à construire des phrases utiles dans de nombreuses situations.",
+      "Cette liste rassemble 100 verbes espagnols fréquemment employés, choisis pour leur utilité pratique. Elle comprend des verbes réguliers en -ar, -er et -ir, des verbes irréguliers essentiels comme ser, estar, ir et tener, ainsi que des verbes pronominaux et des verbes à alternance vocalique.",
+      "Utilisez cette page pour consulter les significations, comparer les niveaux du CECRL et ouvrir la fiche de chaque verbe afin d’accéder à ses traductions et à des informations complémentaires. Vous pouvez également rechercher un verbe précis, filtrer la liste par niveau et consolider vos acquis avec les exercices de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbes",
+      "language": "Espagnol",
+      "level": "Niveaux fondés sur le CECRL",
+      "practice": "Exercices disponibles"
+    },
+    "sections": {
+      "statsHeading": "Aperçu de la liste",
+      "verbListHeading": "100 verbes espagnols courants",
+      "learningTipsHeading": "Comment apprendre les verbes espagnols",
+      "relatedLinksHeading": "Pages connexes de vocabulaire espagnol",
+      "faqHeading": "Questions fréquentes"
+    },
+    "buttons": {
+      "startPractice": "Pratiquer l’espagnol",
+      "takeLevelTest": "Faire le test de niveau d’espagnol"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher un verbe espagnol",
+      "cefrLabel": "Niveau CECRL",
+      "allLevels": "Tous les niveaux"
+    },
+    "table": {
+      "number": "N°",
+      "verb": "Verbe espagnol",
+      "definition": "Sens en français",
+      "wordPage": "Voir la fiche",
+      "noResults": "Aucun verbe espagnol ne correspond à votre recherche."
+    },
+    "learningTips": [
+      "Étudiez chaque jour un petit groupe de verbes espagnols et révisez-les avant d’en ajouter de nouveaux.",
+      "Apprenez chaque verbe dans une phrase complète afin de retenir son sens, les prépositions qu’il exige et son emploi naturel.",
+      "Entraînez-vous aux formes irrégulières et aux alternances vocaliques en parallèle des conjugaisons régulières en -ar, -er et -ir.",
+      "Révisez les verbes à intervalles espacés et revenez plus souvent sur les formes que vous confondez ou oubliez.",
+      "Réutilisez activement les nouveaux verbes en parlant ou en écrivant de courtes phrases à différentes personnes et à différents temps."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test de niveau d’espagnol",
+      "englishA1": "Vocabulaire espagnol A1",
+      "englishA2": "Vocabulaire espagnol A2",
+      "englishB1": "Vocabulaire espagnol B1",
+      "seoHub": "Toutes les pages de vocabulaire"
+    },
+    "faq": [
+      {
+        "question": "Quels verbes figurent parmi les plus courants en espagnol ?",
+        "answer": "Parmi les verbes espagnols fréquemment employés, on trouve ser, estar, tener, hacer, ir, poder, querer, decir, ver et saber. Leur ordre exact peut varier selon le corpus, la région, le sens et le contexte, de sorte que cette liste constitue une sélection pratique plutôt qu’un classement officiel définitif."
+      },
+      {
+        "question": "Pourquoi apprendre d’abord les verbes espagnols les plus courants ?",
+        "answer": "Ces verbes apparaissent souvent dans les conversations, les messages, les récits, les consignes et les médias, ce qui leur donne une utilité immédiate. Ils permettent aussi de se familiariser avec des aspects essentiels de l’espagnol, comme la conjugaison selon la personne, les irrégularités, les changements de voyelle et la distinction entre ser et estar."
+      },
+      {
+        "question": "Ces 100 verbes espagnols suffisent-ils à un débutant ?",
+        "answer": "Ces 100 verbes constituent une base solide, mais ils ne suffisent pas à eux seuls pour communiquer pleinement à un niveau débutant. Il faut également apprendre des noms, des adjectifs, des prépositions, des expressions courantes et les principales formes verbales du présent et du passé."
+      },
+      {
+        "question": "Comment pratiquer efficacement ces verbes espagnols ?",
+        "answer": "Apprenez chaque verbe avec son sens, une phrase courte et les formes que vous utiliserez le plus souvent. Accordez une attention particulière aux verbes irréguliers, aux formes pronominales, à la différence entre ser et estar et, à mesure que vous progressez, au contraste entre le prétérit et l’imparfait."
+      },
+      {
+        "question": "À quels niveaux du CECRL appartiennent ces verbes espagnols ?",
+        "answer": "De nombreux verbes espagnols très fréquents sont introduits aux niveaux A1 ou A2, tandis que d’autres sens, des emplois idiomatiques et des temps plus complexes peuvent apparaître en B1 ou au-delà. Un même verbe peut donc relever de plusieurs niveaux du CECRL selon son sens, sa construction et son contexte."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "de",
+    "title": "Die 100 häufigsten spanischen Verben",
+    "metaTitle": "100 häufige spanische Verben mit Bedeutungen",
+    "metaDescription": "Lerne 100 häufige spanische Verben mit deutschen Bedeutungen, GER-Niveaus, Übersetzungen, Wortseiten und praktischen Übungen.",
+    "heroSubtitle": "Lerne zentrale Verben, um alltägliches Spanisch zu verstehen und Handlungen, Wünsche und Gedanken auszudrücken.",
+    "introParagraphs": [
+      "Verben sind für das Spanische besonders wichtig, weil sie Handlungen, Zustände, Wünsche, Meinungen und Erfahrungen ausdrücken und zugleich Informationen über die handelnde Person enthalten. Wer häufige Verben beherrscht, versteht alltägliche Gespräche schneller und kann in vielen Situationen eigene Sätze bilden.",
+      "Diese Liste enthält 100 häufig gebrauchte spanische Verben, die nach ihrem praktischen Nutzen ausgewählt wurden. Dazu gehören regelmäßige Verben auf -ar, -er und -ir, wichtige unregelmäßige Verben wie ser, estar, ir und tener sowie reflexive Verben und Verben mit Stammvokalwechsel.",
+      "Nutze die Liste, um deutsche Bedeutungen nachzuschlagen, GER-Niveaus zu vergleichen und die einzelnen Wortseiten mit Übersetzungen und zusätzlichen Informationen zu öffnen. Du kannst außerdem gezielt nach spanischen Verben suchen, nach Niveau filtern und sie mit den Übungen von FluentStellar festigen."
+    ],
+    "stats": {
+      "verbs": "100 Verben",
+      "language": "Spanisch",
+      "level": "Niveaus nach dem GER",
+      "practice": "Übungen verfügbar"
+    },
+    "sections": {
+      "statsHeading": "Übersicht",
+      "verbListHeading": "100 häufige spanische Verben",
+      "learningTipsHeading": "So lernst du spanische Verben",
+      "relatedLinksHeading": "Weitere Seiten zum spanischen Wortschatz",
+      "faqHeading": "Häufig gestellte Fragen"
+    },
+    "buttons": {
+      "startPractice": "Spanisch üben",
+      "takeLevelTest": "Spanisch-Einstufungstest machen"
+    },
+    "filters": {
+      "searchPlaceholder": "Spanische Verben suchen",
+      "cefrLabel": "GER-Niveau",
+      "allLevels": "Alle Niveaus"
+    },
+    "table": {
+      "number": "Nr.",
+      "verb": "Spanisches Verb",
+      "definition": "Deutsche Bedeutung",
+      "wordPage": "Wortseite öffnen",
+      "noResults": "Keine passenden spanischen Verben gefunden."
+    },
+    "learningTips": [
+      "Lerne täglich eine überschaubare Gruppe spanischer Verben und wiederhole sie, bevor du neue hinzufügst.",
+      "Merke dir jedes Verb in einem vollständigen Satz, damit du zugleich seine Bedeutung, typische Präpositionen und den natürlichen Gebrauch lernst.",
+      "Übe unregelmäßige Formen und Stammvokalwechsel zusammen mit den regelmäßigen Konjugationen auf -ar, -er und -ir.",
+      "Wiederhole Verben in zunehmenden Abständen und kehre häufiger zu den Formen zurück, die du verwechselst oder vergisst.",
+      "Verwende neue Verben aktiv, indem du kurze Sätze mit verschiedenen Personen und Zeitformen sprichst oder schreibst."
+    ],
+    "relatedLinks": {
+      "levelTest": "Spanisch-Einstufungstest",
+      "englishA1": "Spanischer Wortschatz A1",
+      "englishA2": "Spanischer Wortschatz A2",
+      "englishB1": "Spanischer Wortschatz B1",
+      "seoHub": "Alle Wortschatzseiten"
+    },
+    "faq": [
+      {
+        "question": "Welche Verben gehören zu den häufigsten spanischen Verben?",
+        "answer": "Zu den häufig gebrauchten spanischen Verben zählen ser, estar, tener, hacer, ir, poder, querer, decir, ver und saber. Die genaue Reihenfolge hängt vom untersuchten Korpus, von der Region, der Bedeutung und dem Kontext ab, deshalb ist diese Liste als praktische Auswahl und nicht als endgültige offizielle Rangfolge zu verstehen."
+      },
+      {
+        "question": "Warum sollte ich zuerst häufige spanische Verben lernen?",
+        "answer": "Häufige Verben begegnen dir regelmäßig in Gesprächen, Nachrichten, Erzählungen, Anweisungen und Medien und sind deshalb sofort praktisch nutzbar. Gleichzeitig lernst du mit ihnen zentrale Merkmale des Spanischen kennen, etwa die Konjugation nach Personen, unregelmäßige Formen, Stammvokalwechsel und den Unterschied zwischen ser und estar."
+      },
+      {
+        "question": "Reichen diese 100 spanischen Verben für Anfänger aus?",
+        "answer": "Diese 100 Verben bilden eine solide Grundlage, reichen allein aber nicht für eine vollständige Kommunikation auf Anfängerniveau aus. Zusätzlich brauchst du Substantive, Adjektive, Präpositionen, häufige Wendungen und Übung mit grundlegenden Verbformen in Gegenwart und Vergangenheit."
+      },
+      {
+        "question": "Wie kann ich diese spanischen Verben effektiv üben?",
+        "answer": "Lerne jedes Verb zusammen mit seiner Bedeutung, einem kurzen Beispielsatz und den Formen, die du am häufigsten verwenden wirst. Achte besonders auf unregelmäßige Verben, reflexive Formen, den Unterschied zwischen ser und estar sowie später auf den Gebrauch von Pretérito indefinido und Imperfecto."
+      },
+      {
+        "question": "Zu welchen GER-Niveaus gehören diese spanischen Verben?",
+        "answer": "Viele sehr häufige spanische Verben werden bereits auf den Niveaus A1 oder A2 eingeführt, während zusätzliche Bedeutungen, idiomatische Verwendungen und komplexere Zeitformen erst auf B1 oder höheren Stufen vorkommen können. Ein Verb kann daher je nach Bedeutung, Konstruktion und Kontext mehreren GER-Niveaus zugeordnet werden."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "it",
+    "title": "I 100 verbi spagnoli più comuni",
+    "metaTitle": "100 verbi spagnoli comuni con significato",
+    "metaDescription": "Impara 100 verbi spagnoli comuni con significato in italiano, livelli QCER, traduzioni, schede lessicali ed esercizi pratici.",
+    "heroSubtitle": "Impara i verbi essenziali per capire lo spagnolo quotidiano ed esprimere azioni, bisogni, idee ed esperienze.",
+    "introParagraphs": [
+      "I verbi sono fondamentali in spagnolo perché esprimono azioni, stati, desideri, opinioni ed esperienze, indicando anche chi compie l’azione. Conoscere quelli più frequenti aiuta a comprendere prima le conversazioni e a costruire frasi utili in molte situazioni.",
+      "Questa lista raccoglie 100 verbi spagnoli di uso frequente scelti per la loro utilità pratica. Comprende verbi regolari in -ar, -er e -ir, verbi irregolari essenziali come ser, estar, ir e tener, oltre a verbi riflessivi e verbi con alternanza vocalica.",
+      "Usa la lista per consultare i significati in italiano, confrontare i livelli del QCER e aprire la scheda di ogni verbo con traduzioni e informazioni aggiuntive. Puoi anche cercare un verbo specifico, filtrare i risultati per livello e consolidare ciò che hai imparato con gli esercizi di FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbi",
+      "language": "Spagnolo",
+      "level": "Livelli basati sul QCER",
+      "practice": "Esercizi disponibili"
+    },
+    "sections": {
+      "statsHeading": "Panoramica della lista",
+      "verbListHeading": "100 verbi spagnoli comuni",
+      "learningTipsHeading": "Come imparare i verbi spagnoli",
+      "relatedLinksHeading": "Altre pagine di vocabolario spagnolo",
+      "faqHeading": "Domande frequenti"
+    },
+    "buttons": {
+      "startPractice": "Esercitati in spagnolo",
+      "takeLevelTest": "Fai il test di livello di spagnolo"
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca verbi spagnoli",
+      "cefrLabel": "Livello QCER",
+      "allLevels": "Tutti i livelli"
+    },
+    "table": {
+      "number": "N.",
+      "verb": "Verbo spagnolo",
+      "definition": "Significato in italiano",
+      "wordPage": "Apri la scheda",
+      "noResults": "Nessun verbo spagnolo corrisponde alla ricerca."
+    },
+    "learningTips": [
+      "Studia ogni giorno un gruppo gestibile di verbi spagnoli e ripassali prima di aggiungerne di nuovi.",
+      "Impara ogni verbo in una frase completa per ricordarne il significato, le preposizioni richieste e l’uso naturale.",
+      "Esercitati con le forme irregolari e le alternanze vocaliche insieme alle coniugazioni regolari in -ar, -er e -ir.",
+      "Ripassa i verbi a intervalli progressivi e torna più spesso sulle forme che confondi o dimentichi.",
+      "Usa attivamente i nuovi verbi parlando o scrivendo brevi frasi con persone e tempi verbali diversi."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test di livello di spagnolo",
+      "englishA1": "Vocabolario spagnolo A1",
+      "englishA2": "Vocabolario spagnolo A2",
+      "englishB1": "Vocabolario spagnolo B1",
+      "seoHub": "Tutte le pagine di vocabolario"
+    },
+    "faq": [
+      {
+        "question": "Quali sono alcuni dei verbi più comuni in spagnolo?",
+        "answer": "Tra i verbi spagnoli usati frequentemente figurano ser, estar, tener, hacer, ir, poder, querer, decir, ver e saber. L’ordine preciso può variare in base al corpus, alla regione, al significato e al contesto, quindi questa lista è una selezione pratica e non una graduatoria ufficiale definitiva."
+      },
+      {
+        "question": "Perché conviene imparare prima i verbi spagnoli più comuni?",
+        "answer": "Questi verbi ricorrono spesso nelle conversazioni, nei messaggi, nei racconti, nelle istruzioni e nei media, offrendo quindi un’utilità immediata. Aiutano inoltre a familiarizzare con aspetti centrali dello spagnolo, come la coniugazione in base alla persona, le irregolarità, i cambi vocalici e la distinzione tra ser ed estar."
+      },
+      {
+        "question": "Questi 100 verbi spagnoli sono sufficienti per un principiante?",
+        "answer": "I 100 verbi costituiscono una base solida, ma da soli non bastano per comunicare pienamente a un livello iniziale. È necessario imparare anche sostantivi, aggettivi, preposizioni, espressioni frequenti e le principali forme verbali del presente e del passato."
+      },
+      {
+        "question": "Come posso esercitarmi efficacemente con questi verbi spagnoli?",
+        "answer": "Studia ogni verbo insieme al suo significato, a una frase breve e alle forme che userai più spesso. Presta particolare attenzione ai verbi irregolari, alle forme riflessive, alla differenza tra ser ed estar e, con il progredire del livello, al contrasto tra pretérito indefinido e imperfecto."
+      },
+      {
+        "question": "A quali livelli QCER appartengono questi verbi spagnoli?",
+        "answer": "Molti verbi spagnoli molto frequenti vengono introdotti nei livelli A1 o A2, mentre significati aggiuntivi, usi idiomatici e tempi più complessi possono comparire dal B1 in poi. Uno stesso verbo può quindi essere rilevante a più livelli del QCER in base al significato, alla costruzione e al contesto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "pt",
+    "title": "Os 100 verbos espanhóis mais comuns",
+    "metaTitle": "100 verbos espanhóis comuns com significados",
+    "metaDescription": "Aprenda 100 verbos espanhóis comuns com significados em português, níveis do QECR, traduções, páginas de palavras e exercícios práticos.",
+    "heroSubtitle": "Domine verbos essenciais para compreender o espanhol cotidiano e expressar ações, necessidades, ideias e experiências.",
+    "introParagraphs": [
+      "Os verbos são fundamentais no espanhol porque expressam ações, estados, desejos, opiniões e experiências, além de indicarem quem realiza a ação. Aprender primeiro os verbos mais frequentes ajuda a compreender conversas mais rapidamente e a construir frases úteis em diferentes situações.",
+      "Esta lista reúne 100 verbos espanhóis de uso frequente, selecionados por sua utilidade prática. Ela inclui verbos regulares terminados em -ar, -er e -ir, verbos irregulares essenciais como ser, estar, ir e tener, além de verbos reflexivos e verbos com alterações vocálicas.",
+      "Use a lista para consultar significados em português, comparar níveis do QECR e abrir a página individual de cada verbo com traduções e outras informações. Também é possível pesquisar um verbo específico, filtrar a lista por nível e reforçar o aprendizado com os exercícios do FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Espanhol",
+      "level": "Níveis baseados no QECR",
+      "practice": "Exercícios disponíveis"
+    },
+    "sections": {
+      "statsHeading": "Visão geral da lista",
+      "verbListHeading": "100 verbos espanhóis comuns",
+      "learningTipsHeading": "Como aprender verbos espanhóis",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulário espanhol",
+      "faqHeading": "Perguntas frequentes"
+    },
+    "buttons": {
+      "startPractice": "Praticar espanhol",
+      "takeLevelTest": "Fazer o teste de nível de espanhol"
+    },
+    "filters": {
+      "searchPlaceholder": "Pesquisar verbos em espanhol",
+      "cefrLabel": "Nível do QECR",
+      "allLevels": "Todos os níveis"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo em espanhol",
+      "definition": "Significado em português",
+      "wordPage": "Ver página",
+      "noResults": "Nenhum verbo espanhol correspondente foi encontrado."
+    },
+    "learningTips": [
+      "Estude diariamente um grupo pequeno de verbos espanhóis e revise-os antes de acrescentar novos.",
+      "Aprenda cada verbo dentro de uma frase completa para memorizar seu significado, as preposições exigidas e seu uso natural.",
+      "Pratique as formas irregulares e as alterações vocálicas juntamente com as conjugações regulares em -ar, -er e -ir.",
+      "Revise os verbos em intervalos progressivamente maiores e retome com mais frequência as formas que você confunde ou esquece.",
+      "Use os novos verbos ativamente ao falar ou escrever frases curtas com pessoas e tempos verbais diferentes."
+    ],
+    "relatedLinks": {
+      "levelTest": "Teste de nível de espanhol",
+      "englishA1": "Vocabulário de espanhol A1",
+      "englishA2": "Vocabulário de espanhol A2",
+      "englishB1": "Vocabulário de espanhol B1",
+      "seoHub": "Todas as páginas de vocabulário"
+    },
+    "faq": [
+      {
+        "question": "Quais verbos estão entre os mais comuns em espanhol?",
+        "answer": "Entre os verbos espanhóis usados com frequência estão ser, estar, tener, hacer, ir, poder, querer, decir, ver e saber. A ordem exata pode variar conforme o corpus, a região, o significado e o contexto, por isso esta lista é uma seleção prática e não uma classificação oficial definitiva."
+      },
+      {
+        "question": "Por que devo aprender primeiro os verbos espanhóis mais comuns?",
+        "answer": "Esses verbos aparecem repetidamente em conversas, mensagens, histórias, instruções e meios de comunicação, oferecendo utilidade imediata. Eles também ajudam a compreender características importantes do espanhol, como a conjugação de acordo com a pessoa, as formas irregulares, as mudanças vocálicas e a diferença entre ser e estar."
+      },
+      {
+        "question": "Estes 100 verbos espanhóis são suficientes para iniciantes?",
+        "answer": "Os 100 verbos oferecem uma base sólida, mas não são suficientes, por si só, para uma comunicação completa no nível iniciante. Também é necessário aprender substantivos, adjetivos, preposições, expressões frequentes e as principais formas verbais do presente e do passado."
+      },
+      {
+        "question": "Como posso praticar estes verbos espanhóis de forma eficaz?",
+        "answer": "Estude cada verbo junto com seu significado, uma frase curta e as formas que você usará com mais frequência. Preste atenção especial aos verbos irregulares, às formas reflexivas, à diferença entre ser e estar e, à medida que avançar, ao contraste entre o pretérito indefinido e o imperfeito."
+      },
+      {
+        "question": "A quais níveis do QECR pertencem estes verbos espanhóis?",
+        "answer": "Muitos verbos espanhóis muito frequentes são apresentados nos níveis A1 ou A2, enquanto significados adicionais, usos idiomáticos e tempos verbais mais complexos podem surgir no B1 ou em níveis superiores. Um mesmo verbo pode, portanto, ser relevante em vários níveis do QECR, dependendo do significado, da construção e do contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "ru",
+    "title": "100 самых употребительных испанских глаголов",
+    "metaTitle": "100 употребительных испанских глаголов с переводом",
+    "metaDescription": "Изучайте 100 употребительных испанских глаголов с переводом на русский, уровнями CEFR, страницами слов и практическими упражнениями.",
+    "heroSubtitle": "Освойте основные глаголы для понимания повседневного испанского и выражения действий, желаний, мыслей и опыта.",
+    "introParagraphs": [
+      "Глаголы играют центральную роль в испанском языке, поскольку выражают действия, состояния, желания, мнения и переживания, а их формы также указывают на лицо и число. Знание часто употребляемых глаголов помогает быстрее понимать разговорную речь и строить полезные фразы в разных ситуациях.",
+      "В этом списке представлены 100 часто используемых испанских глаголов, отобранных с учётом их практической ценности. Здесь есть правильные глаголы на -ar, -er и -ir, важные неправильные глаголы ser, estar, ir и tener, а также возвратные глаголы и глаголы с изменением корневой гласной.",
+      "Используйте список, чтобы проверять значения на русском языке, сравнивать уровни CEFR и открывать отдельные страницы глаголов с переводами и дополнительной информацией. Вы также можете искать конкретные испанские глаголы, фильтровать их по уровню и закреплять лексику с помощью упражнений FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 глаголов",
+      "language": "Испанский",
+      "level": "Уровни по системе CEFR",
+      "practice": "Доступны упражнения"
+    },
+    "sections": {
+      "statsHeading": "Обзор списка",
+      "verbListHeading": "100 употребительных испанских глаголов",
+      "learningTipsHeading": "Как учить испанские глаголы",
+      "relatedLinksHeading": "Другие страницы испанской лексики",
+      "faqHeading": "Часто задаваемые вопросы"
+    },
+    "buttons": {
+      "startPractice": "Практиковать испанский",
+      "takeLevelTest": "Пройти тест по испанскому языку"
+    },
+    "filters": {
+      "searchPlaceholder": "Поиск испанских глаголов",
+      "cefrLabel": "Уровень CEFR",
+      "allLevels": "Все уровни"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Испанский глагол",
+      "definition": "Значение на русском",
+      "wordPage": "Открыть страницу",
+      "noResults": "Подходящие испанские глаголы не найдены."
+    },
+    "learningTips": [
+      "Учите ежедневно небольшую группу испанских глаголов и повторяйте её перед добавлением новых слов.",
+      "Запоминайте каждый глагол в составе полного предложения, чтобы усвоить его значение, типичные предлоги и естественный контекст.",
+      "Практикуйте неправильные формы и изменения корневых гласных вместе с правильными спряжениями на -ar, -er и -ir.",
+      "Повторяйте глаголы через постепенно увеличивающиеся интервалы и чаще возвращайтесь к формам, которые вы путаете или забываете.",
+      "Активно используйте новые глаголы, составляя короткие устные и письменные фразы с разными лицами и временами."
+    ],
+    "relatedLinks": {
+      "levelTest": "Тест на уровень испанского языка",
+      "englishA1": "Испанская лексика уровня A1",
+      "englishA2": "Испанская лексика уровня A2",
+      "englishB1": "Испанская лексика уровня B1",
+      "seoHub": "Все страницы словарного запаса"
+    },
+    "faq": [
+      {
+        "question": "Какие глаголы относятся к самым употребительным в испанском языке?",
+        "answer": "К часто употребляемым испанским глаголам относятся ser, estar, tener, hacer, ir, poder, querer, decir, ver и saber. Точный порядок зависит от корпуса, региона, значения и контекста, поэтому этот список представляет собой практическую подборку, а не официальный окончательный рейтинг."
+      },
+      {
+        "question": "Почему стоит сначала учить самые употребительные испанские глаголы?",
+        "answer": "Эти глаголы постоянно встречаются в разговорах, сообщениях, рассказах, инструкциях и средствах массовой информации, поэтому быстро приносят практическую пользу. Они также помогают освоить важные особенности испанского языка, включая спряжение по лицам, неправильные формы, изменения корневых гласных и различие между ser и estar."
+      },
+      {
+        "question": "Достаточно ли этих 100 испанских глаголов для начинающего?",
+        "answer": "Эти 100 глаголов создают прочную основу, но сами по себе не обеспечивают полноценного общения на начальном уровне. Также необходимо изучать существительные, прилагательные, предлоги, распространённые выражения и основные формы настоящего и прошедшего времени."
+      },
+      {
+        "question": "Как эффективно практиковать эти испанские глаголы?",
+        "answer": "Учите каждый глагол вместе с его значением, коротким примером и наиболее полезными формами. Особое внимание уделяйте неправильным глаголам, возвратным формам, различию между ser и estar, а по мере продвижения — употреблению pretérito indefinido и imperfecto."
+      },
+      {
+        "question": "К каким уровням CEFR относятся эти испанские глаголы?",
+        "answer": "Многие часто употребляемые испанские глаголы вводятся уже на уровнях A1 или A2, а дополнительные значения, устойчивые употребления и более сложные времена могут встречаться на уровне B1 и выше. Один и тот же глагол может относиться к нескольким уровням CEFR в зависимости от значения, грамматической конструкции и контекста."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "en",
+    "title": "100 Most Common French Verbs",
+    "metaTitle": "100 Most Common French Verbs with Meanings",
+    "metaDescription": "Learn 100 common French verbs with English meanings, CEFR levels, detailed word pages, translations, and practical vocabulary exercises.",
+    "heroSubtitle": "Master essential verbs for understanding everyday French and expressing actions, needs, thoughts, and experiences.",
+    "introParagraphs": [
+      "Verbs are essential in French because they express actions, states, wishes, opinions, and experiences while also showing tense, person, and number. Learning frequently used verbs gives you a practical foundation for understanding conversations and forming useful sentences.",
+      "This list contains 100 frequently used French verbs selected for practical vocabulary learning. It includes regular -er, -ir, and -re verbs, essential irregular verbs such as être, avoir, aller, and faire, as well as common pronominal verbs and verbs used with fixed prepositions.",
+      "Use the list to check English meanings, compare CEFR levels, and open individual word pages for translations and further information. You can also search for a specific French verb, filter the list by level, and reinforce your knowledge with FluentStellar’s practice tools."
+    ],
+    "stats": {
+      "verbs": "100 verbs",
+      "language": "French",
+      "level": "CEFR-based levels",
+      "practice": "Practice available"
+    },
+    "sections": {
+      "statsHeading": "List overview",
+      "verbListHeading": "100 Common French Verbs",
+      "learningTipsHeading": "How to Learn French Verbs",
+      "relatedLinksHeading": "Related French Vocabulary Pages",
+      "faqHeading": "Frequently Asked Questions"
+    },
+    "buttons": {
+      "startPractice": "Practise French",
+      "takeLevelTest": "Take the French Level Test"
+    },
+    "filters": {
+      "searchPlaceholder": "Search French verbs",
+      "cefrLabel": "CEFR level",
+      "allLevels": "All levels"
+    },
+    "table": {
+      "number": "No.",
+      "verb": "French verb",
+      "definition": "English meaning",
+      "wordPage": "View word",
+      "noResults": "No matching French verbs found."
+    },
+    "learningTips": [
+      "Study a manageable group of French verbs each day and review them before adding new ones.",
+      "Learn every verb in a complete sentence so that you remember its meaning, required prepositions, and natural context.",
+      "Practise common irregular forms alongside the regular -er, -ir, and -re conjugation patterns.",
+      "Review verbs at spaced intervals and return more frequently to forms that you confuse or forget.",
+      "Use new verbs actively by speaking or writing short sentences in different persons and tenses."
+    ],
+    "relatedLinks": {
+      "levelTest": "French Level Test",
+      "englishA1": "French A1 Vocabulary",
+      "englishA2": "French A2 Vocabulary",
+      "englishB1": "French B1 Vocabulary",
+      "seoHub": "All Vocabulary Pages"
+    },
+    "faq": [
+      {
+        "question": "Which verbs are among the most common in French?",
+        "answer": "Frequently used French verbs include être, avoir, faire, aller, pouvoir, vouloir, devoir, dire, voir, and savoir. Their exact order can vary by corpus, meaning, register, and context, so this list is a practical learning selection rather than an official definitive ranking."
+      },
+      {
+        "question": "Why should I learn common French verbs first?",
+        "answer": "Common verbs appear repeatedly in conversations, messages, instructions, stories, and media, so they provide immediate communicative value. They also introduce key features of French, including subject-based conjugation, irregular forms, compound tenses with avoir or être, and pronominal constructions."
+      },
+      {
+        "question": "Are these 100 French verbs enough for a beginner?",
+        "answer": "These 100 verbs provide a strong foundation, but they are not sufficient for complete beginner-level communication on their own. Learners also need nouns, adjectives, prepositions, common expressions, and practice using verbs in the present and past."
+      },
+      {
+        "question": "How can I practise these French verbs effectively?",
+        "answer": "Learn each verb with its meaning, a short example sentence, and the forms you are most likely to use. Pay particular attention to irregular conjugations, pronominal verbs, required prepositions, and whether the passé composé uses avoir or être."
+      },
+      {
+        "question": "Which CEFR levels do these French verbs belong to?",
+        "answer": "Many highly frequent French verbs are introduced at A1 or A2, while additional meanings, idiomatic uses, and more complex tense patterns may appear at B1 or above. A single verb can therefore be relevant at several CEFR levels depending on its meaning, construction, and context."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "es",
+    "title": "Los 100 verbos más comunes en francés",
+    "metaTitle": "100 verbos comunes en francés con significado",
+    "metaDescription": "Aprende 100 verbos comunes en francés con significado en español, niveles del MCER, traducciones, fichas detalladas y ejercicios prácticos.",
+    "heroSubtitle": "Domina los verbos esenciales para comprender el francés cotidiano y expresar acciones, necesidades, ideas y experiencias.",
+    "introParagraphs": [
+      "Los verbos son fundamentales en francés porque expresan acciones, estados, deseos, opiniones y experiencias, además de indicar el tiempo, la persona y el número. Aprender los más frecuentes permite comprender antes las conversaciones y construir frases útiles en situaciones cotidianas.",
+      "Esta lista reúne 100 verbos franceses de uso frecuente seleccionados por su utilidad práctica. Incluye verbos regulares terminados en -er, -ir y -re, verbos irregulares esenciales como être, avoir, aller y faire, además de verbos pronominales y verbos que exigen preposiciones concretas.",
+      "Utiliza la lista para consultar significados en español, comparar niveles del MCER y abrir la página individual de cada verbo con traducciones e información adicional. También puedes buscar un verbo concreto, filtrar la lista por nivel y reforzar lo aprendido con las herramientas de práctica de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Francés",
+      "level": "Niveles basados en el MCER",
+      "practice": "Práctica disponible"
+    },
+    "sections": {
+      "statsHeading": "Resumen de la lista",
+      "verbListHeading": "100 verbos comunes en francés",
+      "learningTipsHeading": "Cómo aprender los verbos franceses",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulario francés",
+      "faqHeading": "Preguntas frecuentes"
+    },
+    "buttons": {
+      "startPractice": "Practicar francés",
+      "takeLevelTest": "Hacer la prueba de nivel de francés"
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar verbos en francés",
+      "cefrLabel": "Nivel del MCER",
+      "allLevels": "Todos los niveles"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo en francés",
+      "definition": "Significado en español",
+      "wordPage": "Ver ficha",
+      "noResults": "No se encontraron verbos franceses que coincidan con la búsqueda."
+    },
+    "learningTips": [
+      "Estudia cada día un grupo manejable de verbos franceses y repásalos antes de añadir otros nuevos.",
+      "Aprende cada verbo dentro de una oración completa para recordar su significado, las preposiciones que exige y su uso natural.",
+      "Practica las formas irregulares más frecuentes junto con los patrones regulares en -er, -ir y -re.",
+      "Repasa los verbos en intervalos espaciados y vuelve con mayor frecuencia a las formas que confundas u olvides.",
+      "Utiliza activamente los nuevos verbos hablando o escribiendo frases breves con distintas personas y tiempos verbales."
+    ],
+    "relatedLinks": {
+      "levelTest": "Prueba de nivel de francés",
+      "englishA1": "Vocabulario de francés A1",
+      "englishA2": "Vocabulario de francés A2",
+      "englishB1": "Vocabulario de francés B1",
+      "seoHub": "Todas las páginas de vocabulario"
+    },
+    "faq": [
+      {
+        "question": "¿Qué verbos se encuentran entre los más comunes en francés?",
+        "answer": "Entre los verbos franceses de uso frecuente se encuentran être, avoir, faire, aller, pouvoir, vouloir, devoir, dire, voir y savoir. El orden exacto puede variar según el corpus, el significado, el registro y el contexto, por lo que esta lista es una selección práctica y no una clasificación oficial definitiva."
+      },
+      {
+        "question": "¿Por qué conviene aprender primero los verbos franceses más comunes?",
+        "answer": "Estos verbos aparecen constantemente en conversaciones, mensajes, instrucciones, relatos y medios de comunicación, por lo que ofrecen una utilidad inmediata. Además, permiten familiarizarse con aspectos esenciales del francés, como la conjugación según la persona, las formas irregulares, los tiempos compuestos con avoir o être y las construcciones pronominales."
+      },
+      {
+        "question": "¿Son suficientes estos 100 verbos franceses para un principiante?",
+        "answer": "Estos 100 verbos proporcionan una base sólida, pero no bastan por sí solos para comunicarse plenamente en un nivel inicial. También es necesario aprender sustantivos, adjetivos, preposiciones, expresiones frecuentes y el uso de los verbos en presente y pasado."
+      },
+      {
+        "question": "¿Cómo puedo practicar estos verbos franceses de forma eficaz?",
+        "answer": "Aprende cada verbo con su significado, una frase breve y las formas que vayas a utilizar con más frecuencia. Presta especial atención a las conjugaciones irregulares, los verbos pronominales, las preposiciones exigidas y el uso de avoir o être en el passé composé."
+      },
+      {
+        "question": "¿A qué niveles del MCER pertenecen estos verbos franceses?",
+        "answer": "Muchos verbos franceses muy frecuentes se introducen en A1 o A2, mientras que otros significados, usos idiomáticos y tiempos más complejos pueden aparecer en B1 o niveles superiores. Un mismo verbo puede ser relevante en varios niveles del MCER según su significado, su construcción y el contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "fr",
+    "title": "Les 100 verbes français les plus courants",
+    "metaTitle": "100 verbes français courants avec leur sens",
+    "metaDescription": "Apprenez 100 verbes français courants avec leur sens, leur niveau CECRL, des fiches détaillées, des traductions et des exercices.",
+    "heroSubtitle": "Maîtrisez les verbes essentiels pour comprendre le français quotidien et exprimer clairement vos actions, besoins et idées.",
+    "introParagraphs": [
+      "Les verbes occupent une place centrale en français, car ils expriment les actions, les états, les intentions, les opinions et les expériences. Leur forme indique aussi la personne, le nombre, le temps et parfois le mode, ce qui rend leur maîtrise indispensable pour comprendre et produire des phrases correctes.",
+      "Cette liste rassemble 100 verbes français fréquemment employés, sélectionnés pour leur utilité pratique. Elle comprend des verbes réguliers en -er, -ir et -re, des verbes irréguliers essentiels comme être, avoir, aller et faire, ainsi que des verbes pronominaux et des verbes construits avec des prépositions précises.",
+      "Utilisez cette page pour consulter les significations, comparer les niveaux du CECRL et ouvrir la fiche de chaque verbe afin d’accéder à ses traductions et à des informations complémentaires. Vous pouvez également rechercher un verbe précis, filtrer la liste par niveau et consolider vos acquis avec les outils d’entraînement de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbes",
+      "language": "Français",
+      "level": "Niveaux fondés sur le CECRL",
+      "practice": "Exercices disponibles"
+    },
+    "sections": {
+      "statsHeading": "Aperçu de la liste",
+      "verbListHeading": "100 verbes français courants",
+      "learningTipsHeading": "Comment apprendre les verbes français",
+      "relatedLinksHeading": "Pages connexes de vocabulaire français",
+      "faqHeading": "Questions fréquentes"
+    },
+    "buttons": {
+      "startPractice": "Pratiquer le français",
+      "takeLevelTest": "Faire le test de niveau de français"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher un verbe français",
+      "cefrLabel": "Niveau CECRL",
+      "allLevels": "Tous les niveaux"
+    },
+    "table": {
+      "number": "N°",
+      "verb": "Verbe français",
+      "definition": "Signification",
+      "wordPage": "Voir la fiche",
+      "noResults": "Aucun verbe français ne correspond à votre recherche."
+    },
+    "learningTips": [
+      "Étudiez chaque jour un petit groupe de verbes français et révisez-le avant d’ajouter de nouveaux mots.",
+      "Apprenez chaque verbe dans une phrase complète afin de retenir son sens, sa construction et les prépositions qu’il exige.",
+      "Entraînez-vous aux formes irrégulières les plus fréquentes en parallèle des modèles réguliers en -er, -ir et -re.",
+      "Révisez les verbes à intervalles espacés et revenez plus souvent sur les formes que vous confondez ou oubliez.",
+      "Réutilisez activement les nouveaux verbes en écrivant ou en prononçant de courtes phrases à différentes personnes et à différents temps."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test de niveau de français",
+      "englishA1": "Vocabulaire français A1",
+      "englishA2": "Vocabulaire français A2",
+      "englishB1": "Vocabulaire français B1",
+      "seoHub": "Toutes les pages de vocabulaire"
+    },
+    "faq": [
+      {
+        "question": "Quels verbes figurent parmi les plus courants en français ?",
+        "answer": "Parmi les verbes français fréquemment employés, on trouve être, avoir, faire, aller, pouvoir, vouloir, devoir, dire, voir et savoir. Leur ordre exact peut varier selon le corpus, le sens, le registre et le contexte, de sorte que cette liste constitue une sélection pratique plutôt qu’un classement officiel définitif."
+      },
+      {
+        "question": "Pourquoi apprendre d’abord les verbes français les plus courants ?",
+        "answer": "Ces verbes apparaissent souvent dans les conversations, les messages, les consignes, les récits et les médias, ce qui leur donne une utilité immédiate. Ils permettent aussi de se familiariser avec des aspects essentiels du français, comme les conjugaisons irrégulières, les temps composés avec avoir ou être et les constructions pronominales."
+      },
+      {
+        "question": "Ces 100 verbes français suffisent-ils à un débutant ?",
+        "answer": "Ces 100 verbes constituent une base solide, mais ils ne suffisent pas à eux seuls pour communiquer pleinement à un niveau débutant. Il faut également apprendre des noms, des adjectifs, des prépositions, des expressions courantes et les principales structures de phrase."
+      },
+      {
+        "question": "Comment pratiquer efficacement ces verbes français ?",
+        "answer": "Apprenez chaque verbe avec son sens, une phrase courte et les formes que vous utiliserez le plus souvent. Accordez une attention particulière aux conjugaisons irrégulières, aux verbes pronominaux, aux prépositions requises et au choix entre avoir et être au passé composé."
+      },
+      {
+        "question": "À quels niveaux du CECRL appartiennent ces verbes français ?",
+        "answer": "De nombreux verbes français très fréquents sont introduits aux niveaux A1 ou A2, tandis que d’autres sens, des emplois idiomatiques et des constructions plus complexes peuvent apparaître en B1 ou au-delà. Un même verbe peut donc relever de plusieurs niveaux du CECRL selon son sens, sa construction et son contexte."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "de",
+    "title": "Die 100 häufigsten französischen Verben",
+    "metaTitle": "100 häufige französische Verben mit Bedeutungen",
+    "metaDescription": "Lerne 100 häufige französische Verben mit deutschen Bedeutungen, GER-Niveaus, Übersetzungen, Wortseiten und praktischen Übungen.",
+    "heroSubtitle": "Lerne zentrale Verben, um alltägliches Französisch zu verstehen und Handlungen, Bedürfnisse und Gedanken auszudrücken.",
+    "introParagraphs": [
+      "Verben sind im Französischen unverzichtbar, weil sie Handlungen, Zustände, Wünsche, Meinungen und Erfahrungen ausdrücken und zugleich Person, Zahl und Zeit markieren. Wer häufige Verben sicher beherrscht, versteht Gespräche schneller und kann in vielen Alltagssituationen eigene Sätze bilden.",
+      "Diese Liste enthält 100 häufig gebrauchte französische Verben, die nach ihrem praktischen Nutzen ausgewählt wurden. Dazu gehören regelmäßige Verben auf -er, -ir und -re, wichtige unregelmäßige Verben wie être, avoir, aller und faire sowie reflexive Verben und Verben mit festen Präpositionen.",
+      "Nutze die Liste, um deutsche Bedeutungen nachzuschlagen, GER-Niveaus zu vergleichen und die einzelnen Wortseiten mit Übersetzungen und zusätzlichen Informationen zu öffnen. Du kannst außerdem gezielt nach französischen Verben suchen, nach Niveau filtern und sie mit den Übungen von FluentStellar festigen."
+    ],
+    "stats": {
+      "verbs": "100 Verben",
+      "language": "Französisch",
+      "level": "Niveaus nach dem GER",
+      "practice": "Übungen verfügbar"
+    },
+    "sections": {
+      "statsHeading": "Übersicht",
+      "verbListHeading": "100 häufige französische Verben",
+      "learningTipsHeading": "So lernst du französische Verben",
+      "relatedLinksHeading": "Weitere Seiten zum französischen Wortschatz",
+      "faqHeading": "Häufig gestellte Fragen"
+    },
+    "buttons": {
+      "startPractice": "Französisch üben",
+      "takeLevelTest": "Französisch-Einstufungstest machen"
+    },
+    "filters": {
+      "searchPlaceholder": "Französische Verben suchen",
+      "cefrLabel": "GER-Niveau",
+      "allLevels": "Alle Niveaus"
+    },
+    "table": {
+      "number": "Nr.",
+      "verb": "Französisches Verb",
+      "definition": "Deutsche Bedeutung",
+      "wordPage": "Wortseite öffnen",
+      "noResults": "Keine passenden französischen Verben gefunden."
+    },
+    "learningTips": [
+      "Lerne täglich eine überschaubare Gruppe französischer Verben und wiederhole sie, bevor du neue hinzufügst.",
+      "Merke dir jedes Verb in einem vollständigen Satz, damit du zugleich seine Bedeutung, typische Präpositionen und den natürlichen Gebrauch lernst.",
+      "Übe häufige unregelmäßige Formen zusammen mit den regelmäßigen Konjugationsmustern auf -er, -ir und -re.",
+      "Wiederhole Verben in zunehmenden Abständen und kehre häufiger zu den Formen zurück, die du verwechselst oder vergisst.",
+      "Verwende neue Verben aktiv, indem du kurze Sätze mit verschiedenen Personen und Zeitformen sprichst oder schreibst."
+    ],
+    "relatedLinks": {
+      "levelTest": "Französisch-Einstufungstest",
+      "englishA1": "Französischer Wortschatz A1",
+      "englishA2": "Französischer Wortschatz A2",
+      "englishB1": "Französischer Wortschatz B1",
+      "seoHub": "Alle Wortschatzseiten"
+    },
+    "faq": [
+      {
+        "question": "Welche Verben gehören zu den häufigsten französischen Verben?",
+        "answer": "Zu den häufig gebrauchten französischen Verben zählen être, avoir, faire, aller, pouvoir, vouloir, devoir, dire, voir und savoir. Die genaue Reihenfolge hängt vom untersuchten Korpus, von der Bedeutung, dem Sprachregister und dem Kontext ab, deshalb ist diese Liste als praktische Auswahl und nicht als endgültige offizielle Rangfolge zu verstehen."
+      },
+      {
+        "question": "Warum sollte ich zuerst häufige französische Verben lernen?",
+        "answer": "Häufige Verben begegnen dir regelmäßig in Gesprächen, Nachrichten, Anweisungen, Erzählungen und Medien und sind deshalb sofort praktisch nutzbar. Gleichzeitig lernst du mit ihnen zentrale Merkmale des Französischen kennen, darunter unregelmäßige Konjugationen, zusammengesetzte Zeiten mit avoir oder être und reflexive Konstruktionen."
+      },
+      {
+        "question": "Reichen diese 100 französischen Verben für Anfänger aus?",
+        "answer": "Diese 100 Verben bilden eine solide Grundlage, reichen allein aber nicht für eine vollständige Kommunikation auf Anfängerniveau aus. Zusätzlich brauchst du Substantive, Adjektive, Präpositionen, häufige Wendungen und grundlegende Satzmuster."
+      },
+      {
+        "question": "Wie kann ich diese französischen Verben effektiv üben?",
+        "answer": "Lerne jedes Verb zusammen mit seiner Bedeutung, einem kurzen Beispielsatz und den Formen, die du am häufigsten verwenden wirst. Achte besonders auf unregelmäßige Konjugationen, reflexive Verben, feste Präpositionen und die Wahl zwischen avoir und être im Passé composé."
+      },
+      {
+        "question": "Zu welchen GER-Niveaus gehören diese französischen Verben?",
+        "answer": "Viele sehr häufige französische Verben werden bereits auf den Niveaus A1 oder A2 eingeführt, während zusätzliche Bedeutungen, idiomatische Verwendungen und komplexere Konstruktionen erst auf B1 oder höheren Stufen vorkommen können. Ein Verb kann daher je nach Bedeutung, Konstruktion und Kontext mehreren GER-Niveaus zugeordnet werden."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "it",
+    "title": "I 100 verbi francesi più comuni",
+    "metaTitle": "100 verbi francesi comuni con significato",
+    "metaDescription": "Impara 100 verbi francesi comuni con significato in italiano, livelli QCER, traduzioni, schede lessicali ed esercizi pratici.",
+    "heroSubtitle": "Impara i verbi essenziali per capire il francese quotidiano ed esprimere azioni, bisogni, idee ed esperienze.",
+    "introParagraphs": [
+      "I verbi sono fondamentali in francese perché esprimono azioni, stati, desideri, opinioni ed esperienze, indicando anche persona, numero e tempo. Conoscere quelli più frequenti aiuta a comprendere prima le conversazioni e a costruire frasi utili in molte situazioni quotidiane.",
+      "Questa lista raccoglie 100 verbi francesi di uso frequente scelti per la loro utilità pratica. Comprende verbi regolari in -er, -ir e -re, verbi irregolari essenziali come être, avoir, aller e faire, oltre a verbi pronominali e verbi che richiedono preposizioni specifiche.",
+      "Usa la lista per consultare i significati in italiano, confrontare i livelli del QCER e aprire la scheda di ogni verbo con traduzioni e informazioni aggiuntive. Puoi anche cercare un verbo specifico, filtrare i risultati per livello e consolidare ciò che hai imparato con gli esercizi di FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbi",
+      "language": "Francese",
+      "level": "Livelli basati sul QCER",
+      "practice": "Esercizi disponibili"
+    },
+    "sections": {
+      "statsHeading": "Panoramica della lista",
+      "verbListHeading": "100 verbi francesi comuni",
+      "learningTipsHeading": "Come imparare i verbi francesi",
+      "relatedLinksHeading": "Altre pagine di vocabolario francese",
+      "faqHeading": "Domande frequenti"
+    },
+    "buttons": {
+      "startPractice": "Esercitati in francese",
+      "takeLevelTest": "Fai il test di livello di francese"
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca verbi francesi",
+      "cefrLabel": "Livello QCER",
+      "allLevels": "Tutti i livelli"
+    },
+    "table": {
+      "number": "N.",
+      "verb": "Verbo francese",
+      "definition": "Significato in italiano",
+      "wordPage": "Apri la scheda",
+      "noResults": "Nessun verbo francese corrisponde alla ricerca."
+    },
+    "learningTips": [
+      "Studia ogni giorno un gruppo gestibile di verbi francesi e ripassali prima di aggiungerne di nuovi.",
+      "Impara ogni verbo in una frase completa per ricordarne il significato, la costruzione e le preposizioni richieste.",
+      "Esercitati con le forme irregolari più frequenti insieme ai modelli regolari in -er, -ir e -re.",
+      "Ripassa i verbi a intervalli progressivi e torna più spesso sulle forme che confondi o dimentichi.",
+      "Usa attivamente i nuovi verbi parlando o scrivendo brevi frasi con persone e tempi verbali diversi."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test di livello di francese",
+      "englishA1": "Vocabolario francese A1",
+      "englishA2": "Vocabolario francese A2",
+      "englishB1": "Vocabolario francese B1",
+      "seoHub": "Tutte le pagine di vocabolario"
+    },
+    "faq": [
+      {
+        "question": "Quali sono alcuni dei verbi più comuni in francese?",
+        "answer": "Tra i verbi francesi usati frequentemente figurano être, avoir, faire, aller, pouvoir, vouloir, devoir, dire, voir e savoir. L’ordine preciso può variare in base al corpus, al significato, al registro e al contesto, quindi questa lista è una selezione pratica e non una graduatoria ufficiale definitiva."
+      },
+      {
+        "question": "Perché conviene imparare prima i verbi francesi più comuni?",
+        "answer": "Questi verbi ricorrono spesso nelle conversazioni, nei messaggi, nelle istruzioni, nei racconti e nei media, offrendo quindi un’utilità immediata. Aiutano inoltre a familiarizzare con aspetti centrali del francese, come le coniugazioni irregolari, i tempi composti con avoir o être e le costruzioni pronominali."
+      },
+      {
+        "question": "Questi 100 verbi francesi sono sufficienti per un principiante?",
+        "answer": "I 100 verbi costituiscono una base solida, ma da soli non bastano per comunicare pienamente a un livello iniziale. È necessario imparare anche sostantivi, aggettivi, preposizioni, espressioni frequenti e le principali strutture della frase."
+      },
+      {
+        "question": "Come posso esercitarmi efficacemente con questi verbi francesi?",
+        "answer": "Studia ogni verbo insieme al suo significato, a una frase breve e alle forme che userai più spesso. Presta particolare attenzione alle coniugazioni irregolari, ai verbi pronominali, alle preposizioni richieste e alla scelta tra avoir ed être nel passé composé."
+      },
+      {
+        "question": "A quali livelli QCER appartengono questi verbi francesi?",
+        "answer": "Molti verbi francesi molto frequenti vengono introdotti nei livelli A1 o A2, mentre significati aggiuntivi, usi idiomatici e costruzioni più complesse possono comparire dal B1 in poi. Uno stesso verbo può quindi essere rilevante a più livelli del QCER in base al significato, alla costruzione e al contesto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "pt",
+    "title": "Os 100 verbos franceses mais comuns",
+    "metaTitle": "100 verbos franceses comuns com significados",
+    "metaDescription": "Aprenda 100 verbos franceses comuns com significados em português, níveis do QECR, traduções, páginas de palavras e exercícios práticos.",
+    "heroSubtitle": "Domine verbos essenciais para compreender o francês cotidiano e expressar ações, necessidades, ideias e experiências.",
+    "introParagraphs": [
+      "Os verbos são fundamentais no francês porque expressam ações, estados, desejos, opiniões e experiências, além de indicarem pessoa, número e tempo. Aprender primeiro os verbos mais frequentes ajuda a compreender conversas mais rapidamente e a construir frases úteis em diferentes situações.",
+      "Esta lista reúne 100 verbos franceses de uso frequente, selecionados por sua utilidade prática. Ela inclui verbos regulares terminados em -er, -ir e -re, verbos irregulares essenciais como être, avoir, aller e faire, além de verbos pronominais e verbos que exigem preposições específicas.",
+      "Use a lista para consultar significados em português, comparar níveis do QECR e abrir a página individual de cada verbo com traduções e outras informações. Também é possível pesquisar um verbo específico, filtrar a lista por nível e reforçar o aprendizado com os exercícios do FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Francês",
+      "level": "Níveis baseados no QECR",
+      "practice": "Exercícios disponíveis"
+    },
+    "sections": {
+      "statsHeading": "Visão geral da lista",
+      "verbListHeading": "100 verbos franceses comuns",
+      "learningTipsHeading": "Como aprender verbos franceses",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulário francês",
+      "faqHeading": "Perguntas frequentes"
+    },
+    "buttons": {
+      "startPractice": "Praticar francês",
+      "takeLevelTest": "Fazer o teste de nível de francês"
+    },
+    "filters": {
+      "searchPlaceholder": "Pesquisar verbos em francês",
+      "cefrLabel": "Nível do QECR",
+      "allLevels": "Todos os níveis"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo em francês",
+      "definition": "Significado em português",
+      "wordPage": "Ver página",
+      "noResults": "Nenhum verbo francês correspondente foi encontrado."
+    },
+    "learningTips": [
+      "Estude diariamente um grupo pequeno de verbos franceses e revise-os antes de acrescentar novos.",
+      "Aprenda cada verbo dentro de uma frase completa para memorizar seu significado, sua construção e as preposições exigidas.",
+      "Pratique as formas irregulares mais frequentes juntamente com os padrões regulares em -er, -ir e -re.",
+      "Revise os verbos em intervalos progressivamente maiores e retome com mais frequência as formas que você confunde ou esquece.",
+      "Use os novos verbos ativamente ao falar ou escrever frases curtas com pessoas e tempos verbais diferentes."
+    ],
+    "relatedLinks": {
+      "levelTest": "Teste de nível de francês",
+      "englishA1": "Vocabulário de francês A1",
+      "englishA2": "Vocabulário de francês A2",
+      "englishB1": "Vocabulário de francês B1",
+      "seoHub": "Todas as páginas de vocabulário"
+    },
+    "faq": [
+      {
+        "question": "Quais verbos estão entre os mais comuns em francês?",
+        "answer": "Entre os verbos franceses usados com frequência estão être, avoir, faire, aller, pouvoir, vouloir, devoir, dire, voir e savoir. A ordem exata pode variar conforme o corpus, o significado, o registro e o contexto, por isso esta lista é uma seleção prática e não uma classificação oficial definitiva."
+      },
+      {
+        "question": "Por que devo aprender primeiro os verbos franceses mais comuns?",
+        "answer": "Esses verbos aparecem repetidamente em conversas, mensagens, instruções, histórias e meios de comunicação, oferecendo utilidade imediata. Eles também ajudam a compreender características importantes do francês, como as conjugações irregulares, os tempos compostos com avoir ou être e as construções pronominais."
+      },
+      {
+        "question": "Estes 100 verbos franceses são suficientes para iniciantes?",
+        "answer": "Os 100 verbos oferecem uma base sólida, mas não são suficientes, por si só, para uma comunicação completa no nível iniciante. Também é necessário aprender substantivos, adjetivos, preposições, expressões frequentes e as principais estruturas de frase."
+      },
+      {
+        "question": "Como posso praticar estes verbos franceses de forma eficaz?",
+        "answer": "Estude cada verbo junto com seu significado, uma frase curta e as formas que você usará com mais frequência. Preste atenção especial às conjugações irregulares, aos verbos pronominais, às preposições exigidas e à escolha entre avoir e être no passé composé."
+      },
+      {
+        "question": "A quais níveis do QECR pertencem estes verbos franceses?",
+        "answer": "Muitos verbos franceses muito frequentes são apresentados nos níveis A1 ou A2, enquanto significados adicionais, usos idiomáticos e construções mais complexas podem surgir no B1 ou em níveis superiores. Um mesmo verbo pode, portanto, ser relevante em vários níveis do QECR, dependendo do significado, da construção e do contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "ru",
+    "title": "100 самых употребительных французских глаголов",
+    "metaTitle": "100 употребительных французских глаголов с переводом",
+    "metaDescription": "Изучайте 100 употребительных французских глаголов с переводом на русский, уровнями CEFR, страницами слов и практическими упражнениями.",
+    "heroSubtitle": "Освойте основные глаголы для понимания повседневного французского и выражения действий, потребностей, мыслей и опыта.",
+    "introParagraphs": [
+      "Глаголы играют центральную роль во французском языке, поскольку выражают действия, состояния, желания, мнения и переживания, а их формы также указывают на лицо, число и время. Знание часто употребляемых глаголов помогает быстрее понимать разговорную речь и строить полезные фразы в повседневных ситуациях.",
+      "В этом списке представлены 100 часто используемых французских глаголов, отобранных с учётом их практической ценности. Здесь есть правильные глаголы на -er, -ir и -re, важные неправильные глаголы être, avoir, aller и faire, а также возвратные глаголы и глаголы, употребляющиеся с определёнными предлогами.",
+      "Используйте список, чтобы проверять значения на русском языке, сравнивать уровни CEFR и открывать отдельные страницы глаголов с переводами и дополнительной информацией. Вы также можете искать конкретные французские глаголы, фильтровать их по уровню и закреплять лексику с помощью упражнений FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 глаголов",
+      "language": "Французский",
+      "level": "Уровни по системе CEFR",
+      "practice": "Доступны упражнения"
+    },
+    "sections": {
+      "statsHeading": "Обзор списка",
+      "verbListHeading": "100 употребительных французских глаголов",
+      "learningTipsHeading": "Как учить французские глаголы",
+      "relatedLinksHeading": "Другие страницы французской лексики",
+      "faqHeading": "Часто задаваемые вопросы"
+    },
+    "buttons": {
+      "startPractice": "Практиковать французский",
+      "takeLevelTest": "Пройти тест по французскому языку"
+    },
+    "filters": {
+      "searchPlaceholder": "Поиск французских глаголов",
+      "cefrLabel": "Уровень CEFR",
+      "allLevels": "Все уровни"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Французский глагол",
+      "definition": "Значение на русском",
+      "wordPage": "Открыть страницу",
+      "noResults": "Подходящие французские глаголы не найдены."
+    },
+    "learningTips": [
+      "Учите ежедневно небольшую группу французских глаголов и повторяйте её перед добавлением новых слов.",
+      "Запоминайте каждый глагол в составе полного предложения, чтобы усвоить его значение, управление и естественный контекст.",
+      "Практикуйте распространённые неправильные формы вместе с правильными моделями спряжения на -er, -ir и -re.",
+      "Повторяйте глаголы через постепенно увеличивающиеся интервалы и чаще возвращайтесь к формам, которые вы путаете или забываете.",
+      "Активно используйте новые глаголы, составляя короткие устные и письменные фразы с разными лицами и временами."
+    ],
+    "relatedLinks": {
+      "levelTest": "Тест на уровень французского языка",
+      "englishA1": "Французская лексика уровня A1",
+      "englishA2": "Французская лексика уровня A2",
+      "englishB1": "Французская лексика уровня B1",
+      "seoHub": "Все страницы словарного запаса"
+    },
+    "faq": [
+      {
+        "question": "Какие глаголы относятся к самым употребительным во французском языке?",
+        "answer": "К часто употребляемым французским глаголам относятся être, avoir, faire, aller, pouvoir, vouloir, devoir, dire, voir и savoir. Точный порядок зависит от корпуса, значения, регистра и контекста, поэтому этот список представляет собой практическую подборку, а не официальный окончательный рейтинг."
+      },
+      {
+        "question": "Почему стоит сначала учить самые употребительные французские глаголы?",
+        "answer": "Эти глаголы постоянно встречаются в разговорах, сообщениях, инструкциях, рассказах и средствах массовой информации, поэтому быстро приносят практическую пользу. Они также помогают освоить важные особенности французского языка, включая неправильное спряжение, сложные времена с avoir или être и возвратные конструкции."
+      },
+      {
+        "question": "Достаточно ли этих 100 французских глаголов для начинающего?",
+        "answer": "Эти 100 глаголов создают прочную основу, но сами по себе не обеспечивают полноценного общения на начальном уровне. Также необходимо изучать существительные, прилагательные, предлоги, распространённые выражения и основные модели предложений."
+      },
+      {
+        "question": "Как эффективно практиковать эти французские глаголы?",
+        "answer": "Учите каждый глагол вместе с его значением, коротким примером и наиболее полезными формами. Особое внимание уделяйте неправильному спряжению, возвратным глаголам, требуемым предлогам и выбору между avoir и être в passé composé."
+      },
+      {
+        "question": "К каким уровням CEFR относятся эти французские глаголы?",
+        "answer": "Многие часто употребляемые французские глаголы вводятся уже на уровнях A1 или A2, а дополнительные значения, устойчивые употребления и более сложные конструкции могут встречаться на уровне B1 и выше. Один и тот же глагол может относиться к нескольким уровням CEFR в зависимости от значения, грамматической конструкции и контекста."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "en",
+    "title": "100 Most Common Italian Verbs",
+    "metaTitle": "100 Most Common Italian Verbs with Meanings",
+    "metaDescription": "Learn 100 common Italian verbs with English meanings, CEFR levels, detailed word pages, translations, and practical vocabulary exercises.",
+    "heroSubtitle": "Master essential verbs for understanding everyday Italian and expressing actions, needs, opinions, and experiences.",
+    "introParagraphs": [
+      "Verbs are central to Italian because they express actions, states, intentions, opinions, and experiences while also indicating person, number, tense, and mood. Learning frequently used verbs gives you the foundation needed to understand everyday conversations and form useful sentences.",
+      "This list contains 100 frequently used Italian verbs selected for practical vocabulary learning. It includes regular verbs ending in -are, -ere, and -ire, essential irregular verbs such as essere, avere, andare, and fare, as well as common reflexive verbs and verbs that use fixed prepositions.",
+      "Use the list to check English meanings, compare CEFR levels, and open individual word pages for translations and further information. You can also search for a specific Italian verb, filter the list by level, and reinforce your knowledge with FluentStellar’s practice tools."
+    ],
+    "stats": {
+      "verbs": "100 verbs",
+      "language": "Italian",
+      "level": "CEFR-based levels",
+      "practice": "Practice available"
+    },
+    "sections": {
+      "statsHeading": "List overview",
+      "verbListHeading": "100 Common Italian Verbs",
+      "learningTipsHeading": "How to Learn Italian Verbs",
+      "relatedLinksHeading": "Related Italian Vocabulary Pages",
+      "faqHeading": "Frequently Asked Questions"
+    },
+    "buttons": {
+      "startPractice": "Practise Italian",
+      "takeLevelTest": "Take the Italian Level Test"
+    },
+    "filters": {
+      "searchPlaceholder": "Search Italian verbs",
+      "cefrLabel": "CEFR level",
+      "allLevels": "All levels"
+    },
+    "table": {
+      "number": "No.",
+      "verb": "Italian verb",
+      "definition": "English meaning",
+      "wordPage": "View word",
+      "noResults": "No matching Italian verbs found."
+    },
+    "learningTips": [
+      "Study a manageable group of Italian verbs each day and review them before adding new ones.",
+      "Learn every verb in a complete sentence so that you remember its meaning, required prepositions, and natural context.",
+      "Practise common irregular forms alongside the regular -are, -ere, and -ire conjugation patterns.",
+      "Review verbs at spaced intervals and return more frequently to forms that you confuse or forget.",
+      "Use new verbs actively by speaking or writing short sentences with different persons, tenses, and subjects."
+    ],
+    "relatedLinks": {
+      "levelTest": "Italian Level Test",
+      "englishA1": "Italian A1 Vocabulary",
+      "englishA2": "Italian A2 Vocabulary",
+      "englishB1": "Italian B1 Vocabulary",
+      "seoHub": "All Vocabulary Pages"
+    },
+    "faq": [
+      {
+        "question": "Which verbs are among the most common in Italian?",
+        "answer": "Frequently used Italian verbs include essere, avere, fare, andare, potere, volere, dovere, dire, vedere, and sapere. Their exact order can vary by corpus, meaning, register, and context, so this list is a practical learning selection rather than an official definitive ranking."
+      },
+      {
+        "question": "Why should I learn common Italian verbs first?",
+        "answer": "Common verbs appear repeatedly in conversations, messages, instructions, stories, and media, so they provide immediate communicative value. They also introduce important features of Italian, including subject-based conjugation, irregular forms, reflexive constructions, and compound tenses with avere or essere."
+      },
+      {
+        "question": "Are these 100 Italian verbs enough for a beginner?",
+        "answer": "These 100 verbs provide a strong foundation, but they are not sufficient for complete beginner-level communication on their own. Learners also need nouns, adjectives, prepositions, common expressions, and practice using verbs in the present and past."
+      },
+      {
+        "question": "How can I practise these Italian verbs effectively?",
+        "answer": "Learn each verb with its meaning, a short example sentence, and the forms you are most likely to use. Pay particular attention to irregular conjugations, reflexive verbs, required prepositions, and whether compound tenses use avere or essere."
+      },
+      {
+        "question": "Which CEFR levels do these Italian verbs belong to?",
+        "answer": "Many highly frequent Italian verbs are introduced at A1 or A2, while additional meanings, idiomatic uses, and more complex tense or mood patterns may appear at B1 or above. A single verb can therefore be relevant at several CEFR levels depending on its meaning, construction, and context."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "es",
+    "title": "Los 100 verbos más comunes en italiano",
+    "metaTitle": "100 verbos comunes en italiano con significado",
+    "metaDescription": "Aprende 100 verbos comunes en italiano con significado en español, niveles del MCER, traducciones, fichas detalladas y ejercicios prácticos.",
+    "heroSubtitle": "Domina los verbos esenciales para comprender el italiano cotidiano y expresar acciones, necesidades, opiniones y experiencias.",
+    "introParagraphs": [
+      "Los verbos son fundamentales en italiano porque expresan acciones, estados, intenciones, opiniones y experiencias, además de indicar persona, número, tiempo y modo. Aprender los más frecuentes permite comprender antes las conversaciones y construir frases útiles en situaciones cotidianas.",
+      "Esta lista reúne 100 verbos italianos de uso frecuente seleccionados por su utilidad práctica. Incluye verbos regulares terminados en -are, -ere e -ire, verbos irregulares esenciales como essere, avere, andare y fare, además de verbos reflexivos y verbos que exigen preposiciones concretas.",
+      "Utiliza la lista para consultar significados en español, comparar niveles del MCER y abrir la página individual de cada verbo con traducciones e información adicional. También puedes buscar un verbo concreto, filtrar la lista por nivel y reforzar lo aprendido con las herramientas de práctica de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Italiano",
+      "level": "Niveles basados en el MCER",
+      "practice": "Práctica disponible"
+    },
+    "sections": {
+      "statsHeading": "Resumen de la lista",
+      "verbListHeading": "100 verbos comunes en italiano",
+      "learningTipsHeading": "Cómo aprender los verbos italianos",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulario italiano",
+      "faqHeading": "Preguntas frecuentes"
+    },
+    "buttons": {
+      "startPractice": "Practicar italiano",
+      "takeLevelTest": "Hacer la prueba de nivel de italiano"
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar verbos en italiano",
+      "cefrLabel": "Nivel del MCER",
+      "allLevels": "Todos los niveles"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo en italiano",
+      "definition": "Significado en español",
+      "wordPage": "Ver ficha",
+      "noResults": "No se encontraron verbos italianos que coincidan con la búsqueda."
+    },
+    "learningTips": [
+      "Estudia cada día un grupo manejable de verbos italianos y repásalos antes de añadir otros nuevos.",
+      "Aprende cada verbo dentro de una oración completa para recordar su significado, las preposiciones que exige y su uso natural.",
+      "Practica las formas irregulares más frecuentes junto con los patrones regulares en -are, -ere e -ire.",
+      "Repasa los verbos en intervalos espaciados y vuelve con mayor frecuencia a las formas que confundas u olvides.",
+      "Utiliza activamente los nuevos verbos hablando o escribiendo frases breves con distintas personas, tiempos y sujetos."
+    ],
+    "relatedLinks": {
+      "levelTest": "Prueba de nivel de italiano",
+      "englishA1": "Vocabulario de italiano A1",
+      "englishA2": "Vocabulario de italiano A2",
+      "englishB1": "Vocabulario de italiano B1",
+      "seoHub": "Todas las páginas de vocabulario"
+    },
+    "faq": [
+      {
+        "question": "¿Qué verbos se encuentran entre los más comunes en italiano?",
+        "answer": "Entre los verbos italianos de uso frecuente se encuentran essere, avere, fare, andare, potere, volere, dovere, dire, vedere y sapere. El orden exacto puede variar según el corpus, el significado, el registro y el contexto, por lo que esta lista es una selección práctica y no una clasificación oficial definitiva."
+      },
+      {
+        "question": "¿Por qué conviene aprender primero los verbos italianos más comunes?",
+        "answer": "Estos verbos aparecen constantemente en conversaciones, mensajes, instrucciones, relatos y medios de comunicación, por lo que ofrecen una utilidad inmediata. Además, permiten familiarizarse con aspectos esenciales del italiano, como la conjugación según la persona, las formas irregulares, las construcciones reflexivas y los tiempos compuestos con avere o essere."
+      },
+      {
+        "question": "¿Son suficientes estos 100 verbos italianos para un principiante?",
+        "answer": "Estos 100 verbos proporcionan una base sólida, pero no bastan por sí solos para comunicarse plenamente en un nivel inicial. También es necesario aprender sustantivos, adjetivos, preposiciones, expresiones frecuentes y el uso de los verbos en presente y pasado."
+      },
+      {
+        "question": "¿Cómo puedo practicar estos verbos italianos de forma eficaz?",
+        "answer": "Aprende cada verbo con su significado, una frase breve y las formas que vayas a utilizar con más frecuencia. Presta especial atención a las conjugaciones irregulares, los verbos reflexivos, las preposiciones exigidas y el uso de avere o essere en los tiempos compuestos."
+      },
+      {
+        "question": "¿A qué niveles del MCER pertenecen estos verbos italianos?",
+        "answer": "Muchos verbos italianos muy frecuentes se introducen en A1 o A2, mientras que otros significados, usos idiomáticos y formas verbales más complejas pueden aparecer en B1 o niveles superiores. Un mismo verbo puede ser relevante en varios niveles del MCER según su significado, su construcción y el contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "fr",
+    "title": "Les 100 verbes italiens les plus courants",
+    "metaTitle": "100 verbes italiens courants avec leur sens",
+    "metaDescription": "Apprenez 100 verbes italiens courants avec leur sens en français, leur niveau CECRL, des traductions et des exercices pratiques.",
+    "heroSubtitle": "Maîtrisez les verbes essentiels pour comprendre l’italien courant et exprimer des actions, des besoins et des idées.",
+    "introParagraphs": [
+      "Les verbes sont indispensables en italien, car ils permettent d’exprimer des actions, des états, des intentions, des opinions et des expériences tout en indiquant la personne, le nombre, le temps et le mode. Apprendre les verbes les plus fréquents aide à comprendre plus rapidement les échanges quotidiens et à construire des phrases utiles.",
+      "Cette liste rassemble 100 verbes italiens fréquemment employés, choisis pour leur utilité pratique. Elle comprend des verbes réguliers en -are, -ere et -ire, des verbes irréguliers essentiels comme essere, avere, andare et fare, ainsi que des verbes pronominaux et des verbes construits avec des prépositions précises.",
+      "Utilisez cette page pour consulter les significations en français, comparer les niveaux du CECRL et ouvrir la fiche de chaque verbe afin d’accéder à ses traductions et à des informations complémentaires. Vous pouvez également rechercher un verbe précis, filtrer la liste par niveau et consolider vos acquis avec les outils d’entraînement de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbes",
+      "language": "Italien",
+      "level": "Niveaux fondés sur le CECRL",
+      "practice": "Exercices disponibles"
+    },
+    "sections": {
+      "statsHeading": "Aperçu de la liste",
+      "verbListHeading": "100 verbes italiens courants",
+      "learningTipsHeading": "Comment apprendre les verbes italiens",
+      "relatedLinksHeading": "Pages connexes de vocabulaire italien",
+      "faqHeading": "Questions fréquentes"
+    },
+    "buttons": {
+      "startPractice": "Pratiquer l’italien",
+      "takeLevelTest": "Faire le test de niveau d’italien"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher un verbe italien",
+      "cefrLabel": "Niveau CECRL",
+      "allLevels": "Tous les niveaux"
+    },
+    "table": {
+      "number": "N°",
+      "verb": "Verbe italien",
+      "definition": "Sens en français",
+      "wordPage": "Voir la fiche",
+      "noResults": "Aucun verbe italien ne correspond à votre recherche."
+    },
+    "learningTips": [
+      "Étudiez chaque jour un petit groupe de verbes italiens et révisez-le avant d’ajouter de nouveaux mots.",
+      "Apprenez chaque verbe dans une phrase complète afin de retenir son sens, sa construction et les prépositions qu’il exige.",
+      "Entraînez-vous aux formes irrégulières les plus fréquentes en parallèle des modèles réguliers en -are, -ere et -ire.",
+      "Révisez les verbes à intervalles espacés et revenez plus souvent sur les formes que vous confondez ou oubliez.",
+      "Réutilisez activement les nouveaux verbes en écrivant ou en prononçant de courtes phrases à différentes personnes et à différents temps."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test de niveau d’italien",
+      "englishA1": "Vocabulaire italien A1",
+      "englishA2": "Vocabulaire italien A2",
+      "englishB1": "Vocabulaire italien B1",
+      "seoHub": "Toutes les pages de vocabulaire"
+    },
+    "faq": [
+      {
+        "question": "Quels verbes figurent parmi les plus courants en italien ?",
+        "answer": "Parmi les verbes italiens fréquemment employés, on trouve essere, avere, fare, andare, potere, volere, dovere, dire, vedere et sapere. Leur ordre exact peut varier selon le corpus, le sens, le registre et le contexte, de sorte que cette liste constitue une sélection pratique plutôt qu’un classement officiel définitif."
+      },
+      {
+        "question": "Pourquoi apprendre d’abord les verbes italiens les plus courants ?",
+        "answer": "Ces verbes apparaissent souvent dans les conversations, les messages, les consignes, les récits et les médias, ce qui leur donne une utilité immédiate. Ils permettent aussi de se familiariser avec des aspects essentiels de l’italien, comme les conjugaisons irrégulières, les verbes pronominaux et les temps composés avec avere ou essere."
+      },
+      {
+        "question": "Ces 100 verbes italiens suffisent-ils à un débutant ?",
+        "answer": "Ces 100 verbes constituent une base solide, mais ils ne suffisent pas à eux seuls pour communiquer pleinement à un niveau débutant. Il faut également apprendre des noms, des adjectifs, des prépositions, des expressions courantes et les principales structures de phrase."
+      },
+      {
+        "question": "Comment pratiquer efficacement ces verbes italiens ?",
+        "answer": "Apprenez chaque verbe avec son sens, une phrase courte et les formes que vous utiliserez le plus souvent. Accordez une attention particulière aux conjugaisons irrégulières, aux verbes pronominaux, aux prépositions requises et au choix entre avere et essere dans les temps composés."
+      },
+      {
+        "question": "À quels niveaux du CECRL appartiennent ces verbes italiens ?",
+        "answer": "De nombreux verbes italiens très fréquents sont introduits aux niveaux A1 ou A2, tandis que d’autres sens, des emplois idiomatiques et des formes verbales plus complexes peuvent apparaître en B1 ou au-delà. Un même verbe peut donc relever de plusieurs niveaux du CECRL selon son sens, sa construction et son contexte."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "de",
+    "title": "Die 100 häufigsten italienischen Verben",
+    "metaTitle": "100 häufige italienische Verben mit Bedeutungen",
+    "metaDescription": "Lerne 100 häufige italienische Verben mit deutschen Bedeutungen, GER-Niveaus, Übersetzungen, Wortseiten und praktischen Übungen.",
+    "heroSubtitle": "Lerne zentrale Verben, um alltägliches Italienisch zu verstehen und Handlungen, Bedürfnisse und Gedanken auszudrücken.",
+    "introParagraphs": [
+      "Verben sind im Italienischen unverzichtbar, weil sie Handlungen, Zustände, Absichten, Meinungen und Erfahrungen ausdrücken und zugleich Person, Zahl, Zeit und Modus kennzeichnen. Wer häufig gebrauchte Verben beherrscht, versteht alltägliche Gespräche schneller und kann in vielen Situationen eigene Sätze bilden.",
+      "Diese Liste enthält 100 häufig verwendete italienische Verben, die nach ihrem praktischen Nutzen ausgewählt wurden. Dazu gehören regelmäßige Verben auf -are, -ere und -ire, wichtige unregelmäßige Verben wie essere, avere, andare und fare sowie reflexive Verben und Verben mit festen Präpositionen.",
+      "Nutze die Liste, um deutsche Bedeutungen nachzuschlagen, GER-Niveaus zu vergleichen und die einzelnen Wortseiten mit Übersetzungen und zusätzlichen Informationen zu öffnen. Du kannst außerdem gezielt nach italienischen Verben suchen, nach Niveau filtern und sie mit den Übungen von FluentStellar festigen."
+    ],
+    "stats": {
+      "verbs": "100 Verben",
+      "language": "Italienisch",
+      "level": "Niveaus nach dem GER",
+      "practice": "Übungen verfügbar"
+    },
+    "sections": {
+      "statsHeading": "Übersicht",
+      "verbListHeading": "100 häufige italienische Verben",
+      "learningTipsHeading": "So lernst du italienische Verben",
+      "relatedLinksHeading": "Weitere Seiten zum italienischen Wortschatz",
+      "faqHeading": "Häufig gestellte Fragen"
+    },
+    "buttons": {
+      "startPractice": "Italienisch üben",
+      "takeLevelTest": "Italienisch-Einstufungstest machen"
+    },
+    "filters": {
+      "searchPlaceholder": "Italienische Verben suchen",
+      "cefrLabel": "GER-Niveau",
+      "allLevels": "Alle Niveaus"
+    },
+    "table": {
+      "number": "Nr.",
+      "verb": "Italienisches Verb",
+      "definition": "Deutsche Bedeutung",
+      "wordPage": "Wortseite öffnen",
+      "noResults": "Keine passenden italienischen Verben gefunden."
+    },
+    "learningTips": [
+      "Lerne täglich eine überschaubare Gruppe italienischer Verben und wiederhole sie, bevor du neue hinzufügst.",
+      "Merke dir jedes Verb in einem vollständigen Satz, damit du zugleich seine Bedeutung, typische Präpositionen und den natürlichen Gebrauch lernst.",
+      "Übe häufige unregelmäßige Formen zusammen mit den regelmäßigen Konjugationsmustern auf -are, -ere und -ire.",
+      "Wiederhole Verben in zunehmenden Abständen und kehre häufiger zu den Formen zurück, die du verwechselst oder vergisst.",
+      "Verwende neue Verben aktiv, indem du kurze Sätze mit verschiedenen Personen und Zeitformen sprichst oder schreibst."
+    ],
+    "relatedLinks": {
+      "levelTest": "Italienisch-Einstufungstest",
+      "englishA1": "Italienischer Wortschatz A1",
+      "englishA2": "Italienischer Wortschatz A2",
+      "englishB1": "Italienischer Wortschatz B1",
+      "seoHub": "Alle Wortschatzseiten"
+    },
+    "faq": [
+      {
+        "question": "Welche Verben gehören zu den häufigsten italienischen Verben?",
+        "answer": "Zu den häufig gebrauchten italienischen Verben zählen essere, avere, fare, andare, potere, volere, dovere, dire, vedere und sapere. Die genaue Reihenfolge hängt vom untersuchten Korpus, von der Bedeutung, dem Sprachregister und dem Kontext ab, deshalb ist diese Liste als praktische Auswahl und nicht als endgültige offizielle Rangfolge zu verstehen."
+      },
+      {
+        "question": "Warum sollte ich zuerst häufige italienische Verben lernen?",
+        "answer": "Häufige Verben begegnen dir regelmäßig in Gesprächen, Nachrichten, Anweisungen, Erzählungen und Medien und sind deshalb sofort praktisch nutzbar. Gleichzeitig lernst du mit ihnen zentrale Merkmale des Italienischen kennen, darunter unregelmäßige Konjugationen, reflexive Konstruktionen und zusammengesetzte Zeiten mit avere oder essere."
+      },
+      {
+        "question": "Reichen diese 100 italienischen Verben für Anfänger aus?",
+        "answer": "Diese 100 Verben bilden eine solide Grundlage, reichen allein aber nicht für eine vollständige Kommunikation auf Anfängerniveau aus. Zusätzlich brauchst du Substantive, Adjektive, Präpositionen, häufige Wendungen und grundlegende Satzmuster."
+      },
+      {
+        "question": "Wie kann ich diese italienischen Verben effektiv üben?",
+        "answer": "Lerne jedes Verb zusammen mit seiner Bedeutung, einem kurzen Beispielsatz und den Formen, die du am häufigsten verwenden wirst. Achte besonders auf unregelmäßige Konjugationen, reflexive Verben, feste Präpositionen und die Wahl zwischen avere und essere in zusammengesetzten Zeiten."
+      },
+      {
+        "question": "Zu welchen GER-Niveaus gehören diese italienischen Verben?",
+        "answer": "Viele sehr häufige italienische Verben werden bereits auf den Niveaus A1 oder A2 eingeführt, während zusätzliche Bedeutungen, idiomatische Verwendungen und komplexere Verbformen erst auf B1 oder höheren Stufen vorkommen können. Ein Verb kann daher je nach Bedeutung, Konstruktion und Kontext mehreren GER-Niveaus zugeordnet werden."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "it",
+    "title": "I 100 verbi italiani più comuni",
+    "metaTitle": "100 verbi italiani comuni con significato",
+    "metaDescription": "Impara 100 verbi italiani comuni con significati, livelli QCER, traduzioni, schede dettagliate ed esercizi pratici di vocabolario.",
+    "heroSubtitle": "Impara i verbi essenziali per comprendere l’italiano quotidiano ed esprimere azioni, bisogni, opinioni ed esperienze.",
+    "introParagraphs": [
+      "I verbi sono il cuore di molte frasi italiane, perché esprimono azioni, stati, intenzioni, opinioni ed esperienze, oltre a indicare persona, numero, tempo e modo. Conoscere quelli più frequenti permette di capire più rapidamente le conversazioni e di comunicare in numerose situazioni quotidiane.",
+      "Questa lista raccoglie 100 verbi italiani di uso frequente, selezionati per la loro utilità pratica. Comprende verbi regolari in -are, -ere e -ire, verbi irregolari fondamentali come essere, avere, andare e fare, oltre a verbi riflessivi e verbi costruiti con preposizioni specifiche.",
+      "Usa la lista per consultare i significati, confrontare i livelli del QCER e aprire la scheda di ogni verbo con traduzioni e informazioni aggiuntive. Puoi anche cercare un verbo preciso, filtrare i risultati per livello e consolidare ciò che hai imparato con gli esercizi di FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbi",
+      "language": "Italiano",
+      "level": "Livelli basati sul QCER",
+      "practice": "Esercizi disponibili"
+    },
+    "sections": {
+      "statsHeading": "Panoramica della lista",
+      "verbListHeading": "100 verbi italiani comuni",
+      "learningTipsHeading": "Come imparare i verbi italiani",
+      "relatedLinksHeading": "Altre pagine di vocabolario italiano",
+      "faqHeading": "Domande frequenti"
+    },
+    "buttons": {
+      "startPractice": "Esercitati in italiano",
+      "takeLevelTest": "Fai il test di livello di italiano"
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca verbi italiani",
+      "cefrLabel": "Livello QCER",
+      "allLevels": "Tutti i livelli"
+    },
+    "table": {
+      "number": "N.",
+      "verb": "Verbo italiano",
+      "definition": "Significato",
+      "wordPage": "Apri la scheda",
+      "noResults": "Nessun verbo italiano corrisponde alla ricerca."
+    },
+    "learningTips": [
+      "Studia ogni giorno un piccolo gruppo di verbi italiani e ripassalo prima di aggiungere nuovi vocaboli.",
+      "Impara ogni verbo in una frase completa per ricordarne il significato, la costruzione e le eventuali preposizioni richieste.",
+      "Esercitati con le forme irregolari più frequenti insieme ai modelli regolari in -are, -ere e -ire.",
+      "Ripassa i verbi a intervalli progressivi e torna più spesso sulle forme che confondi o dimentichi.",
+      "Usa attivamente i nuovi verbi parlando o scrivendo brevi frasi con persone, tempi e soggetti diversi."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test di livello di italiano",
+      "englishA1": "Vocabolario italiano A1",
+      "englishA2": "Vocabolario italiano A2",
+      "englishB1": "Vocabolario italiano B1",
+      "seoHub": "Tutte le pagine di vocabolario"
+    },
+    "faq": [
+      {
+        "question": "Quali sono alcuni dei verbi più comuni in italiano?",
+        "answer": "Tra i verbi italiani usati frequentemente figurano essere, avere, fare, andare, potere, volere, dovere, dire, vedere e sapere. L’ordine preciso può variare in base al corpus, al significato, al registro e al contesto, quindi questa lista è una selezione pratica e non una graduatoria ufficiale definitiva."
+      },
+      {
+        "question": "Perché conviene imparare prima i verbi italiani più comuni?",
+        "answer": "Questi verbi ricorrono spesso nelle conversazioni, nei messaggi, nelle istruzioni, nei racconti e nei media, offrendo quindi un’utilità immediata. Aiutano inoltre a familiarizzare con aspetti centrali dell’italiano, come le coniugazioni irregolari, i verbi riflessivi e i tempi composti con avere o essere."
+      },
+      {
+        "question": "Questi 100 verbi italiani sono sufficienti per un principiante?",
+        "answer": "I 100 verbi costituiscono una base solida, ma da soli non bastano per comunicare pienamente a un livello iniziale. È necessario imparare anche sostantivi, aggettivi, preposizioni, espressioni frequenti e le principali strutture della frase."
+      },
+      {
+        "question": "Come posso esercitarmi efficacemente con questi verbi italiani?",
+        "answer": "Studia ogni verbo insieme al suo significato, a una frase breve e alle forme che userai più spesso. Presta particolare attenzione alle coniugazioni irregolari, ai verbi riflessivi, alle preposizioni richieste e alla scelta tra avere ed essere nei tempi composti."
+      },
+      {
+        "question": "A quali livelli QCER appartengono questi verbi italiani?",
+        "answer": "Molti verbi italiani molto frequenti vengono introdotti nei livelli A1 o A2, mentre significati aggiuntivi, usi idiomatici e forme verbali più complesse possono comparire dal B1 in poi. Uno stesso verbo può quindi essere rilevante a più livelli del QCER in base al significato, alla costruzione e al contesto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "pt",
+    "title": "Os 100 verbos italianos mais comuns",
+    "metaTitle": "100 verbos italianos comuns com significados",
+    "metaDescription": "Aprenda 100 verbos italianos comuns com significados em português, níveis do QECR, traduções, páginas de palavras e exercícios práticos.",
+    "heroSubtitle": "Domine verbos essenciais para compreender o italiano cotidiano e expressar ações, necessidades, opiniões e experiências.",
+    "introParagraphs": [
+      "Os verbos são fundamentais no italiano porque expressam ações, estados, intenções, opiniões e experiências, além de indicarem pessoa, número, tempo e modo. Aprender primeiro os verbos mais frequentes ajuda a compreender conversas mais rapidamente e a construir frases úteis em diferentes situações.",
+      "Esta lista reúne 100 verbos italianos de uso frequente, selecionados por sua utilidade prática. Ela inclui verbos regulares terminados em -are, -ere e -ire, verbos irregulares essenciais como essere, avere, andare e fare, além de verbos reflexivos e verbos que exigem preposições específicas.",
+      "Use a lista para consultar significados em português, comparar níveis do QECR e abrir a página individual de cada verbo com traduções e outras informações. Também é possível pesquisar um verbo específico, filtrar a lista por nível e reforçar o aprendizado com os exercícios do FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Italiano",
+      "level": "Níveis baseados no QECR",
+      "practice": "Exercícios disponíveis"
+    },
+    "sections": {
+      "statsHeading": "Visão geral da lista",
+      "verbListHeading": "100 verbos italianos comuns",
+      "learningTipsHeading": "Como aprender verbos italianos",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulário italiano",
+      "faqHeading": "Perguntas frequentes"
+    },
+    "buttons": {
+      "startPractice": "Praticar italiano",
+      "takeLevelTest": "Fazer o teste de nível de italiano"
+    },
+    "filters": {
+      "searchPlaceholder": "Pesquisar verbos em italiano",
+      "cefrLabel": "Nível do QECR",
+      "allLevels": "Todos os níveis"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo em italiano",
+      "definition": "Significado em português",
+      "wordPage": "Ver página",
+      "noResults": "Nenhum verbo italiano correspondente foi encontrado."
+    },
+    "learningTips": [
+      "Estude diariamente um grupo pequeno de verbos italianos e revise-o antes de acrescentar novos.",
+      "Aprenda cada verbo dentro de uma frase completa para memorizar seu significado, sua construção e as preposições exigidas.",
+      "Pratique as formas irregulares mais frequentes juntamente com os padrões regulares em -are, -ere e -ire.",
+      "Revise os verbos em intervalos progressivamente maiores e retome com mais frequência as formas que você confunde ou esquece.",
+      "Use os novos verbos ativamente ao falar ou escrever frases curtas com pessoas, tempos e sujeitos diferentes."
+    ],
+    "relatedLinks": {
+      "levelTest": "Teste de nível de italiano",
+      "englishA1": "Vocabulário de italiano A1",
+      "englishA2": "Vocabulário de italiano A2",
+      "englishB1": "Vocabulário de italiano B1",
+      "seoHub": "Todas as páginas de vocabulário"
+    },
+    "faq": [
+      {
+        "question": "Quais verbos estão entre os mais comuns em italiano?",
+        "answer": "Entre os verbos italianos usados com frequência estão essere, avere, fare, andare, potere, volere, dovere, dire, vedere e sapere. A ordem exata pode variar conforme o corpus, o significado, o registro e o contexto, por isso esta lista é uma seleção prática e não uma classificação oficial definitiva."
+      },
+      {
+        "question": "Por que devo aprender primeiro os verbos italianos mais comuns?",
+        "answer": "Esses verbos aparecem repetidamente em conversas, mensagens, instruções, histórias e meios de comunicação, oferecendo utilidade imediata. Eles também ajudam a compreender características importantes do italiano, como as conjugações irregulares, os verbos reflexivos e os tempos compostos com avere ou essere."
+      },
+      {
+        "question": "Estes 100 verbos italianos são suficientes para iniciantes?",
+        "answer": "Os 100 verbos oferecem uma base sólida, mas não são suficientes, por si só, para uma comunicação completa no nível iniciante. Também é necessário aprender substantivos, adjetivos, preposições, expressões frequentes e as principais estruturas de frase."
+      },
+      {
+        "question": "Como posso praticar estes verbos italianos de forma eficaz?",
+        "answer": "Estude cada verbo junto com seu significado, uma frase curta e as formas que você usará com mais frequência. Preste atenção especial às conjugações irregulares, aos verbos reflexivos, às preposições exigidas e à escolha entre avere e essere nos tempos compostos."
+      },
+      {
+        "question": "A quais níveis do QECR pertencem estes verbos italianos?",
+        "answer": "Muitos verbos italianos muito frequentes são apresentados nos níveis A1 ou A2, enquanto significados adicionais, usos idiomáticos e formas verbais mais complexas podem surgir no B1 ou em níveis superiores. Um mesmo verbo pode, portanto, ser relevante em vários níveis do QECR, dependendo do significado, da construção e do contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "ru",
+    "title": "100 самых употребительных итальянских глаголов",
+    "metaTitle": "100 употребительных итальянских глаголов с переводом",
+    "metaDescription": "Изучайте 100 употребительных итальянских глаголов с переводом на русский, уровнями CEFR, страницами слов и практическими упражнениями.",
+    "heroSubtitle": "Освойте основные глаголы для понимания повседневного итальянского и выражения действий, потребностей, мнений и опыта.",
+    "introParagraphs": [
+      "Глаголы играют центральную роль в итальянском языке, поскольку выражают действия, состояния, намерения, мнения и переживания, а их формы также указывают на лицо, число, время и наклонение. Знание часто употребляемых глаголов помогает быстрее понимать разговорную речь и строить полезные фразы в повседневных ситуациях.",
+      "В этом списке представлены 100 часто используемых итальянских глаголов, отобранных с учётом их практической ценности. Здесь есть правильные глаголы на -are, -ere и -ire, важные неправильные глаголы essere, avere, andare и fare, а также возвратные глаголы и глаголы, употребляющиеся с определёнными предлогами.",
+      "Используйте список, чтобы проверять значения на русском языке, сравнивать уровни CEFR и открывать отдельные страницы глаголов с переводами и дополнительной информацией. Вы также можете искать конкретные итальянские глаголы, фильтровать их по уровню и закреплять лексику с помощью упражнений FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 глаголов",
+      "language": "Итальянский",
+      "level": "Уровни по системе CEFR",
+      "practice": "Доступны упражнения"
+    },
+    "sections": {
+      "statsHeading": "Обзор списка",
+      "verbListHeading": "100 употребительных итальянских глаголов",
+      "learningTipsHeading": "Как учить итальянские глаголы",
+      "relatedLinksHeading": "Другие страницы итальянской лексики",
+      "faqHeading": "Часто задаваемые вопросы"
+    },
+    "buttons": {
+      "startPractice": "Практиковать итальянский",
+      "takeLevelTest": "Пройти тест по итальянскому языку"
+    },
+    "filters": {
+      "searchPlaceholder": "Поиск итальянских глаголов",
+      "cefrLabel": "Уровень CEFR",
+      "allLevels": "Все уровни"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Итальянский глагол",
+      "definition": "Значение на русском",
+      "wordPage": "Открыть страницу",
+      "noResults": "Подходящие итальянские глаголы не найдены."
+    },
+    "learningTips": [
+      "Учите ежедневно небольшую группу итальянских глаголов и повторяйте её перед добавлением новых слов.",
+      "Запоминайте каждый глагол в составе полного предложения, чтобы усвоить его значение, управление и естественный контекст.",
+      "Практикуйте распространённые неправильные формы вместе с правильными моделями спряжения на -are, -ere и -ire.",
+      "Повторяйте глаголы через постепенно увеличивающиеся интервалы и чаще возвращайтесь к формам, которые вы путаете или забываете.",
+      "Активно используйте новые глаголы, составляя короткие устные и письменные фразы с разными лицами, временами и подлежащими."
+    ],
+    "relatedLinks": {
+      "levelTest": "Тест на уровень итальянского языка",
+      "englishA1": "Итальянская лексика уровня A1",
+      "englishA2": "Итальянская лексика уровня A2",
+      "englishB1": "Итальянская лексика уровня B1",
+      "seoHub": "Все страницы словарного запаса"
+    },
+    "faq": [
+      {
+        "question": "Какие глаголы относятся к самым употребительным в итальянском языке?",
+        "answer": "К часто употребляемым итальянским глаголам относятся essere, avere, fare, andare, potere, volere, dovere, dire, vedere и sapere. Точный порядок зависит от корпуса, значения, регистра и контекста, поэтому этот список представляет собой практическую подборку, а не официальный окончательный рейтинг."
+      },
+      {
+        "question": "Почему стоит сначала учить самые употребительные итальянские глаголы?",
+        "answer": "Эти глаголы постоянно встречаются в разговорах, сообщениях, инструкциях, рассказах и средствах массовой информации, поэтому быстро приносят практическую пользу. Они также помогают освоить важные особенности итальянского языка, включая неправильное спряжение, возвратные глаголы и сложные времена с avere или essere."
+      },
+      {
+        "question": "Достаточно ли этих 100 итальянских глаголов для начинающего?",
+        "answer": "Эти 100 глаголов создают прочную основу, но сами по себе не обеспечивают полноценного общения на начальном уровне. Также необходимо изучать существительные, прилагательные, предлоги, распространённые выражения и основные модели предложений."
+      },
+      {
+        "question": "Как эффективно практиковать эти итальянские глаголы?",
+        "answer": "Учите каждый глагол вместе с его значением, коротким примером и наиболее полезными формами. Особое внимание уделяйте неправильному спряжению, возвратным глаголам, требуемым предлогам и выбору между avere и essere в сложных временах."
+      },
+      {
+        "question": "К каким уровням CEFR относятся эти итальянские глаголы?",
+        "answer": "Многие часто употребляемые итальянские глаголы вводятся уже на уровнях A1 или A2, а дополнительные значения, устойчивые употребления и более сложные формы могут встречаться на уровне B1 и выше. Один и тот же глагол может относиться к нескольким уровням CEFR в зависимости от значения, грамматической конструкции и контекста."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "en",
+    "title": "100 Most Common Portuguese Verbs",
+    "metaTitle": "100 Most Common Portuguese Verbs with Meanings",
+    "metaDescription": "Learn 100 common Portuguese verbs with English meanings, CEFR levels, translations, detailed word pages, and practical exercises.",
+    "heroSubtitle": "Master essential verbs for understanding everyday Portuguese and expressing actions, needs, thoughts, and experiences.",
+    "introParagraphs": [
+      "Verbs are central to Portuguese because they express actions, states, intentions, opinions, and experiences while also marking person, number, tense, and mood. Learning frequently used verbs gives you a practical foundation for understanding conversations and building useful sentences.",
+      "This list contains 100 frequently used Portuguese verbs selected for practical vocabulary learning. It includes regular verbs ending in -ar, -er, and -ir, essential irregular verbs such as ser, estar, ter, ir, and fazer, as well as common pronominal verbs and verbs with spelling or stem changes.",
+      "Use the list to check English meanings, compare CEFR levels, and open individual word pages for translations and further information. You can also search for a specific Portuguese verb, filter the list by level, and reinforce your knowledge with FluentStellar’s practice tools."
+    ],
+    "stats": {
+      "verbs": "100 verbs",
+      "language": "Portuguese",
+      "level": "CEFR-based levels",
+      "practice": "Practice available"
+    },
+    "sections": {
+      "statsHeading": "List overview",
+      "verbListHeading": "100 Common Portuguese Verbs",
+      "learningTipsHeading": "How to Learn Portuguese Verbs",
+      "relatedLinksHeading": "Related Portuguese Vocabulary Pages",
+      "faqHeading": "Frequently Asked Questions"
+    },
+    "buttons": {
+      "startPractice": "Practise Portuguese",
+      "takeLevelTest": "Take the Portuguese Level Test"
+    },
+    "filters": {
+      "searchPlaceholder": "Search Portuguese verbs",
+      "cefrLabel": "CEFR level",
+      "allLevels": "All levels"
+    },
+    "table": {
+      "number": "No.",
+      "verb": "Portuguese verb",
+      "definition": "English meaning",
+      "wordPage": "View word",
+      "noResults": "No matching Portuguese verbs found."
+    },
+    "learningTips": [
+      "Study a manageable group of Portuguese verbs each day and review them before adding new ones.",
+      "Learn every verb in a complete sentence so that you remember its meaning, required prepositions, and natural context.",
+      "Practise common irregular forms alongside the regular -ar, -er, and -ir conjugation patterns.",
+      "Review verbs at spaced intervals and return more frequently to forms that you confuse or forget.",
+      "Use new verbs actively by speaking or writing short sentences with different persons and tenses."
+    ],
+    "relatedLinks": {
+      "levelTest": "Portuguese Level Test",
+      "englishA1": "Portuguese A1 Vocabulary",
+      "englishA2": "Portuguese A2 Vocabulary",
+      "englishB1": "Portuguese B1 Vocabulary",
+      "seoHub": "All Vocabulary Pages"
+    },
+    "faq": [
+      {
+        "question": "Which verbs are among the most common in Portuguese?",
+        "answer": "Frequently used Portuguese verbs include ser, estar, ter, fazer, ir, poder, querer, dizer, ver, and saber. Their exact order can vary by corpus, meaning, context, and regional variety, so this list is a practical learning selection rather than an official definitive ranking."
+      },
+      {
+        "question": "Why should I learn common Portuguese verbs first?",
+        "answer": "Common verbs appear repeatedly in conversations, messages, instructions, stories, and media, so they provide immediate communicative value. They also introduce important features of Portuguese, including person-based conjugation, irregular forms, omitted subject pronouns, and the distinction between ser and estar."
+      },
+      {
+        "question": "Are these 100 Portuguese verbs enough for a beginner?",
+        "answer": "These 100 verbs provide a strong foundation, but they are not sufficient for complete beginner-level communication on their own. Learners also need nouns, adjectives, prepositions, common expressions, and practice using verbs in the present and past."
+      },
+      {
+        "question": "How can I practise these Portuguese verbs effectively?",
+        "answer": "Learn each verb with its meaning, a short example sentence, and the forms you are most likely to use. Pay particular attention to irregular conjugations, pronominal forms, the difference between ser and estar, and the contrast between the preterite and imperfect as your level develops."
+      },
+      {
+        "question": "Which CEFR levels do these Portuguese verbs belong to?",
+        "answer": "Many highly frequent Portuguese verbs are introduced at A1 or A2, while additional meanings, idiomatic uses, and more complex tense or mood patterns may appear at B1 or above. A single verb can therefore be relevant at several CEFR levels depending on its meaning, construction, and context."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "es",
+    "title": "Los 100 verbos más comunes en portugués",
+    "metaTitle": "100 verbos comunes en portugués con significado",
+    "metaDescription": "Aprende 100 verbos comunes en portugués con significado en español, niveles del MCER, traducciones, fichas detalladas y ejercicios.",
+    "heroSubtitle": "Domina los verbos esenciales para comprender el portugués cotidiano y expresar acciones, necesidades, ideas y experiencias.",
+    "introParagraphs": [
+      "Los verbos son fundamentales en portugués porque expresan acciones, estados, intenciones, opiniones y experiencias, además de indicar persona, número, tiempo y modo. Aprender los más frecuentes permite comprender antes las conversaciones y construir frases útiles en situaciones cotidianas.",
+      "Esta lista reúne 100 verbos portugueses de uso frecuente seleccionados por su utilidad práctica. Incluye verbos regulares terminados en -ar, -er e -ir, verbos irregulares esenciales como ser, estar, ter, ir y fazer, además de verbos pronominales y verbos con cambios ortográficos o vocálicos.",
+      "Utiliza la lista para consultar significados en español, comparar niveles del MCER y abrir la página individual de cada verbo con traducciones e información adicional. También puedes buscar un verbo concreto, filtrar la lista por nivel y reforzar lo aprendido con las herramientas de práctica de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Portugués",
+      "level": "Niveles basados en el MCER",
+      "practice": "Práctica disponible"
+    },
+    "sections": {
+      "statsHeading": "Resumen de la lista",
+      "verbListHeading": "100 verbos comunes en portugués",
+      "learningTipsHeading": "Cómo aprender los verbos portugueses",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulario portugués",
+      "faqHeading": "Preguntas frecuentes"
+    },
+    "buttons": {
+      "startPractice": "Practicar portugués",
+      "takeLevelTest": "Hacer la prueba de nivel de portugués"
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar verbos en portugués",
+      "cefrLabel": "Nivel del MCER",
+      "allLevels": "Todos los niveles"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo en portugués",
+      "definition": "Significado en español",
+      "wordPage": "Ver ficha",
+      "noResults": "No se encontraron verbos portugueses que coincidan con la búsqueda."
+    },
+    "learningTips": [
+      "Estudia cada día un grupo manejable de verbos portugueses y repásalos antes de añadir otros nuevos.",
+      "Aprende cada verbo dentro de una oración completa para recordar su significado, las preposiciones que exige y su uso natural.",
+      "Practica las formas irregulares más frecuentes junto con los patrones regulares en -ar, -er e -ir.",
+      "Repasa los verbos en intervalos espaciados y vuelve con mayor frecuencia a las formas que confundas u olvides.",
+      "Utiliza activamente los nuevos verbos hablando o escribiendo frases breves con distintas personas y tiempos verbales."
+    ],
+    "relatedLinks": {
+      "levelTest": "Prueba de nivel de portugués",
+      "englishA1": "Vocabulario de portugués A1",
+      "englishA2": "Vocabulario de portugués A2",
+      "englishB1": "Vocabulario de portugués B1",
+      "seoHub": "Todas las páginas de vocabulario"
+    },
+    "faq": [
+      {
+        "question": "¿Qué verbos se encuentran entre los más comunes en portugués?",
+        "answer": "Entre los verbos portugueses de uso frecuente se encuentran ser, estar, ter, fazer, ir, poder, querer, dizer, ver y saber. El orden exacto puede variar según el corpus, el significado, el contexto y la variedad regional, por lo que esta lista es una selección práctica y no una clasificación oficial definitiva."
+      },
+      {
+        "question": "¿Por qué conviene aprender primero los verbos portugueses más comunes?",
+        "answer": "Estos verbos aparecen constantemente en conversaciones, mensajes, instrucciones, relatos y medios de comunicación, por lo que ofrecen una utilidad inmediata. Además, permiten familiarizarse con aspectos esenciales del portugués, como la conjugación según la persona, las formas irregulares, la omisión del pronombre sujeto y la diferencia entre ser y estar."
+      },
+      {
+        "question": "¿Son suficientes estos 100 verbos portugueses para un principiante?",
+        "answer": "Estos 100 verbos proporcionan una base sólida, pero no bastan por sí solos para comunicarse plenamente en un nivel inicial. También es necesario aprender sustantivos, adjetivos, preposiciones, expresiones frecuentes y el uso de los verbos en presente y pasado."
+      },
+      {
+        "question": "¿Cómo puedo practicar estos verbos portugueses de forma eficaz?",
+        "answer": "Aprende cada verbo con su significado, una frase breve y las formas que vayas a utilizar con más frecuencia. Presta especial atención a las conjugaciones irregulares, las formas pronominales, el contraste entre ser y estar y, a medida que avances, la diferencia entre el pretérito perfecto simple y el imperfecto."
+      },
+      {
+        "question": "¿A qué niveles del MCER pertenecen estos verbos portugueses?",
+        "answer": "Muchos verbos portugueses muy frecuentes se introducen en A1 o A2, mientras que otros significados, usos idiomáticos y formas verbales más complejas pueden aparecer en B1 o niveles superiores. Un mismo verbo puede ser relevante en varios niveles del MCER según su significado, su construcción y el contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "fr",
+    "title": "Les 100 verbes portugais les plus courants",
+    "metaTitle": "100 verbes portugais courants avec leur sens",
+    "metaDescription": "Apprenez 100 verbes portugais courants avec leur sens en français, leur niveau CECRL, des traductions et des exercices pratiques.",
+    "heroSubtitle": "Maîtrisez les verbes essentiels pour comprendre le portugais courant et exprimer des actions, des besoins et des idées.",
+    "introParagraphs": [
+      "Les verbes sont indispensables en portugais, car ils permettent d’exprimer des actions, des états, des intentions, des opinions et des expériences tout en indiquant la personne, le nombre, le temps et le mode. Apprendre les verbes les plus fréquents aide à comprendre plus rapidement les échanges quotidiens et à construire des phrases utiles.",
+      "Cette liste rassemble 100 verbes portugais fréquemment employés, choisis pour leur utilité pratique. Elle comprend des verbes réguliers en -ar, -er et -ir, des verbes irréguliers essentiels comme ser, estar, ter, ir et fazer, ainsi que des verbes pronominaux et des verbes présentant des modifications orthographiques ou vocaliques.",
+      "Utilisez cette page pour consulter les significations en français, comparer les niveaux du CECRL et ouvrir la fiche de chaque verbe afin d’accéder à ses traductions et à des informations complémentaires. Vous pouvez également rechercher un verbe précis, filtrer la liste par niveau et consolider vos acquis avec les outils d’entraînement de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbes",
+      "language": "Portugais",
+      "level": "Niveaux fondés sur le CECRL",
+      "practice": "Exercices disponibles"
+    },
+    "sections": {
+      "statsHeading": "Aperçu de la liste",
+      "verbListHeading": "100 verbes portugais courants",
+      "learningTipsHeading": "Comment apprendre les verbes portugais",
+      "relatedLinksHeading": "Pages connexes de vocabulaire portugais",
+      "faqHeading": "Questions fréquentes"
+    },
+    "buttons": {
+      "startPractice": "Pratiquer le portugais",
+      "takeLevelTest": "Faire le test de niveau de portugais"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher un verbe portugais",
+      "cefrLabel": "Niveau CECRL",
+      "allLevels": "Tous les niveaux"
+    },
+    "table": {
+      "number": "N°",
+      "verb": "Verbe portugais",
+      "definition": "Sens en français",
+      "wordPage": "Voir la fiche",
+      "noResults": "Aucun verbe portugais ne correspond à votre recherche."
+    },
+    "learningTips": [
+      "Étudiez chaque jour un petit groupe de verbes portugais et révisez-le avant d’ajouter de nouveaux mots.",
+      "Apprenez chaque verbe dans une phrase complète afin de retenir son sens, sa construction et les prépositions qu’il exige.",
+      "Entraînez-vous aux formes irrégulières les plus fréquentes en parallèle des modèles réguliers en -ar, -er et -ir.",
+      "Révisez les verbes à intervalles espacés et revenez plus souvent sur les formes que vous confondez ou oubliez.",
+      "Réutilisez activement les nouveaux verbes en écrivant ou en prononçant de courtes phrases à différentes personnes et à différents temps."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test de niveau de portugais",
+      "englishA1": "Vocabulaire portugais A1",
+      "englishA2": "Vocabulaire portugais A2",
+      "englishB1": "Vocabulaire portugais B1",
+      "seoHub": "Toutes les pages de vocabulaire"
+    },
+    "faq": [
+      {
+        "question": "Quels verbes figurent parmi les plus courants en portugais ?",
+        "answer": "Parmi les verbes portugais fréquemment employés, on trouve ser, estar, ter, fazer, ir, poder, querer, dizer, ver et saber. Leur ordre exact peut varier selon le corpus, le sens, le contexte et la variété régionale, de sorte que cette liste constitue une sélection pratique plutôt qu’un classement officiel définitif."
+      },
+      {
+        "question": "Pourquoi apprendre d’abord les verbes portugais les plus courants ?",
+        "answer": "Ces verbes apparaissent souvent dans les conversations, les messages, les consignes, les récits et les médias, ce qui leur donne une utilité immédiate. Ils permettent aussi de se familiariser avec des aspects essentiels du portugais, comme les conjugaisons irrégulières, l’omission fréquente du pronom sujet et la distinction entre ser et estar."
+      },
+      {
+        "question": "Ces 100 verbes portugais suffisent-ils à un débutant ?",
+        "answer": "Ces 100 verbes constituent une base solide, mais ils ne suffisent pas à eux seuls pour communiquer pleinement à un niveau débutant. Il faut également apprendre des noms, des adjectifs, des prépositions, des expressions courantes et les principales structures de phrase."
+      },
+      {
+        "question": "Comment pratiquer efficacement ces verbes portugais ?",
+        "answer": "Apprenez chaque verbe avec son sens, une phrase courte et les formes que vous utiliserez le plus souvent. Accordez une attention particulière aux conjugaisons irrégulières, aux verbes pronominaux, à la différence entre ser et estar et, à mesure que vous progressez, au contraste entre le prétérit et l’imparfait."
+      },
+      {
+        "question": "À quels niveaux du CECRL appartiennent ces verbes portugais ?",
+        "answer": "De nombreux verbes portugais très fréquents sont introduits aux niveaux A1 ou A2, tandis que d’autres sens, des emplois idiomatiques et des formes verbales plus complexes peuvent apparaître en B1 ou au-delà. Un même verbe peut donc relever de plusieurs niveaux du CECRL selon son sens, sa construction et son contexte."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "de",
+    "title": "Die 100 häufigsten portugiesischen Verben",
+    "metaTitle": "100 häufige portugiesische Verben mit Bedeutungen",
+    "metaDescription": "Lerne 100 häufige portugiesische Verben mit deutschen Bedeutungen, GER-Niveaus, Übersetzungen, Wortseiten und praktischen Übungen.",
+    "heroSubtitle": "Lerne zentrale Verben, um alltägliches Portugiesisch zu verstehen und Handlungen, Bedürfnisse und Gedanken auszudrücken.",
+    "introParagraphs": [
+      "Verben sind im Portugiesischen unverzichtbar, weil sie Handlungen, Zustände, Absichten, Meinungen und Erfahrungen ausdrücken und zugleich Person, Zahl, Zeit und Modus kennzeichnen. Wer häufig gebrauchte Verben beherrscht, versteht alltägliche Gespräche schneller und kann in vielen Situationen eigene Sätze bilden.",
+      "Diese Liste enthält 100 häufig verwendete portugiesische Verben, die nach ihrem praktischen Nutzen ausgewählt wurden. Dazu gehören regelmäßige Verben auf -ar, -er und -ir, wichtige unregelmäßige Verben wie ser, estar, ter, ir und fazer sowie reflexive Verben und Verben mit Stamm- oder Rechtschreibänderungen.",
+      "Nutze die Liste, um deutsche Bedeutungen nachzuschlagen, GER-Niveaus zu vergleichen und die einzelnen Wortseiten mit Übersetzungen und zusätzlichen Informationen zu öffnen. Du kannst außerdem gezielt nach portugiesischen Verben suchen, nach Niveau filtern und sie mit den Übungen von FluentStellar festigen."
+    ],
+    "stats": {
+      "verbs": "100 Verben",
+      "language": "Portugiesisch",
+      "level": "Niveaus nach dem GER",
+      "practice": "Übungen verfügbar"
+    },
+    "sections": {
+      "statsHeading": "Übersicht",
+      "verbListHeading": "100 häufige portugiesische Verben",
+      "learningTipsHeading": "So lernst du portugiesische Verben",
+      "relatedLinksHeading": "Weitere Seiten zum portugiesischen Wortschatz",
+      "faqHeading": "Häufig gestellte Fragen"
+    },
+    "buttons": {
+      "startPractice": "Portugiesisch üben",
+      "takeLevelTest": "Portugiesisch-Einstufungstest machen"
+    },
+    "filters": {
+      "searchPlaceholder": "Portugiesische Verben suchen",
+      "cefrLabel": "GER-Niveau",
+      "allLevels": "Alle Niveaus"
+    },
+    "table": {
+      "number": "Nr.",
+      "verb": "Portugiesisches Verb",
+      "definition": "Deutsche Bedeutung",
+      "wordPage": "Wortseite öffnen",
+      "noResults": "Keine passenden portugiesischen Verben gefunden."
+    },
+    "learningTips": [
+      "Lerne täglich eine überschaubare Gruppe portugiesischer Verben und wiederhole sie, bevor du neue hinzufügst.",
+      "Merke dir jedes Verb in einem vollständigen Satz, damit du zugleich seine Bedeutung, typische Präpositionen und den natürlichen Gebrauch lernst.",
+      "Übe häufige unregelmäßige Formen zusammen mit den regelmäßigen Konjugationsmustern auf -ar, -er und -ir.",
+      "Wiederhole Verben in zunehmenden Abständen und kehre häufiger zu den Formen zurück, die du verwechselst oder vergisst.",
+      "Verwende neue Verben aktiv, indem du kurze Sätze mit verschiedenen Personen und Zeitformen sprichst oder schreibst."
+    ],
+    "relatedLinks": {
+      "levelTest": "Portugiesisch-Einstufungstest",
+      "englishA1": "Portugiesischer Wortschatz A1",
+      "englishA2": "Portugiesischer Wortschatz A2",
+      "englishB1": "Portugiesischer Wortschatz B1",
+      "seoHub": "Alle Wortschatzseiten"
+    },
+    "faq": [
+      {
+        "question": "Welche Verben gehören zu den häufigsten portugiesischen Verben?",
+        "answer": "Zu den häufig gebrauchten portugiesischen Verben zählen ser, estar, ter, fazer, ir, poder, querer, dizer, ver und saber. Die genaue Reihenfolge hängt vom untersuchten Korpus, von der Bedeutung, dem Kontext und der regionalen Sprachvariante ab, deshalb ist diese Liste als praktische Auswahl und nicht als endgültige offizielle Rangfolge zu verstehen."
+      },
+      {
+        "question": "Warum sollte ich zuerst häufige portugiesische Verben lernen?",
+        "answer": "Häufige Verben begegnen dir regelmäßig in Gesprächen, Nachrichten, Anweisungen, Erzählungen und Medien und sind deshalb sofort praktisch nutzbar. Gleichzeitig lernst du mit ihnen zentrale Merkmale des Portugiesischen kennen, darunter unregelmäßige Konjugationen, häufig ausgelassene Subjektpronomen und den Unterschied zwischen ser und estar."
+      },
+      {
+        "question": "Reichen diese 100 portugiesischen Verben für Anfänger aus?",
+        "answer": "Diese 100 Verben bilden eine solide Grundlage, reichen allein aber nicht für eine vollständige Kommunikation auf Anfängerniveau aus. Zusätzlich brauchst du Substantive, Adjektive, Präpositionen, häufige Wendungen und grundlegende Satzmuster."
+      },
+      {
+        "question": "Wie kann ich diese portugiesischen Verben effektiv üben?",
+        "answer": "Lerne jedes Verb zusammen mit seiner Bedeutung, einem kurzen Beispielsatz und den Formen, die du am häufigsten verwenden wirst. Achte besonders auf unregelmäßige Konjugationen, reflexive Formen, den Unterschied zwischen ser und estar sowie später auf den Gebrauch von Pretérito perfeito und Imperfeito."
+      },
+      {
+        "question": "Zu welchen GER-Niveaus gehören diese portugiesischen Verben?",
+        "answer": "Viele sehr häufige portugiesische Verben werden bereits auf den Niveaus A1 oder A2 eingeführt, während zusätzliche Bedeutungen, idiomatische Verwendungen und komplexere Verbformen erst auf B1 oder höheren Stufen vorkommen können. Ein Verb kann daher je nach Bedeutung, Konstruktion und Kontext mehreren GER-Niveaus zugeordnet werden."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "pt",
+    "title": "Os 100 verbos portugueses mais comuns",
+    "metaTitle": "100 verbos portugueses comuns com significados",
+    "metaDescription": "Aprenda 100 verbos portugueses comuns com significados, níveis do QECR, traduções, páginas detalhadas e exercícios práticos.",
+    "heroSubtitle": "Domine verbos essenciais para compreender o português cotidiano e expressar ações, necessidades, ideias e experiências.",
+    "introParagraphs": [
+      "Os verbos são essenciais no português porque expressam ações, estados, intenções, opiniões e experiências, além de indicarem pessoa, número, tempo e modo. Aprender primeiro os verbos mais frequentes ajuda a compreender conversas com mais facilidade e a construir frases úteis em diferentes situações.",
+      "Esta lista reúne 100 verbos portugueses de uso frequente, selecionados por sua utilidade prática. Ela inclui verbos regulares terminados em -ar, -er e -ir, verbos irregulares fundamentais como ser, estar, ter, ir e fazer, além de verbos pronominais e formas com alterações no radical ou na grafia.",
+      "Use a lista para consultar significados, comparar níveis do QECR e abrir a página individual de cada verbo com traduções e informações adicionais. Também é possível pesquisar um verbo específico, filtrar os resultados por nível e reforçar o aprendizado com as ferramentas de prática do FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Português",
+      "level": "Níveis baseados no QECR",
+      "practice": "Exercícios disponíveis"
+    },
+    "sections": {
+      "statsHeading": "Visão geral da lista",
+      "verbListHeading": "100 verbos portugueses comuns",
+      "learningTipsHeading": "Como aprender verbos portugueses",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulário português",
+      "faqHeading": "Perguntas frequentes"
+    },
+    "buttons": {
+      "startPractice": "Praticar português",
+      "takeLevelTest": "Fazer o teste de nível de português"
+    },
+    "filters": {
+      "searchPlaceholder": "Pesquisar verbos em português",
+      "cefrLabel": "Nível do QECR",
+      "allLevels": "Todos os níveis"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo em português",
+      "definition": "Significado",
+      "wordPage": "Ver página",
+      "noResults": "Nenhum verbo português correspondente foi encontrado."
+    },
+    "learningTips": [
+      "Estude diariamente um pequeno grupo de verbos portugueses e revise-o antes de acrescentar novos.",
+      "Aprenda cada verbo dentro de uma frase completa para memorizar seu significado, sua construção e as preposições exigidas.",
+      "Pratique as formas irregulares mais frequentes juntamente com os padrões regulares em -ar, -er e -ir.",
+      "Revise os verbos em intervalos progressivamente maiores e retome com mais frequência as formas que você confunde ou esquece.",
+      "Use os novos verbos ativamente ao falar ou escrever frases curtas com pessoas e tempos verbais diferentes."
+    ],
+    "relatedLinks": {
+      "levelTest": "Teste de nível de português",
+      "englishA1": "Vocabulário de português A1",
+      "englishA2": "Vocabulário de português A2",
+      "englishB1": "Vocabulário de português B1",
+      "seoHub": "Todas as páginas de vocabulário"
+    },
+    "faq": [
+      {
+        "question": "Quais verbos estão entre os mais comuns em português?",
+        "answer": "Entre os verbos portugueses usados com frequência estão ser, estar, ter, fazer, ir, poder, querer, dizer, ver e saber. A ordem exata pode variar conforme o corpus, o significado, o contexto e a variedade regional, por isso esta lista é uma seleção prática e não uma classificação oficial definitiva."
+      },
+      {
+        "question": "Por que devo aprender primeiro os verbos portugueses mais comuns?",
+        "answer": "Esses verbos aparecem repetidamente em conversas, mensagens, instruções, histórias e meios de comunicação, oferecendo utilidade imediata. Eles também ajudam a compreender características importantes do português, como a conjugação por pessoa, as formas irregulares, a omissão frequente do pronome sujeito e a diferença entre ser e estar."
+      },
+      {
+        "question": "Estes 100 verbos portugueses são suficientes para iniciantes?",
+        "answer": "Os 100 verbos oferecem uma base sólida, mas não são suficientes, por si só, para uma comunicação completa no nível iniciante. Também é necessário aprender substantivos, adjetivos, preposições, expressões frequentes e as principais estruturas de frase."
+      },
+      {
+        "question": "Como posso praticar estes verbos portugueses de forma eficaz?",
+        "answer": "Estude cada verbo junto com seu significado, uma frase curta e as formas que você usará com mais frequência. Preste atenção especial às conjugações irregulares, aos verbos pronominais, à diferença entre ser e estar e, à medida que avançar, ao contraste entre o pretérito perfeito e o imperfeito."
+      },
+      {
+        "question": "A quais níveis do QECR pertencem estes verbos portugueses?",
+        "answer": "Muitos verbos portugueses muito frequentes são apresentados nos níveis A1 ou A2, enquanto significados adicionais, usos idiomáticos e formas verbais mais complexas podem surgir no B1 ou em níveis superiores. Um mesmo verbo pode, portanto, ser relevante em vários níveis do QECR, dependendo do significado, da construção e do contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "it",
+    "title": "I 100 verbi portoghesi più comuni",
+    "metaTitle": "100 verbi portoghesi comuni con significato",
+    "metaDescription": "Impara 100 verbi portoghesi comuni con significato in italiano, livelli QCER, traduzioni, schede lessicali ed esercizi pratici.",
+    "heroSubtitle": "Impara i verbi essenziali per capire il portoghese quotidiano ed esprimere azioni, bisogni, idee ed esperienze.",
+    "introParagraphs": [
+      "I verbi sono fondamentali in portoghese perché esprimono azioni, stati, intenzioni, opinioni ed esperienze, indicando anche persona, numero, tempo e modo. Conoscere quelli più frequenti aiuta a comprendere prima le conversazioni e a costruire frasi utili in molte situazioni quotidiane.",
+      "Questa lista raccoglie 100 verbi portoghesi di uso frequente scelti per la loro utilità pratica. Comprende verbi regolari in -ar, -er e -ir, verbi irregolari essenziali come ser, estar, ter, ir e fazer, oltre a verbi pronominali e forme con cambiamenti ortografici o della radice.",
+      "Usa la lista per consultare i significati in italiano, confrontare i livelli del QCER e aprire la scheda di ogni verbo con traduzioni e informazioni aggiuntive. Puoi anche cercare un verbo specifico, filtrare i risultati per livello e consolidare ciò che hai imparato con gli esercizi di FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbi",
+      "language": "Portoghese",
+      "level": "Livelli basati sul QCER",
+      "practice": "Esercizi disponibili"
+    },
+    "sections": {
+      "statsHeading": "Panoramica della lista",
+      "verbListHeading": "100 verbi portoghesi comuni",
+      "learningTipsHeading": "Come imparare i verbi portoghesi",
+      "relatedLinksHeading": "Altre pagine di vocabolario portoghese",
+      "faqHeading": "Domande frequenti"
+    },
+    "buttons": {
+      "startPractice": "Esercitati in portoghese",
+      "takeLevelTest": "Fai il test di livello di portoghese"
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca verbi portoghesi",
+      "cefrLabel": "Livello QCER",
+      "allLevels": "Tutti i livelli"
+    },
+    "table": {
+      "number": "N.",
+      "verb": "Verbo portoghese",
+      "definition": "Significato in italiano",
+      "wordPage": "Apri la scheda",
+      "noResults": "Nessun verbo portoghese corrisponde alla ricerca."
+    },
+    "learningTips": [
+      "Studia ogni giorno un piccolo gruppo di verbi portoghesi e ripassalo prima di aggiungere nuovi vocaboli.",
+      "Impara ogni verbo in una frase completa per ricordarne il significato, la costruzione e le eventuali preposizioni richieste.",
+      "Esercitati con le forme irregolari più frequenti insieme ai modelli regolari in -ar, -er e -ir.",
+      "Ripassa i verbi a intervalli progressivi e torna più spesso sulle forme che confondi o dimentichi.",
+      "Usa attivamente i nuovi verbi parlando o scrivendo brevi frasi con persone e tempi verbali diversi."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test di livello di portoghese",
+      "englishA1": "Vocabolario portoghese A1",
+      "englishA2": "Vocabolario portoghese A2",
+      "englishB1": "Vocabolario portoghese B1",
+      "seoHub": "Tutte le pagine di vocabolario"
+    },
+    "faq": [
+      {
+        "question": "Quali sono alcuni dei verbi più comuni in portoghese?",
+        "answer": "Tra i verbi portoghesi usati frequentemente figurano ser, estar, ter, fazer, ir, poder, querer, dizer, ver e saber. L’ordine preciso può variare in base al corpus, al significato, al contesto e alla varietà regionale, quindi questa lista è una selezione pratica e non una graduatoria ufficiale definitiva."
+      },
+      {
+        "question": "Perché conviene imparare prima i verbi portoghesi più comuni?",
+        "answer": "Questi verbi ricorrono spesso nelle conversazioni, nei messaggi, nelle istruzioni, nei racconti e nei media, offrendo quindi un’utilità immediata. Aiutano inoltre a familiarizzare con aspetti centrali del portoghese, come la coniugazione per persona, le forme irregolari, l’omissione frequente del pronome soggetto e la distinzione tra ser ed estar."
+      },
+      {
+        "question": "Questi 100 verbi portoghesi sono sufficienti per un principiante?",
+        "answer": "I 100 verbi costituiscono una base solida, ma da soli non bastano per comunicare pienamente a un livello iniziale. È necessario imparare anche sostantivi, aggettivi, preposizioni, espressioni frequenti e le principali strutture della frase."
+      },
+      {
+        "question": "Come posso esercitarmi efficacemente con questi verbi portoghesi?",
+        "answer": "Studia ogni verbo insieme al suo significato, a una frase breve e alle forme che userai più spesso. Presta particolare attenzione alle coniugazioni irregolari, ai verbi pronominali, alla differenza tra ser ed estar e, con il progredire del livello, al contrasto tra pretérito perfeito e imperfeito."
+      },
+      {
+        "question": "A quali livelli QCER appartengono questi verbi portoghesi?",
+        "answer": "Molti verbi portoghesi molto frequenti vengono introdotti nei livelli A1 o A2, mentre significati aggiuntivi, usi idiomatici e forme verbali più complesse possono comparire dal B1 in poi. Uno stesso verbo può quindi essere rilevante a più livelli del QCER in base al significato, alla costruzione e al contesto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "ru",
+    "title": "100 самых употребительных португальских глаголов",
+    "metaTitle": "100 употребительных португальских глаголов с переводом",
+    "metaDescription": "Изучайте 100 употребительных португальских глаголов с переводом на русский, уровнями CEFR, страницами слов и упражнениями.",
+    "heroSubtitle": "Освойте основные глаголы для понимания повседневного португальского и выражения действий, потребностей, мыслей и опыта.",
+    "introParagraphs": [
+      "Глаголы играют центральную роль в португальском языке, поскольку выражают действия, состояния, намерения, мнения и переживания, а их формы также указывают на лицо, число, время и наклонение. Знание часто употребляемых глаголов помогает быстрее понимать разговорную речь и строить полезные фразы в повседневных ситуациях.",
+      "В этом списке представлены 100 часто используемых португальских глаголов, отобранных с учётом их практической ценности. Здесь есть правильные глаголы на -ar, -er и -ir, важные неправильные глаголы ser, estar, ter, ir и fazer, а также возвратные формы и глаголы с изменениями основы или написания.",
+      "Используйте список, чтобы проверять значения на русском языке, сравнивать уровни CEFR и открывать отдельные страницы глаголов с переводами и дополнительной информацией. Вы также можете искать конкретные португальские глаголы, фильтровать их по уровню и закреплять лексику с помощью упражнений FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 глаголов",
+      "language": "Португальский",
+      "level": "Уровни по системе CEFR",
+      "practice": "Доступны упражнения"
+    },
+    "sections": {
+      "statsHeading": "Обзор списка",
+      "verbListHeading": "100 употребительных португальских глаголов",
+      "learningTipsHeading": "Как учить португальские глаголы",
+      "relatedLinksHeading": "Другие страницы португальской лексики",
+      "faqHeading": "Часто задаваемые вопросы"
+    },
+    "buttons": {
+      "startPractice": "Практиковать португальский",
+      "takeLevelTest": "Пройти тест по португальскому языку"
+    },
+    "filters": {
+      "searchPlaceholder": "Поиск португальских глаголов",
+      "cefrLabel": "Уровень CEFR",
+      "allLevels": "Все уровни"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Португальский глагол",
+      "definition": "Значение на русском",
+      "wordPage": "Открыть страницу",
+      "noResults": "Подходящие португальские глаголы не найдены."
+    },
+    "learningTips": [
+      "Учите ежедневно небольшую группу португальских глаголов и повторяйте её перед добавлением новых слов.",
+      "Запоминайте каждый глагол в составе полного предложения, чтобы усвоить его значение, управление и естественный контекст.",
+      "Практикуйте распространённые неправильные формы вместе с правильными моделями спряжения на -ar, -er и -ir.",
+      "Повторяйте глаголы через постепенно увеличивающиеся интервалы и чаще возвращайтесь к формам, которые вы путаете или забываете.",
+      "Активно используйте новые глаголы, составляя короткие устные и письменные фразы с разными лицами и временами."
+    ],
+    "relatedLinks": {
+      "levelTest": "Тест на уровень португальского языка",
+      "englishA1": "Португальская лексика уровня A1",
+      "englishA2": "Португальская лексика уровня A2",
+      "englishB1": "Португальская лексика уровня B1",
+      "seoHub": "Все страницы словарного запаса"
+    },
+    "faq": [
+      {
+        "question": "Какие глаголы относятся к самым употребительным в португальском языке?",
+        "answer": "К часто употребляемым португальским глаголам относятся ser, estar, ter, fazer, ir, poder, querer, dizer, ver и saber. Точный порядок зависит от корпуса, значения, контекста и регионального варианта языка, поэтому этот список представляет собой практическую подборку, а не официальный окончательный рейтинг."
+      },
+      {
+        "question": "Почему стоит сначала учить самые употребительные португальские глаголы?",
+        "answer": "Эти глаголы постоянно встречаются в разговорах, сообщениях, инструкциях, рассказах и средствах массовой информации, поэтому быстро приносят практическую пользу. Они также помогают освоить важные особенности португальского языка, включая спряжение по лицам, неправильные формы, частое отсутствие подлежащего-местоимения и различие между ser и estar."
+      },
+      {
+        "question": "Достаточно ли этих 100 португальских глаголов для начинающего?",
+        "answer": "Эти 100 глаголов создают прочную основу, но сами по себе не обеспечивают полноценного общения на начальном уровне. Также необходимо изучать существительные, прилагательные, предлоги, распространённые выражения и основные модели предложений."
+      },
+      {
+        "question": "Как эффективно практиковать эти португальские глаголы?",
+        "answer": "Учите каждый глагол вместе с его значением, коротким примером и наиболее полезными формами. Особое внимание уделяйте неправильному спряжению, возвратным формам, различию между ser и estar, а по мере продвижения — употреблению pretérito perfeito и imperfeito."
+      },
+      {
+        "question": "К каким уровням CEFR относятся эти португальские глаголы?",
+        "answer": "Многие часто употребляемые португальские глаголы вводятся уже на уровнях A1 или A2, а дополнительные значения, устойчивые употребления и более сложные формы могут встречаться на уровне B1 и выше. Один и тот же глагол может относиться к нескольким уровням CEFR в зависимости от значения, грамматической конструкции и контекста."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "en",
+    "title": "100 Most Common Russian Verbs",
+    "metaTitle": "100 Most Common Russian Verbs with Meanings",
+    "metaDescription": "Learn 100 common Russian verbs with English meanings, CEFR levels, translations, detailed word pages, and practical exercises.",
+    "heroSubtitle": "Master essential verbs for understanding everyday Russian and expressing actions, movement, needs, and opinions.",
+    "introParagraphs": [
+      "Verbs are essential in Russian because they express actions, states, intentions, movement, and changes while also marking tense, person, number, and sometimes gender. Learning frequently used verbs gives you a practical foundation for understanding everyday speech and building useful sentences.",
+      "This list contains 100 frequently used Russian verbs selected for practical vocabulary learning. It includes imperfective and perfective verbs, common reflexive verbs ending in -ся, irregular forms, and important verbs of motion such as идти, ходить, ехать, and ездить.",
+      "Use the list to check English meanings, compare CEFR levels, and open individual word pages for translations and further information. You can also search for a specific Russian verb, filter the list by level, and reinforce your knowledge with FluentStellar’s practice tools."
+    ],
+    "stats": {
+      "verbs": "100 verbs",
+      "language": "Russian",
+      "level": "CEFR-based levels",
+      "practice": "Practice available"
+    },
+    "sections": {
+      "statsHeading": "List overview",
+      "verbListHeading": "100 Common Russian Verbs",
+      "learningTipsHeading": "How to Learn Russian Verbs",
+      "relatedLinksHeading": "Related Russian Vocabulary Pages",
+      "faqHeading": "Frequently Asked Questions"
+    },
+    "buttons": {
+      "startPractice": "Practise Russian",
+      "takeLevelTest": "Take the Russian Level Test"
+    },
+    "filters": {
+      "searchPlaceholder": "Search Russian verbs",
+      "cefrLabel": "CEFR level",
+      "allLevels": "All levels"
+    },
+    "table": {
+      "number": "No.",
+      "verb": "Russian verb",
+      "definition": "English meaning",
+      "wordPage": "View word",
+      "noResults": "No matching Russian verbs found."
+    },
+    "learningTips": [
+      "Study a manageable group of Russian verbs each day and review them before adding new ones.",
+      "Learn every verb in a complete sentence so that you remember its meaning, case requirements, and natural context.",
+      "Study imperfective and perfective verbs together when they form a commonly used aspectual pair.",
+      "Review verbs at spaced intervals and return more frequently to forms, stress patterns, and aspect pairs that you confuse.",
+      "Use new verbs actively by speaking or writing short sentences in different persons and tenses."
+    ],
+    "relatedLinks": {
+      "levelTest": "Russian Level Test",
+      "englishA1": "Russian A1 Vocabulary",
+      "englishA2": "Russian A2 Vocabulary",
+      "englishB1": "Russian B1 Vocabulary",
+      "seoHub": "All Vocabulary Pages"
+    },
+    "faq": [
+      {
+        "question": "Which verbs are among the most common in Russian?",
+        "answer": "Frequently used Russian verbs include быть, иметь, делать, говорить, знать, хотеть, мочь, идти, видеть, and думать. Their exact order can vary by corpus, meaning, register, and context, so this list is a practical learning selection rather than an official definitive ranking."
+      },
+      {
+        "question": "Why should I learn common Russian verbs first?",
+        "answer": "Common verbs appear repeatedly in conversations, messages, instructions, stories, and media, so they provide immediate communicative value. They also introduce central features of Russian, including verbal aspect, reflexive endings, case government, and distinctions between unidirectional and multidirectional verbs of motion."
+      },
+      {
+        "question": "Are these 100 Russian verbs enough for a beginner?",
+        "answer": "These 100 verbs provide a strong foundation, but they are not sufficient for complete beginner-level communication on their own. Learners also need nouns, adjectives, pronouns, case endings, common expressions, and practice using verbs in complete sentences."
+      },
+      {
+        "question": "How can I practise these Russian verbs effectively?",
+        "answer": "Learn each verb with its meaning, a short example sentence, its present or future forms, and the cases it requires. Pay particular attention to imperfective and perfective pairs, moving stress, reflexive forms, and verbs of motion such as идти and ходить."
+      },
+      {
+        "question": "Which CEFR levels do these Russian verbs belong to?",
+        "answer": "Many highly frequent Russian verbs are introduced at A1 or A2, while additional meanings, aspectual distinctions, prefixed forms, and more complex constructions may appear at B1 or above. A single verb can therefore be relevant at several CEFR levels depending on its meaning, grammatical pattern, and context."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "es",
+    "title": "Los 100 verbos más comunes en ruso",
+    "metaTitle": "100 verbos comunes en ruso con significado",
+    "metaDescription": "Aprende 100 verbos comunes en ruso con significado en español, niveles del MCER, traducciones, fichas detalladas y ejercicios.",
+    "heroSubtitle": "Domina los verbos esenciales para comprender el ruso cotidiano y expresar acciones, movimiento, necesidades y opiniones.",
+    "introParagraphs": [
+      "Los verbos son fundamentales en ruso porque expresan acciones, estados, intenciones, movimiento y cambios, además de indicar tiempo, persona, número y, en algunos casos, género. Aprender los más frecuentes proporciona una base práctica para comprender el habla cotidiana y construir frases útiles.",
+      "Esta lista reúne 100 verbos rusos de uso frecuente seleccionados por su utilidad práctica. Incluye verbos imperfectivos y perfectivos, verbos reflexivos terminados en -ся, formas irregulares y verbos de movimiento importantes como идти, ходить, ехать y ездить.",
+      "Utiliza la lista para consultar significados en español, comparar niveles del MCER y abrir la página individual de cada verbo con traducciones e información adicional. También puedes buscar un verbo concreto, filtrar la lista por nivel y reforzar lo aprendido con las herramientas de práctica de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Ruso",
+      "level": "Niveles basados en el MCER",
+      "practice": "Práctica disponible"
+    },
+    "sections": {
+      "statsHeading": "Resumen de la lista",
+      "verbListHeading": "100 verbos comunes en ruso",
+      "learningTipsHeading": "Cómo aprender los verbos rusos",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulario ruso",
+      "faqHeading": "Preguntas frecuentes"
+    },
+    "buttons": {
+      "startPractice": "Practicar ruso",
+      "takeLevelTest": "Hacer la prueba de nivel de ruso"
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar verbos en ruso",
+      "cefrLabel": "Nivel del MCER",
+      "allLevels": "Todos los niveles"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo en ruso",
+      "definition": "Significado en español",
+      "wordPage": "Ver ficha",
+      "noResults": "No se encontraron verbos rusos que coincidan con la búsqueda."
+    },
+    "learningTips": [
+      "Estudia cada día un grupo manejable de verbos rusos y repásalos antes de añadir otros nuevos.",
+      "Aprende cada verbo dentro de una oración completa para recordar su significado, los casos que rige y su contexto natural.",
+      "Estudia juntos los verbos imperfectivos y perfectivos cuando formen una pareja aspectual de uso frecuente.",
+      "Repasa los verbos en intervalos espaciados y vuelve con mayor frecuencia a las formas, acentos y parejas aspectuales que confundas.",
+      "Utiliza activamente los nuevos verbos hablando o escribiendo frases breves con distintas personas y tiempos verbales."
+    ],
+    "relatedLinks": {
+      "levelTest": "Prueba de nivel de ruso",
+      "englishA1": "Vocabulario de ruso A1",
+      "englishA2": "Vocabulario de ruso A2",
+      "englishB1": "Vocabulario de ruso B1",
+      "seoHub": "Todas las páginas de vocabulario"
+    },
+    "faq": [
+      {
+        "question": "¿Qué verbos se encuentran entre los más comunes en ruso?",
+        "answer": "Entre los verbos rusos de uso frecuente se encuentran быть, иметь, делать, говорить, знать, хотеть, мочь, идти, видеть y думать. El orden exacto puede variar según el corpus, el significado, el registro y el contexto, por lo que esta lista es una selección práctica y no una clasificación oficial definitiva."
+      },
+      {
+        "question": "¿Por qué conviene aprender primero los verbos rusos más comunes?",
+        "answer": "Estos verbos aparecen constantemente en conversaciones, mensajes, instrucciones, relatos y medios de comunicación, por lo que ofrecen una utilidad inmediata. Además, permiten familiarizarse con aspectos esenciales del ruso, como el aspecto verbal, las formas reflexivas, el régimen de casos y la diferencia entre verbos de movimiento unidireccionales y multidireccionales."
+      },
+      {
+        "question": "¿Son suficientes estos 100 verbos rusos para un principiante?",
+        "answer": "Estos 100 verbos proporcionan una base sólida, pero no bastan por sí solos para comunicarse plenamente en un nivel inicial. También es necesario aprender sustantivos, adjetivos, pronombres, terminaciones de los casos, expresiones frecuentes y el uso de los verbos en oraciones completas."
+      },
+      {
+        "question": "¿Cómo puedo practicar estos verbos rusos de forma eficaz?",
+        "answer": "Aprende cada verbo con su significado, una frase breve, sus formas de presente o futuro y los casos que exige. Presta especial atención a las parejas imperfectivas y perfectivas, al acento móvil, a los verbos reflexivos y a los verbos de movimiento como идти y ходить."
+      },
+      {
+        "question": "¿A qué niveles del MCER pertenecen estos verbos rusos?",
+        "answer": "Muchos verbos rusos muy frecuentes se introducen en A1 o A2, mientras que otros significados, contrastes aspectuales, formas con prefijos y construcciones más complejas pueden aparecer en B1 o niveles superiores. Un mismo verbo puede ser relevante en varios niveles del MCER según su significado, su estructura gramatical y el contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "fr",
+    "title": "Les 100 verbes russes les plus courants",
+    "metaTitle": "100 verbes russes courants avec leur sens",
+    "metaDescription": "Apprenez 100 verbes russes courants avec leur sens en français, leur niveau CECRL, des traductions, des fiches et des exercices.",
+    "heroSubtitle": "Maîtrisez les verbes essentiels pour comprendre le russe courant et exprimer des actions, des déplacements et des idées.",
+    "introParagraphs": [
+      "Les verbes sont indispensables en russe, car ils expriment des actions, des états, des intentions, des déplacements et des changements, tout en indiquant le temps, la personne et le nombre. Au passé, leur forme varie également selon le genre, ce qui rend leur apprentissage essentiel pour comprendre et construire des phrases correctes.",
+      "Cette liste rassemble 100 verbes russes fréquemment employés, sélectionnés pour leur utilité pratique. Elle comprend des verbes imperfectifs et perfectifs, des verbes pronominaux terminés par -ся, des formes irrégulières ainsi que des verbes de mouvement importants comme идти, ходить, ехать et ездить.",
+      "Utilisez cette page pour consulter les significations en français, comparer les niveaux du CECRL et ouvrir la fiche de chaque verbe afin d’accéder à ses traductions et à des informations complémentaires. Vous pouvez également rechercher un verbe précis, filtrer la liste par niveau et consolider vos acquis avec les outils d’entraînement de FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbes",
+      "language": "Russe",
+      "level": "Niveaux fondés sur le CECRL",
+      "practice": "Exercices disponibles"
+    },
+    "sections": {
+      "statsHeading": "Aperçu de la liste",
+      "verbListHeading": "100 verbes russes courants",
+      "learningTipsHeading": "Comment apprendre les verbes russes",
+      "relatedLinksHeading": "Pages connexes de vocabulaire russe",
+      "faqHeading": "Questions fréquentes"
+    },
+    "buttons": {
+      "startPractice": "Pratiquer le russe",
+      "takeLevelTest": "Faire le test de niveau de russe"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher un verbe russe",
+      "cefrLabel": "Niveau CECRL",
+      "allLevels": "Tous les niveaux"
+    },
+    "table": {
+      "number": "N°",
+      "verb": "Verbe russe",
+      "definition": "Sens en français",
+      "wordPage": "Voir la fiche",
+      "noResults": "Aucun verbe russe ne correspond à votre recherche."
+    },
+    "learningTips": [
+      "Étudiez chaque jour un petit groupe de verbes russes et révisez-le avant d’ajouter de nouveaux mots.",
+      "Apprenez chaque verbe dans une phrase complète afin de retenir son sens, les cas qu’il régit et son contexte naturel.",
+      "Étudiez ensemble les verbes imperfectifs et perfectifs lorsqu’ils forment une paire aspectuelle courante.",
+      "Révisez les verbes à intervalles espacés et revenez plus souvent sur les formes, les accents et les paires aspectuelles que vous confondez.",
+      "Réutilisez activement les nouveaux verbes en écrivant ou en prononçant de courtes phrases à différentes personnes et à différents temps."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test de niveau de russe",
+      "englishA1": "Vocabulaire russe A1",
+      "englishA2": "Vocabulaire russe A2",
+      "englishB1": "Vocabulaire russe B1",
+      "seoHub": "Toutes les pages de vocabulaire"
+    },
+    "faq": [
+      {
+        "question": "Quels verbes figurent parmi les plus courants en russe ?",
+        "answer": "Parmi les verbes russes fréquemment employés, on trouve быть, иметь, делать, говорить, знать, хотеть, мочь, идти, видеть et думать. Leur ordre exact peut varier selon le corpus, le sens, le registre et le contexte, de sorte que cette liste constitue une sélection pratique plutôt qu’un classement officiel définitif."
+      },
+      {
+        "question": "Pourquoi apprendre d’abord les verbes russes les plus courants ?",
+        "answer": "Ces verbes apparaissent souvent dans les conversations, les messages, les consignes, les récits et les médias, ce qui leur donne une utilité immédiate. Ils permettent aussi de se familiariser avec des aspects essentiels du russe, comme l’aspect verbal, les formes en -ся, la rection des cas et la distinction entre verbes de mouvement unidirectionnels et multidirectionnels."
+      },
+      {
+        "question": "Ces 100 verbes russes suffisent-ils à un débutant ?",
+        "answer": "Ces 100 verbes constituent une base solide, mais ils ne suffisent pas à eux seuls pour communiquer pleinement à un niveau débutant. Il faut également apprendre des noms, des adjectifs, des pronoms, les terminaisons des cas, des expressions courantes et les principales structures de phrase."
+      },
+      {
+        "question": "Comment pratiquer efficacement ces verbes russes ?",
+        "answer": "Apprenez chaque verbe avec son sens, une phrase courte, ses formes du présent ou du futur et les cas qu’il exige. Accordez une attention particulière aux paires imperfectives et perfectives, à l’accent mobile, aux verbes en -ся et aux verbes de mouvement comme идти et ходить."
+      },
+      {
+        "question": "À quels niveaux du CECRL appartiennent ces verbes russes ?",
+        "answer": "De nombreux verbes russes très fréquents sont introduits aux niveaux A1 ou A2, tandis que d’autres sens, les distinctions aspectuelles, les formes préfixées et des constructions plus complexes peuvent apparaître en B1 ou au-delà. Un même verbe peut donc relever de plusieurs niveaux du CECRL selon son sens, sa structure grammaticale et son contexte."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "de",
+    "title": "Die 100 häufigsten russischen Verben",
+    "metaTitle": "100 häufige russische Verben mit Bedeutungen",
+    "metaDescription": "Lerne 100 häufige russische Verben mit deutschen Bedeutungen, GER-Niveaus, Übersetzungen, Wortseiten und praktischen Übungen.",
+    "heroSubtitle": "Lerne zentrale Verben, um alltägliches Russisch zu verstehen und Handlungen, Bewegungen und Gedanken auszudrücken.",
+    "introParagraphs": [
+      "Verben sind im Russischen unverzichtbar, weil sie Handlungen, Zustände, Absichten, Bewegungen und Veränderungen ausdrücken und zugleich Zeit, Person und Zahl kennzeichnen. In der Vergangenheit richten sich ihre Formen außerdem nach dem Genus, weshalb sichere Verbkenntnisse für das Verstehen und Bilden korrekter Sätze besonders wichtig sind.",
+      "Diese Liste enthält 100 häufig verwendete russische Verben, die nach ihrem praktischen Nutzen ausgewählt wurden. Dazu gehören imperfektive und perfektive Verben, reflexive Verben auf -ся, unregelmäßige Formen sowie wichtige Bewegungsverben wie идти, ходить, ехать und ездить.",
+      "Nutze die Liste, um deutsche Bedeutungen nachzuschlagen, GER-Niveaus zu vergleichen und die einzelnen Wortseiten mit Übersetzungen und zusätzlichen Informationen zu öffnen. Du kannst außerdem gezielt nach russischen Verben suchen, nach Niveau filtern und sie mit den Übungen von FluentStellar festigen."
+    ],
+    "stats": {
+      "verbs": "100 Verben",
+      "language": "Russisch",
+      "level": "Niveaus nach dem GER",
+      "practice": "Übungen verfügbar"
+    },
+    "sections": {
+      "statsHeading": "Übersicht",
+      "verbListHeading": "100 häufige russische Verben",
+      "learningTipsHeading": "So lernst du russische Verben",
+      "relatedLinksHeading": "Weitere Seiten zum russischen Wortschatz",
+      "faqHeading": "Häufig gestellte Fragen"
+    },
+    "buttons": {
+      "startPractice": "Russisch üben",
+      "takeLevelTest": "Russisch-Einstufungstest machen"
+    },
+    "filters": {
+      "searchPlaceholder": "Russische Verben suchen",
+      "cefrLabel": "GER-Niveau",
+      "allLevels": "Alle Niveaus"
+    },
+    "table": {
+      "number": "Nr.",
+      "verb": "Russisches Verb",
+      "definition": "Deutsche Bedeutung",
+      "wordPage": "Wortseite öffnen",
+      "noResults": "Keine passenden russischen Verben gefunden."
+    },
+    "learningTips": [
+      "Lerne täglich eine überschaubare Gruppe russischer Verben und wiederhole sie, bevor du neue hinzufügst.",
+      "Merke dir jedes Verb in einem vollständigen Satz, damit du zugleich seine Bedeutung, die verlangten Fälle und den natürlichen Gebrauch lernst.",
+      "Lerne imperfektive und perfektive Verben gemeinsam, wenn sie ein häufig verwendetes Aspektpaar bilden.",
+      "Wiederhole Verben in zunehmenden Abständen und kehre häufiger zu Formen, Betonungsmustern und Aspektpaaren zurück, die du verwechselst.",
+      "Verwende neue Verben aktiv, indem du kurze Sätze mit verschiedenen Personen und Zeitformen sprichst oder schreibst."
+    ],
+    "relatedLinks": {
+      "levelTest": "Russisch-Einstufungstest",
+      "englishA1": "Russischer Wortschatz A1",
+      "englishA2": "Russischer Wortschatz A2",
+      "englishB1": "Russischer Wortschatz B1",
+      "seoHub": "Alle Wortschatzseiten"
+    },
+    "faq": [
+      {
+        "question": "Welche Verben gehören zu den häufigsten russischen Verben?",
+        "answer": "Zu den häufig gebrauchten russischen Verben zählen быть, иметь, делать, говорить, знать, хотеть, мочь, идти, видеть und думать. Die genaue Reihenfolge hängt vom untersuchten Korpus, von der Bedeutung, dem Sprachregister und dem Kontext ab, deshalb ist diese Liste als praktische Auswahl und nicht als endgültige offizielle Rangfolge zu verstehen."
+      },
+      {
+        "question": "Warum sollte ich zuerst häufige russische Verben lernen?",
+        "answer": "Häufige Verben begegnen dir regelmäßig in Gesprächen, Nachrichten, Anweisungen, Erzählungen und Medien und sind deshalb sofort praktisch nutzbar. Gleichzeitig lernst du mit ihnen zentrale Merkmale des Russischen kennen, darunter den Verbalaspekt, reflexive Formen auf -ся, die Kasusrektion und den Unterschied zwischen zielgerichteten und nicht zielgerichteten Bewegungsverben."
+      },
+      {
+        "question": "Reichen diese 100 russischen Verben für Anfänger aus?",
+        "answer": "Diese 100 Verben bilden eine solide Grundlage, reichen allein aber nicht für eine vollständige Kommunikation auf Anfängerniveau aus. Zusätzlich brauchst du Substantive, Adjektive, Pronomen, Kasusendungen, häufige Wendungen und grundlegende Satzmuster."
+      },
+      {
+        "question": "Wie kann ich diese russischen Verben effektiv üben?",
+        "answer": "Lerne jedes Verb zusammen mit seiner Bedeutung, einem kurzen Beispielsatz, seinen Präsens- oder Zukunftsformen und den verlangten Fällen. Achte besonders auf imperfektive und perfektive Paare, wechselnde Betonung, reflexive Formen sowie Bewegungsverben wie идти und ходить."
+      },
+      {
+        "question": "Zu welchen GER-Niveaus gehören diese russischen Verben?",
+        "answer": "Viele sehr häufige russische Verben werden bereits auf den Niveaus A1 oder A2 eingeführt, während zusätzliche Bedeutungen, Aspektunterschiede, präfigierte Formen und komplexere Konstruktionen erst auf B1 oder höheren Stufen vorkommen können. Ein Verb kann daher je nach Bedeutung, grammatischer Struktur und Kontext mehreren GER-Niveaus zugeordnet werden."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "it",
+    "title": "I 100 verbi russi più comuni",
+    "metaTitle": "100 verbi russi comuni con significato",
+    "metaDescription": "Impara 100 verbi russi comuni con significato in italiano, livelli QCER, traduzioni, schede lessicali ed esercizi pratici.",
+    "heroSubtitle": "Impara i verbi essenziali per capire il russo quotidiano ed esprimere azioni, movimenti, bisogni e opinioni.",
+    "introParagraphs": [
+      "I verbi sono fondamentali in russo perché esprimono azioni, stati, intenzioni, movimenti e cambiamenti, indicando anche il tempo, la persona e il numero. Al passato, le forme verbali cambiano inoltre in base al genere, perciò conoscere i verbi più frequenti è essenziale per comprendere e costruire frasi corrette.",
+      "Questa lista raccoglie 100 verbi russi di uso frequente scelti per la loro utilità pratica. Comprende verbi imperfettivi e perfettivi, verbi riflessivi terminati in -ся, forme irregolari e importanti verbi di movimento come идти, ходить, ехать ed ездить.",
+      "Usa la lista per consultare i significati in italiano, confrontare i livelli del QCER e aprire la scheda di ogni verbo con traduzioni e informazioni aggiuntive. Puoi anche cercare un verbo specifico, filtrare i risultati per livello e consolidare ciò che hai imparato con gli esercizi di FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbi",
+      "language": "Russo",
+      "level": "Livelli basati sul QCER",
+      "practice": "Esercizi disponibili"
+    },
+    "sections": {
+      "statsHeading": "Panoramica della lista",
+      "verbListHeading": "100 verbi russi comuni",
+      "learningTipsHeading": "Come imparare i verbi russi",
+      "relatedLinksHeading": "Altre pagine di vocabolario russo",
+      "faqHeading": "Domande frequenti"
+    },
+    "buttons": {
+      "startPractice": "Esercitati in russo",
+      "takeLevelTest": "Fai il test di livello di russo"
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca verbi russi",
+      "cefrLabel": "Livello QCER",
+      "allLevels": "Tutti i livelli"
+    },
+    "table": {
+      "number": "N.",
+      "verb": "Verbo russo",
+      "definition": "Significato in italiano",
+      "wordPage": "Apri la scheda",
+      "noResults": "Nessun verbo russo corrisponde alla ricerca."
+    },
+    "learningTips": [
+      "Studia ogni giorno un piccolo gruppo di verbi russi e ripassalo prima di aggiungere nuovi vocaboli.",
+      "Impara ogni verbo in una frase completa per ricordarne il significato, i casi richiesti e il contesto naturale.",
+      "Studia insieme i verbi imperfettivi e perfettivi quando formano una coppia aspettuale di uso frequente.",
+      "Ripassa i verbi a intervalli progressivi e torna più spesso sulle forme, sugli accenti e sulle coppie aspettuali che confondi.",
+      "Usa attivamente i nuovi verbi parlando o scrivendo brevi frasi con persone e tempi verbali diversi."
+    ],
+    "relatedLinks": {
+      "levelTest": "Test di livello di russo",
+      "englishA1": "Vocabolario russo A1",
+      "englishA2": "Vocabolario russo A2",
+      "englishB1": "Vocabolario russo B1",
+      "seoHub": "Tutte le pagine di vocabolario"
+    },
+    "faq": [
+      {
+        "question": "Quali sono alcuni dei verbi più comuni in russo?",
+        "answer": "Tra i verbi russi usati frequentemente figurano быть, иметь, делать, говорить, знать, хотеть, мочь, идти, видеть e думать. L’ordine preciso può variare in base al corpus, al significato, al registro e al contesto, quindi questa lista è una selezione pratica e non una graduatoria ufficiale definitiva."
+      },
+      {
+        "question": "Perché conviene imparare prima i verbi russi più comuni?",
+        "answer": "Questi verbi ricorrono spesso nelle conversazioni, nei messaggi, nelle istruzioni, nei racconti e nei media, offrendo quindi un’utilità immediata. Aiutano inoltre a familiarizzare con aspetti centrali del russo, come l’aspetto verbale, le forme riflessive in -ся, la reggenza dei casi e la distinzione tra verbi di movimento unidirezionali e multidirezionali."
+      },
+      {
+        "question": "Questi 100 verbi russi sono sufficienti per un principiante?",
+        "answer": "I 100 verbi costituiscono una base solida, ma da soli non bastano per comunicare pienamente a un livello iniziale. È necessario imparare anche sostantivi, aggettivi, pronomi, desinenze dei casi, espressioni frequenti e le principali strutture della frase."
+      },
+      {
+        "question": "Come posso esercitarmi efficacemente con questi verbi russi?",
+        "answer": "Studia ogni verbo insieme al suo significato, a una frase breve, alle forme del presente o del futuro e ai casi che richiede. Presta particolare attenzione alle coppie imperfettive e perfettive, all’accento mobile, ai verbi riflessivi e ai verbi di movimento come идти e ходить."
+      },
+      {
+        "question": "A quali livelli QCER appartengono questi verbi russi?",
+        "answer": "Molti verbi russi molto frequenti vengono introdotti nei livelli A1 o A2, mentre significati aggiuntivi, distinzioni aspettuali, forme con prefissi e costruzioni più complesse possono comparire dal B1 in poi. Uno stesso verbo può quindi essere rilevante a più livelli del QCER in base al significato, alla struttura grammaticale e al contesto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "pt",
+    "title": "Os 100 verbos russos mais comuns",
+    "metaTitle": "100 verbos russos comuns com significados",
+    "metaDescription": "Aprenda 100 verbos russos comuns com significados em português, níveis do QECR, traduções, páginas detalhadas e exercícios práticos.",
+    "heroSubtitle": "Domine verbos essenciais para compreender o russo cotidiano e expressar ações, movimentos, necessidades e opiniões.",
+    "introParagraphs": [
+      "Os verbos são fundamentais no russo porque expressam ações, estados, intenções, movimentos e mudanças, além de indicarem tempo, pessoa e número. No passado, suas formas também variam conforme o gênero, por isso aprender os verbos mais frequentes é essencial para compreender e construir frases corretas.",
+      "Esta lista reúne 100 verbos russos de uso frequente, selecionados por sua utilidade prática. Ela inclui verbos imperfectivos e perfectivos, verbos reflexivos terminados em -ся, formas irregulares e importantes verbos de movimento como идти, ходить, ехать e ездить.",
+      "Use a lista para consultar significados em português, comparar níveis do QECR e abrir a página individual de cada verbo com traduções e outras informações. Também é possível pesquisar um verbo específico, filtrar os resultados por nível e reforçar o aprendizado com os exercícios do FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 verbos",
+      "language": "Russo",
+      "level": "Níveis baseados no QECR",
+      "practice": "Exercícios disponíveis"
+    },
+    "sections": {
+      "statsHeading": "Visão geral da lista",
+      "verbListHeading": "100 verbos russos comuns",
+      "learningTipsHeading": "Como aprender verbos russos",
+      "relatedLinksHeading": "Páginas relacionadas de vocabulário russo",
+      "faqHeading": "Perguntas frequentes"
+    },
+    "buttons": {
+      "startPractice": "Praticar russo",
+      "takeLevelTest": "Fazer o teste de nível de russo"
+    },
+    "filters": {
+      "searchPlaceholder": "Pesquisar verbos em russo",
+      "cefrLabel": "Nível do QECR",
+      "allLevels": "Todos os níveis"
+    },
+    "table": {
+      "number": "N.º",
+      "verb": "Verbo em russo",
+      "definition": "Significado em português",
+      "wordPage": "Ver página",
+      "noResults": "Nenhum verbo russo correspondente foi encontrado."
+    },
+    "learningTips": [
+      "Estude diariamente um pequeno grupo de verbos russos e revise-o antes de acrescentar novos.",
+      "Aprenda cada verbo dentro de uma frase completa para memorizar seu significado, os casos exigidos e seu contexto natural.",
+      "Estude juntos os verbos imperfectivos e perfectivos quando formarem um par aspectual de uso frequente.",
+      "Revise os verbos em intervalos progressivamente maiores e retome com mais frequência as formas, os acentos e os pares aspectuais que você confunde.",
+      "Use os novos verbos ativamente ao falar ou escrever frases curtas com pessoas e tempos verbais diferentes."
+    ],
+    "relatedLinks": {
+      "levelTest": "Teste de nível de russo",
+      "englishA1": "Vocabulário de russo A1",
+      "englishA2": "Vocabulário de russo A2",
+      "englishB1": "Vocabulário de russo B1",
+      "seoHub": "Todas as páginas de vocabulário"
+    },
+    "faq": [
+      {
+        "question": "Quais verbos estão entre os mais comuns em russo?",
+        "answer": "Entre os verbos russos usados com frequência estão быть, иметь, делать, говорить, знать, хотеть, мочь, идти, видеть e думать. A ordem exata pode variar conforme o corpus, o significado, o registro e o contexto, por isso esta lista é uma seleção prática e não uma classificação oficial definitiva."
+      },
+      {
+        "question": "Por que devo aprender primeiro os verbos russos mais comuns?",
+        "answer": "Esses verbos aparecem repetidamente em conversas, mensagens, instruções, histórias e meios de comunicação, oferecendo utilidade imediata. Eles também ajudam a compreender características importantes do russo, como o aspecto verbal, as formas reflexivas em -ся, a regência dos casos e a diferença entre verbos de movimento unidirecionais e multidirecionais."
+      },
+      {
+        "question": "Estes 100 verbos russos são suficientes para iniciantes?",
+        "answer": "Os 100 verbos oferecem uma base sólida, mas não são suficientes, por si só, para uma comunicação completa no nível iniciante. Também é necessário aprender substantivos, adjetivos, pronomes, terminações dos casos, expressões frequentes e as principais estruturas de frase."
+      },
+      {
+        "question": "Como posso praticar estes verbos russos de forma eficaz?",
+        "answer": "Estude cada verbo junto com seu significado, uma frase curta, suas formas do presente ou do futuro e os casos que ele exige. Preste atenção especial aos pares imperfectivos e perfectivos, ao acento móvel, aos verbos reflexivos e aos verbos de movimento como идти e ходить."
+      },
+      {
+        "question": "A quais níveis do QECR pertencem estes verbos russos?",
+        "answer": "Muitos verbos russos muito frequentes são apresentados nos níveis A1 ou A2, enquanto significados adicionais, distinções aspectuais, formas prefixadas e construções mais complexas podem surgir no B1 ou em níveis superiores. Um mesmo verbo pode, portanto, ser relevante em vários níveis do QECR, dependendo do significado, da estrutura gramatical e do contexto."
+      }
+    ]
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "ru",
+    "title": "100 самых употребительных русских глаголов",
+    "metaTitle": "100 употребительных русских глаголов со значениями",
+    "metaDescription": "Изучайте 100 употребительных русских глаголов со значениями, уровнями CEFR, подробными страницами слов и практическими упражнениями.",
+    "heroSubtitle": "Освойте основные глаголы для понимания повседневной русской речи и выражения действий, движения, потребностей и мнений.",
+    "introParagraphs": [
+      "Глаголы играют центральную роль в русском языке, поскольку выражают действия, состояния, намерения, движение и изменения, а также передают время, лицо и число. В прошедшем времени их формы дополнительно изменяются по роду, поэтому знание частотных глаголов необходимо для понимания и построения правильных предложений.",
+      "В этом списке представлены 100 часто употребляемых русских глаголов, отобранных с учётом их практической ценности. Здесь есть глаголы совершенного и несовершенного вида, возвратные формы на -ся, неправильные формы и важные глаголы движения, такие как идти, ходить, ехать и ездить.",
+      "Используйте список, чтобы проверять значения, сравнивать уровни CEFR и открывать отдельные страницы глаголов с переводами и дополнительной информацией. Вы также можете искать конкретные глаголы, фильтровать их по уровню и закреплять лексику с помощью упражнений FluentStellar."
+    ],
+    "stats": {
+      "verbs": "100 глаголов",
+      "language": "Русский",
+      "level": "Уровни по системе CEFR",
+      "practice": "Доступны упражнения"
+    },
+    "sections": {
+      "statsHeading": "Обзор списка",
+      "verbListHeading": "100 употребительных русских глаголов",
+      "learningTipsHeading": "Как учить русские глаголы",
+      "relatedLinksHeading": "Другие страницы русской лексики",
+      "faqHeading": "Часто задаваемые вопросы"
+    },
+    "buttons": {
+      "startPractice": "Практиковать русский",
+      "takeLevelTest": "Пройти тест по русскому языку"
+    },
+    "filters": {
+      "searchPlaceholder": "Поиск русских глаголов",
+      "cefrLabel": "Уровень CEFR",
+      "allLevels": "Все уровни"
+    },
+    "table": {
+      "number": "№",
+      "verb": "Русский глагол",
+      "definition": "Значение",
+      "wordPage": "Открыть страницу",
+      "noResults": "Подходящие русские глаголы не найдены."
+    },
+    "learningTips": [
+      "Учите ежедневно небольшую группу русских глаголов и повторяйте её перед добавлением новых слов.",
+      "Запоминайте каждый глагол в составе полного предложения, чтобы усвоить его значение, управление и естественный контекст.",
+      "Изучайте вместе глаголы совершенного и несовершенного вида, если они образуют распространённую видовую пару.",
+      "Повторяйте глаголы через постепенно увеличивающиеся интервалы и чаще возвращайтесь к формам, ударениям и видовым парам, которые вызывают трудности.",
+      "Активно используйте новые глаголы, составляя короткие устные и письменные фразы с разными лицами и временами."
+    ],
+    "relatedLinks": {
+      "levelTest": "Тест на уровень русского языка",
+      "englishA1": "Русская лексика уровня A1",
+      "englishA2": "Русская лексика уровня A2",
+      "englishB1": "Русская лексика уровня B1",
+      "seoHub": "Все страницы словарного запаса"
+    },
+    "faq": [
+      {
+        "question": "Какие глаголы относятся к самым употребительным в русском языке?",
+        "answer": "К часто употребляемым русским глаголам относятся быть, иметь, делать, говорить, знать, хотеть, мочь, идти, видеть и думать. Точный порядок зависит от корпуса, значения, регистра и контекста, поэтому этот список представляет собой практическую подборку, а не официальный окончательный рейтинг."
+      },
+      {
+        "question": "Почему стоит сначала учить самые употребительные русские глаголы?",
+        "answer": "Эти глаголы постоянно встречаются в разговорах, сообщениях, инструкциях, рассказах и средствах массовой информации, поэтому быстро приносят практическую пользу. Они также помогают освоить важные особенности русского языка, включая вид глагола, возвратные формы на -ся, падежное управление и различие между однонаправленными и разнонаправленными глаголами движения."
+      },
+      {
+        "question": "Достаточно ли этих 100 русских глаголов для начинающего?",
+        "answer": "Эти 100 глаголов создают прочную основу, но сами по себе не обеспечивают полноценного общения на начальном уровне. Также необходимо изучать существительные, прилагательные, местоимения, падежные окончания, распространённые выражения и основные модели предложений."
+      },
+      {
+        "question": "Как эффективно практиковать эти русские глаголы?",
+        "answer": "Учите каждый глагол вместе с его значением, коротким примером, формами настоящего или будущего времени и падежами, которыми он управляет. Особое внимание уделяйте видовым парам, подвижному ударению, возвратным формам и глаголам движения, таким как идти и ходить."
+      },
+      {
+        "question": "К каким уровням CEFR относятся эти русские глаголы?",
+        "answer": "Многие часто употребляемые русские глаголы вводятся уже на уровнях A1 или A2, а дополнительные значения, видовые различия, приставочные формы и более сложные конструкции могут встречаться на уровне B1 и выше. Один и тот же глагол может относиться к нескольким уровням CEFR в зависимости от значения, грамматической структуры и контекста."
+      }
+    ]
   }
 ]

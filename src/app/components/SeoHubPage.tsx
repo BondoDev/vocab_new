@@ -8,9 +8,9 @@ import {
   type UiLanguageCode,
 } from "../../data/seo/slugs";
 import { getLevelTestSeoPath } from "../../data/levelTests";
-import { getEnglishVerbListContent, getEnglishVerbListPath } from "../../data/englishVerbList";
 import { getSeoHubPath } from "../../data/seo/hub";
 import { getWordSeoHubSummaryPath } from "../../data/seo/wordHubRoutes";
+import { getVerbListPath, getVerbListTitle } from "../../data/verbLists";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import { buildSeoHubMetadata } from "../../seo/metadata";
 import { useLanguage, type UILanguage } from "../../contexts/LanguageContext";
@@ -173,17 +173,14 @@ export function SeoHubPage({ uiLang }: SeoHubPageProps) {
         return {
           targetLanguage,
           displayName,
-          levelLinks:
-            targetLanguage === "english"
-              ? [
-                  ...levelLinks,
-                  {
-                    href: getEnglishVerbListPath(contentUiLang),
-                    label: getEnglishVerbListContent(contentUiLang).title,
-                    level: "verbs",
-                  },
-                ]
-              : levelLinks,
+          levelLinks: [
+            ...levelLinks,
+            {
+              href: getVerbListPath(targetLanguage, contentUiLang),
+              label: getVerbListTitle(targetLanguage, contentUiLang),
+              level: "verbs",
+            },
+          ],
         };
       }),
     [contentUiLang, copy, t, vocabularyPracticeLabel],
