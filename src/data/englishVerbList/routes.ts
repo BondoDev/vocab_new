@@ -52,6 +52,11 @@ export interface EnglishVerbListContent {
   faq: EnglishVerbListFaqItem[];
 }
 
+interface EnglishVerbListContentEntry extends EnglishVerbListContent {
+  targetLanguage: string;
+  uiLanguage: UiLanguageCode;
+}
+
 const ENGLISH_VERB_LIST_PATHS: Record<UiLanguageCode, string> = {
   en: "/en/100-most-common-english-verbs",
   es: "/es/100-verbos-ingles-mas-comunes",
@@ -62,7 +67,27 @@ const ENGLISH_VERB_LIST_PATHS: Record<UiLanguageCode, string> = {
   ru: "/ru/100-samykh-chastykh-angliiskikh-glagolov",
 };
 
-const ENGLISH_VERB_LIST_CONTENT = englishVerbListContentJson as Record<UiLanguageCode, EnglishVerbListContent>;
+const ENGLISH_VERB_LIST_CONTENT = (() => {
+  const rawContent = englishVerbListContentJson as
+    | Record<string, EnglishVerbListContent>
+    | EnglishVerbListContentEntry[];
+
+  if (Array.isArray(rawContent)) {
+    return rawContent.reduce(
+      (acc, entry) => {
+        if (entry.targetLanguage !== "en") {
+          return acc;
+        }
+
+        acc[entry.uiLanguage] = entry;
+        return acc;
+      },
+      {} as Partial<Record<UiLanguageCode, EnglishVerbListContent>>,
+    );
+  }
+
+  return rawContent as Partial<Record<UiLanguageCode, EnglishVerbListContent>>;
+})();
 
 export function getEnglishVerbListPath(uiLang: UiLanguageCode): string {
   return ENGLISH_VERB_LIST_PATHS[uiLang];
@@ -78,5 +103,5 @@ export function getAllEnglishVerbListPaths(): string[] {
 }
 
 export function getEnglishVerbListContent(uiLang: UiLanguageCode): EnglishVerbListContent {
-  return ENGLISH_VERB_LIST_CONTENT[uiLang] ?? ENGLISH_VERB_LIST_CONTENT.en;
+  return ENGLISH_VERB_LIST_CONTENT[uiLang] ?? ENGLISH_VERB_LIST_CONTENT.en!;
 }

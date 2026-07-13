@@ -1,5 +1,7 @@
-{
-  "en": {
+[
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "en",
     "title": "100 Most Common English Verbs",
     "metaTitle": "100 Most Common English Verbs - Essential Verb List",
     "metaDescription": "Learn the 100 most common English verbs with CEFR levels. Study essential English verbs and practice vocabulary used in everyday communication.",
@@ -75,7 +77,9 @@
       }
     ]
   },
-  "es": {
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "es",
     "title": "Los 100 verbos más comunes en inglés",
     "metaTitle": "Los 100 verbos más comunes en inglés - Lista de verbos esenciales",
     "metaDescription": "Aprende los 100 verbos más comunes en inglés con sus niveles del MCER. Estudia verbos esenciales en inglés y practica el vocabulario utilizado en la comunicación cotidiana.",
@@ -151,7 +155,9 @@
       }
     ]
   },
-  "de": {
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "de",
     "title": "Die 100 häufigsten englischen Verben",
     "metaTitle": "Die 100 häufigsten englischen Verben – Liste wichtiger Verben",
     "metaDescription": "Lerne die 100 häufigsten englischen Verben mit CEFR-Niveaustufen. Übe wichtige englische Verben und Wortschatz für die alltägliche Kommunikation.",
@@ -227,7 +233,9 @@
       }
     ]
   },
-  "fr": {
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "fr",
     "title": "Les 100 verbes anglais les plus courants",
     "metaTitle": "Les 100 verbes anglais les plus courants - Liste des verbes essentiels",
     "metaDescription": "Apprenez les 100 verbes anglais les plus courants avec leurs niveaux CECR. Étudiez les verbes anglais essentiels et pratiquez le vocabulaire utilisé dans la communication quotidienne.",
@@ -303,7 +311,9 @@
       }
     ]
   },
-  "it": {
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "it",
     "title": "I 100 verbi inglesi più comuni",
     "metaTitle": "I 100 verbi inglesi più comuni - Elenco dei verbi essenziali",
     "metaDescription": "Impara i 100 verbi inglesi più comuni con i livelli del QCER. Studia i verbi inglesi essenziali e pratica il vocabolario usato nella comunicazione quotidiana.",
@@ -379,7 +389,9 @@
       }
     ]
   },
-  "pt": {
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "pt",
     "title": "Os 100 verbos mais comuns em inglês",
     "metaTitle": "Os 100 verbos mais comuns em inglês - Lista de verbos essenciais",
     "metaDescription": "Aprenda os 100 verbos mais comuns em inglês com os respetivos níveis do CEFR. Estude verbos essenciais em inglês e pratique o vocabulário usado na comunicação quotidiana.",
@@ -455,7 +467,9 @@
       }
     ]
   },
-  "ru": {
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "ru",
     "title": "100 самых распространённых английских глаголов",
     "metaTitle": "100 самых распространённых английских глаголов — список основных глаголов",
     "metaDescription": "Изучите 100 самых распространённых английских глаголов с указанием уровней CEFR. Учите основные английские глаголы и практикуйте лексику для повседневного общения.",
@@ -531,4 +545,4 @@
       }
     ]
   }
-}
+]
