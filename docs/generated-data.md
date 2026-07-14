@@ -21,7 +21,7 @@ Guard script: `npm run test:generated-data-ownership`
 | `src/data/seo/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
 | `src/data/seo/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
 | `src/data/seo/level-browse-preview/` | generated committed source, **no generator exists** | itself (hand-authored/one-time-generated) | none found | client + SSR (`levelBrowseWords.ts`, lazy glob G9) | yes | medium — must be hand-edited until a generator is written |
-| `public/seo/level-browse-preview/` | **obsolete duplicate — retained pending follow-up** | `src/data/seo/level-browse-preview/` (byte-identical) | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | **none found** — no fetch, import, or glob targets it anywhere in `src/`, `workers/`, or `scripts/` | yes | see below |
+| ~~`public/seo/level-browse-preview/`~~ | *(removed 2026-07-15; obsolete duplicate)* | `src/data/seo/level-browse-preview/` remains authoritative | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | none found — no fetch, import, glob, sitemap, SSR, Worker, or service-worker consumer required the public URL | no | resolved |
 | `src/data/verbListLookup/` | generated committed source | `list_of_100_most_used_verb.json` + vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR (`commonVerbList.ts`, eager glob G6); not the Worker | yes | low |
 | `public/sitemaps/` | generated build output (committed) | word route manifest + verb registry + vocabulary data | `scripts/generate-sitemap.mjs` (`npm run sitemap`) | search engines only; test-only in-repo consumers | yes | low |
 | `workers/word-ssr/data/full-corpus/` | generated build output | vocabulary + word-route-manifest + slugs | `workers/word-ssr/generate-full-corpus.mjs` (Cloudflare remote build) | `workers/word-ssr/publish-shards.mjs` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
@@ -76,27 +76,21 @@ maintenance gap, documented here rather than fixed in this audit (adding an
 automated copy step would be a build-pipeline change beyond this task's
 scope) — see "Candidate future improvements" below.
 
-## `public/seo/level-browse-preview/` — unresolved, flagged for follow-up
+## `public/seo/level-browse-preview/` — resolved obsolete duplicate
 
-This directory mirrors the exact same historical pattern as the resolved
-`public/vocabularyLevels/index.ts` finding: it was introduced in the same
-commit (`06691d18`) as a side effect of copying source data into `public/`,
-it is byte-identical to `src/data/seo/level-browse-preview/`, and — unlike
-`public/vocabularyLevels/*.json` — **no runtime code anywhere fetches,
-imports, or globs it**. `src/data/seo/levelBrowseWords.ts` (the real
-consumer, glob G9 in `docs/import-boundaries.md`) uses a bundler-driven lazy
-`import.meta.glob` against the `src/` copy, not a URL fetch against `public/`,
-so unlike vocabulary-levels there is no architectural reason this data needs
-to exist as a separately-fetchable static asset.
+`src/data/seo/level-browse-preview/` is authoritative. It contains 42
+committed JSON files, one for every supported target-language x CEFR-level
+combination. No generator is currently known, so manual content preservation
+is required until a generator exists. The active loader is
+`src/data/seo/levelBrowseWords.ts`, which uses the lazy G9
+`import.meta.glob("./level-browse-preview/*.json")` source-tree import.
 
-**Classification: obsolete — high-confidence dead duplicate.** It was
-**deliberately not removed in this audit** per this task's explicit scope
-boundary (only the `src/data/vocabularyLevels/` ↔ `public/vocabularyLevels/`
-pair was in scope for deletion; other duplicate pairs were to be documented,
-not acted on). Recommended as a dedicated follow-up task: re-verify no
-consumer was missed, then remove `public/seo/level-browse-preview/` the same
-way `public/vocabularyLevels/index.ts` was removed here, and extend
-`scripts/test-generated-data-ownership.mjs` with a regression guard.
+The former `public/seo/level-browse-preview/` tree was removed on
+2026-07-15. It was byte-identical to the source tree, but no client, SSR,
+prerender, Worker, sitemap, service-worker, build-script, or documented
+public API consumer required the public URL. Direct static reachability was
+only an artifact of Vite copying `public/**` into build output; there is no
+direct public fetch contract for these files.
 
 ## Worker generated directories are Cloudflare remote-build outputs
 
@@ -135,7 +129,7 @@ visibility, not changed here.
 | `public/sitemaps/` | `npm run sitemap` |
 | `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/` | `npm run build:word-worker:full` |
 | `dist/`, `server-build/` | `npm run build` |
-| `src/data/vocabularyLevels/`, `public/vocabularyLevels/*.json`, `src/data/seo/level-browse-preview/`, `public/seo/level-browse-preview/` | none — hand-maintained, no generator |
+| `src/data/vocabularyLevels/`, `public/vocabularyLevels/*.json`, `src/data/seo/level-browse-preview/` | none — hand-maintained, no generator |
 
 ## Manual-edit policy
 
@@ -156,7 +150,8 @@ visibility, not changed here.
   exact match-set/eager-lazy contract for every `import.meta.glob` boundary
   (G1–G9) documented in `docs/import-boundaries.md`.
 - `npm run test:generated-data-ownership` — asserts the dead
-  `public/vocabularyLevels/index.ts` cannot silently reappear, no raw
+  `public/vocabularyLevels/index.ts` cannot silently reappear, the removed
+  `public/seo/level-browse-preview/` mirror cannot silently reappear, no raw
   TypeScript exists under `public/`, `src/data/vocabularyLevels/` matches the
   expected UI-language × target-language matrix with valid, non-duplicate
   JSON, the listed generated source directories exist and are committed, and

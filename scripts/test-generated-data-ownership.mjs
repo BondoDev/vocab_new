@@ -57,6 +57,23 @@ function gitIgnoreCheck(relPath) {
   }
 }
 
+function walkFiles(absDir, predicate = () => true) {
+  const results = [];
+  if (!fs.existsSync(absDir)) return results;
+  function walk(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const abs = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(abs);
+      } else if (predicate(abs)) {
+        results.push(abs);
+      }
+    }
+  }
+  walk(absDir);
+  return results;
+}
+
 console.log("\n=== dead-artifact regression guards ===\n");
 
 test("public/vocabularyLevels/index.ts does not exist (removed 2026-07-15 — was dead code, nothing imported it)", () => {
@@ -71,6 +88,11 @@ test("scripts/cleanup-word-build-artifacts.mjs no longer targets the removed pub
     !text.includes("vocabularyLevels"),
     "cleanup-word-build-artifacts.mjs still references vocabularyLevels — the obsolete deletion branch for the removed index.ts was reintroduced",
   );
+});
+
+test("public/seo/level-browse-preview/ does not exist (removed 2026-07-15 — obsolete public mirror)", () => {
+  const p = path.join(ROOT_DIR, "public", "seo", "level-browse-preview");
+  assert.ok(!fs.existsSync(p), `${p} exists — the obsolete public level-browse-preview mirror was reintroduced`);
 });
 
 test("no source file imports public/vocabularyLevels as a module", () => {
@@ -187,6 +209,76 @@ test("no malformed vocabulary-level filenames (unexpected casing or extension) u
   assert.deepEqual(offenders, [], `malformed vocabulary-level filename(s): ${offenders.join(", ")}`);
 });
 
+console.log("\n=== src/data/seo/level-browse-preview/ ownership ===\n");
+
+test("src/data/seo/level-browse-preview/ has exactly one valid JSON file per target-language x CEFR-level pair", () => {
+  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "level-browse-preview");
+  const expectedKeys = [];
+  for (const target of SUPPORTED_TARGET_LANGUAGES) {
+    for (const level of SUPPORTED_LEVELS) {
+      expectedKeys.push(`${target}-${level}`);
+    }
+  }
+
+  const files = fs
+    .readdirSync(baseDir)
+    .filter((file) => file.endsWith(".json"))
+    .sort();
+  assert.deepEqual(
+    files,
+    expectedKeys.map((key) => `${key}.json`).sort(),
+    "src/data/seo/level-browse-preview has an unexpected file set",
+  );
+
+  const seenKeys = new Set();
+  const malformed = [];
+  for (const file of files) {
+    const match = file.match(/^([a-z]+)-(a1|a2|b1|b2|c1|c2)\.json$/);
+    if (!match) {
+      malformed.push(file);
+      continue;
+    }
+    const [, targetLanguage, level] = match;
+    const key = `${targetLanguage}-${level}`;
+    assert.ok(!seenKeys.has(key), `duplicate level-browse-preview key: ${key}`);
+    seenKeys.add(key);
+
+    const filePath = path.join(baseDir, file);
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf8").replace(/^\uFEFF/, ""));
+    assert.equal(parsed.targetLanguage, targetLanguage, `${file} targetLanguage does not match filename`);
+    assert.equal(parsed.level, level.toUpperCase(), `${file} level does not match filename`);
+    assert.equal(typeof parsed.totalWords, "number", `${file} totalWords is not a number`);
+    assert.equal(typeof parsed.totalPages, "number", `${file} totalPages is not a number`);
+    assert.ok(Array.isArray(parsed.words), `${file} words is not an array`);
+    assert.ok(parsed.words.length > 0, `${file} words is empty`);
+    for (const [index, word] of parsed.words.entries()) {
+      assert.equal(typeof word?.concept_id, "string", `${file} words[${index}].concept_id is not a string`);
+      assert.equal(typeof word?.word_lemma, "string", `${file} words[${index}].word_lemma is not a string`);
+    }
+  }
+
+  assert.deepEqual(malformed, [], `malformed level-browse-preview filename(s): ${malformed.join(", ")}`);
+  assert.deepEqual([...seenKeys].sort(), expectedKeys.sort(), "unexpected level-browse-preview logical key set");
+});
+
+test("no runtime source fetches the removed public level-browse-preview URL", () => {
+  const runtimeDirs = ["src", "workers", "scripts"];
+  const offenders = [];
+  const runtimePattern =
+    /fetch\(\s*["'`]\/seo\/level-browse-preview|new Request\(\s*["'`]\/seo\/level-browse-preview|XMLHttpRequest[\s\S]{0,300}seo\/level-browse-preview|axios[\s\S]{0,300}seo\/level-browse-preview|new URL\([\s\S]{0,300}seo\/level-browse-preview|import\(\s*["'`]\/seo\/level-browse-preview/;
+  for (const dir of runtimeDirs) {
+    for (const file of walkFiles(path.join(ROOT_DIR, dir), (abs) => /\.(ts|tsx|mjs|js|jsx)$/.test(abs))) {
+      const rel = path.relative(ROOT_DIR, file).replace(/\\/g, "/");
+      if (rel === "scripts/test-generated-data-ownership.mjs") continue;
+      const text = fs.readFileSync(file, "utf8");
+      if (runtimePattern.test(text) || text.includes("public/seo/level-browse-preview")) {
+        offenders.push(rel);
+      }
+    }
+  }
+  assert.deepEqual(offenders, [], `removed public level-browse-preview URL is still referenced by runtime source: ${offenders.join(", ")}`);
+});
+
 console.log("\n=== generated directory presence ===\n");
 
 for (const dir of [
@@ -232,7 +324,6 @@ test("docs/generated-data.md exists and names every high-risk directory", () => 
     "src/data/seo/word-hub-pages",
     "src/data/seo/word-browse-shards",
     "src/data/seo/level-browse-preview",
-    "public/seo/level-browse-preview",
     "src/data/verbListLookup",
     "public/sitemaps",
     "workers/word-ssr/data/full-corpus",
@@ -243,15 +334,27 @@ test("docs/generated-data.md exists and names every high-risk directory", () => 
   assert.deepEqual(missing, [], `docs/generated-data.md does not mention: ${missing.join(", ")}`);
 });
 
-test("public/seo/level-browse-preview/ has an explicitly documented ownership status", () => {
+test("docs/generated-data.md documents src/data/seo/level-browse-preview as authoritative and the public mirror as removed", () => {
   const docPath = path.join(ROOT_DIR, "docs", "generated-data.md");
   const text = fs.readFileSync(docPath, "utf8");
-  const idx = text.indexOf("public/seo/level-browse-preview");
-  assert.ok(idx !== -1, "public/seo/level-browse-preview is not documented");
-  const nearby = text.slice(idx, idx + 600).toLowerCase();
+  const sourceIdx = text.indexOf("`src/data/seo/level-browse-preview/` is authoritative");
+  assert.ok(sourceIdx !== -1, "src/data/seo/level-browse-preview is not documented");
+  const sourceNearby = text.slice(sourceIdx, sourceIdx + 1000).toLowerCase();
   assert.ok(
-    /obsolete|dead|orphan|unresolved|future cleanup/.test(nearby),
-    "public/seo/level-browse-preview is mentioned but its ownership status is not clearly classified nearby",
+    /authoritative/.test(sourceNearby) && /42/.test(sourceNearby) && /levelbrowsewords\.ts/.test(sourceNearby),
+    "src/data/seo/level-browse-preview is documented without its authoritative 42-file loader contract",
+  );
+
+  const publicIdx = text.indexOf("The former `public/seo/level-browse-preview/` tree was removed");
+  assert.ok(publicIdx !== -1, "removed public/seo/level-browse-preview mirror is not documented");
+  const publicNearby = text.slice(publicIdx, publicIdx + 1200).toLowerCase();
+  assert.ok(
+    text.includes("## `public/seo/level-browse-preview/` — resolved obsolete duplicate"),
+    "public/seo/level-browse-preview section does not classify the mirror as obsolete",
+  );
+  assert.ok(
+    /removed/.test(publicNearby) && /no\s+direct\s+public\s+fetch\s+contract/.test(publicNearby),
+    "public/seo/level-browse-preview is documented without its removed/obsolete/no-public-fetch status",
   );
 });
 

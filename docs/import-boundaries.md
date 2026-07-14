@@ -227,15 +227,12 @@ Documented as options, **not implemented** in this audit:
   generated per-language JS chunk) so the `public/vocabularyLevels/` JSON
   mirror and its duplication guard are no longer needed at all — see
   `docs/generated-data.md` for the current state.
-- `public/seo/level-browse-preview/` (byte-identical duplicate of
-  `src/data/seo/level-browse-preview/`, added in the same historical commit
-  as the original `public/vocabularyLevels/` duplication) has **no
-  discoverable runtime consumer** — no fetch, no import, no glob targets it.
-  It looks like the same class of accidental byproduct that
-  `public/vocabularyLevels/index.ts` turned out to be, but was **not**
-  removed in the 2026-07-15 audit (deliberately out of scope — see
-  `docs/generated-data.md`). Flagged here as a high-confidence candidate for
-  a dedicated follow-up task.
+- `public/seo/level-browse-preview/` was removed in the 2026-07-15
+  generated-data cleanup after a dedicated consumer audit found no fetch,
+  import, glob, sitemap, SSR, Worker, service-worker, or documented public
+  API dependency. G9 continues to use the authoritative
+  `src/data/seo/level-browse-preview/` source tree through
+  `src/data/seo/levelBrowseWords.ts`.
 - Consider a shared alias (e.g. `@data/vocabulary`) for the vocabulary
   directory so G2/G7/G8's three separate relative-path spellings of the same
   target collapse to one stable reference.
