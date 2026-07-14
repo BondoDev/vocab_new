@@ -1,0 +1,486 @@
+{
+  "capturedAt": "2026-07-14T18:34:09.616Z",
+  "source": "live:https://www.fluentstellar.com",
+  "fixtureCount": 41,
+  "snapshots": {
+    "word-canonical-english": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-canonical-german": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-canonical-spanish": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-canonical-french": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-canonical-italian": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-canonical-portuguese": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-canonical-russian": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ui-lang-en": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ui-lang-es": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ui-lang-fr": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ui-lang-de": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ui-lang-it": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ui-lang-pt": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ui-lang-ru": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-level-A1": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-level-A2": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-level-B1": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-level-B2": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-level-C1": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-level-C2": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ambiguous-slug-0": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ambiguous-slug-1": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-ambiguous-slug-2": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-diacritic": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-mojibake-note": {
+      "skipped": true,
+      "reason": "No live vocabulary record currently contains mojibake-corrupted text (scanned all 7 languages). fixMojibake() unit coverage already exists in scripts/test-word-seo-routes.mjs."
+    },
+    "word-dataset-first": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "word-dataset-last": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "redirect-legacy-single-hyphen": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "redirect-case-drift": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "error-slug-only": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "error-nonexistent-concept-id": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "error-slug-concept-mismatch": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "error-malformed-separator": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "error-unsupported-ui-language": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "error-unsupported-target-language": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "error-invalid-browse-page": {
+      "status": 403,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "x-robots-tag": null,
+        "cache-control": null,
+        "location": null
+      }
+    },
+    "core-homepage": {
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "x-robots-tag": null,
+        "cache-control": "public, max-age=0, must-revalidate",
+        "location": null
+      },
+      "title": "FluentStellar - Structured Vocabulary Learning Platform",
+      "description": "Structured CEFR vocabulary system with interactive exercises and intelligent learning tools.",
+      "canonical": "https://www.fluentstellar.com/",
+      "robots": null,
+      "hreflang": [],
+      "openGraph": {
+        "title": "FluentStellar - Structured Vocabulary Learning Platform",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/",
+        "description": "Structured CEFR vocabulary system with interactive exercises and intelligent learning tools."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Hello Hola Bonjour Ciao Hello Hola Bonjour こんにちは Ciao გამარჯობა Practice Vocabulary No lessons - Just practice. Practice Vocabulary No lessons - Just practice. Your language Select your language Practice language Select practice lan",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "core-about": {
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "x-robots-tag": null,
+        "cache-control": "public, max-age=0, must-revalidate",
+        "location": null
+      },
+      "title": "About FluentStellar",
+      "description": "Learn what FluentStellar is building and how the platform approaches structured vocabulary learning.",
+      "canonical": "https://www.fluentstellar.com/about",
+      "robots": null,
+      "hreflang": [],
+      "openGraph": {
+        "title": "About FluentStellar",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/about",
+        "description": "Learn what FluentStellar is building and how the platform approaches structured vocabulary learning."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Back FLUENTSTELLAR is designed for active vocabulary practice, not passive browsing. You do not scroll through word lists or memorize definitions. You practice words by using them, through carefully designed exercises that train rec",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "core-help": {
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "x-robots-tag": null,
+        "cache-control": "public, max-age=0, must-revalidate",
+        "location": null
+      },
+      "title": "FluentStellar Help",
+      "description": "Get help using FluentStellar, including navigation, practice routes, and core vocabulary features.",
+      "canonical": "https://www.fluentstellar.com/help",
+      "robots": null,
+      "hreflang": [],
+      "openGraph": {
+        "title": "FluentStellar Help",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/help",
+        "description": "Get help using FluentStellar, including navigation, practice routes, and core vocabulary features."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Back How to start practice Step 1: Choose languages Select: your native language the language you want to practice Step 2: Set filters (optional) You can optionally choose: CEFR level topics word types (part of speech) All filters a",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "core-profile": {
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "x-robots-tag": null,
+        "cache-control": "public, max-age=0, must-revalidate",
+        "location": null
+      },
+      "title": "Profile | FluentStellar",
+      "description": "Your FluentStellar account dashboard.",
+      "canonical": null,
+      "robots": "noindex, nofollow",
+      "hreflang": [],
+      "openGraph": {
+        "title": null,
+        "type": null,
+        "url": null,
+        "description": null
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Profile Menu B Bondo German • A2 Main Dashboard Practice Learning Vocabulary My Lists Insights Progress System Settings",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "core-practice": {
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "x-robots-tag": null,
+        "cache-control": "public, max-age=0, must-revalidate",
+        "location": null
+      },
+      "title": "Vocabulary Practice | FluentStellar",
+      "description": "Your current FluentStellar practice session will appear here.",
+      "canonical": null,
+      "robots": "noindex, nofollow",
+      "hreflang": [],
+      "openGraph": {
+        "title": null,
+        "type": null,
+        "url": null,
+        "description": null
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "Loading words...",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "sourceCommit": "d123ff1c",
+  "capturedAt": "2026-07-14T18:34:00Z",
+  "worker": {
+    "outputFiles": 1,
+    "rawBytes": 1654458,
+    "gzipBytes": 426700,
+    "gzipMethod": "workers/word-ssr/test-worker-bundle-size.mjs (zlib.gzipSync level 9)",
+    "repositoryLimitBytes": 2621440,
+    "cloudflareLimitBytes": 3145728,
+    "repositoryHeadroomBytes": 2194740,
+    "cloudflareHeadroomBytes": 2719028,
+    "sha256": "3203c165acbc6dcc5172e10fc13a8a6215cda1872f0be5571ba320afd777f17f",
+    "noBundle": true,
+    "determinismCheck": { "runs": 2, "byteDiff": 0, "hashDiff": 0, "fileCountDiff": 0 }
+  },
+  "assets": {
+    "currentVersionFileCount": 148,
+    "conceptShards": { "files": 63, "records": 74004, "approxBytes": 52177634 },
+    "overlayShards": { "files": 42, "approxBytes": 10077798 },
+    "browseShards": { "files": 42, "approxBytes": 3282600 },
+    "manifestReferencedShards": 147,
+    "missingShards": 0,
+    "totalRawBytesCurrentVersion": 65536000,
+    "staleDataVersionDirsOnDisk": 4,
+    "orphanedFileCountOnDisk": 592,
+    "note": "assets-full/ and worker-dist-full/ are gitignored local build output; orphaned dirs are prior local runs (2026-07-08/09/10/12), not a production deploy concern."
+  },
+  "client": {
+    "mainJsRawBytes": 3149419,
+    "mainJsGzipBytes": 879109,
+    "mainCssRawBytes": 610576,
+    "mainCssGzipBytes": 116172,
+    "distTotalBytes": 273408080,
+    "jsFileCount": 80,
+    "cssFileCount": 4,
+    "distBreakdownByExtBytes": {
+      "html_prerendered_pages": 222309387,
+      "js": 32180594,
+      "sitemap_xml": 11159781,
+      "svg": 3938514,
+      "json": 1651752,
+      "png": 1517974,
+      "css": 649190
+    }
+  },
+  "build": {
+    "prerenderedRoutes": 2670,
+    "sitemapChildFiles": 11,
+    "sitemapUrlsTotal": 84957,
+    "durationMs": 235000,
+    "workerBuildDurationMs": 62000
+  }
+}

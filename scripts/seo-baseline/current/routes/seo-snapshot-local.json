@@ -1,0 +1,2493 @@
+{
+  "capturedAt": "2026-07-14T18:29:37.069Z",
+  "source": "local:server-build/entry-server.js",
+  "fixtureCount": 41,
+  "snapshots": {
+    "word-canonical-english": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;about&quot; Meaning – Definition and Example (A1 preposition)",
+      "description": "On the subject of; concerning. Learn &quot;about&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;about&quot; Meaning – Definition and Example (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "description": "On the subject of; concerning. Learn &quot;about&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+            "name": "English Word \"about\" Meaning – Definition and Example (A1 preposition)",
+            "description": "On the subject of; concerning. Learn \"about\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "On the subject of; concerning. Learn \"about\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/en/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;About&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;About&quot; about about On the subject of; concerning. Practice This Word Practice More A1 Vocabulary Example Sentence The story is about a little dog. Practice This Word Type the correct word based",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-canonical-german": {
+      "status": 200,
+      "headers": {},
+      "title": "German Word &quot;Handlung&quot; Meaning – Definition and Example (A1 noun)",
+      "description": "The process of doing something to achieve a result. Learn &quot;Handlung&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/german-word-handlung--A1-00003",
+        "en=https://www.fluentstellar.com/en/german-word-handlung--A1-00003",
+        "es=https://www.fluentstellar.com/es/german-word-handlung--A1-00003",
+        "fr=https://www.fluentstellar.com/fr/german-word-handlung--A1-00003",
+        "it=https://www.fluentstellar.com/it/german-word-handlung--A1-00003",
+        "pt=https://www.fluentstellar.com/pt/german-word-handlung--A1-00003",
+        "ru=https://www.fluentstellar.com/ru/german-word-handlung--A1-00003",
+        "x-default=https://www.fluentstellar.com/en/german-word-handlung--A1-00003"
+      ],
+      "openGraph": {
+        "title": "German Word &quot;Handlung&quot; Meaning – Definition and Example (A1 noun)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003",
+        "description": "The process of doing something to achieve a result. Learn &quot;Handlung&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003#webpage",
+            "url": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003",
+            "name": "German Word \"Handlung\" Meaning – Definition and Example (A1 noun)",
+            "description": "The process of doing something to achieve a result. Learn \"Handlung\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003#term",
+            "name": "Handlung",
+            "description": "The process of doing something to achieve a result. Learn \"Handlung\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "German A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "German A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/german-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Handlung",
+                "item": "https://www.fluentstellar.com/en/german-word-handlung--A1-00003"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the German Word &quot;Handlung&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the German Word &quot;Handlung&quot; Handlung action The process of doing something to achieve a result. Practice This Word Practice More A1 Vocabulary Example Sentence Der Film hat viel spannende Handlung . Other Meaning",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-canonical-spanish": {
+      "status": 200,
+      "headers": {},
+      "title": "Spanish Word &quot;sobre&quot; Meaning – Definition and Example (A1 preposition)",
+      "description": "On the subject of; concerning. Learn &quot;sobre&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/spanish-word-sobre--A1-00001",
+        "en=https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001",
+        "es=https://www.fluentstellar.com/es/spanish-word-sobre--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/spanish-word-sobre--A1-00001",
+        "it=https://www.fluentstellar.com/it/spanish-word-sobre--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/spanish-word-sobre--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/spanish-word-sobre--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001"
+      ],
+      "openGraph": {
+        "title": "Spanish Word &quot;sobre&quot; Meaning – Definition and Example (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001",
+        "description": "On the subject of; concerning. Learn &quot;sobre&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001",
+            "name": "Spanish Word \"sobre\" Meaning – Definition and Example (A1 preposition)",
+            "description": "On the subject of; concerning. Learn \"sobre\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001#term",
+            "name": "sobre",
+            "description": "On the subject of; concerning. Learn \"sobre\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Spanish A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Spanish A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/spanish-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "sobre",
+                "item": "https://www.fluentstellar.com/en/spanish-word-sobre--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the Spanish Word &quot;Sobre&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the Spanish Word &quot;Sobre&quot; sobre about On the subject of; concerning. Practice This Word Practice More A1 Vocabulary Example Sentence La historia es sobre un perrito. Other Meanings of This Word Extending directly",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-canonical-french": {
+      "status": 200,
+      "headers": {},
+      "title": "French Word &quot;au-dessus de&quot; Meaning – Definition and Example (A1 preposition)",
+      "description": "In a higher position than something else. Learn &quot;au-dessus de&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/french-word-au-dessus-de--A1-00002",
+        "en=https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002",
+        "es=https://www.fluentstellar.com/es/french-word-au-dessus-de--A1-00002",
+        "fr=https://www.fluentstellar.com/fr/french-word-au-dessus-de--A1-00002",
+        "it=https://www.fluentstellar.com/it/french-word-au-dessus-de--A1-00002",
+        "pt=https://www.fluentstellar.com/pt/french-word-au-dessus-de--A1-00002",
+        "ru=https://www.fluentstellar.com/ru/french-word-au-dessus-de--A1-00002",
+        "x-default=https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002"
+      ],
+      "openGraph": {
+        "title": "French Word &quot;au-dessus de&quot; Meaning – Definition and Example (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002",
+        "description": "In a higher position than something else. Learn &quot;au-dessus de&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002#webpage",
+            "url": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002",
+            "name": "French Word \"au-dessus de\" Meaning – Definition and Example (A1 preposition)",
+            "description": "In a higher position than something else. Learn \"au-dessus de\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002#term",
+            "name": "au-dessus de",
+            "description": "In a higher position than something else. Learn \"au-dessus de\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "French A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "French A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/french-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "au-dessus de",
+                "item": "https://www.fluentstellar.com/en/french-word-au-dessus-de--A1-00002"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the French Word &quot;Au-dessus de&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the French Word &quot;Au-dessus de&quot; au-dessus de above In a higher position than something else. Practice This Word Practice More A1 Vocabulary Example Sentence L&#x27;horloge est au-dessus de la porte. Other Meaning",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-canonical-italian": {
+      "status": 200,
+      "headers": {},
+      "title": "Italian Word &quot;su&quot; Meaning – Definition and Example (A1 preposition)",
+      "description": "On the subject of; concerning. Learn &quot;su&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/italian-word-su--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/italian-word-su--A1-00001",
+        "en=https://www.fluentstellar.com/en/italian-word-su--A1-00001",
+        "es=https://www.fluentstellar.com/es/italian-word-su--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/italian-word-su--A1-00001",
+        "it=https://www.fluentstellar.com/it/italian-word-su--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/italian-word-su--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/italian-word-su--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/italian-word-su--A1-00001"
+      ],
+      "openGraph": {
+        "title": "Italian Word &quot;su&quot; Meaning – Definition and Example (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/italian-word-su--A1-00001",
+        "description": "On the subject of; concerning. Learn &quot;su&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/italian-word-su--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/italian-word-su--A1-00001",
+            "name": "Italian Word \"su\" Meaning – Definition and Example (A1 preposition)",
+            "description": "On the subject of; concerning. Learn \"su\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/italian-word-su--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/italian-word-su--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/italian-word-su--A1-00001#term",
+            "name": "su",
+            "description": "On the subject of; concerning. Learn \"su\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/italian-word-su--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Italian A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/italian-word-su--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Italian A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/italian-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "su",
+                "item": "https://www.fluentstellar.com/en/italian-word-su--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the Italian Word &quot;Su&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the Italian Word &quot;Su&quot; su about On the subject of; concerning. Practice This Word Practice More A1 Vocabulary Example Sentence Il libro è su un cagnolino. Other Meanings of This Word In contact with and supported",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-canonical-portuguese": {
+      "status": 200,
+      "headers": {},
+      "title": "Portuguese Word &quot;sobre&quot; Meaning – Definition and Example (A1 preposition)",
+      "description": "On the subject of; concerning. Learn &quot;sobre&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/portuguese-word-sobre--A1-00001",
+        "en=https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001",
+        "es=https://www.fluentstellar.com/es/portuguese-word-sobre--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/portuguese-word-sobre--A1-00001",
+        "it=https://www.fluentstellar.com/it/portuguese-word-sobre--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/portuguese-word-sobre--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/portuguese-word-sobre--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001"
+      ],
+      "openGraph": {
+        "title": "Portuguese Word &quot;sobre&quot; Meaning – Definition and Example (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001",
+        "description": "On the subject of; concerning. Learn &quot;sobre&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001",
+            "name": "Portuguese Word \"sobre\" Meaning – Definition and Example (A1 preposition)",
+            "description": "On the subject of; concerning. Learn \"sobre\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001#term",
+            "name": "sobre",
+            "description": "On the subject of; concerning. Learn \"sobre\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Portuguese A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Portuguese A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/portuguese-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "sobre",
+                "item": "https://www.fluentstellar.com/en/portuguese-word-sobre--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the Portuguese Word &quot;Sobre&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the Portuguese Word &quot;Sobre&quot; sobre about On the subject of; concerning. Practice This Word Practice More A1 Vocabulary Example Sentence A história é sobre um cachorrinho. Other Meanings of This Word Extending dir",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-canonical-russian": {
+      "status": 200,
+      "headers": {},
+      "title": "Russian Word &quot;DVD&quot; Meaning – Definition and Example (A1 noun)",
+      "description": "A disc on which movies or information are stored. Learn &quot;DVD&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/russian-word-dvd--A1-00316",
+        "en=https://www.fluentstellar.com/en/russian-word-dvd--A1-00316",
+        "es=https://www.fluentstellar.com/es/russian-word-dvd--A1-00316",
+        "fr=https://www.fluentstellar.com/fr/russian-word-dvd--A1-00316",
+        "it=https://www.fluentstellar.com/it/russian-word-dvd--A1-00316",
+        "pt=https://www.fluentstellar.com/pt/russian-word-dvd--A1-00316",
+        "ru=https://www.fluentstellar.com/ru/russian-word-dvd--A1-00316",
+        "x-default=https://www.fluentstellar.com/en/russian-word-dvd--A1-00316"
+      ],
+      "openGraph": {
+        "title": "Russian Word &quot;DVD&quot; Meaning – Definition and Example (A1 noun)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316",
+        "description": "A disc on which movies or information are stored. Learn &quot;DVD&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316#webpage",
+            "url": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316",
+            "name": "Russian Word \"DVD\" Meaning – Definition and Example (A1 noun)",
+            "description": "A disc on which movies or information are stored. Learn \"DVD\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316#term",
+            "name": "DVD",
+            "description": "A disc on which movies or information are stored. Learn \"DVD\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Russian A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Russian A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/russian-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "DVD",
+                "item": "https://www.fluentstellar.com/en/russian-word-dvd--A1-00316"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the Russian Word &quot;DVD&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the Russian Word &quot;DVD&quot; DVD DVD A disc on which movies or information are stored. Practice This Word Practice More A1 Vocabulary Example Sentence Мы смотрели DVD прошлой ночью. Practice This Word Type the correct",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-ui-lang-en": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;about&quot; Meaning – Definition and Example (A1 preposition)",
+      "description": "On the subject of; concerning. Learn &quot;about&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;about&quot; Meaning – Definition and Example (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "description": "On the subject of; concerning. Learn &quot;about&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+            "name": "English Word \"about\" Meaning – Definition and Example (A1 preposition)",
+            "description": "On the subject of; concerning. Learn \"about\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "On the subject of; concerning. Learn \"about\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/en/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;About&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;About&quot; about about On the subject of; concerning. Practice This Word Practice More A1 Vocabulary Example Sentence The story is about a little dog. Practice This Word Type the correct word based",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-ui-lang-es": {
+      "status": 200,
+      "headers": {},
+      "title": "Palabra Inglés &quot;about&quot; – Significado y Ejemplo (A1 preposition)",
+      "description": "Relativo a un tema; acerca de. Aprende la palabra Inglés &quot;about&quot; y ve ejemplos.",
+      "canonical": "https://www.fluentstellar.com/es/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "Palabra Inglés &quot;about&quot; – Significado y Ejemplo (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "description": "Relativo a un tema; acerca de. Aprende la palabra Inglés &quot;about&quot; y ve ejemplos."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/es/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/es/english-word-about--A1-00001",
+            "name": "Palabra Inglés \"about\" – Significado y Ejemplo (A1 preposition)",
+            "description": "Relativo a un tema; acerca de. Aprende la palabra Inglés \"about\" y ve ejemplos.",
+            "inLanguage": "es",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/es/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/es/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/es/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "Relativo a un tema; acerca de. Aprende la palabra Inglés \"about\" y ve ejemplos.",
+            "url": "https://www.fluentstellar.com/es/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Inglés A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/es/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Inglés A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/es/vocabulario-ingles-a1-practica"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/es/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Significado de la palabra Inglés &quot;About&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Idiomas Filtros Ejercicios Mas Prueba de nivel Log in ES Español ES Acerca de Idiomas Filtros Ejercicios Explorar Ayuda Prueba de nivel Log in Idiomas ES Español ES Significado de la palabra Inglés &quot;About&quot; about sobre Relativo a un tema; acerca de. Practica esta palabra Practica más vocabulario A1 Frase de ejemplo The story is about a little dog. Practica esta palabra Escri",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "es"
+    },
+    "word-ui-lang-fr": {
+      "status": 200,
+      "headers": {},
+      "title": "Mot Anglais &quot;about&quot; – Signification et Exemple (A1 preposition)",
+      "description": "Sur le sujet de ; concernant. Apprenez le mot Anglais &quot;about&quot; et voyez des exemples.",
+      "canonical": "https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "Mot Anglais &quot;about&quot; – Signification et Exemple (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "description": "Sur le sujet de ; concernant. Apprenez le mot Anglais &quot;about&quot; et voyez des exemples."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/fr/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+            "name": "Mot Anglais \"about\" – Signification et Exemple (A1 preposition)",
+            "description": "Sur le sujet de ; concernant. Apprenez le mot Anglais \"about\" et voyez des exemples.",
+            "inLanguage": "fr",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/fr/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/fr/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/fr/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "Sur le sujet de ; concernant. Apprenez le mot Anglais \"about\" et voyez des exemples.",
+            "url": "https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Anglais A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/fr/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Anglais A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/fr/vocabulaire-anglais-a1-pratique"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/fr/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Signification du mot Anglais &quot;About&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Langues Filtres Exercices Plus Test de niveau Log in FR Français FR A propos Langues Filtres Exercices Explorer Aide Test de niveau Log in Langues FR Français FR Signification du mot Anglais &quot;About&quot; about à propos de Sur le sujet de ; concernant. Pratiquer ce mot Pratiquer plus de vocabulaire A1 Exemple de phrase The story is about a little dog. Pratiquer ce mot Tapez le mo",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "fr"
+    },
+    "word-ui-lang-de": {
+      "status": 200,
+      "headers": {},
+      "title": "Englisches Wort &quot;about&quot; – Bedeutung und Beispiel (A1 preposition)",
+      "description": "Zu einem Thema; betreffend. Lerne das Wort &quot;about&quot; auf Englisch und sieh Beispiele.",
+      "canonical": "https://www.fluentstellar.com/de/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "Englisches Wort &quot;about&quot; – Bedeutung und Beispiel (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "description": "Zu einem Thema; betreffend. Lerne das Wort &quot;about&quot; auf Englisch und sieh Beispiele."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/de/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/de/english-word-about--A1-00001",
+            "name": "Englisches Wort \"about\" – Bedeutung und Beispiel (A1 preposition)",
+            "description": "Zu einem Thema; betreffend. Lerne das Wort \"about\" auf Englisch und sieh Beispiele.",
+            "inLanguage": "de",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/de/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/de/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/de/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "Zu einem Thema; betreffend. Lerne das Wort \"about\" auf Englisch und sieh Beispiele.",
+            "url": "https://www.fluentstellar.com/de/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Englisch A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/de/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Englisch A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/de/englisch-a1-wortschatz-ueben"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/de/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Bedeutung des Englischen Wortes &quot;About&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Sprachen Filter Übungen Mehr Niveautest Log in DE Deutsch DE Über Sprachen Filter Übungen Entdecken Hilfe Niveautest Log in Sprachen DE Deutsch DE Bedeutung des Englischen Wortes &quot;About&quot; about über Zu einem Thema; betreffend. Dieses Wort üben Mehr A1 Vokabeln üben Beispielsatz The story is about a little dog. Dieses Wort üben Tippe das richtige Wort anhand der Definition. D",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "de"
+    },
+    "word-ui-lang-it": {
+      "status": 200,
+      "headers": {},
+      "title": "Parola Inglese &quot;about&quot; – Significato ed Esempio (A1 preposition)",
+      "description": "In merito a; riguardo a. Impara la parola Inglese &quot;about&quot; e vedi esempi.",
+      "canonical": "https://www.fluentstellar.com/it/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "Parola Inglese &quot;about&quot; – Significato ed Esempio (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "description": "In merito a; riguardo a. Impara la parola Inglese &quot;about&quot; e vedi esempi."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/it/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/it/english-word-about--A1-00001",
+            "name": "Parola Inglese \"about\" – Significato ed Esempio (A1 preposition)",
+            "description": "In merito a; riguardo a. Impara la parola Inglese \"about\" e vedi esempi.",
+            "inLanguage": "it",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/it/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/it/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/it/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "In merito a; riguardo a. Impara la parola Inglese \"about\" e vedi esempi.",
+            "url": "https://www.fluentstellar.com/it/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Inglese A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/it/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Inglese A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/it/vocabolario-inglese-a1-pratica"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/it/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Significato della parola Inglese &quot;About&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Lingue Filtri Esercizi Altro Test livello Log in IT Italiano IT Info Lingue Filtri Esercizi Esplora Aiuto Test livello Log in Lingue IT Italiano IT Significato della parola Inglese &quot;About&quot; about su In merito a; riguardo a. Pratica questa parola Pratica più vocabolario A1 Frase di esempio The story is about a little dog. Pratica questa parola Digita la parola corretta in bas",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "it"
+    },
+    "word-ui-lang-pt": {
+      "status": 200,
+      "headers": {},
+      "title": "Palavra Inglês &quot;about&quot; – Significado e Exemplo (A1 preposition)",
+      "description": "No assunto de; a respeito de. Aprenda a palavra Inglês &quot;about&quot; e veja exemplos.",
+      "canonical": "https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "Palavra Inglês &quot;about&quot; – Significado e Exemplo (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "description": "No assunto de; a respeito de. Aprenda a palavra Inglês &quot;about&quot; e veja exemplos."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/pt/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+            "name": "Palavra Inglês \"about\" – Significado e Exemplo (A1 preposition)",
+            "description": "No assunto de; a respeito de. Aprenda a palavra Inglês \"about\" e veja exemplos.",
+            "inLanguage": "pt",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/pt/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/pt/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/pt/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "No assunto de; a respeito de. Aprenda a palavra Inglês \"about\" e veja exemplos.",
+            "url": "https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Inglês A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/pt/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Inglês A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/pt/vocabulario-ingles-a1-pratica"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/pt/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Significado da palavra Inglês &quot;About&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Idiomas Filtros Exercicios Mais Teste de nivel Log in PT Português PT Sobre Idiomas Filtros Exercicios Explorar Ajuda Teste de nivel Log in Idiomas PT Português PT Significado da palavra Inglês &quot;About&quot; about sobre No assunto de; a respeito de. Pratique esta palavra Pratique mais vocabulário A1 Frase de exemplo The story is about a little dog. Pratique esta palavra Digite a ",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "pt"
+    },
+    "word-ui-lang-ru": {
+      "status": 200,
+      "headers": {},
+      "title": "Слово &quot;about&quot; на Английский – значение и пример (A1 preposition)",
+      "description": "На какую-либо тему; касательно чего-либо. Узнайте значение слова &quot;about&quot; на Английский и посмотрите примеры.",
+      "canonical": "https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "Слово &quot;about&quot; на Английский – значение и пример (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "description": "На какую-либо тему; касательно чего-либо. Узнайте значение слова &quot;about&quot; на Английский и посмотрите примеры."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/ru/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+            "name": "Слово \"about\" на Английский – значение и пример (A1 preposition)",
+            "description": "На какую-либо тему; касательно чего-либо. Узнайте значение слова \"about\" на Английский и посмотрите примеры.",
+            "inLanguage": "ru",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/ru/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/ru/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/ru/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "На какую-либо тему; касательно чего-либо. Узнайте значение слова \"about\" на Английский и посмотрите примеры.",
+            "url": "https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Английский A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/ru/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Английский A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/ru/slovar-angliiskii-a1-praktika"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/ru/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Значение слова &quot;About&quot; на Английский",
+      "visibleTextExcerpt": "FLUENTSTELLAR Языки Фильтры Упражнения Ещё Тест уровня Log in RU Русский RU О нас Языки Фильтры Упражнения Обзор Помощь Тест уровня Log in Языки RU Русский RU Значение слова &quot;About&quot; на Английский about о На какую-либо тему; касательно чего-либо. Практикуйте это слово Практикуйте больше слов уровня A1 Пример предложения The story is about a little dog. Практикуйте это слово Введите правил",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "ru"
+    },
+    "word-level-A1": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;about&quot; Meaning – Definition and Example (A1 preposition)",
+      "description": "On the subject of; concerning. Learn &quot;about&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;about&quot; Meaning – Definition and Example (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "description": "On the subject of; concerning. Learn &quot;about&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+            "name": "English Word \"about\" Meaning – Definition and Example (A1 preposition)",
+            "description": "On the subject of; concerning. Learn \"about\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "On the subject of; concerning. Learn \"about\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/en/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;About&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;About&quot; about about On the subject of; concerning. Practice This Word Practice More A1 Vocabulary Example Sentence The story is about a little dog. Practice This Word Type the correct word based",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-level-A2": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;ability&quot; Meaning – Definition and Example (A2 noun)",
+      "description": "The power or skill to do something. Learn &quot;ability&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-ability--A2-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-ability--A2-00001",
+        "en=https://www.fluentstellar.com/en/english-word-ability--A2-00001",
+        "es=https://www.fluentstellar.com/es/english-word-ability--A2-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-ability--A2-00001",
+        "it=https://www.fluentstellar.com/it/english-word-ability--A2-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-ability--A2-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-ability--A2-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-ability--A2-00001"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;ability&quot; Meaning – Definition and Example (A2 noun)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-ability--A2-00001",
+        "description": "The power or skill to do something. Learn &quot;ability&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-ability--A2-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-ability--A2-00001",
+            "name": "English Word \"ability\" Meaning – Definition and Example (A2 noun)",
+            "description": "The power or skill to do something. Learn \"ability\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-ability--A2-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-ability--A2-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-ability--A2-00001#term",
+            "name": "ability",
+            "description": "The power or skill to do something. Learn \"ability\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-ability--A2-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English A2 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-ability--A2-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English A2 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-a2-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "ability",
+                "item": "https://www.fluentstellar.com/en/english-word-ability--A2-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;Ability&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;Ability&quot; ability ability The power or skill to do something. Practice This Word Practice More A2 Vocabulary Example Sentence She has the ability to sing well. Practice This Word Type the correc",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-level-B1": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;abandon&quot; Meaning – Definition and Example (B1 verb)",
+      "description": "To leave something or someone completely and not return. Learn &quot;abandon&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-abandon--B1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-abandon--B1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-abandon--B1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-abandon--B1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-abandon--B1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-abandon--B1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-abandon--B1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-abandon--B1-00001"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;abandon&quot; Meaning – Definition and Example (B1 verb)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001",
+        "description": "To leave something or someone completely and not return. Learn &quot;abandon&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001",
+            "name": "English Word \"abandon\" Meaning – Definition and Example (B1 verb)",
+            "description": "To leave something or someone completely and not return. Learn \"abandon\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001#term",
+            "name": "abandon",
+            "description": "To leave something or someone completely and not return. Learn \"abandon\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English B1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English B1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-b1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "abandon",
+                "item": "https://www.fluentstellar.com/en/english-word-abandon--B1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;Abandon&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;Abandon&quot; abandon abandon To leave something or someone completely and not return. Practice This Word Practice More B1 Vocabulary Example Sentence They had to abandon the car when it ran out of ",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-level-B2": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;abandoned&quot; Meaning – Definition and Example (B2 adjective)",
+      "description": "Left empty and not used or cared for anymore. Learn &quot;abandoned&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-abandoned--B2-00001",
+        "en=https://www.fluentstellar.com/en/english-word-abandoned--B2-00001",
+        "es=https://www.fluentstellar.com/es/english-word-abandoned--B2-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-abandoned--B2-00001",
+        "it=https://www.fluentstellar.com/it/english-word-abandoned--B2-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-abandoned--B2-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-abandoned--B2-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-abandoned--B2-00001"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;abandoned&quot; Meaning – Definition and Example (B2 adjective)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001",
+        "description": "Left empty and not used or cared for anymore. Learn &quot;abandoned&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001",
+            "name": "English Word \"abandoned\" Meaning – Definition and Example (B2 adjective)",
+            "description": "Left empty and not used or cared for anymore. Learn \"abandoned\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001#term",
+            "name": "abandoned",
+            "description": "Left empty and not used or cared for anymore. Learn \"abandoned\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English B2 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English B2 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-b2-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "abandoned",
+                "item": "https://www.fluentstellar.com/en/english-word-abandoned--B2-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;Abandoned&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;Abandoned&quot; abandoned abandoned Left empty and not used or cared for anymore. Practice This Word Practice More B2 Vocabulary Example Sentence We explored the old abandoned factory. Practice This",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-level-C1": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;abound&quot; Meaning – Definition and Example (C1 verb)",
+      "description": "To exist in large numbers or amounts. Learn &quot;abound&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-abound--C1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-abound--C1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-abound--C1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-abound--C1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-abound--C1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-abound--C1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-abound--C1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-abound--C1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-abound--C1-00001"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;abound&quot; Meaning – Definition and Example (C1 verb)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-abound--C1-00001",
+        "description": "To exist in large numbers or amounts. Learn &quot;abound&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-abound--C1-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-abound--C1-00001",
+            "name": "English Word \"abound\" Meaning – Definition and Example (C1 verb)",
+            "description": "To exist in large numbers or amounts. Learn \"abound\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-abound--C1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-abound--C1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-abound--C1-00001#term",
+            "name": "abound",
+            "description": "To exist in large numbers or amounts. Learn \"abound\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-abound--C1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English C1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-abound--C1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English C1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-c1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "abound",
+                "item": "https://www.fluentstellar.com/en/english-word-abound--C1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;Abound&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;Abound&quot; abound abound To exist in large numbers or amounts. Practice This Word Practice More C1 Vocabulary Example Sentence Rumors abound about the celebrity&#x27;s private life. Practice This ",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-level-C2": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;aberration&quot; Meaning – Definition and Example (C2 noun)",
+      "description": "A departure from what is normal, usual, or expected. Learn &quot;aberration&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-aberration--C2-00001",
+        "en=https://www.fluentstellar.com/en/english-word-aberration--C2-00001",
+        "es=https://www.fluentstellar.com/es/english-word-aberration--C2-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-aberration--C2-00001",
+        "it=https://www.fluentstellar.com/it/english-word-aberration--C2-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-aberration--C2-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-aberration--C2-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-aberration--C2-00001"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;aberration&quot; Meaning – Definition and Example (C2 noun)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001",
+        "description": "A departure from what is normal, usual, or expected. Learn &quot;aberration&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001",
+            "name": "English Word \"aberration\" Meaning – Definition and Example (C2 noun)",
+            "description": "A departure from what is normal, usual, or expected. Learn \"aberration\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001#term",
+            "name": "aberration",
+            "description": "A departure from what is normal, usual, or expected. Learn \"aberration\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English C2 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English C2 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-c2-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "aberration",
+                "item": "https://www.fluentstellar.com/en/english-word-aberration--C2-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;Aberration&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;Aberration&quot; aberration aberration A departure from what is normal, usual, or expected. Practice This Word Practice More C2 Vocabulary Example Sentence The snowy weather in June was an aberratio",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-ambiguous-slug-0": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;above&quot; Meaning – Definition and Example (A1 preposition)",
+      "description": "In a higher position than something else. Learn &quot;above&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-above--A1-00002",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-above--A1-00002",
+        "en=https://www.fluentstellar.com/en/english-word-above--A1-00002",
+        "es=https://www.fluentstellar.com/es/english-word-above--A1-00002",
+        "fr=https://www.fluentstellar.com/fr/english-word-above--A1-00002",
+        "it=https://www.fluentstellar.com/it/english-word-above--A1-00002",
+        "pt=https://www.fluentstellar.com/pt/english-word-above--A1-00002",
+        "ru=https://www.fluentstellar.com/ru/english-word-above--A1-00002",
+        "x-default=https://www.fluentstellar.com/en/english-word-above--A1-00002"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;above&quot; Meaning – Definition and Example (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-above--A1-00002",
+        "description": "In a higher position than something else. Learn &quot;above&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-above--A1-00002#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-above--A1-00002",
+            "name": "English Word \"above\" Meaning – Definition and Example (A1 preposition)",
+            "description": "In a higher position than something else. Learn \"above\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-above--A1-00002#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-above--A1-00002#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-above--A1-00002#term",
+            "name": "above",
+            "description": "In a higher position than something else. Learn \"above\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-above--A1-00002",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-above--A1-00002#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "above",
+                "item": "https://www.fluentstellar.com/en/english-word-above--A1-00002"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;Above&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;Above&quot; above above In a higher position than something else. Practice This Word Practice More A1 Vocabulary Example Sentence The clock is above the door. Other Meanings of This Word In or to a ",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-ambiguous-slug-1": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;above&quot; Meaning – Definition and Example (B1 adverb)",
+      "description": "In or to a higher place. Learn &quot;above&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-above--B1-00007",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-above--B1-00007",
+        "en=https://www.fluentstellar.com/en/english-word-above--B1-00007",
+        "es=https://www.fluentstellar.com/es/english-word-above--B1-00007",
+        "fr=https://www.fluentstellar.com/fr/english-word-above--B1-00007",
+        "it=https://www.fluentstellar.com/it/english-word-above--B1-00007",
+        "pt=https://www.fluentstellar.com/pt/english-word-above--B1-00007",
+        "ru=https://www.fluentstellar.com/ru/english-word-above--B1-00007",
+        "x-default=https://www.fluentstellar.com/en/english-word-above--B1-00007"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;above&quot; Meaning – Definition and Example (B1 adverb)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-above--B1-00007",
+        "description": "In or to a higher place. Learn &quot;above&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00007#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-above--B1-00007",
+            "name": "English Word \"above\" Meaning – Definition and Example (B1 adverb)",
+            "description": "In or to a higher place. Learn \"above\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00007#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00007#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00007#term",
+            "name": "above",
+            "description": "In or to a higher place. Learn \"above\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-above--B1-00007",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English B1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00007#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English B1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-b1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "above",
+                "item": "https://www.fluentstellar.com/en/english-word-above--B1-00007"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;Above&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;Above&quot; above above In or to a higher place. Practice This Word Practice More B1 Vocabulary Example Sentence Our bedroom is just above . Other Meanings of This Word In a higher position than som",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-ambiguous-slug-2": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;above&quot; Meaning – Definition and Example (B1 adjective)",
+      "description": "Mentioned earlier in a piece of writing. Learn &quot;above&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-above--B1-00008",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-above--B1-00008",
+        "en=https://www.fluentstellar.com/en/english-word-above--B1-00008",
+        "es=https://www.fluentstellar.com/es/english-word-above--B1-00008",
+        "fr=https://www.fluentstellar.com/fr/english-word-above--B1-00008",
+        "it=https://www.fluentstellar.com/it/english-word-above--B1-00008",
+        "pt=https://www.fluentstellar.com/pt/english-word-above--B1-00008",
+        "ru=https://www.fluentstellar.com/ru/english-word-above--B1-00008",
+        "x-default=https://www.fluentstellar.com/en/english-word-above--B1-00008"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;above&quot; Meaning – Definition and Example (B1 adjective)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-above--B1-00008",
+        "description": "Mentioned earlier in a piece of writing. Learn &quot;above&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00008#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-above--B1-00008",
+            "name": "English Word \"above\" Meaning – Definition and Example (B1 adjective)",
+            "description": "Mentioned earlier in a piece of writing. Learn \"above\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00008#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00008#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00008#term",
+            "name": "above",
+            "description": "Mentioned earlier in a piece of writing. Learn \"above\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-above--B1-00008",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English B1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-above--B1-00008#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English B1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-b1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "above",
+                "item": "https://www.fluentstellar.com/en/english-word-above--B1-00008"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;Above&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;Above&quot; above above Mentioned earlier in a piece of writing. Practice This Word Practice More B1 Vocabulary Example Sentence Please reply to the above address. Other Meanings of This Word In a h",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-diacritic": {
+      "status": 200,
+      "headers": {},
+      "title": "Spanish Word &quot;amplificación&quot; Meaning – Definition and Example (C1 noun)",
+      "description": "The process of increasing the strength or amount of something. Learn &quot;amplificación&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/spanish-word-amplificación--C1-00035",
+        "en=https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035",
+        "es=https://www.fluentstellar.com/es/spanish-word-amplificación--C1-00035",
+        "fr=https://www.fluentstellar.com/fr/spanish-word-amplificación--C1-00035",
+        "it=https://www.fluentstellar.com/it/spanish-word-amplificación--C1-00035",
+        "pt=https://www.fluentstellar.com/pt/spanish-word-amplificación--C1-00035",
+        "ru=https://www.fluentstellar.com/ru/spanish-word-amplificación--C1-00035",
+        "x-default=https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035"
+      ],
+      "openGraph": {
+        "title": "Spanish Word &quot;amplificación&quot; Meaning – Definition and Example (C1 noun)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035",
+        "description": "The process of increasing the strength or amount of something. Learn &quot;amplificación&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035#webpage",
+            "url": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035",
+            "name": "Spanish Word \"amplificación\" Meaning – Definition and Example (C1 noun)",
+            "description": "The process of increasing the strength or amount of something. Learn \"amplificación\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035#term",
+            "name": "amplificación",
+            "description": "The process of increasing the strength or amount of something. Learn \"amplificación\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "Spanish C1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Spanish C1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/spanish-c1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "amplificación",
+                "item": "https://www.fluentstellar.com/en/spanish-word-amplificación--C1-00035"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the Spanish Word &quot;Amplificación&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the Spanish Word &quot;Amplificación&quot; amplificación amplification The process of increasing the strength or amount of something. Practice This Word Practice More C1 Vocabulary Example Sentence La amplificación de su ",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-mojibake-note": {
+      "skipped": true,
+      "reason": "No live vocabulary record currently contains mojibake-corrupted text (scanned all 7 languages). fixMojibake() unit coverage already exists in scripts/test-word-seo-routes.mjs."
+    },
+    "word-dataset-first": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;about&quot; Meaning – Definition and Example (A1 preposition)",
+      "description": "On the subject of; concerning. Learn &quot;about&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-about--A1-00001",
+        "en=https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "es=https://www.fluentstellar.com/es/english-word-about--A1-00001",
+        "fr=https://www.fluentstellar.com/fr/english-word-about--A1-00001",
+        "it=https://www.fluentstellar.com/it/english-word-about--A1-00001",
+        "pt=https://www.fluentstellar.com/pt/english-word-about--A1-00001",
+        "ru=https://www.fluentstellar.com/ru/english-word-about--A1-00001",
+        "x-default=https://www.fluentstellar.com/en/english-word-about--A1-00001"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;about&quot; Meaning – Definition and Example (A1 preposition)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+        "description": "On the subject of; concerning. Learn &quot;about&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+            "name": "English Word \"about\" Meaning – Definition and Example (A1 preposition)",
+            "description": "On the subject of; concerning. Learn \"about\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#term",
+            "name": "about",
+            "description": "On the subject of; concerning. Learn \"about\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-about--A1-00001",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English A1 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-about--A1-00001#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English A1 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-a1-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "about",
+                "item": "https://www.fluentstellar.com/en/english-word-about--A1-00001"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;About&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;About&quot; about about On the subject of; concerning. Practice This Word Practice More A1 Vocabulary Example Sentence The story is about a little dog. Practice This Word Type the correct word based",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-dataset-last": {
+      "status": 200,
+      "headers": {},
+      "title": "English Word &quot;walkabout&quot; Meaning – Definition and Example (C2 noun)",
+      "description": "A journey on foot by an Australian Aboriginal person; a walk among a crowd by an important visitor. Learn &quot;walkabout&quot; with examples, synonyms, CEFR level, and practice.",
+      "canonical": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/english-word-walkabout--C2-01108",
+        "en=https://www.fluentstellar.com/en/english-word-walkabout--C2-01108",
+        "es=https://www.fluentstellar.com/es/english-word-walkabout--C2-01108",
+        "fr=https://www.fluentstellar.com/fr/english-word-walkabout--C2-01108",
+        "it=https://www.fluentstellar.com/it/english-word-walkabout--C2-01108",
+        "pt=https://www.fluentstellar.com/pt/english-word-walkabout--C2-01108",
+        "ru=https://www.fluentstellar.com/ru/english-word-walkabout--C2-01108",
+        "x-default=https://www.fluentstellar.com/en/english-word-walkabout--C2-01108"
+      ],
+      "openGraph": {
+        "title": "English Word &quot;walkabout&quot; Meaning – Definition and Example (C2 noun)",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108",
+        "description": "A journey on foot by an Australian Aboriginal person; a walk among a crowd by an important visitor. Learn &quot;walkabout&quot; with examples, synonyms, CEFR level, and practice."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108#webpage",
+            "url": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108",
+            "name": "English Word \"walkabout\" Meaning – Definition and Example (C2 noun)",
+            "description": "A journey on foot by an Australian Aboriginal person; a walk among a crowd by an important visitor. Learn \"walkabout\" with examples, synonyms, CEFR level, and practice.",
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108#term"
+            },
+            "breadcrumb": {
+              "@id": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108#breadcrumb"
+            }
+          },
+          {
+            "@type": "DefinedTerm",
+            "@id": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108#term",
+            "name": "walkabout",
+            "description": "A journey on foot by an Australian Aboriginal person; a walk among a crowd by an important visitor. Learn \"walkabout\" with examples, synonyms, CEFR level, and practice.",
+            "url": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108",
+            "inDefinedTermSet": {
+              "@type": "DefinedTermSet",
+              "name": "English C2 Vocabulary"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.fluentstellar.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "English C2 Vocabulary",
+                "item": "https://www.fluentstellar.com/en/english-c2-vocabulary-practice"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "walkabout",
+                "item": "https://www.fluentstellar.com/en/english-word-walkabout--C2-01108"
+              }
+            ]
+          }
+        ]
+      },
+      "h1": "Meaning of the English Word &quot;Walkabout&quot;",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Meaning of the English Word &quot;Walkabout&quot; walkabout walkabout A journey on foot by an Australian Aboriginal person; a walk among a crowd by an important visitor. Practice This Word Practice More C2 Vocabulary Example Sentenc",
+      "hydration": {
+        "wordPageData": true,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "redirect-legacy-single-hyphen": {
+      "status": 308,
+      "headers": {
+        "Location": "/en/english-word-about--A1-00001"
+      }
+    },
+    "redirect-case-drift": {
+      "status": 308,
+      "headers": {
+        "Location": "/en/english-word-about--A1-00001"
+      }
+    },
+    "error-slug-only": {
+      "status": 410
+    },
+    "error-nonexistent-concept-id": {
+      "status": 410
+    },
+    "error-slug-concept-mismatch": {
+      "status": 410
+    },
+    "error-malformed-separator": {
+      "status": 410
+    },
+    "error-unsupported-ui-language": {
+      "status": 410
+    },
+    "error-unsupported-target-language": {
+      "status": 410
+    },
+    "error-invalid-browse-page": {
+      "status": 410
+    },
+    "core-homepage": {
+      "status": 200,
+      "headers": {},
+      "title": "FluentStellar - Structured Vocabulary Learning Platform",
+      "description": "Structured CEFR vocabulary system with interactive exercises and intelligent learning tools.",
+      "canonical": "https://www.fluentstellar.com/",
+      "robots": null,
+      "hreflang": [],
+      "openGraph": {
+        "title": "FluentStellar - Structured Vocabulary Learning Platform",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/",
+        "description": "Structured CEFR vocabulary system with interactive exercises and intelligent learning tools."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Hello Hola Bonjour Ciao Hello Hola Bonjour こんにちは Ciao გამარჯობა Practice Vocabulary No lessons - Just practice. Practice Vocabulary No lessons - Just practice. Your language Select your language Practice language Select practice lan",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "core-about": {
+      "status": 200,
+      "headers": {},
+      "title": "About FluentStellar",
+      "description": "Learn what FluentStellar is building and how the platform approaches structured vocabulary learning.",
+      "canonical": "https://www.fluentstellar.com/about",
+      "robots": null,
+      "hreflang": [],
+      "openGraph": {
+        "title": "About FluentStellar",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/about",
+        "description": "Learn what FluentStellar is building and how the platform approaches structured vocabulary learning."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Back FLUENTSTELLAR is designed for active vocabulary practice, not passive browsing. You do not scroll through word lists or memorize definitions. You practice words by using them, through carefully designed exercises that train rec",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "core-help": {
+      "status": 200,
+      "headers": {},
+      "title": "FluentStellar Help",
+      "description": "Get help using FluentStellar, including navigation, practice routes, and core vocabulary features.",
+      "canonical": "https://www.fluentstellar.com/help",
+      "robots": null,
+      "hreflang": [],
+      "openGraph": {
+        "title": "FluentStellar Help",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/help",
+        "description": "Get help using FluentStellar, including navigation, practice routes, and core vocabulary features."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Back How to start practice Step 1: Choose languages Select: your native language the language you want to practice Step 2: Set filters (optional) You can optionally choose: CEFR level topics word types (part of speech) All filters a",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "core-profile": {
+      "status": 200,
+      "headers": {},
+      "title": "Profile | FluentStellar",
+      "description": "Your FluentStellar account dashboard.",
+      "canonical": null,
+      "robots": "noindex, nofollow",
+      "hreflang": [],
+      "openGraph": {
+        "title": null,
+        "type": null,
+        "url": null,
+        "description": null
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Profile Menu B Bondo German • A2 Main Dashboard Practice Learning Vocabulary My Lists Insights Progress System Settings",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "core-practice": {
+      "status": 200,
+      "headers": {},
+      "title": "Vocabulary Practice | FluentStellar",
+      "description": "Your current FluentStellar practice session will appear here.",
+      "canonical": null,
+      "robots": "noindex, nofollow",
+      "hreflang": [],
+      "openGraph": {
+        "title": null,
+        "type": null,
+        "url": null,
+        "description": null
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": null,
+      "visibleTextExcerpt": "Loading words...",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    }
+  }
+}

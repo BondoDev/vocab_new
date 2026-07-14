@@ -1,0 +1,23 @@
+{
+  "sourceCommit": "d123ff1c",
+  "sourceCommitSubject": "refactor(worker): move production Worker out of staging",
+  "branch": "master",
+  "capturedAt": "2026-07-14T18:34:00Z",
+  "canonicalHost": "https://www.fluentstellar.com",
+  "productionWorker": {
+    "serviceName": "fluentstellar-production",
+    "folder": "workers/word-ssr/",
+    "wranglerConfig": "workers/word-ssr/wrangler.production.toml",
+    "entryFile": "worker-dist-full/index.full.js",
+    "dataVersion": "staging-full-2026-07-14-01"
+  },
+  "commands": {
+    "build": "npm run build",
+    "workerBuild": "npm run build:word-worker:full",
+    "seoTests": ["npm run test:word-seo", "npm run test:seo-output", "npm run test:word-worker:production-safety"],
+    "captureLocal": "npm run seo-baseline:capture -- --out routes/seo-snapshot-local.json",
+    "captureProd": "npm run seo-baseline:capture -- --base-url https://www.fluentstellar.com --out routes/seo-snapshot-prod.json",
+    "compare": "npm run seo-baseline:compare -- --a <old> --b <new>"
+  },
+  "notes": "routes/seo-snapshot-local.json is the authoritative SEO content baseline (41 fixtures via server-build/entry-server.js). routes/seo-snapshot-prod.json is for host/redirect/core-route parity only — word/error/redirect fixtures return 403 Cf-Mitigated:challenge in production (WAF) and must not be used as the SEO content source for those families."
+}
