@@ -21,19 +21,21 @@ integration point for Cloudflare deployment.
 ```text
 Local development
 → push to GitHub (master)
-→ build the site and the Worker artifact
-→ deploy the Worker (currently: manual `wrangler deploy`)
+→ Cloudflare Workers Builds runs `npm run build && npm run build:word-worker:full`
+→ Wrangler deploys the built Worker artifact automatically
 → https://www.fluentstellar.com
 ```
 
-> **Status note (2026-07-14):** every deployment visible in
-> `npx wrangler deployments list --name fluentstellar-production` was
-> authored by the owner's account with no Git build source, i.e. releases
-> are currently pushed manually with Wrangler. If a Cloudflare Git
-> integration (Workers Builds) has been or will be connected to the GitHub
-> repo, that configuration lives only in the Cloudflare dashboard — confirm
-> there which branch it watches and what build command it runs. Nothing in
-> this repository configures or depends on such an integration.
+> **Status note (2026-07-15):** Cloudflare Workers Builds (Git integration)
+> was connected after the 2026-07-14 status note above was written. Pushes to
+> `master` now trigger a Cloudflare-hosted remote build (`npm run build && npm
+> run build:word-worker:full`) followed by an automatic Wrangler deploy; this
+> configuration lives only in the Cloudflare dashboard, is not represented in
+> this repository, and was not changed by this repository's tooling. The
+> previous note describing manual, no-Git-build-source deploys reflected the
+> state before this connection and no longer applies — confirm current
+> behavior in the Cloudflare dashboard (Workers Builds settings, deployment
+> history) if this ever needs re-verifying.
 
 ## Frontend build
 
@@ -73,9 +75,11 @@ Local development
 - Worker build: `npm run build:word-worker:full`
   (**regenerates the data corpus and mints a new UTC-dated `dataVersion`** —
   running it rotates the live data version on the next deploy)
-- Deploy command (manual, from repo root):
-  `npx wrangler deploy --config workers/word-ssr/wrangler.production.toml`
-  — never a bare `wrangler deploy`.
+- Deploy command: as of the Cloudflare Workers Builds connection
+  (2026-07-15 status note above), deploys run automatically on push to
+  `master`. `npx wrangler deploy --config
+  workers/word-ssr/wrangler.production.toml` (never a bare `wrangler
+  deploy`) remains the manual fallback for out-of-band redeploys.
 - Assets: one `[assets]` binding serving `assets-full/` (the production
   client bundle + prerendered HTML + record shards, assembled by
   `publish-shards.mjs`). Assets are served **asset-first**; the Worker's

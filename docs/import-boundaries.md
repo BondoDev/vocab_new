@@ -3,6 +3,10 @@
 Audited at source commit `f7f91c1e`. Machine-readable companion:
 [`scripts/import-boundaries/current/globs.json`](../scripts/import-boundaries/current/globs.json).
 Guard script: `npm run test:import-boundaries` (`scripts/test-import-boundaries.mjs`).
+Follow-up generated-data-ownership audit at `80e52fe4` corrected the
+`public/vocabularyLevels/` finding (see the "corrected" writeup below) and
+removed the dead `index.ts`; see [`docs/generated-data.md`](generated-data.md)
+for the full ownership map.
 
 ## Purpose
 
@@ -74,9 +78,9 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 
 | Consumer | Loader type | Target | Runtime | Risk |
 |---|---|---|---|---|
-| `public/vocabularyLevels/index.ts` | explicit `import()` registry (49 entries) + `new URL(..., import.meta.url)` + Node `fs` fallback | `public/vocabularyLevels/{ui}/{target}.json` | **none — orphaned** | high — dead, byte-identical duplicate of `src/data/vocabularyLevels/`; ships all 49 JSON files into `dist/`/`server-build/` via Vite's `publicDir` copy on every build |
+| `src/data/vocabularyLevels/index.ts` (`fetchVocabularyFile`) | `fetch(`/vocabularyLevels/${ui}/${target}.json`)` | `public/vocabularyLevels/{ui}/{target}.json` | client (browser, on navigation without prerendered/override content) | medium — `public/vocabularyLevels/*.json` is a **required runtime mirror**, not dead data; see corrected writeup below |
 | `src/contexts/LanguageContext.tsx` | explicit switch, 7 literal `import()` calls | `src/data/interface/{language}_interface.json` | client | medium — same directory as G1/G3 but hand-maintained in parallel; a new interface file is picked up by the globs but silently missed here unless also added |
-| `scripts/cleanup-word-build-artifacts.mjs` | hard-coded `fs.rm` | `dist/vocabularyLevels/index.ts`, `server-build/vocabularyLevels/index.ts` | build-time | medium — silent workaround for the `public/vocabularyLevels` leak; if that directory moves, this script stops matching anything with no build failure |
+| ~~`scripts/cleanup-word-build-artifacts.mjs`~~ | ~~hard-coded `fs.rm`~~ | *(removed 2026-07-15)* | — | resolved — see corrected writeup below |
 | `scripts/generate-sitemap.mjs` | `fs.readdir` walk | `src/data/vocabularyLevels/{ui}/` | build-time generator | low |
 | `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `word-hub-pages/`, `word-browse-shards/`, `verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
 | `scripts/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
@@ -85,31 +89,41 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `scripts/test-crawler-policy.mjs` | `fs.readdirSync` walk | `workers/word-ssr/src/` | test-only | low — protective |
 | `scripts/verify-word-ssr-package.mjs` + 7 other `scripts/test-*.mjs` | `fs.readdirSync`/`fs.readdir` | `dist/`, `public/sitemaps/`, `server-build/` | test/build-verification-only | low |
 
-### The `public/vocabularyLevels/` finding, in detail
+### The `public/vocabularyLevels/` finding, corrected (2026-07-15 follow-up audit)
 
-This audit found a full, verified duplicate: `public/vocabularyLevels/`
-contains the same 49 `{ui}/{target}.json` files as
-`src/data/vocabularyLevels/` (byte-identical, confirmed with `diff -rq`), plus
-a 226-line `index.ts` that is a near-duplicate of
-`src/data/vocabularyLevels/index.ts` (198 lines — the `public/` copy has an
-extra Node `fs.readFileSync`/`eval("require")` SSR fallback branch the `src/`
-copy lacks). **Nothing in the application imports `public/vocabularyLevels/`
-— it is dead code from the module graph's perspective**, but because it lives
-under `public/`, Vite's default `publicDir` behavior copies the entire tree
-into `dist/` (and, via the SSR build, into `server-build/`) on every build.
-`scripts/cleanup-word-build-artifacts.mjs` already force-deletes the two
-copied `index.ts` files after build — a targeted patch for the most visible
-symptom (shipping source-like `.ts` as static output) — but the 49 JSON
-files are not covered by that cleanup and do ship to production as
-publicly-fetchable static files, and from there into the Worker's
-`assets-full/` via `publish-shards.mjs` (which copies from `dist/`).
+The original writeup above (source commit `f7f91c1e`) characterized the
+entire `public/vocabularyLevels/` tree as an "orphaned duplicate." A
+follow-up generated-data-ownership audit (see `docs/generated-data.md`)
+found that characterization was only half right, and split the finding into
+two parts with different outcomes:
 
-This was out of scope to fix in this audit (no folder moves/renames/deletes
-were made), but it is the single highest-value cleanup candidate this audit
-surfaced. A new guard (`npm run test:import-boundaries`) now asserts the two
-trees stay byte-identical, so if the `src/` copy is updated without updating
-`public/`, drift is caught immediately instead of silently shipping stale
-data.
+- **`public/vocabularyLevels/index.ts` (226 lines) was genuinely dead.**
+  Nothing in the application imported it — module resolution for
+  `from "../data/vocabularyLevels"` always resolves to
+  `src/data/vocabularyLevels/index.ts`, never the `public/` copy, because
+  `public/` is not part of Vite's module graph. This file has been **removed**.
+- **The 49 `{ui}/{target}.json` files under `public/vocabularyLevels/` are
+  NOT dead.** `src/data/vocabularyLevels/index.ts`'s `fetchVocabularyFile()`
+  performs a live `fetch(`/vocabularyLevels/${ui}/${target}.json`)` call from
+  the browser, reached from `VocabularyLevelPage.tsx` whenever a
+  vocabulary-level route renders client-side without prerendered/override
+  content (e.g. in-app navigation between levels after initial hydration).
+  That fetch has no server other than the static file Vite's `publicDir`
+  copy places at `dist/vocabularyLevels/{ui}/{target}.json`, and from there
+  into `server-build/`, and from there (via `publish-shards.mjs` copying
+  `dist/**`) into the Worker's `assets-full/`. **These JSON files must stay
+  in `public/vocabularyLevels/` and stay byte-identical to
+  `src/data/vocabularyLevels/`** — removing them would break client-side
+  navigation to vocabulary-level pages in production.
+
+`scripts/cleanup-word-build-artifacts.mjs`'s two `fs.rm` calls for
+`dist/vocabularyLevels/index.ts` and `server-build/vocabularyLevels/index.ts`
+are now obsolete (the source `index.ts` no longer exists for Vite to copy)
+and have been removed from that script. `npm run test:import-boundaries`
+still asserts the two JSON trees stay byte-identical (this remains load-bearing,
+not just a drift check), and `scripts/test-generated-data-ownership.mjs` now
+additionally asserts `public/vocabularyLevels/index.ts` cannot silently
+reappear.
 
 ## Safe move checklist
 
@@ -163,9 +177,10 @@ data.
    header comment). Any refactor that merges `WordSeoPage.tsx` and
    `WordSeoPageView.tsx`, or that moves this glob into a shared module, must
    not repeat that mistake.
-4. **`public/vocabularyLevels/`** (related loader, not a glob) — a fully
-   duplicated, orphaned dataset shipped to production purely as a side
-   effect of Vite's `publicDir` default. See detailed writeup above.
+4. **`public/vocabularyLevels/`** (related loader, not a glob) — the JSON
+   files are a required runtime mirror fetched directly by the browser, not
+   an orphaned duplicate; only the accompanying `index.ts` was dead, and it
+   has been removed. See corrected writeup above.
 5. **G2/G3** (`entry-server.tsx`) — not fragile in isolation, but this file
    is a shared, load-bearing SSR entry point consumed by
    `scripts/prerender.mjs`, `server/word-ssr-runtime.mjs`, and
@@ -199,9 +214,7 @@ Documented as options, **not implemented** in this audit:
 
 - Replace G4/G6's eager globs with explicit generated registries (the
   generator already knows the exact language list — it could emit an
-  `index.ts` alongside the JSON, the same shape as
-  `public/vocabularyLevels/index.ts`'s `import()` map, minus that file's dead
-  orphaned status).
+  `index.ts` alongside the JSON).
 - Formalize the "safe export vs. heavy export" split already used correctly
   in `wordBrowseSearchData.ts` (`getWordBrowseSearchShardKey` vs.
   `getWordBrowseSearchData`) as a documented pattern for any future
@@ -209,9 +222,20 @@ Documented as options, **not implemented** in this audit:
 - Reconcile G1/G3's glob-based interface loading with
   `LanguageContext.tsx`'s hand-written `import()` switch (L2) — one
   generated source of truth would remove the dual-maintenance risk.
-- Retire or actually wire up `public/vocabularyLevels/index.ts` — either
-  delete the orphaned duplicate (data + index.ts) or prove it's needed and
-  document why it must stay outside `src/`.
+- Consider replacing `src/data/vocabularyLevels/index.ts`'s browser
+  `fetch()`-from-`public/` strategy with a bundler-driven approach (e.g. a
+  generated per-language JS chunk) so the `public/vocabularyLevels/` JSON
+  mirror and its duplication guard are no longer needed at all — see
+  `docs/generated-data.md` for the current state.
+- `public/seo/level-browse-preview/` (byte-identical duplicate of
+  `src/data/seo/level-browse-preview/`, added in the same historical commit
+  as the original `public/vocabularyLevels/` duplication) has **no
+  discoverable runtime consumer** — no fetch, no import, no glob targets it.
+  It looks like the same class of accidental byproduct that
+  `public/vocabularyLevels/index.ts` turned out to be, but was **not**
+  removed in the 2026-07-15 audit (deliberately out of scope — see
+  `docs/generated-data.md`). Flagged here as a high-confidence candidate for
+  a dedicated follow-up task.
 - Consider a shared alias (e.g. `@data/vocabulary`) for the vocabulary
   directory so G2/G7/G8's three separate relative-path spellings of the same
   target collapse to one stable reference.

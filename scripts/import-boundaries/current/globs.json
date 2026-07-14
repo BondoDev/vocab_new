@@ -141,12 +141,12 @@
   "relatedPathSensitiveLoaders": [
     {
       "id": "L1",
-      "consumer": "public/vocabularyLevels/index.ts",
-      "loaderType": "explicit import() registry (49 entries) + new URL(..., import.meta.url) + Node fs fallback",
+      "consumer": "src/data/vocabularyLevels/index.ts (fetchVocabularyFile)",
+      "loaderType": "browser fetch(`/vocabularyLevels/${uiLang}/${targetLanguage}.json`)",
       "target": "public/vocabularyLevels/{uiLang}/{targetLanguage}.json",
-      "runtime": "none — orphaned, not imported by any application code",
-      "risk": "high-dead-duplicate",
-      "riskReason": "Byte-identical duplicate of src/data/vocabularyLevels/ (49/49 JSON files identical). Lives in public/, so Vite's publicDir copy ships all 49 JSON files into dist/ and server-build/ every build (confirmed present in built dist/vocabularyLevels/). The stray index.ts itself is force-deleted post-build by scripts/cleanup-word-build-artifacts.mjs — a workaround for the leak rather than a fix at the source."
+      "runtime": "client (browser) — invoked on client-side navigation to a vocabulary-level route without prerendered/override content",
+      "risk": "medium-required-public-mirror",
+      "riskReason": "public/vocabularyLevels/*.json (49 files) is NOT dead: it is the live fetch target for src/data/vocabularyLevels/index.ts's client-side loader, confirmed reachable from src/app/components/VocabularyLevelPage.tsx's non-SSR render path. It must stay byte-identical to src/data/vocabularyLevels/ (guarded by the test:import-boundaries duplication check). The one part of this pair that WAS dead — public/vocabularyLevels/index.ts, a 226-line unused loader module nothing imported — was removed during the 2026-07-15 generated-data-ownership audit; see docs/generated-data.md."
     },
     {
       "id": "L2",
@@ -160,11 +160,11 @@
     {
       "id": "L3",
       "consumer": "scripts/cleanup-word-build-artifacts.mjs",
-      "loaderType": "hard-coded path deletion (fs.rm)",
-      "target": "dist/vocabularyLevels/index.ts, server-build/vocabularyLevels/index.ts",
-      "runtime": "build-time",
-      "risk": "medium-silent-workaround",
-      "riskReason": "Patches around the L1 leak. If public/vocabularyLevels/ is ever moved/renamed, this script's hard-coded paths silently stop matching anything (fs.rm force:true swallows the miss) and the .ts leak returns with no build failure."
+      "loaderType": "removed 2026-07-15",
+      "target": "n/a — formerly dist/vocabularyLevels/index.ts, server-build/vocabularyLevels/index.ts",
+      "runtime": "n/a",
+      "risk": "resolved",
+      "riskReason": "Formerly patched around the L1 leak by force-deleting the copied index.ts post-build. Made obsolete by removing public/vocabularyLevels/index.ts at the source (Vite's publicDir copy can no longer produce these files), and removed in the same change. See docs/generated-data.md and scripts/test-generated-data-ownership.mjs, which now guards against the raw .ts file being reintroduced."
     },
     {
       "id": "L4",
