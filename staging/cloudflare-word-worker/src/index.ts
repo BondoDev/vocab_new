@@ -66,7 +66,7 @@ function redirectResponse(location: string): Response {
   // keeps the path structure (/, --, etc.) intact while percent-encoding the
   // non-ASCII bytes, which is ASCII-safe for a header value either way.
   // Node's http module is lenient here and writes raw bytes through, which is
-  // why this doesn't surface in the current production Vercel/Node SSR path.
+  // why this doesn't surface in the generic Node SSR path (server/word-ssr-*).
   return new Response("", {
     status: 308,
     headers: {

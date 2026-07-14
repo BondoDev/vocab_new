@@ -44,7 +44,8 @@ directory = "assets-full"
 binding = "ASSETS"
 # Default html_handling ("auto-trailing-slash") 307-redirects e.g. /about to
 # /about/ before serving prerendered.../about/index.html — an extra redirect
-# hop production doesn't have (Vercel serves /about directly as 200). Also
+# hop production doesn't have (production serves /about directly as 200,
+# as the retired Vercel deployment also did). Also
 # present in the untouched sample's wrangler.toml (same default), confirmed
 # by testing both. drop-trailing-slash makes /about the canonical served
 # form (matching production exactly) and 307-redirects /about/ -> /about

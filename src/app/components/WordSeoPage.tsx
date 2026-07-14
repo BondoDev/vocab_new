@@ -23,7 +23,8 @@ import { WordSeoPageView } from "./WordSeoPageView";
  * Client/production wrapper around the shared, server-safe
  * `WordSeoPageView`. This is the component `App.tsx` renders directly (its
  * import path and prop interface are unchanged from before this split), and
- * it's also what production's own Vercel/Node SSR (`src/entry-server.tsx`)
+ * it's also what the SSR entry (`src/entry-server.tsx`, used by the Node
+ * SSR runtime and the Worker data build)
  * renders — it owns every piece of data-acquisition behavior that requires
  * a heavy or browser-only import:
  *

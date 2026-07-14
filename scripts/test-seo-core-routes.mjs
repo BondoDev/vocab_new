@@ -1,18 +1,18 @@
 /**
- * robots.txt + platform-level redirect/header configuration regression tests.
+ * robots.txt + platform-level route policy regression tests.
  *
- * NEW coverage: no existing script asserts on public/robots.txt content, and
- * nothing cross-checks that vercel.json's noindex/no-store header routes stay
- * in sync with src/seo/routeMetadataPolicy.ts's own classification of which
- * routes are "practice-session" / "private-account" (public-app / noindex).
- * A future edit to either file alone, without the other, would silently
- * desync the platform-level header contract from the in-app metadata policy.
- *
- * Also freezes the current host/legacy-URL redirect rules declared in
- * vercel.json (host normalization + the accented 5-digit legacy word-ID
- * redirect), since Vercel's routing layer runs before any of our own code and
- * isn't otherwise exercised by scripts/test-word-ssr-http.mjs's in-process
- * server.
+ * Coverage: public/robots.txt content; the shared route-metadata policy's
+ * classification of restricted routes (/profile and practice sessions must
+ * stay non-indexable — on Cloudflare the enforcement mechanism is the
+ * noindex <meta> baked into the prerendered HTML, checked build-dependently
+ * by scripts/test-homepage-visibility.mjs; this script guards the policy
+ * source itself with no build required); and the Cloudflare canonical-host /
+ * legacy-redirect contract. The apex→www and HTTP→HTTPS 301s are zone-level
+ * Cloudflare dashboard rules (verified live 2026-07-14) that cannot be read
+ * from the repo, so docs/deployment.md is asserted as the frozen record of
+ * that behavior; the legacy word-URL 308 lives in the Worker source (runtime
+ * behavior is exercised end-to-end by scripts/test-word-ssr-http.mjs and the
+ * route parsing by scripts/test-word-route-manifest.mjs).
  *
  * Run: node scripts/test-seo-core-routes.mjs
  * No build required.
@@ -116,71 +116,74 @@ async function main() {
     });
   }
 
-  console.log("\n[2] vercel.json noindex/no-store header routes stay in sync with routeMetadataPolicy.ts");
+  console.log("\n[2] routeMetadataPolicy.ts keeps restricted routes non-indexable");
   {
-    const vercelConfig = JSON.parse(readFile("vercel.json"));
     const routeMetadataPolicy = compileRouteMetadataPolicy();
 
-    const noindexHeaderRules = (vercelConfig.headers ?? []).filter((rule) =>
-      (rule.headers ?? []).some((h) => h.key === "X-Robots-Tag" && /noindex/i.test(h.value)),
-    );
+    test("/profile is classified private-account", () => {
+      assert.equal(routeMetadataPolicy.classifyRouteMetadata("/profile"), "private-account");
+    });
 
-    test("vercel.json has at least one noindex header rule", () => assert.ok(noindexHeaderRules.length > 0));
-
-    for (const rule of noindexHeaderRules) {
-      // vercel.json path patterns use :param placeholders; translate the ones
-      // we know about into a concrete sample path routeMetadataPolicy.ts can
-      // classify, so the two configs can be compared on the same input.
-      const samplePath = rule.source
-        .replace(":source([a-z]{2})", "en")
-        .replace(":target([a-z]{2})", "es");
-
-      test(`vercel.json noindex rule "${rule.source}" matches a route routeMetadataPolicy.ts also treats as non-indexable`, () => {
-        const routeClass = routeMetadataPolicy.classifyRouteMetadata(samplePath);
-        assert.ok(
-          routeClass === "private-account" || routeClass === "practice-session",
-          `routeMetadataPolicy.ts classifies "${samplePath}" as "${routeClass}", not private-account/practice-session`,
-        );
-      });
-    }
-
-    test("routeMetadataPolicy.ts's practice-session path is covered by a vercel.json noindex rule", () => {
+    test("base practice route is classified practice-session", () => {
       assert.ok(
         routeMetadataPolicy.isPracticeSessionPath("/languages/filters/exercises/practice"),
-        "sanity check: routeMetadataPolicy.ts no longer classifies the base practice route as a practice session",
+        "routeMetadataPolicy.ts no longer classifies the base practice route as a practice session",
       );
-      const covered = noindexHeaderRules.some(
-        (rule) => rule.source === "/languages/filters/exercises/practice",
+      assert.equal(
+        routeMetadataPolicy.classifyRouteMetadata("/languages/filters/exercises/practice"),
+        "practice-session",
       );
-      assert.ok(covered, "vercel.json is missing a noindex rule for /languages/filters/exercises/practice");
     });
+
+    test("language-pair practice route is classified practice-session", () => {
+      assert.equal(
+        routeMetadataPolicy.classifyRouteMetadata("/languages/filters/exercises/en-es/practice"),
+        "practice-session",
+      );
+    });
+
+    for (const restrictedPath of [
+      "/profile",
+      "/languages/filters/exercises/practice",
+      "/languages/filters/exercises/en-es/practice",
+    ]) {
+      test(`buildRouteMetadata emits noindex for "${restrictedPath}"`, () => {
+        const metadata = routeMetadataPolicy.buildRouteMetadata(
+          restrictedPath,
+          "https://www.fluentstellar.com",
+        );
+        assert.match(metadata.robots ?? "", /noindex/i);
+      });
+    }
   }
 
-  console.log("\n[3] vercel.json host-normalization redirects");
+  console.log("\n[3] canonical-host and legacy-URL redirect contract (Cloudflare)");
   {
-    const vercelConfig = JSON.parse(readFile("vercel.json"));
-    const redirects = vercelConfig.redirects ?? [];
+    const wranglerProduction = readFile("staging/cloudflare-word-worker/wrangler.production.toml");
+    const workerSource = readFile("staging/cloudflare-word-worker/src/index.full.ts");
+    const deploymentDoc = readFile("docs/deployment.md");
 
-    test("apex-domain (non-www) redirect exists and is permanent", () => {
-      const rule = redirects.find((r) => r.has?.some((h) => h.value === "fluentstellar.com"));
-      assert.ok(rule, "no redirect rule for host fluentstellar.com");
-      assert.equal(rule.permanent, true);
-      assert.equal(rule.destination, "https://www.fluentstellar.com/:path*");
+    test("production Worker config pins the canonical www origin", () => {
+      assert.match(wranglerProduction, /SITE_ORIGIN\s*=\s*"https:\/\/www\.fluentstellar\.com"/);
+      assert.match(wranglerProduction, /CANONICAL_HOST\s*=\s*"www\.fluentstellar\.com"/);
     });
 
-    test("vercel.app preview-domain redirect exists and is permanent", () => {
-      const rule = redirects.find((r) => r.has?.some((h) => h.value === "fluentstellar.vercel.app"));
-      assert.ok(rule, "no redirect rule for host fluentstellar.vercel.app");
-      assert.equal(rule.permanent, true);
-      assert.equal(rule.destination, "https://www.fluentstellar.com/:path*");
+    test("apex→www + HTTP→HTTPS 301 stays documented as live zone-level behavior", () => {
+      // The redirect itself is a Cloudflare zone rule (dashboard-managed,
+      // verified live 2026-07-14) and cannot be asserted from the repo;
+      // docs/deployment.md is the frozen record of that contract. If the
+      // dashboard rule is ever changed, re-probe and update the doc — this
+      // test exists so the doc cannot silently drift or be deleted.
+      assert.match(deploymentDoc, /apex-to-www and HTTP-to-HTTPS redirects/i);
+      assert.match(deploymentDoc, /\b301\b/);
     });
 
-    test("legacy 5-digit accented-ID word URL redirect exists and is permanent", () => {
-      const rule = redirects.find(
-        (r) => /\(A1\|A2\|B1\|B2\|C1\|C2\)/.test(r.source ?? "") && /\[0-9\]\{5\}/.test(r.source ?? ""),
-      );
-      assert.ok(rule, "no redirect rule for the legacy 5-digit concept-ID word URL format");
-      assert.equal(rule.permanent, true);
+    test("Worker redirects legacy word URL formats with a permanent 308", () => {
+      // Runtime behavior (308 + Location) is exercised end-to-end by
+      // scripts/test-word-ssr-http.mjs; this freezes the Worker source paths.
+      assert.match(workerSource, /legacy-single-hyphen/);
+      assert.match(workerSource, /legacy-slug-format/);
+      assert.match(workerSource, /status:\s*308/);
     });
   }
 

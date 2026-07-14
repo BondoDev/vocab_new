@@ -23,7 +23,7 @@ invoking the Worker's `fetch` handler for any matching path.
 | Word hubs | `/en/seo-pages/english-word-pages` | 200 (prerendered) |
 | Level tests | `/en/english-level-test` | 200 (prerendered) |
 | Verb lists | `/en/100-most-common-english-verbs` | 200 (prerendered) |
-| Profile shell | `/profile` | 200, `X-Robots-Tag: noindex` (prerendered, per existing `vercel.json` header policy mirrored into the prerendered HTML itself) |
+| Profile shell | `/profile` | 200, noindex (prerendered — the retired Vercel-era `X-Robots-Tag` header policy is mirrored into the prerendered HTML itself as a robots `<meta>`) |
 | Practice pages | `/languages/filters/exercises/en-es/practice` | 200, noindex (prerendered) |
 | robots.txt | `/robots.txt` | 200 |
 | Sitemap index + child sitemaps | `/sitemap.xml`, `/sitemaps/*.xml` | 200 |
@@ -33,7 +33,8 @@ invoking the Worker's `fetch` handler for any matching path.
 `wrangler.full.toml`):** Workers Static Assets' default `html_handling`
 (`"auto-trailing-slash"`) 307-redirects directory-style routes like `/about`
 to `/about/` before serving `about/index.html` — an extra redirect hop
-production doesn't have (Vercel serves `/about` directly as 200). This is
+production doesn't have (production, then Vercel, served `/about` directly
+as 200; the Cloudflare production config keeps that behavior). This is
 present in the **existing, untouched sample's** `wrangler.toml` too (tested
 directly — same behavior, not something introduced by this migration).
 `wrangler.full.toml` sets `html_handling = "drop-trailing-slash"` so `/about`

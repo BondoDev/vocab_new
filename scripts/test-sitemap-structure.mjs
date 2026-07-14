@@ -221,19 +221,23 @@ async function main() {
     });
   }
 
-  console.log("\n[6] vercel.json content-type headers cover sitemap routes");
+  console.log("\n[6] static files back the Cloudflare Static Assets MIME contract");
   {
-    const vercelConfig = JSON.parse(readFile("vercel.json"));
-    const headerSources = (vercelConfig.headers ?? []).map((h) => h.source);
-    test("vercel.json declares a content-type header for /sitemap.xml", () =>
-      assert.ok(headerSources.includes("/sitemap.xml")));
-    test("vercel.json declares a content-type header for /sitemaps/(.*)", () =>
-      assert.ok(headerSources.includes("/sitemaps/(.*)")));
-    const sitemapXmlHeaders = vercelConfig.headers.find((h) => h.source === "/sitemap.xml");
-    test("/sitemap.xml content-type is application/xml", () => {
-      const contentType = sitemapXmlHeaders.headers.find((h) => h.key === "Content-Type")?.value;
-      assert.match(contentType ?? "", /application\/xml/);
+    // On Cloudflare, sitemap/robots Content-Type comes from Static Assets'
+    // extension-based MIME mapping (verified live: application/xml for
+    // /sitemap.xml and /sitemaps/*, text/plain for /robots.txt). The repo-side
+    // contract is therefore that these routes exist as real .xml/.txt files
+    // under public/ (copied verbatim into dist/ and the Worker's assets-full/
+    // bundle) rather than being rewritten or served by code.
+    test("/sitemap.xml exists as a static .xml file", () =>
+      assert.ok(fs.existsSync(path.join(PUBLIC_DIR, "sitemap.xml"))));
+    test("public/sitemaps/ contains only .xml files", () => {
+      const entries = fs.readdirSync(SITEMAPS_DIR);
+      assert.ok(entries.length > 0, "public/sitemaps/ is empty");
+      assert.deepEqual(entries.filter((name) => !name.endsWith(".xml")), []);
     });
+    test("/robots.txt exists as a static .txt file", () =>
+      assert.ok(fs.existsSync(path.join(PUBLIC_DIR, "robots.txt"))));
   }
 
   console.log(`\n─────────────────────────────────────────`);

@@ -1,0 +1,181 @@
+# FluentStellar deployment
+
+Last verified: 2026-07-14 (production probed over HTTP, including a full
+redirect audit of all host/protocol combinations; Worker deployment history
+inspected via `wrangler deployments list`).
+
+**Cloudflare is the authoritative production platform.** Vercel no longer
+serves any production traffic. GitHub is the source repository and the
+integration point for Cloudflare deployment.
+
+## Production source
+
+- Repository: `https://github.com/BondoDev/vocab_new` (remote `origin`)
+- Production branch: `master`
+- Domain: `www.fluentstellar.com` (Cloudflare zone; both apex and `www`
+  resolve to Cloudflare — verified via `Server: cloudflare` / `CF-RAY`
+  response headers on 2026-07-13/14)
+
+## Deployment flow
+
+```text
+Local development
+→ push to GitHub (master)
+→ build the site and the Worker artifact
+→ deploy the Worker (currently: manual `wrangler deploy`)
+→ https://www.fluentstellar.com
+```
+
+> **Status note (2026-07-14):** every deployment visible in
+> `npx wrangler deployments list --name fluentstellar-production` was
+> authored by the owner's account with no Git build source, i.e. releases
+> are currently pushed manually with Wrangler. If a Cloudflare Git
+> integration (Workers Builds) has been or will be connected to the GitHub
+> repo, that configuration lives only in the Cloudflare dashboard — confirm
+> there which branch it watches and what build command it runs. Nothing in
+> this repository configures or depends on such an integration.
+
+## Frontend build
+
+- Build command: `npm run build`
+  - `prebuild`: `generate:word-hub-data` + `sitemap` (regenerates
+    `src/data/seo/word-hub-pages/`, `word-browse-shards/`,
+    `src/data/verbListLookup/`, `public/sitemap.xml`, `public/sitemaps/`)
+  - `vite build` → `dist/` (client bundle + prerender template)
+  - `vite build --ssr src/entry-server.tsx --outDir server-build`
+  - `scripts/cleanup-word-build-artifacts.mjs` (removes stray artifacts,
+    copies `dist/index.html` → `server-build/ssr-template.html`)
+  - `scripts/prerender.mjs` (SSG of all core/CEFR/hub/level-test/verb-list
+    routes into `dist/`)
+  - `scripts/verify-word-ssr-package.mjs` (smoke-tests the Node SSR runtime
+    in `server/` against `server-build/` — kept as a generic SSR regression
+    gate; see "Vercel status")
+- Output directory: `dist/` (client + prerendered HTML), `server-build/`
+  (SSR bundle used by tests and by the Worker data build)
+- Environment variables: `VITE_GA_MEASUREMENT_ID`, `VITE_SUPABASE_URL`,
+  `VITE_SUPABASE_ANON_KEY` (see `.env.example`); `SITE_ORIGIN`/`SITE_URL`
+  default to `https://www.fluentstellar.com` in the build scripts.
+- Note: `vite.config.ts` sets `base: /<repo>/` when `GITHUB_ACTIONS` is set.
+  This was for the retired GitHub Pages workflow; production builds must run
+  without `GITHUB_ACTIONS` so the base stays `/`.
+
+## Word SSR Worker (production)
+
+- Worker name: **`fluentstellar-production`** (Cloudflare Free plan)
+- Source folder: `staging/cloudflare-word-worker/`
+  (the `staging/` name is historical — this folder **is** the production
+  Worker source; renaming it is deferred to a dedicated reorganization
+  commit because Wrangler configs, build scripts, and npm test scripts
+  reference the path)
+- Production entry: `staging/cloudflare-word-worker/src/index.full.ts`,
+  pre-bundled by Vite (`vite.worker.config.mjs`) into
+  `worker-dist-full/index.full.js`; deployed with `no_bundle = true`
+- Wrangler config: `staging/cloudflare-word-worker/wrangler.production.toml`
+  (`workers_dev = false`; `ENABLE_CANONICAL_HOST_REDIRECT = "false"`)
+- Worker build: `npm run build:word-worker:full`
+  (**regenerates the data corpus and mints a new UTC-dated `dataVersion`** —
+  running it rotates the live data version on the next deploy)
+- Deploy command (manual, from repo root):
+  `npx wrangler deploy --config staging/cloudflare-word-worker/wrangler.production.toml`
+  — never a bare `wrangler deploy`.
+- Assets: one `[assets]` binding serving `assets-full/` (the production
+  client bundle + prerendered HTML + record shards, assembled by
+  `publish-shards.mjs`). Assets are served **asset-first**; the Worker's
+  `fetch` handler only runs for paths that do not exist as files — in
+  practice the SSR word routes (`…-word-…`), browse pagination, and the
+  browse-shard JSON endpoint.
+- Bundle-size limit: 3 MB gzip (Free-plan ceiling); the repo enforces a
+  2.5 MB budget plus single-file output via
+  `npm run test:word-worker:bundle-size`.
+- Static Assets cap: 20,000 files per version — full prerender of the
+  ~85k-URL word corpus is infeasible; word pages stay SSR.
+- Rollback: redeploy a previous Worker version from the Cloudflare
+  dashboard (Deployments → rollback), or rebuild from an earlier git commit
+  and `wrangler deploy` the same config. The 81-word sample Worker
+  (`src/index.ts` + `wrangler.toml`) is a kept-for-reference prototype, not
+  a production rollback path.
+
+## Domain, redirects, and status behavior
+
+- Canonical host: `https://www.fluentstellar.com`
+- **Apex-to-www and HTTP-to-HTTPS redirects: live and verified
+  (2026-07-14).** `http://fluentstellar.com`, `https://fluentstellar.com`,
+  and `http://www.fluentstellar.com` all return a single **301** directly to
+  `https://www.fluentstellar.com` with path and query preserved (scheme and
+  host corrected in one hop; no loops). The redirect fires at the zone edge
+  before the WAF. It is a zone-level Cloudflare rule managed **only in the
+  dashboard** — it is not represented in this repository and cannot come
+  from the Worker (static pages are served asset-first without invoking the
+  Worker; `ENABLE_CANONICAL_HOST_REDIRECT` stays `"false"`).
+  `scripts/test-seo-core-routes.mjs` asserts this paragraph stays present;
+  if the dashboard rule ever changes, re-probe and update both.
+- Legacy word-URL redirects (single-hyphen and legacy slug formats):
+  `308` computed by the Worker (`classifyAndRespondNonCanonical` in
+  `src/index.full.ts`), including accent-insensitive slug recovery.
+- Removed/invalid word URLs: `410 Gone` (text/plain) from the Worker.
+- Unknown non-word paths that miss the asset directory also fall through to
+  the Worker and currently return `410 Gone` (verified live 2026-07-13).
+- `404` is returned only for missing browse-shard JSON lookups.
+- Sitemap/robots content types come from Static Assets MIME mapping
+  (verified live: `application/xml` for `/sitemap.xml` and `/sitemaps/*`,
+  `text/plain` for `/robots.txt`).
+- `noindex` for `/profile` and practice routes is baked into the
+  prerendered HTML as `<meta name="robots" content="noindex, nofollow">`
+  (verified live). The Vercel-era `X-Robots-Tag`/`Cache-Control: no-store`
+  **headers** are not reproduced on Cloudflare; the page shells contain no
+  user data (profile data loads client-side from Supabase), so this is an
+  accepted difference.
+- Bot management: `robots.txt` disallows quota-heavy crawlers
+  (guarded by `npm run test:crawler-policy`); a zone WAF Managed Challenge
+  covers `-word-` paths (dashboard-managed — curl probes of word routes
+  return `403` with `Cf-Mitigated: challenge`, which is expected).
+- Sitemap `<lastmod>` is **manual-only**, stabilized by
+  `scripts/data/sitemap-lastmod-ledger.json`; it never advances
+  automatically (guarded by `npm run test:sitemap-lastmod`).
+
+## GitHub's role
+
+- Source control and pull requests.
+- Deployment trigger for Cloudflare **if/when Workers Builds is connected**
+  (dashboard configuration; not represented in the repo).
+- **GitHub Pages is not used.** The `deploy-pages.yml` workflow (which
+  published a `/vocab_new/`-based duplicate of `dist/` to github.io on every
+  master push) was removed on 2026-07-14. No CNAME, badge, or script
+  referenced it, and Cloudflare never consumed its artifact.
+
+## Vercel status
+
+**Fully retired (2026-07-14).** The domain is served entirely by
+Cloudflare; `x-vercel-*` headers no longer appear on production responses.
+With the apex-to-www and HTTP-to-HTTPS redirects verified live on
+Cloudflare (see above), the last blocker was cleared and the Vercel
+deployment files were deleted:
+
+- `vercel.json` — removed. Its routing/header policy now lives in the
+  Cloudflare stack: host normalization is the zone-level 301 rule; the
+  legacy word-URL redirect is the Worker's `308`; sitemap/robots MIME
+  types come from Static Assets; `noindex` for restricted routes is baked
+  into the prerendered HTML from `src/seo/routeMetadataPolicy.ts`. The
+  regression tests that previously asserted `vercel.json` contents
+  (`test-seo-core-routes.mjs`, `test-sitemap-structure.mjs` §6,
+  `test-word-seo-routes.mjs`) were migrated to assert those Cloudflare /
+  shared-policy sources instead.
+- `api/word-ssr.ts`, `api/word-ssr-internal.ts` — removed (thin Vercel
+  function wrappers around `server/word-ssr-handler.mjs`; dead on
+  Cloudflare).
+- `server/word-ssr-*.mjs` — **kept; not Vercel-specific**: this is the
+  generic Node SSR runtime used by `npm run build`'s final verification
+  step and by the main SSR regression test (`npm run test:word-ssr-http`).
+  Its internal `/api/word-ssr*` route names are its own HTTP surface, not
+  a Vercel dependency.
+
+## Regression suite for deployment changes
+
+Run before and after any deployment-related change:
+
+```bash
+npm run build
+npm run test:word-seo
+npm run test:seo-output
+npm run test:word-worker:production-safety
+```

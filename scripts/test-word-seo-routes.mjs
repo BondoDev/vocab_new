@@ -437,7 +437,11 @@ const levelBrowseWordsSource = fs.readFileSync(
   "utf8",
 );
 const entryServerSource = fs.readFileSync(path.join(rootDir, "src", "entry-server.tsx"), "utf8");
-const vercelConfigSource = fs.readFileSync(path.join(rootDir, "vercel.json"), "utf8");
+const packageJsonSource = fs.readFileSync(path.join(rootDir, "package.json"), "utf8");
+const wranglerProductionSource = fs.readFileSync(
+  path.join(rootDir, "staging", "cloudflare-word-worker", "wrangler.production.toml"),
+  "utf8",
+);
 const coreSitemapXml = fs.readFileSync(
   path.join(rootDir, "public", "sitemaps", "sitemap-core.xml"),
   "utf8",
@@ -535,20 +539,20 @@ assert.ok(
   "SSR entry server should not filesystem-read source JSON files at runtime",
 );
 assert.ok(
-  vercelConfigSource.includes('"includeFiles": "{server-build/**}"'),
-  "Vercel SSR function should include compiled server-build assets",
+  packageJsonSource.includes("verify-word-ssr-package.mjs"),
+  "npm run build should keep the SSR packaging verification gate (verify-word-ssr-package.mjs)",
 );
 assert.ok(
-  !vercelConfigSource.includes("src/data/vocabulary"),
-  "Vercel SSR function should not force raw vocabulary JSON into the package",
+  /main\s*=\s*"worker-dist-full\/index\.full\.js"/.test(wranglerProductionSource),
+  "production Worker should deploy the prebundled worker-dist-full artifact",
 );
 assert.ok(
-  !vercelConfigSource.includes("src/data/interface"),
-  "Vercel SSR function should not force raw interface JSON into the package",
+  /no_bundle\s*=\s*true/.test(wranglerProductionSource),
+  "production Worker should not let wrangler re-bundle (packaging is done by the Vite worker build)",
 );
 assert.ok(
-  !vercelConfigSource.includes("dist/index.html"),
-  "Vercel SSR function should not trace the dist directory",
+  /directory\s*=\s*"assets-full"/.test(wranglerProductionSource),
+  "production Worker should serve the assembled assets-full static bundle",
 );
 assert.ok(
   /href:\s*`\$\{origin\}\$\{buildWordPath\(lang,\s*targetLanguage,\s*wordLemma,\s*conceptId\)\}`/m.test(
