@@ -16,7 +16,7 @@ Guard script: `npm run test:generated-data-ownership`
 | Directory | Classification | Source of truth | Producer | Consumers | Committed? | Risk |
 |---|---|---|---|---|---|---|
 | `src/data/vocabularyLevels/` | handwritten source | itself | manual (no generator) | client (SSR sync load), SSR (`fs` read), `src/seo/metadata.ts`, `VocabularyLevelPage.tsx`, `scripts/generate-sitemap.mjs` | yes | low |
-| `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/vocabularyLevels/` (must stay byte-identical) | manual copy, no sync script | browser `fetch()` from `src/data/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | medium — no automated sync, only a drift-detection test |
+| `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/vocabularyLevels/` (must stay byte-identical) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`), run explicitly by the developer | browser `fetch()` from `src/data/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | low — deterministic sync script plus a read-only `--check` mode wired into `test:generated-data-ownership` |
 | ~~`public/vocabularyLevels/index.ts`~~ | *(removed 2026-07-15)* | — | — | none — confirmed dead, no import anywhere | — | resolved |
 | `src/data/seo/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
 | `src/data/seo/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
@@ -67,14 +67,41 @@ the copied `dist/vocabularyLevels/index.ts` and
 `server-build/vocabularyLevels/index.ts` post-build) obsolete; those calls
 have been removed from that script.
 
-**No automated sync exists between `src/data/vocabularyLevels/` and
-`public/vocabularyLevels/`.** The two trees were last kept in sync manually,
-in a single historical commit. If `src/data/vocabularyLevels/` content is
-edited, `public/vocabularyLevels/*.json` must be updated in the same change
-or `npm run test:import-boundaries` will fail the build. This is a known
-maintenance gap, documented here rather than fixed in this audit (adding an
-automated copy step would be a build-pipeline change beyond this task's
-scope) — see "Candidate future improvements" below.
+**Synchronization is deterministic but explicit, not automatic (2026-07-15
+follow-up).** `scripts/sync-vocabulary-levels.mjs` derives the expected
+7×7 UI-language × target-language matrix from the same authoritative
+registry (`SUPPORTED_UI_LANGUAGES` / `SUPPORTED_TARGET_LANGUAGES` in
+`src/data/seo/slugs.ts`) already used by `test:generated-data-ownership`,
+validates every source file (JSON parses, no unexpected/hidden/`.ts`/`.js`
+files, no unexpected nested directories, no duplicate logical key), then
+copies bytes exactly into `public/vocabularyLevels/`, removes stale public
+files/directories that no longer exist in source, and verifies SHA-256
+byte-identity of all 49 pairs afterward. It never touches
+`src/data/vocabularyLevels/`.
+
+Two commands:
+
+- `npm run sync:vocabulary-levels` — writes `public/vocabularyLevels/` to
+  match `src/data/vocabularyLevels/` (copies missing/changed files, removes
+  stale ones). Idempotent — running it twice with no source changes performs
+  zero writes.
+- `npm run check:vocabulary-levels-sync` — the same validation and diff,
+  read-only, exits non-zero on any drift. This is what
+  `npm run prebuild` and `npm run test:generated-data-ownership` run; neither
+  mutates tracked files.
+
+**Build policy: explicit synchronization plus prebuild verification, not
+automatic prebuild mutation.** Both trees are committed to git, so a build
+step that silently rewrote `public/vocabularyLevels/*.json` would produce
+uncommitted tracked changes a developer (or Cloudflare's remote build) could
+miss. Instead, `prebuild` runs `check:vocabulary-levels-sync` first (before
+`generate:word-hub-data` and `sitemap`) and fails loudly if the mirror has
+drifted, so a stale public mirror can never be deployed silently. Developers
+who edit `src/data/vocabularyLevels/` must run
+`npm run sync:vocabulary-levels` and commit the resulting
+`public/vocabularyLevels/*.json` changes in the same change as the source
+edit — the same "update both" requirement as before, just with a script
+instead of a manual copy.
 
 ## `public/seo/level-browse-preview/` — resolved obsolete duplicate
 
@@ -129,15 +156,19 @@ visibility, not changed here.
 | `public/sitemaps/` | `npm run sitemap` |
 | `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/` | `npm run build:word-worker:full` |
 | `dist/`, `server-build/` | `npm run build` |
-| `src/data/vocabularyLevels/`, `public/vocabularyLevels/*.json`, `src/data/seo/level-browse-preview/` | none — hand-maintained, no generator |
+| `src/data/vocabularyLevels/` content, `src/data/seo/level-browse-preview/` | none — hand-maintained, no generator |
+| `public/vocabularyLevels/*.json` (mirror only, from source content) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`) |
 
 ## Manual-edit policy
 
 - **Allowed and expected:** `src/data/vocabularyLevels/`,
   `src/data/seo/level-browse-preview/` (no generator exists for either).
-- **Allowed but must be mirrored:** `public/vocabularyLevels/*.json` — must
-  be updated in the same change as `src/data/vocabularyLevels/`, or
-  `test:import-boundaries` fails.
+- **Allowed but must be mirrored:** `public/vocabularyLevels/*.json` — after
+  editing `src/data/vocabularyLevels/`, run `npm run sync:vocabulary-levels`
+  and commit both trees together, or `npm run prebuild` (via
+  `check:vocabulary-levels-sync`) and `test:import-boundaries` will fail.
+  Never hand-edit files under `public/vocabularyLevels/` directly — the sync
+  script treats them as a disposable mirror and will overwrite or remove them.
 - **Not allowed — will be overwritten:** `src/data/seo/word-hub-pages/`,
   `src/data/seo/word-browse-shards/`, `src/data/verbListLookup/`,
   `public/sitemaps/`, and everything under `workers/word-ssr/data/full-corpus/`,
@@ -145,6 +176,11 @@ visibility, not changed here.
 
 ## Drift detection
 
+- `npm run check:vocabulary-levels-sync` — read-only; asserts
+  `public/vocabularyLevels/*.json` is byte-identical to and has the same
+  49-file matrix as `src/data/vocabularyLevels/*.json`. Runs first in
+  `npm run prebuild`, before `generate:word-hub-data` and `sitemap`, so a
+  stale public mirror fails the build loudly instead of deploying silently.
 - `npm run test:import-boundaries` — asserts `public/vocabularyLevels/*.json`
   stays byte-identical to `src/data/vocabularyLevels/*.json`, and asserts the
   exact match-set/eager-lazy contract for every `import.meta.glob` boundary
@@ -154,8 +190,11 @@ visibility, not changed here.
   `public/seo/level-browse-preview/` mirror cannot silently reappear, no raw
   TypeScript exists under `public/`, `src/data/vocabularyLevels/` matches the
   expected UI-language × target-language matrix with valid, non-duplicate
-  JSON, the listed generated source directories exist and are committed, and
-  the listed Worker build-output directories stay gitignored and untracked.
+  JSON, `scripts/sync-vocabulary-levels.mjs` exists and its `--check` mode
+  passes, the `sync:vocabulary-levels`/`check:vocabulary-levels-sync` package
+  scripts are wired up, the listed generated source directories exist and are
+  committed, and the listed Worker build-output directories stay gitignored
+  and untracked.
 - `npm run test:level-browse-preview-completeness` (via
   `test:level-browse-preview`) — asserts the exact 42-key match set for
   `src/data/seo/level-browse-preview/*.json`.

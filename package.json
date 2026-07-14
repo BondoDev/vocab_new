@@ -6,7 +6,9 @@
   "scripts": {
     "generate:word-hub-data": "node scripts/generate-word-hub-data.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
-    "prebuild": "npm run -s generate:word-hub-data && npm run -s sitemap",
+    "sync:vocabulary-levels": "node scripts/sync-vocabulary-levels.mjs",
+    "check:vocabulary-levels-sync": "node scripts/sync-vocabulary-levels.mjs --check",
+    "prebuild": "npm run -s check:vocabulary-levels-sync && npm run -s generate:word-hub-data && npm run -s sitemap",
     "build": "vite build && vite build --ssr src/entry-server.tsx --outDir server-build && node scripts/cleanup-word-build-artifacts.mjs && node scripts/prerender.mjs && node ./scripts/verify-word-ssr-package.mjs",
     "dev": "vite",
     "test:word-route-manifest": "node scripts/test-word-route-manifest.mjs",

@@ -209,6 +209,45 @@ test("no malformed vocabulary-level filenames (unexpected casing or extension) u
   assert.deepEqual(offenders, [], `malformed vocabulary-level filename(s): ${offenders.join(", ")}`);
 });
 
+console.log("\n=== vocabulary-level public mirror synchronization ===\n");
+
+test("scripts/sync-vocabulary-levels.mjs exists", () => {
+  const p = path.join(ROOT_DIR, "scripts", "sync-vocabulary-levels.mjs");
+  assert.ok(fs.existsSync(p), "scripts/sync-vocabulary-levels.mjs is missing");
+});
+
+test("package.json exposes sync:vocabulary-levels and check:vocabulary-levels-sync scripts", () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, "package.json"), "utf8"));
+  assert.equal(
+    pkg.scripts?.["sync:vocabulary-levels"],
+    "node scripts/sync-vocabulary-levels.mjs",
+    "package.json is missing (or has changed) the sync:vocabulary-levels script",
+  );
+  assert.equal(
+    pkg.scripts?.["check:vocabulary-levels-sync"],
+    "node scripts/sync-vocabulary-levels.mjs --check",
+    "package.json is missing (or has changed) the check:vocabulary-levels-sync script",
+  );
+});
+
+test("public/vocabularyLevels/ mirror passes a read-only sync check (no writes)", () => {
+  assert.doesNotThrow(() => {
+    execFileSync("node", [path.join(ROOT_DIR, "scripts", "sync-vocabulary-levels.mjs"), "--check"], {
+      cwd: ROOT_DIR,
+      stdio: "pipe",
+    });
+  }, "npm run check:vocabulary-levels-sync failed — public/vocabularyLevels/ has drifted from src/data/vocabularyLevels/; run npm run sync:vocabulary-levels");
+});
+
+test("docs/generated-data.md documents the synchronization command and build policy", () => {
+  const text = fs.readFileSync(path.join(ROOT_DIR, "docs", "generated-data.md"), "utf8");
+  assert.ok(text.includes("sync:vocabulary-levels"), "docs/generated-data.md does not mention sync:vocabulary-levels");
+  assert.ok(
+    text.includes("check:vocabulary-levels-sync"),
+    "docs/generated-data.md does not mention check:vocabulary-levels-sync",
+  );
+});
+
 console.log("\n=== src/data/seo/level-browse-preview/ ownership ===\n");
 
 test("src/data/seo/level-browse-preview/ has exactly one valid JSON file per target-language x CEFR-level pair", () => {
