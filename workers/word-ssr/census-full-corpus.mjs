@@ -5,7 +5,7 @@
 // full route count, and computes both figures separately so the difference
 // is explicit.
 //
-// Run: node staging/cloudflare-word-worker/census-full-corpus.mjs
+// Run: node workers/word-ssr/census-full-corpus.mjs
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

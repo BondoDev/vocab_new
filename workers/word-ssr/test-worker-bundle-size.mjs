@@ -1,5 +1,5 @@
 // STAGING-ONLY hard architecture test. Fails the build/CI signal if the
-// full-corpus Worker's compiled output (staging/cloudflare-word-worker/
+// full-corpus Worker's compiled output (workers/word-ssr/
 // worker-dist-full/) ever regresses back toward the bundle bloat this task
 // fixed — see the project's bundle-size migration report for the full
 // root-cause writeup (WordSeoPage.tsx's full-vocabulary fallback loader and
@@ -11,7 +11,7 @@
 // `vite build --config vite.worker.config.mjs --ssr src/index.full.ts
 // --outDir worker-dist-full` step within it).
 //
-// Run: node staging/cloudflare-word-worker/test-worker-bundle-size.mjs
+// Run: node workers/word-ssr/test-worker-bundle-size.mjs
 import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";

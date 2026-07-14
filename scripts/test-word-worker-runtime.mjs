@@ -1,1 +1,1 @@
-import "../staging/cloudflare-word-worker/test-production-runtime-config.mjs";
+import "../workers/word-ssr/test-production-runtime-config.mjs";

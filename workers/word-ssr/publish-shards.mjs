@@ -10,7 +10,7 @@
 //   - records/latest/manifest.json   (stable version pointer — see the
 //                                      comment in the manifest-copy step)
 //
-// Run: node staging/cloudflare-word-worker/publish-shards.mjs
+// Run: node workers/word-ssr/publish-shards.mjs
 // Idempotent/incremental: skips any file whose SHA-256 already matches the
 // prior run's record in data/publish-manifest.json.
 import fs from "node:fs";

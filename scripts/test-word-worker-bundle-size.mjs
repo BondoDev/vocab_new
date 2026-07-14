@@ -1,1 +1,1 @@
-import "../staging/cloudflare-word-worker/test-worker-bundle-size.mjs";
+import "../workers/word-ssr/test-worker-bundle-size.mjs";

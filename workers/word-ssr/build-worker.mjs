@@ -31,4 +31,4 @@ execFileSync(
   { stdio: "inherit", cwd: rootDir, shell: true },
 );
 
-console.log("\nDone. Run `npx wrangler dev` from staging/cloudflare-word-worker/ to test locally.");
+console.log("\nDone. Run `npx wrangler dev` from workers/word-ssr/ to test locally.");

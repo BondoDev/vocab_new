@@ -102,7 +102,7 @@ assert.match(
 );
 
 // --- 2. deployed copies stay in sync --------------------------------------
-for (const rel of ["dist/robots.txt", "staging/cloudflare-word-worker/assets-full/robots.txt"]) {
+for (const rel of ["dist/robots.txt", "workers/word-ssr/assets-full/robots.txt"]) {
   const copyPath = path.join(rootDir, ...rel.split("/"));
   assert.ok(fs.existsSync(copyPath), `${rel} missing — run the publish pipeline`);
   assert.equal(
@@ -114,7 +114,7 @@ for (const rel of ["dist/robots.txt", "staging/cloudflare-word-worker/assets-ful
 
 // --- 3. production wrangler config invariants ------------------------------
 const wranglerToml = fs.readFileSync(
-  path.join(rootDir, "staging", "cloudflare-word-worker", "wrangler.production.toml"),
+  path.join(rootDir, "workers", "word-ssr", "wrangler.production.toml"),
   "utf8",
 );
 assert.match(wranglerToml, /^name = "fluentstellar-production"$/m, "Worker name must stay fluentstellar-production");
@@ -131,7 +131,7 @@ assert.match(
 );
 
 // --- 4. no global fetch() in Worker runtime sources ------------------------
-const workerSrcDir = path.join(rootDir, "staging", "cloudflare-word-worker", "src");
+const workerSrcDir = path.join(rootDir, "workers", "word-ssr", "src");
 for (const file of fs.readdirSync(workerSrcDir)) {
   if (!/\.(ts|tsx|mjs)$/.test(file)) continue;
   const source = fs.readFileSync(path.join(workerSrcDir, file), "utf8");

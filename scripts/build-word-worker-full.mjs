@@ -1,1 +1,1 @@
-import "../staging/cloudflare-word-worker/build-worker-full.mjs";
+import "../workers/word-ssr/build-worker-full.mjs";

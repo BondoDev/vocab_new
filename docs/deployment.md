@@ -62,21 +62,19 @@ Local development
 ## Word SSR Worker (production)
 
 - Worker name: **`fluentstellar-production`** (Cloudflare Free plan)
-- Source folder: `staging/cloudflare-word-worker/`
-  (the `staging/` name is historical — this folder **is** the production
-  Worker source; renaming it is deferred to a dedicated reorganization
-  commit because Wrangler configs, build scripts, and npm test scripts
-  reference the path)
-- Production entry: `staging/cloudflare-word-worker/src/index.full.ts`,
+- Source folder: `workers/word-ssr/`
+  (renamed from the historical `staging/cloudflare-word-worker/` on
+  2026-07-14 — this folder **is** the production Worker source)
+- Production entry: `workers/word-ssr/src/index.full.ts`,
   pre-bundled by Vite (`vite.worker.config.mjs`) into
   `worker-dist-full/index.full.js`; deployed with `no_bundle = true`
-- Wrangler config: `staging/cloudflare-word-worker/wrangler.production.toml`
+- Wrangler config: `workers/word-ssr/wrangler.production.toml`
   (`workers_dev = false`; `ENABLE_CANONICAL_HOST_REDIRECT = "false"`)
 - Worker build: `npm run build:word-worker:full`
   (**regenerates the data corpus and mints a new UTC-dated `dataVersion`** —
   running it rotates the live data version on the next deploy)
 - Deploy command (manual, from repo root):
-  `npx wrangler deploy --config staging/cloudflare-word-worker/wrangler.production.toml`
+  `npx wrangler deploy --config workers/word-ssr/wrangler.production.toml`
   — never a bare `wrangler deploy`.
 - Assets: one `[assets]` binding serving `assets-full/` (the production
   client bundle + prerendered HTML + record shards, assembled by

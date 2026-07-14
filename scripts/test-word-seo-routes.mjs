@@ -439,7 +439,7 @@ const levelBrowseWordsSource = fs.readFileSync(
 const entryServerSource = fs.readFileSync(path.join(rootDir, "src", "entry-server.tsx"), "utf8");
 const packageJsonSource = fs.readFileSync(path.join(rootDir, "package.json"), "utf8");
 const wranglerProductionSource = fs.readFileSync(
-  path.join(rootDir, "staging", "cloudflare-word-worker", "wrangler.production.toml"),
+  path.join(rootDir, "workers", "word-ssr", "wrangler.production.toml"),
   "utf8",
 );
 const coreSitemapXml = fs.readFileSync(

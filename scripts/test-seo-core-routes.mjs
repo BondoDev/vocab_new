@@ -159,8 +159,8 @@ async function main() {
 
   console.log("\n[3] canonical-host and legacy-URL redirect contract (Cloudflare)");
   {
-    const wranglerProduction = readFile("staging/cloudflare-word-worker/wrangler.production.toml");
-    const workerSource = readFile("staging/cloudflare-word-worker/src/index.full.ts");
+    const wranglerProduction = readFile("workers/word-ssr/wrangler.production.toml");
+    const workerSource = readFile("workers/word-ssr/src/index.full.ts");
     const deploymentDoc = readFile("docs/deployment.md");
 
     test("production Worker config pins the canonical www origin", () => {

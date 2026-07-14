@@ -14,8 +14,8 @@ indexed-progress.json
 
 poc/cloudflare-word-renderer/.compiled/
 
-staging/cloudflare-word-worker/.wrangler/
-staging/cloudflare-word-worker/worker-dist/
-staging/cloudflare-word-worker/worker-dist-full/
-staging/cloudflare-word-worker/assets-full/
-staging/cloudflare-word-worker/data/full-corpus/
+workers/word-ssr/.wrangler/
+workers/word-ssr/worker-dist/
+workers/word-ssr/worker-dist-full/
+workers/word-ssr/assets-full/
+workers/word-ssr/data/full-corpus/
