@@ -3,11 +3,13 @@
 // external crawlers walking the ~75k-URL sitemap corpus of server-rendered
 // word pages consumed the Free-plan Worker request quota, and SSR CPU over
 // the Free-plan allowance produced "Worker exceeded CPU time limit" 503s.
-// The fix was a robots.txt crawl policy for non-search commercial crawlers.
+// The fix was a robots.txt crawl policy for high-volume low-value crawlers,
+// while still allowing selected AI crawlers that can drive discovery.
 // These asserts keep the policy (and the invariants the audit proved) from
 // silently regressing:
 //   1. robots.txt still disallows the measured heavy bots, still allows
-//      search-engine crawlers, and still points at the sitemap.
+//      search-engine crawlers and selected AI crawlers, and still points at
+//      the sitemap.
 //   2. The deployed copies of robots.txt (dist/, assets-full/) match public/.
 //   3. wrangler.production.toml keeps the Worker name, the asset-first
 //      serving default (no run_worker_first), and the host redirect off
@@ -54,17 +56,11 @@ const groupFor = (agent) =>
   groups.find((g) => g.agents.includes("*"));
 
 const MUST_DISALLOW = [
-  // 2026-07-10 incident (SEO-tool and Amazon crawlers)
   "AhrefsBot",
   "SemrushBot",
   "DataForSeoBot",
   "Amazonbot",
-  // 2026-07-12 incident (verified AI crawlers; GPTBot alone was 92% of
-  // Worker invocations — Amzn-SearchBot and OAI-SearchBot are separate UA
-  // tokens NOT covered by the Amazonbot/GPTBot groups)
   "Amzn-SearchBot",
-  "GPTBot",
-  "OAI-SearchBot",
   "PetalBot",
 ];
 for (const bot of MUST_DISALLOW) {
@@ -79,13 +75,23 @@ for (const bot of MUST_DISALLOW) {
   );
 }
 
-const MUST_ALLOW = ["Googlebot", "Bingbot", "YandexBot", "DuckDuckBot", "Applebot"];
+const MUST_ALLOW = [
+  "Googlebot",
+  "Bingbot",
+  "YandexBot",
+  "DuckDuckBot",
+  "Applebot",
+  "GPTBot",
+  "OAI-SearchBot",
+  "ClaudeBot",
+  "Google-Extended",
+];
 for (const bot of MUST_ALLOW) {
   const group = groupFor(bot);
   assert.ok(group, `robots.txt must resolve a group for ${bot}`);
   assert.ok(
     !group.rules.some((r) => r.type === "disallow" && r.value === "/"),
-    `robots.txt must NOT disallow ${bot} — search crawlers stay allowed`,
+    `robots.txt must NOT disallow ${bot} - allowed crawlers stay open`,
   );
 }
 
@@ -104,7 +110,7 @@ assert.match(
 // --- 2. deployed copies stay in sync --------------------------------------
 for (const rel of ["dist/robots.txt", "workers/word-ssr/assets-full/robots.txt"]) {
   const copyPath = path.join(rootDir, ...rel.split("/"));
-  assert.ok(fs.existsSync(copyPath), `${rel} missing — run the publish pipeline`);
+  assert.ok(fs.existsSync(copyPath), `${rel} missing - run the publish pipeline`);
   assert.equal(
     fs.readFileSync(copyPath, "utf8").replace(/\r\n/g, "\n"),
     robots.replace(/\r\n/g, "\n"),
@@ -140,7 +146,7 @@ for (const file of fs.readdirSync(workerSrcDir)) {
   const bareFetch = source.match(/(?<!async )(?<![.\w])fetch\s*\(/);
   assert.ok(
     !bareFetch,
-    `${file} calls global fetch() — Worker must only use the ASSETS binding (recursive-request guard)`,
+    `${file} calls global fetch() - Worker must only use the ASSETS binding (recursive-request guard)`,
   );
 }
 
@@ -157,7 +163,7 @@ for (const file of walk(path.join(rootDir, "src"))) {
   const source = fs.readFileSync(file, "utf8");
   assert.ok(
     !/setInterval\s*\(/.test(source),
-    `${path.relative(rootDir, file)} uses setInterval — no request polling loops allowed`,
+    `${path.relative(rootDir, file)} uses setInterval - no request polling loops allowed`,
   );
 }
 
