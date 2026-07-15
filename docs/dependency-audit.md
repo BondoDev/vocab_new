@@ -93,9 +93,9 @@ the declared `react`/`react-dom` peer block exist in this repo):
 | cmdk | dependencies | 1.1.1 | none; was sole dep of removed `ui/command.tsx` | unused and removable |
 | date-fns | dependencies | 3.6.0 | `AccountOnboardingDialog.tsx` and others | actively used |
 | embla-carousel-react | dependencies | 8.6.0 | none; was sole dep of removed `ui/carousel.tsx` | unused and removable |
-| fast-xml-parser | dependencies | ^5.9.3 | `google-index.js` (root-level operational script, Search Console indexing) | actively used (script) |
+| fast-xml-parser | dependencies | ^5.9.3 | `scripts/operations/google-index.mjs` (operational script, Search Console indexing) | actively used (script) |
 | flag-icons | dependencies | 7.2.1 | `UILanguageSwitcher.tsx`, `LanguageSelector.tsx` and others | actively used |
-| googleapis | dependencies | ^173.0.0 | `google-index.js` | actively used (script) |
+| googleapis | dependencies | ^173.0.0 | `scripts/operations/google-index.mjs` | actively used (script) |
 | input-otp | dependencies | 1.4.2 | none; was sole dep of removed `ui/input-otp.tsx` | unused and removable |
 | lucide-react | dependencies | 0.487.0 | icons throughout `src/app/components/` | actively used |
 | motion | dependencies | 12.23.24 | animation usage throughout `src/app/components/` | actively used |
