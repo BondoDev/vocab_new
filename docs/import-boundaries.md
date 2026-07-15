@@ -82,6 +82,9 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `src/contexts/LanguageContext.tsx` | explicit switch, 7 literal `import()` calls | `src/data/interface/{language}_interface.json` | client | medium — same directory as G1/G3 but hand-maintained in parallel; a new interface file is picked up by the globs but silently missed here unless also added |
 | ~~`scripts/cleanup-word-build-artifacts.mjs`~~ | ~~hard-coded `fs.rm`~~ | *(removed 2026-07-15)* | — | resolved — see corrected writeup below |
 | `scripts/generate-sitemap.mjs` | `fs.readdir` walk | `src/data/vocabularyLevels/{ui}/` | build-time generator | low |
+| `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`) | `fs.readFile` | `src/data/levelTests/seo_level_test_content.json` (moved from `guidelines/` 2026-07-15) | build-time generator | low |
+| `src/data/levelTests/index.ts` | static relative `import` | `./seo_level_test_content.json` (moved from `../../../guidelines/`) | client + SSR | low — resolved from a repo-root-crossing import to a normal in-`src/` sibling import; see `docs/guidelines-folder-ownership.md` |
+| `src/app/components/devSeoCefrPreviewData.ts` | static relative `import` | `../../data/seo/seo-cefr-content.json` (moved from `../../../guidelines/`) | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low — same resolved-boundary note as above |
 | `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `word-hub-pages/`, `word-browse-shards/`, `verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
 | `scripts/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
 | `workers/word-ssr/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `cleanup-word-build-artifacts.mjs` in the same build |

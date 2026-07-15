@@ -1,4 +1,4 @@
-import sampleContent from "../../../guidelines/seo-cefr-content.json";
+import sampleContent from "../../data/seo/seo-cefr-content.json";
 import {
   buildLocalizedVocabularyPath,
   isSupportedUiLanguage,
