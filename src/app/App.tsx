@@ -76,6 +76,7 @@ import {
 import {
   EMPTY_USER_PROFILE,
   isUserProfileComplete,
+  normalizeLanguage,
   normalizeUserProfile,
   readSupabaseUserProfile,
   readStoredUserProfile,
@@ -1387,16 +1388,18 @@ function AppContent({
           ...storedProfile,
           ...supabaseProfile,
           nickname: supabaseProfile?.nickname || storedProfile?.nickname || "",
-          nativeLanguage:
+          nativeLanguage: normalizeLanguage(
             supabaseProfile?.nativeLanguage ||
-            storedProfile?.nativeLanguage ||
-            currentYourLanguage ||
-            "",
-          practiceLanguage:
+              storedProfile?.nativeLanguage ||
+              currentYourLanguage ||
+              "",
+          ),
+          practiceLanguage: normalizeLanguage(
             supabaseProfile?.practiceLanguage ||
-            storedProfile?.practiceLanguage ||
-            currentPracticeLanguage ||
-            "",
+              storedProfile?.practiceLanguage ||
+              currentPracticeLanguage ||
+              "",
+          ),
         });
 
         if (!currentYourLanguage && nextProfile.nativeLanguage) {
@@ -1418,14 +1421,16 @@ function AppContent({
 
         const fallbackProfile = normalizeUserProfile({
           ...storedProfile,
-          nativeLanguage:
+          nativeLanguage: normalizeLanguage(
             storedProfile?.nativeLanguage ||
-            languagesRef.current.yourLanguage ||
-            "",
-          practiceLanguage:
+              languagesRef.current.yourLanguage ||
+              "",
+          ),
+          practiceLanguage: normalizeLanguage(
             storedProfile?.practiceLanguage ||
-            languagesRef.current.practiceLanguage ||
-            "",
+              languagesRef.current.practiceLanguage ||
+              "",
+          ),
         });
 
         setUserProfile(fallbackProfile);
@@ -1447,8 +1452,8 @@ function AppContent({
     setUserProfile((current) => {
       const nextProfile = normalizeUserProfile({
         ...current,
-        nativeLanguage: yourLanguage || current.nativeLanguage,
-        practiceLanguage: practiceLanguage || current.practiceLanguage,
+        nativeLanguage: normalizeLanguage(yourLanguage || current.nativeLanguage),
+        practiceLanguage: normalizeLanguage(practiceLanguage || current.practiceLanguage),
       });
 
       return JSON.stringify(nextProfile) === JSON.stringify(current)

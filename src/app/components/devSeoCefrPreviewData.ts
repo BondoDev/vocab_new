@@ -1,5 +1,10 @@
 import sampleContent from "../../../guidelines/seo-cefr-content.json";
-import { buildLocalizedVocabularyPath, type TargetLanguageSlug } from "../../data/seo/slugs";
+import {
+  buildLocalizedVocabularyPath,
+  isSupportedUiLanguage,
+  SUPPORTED_TARGET_LANGUAGES,
+  type TargetLanguageSlug,
+} from "../../data/seo/slugs";
 import type {
   CefrLevelCode,
   UiLanguageCode,
@@ -33,8 +38,18 @@ const TARGET_LANGUAGE_CODE_TO_SLUG: Record<UiLanguageCode, TargetLanguageSlug> =
   ru: "russian",
 };
 
+function isTargetLanguageSlug(value: string): value is TargetLanguageSlug {
+  return (SUPPORTED_TARGET_LANGUAGES as readonly string[]).includes(value);
+}
+
 export function normalizeTargetLanguage(targetLanguage: PreviewTargetLanguage): TargetLanguageSlug {
-  return TARGET_LANGUAGE_CODE_TO_SLUG[targetLanguage as UiLanguageCode] ?? targetLanguage;
+  if (isTargetLanguageSlug(targetLanguage)) {
+    return targetLanguage;
+  }
+  if (isSupportedUiLanguage(targetLanguage)) {
+    return TARGET_LANGUAGE_CODE_TO_SLUG[targetLanguage];
+  }
+  throw new Error(`normalizeTargetLanguage: unsupported target language "${targetLanguage}"`);
 }
 
 export const DEV_CEFR_PREVIEW_PATH =

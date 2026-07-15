@@ -47,7 +47,7 @@ function buildStorageKey(userId: string) {
   return `${USER_PROFILE_KEY_PREFIX}.${userId}`;
 }
 
-function normalizeLanguage(value: unknown): UILanguage | "" {
+export function normalizeLanguage(value: unknown): UILanguage | "" {
   if (
     value === "en" ||
     value === "es" ||

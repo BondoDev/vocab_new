@@ -84,6 +84,7 @@ the declared `react`/`react-dom` peer block exist in this repo):
 | @radix-ui/react-toggle-group | dependencies | 1.1.2 | none | unused and removable |
 | @radix-ui/react-tooltip | dependencies | 1.1.8 | none | unused and removable |
 | @tailwindcss/vite | devDependencies | 4.1.12 | `vite.config.ts` plugin | actively used (config) |
+| @types/node | devDependencies | ^22.20.1 | TypeScript compilation of Node globals/built-ins (`process`, `Buffer`, `node:fs`, `node:path`, `node:stream`) in `src/entry-server.tsx` and `src/data/vocabularyLevels/index.ts`; added 2026-07-15 fixing the 19 pre-existing `tsc` errors | actively used (types) |
 | @types/react | devDependencies | 19.2.13 | TypeScript compilation of all `.tsx` | actively used (types) |
 | @types/react-dom | devDependencies | 19.0.4 | TypeScript compilation | actively used (types) |
 | @vitejs/plugin-react | devDependencies | 4.7.0 | `vite.config.ts` plugin | actively used (config) |
@@ -123,6 +124,13 @@ the declared `react`/`react-dom` peer block exist in this repo):
 67 total direct entries (59 `dependencies`, 8 `devDependencies`; the
 `peerDependencies` block only restates `react`/`react-dom`, already listed).
 After removal: 31 total direct entries (23 `dependencies`, 8 `devDependencies`).
+
+**Post-audit addition (2026-07-15, TypeScript error fix):** `@types/node`
+was added as a devDependency to resolve pre-existing `tsc --noEmit` errors —
+missing Node ambient types (`process`, `Buffer`, `node:fs`, `node:path`,
+`node:stream`, `NodeRequire`) in `src/entry-server.tsx` and
+`src/data/vocabularyLevels/index.ts`. This brings the total to **32 direct
+entries (23 `dependencies`, 9 `devDependencies`)**.
 
 ## Removal candidates — condition checklist
 

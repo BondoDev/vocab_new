@@ -23,7 +23,10 @@ import { PracticeEmptyState } from "./practice/PracticeEmptyState";
 import { PracticeResults } from "./practice/PracticeResults";
 import {
   exerciseCardBorders,
+  type MotionCssVars,
 } from "../constants/exerciseTheme";
+
+type PracticeCardCssVars = MotionCssVars<"--practice-card-bg" | "--practice-card-border">;
 
 interface VocabularyPracticeProps {
   practiceLanguage: string;
@@ -46,6 +49,22 @@ const VOCABULARY_IMPORTERS: Record<string, () => Promise<any>> = {
   pt: () => import("../../data/vocabulary/portuguese/vocabulary.json"),
   ru: () => import("../../data/vocabulary/russian/vocabulary.json"),
 };
+
+interface InflectedEntry {
+  concept_id: string;
+  // Naming varies by language data file (e.g. "word_inflected1" for English,
+  // "word_inflected-1"/"word_inflected-2" for German) — only the exact
+  // "word_inflected" key, present for several languages, is read here.
+  word_inflected?: string;
+}
+
+function isInflectedEntry(value: unknown): value is InflectedEntry {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as { concept_id?: unknown }).concept_id === "string"
+  );
+}
 
 const INFLECTED_IMPORTERS: Record<string, () => Promise<any>> = {
   en: () => import("../../data/inflected/english/inflected.json"),
@@ -264,15 +283,15 @@ export function VocabularyPractice({
             isUsableLemma(word?.word_lemma),
         );
 
-        const loadedInflectedEntries = Array.isArray(inflectedModule.default)
-          ? inflectedModule.default
+        const loadedInflectedEntries: InflectedEntry[] = Array.isArray(inflectedModule.default)
+          ? inflectedModule.default.filter(isInflectedEntry)
           : [];
         setInflectedEntries(loadedInflectedEntries);
 
         // Apply inflected forms to loadedWords if available (especially for English)
         if (loadedInflectedEntries.length > 0) {
-          const inflectedByConceptId = new Map(
-            loadedInflectedEntries.map((entry: any) => [entry.concept_id, entry]),
+          const inflectedByConceptId = new Map<string, InflectedEntry>(
+            loadedInflectedEntries.map((entry) => [entry.concept_id, entry]),
           );
           loadedWords = loadedWords.map((word: any) => {
             const inflected = inflectedByConceptId.get(word.concept_id);
@@ -919,6 +938,11 @@ export function VocabularyPractice({
     return <PracticeEmptyState onBack={onBack} />;
   }
 
+  const practiceCardStyle: PracticeCardCssVars = {
+    "--practice-card-bg": "#F8FAFC",
+    "--practice-card-border": exerciseCardBorders[currentExerciseType] ?? "#7A68D8",
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <PracticeHeader
@@ -954,12 +978,7 @@ export function VocabularyPractice({
                     className={`practice-card bg-card border border-border rounded-2xl p-3 md:p-5 shadow-sm transition-all duration-300 ease-in-out flex flex-col relative ${
                       isCardSwitching ? "practice-card-switching" : ""
                     }`}
-                    style={{
-                      ["--practice-card-bg" as "--practice-card-bg"]:
-                        "#F8FAFC",
-                      ["--practice-card-border" as "--practice-card-border"]:
-                        exerciseCardBorders[currentExerciseType] ?? "#7A68D8",
-                    }}
+                    style={practiceCardStyle}
                 >
                   <p
                     className={`mx-auto max-w-[34rem] text-center text-sm text-gray-500 leading-relaxed font-medium ${

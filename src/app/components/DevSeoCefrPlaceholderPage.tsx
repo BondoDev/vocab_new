@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { VocabularyLevelPage } from "./VocabularyLevelPage";
 import type { SeoMetadata } from "../../seo/SeoContext";
 import type {
+  CefrLevelCode,
   TargetLanguageSlug,
   UiLanguageCode,
 } from "../../data/vocabularyLevels";

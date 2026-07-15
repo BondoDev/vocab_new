@@ -15,7 +15,12 @@ import {
   exerciseCardBackgrounds,
   exerciseCardBorders,
   exerciseCardIconColors,
+  type MotionCssVars,
 } from "../constants/exerciseTheme";
+
+type ExerciseCardCssVars = MotionCssVars<
+  "--exercise-card-bg" | "--exercise-card-border" | "--exercise-card-icon"
+>;
 
 interface ExerciseSelectionProps {
   selectedExercises: string[];
@@ -303,20 +308,18 @@ export function ExerciseSelection({
               );
               const isLastSelected =
                 isSelected && selectedExercises.length === 1;
+              const cardStyle: ExerciseCardCssVars = {
+                "--exercise-card-bg": exerciseCardBackgrounds[exercise.id] ?? "#F2F0FF",
+                "--exercise-card-border": exerciseCardBorders[exercise.id] ?? "#7A68D8",
+                "--exercise-card-icon": exerciseCardIconColors[exercise.id] ?? "#6B58C8",
+              };
 
               return (
                 <motion.button
                     key={exercise.id}
                     onClick={() => toggleExercise(exercise.id)}
                     aria-pressed={isSelected}
-                    style={{
-                      ["--exercise-card-bg" as "--exercise-card-bg"]:
-                        exerciseCardBackgrounds[exercise.id] ?? "#F2F0FF",
-                      ["--exercise-card-border" as "--exercise-card-border"]:
-                        exerciseCardBorders[exercise.id] ?? "#7A68D8",
-                      ["--exercise-card-icon" as "--exercise-card-icon"]:
-                        exerciseCardIconColors[exercise.id] ?? "#6B58C8",
-                    }}
+                    style={cardStyle}
                     className={`exercise-card p-5 rounded-lg border-2 transition-all ${
                       isSelected
                         ? "border-primary shadow-md shadow-primary/10"

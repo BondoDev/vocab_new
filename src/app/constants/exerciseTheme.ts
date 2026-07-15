@@ -1,3 +1,13 @@
+import type { CSSProperties } from "react";
+
+// Motion's `style` prop type doesn't declare arbitrary CSS custom properties,
+// so plain object literals using them fail excess-property checks. Naming the
+// exact custom properties here (rather than a generic `--${string}` index
+// signature) keeps typos in call sites caught at compile time.
+export type MotionCssVars<Name extends `--${string}`> = CSSProperties & {
+  [K in Name]?: string;
+};
+
 export const exerciseCardBackgrounds: Record<string, string> = {
   wordTyping: "#F2F0FF",
   halfWritten: "#EEF9F2",

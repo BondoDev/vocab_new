@@ -119,8 +119,8 @@ test("docs/dependency-audit.md documents every removed package with a concrete c
   assert.deepEqual(undocumented, [], `removed package(s) missing a table row: ${undocumented.join(", ")}`);
 });
 
-test("package manifest direct-dependency total matches the audit's documented total (31)", () => {
-  assert.equal(directDepNames.length, 31, `expected 31 direct dependencies, found ${directDepNames.length}`);
+test("package manifest direct-dependency total matches the audit's documented total (32)", () => {
+  assert.equal(directDepNames.length, 32, `expected 32 direct dependencies, found ${directDepNames.length}`);
 });
 
 console.log("\n=== script/binary ownership guards ===\n");
