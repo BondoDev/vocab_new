@@ -85,7 +85,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `word-hub-pages/`, `word-browse-shards/`, `verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
 | `scripts/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
 | `workers/word-ssr/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `cleanup-word-build-artifacts.mjs` in the same build |
-| `workers/word-ssr/measure-shard-formats.mjs`, `poc/cloudflare-word-renderer/measure-formats.mjs` | `fs.readdirSync` | internal data dirs | obsolete/POC | low |
+| `workers/word-ssr/measure-shard-formats.mjs` | `fs.readdirSync` | internal data dirs | staging-only measurement | low |
 | `scripts/test-crawler-policy.mjs` | `fs.readdirSync` walk | `workers/word-ssr/src/` | test-only | low — protective |
 | `scripts/verify-word-ssr-package.mjs` + 7 other `scripts/test-*.mjs` | `fs.readdirSync`/`fs.readdir` | `dist/`, `public/sitemaps/`, `server-build/` | test/build-verification-only | low |
 

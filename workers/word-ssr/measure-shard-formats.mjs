@@ -1,8 +1,8 @@
-// STAGING-ONLY measurement tool (Phase 4). Extends
-// poc/cloudflare-word-renderer/measure-formats.mjs's methodology (object
-// size / gzip size / parse time / lookup complexity) from a single 81-record
-// format comparison to a full-corpus SHARDING-STRATEGY comparison, using the
-// real data generate-full-corpus.mjs already produced.
+// STAGING-ONLY measurement tool (Phase 4). Extends the retired prototype's
+// measurement methodology (object size / gzip size / parse time / lookup
+// complexity) from a single 81-record format comparison to a full-corpus
+// SHARDING-STRATEGY comparison, using the real data generate-full-corpus.mjs
+// already produced.
 //
 // Compares:
 //   A. target language + CEFR level (the chosen default — already generated)

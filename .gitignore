@@ -12,8 +12,6 @@ indexed-progress.json
 
 .vercel
 
-poc/cloudflare-word-renderer/.compiled/
-
 workers/word-ssr/.wrangler/
 workers/word-ssr/worker-dist/
 workers/word-ssr/worker-dist-full/

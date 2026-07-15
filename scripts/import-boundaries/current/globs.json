@@ -204,11 +204,11 @@
     },
     {
       "id": "L8",
-      "consumer": "workers/word-ssr/measure-shard-formats.mjs, poc/cloudflare-word-renderer/measure-formats.mjs",
+      "consumer": "workers/word-ssr/measure-shard-formats.mjs",
       "loaderType": "fs.readdirSync",
       "target": "internal data directories",
-      "runtime": "obsolete/POC measurement scripts",
-      "risk": "low-obsolete",
+      "runtime": "staging-only measurement script",
+      "risk": "low",
       "riskReason": "Not part of the production build or test pipeline."
     },
     {
