@@ -21,3 +21,10 @@ workers/word-ssr/worker-dist/
 workers/word-ssr/worker-dist-full/
 workers/word-ssr/assets-full/
 workers/word-ssr/data/full-corpus/
+
+# Local agent-tool state (Claude Code, Codex, and similar). These folders are
+# recreated by the tools themselves and hold only local session/cache state,
+# never repository instructions — see docs/agent-tool-folders.md.
+.agents/
+.claude/
+.codex/
