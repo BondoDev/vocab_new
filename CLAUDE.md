@@ -42,6 +42,6 @@ React 18 + Vite + TypeScript SPA with SSR/SSG capability. Deployed to GitHub Pag
 - `ui/` — shared UI primitives
 - `figma/` — Figma integration components
 
-**Styling:** Tailwind CSS v4 (no PostCSS plugin needed) + SCSS modules + Emotion (for MUI). Path alias `@` maps to `src/`.
+**Styling:** Tailwind CSS v4 (no PostCSS plugin needed) + SCSS modules. Path alias `@` maps to `src/`.
 
-**UI libraries:** MUI, Radix UI (headless), Motion (animations), Lucide React (icons), react-dnd (drag-and-drop), recharts (charts), sonner (toasts), React Hook Form.
+**UI libraries:** Radix UI (headless — alert-dialog, dialog, dropdown-menu, label, popover, select, slot only) + class-variance-authority/clsx/tailwind-merge, Motion (animations), Lucide React (icons), react-dnd (drag-and-drop). See `docs/dependency-audit.md` for the full dependency inventory (36 unused packages, including MUI/Emotion, recharts, sonner, and React Hook Form, were removed 2026-07-15).
