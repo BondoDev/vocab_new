@@ -1,7 +1,7 @@
 {
-  "capturedAt": "2026-07-14T18:29:37.069Z",
+  "capturedAt": "2026-07-16T22:11:23.800Z",
   "source": "local:server-build/entry-server.js",
-  "fixtureCount": 41,
+  "fixtureCount": 44,
   "snapshots": {
     "word-canonical-english": {
       "status": 200,
@@ -2488,6 +2488,114 @@
         "interfaceData": true
       },
       "htmlLang": "en"
+    },
+    "seo-hub-en": {
+      "status": 200,
+      "headers": {},
+      "title": "SEO Pages - Vocabulary Practice and Level Tests",
+      "description": "Browse all vocabulary practice pages and available language level tests in one place.",
+      "canonical": "https://www.fluentstellar.com/en/seo-pages",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/seo-seiten",
+        "en=https://www.fluentstellar.com/en/seo-pages",
+        "es=https://www.fluentstellar.com/es/paginas-seo",
+        "fr=https://www.fluentstellar.com/fr/pages-seo",
+        "it=https://www.fluentstellar.com/it/pagine-seo",
+        "pt=https://www.fluentstellar.com/pt/paginas-seo",
+        "ru=https://www.fluentstellar.com/ru/seo-stranicy",
+        "x-default=https://www.fluentstellar.com/en/seo-pages"
+      ],
+      "openGraph": {
+        "title": "SEO Pages - Vocabulary Practice and Level Tests",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/en/seo-pages",
+        "description": "Browse all vocabulary practice pages and available language level tests in one place."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": "Pages",
+      "visibleTextExcerpt": "FLUENTSTELLAR Languages Filters Exercises More Level Test Log in EN English EN About Languages Filters Exercises Explore Help Level Test Log in Languages EN English EN Pages Browse all vocabulary practice pages and available level tests in one place. Vocabulary practice pages English English A1 Practice Vocabulary English A2 Practice Vocabulary English B1 Practice Vocabulary English B2 Practice Vo",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "en"
+    },
+    "word-hub-summary-de-spanish": {
+      "status": 200,
+      "headers": {},
+      "title": "SEO-Seiten für spanische Wörter",
+      "description": "Durchsuchen Sie paginierte Indexseiten mit Links zu allen kanonischen spanischen Wort-SEO-URLs auf FluentStellar.",
+      "canonical": "https://www.fluentstellar.com/de/seo-seiten/spanische-wortseiten",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/seo-seiten/spanische-wortseiten",
+        "en=https://www.fluentstellar.com/en/seo-pages/spanish-word-pages",
+        "es=https://www.fluentstellar.com/es/paginas-seo/paginas-palabras-espanol",
+        "fr=https://www.fluentstellar.com/fr/pages-seo/pages-mots-espagnol",
+        "it=https://www.fluentstellar.com/it/pagine-seo/pagine-parole-spagnolo",
+        "pt=https://www.fluentstellar.com/pt/paginas-seo/paginas-palavras-espanhol",
+        "ru=https://www.fluentstellar.com/ru/seo-stranicy/stranicy-slov-ispanskii",
+        "x-default=https://www.fluentstellar.com/en/seo-pages/spanish-word-pages"
+      ],
+      "openGraph": {
+        "title": "SEO-Seiten für spanische Wörter",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/de/seo-seiten/spanische-wortseiten",
+        "description": "Durchsuchen Sie paginierte Indexseiten mit Links zu allen kanonischen spanischen Wort-SEO-URLs auf FluentStellar."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": "Wortseiten für spanische Wörter",
+      "visibleTextExcerpt": "FLUENTSTELLAR Sprachen Filter Übungen Mehr Niveautest Log in DE Deutsch DE Über Sprachen Filter Übungen Entdecken Hilfe Niveautest Log in Sprachen DE Deutsch DE Wortseiten für spanische Wörter Zurück zu Seiten Niveau : A1 Wörter : 939 Seiten : 4 Wörter öffnen Niveau : A2 Wörter : 1.218 Seiten : 5 Wörter öffnen Niveau : B1 Wörter : 2.750 Seiten : 11 Wörter öffnen Niveau : B2 Wörter : 3.054 Seiten :",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "de"
+    },
+    "word-hub-level-de-spanish-a1": {
+      "status": 200,
+      "headers": {},
+      "title": "SEO-Seiten für spanische Wörter A1",
+      "description": "Durchsuchen Sie den kanonischen URL-Index für spanische Wortseiten A1.",
+      "canonical": "https://www.fluentstellar.com/de/seo-seiten/spanische-wortseiten/a1",
+      "robots": null,
+      "hreflang": [
+        "de=https://www.fluentstellar.com/de/seo-seiten/spanische-wortseiten/a1",
+        "en=https://www.fluentstellar.com/en/seo-pages/spanish-word-pages/a1",
+        "es=https://www.fluentstellar.com/es/paginas-seo/paginas-palabras-espanol/a1",
+        "fr=https://www.fluentstellar.com/fr/pages-seo/pages-mots-espagnol/a1",
+        "it=https://www.fluentstellar.com/it/pagine-seo/pagine-parole-spagnolo/a1",
+        "pt=https://www.fluentstellar.com/pt/paginas-seo/paginas-palavras-espanhol/a1",
+        "ru=https://www.fluentstellar.com/ru/seo-stranicy/stranicy-slov-ispanskii/a1",
+        "x-default=https://www.fluentstellar.com/en/seo-pages/spanish-word-pages/a1"
+      ],
+      "openGraph": {
+        "title": "SEO-Seiten für spanische Wörter A1",
+        "type": "website",
+        "url": "https://www.fluentstellar.com/de/seo-seiten/spanische-wortseiten/a1",
+        "description": "Durchsuchen Sie den kanonischen URL-Index für spanische Wortseiten A1."
+      },
+      "twitter": {
+        "card": null,
+        "title": null
+      },
+      "jsonLd": null,
+      "h1": "Wortseiten für spanische Wörter A1",
+      "visibleTextExcerpt": "FLUENTSTELLAR Sprachen Filter Übungen Mehr Niveautest Log in DE Deutsch DE Über Sprachen Filter Übungen Entdecken Hilfe Niveautest Log in Sprachen DE Deutsch DE Zurück zu Seiten Zurück zu spanischen Wörtern Wortseiten für spanische Wörter A1 sobre encima de acción actividad actor añadir dirección ser asustado después de tarde otra vez edad atrás estar de acuerdo avión aeropuerto álbum todo bien le",
+      "hydration": {
+        "wordPageData": false,
+        "interfaceData": true
+      },
+      "htmlLang": "de"
     }
   }
 }

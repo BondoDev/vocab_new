@@ -19,5 +19,16 @@
     "captureProd": "npm run seo-baseline:capture -- --base-url https://www.fluentstellar.com --out routes/seo-snapshot-prod.json",
     "compare": "npm run seo-baseline:compare -- --a <old> --b <new>"
   },
-  "notes": "routes/seo-snapshot-local.json is the authoritative SEO content baseline (41 fixtures via server-build/entry-server.js). routes/seo-snapshot-prod.json is for host/redirect/core-route parity only — word/error/redirect fixtures return 403 Cf-Mitigated:challenge in production (WAF) and must not be used as the SEO content source for those families."
+  "notes": "routes/seo-snapshot-local.json is the authoritative SEO content baseline via server-build/entry-server.js — see localSnapshotRefresh below for its current fixture count and capture state (it no longer matches this manifest's top-level sourceCommit/capturedAt). routes/seo-snapshot-prod.json is for host/redirect/core-route parity only — word/error/redirect fixtures return 403 Cf-Mitigated:challenge in production (WAF) and must not be used as the SEO content source for those families.",
+  "localSnapshotRefresh": {
+    "file": "routes/seo-snapshot-local.json",
+    "sourceCommit": "8e0e0aed",
+    "sourceCommitSubject": "chore(app): clean stale extraction references",
+    "branch": "master",
+    "capturedAt": "2026-07-16T22:11:23.800Z",
+    "fixtureCount": 44,
+    "source": "local:server-build/entry-server.js",
+    "reason": "Issue 15 pre-refactor baseline: added seo-hub, word-hub-summary, and word-hub-level fixtures (previously uncovered builders); all 41 fixtures from the 2026-07-14 capture are unchanged.",
+    "scope": "Only routes/seo-snapshot-local.json was refreshed. This manifest's top-level sourceCommit/capturedAt, performance.json, and routes/seo-snapshot-prod.json still reflect the original 2026-07-14 capture at d123ff1c."
+  }
 }

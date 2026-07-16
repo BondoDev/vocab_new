@@ -48,6 +48,7 @@ export function loadBaselineContext() {
   const wordSlugs = compiled.require("src/data/seo/wordSlugs");
   const wordPageData = compiled.require("src/data/seo/wordPageData");
   const slugsModule = compiled.require("src/data/seo/slugs");
+  const hub = compiled.require("src/data/seo/hub");
   const wordHubRoutes = compiled.require("src/data/seo/wordHubRoutes");
   const browseWordValidation = compiled.require("src/data/seo/browseWordValidation");
   const { fixMojibake } = compiled.require("src/utils/fixMojibake");
@@ -63,6 +64,7 @@ export function loadBaselineContext() {
     wordSlugs,
     wordPageData,
     slugsModule,
+    hub,
     wordHubRoutes,
     browseWordValidation,
     fixMojibake,
@@ -140,7 +142,7 @@ function findDiacriticEntry(vocabulary, wordToSlug) {
  * }>}
  */
 export function buildFixtureMatrix(ctx) {
-  const { wordSlugs, vocabularies, siteOrigin } = ctx;
+  const { wordSlugs, vocabularies, siteOrigin, hub, wordHubRoutes } = ctx;
   const english = vocabularies.english;
   const fixtures = [];
 
@@ -402,6 +404,81 @@ export function buildFixtureMatrix(ctx) {
       expectedStatus: 200,
       expectedRobots: "noindex, nofollow",
       reason: "Interactive practice session page — deliberately not indexed.",
+    },
+  );
+
+  // ── SEO-hub index page (buildSeoHubMetadata) ───────────────────────────────
+  // Single fixture is sufficient: the builder has no other branch — it only
+  // looks up one per-uiLang template record (SEO_HUB_METADATA) and builds
+  // alternates from SUPPORTED_UI_LANGUAGES, a pattern already exercised
+  // broadly elsewhere in this matrix. No JSON-LD, no robots override (always
+  // indexable), confirmed by reading src/seo/metadata.ts's
+  // buildSeoHubMetadata directly — not inferred.
+  const seoHubPathEn = hub.getSeoHubPath("en");
+  fixtures.push({
+    id: "seo-hub-en",
+    family: "seo-hub",
+    url: seoHubPathEn,
+    expectedStatus: 200,
+    expectedCanonical: `${siteOrigin}${seoHubPathEn}`,
+    expectedRobots: undefined,
+    reason:
+      "buildSeoHubMetadata's only route family — title/description/canonical/alternates, no JSON-LD, no robots branch.",
+  });
+
+  // ── Word-hub index pages (buildWordSeoHubMetadata) ─────────────────────────
+  // uiLang "de" and target "spanish" (rather than English/English) are chosen
+  // to exercise buildWordSeoHubMetadata's `route.targetLanguage === "english"`
+  // branch on its generic-copy side: WORD_SEO_HUB_METADATA (English copy) vs.
+  // GENERIC_WORD_SEO_HUB_METADATA (generic copy, with `.toLowerCase()`
+  // transforms) — the generic branch is the more complex of the two, so a
+  // non-English target is the more valuable single sample.
+  //
+  // (A word-hub URL under uiLang=en was considered and specifically checked
+  // against the word-page URL parser for a "-word-" substring collision,
+  // since getWordSeoHubSummaryPath nests the word-hub segment under the
+  // seo-hub prefix, e.g. "/en/seo-pages/english-word-pages" — three path
+  // segments. parseWordRoutePathname only inspects the *second* segment
+  // ("seo-pages"), never the third, so no collision occurs; confirmed by
+  // calling resolveWordSeoRequest()/render() directly against the built
+  // server-build/entry-server.js for that exact path. uiLang=en would have
+  // worked equally well here — "de" was kept simply because it was already
+  // chosen and verified.)
+  const wordHubUiLang = "de";
+  const wordHubTargetLanguage = "spanish";
+  const wordHubLevel = "a1";
+  const wordHubSummaryPath = wordHubRoutes.getWordSeoHubSummaryPath(
+    wordHubUiLang,
+    wordHubTargetLanguage,
+  );
+  const wordHubLevelPath = wordHubRoutes.getWordSeoHubLevelPath(
+    wordHubUiLang,
+    wordHubTargetLanguage,
+    wordHubLevel,
+  );
+  fixtures.push(
+    {
+      id: "word-hub-summary-de-spanish",
+      family: "word-hub-summary",
+      url: wordHubSummaryPath,
+      expectedStatus: 200,
+      expectedCanonical: `${siteOrigin}${wordHubSummaryPath}`,
+      expectedRobots: undefined,
+      reason:
+        "buildWordSeoHubMetadata's 'summary' branch (route.kind === \"summary\"), generic (non-English) target-language copy path.",
+    },
+    {
+      id: "word-hub-level-de-spanish-a1",
+      family: "word-hub-level",
+      url: wordHubLevelPath,
+      expectedStatus: 200,
+      expectedCanonical: `${siteOrigin}${wordHubLevelPath}`,
+      expectedRobots: undefined,
+      reason:
+        "buildWordSeoHubMetadata's 'level' branch, page 1 (getWordSeoHubLevelPath omits the /page/N suffix for page <= 1). " +
+        "No separate pagination fixture added: neither branch sets a robots field regardless of page number, and canonical " +
+        "is always self-referential ({origin}{pathname}) for every page — confirmed by reading the builder source — so " +
+        "page > 1 does not exercise a materially different metadata code path, only different template copy text.",
     },
   );
 
