@@ -60,7 +60,6 @@ import {
   parseWordSeoHubRoute,
   type RouteKey,
 } from "./utils/pageRouting";
-import { shouldAutoRedirectStoredLanguages } from "./utils/storedLanguageAutoRedirectPolicy";
 import { useAuthSession } from "./hooks/useAuthSession";
 import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
@@ -68,6 +67,7 @@ import { useUserProfileLoad } from "./hooks/useUserProfileLoad";
 import { useUserProfileSync } from "./hooks/useUserProfileSync";
 import { useRouteLanguageSync } from "./hooks/useRouteLanguageSync";
 import { usePracticeRouteLanguageSync } from "./hooks/usePracticeRouteLanguageSync";
+import { useStoredLanguageAutoRedirect } from "./hooks/useStoredLanguageAutoRedirect";
 import { useExploreItems } from "./hooks/useExploreItems";
 import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
 
@@ -297,18 +297,6 @@ function AppContent({
   ] = useState("");
   const [levelTestModalSwapRotation, setLevelTestModalSwapRotation] =
     useState(0);
-  const hasAutoRedirectedRef = useRef(false);
-  const initialPathRef = useRef(location.pathname);
-  const startedFromReloadRef = useRef(
-    typeof window !== "undefined" &&
-      window.performance
-        .getEntriesByType("navigation")
-        .some(
-          (entry) =>
-            "type" in entry &&
-            (entry as PerformanceNavigationTiming).type === "reload",
-        ),
-  );
   const previousAuthUserIdRef = useRef<string | null>(null);
   const [swapRotation, setSwapRotation] = useState(0);
   const resolvedPage = ssrRouteOverride?.page ?? currentPage;
@@ -409,30 +397,16 @@ function AppContent({
     },
   });
 
-  useEffect(() => {
-    const initialPage = pageFromPath(initialPathRef.current, ROUTES);
-    const startedOnLanguagePage = initialPage === "language";
-    const startedOnLegacyPracticePage =
-      initialPathRef.current === ROUTES.practice;
-
-    if (
-      !shouldAutoRedirectStoredLanguages({
-        resolvedPage,
-        startedOnLanguagePage,
-        startedOnLegacyPracticePage,
-        startedFromReload: startedFromReloadRef.current,
-        shouldAutoRedirectFromStoredLanguages:
-          shouldAutoRedirectFromStoredLanguagesRef.current,
-        isContinueDisabled,
-        hasAutoRedirected: hasAutoRedirectedRef.current,
-      })
-    ) {
-      return;
-    }
-
-    hasAutoRedirectedRef.current = true;
-    navigate(ROUTES.exerciseSelection, { replace: true });
-  }, [isContinueDisabled, navigate, resolvedPage]);
+  useStoredLanguageAutoRedirect({
+    resolvedPage,
+    initialPathname: location.pathname,
+    startedOnLanguagePage: pageFromPath(location.pathname, ROUTES) === "language",
+    isContinueDisabled,
+    shouldAutoRedirectFromStoredLanguagesRef,
+    navigate,
+    legacyPracticePath: ROUTES.practice,
+    exerciseSelectionPath: ROUTES.exerciseSelection,
+  });
 
   const { popupRef, queueForLanguagePage } = useLanguageContinuePopup({
     resolvedPage,
