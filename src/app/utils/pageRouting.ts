@@ -178,6 +178,40 @@ export function parsePracticeRoute(path: string): ParsedPracticeRoute | null {
   };
 }
 
+// Maps the already-resolved page (see `pageFromPath` below) and its
+// corresponding parsed route to the UI language that page's URL encodes.
+// Switches on `resolvedPage` rather than testing route truthiness, so it
+// inherits `pageFromPath`'s parser-precedence guarantee instead of
+// re-deciding precedence itself — never duplicate that logic here.
+export function getRouteUILanguage(
+  resolvedPage: PageKey,
+  routes: {
+    vocabularyRoute: ParsedVocabularyRoute | null;
+    levelTestSeoRoute: ParsedLevelTestSeoRoute | null;
+    verbListSeoRoute: ParsedVerbListSeoRoute | null;
+    seoHubRoute: UiLanguageCode | null;
+    wordSeoHubRoute: ParsedWordSeoHubRoute | null;
+    wordRoute: CanonicalWordPageRouteMatch | null;
+  },
+): UiLanguageCode | null {
+  switch (resolvedPage) {
+    case "vocabularyLevel":
+      return routes.vocabularyRoute?.uiLang ?? null;
+    case "levelTestSeo":
+      return routes.levelTestSeoRoute?.uiLang ?? null;
+    case "verbListSeo":
+      return routes.verbListSeoRoute?.uiLang ?? null;
+    case "seoHub":
+      return routes.seoHubRoute ?? null;
+    case "wordSeoHub":
+      return routes.wordSeoHubRoute?.uiLang ?? null;
+    case "wordPage":
+      return routes.wordRoute?.uiLang ?? null;
+    default:
+      return null;
+  }
+}
+
 // Resolves a pathname to a PageKey. Pure and SSR-safe apart from the
 // `import.meta.env.DEV` check, which Vite replaces at build time (the
 // dev-only /test/ preview route must never match in production builds).

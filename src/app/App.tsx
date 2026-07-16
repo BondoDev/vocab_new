@@ -56,6 +56,7 @@ import type { UserProfile } from "../lib/userProfile";
 import {
   TARGET_LANGUAGE_TO_UI_CODE,
   buildPracticeRoute,
+  getRouteUILanguage,
   pageFromPath,
   parseDevSeoCefrPlaceholderRoute,
   parseLevelTestSeoRoute,
@@ -84,6 +85,7 @@ import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
 import { useUserProfileLoad } from "./hooks/useUserProfileLoad";
 import { useUserProfileSync } from "./hooks/useUserProfileSync";
+import { useRouteLanguageSync } from "./hooks/useRouteLanguageSync";
 
 const LevelCategorySelection = lazy(() =>
   import("./components/LevelCategorySelection").then((module) => ({
@@ -582,65 +584,27 @@ function AppContent({
     navigate(ROUTES.levelCategory);
   };
 
-  useEffect(() => {
-    if (resolvedPage !== "vocabularyLevel" || !vocabularyRoute) {
-      return;
-    }
-
-    if (uiLanguage !== vocabularyRoute.uiLang) {
-      setUILanguage(vocabularyRoute.uiLang);
-    }
-  }, [resolvedPage, setUILanguage, uiLanguage, vocabularyRoute]);
-
-  useEffect(() => {
-    if (resolvedPage !== "levelTestSeo" || !levelTestSeoRoute) {
-      return;
-    }
-
-    if (uiLanguage !== levelTestSeoRoute.uiLang) {
-      setUILanguage(levelTestSeoRoute.uiLang);
-    }
-  }, [levelTestSeoRoute, resolvedPage, setUILanguage, uiLanguage]);
-
-  useEffect(() => {
-    if (resolvedPage !== "verbListSeo" || !verbListSeoRoute) {
-      return;
-    }
-
-    if (uiLanguage !== verbListSeoRoute.uiLang) {
-      setUILanguage(verbListSeoRoute.uiLang);
-    }
-  }, [verbListSeoRoute, resolvedPage, setUILanguage, uiLanguage]);
-
-  useEffect(() => {
-    if (resolvedPage !== "seoHub" || !seoHubRoute) {
-      return;
-    }
-
-    if (uiLanguage !== seoHubRoute) {
-      setUILanguage(seoHubRoute);
-    }
-  }, [resolvedPage, seoHubRoute, setUILanguage, uiLanguage]);
-
-  useEffect(() => {
-    if (resolvedPage !== "wordSeoHub" || !wordSeoHubRoute) {
-      return;
-    }
-
-    if (uiLanguage !== wordSeoHubRoute.uiLang) {
-      setUILanguage(wordSeoHubRoute.uiLang);
-    }
-  }, [resolvedPage, setUILanguage, uiLanguage, wordSeoHubRoute]);
-
-  useEffect(() => {
-    if (resolvedPage !== "wordPage" || !wordRoute) {
-      return;
-    }
-
-    if (uiLanguage !== wordRoute.uiLang) {
-      setUILanguage(wordRoute.uiLang);
-    }
-  }, [resolvedPage, setUILanguage, uiLanguage, wordRoute]);
+  const routeUILanguage = useMemo(
+    () =>
+      getRouteUILanguage(resolvedPage, {
+        vocabularyRoute,
+        levelTestSeoRoute,
+        verbListSeoRoute,
+        seoHubRoute,
+        wordSeoHubRoute,
+        wordRoute,
+      }),
+    [
+      resolvedPage,
+      vocabularyRoute,
+      levelTestSeoRoute,
+      verbListSeoRoute,
+      seoHubRoute,
+      wordSeoHubRoute,
+      wordRoute,
+    ],
+  );
+  useRouteLanguageSync(routeUILanguage, uiLanguage, setUILanguage);
 
   useEffect(() => {
     if (resolvedPage !== "practice" || !practiceRoute) {
