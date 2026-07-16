@@ -60,13 +60,13 @@ import {
   parseWordSeoHubRoute,
   type RouteKey,
 } from "./utils/pageRouting";
-import { shouldCanonicalizePracticeRoute } from "./utils/practiceRouteCanonicalizationPolicy";
 import { useAuthSession } from "./hooks/useAuthSession";
 import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
 import { useUserProfileLoad } from "./hooks/useUserProfileLoad";
 import { useUserProfileSync } from "./hooks/useUserProfileSync";
 import { useRouteLanguageSync } from "./hooks/useRouteLanguageSync";
+import { usePracticeRouteLanguageSync } from "./hooks/usePracticeRouteLanguageSync";
 import { useExploreItems } from "./hooks/useExploreItems";
 import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
 
@@ -282,10 +282,6 @@ function AppContent({
     () => parseWordRoute(location.pathname),
     [location.pathname],
   );
-  const practiceRoute = useMemo(
-    () => parsePracticeRoute(location.pathname),
-    [location.pathname],
-  );
   const currentPage = useMemo(
     () => pageFromPath(location.pathname, ROUTES),
     [location.pathname],
@@ -399,48 +395,18 @@ function AppContent({
   );
   useRouteLanguageSync(routeUILanguage, uiLanguage, setUILanguage);
 
-  useEffect(() => {
-    if (resolvedPage !== "practice" || !practiceRoute) {
-      return;
-    }
-
-    if (yourLanguage !== practiceRoute.yourLanguage) {
-      setYourLanguage(practiceRoute.yourLanguage);
-    }
-
-    if (practiceLanguage !== practiceRoute.practiceLanguage) {
-      setPracticeLanguage(practiceRoute.practiceLanguage);
-    }
-  }, [practiceLanguage, practiceRoute, resolvedPage, yourLanguage]);
-
-  useEffect(() => {
-    if (
-      !shouldCanonicalizePracticeRoute(
-        resolvedPage,
-        practiceRoute !== null,
-        yourLanguage,
-        practiceLanguage,
-      )
-    ) {
-      return;
-    }
-
-    const expectedPath = buildPracticeRoute(
-      yourLanguage as UILanguage,
-      practiceLanguage as UILanguage,
-      ROUTES,
-    );
-    if (location.pathname !== expectedPath) {
-      navigate(expectedPath, { replace: true });
-    }
-  }, [
-    location.pathname,
-    navigate,
-    practiceLanguage,
-    practiceRoute,
+  usePracticeRouteLanguageSync({
+    pathname: location.pathname,
     resolvedPage,
     yourLanguage,
-  ]);
+    practiceLanguage,
+    setYourLanguage,
+    setPracticeLanguage,
+    navigate,
+    routes: {
+      exerciseSelection: ROUTES.exerciseSelection,
+    },
+  });
 
   useEffect(() => {
     if (hasAutoRedirectedRef.current) {
