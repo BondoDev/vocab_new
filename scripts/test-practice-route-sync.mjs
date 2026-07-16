@@ -39,6 +39,7 @@
 import assert from "node:assert/strict";
 import { shouldRestoreStoredLanguagePreference } from "../src/app/utils/storedLanguagePreferencePolicy.ts";
 import { shouldCanonicalizePracticeRoute } from "../src/app/utils/practiceRouteCanonicalizationPolicy.ts";
+import { shouldAutoRedirectStoredLanguages } from "../src/app/utils/storedLanguageAutoRedirectPolicy.ts";
 
 let passed = 0;
 let failed = 0;
@@ -353,6 +354,145 @@ test("a later valid canonical practice route still allows state->URL synchroniza
   });
   assert.equal(result.changed, true, "state->URL must still canonicalize a valid practice route");
   assert.equal(result.nextPathname, "/languages/filters/exercises/de-it/practice");
+});
+
+console.log("\n=== stored-language auto-redirect policy ===\n");
+
+function autoRedirectInput(overrides = {}) {
+  return {
+    resolvedPage: "language",
+    startedOnLanguagePage: true,
+    startedOnLegacyPracticePage: false,
+    startedFromReload: false,
+    shouldAutoRedirectFromStoredLanguages: true,
+    isContinueDisabled: false,
+    hasAutoRedirected: false,
+    ...overrides,
+  };
+}
+
+test("auto-redirect: fresh /languages with complete stored pair redirects", () => {
+  assert.equal(shouldAutoRedirectStoredLanguages(autoRedirectInput()), true);
+});
+
+test("auto-redirect: hard reload on /languages with complete stored pair does not redirect", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({ startedFromReload: true }),
+    ),
+    false,
+  );
+});
+
+test("auto-redirect: /languages with incomplete language state does not redirect", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({ isContinueDisabled: true }),
+    ),
+    false,
+  );
+});
+
+test("auto-redirect: /languages without stored-pair eligibility does not redirect", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({ shouldAutoRedirectFromStoredLanguages: false }),
+    ),
+    false,
+  );
+});
+
+test("auto-redirect: /languages after the one-shot redirect does not redirect again", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({ hasAutoRedirected: true }),
+    ),
+    false,
+  );
+});
+
+test("auto-redirect: later SPA return to /languages from a different initial entry does not redirect", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({ startedOnLanguagePage: false }),
+    ),
+    false,
+  );
+});
+
+test("auto-redirect: fresh legacy practice route with complete stored pair redirects", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({
+        resolvedPage: "practice",
+        startedOnLanguagePage: false,
+        startedOnLegacyPracticePage: true,
+      }),
+    ),
+    true,
+  );
+});
+
+test("auto-redirect: hard reload on legacy practice route still redirects", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({
+        resolvedPage: "practice",
+        startedOnLanguagePage: false,
+        startedOnLegacyPracticePage: true,
+        startedFromReload: true,
+      }),
+    ),
+    true,
+  );
+});
+
+test("auto-redirect: legacy practice route with incomplete language state does not redirect", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({
+        resolvedPage: "practice",
+        startedOnLanguagePage: false,
+        startedOnLegacyPracticePage: true,
+        isContinueDisabled: true,
+      }),
+    ),
+    false,
+  );
+});
+
+test("auto-redirect: canonical practice route does not redirect", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({
+        resolvedPage: "practice",
+        startedOnLanguagePage: false,
+        startedOnLegacyPracticePage: false,
+      }),
+    ),
+    false,
+  );
+});
+
+test("auto-redirect: profile-provided language completeness without stored-pair eligibility does not redirect", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({
+        shouldAutoRedirectFromStoredLanguages: false,
+        isContinueDisabled: false,
+      }),
+    ),
+    false,
+  );
+});
+
+test("auto-redirect: wrong current page does not redirect even when initial entry was eligible", () => {
+  assert.equal(
+    shouldAutoRedirectStoredLanguages(
+      autoRedirectInput({ resolvedPage: "levelCategory" }),
+    ),
+    false,
+  );
 });
 
 console.log(`\n─────────────────────────────────────────`);

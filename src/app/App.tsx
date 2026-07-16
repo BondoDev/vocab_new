@@ -60,6 +60,7 @@ import {
   parseWordSeoHubRoute,
   type RouteKey,
 } from "./utils/pageRouting";
+import { shouldAutoRedirectStoredLanguages } from "./utils/storedLanguageAutoRedirectPolicy";
 import { useAuthSession } from "./hooks/useAuthSession";
 import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
@@ -409,38 +410,28 @@ function AppContent({
   });
 
   useEffect(() => {
-    if (hasAutoRedirectedRef.current) {
-      return;
-    }
-
-    if (!shouldAutoRedirectFromStoredLanguagesRef.current) {
-      return;
-    }
-
     const initialPage = pageFromPath(initialPathRef.current, ROUTES);
     const startedOnLanguagePage = initialPage === "language";
     const startedOnLegacyPracticePage =
       initialPathRef.current === ROUTES.practice;
 
     if (
-      resolvedPage === "language" &&
-      !isContinueDisabled &&
-      startedOnLanguagePage &&
-      !startedFromReloadRef.current
+      !shouldAutoRedirectStoredLanguages({
+        resolvedPage,
+        startedOnLanguagePage,
+        startedOnLegacyPracticePage,
+        startedFromReload: startedFromReloadRef.current,
+        shouldAutoRedirectFromStoredLanguages:
+          shouldAutoRedirectFromStoredLanguagesRef.current,
+        isContinueDisabled,
+        hasAutoRedirected: hasAutoRedirectedRef.current,
+      })
     ) {
-      hasAutoRedirectedRef.current = true;
-      navigate(ROUTES.exerciseSelection, { replace: true });
       return;
     }
 
-    if (
-      !isContinueDisabled &&
-      startedOnLegacyPracticePage &&
-      resolvedPage === "practice"
-    ) {
-      hasAutoRedirectedRef.current = true;
-      navigate(ROUTES.exerciseSelection, { replace: true });
-    }
+    hasAutoRedirectedRef.current = true;
+    navigate(ROUTES.exerciseSelection, { replace: true });
   }, [isContinueDisabled, navigate, resolvedPage]);
 
   const { popupRef, queueForLanguagePage } = useLanguageContinuePopup({
