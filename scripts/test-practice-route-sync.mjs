@@ -6,7 +6,8 @@
 //    valid canonical practice URL (e.g. .../en-es/practice) must not have its
 //    language state overwritten by a *different* complete stored language pair.
 // 2. The legacy /languages/filters/exercises/practice double-navigation
-//    (fixed in src/app/App.tsx and
+//    (fixed in src/app/hooks/usePracticeRouteLanguageSync.ts,
+//    src/app/hooks/useStoredLanguageAutoRedirect.ts, and
 //    src/app/utils/practiceRouteCanonicalizationPolicy.ts): the state->URL
 //    effect must not treat that language-less alias as a canonical route
 //    needing canonicalization, leaving the stored-language auto-redirect
@@ -65,8 +66,8 @@ function parsePracticeRoute(path) {
   return { yourLanguage: m[1], practiceLanguage: m[2] };
 }
 
-// One render's effect flush: storage-load (real policy, one-shot) + the
-// unchanged route→state and state→URL effects, mirroring App.tsx exactly.
+// One render's effect flush: storage-load (real policy, one-shot) plus the
+// route→state and state→URL effects owned by usePracticeRouteLanguageSync.
 function step({ pathname, state, storageLoadFired, hasInitialCanonicalPracticeRoute, storedPair }) {
   const practiceRoute = parsePracticeRoute(pathname);
   const resolvedPage = practiceRoute ? "practice" : "other";
@@ -88,7 +89,7 @@ function step({ pathname, state, storageLoadFired, hasInitialCanonicalPracticeRo
     }
   }
 
-  // route -> state (App.tsx:400-412, unchanged by this fix)
+  // route -> state, matching usePracticeRouteLanguageSync.
   if (resolvedPage === "practice" && practiceRoute) {
     const base = { ...state };
     const next = { ...(scheduledState ?? base) };
@@ -104,8 +105,8 @@ function step({ pathname, state, storageLoadFired, hasInitialCanonicalPracticeRo
     if (changed) scheduledState = next;
   }
 
-  // state -> URL (App.tsx:415-441): eligibility now comes from the real
-  // shouldCanonicalizePracticeRoute helper, not a reimplemented guard.
+  // state -> URL: eligibility comes from practiceRouteCanonicalizationPolicy,
+  // not a reimplemented guard.
   if (
     shouldCanonicalizePracticeRoute(
       resolvedPage,
@@ -295,11 +296,10 @@ test("legacy-route state->URL eligibility is false", () => {
 });
 
 // Legacy-route navigation model: state->URL's contribution comes from the
-// real shouldCanonicalizePracticeRoute helper; the auto-redirect effect
-// itself (App.tsx:436-469) is unchanged production code and is reproduced
-// here only as scaffolding, to prove exactly one navigation decision
-// results once state->URL is correctly suppressed — not to re-test
-// auto-redirect's own conditions.
+// real shouldCanonicalizePracticeRoute helper; auto-redirect eligibility
+// comes from storedLanguageAutoRedirectPolicy. This scaffolding proves exactly
+// one navigation decision results once state->URL is correctly suppressed —
+// it does not re-test auto-redirect's own conditions.
 function legacyRouteNavigationDecisions({ hasCompleteStoredPair }) {
   const practiceRoute = parsePracticeRoute("/languages/filters/exercises/practice"); // null: no language segment
   const resolvedPage = "practice"; // pageFromPath's literal ROUTES.practice match

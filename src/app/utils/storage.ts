@@ -6,10 +6,9 @@
 // return null there. Validation failures and JSON parse errors also return
 // null so callers fall back to their in-memory defaults.
 //
-// Only reads live here. The `STORAGE_KEYS` constant, the persistence
-// effects, and all localStorage writes stay in App.tsx: the write timing is
-// coupled to React state ownership, and scripts/test-interactive-contracts.mjs
-// asserts the `app.*` key strings appear in App.tsx's source.
+// Only reads live here. The `STORAGE_KEYS` constant stays in App.tsx for
+// source-text guards; preference persistence effects and writes are owned by
+// useStoredAppPreferences, where the related React state now lives.
 
 export function canUseLocalStorage(): boolean {
   return (

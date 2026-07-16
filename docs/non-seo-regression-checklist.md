@@ -99,9 +99,9 @@ rendering + hardcoded sidebar + mobile drawer, navigation, custom keyboard.
 
 ## 3. Profile-page ground truth
 
-Route: `/profile` (`ROUTES.profile` in `src/app/App.tsx:323`, mirrored in
-`NAV_HREFS` in `src/app/components/Header.tsx:54-63`). Rendered at
-`App.tsx:2282-2295`.
+Route: `/profile` (`ROUTES.profile` in `src/app/App.tsx`, mirrored in
+`NAV_HREFS` in `src/app/components/Header.tsx`). The `resolvedPage ===
+"profile"` branch in `AppContent` renders `<UserProfileDashboardPage>`.
 
 > **The profile page is an unfinished shell.** Current regression coverage
 > protects only route access, absence-of-guard behavior, basic rendering,

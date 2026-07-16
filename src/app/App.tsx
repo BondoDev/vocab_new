@@ -151,10 +151,6 @@ const ROUTES = {
   profile: "/profile",
 } as const;
 
-function randomBetween(min: number, max: number): number {
-  return min + (max - min) * 0.5;
-}
-
 function AppContent({
   initialWordPageData,
   initialBrowsePreviewData,

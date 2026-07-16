@@ -1,8 +1,8 @@
 // Owns the language-continue popup lifecycle extracted from App.tsx:
 // the popup ref, the queued-popup flag, and the two effects that show/hide
 // it. Navigation, the immediate `popupRef.current?.show({ delayMs: 0 })`
-// calls, and the <LanguageContinuePopup> render all stay in App.tsx — this
-// hook only owns "queue a popup to appear once the language page renders."
+// calls, and other cross-page orchestration stay in AppContent. The
+// <LanguageContinuePopup> render now lives in HomePage.tsx.
 import { useEffect, useRef, useState } from "react";
 import type { LanguageContinuePopupHandle } from "../components/LanguageContinuePopup";
 import type { PageKey } from "../utils/pageRouting";
