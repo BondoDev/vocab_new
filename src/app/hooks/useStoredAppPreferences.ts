@@ -12,9 +12,19 @@
 // stored-language auto-redirect effect). React fires a component's effects
 // in declaration order, and that ref is only populated once the
 // storage-loading effect below has run.
+//
+// Canonical-route precedence: when the app mounted on a valid canonical
+// practice URL, that URL's language pair is already authoritative in state
+// (seeded by App.tsx's initialPracticeRouteRef) before this effect runs.
+// Restoring a different stored pair on top of it would fight the
+// route→state/state→URL effects every render (see
+// shouldRestoreStoredLanguagePreference). The storage-loading effect below
+// still reads and validates every stored value unconditionally — it just
+// skips applying the language ones in that case.
 import { useEffect, useRef, useState } from "react";
 import { canUseLocalStorage, readStoredString, readStoredStringArray } from "../utils/storage";
 import { VALID_LEVEL_CODES } from "../utils/pageRouting";
+import { shouldRestoreStoredLanguagePreference } from "../utils/storedLanguagePreferencePolicy";
 
 // Only used to seed selectedExercises and to validate persisted exercise
 // selections — moved here because the hook is now the only reader.
@@ -45,6 +55,10 @@ export interface UseStoredAppPreferencesParams {
   // App.tsx; only the two primitive fallback values are this hook's concern.
   initialYourLanguage: string;
   initialPracticeLanguage: string;
+  // App.tsx's `initialPracticeRouteRef.current !== null` — whether the app
+  // mounted on a valid canonical practice URL. Only this boolean crosses the
+  // boundary (not the parsed route itself), matching the primitives above.
+  hasInitialCanonicalPracticeRoute: boolean;
   supportedLanguageCodes: Set<string>;
 }
 
@@ -77,6 +91,7 @@ export function useStoredAppPreferences({
   storageKeys,
   initialYourLanguage,
   initialPracticeLanguage,
+  hasInitialCanonicalPracticeRoute,
   supportedLanguageCodes,
 }: UseStoredAppPreferencesParams): UseStoredAppPreferencesResult {
   const [yourLanguage, setYourLanguage] = useState(initialYourLanguage);
@@ -126,11 +141,17 @@ export function useStoredAppPreferences({
       (value) => allowedExercises.has(value),
     );
 
-    if (persistedYourLanguage) {
-      setYourLanguage(persistedYourLanguage);
-    }
-    if (persistedPracticeLanguage) {
-      setPracticeLanguage(persistedPracticeLanguage);
+    const restoreStoredLanguage = shouldRestoreStoredLanguagePreference(
+      hasInitialCanonicalPracticeRoute,
+    );
+
+    if (restoreStoredLanguage) {
+      if (persistedYourLanguage) {
+        setYourLanguage(persistedYourLanguage);
+      }
+      if (persistedPracticeLanguage) {
+        setPracticeLanguage(persistedPracticeLanguage);
+      }
     }
     if (persistedSelectedLevel) {
       setSelectedLevel(persistedSelectedLevel.toUpperCase());
@@ -148,10 +169,13 @@ export function useStoredAppPreferences({
       setSelectedExercises(persistedSelectedExercises);
     }
 
-    shouldAutoRedirectFromStoredLanguagesRef.current = Boolean(
-      persistedYourLanguage && persistedPracticeLanguage,
-    );
-  }, [supportedLanguageCodes]);
+    // Gated by restoreStoredLanguage too: a canonical-practice mount must
+    // never make /languages's stored-language auto-redirect eligible — the
+    // route's own pair, not localStorage, is what's active for this load.
+    shouldAutoRedirectFromStoredLanguagesRef.current =
+      restoreStoredLanguage &&
+      Boolean(persistedYourLanguage && persistedPracticeLanguage);
+  }, [supportedLanguageCodes, hasInitialCanonicalPracticeRoute]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {

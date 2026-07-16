@@ -213,6 +213,7 @@ function AppContent({
     initialYourLanguage: initialPracticeRouteRef.current?.yourLanguage ?? "",
     initialPracticeLanguage:
       initialPracticeRouteRef.current?.practiceLanguage ?? "",
+    hasInitialCanonicalPracticeRoute: initialPracticeRouteRef.current !== null,
     supportedLanguageCodes,
   });
   const { authSession, authUserId, handleAuthSessionChange } = useAuthSession();
