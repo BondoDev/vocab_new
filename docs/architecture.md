@@ -87,7 +87,7 @@ flowchart TD
 |---|---|---|---|
 | React application | `src/app/`, `src/contexts/`, `src/keyboards/`, `src/lib/` | `dist/`, `server-build/` (gitignored) | `npx tsc --noEmit`, `npm run build` |
 | Routes | `src/app/App.tsx` (`ROUTES`), `src/app/utils/pageRouting.ts` (`PageKey`, parsers), `src/data/seo/*Slugs.ts`/`hub.ts` | `getPrerenderRoutes()` output (prerendered set) | `test:interactive-contracts`, `test:word-seo` |
-| SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPageData.ts` | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
+| SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPageData.ts`, `src/seo/metadata.ts` (compatibility facade re-exporting `src/seo/{seoTemplates,seoAlternates,seoFaq,seoSchema,vocabularyMetadata,verbListMetadata,wordMetadata,hubMetadata}.ts`) | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
 | Prerendered pages | `src/entry-server.tsx` (`render`, `getPrerenderRoutes`) | `dist/**/index.html` (2,670 files) | `test:prerender-parity` |
 | Sitemap | `scripts/generate-sitemap.mjs` + vocabulary/route data | `public/sitemap.xml`, `public/sitemaps/*.xml` (84,957 URLs) | `test:sitemap-structure`, `test:sitemap-lastmod` |
 | Word Worker | `workers/word-ssr/src/` | `worker-dist-full/`, `assets-full/`, `data/full-corpus/` (all gitignored) | `test:word-worker:production-safety` |

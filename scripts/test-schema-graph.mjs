@@ -352,10 +352,25 @@ if (levelTestDirs.length === 0 && seoHubDirs.length === 0) {
 console.log("\n[4] Source-level: forbidden schema types not present");
 
 {
-  const metadataSource = fs.readFileSync(
-    path.join(rootDir, "src", "seo", "metadata.ts"),
-    "utf8",
+  // src/seo/metadata.ts was split (Issue 15) into a compatibility facade plus
+  // focused modules. Each JSON-LD-emitting builder now lives in its own file
+  // (kept deliberately separate, not merged into a generic graph builder):
+  // buildVerbListSeoMetadata (verbListMetadata.ts), buildVocabularyJsonLdGraph
+  // (seoSchema.ts), buildWordSeoMetadata (wordMetadata.ts). Scan all three
+  // instead of the single pre-split file so this guard keeps validating the
+  // moved code.
+  const jsonLdSourceFiles = {
+    "verbListMetadata.ts": path.join(rootDir, "src", "seo", "verbListMetadata.ts"),
+    "seoSchema.ts": path.join(rootDir, "src", "seo", "seoSchema.ts"),
+    "wordMetadata.ts": path.join(rootDir, "src", "seo", "wordMetadata.ts"),
+  };
+  const jsonLdSources = Object.fromEntries(
+    Object.entries(jsonLdSourceFiles).map(([name, filePath]) => [
+      name,
+      fs.readFileSync(filePath, "utf8"),
+    ]),
   );
+  const combinedJsonLdSource = Object.values(jsonLdSources).join("\n");
 
   const FORBIDDEN = [
     "Course",
@@ -367,24 +382,26 @@ console.log("\n[4] Source-level: forbidden schema types not present");
   ];
 
   FORBIDDEN.forEach((type) => {
-    test(`"${type}" is NOT a schema @type in metadata.ts`, () => {
+    test(`"${type}" is NOT a schema @type in verbListMetadata.ts / seoSchema.ts / wordMetadata.ts`, () => {
       // Only flag it if it appears as a schema @type string value
       const pattern = new RegExp(`"@type":\\s*"${type}"`);
       assert.ok(
-        !pattern.test(metadataSource),
+        !pattern.test(combinedJsonLdSource),
         `Forbidden schema type "${type}" found as @type value`,
       );
     });
   });
 
-  test('"@graph" present in both buildWordSeoMetadata and buildVocabularySeoMetadata', () => {
-    const matches = (metadataSource.match(/"@graph"/g) ?? []).length;
-    assert.ok(matches >= 2, `Expected @graph in both builders, found ${matches} occurrences`);
-  });
+  Object.entries(jsonLdSources).forEach(([name, source]) => {
+    test(`"@graph" present in ${name}`, () => {
+      const matches = (source.match(/"@graph"/g) ?? []).length;
+      assert.ok(matches >= 1, `Expected @graph in ${name}, found ${matches} occurrences`);
+    });
 
-  test('"BreadcrumbList" present in both builders', () => {
-    const matches = (metadataSource.match(/"BreadcrumbList"/g) ?? []).length;
-    assert.ok(matches >= 2, `Expected BreadcrumbList in both builders, found ${matches} occurrences`);
+    test(`"BreadcrumbList" present in ${name}`, () => {
+      const matches = (source.match(/"BreadcrumbList"/g) ?? []).length;
+      assert.ok(matches >= 1, `Expected BreadcrumbList in ${name}, found ${matches} occurrences`);
+    });
   });
 }
 

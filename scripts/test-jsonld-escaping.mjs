@@ -687,61 +687,68 @@ console.log("\n[9] No duplicate JSON-LD during SSR injection");
 
 // ── [10] Schema @type values preserved in source ───────────────────────────────
 
-console.log("\n[10] Schema @type values in metadata.ts (not removed)");
+console.log("\n[10] Schema @type values in verbListMetadata.ts / seoSchema.ts / wordMetadata.ts (not removed)");
 
 {
-  const metadataSource = fs.readFileSync(
-    path.join(rootDir, "src", "seo", "metadata.ts"),
-    "utf8",
-  );
+  // src/seo/metadata.ts was split (Issue 15) into a compatibility facade plus
+  // focused modules; the JSON-LD-emitting builders these checks guard now
+  // live in verbListMetadata.ts, seoSchema.ts (buildVocabularyJsonLdGraph),
+  // and wordMetadata.ts — kept deliberately separate, not merged.
+  const jsonLdSource = [
+    "verbListMetadata.ts",
+    "seoSchema.ts",
+    "wordMetadata.ts",
+  ]
+    .map((name) => fs.readFileSync(path.join(rootDir, "src", "seo", name), "utf8"))
+    .join("\n");
 
   test('"FAQPage" @type still present in buildVocabularySeoMetadata', () => {
-    assert.ok(metadataSource.includes('"FAQPage"'));
+    assert.ok(jsonLdSource.includes('"FAQPage"'));
   });
 
   test('"DefinedTerm" @type still present in buildWordSeoMetadata', () => {
-    assert.ok(metadataSource.includes('"DefinedTerm"'));
+    assert.ok(jsonLdSource.includes('"DefinedTerm"'));
   });
 
   test('"Question" @type still present in FAQPage schema', () => {
-    assert.ok(metadataSource.includes('"Question"'));
+    assert.ok(jsonLdSource.includes('"Question"'));
   });
 
   test('"Answer" @type still present in acceptedAnswer', () => {
-    assert.ok(metadataSource.includes('"Answer"'));
+    assert.ok(jsonLdSource.includes('"Answer"'));
   });
 
   test('"DefinedTermSet" @type still present', () => {
-    assert.ok(metadataSource.includes('"DefinedTermSet"'));
+    assert.ok(jsonLdSource.includes('"DefinedTermSet"'));
   });
 
   test('"WebPage" @type present in both builders', () => {
-    assert.ok(metadataSource.includes('"WebPage"'));
+    assert.ok(jsonLdSource.includes('"WebPage"'));
   });
 
   test('"BreadcrumbList" @type present in both builders', () => {
-    assert.ok(metadataSource.includes('"BreadcrumbList"'));
+    assert.ok(jsonLdSource.includes('"BreadcrumbList"'));
   });
 
   test('"@graph" key present in both builders', () => {
-    assert.ok(metadataSource.includes('"@graph"'));
+    assert.ok(jsonLdSource.includes('"@graph"'));
   });
 
   test('"Course" is NOT present in source (forbidden type)', () => {
-    assert.ok(!metadataSource.includes('"Course"'));
+    assert.ok(!jsonLdSource.includes('"Course"'));
   });
 
   test('"EducationalOccupationalProgram" is NOT present in source (forbidden type)', () => {
-    assert.ok(!metadataSource.includes('"EducationalOccupationalProgram"'));
+    assert.ok(!jsonLdSource.includes('"EducationalOccupationalProgram"'));
   });
 
   test('"#breadcrumb" ID fragment present in both builders', () => {
-    const count = (metadataSource.match(/#breadcrumb/g) ?? []).length;
+    const count = (jsonLdSource.match(/#breadcrumb/g) ?? []).length;
     assert.ok(count >= 2, `Expected #breadcrumb in both builders, found ${count}`);
   });
 
   test('"#webpage" ID fragment present in both builders', () => {
-    const count = (metadataSource.match(/#webpage/g) ?? []).length;
+    const count = (jsonLdSource.match(/#webpage/g) ?? []).length;
     assert.ok(count >= 2, `Expected #webpage in both builders, found ${count}`);
   });
 }

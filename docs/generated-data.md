@@ -18,8 +18,8 @@ Guard script: `npm run test:generated-data-ownership`
 
 | Directory | Classification | Source of truth | Producer | Consumers | Committed? | Risk |
 |---|---|---|---|---|---|---|
-| `src/data/vocabularyLevels/` | handwritten source | itself | manual (no generator) | client (SSR sync load), SSR (`fs` read), `src/seo/metadata.ts`, `VocabularyLevelPage.tsx`, `scripts/generate-sitemap.mjs` | yes | low |
-| `src/data/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/levelTests/index.ts`, `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/metadata.ts`, `src/entry-server.tsx` (SSR/prerender) | yes | low |
+| `src/data/vocabularyLevels/` | handwritten source | itself | manual (no generator) | client (SSR sync load), SSR (`fs` read), `src/seo/vocabularyMetadata.ts` (via the `src/seo/metadata.ts` facade), `VocabularyLevelPage.tsx`, `scripts/generate-sitemap.mjs` | yes | low |
+| `src/data/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/levelTests/index.ts`, `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/hubMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
 | `src/data/seo/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/components/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
 | `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/vocabularyLevels/` (must stay byte-identical) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`), run explicitly by the developer | browser `fetch()` from `src/data/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | low — deterministic sync script plus a read-only `--check` mode wired into `test:generated-data-ownership` |
 | ~~`public/vocabularyLevels/index.ts`~~ | *(removed 2026-07-15)* | — | — | none — confirmed dead, no import anywhere | — | resolved |
@@ -38,7 +38,9 @@ Guard script: `npm run test:generated-data-ownership`
 ## `src/data/vocabularyLevels/` vs `public/vocabularyLevels/` — resolved finding
 
 **`src/data/vocabularyLevels/` is authoritative for SEO `<head>` metadata.**
-`src/seo/metadata.ts` reads it directly for every vocabulary-level route's
+`src/seo/vocabularyMetadata.ts` (re-exported through the `src/seo/metadata.ts`
+compatibility facade — see Issue 15's module split) reads it directly for
+every vocabulary-level route's
 title/description/canonical, and it's the only copy `scripts/generate-sitemap.mjs`
 reads to enumerate sitemap routes and the only copy the SSR sync loader reads
 from disk (`path.resolve(process.cwd(), "src", "data", "vocabularyLevels", ...)`).

@@ -411,7 +411,17 @@ const verbListPageSource = fs.readFileSync(
   path.join(rootDir, "src", "app", "components", "VerbListSeoPage.tsx"),
   "utf8",
 );
-const metadataSource = fs.readFileSync(path.join(rootDir, "src", "seo", "metadata.ts"), "utf8");
+// src/seo/metadata.ts was split (Issue 15) into a compatibility facade plus
+// focused modules; these two now hold the code the checks below assert
+// against (word-page metadata, verb-list metadata respectively).
+const wordMetadataSource = fs.readFileSync(
+  path.join(rootDir, "src", "seo", "wordMetadata.ts"),
+  "utf8",
+);
+const verbListMetadataSource = fs.readFileSync(
+  path.join(rootDir, "src", "seo", "verbListMetadata.ts"),
+  "utf8",
+);
 const wordHubDataSource = fs.readFileSync(
   path.join(rootDir, "src", "data", "seo", "wordHubData.ts"),
   "utf8",
@@ -555,14 +565,14 @@ assert.ok(
   "production Worker should serve the assembled assets-full static bundle",
 );
 assert.ok(
-  /href:\s*`\$\{origin\}\$\{buildWordPath\(lang,\s*targetLanguage,\s*wordLemma,\s*conceptId\)\}`/m.test(
-    metadataSource,
+  /\(lang\)\s*=>\s*`\$\{origin\}\$\{buildWordPath\(lang,\s*targetLanguage,\s*wordLemma,\s*conceptId\)\}`/m.test(
+    wordMetadataSource,
   ),
   "hreflang entries should preserve concept IDs in metadata",
 );
 assert.ok(
   /return\s*\{\s*title,\s*description,\s*canonical:\s*`\$\{origin\}\$\{pathname\}`,\s*alternates,\s*jsonLd,[\s\S]*\};/m.test(
-    metadataSource,
+    wordMetadataSource,
   ),
   "canonical metadata should use the current ID-based pathname",
 );
@@ -589,7 +599,7 @@ assert.ok(
   "shared verb list page should link rows with the shared word-path helper",
 );
 assert.ok(
-  metadataSource.includes("buildVerbListSeoMetadata"),
+  verbListMetadataSource.includes("export function buildVerbListSeoMetadata"),
   "generic metadata builder for verb list pages should exist",
 );
 assert.ok(
