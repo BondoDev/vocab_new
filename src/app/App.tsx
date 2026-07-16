@@ -489,13 +489,8 @@ function AppContent({
     () => pageFromPath(location.pathname, ROUTES),
     [location.pathname],
   );
-  const [isEnglishExploreOpen, setIsEnglishExploreOpen] = useState(false);
-  const [isSpanishExploreOpen, setIsSpanishExploreOpen] = useState(false);
-  const [isFrenchExploreOpen, setIsFrenchExploreOpen] = useState(false);
-  const [isGermanExploreOpen, setIsGermanExploreOpen] = useState(false);
-  const [isItalianExploreOpen, setIsItalianExploreOpen] = useState(false);
-  const [isPortugueseExploreOpen, setIsPortugueseExploreOpen] = useState(false);
-  const [isRussianExploreOpen, setIsRussianExploreOpen] = useState(false);
+  const [openExploreLanguage, setOpenExploreLanguage] =
+    useState<UILanguage | null>(null);
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
   const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] =
     useState(false);
@@ -792,14 +787,8 @@ function AppContent({
     navigate(ROUTES.levelCategory);
   };
 
-  const closeAllExploreDropdowns = () => {
-    setIsEnglishExploreOpen(false);
-    setIsSpanishExploreOpen(false);
-    setIsFrenchExploreOpen(false);
-    setIsGermanExploreOpen(false);
-    setIsItalianExploreOpen(false);
-    setIsPortugueseExploreOpen(false);
-    setIsRussianExploreOpen(false);
+  const toggleExploreLanguage = (language: UILanguage) => {
+    setOpenExploreLanguage((prev) => (prev === language ? null : language));
   };
 
   const renderExploreTopicItem = (topic: ExploreTopic) => {
@@ -809,7 +798,7 @@ function AppContent({
           <Link
             key={`${topic.targetLanguage}-${topic.id}`}
             to={topic.path}
-            onClick={closeAllExploreDropdowns}
+            onClick={() => setOpenExploreLanguage(null)}
             className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
           >
             {topic.label}
@@ -822,7 +811,7 @@ function AppContent({
           key={`${topic.targetLanguage}-${topic.id}`}
           type="button"
           onClick={() => {
-            closeAllExploreDropdowns();
+            setOpenExploreLanguage(null);
             if (topic.path === ROUTES.exam) {
               setPracticeLanguage(
                 TARGET_LANGUAGE_TO_UI_CODE[topic.targetLanguage],
@@ -844,7 +833,7 @@ function AppContent({
       <Link
         key={`${topic.targetLanguage}-${topic.id}`}
         to={topic.path}
-        onClick={closeAllExploreDropdowns}
+        onClick={() => setOpenExploreLanguage(null)}
         className="block w-full border-b border-primary/10 px-4 py-3 text-left text-sm text-foreground/90 transition-colors hover:bg-primary/5 last:border-b-0"
       >
         {topic.label}
@@ -1037,15 +1026,7 @@ function AppContent({
                   >
                     <button
                       type="button"
-                      onClick={() => {
-                        setIsEnglishExploreOpen((prev) => !prev);
-                        setIsSpanishExploreOpen(false);
-                        setIsFrenchExploreOpen(false);
-                        setIsGermanExploreOpen(false);
-                        setIsItalianExploreOpen(false);
-                        setIsPortugueseExploreOpen(false);
-                        setIsRussianExploreOpen(false);
-                      }}
+                      onClick={() => toggleExploreLanguage("en")}
                       className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
                     >
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
@@ -1062,13 +1043,13 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isEnglishExploreOpen
+                          openExploreLanguage === "en"
                             ? "rotate-180"
                             : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
-                    {isEnglishExploreOpen ? (
+                    {openExploreLanguage === "en" ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
                         {englishExploreItems.map(renderExploreTopicItem)}
                       </div>
@@ -1081,15 +1062,7 @@ function AppContent({
                   >
                     <button
                       type="button"
-                      onClick={() => {
-                        setIsSpanishExploreOpen((prev) => !prev);
-                        setIsEnglishExploreOpen(false);
-                        setIsFrenchExploreOpen(false);
-                        setIsGermanExploreOpen(false);
-                        setIsItalianExploreOpen(false);
-                        setIsPortugueseExploreOpen(false);
-                        setIsRussianExploreOpen(false);
-                      }}
+                      onClick={() => toggleExploreLanguage("es")}
                       className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
                     >
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
@@ -1106,13 +1079,13 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isSpanishExploreOpen
+                          openExploreLanguage === "es"
                             ? "rotate-180"
                             : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
-                    {isSpanishExploreOpen ? (
+                    {openExploreLanguage === "es" ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
                         {spanishExploreItems.map(renderExploreTopicItem)}
                       </div>
@@ -1125,15 +1098,7 @@ function AppContent({
                   >
                     <button
                       type="button"
-                      onClick={() => {
-                        setIsFrenchExploreOpen((prev) => !prev);
-                        setIsEnglishExploreOpen(false);
-                        setIsSpanishExploreOpen(false);
-                        setIsGermanExploreOpen(false);
-                        setIsItalianExploreOpen(false);
-                        setIsPortugueseExploreOpen(false);
-                        setIsRussianExploreOpen(false);
-                      }}
+                      onClick={() => toggleExploreLanguage("fr")}
                       className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
                     >
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
@@ -1150,13 +1115,13 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isFrenchExploreOpen
+                          openExploreLanguage === "fr"
                             ? "rotate-180"
                             : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
-                    {isFrenchExploreOpen ? (
+                    {openExploreLanguage === "fr" ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
                         {frenchExploreItems.map(renderExploreTopicItem)}
                       </div>
@@ -1169,15 +1134,7 @@ function AppContent({
                   >
                     <button
                       type="button"
-                      onClick={() => {
-                        setIsGermanExploreOpen((prev) => !prev);
-                        setIsEnglishExploreOpen(false);
-                        setIsSpanishExploreOpen(false);
-                        setIsFrenchExploreOpen(false);
-                        setIsItalianExploreOpen(false);
-                        setIsPortugueseExploreOpen(false);
-                        setIsRussianExploreOpen(false);
-                      }}
+                      onClick={() => toggleExploreLanguage("de")}
                       className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
                     >
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
@@ -1194,13 +1151,13 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isGermanExploreOpen
+                          openExploreLanguage === "de"
                             ? "rotate-180"
                             : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
-                    {isGermanExploreOpen ? (
+                    {openExploreLanguage === "de" ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
                         {germanExploreItems.map(renderExploreTopicItem)}
                       </div>
@@ -1213,15 +1170,7 @@ function AppContent({
                   >
                     <button
                       type="button"
-                      onClick={() => {
-                        setIsItalianExploreOpen((prev) => !prev);
-                        setIsEnglishExploreOpen(false);
-                        setIsSpanishExploreOpen(false);
-                        setIsFrenchExploreOpen(false);
-                        setIsGermanExploreOpen(false);
-                        setIsPortugueseExploreOpen(false);
-                        setIsRussianExploreOpen(false);
-                      }}
+                      onClick={() => toggleExploreLanguage("it")}
                       className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
                     >
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
@@ -1238,13 +1187,13 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isItalianExploreOpen
+                          openExploreLanguage === "it"
                             ? "rotate-180"
                             : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
-                    {isItalianExploreOpen ? (
+                    {openExploreLanguage === "it" ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
                         {italianExploreItems.map(renderExploreTopicItem)}
                       </div>
@@ -1257,15 +1206,7 @@ function AppContent({
                   >
                     <button
                       type="button"
-                      onClick={() => {
-                        setIsPortugueseExploreOpen((prev) => !prev);
-                        setIsEnglishExploreOpen(false);
-                        setIsSpanishExploreOpen(false);
-                        setIsFrenchExploreOpen(false);
-                        setIsGermanExploreOpen(false);
-                        setIsItalianExploreOpen(false);
-                        setIsRussianExploreOpen(false);
-                      }}
+                      onClick={() => toggleExploreLanguage("pt")}
                       className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
                     >
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
@@ -1282,13 +1223,13 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isPortugueseExploreOpen
+                          openExploreLanguage === "pt"
                             ? "rotate-180"
                             : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
-                    {isPortugueseExploreOpen ? (
+                    {openExploreLanguage === "pt" ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
                         {portugueseExploreItems.map(renderExploreTopicItem)}
                       </div>
@@ -1301,15 +1242,7 @@ function AppContent({
                   >
                     <button
                       type="button"
-                      onClick={() => {
-                        setIsRussianExploreOpen((prev) => !prev);
-                        setIsEnglishExploreOpen(false);
-                        setIsSpanishExploreOpen(false);
-                        setIsFrenchExploreOpen(false);
-                        setIsGermanExploreOpen(false);
-                        setIsItalianExploreOpen(false);
-                        setIsPortugueseExploreOpen(false);
-                      }}
+                      onClick={() => toggleExploreLanguage("ru")}
                       className="group relative flex h-16 w-full items-center justify-between overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-card via-card/95 to-card/80 px-5 text-left shadow-[0_10px_24px_-16px_rgba(74,43,130,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_16px_34px_-14px_rgba(74,43,130,0.55)]"
                     >
                       <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.22),transparent_45%)]" />
@@ -1326,13 +1259,13 @@ function AppContent({
                       </span>
                       <ChevronDown
                         className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
-                          isRussianExploreOpen
+                          openExploreLanguage === "ru"
                             ? "rotate-180"
                             : "group-hover:translate-y-0.5"
                         }`}
                       />
                     </button>
-                    {isRussianExploreOpen ? (
+                    {openExploreLanguage === "ru" ? (
                       <div className="overflow-hidden rounded-xl border border-primary/25 bg-card/90 shadow-[0_12px_26px_-18px_rgba(74,43,130,0.65)]">
                         {russianExploreItems.map(renderExploreTopicItem)}
                       </div>
