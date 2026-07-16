@@ -1,30 +1,44 @@
-// Regression guard for the canonical-practice-route/stored-language-
-// preference oscillation (fixed in src/app/hooks/useStoredAppPreferences.ts
-// and src/app/utils/storedLanguagePreferencePolicy.ts): a fresh mount on a
-// valid canonical practice URL (e.g. .../en-es/practice) must not have its
-// language state overwritten by a *different* complete stored language pair.
+// Regression guard for two related practice-route defects:
+//
+// 1. The canonical-practice-route/stored-language-preference oscillation
+//    (fixed in src/app/hooks/useStoredAppPreferences.ts and
+//    src/app/utils/storedLanguagePreferencePolicy.ts): a fresh mount on a
+//    valid canonical practice URL (e.g. .../en-es/practice) must not have its
+//    language state overwritten by a *different* complete stored language pair.
+// 2. The legacy /languages/filters/exercises/practice double-navigation
+//    (fixed in src/app/App.tsx and
+//    src/app/utils/practiceRouteCanonicalizationPolicy.ts): the state->URL
+//    effect must not treat that language-less alias as a canonical route
+//    needing canonicalization, leaving the stored-language auto-redirect
+//    effect as the alias's sole navigator.
 //
 // Behavioral, not source-text: this imports and exercises the real
-// production policy helper (shouldRestoreStoredLanguagePreference) via
-// Node's native TypeScript stripping (--experimental-strip-types), rather
-// than duplicating the rule or grepping for guard text. That helper is
-// deliberately import-free (see its file) so it can be loaded directly here
-// without a custom loader — most other TS modules in this app (e.g.
-// pageRouting.ts) have their own extensionless relative imports that Node's
-// ESM resolver cannot follow without a bundler, so only import-free helpers
-// like this one are directly importable from a plain script.
+// production policy helpers (shouldRestoreStoredLanguagePreference,
+// shouldCanonicalizePracticeRoute) via Node's native TypeScript stripping
+// (--experimental-strip-types), rather than duplicating either rule or
+// grepping for guard text. Both helpers are import-free at runtime (the
+// second has only a type-only import, fully erased by type stripping) so
+// they can be loaded directly here without a custom loader — most other TS
+// modules in this app (e.g. pageRouting.ts) have their own extensionless
+// relative imports that Node's ESM resolver cannot follow without a bundler,
+// so only import-free helpers like these are directly importable from a
+// plain script.
 //
-// The route→state/state→URL effect bodies themselves are NOT changed by
-// this fix and are NOT re-exported for testing (out of scope for this task),
-// so they are reimplemented here as plain, side-effect-free scaffolding
-// (buildPracticeRoute/parsePracticeRoute are simple, already-audited
-// one-liners) purely to drive a deterministic multi-render reconciliation
-// model. The one piece of logic actually under test — the storage-load
-// restoration decision — always comes from the real imported helper.
+// The route→state/state→URL effect bodies and the auto-redirect effect
+// itself are NOT changed by this task and are NOT re-exported for testing
+// (out of scope), so they are reimplemented here as plain, side-effect-free
+// scaffolding (buildPracticeRoute/parsePracticeRoute are simple,
+// already-audited one-liners; the auto-redirect conditions are reproduced
+// only to prove non-interference, not to re-test that effect) purely to
+// drive a deterministic multi-render reconciliation model. The two pieces of
+// logic actually under test — the storage-load restoration decision and the
+// state->URL canonicalization-eligibility decision — always come from the
+// real imported helpers.
 //
 // Run: node --experimental-strip-types scripts/test-practice-route-sync.mjs
 import assert from "node:assert/strict";
 import { shouldRestoreStoredLanguagePreference } from "../src/app/utils/storedLanguagePreferencePolicy.ts";
+import { shouldCanonicalizePracticeRoute } from "../src/app/utils/practiceRouteCanonicalizationPolicy.ts";
 
 let passed = 0;
 let failed = 0;
@@ -89,8 +103,16 @@ function step({ pathname, state, storageLoadFired, hasInitialCanonicalPracticeRo
     if (changed) scheduledState = next;
   }
 
-  // state -> URL (App.tsx:414-433, unchanged by this fix)
-  if (resolvedPage === "practice" && state.yourLanguage && state.practiceLanguage) {
+  // state -> URL (App.tsx:415-441): eligibility now comes from the real
+  // shouldCanonicalizePracticeRoute helper, not a reimplemented guard.
+  if (
+    shouldCanonicalizePracticeRoute(
+      resolvedPage,
+      practiceRoute !== null,
+      state.yourLanguage,
+      state.practiceLanguage,
+    )
+  ) {
     const expectedPath = buildPracticeRoute(state.yourLanguage, state.practiceLanguage);
     if (pathname !== expectedPath) {
       scheduledPathname = expectedPath;
@@ -251,6 +273,86 @@ test("6. a later ordinary language-selector change is not blocked or reverted by
     { yourLanguage: "ru", practiceLanguage: "de" },
     "the new selection must stick — the initial-load suppression must not re-apply or revert it",
   );
+});
+
+console.log("\n=== legacy practice-route (language-less alias) ===\n");
+
+test("canonical-route state->URL eligibility remains true", () => {
+  assert.equal(
+    shouldCanonicalizePracticeRoute("practice", true, "en", "es"),
+    true,
+    "a valid canonical practice route with both languages must remain eligible for canonicalization",
+  );
+});
+
+test("legacy-route state->URL eligibility is false", () => {
+  assert.equal(
+    shouldCanonicalizePracticeRoute("practice", false, "en", "es"),
+    false,
+    "the language-less legacy route (hasPracticeRoute=false) must never be eligible, even with both languages known",
+  );
+});
+
+// Legacy-route navigation model: state->URL's contribution comes from the
+// real shouldCanonicalizePracticeRoute helper; the auto-redirect effect
+// itself (App.tsx:436-469) is unchanged production code and is reproduced
+// here only as scaffolding, to prove exactly one navigation decision
+// results once state->URL is correctly suppressed — not to re-test
+// auto-redirect's own conditions.
+function legacyRouteNavigationDecisions({ hasCompleteStoredPair }) {
+  const practiceRoute = parsePracticeRoute("/languages/filters/exercises/practice"); // null: no language segment
+  const resolvedPage = "practice"; // pageFromPath's literal ROUTES.practice match
+  const yourLanguage = hasCompleteStoredPair ? "en" : "";
+  const practiceLanguage = hasCompleteStoredPair ? "es" : "";
+
+  const decisions = [];
+
+  if (shouldCanonicalizePracticeRoute(resolvedPage, practiceRoute !== null, yourLanguage, practiceLanguage)) {
+    decisions.push({ source: "state->URL", destination: buildPracticeRoute(yourLanguage, practiceLanguage) });
+  }
+
+  // Auto-redirect's own conditions, unchanged and out of scope — reproduced
+  // only to prove it remains the sole navigator once state->URL is silent.
+  const isContinueDisabled = !yourLanguage || !practiceLanguage;
+  const shouldAutoRedirectFromStoredLanguages = hasCompleteStoredPair; // ordinary-route mount, both persisted
+  const startedOnLegacyPracticePage = true; // fresh mount directly on ROUTES.practice
+  if (!isContinueDisabled && shouldAutoRedirectFromStoredLanguages && startedOnLegacyPracticePage && resolvedPage === "practice") {
+    decisions.push({ source: "auto-redirect", destination: "/languages/filters/exercises" });
+  }
+
+  return decisions;
+}
+
+test("legacy route with complete stored pair produces only the auto-redirect-equivalent decision", () => {
+  const decisions = legacyRouteNavigationDecisions({ hasCompleteStoredPair: true });
+  assert.equal(decisions.length, 1, "exactly one navigation decision must be produced, not two competing ones");
+  assert.equal(decisions[0].source, "auto-redirect");
+});
+
+test("legacy route destination remains exercise selection", () => {
+  const decisions = legacyRouteNavigationDecisions({ hasCompleteStoredPair: true });
+  assert.equal(decisions[0].destination, "/languages/filters/exercises");
+});
+
+test("legacy route with incomplete language state produces no newly invented navigation", () => {
+  const decisions = legacyRouteNavigationDecisions({ hasCompleteStoredPair: false });
+  assert.deepEqual(decisions, [], "no navigation — invented or otherwise — should occur for the incomplete-language case");
+});
+
+test("a later valid canonical practice route still allows state->URL synchronization", () => {
+  // On an already-canonical practice path, state->URL must still be able to
+  // canonicalize if state and path ever disagree (e.g. a direct setter
+  // change) — proving the legacy-route guard change is narrowly scoped to
+  // hasPracticeRoute=false and does not suppress canonicalization generally.
+  const result = step({
+    pathname: "/languages/filters/exercises/en-es/practice",
+    state: { yourLanguage: "de", practiceLanguage: "it" },
+    storageLoadFired: true,
+    hasInitialCanonicalPracticeRoute: true,
+    storedPair: null,
+  });
+  assert.equal(result.changed, true, "state->URL must still canonicalize a valid practice route");
+  assert.equal(result.nextPathname, "/languages/filters/exercises/de-it/practice");
 });
 
 console.log(`\n─────────────────────────────────────────`);

@@ -60,6 +60,7 @@ import {
   parseWordSeoHubRoute,
   type RouteKey,
 } from "./utils/pageRouting";
+import { shouldCanonicalizePracticeRoute } from "./utils/practiceRouteCanonicalizationPolicy";
 import { useAuthSession } from "./hooks/useAuthSession";
 import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
@@ -413,7 +414,14 @@ function AppContent({
   }, [practiceLanguage, practiceRoute, resolvedPage, yourLanguage]);
 
   useEffect(() => {
-    if (resolvedPage !== "practice" || !yourLanguage || !practiceLanguage) {
+    if (
+      !shouldCanonicalizePracticeRoute(
+        resolvedPage,
+        practiceRoute !== null,
+        yourLanguage,
+        practiceLanguage,
+      )
+    ) {
       return;
     }
 
@@ -429,6 +437,7 @@ function AppContent({
     location.pathname,
     navigate,
     practiceLanguage,
+    practiceRoute,
     resolvedPage,
     yourLanguage,
   ]);
