@@ -1,9 +1,9 @@
-// Deterministic guard for the dependency-removal decisions recorded in
-// docs/dependency-audit.md (2026-07-15 cleanup, starting commit 165f0486).
-// This is intentionally not a full dependency-graph analyzer — it protects
-// the specific facts that audit established: which packages were proven
-// unused and removed, which packages the retained UI primitives still need,
-// and that package.json's script commands only invoke declared binaries.
+// Deterministic guard for the dependency ownership contract recorded in
+// docs/dependency-ownership.md. This is intentionally not a full
+// dependency-graph analyzer — it protects the specific facts that document
+// establishes: which packages were proven unused and removed, which
+// packages the retained UI primitives still need, and that package.json's
+// script commands only invoke declared binaries.
 //
 // Read-only. No network. No browser. Node standard library only.
 // Run: node scripts/test-dependency-ownership.mjs
@@ -30,7 +30,7 @@ function test(name, fn) {
 }
 
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, "package.json"), "utf8"));
-const auditDoc = fs.readFileSync(path.join(ROOT_DIR, "docs", "dependency-audit.md"), "utf8");
+const auditDoc = fs.readFileSync(path.join(ROOT_DIR, "docs", "dependency-ownership.md"), "utf8");
 
 // The 36 direct dependencies proven unused and removed by the 2026-07-15 audit.
 const REMOVED_PACKAGES = [
@@ -73,7 +73,7 @@ const REMOVED_PACKAGES = [
 ];
 
 // Packages the 9 retained src/app/components/ui/ files depend on (see
-// docs/ui-component-audit.md's per-file mapping and docs/dependency-audit.md
+// docs/ui-component-ownership.md's per-file mapping and docs/dependency-ownership.md
 // §"Full direct-dependency inventory").
 const RETAINED_UI_PACKAGES = [
   "@radix-ui/react-alert-dialog",
@@ -103,16 +103,16 @@ test("every retained UI package is still declared", () => {
   assert.deepEqual(missing, [], `missing retained UI package(s): ${missing.join(", ")}`);
 });
 
-test("every direct dependency is represented in docs/dependency-audit.md", () => {
+test("every direct dependency is represented in docs/dependency-ownership.md", () => {
   const missingFromAudit = directDepNames.filter((name) => !auditDoc.includes(name));
   assert.deepEqual(
     missingFromAudit,
     [],
-    `package(s) declared but not documented in docs/dependency-audit.md: ${missingFromAudit.join(", ")}`,
+    `package(s) declared but not documented in docs/dependency-ownership.md: ${missingFromAudit.join(", ")}`,
   );
 });
 
-test("docs/dependency-audit.md documents every removed package with a concrete classification", () => {
+test("docs/dependency-ownership.md documents every removed package with a concrete classification", () => {
   const undocumented = REMOVED_PACKAGES.filter(
     (name) => !new RegExp(`\\| ${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\|`).test(auditDoc),
   );

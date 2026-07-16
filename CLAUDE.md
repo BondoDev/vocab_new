@@ -21,7 +21,7 @@ No test runner is configured.
 
 ## Architecture
 
-React 18 + Vite + TypeScript SPA with SSR/SSG capability. Deployed to GitHub Pages as a prerendered static site.
+React 18 + Vite + TypeScript SPA with SSR/SSG capability. Deployed to Cloudflare (Workers Builds + a word-page SSR Worker); GitHub Pages is retired. See [`docs/architecture.md`](docs/architecture.md) for the full system overview and [`docs/deployment.md`](docs/deployment.md) for current production/deployment behavior — this section is a quick agent-facing reference, not the authoritative source.
 
 **Entry points:**
 - `src/main.tsx` — browser dev entry
@@ -44,4 +44,4 @@ React 18 + Vite + TypeScript SPA with SSR/SSG capability. Deployed to GitHub Pag
 
 **Styling:** Tailwind CSS v4 (no PostCSS plugin needed) + SCSS modules. Path alias `@` maps to `src/`.
 
-**UI libraries:** Radix UI (headless — alert-dialog, dialog, dropdown-menu, label, popover, select, slot only) + class-variance-authority/clsx/tailwind-merge, Motion (animations), Lucide React (icons), react-dnd (drag-and-drop). See `docs/dependency-audit.md` for the full dependency inventory (36 unused packages, including MUI/Emotion, recharts, sonner, and React Hook Form, were removed 2026-07-15).
+**UI libraries:** Radix UI (headless — alert-dialog, dialog, dropdown-menu, label, popover, select, slot only) + class-variance-authority/clsx/tailwind-merge, Motion (animations), Lucide React (icons), react-dnd (drag-and-drop). See `docs/dependency-ownership.md` for the full dependency inventory (36 unused packages, including MUI/Emotion, recharts, sonner, and React Hook Form, were removed 2026-07-15).

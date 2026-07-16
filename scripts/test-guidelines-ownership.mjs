@@ -4,8 +4,9 @@
 // and guidelines/seo-cefr-placeholder.html were discovered (2026-07-15 audit) to be
 // live production data/dead artifacts sitting in a directory meant only for AI
 // assistant instructions. The two JSON files were moved to src/data/levelTests/ and
-// src/data/seo/ respectively; the HTML file was deleted. See
-// docs/guidelines-folder-ownership.md for the full writeup.
+// src/data/seo/ respectively; the HTML file was deleted. The durable
+// "guidelines/ is human-guidance-only" rule now lives in docs/architecture.md
+// (the relocated files' provenance is recorded in git history).
 //
 // Read-only. No network. No browser. Node standard library only.
 // Run: node scripts/test-guidelines-ownership.mjs
@@ -54,7 +55,6 @@ const OLD_PATH_PATTERN = /guidelines[\\/](seo_level_test_content\.json|seo-cefr-
 // document the relocation rather than depending on it.
 const ALLOWED_SELF_REFERENCES = new Set([
   path.join(ROOT_DIR, "scripts", "test-guidelines-ownership.mjs"),
-  path.join(ROOT_DIR, "docs", "guidelines-folder-ownership.md"),
   path.join(ROOT_DIR, "docs", "generated-data.md"),
   path.join(ROOT_DIR, "docs", "import-boundaries.md"),
 ]);
@@ -208,13 +208,13 @@ test("package.json has no script referencing the old guidelines/ data paths", ()
   );
 });
 
-test("docs/guidelines-folder-ownership.md documents guidelines/ as human-facing only", () => {
-  const file = path.join(ROOT_DIR, "docs", "guidelines-folder-ownership.md");
-  assert.ok(fs.existsSync(file), "docs/guidelines-folder-ownership.md is missing");
+test("docs/architecture.md documents guidelines/ as human-guidance-only", () => {
+  const file = path.join(ROOT_DIR, "docs", "architecture.md");
+  assert.ok(fs.existsSync(file), "docs/architecture.md is missing");
   const content = fs.readFileSync(file, "utf8");
   assert.ok(
     /human-guidance-only/i.test(content),
-    "docs/guidelines-folder-ownership.md does not state guidelines/ is human-guidance-only",
+    "docs/architecture.md does not state guidelines/ is human-guidance-only",
   );
 });
 

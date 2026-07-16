@@ -2,8 +2,8 @@
 
 Audited 2026-07-15, source commit `80e52fe4`; updated same day (guidelines/
 folder cleanup) to add `src/data/levelTests/seo_level_test_content.json` and
-`src/data/seo/seo-cefr-content.json`, both relocated from `guidelines/` — see
-[`docs/guidelines-folder-ownership.md`](guidelines-folder-ownership.md).
+`src/data/seo/seo-cefr-content.json`, both relocated from `guidelines/`
+(which is human-guidance-only — see [`docs/architecture.md`](architecture.md)).
 Companion to [`docs/import-boundaries.md`](import-boundaries.md) (which
 guards the *shape* `import.meta.glob` and related loaders depend on). This
 document instead answers, for every generated or `src`/`public`-duplicated
@@ -56,8 +56,7 @@ page's hero/sections/FAQ content renders from `seo-cefr-content.json` via
 this audit changed — it's flagged here because the "dev preview"/"placeholder"
 naming of the module and component is misleading about their actual
 production role. Not redesigned or renamed as part of this audit (out of
-scope); see `docs/guidelines-folder-ownership.md` for the file-relocation
-details.
+scope).
 
 **`public/vocabularyLevels/*.json` is a required runtime mirror, not dead
 duplication.** `src/data/vocabularyLevels/index.ts`'s client-side loader

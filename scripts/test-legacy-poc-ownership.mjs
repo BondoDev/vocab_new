@@ -1,5 +1,6 @@
 // Deterministic guard proving the obsolete poc/cloudflare-word-renderer/
-// prototype (deleted 2026-07-15, see docs/legacy-cloudflare-poc-removal.md)
+// prototype (deleted 2026-07-15; see `git log --diff-filter=D --summary --
+// poc/cloudflare-word-renderer/` for the removal commit and prior contents)
 // stays deleted and does not silently regain a reference somewhere in the
 // tracked tree.
 //
@@ -34,7 +35,8 @@ const REFERENCE_PATTERN = /cloudflare-word-renderer/;
 // removal rather than depending on it.
 const ALLOWED_SELF_REFERENCES = new Set([
   path.join(ROOT_DIR, "scripts", "test-legacy-poc-ownership.mjs"),
-  path.join(ROOT_DIR, "docs", "legacy-cloudflare-poc-removal.md"),
+  path.join(ROOT_DIR, "docs", "architecture.md"),
+  path.join(ROOT_DIR, "scripts", "test-architecture-documentation.mjs"),
 ]);
 
 const EXCLUDED_DIRS = new Set([

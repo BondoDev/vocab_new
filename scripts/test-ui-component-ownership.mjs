@@ -1,5 +1,5 @@
 // Deterministic guard for src/app/components/ui/ ownership, documented in
-// docs/ui-component-audit.md. Complements scripts/test-interactive-contracts.mjs
+// docs/ui-component-ownership.md. Complements scripts/test-interactive-contracts.mjs
 // (which guards routing/profile-shell contracts) by guarding the shadcn/ui
 // primitive-library surface: the retained set stays reachable, the removed
 // set doesn't silently reappear, and no source file points at a missing
@@ -15,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 const UI_DIR = path.join(ROOT_DIR, "src", "app", "components", "ui");
-const AUDIT_DOC = path.join(ROOT_DIR, "docs", "ui-component-audit.md");
+const AUDIT_DOC = path.join(ROOT_DIR, "docs", "ui-component-ownership.md");
 
 let passed = 0;
 let failed = 0;
@@ -31,7 +31,7 @@ function test(name, fn) {
   }
 }
 
-// Retained set, as established by the 2026-07-15 audit (docs/ui-component-audit.md).
+// Retained set, as established by the 2026-07-15 audit (docs/ui-component-ownership.md).
 const EXPECTED_RETAINED = [
   "alert-dialog.tsx",
   "button.tsx",
@@ -82,7 +82,7 @@ test("src/app/components/ui/ contains exactly the 9 retained files established b
   assert.deepEqual(
     actualFiles,
     EXPECTED_RETAINED,
-    "src/app/components/ui/ file set no longer matches docs/ui-component-audit.md's retained set — update the audit in the same change if this is intentional",
+    "src/app/components/ui/ file set no longer matches docs/ui-component-ownership.md's retained set — update the audit in the same change if this is intentional",
   );
 });
 
@@ -143,8 +143,8 @@ test("every retained ui/ file is still imported by at least one file outside com
 
 console.log("\n=== audit documentation completeness ===\n");
 
-test("docs/ui-component-audit.md exists and covers every current ui/ file plus the full removed set", () => {
-  assert.ok(fs.existsSync(AUDIT_DOC), "docs/ui-component-audit.md is missing");
+test("docs/ui-component-ownership.md exists and covers every current ui/ file plus the full removed set", () => {
+  assert.ok(fs.existsSync(AUDIT_DOC), "docs/ui-component-ownership.md is missing");
   const text = fs.readFileSync(AUDIT_DOC, "utf8");
   const missing = [...EXPECTED_RETAINED, ...EXPECTED_REMOVED].filter(
     (name) => !text.includes(`\`${name}\``),
@@ -152,15 +152,15 @@ test("docs/ui-component-audit.md exists and covers every current ui/ file plus t
   assert.deepEqual(
     missing,
     [],
-    `docs/ui-component-audit.md does not mention: ${missing.join(", ")}`,
+    `docs/ui-component-ownership.md does not mention: ${missing.join(", ")}`,
   );
 });
 
-test("docs/ui-component-audit.md states the audited totals", () => {
+test("docs/ui-component-ownership.md states the audited totals", () => {
   const text = fs.readFileSync(AUDIT_DOC, "utf8");
   assert.ok(
     text.includes("48 files audited") && text.includes("9 actively used") && text.includes("39 unused and"),
-    "docs/ui-component-audit.md is missing the expected total/used/removed counts",
+    "docs/ui-component-ownership.md is missing the expected total/used/removed counts",
   );
 });
 
