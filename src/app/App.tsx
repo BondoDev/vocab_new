@@ -1,11 +1,12 @@
 import {
   Suspense,
   lazy,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
+  type Dispatch,
+  type SetStateAction,
 } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -49,24 +50,8 @@ import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
 import { getVerbListPath, getVerbListTitle } from "../data/verbLists";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPageData";
-import {
-  getStoredSupabaseSession,
-  handleSupabaseAuthRedirect,
-  subscribeToSupabaseSessionChanges,
-  type StoredSupabaseSession,
-} from "../lib/supabaseAuth";
-import {
-  EMPTY_USER_PROFILE,
-  isUserProfileComplete,
-  normalizeLanguage,
-  normalizeUserProfile,
-  readSupabaseUserProfile,
-  readStoredUserProfile,
-  startsWithLetter,
-  writeSupabaseUserProfile,
-  writeStoredUserProfile,
-  type UserProfile,
-} from "../lib/userProfile";
+import { handleSupabaseAuthRedirect } from "../lib/supabaseAuth";
+import type { UserProfile } from "../lib/userProfile";
 import {
   TARGET_LANGUAGE_TO_UI_CODE,
   buildPracticeRoute,
@@ -93,7 +78,11 @@ import {
   withLevelTestExploreTopic,
   type ExploreTopic,
 } from "./utils/exploreTopics";
+import { useAuthSession } from "./hooks/useAuthSession";
+import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
+import { useUserProfileLoad } from "./hooks/useUserProfileLoad";
+import { useUserProfileSync } from "./hooks/useUserProfileSync";
 
 const LevelCategorySelection = lazy(() =>
   import("./components/LevelCategorySelection").then((module) => ({
@@ -156,14 +145,6 @@ function RouteLoadingFallback() {
       Loading...
     </div>
   );
-}
-
-function getSessionUserId(
-  session: StoredSupabaseSession | null,
-): string | null {
-  return typeof session?.user?.id === "string" && session.user.id.trim()
-    ? session.user.id
-    : null;
 }
 
 // ROUTES must stay defined in this file as a literal `as const` block:
@@ -431,17 +412,47 @@ function AppContent({
       initialPracticeRouteRef.current?.practiceLanguage ?? "",
     supportedLanguageCodes,
   });
-  const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(
-    null,
-  );
-  const [userProfile, setUserProfile] =
-    useState<UserProfile>(EMPTY_USER_PROFILE);
-  const [isAccountOnboardingOpen, setIsAccountOnboardingOpen] = useState(false);
-  const [isAccountOnboardingSubmitting, setIsAccountOnboardingSubmitting] =
-    useState(false);
-  const [accountOnboardingError, setAccountOnboardingError] = useState<
-    string | null
-  >(null);
+  const { authSession, authUserId, handleAuthSessionChange } =
+    useAuthSession();
+  let loadedUserProfile!: UserProfile;
+  let setLoadedUserProfile!: Dispatch<SetStateAction<UserProfile>>;
+  const {
+    isAccountOnboardingOpen,
+    setIsAccountOnboardingOpen,
+    isAccountOnboardingSubmitting,
+    accountOnboardingError,
+    setAccountOnboardingError,
+    handleUserProfileChange,
+    handleAccountOnboardingSubmit,
+  } = useAccountOnboarding({
+    authSession,
+    authUserId,
+    getUserProfile: () => loadedUserProfile,
+    setUserProfile: (value) => setLoadedUserProfile(value),
+    yourLanguage,
+    practiceLanguage,
+    setYourLanguage,
+    setPracticeLanguage,
+  });
+  const { userProfile, setUserProfile } = useUserProfileLoad({
+    authUserId,
+    yourLanguage,
+    practiceLanguage,
+    setYourLanguage,
+    setPracticeLanguage,
+    setIsAccountOnboardingOpen,
+    setAccountOnboardingError,
+  });
+  loadedUserProfile = userProfile;
+  setLoadedUserProfile = setUserProfile;
+  useUserProfileSync({
+    authSession,
+    authUserId,
+    userProfile,
+    setUserProfile,
+    yourLanguage,
+    practiceLanguage,
+  });
   const navigate = useNavigate();
   const levelTestSeoRoute = useMemo(
     () => parseLevelTestSeoRoute(location.pathname),
@@ -509,7 +520,6 @@ function AppContent({
   const shouldReduceMotion = useReducedMotion();
   const resolvedPage = ssrRouteOverride?.page ?? currentPage;
   const wordRoute = ssrRouteOverride?.wordRoute ?? detectedWordRoute;
-  const authUserId = getSessionUserId(authSession);
   const siteOrigin = useSeoSiteOrigin();
   const routeMetadata = useMemo(() => {
     switch (resolvedPage) {
@@ -527,14 +537,6 @@ function AppContent({
   }, [location.pathname, resolvedPage, siteOrigin]);
 
   useEffect(() => {
-    // Initialize auth session from storage on client side only (after hydration)
-    setAuthSession(getStoredSupabaseSession());
-
-    const unsubscribe = subscribeToSupabaseSessionChanges(setAuthSession);
-    return unsubscribe;
-  }, []);
-
-  useEffect(() => {
     if (resolvedPage !== "practice" && resolvedPage !== "exam") {
       return;
     }
@@ -547,165 +549,14 @@ function AppContent({
           return;
         }
 
-        setAuthSession(result.session);
+        handleAuthSessionChange(result.session);
       })
       .catch(() => {});
 
     return () => {
       cancelled = true;
     };
-  }, [resolvedPage]);
-
-  // Languages are read through a ref so language changes don't refire the
-  // profile fetch below — they are only fallbacks, not fetch inputs.
-  const languagesRef = useRef({ yourLanguage, practiceLanguage });
-  useEffect(() => {
-    languagesRef.current = { yourLanguage, practiceLanguage };
-  });
-
-  useEffect(() => {
-    if (!authUserId) {
-      setUserProfile(EMPTY_USER_PROFILE);
-      setIsAccountOnboardingOpen(false);
-      setAccountOnboardingError(null);
-      return;
-    }
-
-    let cancelled = false;
-    const storedProfile = readStoredUserProfile(authUserId);
-
-    void (async () => {
-      try {
-        // Read the session from storage: token refreshes replace the session
-        // object, and depending on it here would refetch the profile each time.
-        const session = getStoredSupabaseSession();
-        const supabaseProfile = session
-          ? await readSupabaseUserProfile(session)
-          : null;
-        const hasSupabaseProfileRow = Boolean(supabaseProfile);
-        if (cancelled) {
-          return;
-        }
-
-        const {
-          yourLanguage: currentYourLanguage,
-          practiceLanguage: currentPracticeLanguage,
-        } = languagesRef.current;
-        const nextProfile = normalizeUserProfile({
-          ...storedProfile,
-          ...supabaseProfile,
-          nickname: supabaseProfile?.nickname || storedProfile?.nickname || "",
-          nativeLanguage: normalizeLanguage(
-            supabaseProfile?.nativeLanguage ||
-              storedProfile?.nativeLanguage ||
-              currentYourLanguage ||
-              "",
-          ),
-          practiceLanguage: normalizeLanguage(
-            supabaseProfile?.practiceLanguage ||
-              storedProfile?.practiceLanguage ||
-              currentPracticeLanguage ||
-              "",
-          ),
-        });
-
-        if (!currentYourLanguage && nextProfile.nativeLanguage) {
-          setYourLanguage(nextProfile.nativeLanguage);
-        }
-        if (!currentPracticeLanguage && nextProfile.practiceLanguage) {
-          setPracticeLanguage(nextProfile.practiceLanguage);
-        }
-
-        setUserProfile(nextProfile);
-        setIsAccountOnboardingOpen(
-          !hasSupabaseProfileRow || !isUserProfileComplete(nextProfile),
-        );
-        setAccountOnboardingError(null);
-      } catch {
-        if (cancelled) {
-          return;
-        }
-
-        const fallbackProfile = normalizeUserProfile({
-          ...storedProfile,
-          nativeLanguage: normalizeLanguage(
-            storedProfile?.nativeLanguage ||
-              languagesRef.current.yourLanguage ||
-              "",
-          ),
-          practiceLanguage: normalizeLanguage(
-            storedProfile?.practiceLanguage ||
-              languagesRef.current.practiceLanguage ||
-              "",
-          ),
-        });
-
-        setUserProfile(fallbackProfile);
-        setIsAccountOnboardingOpen(!isUserProfileComplete(fallbackProfile));
-        setAccountOnboardingError(null);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [authUserId]);
-
-  useEffect(() => {
-    if (!authUserId) {
-      return;
-    }
-
-    setUserProfile((current) => {
-      const nextProfile = normalizeUserProfile({
-        ...current,
-        nativeLanguage: normalizeLanguage(yourLanguage || current.nativeLanguage),
-        practiceLanguage: normalizeLanguage(practiceLanguage || current.practiceLanguage),
-      });
-
-      return JSON.stringify(nextProfile) === JSON.stringify(current)
-        ? current
-        : nextProfile;
-    });
-  }, [authUserId, practiceLanguage, yourLanguage]);
-
-  const lastSyncedLanguagesRef = useRef("");
-
-  useEffect(() => {
-    if (
-      !authSession ||
-      !authUserId ||
-      !userProfile.onboardingCompleted ||
-      !yourLanguage ||
-      !practiceLanguage
-    ) {
-      return;
-    }
-
-    if (
-      userProfile.nativeLanguage === yourLanguage &&
-      userProfile.practiceLanguage === practiceLanguage
-    ) {
-      return;
-    }
-
-    // A late profile GET can reset userProfile to stale server languages and
-    // re-run this effect; the sync key prevents re-writing the same values.
-    const syncKey = `${authUserId}:${yourLanguage}:${practiceLanguage}`;
-    if (lastSyncedLanguagesRef.current === syncKey) {
-      return;
-    }
-    lastSyncedLanguagesRef.current = syncKey;
-
-    const nextProfile = writeStoredUserProfile(authUserId, {
-      ...userProfile,
-      nativeLanguage: yourLanguage as UILanguage,
-      practiceLanguage: practiceLanguage as UILanguage,
-    });
-
-    setUserProfile(nextProfile);
-    void writeSupabaseUserProfile(authSession, nextProfile).catch(() => {});
-  }, [authSession, authUserId, practiceLanguage, userProfile, yourLanguage]);
+  }, [handleAuthSessionChange, resolvedPage]);
 
   const handleStartPracticing = () => {
     if (isContinueDisabled) {
@@ -908,13 +759,6 @@ function AppContent({
     );
   };
 
-  const handleAuthSessionChange = useCallback(
-    (session: StoredSupabaseSession | null) => {
-      setAuthSession(session);
-    },
-    [],
-  );
-
   useEffect(() => {
     const previousAuthUserId = previousAuthUserIdRef.current;
 
@@ -928,101 +772,6 @@ function AppContent({
 
     previousAuthUserIdRef.current = authUserId;
   }, [authUserId, navigate]);
-
-  const handleUserProfileChange = (patch: Partial<UserProfile>) => {
-    setAccountOnboardingError(null);
-    setUserProfile((current) => normalizeUserProfile({ ...current, ...patch }));
-
-    if (patch.nativeLanguage !== undefined) {
-      setYourLanguage(patch.nativeLanguage);
-    }
-
-    if (patch.practiceLanguage !== undefined) {
-      setPracticeLanguage(patch.practiceLanguage);
-    }
-  };
-
-  const handleAccountOnboardingSubmit = async () => {
-    const nickname = userProfile.nickname.trim();
-    const age = userProfile.age;
-    const birthMonth = userProfile.birthMonth;
-    const birthDay = userProfile.birthDay;
-    const nativeLanguage = (userProfile.nativeLanguage ||
-      yourLanguage) as UserProfile["nativeLanguage"];
-    const nextPracticeLanguage = (userProfile.practiceLanguage ||
-      practiceLanguage) as UserProfile["practiceLanguage"];
-
-    if (!authUserId) {
-      setAccountOnboardingError("Sign in again to finish your profile.");
-      return;
-    }
-
-    if (!nickname) {
-      setAccountOnboardingError("Please choose a nickname.");
-      return;
-    }
-
-    if (!startsWithLetter(nickname)) {
-      setAccountOnboardingError("Nickname must start with a letter.");
-      return;
-    }
-
-    if (!userProfile.languageLevel) {
-      setAccountOnboardingError("Please choose your language level.");
-      return;
-    }
-
-    if (age === null) {
-      setAccountOnboardingError("Please set your age.");
-      return;
-    }
-
-    if (!birthMonth || !birthDay) {
-      setAccountOnboardingError("Please choose your birth month and day.");
-      return;
-    }
-
-    if (!nativeLanguage || !nextPracticeLanguage) {
-      setAccountOnboardingError("Please choose both languages.");
-      return;
-    }
-
-    setIsAccountOnboardingSubmitting(true);
-
-    try {
-      const profileToSave = {
-        ...userProfile,
-        nickname,
-        age,
-        birthMonth,
-        birthDay,
-        nativeLanguage,
-        practiceLanguage: nextPracticeLanguage,
-        onboardingCompleted: true,
-      };
-      const supabaseProfile = authSession
-        ? await writeSupabaseUserProfile(authSession, profileToSave)
-        : {};
-      const nextProfile = writeStoredUserProfile(authUserId, {
-        ...profileToSave,
-        ...supabaseProfile,
-      });
-
-      setUserProfile(nextProfile);
-      setYourLanguage(nativeLanguage);
-      setPracticeLanguage(nextPracticeLanguage);
-      setIsAccountOnboardingOpen(false);
-      setAccountOnboardingError(null);
-    } catch (error) {
-      const message =
-        error instanceof Error && error.message.trim()
-          ? error.message
-          : "We could not save your profile. Please try again.";
-      setAccountOnboardingError(message);
-    } finally {
-      setIsAccountOnboardingSubmitting(false);
-    }
-  };
 
   const sharedHeaderProps = {
     onAbout: () => navigate(ROUTES.about),
