@@ -16,6 +16,7 @@ import { ArrowLeftRight, ChevronDown, Search } from "lucide-react";
 import { Header } from "./components/Header";
 import { AccountOnboardingDialog } from "./components/AccountOnboardingDialog";
 import { LanguageSelector } from "./components/LanguageSelector";
+import { LevelTestLanguageModal } from "./components/LevelTestLanguageModal";
 import { FloatingWords } from "./components/FloatingWords";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { ScrollToTopButton } from "./components/ScrollToTopButton";
@@ -496,10 +497,10 @@ function AppContent({
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
   const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] =
     useState(false);
-  const [levelTestDraftYourLanguage, setLevelTestDraftYourLanguage] =
-    useState("");
-  const [levelTestDraftPracticeLanguage, setLevelTestDraftPracticeLanguage] =
-    useState("");
+  const [
+    levelTestModalSeedTargetLanguage,
+    setLevelTestModalSeedTargetLanguage,
+  ] = useState("");
   const [levelTestModalSwapRotation, setLevelTestModalSwapRotation] =
     useState(0);
   const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
@@ -800,8 +801,7 @@ function AppContent({
   };
 
   const openLevelTestLanguageModal = (targetLanguageCode: UILanguage) => {
-    setLevelTestDraftYourLanguage(yourLanguage);
-    setLevelTestDraftPracticeLanguage(practiceLanguage || targetLanguageCode);
+    setLevelTestModalSeedTargetLanguage(targetLanguageCode);
     setIsLevelTestLanguageModalOpen(true);
   };
 
@@ -820,21 +820,6 @@ function AppContent({
       setPracticeLanguage(targetLanguageCode);
     }
 
-    navigate(ROUTES.exam);
-  };
-
-  const handleConfirmLevelTestLanguages = () => {
-    if (
-      !levelTestDraftYourLanguage ||
-      !levelTestDraftPracticeLanguage ||
-      levelTestDraftYourLanguage === levelTestDraftPracticeLanguage
-    ) {
-      return;
-    }
-
-    setYourLanguage(levelTestDraftYourLanguage);
-    setPracticeLanguage(levelTestDraftPracticeLanguage);
-    setIsLevelTestLanguageModalOpen(false);
     navigate(ROUTES.exam);
   };
 
@@ -910,13 +895,6 @@ function AppContent({
     setSwapRotation((prev) => prev + 180);
   };
 
-  const handleReverseLevelTestModalLanguages = () => {
-    const temp = levelTestDraftYourLanguage;
-    setLevelTestDraftYourLanguage(levelTestDraftPracticeLanguage);
-    setLevelTestDraftPracticeLanguage(temp);
-    setLevelTestModalSwapRotation((prev) => prev + 180);
-  };
-
   const swapButton = (
     <motion.button
       onClick={handleReverseLanguages}
@@ -938,130 +916,6 @@ function AppContent({
       </motion.span>
     </motion.button>
   );
-
-  const levelTestModalSwapButton = (
-    <motion.button
-      type="button"
-      onClick={handleReverseLevelTestModalLanguages}
-      className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full border border-border/70 bg-muted/50 text-muted-foreground hover:text-foreground hover:border-primary/40 hover:bg-muted/70 shadow-sm transition-all opacity-90 md:opacity-100"
-      aria-label="Reverse languages"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <motion.span
-        animate={
-          shouldReduceMotion
-            ? undefined
-            : { rotate: levelTestModalSwapRotation }
-        }
-        transition={
-          shouldReduceMotion
-            ? { duration: 0 }
-            : { duration: 0.25, ease: "easeInOut" }
-        }
-        className="inline-flex"
-      >
-        <ArrowLeftRight className="w-4 h-4 rotate-90 md:rotate-0 text-foreground/80" />
-      </motion.span>
-    </motion.button>
-  );
-
-  const isLevelTestLanguageSelectionDisabled =
-    !levelTestDraftYourLanguage ||
-    !levelTestDraftPracticeLanguage ||
-    levelTestDraftYourLanguage === levelTestDraftPracticeLanguage;
-
-  const levelTestLanguageModal = isLevelTestLanguageModalOpen ? (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center px-4 py-6">
-      <button
-        type="button"
-        aria-label={t("languageContinuePopup.closePopup")}
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-        onClick={() => setIsLevelTestLanguageModalOpen(false)}
-      />
-      <div className="relative z-10 w-full max-w-2xl rounded-3xl border border-border bg-card p-6 shadow-2xl md:p-8">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-2xl text-foreground">
-              {t("languageContinuePopup.title")}
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t("home.selectYourLanguage")} and{" "}
-              {t("home.selectPracticeLanguage").toLowerCase()}.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setIsLevelTestLanguageModalOpen(false)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground transition hover:bg-muted hover:text-foreground"
-            aria-label={t("languageContinuePopup.close")}
-          >
-            X
-          </button>
-        </div>
-
-        <div className="mt-6">
-          <div className="md:hidden relative space-y-10">
-            <LanguageSelector
-              label={t("home.yourLanguage")}
-              value={levelTestDraftYourLanguage}
-              onChange={setLevelTestDraftYourLanguage}
-              placeholder={t("home.selectYourLanguage")}
-              languages={languages}
-              disabledLanguages={[levelTestDraftPracticeLanguage]}
-            />
-            <div className="absolute left-1/2 top-[calc(50%+16px)] -translate-x-1/2 -translate-y-1/2 z-10">
-              {levelTestModalSwapButton}
-            </div>
-            <LanguageSelector
-              label={t("home.practiceLanguage")}
-              value={levelTestDraftPracticeLanguage}
-              onChange={setLevelTestDraftPracticeLanguage}
-              placeholder={t("home.selectPracticeLanguage")}
-              languages={languages}
-              disabledLanguages={[levelTestDraftYourLanguage]}
-            />
-          </div>
-          <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-6">
-            <LanguageSelector
-              label={t("home.yourLanguage")}
-              value={levelTestDraftYourLanguage}
-              onChange={setLevelTestDraftYourLanguage}
-              placeholder={t("home.selectYourLanguage")}
-              languages={languages}
-              disabledLanguages={[levelTestDraftPracticeLanguage]}
-            />
-            <div className="flex justify-center mt-8">
-              {levelTestModalSwapButton}
-            </div>
-            <LanguageSelector
-              label={t("home.practiceLanguage")}
-              value={levelTestDraftPracticeLanguage}
-              onChange={setLevelTestDraftPracticeLanguage}
-              placeholder={t("home.selectPracticeLanguage")}
-              languages={languages}
-              disabledLanguages={[levelTestDraftYourLanguage]}
-            />
-          </div>
-        </div>
-
-        <div className="mt-6 flex justify-end">
-          <button
-            type="button"
-            onClick={handleConfirmLevelTestLanguages}
-            disabled={isLevelTestLanguageSelectionDisabled}
-            className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition ${
-              isLevelTestLanguageSelectionDisabled
-                ? "cursor-not-allowed bg-muted text-muted-foreground"
-                : "border border-primary/45 bg-primary/10 text-primary hover:bg-primary/15"
-            }`}
-          >
-            Start Level Test
-          </button>
-        </div>
-      </div>
-    </div>
-  ) : null;
 
   const accountOnboardingDialog = authUserId ? (
     <AccountOnboardingDialog
@@ -1589,7 +1443,25 @@ function AppContent({
             }
           />
         </Suspense>
-        {levelTestLanguageModal}
+        <LevelTestLanguageModal
+          open={isLevelTestLanguageModalOpen}
+          initialYourLanguage={yourLanguage}
+          initialPracticeLanguage={
+            practiceLanguage || levelTestModalSeedTargetLanguage
+          }
+          languages={languages}
+          swapRotation={levelTestModalSwapRotation}
+          onReverse={() =>
+            setLevelTestModalSwapRotation((prev) => prev + 180)
+          }
+          onClose={() => setIsLevelTestLanguageModalOpen(false)}
+          onConfirm={(nextYourLanguage, nextPracticeLanguage) => {
+            setYourLanguage(nextYourLanguage);
+            setPracticeLanguage(nextPracticeLanguage);
+            setIsLevelTestLanguageModalOpen(false);
+            navigate(ROUTES.exam);
+          }}
+        />
         {accountOnboardingDialog}
       </div>
     );
