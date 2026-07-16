@@ -28,10 +28,7 @@ import { VerbListSeoPage } from "./components/VerbListSeoPage";
 import { WordSeoPage } from "./components/WordSeoPage";
 import { WordPageLayout } from "./components/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./components/DevSeoCefrPlaceholderPage";
-import {
-  LanguageContinuePopup,
-  type LanguageContinuePopupHandle,
-} from "./components/LanguageContinuePopup";
+import { LanguageContinuePopup } from "./components/LanguageContinuePopup";
 import {
   LanguageProvider,
   useLanguage,
@@ -75,6 +72,7 @@ import { useUserProfileLoad } from "./hooks/useUserProfileLoad";
 import { useUserProfileSync } from "./hooks/useUserProfileSync";
 import { useRouteLanguageSync } from "./hooks/useRouteLanguageSync";
 import { useExploreItems } from "./hooks/useExploreItems";
+import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
 
 const LevelCategorySelection = lazy(() =>
   import("./components/LevelCategorySelection").then((module) => ({
@@ -313,7 +311,6 @@ function AppContent({
   );
   const [openExploreLanguage, setOpenExploreLanguage] =
     useState<UILanguage | null>(null);
-  const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
   const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] =
     useState(false);
   const [
@@ -322,7 +319,6 @@ function AppContent({
   ] = useState("");
   const [levelTestModalSwapRotation, setLevelTestModalSwapRotation] =
     useState(0);
-  const popupRef = useRef<LanguageContinuePopupHandle | null>(null);
   const hasAutoRedirectedRef = useRef(false);
   const initialPathRef = useRef(location.pathname);
   const startedFromReloadRef = useRef(
@@ -394,7 +390,7 @@ function AppContent({
 
     if (isContinueDisabled) {
       navigate(ROUTES.language);
-      setPopupQueuedForLanguage(true);
+      queueForLanguagePage();
       return;
     }
 
@@ -493,22 +489,10 @@ function AppContent({
     }
   }, [isContinueDisabled, navigate, resolvedPage]);
 
-  // Cleanup when leaving page or changing languages
-  useEffect(() => {
-    if (resolvedPage !== "language" || !isContinueDisabled) {
-      setPopupQueuedForLanguage(false);
-      popupRef.current?.hide();
-    }
-  }, [resolvedPage, isContinueDisabled]);
-
-  // Show queued popup after language page renders
-  useEffect(() => {
-    if (resolvedPage !== "language" || !popupQueuedForLanguage) {
-      return;
-    }
-    setPopupQueuedForLanguage(false);
-    popupRef.current?.show({ delayMs: 100 });
-  }, [resolvedPage, popupQueuedForLanguage]);
+  const { popupRef, queueForLanguagePage } = useLanguageContinuePopup({
+    resolvedPage,
+    isContinueDisabled,
+  });
 
   const handleContinueToExerciseSelection = () => {
     navigate(ROUTES.exerciseSelection);
@@ -519,7 +503,7 @@ function AppContent({
       const suppressPopup = resolvedPage === "about";
       navigate(ROUTES.language);
       if (!suppressPopup) {
-        setPopupQueuedForLanguage(true);
+        queueForLanguagePage();
       }
       return;
     }
@@ -574,7 +558,7 @@ function AppContent({
       const suppressPopup = resolvedPage === "about";
       navigate(ROUTES.language);
       if (!suppressPopup) {
-        setPopupQueuedForLanguage(true);
+        queueForLanguagePage();
       }
       return;
     }
