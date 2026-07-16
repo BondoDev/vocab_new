@@ -48,7 +48,6 @@ import {
 } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
-import { getVerbListPath, getVerbListTitle } from "../data/verbLists";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPageData";
 import { handleSupabaseAuthRedirect } from "../lib/supabaseAuth";
@@ -69,22 +68,13 @@ import {
   type RouteKey,
 } from "./utils/pageRouting";
 import { createDistributedStarFieldImage } from "./utils/starField";
-import {
-  buildEnglishExploreTopics,
-  buildFrenchExploreTopics,
-  buildGermanExploreTopics,
-  buildItalianExploreTopics,
-  buildPortugueseExploreTopics,
-  buildRussianExploreTopics,
-  buildSpanishExploreTopics,
-  withLevelTestExploreTopic,
-} from "./utils/exploreTopics";
 import { useAuthSession } from "./hooks/useAuthSession";
 import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
 import { useUserProfileLoad } from "./hooks/useUserProfileLoad";
 import { useUserProfileSync } from "./hooks/useUserProfileSync";
 import { useRouteLanguageSync } from "./hooks/useRouteLanguageSync";
+import { useExploreItems } from "./hooks/useExploreItems";
 
 const LevelCategorySelection = lazy(() =>
   import("./components/LevelCategorySelection").then((module) => ({
@@ -188,176 +178,9 @@ function AppContent({
     [],
   );
   // Explore-topic data building is pure and lives in ./utils/exploreTopics;
-  // the useMemo calls (and their exact dependency arrays) stay here so
-  // memoization behavior is unchanged.
-  const englishExploreTopics = useMemo(
-    () => buildEnglishExploreTopics(uiLanguage, t),
-    [t, uiLanguage],
-  );
-  const spanishExploreTopics = useMemo(
-    () => buildSpanishExploreTopics(uiLanguage),
-    [uiLanguage],
-  );
-  const frenchExploreTopics = useMemo(
-    () => buildFrenchExploreTopics(uiLanguage),
-    [uiLanguage],
-  );
-  const germanExploreTopics = useMemo(
-    () => buildGermanExploreTopics(uiLanguage),
-    [uiLanguage],
-  );
-  const italianExploreTopics = useMemo(
-    () => buildItalianExploreTopics(uiLanguage),
-    [uiLanguage],
-  );
-  const portugueseExploreTopics = useMemo(
-    () => buildPortugueseExploreTopics(uiLanguage),
-    [uiLanguage],
-  );
-  const russianExploreTopics = useMemo(
-    () => buildRussianExploreTopics(uiLanguage),
-    [uiLanguage],
-  );
-  const englishExploreItems = useMemo(
-    () => [
-      ...withLevelTestExploreTopic(
-        englishExploreTopics,
-        "english",
-        uiLanguage,
-        t,
-        ROUTES.exam,
-      ),
-      {
-        id: "verbs",
-        level: "verbs" as const,
-        label: getVerbListTitle("english", uiLanguage),
-        path: getVerbListPath("english", uiLanguage),
-        kind: "custom" as const,
-        targetLanguage: "english" as const,
-      },
-    ],
-    [englishExploreTopics, uiLanguage],
-  );
-  const spanishExploreItems = useMemo(
-    () => [
-      ...withLevelTestExploreTopic(
-        spanishExploreTopics,
-        "spanish",
-        uiLanguage,
-        t,
-        ROUTES.exam,
-      ),
-      {
-        id: "verbs",
-        level: "verbs" as const,
-        label: getVerbListTitle("spanish", uiLanguage),
-        path: getVerbListPath("spanish", uiLanguage),
-        kind: "custom" as const,
-        targetLanguage: "spanish" as const,
-      },
-    ],
-    [spanishExploreTopics, uiLanguage],
-  );
-  const frenchExploreItems = useMemo(
-    () => [
-      ...withLevelTestExploreTopic(
-        frenchExploreTopics,
-        "french",
-        uiLanguage,
-        t,
-        ROUTES.exam,
-      ),
-      {
-        id: "verbs",
-        level: "verbs" as const,
-        label: getVerbListTitle("french", uiLanguage),
-        path: getVerbListPath("french", uiLanguage),
-        kind: "custom" as const,
-        targetLanguage: "french" as const,
-      },
-    ],
-    [frenchExploreTopics, uiLanguage],
-  );
-  const germanExploreItems = useMemo(
-    () => [
-      ...withLevelTestExploreTopic(
-        germanExploreTopics,
-        "german",
-        uiLanguage,
-        t,
-        ROUTES.exam,
-      ),
-      {
-        id: "verbs",
-        level: "verbs" as const,
-        label: getVerbListTitle("german", uiLanguage),
-        path: getVerbListPath("german", uiLanguage),
-        kind: "custom" as const,
-        targetLanguage: "german" as const,
-      },
-    ],
-    [germanExploreTopics, uiLanguage],
-  );
-  const italianExploreItems = useMemo(
-    () => [
-      ...withLevelTestExploreTopic(
-        italianExploreTopics,
-        "italian",
-        uiLanguage,
-        t,
-        ROUTES.exam,
-      ),
-      {
-        id: "verbs",
-        level: "verbs" as const,
-        label: getVerbListTitle("italian", uiLanguage),
-        path: getVerbListPath("italian", uiLanguage),
-        kind: "custom" as const,
-        targetLanguage: "italian" as const,
-      },
-    ],
-    [italianExploreTopics, uiLanguage],
-  );
-  const portugueseExploreItems = useMemo(
-    () => [
-      ...withLevelTestExploreTopic(
-        portugueseExploreTopics,
-        "portuguese",
-        uiLanguage,
-        t,
-        ROUTES.exam,
-      ),
-      {
-        id: "verbs",
-        level: "verbs" as const,
-        label: getVerbListTitle("portuguese", uiLanguage),
-        path: getVerbListPath("portuguese", uiLanguage),
-        kind: "custom" as const,
-        targetLanguage: "portuguese" as const,
-      },
-    ],
-    [portugueseExploreTopics, uiLanguage],
-  );
-  const russianExploreItems = useMemo(
-    () => [
-      ...withLevelTestExploreTopic(
-        russianExploreTopics,
-        "russian",
-        uiLanguage,
-        t,
-        ROUTES.exam,
-      ),
-      {
-        id: "verbs",
-        level: "verbs" as const,
-        label: getVerbListTitle("russian", uiLanguage),
-        path: getVerbListPath("russian", uiLanguage),
-        kind: "custom" as const,
-        targetLanguage: "russian" as const,
-      },
-    ],
-    [russianExploreTopics, uiLanguage],
-  );
+  // the 14 useMemo calls (and their exact dependency arrays) live in
+  // ./hooks/useExploreItems so memoization behavior is unchanged.
+  const exploreItemsByLanguageCode = useExploreItems(uiLanguage, t, ROUTES.exam);
   const languages = useMemo(
     () =>
       supportedLanguages.map((lang) => ({
@@ -952,15 +775,7 @@ function AppContent({
         <Header {...sharedHeaderProps} activePage="explore" />
         <ExplorePage
           languages={languages}
-          itemsByLanguageCode={{
-            en: englishExploreItems,
-            es: spanishExploreItems,
-            fr: frenchExploreItems,
-            de: germanExploreItems,
-            it: italianExploreItems,
-            pt: portugueseExploreItems,
-            ru: russianExploreItems,
-          }}
+          itemsByLanguageCode={exploreItemsByLanguageCode}
           openLanguage={openExploreLanguage}
           onToggleLanguage={toggleExploreLanguage}
           onCloseDropdown={() => setOpenExploreLanguage(null)}
