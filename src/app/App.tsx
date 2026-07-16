@@ -35,22 +35,9 @@ import {
   useLanguage,
   type UILanguage,
 } from "../contexts/LanguageContext";
-import {
-  buildLocalizedVocabularyPath,
-  isSupportedUiLanguage,
-  resolveVocabularyRoute,
-  type Level as CefrLevelCode,
-  type TargetLanguageSlug,
-  type UiLanguageCode,
-} from "../data/seo/slugs";
-import {
-  parseWordRoutePathname,
-  type CanonicalWordPageRouteMatch,
-  resolveWordPageRoute,
-} from "../data/seo/wordSlugs";
+import type { TargetLanguageSlug } from "../data/seo/slugs";
+import type { CanonicalWordPageRouteMatch } from "../data/seo/wordSlugs";
 import type { LevelBrowsePreviewData } from "../data/seo/levelBrowseWords";
-import { resolveSeoHubRoute } from "../data/seo/hub";
-import { resolveWordSeoHubRoute, type WordSeoHubRoute } from "../data/seo/wordHubRoutes";
 import {
   SEOHead,
   SeoProvider,
@@ -59,12 +46,7 @@ import {
 } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
-import {
-  getLevelTestContent,
-  getLevelTestSeoPath,
-  resolveLevelTestSeoRoute,
-} from "../data/levelTests";
-import { getVerbListPath, getVerbListTitle, resolveVerbListRoute } from "../data/verbLists";
+import { getVerbListPath, getVerbListTitle } from "../data/verbLists";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPageData";
 import {
@@ -85,6 +67,33 @@ import {
   writeStoredUserProfile,
   type UserProfile,
 } from "../lib/userProfile";
+import {
+  TARGET_LANGUAGE_TO_UI_CODE,
+  buildPracticeRoute,
+  pageFromPath,
+  parseDevSeoCefrPlaceholderRoute,
+  parseLevelTestSeoRoute,
+  parsePracticeRoute,
+  parseSeoHubRoute,
+  parseVerbListSeoRoute,
+  parseVocabularyRoute,
+  parseWordRoute,
+  parseWordSeoHubRoute,
+  type RouteKey,
+} from "./utils/pageRouting";
+import { createDistributedStarFieldImage } from "./utils/starField";
+import {
+  buildEnglishExploreTopics,
+  buildFrenchExploreTopics,
+  buildGermanExploreTopics,
+  buildItalianExploreTopics,
+  buildPortugueseExploreTopics,
+  buildRussianExploreTopics,
+  buildSpanishExploreTopics,
+  withLevelTestExploreTopic,
+  type ExploreTopic,
+} from "./utils/exploreTopics";
+import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
 
 const LevelCategorySelection = lazy(() =>
   import("./components/LevelCategorySelection").then((module) => ({
@@ -131,14 +140,6 @@ const supportedLanguages = [
   { code: "ru", flagCode: "ru" },
 ];
 
-const DEFAULT_EXERCISES = [
-  "wordTyping",
-  "halfWritten",
-  "brokenWord",
-  "connectWords",
-  "listening",
-];
-
 const STORAGE_KEYS = {
   yourLanguage: "app.yourLanguage",
   practiceLanguage: "app.practiceLanguage",
@@ -149,64 +150,12 @@ const STORAGE_KEYS = {
   selectedExercises: "app.selectedExercises",
 } as const;
 
-const VALID_LEVEL_CODES = new Set(["A1", "A2", "B1", "B2", "C1", "C2"]);
-
 function RouteLoadingFallback() {
   return (
     <div className="flex-1 flex items-center justify-center px-6 py-12 text-sm text-muted-foreground">
       Loading...
     </div>
   );
-}
-
-function canUseLocalStorage(): boolean {
-  return (
-    typeof window !== "undefined" && typeof window.localStorage !== "undefined"
-  );
-}
-
-function readStoredString(
-  key: string,
-  isValid: (value: string) => boolean,
-): string | null {
-  if (!canUseLocalStorage()) {
-    return null;
-  }
-
-  const value = window.localStorage.getItem(key);
-  if (!value || !isValid(value)) {
-    return null;
-  }
-
-  return value;
-}
-
-function readStoredStringArray(
-  key: string,
-  isValidItem?: (value: string) => boolean,
-): string[] | null {
-  if (!canUseLocalStorage()) {
-    return null;
-  }
-
-  const rawValue = window.localStorage.getItem(key);
-  if (!rawValue) {
-    return null;
-  }
-
-  try {
-    const parsed = JSON.parse(rawValue);
-    if (!Array.isArray(parsed)) {
-      return null;
-    }
-
-    const normalized = parsed.filter(
-      (item): item is string => typeof item === "string",
-    );
-    return isValidItem ? normalized.filter(isValidItem) : normalized;
-  } catch {
-    return null;
-  }
 }
 
 function getSessionUserId(
@@ -217,101 +166,11 @@ function getSessionUserId(
     : null;
 }
 
-interface ParsedVocabularyRoute {
-  uiLang: UiLanguageCode;
-  targetLanguage: TargetLanguageSlug;
-  level: CefrLevelCode;
-}
-
-interface ParsedLevelTestSeoRoute {
-  uiLang: UiLanguageCode;
-  targetLanguage: TargetLanguageSlug;
-}
-
-interface ParsedVerbListSeoRoute {
-  uiLang: UiLanguageCode;
-  targetLanguage: TargetLanguageSlug;
-}
-
-type ParsedWordSeoHubRoute = WordSeoHubRoute;
-
-interface ParsedPracticeRoute {
-  yourLanguage: UILanguage;
-  practiceLanguage: UILanguage;
-}
-
-interface ExploreTopic {
-  id: string;
-  level: CefrLevelCode | "test" | "verbs";
-  label: string;
-  path: string;
-  kind: "level" | "test" | "custom";
-  targetLanguage: TargetLanguageSlug;
-}
-
-const TARGET_LANGUAGE_TO_UI_CODE: Record<TargetLanguageSlug, UILanguage> = {
-  english: "en",
-  spanish: "es",
-  french: "fr",
-  german: "de",
-  italian: "it",
-  portuguese: "pt",
-  russian: "ru",
-};
-
-function parseVocabularyRoute(path: string): ParsedVocabularyRoute | null {
-  const match = path.match(/^\/([a-z]{2})\/([^/?#]+)$/);
-  if (!match) {
-    return null;
-  }
-
-  const [, uiLangRaw, slug] = match;
-  const resolved = resolveVocabularyRoute(uiLangRaw, slug);
-  if (!resolved) {
-    return null;
-  }
-
-  return {
-    uiLang: resolved.uiLang,
-    targetLanguage: resolved.targetLanguage,
-    level: resolved.level,
-  };
-}
-
-function parseDevSeoCefrPlaceholderRoute(
-  path: string,
-): ParsedVocabularyRoute | null {
-  if (!path.startsWith("/test/")) {
-    return null;
-  }
-
-  return parseVocabularyRoute(path.slice("/test".length));
-}
-
-function parseLevelTestSeoRoute(path: string): ParsedLevelTestSeoRoute | null {
-  return resolveLevelTestSeoRoute(path);
-}
-
-function parseVerbListSeoRoute(path: string): ParsedVerbListSeoRoute | null {
-  return resolveVerbListRoute(path);
-}
-
-function parseSeoHubRoute(path: string): UiLanguageCode | null {
-  return resolveSeoHubRoute(path);
-}
-
-function parseWordSeoHubRoute(path: string): ParsedWordSeoHubRoute | null {
-  return resolveWordSeoHubRoute(path);
-}
-
-function parseWordRoute(path: string): CanonicalWordPageRouteMatch | null {
-  return resolveWordPageRoute(path);
-}
-
-function parseAnyWordRoute(path: string) {
-  const result = parseWordRoutePathname(path);
-  return result.kind === "not-word-route" ? null : result;
-}
+// ROUTES must stay defined in this file as a literal `as const` block:
+// scripts/test-interactive-contracts.mjs parses App.tsx's source text for it
+// (and Header.tsx's NAV_HREFS is checked against it). The pure route helpers
+// live in ./utils/pageRouting and receive this map as a parameter instead of
+// importing App.tsx.
 const ROUTES = {
   language: "/languages",
   levelCategory: "/languages/filters",
@@ -324,168 +183,8 @@ const ROUTES = {
   profile: "/profile",
 } as const;
 
-type RouteKey = keyof typeof ROUTES;
-type PageKey =
-  | RouteKey
-  | "vocabularyLevel"
-  | "levelTestSeo"
-  | "verbListSeo"
-  | "seoHub"
-  | "wordSeoHub"
-  | "wordPage"
-  | "devSeoCefrPlaceholder"
-  | "notFound";
-
-function buildPracticeRoute(
-  yourLanguage: UILanguage,
-  practiceLanguage: UILanguage,
-): string {
-  return `${ROUTES.exerciseSelection}/${yourLanguage}-${practiceLanguage}/practice`;
-}
-
-function parsePracticeRoute(path: string): ParsedPracticeRoute | null {
-  const match = path.match(
-    /^\/languages\/filters\/exercises\/([a-z]{2})-([a-z]{2})\/practice$/,
-  );
-  if (!match) {
-    return null;
-  }
-
-  const [, yourLanguageRaw, practiceLanguageRaw] = match;
-  if (
-    !isSupportedUiLanguage(yourLanguageRaw) ||
-    !isSupportedUiLanguage(practiceLanguageRaw)
-  ) {
-    return null;
-  }
-
-  return {
-    yourLanguage: yourLanguageRaw,
-    practiceLanguage: practiceLanguageRaw,
-  };
-}
-
-const pageFromPath = (path: string): PageKey => {
-  if (parsePracticeRoute(path)) {
-    return "practice";
-  }
-
-  switch (path) {
-    case "/":
-    case ROUTES.language:
-      return "language";
-    case ROUTES.levelCategory:
-      return "levelCategory";
-    case ROUTES.exerciseSelection:
-      return "exerciseSelection";
-    case ROUTES.practice:
-      return "practice";
-    case ROUTES.explore:
-      return "explore";
-    case ROUTES.exam:
-      return "exam";
-    case ROUTES.about:
-      return "about";
-    case ROUTES.help:
-      return "help";
-    case ROUTES.profile:
-      return "profile";
-    default: {
-      if (import.meta.env.DEV && parseDevSeoCefrPlaceholderRoute(path)) {
-        return "devSeoCefrPlaceholder";
-      }
-      if (parseSeoHubRoute(path)) {
-        return "seoHub";
-      }
-      if (parseWordSeoHubRoute(path)) {
-        return "wordSeoHub";
-      }
-      if (parseLevelTestSeoRoute(path)) {
-        return "levelTestSeo";
-      }
-      if (parseVerbListSeoRoute(path)) {
-        return "verbListSeo";
-      }
-      if (parseAnyWordRoute(path)) {
-        return "wordPage";
-      }
-      if (parseVocabularyRoute(path)) {
-        return "vocabularyLevel";
-      }
-      return "notFound";
-    }
-  }
-};
-
 function randomBetween(min: number, max: number): number {
   return min + (max - min) * 0.5;
-}
-
-function createSeededRandom(seed: number): () => number {
-  let value = seed >>> 0;
-
-  return () => {
-    value = (value * 1664525 + 1013904223) >>> 0;
-    return value / 4294967296;
-  };
-}
-
-function createDistributedStarFieldImage(
-  starCount: number,
-  seed = starCount,
-): string {
-  const cols = Math.ceil(Math.sqrt(starCount));
-  const rows = Math.ceil(starCount / cols);
-  const sparkleScaleOptions = [0.8, 1, 1.2, 1.4];
-  const colorOptions = [
-    "#fff",
-    "#fff",
-    "#fff",
-    "#f3f3f3",
-    "rgba(255,255,255,0.9)",
-  ];
-  const layers: string[] = [];
-  const nextRandom = createSeededRandom(seed);
-
-  for (let i = 0; i < starCount; i++) {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-    const cellWidth = 100 / cols;
-    const cellHeight = 100 / rows;
-    const xMin = col * cellWidth + 10;
-    const xMax = (col + 1) * cellWidth - 10;
-    const yMin = row * cellHeight + 14;
-    const yMax = (row + 1) * cellHeight - 14;
-    const x = (
-      Math.max(5, xMin) +
-      (Math.min(95, xMax) - Math.max(5, xMin)) * nextRandom()
-    ).toFixed(1);
-    const y = (
-      Math.max(8, yMin) +
-      (Math.min(92, yMax) - Math.max(8, yMin)) * nextRandom()
-    ).toFixed(1);
-    const sparkleScale =
-      sparkleScaleOptions[
-        Math.floor(nextRandom() * sparkleScaleOptions.length)
-      ];
-    const color = colorOptions[Math.floor(nextRandom() * colorOptions.length)];
-    const longArm = ((4.8 + (6.6 - 4.8) * nextRandom()) * sparkleScale).toFixed(
-      1,
-    );
-    const shortArm = (
-      (1.05 + (1.45 - 1.05) * nextRandom()) *
-      sparkleScale
-    ).toFixed(2);
-    const core = ((0.9 + (1.3 - 0.9) * nextRandom()) * sparkleScale).toFixed(2);
-
-    layers.push(
-      `radial-gradient(ellipse ${longArm}px ${shortArm}px at ${x}% ${y}%, ${color}, rgba(0,0,0,0) 72%)`,
-      `radial-gradient(ellipse ${shortArm}px ${longArm}px at ${x}% ${y}%, ${color}, rgba(0,0,0,0) 72%)`,
-      `radial-gradient(${core}px ${core}px at ${x}% ${y}%, rgba(255,255,255,0.98), rgba(0,0,0,0))`,
-    );
-  }
-
-  return layers.join(",\n    ");
 }
 
 function AppContent({
@@ -505,531 +204,46 @@ function AppContent({
     () => new Set(supportedLanguages.map((language) => language.code)),
     [],
   );
-  const vocabularyPracticeByUiLanguage: Record<string, string> = {
-    en: "Vocabulary Practice",
-    es: "práctica de vocabulario",
-    fr: "Pratique du vocabulaire",
-    de: "Wortschatzubung",
-    it: "Pratica del vocabolario",
-    pt: "Pratica de vocabulario",
-    ru: "Практика словарного запаса",
-  };
-  const buildExploreLevelTestLabel = (targetLanguage: TargetLanguageSlug) => {
-    const seoContent = getLevelTestContent(uiLanguage, targetLanguage);
-    if (seoContent?.title) {
-      return seoContent.title;
-    }
-
-    const languageCode = TARGET_LANGUAGE_TO_UI_CODE[targetLanguage];
-    const languageName = t(`languageNames.${languageCode}`);
-    const levelTestLabel = t("header.levelTest");
-
-    switch (uiLanguage) {
-      case "en":
-      case "de":
-        return `${languageName} ${levelTestLabel}`;
-      default:
-        return `${levelTestLabel}: ${languageName.toLowerCase()}`;
-    }
-  };
-
-  const withLevelTestExploreTopic = (
-    topics: Array<{
-      level: CefrLevelCode;
-      label: string;
-      path: string | null | undefined;
-    }>,
-    targetLanguage: TargetLanguageSlug,
-  ): ExploreTopic[] => [
-    ...topics.map((topic) => ({
-      id: topic.level,
-      level: topic.level,
-      label: topic.label,
-      path: topic.path ?? "#",
-      kind: "level" as const,
-      targetLanguage,
-    })),
-    {
-      id: "test",
-      level: "test",
-      label: buildExploreLevelTestLabel(targetLanguage),
-      path: getLevelTestSeoPath(uiLanguage, targetLanguage) ?? ROUTES.exam,
-      kind: "test",
-      targetLanguage,
-    },
-  ];
-  const englishExploreTopics = useMemo(() => {
-    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
-
-    if (uiLanguage === "fr") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulaire d’anglais ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "de") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Englisch Wortschatz ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "it") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabolario di inglese ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "pt") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulário de inglês ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "ru") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Словарный запас английского ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-
-    const englishLabel = t("languageNames.en");
-
-    if (uiLanguage === "en") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `${englishLabel} ${level.toUpperCase()} Vocabulary`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-
-    const practiceLabel =
-      vocabularyPracticeByUiLanguage[uiLanguage] ??
-      vocabularyPracticeByUiLanguage.en;
-
-    return levels
-      .map((level) => ({
-        level,
-        label: `${englishLabel} ${level.toUpperCase()} ${practiceLabel}`,
-        path: buildLocalizedVocabularyPath(uiLanguage, "english", level),
-      }))
-      .filter((topic) => Boolean(topic.path));
-  }, [t, uiLanguage]);
-  const spanishExploreTopics = useMemo(() => {
-    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
-
-    if (uiLanguage === "es") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulario de español ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "de") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Spanisch Wortschatz ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "fr") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulaire d’espagnol ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "pt") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulário de espanhol ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "it") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabolario di spagnolo ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "ru") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Словарный запас испанского ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-
-    return levels
-      .map((level) => ({
-        level,
-        label: `Spanish Vocabulary ${level.toUpperCase()}`,
-        path: buildLocalizedVocabularyPath(uiLanguage, "spanish", level),
-      }))
-      .filter((topic) => Boolean(topic.path));
-  }, [uiLanguage]);
-  const frenchExploreTopics = useMemo(() => {
-    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
-
-    if (uiLanguage === "es") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulario de francés ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "de") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Französisch Wortschatz ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "ru") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Словарный запас французского ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "fr") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulaire de français ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "pt") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulário de francês ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "it") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabolario di francese ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-
-    return levels
-      .map((level) => ({
-        level,
-        label: `French Vocabulary ${level.toUpperCase()}`,
-        path: buildLocalizedVocabularyPath(uiLanguage, "french", level),
-      }))
-      .filter((topic) => Boolean(topic.path));
-  }, [uiLanguage]);
-  const germanExploreTopics = useMemo(() => {
-    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
-
-    if (uiLanguage === "es") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulario de alemán ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "de") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Deutsch Wortschatz ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "ru") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Словарный запас немецкого ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "fr") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulaire d’allemand ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "pt") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulário de alemão ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "it") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabolario di tedesco ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-
-    return levels
-      .map((level) => ({
-        level,
-        label: `German Vocabulary ${level.toUpperCase()}`,
-        path: buildLocalizedVocabularyPath(uiLanguage, "german", level),
-      }))
-      .filter((topic) => Boolean(topic.path));
-  }, [uiLanguage]);
-  const italianExploreTopics = useMemo(() => {
-    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
-
-    if (uiLanguage === "es") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulario de italiano ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "de") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Italienisch Wortschatz ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "ru") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Словарный запас итальянского ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "fr") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulaire d’italien ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "pt") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulário de italiano ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "it") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabolario di italiano ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-
-    return levels
-      .map((level) => ({
-        level,
-        label: `Italian Vocabulary ${level.toUpperCase()}`,
-        path: buildLocalizedVocabularyPath(uiLanguage, "italian", level),
-      }))
-      .filter((topic) => Boolean(topic.path));
-  }, [uiLanguage]);
-  const portugueseExploreTopics = useMemo(() => {
-    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
-
-    if (uiLanguage === "es") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulario de portugués ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "de") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Portugiesisch Wortschatz ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "ru") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Словарный запас португальского ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "fr") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulaire de portugais ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "pt") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulário de português ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "it") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabolario di portoghese ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-
-    return levels
-      .map((level) => ({
-        level,
-        label: `Portuguese Vocabulary ${level.toUpperCase()}`,
-        path: buildLocalizedVocabularyPath(uiLanguage, "portuguese", level),
-      }))
-      .filter((topic) => Boolean(topic.path));
-  }, [uiLanguage]);
-  const russianExploreTopics = useMemo(() => {
-    const levels: CefrLevelCode[] = ["a1", "a2", "b1", "b2", "c1", "c2"];
-
-    if (uiLanguage === "es") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulario de ruso ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "de") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Russisch Wortschatz ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "ru") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Словарный запас русского ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "fr") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulaire de russe ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "pt") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabulário de russo ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-    if (uiLanguage === "it") {
-      return levels
-        .map((level) => ({
-          level,
-          label: `Vocabolario di russo ${level.toUpperCase()}`,
-          path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
-        }))
-        .filter((topic) => Boolean(topic.path));
-    }
-
-    return levels
-      .map((level) => ({
-        level,
-        label: `Russian Vocabulary ${level.toUpperCase()}`,
-        path: buildLocalizedVocabularyPath(uiLanguage, "russian", level),
-      }))
-      .filter((topic) => Boolean(topic.path));
-  }, [uiLanguage]);
+  // Explore-topic data building is pure and lives in ./utils/exploreTopics;
+  // the useMemo calls (and their exact dependency arrays) stay here so
+  // memoization behavior is unchanged.
+  const englishExploreTopics = useMemo(
+    () => buildEnglishExploreTopics(uiLanguage, t),
+    [t, uiLanguage],
+  );
+  const spanishExploreTopics = useMemo(
+    () => buildSpanishExploreTopics(uiLanguage),
+    [uiLanguage],
+  );
+  const frenchExploreTopics = useMemo(
+    () => buildFrenchExploreTopics(uiLanguage),
+    [uiLanguage],
+  );
+  const germanExploreTopics = useMemo(
+    () => buildGermanExploreTopics(uiLanguage),
+    [uiLanguage],
+  );
+  const italianExploreTopics = useMemo(
+    () => buildItalianExploreTopics(uiLanguage),
+    [uiLanguage],
+  );
+  const portugueseExploreTopics = useMemo(
+    () => buildPortugueseExploreTopics(uiLanguage),
+    [uiLanguage],
+  );
+  const russianExploreTopics = useMemo(
+    () => buildRussianExploreTopics(uiLanguage),
+    [uiLanguage],
+  );
   const englishExploreItems = useMemo(
     () => [
-      ...withLevelTestExploreTopic(englishExploreTopics, "english"),
+      ...withLevelTestExploreTopic(
+        englishExploreTopics,
+        "english",
+        uiLanguage,
+        t,
+        ROUTES.exam,
+      ),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -1043,7 +257,13 @@ function AppContent({
   );
   const spanishExploreItems = useMemo(
     () => [
-      ...withLevelTestExploreTopic(spanishExploreTopics, "spanish"),
+      ...withLevelTestExploreTopic(
+        spanishExploreTopics,
+        "spanish",
+        uiLanguage,
+        t,
+        ROUTES.exam,
+      ),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -1057,7 +277,13 @@ function AppContent({
   );
   const frenchExploreItems = useMemo(
     () => [
-      ...withLevelTestExploreTopic(frenchExploreTopics, "french"),
+      ...withLevelTestExploreTopic(
+        frenchExploreTopics,
+        "french",
+        uiLanguage,
+        t,
+        ROUTES.exam,
+      ),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -1071,7 +297,13 @@ function AppContent({
   );
   const germanExploreItems = useMemo(
     () => [
-      ...withLevelTestExploreTopic(germanExploreTopics, "german"),
+      ...withLevelTestExploreTopic(
+        germanExploreTopics,
+        "german",
+        uiLanguage,
+        t,
+        ROUTES.exam,
+      ),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -1085,7 +317,13 @@ function AppContent({
   );
   const italianExploreItems = useMemo(
     () => [
-      ...withLevelTestExploreTopic(italianExploreTopics, "italian"),
+      ...withLevelTestExploreTopic(
+        italianExploreTopics,
+        "italian",
+        uiLanguage,
+        t,
+        ROUTES.exam,
+      ),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -1099,7 +337,13 @@ function AppContent({
   );
   const portugueseExploreItems = useMemo(
     () => [
-      ...withLevelTestExploreTopic(portugueseExploreTopics, "portuguese"),
+      ...withLevelTestExploreTopic(
+        portugueseExploreTopics,
+        "portuguese",
+        uiLanguage,
+        t,
+        ROUTES.exam,
+      ),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -1113,7 +357,13 @@ function AppContent({
   );
   const russianExploreItems = useMemo(
     () => [
-      ...withLevelTestExploreTopic(russianExploreTopics, "russian"),
+      ...withLevelTestExploreTopic(
+        russianExploreTopics,
+        "russian",
+        uiLanguage,
+        t,
+        ROUTES.exam,
+      ),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -1153,13 +403,34 @@ function AppContent({
     [starFieldStyle],
   );
   const location = useLocation();
+  // initialPracticeRouteRef stays here (route parsing); only the two
+  // derived fallback strings are handed to the preferences hook below.
   const initialPracticeRouteRef = useRef(parsePracticeRoute(location.pathname));
-  const [yourLanguage, setYourLanguage] = useState(
-    () => initialPracticeRouteRef.current?.yourLanguage ?? "",
-  );
-  const [practiceLanguage, setPracticeLanguage] = useState(
-    () => initialPracticeRouteRef.current?.practiceLanguage ?? "",
-  );
+  const {
+    yourLanguage,
+    setYourLanguage,
+    practiceLanguage,
+    setPracticeLanguage,
+    selectedLevel,
+    setSelectedLevel,
+    selectedCategories,
+    setSelectedCategories,
+    selectedLevels,
+    setSelectedLevels,
+    selectedWordTypes,
+    setSelectedWordTypes,
+    selectedExercises,
+    setSelectedExercises,
+    isContinueDisabled,
+    shouldAutoRedirectFromStoredLanguagesRef,
+    resetFiltersForLevel,
+  } = useStoredAppPreferences({
+    storageKeys: STORAGE_KEYS,
+    initialYourLanguage: initialPracticeRouteRef.current?.yourLanguage ?? "",
+    initialPracticeLanguage:
+      initialPracticeRouteRef.current?.practiceLanguage ?? "",
+    supportedLanguageCodes,
+  });
   const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(
     null,
   );
@@ -1201,13 +472,9 @@ function AppContent({
     [location.pathname],
   );
   const currentPage = useMemo(
-    () => pageFromPath(location.pathname),
+    () => pageFromPath(location.pathname, ROUTES),
     [location.pathname],
   );
-  const [selectedLevel, setSelectedLevel] = useState("A1");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
-  const [selectedWordTypes, setSelectedWordTypes] = useState<string[]>([]);
   const [isEnglishExploreOpen, setIsEnglishExploreOpen] = useState(false);
   const [isSpanishExploreOpen, setIsSpanishExploreOpen] = useState(false);
   const [isFrenchExploreOpen, setIsFrenchExploreOpen] = useState(false);
@@ -1215,10 +482,6 @@ function AppContent({
   const [isItalianExploreOpen, setIsItalianExploreOpen] = useState(false);
   const [isPortugueseExploreOpen, setIsPortugueseExploreOpen] = useState(false);
   const [isRussianExploreOpen, setIsRussianExploreOpen] = useState(false);
-  const [selectedExercises, setSelectedExercises] = useState<string[]>([
-    ...DEFAULT_EXERCISES,
-  ]);
-  const isContinueDisabled = !yourLanguage || !practiceLanguage;
   const [popupQueuedForLanguage, setPopupQueuedForLanguage] = useState(false);
   const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] =
     useState(false);
@@ -1241,7 +504,6 @@ function AppContent({
             (entry as PerformanceNavigationTiming).type === "reload",
         ),
   );
-  const shouldAutoRedirectFromStoredLanguagesRef = useRef(false);
   const previousAuthUserIdRef = useRef<string | null>(null);
   const [swapRotation, setSwapRotation] = useState(0);
   const shouldReduceMotion = useReducedMotion();
@@ -1263,61 +525,6 @@ function AppContent({
         return buildRouteMetadata(location.pathname, siteOrigin);
     }
   }, [location.pathname, resolvedPage, siteOrigin]);
-
-  useEffect(() => {
-    const persistedYourLanguage = readStoredString(
-      STORAGE_KEYS.yourLanguage,
-      (value) => supportedLanguageCodes.has(value),
-    );
-    const persistedPracticeLanguage = readStoredString(
-      STORAGE_KEYS.practiceLanguage,
-      (value) => supportedLanguageCodes.has(value),
-    );
-    const persistedSelectedLevel = readStoredString(
-      STORAGE_KEYS.selectedLevel,
-      (value) => VALID_LEVEL_CODES.has(value.toUpperCase()),
-    );
-    const persistedSelectedCategories =
-      readStoredStringArray(STORAGE_KEYS.selectedCategories) ?? [];
-    const persistedSelectedLevels = (
-      readStoredStringArray(STORAGE_KEYS.selectedLevels, (value) =>
-        VALID_LEVEL_CODES.has(value.toUpperCase()),
-      ) ?? []
-    ).map((value) => value.toUpperCase());
-    const persistedSelectedWordTypes =
-      readStoredStringArray(STORAGE_KEYS.selectedWordTypes) ?? [];
-    const allowedExercises = new Set(DEFAULT_EXERCISES);
-    const persistedSelectedExercises = readStoredStringArray(
-      STORAGE_KEYS.selectedExercises,
-      (value) => allowedExercises.has(value),
-    );
-
-    if (persistedYourLanguage) {
-      setYourLanguage(persistedYourLanguage);
-    }
-    if (persistedPracticeLanguage) {
-      setPracticeLanguage(persistedPracticeLanguage);
-    }
-    if (persistedSelectedLevel) {
-      setSelectedLevel(persistedSelectedLevel.toUpperCase());
-    }
-    if (persistedSelectedCategories.length > 0) {
-      setSelectedCategories(persistedSelectedCategories);
-    }
-    if (persistedSelectedLevels.length > 0) {
-      setSelectedLevels(persistedSelectedLevels);
-    }
-    if (persistedSelectedWordTypes.length > 0) {
-      setSelectedWordTypes(persistedSelectedWordTypes);
-    }
-    if (persistedSelectedExercises && persistedSelectedExercises.length > 0) {
-      setSelectedExercises(persistedSelectedExercises);
-    }
-
-    shouldAutoRedirectFromStoredLanguagesRef.current = Boolean(
-      persistedYourLanguage && persistedPracticeLanguage,
-    );
-  }, [supportedLanguageCodes]);
 
   useEffect(() => {
     // Initialize auth session from storage on client side only (after hydration)
@@ -1462,23 +669,6 @@ function AppContent({
     });
   }, [authUserId, practiceLanguage, yourLanguage]);
 
-  useEffect(() => {
-    if (!canUseLocalStorage()) {
-      return;
-    }
-    window.localStorage.setItem(STORAGE_KEYS.yourLanguage, yourLanguage);
-  }, [yourLanguage]);
-
-  useEffect(() => {
-    if (!canUseLocalStorage()) {
-      return;
-    }
-    window.localStorage.setItem(
-      STORAGE_KEYS.practiceLanguage,
-      practiceLanguage,
-    );
-  }, [practiceLanguage]);
-
   const lastSyncedLanguagesRef = useRef("");
 
   useEffect(() => {
@@ -1517,53 +707,6 @@ function AppContent({
     void writeSupabaseUserProfile(authSession, nextProfile).catch(() => {});
   }, [authSession, authUserId, practiceLanguage, userProfile, yourLanguage]);
 
-  useEffect(() => {
-    if (!canUseLocalStorage()) {
-      return;
-    }
-    window.localStorage.setItem(STORAGE_KEYS.selectedLevel, selectedLevel);
-  }, [selectedLevel]);
-
-  useEffect(() => {
-    if (!canUseLocalStorage()) {
-      return;
-    }
-    window.localStorage.setItem(
-      STORAGE_KEYS.selectedCategories,
-      JSON.stringify(selectedCategories),
-    );
-  }, [selectedCategories]);
-
-  useEffect(() => {
-    if (!canUseLocalStorage()) {
-      return;
-    }
-    window.localStorage.setItem(
-      STORAGE_KEYS.selectedLevels,
-      JSON.stringify(selectedLevels),
-    );
-  }, [selectedLevels]);
-
-  useEffect(() => {
-    if (!canUseLocalStorage()) {
-      return;
-    }
-    window.localStorage.setItem(
-      STORAGE_KEYS.selectedWordTypes,
-      JSON.stringify(selectedWordTypes),
-    );
-  }, [selectedWordTypes]);
-
-  useEffect(() => {
-    if (!canUseLocalStorage()) {
-      return;
-    }
-    window.localStorage.setItem(
-      STORAGE_KEYS.selectedExercises,
-      JSON.stringify(selectedExercises),
-    );
-  }, [selectedExercises]);
-
   const handleStartPracticing = () => {
     if (isContinueDisabled) {
       popupRef.current?.show({ delayMs: 0 });
@@ -1576,11 +719,7 @@ function AppContent({
     _targetLanguage: TargetLanguageSlug,
     level: string,
   ) => {
-    setSelectedLevel(level.toUpperCase());
-    setSelectedLevels([level.toUpperCase()]);
-    setSelectedCategories([]);
-    setSelectedWordTypes([]);
-    setSelectedExercises([...DEFAULT_EXERCISES]);
+    resetFiltersForLevel(level);
 
     if (isContinueDisabled) {
       navigate(ROUTES.language);
@@ -1673,6 +812,7 @@ function AppContent({
     const expectedPath = buildPracticeRoute(
       yourLanguage as UILanguage,
       practiceLanguage as UILanguage,
+      ROUTES,
     );
     if (location.pathname !== expectedPath) {
       navigate(expectedPath, { replace: true });
@@ -1694,7 +834,7 @@ function AppContent({
       return;
     }
 
-    const initialPage = pageFromPath(initialPathRef.current);
+    const initialPage = pageFromPath(initialPathRef.current, ROUTES);
     const startedOnLanguagePage = initialPage === "language";
     const startedOnLegacyPracticePage =
       initialPathRef.current === ROUTES.practice;
@@ -1763,6 +903,7 @@ function AppContent({
       buildPracticeRoute(
         yourLanguage as UILanguage,
         practiceLanguage as UILanguage,
+        ROUTES,
       ),
     );
   };

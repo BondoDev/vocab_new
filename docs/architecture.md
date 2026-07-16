@@ -86,7 +86,7 @@ flowchart TD
 | Area | Authoritative source | Generated output | Guard/test |
 |---|---|---|---|
 | React application | `src/app/`, `src/contexts/`, `src/keyboards/`, `src/lib/` | `dist/`, `server-build/` (gitignored) | `npx tsc --noEmit`, `npm run build` |
-| Routes | `src/app/App.tsx` (`ROUTES`, `PageKey`), `src/data/seo/*Slugs.ts`/`hub.ts` | `getPrerenderRoutes()` output (prerendered set) | `test:interactive-contracts`, `test:word-seo` |
+| Routes | `src/app/App.tsx` (`ROUTES`), `src/app/utils/pageRouting.ts` (`PageKey`, parsers), `src/data/seo/*Slugs.ts`/`hub.ts` | `getPrerenderRoutes()` output (prerendered set) | `test:interactive-contracts`, `test:word-seo` |
 | SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPageData.ts` | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
 | Prerendered pages | `src/entry-server.tsx` (`render`, `getPrerenderRoutes`) | `dist/**/index.html` (2,670 files) | `test:prerender-parity` |
 | Sitemap | `scripts/generate-sitemap.mjs` + vocabulary/route data | `public/sitemap.xml`, `public/sitemaps/*.xml` (84,957 URLs) | `test:sitemap-structure`, `test:sitemap-lastmod` |
@@ -126,8 +126,9 @@ path-sensitive).
 
 `src/app/App.tsx` defines a small `ROUTES` map (`language`, `levelCategory`,
 `exerciseSelection`, `practice`, `explore`, `exam`, `about`, `help`,
-`profile`) and a wider `PageKey` union that also covers SEO-driven route
-families resolved by pattern-matching helpers in `src/data/seo/`:
+`profile`); `src/app/utils/pageRouting.ts` defines the wider `PageKey` union
+that also covers SEO-driven route families resolved by pattern-matching
+helpers in `src/data/seo/`:
 
 - `vocabularyLevel` — CEFR level pages (`resolveVocabularyRoute`)
 - `levelTestSeo` — per-language level-test SEO pages
@@ -137,9 +138,10 @@ families resolved by pattern-matching helpers in `src/data/seo/`:
 - `devSeoCefrPlaceholder` — dev-only preview route, `import.meta.env.DEV`-gated
 - `notFound`
 
-`pageFromPath()` resolves a pathname to a `PageKey` using the same route
-parsers on both the client and in `src/entry-server.tsx`, so client routing,
-prerendering, and Worker SSR agree on what a given URL means.
+`pageFromPath()` in `src/app/utils/pageRouting.ts` resolves a pathname to a
+`PageKey` using the same route parsers on both the client and in
+`src/entry-server.tsx`, so client routing, prerendering, and Worker SSR
+agree on what a given URL means.
 
 ## SEO rendering
 
