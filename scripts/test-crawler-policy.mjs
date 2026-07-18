@@ -3,12 +3,12 @@
 // external crawlers walking the ~75k-URL sitemap corpus of server-rendered
 // word pages consumed the Free-plan Worker request quota, and SSR CPU over
 // the Free-plan allowance produced "Worker exceeded CPU time limit" 503s.
-// The fix was a robots.txt crawl policy for high-volume low-value crawlers,
-// while still allowing selected AI crawlers that can drive discovery.
+// The fix is a robots.txt crawl policy for AI crawlers and high-volume
+// low-value crawlers while keeping normal search-engine discovery open.
 // These asserts keep the policy (and the invariants the audit proved) from
 // silently regressing:
-//   1. robots.txt still disallows the measured heavy bots, still allows
-//      search-engine crawlers and selected AI crawlers, and still points at
+//   1. robots.txt still disallows measured heavy bots and AI crawlers, still
+//      allows search-engine crawlers through the catch-all, and still points at
 //      the sitemap.
 //   2. The deployed copies of robots.txt (dist/, assets-full/) match public/.
 //   3. wrangler.production.toml keeps the Worker name, the asset-first
@@ -62,6 +62,24 @@ const MUST_DISALLOW = [
   "Amazonbot",
   "Amzn-SearchBot",
   "PetalBot",
+  "GPTBot",
+  "ChatGPT-User",
+  "OAI-SearchBot",
+  "OAI-AdsBot",
+  "ClaudeBot",
+  "Claude-SearchBot",
+  "Claude-User",
+  "anthropic-ai",
+  "Claude-Web",
+  "Google-Extended",
+  "Google-CloudVertexBot",
+  "PerplexityBot",
+  "Perplexity-User",
+  "CCBot",
+  "Bytespider",
+  "Applebot-Extended",
+  "Meta-ExternalAgent",
+  "Meta-ExternalFetcher",
 ];
 for (const bot of MUST_DISALLOW) {
   const group = groupFor(bot);
@@ -81,10 +99,6 @@ const MUST_ALLOW = [
   "YandexBot",
   "DuckDuckBot",
   "Applebot",
-  "GPTBot",
-  "OAI-SearchBot",
-  "ClaudeBot",
-  "Google-Extended",
 ];
 for (const bot of MUST_ALLOW) {
   const group = groupFor(bot);

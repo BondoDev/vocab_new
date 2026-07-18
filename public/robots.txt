@@ -1,9 +1,8 @@
-# Crawl policy (updated 2026-07-15): word pages are server-rendered per
+# Crawl policy (updated 2026-07-18): word pages are server-rendered per
 # request, so crawler volume consumes Worker CPU/request quota. Keep major
-# search crawlers and selected AI crawlers that can drive discovery in
-# ChatGPT, Claude, and Gemini allowed. Block the high-volume crawlers that
-# were measured via wrangler tail (2026-07-10 and 2026-07-12) to consume
-# production Worker invocations without clear ranking or referral value.
+# search crawlers allowed, but block AI crawlers and high-volume low-value
+# crawlers that can burn the Cloudflare daily request limit without clear
+# ranking or referral value.
 
 User-agent: AhrefsBot
 Disallow: /
@@ -21,16 +20,58 @@ User-agent: Amzn-SearchBot
 Disallow: /
 
 User-agent: GPTBot
-Allow: /
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
 
 User-agent: OAI-SearchBot
-Allow: /
+Disallow: /
+
+User-agent: OAI-AdsBot
+Disallow: /
 
 User-agent: ClaudeBot
-Allow: /
+Disallow: /
+
+User-agent: Claude-SearchBot
+Disallow: /
+
+User-agent: Claude-User
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
 
 User-agent: Google-Extended
-Allow: /
+Disallow: /
+
+User-agent: Google-CloudVertexBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Perplexity-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Meta-ExternalFetcher
+Disallow: /
 
 User-agent: PetalBot
 Disallow: /
