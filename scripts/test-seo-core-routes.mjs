@@ -187,6 +187,55 @@ async function main() {
     });
   }
 
+  console.log("\n[4] sitemap-core.xml must not submit noindex-classified app routes");
+  {
+    // Regression guard for the 2026-07-18 finding: scripts/generate-sitemap.mjs's
+    // CORE_ROUTES previously included /languages, /languages/filters,
+    // /languages/filters/exercises, /languages/level-test, and /explore even
+    // though routeMetadataPolicy.ts classifies all of them "public-app" and
+    // always emits `robots: noindex, follow`. This reads the actual generated
+    // artifact and cross-checks every entry against the real policy module
+    // (compiled here, not hand-duplicated), so it fails on this exact class
+    // of drift in either direction — a new noindex route added to the
+    // sitemap, or an indexable route silently reclassified while still
+    // submitted — without hard-coding today's route list into the assertion.
+    //
+    // Scope note: routeMetadataPolicy.ts only governs the general app-shell
+    // routes (homepage/public-seo/public-app/private-account/practice-session
+    // — see its RouteMetadataClass union). SEO hub landing pages such as
+    // /en/seo-pages are deliberately excluded from it (src/app/App.tsx's
+    // routeMetadata switch returns null for resolvedPage "seoHub" and
+    // siblings, and those pages get their metadata from src/seo/hubMetadata.ts
+    // instead). classifyRouteMetadata() falls back to "invalid" for anything
+    // it doesn't recognize, which would misreport those hub routes as
+    // noindex — so this check only applies to routes the policy explicitly
+    // classifies into one of its own noindex classes, not to "invalid".
+    const routeMetadataPolicy = compileRouteMetadataPolicy();
+    const NOINDEX_CLASSES = new Set(["public-app", "private-account", "practice-session"]);
+    const coreXml = readFile("public/sitemaps/sitemap-core.xml");
+    const corePathnames = Array.from(coreXml.matchAll(/<loc>([^<]+)<\/loc>/g)).map(
+      ([, loc]) => new URL(loc).pathname,
+    );
+
+    test("sitemap-core.xml is non-empty", () => assert.ok(corePathnames.length > 0));
+
+    test("no sitemap-core.xml entry is classified into one of routeMetadataPolicy's noindex classes", () => {
+      const offenders = corePathnames
+        .map((pathname) => ({
+          pathname,
+          routeClass: routeMetadataPolicy.classifyRouteMetadata(pathname),
+        }))
+        .filter(({ routeClass }) => NOINDEX_CLASSES.has(routeClass));
+      assert.deepEqual(
+        offenders,
+        [],
+        `sitemap-core.xml submits route(s) routeMetadataPolicy.ts marks noindex: ${offenders
+          .map(({ pathname, routeClass }) => `${pathname} (${routeClass})`)
+          .join(", ")}`,
+      );
+    });
+  }
+
   console.log(`\n─────────────────────────────────────────`);
   console.log(`  ${passed} passed, ${failed} failed`);
   console.log(`─────────────────────────────────────────\n`);

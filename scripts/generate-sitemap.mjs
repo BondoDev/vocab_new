@@ -20,11 +20,11 @@ const SITEMAP_CHUNK_SIZE = Number.parseInt(process.env.SITEMAP_CHUNK_SIZE || "50
 
 const CORE_ROUTES = [
   "/",
-  "/languages",
-  "/languages/filters",
-  "/languages/filters/exercises",
-  "/explore",
-  "/languages/level-test",
+  // /languages, /languages/filters, /languages/filters/exercises,
+  // /languages/level-test, and /explore are intentionally excluded here:
+  // src/seo/routeMetadataPolicy.ts classifies them "public-app" and always
+  // emits `robots: noindex, follow` for them. They stay live, 200-status,
+  // navigable app routes — they just must not be submitted for indexing.
   "/en/seo-pages",
   "/es/paginas-seo",
   "/fr/pages-seo",
