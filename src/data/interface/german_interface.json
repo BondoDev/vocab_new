@@ -36,6 +36,14 @@
     "close": "Schließen",
     "closePopup": "Popup schließen"
   },
+  "accountLanguageConfirm": {
+    "title": "Kontosprachen aktualisieren?",
+    "description": "Diese Sprachen unterscheiden sich von den in deinem Konto gespeicherten. Wähle, wie du fortfahren möchtest.",
+    "saveToAccount": "In meinem Konto speichern",
+    "useSelected": "Diese Sprachen vorerst verwenden",
+    "saving": "Wird gespeichert...",
+    "cancel": "Abbrechen"
+  },
   "aboutPage": {
     "back": "Zurück",
     "p1": "FLUENTSTELLAR ist für aktives Wortschatztraining gedacht, nicht für passives Durchblättern.",

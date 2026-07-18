@@ -36,6 +36,14 @@
     "close": "Close",
     "closePopup": "Close popup"
   },
+  "accountLanguageConfirm": {
+    "title": "Update your account languages?",
+    "description": "These languages are different from the ones saved to your account. Choose how you'd like to continue.",
+    "saveToAccount": "Save to my account",
+    "useSelected": "Use these languages for now",
+    "saving": "Saving...",
+    "cancel": "Cancel"
+  },
   "aboutPage": {
     "back": "Back",
     "p1": "FLUENTSTELLAR is designed for active vocabulary practice, not passive browsing.",

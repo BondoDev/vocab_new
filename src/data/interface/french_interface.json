@@ -36,6 +36,14 @@
     "close": "Fermer",
     "closePopup": "Fermer la fenetre"
   },
+  "accountLanguageConfirm": {
+    "title": "Mettre a jour les langues de votre compte ?",
+    "description": "Ces langues sont differentes de celles enregistrees dans votre compte. Choisissez comment continuer.",
+    "saveToAccount": "Enregistrer dans mon compte",
+    "useSelected": "Utiliser ces langues pour l'instant",
+    "saving": "Enregistrement...",
+    "cancel": "Annuler"
+  },
   "aboutPage": {
     "back": "Retour",
     "p1": "FLUENTSTELLAR est concu pour la pratique active du vocabulaire, pas pour une navigation passive.",

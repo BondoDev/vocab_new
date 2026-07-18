@@ -13,6 +13,7 @@ import "../styles/index.css";
 import { Header } from "./components/Header";
 import { ExplorePage } from "./components/ExplorePage";
 import { AccountOnboardingDialog } from "./components/AccountOnboardingDialog";
+import { AccountLanguageConfirmDialog } from "./components/AccountLanguageConfirmDialog";
 import { LevelTestLanguageModal } from "./components/LevelTestLanguageModal";
 import { HomePage } from "./components/HomePage";
 import { NotFoundPage } from "./components/NotFoundPage";
@@ -64,7 +65,7 @@ import { useAuthSession } from "./hooks/useAuthSession";
 import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
 import { useUserProfileLoad } from "./hooks/useUserProfileLoad";
-import { useUserProfileSync } from "./hooks/useUserProfileSync";
+import { useAccountLanguageConfirm } from "./hooks/useAccountLanguageConfirm";
 import { useRouteLanguageSync } from "./hooks/useRouteLanguageSync";
 import { usePracticeRouteLanguageSync } from "./hooks/usePracticeRouteLanguageSync";
 import { useStoredLanguageAutoRedirect } from "./hooks/useStoredLanguageAutoRedirect";
@@ -235,7 +236,7 @@ function AppContent({
     setYourLanguage,
     setPracticeLanguage,
   });
-  const { userProfile, setUserProfile } = useUserProfileLoad({
+  const { userProfile, setUserProfile, isProfileLoaded } = useUserProfileLoad({
     authUserId,
     yourLanguage,
     practiceLanguage,
@@ -246,14 +247,6 @@ function AppContent({
   });
   loadedUserProfile = userProfile;
   setLoadedUserProfile = setUserProfile;
-  useUserProfileSync({
-    authSession,
-    authUserId,
-    userProfile,
-    setUserProfile,
-    yourLanguage,
-    practiceLanguage,
-  });
   const navigate = useNavigate();
   const levelTestSeoRoute = useMemo(
     () => parseLevelTestSeoRoute(location.pathname),
@@ -340,7 +333,7 @@ function AppContent({
       popupRef.current?.show({ delayMs: 0 });
       return;
     }
-    navigate(ROUTES.levelCategory);
+    accountLanguageConfirm.attemptContinue();
   };
 
   const handleStartVocabularyPractice = (
@@ -407,6 +400,17 @@ function AppContent({
   const { popupRef, queueForLanguagePage } = useLanguageContinuePopup({
     resolvedPage,
     isContinueDisabled,
+  });
+
+  const accountLanguageConfirm = useAccountLanguageConfirm({
+    authSession,
+    authUserId,
+    isProfileLoaded,
+    userProfile,
+    setUserProfile,
+    yourLanguage,
+    practiceLanguage,
+    proceed: () => navigate(ROUTES.levelCategory),
   });
 
   const handleContinueToExerciseSelection = () => {
@@ -936,6 +940,16 @@ function AppContent({
       />
 
       {accountOnboardingDialog}
+      {authUserId ? (
+        <AccountLanguageConfirmDialog
+          open={accountLanguageConfirm.isOpen}
+          isSaving={accountLanguageConfirm.isSaving}
+          error={accountLanguageConfirm.saveError}
+          onUseSelectedLanguages={accountLanguageConfirm.handleUseSelectedLanguages}
+          onSaveToAccount={accountLanguageConfirm.handleSaveToAccount}
+          onCancel={accountLanguageConfirm.handleCancel}
+        />
+      ) : null}
     </div>
   );
 }

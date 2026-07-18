@@ -18,6 +18,7 @@ import {
   buildMergedUserProfile,
   shouldOpenAccountOnboarding,
 } from "../utils/accountProfile";
+import { resolveHydratedLanguagePair } from "../utils/languageProfileSyncPolicy";
 
 interface UseUserProfileLoadParams {
   authUserId: string | null;
@@ -40,6 +41,11 @@ export function useUserProfileLoad({
 }: UseUserProfileLoadParams) {
   const [userProfile, setUserProfile] =
     useState<UserProfile>(EMPTY_USER_PROFILE);
+  // False while a signed-in user's profile fetch is in flight. Consumers
+  // (the Languages-page account-confirmation popup) must not compare
+  // against userProfile's language pair until this is true, so a
+  // not-yet-loaded profile is never mistaken for "no saved pair".
+  const [isProfileLoaded, setIsProfileLoaded] = useState(false);
 
   // Languages are read through a ref so language changes don't refire the
   // profile fetch below - they are only fallbacks, not fetch inputs.
@@ -53,10 +59,16 @@ export function useUserProfileLoad({
       setUserProfile(EMPTY_USER_PROFILE);
       setIsAccountOnboardingOpen(false);
       setAccountOnboardingError(null);
+      // Nothing to load for a signed-out visitor - trivially "known".
+      setIsProfileLoaded(true);
       return;
     }
 
     let cancelled = false;
+    // A new authUserId means any previously loaded profile belongs to a
+    // different account - it must not be treated as "loaded" for this one
+    // until its own fetch resolves.
+    setIsProfileLoaded(false);
     const storedProfile = readStoredUserProfile(authUserId);
 
     void (async () => {
@@ -83,11 +95,30 @@ export function useUserProfileLoad({
           practiceLanguage: currentPracticeLanguage,
         });
 
-        if (!currentYourLanguage && nextProfile.nativeLanguage) {
-          setYourLanguage(nextProfile.nativeLanguage);
+        // A complete saved Supabase pair has priority over whatever is
+        // currently selected - a stale anonymous/local value must not win
+        // over the account's real saved languages. When Supabase has no
+        // valid pair yet, fall back to the pre-existing fill-blanks-only
+        // behavior (onboarding/anonymous flows are unaffected).
+        const hydratedPair = resolveHydratedLanguagePair({
+          supabaseLanguages: {
+            nativeLanguage: supabaseProfile?.nativeLanguage ?? "",
+            practiceLanguage: supabaseProfile?.practiceLanguage ?? "",
+          },
+          mergedLanguages: {
+            nativeLanguage: nextProfile.nativeLanguage,
+            practiceLanguage: nextProfile.practiceLanguage,
+          },
+          currentLanguages: {
+            nativeLanguage: currentYourLanguage,
+            practiceLanguage: currentPracticeLanguage,
+          },
+        });
+        if (hydratedPair.nativeLanguage !== null) {
+          setYourLanguage(hydratedPair.nativeLanguage);
         }
-        if (!currentPracticeLanguage && nextProfile.practiceLanguage) {
-          setPracticeLanguage(nextProfile.practiceLanguage);
+        if (hydratedPair.practiceLanguage !== null) {
+          setPracticeLanguage(hydratedPair.practiceLanguage);
         }
 
         setUserProfile(nextProfile);
@@ -95,6 +126,7 @@ export function useUserProfileLoad({
           shouldOpenAccountOnboarding(hasSupabaseProfileRow, nextProfile),
         );
         setAccountOnboardingError(null);
+        setIsProfileLoaded(true);
       } catch {
         if (cancelled) {
           return;
@@ -111,6 +143,7 @@ export function useUserProfileLoad({
           shouldOpenAccountOnboarding(true, fallbackProfile),
         );
         setAccountOnboardingError(null);
+        setIsProfileLoaded(true);
       }
     })();
 
@@ -119,5 +152,5 @@ export function useUserProfileLoad({
     };
   }, [authUserId]);
 
-  return { userProfile, setUserProfile };
+  return { userProfile, setUserProfile, isProfileLoaded };
 }
