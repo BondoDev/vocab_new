@@ -1,0 +1,69 @@
+name: CI
+
+# Lightweight regression gate. Runs the project's existing, already-established
+# checks only - see docs/architecture.md's "Validation commands" table for the
+# source of truth this mirrors. Does not build the word-worker Cloudflare
+# bundle (npm run build:word-worker:full): that step is fast and secret-free,
+# but its output manifest (workers/word-ssr/data/publish-manifest.json) embeds
+# a real wall-clock timestamp and a date-stamped data version on every run, so
+# it would always trip the "no tracked-file drift" check below for reasons
+# unrelated to correctness. Cloudflare Workers Builds still runs it for real
+# at deploy time.
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+# Cancel superseded runs on the same branch/PR to keep this cheap.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: Typecheck, regression tests, and build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Cheapest, most specific checks first so a broken PR fails fast before
+      # paying for the full build.
+      - name: Route/profile-language policy regression tests
+        run: |
+          npm run test:practice-route-sync
+          npm run test:account-language-sync
+
+      - name: TypeScript validation
+        run: npx tsc --noEmit
+
+      - name: Architecture guards
+        run: npm run test:architecture-guards
+
+      - name: Production build
+        run: npm run build
+
+      - name: Verify the build left tracked files unchanged
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::npm run build modified or created tracked files - generated artifacts (sitemap, word-hub data, etc.) are out of sync with what's committed."
+            git status --short
+            git --no-pager diff
+            exit 1
+          fi
+
+      - name: SEO, sitemap, and route policy regression tests
+        run: npm run test:seo-output
