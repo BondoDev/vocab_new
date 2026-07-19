@@ -114,6 +114,23 @@ test("/profile route is still wired to the resolvedPage switch in src/app/App.ts
   );
 });
 
+test("src/app/App.tsx does not reintroduce an auth-driven redirect to /profile", () => {
+  assert.ok(
+    !appTsxSource.includes("previousAuthUserIdRef"),
+    "src/app/App.tsx must not reintroduce previousAuthUserIdRef — successful authentication preserves the current route (users open /profile explicitly via the account menu)",
+  );
+  const navigateToProfileMatches = appTsxSource.match(/navigate\(ROUTES\.profile\)/g) ?? [];
+  assert.equal(
+    navigateToProfileMatches.length,
+    1,
+    `expected exactly one navigate(ROUTES.profile) call (the explicit onProfile handler), found ${navigateToProfileMatches.length}`,
+  );
+  assert.ok(
+    appTsxSource.includes("onProfile: () => navigate(ROUTES.profile)"),
+    "the sole navigate(ROUTES.profile) call must be the explicit sharedHeaderProps.onProfile handler, not an auth-driven redirect",
+  );
+});
+
 console.log("\n=== profile shell wiring (unfinished by design — see docs/non-seo-regression-checklist.md) ===\n");
 
 test("profile shell component files exist", () => {

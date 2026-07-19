@@ -286,7 +286,6 @@ function AppContent({
   ] = useState("");
   const [levelTestModalSwapRotation, setLevelTestModalSwapRotation] =
     useState(0);
-  const previousAuthUserIdRef = useRef<string | null>(null);
   const [swapRotation, setSwapRotation] = useState(0);
   const resolvedPage = ssrRouteOverride?.page ?? currentPage;
   const wordRoute = ssrRouteOverride?.wordRoute ?? detectedWordRoute;
@@ -456,20 +455,8 @@ function AppContent({
     );
   };
 
-  useEffect(() => {
-    const previousAuthUserId = previousAuthUserIdRef.current;
-
-    // Only redirect to profile if user actually logged in during this session.
-    // On initial load, previousAuthUserId is null (initial state) and authUserId becomes truthy from
-    // the stored session. This is NOT a login action, so we skip the redirect.
-    // We only redirect when authUserId changed from one user to another user (actual login during session).
-    if (previousAuthUserId && previousAuthUserId !== authUserId && authUserId) {
-      navigate(ROUTES.profile);
-    }
-
-    previousAuthUserIdRef.current = authUserId;
-  }, [authUserId, navigate]);
-
+  // Authentication preserves the current route; users open their profile
+  // explicitly from the account menu (see sharedHeaderProps.onProfile below).
   const sharedHeaderProps = {
     onAbout: () => navigate(ROUTES.about),
     onHelp: () => navigate(ROUTES.help),
