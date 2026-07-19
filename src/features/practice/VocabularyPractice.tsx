@@ -10,21 +10,21 @@ import { ListeningExercise } from "./exercises/ListeningExercise";
 import { BrokenWordExercise } from "./exercises/BrokenWordExercise";
 import { WordTypingExercise } from "./exercises/WordTypingExercise";
 import { HalfWrittenExercise } from "./exercises/HalfWrittenExercise";
-import { shuffleArray } from "../utils/shuffleArray";
-import { highlightInflectedWords } from "../utils/highlightInflectedWords";
+import { shuffleArray } from "./utils/shuffleArray";
+import { highlightInflectedWords } from "./utils/highlightInflectedWords";
 import {
   advanceTypingRepeatQueue,
   getEligibleTypingExercisesForWord,
   type TypingRepeatEntry,
-} from "../utils/typingRepeatQueue";
-import { PracticeHeader } from "./practice/PracticeHeader";
-import { PracticeLoading } from "./practice/PracticeLoading";
-import { PracticeEmptyState } from "./practice/PracticeEmptyState";
-import { PracticeResults } from "./practice/PracticeResults";
+} from "./utils/typingRepeatQueue";
+import { PracticeHeader } from "./components/PracticeHeader";
+import { PracticeLoading } from "./components/PracticeLoading";
+import { PracticeEmptyState } from "./components/PracticeEmptyState";
+import { PracticeResults } from "./components/PracticeResults";
 import {
   exerciseCardBorders,
   type MotionCssVars,
-} from "../constants/exerciseTheme";
+} from "../../app/constants/exerciseTheme";
 
 type PracticeCardCssVars = MotionCssVars<"--practice-card-bg" | "--practice-card-border">;
 

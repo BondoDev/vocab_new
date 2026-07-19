@@ -54,7 +54,7 @@ stale in the direction of *understating* what exists, either.
 | Explore | `/explore` | no | `LanguageContext`, SEO vocabulary-level data | complete | medium |
 | About | `/about` | no | static | complete | low |
 | Help | `/help` | no | static | complete | low |
-| Custom mobile keyboard | embedded in WordTyping/HalfWritten exercises | no | `src/keyboards/layouts/*` | complete, mobile-scoped | medium |
+| Custom mobile keyboard | embedded in WordTyping/HalfWritten exercises | no | `src/features/practice/exercises/layouts.ts` | complete, mobile-scoped | medium |
 | Login / signup / logout | modal in `Header.tsx`, no dedicated route | no (to open) | Supabase Auth REST | complete | high — security-adjacent |
 | Password recovery | link inside the same auth modal | no | Supabase Auth REST (`/auth/v1/recover`) | functional but partial — send-email step confirmed implemented; post-recovery session/redirect handling not fully traced in this audit | medium |
 | Account onboarding dialog | global overlay, any page | yes (only opens for a logged-in, incomplete profile) | Supabase `user_profiles` table + `localStorage` mirror | complete — the only real "write" flow in the interactive app | high |

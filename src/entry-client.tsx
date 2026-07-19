@@ -19,7 +19,7 @@ const _lazyChunkPreload: Promise<unknown> | null =
     : pathname === "/help" || pathname.startsWith("/help/")
     ? import("./app/components/Help")
     : pathname.includes("/languages/filters/exercises") && pathname.includes("/practice")
-    ? import("./app/components/VocabularyPractice")
+    ? import("./features/practice/VocabularyPractice")
     : pathname.startsWith("/languages/filters/exercises")
     ? import("./app/components/ExerciseSelection")
     : pathname === "/languages/filters" || pathname === "/languages/filters/"

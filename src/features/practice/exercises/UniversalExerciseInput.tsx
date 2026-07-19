@@ -8,7 +8,7 @@ import {
 } from "react";
 import { motion } from "motion/react";
 import { Volume2 } from "lucide-react";
-import { cn } from "../ui/utils";
+import { cn } from "../../../app/components/ui/utils";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface UniversalExerciseInputProps {

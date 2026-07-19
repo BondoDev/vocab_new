@@ -11,7 +11,7 @@ import {
   KEY_BACKSPACE,
   KEY_SHIFT,
   getKeyboardLayout,
-} from "../../../keyboards/layouts";
+} from "./layouts";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 export type MobileKeyboardProps = {

@@ -6,7 +6,7 @@ import {
 import { DesktopSpecialCharacters } from "./DesktopSpecialCharacters";
 import { MobileKeyboard } from "./MobileKeyboard";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
-import { type KeyboardLanguage } from "../../../keyboards/layouts";
+import { type KeyboardLanguage } from "./layouts";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface WordTypingExerciseProps {

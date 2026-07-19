@@ -36,8 +36,8 @@ anywhere in this codebase.
 | `src/app/components/Header.tsx` | `dialog`, `input`, `button`, `dropdown-menu` |
 | `src/app/components/AccountOnboardingDialog.tsx` | `button`, `dialog`, `input`, `label`, `select` |
 | `src/app/components/VocabularyLevelExam.tsx` | `alert-dialog` |
-| `src/app/components/exercises/DesktopSpecialCharacters.tsx` | `popover` |
-| `src/app/components/exercises/UniversalExerciseInput.tsx` | `utils` (`cn`) |
+| `src/features/practice/exercises/DesktopSpecialCharacters.tsx` | `popover` |
+| `src/features/practice/exercises/UniversalExerciseInput.tsx` | `utils` (`cn`) |
 
 The profile shell (`UserProfileDashboardPage.tsx`, `UserProfileSidebar.tsx`)
 imports **zero** files from `ui/` — it is hand-built markup and SCSS, not

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { ChevronRight, Languages } from "lucide-react";
 
-import { type KeyboardLanguage } from "../../../keyboards/layouts";
+import { type KeyboardLanguage } from "./layouts";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../ui/popover";
+} from "../../../app/components/ui/popover";
 
 type DesktopSpecialCharactersProps = {
   language: KeyboardLanguage;

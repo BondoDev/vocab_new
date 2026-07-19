@@ -83,7 +83,7 @@ const ExerciseSelection = lazy(() =>
   })),
 );
 const VocabularyPractice = lazy(() =>
-  import("./components/VocabularyPractice").then((module) => ({
+  import("../features/practice/VocabularyPractice").then((module) => ({
     default: module.VocabularyPractice,
   })),
 );
