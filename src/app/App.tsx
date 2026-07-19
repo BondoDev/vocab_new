@@ -417,7 +417,15 @@ function AppContent({
     navigate(ROUTES.exerciseSelection);
   };
 
-  const handleRequireLanguages = (nextPage: RouteKey) => {
+  // Shared "languages required" policy: if the user hasn't picked both
+  // languages yet, redirect to the Languages page (optionally queuing the
+  // continue popup there) instead of proceeding. Mechanical consolidation of
+  // what were three near-duplicate implementations (see the App.tsx
+  // architecture audit) — handleRequireLanguages and handleStartExam shared
+  // this branch verbatim; handleStartSeoLevelTest implements a different
+  // policy (inline language collection via LevelTestLanguageModal) and is
+  // deliberately not part of this helper.
+  const requireLanguagesBeforeContinue = (onReady: () => void) => {
     if (isContinueDisabled) {
       const suppressPopup = resolvedPage === "about";
       navigate(ROUTES.language);
@@ -426,7 +434,11 @@ function AppContent({
       }
       return;
     }
-    navigate(ROUTES[nextPage]);
+    onReady();
+  };
+
+  const handleRequireLanguages = (nextPage: RouteKey) => {
+    requireLanguagesBeforeContinue(() => navigate(ROUTES[nextPage]));
   };
 
   const handleContinueToPractice = () => {
@@ -473,15 +485,7 @@ function AppContent({
   };
 
   const handleStartExam = () => {
-    if (isContinueDisabled) {
-      const suppressPopup = resolvedPage === "about";
-      navigate(ROUTES.language);
-      if (!suppressPopup) {
-        queueForLanguagePage();
-      }
-      return;
-    }
-    navigate(ROUTES.exam);
+    requireLanguagesBeforeContinue(() => navigate(ROUTES.exam));
   };
 
   const openLevelTestLanguageModal = (targetLanguageCode: UILanguage) => {
