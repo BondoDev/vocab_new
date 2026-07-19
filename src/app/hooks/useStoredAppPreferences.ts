@@ -25,16 +25,7 @@ import { useEffect, useRef, useState } from "react";
 import { canUseLocalStorage, readStoredString, readStoredStringArray } from "../utils/storage";
 import { VALID_LEVEL_CODES } from "../utils/pageRouting";
 import { shouldRestoreStoredLanguagePreference } from "../utils/storedLanguagePreferencePolicy";
-
-// Only used to seed selectedExercises and to validate persisted exercise
-// selections — moved here because the hook is now the only reader.
-const DEFAULT_EXERCISES = [
-  "wordTyping",
-  "halfWritten",
-  "brokenWord",
-  "connectWords",
-  "listening",
-];
+import { EXERCISE_IDS } from "../constants/exerciseIds";
 
 export interface AppPreferencesStorageKeys {
   yourLanguage: string;
@@ -103,7 +94,7 @@ export function useStoredAppPreferences({
   const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
   const [selectedWordTypes, setSelectedWordTypes] = useState<string[]>([]);
   const [selectedExercises, setSelectedExercises] = useState<string[]>([
-    ...DEFAULT_EXERCISES,
+    ...EXERCISE_IDS,
   ]);
 
   const isContinueDisabled = !yourLanguage || !practiceLanguage;
@@ -135,7 +126,7 @@ export function useStoredAppPreferences({
     ).map((value) => value.toUpperCase());
     const persistedSelectedWordTypes =
       readStoredStringArray(storageKeys.selectedWordTypes) ?? [];
-    const allowedExercises = new Set(DEFAULT_EXERCISES);
+    const allowedExercises = new Set<string>(EXERCISE_IDS);
     const persistedSelectedExercises = readStoredStringArray(
       storageKeys.selectedExercises,
       (value) => allowedExercises.has(value),
@@ -249,7 +240,7 @@ export function useStoredAppPreferences({
     setSelectedLevels([level.toUpperCase()]);
     setSelectedCategories([]);
     setSelectedWordTypes([]);
-    setSelectedExercises([...DEFAULT_EXERCISES]);
+    setSelectedExercises([...EXERCISE_IDS]);
   };
 
   return {

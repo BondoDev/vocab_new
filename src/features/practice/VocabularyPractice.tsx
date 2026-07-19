@@ -25,8 +25,11 @@ import {
   exerciseCardBorders,
   type MotionCssVars,
 } from "../../app/constants/exerciseTheme";
+import { FOUR_WORD_EXERCISE_IDS } from "../../app/constants/exerciseIds";
 
 type PracticeCardCssVars = MotionCssVars<"--practice-card-bg" | "--practice-card-border">;
+
+const FOUR_WORD_EXERCISE_ID_SET = new Set<string>(FOUR_WORD_EXERCISE_IDS);
 
 interface VocabularyPracticeProps {
   practiceLanguage: string;
@@ -122,8 +125,7 @@ export function VocabularyPractice({
     typeof value === "string" && value.trim().length > 0 && value.trim() !== "-";
 
   const isFourWordExercise = useCallback(
-    (exerciseType: string) =>
-      exerciseType === "connectWords" || exerciseType === "listening",
+    (exerciseType: string) => FOUR_WORD_EXERCISE_ID_SET.has(exerciseType),
     [],
   );
   const typingExerciseTypes = useMemo(

@@ -1,12 +1,14 @@
+import { TYPING_EXERCISE_IDS } from "../../../app/constants/exerciseIds";
+
 export interface TypingRepeatEntry {
   conceptId: string;
   remainingTypingExercises: number;
 }
 
+const TYPING_EXERCISE_ID_SET = new Set<string>(TYPING_EXERCISE_IDS);
+
 export const isTypingExercise = (exerciseType: string): boolean =>
-  exerciseType === "wordTyping" ||
-  exerciseType === "halfWritten" ||
-  exerciseType === "brokenWord";
+  TYPING_EXERCISE_ID_SET.has(exerciseType);
 
 export const getEligibleTypingExercisesForWord = (
   word: any,

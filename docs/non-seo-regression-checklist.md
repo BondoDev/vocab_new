@@ -335,8 +335,17 @@ Columns: `ID | Feature | Preconditions | Steps | Expected result | Status | Auto
 | FILTER-01 | Level multi-select | — | Toggle multiple CEFR levels | Selection updates, word count updates | current | manual |
 | FILTER-02 | Level double-tap exclusive select | Multiple levels selected | Double-tap/double-click one level | Only that level remains selected | current | manual |
 | FILTER-03 | Zero-result guard | — | Choose a filter combo yielding 0 words | Continue is disabled | current | manual |
-| FILTER-04 | Exercise type toggle | — | Toggle each of the 5 exercise types | Selection updates; last one cannot be deselected | current | manual |
+| FILTER-04 | Exercise type toggle | — | Toggle each of the 5 exercise types | Selection updates; last one cannot be deselected | current | manual (id-set/partition covered by `test:exercise-id-contract`) |
 | FILTER-05 | Filter persistence | Filters set | Refresh | Restored from `app.selectedLevel`/`selectedCategories`/`selectedLevels`/`selectedWordTypes`/`selectedExercises` | current | `test:interactive-contracts` (key-contract only) |
+
+The five exercise ids (`wordTyping`, `halfWritten`, `brokenWord`, `connectWords`,
+`listening`) are persisted under `app.selectedExercises` and are also i18n-key
+segments, so they are a stable, backward-compatible contract, not just UI
+copy. They are canonicalized in `src/app/constants/exerciseIds.ts`
+(`EXERCISE_IDS`/`ExerciseId`), which both `learning-setup` and `practice`
+import — adding a 6th exercise means updating that file's id list *and* its
+typing/four-word classification *and* the setup option list in
+`ExerciseSelection.tsx`, or `test:exercise-id-contract` will fail.
 
 ### PRACTICE
 

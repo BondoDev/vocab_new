@@ -39,6 +39,7 @@
     "test:interactive-contracts": "node scripts/test-interactive-contracts.mjs",
     "test:practice-route-sync": "node --experimental-strip-types scripts/test-practice-route-sync.mjs",
     "test:account-language-sync": "node --experimental-strip-types scripts/test-account-language-sync.mjs",
+    "test:exercise-id-contract": "node --experimental-strip-types scripts/test-exercise-id-contract.mjs",
     "test:ui-component-ownership": "node scripts/test-ui-component-ownership.mjs",
     "test:dependency-ownership": "node scripts/test-dependency-ownership.mjs",
     "test:legacy-poc-ownership": "node scripts/test-legacy-poc-ownership.mjs",

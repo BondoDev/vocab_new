@@ -21,6 +21,7 @@ import {
   exerciseCardIconColors,
   type MotionCssVars,
 } from "../../app/constants/exerciseTheme";
+import type { ExerciseId } from "../../app/constants/exerciseIds";
 
 type ExerciseCardCssVars = MotionCssVars<
   "--exercise-card-bg" | "--exercise-card-border" | "--exercise-card-icon"
@@ -33,7 +34,22 @@ interface ExerciseSelectionProps {
   onContinue: () => void;
 }
 
-const exerciseGroups = [
+interface ExerciseGroupItem {
+  id: ExerciseId;
+  description: string;
+}
+
+interface ExerciseGroup {
+  id: string;
+  title: string;
+  items: ExerciseGroupItem[];
+}
+
+// Setup-only presentation metadata (grouping, titles, descriptions, display
+// order) — item ids are compile-time checked against the canonical
+// ExerciseId union, but the grouping/order/copy here is not derived from it
+// and is not shared with practice.
+const exerciseGroups: ExerciseGroup[] = [
   {
     id: "recall",
     title: "Recall exercises",
