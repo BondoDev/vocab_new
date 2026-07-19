@@ -10,7 +10,7 @@ import {
 import { getLevelTestSeoPath } from "../../data/levelTests";
 import { getSeoHubPath } from "../../data/seo/hub";
 import { getWordSeoHubSummaryPath } from "../../data/seo/wordHubRoutes";
-import { getVerbListPath, getVerbListTitle } from "../../data/verbLists";
+import { getVerbListPath, getVerbListTitle } from "../../data/seo/verbLists";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import { buildSeoHubMetadata } from "../../seo/metadata";
 import { useLanguage, type UILanguage } from "../../contexts/LanguageContext";

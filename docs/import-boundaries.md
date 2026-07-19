@@ -40,7 +40,7 @@ consumer file is a *deliberate, checked* change instead of an accidental one.
   and compare the client bundle, SSR bundle, and Worker bundle against
   `scripts/seo-baseline/current/performance.json`.
 - Never move `src/data/seo/word-hub-pages/`, `word-browse-shards/`, or
-  `src/data/verbLists/verbListLookup/` without also updating
+  `src/data/seo/verbLists/verbListLookup/` without also updating
   `scripts/generate-word-hub-data.mjs` (their generator) in the same change.
 - Do not introduce a new broad glob (e.g. `**/*.json`) over a large data
   directory; every existing glob here is scoped to one flat directory with a
@@ -64,7 +64,7 @@ is in `scripts/import-boundaries/current/globs.json`. Summary:
 | G3 | `src/entry-server.tsx` | `./data/interface/*.json` | SSR entry | lazy | 7 | high — same consumer as G2 |
 | G4 | `src/data/seo/wordHubData.ts` | `./word-hub-pages/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
 | G5 | `src/data/seo/wordBrowseSearchData.ts` | `./word-browse-shards/*.json` | client + SSR + **transitively Worker** via `WordSeoPageView.tsx` | lazy | 42 | high — shared-module boundary, only a test prevents the heavy export from running in the Worker |
-| G6 | `src/data/verbLists/commonVerbList.ts` | `./verbListLookup/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
+| G6 | `src/data/seo/verbLists/commonVerbList.ts` | `./verbListLookup/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
 | G7 | `src/app/components/WordSeoPage.tsx` | `../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | high — site of the historical Worker bundle-bloat incident |
 | G8 | `src/app/components/VocabularyLevelPage.tsx` | `../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | medium |
 | G9 | `src/data/seo/levelBrowseWords.ts` | `./level-browse-preview/*.json` | client + SSR | lazy | 42 | medium — hand-authored data, no generator script exists |

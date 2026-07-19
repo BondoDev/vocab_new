@@ -9,7 +9,7 @@ import {
   getVerbListTranslation,
   getVerbListWordLemma,
   VERB_LIST_ITEMS,
-} from "../../data/verbLists";
+} from "../../data/seo/verbLists";
 import { buildWordPath } from "../../data/seo/wordSlugs";
 import { type TargetLanguageSlug, type UiLanguageCode } from "../../data/seo/slugs";
 import { buildVerbListSeoMetadata } from "../../seo/metadata";

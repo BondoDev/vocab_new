@@ -7,7 +7,7 @@ import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordSlugs";
-import { getVerbListPath, resolveVerbListRoute } from "../../data/verbLists";
+import { getVerbListPath, resolveVerbListRoute } from "../../data/seo/verbLists";
 import {
   resolveWordSeoHubRoute,
   getWordSeoHubSummaryPath,

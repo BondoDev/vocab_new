@@ -1,5 +1,5 @@
 import verbListContentJson from "./common_100_verblists_text.json";
-import { type TargetLanguageSlug, type UiLanguageCode } from "../seo/slugs";
+import { type TargetLanguageSlug, type UiLanguageCode } from "../slugs";
 import { getFallbackVerbListCopy } from "./verbListFallbackCopy";
 import {
   buildVerbListContentLookup,

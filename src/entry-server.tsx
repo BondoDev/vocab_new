@@ -9,7 +9,7 @@ import {
 } from "./data/seo/slugs";
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/levelTests";
-import { getAllVerbListPaths, resolveVerbListRoute } from "./data/verbLists";
+import { getAllVerbListPaths, resolveVerbListRoute } from "./data/seo/verbLists";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";

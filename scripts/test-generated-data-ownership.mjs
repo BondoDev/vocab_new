@@ -324,7 +324,7 @@ for (const dir of [
   "src/data/seo/word-hub-pages",
   "src/data/seo/word-browse-shards",
   "src/data/seo/level-browse-preview",
-  "src/data/verbLists/verbListLookup",
+  "src/data/seo/verbLists/verbListLookup",
   "public/sitemaps",
 ]) {
   test(`${dir} exists and is committed to git`, () => {
@@ -363,7 +363,7 @@ test("docs/generated-data.md exists and names every high-risk directory", () => 
     "src/data/seo/word-hub-pages",
     "src/data/seo/word-browse-shards",
     "src/data/seo/level-browse-preview",
-    "src/data/verbLists/verbListLookup",
+    "src/data/seo/verbLists/verbListLookup",
     "public/sitemaps",
     "workers/word-ssr/data/full-corpus",
     "workers/word-ssr/assets-full",

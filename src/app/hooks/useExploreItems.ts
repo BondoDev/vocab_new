@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { UILanguage } from "../../contexts/LanguageContext";
-import { getVerbListPath, getVerbListTitle } from "../../data/verbLists";
+import { getVerbListPath, getVerbListTitle } from "../../data/seo/verbLists";
 import {
   buildEnglishExploreTopics,
   buildFrenchExploreTopics,

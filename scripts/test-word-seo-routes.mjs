@@ -21,7 +21,7 @@ function compileTestModules() {
     path.join(rootDir, "src", "data", "seo", "slugs.ts"),
     path.join(rootDir, "src", "data", "seo", "hub.ts"),
     path.join(rootDir, "src", "data", "seo", "wordHubRoutes.ts"),
-    path.join(rootDir, "src", "data", "verbLists", "verbListRegistry.ts"),
+    path.join(rootDir, "src", "data", "seo", "verbLists", "verbListRegistry.ts"),
     path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
 
@@ -67,7 +67,7 @@ compileTestModules();
 const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
 const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPageData.js"));
 const wordHubRoutes = require(path.join(tempDir, "src", "data", "seo", "wordHubRoutes.js"));
-const verbListRegistry = require(path.join(tempDir, "src", "data", "verbLists", "verbListRegistry.js"));
+const verbListRegistry = require(path.join(tempDir, "src", "data", "seo", "verbLists", "verbListRegistry.js"));
 const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
 function readJson(relativePath) {
@@ -79,7 +79,7 @@ function readJson(relativePath) {
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 const spanishVocabulary = readJson("src/data/vocabulary/spanish/vocabulary.json");
-const englishVerbList = readJson("src/data/verbLists/list_of_100_most_used_verb.json");
+const englishVerbList = readJson("src/data/seo/verbLists/list_of_100_most_used_verb.json");
 const normalizedEnglishVerbList = englishVerbList.map((item) => {
   const legacyId = String(item?.id ?? "").trim();
   if (legacyId) {
@@ -427,15 +427,15 @@ const wordHubDataSource = fs.readFileSync(
   "utf8",
 );
 const verbListRegistrySource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "verbLists", "verbListRegistry.ts"),
+  path.join(rootDir, "src", "data", "seo", "verbLists", "verbListRegistry.ts"),
   "utf8",
 );
 const commonVerbListSource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "verbLists", "commonVerbList.ts"),
+  path.join(rootDir, "src", "data", "seo", "verbLists", "commonVerbList.ts"),
   "utf8",
 );
 const verbListsSource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "verbLists", "index.ts"),
+  path.join(rootDir, "src", "data", "seo", "verbLists", "index.ts"),
   "utf8",
 );
 const generateWordHubDataSource = fs.readFileSync(
@@ -518,7 +518,7 @@ assert.ok(
 );
 assert.ok(
   /["']verbListLookup["']/.test(generateWordHubDataSource),
-  "word hub generator should write shared verb list lookup JSON files to src/data/verbLists/verbListLookup",
+  "word hub generator should write shared verb list lookup JSON files to src/data/seo/verbLists/verbListLookup",
 );
 assert.ok(
   !/englishVerbList["'],\s*["']lookup/.test(generateWordHubDataSource),
