@@ -73,12 +73,12 @@ import { useExploreItems } from "./hooks/useExploreItems";
 import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
 
 const LevelCategorySelection = lazy(() =>
-  import("./components/LevelCategorySelection").then((module) => ({
+  import("../features/learning-setup/LevelCategorySelection").then((module) => ({
     default: module.LevelCategorySelection,
   })),
 );
 const ExerciseSelection = lazy(() =>
-  import("./components/ExerciseSelection").then((module) => ({
+  import("../features/learning-setup/ExerciseSelection").then((module) => ({
     default: module.ExerciseSelection,
   })),
 );

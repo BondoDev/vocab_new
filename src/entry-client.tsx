@@ -21,9 +21,9 @@ const _lazyChunkPreload: Promise<unknown> | null =
     : pathname.includes("/languages/filters/exercises") && pathname.includes("/practice")
     ? import("./features/practice/VocabularyPractice")
     : pathname.startsWith("/languages/filters/exercises")
-    ? import("./app/components/ExerciseSelection")
+    ? import("./features/learning-setup/ExerciseSelection")
     : pathname === "/languages/filters" || pathname === "/languages/filters/"
-    ? import("./app/components/LevelCategorySelection")
+    ? import("./features/learning-setup/LevelCategorySelection")
     : pathname.startsWith("/languages/level-test")
     ? import("./app/components/VocabularyLevelExam")
     : null;

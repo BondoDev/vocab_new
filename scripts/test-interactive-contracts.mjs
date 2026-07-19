@@ -135,8 +135,12 @@ console.log("\n=== interactive feature module presence ===\n");
 
 test("key practice/exercise/exam module files exist", () => {
   const expectedFiles = [
-    "src/app/components/LevelCategorySelection.tsx",
-    "src/app/components/ExerciseSelection.tsx",
+    // Level/exercise selection moved under src/features/learning-setup/
+    // (learning-setup-domain migration); exerciseTheme.ts stayed under
+    // src/app/constants/ because src/features/practice/VocabularyPractice.tsx
+    // also imports it, and practice must not depend on learning-setup.
+    "src/features/learning-setup/LevelCategorySelection.tsx",
+    "src/features/learning-setup/ExerciseSelection.tsx",
     "src/app/components/VocabularyLevelExam.tsx",
     // Practice/exercises moved under src/features/practice/ (practice-domain migration).
     "src/features/practice/VocabularyPractice.tsx",

@@ -2,7 +2,10 @@
 import { motion } from "motion/react";
 import "../../styles/filters_page.scss";
 import { ChevronLeft, ChevronDown, Check, X } from "lucide-react";
-import categoriesData from "../../data/categories.json";
+// categories.json is exclusive to this component and moved with it (see
+// docs/generated-data.md — unlike vocabularyMetadata/*.json below, which
+// stays shared under src/data/ and is loaded by relative path, not moved).
+import categoriesData from "./data/categories.json";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 interface LevelCategorySelectionProps {

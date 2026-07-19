@@ -47,7 +47,7 @@ stale in the direction of *understating* what exists, either.
 | Feature | Route(s) | Auth required? | Data source | Current status | Risk |
 |---|---|---|---|---|---|
 | Language/home selection | `/`, `/languages` | no | `LanguageContext` + `localStorage` (`uiLanguage`, `app.yourLanguage`, `app.practiceLanguage`) | complete | high — entry point for every flow |
-| Level/category/word-type filters | `/languages/filters` | no | `src/data/categories.json`, `src/data/vocabularyMetadata/*.json` | complete | high |
+| Level/category/word-type filters | `/languages/filters` | no | `src/features/learning-setup/data/categories.json`, `src/data/vocabularyMetadata/*.json` | complete | high |
 | Exercise-type selection | `/languages/filters/exercises` | no | in-memory + `localStorage` (`app.selectedExercises`) | complete | high |
 | Vocabulary practice | `/languages/filters/exercises/:pair/practice` | no | `src/data/vocabulary/*/vocabulary.json`; session state is **ephemeral, not persisted** | complete, but no persistence by design (not a bug — see corrections above) | high — core product flow |
 | Vocabulary-level exam | `/languages/level-test` | no | generated in-app; **not persisted** | complete, ephemeral | medium-high |
