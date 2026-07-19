@@ -24,8 +24,8 @@ import { PracticeResults } from "./components/PracticeResults";
 import {
   exerciseCardBorders,
   type MotionCssVars,
-} from "../../app/constants/exerciseTheme";
-import { FOUR_WORD_EXERCISE_IDS } from "../../app/constants/exerciseIds";
+} from "../../exercises/exerciseTheme";
+import { FOUR_WORD_EXERCISE_IDS } from "../../exercises/exerciseIds";
 
 type PracticeCardCssVars = MotionCssVars<"--practice-card-bg" | "--practice-card-border">;
 

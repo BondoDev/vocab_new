@@ -1,4 +1,4 @@
-import { TYPING_EXERCISE_IDS } from "../../../app/constants/exerciseIds";
+import { TYPING_EXERCISE_IDS } from "../../../exercises/exerciseIds";
 
 export interface TypingRepeatEntry {
   conceptId: string;

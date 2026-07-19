@@ -1,5 +1,5 @@
 // Focused guard for the canonical exercise-identifier contract in
-// src/app/constants/exerciseIds.ts. Complements
+// src/exercises/exerciseIds.ts. Complements
 // scripts/test-interactive-contracts.mjs, which guards the
 // `app.selectedExercises` storage-key *string* in src/app/App.tsx but does
 // not check the id values, the canonical set, or the typing/four-word
@@ -32,7 +32,7 @@ import {
   TYPING_EXERCISE_IDS,
   FOUR_WORD_EXERCISE_IDS,
   isExerciseId,
-} from "../src/app/constants/exerciseIds.ts";
+} from "../src/exercises/exerciseIds.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

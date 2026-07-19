@@ -341,7 +341,7 @@ Columns: `ID | Feature | Preconditions | Steps | Expected result | Status | Auto
 The five exercise ids (`wordTyping`, `halfWritten`, `brokenWord`, `connectWords`,
 `listening`) are persisted under `app.selectedExercises` and are also i18n-key
 segments, so they are a stable, backward-compatible contract, not just UI
-copy. They are canonicalized in `src/app/constants/exerciseIds.ts`
+copy. They are canonicalized in `src/exercises/exerciseIds.ts`
 (`EXERCISE_IDS`/`ExerciseId`), which both `learning-setup` and `practice`
 import — adding a 6th exercise means updating that file's id list *and* its
 typing/four-word classification *and* the setup option list in

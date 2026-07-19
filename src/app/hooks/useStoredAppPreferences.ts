@@ -25,7 +25,7 @@ import { useEffect, useRef, useState } from "react";
 import { canUseLocalStorage, readStoredString, readStoredStringArray } from "../utils/storage";
 import { VALID_LEVEL_CODES } from "../utils/pageRouting";
 import { shouldRestoreStoredLanguagePreference } from "../utils/storedLanguagePreferencePolicy";
-import { EXERCISE_IDS } from "../constants/exerciseIds";
+import { EXERCISE_IDS } from "../../exercises/exerciseIds";
 
 export interface AppPreferencesStorageKeys {
   yourLanguage: string;

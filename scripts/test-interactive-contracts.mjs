@@ -153,18 +153,19 @@ console.log("\n=== interactive feature module presence ===\n");
 test("key practice/exercise/exam module files exist", () => {
   const expectedFiles = [
     // Level/exercise selection moved under src/features/learning-setup/
-    // (learning-setup-domain migration); exerciseTheme.ts stayed under
-    // src/app/constants/ because src/features/practice/VocabularyPractice.tsx
-    // also imports it, and practice must not depend on learning-setup.
-    // exerciseIds.ts (the canonical, persisted exercise-id contract — see its
-    // own header comment) lives alongside it for the same reason: both
-    // learning-setup and practice import it, and neither may import the
-    // other. See scripts/test-exercise-id-contract.mjs for the id-set and
+    // (learning-setup-domain migration); exerciseTheme.ts lives in
+    // src/exercises/, the neutral exercise-domain boundary, because
+    // src/features/practice/VocabularyPractice.tsx also imports it, and
+    // practice must not depend on learning-setup. exerciseIds.ts (the
+    // canonical, persisted exercise-id contract — see its own header
+    // comment) lives alongside it for the same reason: both learning-setup
+    // and practice import it, and neither may import the other. See
+    // scripts/test-exercise-id-contract.mjs for the id-set and
     // typing/four-word partition checks that file doesn't cover.
     "src/features/learning-setup/LevelCategorySelection.tsx",
     "src/features/learning-setup/ExerciseSelection.tsx",
     "src/app/components/VocabularyLevelExam.tsx",
-    "src/app/constants/exerciseIds.ts",
+    "src/exercises/exerciseIds.ts",
     // Practice/exercises moved under src/features/practice/ (practice-domain migration).
     "src/features/practice/VocabularyPractice.tsx",
     "src/features/practice/exercises/WordTypingExercise.tsx",

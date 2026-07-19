@@ -11,17 +11,18 @@ import {
   X,
 } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
-// exerciseTheme.ts stays under src/app/constants/ (not moved with this file):
-// src/features/practice/VocabularyPractice.tsx also imports from it
-// (exerciseCardBorders, for practice-card color matching), so moving it here
-// would make practice depend on learning-setup, which this migration must not do.
+// exerciseTheme.ts lives in src/exercises/, the neutral exercise-domain
+// boundary shared by both sibling features: src/features/practice/VocabularyPractice.tsx
+// also imports from it (exerciseCardBorders, for practice-card color matching).
+// Neither feature owns it — moving it into either one would make practice and
+// learning-setup depend on each other, which they must not do.
 import {
   exerciseCardBackgrounds,
   exerciseCardBorders,
   exerciseCardIconColors,
   type MotionCssVars,
-} from "../../app/constants/exerciseTheme";
-import type { ExerciseId } from "../../app/constants/exerciseIds";
+} from "../../exercises/exerciseTheme";
+import type { ExerciseId } from "../../exercises/exerciseIds";
 
 type ExerciseCardCssVars = MotionCssVars<
   "--exercise-card-bg" | "--exercise-card-border" | "--exercise-card-icon"
