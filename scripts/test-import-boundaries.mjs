@@ -99,10 +99,10 @@ test("src/data/seo/word-browse-shards/*.json — exactly one file per language x
   assertExactMatchSet("src/data/seo/word-browse-shards", "src/data/seo/word-browse-shards", expected);
 });
 
-test("src/data/verbListLookup/*.json — exactly one file per target language", () => {
+test("src/data/verbLists/verbListLookup/*.json — exactly one file per target language", () => {
   assertExactMatchSet(
-    "src/data/verbListLookup",
-    "src/data/verbListLookup",
+    "src/data/verbLists/verbListLookup",
+    "src/data/verbLists/verbListLookup",
     SUPPORTED_TARGET_LANGUAGES.map((lang) => `${lang}.json`),
   );
 });
@@ -116,7 +116,7 @@ const EAGER_LAZY_CONTRACT = [
   ["src/entry-server.tsx", "./data/interface/*.json", null],
   ["src/data/seo/wordHubData.ts", "./word-hub-pages/*.json", "eager: true"],
   ["src/data/seo/wordBrowseSearchData.ts", "./word-browse-shards/*.json", null],
-  ["src/data/commonVerbList.ts", "./verbListLookup/*.json", "eager: true"],
+  ["src/data/verbLists/commonVerbList.ts", "./verbListLookup/*.json", "eager: true"],
   ["src/app/components/WordSeoPage.tsx", "../../data/vocabulary/*/vocabulary.json", null],
   ["src/app/components/VocabularyLevelPage.tsx", "../../data/vocabulary/*/vocabulary.json", null],
   ["src/data/seo/levelBrowseWords.ts", "./level-browse-preview/*.json", null],

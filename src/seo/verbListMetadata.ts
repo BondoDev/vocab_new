@@ -1,7 +1,7 @@
 import type { TargetLanguageSlug, UiLanguageCode } from "../data/seo/slugs";
 import { buildWordPath } from "../data/seo/wordSlugs";
-import { getFallbackVerbListCopy } from "../data/verbListFallbackCopy";
-import type { VerbListContent } from "../data/verbListRouteHelpers";
+import { getFallbackVerbListCopy } from "../data/verbLists/verbListFallbackCopy";
+import type { VerbListContent } from "../data/verbLists/verbListRouteHelpers";
 import type { SeoMetadata } from "./SeoContext";
 import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "./seoAlternates";
 

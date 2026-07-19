@@ -42,7 +42,7 @@ Local development
 - Build command: `npm run build`
   - `prebuild`: `generate:word-hub-data` + `sitemap` (regenerates
     `src/data/seo/word-hub-pages/`, `word-browse-shards/`,
-    `src/data/verbListLookup/`, `public/sitemap.xml`, `public/sitemaps/`)
+    `src/data/verbLists/verbListLookup/`, `public/sitemap.xml`, `public/sitemaps/`)
   - `vite build` → `dist/` (client bundle + prerender template)
   - `vite build --ssr src/entry-server.tsx --outDir server-build`
   - `scripts/cleanup-word-build-artifacts.mjs` (removes stray artifacts,

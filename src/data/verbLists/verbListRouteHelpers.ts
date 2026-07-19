@@ -1,4 +1,4 @@
-import type { UiLanguageCode } from "./seo/slugs";
+import type { UiLanguageCode } from "../seo/slugs";
 
 export interface VerbListFaqItem {
   question: string;
