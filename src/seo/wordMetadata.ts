@@ -7,7 +7,7 @@ import {
 import { buildWordPath } from "../data/seo/wordPages/wordSlugs";
 import type { SeoMetadata } from "./SeoContext";
 import { buildHreflangAlternates, sanitizeMetadataText } from "./shared/seoAlternates";
-import { WORD_META_DESC, WORD_META_TITLE } from "./seoTemplates";
+import { WORD_META_DESC, WORD_META_TITLE } from "./wordTemplates";
 
 export interface WordSeoMetadataParams {
   uiLang: UiLanguageCode;

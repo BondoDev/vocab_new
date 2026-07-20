@@ -9,7 +9,7 @@ import type { SeoMetadata } from "../SeoContext";
 import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "../shared/seoAlternates";
 import { buildVocabularyFaqSection } from "./seoFaq";
 import { buildVocabularyJsonLdGraph } from "./seoSchema";
-import { LEVEL_DISPLAY, META_DESC_TEMPLATE, META_TITLE_TEMPLATE, WORDS_UNIT_BY_UI_LANG } from "../seoTemplates";
+import { LEVEL_DISPLAY, META_DESC_TEMPLATE, META_TITLE_TEMPLATE, WORDS_UNIT_BY_UI_LANG } from "./seoTemplates";
 
 export function buildVocabularySeoMetadata({
   uiLang,

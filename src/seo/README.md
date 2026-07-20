@@ -20,7 +20,7 @@ code is what decides where it belongs.
 - Robots / indexing directives and route-level SEO policy
 - JSON-LD / schema.org builders
 - FAQ schema helpers
-- SEO templates (shared copy fragments metadata builders assemble from)
+- SEO templates and copy owned by the metadata builders that consume them
 - React SEO context/provider behavior
 - Site-wide SEO configuration used by metadata generation (default
   origin, default OG image, etc.)
@@ -48,28 +48,31 @@ it to produce metadata.
 
 ## Shared versus page-family-specific SEO behavior
 
-- Page-family-specific: `wordMetadata.ts`, `verbListMetadata.ts`, and
-  `hubMetadata.ts` each build metadata for one SEO page family at the
-  `src/seo/` root. `vocabularyLevels/vocabularyMetadata.ts`,
-  `vocabularyLevels/seoFaq.ts` (FAQ section), and
-  `vocabularyLevels/seoSchema.ts` (JSON-LD graph) are exclusively owned
-  by the vocabulary-level page family and live together in
-  `vocabularyLevels/`.
+- Page-family-specific: `wordMetadata.ts`, `wordTemplates.ts`,
+  `verbListMetadata.ts`, `hubMetadata.ts`, and `hubTemplates.ts` are
+  root-level files owned by their page families. `wordTemplates.ts` owns
+  individual word-page metadata copy/templates; `hubTemplates.ts` owns
+  hub metadata copy/templates. `vocabularyLevels/vocabularyMetadata.ts`,
+  `vocabularyLevels/seoFaq.ts` (FAQ section),
+  `vocabularyLevels/seoSchema.ts` (JSON-LD graph), and
+  `vocabularyLevels/seoTemplates.ts` (vocabulary-level metadata templates
+  and FAQ item type) are exclusively owned by the vocabulary-level page
+  family and live together in `vocabularyLevels/`.
 - Cross-family/shared behavior: `shared/seoAlternates.ts` (hreflang
-  building), `seoTemplates.ts` (shared copy templates),
-  `routeMetadataPolicy.ts` (route-level indexing policy),
+  building), `routeMetadataPolicy.ts` (route-level indexing policy),
   `SeoContext.tsx` (the React provider/runtime), and `site.ts`
-  (site-wide defaults) are consumed across multiple or all page
-  families.
+  (site-wide defaults) are consumed across multiple or all page families.
 
 ## Internal structure
 
-A subfolder is used only once multiple files clearly share one owner.
+A subfolder is used only once multiple files clearly share one owner and
+the repository has adopted a dedicated folder for that owner.
 `vocabularyLevels/` groups the vocabulary-level page family;
 `shared/` currently owns `seoAlternates.ts`, the one file with no
-single page-family owner. A single-file family (`wordMetadata.ts`,
-`verbListMetadata.ts`, `hubMetadata.ts`) stays at the root until a
-second file justifies its own folder. Public entry points
+single page-family owner. Root-level family files such as
+`wordMetadata.ts`, `wordTemplates.ts`, `verbListMetadata.ts`,
+`hubMetadata.ts`, and `hubTemplates.ts` stay at the root until a
+dedicated folder is adopted for that family. Public entry points
 (`SeoContext.tsx`, `routeMetadataPolicy.ts`) and the compatibility
 facade (`metadata.ts`) remain at the root regardless of file count.
 
@@ -105,12 +108,15 @@ to preserve by inspection and review.
    convention (`wordMetadata.ts`, `verbListMetadata.ts`,
    `vocabularyLevels/vocabularyMetadata.ts`). Put it in its own
    `<family>/` subfolder only once that family owns more than one file.
-3. Reuse `shared/seoAlternates.ts`, `seoTemplates.ts`, and
+3. Reuse `shared/seoAlternates.ts` and
    `routeMetadataPolicy.ts` where the concern is cross-family — don't
    fork copies of hreflang logic per family. `vocabularyLevels/seoFaq.ts`
    and `vocabularyLevels/seoSchema.ts` are vocabulary-level-only
    helpers, not general-purpose infrastructure — don't reuse them for a
-   different family.
+   different family. Keep metadata copy/templates with their owning
+   family: `vocabularyLevels/seoTemplates.ts` for vocabulary-level pages,
+   `hubTemplates.ts` for hub pages, and `wordTemplates.ts` for individual
+   word pages.
 4. Only import from `src/data/seo/`, never the other way around.
 5. If the module needs to be reachable under the old `./metadata`
    import path, add a re-export to `metadata.ts` (the existing

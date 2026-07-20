@@ -8,7 +8,7 @@ import {
 import { getLevelTestContent, getLevelTestSeoPath } from "../data/seo/levelTests";
 import type { SeoMetadata } from "./SeoContext";
 import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "./shared/seoAlternates";
-import { GENERIC_WORD_SEO_HUB_METADATA, SEO_HUB_METADATA, WORD_SEO_HUB_METADATA } from "./seoTemplates";
+import { GENERIC_WORD_SEO_HUB_METADATA, SEO_HUB_METADATA, WORD_SEO_HUB_METADATA } from "./hubTemplates";
 
 export function buildLevelTestSeoMetadata({
   uiLang,
