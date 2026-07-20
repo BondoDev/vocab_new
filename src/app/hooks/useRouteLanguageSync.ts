@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { UiLanguageCode } from "../../data/seo/slugs";
+import type { UiLanguageCode } from "../../data/seo/shared/slugs";
 import type { UILanguage } from "../../contexts/LanguageContext";
 
 export function useRouteLanguageSync(

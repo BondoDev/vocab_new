@@ -5,8 +5,8 @@ import App from "./app/App";
 import {
   getAllLocalizedVocabularyRoutes,
   resolveVocabularyRoute,
-  type UiLanguageCode,
-} from "./data/seo/slugs";
+} from "./data/seo/vocabularyLevels/vocabularyLevelRoutes";
+import type { UiLanguageCode } from "./data/seo/shared/slugs";
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/shared/hub";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/seo/levelTests";
 import { getAllVerbListPaths, resolveVerbListRoute } from "./data/seo/verbLists";

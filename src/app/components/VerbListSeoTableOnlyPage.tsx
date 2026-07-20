@@ -6,7 +6,7 @@ import {
   TARGET_LANGUAGE_TO_UI_LANGUAGE,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/slugs";
+} from "../../data/seo/shared/slugs";
 import { getFallbackVerbListCopy } from "../../data/seo/verbLists/verbListFallbackCopy";
 import { SEOHead, type SeoMetadata } from "../../seo/SeoContext";
 import { useLanguage } from "../../contexts/LanguageContext";

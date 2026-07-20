@@ -1,4 +1,4 @@
-import type { TargetLanguageSlug, UiLanguageCode } from "../slugs";
+import type { TargetLanguageSlug, UiLanguageCode } from "../shared/slugs";
 import { wordToSlug, stripDiacriticsForComparison } from "./wordSlugs";
 import { isValidBrowseWordLemma } from "../shared/browseWordValidation";
 import { fixMojibake } from "../../../utils/fixMojibake";

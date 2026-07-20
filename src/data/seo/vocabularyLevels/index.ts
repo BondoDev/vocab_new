@@ -4,7 +4,7 @@
   type UiLanguageCode,
   SUPPORTED_TARGET_LANGUAGES,
   SUPPORTED_LEVELS,
-} from "../slugs";
+} from "../shared/slugs";
 
 export {
   SUPPORTED_LEVELS,

@@ -1,4 +1,4 @@
-import type { TargetLanguageSlug, UiLanguageCode } from "../data/seo/slugs";
+import type { TargetLanguageSlug, UiLanguageCode } from "../data/seo/shared/slugs";
 import { buildWordPath } from "../data/seo/wordPages/wordSlugs";
 import { getFallbackVerbListCopy } from "../data/seo/verbLists/verbListFallbackCopy";
 import type { VerbListContent } from "../data/seo/verbLists/verbListRouteHelpers";

@@ -1,4 +1,4 @@
-import type { UiLanguageCode } from "../data/seo/slugs";
+import type { UiLanguageCode } from "../data/seo/shared/slugs";
 import type { VocabularyLevelContent } from "../data/seo/vocabularyLevels";
 import { FAQ_QUESTION_TEMPLATES, FAQ_SECTION_HEADING, type FaqItem } from "./seoTemplates";
 

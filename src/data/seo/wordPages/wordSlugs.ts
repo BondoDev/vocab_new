@@ -22,7 +22,7 @@ import {
   SUPPORTED_UI_LANGUAGES,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../slugs";
+} from "../shared/slugs";
 import { fixMojibake } from "../../../utils/fixMojibake";
 
 export type {

@@ -1,10 +1,10 @@
 import sampleContent from "../../data/seo/vocabularyLevels/seo-cefr-content.json";
+import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
-  buildLocalizedVocabularyPath,
   isSupportedUiLanguage,
   SUPPORTED_TARGET_LANGUAGES,
   type TargetLanguageSlug,
-} from "../../data/seo/slugs";
+} from "../../data/seo/shared/slugs";
 import type {
   CefrLevelCode,
   UiLanguageCode,

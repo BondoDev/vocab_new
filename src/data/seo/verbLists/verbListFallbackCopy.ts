@@ -1,4 +1,4 @@
-import type { TargetLanguageSlug, UiLanguageCode } from "../slugs";
+import type { TargetLanguageSlug, UiLanguageCode } from "../shared/slugs";
 
 const TARGET_LANGUAGE_DISPLAY_NAMES: Record<UiLanguageCode, Record<TargetLanguageSlug, string>> = {
   en: {

@@ -19,11 +19,16 @@ const PUBLIC_DIR = path.join(ROOT_DIR, "public", "vocabularyLevels");
 
 // index.ts is the legitimate SSR/client loader module that lives alongside
 // the source JSON — it is never copied to public/, only skipped.
-// levelBrowseWords.ts, level-browse-preview/, and seo-cefr-content.json are
-// other CEFR vocabulary-level SEO data co-located here (not part of the
-// {ui}/{target}.json matrix this script mirrors) — also skipped, never
-// copied to public/.
-const ALLOWED_SOURCE_TOP_LEVEL_FILES = new Set(["index.ts", "levelBrowseWords.ts", "seo-cefr-content.json"]);
+// levelBrowseWords.ts, vocabularyLevelRoutes.ts, level-browse-preview/, and
+// seo-cefr-content.json are other CEFR vocabulary-level SEO data co-located
+// here (not part of the {ui}/{target}.json matrix this script mirrors) —
+// also skipped, never copied to public/.
+const ALLOWED_SOURCE_TOP_LEVEL_FILES = new Set([
+  "index.ts",
+  "levelBrowseWords.ts",
+  "vocabularyLevelRoutes.ts",
+  "seo-cefr-content.json",
+]);
 const ALLOWED_SOURCE_TOP_LEVEL_DIRS = new Set(["level-browse-preview"]);
 const ALLOWED_PUBLIC_EXTRA_FILES = new Set([".gitkeep"]);
 
@@ -42,12 +47,12 @@ function reportFailure(title, errors) {
 
 function main() {
   const compiled = compileTsToCommonJs(".tmp-sync-vocabulary-levels", [
-    path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
+    path.join(ROOT_DIR, "src", "data", "seo", "shared", "slugs.ts"),
   ]);
 
   try {
     const { SUPPORTED_UI_LANGUAGES, SUPPORTED_TARGET_LANGUAGES } =
-      compiled.require("src/data/seo/slugs");
+      compiled.require("src/data/seo/shared/slugs");
 
     const uiSet = new Set(SUPPORTED_UI_LANGUAGES);
     const expectedFileNames = new Set(SUPPORTED_TARGET_LANGUAGES.map((t) => `${t}.json`));

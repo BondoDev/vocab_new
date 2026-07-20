@@ -1,4 +1,4 @@
-import { SUPPORTED_UI_LANGUAGES, type UiLanguageCode } from "../slugs";
+import { SUPPORTED_UI_LANGUAGES, type UiLanguageCode } from "./slugs";
 
 const SEO_HUB_PATHS: Record<UiLanguageCode, string> = {
   en: "/en/seo-pages",

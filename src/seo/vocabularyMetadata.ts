@@ -1,9 +1,9 @@
+import { buildLocalizedVocabularyPath } from "../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
-  buildLocalizedVocabularyPath,
   type Level,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../data/seo/slugs";
+} from "../data/seo/shared/slugs";
 import { getVocabularyLevelContent } from "../data/seo/vocabularyLevels";
 import type { SeoMetadata } from "./SeoContext";
 import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "./seoAlternates";

@@ -93,7 +93,7 @@ have been removed from that script.
 follow-up).** `scripts/sync-vocabulary-levels.mjs` derives the expected
 7×7 UI-language × target-language matrix from the same authoritative
 registry (`SUPPORTED_UI_LANGUAGES` / `SUPPORTED_TARGET_LANGUAGES` in
-`src/data/seo/slugs.ts`) already used by `test:generated-data-ownership`,
+`src/data/seo/shared/slugs.ts`) already used by `test:generated-data-ownership`,
 validates every source file (JSON parses, no unexpected/hidden/`.ts`/`.js`
 files, no unexpected nested directories, no duplicate logical key), then
 copies bytes exactly into `public/vocabularyLevels/`, removes stale public

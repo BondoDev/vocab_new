@@ -14,11 +14,11 @@
 // Item ordering is user-visible and must be preserved: level topics appear
 // A1→C2, then the level-test entry, then (in App.tsx) the verb-list entry.
 import type { UILanguage } from "../../contexts/LanguageContext";
+import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
-  buildLocalizedVocabularyPath,
   type Level as CefrLevelCode,
   type TargetLanguageSlug,
-} from "../../data/seo/slugs";
+} from "../../data/seo/shared/slugs";
 import { getLevelTestContent, getLevelTestSeoPath } from "../../data/seo/levelTests";
 import { TARGET_LANGUAGE_TO_UI_CODE } from "./pageRouting";
 

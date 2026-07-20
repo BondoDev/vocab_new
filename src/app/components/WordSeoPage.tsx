@@ -3,7 +3,7 @@ import { useLocation } from "react-router";
 import {
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/slugs";
+} from "../../data/seo/shared/slugs";
 import {
   getWordBrowseSearchData,
   getWordBrowseSearchShardKey,

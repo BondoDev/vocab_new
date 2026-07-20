@@ -13,13 +13,13 @@
 // the route map (or the slice they need) as a parameter instead of
 // importing App.tsx, which would also create a circular dependency.
 import type { UILanguage } from "../../contexts/LanguageContext";
+import { resolveVocabularyRoute } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
   isSupportedUiLanguage,
-  resolveVocabularyRoute,
   type Level as CefrLevelCode,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/slugs";
+} from "../../data/seo/shared/slugs";
 import {
   parseWordRoutePathname,
   type CanonicalWordPageRouteMatch,

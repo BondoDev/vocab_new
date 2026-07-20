@@ -1,6 +1,6 @@
 // STAGING-ONLY, Node-only, OFFLINE census tool (Phase 2 of the full-corpus
 // migration). Reads the real vocabulary data and the centralized route
-// manifest (src/data/seo/wordPages/wordRouteManifest.ts, src/data/seo/slugs.ts) as the
+// manifest (src/data/seo/wordPages/wordRouteManifest.ts, src/data/seo/shared/slugs.ts) as the
 // source of truth — does NOT assume the current ~84,550 sitemap count is the
 // full route count, and computes both figures separately so the difference
 // is explicit.
@@ -15,10 +15,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const compiled = compileTsToCommonJs(".tmp-census-full-corpus", [
   path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordRouteManifest.ts"),
-  path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "shared", "slugs.ts"),
 ]);
 const wordRouteManifest = compiled.require("src/data/seo/wordPages/wordRouteManifest");
-const slugsModule = compiled.require("src/data/seo/slugs");
+const slugsModule = compiled.require("src/data/seo/shared/slugs");
 
 const { SUPPORTED_TARGET_LANGUAGES, SUPPORTED_UI_LANGUAGES, SUPPORTED_LEVELS } = slugsModule;
 const { WORD_SITEMAP_DEFINITIONS, CRAWLABLE_WORD_TARGET_LANGUAGES, wordToSlug } = wordRouteManifest;

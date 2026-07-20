@@ -6,7 +6,7 @@ import {
   getVerbTranslation,
   type VerbListItem,
 } from "./commonVerbList";
-import { type TargetLanguageSlug, type UiLanguageCode } from "../slugs";
+import { type TargetLanguageSlug, type UiLanguageCode } from "../shared/slugs";
 import {
   getAllVerbListPaths,
   getVerbListConfig,

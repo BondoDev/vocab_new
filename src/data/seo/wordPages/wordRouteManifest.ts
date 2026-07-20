@@ -4,7 +4,7 @@ import {
   isSupportedUiLanguage,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../slugs";
+} from "../shared/slugs";
 
 export const WORD_ROUTE_FAMILY = "word";
 export const CRAWLABLE_WORD_TARGET_LANGUAGES = ["english"] as const;

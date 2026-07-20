@@ -1,5 +1,5 @@
-import type { TargetLanguageSlug } from "../slugs";
-import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, type UiLanguageCode } from "../slugs";
+import type { TargetLanguageSlug } from "../shared/slugs";
+import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, type UiLanguageCode } from "../shared/slugs";
 import type { CefrLevelCode } from "./index";
 import { buildWordPath } from "../wordPages/wordSlugs";
 

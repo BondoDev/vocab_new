@@ -4,12 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 import { getLevelTestSeoPath } from "../../data/seo/levelTests";
 import { getSeoHubPath } from "../../data/seo/shared/hub";
 import { getUiVocabularyLanguage } from "../../data/seo/wordPages/wordPageData";
+import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
   TARGET_LANGUAGE_TO_UI_LANGUAGE,
-  buildLocalizedVocabularyPath,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/slugs";
+} from "../../data/seo/shared/slugs";
 import type { VerbListContent } from "../../data/seo/verbLists/verbListRouteHelpers";
 import { SEOHead, type SeoMetadata } from "../../seo/SeoContext";
 import { useLanguage } from "../../contexts/LanguageContext";

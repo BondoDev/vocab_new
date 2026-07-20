@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { getEnglishLevelPracticeLinks, getLevelTestContent, type LevelTestContent } from "../../data/seo/levelTests";
 import { buildLevelTestSeoMetadata } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
-import type { TargetLanguageSlug, UiLanguageCode } from "../../data/seo/slugs";
+import type { TargetLanguageSlug, UiLanguageCode } from "../../data/seo/shared/slugs";
 
 interface LevelTestSeoPageProps {
   uiLang: UiLanguageCode;

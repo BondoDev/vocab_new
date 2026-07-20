@@ -18,7 +18,7 @@ function compileTestModules() {
   const rootNames = [
     path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
     path.join(rootDir, "src", "data", "seo", "wordPages", "wordPageData.ts"),
-    path.join(rootDir, "src", "data", "seo", "slugs.ts"),
+    path.join(rootDir, "src", "data", "seo", "shared", "slugs.ts"),
     path.join(rootDir, "src", "data", "seo", "shared", "hub.ts"),
     path.join(rootDir, "src", "data", "seo", "wordPages", "wordHubRoutes.ts"),
     path.join(rootDir, "src", "data", "seo", "verbLists", "verbListRegistry.ts"),

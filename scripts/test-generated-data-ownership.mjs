@@ -30,10 +30,10 @@ function test(name, fn) {
 }
 
 const compiled = compileTsToCommonJs(".tmp-generated-data-ownership", [
-  path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "shared", "slugs.ts"),
 ]);
 const { SUPPORTED_UI_LANGUAGES, SUPPORTED_TARGET_LANGUAGES, SUPPORTED_LEVELS } =
-  compiled.require("src/data/seo/slugs");
+  compiled.require("src/data/seo/shared/slugs");
 
 function gitLsFiles(relDir) {
   try {

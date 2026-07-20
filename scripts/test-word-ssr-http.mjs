@@ -31,7 +31,10 @@ function compileWordSlugModule() {
   fs.mkdirSync(tempDir, { recursive: true });
 
   const program = ts.createProgram({
-    rootNames: [path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts")],
+    rootNames: [
+      path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
+      path.join(rootDir, "src", "data", "seo", "vocabularyLevels", "vocabularyLevelRoutes.ts"),
+    ],
     options: {
       target: ts.ScriptTarget.ES2020,
       module: ts.ModuleKind.CommonJS,
@@ -69,9 +72,12 @@ function compileWordSlugModule() {
 
 const wordSlugs = compileWordSlugModule();
 const wordToSlug = wordSlugs.wordToSlug;
-// slugs.ts is emitted transitively (wordSlugs.ts imports from it)
-const slugsModule = require(path.join(tempDir, "src", "data", "seo", "slugs.js"));
-const buildLocalizedVocabularyPath = slugsModule.buildLocalizedVocabularyPath;
+// vocabularyLevelRoutes.ts is compiled alongside wordSlugs.ts in the same
+// program/tempDir (see rootNames above) for buildLocalizedVocabularyPath.
+const vocabularyLevelRoutes = require(
+  path.join(tempDir, "src", "data", "seo", "vocabularyLevels", "vocabularyLevelRoutes.js"),
+);
+const buildLocalizedVocabularyPath = vocabularyLevelRoutes.buildLocalizedVocabularyPath;
 
 function buildCanonicalPath(uiLang, targetLanguage, entry) {
   return wordSlugs.buildWordPath(

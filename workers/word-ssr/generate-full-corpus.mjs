@@ -36,10 +36,10 @@ const DATA_VERSION = `staging-full-${new Date().toISOString().slice(0, 10)}-01`;
 
 const compiled = compileTsToCommonJs(".tmp-generate-full-corpus", [
   path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordRouteManifest.ts"),
-  path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "shared", "slugs.ts"),
 ]);
 const wordRouteManifest = compiled.require("src/data/seo/wordPages/wordRouteManifest");
-const slugsModule = compiled.require("src/data/seo/slugs");
+const slugsModule = compiled.require("src/data/seo/shared/slugs");
 const { SUPPORTED_TARGET_LANGUAGES, SUPPORTED_UI_LANGUAGES } = slugsModule;
 const { wordToSlug } = wordRouteManifest;
 

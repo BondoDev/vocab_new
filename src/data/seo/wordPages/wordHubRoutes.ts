@@ -1,5 +1,5 @@
-import type { Level, TargetLanguageSlug, UiLanguageCode } from "../slugs";
-import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, SUPPORTED_UI_LANGUAGES, TARGET_NAME_SLUGS } from "../slugs";
+import type { Level, TargetLanguageSlug, UiLanguageCode } from "../shared/slugs";
+import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, SUPPORTED_UI_LANGUAGES, TARGET_NAME_SLUGS } from "../shared/slugs";
 import { getSeoHubPath } from "../shared/hub";
 
 export const WORD_HUB_PAGE_SIZE = 250;

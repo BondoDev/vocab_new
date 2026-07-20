@@ -37,9 +37,9 @@ function test(name, fn) {
 }
 
 const compiled = compileTsToCommonJs(".tmp-import-boundaries", [
-  path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "shared", "slugs.ts"),
 ]);
-const { SUPPORTED_TARGET_LANGUAGES, SUPPORTED_LEVELS } = compiled.require("src/data/seo/slugs");
+const { SUPPORTED_TARGET_LANGUAGES, SUPPORTED_LEVELS } = compiled.require("src/data/seo/shared/slugs");
 
 function readdirJson(relDir) {
   const abs = path.join(ROOT_DIR, relDir);

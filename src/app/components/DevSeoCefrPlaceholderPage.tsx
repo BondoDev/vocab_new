@@ -6,7 +6,7 @@ import type {
   TargetLanguageSlug,
   UiLanguageCode,
 } from "../../data/seo/vocabularyLevels";
-import { buildLocalizedVocabularyPath } from "../../data/seo/slugs";
+import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import { buildVocabularyFaqSection, buildVocabularyJsonLdGraph } from "../../seo/metadata";
 import {
   DEV_CEFR_PREVIEW_PATH,

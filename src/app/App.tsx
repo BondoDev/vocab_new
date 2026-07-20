@@ -31,7 +31,7 @@ import {
   useLanguage,
   type UILanguage,
 } from "../contexts/LanguageContext";
-import type { TargetLanguageSlug } from "../data/seo/slugs";
+import type { TargetLanguageSlug } from "../data/seo/shared/slugs";
 import type { CanonicalWordPageRouteMatch } from "../data/seo/wordPages/wordSlugs";
 import type { LevelBrowsePreviewData } from "../data/seo/vocabularyLevels/levelBrowseWords";
 import {

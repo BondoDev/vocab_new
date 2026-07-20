@@ -6,7 +6,7 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import {
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/slugs";
+} from "../../data/seo/shared/slugs";
 import { buildWordBrowsePagePathFromSlug, buildWordPath } from "../../data/seo/wordPages/wordSlugs";
 import {
   getWordBrowseSearchShardKey,

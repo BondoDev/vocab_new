@@ -1,4 +1,4 @@
-import type { TargetLanguageSlug, UiLanguageCode } from "../data/seo/slugs";
+import type { TargetLanguageSlug, UiLanguageCode } from "../data/seo/shared/slugs";
 import { getAllSeoHubPaths, getSeoHubPath } from "../data/seo/shared/hub";
 import {
   getWordSeoHubLevelPath,

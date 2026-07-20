@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
   SUPPORTED_LEVELS,
   SUPPORTED_TARGET_LANGUAGES,
-  buildLocalizedVocabularyPath,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/slugs";
+} from "../../data/seo/shared/slugs";
 import { getLevelTestSeoPath } from "../../data/seo/levelTests";
 import { getSeoHubPath } from "../../data/seo/shared/hub";
 import { getWordSeoHubSummaryPath } from "../../data/seo/wordPages/wordHubRoutes";

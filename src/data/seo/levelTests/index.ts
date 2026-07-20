@@ -1,5 +1,6 @@
 import levelTestContentJson from "./seo_level_test_content.json";
-import { buildLocalizedVocabularyPath, type TargetLanguageSlug, type UiLanguageCode } from "../slugs";
+import { buildLocalizedVocabularyPath } from "../vocabularyLevels/vocabularyLevelRoutes";
+import { type TargetLanguageSlug, type UiLanguageCode } from "../shared/slugs";
 
 export interface LevelTestContentSection {
   heading: string;

@@ -1,18 +1,18 @@
-﻿export const SUPPORTED_UI_LANGUAGES = ["en", "es", "de", "fr", "ru", "pt", "it"] as const;
-export const SUPPORTED_TARGET_LANGUAGES = [
-  "english",
-  "german",
-  "spanish",
-  "french",
-  "italian",
-  "portuguese",
-  "russian",
-] as const;
-export const SUPPORTED_LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"] as const;
+﻿// CEFR vocabulary-level-page route construction/resolution. Cross-family
+// constants (supported language/level sets, target-name slugs, the UI
+// language guard) live in shared/slugs.ts; this module owns only the
+// vocab-practice-page-specific slug patterns and PageKey/route logic.
+import {
+  SUPPORTED_UI_LANGUAGES,
+  SUPPORTED_TARGET_LANGUAGES,
+  SUPPORTED_LEVELS,
+  TARGET_NAME_SLUGS,
+  isSupportedUiLanguage,
+  type UiLanguageCode,
+  type TargetLanguageSlug,
+  type Level,
+} from "../shared/slugs";
 
-export type UiLanguageCode = (typeof SUPPORTED_UI_LANGUAGES)[number];
-export type TargetLanguageSlug = (typeof SUPPORTED_TARGET_LANGUAGES)[number];
-export type Level = (typeof SUPPORTED_LEVELS)[number];
 export type PageType = "vocab-practice";
 export type PageKey = `${TargetLanguageSlug}:${Level}:${PageType}`;
 export interface LocalizedVocabularyRoute {
@@ -22,82 +22,6 @@ export interface LocalizedVocabularyRoute {
   path: string;
   slug: string;
 }
-
-export const TARGET_LANGUAGE_TO_UI_LANGUAGE: Record<TargetLanguageSlug, UiLanguageCode> = {
-  english: "en",
-  german: "de",
-  spanish: "es",
-  french: "fr",
-  italian: "it",
-  portuguese: "pt",
-  russian: "ru",
-};
-
-export const TARGET_NAME_SLUGS: Record<UiLanguageCode, Record<TargetLanguageSlug, string>> = {
-  en: {
-    english: "english",
-    german: "german",
-    spanish: "spanish",
-    french: "french",
-    italian: "italian",
-    portuguese: "portuguese",
-    russian: "russian",
-  },
-  es: {
-    english: "ingles",
-    german: "aleman",
-    spanish: "espanol",
-    french: "frances",
-    italian: "italiano",
-    portuguese: "portugues",
-    russian: "ruso",
-  },
-  de: {
-    english: "englisch",
-    german: "deutsch",
-    spanish: "spanisch",
-    french: "franzoesisch",
-    italian: "italienisch",
-    portuguese: "portugiesisch",
-    russian: "russisch",
-  },
-  fr: {
-    english: "anglais",
-    german: "allemand",
-    spanish: "espagnol",
-    french: "francais",
-    italian: "italien",
-    portuguese: "portugais",
-    russian: "russe",
-  },
-  ru: {
-    english: "angliiskii",
-    german: "nemetskii",
-    spanish: "ispanskii",
-    french: "frantsuzskii",
-    italian: "italyanskii",
-    portuguese: "portugalskii",
-    russian: "russkii",
-  },
-  pt: {
-    english: "ingles",
-    german: "alemao",
-    spanish: "espanhol",
-    french: "frances",
-    italian: "italiano",
-    portuguese: "portugues",
-    russian: "russo",
-  },
-  it: {
-    english: "inglese",
-    german: "tedesco",
-    spanish: "spagnolo",
-    french: "francese",
-    italian: "italiano",
-    portuguese: "portoghese",
-    russian: "russo",
-  },
-};
 
 const SLUG_PATTERNS: Record<UiLanguageCode, (targetSlug: string, level: Level) => string> = {
   en: (targetSlug, level) => `${targetSlug}-${level}-vocabulary-practice`,
@@ -140,10 +64,6 @@ export const slugs: Record<UiLanguageCode, Record<PageKey, string>> =
     acc[uiLang] = byKey;
     return acc;
   }, {} as Record<UiLanguageCode, Record<PageKey, string>>);
-
-export function isSupportedUiLanguage(value: string): value is UiLanguageCode {
-  return (SUPPORTED_UI_LANGUAGES as readonly string[]).includes(value);
-}
 
 export function getPageKeyFromSlug(uiLang: UiLanguageCode, slug: string): PageKey | null {
   const entries = Object.entries(slugs[uiLang]) as Array<[PageKey, string]>;

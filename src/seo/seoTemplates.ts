@@ -1,4 +1,4 @@
-import type { Level, UiLanguageCode } from "../data/seo/slugs";
+import type { Level, UiLanguageCode } from "../data/seo/shared/slugs";
 
 export const LEVEL_DISPLAY: Record<Level, string> = {
   a1: "A1",

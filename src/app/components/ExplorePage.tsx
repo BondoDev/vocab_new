@@ -1,7 +1,7 @@
 import { ChevronDown, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage, type UILanguage } from "../../contexts/LanguageContext";
-import type { TargetLanguageSlug } from "../../data/seo/slugs";
+import type { TargetLanguageSlug } from "../../data/seo/shared/slugs";
 import type { ExploreTopic } from "../utils/exploreTopics";
 
 interface ExploreLanguageOption {

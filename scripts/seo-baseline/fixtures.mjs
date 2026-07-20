@@ -38,7 +38,7 @@ export function loadBaselineContext() {
   const compiled = compileTsToCommonJs(".tmp-seo-baseline-fixtures", [
     path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordPageData.ts"),
-    path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
+    path.join(ROOT_DIR, "src", "data", "seo", "shared", "slugs.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "shared", "hub.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordHubRoutes.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "shared", "browseWordValidation.ts"),
@@ -47,7 +47,7 @@ export function loadBaselineContext() {
 
   const wordSlugs = compiled.require("src/data/seo/wordPages/wordSlugs");
   const wordPageData = compiled.require("src/data/seo/wordPages/wordPageData");
-  const slugsModule = compiled.require("src/data/seo/slugs");
+  const slugsModule = compiled.require("src/data/seo/shared/slugs");
   const hub = compiled.require("src/data/seo/shared/hub");
   const wordHubRoutes = compiled.require("src/data/seo/wordPages/wordHubRoutes");
   const browseWordValidation = compiled.require("src/data/seo/shared/browseWordValidation");

@@ -1,4 +1,4 @@
-import { SUPPORTED_UI_LANGUAGES, type UiLanguageCode } from "../data/seo/slugs";
+import { SUPPORTED_UI_LANGUAGES, type UiLanguageCode } from "../data/seo/shared/slugs";
 import { fixMojibake } from "../utils/fixMojibake";
 import type { SeoAlternateLink } from "./SeoContext";
 

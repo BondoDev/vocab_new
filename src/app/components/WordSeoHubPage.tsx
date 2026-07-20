@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getSeoHubPath } from "../../data/seo/shared/hub";
-import { TARGET_LANGUAGE_TO_UI_LANGUAGE, type Level, type UiLanguageCode } from "../../data/seo/slugs";
+import { TARGET_LANGUAGE_TO_UI_LANGUAGE, type Level, type UiLanguageCode } from "../../data/seo/shared/slugs";
 import {
   getWordSeoHubLevelPageData,
   getWordSeoHubSummaryPageData,
