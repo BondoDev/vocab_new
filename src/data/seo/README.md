@@ -40,6 +40,17 @@ Those live in [`src/seo/`](../../seo/README.md).
 contract exists?"*, it belongs here. If it primarily answers *"how should
 a page be represented to search engines?"*, it belongs in `src/seo/`.
 
+**Field names don't decide ownership.** Page-family content and fallback
+content may legitimately include fields named `pageTitle`, `metaTitle`,
+`metaDescription`, `searchPlaceholder`, `definition`, `noResults`,
+`pronounceLabel`, or similar. A field name alone never moves a file to
+`src/seo/`. If the content is authored/keyed per page family and may be
+read directly by UI/runtime code (not only by a metadata builder), it
+belongs here — even when a `src/seo/` metadata builder also reads some
+of its fields as a title/description source. A metadata builder
+*reading* page-family data does not transfer ownership of that data to
+`src/seo/`: builders consume page-family content, they don't own it.
+
 ## Current page-family structure
 
 ```

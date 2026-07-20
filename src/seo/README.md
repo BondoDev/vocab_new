@@ -38,6 +38,14 @@ contract exists?"*, it belongs in `src/data/seo/`. If it primarily
 answers *"how should a page be represented to search engines?"*, it
 belongs here.
 
+**How this folder should be consumed:** other code should import
+metadata builders, schema builders, canonical builders, or other
+metadata-generation helpers from here — not raw template/copy modules.
+Application/UI code should not import a metadata-template module merely
+to render visible page text; that copy belongs to the page family's own
+content in `src/data/seo/`, even when a builder here also reads some of
+it to produce metadata.
+
 ## Shared versus page-family-specific SEO behavior
 
 - Page-family-specific: `wordMetadata.ts`, `vocabularyMetadata.ts`,
