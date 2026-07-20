@@ -4,7 +4,7 @@ import { Globe, ChevronDown } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
-import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/levelTests";
+import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/seo/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordSlugs";
 import { getVerbListPath, resolveVerbListRoute } from "../../data/seo/verbLists";

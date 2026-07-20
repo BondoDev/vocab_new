@@ -3,7 +3,7 @@
 // Context: guidelines/seo_level_test_content.json, guidelines/seo-cefr-content.json,
 // and guidelines/seo-cefr-placeholder.html were discovered (2026-07-15 audit) to be
 // live production data/dead artifacts sitting in a directory meant only for AI
-// assistant instructions. The two JSON files were moved to src/data/levelTests/ and
+// assistant instructions. The two JSON files were moved to src/data/seo/levelTests/ and
 // src/data/seo/ respectively; the HTML file was deleted. The durable
 // "guidelines/ is human-guidance-only" rule now lives in docs/architecture.md
 // (the relocated files' provenance is recorded in git history).
@@ -41,7 +41,7 @@ const OLD_PATHS = [
 ];
 
 const NEW_PATHS = [
-  path.join(ROOT_DIR, "src", "data", "levelTests", "seo_level_test_content.json"),
+  path.join(ROOT_DIR, "src", "data", "seo", "levelTests", "seo_level_test_content.json"),
   path.join(ROOT_DIR, "src", "data", "seo", "seo-cefr-content.json"),
 ];
 
@@ -138,14 +138,14 @@ test("moved authoritative files exist at their new locations", () => {
   assert.deepEqual(missing, [], `expected relocated file(s) missing: ${missing.join(", ")}`);
 });
 
-test("src/data/levelTests/index.ts imports the relocated JSON, not the old guidelines/ path", () => {
-  const file = path.join(ROOT_DIR, "src", "data", "levelTests", "index.ts");
+test("src/data/seo/levelTests/index.ts imports the relocated JSON, not the old guidelines/ path", () => {
+  const file = path.join(ROOT_DIR, "src", "data", "seo", "levelTests", "index.ts");
   const content = fs.readFileSync(file, "utf8");
   assert.ok(
     /from\s+["']\.\/seo_level_test_content\.json["']/.test(content),
-    "src/data/levelTests/index.ts does not import ./seo_level_test_content.json",
+    "src/data/seo/levelTests/index.ts does not import ./seo_level_test_content.json",
   );
-  assert.ok(!OLD_PATH_PATTERN.test(content), "src/data/levelTests/index.ts still references guidelines/");
+  assert.ok(!OLD_PATH_PATTERN.test(content), "src/data/seo/levelTests/index.ts still references guidelines/");
 });
 
 test("devSeoCefrPreviewData.ts imports the relocated JSON, not the old guidelines/ path", () => {
@@ -168,10 +168,10 @@ test("scripts/generate-sitemap.mjs reads the relocated level-test JSON, not the 
   const file = path.join(ROOT_DIR, "scripts", "generate-sitemap.mjs");
   const content = fs.readFileSync(file, "utf8");
   assert.ok(
-    /path\.join\(\s*ROOT_DIR,\s*"src",\s*"data",\s*"levelTests",\s*"seo_level_test_content\.json"\s*\)/.test(
+    /path\.join\(\s*ROOT_DIR,\s*"src",\s*"data",\s*"seo",\s*"levelTests",\s*"seo_level_test_content\.json"\s*\)/.test(
       content,
     ),
-    "generate-sitemap.mjs does not read src/data/levelTests/seo_level_test_content.json",
+    "generate-sitemap.mjs does not read src/data/seo/levelTests/seo_level_test_content.json",
   );
   assert.ok(!OLD_PATH_PATTERN.test(content), "generate-sitemap.mjs still references guidelines/");
 });

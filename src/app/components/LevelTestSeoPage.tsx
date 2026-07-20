@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { getEnglishLevelPracticeLinks, getLevelTestContent, type LevelTestContent } from "../../data/levelTests";
+import { getEnglishLevelPracticeLinks, getLevelTestContent, type LevelTestContent } from "../../data/seo/levelTests";
 import { buildLevelTestSeoMetadata } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import type { TargetLanguageSlug, UiLanguageCode } from "../../data/seo/slugs";

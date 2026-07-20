@@ -19,7 +19,7 @@ import {
   type Level as CefrLevelCode,
   type TargetLanguageSlug,
 } from "../../data/seo/slugs";
-import { getLevelTestContent, getLevelTestSeoPath } from "../../data/levelTests";
+import { getLevelTestContent, getLevelTestSeoPath } from "../../data/seo/levelTests";
 import { TARGET_LANGUAGE_TO_UI_CODE } from "./pageRouting";
 
 export type TranslateFn = (key: string) => string;

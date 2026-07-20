@@ -7,7 +7,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../data/seo/slugs";
-import { getLevelTestSeoPath } from "../../data/levelTests";
+import { getLevelTestSeoPath } from "../../data/seo/levelTests";
 import { getSeoHubPath } from "../../data/seo/hub";
 import { getWordSeoHubSummaryPath } from "../../data/seo/wordHubRoutes";
 import { getVerbListPath, getVerbListTitle } from "../../data/seo/verbLists";

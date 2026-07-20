@@ -1,7 +1,7 @@
 # Generated-data ownership
 
 Audited 2026-07-15, source commit `80e52fe4`; updated same day (guidelines/
-folder cleanup) to add `src/data/levelTests/seo_level_test_content.json` and
+folder cleanup) to add `src/data/seo/levelTests/seo_level_test_content.json` and
 `src/data/seo/seo-cefr-content.json`, both relocated from `guidelines/`
 (which is human-guidance-only — see [`docs/architecture.md`](architecture.md)).
 Companion to [`docs/import-boundaries.md`](import-boundaries.md) (which
@@ -19,7 +19,7 @@ Guard script: `npm run test:generated-data-ownership`
 | Directory | Classification | Source of truth | Producer | Consumers | Committed? | Risk |
 |---|---|---|---|---|---|---|
 | `src/data/vocabularyLevels/` | handwritten source | itself | manual (no generator) | client (SSR sync load), SSR (`fs` read), `src/seo/vocabularyMetadata.ts` (via the `src/seo/metadata.ts` facade), `VocabularyLevelPage.tsx`, `scripts/generate-sitemap.mjs` | yes | low |
-| `src/data/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/levelTests/index.ts`, `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/hubMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
+| `src/data/seo/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/seo/levelTests/index.ts`, `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/hubMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
 | `src/data/seo/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/components/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
 | `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/vocabularyLevels/` (must stay byte-identical) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`), run explicitly by the developer | browser `fetch()` from `src/data/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | low — deterministic sync script plus a read-only `--check` mode wired into `test:generated-data-ownership` |
 | ~~`public/vocabularyLevels/index.ts`~~ | *(removed 2026-07-15)* | — | — | none — confirmed dead, no import anywhere | — | resolved |
@@ -178,14 +178,14 @@ visibility, not changed here.
 | `public/sitemaps/` | `npm run sitemap` |
 | `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/` | `npm run build:word-worker:full` |
 | `dist/`, `server-build/` | `npm run build` |
-| `src/data/vocabularyLevels/` content, `src/data/seo/level-browse-preview/`, `src/data/levelTests/seo_level_test_content.json`, `src/data/seo/seo-cefr-content.json` | none — hand-maintained, no generator |
+| `src/data/vocabularyLevels/` content, `src/data/seo/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/seo-cefr-content.json` | none — hand-maintained, no generator |
 | `public/vocabularyLevels/*.json` (mirror only, from source content) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`) |
 
 ## Manual-edit policy
 
 - **Allowed and expected:** `src/data/vocabularyLevels/`,
   `src/data/seo/level-browse-preview/`,
-  `src/data/levelTests/seo_level_test_content.json`,
+  `src/data/seo/levelTests/seo_level_test_content.json`,
   `src/data/seo/seo-cefr-content.json` (no generator exists for any of these).
 - **Allowed but must be mirrored:** `public/vocabularyLevels/*.json` — after
   editing `src/data/vocabularyLevels/`, run `npm run sync:vocabulary-levels`

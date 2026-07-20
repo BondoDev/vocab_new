@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, buildLocalizedVocabularyPath } from "../../data/seo/slugs";
-import { getLevelTestSeoPath } from "../../data/levelTests";
+import { getLevelTestSeoPath } from "../../data/seo/levelTests";
 import { getSeoHubPath } from "../../data/seo/hub";
 import {
   getVocabularyLevelContent,

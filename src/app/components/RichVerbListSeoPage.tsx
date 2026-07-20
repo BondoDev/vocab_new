@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Volume2 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { getLevelTestSeoPath } from "../../data/levelTests";
+import { getLevelTestSeoPath } from "../../data/seo/levelTests";
 import { getSeoHubPath } from "../../data/seo/hub";
 import { getUiVocabularyLanguage } from "../../data/seo/wordPageData";
 import {

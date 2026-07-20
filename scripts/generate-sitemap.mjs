@@ -267,7 +267,7 @@ async function collectVocabularyRoutes() {
 }
 
 async function collectLevelTestRoutes() {
-  const filePath = path.join(ROOT_DIR, "src", "data", "levelTests", "seo_level_test_content.json");
+  const filePath = path.join(ROOT_DIR, "src", "data", "seo", "levelTests", "seo_level_test_content.json");
   const raw = await fs.readFile(filePath, "utf8");
   const entries = JSON.parse(raw.replace(/^\uFEFF/, ""));
   const routes = new Set();

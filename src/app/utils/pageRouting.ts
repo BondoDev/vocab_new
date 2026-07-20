@@ -30,7 +30,7 @@ import {
   resolveWordSeoHubRoute,
   type WordSeoHubRoute,
 } from "../../data/seo/wordHubRoutes";
-import { resolveLevelTestSeoRoute } from "../../data/levelTests";
+import { resolveLevelTestSeoRoute } from "../../data/seo/levelTests";
 import { resolveVerbListRoute } from "../../data/seo/verbLists";
 
 // Shape of App.tsx's ROUTES map. The keys here must stay in sync with the

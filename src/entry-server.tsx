@@ -8,7 +8,7 @@ import {
   type UiLanguageCode,
 } from "./data/seo/slugs";
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
-import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/levelTests";
+import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/seo/levelTests";
 import { getAllVerbListPaths, resolveVerbListRoute } from "./data/seo/verbLists";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
