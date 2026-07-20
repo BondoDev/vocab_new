@@ -3,9 +3,9 @@ import { Volume2 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { getLevelTestSeoPath } from "../../data/seo/levelTests";
 import { getSeoHubPath } from "../../data/seo/shared/hub";
-import { getUiVocabularyLanguage } from "../../data/seo/wordPages/wordPageData";
 import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
+  getUiVocabularyLanguage,
   TARGET_LANGUAGE_TO_UI_LANGUAGE,
   type TargetLanguageSlug,
   type UiLanguageCode,

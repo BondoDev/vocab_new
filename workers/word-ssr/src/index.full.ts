@@ -26,7 +26,7 @@ import {
 
 const BROWSE_PAGE_SIZE = 54;
 
-// Mirrors production's UI_LANG_TO_VOCAB (src/data/seo/wordPages/wordPageData.ts,
+// Mirrors production's UI_LANG_TO_VOCAB (src/data/seo/shared/slugs.ts,
 // private/not exported there) — which UI language shows which language's
 // OWN vocabulary as overlay data when it differs from the word's target
 // language.

@@ -24,6 +24,24 @@ export const TARGET_LANGUAGE_TO_UI_LANGUAGE: Record<TargetLanguageSlug, UiLangua
   russian: "ru",
 };
 
+// Exact inverse of TARGET_LANGUAGE_TO_UI_LANGUAGE, kept as its own named
+// mapping rather than derived: this answers "which target-language
+// vocabulary does a UI-language visitor see by default", a distinct
+// question from "which UI locale is this target language's home".
+const UI_LANG_TO_VOCAB: Record<UiLanguageCode, TargetLanguageSlug> = {
+  en: "english",
+  es: "spanish",
+  fr: "french",
+  de: "german",
+  it: "italian",
+  pt: "portuguese",
+  ru: "russian",
+};
+
+export function getUiVocabularyLanguage(uiLang: UiLanguageCode): TargetLanguageSlug {
+  return UI_LANG_TO_VOCAB[uiLang];
+}
+
 export const TARGET_NAME_SLUGS: Record<UiLanguageCode, Record<TargetLanguageSlug, string>> = {
   en: {
     english: "english",

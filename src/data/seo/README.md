@@ -75,6 +75,12 @@ Current contents and why they qualify:
 If a new helper is only used by one family, put it in that family's
 folder, not in `shared/`.
 
+**Red flag:** a page-family folder importing a general-purpose symbol
+from a *sibling* page-family folder (e.g. `verbLists/` importing from
+`wordPages/`) is a sign of misplaced ownership, not a fine cross-family
+dependency. When you see one, check whether the symbol belongs in
+`shared/` instead of accepting the sideways import.
+
 ## Dependency direction
 
 - `src/seo/` may import from `src/data/seo/`.

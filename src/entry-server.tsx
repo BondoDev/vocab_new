@@ -6,7 +6,7 @@ import {
   getAllLocalizedVocabularyRoutes,
   resolveVocabularyRoute,
 } from "./data/seo/vocabularyLevels/vocabularyLevelRoutes";
-import type { UiLanguageCode } from "./data/seo/shared/slugs";
+import { getUiVocabularyLanguage, type UiLanguageCode } from "./data/seo/shared/slugs";
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/shared/hub";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/seo/levelTests";
 import { getAllVerbListPaths, resolveVerbListRoute } from "./data/seo/verbLists";
@@ -25,7 +25,6 @@ import {
   buildHydrationWordPageData,
   buildResolvedWordPageData,
   findWordEntryIgnoringAccents,
-  getUiVocabularyLanguage,
   WORD_PAGE_BROWSE_WORDS_PER_PAGE,
   type ResolvedWordPageData,
   type WordPageVocabEntry,

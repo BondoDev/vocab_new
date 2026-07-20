@@ -1,4 +1,4 @@
-import type { TargetLanguageSlug, UiLanguageCode } from "../shared/slugs";
+import { getUiVocabularyLanguage, type TargetLanguageSlug, type UiLanguageCode } from "../shared/slugs";
 import { wordToSlug, stripDiacriticsForComparison } from "./wordSlugs";
 import { isValidBrowseWordLemma } from "../shared/browseWordValidation";
 import { fixMojibake } from "../../../utils/fixMojibake";
@@ -78,16 +78,6 @@ interface ResolveWordPageDataParams {
   vocabulary: WordPageVocabEntry[];
   uiVocabulary?: WordPageVocabEntry[] | null;
 }
-
-const UI_LANG_TO_VOCAB: Record<UiLanguageCode, TargetLanguageSlug> = {
-  en: "english",
-  es: "spanish",
-  fr: "french",
-  de: "german",
-  it: "italian",
-  pt: "portuguese",
-  ru: "russian",
-};
 
 function sanitizeWordPageEntry(entry: WordPageVocabEntry): WordPageVocabEntry {
   return {
@@ -219,10 +209,6 @@ export function findWordEntryIgnoringAccents(
   }
 
   return null;
-}
-
-export function getUiVocabularyLanguage(uiLang: UiLanguageCode): TargetLanguageSlug {
-  return UI_LANG_TO_VOCAB[uiLang];
 }
 
 export function buildResolvedWordPageData({

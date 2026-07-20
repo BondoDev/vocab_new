@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router";
 import {
+  getUiVocabularyLanguage,
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../data/seo/shared/slugs";
@@ -12,7 +13,6 @@ import {
 import {
   buildHydrationWordPageData,
   buildResolvedWordPageData,
-  getUiVocabularyLanguage,
   type HydrationWordPageData,
   type ResolvedWordPageData,
   type WordPageVocabEntry,

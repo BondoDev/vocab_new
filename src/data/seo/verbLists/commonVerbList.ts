@@ -1,6 +1,5 @@
 import verbListJson from "./list_of_100_most_used_verb.json";
-import { getUiVocabularyLanguage } from "../wordPages/wordPageData";
-import type { TargetLanguageSlug, UiLanguageCode } from "../shared/slugs";
+import { getUiVocabularyLanguage, type TargetLanguageSlug, type UiLanguageCode } from "../shared/slugs";
 
 export interface VerbListItem {
   id: string;
