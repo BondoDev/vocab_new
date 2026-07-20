@@ -355,12 +355,12 @@ console.log("\n[4] Source-level: forbidden schema types not present");
   // src/seo/metadata.ts was split (Issue 15) into a compatibility facade plus
   // focused modules. Each JSON-LD-emitting builder now lives in its own file
   // (kept deliberately separate, not merged into a generic graph builder):
-  // buildVerbListSeoMetadata (verbListMetadata.ts), buildVocabularyJsonLdGraph
+  // buildVerbListSeoMetadata (verbLists/verbListMetadata.ts), buildVocabularyJsonLdGraph
   // (seoSchema.ts), buildWordSeoMetadata (wordPages/wordMetadata.ts). Scan all three
   // instead of the single pre-split file so this guard keeps validating the
   // moved code.
   const jsonLdSourceFiles = {
-    "verbListMetadata.ts": path.join(rootDir, "src", "seo", "verbListMetadata.ts"),
+    "verbLists/verbListMetadata.ts": path.join(rootDir, "src", "seo", "verbLists", "verbListMetadata.ts"),
     "seoSchema.ts": path.join(rootDir, "src", "seo", "vocabularyLevels", "seoSchema.ts"),
     "wordPages/wordMetadata.ts": path.join(rootDir, "src", "seo", "wordPages", "wordMetadata.ts"),
   };
@@ -382,7 +382,7 @@ console.log("\n[4] Source-level: forbidden schema types not present");
   ];
 
   FORBIDDEN.forEach((type) => {
-    test(`"${type}" is NOT a schema @type in verbListMetadata.ts / seoSchema.ts / wordPages/wordMetadata.ts`, () => {
+    test(`"${type}" is NOT a schema @type in verbLists/verbListMetadata.ts / seoSchema.ts / wordPages/wordMetadata.ts`, () => {
       // Only flag it if it appears as a schema @type string value
       const pattern = new RegExp(`"@type":\\s*"${type}"`);
       assert.ok(

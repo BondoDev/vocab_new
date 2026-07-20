@@ -1,7 +1,7 @@
-import type { TargetLanguageSlug, UiLanguageCode } from "../data/seo/shared/slugs";
-import { getLevelTestContent, getLevelTestSeoPath } from "../data/seo/levelTests";
-import type { SeoMetadata } from "./SeoContext";
-import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "./shared/seoAlternates";
+import type { TargetLanguageSlug, UiLanguageCode } from "../../data/seo/shared/slugs";
+import { getLevelTestContent, getLevelTestSeoPath } from "../../data/seo/levelTests";
+import type { SeoMetadata } from "../SeoContext";
+import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "../shared/seoAlternates";
 
 export function buildLevelTestSeoMetadata({
   uiLang,
