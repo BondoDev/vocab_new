@@ -1,7 +1,7 @@
-import type { TargetLanguageSlug, UiLanguageCode } from "../data/seo/shared/slugs";
-import { buildWordPath } from "../data/seo/wordPages/wordSlugs";
-import { sanitizeMetadataText } from "./seoAlternates";
-import type { FaqItem } from "./seoTemplates";
+import type { TargetLanguageSlug, UiLanguageCode } from "../../data/seo/shared/slugs";
+import { buildWordPath } from "../../data/seo/wordPages/wordSlugs";
+import { sanitizeMetadataText } from "../seoAlternates";
+import type { FaqItem } from "../seoTemplates";
 
 /**
  * Shared @graph assembly (WebPage + BreadcrumbList + FAQPage + optional ItemList) for

@@ -361,7 +361,7 @@ console.log("\n[4] Source-level: forbidden schema types not present");
   // moved code.
   const jsonLdSourceFiles = {
     "verbListMetadata.ts": path.join(rootDir, "src", "seo", "verbListMetadata.ts"),
-    "seoSchema.ts": path.join(rootDir, "src", "seo", "seoSchema.ts"),
+    "seoSchema.ts": path.join(rootDir, "src", "seo", "vocabularyLevels", "seoSchema.ts"),
     "wordMetadata.ts": path.join(rootDir, "src", "seo", "wordMetadata.ts"),
   };
   const jsonLdSources = Object.fromEntries(

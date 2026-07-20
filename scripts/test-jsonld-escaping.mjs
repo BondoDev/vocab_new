@@ -695,11 +695,11 @@ console.log("\n[10] Schema @type values in verbListMetadata.ts / seoSchema.ts / 
   // live in verbListMetadata.ts, seoSchema.ts (buildVocabularyJsonLdGraph),
   // and wordMetadata.ts — kept deliberately separate, not merged.
   const jsonLdSource = [
-    "verbListMetadata.ts",
-    "seoSchema.ts",
-    "wordMetadata.ts",
+    ["verbListMetadata.ts"],
+    ["vocabularyLevels", "seoSchema.ts"],
+    ["wordMetadata.ts"],
   ]
-    .map((name) => fs.readFileSync(path.join(rootDir, "src", "seo", name), "utf8"))
+    .map((parts) => fs.readFileSync(path.join(rootDir, "src", "seo", ...parts), "utf8"))
     .join("\n");
 
   test('"FAQPage" @type still present in buildVocabularySeoMetadata', () => {

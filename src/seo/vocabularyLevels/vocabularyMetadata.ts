@@ -1,15 +1,15 @@
-import { buildLocalizedVocabularyPath } from "../data/seo/vocabularyLevels/vocabularyLevelRoutes";
+import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
   type Level,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../data/seo/shared/slugs";
-import { getVocabularyLevelContent } from "../data/seo/vocabularyLevels";
-import type { SeoMetadata } from "./SeoContext";
-import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "./seoAlternates";
+} from "../../data/seo/shared/slugs";
+import { getVocabularyLevelContent } from "../../data/seo/vocabularyLevels";
+import type { SeoMetadata } from "../SeoContext";
+import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "../seoAlternates";
 import { buildVocabularyFaqSection } from "./seoFaq";
 import { buildVocabularyJsonLdGraph } from "./seoSchema";
-import { LEVEL_DISPLAY, META_DESC_TEMPLATE, META_TITLE_TEMPLATE, WORDS_UNIT_BY_UI_LANG } from "./seoTemplates";
+import { LEVEL_DISPLAY, META_DESC_TEMPLATE, META_TITLE_TEMPLATE, WORDS_UNIT_BY_UI_LANG } from "../seoTemplates";
 
 export function buildVocabularySeoMetadata({
   uiLang,

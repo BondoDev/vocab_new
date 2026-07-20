@@ -48,20 +48,28 @@ it to produce metadata.
 
 ## Shared versus page-family-specific SEO behavior
 
-- Page-family-specific: `wordMetadata.ts`, `vocabularyMetadata.ts`,
-  `verbListMetadata.ts`, `hubMetadata.ts` each build metadata for one
-  SEO page family.
+- Page-family-specific: `wordMetadata.ts`, `verbListMetadata.ts`, and
+  `hubMetadata.ts` each build metadata for one SEO page family at the
+  `src/seo/` root. `vocabularyLevels/vocabularyMetadata.ts`,
+  `vocabularyLevels/seoFaq.ts` (FAQ section), and
+  `vocabularyLevels/seoSchema.ts` (JSON-LD graph) are exclusively owned
+  by the vocabulary-level page family and live together in
+  `vocabularyLevels/`.
 - Cross-family/shared behavior: `seoAlternates.ts` (hreflang building),
-  `seoFaq.ts` (FAQ schema), `seoSchema.ts` (JSON-LD graph building),
   `seoTemplates.ts` (shared copy templates), `routeMetadataPolicy.ts`
   (route-level indexing policy), `SeoContext.tsx` (the React
   provider/runtime), and `site.ts` (site-wide defaults) are consumed
   across multiple or all page families.
 
-`src/seo/` does not yet have a family-based subfolder split the way
-`src/data/seo/` does. This README documents current ownership as a
-baseline before a separate ownership audit and possible reorganization
-— it does not prescribe a final subfolder structure.
+## Internal structure
+
+A page-family subfolder (like `vocabularyLevels/`) is used only once
+multiple files clearly share one family owner. A single-file family
+(`wordMetadata.ts`, `verbListMetadata.ts`, `hubMetadata.ts`) stays at
+the root until a second file justifies its own folder. Public entry
+points (`SeoContext.tsx`, `routeMetadataPolicy.ts`) and the
+compatibility facade (`metadata.ts`) remain at the root regardless of
+file count.
 
 ## Dependency direction
 
@@ -79,9 +87,9 @@ to preserve by inspection and review.
 | File | Why it's behavior, not data |
 |---|---|
 | `wordMetadata.ts` | Builds word-page `<title>`/description/canonical from word data — output behavior |
-| `vocabularyMetadata.ts` | Builds vocabulary-level-page metadata from vocabulary-level data |
+| `vocabularyLevels/vocabularyMetadata.ts` | Builds vocabulary-level-page metadata from vocabulary-level data |
 | `verbListMetadata.ts` | Builds verb-list-page metadata |
-| `seoSchema.ts` | Builds the JSON-LD structured-data graph |
+| `vocabularyLevels/seoSchema.ts` | Builds the vocabulary-level-page JSON-LD structured-data graph |
 | `seoAlternates.ts` | Builds hreflang alternate-link sets — a cross-family concern |
 | `routeMetadataPolicy.ts` | Classifies routes and decides indexability/noindex policy |
 | `SeoContext.tsx` | React context/provider that renders SEO tags at request time |
@@ -92,10 +100,15 @@ to preserve by inspection and review.
    `src/data/seo/<family>/`? Build the metadata module on top of it —
    don't duplicate data here.
 2. Name the module `<family>Metadata.ts` to match the existing
-   convention (`wordMetadata.ts`, `vocabularyMetadata.ts`, `verbListMetadata.ts`).
-3. Reuse `seoAlternates.ts`, `seoSchema.ts`, `seoTemplates.ts`, and
+   convention (`wordMetadata.ts`, `verbListMetadata.ts`,
+   `vocabularyLevels/vocabularyMetadata.ts`). Put it in its own
+   `<family>/` subfolder only once that family owns more than one file.
+3. Reuse `seoAlternates.ts`, `seoTemplates.ts`, and
    `routeMetadataPolicy.ts` where the concern is cross-family — don't
-   fork copies of hreflang/JSON-LD logic per family.
+   fork copies of hreflang logic per family. `vocabularyLevels/seoFaq.ts`
+   and `vocabularyLevels/seoSchema.ts` are vocabulary-level-only
+   helpers, not general-purpose infrastructure — don't reuse them for a
+   different family.
 4. Only import from `src/data/seo/`, never the other way around.
 5. If the module needs to be reachable under the old `./metadata`
    import path, add a re-export to `metadata.ts` (the existing
