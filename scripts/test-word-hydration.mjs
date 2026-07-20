@@ -4,17 +4,17 @@ import path from "node:path";
 import { compileTsToCommonJs, ROOT_DIR, readJson } from "./seo-baseline/lib/compileTs.mjs";
 
 const compiled = compileTsToCommonJs(".tmp-word-hydration-test", [
-  path.join(ROOT_DIR, "src", "data", "seo", "wordPageData.ts"),
-  path.join(ROOT_DIR, "src", "data", "seo", "wordSlugs.ts"),
-  path.join(ROOT_DIR, "src", "data", "seo", "wordRouteManifest.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordPageData.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordRouteManifest.ts"),
   path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
   path.join(ROOT_DIR, "src", "data", "seo", "browseWordValidation.ts"),
   path.join(ROOT_DIR, "src", "utils", "fixMojibake.ts"),
 ]);
 
 try {
-  const wordPageData = compiled.require("src/data/seo/wordPageData");
-  const wordSlugs = compiled.require("src/data/seo/wordSlugs");
+  const wordPageData = compiled.require("src/data/seo/wordPages/wordPageData");
+  const wordSlugs = compiled.require("src/data/seo/wordPages/wordSlugs");
   const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
   const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
   const wordSeoPageSource = fs.readFileSync(
@@ -30,6 +30,7 @@ try {
     "src",
     "data",
     "seo",
+    "wordPages",
     "word-browse-shards",
     "english-a1.json",
   );

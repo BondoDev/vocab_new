@@ -23,8 +23,8 @@ Guard script: `npm run test:generated-data-ownership`
 | `src/data/seo/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/components/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
 | `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/seo/vocabularyLevels/` (must stay byte-identical) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`), run explicitly by the developer | browser `fetch()` from `src/data/seo/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | low — deterministic sync script plus a read-only `--check` mode wired into `test:generated-data-ownership` |
 | ~~`public/vocabularyLevels/index.ts`~~ | *(removed 2026-07-15)* | — | — | none — confirmed dead, no import anywhere | — | resolved |
-| `src/data/seo/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
-| `src/data/seo/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
+| `src/data/seo/wordPages/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
+| `src/data/seo/wordPages/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
 | `src/data/seo/level-browse-preview/` | generated committed source, **no generator exists** | itself (hand-authored/one-time-generated) | none found | client + SSR (`levelBrowseWords.ts`, lazy glob G9) | yes | medium — must be hand-edited until a generator is written |
 | ~~`public/seo/level-browse-preview/`~~ | *(removed 2026-07-15; obsolete duplicate)* | `src/data/seo/level-browse-preview/` remains authoritative | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | none found — no fetch, import, glob, sitemap, SSR, Worker, or service-worker consumer required the public URL | no | resolved |
 | `src/data/seo/verbLists/verbListLookup/` | generated committed source | `list_of_100_most_used_verb.json` + vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR (`commonVerbList.ts`, eager glob G6); not the Worker | yes | low |
@@ -174,7 +174,7 @@ visibility, not changed here.
 
 | Directory | Command |
 |---|---|
-| `src/data/seo/word-hub-pages/`, `src/data/seo/word-browse-shards/`, `src/data/seo/verbLists/verbListLookup/` | `npm run generate:word-hub-data` |
+| `src/data/seo/wordPages/word-hub-pages/`, `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/verbListLookup/` | `npm run generate:word-hub-data` |
 | `public/sitemaps/` | `npm run sitemap` |
 | `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/` | `npm run build:word-worker:full` |
 | `dist/`, `server-build/` | `npm run build` |
@@ -193,8 +193,8 @@ visibility, not changed here.
   `check:vocabulary-levels-sync`) and `test:import-boundaries` will fail.
   Never hand-edit files under `public/vocabularyLevels/` directly — the sync
   script treats them as a disposable mirror and will overwrite or remove them.
-- **Not allowed — will be overwritten:** `src/data/seo/word-hub-pages/`,
-  `src/data/seo/word-browse-shards/`, `src/data/seo/verbLists/verbListLookup/`,
+- **Not allowed — will be overwritten:** `src/data/seo/wordPages/word-hub-pages/`,
+  `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/verbListLookup/`,
   `public/sitemaps/`, and everything under `workers/word-ssr/data/full-corpus/`,
   `assets-full/`, `worker-dist-full/`, `dist/`, `server-build/`.
 

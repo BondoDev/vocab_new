@@ -4,7 +4,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../data/seo/slugs";
-import { buildWordPath } from "../data/seo/wordSlugs";
+import { buildWordPath } from "../data/seo/wordPages/wordSlugs";
 import type { SeoMetadata } from "./SeoContext";
 import { buildHreflangAlternates, sanitizeMetadataText } from "./seoAlternates";
 import { WORD_META_DESC, WORD_META_TITLE } from "./seoTemplates";

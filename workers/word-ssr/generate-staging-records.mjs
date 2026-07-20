@@ -121,7 +121,7 @@ function buildRelatedConceptIds(entry) {
 }
 
 // wordPages: indexed by conceptId, each value is a ready-to-serve
-// HydrationWordPageData object (matches src/data/seo/wordPageData.ts's
+// HydrationWordPageData object (matches src/data/seo/wordPages/wordPageData.ts's
 // HydrationWordPageData shape exactly) for browsePage=1.
 const wordPages = {};
 // aliases: concept slug (as-generated) -> conceptId, used to validate the

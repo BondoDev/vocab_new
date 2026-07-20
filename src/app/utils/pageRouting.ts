@@ -24,12 +24,12 @@ import {
   parseWordRoutePathname,
   type CanonicalWordPageRouteMatch,
   resolveWordPageRoute,
-} from "../../data/seo/wordSlugs";
+} from "../../data/seo/wordPages/wordSlugs";
 import { resolveSeoHubRoute } from "../../data/seo/hub";
 import {
   resolveWordSeoHubRoute,
   type WordSeoHubRoute,
-} from "../../data/seo/wordHubRoutes";
+} from "../../data/seo/wordPages/wordHubRoutes";
 import { resolveLevelTestSeoRoute } from "../../data/seo/levelTests";
 import { resolveVerbListRoute } from "../../data/seo/verbLists";
 

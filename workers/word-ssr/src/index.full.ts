@@ -14,7 +14,7 @@ import {
   buildWordBrowsePagePathFromSlug,
   stripDiacriticsForComparison,
   type ParsedWordRoutePathnameResult,
-} from "../../../src/data/seo/wordRouteManifest";
+} from "../../../src/data/seo/wordPages/wordRouteManifest";
 import { renderWordPage } from "./render-entry";
 import clientAssets from "../data/client-assets.full.json";
 import { createAssetsShardStore, withInIsolateMemoization, type ShardStore } from "./shard-store";
@@ -26,7 +26,7 @@ import {
 
 const BROWSE_PAGE_SIZE = 54;
 
-// Mirrors production's UI_LANG_TO_VOCAB (src/data/seo/wordPageData.ts,
+// Mirrors production's UI_LANG_TO_VOCAB (src/data/seo/wordPages/wordPageData.ts,
 // private/not exported there) — which UI language shows which language's
 // OWN vocabulary as overlay data when it differs from the word's target
 // language.
@@ -360,7 +360,7 @@ async function handleWordPageRequest(
 
   // UI overlay: only consulted when the UI language's own vocabulary
   // differs from the word's target language (mirrors production's
-  // buildResolvedWordPageData in src/data/seo/wordPageData.ts).
+  // buildResolvedWordPageData in src/data/seo/wordPages/wordPageData.ts).
   let displayDefinition = record.definition;
   let displayWordLemma = record.lemma;
   let displayWordType = record.grammarType;

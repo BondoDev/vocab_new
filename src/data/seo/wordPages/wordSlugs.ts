@@ -22,8 +22,8 @@ import {
   SUPPORTED_UI_LANGUAGES,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "./slugs";
-import { fixMojibake } from "../../utils/fixMojibake";
+} from "../slugs";
+import { fixMojibake } from "../../../utils/fixMojibake";
 
 export type {
   CanonicalWordPageRouteMatch,

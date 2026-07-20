@@ -10,7 +10,7 @@ import {
   getVerbListWordLemma,
   VERB_LIST_ITEMS,
 } from "../../data/seo/verbLists";
-import { buildWordPath } from "../../data/seo/wordSlugs";
+import { buildWordPath } from "../../data/seo/wordPages/wordSlugs";
 import { type TargetLanguageSlug, type UiLanguageCode } from "../../data/seo/slugs";
 import { buildVerbListSeoMetadata } from "../../seo/metadata";
 import { useSeoSiteOrigin } from "../../seo/SeoContext";

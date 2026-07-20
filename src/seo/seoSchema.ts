@@ -1,5 +1,5 @@
 import type { TargetLanguageSlug, UiLanguageCode } from "../data/seo/slugs";
-import { buildWordPath } from "../data/seo/wordSlugs";
+import { buildWordPath } from "../data/seo/wordPages/wordSlugs";
 import { sanitizeMetadataText } from "./seoAlternates";
 import type { FaqItem } from "./seoTemplates";
 

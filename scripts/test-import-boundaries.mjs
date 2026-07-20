@@ -84,19 +84,19 @@ test("src/data/interface/*.json — exactly one file per supported language", ()
   );
 });
 
-test("src/data/seo/word-hub-pages/*.json — exactly one file per target language", () => {
+test("src/data/seo/wordPages/word-hub-pages/*.json — exactly one file per target language", () => {
   assertExactMatchSet(
-    "src/data/seo/word-hub-pages",
-    "src/data/seo/word-hub-pages",
+    "src/data/seo/wordPages/word-hub-pages",
+    "src/data/seo/wordPages/word-hub-pages",
     SUPPORTED_TARGET_LANGUAGES.map((lang) => `${lang}.json`),
   );
 });
 
-test("src/data/seo/word-browse-shards/*.json — exactly one file per language x CEFR level", () => {
+test("src/data/seo/wordPages/word-browse-shards/*.json — exactly one file per language x CEFR level", () => {
   const expected = SUPPORTED_TARGET_LANGUAGES.flatMap((lang) =>
     SUPPORTED_LEVELS.map((level) => `${lang}-${level}.json`),
   );
-  assertExactMatchSet("src/data/seo/word-browse-shards", "src/data/seo/word-browse-shards", expected);
+  assertExactMatchSet("src/data/seo/wordPages/word-browse-shards", "src/data/seo/wordPages/word-browse-shards", expected);
 });
 
 test("src/data/seo/verbLists/verbListLookup/*.json — exactly one file per target language", () => {
@@ -114,8 +114,8 @@ const EAGER_LAZY_CONTRACT = [
   ["workers/word-ssr/src/render-entry.tsx", "../../../src/data/interface/*.json", "eager: true"],
   ["src/entry-server.tsx", "./data/vocabulary/*/vocabulary.json", null],
   ["src/entry-server.tsx", "./data/interface/*.json", null],
-  ["src/data/seo/wordHubData.ts", "./word-hub-pages/*.json", "eager: true"],
-  ["src/data/seo/wordBrowseSearchData.ts", "./word-browse-shards/*.json", null],
+  ["src/data/seo/wordPages/wordHubData.ts", "./word-hub-pages/*.json", "eager: true"],
+  ["src/data/seo/wordPages/wordBrowseSearchData.ts", "./word-browse-shards/*.json", null],
   ["src/data/seo/verbLists/commonVerbList.ts", "./verbListLookup/*.json", "eager: true"],
   ["src/app/components/WordSeoPage.tsx", "../../data/vocabulary/*/vocabulary.json", null],
   ["src/app/components/VocabularyLevelPage.tsx", "../../data/vocabulary/*/vocabulary.json", null],

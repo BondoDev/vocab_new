@@ -6,13 +6,13 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/seo/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
-import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordSlugs";
+import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordPages/wordSlugs";
 import { getVerbListPath, resolveVerbListRoute } from "../../data/seo/verbLists";
 import {
   resolveWordSeoHubRoute,
   getWordSeoHubSummaryPath,
   getWordSeoHubLevelPath,
-} from "../../data/seo/wordHubRoutes";
+} from "../../data/seo/wordPages/wordHubRoutes";
 
 interface UILanguageSwitcherProps {
   variant?: "default" | "centered-modal";

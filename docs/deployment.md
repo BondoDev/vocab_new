@@ -41,7 +41,7 @@ Local development
 
 - Build command: `npm run build`
   - `prebuild`: `generate:word-hub-data` + `sitemap` (regenerates
-    `src/data/seo/word-hub-pages/`, `word-browse-shards/`,
+    `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`,
     `src/data/seo/verbLists/verbListLookup/`, `public/sitemap.xml`, `public/sitemaps/`)
   - `vite build` → `dist/` (client bundle + prerender template)
   - `vite build --ssr src/entry-server.tsx --outDir server-build`

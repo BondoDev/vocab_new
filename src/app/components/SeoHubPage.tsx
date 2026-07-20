@@ -9,7 +9,7 @@ import {
 } from "../../data/seo/slugs";
 import { getLevelTestSeoPath } from "../../data/seo/levelTests";
 import { getSeoHubPath } from "../../data/seo/hub";
-import { getWordSeoHubSummaryPath } from "../../data/seo/wordHubRoutes";
+import { getWordSeoHubSummaryPath } from "../../data/seo/wordPages/wordHubRoutes";
 import { getVerbListPath, getVerbListTitle } from "../../data/seo/verbLists";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import { buildSeoHubMetadata } from "../../seo/metadata";

@@ -1,4 +1,4 @@
-import type { TargetLanguageSlug } from "./slugs";
+import type { TargetLanguageSlug } from "../slugs";
 
 const browseSearchModules = import.meta.glob("./word-browse-shards/*.json") as Record<
   string,

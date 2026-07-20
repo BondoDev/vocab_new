@@ -4,7 +4,7 @@ import {
   getWordSeoHubLevelPath,
   getWordSeoHubSummaryPath,
   type WordSeoHubRoute,
-} from "../data/seo/wordHubRoutes";
+} from "../data/seo/wordPages/wordHubRoutes";
 import { getLevelTestContent, getLevelTestSeoPath } from "../data/seo/levelTests";
 import type { SeoMetadata } from "./SeoContext";
 import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "./seoAlternates";

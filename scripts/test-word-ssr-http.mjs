@@ -31,7 +31,7 @@ function compileWordSlugModule() {
   fs.mkdirSync(tempDir, { recursive: true });
 
   const program = ts.createProgram({
-    rootNames: [path.join(rootDir, "src", "data", "seo", "wordSlugs.ts")],
+    rootNames: [path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts")],
     options: {
       target: ts.ScriptTarget.ES2020,
       module: ts.ModuleKind.CommonJS,
@@ -64,7 +64,7 @@ function compileWordSlugModule() {
     JSON.stringify({ type: "commonjs" }, null, 2),
   );
 
-  return require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
+  return require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordSlugs.js"));
 }
 
 const wordSlugs = compileWordSlugModule();

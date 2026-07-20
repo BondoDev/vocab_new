@@ -7,15 +7,15 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../data/seo/slugs";
-import { buildWordBrowsePagePathFromSlug, buildWordPath } from "../../data/seo/wordSlugs";
+import { buildWordBrowsePagePathFromSlug, buildWordPath } from "../../data/seo/wordPages/wordSlugs";
 import {
   getWordBrowseSearchShardKey,
   type WordBrowseSearchWordEntry,
-} from "../../data/seo/wordBrowseSearchData";
+} from "../../data/seo/wordPages/wordBrowseSearchData";
 import {
   WORD_PAGE_BROWSE_WORDS_PER_PAGE,
   type HydrationWordPageData,
-} from "../../data/seo/wordPageData";
+} from "../../data/seo/wordPages/wordPageData";
 import { buildWordSeoMetadata } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 import { fixMojibake } from "../../utils/fixMojibake";

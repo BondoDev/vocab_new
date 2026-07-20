@@ -14,7 +14,7 @@ import {
   buildWordBrowsePagePathFromSlug,
   stripDiacriticsForComparison,
   type ParsedWordRoutePathnameResult,
-} from "../../../src/data/seo/wordSlugs";
+} from "../../../src/data/seo/wordPages/wordSlugs";
 import { renderWordPage } from "./render-entry";
 import wordPages from "../data/word-pages.english.a1.json";
 import aliases from "../data/aliases.english.a1.json";

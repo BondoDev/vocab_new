@@ -1,7 +1,7 @@
 import type { TargetLanguageSlug } from "./slugs";
 import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, type UiLanguageCode } from "./slugs";
 import type { CefrLevelCode } from "./vocabularyLevels";
-import { buildWordPath } from "./wordSlugs";
+import { buildWordPath } from "./wordPages/wordSlugs";
 
 const previewModules = import.meta.glob("./level-browse-preview/*.json") as Record<
   string,

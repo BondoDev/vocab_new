@@ -39,7 +39,7 @@ consumer file is a *deliberate, checked* change instead of an accidental one.
 - After any change touching a glob's consumer or target directory, rebuild
   and compare the client bundle, SSR bundle, and Worker bundle against
   `scripts/seo-baseline/current/performance.json`.
-- Never move `src/data/seo/word-hub-pages/`, `word-browse-shards/`, or
+- Never move `src/data/seo/wordPages/word-hub-pages/`, `word-browse-shards/`, or
   `src/data/seo/verbLists/verbListLookup/` without also updating
   `scripts/generate-word-hub-data.mjs` (their generator) in the same change.
 - Do not introduce a new broad glob (e.g. `**/*.json`) over a large data
@@ -62,8 +62,8 @@ is in `scripts/import-boundaries/current/globs.json`. Summary:
 | G1 | `workers/word-ssr/src/render-entry.tsx` | `../../../src/data/interface/*.json` | Cloudflare Worker | eager | 7 | high — deepest relative path in the repo, eager into Worker bundle |
 | G2 | `src/entry-server.tsx` | `./data/vocabulary/*/vocabulary.json` | SSR entry (shared by prerender, Worker-adjacent Node runtime, seo-baseline capture) | lazy | 7 | high — load-bearing shared entry point |
 | G3 | `src/entry-server.tsx` | `./data/interface/*.json` | SSR entry | lazy | 7 | high — same consumer as G2 |
-| G4 | `src/data/seo/wordHubData.ts` | `./word-hub-pages/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
-| G5 | `src/data/seo/wordBrowseSearchData.ts` | `./word-browse-shards/*.json` | client + SSR + **transitively Worker** via `WordSeoPageView.tsx` | lazy | 42 | high — shared-module boundary, only a test prevents the heavy export from running in the Worker |
+| G4 | `src/data/seo/wordPages/wordHubData.ts` | `./word-hub-pages/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
+| G5 | `src/data/seo/wordPages/wordBrowseSearchData.ts` | `./word-browse-shards/*.json` | client + SSR + **transitively Worker** via `WordSeoPageView.tsx` | lazy | 42 | high — shared-module boundary, only a test prevents the heavy export from running in the Worker |
 | G6 | `src/data/seo/verbLists/commonVerbList.ts` | `./verbListLookup/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
 | G7 | `src/app/components/WordSeoPage.tsx` | `../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | high — site of the historical Worker bundle-bloat incident |
 | G8 | `src/app/components/VocabularyLevelPage.tsx` | `../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | medium |
@@ -84,7 +84,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`) | `fs.readFile` | `src/data/seo/levelTests/seo_level_test_content.json` | build-time generator | low |
 | `src/data/seo/levelTests/index.ts` | static relative `import` | `./seo_level_test_content.json` | client + SSR | low |
 | `src/app/components/devSeoCefrPreviewData.ts` | static relative `import` | `../../data/seo/seo-cefr-content.json` | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low |
-| `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `word-hub-pages/`, `word-browse-shards/`, `verbLists/verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
+| `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
 | `scripts/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
 | `workers/word-ssr/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `cleanup-word-build-artifacts.mjs` in the same build |
 | `workers/word-ssr/measure-shard-formats.mjs` | `fs.readdirSync` | internal data dirs | staging-only measurement | low |
@@ -105,7 +105,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 5. Run the SEO/performance baseline comparison
    (`npm run seo-baseline:capture` + `seo-baseline:compare`).
 
-### Moving a matched directory (e.g. relocating `word-browse-shards/`)
+### Moving a matched directory (e.g. relocating `wordPages/word-browse-shards/`)
 
 1. Update the generator (`scripts/generate-word-hub-data.mjs` for G4/G5/G6).
 2. Update every consumer glob pattern in the same change.

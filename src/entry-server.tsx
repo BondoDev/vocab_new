@@ -19,7 +19,7 @@ import {
   parseWordRoutePathname,
   resolveWordPageRoute,
   type CanonicalWordPageRouteMatch,
-} from "./data/seo/wordSlugs";
+} from "./data/seo/wordPages/wordSlugs";
 import type { SeoMetadata } from "./seo/SeoContext";
 import {
   buildHydrationWordPageData,
@@ -29,10 +29,10 @@ import {
   WORD_PAGE_BROWSE_WORDS_PER_PAGE,
   type ResolvedWordPageData,
   type WordPageVocabEntry,
-} from "./data/seo/wordPageData";
+} from "./data/seo/wordPages/wordPageData";
 import { getLevelBrowsePreviewData, type LevelBrowsePreviewData } from "./data/seo/levelBrowseWords";
-import { getAllWordSeoHubPaths } from "./data/seo/wordHubData";
-import { resolveWordSeoHubRoute } from "./data/seo/wordHubRoutes";
+import { getAllWordSeoHubPaths } from "./data/seo/wordPages/wordHubData";
+import { resolveWordSeoHubRoute } from "./data/seo/wordPages/wordHubRoutes";
 
 export type WordSeoRequestResolution =
   | {

@@ -8,7 +8,7 @@ import {
   getWordBrowseSearchData,
   getWordBrowseSearchShardKey,
   type WordBrowseSearchWordEntry,
-} from "../../data/seo/wordBrowseSearchData";
+} from "../../data/seo/wordPages/wordBrowseSearchData";
 import {
   buildHydrationWordPageData,
   buildResolvedWordPageData,
@@ -16,7 +16,7 @@ import {
   type HydrationWordPageData,
   type ResolvedWordPageData,
   type WordPageVocabEntry,
-} from "../../data/seo/wordPageData";
+} from "../../data/seo/wordPages/wordPageData";
 import { WordSeoPageView } from "./WordSeoPageView";
 
 /**

@@ -5,11 +5,11 @@ import { TARGET_LANGUAGE_TO_UI_LANGUAGE, type Level, type UiLanguageCode } from 
 import {
   getWordSeoHubLevelPageData,
   getWordSeoHubSummaryPageData,
-} from "../../data/seo/wordHubData";
+} from "../../data/seo/wordPages/wordHubData";
 import {
   type WordSeoHubRoute,
   getWordSeoHubLevelPath,
-} from "../../data/seo/wordHubRoutes";
+} from "../../data/seo/wordPages/wordHubRoutes";
 import { buildWordSeoHubMetadata } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
 

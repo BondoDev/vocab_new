@@ -321,8 +321,8 @@ test("no runtime source fetches the removed public level-browse-preview URL", ()
 console.log("\n=== generated directory presence ===\n");
 
 for (const dir of [
-  "src/data/seo/word-hub-pages",
-  "src/data/seo/word-browse-shards",
+  "src/data/seo/wordPages/word-hub-pages",
+  "src/data/seo/wordPages/word-browse-shards",
   "src/data/seo/level-browse-preview",
   "src/data/seo/verbLists/verbListLookup",
   "public/sitemaps",
@@ -360,8 +360,8 @@ test("docs/generated-data.md exists and names every high-risk directory", () => 
   const requiredMentions = [
     "src/data/seo/vocabularyLevels",
     "public/vocabularyLevels",
-    "src/data/seo/word-hub-pages",
-    "src/data/seo/word-browse-shards",
+    "src/data/seo/wordPages/word-hub-pages",
+    "src/data/seo/wordPages/word-browse-shards",
     "src/data/seo/level-browse-preview",
     "src/data/seo/verbLists/verbListLookup",
     "public/sitemaps",

@@ -43,7 +43,7 @@ export async function measureOnePass({ uiLang = "en", targetLanguage = "english"
   const pathname = mark("routeParsing", () => {
     // Mirrors buildWordPath's own construction without importing wordSlugs.ts
     // separately (entry-server.js's compiled bundle doesn't re-export it) —
-    // the canonical shape is fixed and documented in src/data/seo/wordSlugs.ts.
+    // the canonical shape is fixed and documented in src/data/seo/wordPages/wordSlugs.ts.
     return `/${uiLang}/${targetLanguage}-word-about--${conceptId}`;
   });
 

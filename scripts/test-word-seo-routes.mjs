@@ -16,11 +16,11 @@ function compileTestModules() {
   fs.mkdirSync(tempDir, { recursive: true });
 
   const rootNames = [
-    path.join(rootDir, "src", "data", "seo", "wordSlugs.ts"),
-    path.join(rootDir, "src", "data", "seo", "wordPageData.ts"),
+    path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
+    path.join(rootDir, "src", "data", "seo", "wordPages", "wordPageData.ts"),
     path.join(rootDir, "src", "data", "seo", "slugs.ts"),
     path.join(rootDir, "src", "data", "seo", "hub.ts"),
-    path.join(rootDir, "src", "data", "seo", "wordHubRoutes.ts"),
+    path.join(rootDir, "src", "data", "seo", "wordPages", "wordHubRoutes.ts"),
     path.join(rootDir, "src", "data", "seo", "verbLists", "verbListRegistry.ts"),
     path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
@@ -64,9 +64,9 @@ function compileTestModules() {
 
 compileTestModules();
 
-const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordSlugs.js"));
-const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPageData.js"));
-const wordHubRoutes = require(path.join(tempDir, "src", "data", "seo", "wordHubRoutes.js"));
+const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordSlugs.js"));
+const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordPageData.js"));
+const wordHubRoutes = require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordHubRoutes.js"));
 const verbListRegistry = require(path.join(tempDir, "src", "data", "seo", "verbLists", "verbListRegistry.js"));
 const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
@@ -423,7 +423,7 @@ const verbListMetadataSource = fs.readFileSync(
   "utf8",
 );
 const wordHubDataSource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "seo", "wordHubData.ts"),
+  path.join(rootDir, "src", "data", "seo", "wordPages", "wordHubData.ts"),
   "utf8",
 );
 const verbListRegistrySource = fs.readFileSync(

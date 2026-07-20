@@ -36,20 +36,20 @@ const UI_LANGUAGES = ["en", "es", "fr", "de", "it", "pt", "ru"];
 
 export function loadBaselineContext() {
   const compiled = compileTsToCommonJs(".tmp-seo-baseline-fixtures", [
-    path.join(ROOT_DIR, "src", "data", "seo", "wordSlugs.ts"),
-    path.join(ROOT_DIR, "src", "data", "seo", "wordPageData.ts"),
+    path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
+    path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordPageData.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "hub.ts"),
-    path.join(ROOT_DIR, "src", "data", "seo", "wordHubRoutes.ts"),
+    path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordHubRoutes.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "browseWordValidation.ts"),
     path.join(ROOT_DIR, "src", "utils", "fixMojibake.ts"),
   ]);
 
-  const wordSlugs = compiled.require("src/data/seo/wordSlugs");
-  const wordPageData = compiled.require("src/data/seo/wordPageData");
+  const wordSlugs = compiled.require("src/data/seo/wordPages/wordSlugs");
+  const wordPageData = compiled.require("src/data/seo/wordPages/wordPageData");
   const slugsModule = compiled.require("src/data/seo/slugs");
   const hub = compiled.require("src/data/seo/hub");
-  const wordHubRoutes = compiled.require("src/data/seo/wordHubRoutes");
+  const wordHubRoutes = compiled.require("src/data/seo/wordPages/wordHubRoutes");
   const browseWordValidation = compiled.require("src/data/seo/browseWordValidation");
   const { fixMojibake } = compiled.require("src/utils/fixMojibake");
 

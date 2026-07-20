@@ -32,7 +32,7 @@ import {
   type UILanguage,
 } from "../contexts/LanguageContext";
 import type { TargetLanguageSlug } from "../data/seo/slugs";
-import type { CanonicalWordPageRouteMatch } from "../data/seo/wordSlugs";
+import type { CanonicalWordPageRouteMatch } from "../data/seo/wordPages/wordSlugs";
 import type { LevelBrowsePreviewData } from "../data/seo/levelBrowseWords";
 import {
   SEOHead,
@@ -43,7 +43,7 @@ import {
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
 import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
-import type { ResolvedWordPageData } from "../data/seo/wordPageData";
+import type { ResolvedWordPageData } from "../data/seo/wordPages/wordPageData";
 import { handleSupabaseAuthRedirect } from "../lib/supabaseAuth";
 import type { UserProfile } from "../lib/userProfile";
 import {

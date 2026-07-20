@@ -49,7 +49,7 @@ import { WordSeoPageView } from "@/app/components/WordSeoPageView";
 import { SeoProvider, renderSeoTags, type SeoManager } from "@/seo/SeoContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import type { UiLanguageCode, TargetLanguageSlug } from "@/data/seo/slugs";
-import type { HydrationWordPageData } from "@/data/seo/wordPageData";
+import type { HydrationWordPageData } from "@/data/seo/wordPages/wordPageData";
 
 // Eager, per-UI-language interface JSON (7 files, ~15-22KB each — see the
 // final report's "Shell and hydration integration" section for why eager,

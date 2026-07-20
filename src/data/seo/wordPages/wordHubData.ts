@@ -1,13 +1,13 @@
-import type { Level, TargetLanguageSlug, UiLanguageCode } from "./slugs";
-import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, SUPPORTED_UI_LANGUAGES } from "./slugs";
+import type { Level, TargetLanguageSlug, UiLanguageCode } from "../slugs";
+import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, SUPPORTED_UI_LANGUAGES } from "../slugs";
 import { buildWordPath } from "./wordSlugs";
 import {
   WORD_HUB_PAGE_SIZE,
   getWordSeoHubLevelPath,
   getWordSeoHubSummaryPath,
 } from "./wordHubRoutes";
-import { isValidBrowseWordLemma } from "./browseWordValidation";
-import { fixMojibake } from "../../utils/fixMojibake";
+import { isValidBrowseWordLemma } from "../browseWordValidation";
+import { fixMojibake } from "../../../utils/fixMojibake";
 
 interface VocabularyEntry {
   targetLanguage: TargetLanguageSlug;
