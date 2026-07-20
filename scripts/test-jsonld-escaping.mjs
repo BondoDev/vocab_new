@@ -687,15 +687,15 @@ console.log("\n[9] No duplicate JSON-LD during SSR injection");
 
 // ── [10] Schema @type values preserved in source ───────────────────────────────
 
-console.log("\n[10] Schema @type values in verbLists/verbListMetadata.ts / seoSchema.ts / wordPages/wordMetadata.ts (not removed)");
+console.log("\n[10] Schema @type values in verbLists/common100Verbs/common100VerbsMetadata.ts / seoSchema.ts / wordPages/wordMetadata.ts (not removed)");
 
 {
   // src/seo/metadata.ts was split (Issue 15) into a compatibility facade plus
   // focused modules; the JSON-LD-emitting builders these checks guard now
-  // live in verbLists/verbListMetadata.ts, seoSchema.ts (buildVocabularyJsonLdGraph),
+  // live in verbLists/common100Verbs/common100VerbsMetadata.ts, seoSchema.ts (buildVocabularyJsonLdGraph),
   // and wordPages/wordMetadata.ts — kept deliberately separate, not merged.
   const jsonLdSource = [
-    ["verbLists", "verbListMetadata.ts"],
+    ["verbLists", "common100Verbs", "common100VerbsMetadata.ts"],
     ["vocabularyLevels", "seoSchema.ts"],
     ["wordPages", "wordMetadata.ts"],
   ]

@@ -51,7 +51,7 @@ it to produce metadata.
 - Page-family-specific: `wordPages/wordMetadata.ts`,
   `wordPages/wordTemplates.ts`, `hubPages/hubMetadata.ts`,
   `hubPages/hubTemplates.ts`, `levelTests/levelTestMetadata.ts`, and
-  `verbLists/verbListMetadata.ts` are files owned by their page families.
+  `verbLists/common100Verbs/common100VerbsMetadata.ts` are files owned by their page families.
   `wordPages/wordTemplates.ts` owns individual word-page metadata
   copy/templates; `hubPages/hubTemplates.ts` owns hub metadata
   copy/templates. `levelTests/levelTestMetadata.ts` owns level-test page
@@ -76,7 +76,11 @@ the repository has adopted a dedicated folder for that owner.
 single page-family owner. `wordPages/` groups the individual word-page
 page family. `hubPages/` groups the SEO hub and word-SEO-hub page
 family. `levelTests/` groups the level-test SEO page family, and
-`verbLists/` groups the verb-list SEO page family. Root files are limited
+`verbLists/` is the umbrella for verb-list SEO page families. Its
+`common100Verbs/` folder owns the current "100 most common verbs"
+runtime metadata implementation; future verb-list families such as
+irregular verbs, modal verbs, and phrasal verbs should become sibling
+folders. Root files are limited
 to the compatibility facade (`metadata.ts`), runtime integration
 (`SeoContext.tsx`), route policy (`routeMetadataPolicy.ts`), site
 configuration (`site.ts`), and documentation (`README.md`).
@@ -100,7 +104,7 @@ to preserve by inspection and review.
 | `hubPages/hubMetadata.ts` | Builds SEO hub and word-SEO-hub metadata |
 | `levelTests/levelTestMetadata.ts` | Builds level-test-page metadata |
 | `vocabularyLevels/vocabularyMetadata.ts` | Builds vocabulary-level-page metadata from vocabulary-level data |
-| `verbLists/verbListMetadata.ts` | Builds verb-list-page metadata |
+| `verbLists/common100Verbs/common100VerbsMetadata.ts` | Builds 100-most-common-verb-list-page metadata |
 | `vocabularyLevels/seoSchema.ts` | Builds the vocabulary-level-page JSON-LD structured-data graph |
 | `shared/seoAlternates.ts` | Builds hreflang alternate-link sets — a cross-family concern |
 | `routeMetadataPolicy.ts` | Classifies routes and decides indexability/noindex policy |
@@ -112,7 +116,7 @@ to preserve by inspection and review.
    `src/data/seo/<family>/`? Build the metadata module on top of it —
    don't duplicate data here.
 2. Name the module `<family>Metadata.ts` to match the existing
-   convention (`wordPages/wordMetadata.ts`, `verbLists/verbListMetadata.ts`,
+   convention (`wordPages/wordMetadata.ts`, `verbLists/common100Verbs/common100VerbsMetadata.ts`,
    `vocabularyLevels/vocabularyMetadata.ts`). Put it in its own
    `<family>/` subfolder only once that family owns more than one file.
 3. Reuse `shared/seoAlternates.ts` and

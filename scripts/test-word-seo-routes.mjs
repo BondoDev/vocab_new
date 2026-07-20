@@ -437,7 +437,7 @@ const wordMetadataSource = fs.readFileSync(
   "utf8",
 );
 const verbListMetadataSource = fs.readFileSync(
-  path.join(rootDir, "src", "seo", "verbLists", "verbListMetadata.ts"),
+  path.join(rootDir, "src", "seo", "verbLists", "common100Verbs", "common100VerbsMetadata.ts"),
   "utf8",
 );
 const wordHubDataSource = fs.readFileSync(

@@ -3,7 +3,7 @@
 // production imports of "../../seo/metadata" / "./metadata" keep working.
 export type { FaqItem } from "./vocabularyLevels/seoTemplates";
 export { buildVocabularyFaqSection } from "./vocabularyLevels/seoFaq";
-export { buildVerbListSeoMetadata } from "./verbLists/verbListMetadata";
+export { buildVerbListSeoMetadata } from "./verbLists/common100Verbs/common100VerbsMetadata";
 export { buildVocabularyJsonLdGraph } from "./vocabularyLevels/seoSchema";
 export { buildVocabularySeoMetadata } from "./vocabularyLevels/vocabularyMetadata";
 export { buildLevelTestSeoMetadata } from "./levelTests/levelTestMetadata";
