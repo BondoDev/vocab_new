@@ -6,7 +6,7 @@ import {
 } from "../data/seo/shared/slugs";
 import { buildWordPath } from "../data/seo/wordPages/wordSlugs";
 import type { SeoMetadata } from "./SeoContext";
-import { buildHreflangAlternates, sanitizeMetadataText } from "./seoAlternates";
+import { buildHreflangAlternates, sanitizeMetadataText } from "./shared/seoAlternates";
 import { WORD_META_DESC, WORD_META_TITLE } from "./seoTemplates";
 
 export interface WordSeoMetadataParams {

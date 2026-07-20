@@ -1,6 +1,6 @@
 import type { TargetLanguageSlug, UiLanguageCode } from "../../data/seo/shared/slugs";
 import { buildWordPath } from "../../data/seo/wordPages/wordSlugs";
-import { sanitizeMetadataText } from "../seoAlternates";
+import { sanitizeMetadataText } from "../shared/seoAlternates";
 import type { FaqItem } from "../seoTemplates";
 
 /**

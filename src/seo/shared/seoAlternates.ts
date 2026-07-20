@@ -1,6 +1,6 @@
-import { SUPPORTED_UI_LANGUAGES, type UiLanguageCode } from "../data/seo/shared/slugs";
-import { fixMojibake } from "../utils/fixMojibake";
-import type { SeoAlternateLink } from "./SeoContext";
+import { SUPPORTED_UI_LANGUAGES, type UiLanguageCode } from "../../data/seo/shared/slugs";
+import { fixMojibake } from "../../utils/fixMojibake";
+import type { SeoAlternateLink } from "../SeoContext";
 
 export function normalizeOrigin(siteOrigin: string): string {
   return siteOrigin.endsWith("/") ? siteOrigin.slice(0, -1) : siteOrigin;

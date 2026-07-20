@@ -7,7 +7,7 @@ import {
 } from "../data/seo/wordPages/wordHubRoutes";
 import { getLevelTestContent, getLevelTestSeoPath } from "../data/seo/levelTests";
 import type { SeoMetadata } from "./SeoContext";
-import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "./seoAlternates";
+import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "./shared/seoAlternates";
 import { GENERIC_WORD_SEO_HUB_METADATA, SEO_HUB_METADATA, WORD_SEO_HUB_METADATA } from "./seoTemplates";
 
 export function buildLevelTestSeoMetadata({

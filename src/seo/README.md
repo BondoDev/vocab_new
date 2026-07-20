@@ -55,21 +55,23 @@ it to produce metadata.
   `vocabularyLevels/seoSchema.ts` (JSON-LD graph) are exclusively owned
   by the vocabulary-level page family and live together in
   `vocabularyLevels/`.
-- Cross-family/shared behavior: `seoAlternates.ts` (hreflang building),
-  `seoTemplates.ts` (shared copy templates), `routeMetadataPolicy.ts`
-  (route-level indexing policy), `SeoContext.tsx` (the React
-  provider/runtime), and `site.ts` (site-wide defaults) are consumed
-  across multiple or all page families.
+- Cross-family/shared behavior: `shared/seoAlternates.ts` (hreflang
+  building), `seoTemplates.ts` (shared copy templates),
+  `routeMetadataPolicy.ts` (route-level indexing policy),
+  `SeoContext.tsx` (the React provider/runtime), and `site.ts`
+  (site-wide defaults) are consumed across multiple or all page
+  families.
 
 ## Internal structure
 
-A page-family subfolder (like `vocabularyLevels/`) is used only once
-multiple files clearly share one family owner. A single-file family
-(`wordMetadata.ts`, `verbListMetadata.ts`, `hubMetadata.ts`) stays at
-the root until a second file justifies its own folder. Public entry
-points (`SeoContext.tsx`, `routeMetadataPolicy.ts`) and the
-compatibility facade (`metadata.ts`) remain at the root regardless of
-file count.
+A subfolder is used only once multiple files clearly share one owner.
+`vocabularyLevels/` groups the vocabulary-level page family;
+`shared/` currently owns `seoAlternates.ts`, the one file with no
+single page-family owner. A single-file family (`wordMetadata.ts`,
+`verbListMetadata.ts`, `hubMetadata.ts`) stays at the root until a
+second file justifies its own folder. Public entry points
+(`SeoContext.tsx`, `routeMetadataPolicy.ts`) and the compatibility
+facade (`metadata.ts`) remain at the root regardless of file count.
 
 ## Dependency direction
 
@@ -90,7 +92,7 @@ to preserve by inspection and review.
 | `vocabularyLevels/vocabularyMetadata.ts` | Builds vocabulary-level-page metadata from vocabulary-level data |
 | `verbListMetadata.ts` | Builds verb-list-page metadata |
 | `vocabularyLevels/seoSchema.ts` | Builds the vocabulary-level-page JSON-LD structured-data graph |
-| `seoAlternates.ts` | Builds hreflang alternate-link sets — a cross-family concern |
+| `shared/seoAlternates.ts` | Builds hreflang alternate-link sets — a cross-family concern |
 | `routeMetadataPolicy.ts` | Classifies routes and decides indexability/noindex policy |
 | `SeoContext.tsx` | React context/provider that renders SEO tags at request time |
 
@@ -103,7 +105,7 @@ to preserve by inspection and review.
    convention (`wordMetadata.ts`, `verbListMetadata.ts`,
    `vocabularyLevels/vocabularyMetadata.ts`). Put it in its own
    `<family>/` subfolder only once that family owns more than one file.
-3. Reuse `seoAlternates.ts`, `seoTemplates.ts`, and
+3. Reuse `shared/seoAlternates.ts`, `seoTemplates.ts`, and
    `routeMetadataPolicy.ts` where the concern is cross-family — don't
    fork copies of hreflang logic per family. `vocabularyLevels/seoFaq.ts`
    and `vocabularyLevels/seoSchema.ts` are vocabulary-level-only
