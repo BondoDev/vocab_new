@@ -42,7 +42,7 @@ const OLD_PATHS = [
 
 const NEW_PATHS = [
   path.join(ROOT_DIR, "src", "data", "seo", "levelTests", "seo_level_test_content.json"),
-  path.join(ROOT_DIR, "src", "data", "seo", "seo-cefr-content.json"),
+  path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels", "seo-cefr-content.json"),
 ];
 
 // Only the old guidelines/-prefixed path is a "stale reference" — the bare
@@ -158,8 +158,8 @@ test("devSeoCefrPreviewData.ts imports the relocated JSON, not the old guideline
   );
   const content = fs.readFileSync(file, "utf8");
   assert.ok(
-    /from\s+["']\.\.\/\.\.\/data\/seo\/seo-cefr-content\.json["']/.test(content),
-    "devSeoCefrPreviewData.ts does not import ../../data/seo/seo-cefr-content.json",
+    /from\s+["']\.\.\/\.\.\/data\/seo\/vocabularyLevels\/seo-cefr-content\.json["']/.test(content),
+    "devSeoCefrPreviewData.ts does not import ../../data/seo/vocabularyLevels/seo-cefr-content.json",
   );
   assert.ok(!OLD_PATH_PATTERN.test(content), "devSeoCefrPreviewData.ts still references guidelines/");
 });

@@ -124,11 +124,11 @@
     },
     {
       "id": "G9",
-      "consumer": "src/data/seo/levelBrowseWords.ts",
+      "consumer": "src/data/seo/vocabularyLevels/levelBrowseWords.ts",
       "line": 6,
       "pattern": "./level-browse-preview/*.json",
       "options": {},
-      "resolvesTo": "src/data/seo/level-browse-preview/*.json",
+      "resolvesTo": "src/data/seo/vocabularyLevels/level-browse-preview/*.json",
       "runtime": "shared client + ssr",
       "eager": false,
       "expectedCount": 42,

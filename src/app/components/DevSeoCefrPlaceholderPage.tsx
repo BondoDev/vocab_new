@@ -15,7 +15,7 @@ import {
   normalizeTargetLanguage,
   type SeoCefrContentItem,
 } from "./devSeoCefrPreviewData";
-import type { LevelBrowsePreviewData } from "../../data/seo/levelBrowseWords";
+import type { LevelBrowsePreviewData } from "../../data/seo/vocabularyLevels/levelBrowseWords";
 
 const PREVIEW_HERO_SUFFIX_LANGUAGE_NAMES: Record<
   UiLanguageCode,

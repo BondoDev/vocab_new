@@ -119,7 +119,7 @@ const EAGER_LAZY_CONTRACT = [
   ["src/data/seo/verbLists/commonVerbList.ts", "./verbListLookup/*.json", "eager: true"],
   ["src/app/components/WordSeoPage.tsx", "../../data/vocabulary/*/vocabulary.json", null],
   ["src/app/components/VocabularyLevelPage.tsx", "../../data/vocabulary/*/vocabulary.json", null],
-  ["src/data/seo/levelBrowseWords.ts", "./level-browse-preview/*.json", null],
+  ["src/data/seo/vocabularyLevels/levelBrowseWords.ts", "./level-browse-preview/*.json", null],
 ];
 
 for (const [relFile, patternSubstring, requiredOption] of EAGER_LAZY_CONTRACT) {
@@ -152,9 +152,16 @@ test("public/vocabularyLevels/*.json stays byte-identical to src/data/seo/vocabu
   const publicDir = path.join(ROOT_DIR, "public", "vocabularyLevels");
   const srcDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
 
+  // level-browse-preview/ and seo-cefr-content.json are other CEFR
+  // vocabulary-level SEO data co-located directly under src/data/seo/vocabularyLevels/
+  // (not part of the {ui}/{target}.json mirror this guard compares) — skipped
+  // at the top level only.
+  const SRC_TOP_LEVEL_NON_MIRROR_ENTRIES = new Set(["level-browse-preview", "seo-cefr-content.json"]);
+
   function walkJson(dir, base = dir) {
     const out = [];
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (dir === base && SRC_TOP_LEVEL_NON_MIRROR_ENTRIES.has(entry.name)) continue;
       const abs = path.join(dir, entry.name);
       if (entry.isDirectory()) out.push(...walkJson(abs, base));
       else if (entry.name.endsWith(".json")) out.push(path.relative(base, abs));

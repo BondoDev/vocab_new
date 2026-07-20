@@ -33,7 +33,7 @@ import {
 } from "../contexts/LanguageContext";
 import type { TargetLanguageSlug } from "../data/seo/slugs";
 import type { CanonicalWordPageRouteMatch } from "../data/seo/wordPages/wordSlugs";
-import type { LevelBrowsePreviewData } from "../data/seo/levelBrowseWords";
+import type { LevelBrowsePreviewData } from "../data/seo/vocabularyLevels/levelBrowseWords";
 import {
   SEOHead,
   SeoProvider,

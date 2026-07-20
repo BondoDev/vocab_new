@@ -2,7 +2,7 @@
 
 Audited 2026-07-15, source commit `80e52fe4`; updated same day (guidelines/
 folder cleanup) to add `src/data/seo/levelTests/seo_level_test_content.json` and
-`src/data/seo/seo-cefr-content.json`, both relocated from `guidelines/`
+`src/data/seo/vocabularyLevels/seo-cefr-content.json`, both relocated from `guidelines/`
 (which is human-guidance-only — see [`docs/architecture.md`](architecture.md)).
 Companion to [`docs/import-boundaries.md`](import-boundaries.md) (which
 guards the *shape* `import.meta.glob` and related loaders depend on). This
@@ -20,13 +20,13 @@ Guard script: `npm run test:generated-data-ownership`
 |---|---|---|---|---|---|---|
 | `src/data/seo/vocabularyLevels/` | handwritten source | itself | manual (no generator) | client (SSR sync load), SSR (`fs` read), `src/seo/vocabularyMetadata.ts` (via the `src/seo/metadata.ts` facade), `VocabularyLevelPage.tsx`, `scripts/generate-sitemap.mjs` | yes | low |
 | `src/data/seo/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/seo/levelTests/index.ts`, `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/hubMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
-| `src/data/seo/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/components/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
+| `src/data/seo/vocabularyLevels/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/components/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
 | `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/seo/vocabularyLevels/` (must stay byte-identical) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`), run explicitly by the developer | browser `fetch()` from `src/data/seo/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | low — deterministic sync script plus a read-only `--check` mode wired into `test:generated-data-ownership` |
 | ~~`public/vocabularyLevels/index.ts`~~ | *(removed 2026-07-15)* | — | — | none — confirmed dead, no import anywhere | — | resolved |
 | `src/data/seo/wordPages/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
 | `src/data/seo/wordPages/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
-| `src/data/seo/level-browse-preview/` | generated committed source, **no generator exists** | itself (hand-authored/one-time-generated) | none found | client + SSR (`levelBrowseWords.ts`, lazy glob G9) | yes | medium — must be hand-edited until a generator is written |
-| ~~`public/seo/level-browse-preview/`~~ | *(removed 2026-07-15; obsolete duplicate)* | `src/data/seo/level-browse-preview/` remains authoritative | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | none found — no fetch, import, glob, sitemap, SSR, Worker, or service-worker consumer required the public URL | no | resolved |
+| `src/data/seo/vocabularyLevels/level-browse-preview/` | generated committed source, **no generator exists** | itself (hand-authored/one-time-generated) | none found | client + SSR (`levelBrowseWords.ts`, lazy glob G9) | yes | medium — must be hand-edited until a generator is written |
+| ~~`public/seo/level-browse-preview/`~~ | *(removed 2026-07-15; obsolete duplicate)* | `src/data/seo/vocabularyLevels/level-browse-preview/` remains authoritative | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | none found — no fetch, import, glob, sitemap, SSR, Worker, or service-worker consumer required the public URL | no | resolved |
 | `src/data/seo/verbLists/verbListLookup/` | generated committed source | `list_of_100_most_used_verb.json` + vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR (`commonVerbList.ts`, eager glob G6); not the Worker | yes | low |
 | `public/sitemaps/` | generated build output (committed) | word route manifest + verb registry + vocabulary data | `scripts/generate-sitemap.mjs` (`npm run sitemap`) | search engines only; test-only in-repo consumers | yes | low |
 | `workers/word-ssr/data/full-corpus/` | generated build output | vocabulary + word-route-manifest + slugs | `workers/word-ssr/generate-full-corpus.mjs` (Cloudflare remote build) | `workers/word-ssr/publish-shards.mjs` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
@@ -49,7 +49,7 @@ from disk (`path.resolve(process.cwd(), "src", "data", "seo", "vocabularyLevels"
 visible page body on production `vocabularyLevel` routes.** `App.tsx`'s
 `"vocabularyLevel"` branch calls `findSeoCefrPreviewItem()`
 (`src/app/components/devSeoCefrPreviewData.ts`, backed by
-`src/data/seo/seo-cefr-content.json`) before falling back to
+`src/data/seo/vocabularyLevels/seo-cefr-content.json`) before falling back to
 `VocabularyLevelPage`/`vocabularyLevels`. Because that file has full 7×7×6
 coverage, the match always succeeds, so every production vocabulary-level
 page's hero/sections/FAQ content renders from `seo-cefr-content.json` via
@@ -127,11 +127,11 @@ instead of a manual copy.
 
 ## `public/seo/level-browse-preview/` — resolved obsolete duplicate
 
-`src/data/seo/level-browse-preview/` is authoritative. It contains 42
+`src/data/seo/vocabularyLevels/level-browse-preview/` is authoritative. It contains 42
 committed JSON files, one for every supported target-language x CEFR-level
 combination. No generator is currently known, so manual content preservation
 is required until a generator exists. The active loader is
-`src/data/seo/levelBrowseWords.ts`, which uses the lazy G9
+`src/data/seo/vocabularyLevels/levelBrowseWords.ts`, which uses the lazy G9
 `import.meta.glob("./level-browse-preview/*.json")` source-tree import.
 
 The former `public/seo/level-browse-preview/` tree was removed on
@@ -178,15 +178,15 @@ visibility, not changed here.
 | `public/sitemaps/` | `npm run sitemap` |
 | `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/` | `npm run build:word-worker:full` |
 | `dist/`, `server-build/` | `npm run build` |
-| `src/data/seo/vocabularyLevels/` content, `src/data/seo/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/seo-cefr-content.json` | none — hand-maintained, no generator |
+| `src/data/seo/vocabularyLevels/` content, `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json` | none — hand-maintained, no generator |
 | `public/vocabularyLevels/*.json` (mirror only, from source content) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`) |
 
 ## Manual-edit policy
 
 - **Allowed and expected:** `src/data/seo/vocabularyLevels/`,
-  `src/data/seo/level-browse-preview/`,
+  `src/data/seo/vocabularyLevels/level-browse-preview/`,
   `src/data/seo/levelTests/seo_level_test_content.json`,
-  `src/data/seo/seo-cefr-content.json` (no generator exists for any of these).
+  `src/data/seo/vocabularyLevels/seo-cefr-content.json` (no generator exists for any of these).
 - **Allowed but must be mirrored:** `public/vocabularyLevels/*.json` — after
   editing `src/data/seo/vocabularyLevels/`, run `npm run sync:vocabulary-levels`
   and commit both trees together, or `npm run prebuild` (via
@@ -221,7 +221,7 @@ visibility, not changed here.
   and untracked.
 - `npm run test:level-browse-preview-completeness` (via
   `test:level-browse-preview`) — asserts the exact 42-key match set for
-  `src/data/seo/level-browse-preview/*.json`.
+  `src/data/seo/vocabularyLevels/level-browse-preview/*.json`.
 - `workers/word-ssr/test-worker-bundle-size.mjs` — asserts
   `word-browse-shards`' heavy export never reaches the Worker bundle.
 

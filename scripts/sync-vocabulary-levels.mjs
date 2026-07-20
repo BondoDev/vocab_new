@@ -19,7 +19,12 @@ const PUBLIC_DIR = path.join(ROOT_DIR, "public", "vocabularyLevels");
 
 // index.ts is the legitimate SSR/client loader module that lives alongside
 // the source JSON — it is never copied to public/, only skipped.
-const ALLOWED_SOURCE_TOP_LEVEL_FILES = new Set(["index.ts"]);
+// levelBrowseWords.ts, level-browse-preview/, and seo-cefr-content.json are
+// other CEFR vocabulary-level SEO data co-located here (not part of the
+// {ui}/{target}.json matrix this script mirrors) — also skipped, never
+// copied to public/.
+const ALLOWED_SOURCE_TOP_LEVEL_FILES = new Set(["index.ts", "levelBrowseWords.ts", "seo-cefr-content.json"]);
+const ALLOWED_SOURCE_TOP_LEVEL_DIRS = new Set(["level-browse-preview"]);
 const ALLOWED_PUBLIC_EXTRA_FILES = new Set([".gitkeep"]);
 
 const UTF8_BOM_PATTERN = /^﻿/;
@@ -66,7 +71,7 @@ function main() {
 
     for (const entry of fs.readdirSync(SRC_DIR, { withFileTypes: true })) {
       if (entry.isDirectory()) {
-        if (!uiSet.has(entry.name)) {
+        if (!uiSet.has(entry.name) && !ALLOWED_SOURCE_TOP_LEVEL_DIRS.has(entry.name)) {
           errors.push(`unexpected source directory: src/data/seo/vocabularyLevels/${entry.name}`);
         }
       } else if (!ALLOWED_SOURCE_TOP_LEVEL_FILES.has(entry.name)) {

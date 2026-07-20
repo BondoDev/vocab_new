@@ -16,7 +16,7 @@ import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../seo
 import { SEOHead, useSeoSiteOrigin, type SeoMetadata } from "../../seo/SeoContext";
 import { buildWordPath } from "../../data/seo/wordPages/wordSlugs";
 import { isValidBrowseWordLemma } from "../../data/seo/browseWordValidation";
-import type { LevelBrowsePreviewData } from "../../data/seo/levelBrowseWords";
+import type { LevelBrowsePreviewData } from "../../data/seo/vocabularyLevels/levelBrowseWords";
 
 interface VocabularyLevelPageProps {
   uiLang: UiLanguageCode;

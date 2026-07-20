@@ -9,7 +9,7 @@ const rootDir = path.resolve(__dirname, "..");
 
 const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "portuguese", "russian"];
 const SUPPORTED_LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"];
-const PREVIEW_DIR = path.join(rootDir, "src", "data", "seo", "level-browse-preview");
+const PREVIEW_DIR = path.join(rootDir, "src", "data", "seo", "vocabularyLevels", "level-browse-preview");
 
 const expectedKeys = TARGET_LANGUAGES.flatMap((targetLanguage) =>
   SUPPORTED_LEVELS.map((level) => `${targetLanguage}-${level}`),

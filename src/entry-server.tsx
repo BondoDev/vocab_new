@@ -30,7 +30,7 @@ import {
   type ResolvedWordPageData,
   type WordPageVocabEntry,
 } from "./data/seo/wordPages/wordPageData";
-import { getLevelBrowsePreviewData, type LevelBrowsePreviewData } from "./data/seo/levelBrowseWords";
+import { getLevelBrowsePreviewData, type LevelBrowsePreviewData } from "./data/seo/vocabularyLevels/levelBrowseWords";
 import { getAllWordSeoHubPaths } from "./data/seo/wordPages/wordHubData";
 import { resolveWordSeoHubRoute } from "./data/seo/wordPages/wordHubRoutes";
 

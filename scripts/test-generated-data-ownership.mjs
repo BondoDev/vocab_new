@@ -148,9 +148,11 @@ test("src/data/seo/vocabularyLevels/ has exactly one JSON file per UI-language x
   }
   assert.deepEqual(missing, [], `missing vocabulary-level file(s): ${missing.join(", ")}`);
 
+  // level-browse-preview/ is other CEFR vocabulary-level SEO data co-located
+  // under vocabularyLevels/, not a UI-language folder — excluded here.
   const actualDirs = fs
     .readdirSync(baseDir, { withFileTypes: true })
-    .filter((e) => e.isDirectory())
+    .filter((e) => e.isDirectory() && e.name !== "level-browse-preview")
     .map((e) => e.name)
     .sort();
   assert.deepEqual(actualDirs, [...SUPPORTED_UI_LANGUAGES].sort(), "unexpected UI-language folder(s) under src/data/seo/vocabularyLevels");
@@ -194,6 +196,11 @@ test("no malformed vocabulary-level filenames (unexpected casing or extension) u
     const baseDir = path.join(ROOT_DIR, ...root.split("/"));
     if (!fs.existsSync(baseDir)) continue;
     for (const ui of fs.readdirSync(baseDir, { withFileTypes: true }).filter((e) => e.isDirectory())) {
+      // level-browse-preview/ is other CEFR vocabulary-level SEO data
+      // co-located under src/data/seo/vocabularyLevels/, not a UI-language folder.
+      if (root === "src/data/seo/vocabularyLevels" && ui.name === "level-browse-preview") {
+        continue;
+      }
       if (!SUPPORTED_UI_LANGUAGES.includes(ui.name)) {
         offenders.push(`${root}/${ui.name} (unexpected UI-language folder name)`);
         continue;
@@ -248,10 +255,10 @@ test("docs/generated-data.md documents the synchronization command and build pol
   );
 });
 
-console.log("\n=== src/data/seo/level-browse-preview/ ownership ===\n");
+console.log("\n=== src/data/seo/vocabularyLevels/level-browse-preview/ ownership ===\n");
 
-test("src/data/seo/level-browse-preview/ has exactly one valid JSON file per target-language x CEFR-level pair", () => {
-  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "level-browse-preview");
+test("src/data/seo/vocabularyLevels/level-browse-preview/ has exactly one valid JSON file per target-language x CEFR-level pair", () => {
+  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels", "level-browse-preview");
   const expectedKeys = [];
   for (const target of SUPPORTED_TARGET_LANGUAGES) {
     for (const level of SUPPORTED_LEVELS) {
@@ -266,7 +273,7 @@ test("src/data/seo/level-browse-preview/ has exactly one valid JSON file per tar
   assert.deepEqual(
     files,
     expectedKeys.map((key) => `${key}.json`).sort(),
-    "src/data/seo/level-browse-preview has an unexpected file set",
+    "src/data/seo/vocabularyLevels/level-browse-preview has an unexpected file set",
   );
 
   const seenKeys = new Set();
@@ -323,7 +330,7 @@ console.log("\n=== generated directory presence ===\n");
 for (const dir of [
   "src/data/seo/wordPages/word-hub-pages",
   "src/data/seo/wordPages/word-browse-shards",
-  "src/data/seo/level-browse-preview",
+  "src/data/seo/vocabularyLevels/level-browse-preview",
   "src/data/seo/verbLists/verbListLookup",
   "public/sitemaps",
 ]) {
@@ -362,7 +369,7 @@ test("docs/generated-data.md exists and names every high-risk directory", () => 
     "public/vocabularyLevels",
     "src/data/seo/wordPages/word-hub-pages",
     "src/data/seo/wordPages/word-browse-shards",
-    "src/data/seo/level-browse-preview",
+    "src/data/seo/vocabularyLevels/level-browse-preview",
     "src/data/seo/verbLists/verbListLookup",
     "public/sitemaps",
     "workers/word-ssr/data/full-corpus",
@@ -373,15 +380,15 @@ test("docs/generated-data.md exists and names every high-risk directory", () => 
   assert.deepEqual(missing, [], `docs/generated-data.md does not mention: ${missing.join(", ")}`);
 });
 
-test("docs/generated-data.md documents src/data/seo/level-browse-preview as authoritative and the public mirror as removed", () => {
+test("docs/generated-data.md documents src/data/seo/vocabularyLevels/level-browse-preview as authoritative and the public mirror as removed", () => {
   const docPath = path.join(ROOT_DIR, "docs", "generated-data.md");
   const text = fs.readFileSync(docPath, "utf8");
-  const sourceIdx = text.indexOf("`src/data/seo/level-browse-preview/` is authoritative");
-  assert.ok(sourceIdx !== -1, "src/data/seo/level-browse-preview is not documented");
+  const sourceIdx = text.indexOf("`src/data/seo/vocabularyLevels/level-browse-preview/` is authoritative");
+  assert.ok(sourceIdx !== -1, "src/data/seo/vocabularyLevels/level-browse-preview is not documented");
   const sourceNearby = text.slice(sourceIdx, sourceIdx + 1000).toLowerCase();
   assert.ok(
     /authoritative/.test(sourceNearby) && /42/.test(sourceNearby) && /levelbrowsewords\.ts/.test(sourceNearby),
-    "src/data/seo/level-browse-preview is documented without its authoritative 42-file loader contract",
+    "src/data/seo/vocabularyLevels/level-browse-preview is documented without its authoritative 42-file loader contract",
   );
 
   const publicIdx = text.indexOf("The former `public/seo/level-browse-preview/` tree was removed");

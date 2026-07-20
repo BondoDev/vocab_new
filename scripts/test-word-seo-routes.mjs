@@ -443,7 +443,7 @@ const generateWordHubDataSource = fs.readFileSync(
   "utf8",
 );
 const levelBrowseWordsSource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "seo", "levelBrowseWords.ts"),
+  path.join(rootDir, "src", "data", "seo", "vocabularyLevels", "levelBrowseWords.ts"),
   "utf8",
 );
 const entryServerSource = fs.readFileSync(path.join(rootDir, "src", "entry-server.tsx"), "utf8");
