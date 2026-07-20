@@ -10,13 +10,22 @@ const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "
 const SUPPORTED_LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"];
 const OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "word-hub-pages");
 const BROWSE_SHARD_OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "word-browse-shards");
-const VERB_LIST_LOOKUP_OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "verbLists", "verbListLookup");
+const VERB_LIST_LOOKUP_OUTPUT_DIR = path.join(
+  ROOT_DIR,
+  "src",
+  "data",
+  "seo",
+  "verbLists",
+  "common100Verbs",
+  "verbListLookup",
+);
 const ENGLISH_VERB_LIST_PATH = path.join(
   ROOT_DIR,
   "src",
   "data",
   "seo",
   "verbLists",
+  "common100Verbs",
   "list_of_100_most_used_verb.json",
 );
 

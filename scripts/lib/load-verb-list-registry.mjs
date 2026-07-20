@@ -3,11 +3,19 @@ import { compileTsToCommonJs, ROOT_DIR } from "../seo-baseline/lib/compileTs.mjs
 
 export function loadVerbListRegistry(tempDirName = ".tmp-verb-list-registry") {
   const compiled = compileTsToCommonJs(tempDirName, [
-    path.join(ROOT_DIR, "src", "data", "seo", "verbLists", "verbListRegistry.ts"),
+    path.join(
+      ROOT_DIR,
+      "src",
+      "data",
+      "seo",
+      "verbLists",
+      "common100Verbs",
+      "common100VerbRegistry.ts",
+    ),
   ]);
 
   return {
     ...compiled,
-    registry: compiled.require("src/data/seo/verbLists/verbListRegistry"),
+    registry: compiled.require("src/data/seo/verbLists/common100Verbs/common100VerbRegistry"),
   };
 }

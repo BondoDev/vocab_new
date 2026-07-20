@@ -57,7 +57,8 @@ of its fields as a title/description source. A metadata builder
 src/data/seo/
   vocabularyLevels/   CEFR vocabulary-level pages
   levelTests/         Level-test pages
-  verbLists/          100-most-common-verb pages
+  verbLists/          Verb-list page-family umbrella
+    common100Verbs/   100-most-common-verb pages
   wordPages/          Word detail/hub pages
   shared/             Cross-family data contracts (not a fifth family)
 ```

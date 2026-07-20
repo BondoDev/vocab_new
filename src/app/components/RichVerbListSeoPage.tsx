@@ -10,7 +10,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../data/seo/shared/slugs";
-import type { VerbListContent } from "../../data/seo/verbLists/verbListRouteHelpers";
+import type { VerbListContent } from "../../data/seo/verbLists/common100Verbs/common100VerbRouteHelpers";
 import { SEOHead, type SeoMetadata } from "../../seo/SeoContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 

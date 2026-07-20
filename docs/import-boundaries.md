@@ -40,7 +40,7 @@ consumer file is a *deliberate, checked* change instead of an accidental one.
   and compare the client bundle, SSR bundle, and Worker bundle against
   `scripts/seo-baseline/current/performance.json`.
 - Never move `src/data/seo/wordPages/word-hub-pages/`, `word-browse-shards/`, or
-  `src/data/seo/verbLists/verbListLookup/` without also updating
+  `src/data/seo/verbLists/common100Verbs/verbListLookup/` without also updating
   `scripts/generate-word-hub-data.mjs` (their generator) in the same change.
 - Do not introduce a new broad glob (e.g. `**/*.json`) over a large data
   directory; every existing glob here is scoped to one flat directory with a
@@ -64,7 +64,7 @@ is in `scripts/import-boundaries/current/globs.json`. Summary:
 | G3 | `src/entry-server.tsx` | `./data/interface/*.json` | SSR entry | lazy | 7 | high — same consumer as G2 |
 | G4 | `src/data/seo/wordPages/wordHubData.ts` | `./word-hub-pages/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
 | G5 | `src/data/seo/wordPages/wordBrowseSearchData.ts` | `./word-browse-shards/*.json` | client + SSR + **transitively Worker** via `WordSeoPageView.tsx` | lazy | 42 | high — shared-module boundary, only a test prevents the heavy export from running in the Worker |
-| G6 | `src/data/seo/verbLists/commonVerbList.ts` | `./verbListLookup/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
+| G6 | `src/data/seo/verbLists/common100Verbs/common100VerbList.ts` | `./verbListLookup/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
 | G7 | `src/app/components/WordSeoPage.tsx` | `../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | high — site of the historical Worker bundle-bloat incident |
 | G8 | `src/app/components/VocabularyLevelPage.tsx` | `../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | medium |
 | G9 | `src/data/seo/vocabularyLevels/levelBrowseWords.ts` | `./level-browse-preview/*.json` | client + SSR | lazy | 42 | medium — hand-authored data, no generator script exists |
@@ -84,7 +84,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`) | `fs.readFile` | `src/data/seo/levelTests/seo_level_test_content.json` | build-time generator | low |
 | `src/data/seo/levelTests/index.ts` | static relative `import` | `./seo_level_test_content.json` | client + SSR | low |
 | `src/app/components/devSeoCefrPreviewData.ts` | static relative `import` | `../../data/seo/vocabularyLevels/seo-cefr-content.json` | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low |
-| `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
+| `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/common100Verbs/verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
 | `scripts/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
 | `workers/word-ssr/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `cleanup-word-build-artifacts.mjs` in the same build |
 | `workers/word-ssr/measure-shard-formats.mjs` | `fs.readdirSync` | internal data dirs | staging-only measurement | low |

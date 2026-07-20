@@ -79,11 +79,11 @@
     },
     {
       "id": "G6",
-      "consumer": "src/data/seo/verbLists/commonVerbList.ts",
+      "consumer": "src/data/seo/verbLists/common100Verbs/common100VerbList.ts",
       "line": 70,
       "pattern": "./verbListLookup/*.json",
       "options": { "eager": true },
-      "resolvesTo": "src/data/seo/verbLists/verbListLookup/*.json",
+      "resolvesTo": "src/data/seo/verbLists/common100Verbs/verbListLookup/*.json",
       "runtime": "client + ssr (verb-list SEO pages; not imported by the Worker)",
       "eager": true,
       "expectedCount": 7,
@@ -179,7 +179,7 @@
       "id": "L5",
       "consumer": "scripts/generate-word-hub-data.mjs",
       "loaderType": "generator + fs.readdir cleanup of its own output dirs",
-      "target": "src/data/seo/wordPages/word-hub-pages/, src/data/seo/wordPages/word-browse-shards/, src/data/seo/verbLists/verbListLookup/",
+      "target": "src/data/seo/wordPages/word-hub-pages/, src/data/seo/wordPages/word-browse-shards/, src/data/seo/verbLists/common100Verbs/verbListLookup/",
       "runtime": "build-time generator",
       "risk": "low-authoritative",
       "riskReason": "This is the authoritative generator for 3 of the 6 glob targets above (G4, G5, G6). Any directory rename must update this script and all 3 consumers together."

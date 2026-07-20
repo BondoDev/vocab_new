@@ -21,7 +21,15 @@ function compileTestModules() {
     path.join(rootDir, "src", "data", "seo", "shared", "slugs.ts"),
     path.join(rootDir, "src", "data", "seo", "shared", "hub.ts"),
     path.join(rootDir, "src", "data", "seo", "wordPages", "wordHubRoutes.ts"),
-    path.join(rootDir, "src", "data", "seo", "verbLists", "verbListRegistry.ts"),
+    path.join(
+      rootDir,
+      "src",
+      "data",
+      "seo",
+      "verbLists",
+      "common100Verbs",
+      "common100VerbRegistry.ts",
+    ),
     path.join(rootDir, "src", "utils", "fixMojibake.ts"),
   ];
 
@@ -67,7 +75,17 @@ compileTestModules();
 const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordSlugs.js"));
 const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordPageData.js"));
 const wordHubRoutes = require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordHubRoutes.js"));
-const verbListRegistry = require(path.join(tempDir, "src", "data", "seo", "verbLists", "verbListRegistry.js"));
+const verbListRegistry = require(
+  path.join(
+    tempDir,
+    "src",
+    "data",
+    "seo",
+    "verbLists",
+    "common100Verbs",
+    "common100VerbRegistry.js",
+  ),
+);
 const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
 
 function readJson(relativePath) {
@@ -79,7 +97,7 @@ function readJson(relativePath) {
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 const spanishVocabulary = readJson("src/data/vocabulary/spanish/vocabulary.json");
-const englishVerbList = readJson("src/data/seo/verbLists/list_of_100_most_used_verb.json");
+const englishVerbList = readJson("src/data/seo/verbLists/common100Verbs/list_of_100_most_used_verb.json");
 const normalizedEnglishVerbList = englishVerbList.map((item) => {
   const legacyId = String(item?.id ?? "").trim();
   if (legacyId) {
@@ -427,11 +445,11 @@ const wordHubDataSource = fs.readFileSync(
   "utf8",
 );
 const verbListRegistrySource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "seo", "verbLists", "verbListRegistry.ts"),
+  path.join(rootDir, "src", "data", "seo", "verbLists", "common100Verbs", "common100VerbRegistry.ts"),
   "utf8",
 );
 const commonVerbListSource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "seo", "verbLists", "commonVerbList.ts"),
+  path.join(rootDir, "src", "data", "seo", "verbLists", "common100Verbs", "common100VerbList.ts"),
   "utf8",
 );
 const verbListsSource = fs.readFileSync(
@@ -474,8 +492,8 @@ assert.ok(
   "shared verb list data should read compact generated lookup JSON files",
 );
 assert.ok(
-  verbListsSource.includes('from "./verbListRegistry"'),
-  "runtime verb list module should re-export route and content helpers from the shared registry",
+  verbListsSource.includes('from "./common100Verbs/common100VerbRegistry"'),
+  "runtime verb list module should re-export route and content helpers from the common-100 registry",
 );
 assert.equal(
   Object.keys(verbListRegistry.VERB_LIST_CONFIG).length,
@@ -517,8 +535,8 @@ assert.ok(
   "verb list registry should build localized content lookup from shared JSON content",
 );
 assert.ok(
-  /["']verbListLookup["']/.test(generateWordHubDataSource),
-  "word hub generator should write shared verb list lookup JSON files to src/data/seo/verbLists/verbListLookup",
+  /["']common100Verbs["'][\s\S]*["']verbListLookup["']/.test(generateWordHubDataSource),
+  "word hub generator should write common-100 verb lookup JSON files to src/data/seo/verbLists/common100Verbs/verbListLookup",
 );
 assert.ok(
   !/englishVerbList["'],\s*["']lookup/.test(generateWordHubDataSource),

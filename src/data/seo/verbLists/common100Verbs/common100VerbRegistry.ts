@@ -1,11 +1,11 @@
 import verbListContentJson from "./common_100_verblists_text.json";
-import { type TargetLanguageSlug, type UiLanguageCode } from "../shared/slugs";
-import { getFallbackVerbListCopy } from "./verbListFallbackCopy";
+import { type TargetLanguageSlug, type UiLanguageCode } from "../../shared/slugs";
+import { getFallbackVerbListCopy } from "./common100VerbFallbackCopy";
 import {
   buildVerbListContentLookup,
   type VerbListContent,
   type VerbListContentEntry,
-} from "./verbListRouteHelpers";
+} from "./common100VerbRouteHelpers";
 
 export interface VerbListConfigEntry {
   speechLang: string;

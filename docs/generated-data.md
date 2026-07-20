@@ -27,7 +27,7 @@ Guard script: `npm run test:generated-data-ownership`
 | `src/data/seo/wordPages/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
 | `src/data/seo/vocabularyLevels/level-browse-preview/` | generated committed source, **no generator exists** | itself (hand-authored/one-time-generated) | none found | client + SSR (`levelBrowseWords.ts`, lazy glob G9) | yes | medium — must be hand-edited until a generator is written |
 | ~~`public/seo/level-browse-preview/`~~ | *(removed 2026-07-15; obsolete duplicate)* | `src/data/seo/vocabularyLevels/level-browse-preview/` remains authoritative | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | none found — no fetch, import, glob, sitemap, SSR, Worker, or service-worker consumer required the public URL | no | resolved |
-| `src/data/seo/verbLists/verbListLookup/` | generated committed source | `list_of_100_most_used_verb.json` + vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR (`commonVerbList.ts`, eager glob G6); not the Worker | yes | low |
+| `src/data/seo/verbLists/common100Verbs/verbListLookup/` | generated committed source | `common100Verbs/list_of_100_most_used_verb.json` + vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR (`common100VerbList.ts`, eager glob G6); not the Worker | yes | low |
 | `public/sitemaps/` | generated build output (committed) | word route manifest + verb registry + vocabulary data | `scripts/generate-sitemap.mjs` (`npm run sitemap`) | search engines only; test-only in-repo consumers | yes | low |
 | `workers/word-ssr/data/full-corpus/` | generated build output | vocabulary + word-route-manifest + slugs | `workers/word-ssr/generate-full-corpus.mjs` (Cloudflare remote build) | `workers/word-ssr/publish-shards.mjs` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `workers/word-ssr/assets-full/` | Worker Static Asset directory | `dist/**` + `data/full-corpus/` | `workers/word-ssr/publish-shards.mjs` (Cloudflare remote build) | **Worker runtime** — bound in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
@@ -174,7 +174,7 @@ visibility, not changed here.
 
 | Directory | Command |
 |---|---|
-| `src/data/seo/wordPages/word-hub-pages/`, `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/verbListLookup/` | `npm run generate:word-hub-data` |
+| `src/data/seo/wordPages/word-hub-pages/`, `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/common100Verbs/verbListLookup/` | `npm run generate:word-hub-data` |
 | `public/sitemaps/` | `npm run sitemap` |
 | `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/` | `npm run build:word-worker:full` |
 | `dist/`, `server-build/` | `npm run build` |
@@ -194,7 +194,7 @@ visibility, not changed here.
   Never hand-edit files under `public/vocabularyLevels/` directly — the sync
   script treats them as a disposable mirror and will overwrite or remove them.
 - **Not allowed — will be overwritten:** `src/data/seo/wordPages/word-hub-pages/`,
-  `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/verbListLookup/`,
+  `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/common100Verbs/verbListLookup/`,
   `public/sitemaps/`, and everything under `workers/word-ssr/data/full-corpus/`,
   `assets-full/`, `worker-dist-full/`, `dist/`, `server-build/`.
 

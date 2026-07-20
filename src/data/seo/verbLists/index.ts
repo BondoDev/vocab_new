@@ -5,7 +5,7 @@ import {
   getVerbDefinition,
   getVerbTranslation,
   type VerbListItem,
-} from "./commonVerbList";
+} from "./common100Verbs/common100VerbList";
 import { type TargetLanguageSlug, type UiLanguageCode } from "../shared/slugs";
 import {
   getAllVerbListPaths,
@@ -15,7 +15,7 @@ import {
   getVerbListSpeechLang,
   getVerbListTitle,
   resolveVerbListRoute,
-} from "./verbListRegistry";
+} from "./common100Verbs/common100VerbRegistry";
 
 export {
   getAllVerbListPaths,
@@ -25,7 +25,7 @@ export {
   getVerbListSpeechLang,
   getVerbListTitle,
   resolveVerbListRoute,
-} from "./verbListRegistry";
+} from "./common100Verbs/common100VerbRegistry";
 
 export const VERB_LIST_ITEMS = BASE_VERB_LIST_ITEMS;
 export type SharedVerbListItem = VerbListItem;
