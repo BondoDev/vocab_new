@@ -8,7 +8,7 @@ const compiled = compileTsToCommonJs(".tmp-word-hydration-test", [
   path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
   path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordRouteManifest.ts"),
   path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
-  path.join(ROOT_DIR, "src", "data", "seo", "browseWordValidation.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "shared", "browseWordValidation.ts"),
   path.join(ROOT_DIR, "src", "utils", "fixMojibake.ts"),
 ]);
 

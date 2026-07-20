@@ -1,6 +1,6 @@
 import type { TargetLanguageSlug, UiLanguageCode } from "../slugs";
 import { wordToSlug, stripDiacriticsForComparison } from "./wordSlugs";
-import { isValidBrowseWordLemma } from "../browseWordValidation";
+import { isValidBrowseWordLemma } from "../shared/browseWordValidation";
 import { fixMojibake } from "../../../utils/fixMojibake";
 
 export interface WordPageVocabEntry {

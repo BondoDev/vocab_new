@@ -25,7 +25,7 @@ import {
   type CanonicalWordPageRouteMatch,
   resolveWordPageRoute,
 } from "../../data/seo/wordPages/wordSlugs";
-import { resolveSeoHubRoute } from "../../data/seo/hub";
+import { resolveSeoHubRoute } from "../../data/seo/shared/hub";
 import {
   resolveWordSeoHubRoute,
   type WordSeoHubRoute,

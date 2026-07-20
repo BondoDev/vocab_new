@@ -3,7 +3,7 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, buildLocalizedVocabularyPath } from "../../data/seo/slugs";
 import { getLevelTestSeoPath } from "../../data/seo/levelTests";
-import { getSeoHubPath } from "../../data/seo/hub";
+import { getSeoHubPath } from "../../data/seo/shared/hub";
 import {
   getVocabularyLevelContent,
   loadVocabularyLevelContent,
@@ -15,7 +15,7 @@ import {
 import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin, type SeoMetadata } from "../../seo/SeoContext";
 import { buildWordPath } from "../../data/seo/wordPages/wordSlugs";
-import { isValidBrowseWordLemma } from "../../data/seo/browseWordValidation";
+import { isValidBrowseWordLemma } from "../../data/seo/shared/browseWordValidation";
 import type { LevelBrowsePreviewData } from "../../data/seo/vocabularyLevels/levelBrowseWords";
 
 interface VocabularyLevelPageProps {

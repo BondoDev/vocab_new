@@ -7,7 +7,7 @@ import {
   resolveVocabularyRoute,
   type UiLanguageCode,
 } from "./data/seo/slugs";
-import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/hub";
+import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/shared/hub";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/seo/levelTests";
 import { getAllVerbListPaths, resolveVerbListRoute } from "./data/seo/verbLists";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";

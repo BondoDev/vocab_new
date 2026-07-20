@@ -39,18 +39,18 @@ export function loadBaselineContext() {
     path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordPageData.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "slugs.ts"),
-    path.join(ROOT_DIR, "src", "data", "seo", "hub.ts"),
+    path.join(ROOT_DIR, "src", "data", "seo", "shared", "hub.ts"),
     path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordHubRoutes.ts"),
-    path.join(ROOT_DIR, "src", "data", "seo", "browseWordValidation.ts"),
+    path.join(ROOT_DIR, "src", "data", "seo", "shared", "browseWordValidation.ts"),
     path.join(ROOT_DIR, "src", "utils", "fixMojibake.ts"),
   ]);
 
   const wordSlugs = compiled.require("src/data/seo/wordPages/wordSlugs");
   const wordPageData = compiled.require("src/data/seo/wordPages/wordPageData");
   const slugsModule = compiled.require("src/data/seo/slugs");
-  const hub = compiled.require("src/data/seo/hub");
+  const hub = compiled.require("src/data/seo/shared/hub");
   const wordHubRoutes = compiled.require("src/data/seo/wordPages/wordHubRoutes");
-  const browseWordValidation = compiled.require("src/data/seo/browseWordValidation");
+  const browseWordValidation = compiled.require("src/data/seo/shared/browseWordValidation");
   const { fixMojibake } = compiled.require("src/utils/fixMojibake");
 
   const vocabularies = Object.fromEntries(

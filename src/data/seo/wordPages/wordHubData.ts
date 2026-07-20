@@ -6,7 +6,7 @@ import {
   getWordSeoHubLevelPath,
   getWordSeoHubSummaryPath,
 } from "./wordHubRoutes";
-import { isValidBrowseWordLemma } from "../browseWordValidation";
+import { isValidBrowseWordLemma } from "../shared/browseWordValidation";
 import { fixMojibake } from "../../../utils/fixMojibake";
 
 interface VocabularyEntry {

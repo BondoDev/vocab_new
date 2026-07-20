@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/slugs";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/seo/levelTests";
-import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/hub";
+import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/shared/hub";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordPages/wordSlugs";
 import { getVerbListPath, resolveVerbListRoute } from "../../data/seo/verbLists";
 import {
