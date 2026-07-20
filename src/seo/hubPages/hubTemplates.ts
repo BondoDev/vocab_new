@@ -1,4 +1,4 @@
-import type { UiLanguageCode } from "../data/seo/shared/slugs";
+import type { UiLanguageCode } from "../../data/seo/shared/slugs";
 
 export const SEO_HUB_METADATA: Record<
   UiLanguageCode,

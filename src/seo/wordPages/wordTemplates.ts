@@ -1,4 +1,4 @@
-import type { UiLanguageCode } from "../data/seo/shared/slugs";
+import type { UiLanguageCode } from "../../data/seo/shared/slugs";
 
 export const WORD_META_TITLE: Record<UiLanguageCode, (lang: string, word: string) => string> = {
   en: (lang, word) => `${lang} Word "${word}" Meaning – Definition and Example`,

@@ -1,12 +1,12 @@
-import { buildLocalizedVocabularyPath } from "../data/seo/vocabularyLevels/vocabularyLevelRoutes";
+import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
   type Level,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../data/seo/shared/slugs";
-import { buildWordPath } from "../data/seo/wordPages/wordSlugs";
-import type { SeoMetadata } from "./SeoContext";
-import { buildHreflangAlternates, sanitizeMetadataText } from "./shared/seoAlternates";
+} from "../../data/seo/shared/slugs";
+import { buildWordPath } from "../../data/seo/wordPages/wordSlugs";
+import type { SeoMetadata } from "../SeoContext";
+import { buildHreflangAlternates, sanitizeMetadataText } from "../shared/seoAlternates";
 import { WORD_META_DESC, WORD_META_TITLE } from "./wordTemplates";
 
 export interface WordSeoMetadataParams {

@@ -205,7 +205,7 @@ async function main() {
     // — see its RouteMetadataClass union). SEO hub landing pages such as
     // /en/seo-pages are deliberately excluded from it (src/app/App.tsx's
     // routeMetadata switch returns null for resolvedPage "seoHub" and
-    // siblings, and those pages get their metadata from src/seo/hubMetadata.ts
+    // siblings, and those pages get their metadata from src/seo/hubPages/hubMetadata.ts
     // instead). classifyRouteMetadata() falls back to "invalid" for anything
     // it doesn't recognize, which would misreport those hub routes as
     // noindex — so this check only applies to routes the policy explicitly

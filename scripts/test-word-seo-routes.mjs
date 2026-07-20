@@ -415,7 +415,7 @@ const verbListPageSource = fs.readFileSync(
 // focused modules; these two now hold the code the checks below assert
 // against (word-page metadata, verb-list metadata respectively).
 const wordMetadataSource = fs.readFileSync(
-  path.join(rootDir, "src", "seo", "wordMetadata.ts"),
+  path.join(rootDir, "src", "seo", "wordPages", "wordMetadata.ts"),
   "utf8",
 );
 const verbListMetadataSource = fs.readFileSync(

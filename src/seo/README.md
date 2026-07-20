@@ -48,11 +48,14 @@ it to produce metadata.
 
 ## Shared versus page-family-specific SEO behavior
 
-- Page-family-specific: `wordMetadata.ts`, `wordTemplates.ts`,
-  `verbListMetadata.ts`, `hubMetadata.ts`, and `hubTemplates.ts` are
-  root-level files owned by their page families. `wordTemplates.ts` owns
-  individual word-page metadata copy/templates; `hubTemplates.ts` owns
-  hub metadata copy/templates. `vocabularyLevels/vocabularyMetadata.ts`,
+- Page-family-specific: `wordPages/wordMetadata.ts`,
+  `wordPages/wordTemplates.ts`, `hubPages/hubMetadata.ts`,
+  `hubPages/hubTemplates.ts`, `levelTestMetadata.ts`, and
+  `verbListMetadata.ts` are files owned by their page families.
+  `wordPages/wordTemplates.ts` owns individual word-page metadata
+  copy/templates; `hubPages/hubTemplates.ts` owns hub metadata
+  copy/templates. `levelTestMetadata.ts` owns level-test page metadata.
+  `vocabularyLevels/vocabularyMetadata.ts`,
   `vocabularyLevels/seoFaq.ts` (FAQ section),
   `vocabularyLevels/seoSchema.ts` (JSON-LD graph), and
   `vocabularyLevels/seoTemplates.ts` (vocabulary-level metadata templates
@@ -69,10 +72,11 @@ A subfolder is used only once multiple files clearly share one owner and
 the repository has adopted a dedicated folder for that owner.
 `vocabularyLevels/` groups the vocabulary-level page family;
 `shared/` currently owns `seoAlternates.ts`, the one file with no
-single page-family owner. Root-level family files such as
-`wordMetadata.ts`, `wordTemplates.ts`, `verbListMetadata.ts`,
-`hubMetadata.ts`, and `hubTemplates.ts` stay at the root until a
-dedicated folder is adopted for that family. Public entry points
+single page-family owner. `wordPages/` groups the individual word-page
+page family. `hubPages/` groups the SEO hub and word-SEO-hub page
+family. Root-level family files such as `verbListMetadata.ts` and
+`levelTestMetadata.ts` stay at the root until a dedicated folder is
+adopted for that family. Public entry points
 (`SeoContext.tsx`, `routeMetadataPolicy.ts`) and the compatibility
 facade (`metadata.ts`) remain at the root regardless of file count.
 
@@ -91,7 +95,9 @@ to preserve by inspection and review.
 
 | File | Why it's behavior, not data |
 |---|---|
-| `wordMetadata.ts` | Builds word-page `<title>`/description/canonical from word data — output behavior |
+| `wordPages/wordMetadata.ts` | Builds word-page `<title>`/description/canonical from word data — output behavior |
+| `hubPages/hubMetadata.ts` | Builds SEO hub and word-SEO-hub metadata |
+| `levelTestMetadata.ts` | Builds level-test-page metadata |
 | `vocabularyLevels/vocabularyMetadata.ts` | Builds vocabulary-level-page metadata from vocabulary-level data |
 | `verbListMetadata.ts` | Builds verb-list-page metadata |
 | `vocabularyLevels/seoSchema.ts` | Builds the vocabulary-level-page JSON-LD structured-data graph |
@@ -105,7 +111,7 @@ to preserve by inspection and review.
    `src/data/seo/<family>/`? Build the metadata module on top of it —
    don't duplicate data here.
 2. Name the module `<family>Metadata.ts` to match the existing
-   convention (`wordMetadata.ts`, `verbListMetadata.ts`,
+   convention (`wordPages/wordMetadata.ts`, `verbListMetadata.ts`,
    `vocabularyLevels/vocabularyMetadata.ts`). Put it in its own
    `<family>/` subfolder only once that family owns more than one file.
 3. Reuse `shared/seoAlternates.ts` and
@@ -115,8 +121,8 @@ to preserve by inspection and review.
    helpers, not general-purpose infrastructure — don't reuse them for a
    different family. Keep metadata copy/templates with their owning
    family: `vocabularyLevels/seoTemplates.ts` for vocabulary-level pages,
-   `hubTemplates.ts` for hub pages, and `wordTemplates.ts` for individual
-   word pages.
+   `hubPages/hubTemplates.ts` for hub pages, and
+   `wordPages/wordTemplates.ts` for individual word pages.
 4. Only import from `src/data/seo/`, never the other way around.
 5. If the module needs to be reachable under the old `./metadata`
    import path, add a re-export to `metadata.ts` (the existing
