@@ -9,7 +9,7 @@ import type {
   CefrLevelCode,
   UiLanguageCode,
   VocabularyLevelContent,
-} from "../../data/vocabularyLevels";
+} from "../../data/seo/vocabularyLevels";
 
 type PreviewTargetLanguage = TargetLanguageSlug | UiLanguageCode;
 

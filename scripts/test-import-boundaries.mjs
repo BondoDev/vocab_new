@@ -148,9 +148,9 @@ test("render-entry.tsx's ../../../src/data/interface resolves to the real src/da
 
 console.log("\n=== public/ vs src/ duplication drift guard ===\n");
 
-test("public/vocabularyLevels/*.json stays byte-identical to src/data/vocabularyLevels/*.json (known duplication, see docs/import-boundaries.md)", () => {
+test("public/vocabularyLevels/*.json stays byte-identical to src/data/seo/vocabularyLevels/*.json (known duplication, see docs/import-boundaries.md)", () => {
   const publicDir = path.join(ROOT_DIR, "public", "vocabularyLevels");
-  const srcDir = path.join(ROOT_DIR, "src", "data", "vocabularyLevels");
+  const srcDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
 
   function walkJson(dir, base = dir) {
     const out = [];
@@ -164,7 +164,7 @@ test("public/vocabularyLevels/*.json stays byte-identical to src/data/vocabulary
 
   const publicFiles = walkJson(publicDir);
   const srcFiles = walkJson(srcDir);
-  assert.deepEqual(publicFiles, srcFiles, "public/vocabularyLevels and src/data/vocabularyLevels JSON file sets differ");
+  assert.deepEqual(publicFiles, srcFiles, "public/vocabularyLevels and src/data/seo/vocabularyLevels JSON file sets differ");
 
   const drifted = [];
   for (const rel of publicFiles) {

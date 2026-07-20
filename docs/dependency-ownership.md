@@ -40,7 +40,7 @@ peer or transitive dependency before removing it.
 | @radix-ui/react-select | dependencies | 2.1.6 | `src/app/components/ui/select.tsx` | actively used |
 | @radix-ui/react-slot | dependencies | 1.1.2 | `src/app/components/ui/button.tsx` | actively used |
 | @tailwindcss/vite | devDependencies | 4.1.12 | `vite.config.ts` plugin | actively used (config) |
-| @types/node | devDependencies | ^22.20.1 | TypeScript compilation of Node globals/built-ins (`process`, `Buffer`, `node:fs`, `node:path`, `node:stream`) in `src/entry-server.tsx` and `src/data/vocabularyLevels/index.ts` | actively used (types) |
+| @types/node | devDependencies | ^22.20.1 | TypeScript compilation of Node globals/built-ins (`process`, `Buffer`, `node:fs`, `node:path`, `node:stream`) in `src/entry-server.tsx` and `src/data/seo/vocabularyLevels/index.ts` | actively used (types) |
 | @types/react | devDependencies | 19.2.13 | TypeScript compilation of all `.tsx` | actively used (types) |
 | @types/react-dom | devDependencies | 19.0.4 | TypeScript compilation | actively used (types) |
 | @vitejs/plugin-react | devDependencies | 4.7.0 | `vite.config.ts` plugin | actively used (config) |

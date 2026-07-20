@@ -4,7 +4,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../data/seo/slugs";
-import { getVocabularyLevelContent } from "../data/vocabularyLevels";
+import { getVocabularyLevelContent } from "../data/seo/vocabularyLevels";
 import type { SeoMetadata } from "./SeoContext";
 import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "./seoAlternates";
 import { buildVocabularyFaqSection } from "./seoFaq";

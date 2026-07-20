@@ -4,7 +4,7 @@
   type UiLanguageCode,
   SUPPORTED_TARGET_LANGUAGES,
   SUPPORTED_LEVELS,
-} from "../seo/slugs";
+} from "../slugs";
 
 export {
   SUPPORTED_LEVELS,
@@ -185,6 +185,7 @@ function loadVocabularyFileSync(
       process.cwd(),
       "src",
       "data",
+      "seo",
       "vocabularyLevels",
       uiLanguage,
       `${targetLanguage}.json`,

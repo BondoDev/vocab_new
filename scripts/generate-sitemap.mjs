@@ -221,7 +221,7 @@ function xmlEscape(value) {
 }
 
 async function collectVocabularyRoutes() {
-  const baseDir = path.join(ROOT_DIR, "src", "data", "vocabularyLevels");
+  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
   const uiDirEntries = await fs.readdir(baseDir, { withFileTypes: true });
   const routes = new Set();
 

@@ -141,12 +141,12 @@
   "relatedPathSensitiveLoaders": [
     {
       "id": "L1",
-      "consumer": "src/data/vocabularyLevels/index.ts (fetchVocabularyFile)",
+      "consumer": "src/data/seo/vocabularyLevels/index.ts (fetchVocabularyFile)",
       "loaderType": "browser fetch(`/vocabularyLevels/${uiLang}/${targetLanguage}.json`)",
       "target": "public/vocabularyLevels/{uiLang}/{targetLanguage}.json",
       "runtime": "client (browser) — invoked on client-side navigation to a vocabulary-level route without prerendered/override content",
       "risk": "medium-required-public-mirror",
-      "riskReason": "public/vocabularyLevels/*.json (49 files) is NOT dead: it is the live fetch target for src/data/vocabularyLevels/index.ts's client-side loader, confirmed reachable from src/app/components/VocabularyLevelPage.tsx's non-SSR render path. It must stay byte-identical to src/data/vocabularyLevels/ (guarded by the test:import-boundaries duplication check). The one part of this pair that WAS dead — public/vocabularyLevels/index.ts, a 226-line unused loader module nothing imported — was removed during the 2026-07-15 generated-data-ownership audit; see docs/generated-data.md."
+      "riskReason": "public/vocabularyLevels/*.json (49 files) is NOT dead: it is the live fetch target for src/data/seo/vocabularyLevels/index.ts's client-side loader, confirmed reachable from src/app/components/VocabularyLevelPage.tsx's non-SSR render path. It must stay byte-identical to src/data/seo/vocabularyLevels/ (guarded by the test:import-boundaries duplication check). The one part of this pair that WAS dead — public/vocabularyLevels/index.ts, a 226-line unused loader module nothing imported — was removed during the 2026-07-15 generated-data-ownership audit; see docs/generated-data.md."
     },
     {
       "id": "L2",
@@ -170,7 +170,7 @@
       "id": "L4",
       "consumer": "scripts/generate-sitemap.mjs",
       "loaderType": "fs.readdir walk",
-      "target": "src/data/vocabularyLevels/{uiLang}/",
+      "target": "src/data/seo/vocabularyLevels/{uiLang}/",
       "runtime": "build-time generator",
       "risk": "low",
       "riskReason": "Reads the real src/ copy (not the public/ duplicate); walks it to enumerate sitemap routes."

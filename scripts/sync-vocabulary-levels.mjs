@@ -1,7 +1,7 @@
 // Deterministic sync for the vocabulary-level public runtime mirror,
-// documented in docs/generated-data.md. src/data/vocabularyLevels/ is
+// documented in docs/generated-data.md. src/data/seo/vocabularyLevels/ is
 // authoritative; public/vocabularyLevels/*.json is a required browser-runtime
-// mirror fetched by src/data/vocabularyLevels/index.ts's fetchVocabularyFile()
+// mirror fetched by src/data/seo/vocabularyLevels/index.ts's fetchVocabularyFile()
 // and must stay byte-identical (also guarded by test:import-boundaries).
 //
 // Usage:
@@ -14,7 +14,7 @@ import { compileTsToCommonJs, ROOT_DIR } from "./seo-baseline/lib/compileTs.mjs"
 
 const CHECK_ONLY = process.argv.includes("--check");
 
-const SRC_DIR = path.join(ROOT_DIR, "src", "data", "vocabularyLevels");
+const SRC_DIR = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public", "vocabularyLevels");
 
 // index.ts is the legitimate SSR/client loader module that lives alongside
@@ -67,21 +67,21 @@ function main() {
     for (const entry of fs.readdirSync(SRC_DIR, { withFileTypes: true })) {
       if (entry.isDirectory()) {
         if (!uiSet.has(entry.name)) {
-          errors.push(`unexpected source directory: src/data/vocabularyLevels/${entry.name}`);
+          errors.push(`unexpected source directory: src/data/seo/vocabularyLevels/${entry.name}`);
         }
       } else if (!ALLOWED_SOURCE_TOP_LEVEL_FILES.has(entry.name)) {
-        errors.push(`unexpected source file: src/data/vocabularyLevels/${entry.name}`);
+        errors.push(`unexpected source file: src/data/seo/vocabularyLevels/${entry.name}`);
       }
     }
 
     for (const ui of SUPPORTED_UI_LANGUAGES) {
       const uiDir = path.join(SRC_DIR, ui);
       if (!fs.existsSync(uiDir)) {
-        errors.push(`missing source UI-language directory: src/data/vocabularyLevels/${ui}`);
+        errors.push(`missing source UI-language directory: src/data/seo/vocabularyLevels/${ui}`);
         continue;
       }
       for (const entry of fs.readdirSync(uiDir, { withFileTypes: true })) {
-        const rel = `src/data/vocabularyLevels/${ui}/${entry.name}`;
+        const rel = `src/data/seo/vocabularyLevels/${ui}/${entry.name}`;
         if (entry.isDirectory()) {
           errors.push(`unexpected nested directory: ${rel}`);
         } else if (entry.name.startsWith(".")) {
@@ -94,7 +94,7 @@ function main() {
       }
       for (const target of SUPPORTED_TARGET_LANGUAGES) {
         if (!fs.existsSync(path.join(uiDir, `${target}.json`))) {
-          errors.push(`missing expected source pair: src/data/vocabularyLevels/${ui}/${target}.json`);
+          errors.push(`missing expected source pair: src/data/seo/vocabularyLevels/${ui}/${target}.json`);
         }
       }
     }
@@ -112,7 +112,7 @@ function main() {
       try {
         JSON.parse(buf.toString("utf8").replace(UTF8_BOM_PATTERN, ""));
       } catch (err) {
-        errors.push(`invalid JSON: src/data/vocabularyLevels/${rel} (${err.message})`);
+        errors.push(`invalid JSON: src/data/seo/vocabularyLevels/${rel} (${err.message})`);
         continue;
       }
       sourceFiles.set(rel, { buf, hash: sha256(buf) });
@@ -192,7 +192,7 @@ function main() {
 
     if (CHECK_ONLY) {
       if (hasDrift) {
-        console.error("\nVocabulary-level public mirror is out of sync with src/data/vocabularyLevels/:\n");
+        console.error("\nVocabulary-level public mirror is out of sync with src/data/seo/vocabularyLevels/:\n");
         if (copied > 0) console.error(`  missing in public: ${copied}`);
         if (updated > 0) console.error(`  modified in public: ${updated}`);
         if (staleRel.length > 0) {

@@ -1,4 +1,4 @@
-import type { UiLanguageCode } from "../vocabularyLevels";
+import type { UiLanguageCode } from "./vocabularyLevels";
 
 export const LEVEL_DISPLAY = {
   a1: "A1",

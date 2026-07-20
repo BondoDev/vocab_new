@@ -132,10 +132,10 @@ test("no raw .ts/.tsx source files exist anywhere under public/", () => {
   assert.deepEqual(offenders, [], `raw TypeScript source found under public/ (Vite ships it as static output verbatim): ${offenders.join(", ")}`);
 });
 
-console.log("\n=== src/data/vocabularyLevels/ completeness ===\n");
+console.log("\n=== src/data/seo/vocabularyLevels/ completeness ===\n");
 
-test("src/data/vocabularyLevels/ has exactly one JSON file per UI-language x target-language pair", () => {
-  const baseDir = path.join(ROOT_DIR, "src", "data", "vocabularyLevels");
+test("src/data/seo/vocabularyLevels/ has exactly one JSON file per UI-language x target-language pair", () => {
+  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
   const expected = [];
   for (const ui of SUPPORTED_UI_LANGUAGES) {
     for (const target of SUPPORTED_TARGET_LANGUAGES) {
@@ -153,7 +153,7 @@ test("src/data/vocabularyLevels/ has exactly one JSON file per UI-language x tar
     .filter((e) => e.isDirectory())
     .map((e) => e.name)
     .sort();
-  assert.deepEqual(actualDirs, [...SUPPORTED_UI_LANGUAGES].sort(), "unexpected UI-language folder(s) under src/data/vocabularyLevels");
+  assert.deepEqual(actualDirs, [...SUPPORTED_UI_LANGUAGES].sort(), "unexpected UI-language folder(s) under src/data/seo/vocabularyLevels");
 
   for (const ui of actualDirs) {
     const files = fs
@@ -163,13 +163,13 @@ test("src/data/vocabularyLevels/ has exactly one JSON file per UI-language x tar
     assert.deepEqual(
       files,
       SUPPORTED_TARGET_LANGUAGES.map((t) => `${t}.json`).sort(),
-      `src/data/vocabularyLevels/${ui} has an unexpected file set`,
+      `src/data/seo/vocabularyLevels/${ui} has an unexpected file set`,
     );
   }
 });
 
-test("all src/data/vocabularyLevels/*.json files parse and have no duplicate normalized level keys", () => {
-  const baseDir = path.join(ROOT_DIR, "src", "data", "vocabularyLevels");
+test("all src/data/seo/vocabularyLevels/*.json files parse and have no duplicate normalized level keys", () => {
+  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
   for (const ui of SUPPORTED_UI_LANGUAGES) {
     for (const target of SUPPORTED_TARGET_LANGUAGES) {
       const filePath = path.join(baseDir, ui, `${target}.json`);
@@ -190,7 +190,7 @@ test("all src/data/vocabularyLevels/*.json files parse and have no duplicate nor
 
 test("no malformed vocabulary-level filenames (unexpected casing or extension) under src/ or public/ vocabularyLevels", () => {
   const offenders = [];
-  for (const root of ["src/data/vocabularyLevels", "public/vocabularyLevels"]) {
+  for (const root of ["src/data/seo/vocabularyLevels", "public/vocabularyLevels"]) {
     const baseDir = path.join(ROOT_DIR, ...root.split("/"));
     if (!fs.existsSync(baseDir)) continue;
     for (const ui of fs.readdirSync(baseDir, { withFileTypes: true }).filter((e) => e.isDirectory())) {
@@ -236,7 +236,7 @@ test("public/vocabularyLevels/ mirror passes a read-only sync check (no writes)"
       cwd: ROOT_DIR,
       stdio: "pipe",
     });
-  }, "npm run check:vocabulary-levels-sync failed — public/vocabularyLevels/ has drifted from src/data/vocabularyLevels/; run npm run sync:vocabulary-levels");
+  }, "npm run check:vocabulary-levels-sync failed — public/vocabularyLevels/ has drifted from src/data/seo/vocabularyLevels/; run npm run sync:vocabulary-levels");
 });
 
 test("docs/generated-data.md documents the synchronization command and build policy", () => {
@@ -358,7 +358,7 @@ test("docs/generated-data.md exists and names every high-risk directory", () => 
   assert.ok(fs.existsSync(docPath), "docs/generated-data.md is missing");
   const text = fs.readFileSync(docPath, "utf8");
   const requiredMentions = [
-    "src/data/vocabularyLevels",
+    "src/data/seo/vocabularyLevels",
     "public/vocabularyLevels",
     "src/data/seo/word-hub-pages",
     "src/data/seo/word-browse-shards",

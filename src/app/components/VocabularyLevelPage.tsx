@@ -11,7 +11,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
   type VocabularyLevelContent,
-} from "../../data/vocabularyLevels";
+} from "../../data/seo/vocabularyLevels";
 import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../seo/metadata";
 import { SEOHead, useSeoSiteOrigin, type SeoMetadata } from "../../seo/SeoContext";
 import { buildWordPath } from "../../data/seo/wordSlugs";

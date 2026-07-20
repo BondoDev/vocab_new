@@ -77,10 +77,10 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 
 | Consumer | Loader type | Target | Runtime | Risk |
 |---|---|---|---|---|
-| `src/data/vocabularyLevels/index.ts` (`fetchVocabularyFile`) | `fetch(`/vocabularyLevels/${ui}/${target}.json`)` | `public/vocabularyLevels/{ui}/{target}.json` | client (browser, on navigation without prerendered/override content) | medium — `public/vocabularyLevels/*.json` is a **required runtime mirror**, not dead data; see `docs/generated-data.md` |
+| `src/data/seo/vocabularyLevels/index.ts` (`fetchVocabularyFile`) | `fetch(`/vocabularyLevels/${ui}/${target}.json`)` | `public/vocabularyLevels/{ui}/{target}.json` | client (browser, on navigation without prerendered/override content) | medium — `public/vocabularyLevels/*.json` is a **required runtime mirror**, not dead data; see `docs/generated-data.md` |
 | `src/contexts/LanguageContext.tsx` | explicit switch, 7 literal `import()` calls | `src/data/interface/{language}_interface.json` | client | medium — same directory as G1/G3 but hand-maintained in parallel; a new interface file is picked up by the globs but silently missed here unless also added |
 | `src/features/learning-setup/LevelCategorySelection.tsx` (`loadVocabularyMetadata`) | explicit switch, 7 literal lazy `import()` calls | `src/data/vocabularyMetadata/{language}.json` | client (browser `useEffect`, runs after mount — not executed during SSR/prerender, so it has no `entry-server.tsx`/Worker exposure) | medium — dual-maintenance risk of the same shape as the `LanguageContext.tsx` row above: adding an 8th UI/practice language requires a new `case` branch here even though the JSON file could be added to `src/data/vocabularyMetadata/` independently; a missing branch returns `null` and silently falls back to `DEFAULT_WORD_TYPES` instead of failing loudly |
-| `scripts/generate-sitemap.mjs` | `fs.readdir` walk | `src/data/vocabularyLevels/{ui}/` | build-time generator | low |
+| `scripts/generate-sitemap.mjs` | `fs.readdir` walk | `src/data/seo/vocabularyLevels/{ui}/` | build-time generator | low |
 | `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`) | `fs.readFile` | `src/data/seo/levelTests/seo_level_test_content.json` | build-time generator | low |
 | `src/data/seo/levelTests/index.ts` | static relative `import` | `./seo_level_test_content.json` | client + SSR | low |
 | `src/app/components/devSeoCefrPreviewData.ts` | static relative `import` | `../../data/seo/seo-cefr-content.json` | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low |
@@ -164,7 +164,7 @@ Documented as options, not implemented:
 - Reconcile G1/G3's glob-based interface loading with
   `LanguageContext.tsx`'s hand-written `import()` switch with one generated
   source of truth to remove the dual-maintenance risk.
-- Consider replacing `src/data/vocabularyLevels/index.ts`'s browser
+- Consider replacing `src/data/seo/vocabularyLevels/index.ts`'s browser
   `fetch()`-from-`public/` strategy with a bundler-driven approach (e.g. a
   generated per-language JS chunk) so the `public/vocabularyLevels/` JSON
   mirror and its duplication guard are no longer needed at all.
