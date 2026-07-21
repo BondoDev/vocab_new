@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { Header } from "./layout/Header";
-import type { StoredSupabaseSession } from "../../lib/supabaseAuth";
+import { Header } from "../../../components/layout/Header";
+import type { StoredSupabaseSession } from "../../../../lib/supabaseAuth";
 
 type HeaderActivePage =
   | "about"

@@ -4,19 +4,19 @@ import {
   getUiVocabularyLanguage,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/shared/slugs";
+} from "../../../../data/seo/shared/slugs";
 import {
   getWordBrowseSearchData,
   getWordBrowseSearchShardKey,
   type WordBrowseSearchWordEntry,
-} from "../../data/seo/wordPages/wordBrowseSearchData";
+} from "../../../../data/seo/wordPages/wordBrowseSearchData";
 import {
   buildHydrationWordPageData,
   buildResolvedWordPageData,
   type HydrationWordPageData,
   type ResolvedWordPageData,
   type WordPageVocabEntry,
-} from "../../data/seo/wordPages/wordPageData";
+} from "../../../../data/seo/wordPages/wordPageData";
 import { WordSeoPageView } from "./WordSeoPageView";
 
 /**
@@ -56,7 +56,7 @@ declare global {
 }
 
 const wordVocabModules = import.meta.glob(
-  "../../data/vocabulary/*/vocabulary.json",
+  "../../../../data/vocabulary/*/vocabulary.json",
 ) as Record<string, () => Promise<{ default: FullVocabEntry[] }>>;
 
 function getHydratedWordPageData(pathname: string): HydrationWordPageData | null {
@@ -197,7 +197,7 @@ export function WordSeoPage({
     setPageData(undefined);
     setIsBrowseLoading(true);
 
-    const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
+    const key = `../../../../data/vocabulary/${targetLanguage}/vocabulary.json`;
     const loader = wordVocabModules[key];
     if (!loader) {
       setPageData(createEmptyHydrationWordPageData(browsePage));
@@ -211,7 +211,7 @@ export function WordSeoPage({
       const uiVocabLang = getUiVocabularyLanguage(uiLang);
       let uiVocabulary: FullVocabEntry[] | null = null;
       if (uiVocabLang !== targetLanguage) {
-        const uiKey = `../../data/vocabulary/${uiVocabLang}/vocabulary.json`;
+        const uiKey = `../../../../data/vocabulary/${uiVocabLang}/vocabulary.json`;
         const uiLoader = wordVocabModules[uiKey];
         if (uiLoader) {
           const uiMod = await uiLoader();

@@ -156,9 +156,22 @@ second subtype genuinely reuses the same implementation, not preemptively.
 `vocabularyLevel` route's visible body renders through
 `DevSeoCefrPlaceholderPage`, backed by `devSeoCefrPreviewData.ts`'s
 full-coverage content lookup (see `docs/generated-data.md`); this legacy
-naming was preserved as-is, not treated as dev-only. Further feature-owned
-pages (word/SEO rendering) are planned to move into their own
-`src/features/*` folders in later phases.
+naming was preserved as-is, not treated as dev-only.
+`src/app/pages/word-pages/detail/` owns individual word-detail-page
+rendering — `WordSeoPage.tsx` (the client/production data-acquisition
+wrapper), `WordSeoPageView.tsx` (the SSR-safe presentational core), and
+`WordPageLayout.tsx` (the word-detail-page shell) — and supports both the
+normal application rendering path and Word Worker rendering. `WordPageLayout`
+is not general-purpose application layout despite its name; it is scoped
+to this page family and, together with `WordSeoPageView`, is imported
+directly by `workers/word-ssr/src/render-entry.tsx`. The Worker must never
+import `WordSeoPage` — only `WordSeoPageView` and `WordPageLayout` are direct
+Worker rendering dependencies; see `docs/import-boundaries.md` (G7) for the
+historical bundle-bloat incident this boundary prevents from recurring.
+`src/app/pages/word-pages/hub/` owns the word-hub/index routes
+(`WordSeoHubPage.tsx`) — a separate sibling page family with its own route
+parser, `App.tsx` branch, and metadata ownership; it is prerendered
+separately and is not part of the Word Worker rendering path.
 
 Distinguishing source vs. output:
 

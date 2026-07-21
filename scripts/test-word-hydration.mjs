@@ -18,11 +18,11 @@ try {
   const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
   const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
   const wordSeoPageSource = fs.readFileSync(
-    path.join(ROOT_DIR, "src", "app", "components", "WordSeoPage.tsx"),
+    path.join(ROOT_DIR, "src", "app", "pages", "word-pages", "detail", "WordSeoPage.tsx"),
     "utf8",
   );
   const wordSeoPageViewSource = fs.readFileSync(
-    path.join(ROOT_DIR, "src", "app", "components", "WordSeoPageView.tsx"),
+    path.join(ROOT_DIR, "src", "app", "pages", "word-pages", "detail", "WordSeoPageView.tsx"),
     "utf8",
   );
   const browseShardPath = path.join(

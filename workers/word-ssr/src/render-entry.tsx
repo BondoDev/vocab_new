@@ -44,8 +44,8 @@
 // recommendation.
 import { renderToReadableStream } from "react-dom/server.browser";
 import { StaticRouter } from "react-router-dom/server";
-import { WordPageLayout } from "@/app/components/WordPageLayout";
-import { WordSeoPageView } from "@/app/components/WordSeoPageView";
+import { WordPageLayout } from "@/app/pages/word-pages/detail/WordPageLayout";
+import { WordSeoPageView } from "@/app/pages/word-pages/detail/WordSeoPageView";
 import { SeoProvider, renderSeoTags, type SeoManager } from "@/seo/SeoContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import type { UiLanguageCode, TargetLanguageSlug } from "@/data/seo/shared/slugs";

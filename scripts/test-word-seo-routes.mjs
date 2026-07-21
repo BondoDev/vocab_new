@@ -422,7 +422,7 @@ assert.ok(
 // browse-search loaders). The two checks below assert against wherever that
 // JSX actually lives now, not against WordSeoPage.tsx specifically.
 const wordSeoPageSource = fs.readFileSync(
-  path.join(rootDir, "src", "app", "components", "WordSeoPageView.tsx"),
+  path.join(rootDir, "src", "app", "pages", "word-pages", "detail", "WordSeoPageView.tsx"),
   "utf8",
 );
 const verbListPageSource = fs.readFileSync(

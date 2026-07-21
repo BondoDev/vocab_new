@@ -65,7 +65,7 @@ is in `scripts/import-boundaries/current/globs.json`. Summary:
 | G4 | `src/data/seo/wordPages/wordHubData.ts` | `./word-hub-pages/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
 | G5 | `src/data/seo/wordPages/wordBrowseSearchData.ts` | `./word-browse-shards/*.json` | client + SSR + **transitively Worker** via `WordSeoPageView.tsx` | lazy | 42 | high — shared-module boundary, only a test prevents the heavy export from running in the Worker |
 | G6 | `src/data/seo/verbLists/common100Verbs/common100VerbList.ts` | `./verbListLookup/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
-| G7 | `src/app/components/WordSeoPage.tsx` | `../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | high — site of the historical Worker bundle-bloat incident |
+| G7 | `src/app/pages/word-pages/detail/WordSeoPage.tsx` | `../../../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | high — site of the historical Worker bundle-bloat incident |
 | G8 | `src/app/pages/vocabulary/VocabularyLevelPage.tsx` | `../../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | medium |
 | G9 | `src/data/seo/vocabularyLevels/levelBrowseWords.ts` | `./level-browse-preview/*.json` | client + SSR | lazy | 42 | medium — hand-authored data, no generator script exists |
 

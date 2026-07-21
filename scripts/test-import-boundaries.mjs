@@ -117,7 +117,7 @@ const EAGER_LAZY_CONTRACT = [
   ["src/data/seo/wordPages/wordHubData.ts", "./word-hub-pages/*.json", "eager: true"],
   ["src/data/seo/wordPages/wordBrowseSearchData.ts", "./word-browse-shards/*.json", null],
   ["src/data/seo/verbLists/common100Verbs/common100VerbList.ts", "./verbListLookup/*.json", "eager: true"],
-  ["src/app/components/WordSeoPage.tsx", "../../data/vocabulary/*/vocabulary.json", null],
+  ["src/app/pages/word-pages/detail/WordSeoPage.tsx", "../../../../data/vocabulary/*/vocabulary.json", null],
   ["src/app/pages/vocabulary/VocabularyLevelPage.tsx", "../../../data/vocabulary/*/vocabulary.json", null],
   ["src/data/seo/vocabularyLevels/levelBrowseWords.ts", "./level-browse-preview/*.json", null],
 ];

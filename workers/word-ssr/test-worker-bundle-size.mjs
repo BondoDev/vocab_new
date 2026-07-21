@@ -153,7 +153,7 @@ test("render-entry.tsx does not import the client WordSeoPage wrapper", () => {
 });
 
 test("WordSeoPageView.tsx contains no vocabulary or browse-search-shard glob imports", () => {
-  const viewPath = path.join(path.resolve(__dirname, "..", ".."), "src", "app", "components", "WordSeoPageView.tsx");
+  const viewPath = path.join(path.resolve(__dirname, "..", ".."), "src", "app", "pages", "word-pages", "detail", "WordSeoPageView.tsx");
   const source = fs.readFileSync(viewPath, "utf8");
   if (/import\.meta\.glob\s*\(/.test(source)) {
     throw new Error("WordSeoPageView.tsx contains an import.meta.glob(...) call — it must stay import-light for the SSR bundle");

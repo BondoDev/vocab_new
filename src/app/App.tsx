@@ -23,8 +23,8 @@ import { VocabularyLevelPage } from "./pages/vocabulary/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./pages/level-test/LevelTestSeoPage";
 import { SeoHubPage } from "./pages/SeoHubPage";
 import { VerbListSeoPage } from "./pages/verb-lists/common100Verbs/VerbListSeoPage";
-import { WordSeoPage } from "./components/WordSeoPage";
-import { WordPageLayout } from "./components/WordPageLayout";
+import { WordSeoPage } from "./pages/word-pages/detail/WordSeoPage";
+import { WordPageLayout } from "./pages/word-pages/detail/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./pages/vocabulary/DevSeoCefrPlaceholderPage";
 import {
   LanguageProvider,
@@ -103,7 +103,7 @@ const Help = lazy(() =>
   })),
 );
 const WordSeoHubPage = lazy(() =>
-  import("./components/WordSeoHubPage").then((module) => ({
+  import("./pages/word-pages/hub/WordSeoHubPage").then((module) => ({
     default: module.WordSeoHubPage,
   })),
 );

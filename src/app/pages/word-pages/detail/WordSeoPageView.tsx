@@ -2,23 +2,23 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Volume2 } from "lucide-react";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../../../contexts/LanguageContext";
 import {
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/shared/slugs";
-import { buildWordBrowsePagePathFromSlug, buildWordPath } from "../../data/seo/wordPages/wordSlugs";
+} from "../../../../data/seo/shared/slugs";
+import { buildWordBrowsePagePathFromSlug, buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
 import {
   getWordBrowseSearchShardKey,
   type WordBrowseSearchWordEntry,
-} from "../../data/seo/wordPages/wordBrowseSearchData";
+} from "../../../../data/seo/wordPages/wordBrowseSearchData";
 import {
   WORD_PAGE_BROWSE_WORDS_PER_PAGE,
   type HydrationWordPageData,
-} from "../../data/seo/wordPages/wordPageData";
-import { buildWordSeoMetadata } from "../../seo/metadata";
-import { SEOHead, useSeoSiteOrigin } from "../../seo/SeoContext";
-import { fixMojibake } from "../../utils/fixMojibake";
+} from "../../../../data/seo/wordPages/wordPageData";
+import { buildWordSeoMetadata } from "../../../../seo/metadata";
+import { SEOHead, useSeoSiteOrigin } from "../../../../seo/SeoContext";
+import { fixMojibake } from "../../../../utils/fixMojibake";
 
 /**
  * Server-safe presentational component for a word SEO page.
