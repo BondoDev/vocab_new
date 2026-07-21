@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 export type LanguageContinuePopupHandle = {
   show: (options?: { delayMs?: number }) => void;

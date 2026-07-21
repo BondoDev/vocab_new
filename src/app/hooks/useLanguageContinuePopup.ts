@@ -4,7 +4,7 @@
 // calls, and other cross-page orchestration stay in AppContent. The
 // <LanguageContinuePopup> render now lives in HomePage.tsx.
 import { useEffect, useRef, useState } from "react";
-import type { LanguageContinuePopupHandle } from "../components/LanguageContinuePopup";
+import type { LanguageContinuePopupHandle } from "../pages/home/LanguageContinuePopup";
 import type { PageKey } from "../utils/pageRouting";
 
 export interface UseLanguageContinuePopupParams {

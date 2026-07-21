@@ -120,7 +120,13 @@ components — the global header, its UI-language switcher, and the
 scroll-to-top control (`Header.tsx`, `UILanguageSwitcher.tsx`,
 `ScrollToTopButton.tsx`) — reusable shell UI consumed across routes, as
 distinct from pages, feature-owned components, SEO page renderers, dialogs,
-and the `ui/` primitive library. Further feature-owned pages (level-test,
+and the `ui/` primitive library. `src/app/pages/home/` owns the homepage
+route and homepage-specific components — `HomePage.tsx` plus its two
+homepage-exclusive subcomponents, `FloatingWords.tsx` (decorative animation)
+and `LanguageContinuePopup.tsx` (the "select languages" nudge). Components
+still shared across pages (`LanguageSelector.tsx`, used by the homepage,
+account onboarding, and the level-test language modal) remain outside this
+folder in `src/app/components/`. Further feature-owned pages (level-test,
 word/SEO rendering) are planned to move into their own `src/features/*`
 folders in later phases.
 

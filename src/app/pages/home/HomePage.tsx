@@ -1,14 +1,14 @@
 import { useMemo, type ComponentProps, type MutableRefObject } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowLeftRight } from "lucide-react";
-import { useLanguage } from "../../contexts/LanguageContext";
-import { LanguageSelector } from "./LanguageSelector";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import { LanguageSelector } from "../../components/LanguageSelector";
 import { FloatingWords } from "./FloatingWords";
 import {
   LanguageContinuePopup,
   type LanguageContinuePopupHandle,
 } from "./LanguageContinuePopup";
-import { createDistributedStarFieldImage } from "../utils/starField";
+import { createDistributedStarFieldImage } from "../../utils/starField";
 
 interface HomePageProps {
   yourLanguage: string;

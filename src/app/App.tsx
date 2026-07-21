@@ -15,7 +15,7 @@ import { ExplorePage } from "./pages/ExplorePage";
 import { AccountOnboardingDialog } from "./components/AccountOnboardingDialog";
 import { AccountLanguageConfirmDialog } from "./components/AccountLanguageConfirmDialog";
 import { LevelTestLanguageModal } from "./components/LevelTestLanguageModal";
-import { HomePage } from "./components/HomePage";
+import { HomePage } from "./pages/home/HomePage";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
 import { UserProfileDashboardPage } from "../features/user-profile";
