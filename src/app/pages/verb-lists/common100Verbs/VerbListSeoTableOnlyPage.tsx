@@ -6,10 +6,10 @@ import {
   TARGET_LANGUAGE_TO_UI_LANGUAGE,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/shared/slugs";
-import { getFallbackVerbListCopy } from "../../data/seo/verbLists/common100Verbs/common100VerbFallbackCopy";
-import { SEOHead, type SeoMetadata } from "../../seo/SeoContext";
-import { useLanguage } from "../../contexts/LanguageContext";
+} from "../../../../data/seo/shared/slugs";
+import { getFallbackVerbListCopy } from "../../../../data/seo/verbLists/common100Verbs/common100VerbFallbackCopy";
+import { SEOHead, type SeoMetadata } from "../../../../seo/SeoContext";
+import { useLanguage } from "../../../../contexts/LanguageContext";
 
 export interface VerbListSeoTableOnlyRow {
   id: string;

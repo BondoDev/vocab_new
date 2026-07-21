@@ -1,18 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { Volume2 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { getLevelTestSeoPath } from "../../data/seo/levelTests";
-import { getSeoHubPath } from "../../data/seo/shared/hub";
-import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
+import { getLevelTestSeoPath } from "../../../../data/seo/levelTests";
+import { getSeoHubPath } from "../../../../data/seo/shared/hub";
+import { buildLocalizedVocabularyPath } from "../../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
   getUiVocabularyLanguage,
   TARGET_LANGUAGE_TO_UI_LANGUAGE,
   type TargetLanguageSlug,
   type UiLanguageCode,
-} from "../../data/seo/shared/slugs";
-import type { VerbListContent } from "../../data/seo/verbLists/common100Verbs/common100VerbRouteHelpers";
-import { SEOHead, type SeoMetadata } from "../../seo/SeoContext";
-import { useLanguage } from "../../contexts/LanguageContext";
+} from "../../../../data/seo/shared/slugs";
+import type { VerbListContent } from "../../../../data/seo/verbLists/common100Verbs/common100VerbRouteHelpers";
+import { SEOHead, type SeoMetadata } from "../../../../seo/SeoContext";
+import { useLanguage } from "../../../../contexts/LanguageContext";
 
 export interface RichVerbListSeoRow {
   id: string;

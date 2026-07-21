@@ -9,11 +9,11 @@ import {
   getVerbListTranslation,
   getVerbListWordLemma,
   VERB_LIST_ITEMS,
-} from "../../data/seo/verbLists";
-import { buildWordPath } from "../../data/seo/wordPages/wordSlugs";
-import { type TargetLanguageSlug, type UiLanguageCode } from "../../data/seo/shared/slugs";
-import { buildVerbListSeoMetadata } from "../../seo/metadata";
-import { useSeoSiteOrigin } from "../../seo/SeoContext";
+} from "../../../../data/seo/verbLists";
+import { buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
+import { type TargetLanguageSlug, type UiLanguageCode } from "../../../../data/seo/shared/slugs";
+import { buildVerbListSeoMetadata } from "../../../../seo/metadata";
+import { useSeoSiteOrigin } from "../../../../seo/SeoContext";
 import { useLocation } from "react-router-dom";
 import { RichVerbListSeoPage } from "./RichVerbListSeoPage";
 import { VerbListSeoTableOnlyPage } from "./VerbListSeoTableOnlyPage";
