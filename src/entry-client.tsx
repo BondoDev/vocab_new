@@ -15,9 +15,9 @@ import "./styles/header.scss";
 const { pathname } = window.location;
 const _lazyChunkPreload: Promise<unknown> | null =
   pathname === "/about" || pathname.startsWith("/about/")
-    ? import("./app/components/About")
+    ? import("./app/pages/About")
     : pathname === "/help" || pathname.startsWith("/help/")
-    ? import("./app/components/Help")
+    ? import("./app/pages/Help")
     : pathname.includes("/languages/filters/exercises") && pathname.includes("/practice")
     ? import("./features/practice/VocabularyPractice")
     : pathname.startsWith("/languages/filters/exercises")
@@ -25,7 +25,7 @@ const _lazyChunkPreload: Promise<unknown> | null =
     : pathname === "/languages/filters" || pathname === "/languages/filters/"
     ? import("./features/learning-setup/LevelCategorySelection")
     : pathname.startsWith("/languages/level-test")
-    ? import("./app/components/VocabularyLevelExam")
+    ? import("./app/pages/VocabularyLevelExam")
     : null;
 
 const rootElement = document.getElementById("root");

@@ -99,6 +99,17 @@ flowchart TD
 | Operational scripts | `scripts/operations/` | `scripts/operations/state/indexed-progress.json` (gitignored) | [`docs/google-indexing-operations.md`](google-indexing-operations.md), `test:operational-security` |
 | Local agent state | n/a (tool-created) | `.agents/`, `.claude/`, `.codex/` (gitignored, untracked) | `test:agent-folder-ownership` (see "Local-only state" below) |
 
+Within `src/app/`, page ownership is split by directory: `src/app/pages/`
+owns route-level application pages (rendered directly from a route branch
+in `App.tsx`); `src/app/components/` owns reusable, shared, and app-shell
+components (layout, dialogs, UI primitives) consumed by more than one page
+or by the app shell itself. This split is being introduced in phases as
+part of an ongoing `src/app/components/` cleanup — so far only `About.tsx`,
+`Help.tsx`, `ExplorePage.tsx`, and `VocabularyLevelExam.tsx` have moved to
+`src/app/pages/`; further feature-owned pages (profile, level-test, word/SEO
+rendering) are planned to move into their own `src/features/*` folders in
+later phases.
+
 Distinguishing source vs. output:
 
 - **Source files** — hand-maintained, committed, edited directly:

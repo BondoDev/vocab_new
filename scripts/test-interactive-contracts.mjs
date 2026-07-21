@@ -164,7 +164,7 @@ test("key practice/exercise/exam module files exist", () => {
     // typing/four-word partition checks that file doesn't cover.
     "src/features/learning-setup/LevelCategorySelection.tsx",
     "src/features/learning-setup/ExerciseSelection.tsx",
-    "src/app/components/VocabularyLevelExam.tsx",
+    "src/app/pages/VocabularyLevelExam.tsx",
     "src/exercises/exerciseIds.ts",
     // Practice/exercises moved under src/features/practice/ (practice-domain migration).
     "src/features/practice/VocabularyPractice.tsx",

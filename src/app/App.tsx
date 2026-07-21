@@ -11,7 +11,7 @@ import {
 import { useLocation, useNavigate } from "react-router";
 import "../styles/index.css";
 import { Header } from "./components/Header";
-import { ExplorePage } from "./components/ExplorePage";
+import { ExplorePage } from "./pages/ExplorePage";
 import { AccountOnboardingDialog } from "./components/AccountOnboardingDialog";
 import { AccountLanguageConfirmDialog } from "./components/AccountLanguageConfirmDialog";
 import { LevelTestLanguageModal } from "./components/LevelTestLanguageModal";
@@ -88,17 +88,17 @@ const VocabularyPractice = lazy(() =>
   })),
 );
 const VocabularyLevelExam = lazy(() =>
-  import("./components/VocabularyLevelExam").then((module) => ({
+  import("./pages/VocabularyLevelExam").then((module) => ({
     default: module.VocabularyLevelExam,
   })),
 );
 const About = lazy(() =>
-  import("./components/About").then((module) => ({
+  import("./pages/About").then((module) => ({
     default: module.About,
   })),
 );
 const Help = lazy(() =>
-  import("./components/Help").then((module) => ({
+  import("./pages/Help").then((module) => ({
     default: module.Help,
   })),
 );

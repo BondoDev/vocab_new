@@ -35,7 +35,7 @@ anywhere in this codebase.
 |---|---|
 | `src/app/components/Header.tsx` | `dialog`, `input`, `button`, `dropdown-menu` |
 | `src/app/components/AccountOnboardingDialog.tsx` | `button`, `dialog`, `input`, `label`, `select` |
-| `src/app/components/VocabularyLevelExam.tsx` | `alert-dialog` |
+| `src/app/pages/VocabularyLevelExam.tsx` | `alert-dialog` |
 | `src/features/practice/exercises/DesktopSpecialCharacters.tsx` | `popover` |
 | `src/features/practice/exercises/UniversalExerciseInput.tsx` | `utils` (`cn`) |
 

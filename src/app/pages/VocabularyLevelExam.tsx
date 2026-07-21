@@ -11,7 +11,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "./ui/alert-dialog";
+} from "../components/ui/alert-dialog";
 
 interface VocabularyLevelExamProps {
   practiceLanguage: string;

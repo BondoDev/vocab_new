@@ -104,14 +104,17 @@ console.log("\n=== no dangling imports into src/app/components/ui/ ===\n");
 test("every relative import into components/ui/ resolves to a file that exists", () => {
   const srcDir = path.join(ROOT_DIR, "src");
   const files = walkSourceFiles(srcDir);
-  // Matches two known-real shapes: a pure "../"-chain ending in "ui/<name>"
-  // (a consumer inside src/app/components/), or the same chain continuing
+  // Matches three known-real shapes: a pure "../"-chain ending in "ui/<name>"
+  // (a consumer inside src/app/components/); the same chain continuing
   // through the literal "app/components/" segment (a consumer elsewhere,
-  // e.g. src/features/practice/, reaching back into components/ui/). This
-  // stays anchored to those two concrete shapes rather than a bare [\w./]+,
-  // which would also match unrelated paths that merely end in the letters
-  // "ui/" (e.g. a hypothetical "gui/" or "requi/" directory).
-  const importPattern = /from\s+["']((?:\.\.?\/)*(?:app\/components\/)?ui\/[a-zA-Z0-9-]+)["']/g;
+  // e.g. src/features/practice/, reaching back into components/ui/); or the
+  // same chain continuing through a bare "components/" segment (a sibling of
+  // components/ under src/app/, e.g. src/app/pages/, reaching into
+  // components/ui/ via "../components/ui/<name>"). This stays anchored to
+  // those three concrete shapes rather than a bare [\w./]+, which would also
+  // match unrelated paths that merely end in the letters "ui/" (e.g. a
+  // hypothetical "gui/" or "requi/" directory).
+  const importPattern = /from\s+["']((?:\.\.?\/)*(?:(?:app\/)?components\/)?ui\/[a-zA-Z0-9-]+)["']/g;
   const broken = [];
   for (const file of files) {
     const text = fs.readFileSync(file, "utf8");
@@ -139,7 +142,7 @@ test("every retained ui/ file is still imported by at least one file outside com
   const unreferenced = EXPECTED_RETAINED.filter((name) => {
     const base = name.replace(/\.tsx?$/, "");
     // Same anchored shape as the dangling-import check above.
-    const pattern = new RegExp(`from\\s+["'](?:\\.\\.?/)*(?:app/components/)?ui/${base}["']`);
+    const pattern = new RegExp(`from\\s+["'](?:\\.\\.?/)*(?:(?:app/)?components/)?ui/${base}["']`);
     return !pattern.test(allExternalSource);
   }).filter((name) => name !== "utils.ts"); // utils.ts is also reached transitively via other ui/ files; checked separately below.
   assert.deepEqual(
