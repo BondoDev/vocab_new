@@ -104,11 +104,19 @@ owns route-level application pages (rendered directly from a route branch
 in `App.tsx`); `src/app/components/` owns reusable, shared, and app-shell
 components (layout, dialogs, UI primitives) consumed by more than one page
 or by the app shell itself. This split is being introduced in phases as
-part of an ongoing `src/app/components/` cleanup — so far only `About.tsx`,
+part of an ongoing `src/app/components/` cleanup — so far `About.tsx`,
 `Help.tsx`, `ExplorePage.tsx`, and `VocabularyLevelExam.tsx` have moved to
-`src/app/pages/`; further feature-owned pages (profile, level-test, word/SEO
-rendering) are planned to move into their own `src/features/*` folders in
-later phases.
+`src/app/pages/`, and the profile route/shell has moved to
+`src/features/user-profile/` (`pages/UserProfileDashboardPage.tsx`,
+`components/UserProfileSidebar.tsx`, `styles/user-profile-sidebar.scss`,
+public entry point `index.ts`). Global authentication/session infrastructure
+(`src/lib/supabaseAuth.ts`, `src/lib/userProfile.ts`) and shared
+account/onboarding behavior (`src/app/hooks/useAccountOnboarding.ts`,
+`useAccountLanguageConfirm.ts`, `useUserProfileLoad.ts`, the
+`AccountOnboardingDialog`/`AccountLanguageConfirmDialog` components) remain
+outside the feature — they are consumed by more than just the profile page.
+Further feature-owned pages (level-test, word/SEO rendering) are planned to
+move into their own `src/features/*` folders in later phases.
 
 Distinguishing source vs. output:
 

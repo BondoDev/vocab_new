@@ -9,7 +9,7 @@ import {
   UserRound,
   X,
 } from "lucide-react";
-import "./user-profile-sidebar.scss";
+import "../styles/user-profile-sidebar.scss";
 import type { LanguageLevelCode } from "../../../lib/userProfile";
 import type { UILanguage } from "../../../contexts/LanguageContext";
 

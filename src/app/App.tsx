@@ -18,7 +18,7 @@ import { LevelTestLanguageModal } from "./components/LevelTestLanguageModal";
 import { HomePage } from "./components/HomePage";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { ScrollToTopButton } from "./components/ScrollToTopButton";
-import { UserProfileDashboardPage } from "./components/user-profile/UserProfileDashboardPage";
+import { UserProfileDashboardPage } from "../features/user-profile";
 import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { SeoHubPage } from "./components/SeoHubPage";

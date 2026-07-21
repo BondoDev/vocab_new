@@ -1,6 +1,6 @@
 import type { LanguageLevelCode } from "../../../lib/userProfile";
 import type { UILanguage } from "../../../contexts/LanguageContext";
-import { UserProfileSidebar } from "./UserProfileSidebar";
+import { UserProfileSidebar } from "../components/UserProfileSidebar";
 
 interface UserProfileDashboardPageProps {
   nickname?: string;
