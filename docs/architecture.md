@@ -137,9 +137,18 @@ dialog. `NotFoundPage.tsx` (the shared 404 fallback, rendered from several
 route branches in `App.tsx`) and `SeoHubPage.tsx` (the SEO page index) have
 moved to `src/app/pages/` alongside the Phase 1 pages above — both are
 standalone route-level pages with a single `App.tsx` consumer and no
-membership in a larger page family. Further feature-owned pages (level-test,
-word/SEO rendering) are planned to move into their own `src/features/*`
-folders in later phases.
+membership in a larger page family. `src/app/pages/verb-lists/` owns
+verb-list route pages as a general category, split into per-subtype folders
+mirroring `src/data/seo/verbLists/` and `src/seo/verbLists/`; `common100Verbs/`
+is the current (and only) subtype, holding `VerbListSeoPage.tsx` (route
+entry), `RichVerbListSeoPage.tsx` (rich-content view), and
+`VerbListSeoTableOnlyPage.tsx` (fallback view, runtime-coupled to
+common100Verbs fallback copy). Future verb-list families (e.g. irregular,
+modal, or separable verbs) would live as sibling subtype folders under
+`verb-lists/`; shared extraction across subtypes should happen only once a
+second subtype genuinely reuses the same implementation, not preemptively.
+Further feature-owned pages (level-test, word/SEO rendering) are planned to
+move into their own `src/features/*` folders in later phases.
 
 Distinguishing source vs. output:
 

@@ -22,7 +22,7 @@ import { UserProfileDashboardPage } from "../features/user-profile";
 import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
 import { SeoHubPage } from "./pages/SeoHubPage";
-import { VerbListSeoPage } from "./components/VerbListSeoPage";
+import { VerbListSeoPage } from "./pages/verb-lists/common100Verbs/VerbListSeoPage";
 import { WordSeoPage } from "./components/WordSeoPage";
 import { WordPageLayout } from "./components/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./components/DevSeoCefrPlaceholderPage";

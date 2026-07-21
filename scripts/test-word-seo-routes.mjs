@@ -426,7 +426,7 @@ const wordSeoPageSource = fs.readFileSync(
   "utf8",
 );
 const verbListPageSource = fs.readFileSync(
-  path.join(rootDir, "src", "app", "components", "VerbListSeoPage.tsx"),
+  path.join(rootDir, "src", "app", "pages", "verb-lists", "common100Verbs", "VerbListSeoPage.tsx"),
   "utf8",
 );
 // src/seo/metadata.ts was split (Issue 15) into a compatibility facade plus
