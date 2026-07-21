@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { shuffleArray } from "../utils/shuffleArray";
+import { shuffleArray } from "../../../utils/shuffleArray";
 import { UniversalExerciseInput } from "./UniversalExerciseInput";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { useLanguage } from "../../../contexts/LanguageContext";

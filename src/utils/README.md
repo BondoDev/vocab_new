@@ -31,17 +31,23 @@ Narrow ownership always wins. A file with real consumers in only one of
 those top-level areas belongs with that area instead — this folder is not
 a default home for "generic-looking" code.
 
-## Current Example
+## Current Examples
 
-`fixMojibake.ts` is the current occupant. At a high level, it repairs
-corrupted text and is consumed by both the SEO/data layer and application
-pages that render that data — its real consumers span more than one
-top-level area of the repository. It is intentionally outside `src/app/`
-for that reason: it is not app-shell logic that happens to be reusable,
-it is genuinely repository-wide logic that `src/app/` is only one
-consumer of.
+`fixMojibake.ts` repairs corrupted text and is consumed by both the
+SEO/data layer and application pages that render that data — its real
+consumers span more than one top-level area of the repository. It is
+intentionally outside `src/app/` for that reason: it is not app-shell
+logic that happens to be reusable, it is genuinely repository-wide logic
+that `src/app/` is only one consumer of.
 
-This folder containing only one file is not evidence that it should be
+`shuffleArray.ts` is a framework-independent Fisher-Yates shuffle with
+real consumers in two independent top-level owners: the `practice`
+feature (session/exercise randomization) and the `VocabularyLevelExam`
+page family. It moved here from `src/features/practice/utils/` once the
+exam page needed the same contract — a second real consumer, not a
+hypothetical one, is what justified promotion out of Practice.
+
+This folder containing few files is not evidence that it should be
 merged elsewhere — the ownership rule above, not file count, decides
 whether a file lives here.
 

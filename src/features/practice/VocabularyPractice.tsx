@@ -10,7 +10,7 @@ import { ListeningExercise } from "./exercises/ListeningExercise";
 import { BrokenWordExercise } from "./exercises/BrokenWordExercise";
 import { WordTypingExercise } from "./exercises/WordTypingExercise";
 import { HalfWrittenExercise } from "./exercises/HalfWrittenExercise";
-import { shuffleArray } from "./utils/shuffleArray";
+import { shuffleArray } from "../../utils/shuffleArray";
 import { highlightInflectedWords } from "./utils/highlightInflectedWords";
 import {
   advanceTypingRepeatQueue,

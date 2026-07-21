@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { shuffleArray } from "../../utils/shuffleArray";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,15 +46,6 @@ interface ExamQuestion {
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const QUESTIONS_PER_LEVEL = 6;
 const MAX_WRONG_ANSWERS = 3;
-
-function shuffleArray<T>(items: T[]): T[] {
-  const copy = [...items];
-  for (let i = copy.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
 
 function splitWordIntoChunks(word: string): string[] {
   const chunks: string[] = [];

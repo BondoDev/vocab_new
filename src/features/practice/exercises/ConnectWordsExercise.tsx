@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { shuffleArray } from "../utils/shuffleArray";
+import { shuffleArray } from "../../../utils/shuffleArray";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface ConnectWordsExerciseProps {
