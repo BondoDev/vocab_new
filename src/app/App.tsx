@@ -169,9 +169,10 @@ function AppContent({
     () => new Set(supportedLanguages.map((language) => language.code)),
     [],
   );
-  // Explore-topic data building is pure and lives in ./utils/exploreTopics;
-  // the 14 useMemo calls (and their exact dependency arrays) live in
-  // ./pages/explore/useExploreItems so memoization behavior is unchanged.
+  // Explore-topic data building is pure and lives in
+  // ./pages/explore/exploreTopics; the 14 useMemo calls (and their exact
+  // dependency arrays) live in ./pages/explore/useExploreItems so
+  // memoization behavior is unchanged.
   const exploreItemsByLanguageCode = useExploreItems(
     uiLanguage,
     t,

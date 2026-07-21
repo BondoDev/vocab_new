@@ -72,6 +72,7 @@ hooks consumed across unrelated page/feature owners).
 explore/
   ExplorePage.tsx
   useExploreItems.ts
+  exploreTopics.ts
 ```
 
 ## Supporting-file colocation

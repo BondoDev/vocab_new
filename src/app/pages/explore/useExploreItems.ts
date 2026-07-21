@@ -12,13 +12,13 @@ import {
   withLevelTestExploreTopic,
   type ExploreTopic,
   type TranslateFn,
-} from "../../utils/exploreTopics";
+} from "./exploreTopics";
 
 // Extracted verbatim from src/app/App.tsx (AppContent). Every useMemo body,
 // dependency array, helper call, and appended level-test/verb-list entry is
 // unchanged — see docs/non-seo-regression-checklist.md and the Explore memo
 // audit that preceded this extraction. `examPath` is App.tsx's ROUTES.exam,
-// passed in rather than imported, matching how ./utils/exploreTopics already
+// passed in rather than imported, matching how ./exploreTopics already
 // receives it (that module's `examFallbackPath` param) so this hook never
 // depends on App.tsx.
 export function useExploreItems(
