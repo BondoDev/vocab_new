@@ -17,9 +17,10 @@ infrastructure (→ `src/data/`, `src/seo/`).
 
 ```
 src/app/pages/
-  About.tsx, ExplorePage.tsx, Help.tsx,   # standalone route pages
+  About.tsx, Help.tsx,                    # standalone route pages
   NotFoundPage.tsx, SeoHubPage.tsx, VocabularyLevelExam.tsx
 
+  explore/              # page family: explore route + its exclusive hook
   home/                 # page family: homepage + its exclusive components
   level-test/           # page family: level-test SEO page + its modal
   verb-lists/
@@ -37,7 +38,7 @@ with no exclusively owned supporting view, modal, layout, or local
 configuration — a one-file folder would add nesting without clarifying
 ownership.
 
-**Examples:** `About.tsx`, `ExplorePage.tsx`, `Help.tsx`, `SeoHubPage.tsx`,
+**Examples:** `About.tsx`, `Help.tsx`, `SeoHubPage.tsx`,
 `VocabularyLevelExam.tsx`. `NotFoundPage.tsx` also stays flat, for a
 different reason: it's a shared route fallback rendered from several
 unrelated route branches, so no single family owns it.
@@ -61,6 +62,17 @@ home/
 `FloatingWords.tsx`/`LanguageContinuePopup.tsx` stay beside `HomePage.tsx`
 because they have no consumers outside the homepage. General shape: one
 route entry plus one supporting file with the same ownership.
+
+`explore/` is the same pattern with a hook instead of a component:
+`useExploreItems.ts` has no consumer besides `ExplorePage.tsx`, so it moved
+beside it rather than staying in `src/app/hooks/` (which is reserved for
+hooks consumed across unrelated page/feature owners).
+
+```
+explore/
+  ExplorePage.tsx
+  useExploreItems.ts
+```
 
 ## Supporting-file colocation
 

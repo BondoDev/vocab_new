@@ -11,7 +11,7 @@ import {
 import { useLocation, useNavigate } from "react-router";
 import "../styles/index.css";
 import { Header } from "./components/layout/Header";
-import { ExplorePage } from "./pages/ExplorePage";
+import { ExplorePage } from "./pages/explore/ExplorePage";
 import { AccountOnboardingDialog } from "./components/dialogs/AccountOnboardingDialog";
 import { AccountLanguageConfirmDialog } from "./components/dialogs/AccountLanguageConfirmDialog";
 import { LevelTestLanguageModal } from "./pages/level-test/LevelTestLanguageModal";
@@ -69,7 +69,7 @@ import { useAccountLanguageConfirm } from "./hooks/useAccountLanguageConfirm";
 import { useRouteLanguageSync } from "./hooks/useRouteLanguageSync";
 import { usePracticeRouteLanguageSync } from "./hooks/usePracticeRouteLanguageSync";
 import { useStoredLanguageAutoRedirect } from "./hooks/useStoredLanguageAutoRedirect";
-import { useExploreItems } from "./hooks/useExploreItems";
+import { useExploreItems } from "./pages/explore/useExploreItems";
 import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
 
 const LevelCategorySelection = lazy(() =>
@@ -171,7 +171,7 @@ function AppContent({
   );
   // Explore-topic data building is pure and lives in ./utils/exploreTopics;
   // the 14 useMemo calls (and their exact dependency arrays) live in
-  // ./hooks/useExploreItems so memoization behavior is unchanged.
+  // ./pages/explore/useExploreItems so memoization behavior is unchanged.
   const exploreItemsByLanguageCode = useExploreItems(
     uiLanguage,
     t,

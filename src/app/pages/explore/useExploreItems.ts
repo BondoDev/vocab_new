@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import type { UILanguage } from "../../contexts/LanguageContext";
-import { getVerbListPath, getVerbListTitle } from "../../data/seo/verbLists";
+import type { UILanguage } from "../../../contexts/LanguageContext";
+import { getVerbListPath, getVerbListTitle } from "../../../data/seo/verbLists";
 import {
   buildEnglishExploreTopics,
   buildFrenchExploreTopics,
@@ -12,7 +12,7 @@ import {
   withLevelTestExploreTopic,
   type ExploreTopic,
   type TranslateFn,
-} from "../utils/exploreTopics";
+} from "../../utils/exploreTopics";
 
 // Extracted verbatim from src/app/App.tsx (AppContent). Every useMemo body,
 // dependency array, helper call, and appended level-test/verb-list entry is
