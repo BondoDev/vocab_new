@@ -26,10 +26,10 @@
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { spawn } from "node:child_process";
-import { measureOnePass } from "./seo-baseline/lib/wordRenderBreakdown.mjs";
+import { measureOnePass } from "./word-render-benchmark/wordRenderBreakdown.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const COLD_WORKER_PATH = path.join(__dirname, "seo-baseline", "lib", "benchmark-worker-once.mjs");
+const COLD_WORKER_PATH = path.join(__dirname, "word-render-benchmark", "benchmark-worker-once.mjs");
 
 function parseArgs(argv) {
   const args = { samples: 20 };

@@ -8,12 +8,17 @@
  * src/entry-server.tsx pipeline rather than instrumenting production code
  * directly — the benchmark's job is to report timings, not to change what
  * ships, so nothing here is imported by any production entry point.
+ *
+ * Owned by the word-render benchmark workflow, not SEO baseline — moved out
+ * of scripts/seo-baseline/lib/ because no seo-baseline capture/compare/fixture
+ * script ever consumed it, only scripts/benchmark-word-render.mjs and its
+ * sibling benchmark-worker-once.mjs did.
  */
 
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { ROOT_DIR } from "./compileTs.mjs";
+import { ROOT_DIR } from "../lib/compileTs.mjs";
 
 const SITE_ORIGIN = "https://www.fluentstellar.com";
 
