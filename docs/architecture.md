@@ -133,8 +133,13 @@ multiple routes. `LevelTestLanguageModal.tsx` is not one of these — it is
 rendered only within the `levelTestSeo` route branch alongside
 `LevelTestSeoPage.tsx`, so it stays in `src/app/components/` as a
 level-test-page-family concern rather than a globally reusable account
-dialog. Further feature-owned pages (level-test, word/SEO rendering) are
-planned to move into their own `src/features/*` folders in later phases.
+dialog. `NotFoundPage.tsx` (the shared 404 fallback, rendered from several
+route branches in `App.tsx`) and `SeoHubPage.tsx` (the SEO page index) have
+moved to `src/app/pages/` alongside the Phase 1 pages above — both are
+standalone route-level pages with a single `App.tsx` consumer and no
+membership in a larger page family. Further feature-owned pages (level-test,
+word/SEO rendering) are planned to move into their own `src/features/*`
+folders in later phases.
 
 Distinguishing source vs. output:
 

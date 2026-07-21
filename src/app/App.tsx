@@ -16,12 +16,12 @@ import { AccountOnboardingDialog } from "./components/dialogs/AccountOnboardingD
 import { AccountLanguageConfirmDialog } from "./components/dialogs/AccountLanguageConfirmDialog";
 import { LevelTestLanguageModal } from "./components/LevelTestLanguageModal";
 import { HomePage } from "./pages/home/HomePage";
-import { NotFoundPage } from "./components/NotFoundPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
 import { UserProfileDashboardPage } from "../features/user-profile";
 import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
-import { SeoHubPage } from "./components/SeoHubPage";
+import { SeoHubPage } from "./pages/SeoHubPage";
 import { VerbListSeoPage } from "./components/VerbListSeoPage";
 import { WordSeoPage } from "./components/WordSeoPage";
 import { WordPageLayout } from "./components/WordPageLayout";
