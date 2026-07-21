@@ -34,7 +34,7 @@ anywhere in this codebase.
 | Consumer | Imports from `ui/` |
 |---|---|
 | `src/app/components/layout/Header.tsx` | `dialog`, `input`, `button`, `dropdown-menu` |
-| `src/app/components/AccountOnboardingDialog.tsx` | `button`, `dialog`, `input`, `label`, `select` |
+| `src/app/components/dialogs/AccountOnboardingDialog.tsx` | `button`, `dialog`, `input`, `label`, `select` |
 | `src/app/pages/VocabularyLevelExam.tsx` | `alert-dialog` |
 | `src/features/practice/exercises/DesktopSpecialCharacters.tsx` | `popover` |
 | `src/features/practice/exercises/UniversalExerciseInput.tsx` | `utils` (`cn`) |

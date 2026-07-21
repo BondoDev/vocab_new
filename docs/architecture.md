@@ -126,9 +126,15 @@ homepage-exclusive subcomponents, `FloatingWords.tsx` (decorative animation)
 and `LanguageContinuePopup.tsx` (the "select languages" nudge). Components
 still shared across pages (`LanguageSelector.tsx`, used by the homepage,
 account onboarding, and the level-test language modal) remain outside this
-folder in `src/app/components/`. Further feature-owned pages (level-test,
-word/SEO rendering) are planned to move into their own `src/features/*`
-folders in later phases.
+folder in `src/app/components/`. `src/app/components/dialogs/` owns shared
+application/account dialogs — `AccountOnboardingDialog.tsx` and
+`AccountLanguageConfirmDialog.tsx`, both rendered from the app shell across
+multiple routes. `LevelTestLanguageModal.tsx` is not one of these — it is
+rendered only within the `levelTestSeo` route branch alongside
+`LevelTestSeoPage.tsx`, so it stays in `src/app/components/` as a
+level-test-page-family concern rather than a globally reusable account
+dialog. Further feature-owned pages (level-test, word/SEO rendering) are
+planned to move into their own `src/features/*` folders in later phases.
 
 Distinguishing source vs. output:
 
