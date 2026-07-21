@@ -66,7 +66,7 @@ is in `scripts/import-boundaries/current/globs.json`. Summary:
 | G5 | `src/data/seo/wordPages/wordBrowseSearchData.ts` | `./word-browse-shards/*.json` | client + SSR + **transitively Worker** via `WordSeoPageView.tsx` | lazy | 42 | high — shared-module boundary, only a test prevents the heavy export from running in the Worker |
 | G6 | `src/data/seo/verbLists/common100Verbs/common100VerbList.ts` | `./verbListLookup/*.json` | client + SSR (not Worker) | eager | 7 | safe-but-generated |
 | G7 | `src/app/components/WordSeoPage.tsx` | `../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | high — site of the historical Worker bundle-bloat incident |
-| G8 | `src/app/components/VocabularyLevelPage.tsx` | `../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | medium |
+| G8 | `src/app/pages/vocabulary/VocabularyLevelPage.tsx` | `../../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | medium |
 | G9 | `src/data/seo/vocabularyLevels/levelBrowseWords.ts` | `./level-browse-preview/*.json` | client + SSR | lazy | 42 | medium — hand-authored data, no generator script exists |
 
 All 9 match counts are asserted by `npm run test:import-boundaries`.
@@ -83,7 +83,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `scripts/generate-sitemap.mjs` | `fs.readdir` walk | `src/data/seo/vocabularyLevels/{ui}/` | build-time generator | low |
 | `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`) | `fs.readFile` | `src/data/seo/levelTests/seo_level_test_content.json` | build-time generator | low |
 | `src/data/seo/levelTests/index.ts` | static relative `import` | `./seo_level_test_content.json` | client + SSR | low |
-| `src/app/components/devSeoCefrPreviewData.ts` | static relative `import` | `../../data/seo/vocabularyLevels/seo-cefr-content.json` | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low |
+| `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` | static relative `import` | `../../../data/seo/vocabularyLevels/seo-cefr-content.json` | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low |
 | `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/common100Verbs/verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
 | `scripts/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
 | `workers/word-ssr/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `cleanup-word-build-artifacts.mjs` in the same build |

@@ -153,13 +153,14 @@ test("devSeoCefrPreviewData.ts imports the relocated JSON, not the old guideline
     ROOT_DIR,
     "src",
     "app",
-    "components",
+    "pages",
+    "vocabulary",
     "devSeoCefrPreviewData.ts",
   );
   const content = fs.readFileSync(file, "utf8");
   assert.ok(
-    /from\s+["']\.\.\/\.\.\/data\/seo\/vocabularyLevels\/seo-cefr-content\.json["']/.test(content),
-    "devSeoCefrPreviewData.ts does not import ../../data/seo/vocabularyLevels/seo-cefr-content.json",
+    /from\s+["']\.\.\/\.\.\/\.\.\/data\/seo\/vocabularyLevels\/seo-cefr-content\.json["']/.test(content),
+    "devSeoCefrPreviewData.ts does not import ../../../data/seo/vocabularyLevels/seo-cefr-content.json",
   );
   assert.ok(!OLD_PATH_PATTERN.test(content), "devSeoCefrPreviewData.ts still references guidelines/");
 });

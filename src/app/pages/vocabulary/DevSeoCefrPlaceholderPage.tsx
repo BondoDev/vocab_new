@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { VocabularyLevelPage } from "./VocabularyLevelPage";
-import type { SeoMetadata } from "../../seo/SeoContext";
+import type { SeoMetadata } from "../../../seo/SeoContext";
 import type {
   CefrLevelCode,
   TargetLanguageSlug,
   UiLanguageCode,
-} from "../../data/seo/vocabularyLevels";
-import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
-import { buildVocabularyFaqSection, buildVocabularyJsonLdGraph } from "../../seo/metadata";
+} from "../../../data/seo/vocabularyLevels";
+import { buildLocalizedVocabularyPath } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
+import { buildVocabularyFaqSection, buildVocabularyJsonLdGraph } from "../../../seo/metadata";
 import {
   DEV_CEFR_PREVIEW_PATH,
   findSeoCefrPreviewItem,
@@ -15,7 +15,7 @@ import {
   normalizeTargetLanguage,
   type SeoCefrContentItem,
 } from "./devSeoCefrPreviewData";
-import type { LevelBrowsePreviewData } from "../../data/seo/vocabularyLevels/levelBrowseWords";
+import type { LevelBrowsePreviewData } from "../../../data/seo/vocabularyLevels/levelBrowseWords";
 
 const PREVIEW_HERO_SUFFIX_LANGUAGE_NAMES: Record<
   UiLanguageCode,

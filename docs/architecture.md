@@ -129,11 +129,13 @@ account onboarding, and the level-test language modal) remain outside this
 folder in `src/app/components/`. `src/app/components/dialogs/` owns shared
 application/account dialogs — `AccountOnboardingDialog.tsx` and
 `AccountLanguageConfirmDialog.tsx`, both rendered from the app shell across
-multiple routes. `LevelTestLanguageModal.tsx` is not one of these — it is
-rendered only within the `levelTestSeo` route branch alongside
-`LevelTestSeoPage.tsx`, so it stays in `src/app/components/` as a
-level-test-page-family concern rather than a globally reusable account
-dialog. `NotFoundPage.tsx` (the shared 404 fallback, rendered from several
+multiple routes. `src/app/pages/level-test/` owns the complete Level Test
+page family: `LevelTestSeoPage.tsx` (the route) and
+`LevelTestLanguageModal.tsx` (its page-specific language-selection modal,
+rendered only alongside this page). Despite its modal implementation,
+`LevelTestLanguageModal.tsx` is not part of the shared dialog system in
+`src/app/components/dialogs/` and is not globally reusable — it stays
+beside the page that owns it. `NotFoundPage.tsx` (the shared 404 fallback, rendered from several
 route branches in `App.tsx`) and `SeoHubPage.tsx` (the SEO page index) have
 moved to `src/app/pages/` alongside the Phase 1 pages above — both are
 standalone route-level pages with a single `App.tsx` consumer and no
@@ -147,8 +149,16 @@ common100Verbs fallback copy). Future verb-list families (e.g. irregular,
 modal, or separable verbs) would live as sibling subtype folders under
 `verb-lists/`; shared extraction across subtypes should happen only once a
 second subtype genuinely reuses the same implementation, not preemptively.
-Further feature-owned pages (level-test, word/SEO rendering) are planned to
-move into their own `src/features/*` folders in later phases.
+`src/app/pages/vocabulary/` owns the Vocabulary Level/CEFR page family:
+`VocabularyLevelPage.tsx` (the production vocabulary-level rendering flow),
+`DevSeoCefrPlaceholderPage.tsx`, and `devSeoCefrPreviewData.ts`. Despite their
+"dev"/"preview" naming, the latter two are production-runtime code — every
+`vocabularyLevel` route's visible body renders through
+`DevSeoCefrPlaceholderPage`, backed by `devSeoCefrPreviewData.ts`'s
+full-coverage content lookup (see `docs/generated-data.md`); this legacy
+naming was preserved as-is, not treated as dev-only. Further feature-owned
+pages (word/SEO rendering) are planned to move into their own
+`src/features/*` folders in later phases.
 
 Distinguishing source vs. output:
 

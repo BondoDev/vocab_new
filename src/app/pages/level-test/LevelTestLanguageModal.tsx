@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowLeftRight } from "lucide-react";
-import { useLanguage } from "../../contexts/LanguageContext";
-import { LanguageSelector } from "./LanguageSelector";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import { LanguageSelector } from "../../components/LanguageSelector";
 
 interface LevelTestLanguageOption {
   code: string;

@@ -405,7 +405,7 @@ assert.equal(
 );
 
 const vocabularyLevelPageSource = fs.readFileSync(
-  path.join(rootDir, "src", "app", "components", "VocabularyLevelPage.tsx"),
+  path.join(rootDir, "src", "app", "pages", "vocabulary", "VocabularyLevelPage.tsx"),
   "utf8",
 );
 assert.ok(

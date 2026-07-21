@@ -1,15 +1,15 @@
-import sampleContent from "../../data/seo/vocabularyLevels/seo-cefr-content.json";
-import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
+import sampleContent from "../../../data/seo/vocabularyLevels/seo-cefr-content.json";
+import { buildLocalizedVocabularyPath } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import {
   isSupportedUiLanguage,
   SUPPORTED_TARGET_LANGUAGES,
   type TargetLanguageSlug,
-} from "../../data/seo/shared/slugs";
+} from "../../../data/seo/shared/slugs";
 import type {
   CefrLevelCode,
   UiLanguageCode,
   VocabularyLevelContent,
-} from "../../data/seo/vocabularyLevels";
+} from "../../../data/seo/vocabularyLevels";
 
 type PreviewTargetLanguage = TargetLanguageSlug | UiLanguageCode;
 

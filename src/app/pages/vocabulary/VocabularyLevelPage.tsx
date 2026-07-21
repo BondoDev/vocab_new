@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { buildLocalizedVocabularyPath } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
-import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES } from "../../data/seo/shared/slugs";
-import { getLevelTestSeoPath } from "../../data/seo/levelTests";
-import { getSeoHubPath } from "../../data/seo/shared/hub";
+import { buildLocalizedVocabularyPath } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
+import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES } from "../../../data/seo/shared/slugs";
+import { getLevelTestSeoPath } from "../../../data/seo/levelTests";
+import { getSeoHubPath } from "../../../data/seo/shared/hub";
 import {
   getVocabularyLevelContent,
   loadVocabularyLevelContent,
@@ -12,12 +12,12 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
   type VocabularyLevelContent,
-} from "../../data/seo/vocabularyLevels";
-import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../seo/metadata";
-import { SEOHead, useSeoSiteOrigin, type SeoMetadata } from "../../seo/SeoContext";
-import { buildWordPath } from "../../data/seo/wordPages/wordSlugs";
-import { isValidBrowseWordLemma } from "../../data/seo/shared/browseWordValidation";
-import type { LevelBrowsePreviewData } from "../../data/seo/vocabularyLevels/levelBrowseWords";
+} from "../../../data/seo/vocabularyLevels";
+import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../../seo/metadata";
+import { SEOHead, useSeoSiteOrigin, type SeoMetadata } from "../../../seo/SeoContext";
+import { buildWordPath } from "../../../data/seo/wordPages/wordSlugs";
+import { isValidBrowseWordLemma } from "../../../data/seo/shared/browseWordValidation";
+import type { LevelBrowsePreviewData } from "../../../data/seo/vocabularyLevels/levelBrowseWords";
 
 interface VocabularyLevelPageProps {
   uiLang: UiLanguageCode;
@@ -40,7 +40,7 @@ interface VocabularyLevelPageProps {
 
 type VocabEntry = { concept_id: string; word_lemma: string; level: string };
 type BrowsePreviewData = LevelBrowsePreviewData;
-const vocabModules = import.meta.glob("../../data/vocabulary/*/vocabulary.json") as Record<
+const vocabModules = import.meta.glob("../../../data/vocabulary/*/vocabulary.json") as Record<
   string,
   () => Promise<{ default: VocabEntry[] }>
 >;
@@ -544,7 +544,7 @@ export function VocabularyLevelPage({
       return;
     }
 
-    const key = `../../data/vocabulary/${targetLanguage}/vocabulary.json`;
+    const key = `../../../data/vocabulary/${targetLanguage}/vocabulary.json`;
     const loader = vocabModules[key];
     if (!loader) {
       setBrowseWords([]);

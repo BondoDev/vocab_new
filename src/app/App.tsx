@@ -14,18 +14,18 @@ import { Header } from "./components/layout/Header";
 import { ExplorePage } from "./pages/ExplorePage";
 import { AccountOnboardingDialog } from "./components/dialogs/AccountOnboardingDialog";
 import { AccountLanguageConfirmDialog } from "./components/dialogs/AccountLanguageConfirmDialog";
-import { LevelTestLanguageModal } from "./components/LevelTestLanguageModal";
+import { LevelTestLanguageModal } from "./pages/level-test/LevelTestLanguageModal";
 import { HomePage } from "./pages/home/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
 import { UserProfileDashboardPage } from "../features/user-profile";
-import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
-import { LevelTestSeoPage } from "./components/LevelTestSeoPage";
+import { VocabularyLevelPage } from "./pages/vocabulary/VocabularyLevelPage";
+import { LevelTestSeoPage } from "./pages/level-test/LevelTestSeoPage";
 import { SeoHubPage } from "./pages/SeoHubPage";
 import { VerbListSeoPage } from "./pages/verb-lists/common100Verbs/VerbListSeoPage";
 import { WordSeoPage } from "./components/WordSeoPage";
 import { WordPageLayout } from "./components/WordPageLayout";
-import { DevSeoCefrPlaceholderPage } from "./components/DevSeoCefrPlaceholderPage";
+import { DevSeoCefrPlaceholderPage } from "./pages/vocabulary/DevSeoCefrPlaceholderPage";
 import {
   LanguageProvider,
   useLanguage,
@@ -42,7 +42,7 @@ import {
 } from "../seo/SeoContext";
 import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
-import { findSeoCefrPreviewItem } from "./components/devSeoCefrPreviewData";
+import { findSeoCefrPreviewItem } from "./pages/vocabulary/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPages/wordPageData";
 import { handleSupabaseAuthRedirect } from "../lib/supabaseAuth";
 import type { UserProfile } from "../lib/userProfile";
