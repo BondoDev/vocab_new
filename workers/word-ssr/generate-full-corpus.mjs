@@ -27,7 +27,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs, ROOT_DIR, readJson } from "../../scripts/seo-baseline/lib/compileTs.mjs";
+import { compileTsToCommonJs, ROOT_DIR, readJson } from "../../scripts/lib/compileTs.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dataDir = path.join(__dirname, "data", "full-corpus");

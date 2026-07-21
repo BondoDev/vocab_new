@@ -24,7 +24,7 @@ import assert from "node:assert/strict";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { loadBaselineContext } from "./seo-baseline/fixtures.mjs";
-import { ROOT_DIR } from "./seo-baseline/lib/compileTs.mjs";
+import { ROOT_DIR } from "./lib/compileTs.mjs";
 
 let passed = 0;
 let failed = 0;

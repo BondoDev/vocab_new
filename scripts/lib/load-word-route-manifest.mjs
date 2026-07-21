@@ -1,5 +1,5 @@
 import path from "node:path";
-import { compileTsToCommonJs, ROOT_DIR } from "../seo-baseline/lib/compileTs.mjs";
+import { compileTsToCommonJs, ROOT_DIR } from "./compileTs.mjs";
 
 export function loadWordRouteManifest(tempDirName = ".tmp-word-route-manifest") {
   const compiled = compileTsToCommonJs(tempDirName, [

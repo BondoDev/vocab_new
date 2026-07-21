@@ -1,10 +1,15 @@
 /**
- * Shared TypeScript → CommonJS compile helper for read-only SEO baseline
- * scripts. Extracted from the repeated pattern already used by
- * scripts/test-word-seo-routes.mjs, scripts/test-word-ssr-http.mjs, and
- * scripts/test-jsonld-escaping.mjs (each of those keeps its own inline copy —
- * this shared copy is only used by the *new* seo-baseline scripts so none of
- * the existing test files are touched).
+ * Shared TypeScript → CommonJS compile helper for Node-based scripts under
+ * scripts/ and workers/word-ssr/. Originally added under scripts/seo-baseline/lib/
+ * for the seo-baseline capture/fixtures scripts only; moved here once real
+ * consumers spanned unrelated domains (sync-vocabulary-levels, import-boundaries,
+ * generated-data-ownership, word-route-manifest/verb-list loaders, and the
+ * offline full-corpus tools in workers/word-ssr/).
+ *
+ * scripts/test-word-seo-routes.mjs, scripts/test-word-ssr-http.mjs,
+ * scripts/test-jsonld-escaping.mjs, and scripts/test-seo-core-routes.mjs each
+ * keep their own independent inline copy of this pattern — consolidating them
+ * onto this helper is a separate, later task, not done here.
  *
  * Compiles a fixed set of source .ts/.tsx files to a scratch directory and
  * returns a `require()` bound to that directory, so callers can load the
@@ -19,7 +24,8 @@ import ts from "typescript";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-export const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
+// scripts/lib/ is two levels below the repo root (scripts/lib -> scripts -> root).
+export const ROOT_DIR = path.resolve(__dirname, "..", "..");
 
 /**
  * @param {string} tempDirName - unique scratch directory name (under repo root)

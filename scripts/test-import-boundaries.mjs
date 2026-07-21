@@ -17,7 +17,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs, ROOT_DIR } from "./seo-baseline/lib/compileTs.mjs";
+import { compileTsToCommonJs, ROOT_DIR } from "./lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 void __filename;

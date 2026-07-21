@@ -20,7 +20,7 @@
  */
 
 import path from "node:path";
-import { compileTsToCommonJs, readJson, ROOT_DIR } from "./lib/compileTs.mjs";
+import { compileTsToCommonJs, readJson, ROOT_DIR } from "../lib/compileTs.mjs";
 
 const SITE_ORIGIN = "https://www.fluentstellar.com";
 const TARGET_LANGUAGES = [

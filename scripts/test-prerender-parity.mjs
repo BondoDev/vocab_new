@@ -48,7 +48,7 @@ import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { ROOT_DIR } from "./seo-baseline/lib/compileTs.mjs";
+import { ROOT_DIR } from "./lib/compileTs.mjs";
 
 const DIST_DIR = path.join(ROOT_DIR, "dist");
 const SITE_ORIGIN = "https://www.fluentstellar.com";

@@ -29,7 +29,7 @@ import fsSync from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { loadBaselineContext, buildFixtureMatrix } from "./fixtures.mjs";
-import { ROOT_DIR } from "./lib/compileTs.mjs";
+import { ROOT_DIR } from "../lib/compileTs.mjs";
 
 const DEFAULT_OUT_DIR =
   process.env.CLAUDE_SCRATCHPAD_DIR ||
