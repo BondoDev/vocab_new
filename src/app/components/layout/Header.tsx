@@ -21,17 +21,17 @@ import {
   UserRound,
   X,
 } from "lucide-react";
-import { UILanguageSwitcher } from "../components/UILanguageSwitcher";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { UILanguageSwitcher } from "./UILanguageSwitcher";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+} from "../ui/dialog";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,7 +39,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import {
   getStoredSupabaseSession,
   handleSupabaseAuthRedirect,
@@ -49,7 +49,7 @@ import {
   signOutSupabase,
   signUpWithPassword,
   type StoredSupabaseSession,
-} from "../../lib/supabaseAuth";
+} from "../../../lib/supabaseAuth";
 
 const NAV_HREFS = {
   about: "/about",

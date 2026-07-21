@@ -115,8 +115,14 @@ account/onboarding behavior (`src/app/hooks/useAccountOnboarding.ts`,
 `useAccountLanguageConfirm.ts`, `useUserProfileLoad.ts`, the
 `AccountOnboardingDialog`/`AccountLanguageConfirmDialog` components) remain
 outside the feature — they are consumed by more than just the profile page.
-Further feature-owned pages (level-test, word/SEO rendering) are planned to
-move into their own `src/features/*` folders in later phases.
+`src/app/components/layout/` owns shared application layout/navigation
+components — the global header, its UI-language switcher, and the
+scroll-to-top control (`Header.tsx`, `UILanguageSwitcher.tsx`,
+`ScrollToTopButton.tsx`) — reusable shell UI consumed across routes, as
+distinct from pages, feature-owned components, SEO page renderers, dialogs,
+and the `ui/` primitive library. Further feature-owned pages (level-test,
+word/SEO rendering) are planned to move into their own `src/features/*`
+folders in later phases.
 
 Distinguishing source vs. output:
 

@@ -2,17 +2,17 @@
 import { createPortal } from "react-dom";
 import { Globe, ChevronDown } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
-import { useLanguage } from "../../contexts/LanguageContext";
-import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
-import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../data/seo/levelTests";
-import { getSeoHubPath, resolveSeoHubRoute } from "../../data/seo/shared/hub";
-import { resolveWordRoute, buildWordPathFromSlug } from "../../data/seo/wordPages/wordSlugs";
-import { getVerbListPath, resolveVerbListRoute } from "../../data/seo/verbLists";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
+import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../../data/seo/levelTests";
+import { getSeoHubPath, resolveSeoHubRoute } from "../../../data/seo/shared/hub";
+import { resolveWordRoute, buildWordPathFromSlug } from "../../../data/seo/wordPages/wordSlugs";
+import { getVerbListPath, resolveVerbListRoute } from "../../../data/seo/verbLists";
 import {
   resolveWordSeoHubRoute,
   getWordSeoHubSummaryPath,
   getWordSeoHubLevelPath,
-} from "../../data/seo/wordPages/wordHubRoutes";
+} from "../../../data/seo/wordPages/wordHubRoutes";
 
 interface UILanguageSwitcherProps {
   variant?: "default" | "centered-modal";

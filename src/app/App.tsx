@@ -10,14 +10,14 @@ import {
 } from "react";
 import { useLocation, useNavigate } from "react-router";
 import "../styles/index.css";
-import { Header } from "./components/Header";
+import { Header } from "./components/layout/Header";
 import { ExplorePage } from "./pages/ExplorePage";
 import { AccountOnboardingDialog } from "./components/AccountOnboardingDialog";
 import { AccountLanguageConfirmDialog } from "./components/AccountLanguageConfirmDialog";
 import { LevelTestLanguageModal } from "./components/LevelTestLanguageModal";
 import { HomePage } from "./components/HomePage";
 import { NotFoundPage } from "./components/NotFoundPage";
-import { ScrollToTopButton } from "./components/ScrollToTopButton";
+import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
 import { UserProfileDashboardPage } from "../features/user-profile";
 import { VocabularyLevelPage } from "./components/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./components/LevelTestSeoPage";

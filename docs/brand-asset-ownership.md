@@ -29,7 +29,7 @@ mark, and a base64-embedded raster SVG is not an optimization.
 Not present, by design: web app manifest / PWA icons (the site is not a PWA),
 structured-data `logo`/`image` fields (JSON-LD builders don't emit any), and a
 visible image logo (the header uses text-only branding in
-`src/app/components/Header.tsx`).
+`src/app/components/layout/Header.tsx`).
 
 ## Regeneration
 

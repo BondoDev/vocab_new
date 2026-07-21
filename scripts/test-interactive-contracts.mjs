@@ -60,7 +60,7 @@ function extractRouteObject(source, constName) {
 console.log("\n=== interactive route contracts ===\n");
 
 const appTsxSource = readFile("src/app/App.tsx");
-const headerTsxSource = readFile("src/app/components/Header.tsx");
+const headerTsxSource = readFile("src/app/components/layout/Header.tsx");
 
 const EXPECTED_ROUTES = {
   language: "/languages",
@@ -91,7 +91,7 @@ test("src/app/App.tsx ROUTES has no duplicate path values", () => {
   assert.deepEqual(duplicates, [], `duplicate route path(s) found: ${duplicates.join(", ")}`);
 });
 
-test("src/app/components/Header.tsx NAV_HREFS stays consistent with src/app/App.tsx ROUTES for shared keys", () => {
+test("src/app/components/layout/Header.tsx NAV_HREFS stays consistent with src/app/App.tsx ROUTES for shared keys", () => {
   const routes = extractRouteObject(appTsxSource, "ROUTES");
   const navHrefs = extractRouteObject(headerTsxSource, "NAV_HREFS");
   const mismatches = [];
