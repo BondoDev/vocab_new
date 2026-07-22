@@ -2,10 +2,9 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import http from "node:http";
-import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import ts from "typescript";
+import { compileTsToCommonJs } from "./lib/compileTs.mjs";
 import { sendNodeResponse } from "../server/word-ssr-http.mjs";
 import {
   handleBlockedWordApiRequest,
@@ -17,8 +16,6 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 const distDir = path.join(rootDir, "dist");
 const siteOrigin = "https://www.fluentstellar.com";
-const tempDir = path.join(rootDir, ".tmp-word-ssr-http-test");
-const require = createRequire(import.meta.url);
 
 function readJson(relativePath) {
   return JSON.parse(
@@ -26,56 +23,18 @@ function readJson(relativePath) {
   );
 }
 
-function compileWordSlugModule() {
-  fs.rmSync(tempDir, { recursive: true, force: true });
-  fs.mkdirSync(tempDir, { recursive: true });
+const compiled = compileTsToCommonJs(".tmp-word-ssr-http-test", [
+  path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
+  path.join(rootDir, "src", "data", "seo", "vocabularyLevels", "vocabularyLevelRoutes.ts"),
+]);
+const { require: requireCompiled, cleanup } = compiled;
 
-  const program = ts.createProgram({
-    rootNames: [
-      path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
-      path.join(rootDir, "src", "data", "seo", "vocabularyLevels", "vocabularyLevelRoutes.ts"),
-    ],
-    options: {
-      target: ts.ScriptTarget.ES2020,
-      module: ts.ModuleKind.CommonJS,
-      moduleResolution: ts.ModuleResolutionKind.Node10,
-      esModuleInterop: true,
-      allowSyntheticDefaultImports: true,
-      skipLibCheck: true,
-      rootDir,
-      outDir: tempDir,
-      noEmit: false,
-    },
-  });
-
-  const emitResult = program.emit();
-  const diagnostics = ts
-    .getPreEmitDiagnostics(program)
-    .concat(emitResult.diagnostics);
-
-  if (diagnostics.length > 0) {
-    const formatted = ts.formatDiagnosticsWithColorAndContext(diagnostics, {
-      getCanonicalFileName: (fileName) => fileName,
-      getCurrentDirectory: () => rootDir,
-      getNewLine: () => "\n",
-    });
-    throw new Error(`TypeScript compile failed:\n${formatted}`);
-  }
-
-  fs.writeFileSync(
-    path.join(tempDir, "package.json"),
-    JSON.stringify({ type: "commonjs" }, null, 2),
-  );
-
-  return require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordSlugs.js"));
-}
-
-const wordSlugs = compileWordSlugModule();
+const wordSlugs = requireCompiled("src/data/seo/wordPages/wordSlugs");
 const wordToSlug = wordSlugs.wordToSlug;
 // vocabularyLevelRoutes.ts is compiled alongside wordSlugs.ts in the same
 // program/tempDir (see rootNames above) for buildLocalizedVocabularyPath.
-const vocabularyLevelRoutes = require(
-  path.join(tempDir, "src", "data", "seo", "vocabularyLevels", "vocabularyLevelRoutes.js"),
+const vocabularyLevelRoutes = requireCompiled(
+  "src/data/seo/vocabularyLevels/vocabularyLevelRoutes",
 );
 const buildLocalizedVocabularyPath = vocabularyLevelRoutes.buildLocalizedVocabularyPath;
 
@@ -835,7 +794,7 @@ async function main() {
 
     console.log("word SSR HTTP tests passed");
   } finally {
-    fs.rmSync(tempDir, { recursive: true, force: true });
+    cleanup();
     await new Promise((resolve, reject) => {
       server.close((error) => {
         if (error) {
