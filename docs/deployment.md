@@ -45,11 +45,11 @@ Local development
     `src/data/seo/verbLists/common100Verbs/verbListLookup/`, `public/sitemap.xml`, `public/sitemaps/`)
   - `vite build` → `dist/` (client bundle + prerender template)
   - `vite build --ssr src/entry-server.tsx --outDir server-build`
-  - `scripts/cleanup-word-build-artifacts.mjs` (removes stray artifacts,
+  - `scripts/build/cleanup-word-build-artifacts.mjs` (removes stray artifacts,
     copies `dist/index.html` → `server-build/ssr-template.html`)
-  - `scripts/prerender.mjs` (SSG of all core/CEFR/hub/level-test/verb-list
+  - `scripts/build/prerender.mjs` (SSG of all core/CEFR/hub/level-test/verb-list
     routes into `dist/`)
-  - `scripts/verify-word-ssr-package.mjs` (smoke-tests the Node SSR runtime
+  - `scripts/build/verify-word-ssr-package.mjs` (smoke-tests the Node SSR runtime
     in `server/` against `server-build/` — kept as a generic SSR regression
     gate; see "Vercel status")
 - Output directory: `dist/` (client + prerendered HTML), `server-build/`

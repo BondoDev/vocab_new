@@ -70,7 +70,7 @@ export async function measureOnePass({ uiLang = "en", targetLanguage = "english"
   const rendered = await markAsync("fullRender(metadata+reactSsr)", () => entryServer.render(pathname, SITE_ORIGIN));
 
   // Stage: template injection — approximates the string-manipulation cost
-  // scripts/prerender.mjs / server/word-ssr-runtime.mjs pay when splicing
+  // scripts/build/prerender.mjs / server/word-ssr-runtime.mjs pay when splicing
   // headTags + appHtml into a template (not an exact copy of either script's
   // regex set — see file header — close enough for relative timing).
   const templatePath = path.join(ROOT_DIR, "server-build", "ssr-template.html");

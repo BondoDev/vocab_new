@@ -51,7 +51,7 @@ const KEY_PATHS = [
   "src/seo/routeMetadataPolicy.ts",
   "src/seo/SeoContext.tsx",
   "src/seo/site.ts",
-  "scripts/prerender.mjs",
+  "scripts/build/prerender.mjs",
   "scripts/generate-sitemap.mjs",
   "scripts/generate-word-hub-data.mjs",
   "workers/word-ssr/src/index.full.ts",

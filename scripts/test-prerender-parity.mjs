@@ -6,7 +6,7 @@
  * on-demand SSR path (server/word-ssr-runtime.mjs → server-build/entry-server.js),
  * and scripts/test-homepage-visibility.mjs / test-schema-graph.mjs inspect
  * *already-built* files under dist/ — but nothing currently proves that the
- * build-time prerender path (scripts/prerender.mjs, which calls the exact
+ * build-time prerender path (scripts/build/prerender.mjs, which calls the exact
  * same `render()` function) and the request-time runtime path
  * (server/word-ssr-runtime.mjs, same `render()` function, different template)
  * actually agree for the same URL.
@@ -17,8 +17,8 @@
  * both paths produce equivalent SEO output today.
  *
  * Strategy (deliberately does NOT touch WORD_PRERENDER_LIMIT, does NOT run a
- * build, does NOT modify scripts/prerender.mjs or server/word-ssr-runtime.mjs):
- *   Both scripts/prerender.mjs (build time) and server/word-ssr-runtime.mjs
+ * build, does NOT modify scripts/build/prerender.mjs or server/word-ssr-runtime.mjs):
+ *   Both scripts/build/prerender.mjs (build time) and server/word-ssr-runtime.mjs
  *   (request time) call the exact same exported `render(pathname, siteOrigin)`
  *   function from the compiled server-build/entry-server.js — they only
  *   differ in which HTML template they inject the result into. So proving
@@ -40,7 +40,7 @@
  * Run: node scripts/test-prerender-parity.mjs
  * Requires a prior `npm run build` (or at least `vite build` +
  * `vite build --ssr src/entry-server.tsx --outDir server-build` +
- * `node scripts/prerender.mjs`) so dist/ and server-build/ both exist.
+ * `node scripts/build/prerender.mjs`) so dist/ and server-build/ both exist.
  */
 
 import assert from "node:assert/strict";
@@ -139,7 +139,7 @@ function extractSeoSnapshotFromDocument(html) {
 /**
  * A fresh `render()` result — {headTags, appHtml} — is not a full HTML
  * document (no <html>/<head>/<body>/<div id="root">), it's the exact pair of
- * fragments that both scripts/prerender.mjs and server/word-ssr-runtime.mjs
+ * fragments that both scripts/build/prerender.mjs and server/word-ssr-runtime.mjs
  * inject into their respective templates. Extracting from the concatenation
  * of the two fragments directly (rather than reconstructing a full document)
  * avoids re-implementing either script's template-injection logic here.
@@ -213,7 +213,7 @@ async function main() {
     const staticHtml = await fs.readFile(distFile, "utf8");
     const staticSnapshot = extractSeoSnapshotFromDocument(staticHtml);
 
-    // Fresh call to the exact same render() function scripts/prerender.mjs
+    // Fresh call to the exact same render() function scripts/build/prerender.mjs
     // called when it produced the static file above.
     const freshRenderResult = await entryServer.render(route, SITE_ORIGIN);
     const freshSnapshot = extractSeoSnapshotFromRenderResult(freshRenderResult);

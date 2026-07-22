@@ -24,7 +24,7 @@
       "pattern": "./data/vocabulary/*/vocabulary.json",
       "options": {},
       "resolvesTo": "src/data/vocabulary/*/vocabulary.json",
-      "runtime": "ssr-entry (server-build/entry-server.js; consumed by scripts/prerender.mjs, server/word-ssr-runtime.mjs, scripts/seo-baseline/capture.mjs)",
+      "runtime": "ssr-entry (server-build/entry-server.js; consumed by scripts/build/prerender.mjs, server/word-ssr-runtime.mjs, scripts/seo-baseline/capture.mjs)",
       "eager": false,
       "expectedCount": 7,
       "actualCount": 7,
@@ -159,7 +159,7 @@
     },
     {
       "id": "L3",
-      "consumer": "scripts/cleanup-word-build-artifacts.mjs",
+      "consumer": "scripts/build/cleanup-word-build-artifacts.mjs",
       "loaderType": "removed 2026-07-15",
       "target": "n/a — formerly dist/vocabularyLevels/index.ts, server-build/vocabularyLevels/index.ts",
       "runtime": "n/a",
@@ -186,7 +186,7 @@
     },
     {
       "id": "L6",
-      "consumer": "scripts/prerender.mjs",
+      "consumer": "scripts/build/prerender.mjs",
       "loaderType": "fs.readdir",
       "target": "dist/assets/",
       "runtime": "build-time",
@@ -200,7 +200,7 @@
       "target": "dist/** (copied into workers/word-ssr/assets-full/)",
       "runtime": "build-time (Worker Static Assets publishing)",
       "risk": "medium-order-dependent",
-      "riskReason": "Copies whatever currently exists in dist/. Depends on scripts/cleanup-word-build-artifacts.mjs (L3) having already run in the same npm run build invocation; if build:word-worker:full is ever run against a stale/uncleaned dist/, the L1 leak could reach Worker Static Assets."
+      "riskReason": "Copies whatever currently exists in dist/. Depends on scripts/build/cleanup-word-build-artifacts.mjs (L3) having already run in the same npm run build invocation; if build:word-worker:full is ever run against a stale/uncleaned dist/, the L1 leak could reach Worker Static Assets."
     },
     {
       "id": "L8",
@@ -222,7 +222,7 @@
     },
     {
       "id": "L10",
-      "consumer": "scripts/verify-word-ssr-package.mjs, and 7 other scripts/test-*.mjs files",
+      "consumer": "scripts/build/verify-word-ssr-package.mjs, and 7 other scripts/test-*.mjs files",
       "loaderType": "fs.readdirSync / fs.readdir walks",
       "target": "dist/, public/sitemaps/, server-build/",
       "runtime": "test-only / build-verification-only",

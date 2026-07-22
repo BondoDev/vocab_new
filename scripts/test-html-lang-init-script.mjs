@@ -16,7 +16,7 @@
  *
  * Fix: the inline script now only ever sets html lang from the URL's
  * language-prefixed segment (which SSR/prerender already guarantees is
- * correct - see scripts/prerender.mjs and src/entry-server.tsx). It no
+ * correct - see scripts/build/prerender.mjs and src/entry-server.tsx). It no
  * longer reads localStorage at all, so it can never contradict the
  * delivered HTML.
  *

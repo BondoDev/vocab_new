@@ -4,7 +4,7 @@
  * Captures a normalized, comparable "SEO snapshot" for every URL fixture in
  * fixtures.mjs, from one of two sources:
  *   - "local" (default, no network): calls the exact same render() export
- *     from server-build/entry-server.js that both scripts/prerender.mjs and
+ *     from server-build/entry-server.js that both scripts/build/prerender.mjs and
  *     server/word-ssr-runtime.mjs call, plus the word-route resolver for
  *     status/redirect fixtures. No network access, no live URL required.
  *   - "live": fetches each fixture's URL against a base URL you provide
@@ -169,7 +169,7 @@ async function captureLocal(fixtures, ctx) {
       const rendered = await entryServer.render(fixture.url, ctx.siteOrigin);
       // headTags (title/canonical/robots/hreflang/OG/Twitter/JSON-LD) and
       // appHtml (H1, visible text, hydration script tags) are the exact two
-      // fragments both scripts/prerender.mjs and server/word-ssr-runtime.mjs
+      // fragments both scripts/build/prerender.mjs and server/word-ssr-runtime.mjs
       // inject into their templates — concatenating them here is sufficient
       // for every field this snapshot extracts, without reconstructing a
       // full HTML document or touching either script's injection logic.

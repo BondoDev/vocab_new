@@ -81,8 +81,8 @@ test("public/vocabularyLevels/index.ts does not exist (removed 2026-07-15 — wa
   assert.ok(!fs.existsSync(p), `${p} exists — the dead orphaned loader was reintroduced`);
 });
 
-test("scripts/cleanup-word-build-artifacts.mjs no longer targets the removed public/vocabularyLevels/index.ts artifact", () => {
-  const scriptPath = path.join(ROOT_DIR, "scripts", "cleanup-word-build-artifacts.mjs");
+test("scripts/build/cleanup-word-build-artifacts.mjs no longer targets the removed public/vocabularyLevels/index.ts artifact", () => {
+  const scriptPath = path.join(ROOT_DIR, "scripts", "build", "cleanup-word-build-artifacts.mjs");
   const text = fs.readFileSync(scriptPath, "utf8");
   assert.ok(
     !text.includes("vocabularyLevels"),

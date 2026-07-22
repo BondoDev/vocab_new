@@ -66,7 +66,7 @@ and status.
 flowchart TD
     Source["Source code\nsrc/, workers/word-ssr/src/"] -->|vite build| ClientBundle["Client bundle\ndist/assets/*"]
     Source -->|vite build --ssr| SSRBundle["SSR bundle\nserver-build/entry-server.js"]
-    SSRBundle -->|scripts/prerender.mjs| Prerendered["Prerendered HTML\ndist/**/index.html\n(2,670 routes)"]
+    SSRBundle -->|scripts/build/prerender.mjs| Prerendered["Prerendered HTML\ndist/**/index.html\n(2,670 routes)"]
     VocabData["src/data/vocabulary, seo/**\n(source + generated mirrors)"] -->|scripts/generate-sitemap.mjs| Sitemap["public/sitemap.xml +\npublic/sitemaps/*.xml\n(84,957 URLs)"]
     VocabData -->|scripts/generate-word-hub-data.mjs| HubData["wordPages/word-hub-pages/,\nwordPages/word-browse-shards/,\nverbLists/common100Verbs/verbListLookup/"]
     ClientBundle --> Publish["workers/word-ssr/publish-shards.mjs"]
@@ -255,7 +255,7 @@ things by design, not a discrepancy:
   every CEFR vocabulary-level page, every SEO hub page, every word-hub page,
   every level-test SEO page, and every verb-list page — **2,670 routes
   total**, each written to a physical `dist/**/index.html` file by
-  `scripts/prerender.mjs`. A `WORD_PRERENDER_LIMIT` env var exists to
+  `scripts/build/prerender.mjs`. A `WORD_PRERENDER_LIMIT` env var exists to
   optionally prerender a subset of individual word pages too, but it
   defaults to `0`, so a plain `npm run build` prerenders **zero** individual
   word pages — confirmed by reading `collectWordRoutesSubset()`'s
@@ -269,7 +269,7 @@ things by design, not a discrepancy:
 - The ~84,500 individual word-page URLs in the sitemap are **not** emitted
   as static files. They resolve at request time through
   `workers/word-ssr/`'s Worker `fetch` handler, which calls the same
-  `render()` function `scripts/prerender.mjs` uses, so the Worker returns
+  `render()` function `scripts/build/prerender.mjs` uses, so the Worker returns
   complete server-rendered HTML — full markup with SEO tags already
   present, not a client-only shell that would need JavaScript to become
   indexable. React then hydrates onto that markup in the browser exactly
@@ -279,7 +279,7 @@ things by design, not a discrepancy:
   only difference is *when* rendering happens (build time vs. request
   time), not *what* is produced.
 
-This is verifiable from code (`entry-server.tsx`, `prerender.mjs`,
+This is verifiable from code (`entry-server.tsx`, `scripts/build/prerender.mjs`,
 `generate-sitemap.mjs`, `route-ownership.md`) and from a local `dist/` +
 `public/sitemaps/` tree after `npm run build`; it has not been confirmed
 against a live production crawl.
@@ -323,7 +323,7 @@ Orientation:
   only, not a production rollback path.
 - **Generated payload**: `generate-full-corpus.mjs` builds the data corpus
   and mints a UTC-dated `dataVersion`; `publish-shards.mjs` assembles
-  `assets-full/` from `dist/**` plus the corpus; `build-word-worker-full.mjs`
+  `assets-full/` from `dist/**` plus the corpus; `scripts/build/build-word-worker-full.mjs`
   bundles `worker-dist-full/index.full.js` via `vite.worker.config.mjs`.
   All three output directories are gitignored — Cloudflare's remote build
   regenerates them on every deploy, not a developer's machine.
@@ -352,10 +352,10 @@ Local build (`npm run build`):
 2. `vite build` → client bundle in `dist/`.
 3. `vite build --ssr src/entry-server.tsx --outDir server-build` → SSR
    bundle.
-4. `scripts/cleanup-word-build-artifacts.mjs` — removes stray artifacts,
+4. `scripts/build/cleanup-word-build-artifacts.mjs` — removes stray artifacts,
    copies `dist/index.html` → `server-build/ssr-template.html`.
-5. `scripts/prerender.mjs` — SSGs all 2,670 routes into `dist/`.
-6. `scripts/verify-word-ssr-package.mjs` — smoke-tests the Node SSR runtime.
+5. `scripts/build/prerender.mjs` — SSGs all 2,670 routes into `dist/`.
+6. `scripts/build/verify-word-ssr-package.mjs` — smoke-tests the Node SSR runtime.
 
 Cloudflare deployment: pushes to `master` trigger Cloudflare Workers Builds
 (Git integration), which runs `npm run build && npm run build:word-worker:full`

@@ -33,7 +33,7 @@ Guard script: `npm run test:generated-data-ownership`
 | `workers/word-ssr/assets-full/` | Worker Static Asset directory | `dist/**` + `data/full-corpus/` | `workers/word-ssr/publish-shards.mjs` (Cloudflare remote build) | **Worker runtime** — bound in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `workers/word-ssr/worker-dist-full/` | generated build output | `workers/word-ssr/src/index.full.ts` | `vite build --ssr` step of `build-worker-full.mjs` (Cloudflare remote build) | **Worker runtime** — `main` field in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `dist/` | generated build output | `vite build` | `npm run build` | intermediate; feeds `server-build/` cleanup and `assets-full/` publish | no (gitignored) | low, ephemeral |
-| `server-build/` | generated build output | `vite build --ssr` | `npm run build` | `scripts/prerender.mjs`, `scripts/verify-word-ssr-package.mjs` | no (gitignored) | low, ephemeral |
+| `server-build/` | generated build output | `vite build --ssr` | `npm run build` | `scripts/build/prerender.mjs`, `scripts/build/verify-word-ssr-package.mjs` | no (gitignored) | low, ephemeral |
 
 ## `src/data/seo/vocabularyLevels/` vs `public/vocabularyLevels/` — resolved finding
 
@@ -84,7 +84,7 @@ introduced the `fetch()`-based client loading strategy in
 not the accompanying `.ts` file, which appears to have been an incidental
 byproduct of copying the whole source directory into `public/` rather than a
 deliberate addition. Removing it also made
-`scripts/cleanup-word-build-artifacts.mjs`'s two `fs.rm` calls (which force-deleted
+`scripts/build/cleanup-word-build-artifacts.mjs`'s two `fs.rm` calls (which force-deleted
 the copied `dist/vocabularyLevels/index.ts` and
 `server-build/vocabularyLevels/index.ts` post-build) obsolete; those calls
 have been removed from that script.

@@ -1,11 +1,11 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { loadWordRouteManifest } from "./lib/load-word-route-manifest.mjs";
+import { loadWordRouteManifest } from "../lib/load-word-route-manifest.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT_DIR = path.resolve(__dirname, "..", "..");
 const DIST_DIR = path.join(ROOT_DIR, "dist");
 const SSR_DIR = path.join(ROOT_DIR, "server-build");
 const TEMPLATE_PATH = path.join(DIST_DIR, "index.html");

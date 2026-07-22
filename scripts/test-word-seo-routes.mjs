@@ -508,8 +508,8 @@ assert.ok(
   "SSR entry server should not filesystem-read source JSON files at runtime",
 );
 assert.ok(
-  packageJsonSource.includes("verify-word-ssr-package.mjs"),
-  "npm run build should keep the SSR packaging verification gate (verify-word-ssr-package.mjs)",
+  packageJsonSource.includes("scripts/build/verify-word-ssr-package.mjs"),
+  "npm run build should keep the SSR packaging verification gate (scripts/build/verify-word-ssr-package.mjs)",
 );
 assert.ok(
   /main\s*=\s*"worker-dist-full\/index\.full\.js"/.test(wranglerProductionSource),

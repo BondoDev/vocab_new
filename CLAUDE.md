@@ -26,7 +26,7 @@ React 18 + Vite + TypeScript SPA with SSR/SSG capability. Deployed to Cloudflare
 **Entry points:**
 - `src/main.tsx` — browser dev entry
 - `src/entry-client.tsx` — hydration entry (production client)
-- `src/entry-server.tsx` — SSR entry used by `scripts/prerender.mjs`
+- `src/entry-server.tsx` — SSR entry used by `scripts/build/prerender.mjs`
 
 **Routing:** React Router v6, defined in `src/app/App.tsx`. Routes include language/level/category/exercise selection, vocabulary practice, level exams, SEO hub pages, and about/help.
 

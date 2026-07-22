@@ -85,11 +85,11 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `src/data/seo/levelTests/index.ts` | static relative `import` | `./seo_level_test_content.json` | client + SSR | low |
 | `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` | static relative `import` | `../../../data/seo/vocabularyLevels/seo-cefr-content.json` | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low |
 | `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/common100Verbs/verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
-| `scripts/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
-| `workers/word-ssr/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `cleanup-word-build-artifacts.mjs` in the same build |
+| `scripts/build/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
+| `workers/word-ssr/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `scripts/build/cleanup-word-build-artifacts.mjs` in the same build |
 | `workers/word-ssr/measure-shard-formats.mjs` | `fs.readdirSync` | internal data dirs | staging-only measurement | low |
 | `scripts/test-crawler-policy.mjs` | `fs.readdirSync` walk | `workers/word-ssr/src/` | test-only | low — protective |
-| `scripts/verify-word-ssr-package.mjs` + 7 other `scripts/test-*.mjs` | `fs.readdirSync`/`fs.readdir` | `dist/`, `public/sitemaps/`, `server-build/` | test/build-verification-only | low |
+| `scripts/build/verify-word-ssr-package.mjs` + 7 other `scripts/test-*.mjs` | `fs.readdirSync`/`fs.readdir` | `dist/`, `public/sitemaps/`, `server-build/` | test/build-verification-only | low |
 
 ## Safe move checklist
 
@@ -145,7 +145,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
    an orphaned duplicate. See `docs/generated-data.md`.
 5. **G2/G3** (`entry-server.tsx`) — not fragile in isolation, but this file
    is a shared, load-bearing SSR entry point consumed by
-   `scripts/prerender.mjs`, `server/word-ssr-runtime.mjs`, and
+   `scripts/build/prerender.mjs`, `server/word-ssr-runtime.mjs`, and
    `scripts/seo-baseline/capture.mjs` by its build output path
    (`server-build/entry-server.js`). Moving it has blast radius well beyond
    its two globs.
