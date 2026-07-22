@@ -222,7 +222,7 @@
     },
     {
       "id": "L10",
-      "consumer": "scripts/build/verify-word-ssr-package.mjs, and 7 other scripts/test-*.mjs files",
+      "consumer": "scripts/build/verify-word-ssr-package.mjs, and 7 other scripts/tests/**/test-*.mjs files",
       "loaderType": "fs.readdirSync / fs.readdir walks",
       "target": "dist/, public/sitemaps/, server-build/",
       "runtime": "test-only / build-verification-only",

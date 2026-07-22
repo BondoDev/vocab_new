@@ -21,7 +21,7 @@ npx tsc --noEmit                  # typecheck
 npm run test:architecture-guards  # run all repository-contract guards
 ```
 
-No unit-test framework is configured; guard scripts under `scripts/test-*.mjs`
+No unit-test framework is configured; guard scripts under `scripts/tests/**/test-*.mjs`
 provide deterministic, file-tree-level regression coverage instead.
 
 ## Architecture
