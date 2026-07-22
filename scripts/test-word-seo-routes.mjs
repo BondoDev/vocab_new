@@ -1,98 +1,39 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
-import ts from "typescript";
+import { compileTsToCommonJs, readJson } from "./lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
-const tempDir = path.join(rootDir, ".tmp-word-seo-test");
-const require = createRequire(import.meta.url);
 
-function compileTestModules() {
-  fs.rmSync(tempDir, { recursive: true, force: true });
-  fs.mkdirSync(tempDir, { recursive: true });
-
-  const rootNames = [
-    path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
-    path.join(rootDir, "src", "data", "seo", "wordPages", "wordPageData.ts"),
-    path.join(rootDir, "src", "data", "seo", "shared", "slugs.ts"),
-    path.join(rootDir, "src", "data", "seo", "shared", "hub.ts"),
-    path.join(rootDir, "src", "data", "seo", "wordPages", "wordHubRoutes.ts"),
-    path.join(
-      rootDir,
-      "src",
-      "data",
-      "seo",
-      "verbLists",
-      "common100Verbs",
-      "common100VerbRegistry.ts",
-    ),
-    path.join(rootDir, "src", "utils", "fixMojibake.ts"),
-  ];
-
-  const program = ts.createProgram({
-    rootNames,
-    options: {
-      target: ts.ScriptTarget.ES2020,
-      module: ts.ModuleKind.CommonJS,
-      moduleResolution: ts.ModuleResolutionKind.Node10,
-      jsx: ts.JsxEmit.ReactJSX,
-      resolveJsonModule: true,
-      esModuleInterop: true,
-      allowSyntheticDefaultImports: true,
-      skipLibCheck: true,
-      rootDir,
-      outDir: tempDir,
-      noEmit: false,
-    },
-  });
-
-  const emitResult = program.emit();
-  const diagnostics = ts
-    .getPreEmitDiagnostics(program)
-    .concat(emitResult.diagnostics);
-
-  if (diagnostics.length > 0) {
-    const formatted = ts.formatDiagnosticsWithColorAndContext(diagnostics, {
-      getCanonicalFileName: (fileName) => fileName,
-      getCurrentDirectory: () => rootDir,
-      getNewLine: () => "\n",
-    });
-    throw new Error(`TypeScript compile failed:\n${formatted}`);
-  }
-
-  fs.writeFileSync(
-    path.join(tempDir, "package.json"),
-    JSON.stringify({ type: "commonjs" }, null, 2),
-  );
-}
-
-compileTestModules();
-
-const wordSlugs = require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordSlugs.js"));
-const wordPageData = require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordPageData.js"));
-const wordHubRoutes = require(path.join(tempDir, "src", "data", "seo", "wordPages", "wordHubRoutes.js"));
-const verbListRegistry = require(
+const compiled = compileTsToCommonJs(".tmp-word-seo-test", [
+  path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts"),
+  path.join(rootDir, "src", "data", "seo", "wordPages", "wordPageData.ts"),
+  path.join(rootDir, "src", "data", "seo", "shared", "slugs.ts"),
+  path.join(rootDir, "src", "data", "seo", "shared", "hub.ts"),
+  path.join(rootDir, "src", "data", "seo", "wordPages", "wordHubRoutes.ts"),
   path.join(
-    tempDir,
+    rootDir,
     "src",
     "data",
     "seo",
     "verbLists",
     "common100Verbs",
-    "common100VerbRegistry.js",
+    "common100VerbRegistry.ts",
   ),
-);
-const { fixMojibake } = require(path.join(tempDir, "src", "utils", "fixMojibake.js"));
+  path.join(rootDir, "src", "utils", "fixMojibake.ts"),
+]);
+const { require: requireCompiled, cleanup } = compiled;
 
-function readJson(relativePath) {
-  return JSON.parse(
-    fs.readFileSync(path.join(rootDir, relativePath), "utf8").replace(/^\uFEFF/, ""),
-  );
-}
+const wordSlugs = requireCompiled("src/data/seo/wordPages/wordSlugs");
+const wordPageData = requireCompiled("src/data/seo/wordPages/wordPageData");
+const wordHubRoutes = requireCompiled("src/data/seo/wordPages/wordHubRoutes");
+const verbListRegistry = requireCompiled(
+  "src/data/seo/verbLists/common100Verbs/common100VerbRegistry",
+);
+const { fixMojibake } = requireCompiled("src/utils/fixMojibake");
 
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
@@ -634,4 +575,4 @@ assert.ok(
 );
 
 console.log("word SEO route tests passed");
-fs.rmSync(tempDir, { recursive: true, force: true });
+cleanup();
