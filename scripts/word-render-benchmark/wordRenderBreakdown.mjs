@@ -1,6 +1,6 @@
 /**
  * One measured pass through the word-page render pipeline, broken down by
- * stage. Shared by scripts/benchmark-word-render.mjs for both the "cold"
+ * stage. Shared by scripts/word-render-benchmark/benchmark-word-render.mjs for both the "cold"
  * (fresh child process) and "warm" (repeated in-process) measurements, so
  * both use exactly the same stage boundaries.
  *
@@ -11,7 +11,7 @@
  *
  * Owned by the word-render benchmark workflow, not SEO baseline — moved out
  * of scripts/seo-baseline/lib/ because no seo-baseline capture/compare/fixture
- * script ever consumed it, only scripts/benchmark-word-render.mjs and its
+ * script ever consumed it, only scripts/word-render-benchmark/benchmark-word-render.mjs and its
  * sibling benchmark-worker-once.mjs did.
  */
 

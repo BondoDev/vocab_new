@@ -5,12 +5,12 @@
 // and must stay byte-identical (also guarded by test:import-boundaries).
 //
 // Usage:
-//   node scripts/sync-vocabulary-levels.mjs           # sync (writes public/)
-//   node scripts/sync-vocabulary-levels.mjs --check   # read-only drift check
+//   node scripts/generation/sync-vocabulary-levels.mjs           # sync (writes public/)
+//   node scripts/generation/sync-vocabulary-levels.mjs --check   # read-only drift check
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import { compileTsToCommonJs, ROOT_DIR } from "./lib/compileTs.mjs";
+import { compileTsToCommonJs, ROOT_DIR } from "../lib/compileTs.mjs";
 
 const CHECK_ONLY = process.argv.includes("--check");
 

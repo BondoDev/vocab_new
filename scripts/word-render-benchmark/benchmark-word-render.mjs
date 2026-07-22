@@ -19,17 +19,17 @@
  *   - approximate heap delta (Node's GC makes exact numbers noisy — treat as
  *     directional, not authoritative)
  *
- * Run: node scripts/benchmark-word-render.mjs [--samples N]
+ * Run: node scripts/word-render-benchmark/benchmark-word-render.mjs [--samples N]
  * Requires a prior `npm run build` (needs server-build/entry-server.js).
  */
 
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { spawn } from "node:child_process";
-import { measureOnePass } from "./word-render-benchmark/wordRenderBreakdown.mjs";
+import { measureOnePass } from "./wordRenderBreakdown.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const COLD_WORKER_PATH = path.join(__dirname, "word-render-benchmark", "benchmark-worker-once.mjs");
+const COLD_WORKER_PATH = path.join(__dirname, "benchmark-worker-once.mjs");
 
 function parseArgs(argv) {
   const args = { samples: 20 };

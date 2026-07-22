@@ -155,7 +155,7 @@ async function main() {
 
   console.log("\n[4] sitemap-core.xml must not submit noindex-classified app routes");
   {
-    // Regression guard for the 2026-07-18 finding: scripts/generate-sitemap.mjs's
+    // Regression guard for the 2026-07-18 finding: scripts/generation/generate-sitemap.mjs's
     // CORE_ROUTES previously included /languages, /languages/filters,
     // /languages/filters/exercises, /languages/level-test, and /explore even
     // though routeMetadataPolicy.ts classifies all of them "public-app" and

@@ -8,7 +8,7 @@
  * ↔ child-file consistency, cross-file duplicate URLs, or exhaustive
  * canonical-shape conformance across every entry in every word sitemap file.
  * This script adds that structural layer without touching sitemap generation
- * itself (scripts/generate-sitemap.mjs is not modified or re-run — this only
+ * itself (scripts/generation/generate-sitemap.mjs is not modified or re-run — this only
  * reads the already-generated public/sitemap.xml and public/sitemaps/*.xml
  * files as they currently sit in the working tree).
  *

@@ -18,17 +18,17 @@ Guard script: `npm run test:generated-data-ownership`
 
 | Directory | Classification | Source of truth | Producer | Consumers | Committed? | Risk |
 |---|---|---|---|---|---|---|
-| `src/data/seo/vocabularyLevels/` | handwritten source | itself | manual (no generator) | client (SSR sync load), SSR (`fs` read), `src/seo/vocabularyLevels/vocabularyMetadata.ts` (via the `src/seo/metadata.ts` facade), `VocabularyLevelPage.tsx`, `scripts/generate-sitemap.mjs` | yes | low |
-| `src/data/seo/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/seo/levelTests/index.ts`, `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/levelTests/levelTestMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
+| `src/data/seo/vocabularyLevels/` | handwritten source | itself | manual (no generator) | client (SSR sync load), SSR (`fs` read), `src/seo/vocabularyLevels/vocabularyMetadata.ts` (via the `src/seo/metadata.ts` facade), `VocabularyLevelPage.tsx`, `scripts/generation/generate-sitemap.mjs` | yes | low |
+| `src/data/seo/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/seo/levelTests/index.ts`, `scripts/generation/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/levelTests/levelTestMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
 | `src/data/seo/vocabularyLevels/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
-| `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/seo/vocabularyLevels/` (must stay byte-identical) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`), run explicitly by the developer | browser `fetch()` from `src/data/seo/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | low — deterministic sync script plus a read-only `--check` mode wired into `test:generated-data-ownership` |
+| `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/seo/vocabularyLevels/` (must stay byte-identical) | `npm run sync:vocabulary-levels` (`scripts/generation/sync-vocabulary-levels.mjs`), run explicitly by the developer | browser `fetch()` from `src/data/seo/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | low — deterministic sync script plus a read-only `--check` mode wired into `test:generated-data-ownership` |
 | ~~`public/vocabularyLevels/index.ts`~~ | *(removed 2026-07-15)* | — | — | none — confirmed dead, no import anywhere | — | resolved |
-| `src/data/seo/wordPages/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
-| `src/data/seo/wordPages/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
+| `src/data/seo/wordPages/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generation/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
+| `src/data/seo/wordPages/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generation/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
 | `src/data/seo/vocabularyLevels/level-browse-preview/` | generated committed source, **no generator exists** | itself (hand-authored/one-time-generated) | none found | client + SSR (`levelBrowseWords.ts`, lazy glob G9) | yes | medium — must be hand-edited until a generator is written |
 | ~~`public/seo/level-browse-preview/`~~ | *(removed 2026-07-15; obsolete duplicate)* | `src/data/seo/vocabularyLevels/level-browse-preview/` remains authoritative | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | none found — no fetch, import, glob, sitemap, SSR, Worker, or service-worker consumer required the public URL | no | resolved |
-| `src/data/seo/verbLists/common100Verbs/verbListLookup/` | generated committed source | `common100Verbs/list_of_100_most_used_verb.json` + vocabulary.json | `scripts/generate-word-hub-data.mjs` | client + SSR (`common100VerbList.ts`, eager glob G6); not the Worker | yes | low |
-| `public/sitemaps/` | generated build output (committed) | word route manifest + verb registry + vocabulary data | `scripts/generate-sitemap.mjs` (`npm run sitemap`) | search engines only; test-only in-repo consumers | yes | low |
+| `src/data/seo/verbLists/common100Verbs/verbListLookup/` | generated committed source | `common100Verbs/list_of_100_most_used_verb.json` + vocabulary.json | `scripts/generation/generate-word-hub-data.mjs` | client + SSR (`common100VerbList.ts`, eager glob G6); not the Worker | yes | low |
+| `public/sitemaps/` | generated build output (committed) | word route manifest + verb registry + vocabulary data | `scripts/generation/generate-sitemap.mjs` (`npm run sitemap`) | search engines only; test-only in-repo consumers | yes | low |
 | `workers/word-ssr/data/full-corpus/` | generated build output | vocabulary + word-route-manifest + slugs | `workers/word-ssr/generate-full-corpus.mjs` (Cloudflare remote build) | `workers/word-ssr/publish-shards.mjs` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `workers/word-ssr/assets-full/` | Worker Static Asset directory | `dist/**` + `data/full-corpus/` | `workers/word-ssr/publish-shards.mjs` (Cloudflare remote build) | **Worker runtime** — bound in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `workers/word-ssr/worker-dist-full/` | generated build output | `workers/word-ssr/src/index.full.ts` | `vite build --ssr` step of `build-worker-full.mjs` (Cloudflare remote build) | **Worker runtime** — `main` field in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
@@ -41,7 +41,7 @@ Guard script: `npm run test:generated-data-ownership`
 `src/seo/vocabularyLevels/vocabularyMetadata.ts` (re-exported through the
 `src/seo/metadata.ts` compatibility facade — see Issue 15's module split) reads it directly for
 every vocabulary-level route's
-title/description/canonical, and it's the only copy `scripts/generate-sitemap.mjs`
+title/description/canonical, and it's the only copy `scripts/generation/generate-sitemap.mjs`
 reads to enumerate sitemap routes and the only copy the SSR sync loader reads
 from disk (`path.resolve(process.cwd(), "src", "data", "seo", "vocabularyLevels", ...)`).
 
@@ -90,7 +90,7 @@ the copied `dist/vocabularyLevels/index.ts` and
 have been removed from that script.
 
 **Synchronization is deterministic but explicit, not automatic (2026-07-15
-follow-up).** `scripts/sync-vocabulary-levels.mjs` derives the expected
+follow-up).** `scripts/generation/sync-vocabulary-levels.mjs` derives the expected
 7×7 UI-language × target-language matrix from the same authoritative
 registry (`SUPPORTED_UI_LANGUAGES` / `SUPPORTED_TARGET_LANGUAGES` in
 `src/data/seo/shared/slugs.ts`) already used by `test:generated-data-ownership`,
@@ -179,7 +179,7 @@ visibility, not changed here.
 | `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/` | `npm run build:word-worker:full` |
 | `dist/`, `server-build/` | `npm run build` |
 | `src/data/seo/vocabularyLevels/` content, `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json` | none — hand-maintained, no generator |
-| `public/vocabularyLevels/*.json` (mirror only, from source content) | `npm run sync:vocabulary-levels` (`scripts/sync-vocabulary-levels.mjs`) |
+| `public/vocabularyLevels/*.json` (mirror only, from source content) | `npm run sync:vocabulary-levels` (`scripts/generation/sync-vocabulary-levels.mjs`) |
 
 ## Manual-edit policy
 
@@ -214,7 +214,7 @@ visibility, not changed here.
   `public/seo/level-browse-preview/` mirror cannot silently reappear, no raw
   TypeScript exists under `public/`, `src/data/seo/vocabularyLevels/` matches the
   expected UI-language × target-language matrix with valid, non-duplicate
-  JSON, `scripts/sync-vocabulary-levels.mjs` exists and its `--check` mode
+  JSON, `scripts/generation/sync-vocabulary-levels.mjs` exists and its `--check` mode
   passes, the `sync:vocabulary-levels`/`check:vocabulary-levels-sync` package
   scripts are wired up, the listed generated source directories exist and are
   committed, and the listed Worker build-output directories stay gitignored

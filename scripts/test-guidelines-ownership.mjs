@@ -165,8 +165,8 @@ test("devSeoCefrPreviewData.ts imports the relocated JSON, not the old guideline
   assert.ok(!OLD_PATH_PATTERN.test(content), "devSeoCefrPreviewData.ts still references guidelines/");
 });
 
-test("scripts/generate-sitemap.mjs reads the relocated level-test JSON, not the old guidelines/ path", () => {
-  const file = path.join(ROOT_DIR, "scripts", "generate-sitemap.mjs");
+test("scripts/generation/generate-sitemap.mjs reads the relocated level-test JSON, not the old guidelines/ path", () => {
+  const file = path.join(ROOT_DIR, "scripts", "generation", "generate-sitemap.mjs");
   const content = fs.readFileSync(file, "utf8");
   assert.ok(
     /path\.join\(\s*ROOT_DIR,\s*"src",\s*"data",\s*"seo",\s*"levelTests",\s*"seo_level_test_content\.json"\s*\)/.test(

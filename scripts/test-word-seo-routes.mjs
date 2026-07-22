@@ -398,7 +398,7 @@ const verbListsSource = fs.readFileSync(
   "utf8",
 );
 const generateWordHubDataSource = fs.readFileSync(
-  path.join(rootDir, "scripts", "generate-word-hub-data.mjs"),
+  path.join(rootDir, "scripts", "generation", "generate-word-hub-data.mjs"),
   "utf8",
 );
 const levelBrowseWordsSource = fs.readFileSync(

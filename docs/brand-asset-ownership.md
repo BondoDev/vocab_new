@@ -34,7 +34,7 @@ visible image logo (the header uses text-only branding in
 ## Regeneration
 
 ```
-python scripts/generate-brand-assets.py   # requires Pillow
+python scripts/generation/generate-brand-assets.py   # requires Pillow
 node scripts/test-brand-asset-ownership.mjs
 ```
 

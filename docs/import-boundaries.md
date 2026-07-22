@@ -41,7 +41,7 @@ consumer file is a *deliberate, checked* change instead of an accidental one.
   `scripts/seo-baseline/current/performance.json`.
 - Never move `src/data/seo/wordPages/word-hub-pages/`, `word-browse-shards/`, or
   `src/data/seo/verbLists/common100Verbs/verbListLookup/` without also updating
-  `scripts/generate-word-hub-data.mjs` (their generator) in the same change.
+  `scripts/generation/generate-word-hub-data.mjs` (their generator) in the same change.
 - Do not introduce a new broad glob (e.g. `**/*.json`) over a large data
   directory; every existing glob here is scoped to one flat directory with a
   fixed extension.
@@ -80,11 +80,11 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `src/data/seo/vocabularyLevels/index.ts` (`fetchVocabularyFile`) | `fetch(`/vocabularyLevels/${ui}/${target}.json`)` | `public/vocabularyLevels/{ui}/{target}.json` | client (browser, on navigation without prerendered/override content) | medium — `public/vocabularyLevels/*.json` is a **required runtime mirror**, not dead data; see `docs/generated-data.md` |
 | `src/contexts/LanguageContext.tsx` | explicit switch, 7 literal `import()` calls | `src/data/interface/{language}_interface.json` | client | medium — same directory as G1/G3 but hand-maintained in parallel; a new interface file is picked up by the globs but silently missed here unless also added |
 | `src/features/learning-setup/LevelCategorySelection.tsx` (`loadVocabularyMetadata`) | explicit switch, 7 literal lazy `import()` calls | `src/data/vocabularyMetadata/{language}.json` | client (browser `useEffect`, runs after mount — not executed during SSR/prerender, so it has no `entry-server.tsx`/Worker exposure) | medium — dual-maintenance risk of the same shape as the `LanguageContext.tsx` row above: adding an 8th UI/practice language requires a new `case` branch here even though the JSON file could be added to `src/data/vocabularyMetadata/` independently; a missing branch returns `null` and silently falls back to `DEFAULT_WORD_TYPES` instead of failing loudly |
-| `scripts/generate-sitemap.mjs` | `fs.readdir` walk | `src/data/seo/vocabularyLevels/{ui}/` | build-time generator | low |
-| `scripts/generate-sitemap.mjs` (`collectLevelTestRoutes`) | `fs.readFile` | `src/data/seo/levelTests/seo_level_test_content.json` | build-time generator | low |
+| `scripts/generation/generate-sitemap.mjs` | `fs.readdir` walk | `src/data/seo/vocabularyLevels/{ui}/` | build-time generator | low |
+| `scripts/generation/generate-sitemap.mjs` (`collectLevelTestRoutes`) | `fs.readFile` | `src/data/seo/levelTests/seo_level_test_content.json` | build-time generator | low |
 | `src/data/seo/levelTests/index.ts` | static relative `import` | `./seo_level_test_content.json` | client + SSR | low |
 | `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` | static relative `import` | `../../../data/seo/vocabularyLevels/seo-cefr-content.json` | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low |
-| `scripts/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/common100Verbs/verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
+| `scripts/generation/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/common100Verbs/verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
 | `scripts/build/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
 | `workers/word-ssr/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `scripts/build/cleanup-word-build-artifacts.mjs` in the same build |
 | `workers/word-ssr/measure-shard-formats.mjs` | `fs.readdirSync` | internal data dirs | staging-only measurement | low |
@@ -107,7 +107,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 
 ### Moving a matched directory (e.g. relocating `wordPages/word-browse-shards/`)
 
-1. Update the generator (`scripts/generate-word-hub-data.mjs` for G4/G5/G6).
+1. Update the generator (`scripts/generation/generate-word-hub-data.mjs` for G4/G5/G6).
 2. Update every consumer glob pattern in the same change.
 3. If a `public/` copy exists for this data (as it does for
    `vocabularyLevels/`), update or remove it in the same change — do not

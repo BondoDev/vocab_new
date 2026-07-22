@@ -218,28 +218,28 @@ test("no malformed vocabulary-level filenames (unexpected casing or extension) u
 
 console.log("\n=== vocabulary-level public mirror synchronization ===\n");
 
-test("scripts/sync-vocabulary-levels.mjs exists", () => {
-  const p = path.join(ROOT_DIR, "scripts", "sync-vocabulary-levels.mjs");
-  assert.ok(fs.existsSync(p), "scripts/sync-vocabulary-levels.mjs is missing");
+test("scripts/generation/sync-vocabulary-levels.mjs exists", () => {
+  const p = path.join(ROOT_DIR, "scripts", "generation", "sync-vocabulary-levels.mjs");
+  assert.ok(fs.existsSync(p), "scripts/generation/sync-vocabulary-levels.mjs is missing");
 });
 
 test("package.json exposes sync:vocabulary-levels and check:vocabulary-levels-sync scripts", () => {
   const pkg = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, "package.json"), "utf8"));
   assert.equal(
     pkg.scripts?.["sync:vocabulary-levels"],
-    "node scripts/sync-vocabulary-levels.mjs",
+    "node scripts/generation/sync-vocabulary-levels.mjs",
     "package.json is missing (or has changed) the sync:vocabulary-levels script",
   );
   assert.equal(
     pkg.scripts?.["check:vocabulary-levels-sync"],
-    "node scripts/sync-vocabulary-levels.mjs --check",
+    "node scripts/generation/sync-vocabulary-levels.mjs --check",
     "package.json is missing (or has changed) the check:vocabulary-levels-sync script",
   );
 });
 
 test("public/vocabularyLevels/ mirror passes a read-only sync check (no writes)", () => {
   assert.doesNotThrow(() => {
-    execFileSync("node", [path.join(ROOT_DIR, "scripts", "sync-vocabulary-levels.mjs"), "--check"], {
+    execFileSync("node", [path.join(ROOT_DIR, "scripts", "generation", "sync-vocabulary-levels.mjs"), "--check"], {
       cwd: ROOT_DIR,
       stdio: "pipe",
     });

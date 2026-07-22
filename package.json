@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "google:index": "node scripts/operations/google-index.mjs",
-    "generate:word-hub-data": "node scripts/generate-word-hub-data.mjs",
-    "sitemap": "node scripts/generate-sitemap.mjs",
-    "sync:vocabulary-levels": "node scripts/sync-vocabulary-levels.mjs",
-    "check:vocabulary-levels-sync": "node scripts/sync-vocabulary-levels.mjs --check",
+    "generate:word-hub-data": "node scripts/generation/generate-word-hub-data.mjs",
+    "sitemap": "node scripts/generation/generate-sitemap.mjs",
+    "sync:vocabulary-levels": "node scripts/generation/sync-vocabulary-levels.mjs",
+    "check:vocabulary-levels-sync": "node scripts/generation/sync-vocabulary-levels.mjs --check",
     "prebuild": "npm run -s check:vocabulary-levels-sync && npm run -s generate:word-hub-data && npm run -s sitemap",
     "build": "vite build && vite build --ssr src/entry-server.tsx --outDir server-build && node scripts/build/cleanup-word-build-artifacts.mjs && node scripts/build/prerender.mjs && node ./scripts/build/verify-word-ssr-package.mjs",
     "dev": "vite",
@@ -51,7 +51,7 @@
     "build:word-worker:full": "node scripts/build/build-word-worker-full.mjs",
     "seo-baseline:capture": "node scripts/seo-baseline/capture.mjs",
     "seo-baseline:compare": "node scripts/seo-baseline/compare.mjs",
-    "benchmark:word-render": "node scripts/benchmark-word-render.mjs"
+    "benchmark:word-render": "node scripts/word-render-benchmark/benchmark-word-render.mjs"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "1.1.6",

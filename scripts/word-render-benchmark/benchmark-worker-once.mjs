@@ -1,6 +1,6 @@
 /**
  * Runs exactly one measureOnePass() and prints its JSON result to stdout.
- * Invoked as a fresh child process by scripts/benchmark-word-render.mjs to
+ * Invoked as a fresh child process by scripts/word-render-benchmark/benchmark-word-render.mjs to
  * capture genuine "cold start" timings (fresh module graph, nothing cached).
  */
 

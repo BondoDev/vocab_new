@@ -59,7 +59,7 @@ try {
 }
 
 // --- 2. generator must use the ledger, never a bare build-date stamp -------
-const generatorSource = fs.readFileSync(path.join(rootDir, "scripts", "generate-sitemap.mjs"), "utf8");
+const generatorSource = fs.readFileSync(path.join(rootDir, "scripts", "generation", "generate-sitemap.mjs"), "utf8");
 assert.ok(
   generatorSource.includes("createLastmodLedger"),
   "generate-sitemap.mjs must resolve lastmod through the ledger",

@@ -1,13 +1,13 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadWordRouteManifest } from "./lib/load-word-route-manifest.mjs";
-import { loadVerbListRegistry } from "./lib/load-verb-list-registry.mjs";
-import { createLastmodLedger } from "./lib/sitemap-lastmod.mjs";
+import { loadWordRouteManifest } from "../lib/load-word-route-manifest.mjs";
+import { loadVerbListRegistry } from "../lib/load-verb-list-registry.mjs";
+import { createLastmodLedger } from "../lib/sitemap-lastmod.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT_DIR = path.resolve(__dirname, "..", "..");
 
 const SITE_URL = (process.env.SITE_URL || "https://www.fluentstellar.com").replace(/\/+$/, "");
 const WORD_SITEMAP_LIMIT = Number.parseInt(process.env.WORD_SITEMAP_LIMIT || "0", 10);
@@ -383,7 +383,7 @@ async function main() {
     // never advance on rebuilds or data changes. To change them, edit
     // scripts/data/sitemap-lastmod-ledger.json or run with
     // SITEMAP_LASTMOD_BUMP="all" / comma-separated file keys.
-    const ledger = createLastmodLedger(path.join(__dirname, "data", "sitemap-lastmod-ledger.json"), {
+    const ledger = createLastmodLedger(path.join(ROOT_DIR, "scripts", "data", "sitemap-lastmod-ledger.json"), {
       bump: process.env.SITEMAP_LASTMOD_BUMP || "",
     });
     const resolveLastmod = (fileName) => ledger.resolve(fileName);

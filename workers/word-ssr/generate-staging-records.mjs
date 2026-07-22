@@ -1,4 +1,4 @@
-// STAGING-ONLY, Node-based, OFFLINE generator (like scripts/generate-word-hub-data.mjs).
+// STAGING-ONLY, Node-based, OFFLINE generator (like scripts/generation/generate-word-hub-data.mjs).
 // Reads the real English vocabulary ONCE at generation time and writes compact,
 // ready-to-serve HydrationWordPageData records for a deterministic ~81-word
 // English A1 subset. The Worker itself never runs this script and never uses

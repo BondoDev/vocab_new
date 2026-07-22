@@ -6,12 +6,12 @@
 #
 # Requires: Python 3 + Pillow (not an npm dependency by design — this is a
 # rare, manual asset-regeneration step, not part of the build).
-# Run: python scripts/generate-brand-assets.py
+# Run: python scripts/generation/generate-brand-assets.py
 import os
 
 from PIL import Image
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MASTER = os.path.join(ROOT, "src", "assets", "brand", "favicon-master.png")
 PUBLIC = os.path.join(ROOT, "public")
 
