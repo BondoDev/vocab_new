@@ -2,9 +2,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
-import workerModule from "../workers/word-ssr/worker-dist-full/index.full.js";
+import workerModule from "../../../workers/word-ssr/worker-dist-full/index.full.js";
 
-const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const assetsRoot = path.join(projectRoot, "workers", "word-ssr", "assets-full");
 const cacheStore = new Map();
 
