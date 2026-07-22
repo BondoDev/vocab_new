@@ -5,13 +5,14 @@
 // full route count, and computes both figures separately so the difference
 // is explicit.
 //
-// Run: node workers/word-ssr/census-full-corpus.mjs
+// Run: node workers/word-ssr/diagnostics/census-full-corpus.mjs
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs, ROOT_DIR, readJson } from "../../scripts/lib/compileTs.mjs";
+import { compileTsToCommonJs, ROOT_DIR, readJson } from "../../../scripts/lib/compileTs.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const workerDir = path.resolve(__dirname, "..");
 
 const compiled = compileTsToCommonJs(".tmp-census-full-corpus", [
   path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordRouteManifest.ts"),
@@ -146,7 +147,7 @@ census.derived = {
   targetLanguageCount: SUPPORTED_TARGET_LANGUAGES.length,
 };
 
-const outPath = path.join(__dirname, "data", "full-corpus-census.json");
+const outPath = path.join(workerDir, "data", "full-corpus-census.json");
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
 fs.writeFileSync(outPath, JSON.stringify(census, null, 2));
 

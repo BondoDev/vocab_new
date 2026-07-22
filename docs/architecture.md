@@ -69,7 +69,7 @@ flowchart TD
     SSRBundle -->|scripts/build/prerender.mjs| Prerendered["Prerendered HTML\ndist/**/index.html\n(2,670 routes)"]
     VocabData["src/data/vocabulary, seo/**\n(source + generated mirrors)"] -->|scripts/generation/generate-sitemap.mjs| Sitemap["public/sitemap.xml +\npublic/sitemaps/*.xml\n(84,957 URLs)"]
     VocabData -->|scripts/generation/generate-word-hub-data.mjs| HubData["wordPages/word-hub-pages/,\nwordPages/word-browse-shards/,\nverbLists/common100Verbs/verbListLookup/"]
-    ClientBundle --> Publish["workers/word-ssr/publish-shards.mjs"]
+    ClientBundle --> Publish["workers/word-ssr/generation/publish-shards.mjs"]
     Prerendered --> Publish
     SSRBundle -->|build-worker-full.mjs\ngenerate-full-corpus.mjs| WorkerBundle["worker-dist-full/index.full.js\n(~1.65 MB raw / ~416 KB gzip)"]
     Publish --> AssetsFull["assets-full/\n(Worker Static Assets)"]

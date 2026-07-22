@@ -195,7 +195,7 @@
     },
     {
       "id": "L7",
-      "consumer": "workers/word-ssr/publish-shards.mjs",
+      "consumer": "workers/word-ssr/generation/publish-shards.mjs",
       "loaderType": "fs.readdirSync recursive walk",
       "target": "dist/** (copied into workers/word-ssr/assets-full/)",
       "runtime": "build-time (Worker Static Assets publishing)",
@@ -204,7 +204,7 @@
     },
     {
       "id": "L8",
-      "consumer": "workers/word-ssr/measure-shard-formats.mjs",
+      "consumer": "workers/word-ssr/diagnostics/measure-shard-formats.mjs",
       "loaderType": "fs.readdirSync",
       "target": "internal data directories",
       "runtime": "staging-only measurement script",

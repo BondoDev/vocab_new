@@ -2,7 +2,7 @@
 // Assets instead of R2 — no R2 account calls, no billing). Assembles
 // assets-full/, the single combined directory wrangler.full.toml's
 // `[assets] directory` points at:
-//   - a copy of ../../dist/**        (the existing production client bundle —
+//   - a copy of ../../../dist/**     (the existing production client bundle —
 //                                      same files the sample Worker already
 //                                      serves via its own [assets] binding)
 //   - records/{dataVersion}/**       (the generated shard tree from
@@ -10,7 +10,7 @@
 //   - records/latest/manifest.json   (stable version pointer — see the
 //                                      comment in the manifest-copy step)
 //
-// Run: node workers/word-ssr/publish-shards.mjs
+// Run: node workers/word-ssr/generation/publish-shards.mjs
 // Idempotent/incremental: skips any file whose SHA-256 already matches the
 // prior run's record in data/publish-manifest.json.
 import fs from "node:fs";
@@ -19,12 +19,13 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.resolve(__dirname, "..", "..");
+const workerDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(workerDir, "..", "..");
 const distDir = path.join(rootDir, "dist");
-const dataDir = path.join(__dirname, "data", "full-corpus");
-const assetsFullDir = path.join(__dirname, "assets-full");
-const publishManifestPath = path.join(__dirname, "data", "publish-manifest.json");
-const clientAssetsOutputPath = path.join(__dirname, "data", "client-assets.full.json");
+const dataDir = path.join(workerDir, "data", "full-corpus");
+const assetsFullDir = path.join(workerDir, "assets-full");
+const publishManifestPath = path.join(workerDir, "data", "publish-manifest.json");
+const clientAssetsOutputPath = path.join(workerDir, "data", "client-assets.full.json");
 
 function sha256(buffer) {
   return crypto.createHash("sha256").update(buffer).digest("hex");

@@ -17,7 +17,8 @@ import zlib from "node:zlib";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, "data", "full-corpus");
+const workerDir = path.resolve(__dirname, "..");
+const dataDir = path.join(workerDir, "data", "full-corpus");
 
 function gzipSize(str) {
   return zlib.gzipSync(Buffer.from(str, "utf8"), { level: 9 }).length;
@@ -150,6 +151,6 @@ console.log(
 );
 
 fs.writeFileSync(
-  path.join(__dirname, "data", "sharding-measurement.json"),
+  path.join(workerDir, "data", "sharding-measurement.json"),
   JSON.stringify({ measuredAt: new Date().toISOString(), results }, null, 2),
 );

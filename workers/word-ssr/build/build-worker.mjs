@@ -12,7 +12,7 @@ const workerDir = path.resolve(__dirname, "..");
 const rootDir = path.resolve(workerDir, "..", "..");
 
 console.log("[1/2] Generating staging records...");
-execFileSync(process.execPath, [path.join(workerDir, "generate-staging-records.mjs")], {
+execFileSync(process.execPath, [path.join(workerDir, "generation", "generate-staging-records.mjs")], {
   stdio: "inherit",
 });
 

@@ -29,8 +29,8 @@ Guard script: `npm run test:generated-data-ownership`
 | ~~`public/seo/level-browse-preview/`~~ | *(removed 2026-07-15; obsolete duplicate)* | `src/data/seo/vocabularyLevels/level-browse-preview/` remains authoritative | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | none found — no fetch, import, glob, sitemap, SSR, Worker, or service-worker consumer required the public URL | no | resolved |
 | `src/data/seo/verbLists/common100Verbs/verbListLookup/` | generated committed source | `common100Verbs/list_of_100_most_used_verb.json` + vocabulary.json | `scripts/generation/generate-word-hub-data.mjs` | client + SSR (`common100VerbList.ts`, eager glob G6); not the Worker | yes | low |
 | `public/sitemaps/` | generated build output (committed) | word route manifest + verb registry + vocabulary data | `scripts/generation/generate-sitemap.mjs` (`npm run sitemap`) | search engines only; test-only in-repo consumers | yes | low |
-| `workers/word-ssr/data/full-corpus/` | generated build output | vocabulary + word-route-manifest + slugs | `workers/word-ssr/generate-full-corpus.mjs` (Cloudflare remote build) | `workers/word-ssr/publish-shards.mjs` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
-| `workers/word-ssr/assets-full/` | Worker Static Asset directory | `dist/**` + `data/full-corpus/` | `workers/word-ssr/publish-shards.mjs` (Cloudflare remote build) | **Worker runtime** — bound in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
+| `workers/word-ssr/data/full-corpus/` | generated build output | vocabulary + word-route-manifest + slugs | `workers/word-ssr/generation/generate-full-corpus.mjs` (Cloudflare remote build) | `workers/word-ssr/generation/publish-shards.mjs` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
+| `workers/word-ssr/assets-full/` | Worker Static Asset directory | `dist/**` + `data/full-corpus/` | `workers/word-ssr/generation/publish-shards.mjs` (Cloudflare remote build) | **Worker runtime** — bound in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `workers/word-ssr/worker-dist-full/` | generated build output | `workers/word-ssr/src/index.full.ts` | `vite build --ssr` step of `build-worker-full.mjs` (Cloudflare remote build) | **Worker runtime** — `main` field in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `dist/` | generated build output | `vite build` | `npm run build` | intermediate; feeds `server-build/` cleanup and `assets-full/` publish | no (gitignored) | low, ephemeral |
 | `server-build/` | generated build output | `vite build --ssr` | `npm run build` | `scripts/build/prerender.mjs`, `scripts/build/verify-word-ssr-package.mjs` | no (gitignored) | low, ephemeral |
@@ -68,7 +68,7 @@ prerendered/override content (client-side navigation between vocabulary-level
 pages after initial hydration). That URL is only servable because Vite's
 `publicDir` default copies `public/vocabularyLevels/` into `dist/` (and, via
 the SSR build, into `server-build/`), and from there
-`workers/word-ssr/publish-shards.mjs` copies it into the Worker's
+`workers/word-ssr/generation/publish-shards.mjs` copies it into the Worker's
 `assets-full/`. **Deleting `public/vocabularyLevels/*.json` would break
 production client-side rendering of vocabulary-level pages.** All 49 JSON
 files were verified byte-identical to `src/data/seo/vocabularyLevels/` (SHA-256,
@@ -163,7 +163,7 @@ change or reconfigure that Cloudflare setting — see `docs/deployment.md` for
 the authoritative deployment-flow description, which has been updated to
 match.
 
-Separately, `workers/word-ssr/generate-full-corpus.mjs` and
+Separately, `workers/word-ssr/generation/generate-full-corpus.mjs` and
 `workers/word-ssr/build/build-worker-full.mjs` both carry header comments calling
 this pipeline "STAGING-ONLY," but `wrangler.production.toml` uses the
 identical `assets-full`/`worker-dist-full` outputs for production. That

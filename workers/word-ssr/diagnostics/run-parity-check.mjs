@@ -8,7 +8,8 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.resolve(__dirname, "..", "..");
+const workerDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(workerDir, "..", "..");
 const WORKER_ORIGIN = process.env.STAGING_WORKER_ORIGIN ?? "http://127.0.0.1:8787";
 const SITE_ORIGIN = "https://www.fluentstellar.com";
 

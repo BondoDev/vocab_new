@@ -27,10 +27,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs, ROOT_DIR, readJson } from "../../scripts/lib/compileTs.mjs";
+import { compileTsToCommonJs, ROOT_DIR, readJson } from "../../../scripts/lib/compileTs.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, "data", "full-corpus");
+const workerDir = path.resolve(__dirname, "..");
+const dataDir = path.join(workerDir, "data", "full-corpus");
 const BROWSE_PAGE_SIZE = 54;
 const DATA_VERSION = `staging-full-${new Date().toISOString().slice(0, 10)}-01`;
 

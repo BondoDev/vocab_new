@@ -8,8 +8,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.resolve(__dirname, "..", "..");
-const dataDir = path.join(__dirname, "data");
+const workerDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(workerDir, "..", "..");
+const dataDir = path.join(workerDir, "data");
 
 const TARGET_LANGUAGE = "english";
 const UI_LANGUAGE = "en";
