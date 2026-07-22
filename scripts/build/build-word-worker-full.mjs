@@ -1,1 +1,1 @@
-import "../../workers/word-ssr/build-worker-full.mjs";
+import "../../workers/word-ssr/build/build-worker-full.mjs";

@@ -164,7 +164,7 @@ the authoritative deployment-flow description, which has been updated to
 match.
 
 Separately, `workers/word-ssr/generate-full-corpus.mjs` and
-`workers/word-ssr/build-worker-full.mjs` both carry header comments calling
+`workers/word-ssr/build/build-worker-full.mjs` both carry header comments calling
 this pipeline "STAGING-ONLY," but `wrangler.production.toml` uses the
 identical `assets-full`/`worker-dist-full` outputs for production. That
 comment appears stale relative to current usage — also flagged for

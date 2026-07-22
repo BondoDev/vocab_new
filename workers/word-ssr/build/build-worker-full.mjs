@@ -11,13 +11,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.resolve(__dirname, "..", "..");
+const workerDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(workerDir, "..", "..");
 
 console.log("[1/3] Generating full-corpus records...");
-execFileSync(process.execPath, [path.join(__dirname, "generate-full-corpus.mjs")], { stdio: "inherit" });
+execFileSync(process.execPath, [path.join(workerDir, "generate-full-corpus.mjs")], { stdio: "inherit" });
 
 console.log("\n[2/3] Publishing records + client bundle into assets-full/...");
-execFileSync(process.execPath, [path.join(__dirname, "publish-shards.mjs")], { stdio: "inherit" });
+execFileSync(process.execPath, [path.join(workerDir, "publish-shards.mjs")], { stdio: "inherit" });
 
 console.log("\n[3/3] Building Worker entry via Vite...");
 const viteBin = path.join(rootDir, "node_modules", ".bin", "vite");
@@ -28,9 +29,9 @@ execFileSync(
     "--config",
     path.join(__dirname, "vite.worker.config.mjs"),
     "--ssr",
-    path.join(__dirname, "src", "index.full.ts"),
+    path.join(workerDir, "src", "index.full.ts"),
     "--outDir",
-    path.join(__dirname, "worker-dist-full"),
+    path.join(workerDir, "worker-dist-full"),
   ],
   { stdio: "inherit", cwd: rootDir, shell: true },
 );

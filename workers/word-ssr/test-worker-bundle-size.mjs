@@ -7,8 +7,8 @@
 // into the Worker upload, plus Vite's default publicDir behavior copying
 // public/ into the SSR build output).
 //
-// Run after: node build-worker-full.mjs (or at least the plain
-// `vite build --config vite.worker.config.mjs --ssr src/index.full.ts
+// Run after: node build/build-worker-full.mjs (or at least the plain
+// `vite build --config build/vite.worker.config.mjs --ssr src/index.full.ts
 // --outDir worker-dist-full` step within it).
 //
 // Run: node workers/word-ssr/test-worker-bundle-size.mjs
@@ -70,7 +70,7 @@ function gzipSize(absPath) {
 
 if (!fs.existsSync(DIST_DIR)) {
   console.log(`\nSKIPPED: ${path.relative(process.cwd(), DIST_DIR)} not found.`);
-  console.log("Run `node build-worker-full.mjs` (or its vite --ssr build step) first.\n");
+  console.log("Run `node build/build-worker-full.mjs` (or its vite --ssr build step) first.\n");
   process.exit(0);
 }
 

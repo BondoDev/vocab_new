@@ -8,10 +8,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.resolve(__dirname, "..", "..");
+const workerDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(workerDir, "..", "..");
 
 console.log("[1/2] Generating staging records...");
-execFileSync(process.execPath, [path.join(__dirname, "generate-staging-records.mjs")], {
+execFileSync(process.execPath, [path.join(workerDir, "generate-staging-records.mjs")], {
   stdio: "inherit",
 });
 
@@ -24,9 +25,9 @@ execFileSync(
     "--config",
     path.join(__dirname, "vite.worker.config.mjs"),
     "--ssr",
-    path.join(__dirname, "src", "index.ts"),
+    path.join(workerDir, "src", "index.ts"),
     "--outDir",
-    path.join(__dirname, "worker-dist"),
+    path.join(workerDir, "worker-dist"),
   ],
   { stdio: "inherit", cwd: rootDir, shell: true },
 );
