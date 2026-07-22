@@ -15,70 +15,22 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
-import ts from "typescript";
+import { compileTsToCommonJs } from "./lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
-const tempDir = path.join(rootDir, ".tmp-jsonld-escape-test");
-const require = createRequire(import.meta.url);
 
 // ── Compile SeoContext.tsx and site.ts to CommonJS ───────────────────────────
 
-function compileModules() {
-  fs.rmSync(tempDir, { recursive: true, force: true });
-  fs.mkdirSync(tempDir, { recursive: true });
+const compiled = compileTsToCommonJs(".tmp-jsonld-escape-test", [
+  path.join(rootDir, "src", "seo", "SeoContext.tsx"),
+  path.join(rootDir, "src", "seo", "site.ts"),
+]);
+const { require: requireCompiled, cleanup } = compiled;
 
-  const rootNames = [
-    path.join(rootDir, "src", "seo", "SeoContext.tsx"),
-    path.join(rootDir, "src", "seo", "site.ts"),
-  ];
-
-  const program = ts.createProgram({
-    rootNames,
-    options: {
-      target: ts.ScriptTarget.ES2020,
-      module: ts.ModuleKind.CommonJS,
-      moduleResolution: ts.ModuleResolutionKind.Node10,
-      jsx: ts.JsxEmit.ReactJSX,
-      resolveJsonModule: true,
-      esModuleInterop: true,
-      allowSyntheticDefaultImports: true,
-      skipLibCheck: true,
-      rootDir,
-      outDir: tempDir,
-      noEmit: false,
-    },
-  });
-
-  const emitResult = program.emit();
-  const diagnostics = ts
-    .getPreEmitDiagnostics(program)
-    .concat(emitResult.diagnostics);
-
-  if (diagnostics.length > 0) {
-    const formatted = ts.formatDiagnosticsWithColorAndContext(diagnostics, {
-      getCanonicalFileName: (f) => f,
-      getCurrentDirectory: () => rootDir,
-      getNewLine: () => "\n",
-    });
-    throw new Error(`TypeScript compile failed:\n${formatted}`);
-  }
-
-  // Mark the temp directory as CommonJS so Node.js loads the compiled files
-  fs.writeFileSync(
-    path.join(tempDir, "package.json"),
-    JSON.stringify({ type: "commonjs" }),
-  );
-}
-
-compileModules();
-
-const { renderSeoTags } = require(
-  path.join(tempDir, "src", "seo", "SeoContext.js"),
-);
+const { renderSeoTags } = requireCompiled("src/seo/SeoContext");
 
 // ── HTML script-element parser ───────────────────────────────────────────────
 //
@@ -949,7 +901,7 @@ console.log(`\n─────────────────────�
 console.log(`  ${passed} passed, ${failed} failed`);
 console.log(`─────────────────────────────────────────\n`);
 
-fs.rmSync(tempDir, { recursive: true, force: true });
+cleanup();
 
 if (failed > 0) {
   process.exit(1);
