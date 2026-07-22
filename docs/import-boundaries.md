@@ -88,7 +88,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `scripts/build/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
 | `workers/word-ssr/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `scripts/build/cleanup-word-build-artifacts.mjs` in the same build |
 | `workers/word-ssr/measure-shard-formats.mjs` | `fs.readdirSync` | internal data dirs | staging-only measurement | low |
-| `scripts/test-crawler-policy.mjs` | `fs.readdirSync` walk | `workers/word-ssr/src/` | test-only | low — protective |
+| `scripts/tests/worker/test-crawler-policy.mjs` | `fs.readdirSync` walk | `workers/word-ssr/src/` | test-only | low — protective |
 | `scripts/build/verify-word-ssr-package.mjs` + 7 other `scripts/test-*.mjs` | `fs.readdirSync`/`fs.readdir` | `dist/`, `public/sitemaps/`, `server-build/` | test/build-verification-only | low |
 
 ## Safe move checklist

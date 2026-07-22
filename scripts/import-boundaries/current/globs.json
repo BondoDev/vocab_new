@@ -213,7 +213,7 @@
     },
     {
       "id": "L9",
-      "consumer": "scripts/test-crawler-policy.mjs",
+      "consumer": "scripts/tests/worker/test-crawler-policy.mjs",
       "loaderType": "fs.readdirSync walk",
       "target": "workers/word-ssr/src/",
       "runtime": "test-only",

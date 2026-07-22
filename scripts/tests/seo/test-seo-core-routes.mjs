@@ -60,7 +60,7 @@ async function main() {
     test("robots.txt catch-all group has no blanket Disallow (search engines stay allowed)", () => {
       // Per-bot Disallow groups are an intentional crawl policy for
       // non-search commercial crawlers (2026-07-10 Worker-quota incident;
-      // see scripts/test-crawler-policy.mjs for the full policy guards).
+      // see scripts/tests/worker/test-crawler-policy.mjs for the full policy guards).
       // What must never happen is the catch-all `User-agent: *` group —
       // the one Googlebot/Bingbot fall into — gaining a `Disallow: /`.
       const catchAllGroup = robotsTxt
