@@ -21,15 +21,12 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
-import ts from "typescript";
+import { compileTsToCommonJs } from "./lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
-const tempDir = path.join(rootDir, ".tmp-seo-core-routes-test");
-const require = createRequire(import.meta.url);
 
 let passed = 0;
 let failed = 0;
@@ -48,41 +45,6 @@ function test(name, fn) {
 
 function readFile(relativePath) {
   return fs.readFileSync(path.join(rootDir, relativePath), "utf8");
-}
-
-function compileRouteMetadataPolicy() {
-  fs.rmSync(tempDir, { recursive: true, force: true });
-  fs.mkdirSync(tempDir, { recursive: true });
-
-  const program = ts.createProgram({
-    rootNames: [path.join(rootDir, "src", "seo", "routeMetadataPolicy.ts")],
-    options: {
-      target: ts.ScriptTarget.ES2020,
-      module: ts.ModuleKind.CommonJS,
-      moduleResolution: ts.ModuleResolutionKind.Node10,
-      jsx: ts.JsxEmit.ReactJSX,
-      esModuleInterop: true,
-      allowSyntheticDefaultImports: true,
-      skipLibCheck: true,
-      rootDir,
-      outDir: tempDir,
-      noEmit: false,
-    },
-  });
-
-  const emitResult = program.emit();
-  const diagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
-  if (diagnostics.length > 0) {
-    const formatted = ts.formatDiagnosticsWithColorAndContext(diagnostics, {
-      getCanonicalFileName: (f) => f,
-      getCurrentDirectory: () => rootDir,
-      getNewLine: () => "\n",
-    });
-    throw new Error(`TypeScript compile failed:\n${formatted}`);
-  }
-
-  fs.writeFileSync(path.join(tempDir, "package.json"), JSON.stringify({ type: "commonjs" }));
-  return require(path.join(tempDir, "src", "seo", "routeMetadataPolicy.js"));
 }
 
 async function main() {
@@ -116,10 +78,14 @@ async function main() {
     });
   }
 
+  const compiled = compileTsToCommonJs(".tmp-seo-core-routes-test", [
+    path.join(rootDir, "src", "seo", "routeMetadataPolicy.ts"),
+  ]);
+  const { require: requireCompiled, cleanup } = compiled;
+  const routeMetadataPolicy = requireCompiled("src/seo/routeMetadataPolicy");
+
   console.log("\n[2] routeMetadataPolicy.ts keeps restricted routes non-indexable");
   {
-    const routeMetadataPolicy = compileRouteMetadataPolicy();
-
     test("/profile is classified private-account", () => {
       assert.equal(routeMetadataPolicy.classifyRouteMetadata("/profile"), "private-account");
     });
@@ -210,7 +176,6 @@ async function main() {
     // it doesn't recognize, which would misreport those hub routes as
     // noindex — so this check only applies to routes the policy explicitly
     // classifies into one of its own noindex classes, not to "invalid".
-    const routeMetadataPolicy = compileRouteMetadataPolicy();
     const NOINDEX_CLASSES = new Set(["public-app", "private-account", "practice-session"]);
     const coreXml = readFile("public/sitemaps/sitemap-core.xml");
     const corePathnames = Array.from(coreXml.matchAll(/<loc>([^<]+)<\/loc>/g)).map(
@@ -240,7 +205,7 @@ async function main() {
   console.log(`  ${passed} passed, ${failed} failed`);
   console.log(`─────────────────────────────────────────\n`);
 
-  fs.rmSync(tempDir, { recursive: true, force: true });
+  cleanup();
 
   if (failed > 0) {
     process.exitCode = 1;
