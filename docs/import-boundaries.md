@@ -21,7 +21,7 @@ a future folder reorganization can silently:
 - flip eager/lazy behavior if the pattern or options are edited along the way;
 - pull vocabulary or SEO data into the Cloudflare Worker bundle, which has a
   strict internal 2.5 MB gzip guard well below Cloudflare's 3 MB hard limit
-  (see `workers/word-ssr/test-worker-bundle-size.mjs` and
+  (see `workers/word-ssr/tests/test-worker-bundle-size.mjs` and
   `scripts/seo-baseline/current/performance.json`).
 
 This document exists so that any future move of a data directory or a
@@ -130,7 +130,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
    fragility is real.
 2. **G5** (`wordBrowseSearchData.ts`) — the module is imported into
    Worker-reachable code (`WordSeoPageView.tsx`), and only
-   `workers/word-ssr/test-worker-bundle-size.mjs`'s explicit
+   `workers/word-ssr/tests/test-worker-bundle-size.mjs`'s explicit
    `getWordBrowseSearchData` usage check stands between "safe" and
    "re-introduces the historical bundle-bloat bug."
 3. **G7** (`WordSeoPage.tsx`'s vocabulary glob) — this is literally the

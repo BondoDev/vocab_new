@@ -5,7 +5,7 @@
     "outputFiles": 1,
     "rawBytes": 1654458,
     "gzipBytes": 426700,
-    "gzipMethod": "workers/word-ssr/test-worker-bundle-size.mjs (zlib.gzipSync level 9)",
+    "gzipMethod": "workers/word-ssr/tests/test-worker-bundle-size.mjs (zlib.gzipSync level 9)",
     "repositoryLimitBytes": 2621440,
     "cloudflareLimitBytes": 3145728,
     "repositoryHeadroomBytes": 2194740,

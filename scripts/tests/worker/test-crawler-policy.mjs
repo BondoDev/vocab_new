@@ -134,7 +134,7 @@ for (const rel of ["dist/robots.txt", "workers/word-ssr/assets-full/robots.txt"]
 
 // --- 3. production wrangler config invariants ------------------------------
 const wranglerToml = fs.readFileSync(
-  path.join(rootDir, "workers", "word-ssr", "wrangler.production.toml"),
+  path.join(rootDir, "workers", "word-ssr", "config", "wrangler.production.toml"),
   "utf8",
 );
 assert.match(wranglerToml, /^name = "fluentstellar-production"$/m, "Worker name must stay fluentstellar-production");

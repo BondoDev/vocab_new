@@ -1,7 +1,7 @@
 // STAGING-ONLY build helper for the FULL-CORPUS Worker (src/index.full.ts).
 // Separate from build-worker.mjs (the original 81-word sample's build
 // helper, kept untouched). Runs the offline steps needed before
-// `wrangler dev --config wrangler.full.toml` can run against fresh code:
+// `wrangler dev --config config/wrangler.full.toml` can run against fresh code:
 //   1. regenerate full-corpus records from the real vocabulary (Node, offline)
 //   2. publish those records (+ a copy of the client bundle) into assets-full/
 //   3. pre-bundle the Worker entry via Vite (resolves import.meta.glob,
@@ -36,4 +36,4 @@ execFileSync(
   { stdio: "inherit", cwd: rootDir, shell: true },
 );
 
-console.log("\nDone. Run `npx wrangler dev --config wrangler.full.toml` from workers/word-ssr/ to test locally.");
+console.log("\nDone. Run `npx wrangler dev --config config/wrangler.full.toml` from workers/word-ssr/ to test locally.");

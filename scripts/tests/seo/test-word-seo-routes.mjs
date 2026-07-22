@@ -408,7 +408,7 @@ const levelBrowseWordsSource = fs.readFileSync(
 const entryServerSource = fs.readFileSync(path.join(rootDir, "src", "entry-server.tsx"), "utf8");
 const packageJsonSource = fs.readFileSync(path.join(rootDir, "package.json"), "utf8");
 const wranglerProductionSource = fs.readFileSync(
-  path.join(rootDir, "workers", "word-ssr", "wrangler.production.toml"),
+  path.join(rootDir, "workers", "word-ssr", "config", "wrangler.production.toml"),
   "utf8",
 );
 const coreSitemapXml = fs.readFileSync(
@@ -512,7 +512,7 @@ assert.ok(
   "npm run build should keep the SSR packaging verification gate (scripts/build/verify-word-ssr-package.mjs)",
 );
 assert.ok(
-  /main\s*=\s*"worker-dist-full\/index\.full\.js"/.test(wranglerProductionSource),
+  /main\s*=\s*"\.\.\/worker-dist-full\/index\.full\.js"/.test(wranglerProductionSource),
   "production Worker should deploy the prebundled worker-dist-full artifact",
 );
 assert.ok(
@@ -520,7 +520,7 @@ assert.ok(
   "production Worker should not let wrangler re-bundle (packaging is done by the Vite worker build)",
 );
 assert.ok(
-  /directory\s*=\s*"assets-full"/.test(wranglerProductionSource),
+  /directory\s*=\s*"\.\.\/assets-full"/.test(wranglerProductionSource),
   "production Worker should serve the assembled assets-full static bundle",
 );
 assert.ok(

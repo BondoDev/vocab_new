@@ -53,7 +53,7 @@ and status.
   JSON endpoint have no matching static file, so Cloudflare falls through to
   `workers/word-ssr/src/index.full.ts`'s `fetch` handler, which performs a
   concept-shard lookup and SSRs the page with `render-entry.tsx`. See
-  [`workers/word-ssr/route-ownership.md`](../workers/word-ssr/route-ownership.md)
+  [`workers/word-ssr/docs/route-ownership.md`](../workers/word-ssr/docs/route-ownership.md)
   for the exact route split, verified against a running `wrangler dev`
   instance.
 - **Browser hydration** — `src/entry-client.tsx` checks whether the root
@@ -312,7 +312,7 @@ is the authoritative reference; this section only orients:
 `workers/word-ssr/` is the production Cloudflare Worker. Full detail —
 route split, build/packaging commands, bundle-size limits, and production
 safety checks — lives in [`docs/deployment.md`](deployment.md) and
-[`workers/word-ssr/route-ownership.md`](../workers/word-ssr/route-ownership.md).
+[`workers/word-ssr/docs/route-ownership.md`](../workers/word-ssr/docs/route-ownership.md).
 Orientation:
 
 - **Purpose**: SSR word pages, word-browse pagination, legacy-URL redirects,
@@ -329,7 +329,7 @@ Orientation:
   regenerates them on every deploy, not a developer's machine.
 - **Commands**: `npm run build:word-worker:full` (full rebuild + corpus +
   packaging). Manual deploy fallback:
-  `npx wrangler deploy --config workers/word-ssr/wrangler.production.toml`.
+  `npx wrangler deploy --config workers/word-ssr/config/wrangler.production.toml`.
 - **Cloudflare limits (Free plan)**: 3 MB gzip hard limit; this repo
   enforces an internal 2.5 MB gzip budget (`test:word-worker:bundle-size`).
   Static Assets cap at 20,000 files/version, which is why the ~85k-URL word
@@ -454,7 +454,7 @@ contracts or recurring procedures.
 | `docs/brand-asset-ownership.md` | favicon/OG-image master, variants, regeneration |
 | `docs/google-indexing-operations.md` | manual Search Console indexing procedure |
 | `docs/non-seo-regression-checklist.md` | recurring manual/automated interactive-behavior checklist |
-| `workers/word-ssr/route-ownership.md` | Worker vs. static-asset route split (staging-verified) |
+| `workers/word-ssr/docs/route-ownership.md` | Worker vs. static-asset route split (staging-verified) |
 | `scripts/README.md` | `scripts/` subsystem ownership and architecture reference |
 
 Documents that recorded a single completed cleanup (dependency/UI-component

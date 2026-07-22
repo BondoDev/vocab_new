@@ -70,7 +70,7 @@ Local development
 - Production entry: `workers/word-ssr/src/index.full.ts`,
   pre-bundled by Vite (`vite.worker.config.mjs`) into
   `worker-dist-full/index.full.js`; deployed with `no_bundle = true`
-- Wrangler config: `workers/word-ssr/wrangler.production.toml`
+- Wrangler config: `workers/word-ssr/config/wrangler.production.toml`
   (`workers_dev = false`; `ENABLE_CANONICAL_HOST_REDIRECT = "false"`)
 - Worker build: `npm run build:word-worker:full`
   (**regenerates the data corpus and mints a new UTC-dated `dataVersion`** —
@@ -78,7 +78,7 @@ Local development
 - Deploy command: as of the Cloudflare Workers Builds connection
   (2026-07-15 status note above), deploys run automatically on push to
   `master`. `npx wrangler deploy --config
-  workers/word-ssr/wrangler.production.toml` (never a bare `wrangler
+  workers/word-ssr/config/wrangler.production.toml` (never a bare `wrangler
   deploy`) remains the manual fallback for out-of-band redeploys.
 - Assets: one `[assets]` binding serving `assets-full/` (the production
   client bundle + prerendered HTML + record shards, assembled by

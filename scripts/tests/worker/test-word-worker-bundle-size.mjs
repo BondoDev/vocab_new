@@ -1,1 +1,1 @@
-import "../../../workers/word-ssr/test-worker-bundle-size.mjs";
+import "../../../workers/word-ssr/tests/test-worker-bundle-size.mjs";

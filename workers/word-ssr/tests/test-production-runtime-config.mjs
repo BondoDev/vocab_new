@@ -3,7 +3,7 @@ import {
   getCanonicalHostRedirectLocation,
   getGlobalRobotsHeader,
   resolveWorkerRuntimeConfig,
-} from "./src/runtime-config.mjs";
+} from "../src/runtime-config.mjs";
 
 const productionConfig = resolveWorkerRuntimeConfig(
   {

@@ -143,7 +143,7 @@ direct public fetch contract for these files.
 
 ## Worker generated directories are Cloudflare remote-build outputs
 
-`workers/word-ssr/wrangler.production.toml` (the `fluentstellar-production`
+`workers/word-ssr/config/wrangler.production.toml` (the `fluentstellar-production`
 config) points `main` at `worker-dist-full/index.full.js` and `[assets]
 directory` at `assets-full` — both fully gitignored and never stored in Git.
 As of the Cloudflare Workers Builds connection made after 2026-07-14, these
@@ -222,7 +222,7 @@ visibility, not changed here.
 - `npm run test:level-browse-preview-completeness` (via
   `test:level-browse-preview`) — asserts the exact 42-key match set for
   `src/data/seo/vocabularyLevels/level-browse-preview/*.json`.
-- `workers/word-ssr/test-worker-bundle-size.mjs` — asserts
+- `workers/word-ssr/tests/test-worker-bundle-size.mjs` — asserts
   `word-browse-shards`' heavy export never reaches the Worker bundle.
 
 ## Safe-move rules

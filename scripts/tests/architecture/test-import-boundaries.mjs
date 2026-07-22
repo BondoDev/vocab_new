@@ -6,7 +6,7 @@
 // set itself.
 //
 // This intentionally does not re-check things already covered elsewhere:
-//   - workers/word-ssr/test-worker-bundle-size.mjs already asserts
+//   - workers/word-ssr/tests/test-worker-bundle-size.mjs already asserts
 //     WordSeoPageView.tsx has no import.meta.glob and no vocabulary-*.js
 //     chunk reaches the Worker bundle.
 //   - scripts/tests/routing/test-level-browse-preview-completeness.mjs already asserts

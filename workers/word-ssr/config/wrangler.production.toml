@@ -5,7 +5,7 @@
 # workers.dev preview; attaching www.fluentstellar.com remains a separate,
 # manual cutover step.
 name = "fluentstellar-production"
-main = "worker-dist-full/index.full.js"
+main = "../worker-dist-full/index.full.js"
 compatibility_date = "2024-09-23"
 no_bundle = true
 # workers.dev serves indexable duplicate content and bypasses zone WAF rules.
@@ -19,6 +19,6 @@ ENABLE_CANONICAL_HOST_REDIRECT = "false"
 WORKER_LOG_LABEL = "Production word worker"
 
 [assets]
-directory = "assets-full"
+directory = "../assets-full"
 binding = "ASSETS"
 html_handling = "drop-trailing-slash"

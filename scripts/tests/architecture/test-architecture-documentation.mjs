@@ -55,7 +55,7 @@ const KEY_PATHS = [
   "scripts/generation/generate-sitemap.mjs",
   "scripts/generation/generate-word-hub-data.mjs",
   "workers/word-ssr/src/index.full.ts",
-  "workers/word-ssr/route-ownership.md",
+  "workers/word-ssr/docs/route-ownership.md",
   "docs/generated-data.md",
   "docs/import-boundaries.md",
   "docs/deployment.md",

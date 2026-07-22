@@ -2,7 +2,8 @@
 // Worker (http://127.0.0.1:8787 by default) against the real production SSR
 // render() (server-build/entry-server.js) for the same sample word routes.
 // Requires both `npm run build` (for server-build/entry-server.js) and
-// `wrangler dev` (from this directory) to already be running.
+// `npx wrangler dev --config workers/word-ssr/config/wrangler.full.toml
+// --local` (run from the repository root) to already be running.
 import assert from "node:assert/strict";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";

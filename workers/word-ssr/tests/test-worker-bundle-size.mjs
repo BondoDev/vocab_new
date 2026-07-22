@@ -11,14 +11,16 @@
 // `vite build --config build/vite.worker.config.mjs --ssr src/index.full.ts
 // --outDir worker-dist-full` step within it).
 //
-// Run: node workers/word-ssr/test-worker-bundle-size.mjs
+// Run: node workers/word-ssr/tests/test-worker-bundle-size.mjs
 import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DIST_DIR = path.join(__dirname, "worker-dist-full");
+const workerDir = path.resolve(__dirname, "..");
+const repoRoot = path.resolve(workerDir, "..", "..");
+const DIST_DIR = path.join(workerDir, "worker-dist-full");
 
 // Preferred target from the migration task; the hard Cloudflare Workers
 // Free-plan ceiling is 3 MB gzip — this threshold intentionally leaves
@@ -143,7 +145,7 @@ test("total gzip upload size is under the Cloudflare Workers Free-plan 3MB hard 
 // WordSeoPage.tsx (the client wrapper that owns the heavy loaders) or an
 // import.meta.glob targeting the full vocabulary dataset.
 test("render-entry.tsx does not import the client WordSeoPage wrapper", () => {
-  const source = fs.readFileSync(path.join(__dirname, "src", "render-entry.tsx"), "utf8");
+  const source = fs.readFileSync(path.join(workerDir, "src", "render-entry.tsx"), "utf8");
   if (/from\s+["'].*\/WordSeoPage["']/.test(source)) {
     throw new Error("render-entry.tsx imports WordSeoPage.tsx directly — this reintroduces the heavy client loaders");
   }
@@ -153,7 +155,7 @@ test("render-entry.tsx does not import the client WordSeoPage wrapper", () => {
 });
 
 test("WordSeoPageView.tsx contains no vocabulary or browse-search-shard glob imports", () => {
-  const viewPath = path.join(path.resolve(__dirname, "..", ".."), "src", "app", "pages", "word-pages", "detail", "WordSeoPageView.tsx");
+  const viewPath = path.join(repoRoot, "src", "app", "pages", "word-pages", "detail", "WordSeoPageView.tsx");
   const source = fs.readFileSync(viewPath, "utf8");
   if (/import\.meta\.glob\s*\(/.test(source)) {
     throw new Error("WordSeoPageView.tsx contains an import.meta.glob(...) call — it must stay import-light for the SSR bundle");

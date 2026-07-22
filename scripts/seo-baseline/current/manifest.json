@@ -7,7 +7,7 @@
   "productionWorker": {
     "serviceName": "fluentstellar-production",
     "folder": "workers/word-ssr/",
-    "wranglerConfig": "workers/word-ssr/wrangler.production.toml",
+    "wranglerConfig": "workers/word-ssr/config/wrangler.production.toml",
     "entryFile": "worker-dist-full/index.full.js",
     "dataVersion": "staging-full-2026-07-14-01"
   },

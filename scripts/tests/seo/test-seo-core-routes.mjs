@@ -125,7 +125,7 @@ async function main() {
 
   console.log("\n[3] canonical-host and legacy-URL redirect contract (Cloudflare)");
   {
-    const wranglerProduction = readFile("workers/word-ssr/wrangler.production.toml");
+    const wranglerProduction = readFile("workers/word-ssr/config/wrangler.production.toml");
     const workerSource = readFile("workers/word-ssr/src/index.full.ts");
     const deploymentDoc = readFile("docs/deployment.md");
 

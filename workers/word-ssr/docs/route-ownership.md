@@ -2,8 +2,9 @@
 
 STAGING-ONLY. Describes which routes are served directly by Cloudflare
 Workers Static Assets (no Worker code runs) vs. intercepted by
-`src/index.full.ts`. Verified against the running `wrangler dev --config
-wrangler.full.toml --local` instance — see the status codes recorded below.
+`src/index.full.ts`. Verified against the running `npx wrangler dev --config
+workers/word-ssr/config/wrangler.full.toml --local` instance (run from the
+repository root) — see the status codes recorded below.
 
 ## Assets-served (no Worker invocation)
 
