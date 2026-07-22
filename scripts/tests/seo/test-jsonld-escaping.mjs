@@ -6,21 +6,21 @@
  * controlled content cannot terminate the script element early or inject
  * executable markup into the SSR HTML.
  *
- * Run: node scripts/test-jsonld-escaping.mjs
+ * Run: node scripts/tests/seo/test-jsonld-escaping.mjs
  * No build required — compiles SeoContext.tsx from TypeScript source.
  *
- * Run after build for dist/ checks: npm run build && node scripts/test-jsonld-escaping.mjs
+ * Run after build for dist/ checks: npm run build && node scripts/tests/seo/test-jsonld-escaping.mjs
  */
 
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs } from "./lib/compileTs.mjs";
+import { compileTsToCommonJs } from "../../lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(__dirname, "..", "..", "..");
 
 // ── Compile SeoContext.tsx and site.ts to CommonJS ───────────────────────────
 

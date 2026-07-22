@@ -1,7 +1,7 @@
 /**
  * Sitemap structural regression tests.
  *
- * NEW coverage: scripts/test-word-seo-routes.mjs already spot-checks that
+ * NEW coverage: scripts/tests/seo/test-word-seo-routes.mjs already spot-checks that
  * legacy/slug-only URLs are absent from word sitemaps and that entries use
  * the canonical double-hyphen concept format — but it only inspects the
  * literal "about" word case, and nothing currently verifies sitemap-index
@@ -12,7 +12,7 @@
  * reads the already-generated public/sitemap.xml and public/sitemaps/*.xml
  * files as they currently sit in the working tree).
  *
- * Run: node scripts/test-sitemap-structure.mjs
+ * Run: node scripts/tests/seo/test-sitemap-structure.mjs
  * No build required.
  */
 
@@ -22,7 +22,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
 const SITEMAPS_DIR = path.join(PUBLIC_DIR, "sitemaps");
 

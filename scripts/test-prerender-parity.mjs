@@ -4,7 +4,7 @@
  * NEW coverage: this is the layer explicitly missing from the existing test
  * suite. scripts/test-word-ssr-http.mjs thoroughly exercises the *runtime*
  * on-demand SSR path (server/word-ssr-runtime.mjs → server-build/entry-server.js),
- * and scripts/test-homepage-visibility.mjs / test-schema-graph.mjs inspect
+ * and scripts/tests/seo/test-homepage-visibility.mjs / scripts/tests/seo/test-schema-graph.mjs inspect
  * *already-built* files under dist/ — but nothing currently proves that the
  * build-time prerender path (scripts/build/prerender.mjs, which calls the exact
  * same `render()` function) and the request-time runtime path
@@ -34,7 +34,7 @@
  *     (b) the SEO-observable fields from a fresh render() call for that route
  *   Word routes are included in the same comparison whenever the current
  *   dist/ happens to have any prerendered (mirrors the existing convention in
- *   scripts/test-homepage-visibility.mjs of skipping word-page checks with an
+ *   scripts/tests/seo/test-homepage-visibility.mjs of skipping word-page checks with an
  *   explicit note when WORD_PRERENDER_LIMIT=0).
  *
  * Run: node scripts/test-prerender-parity.mjs
@@ -237,7 +237,7 @@ async function main() {
   }
 
   // Word pages: only exercised if the current build actually prerendered any
-  // (mirrors the existing skip convention in scripts/test-homepage-visibility.mjs
+  // (mirrors the existing skip convention in scripts/tests/seo/test-homepage-visibility.mjs
   // for the same WORD_PRERENDER_LIMIT=0-by-default reason — this script does
   // not set or override that variable).
   console.log(`\n[word pages] prerendered-word-page parity`);

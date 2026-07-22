@@ -5,7 +5,7 @@
  * classification of restricted routes (/profile and practice sessions must
  * stay non-indexable — on Cloudflare the enforcement mechanism is the
  * noindex <meta> baked into the prerendered HTML, checked build-dependently
- * by scripts/test-homepage-visibility.mjs; this script guards the policy
+ * by scripts/tests/seo/test-homepage-visibility.mjs; this script guards the policy
  * source itself with no build required); and the Cloudflare canonical-host /
  * legacy-redirect contract. The apex→www and HTTP→HTTPS 301s are zone-level
  * Cloudflare dashboard rules (verified live 2026-07-14) that cannot be read
@@ -14,7 +14,7 @@
  * behavior is exercised end-to-end by scripts/test-word-ssr-http.mjs and the
  * route parsing by scripts/test-word-route-manifest.mjs).
  *
- * Run: node scripts/test-seo-core-routes.mjs
+ * Run: node scripts/tests/seo/test-seo-core-routes.mjs
  * No build required.
  */
 
@@ -22,11 +22,11 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs } from "./lib/compileTs.mjs";
+import { compileTsToCommonJs } from "../../lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(__dirname, "..", "..", "..");
 
 let passed = 0;
 let failed = 0;

@@ -372,7 +372,7 @@ deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
 |---|---|---|
-| `test:word-seo` | `test-word-seo-routes.mjs` | word-route SEO source contracts |
+| `test:word-seo` | `scripts/tests/seo/test-word-seo-routes.mjs` | word-route SEO source contracts |
 | `test:level-browse-preview` | `test-level-browse-preview-completeness.mjs` | 42-key CEFR preview match set |
 | `test:import-boundaries` | `scripts/tests/architecture/test-import-boundaries.mjs` | `import.meta.glob` match counts/eager-lazy (G1–G9) |
 | `test:generated-data-ownership` | `scripts/tests/architecture/test-generated-data-ownership.mjs` | generated/mirrored data directories |

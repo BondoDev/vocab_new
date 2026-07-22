@@ -2,11 +2,11 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs, readJson } from "./lib/compileTs.mjs";
+import { compileTsToCommonJs, readJson } from "../../lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(__dirname, "..", "..", "..");
 
 const compiled = compileTsToCommonJs(".tmp-word-seo-test", [
   path.join(rootDir, "src", "data", "seo", "wordPages", "wordSlugs.ts"),

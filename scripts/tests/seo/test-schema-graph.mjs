@@ -4,7 +4,7 @@
  * Verifies that prerendered HTML pages emit correctly structured @graph JSON-LD
  * containing WebPage, DefinedTerm/FAQPage, and BreadcrumbList nodes.
  *
- * Run after build: npm run build && node scripts/test-schema-graph.mjs
+ * Run after build: npm run build && node scripts/tests/seo/test-schema-graph.mjs
  *
  * Expected rich-result enhancement: BreadcrumbList only.
  * DefinedTerm is retained for semantic accuracy.
@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(__dirname, "..", "..", "..");
 const distDir = path.join(rootDir, "dist");
 
 // ── Parser (same HTML5 state-machine as test-jsonld-escaping.mjs) ─────────────

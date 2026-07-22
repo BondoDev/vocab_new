@@ -13,9 +13,9 @@ import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { fileURLToPath } from "node:url";
-import { createLastmodLedger } from "./lib/sitemap-lastmod.mjs";
+import { createLastmodLedger } from "../../lib/sitemap-lastmod.mjs";
 
-const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 
 // --- 1. ledger behavior (pure unit checks) ---------------------------------
 const tmpLedger = path.join(os.tmpdir(), `sitemap-ledger-test-${process.pid}.json`);

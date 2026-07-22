@@ -2,7 +2,7 @@
  * Homepage visibility regression tests.
  * Inspects actual built dist/ HTML — not source strings.
  *
- * Run: node scripts/test-homepage-visibility.mjs
+ * Run: node scripts/tests/seo/test-homepage-visibility.mjs
  * Must be run after: npm run build
  */
 
@@ -11,7 +11,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DIST = path.join(__dirname, "..", "dist");
+const DIST = path.join(__dirname, "..", "..", "..", "dist");
 
 let passed = 0;
 let failed = 0;

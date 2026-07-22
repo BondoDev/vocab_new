@@ -17,7 +17,7 @@
  *
  * Run: node scripts/test-word-browse-pagination.mjs
  * No build required — compiles TS sources on the fly (same pattern as the
- * existing scripts/test-word-seo-routes.mjs).
+ * existing scripts/tests/seo/test-word-seo-routes.mjs).
  */
 
 import assert from "node:assert/strict";

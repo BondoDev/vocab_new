@@ -109,7 +109,7 @@ Local development
   dashboard** — it is not represented in this repository and cannot come
   from the Worker (static pages are served asset-first without invoking the
   Worker; `ENABLE_CANONICAL_HOST_REDIRECT` stays `"false"`).
-  `scripts/test-seo-core-routes.mjs` asserts this paragraph stays present;
+  `scripts/tests/seo/test-seo-core-routes.mjs` asserts this paragraph stays present;
   if the dashboard rule ever changes, re-probe and update both.
 - Legacy word-URL redirects (single-hyphen and legacy slug formats):
   `308` computed by the Worker (`classifyAndRespondNonCanonical` in
@@ -159,8 +159,8 @@ deployment files were deleted:
   types come from Static Assets; `noindex` for restricted routes is baked
   into the prerendered HTML from `src/seo/routeMetadataPolicy.ts`. The
   regression tests that previously asserted `vercel.json` contents
-  (`test-seo-core-routes.mjs`, `test-sitemap-structure.mjs` §6,
-  `test-word-seo-routes.mjs`) were migrated to assert those Cloudflare /
+  (`scripts/tests/seo/test-seo-core-routes.mjs`, `scripts/tests/seo/test-sitemap-structure.mjs` §6,
+  `scripts/tests/seo/test-word-seo-routes.mjs`) were migrated to assert those Cloudflare /
   shared-policy sources instead.
 - `api/word-ssr.ts`, `api/word-ssr-internal.ts` — removed (thin Vercel
   function wrappers around `server/word-ssr-handler.mjs`; dead on

@@ -234,7 +234,7 @@ export function buildFixtureMatrix(ctx) {
       url: pathname,
       expectedStatus: 200,
       expectedCanonical: `${siteOrigin}${pathname}`,
-      reason: `Spanish "${diacriticEntry.word_lemma}" (${diacriticEntry.concept_id}) — wordToSlug preserves accents, so this must resolve directly (canonical), never redirect. Already relied on by scripts/test-word-seo-routes.mjs.`,
+      reason: `Spanish "${diacriticEntry.word_lemma}" (${diacriticEntry.concept_id}) — wordToSlug preserves accents, so this must resolve directly (canonical), never redirect. Already relied on by scripts/tests/seo/test-word-seo-routes.mjs.`,
       entry: diacriticEntry,
       targetLanguage: "spanish",
       uiLang: "en",
@@ -246,10 +246,10 @@ export function buildFixtureMatrix(ctx) {
   // where fixMojibake(value) !== value — none found as of this suite's
   // creation. Documented rather than silently skipped; the direct-unit-test
   // coverage for fixMojibake() itself already exists in
-  // scripts/test-word-seo-routes.mjs (real corrupted-byte strings, asserted
+  // scripts/tests/seo/test-word-seo-routes.mjs (real corrupted-byte strings, asserted
   // against exact expected repairs), so this is intentionally not duplicated
   // here. If a future data import reintroduces mojibake, that existing test
-  // (and scripts/test-sitemap-structure.mjs's slug-shape checks) will still
+  // (and scripts/tests/seo/test-sitemap-structure.mjs's slug-shape checks) will still
   // catch slug/URL fallout.
   fixtures.push({
     id: "word-mojibake-note",
@@ -257,7 +257,7 @@ export function buildFixtureMatrix(ctx) {
     url: null,
     expectedStatus: null,
     reason:
-      "No live vocabulary record currently contains mojibake-corrupted text (scanned all 7 languages). fixMojibake() unit coverage already exists in scripts/test-word-seo-routes.mjs.",
+      "No live vocabulary record currently contains mojibake-corrupted text (scanned all 7 languages). fixMojibake() unit coverage already exists in scripts/tests/seo/test-word-seo-routes.mjs.",
   });
 
   // ── First / last entries in a vocabulary dataset ──────────────────────────
