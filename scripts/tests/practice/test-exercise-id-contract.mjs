@@ -1,6 +1,6 @@
 // Focused guard for the canonical exercise-identifier contract in
 // src/exercises/exerciseIds.ts. Complements
-// scripts/test-interactive-contracts.mjs, which guards the
+// scripts/tests/routing/test-interactive-contracts.mjs, which guards the
 // `app.selectedExercises` storage-key *string* in src/app/App.tsx but does
 // not check the id values, the canonical set, or the typing/four-word
 // partition — this script does.
@@ -10,19 +10,19 @@
 // via Node's native TypeScript stripping (--experimental-strip-types).
 // exerciseIds.ts is deliberately import-free (see its own header comment),
 // so — like storedLanguagePreferencePolicy.ts in
-// scripts/test-practice-route-sync.mjs — it can be loaded directly here
+// scripts/tests/practice/test-practice-route-sync.mjs — it can be loaded directly here
 // without a bundler or a compile step.
 //
 // The setup-option completeness check (exerciseGroups in
 // src/features/learning-setup/ExerciseSelection.tsx) can't use the same
 // approach: that file imports .scss/motion/lucide-react, which Node's ESM
 // resolver can't follow without a bundler (the same constraint documented in
-// scripts/test-interactive-contracts.mjs's header, which is why that script
+// scripts/tests/routing/test-interactive-contracts.mjs's header, which is why that script
 // also never require()s/imports .tsx modules). That one check below uses a
 // narrow source-text regex instead, in the same spirit as
-// test-interactive-contracts.mjs's extractRouteObject helper.
+// scripts/tests/routing/test-interactive-contracts.mjs's extractRouteObject helper.
 //
-// Run: node --experimental-strip-types scripts/test-exercise-id-contract.mjs
+// Run: node --experimental-strip-types scripts/tests/practice/test-exercise-id-contract.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -32,11 +32,11 @@ import {
   TYPING_EXERCISE_IDS,
   FOUR_WORD_EXERCISE_IDS,
   isExerciseId,
-} from "../src/exercises/exerciseIds.ts";
+} from "../../../src/exercises/exerciseIds.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 
 let passed = 0;
 let failed = 0;

@@ -30,10 +30,10 @@
 // deliberately untouched by this task) both pull in that import chain and
 // so cannot be loaded directly by this script without a bundler. For those,
 // this file falls back to source-text presence checks proving the expected
-// wiring exists - the same tradeoff scripts/test-practice-route-sync.mjs
-// and scripts/test-interactive-contracts.mjs document for the same reason.
+// wiring exists - the same tradeoff scripts/tests/practice/test-practice-route-sync.mjs
+// and scripts/tests/routing/test-interactive-contracts.mjs document for the same reason.
 //
-// Run: node --experimental-strip-types scripts/test-account-language-sync.mjs
+// Run: node --experimental-strip-types scripts/tests/account/test-account-language-sync.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -42,11 +42,11 @@ import {
   hasCompleteLanguagePair,
   resolveHydratedLanguagePair,
   shouldConfirmAccountLanguageChange,
-} from "../src/app/utils/languageProfileSyncPolicy.ts";
-import { saveAccountLanguagePair } from "../src/app/utils/accountLanguageSave.ts";
+} from "../../../src/app/utils/languageProfileSyncPolicy.ts";
+import { saveAccountLanguagePair } from "../../../src/app/utils/accountLanguageSave.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 
 let passed = 0;
 let failed = 0;

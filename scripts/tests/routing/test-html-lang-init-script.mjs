@@ -24,7 +24,7 @@
  * (via node:vm, with a mock document/location/localStorage) rather than
  * re-implementing its logic, so it exercises the actual production script.
  *
- * Run: node scripts/test-html-lang-init-script.mjs
+ * Run: node scripts/tests/routing/test-html-lang-init-script.mjs
  * No build required.
  */
 
@@ -35,7 +35,7 @@ import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 
 let passed = 0;
 let failed = 0;

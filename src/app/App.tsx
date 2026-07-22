@@ -136,7 +136,7 @@ function RouteLoadingFallback() {
 }
 
 // ROUTES must stay defined in this file as a literal `as const` block:
-// scripts/test-interactive-contracts.mjs parses App.tsx's source text for it
+// scripts/tests/routing/test-interactive-contracts.mjs parses App.tsx's source text for it
 // (and Header.tsx's NAV_HREFS is checked against it). The pure route helpers
 // live in ./utils/pageRouting and receive this map as a parameter instead of
 // importing App.tsx.

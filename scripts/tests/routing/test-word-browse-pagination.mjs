@@ -15,7 +15,7 @@
  *   - the last valid page is 200; one page past it is 410
  *   - page 0 is 410 (invalid, not just "out of range")
  *
- * Run: node scripts/test-word-browse-pagination.mjs
+ * Run: node scripts/tests/routing/test-word-browse-pagination.mjs
  * No build required — compiles TS sources on the fly (same pattern as the
  * existing scripts/tests/seo/test-word-seo-routes.mjs).
  */
@@ -23,8 +23,8 @@
 import assert from "node:assert/strict";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { loadBaselineContext } from "./seo-baseline/fixtures.mjs";
-import { ROOT_DIR } from "./lib/compileTs.mjs";
+import { loadBaselineContext } from "../../seo-baseline/fixtures.mjs";
+import { ROOT_DIR } from "../../lib/compileTs.mjs";
 
 let passed = 0;
 let failed = 0;

@@ -12,7 +12,7 @@
  * from the repo, so docs/deployment.md is asserted as the frozen record of
  * that behavior; the legacy word-URL 308 lives in the Worker source (runtime
  * behavior is exercised end-to-end by scripts/test-word-ssr-http.mjs and the
- * route parsing by scripts/test-word-route-manifest.mjs).
+ * route parsing by scripts/tests/routing/test-word-route-manifest.mjs).
  *
  * Run: node scripts/tests/seo/test-seo-core-routes.mjs
  * No build required.

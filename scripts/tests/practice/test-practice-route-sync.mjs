@@ -36,11 +36,11 @@
 // state->URL canonicalization-eligibility decision — always come from the
 // real imported helpers.
 //
-// Run: node --experimental-strip-types scripts/test-practice-route-sync.mjs
+// Run: node --experimental-strip-types scripts/tests/practice/test-practice-route-sync.mjs
 import assert from "node:assert/strict";
-import { shouldRestoreStoredLanguagePreference } from "../src/app/utils/storedLanguagePreferencePolicy.ts";
-import { shouldCanonicalizePracticeRoute } from "../src/app/utils/practiceRouteCanonicalizationPolicy.ts";
-import { shouldAutoRedirectStoredLanguages } from "../src/app/utils/storedLanguageAutoRedirectPolicy.ts";
+import { shouldRestoreStoredLanguagePreference } from "../../../src/app/utils/storedLanguagePreferencePolicy.ts";
+import { shouldCanonicalizePracticeRoute } from "../../../src/app/utils/practiceRouteCanonicalizationPolicy.ts";
+import { shouldAutoRedirectStoredLanguages } from "../../../src/app/utils/storedLanguageAutoRedirectPolicy.ts";
 
 let passed = 0;
 let failed = 0;

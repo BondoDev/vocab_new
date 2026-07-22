@@ -1,4 +1,4 @@
-// Deliberately import-free: scripts/test-account-language-sync.mjs loads this
+// Deliberately import-free: scripts/tests/account/test-account-language-sync.mjs loads this
 // file directly via Node's native TypeScript stripping (see
 // storedLanguagePreferencePolicy.ts for why extensionless relative imports
 // block that path). Keeping this file dependency-free is what lets the

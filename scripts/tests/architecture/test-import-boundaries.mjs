@@ -9,7 +9,7 @@
 //   - workers/word-ssr/test-worker-bundle-size.mjs already asserts
 //     WordSeoPageView.tsx has no import.meta.glob and no vocabulary-*.js
 //     chunk reaches the Worker bundle.
-//   - scripts/test-level-browse-preview-completeness.mjs already asserts
+//   - scripts/tests/routing/test-level-browse-preview-completeness.mjs already asserts
 //     the exact 42-key match set for level-browse-preview/*.json.
 //
 // Run: node scripts/tests/architecture/test-import-boundaries.mjs

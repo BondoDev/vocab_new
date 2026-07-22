@@ -135,7 +135,7 @@
       "actualCount": 42,
       "namingContract": "{targetLanguage}-{cefrLevel}.json, 7 languages x 6 levels",
       "risk": "medium-hand-authored",
-      "riskReason": "Unlike G4/G5/G6, no generator script currently writes this directory — it appears to be committed, hand-authored/one-time-generated data with no regeneration path in scripts/. Strongest existing test coverage of any glob (scripts/test-level-browse-preview-completeness.mjs asserts the exact 42-key match set and validates content)."
+      "riskReason": "Unlike G4/G5/G6, no generator script currently writes this directory — it appears to be committed, hand-authored/one-time-generated data with no regeneration path in scripts/. Strongest existing test coverage of any glob (scripts/tests/routing/test-level-browse-preview-completeness.mjs asserts the exact 42-key match set and validates content)."
     }
   ],
   "relatedPathSensitiveLoaders": [

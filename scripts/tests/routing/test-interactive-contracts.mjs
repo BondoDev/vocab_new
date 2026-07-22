@@ -9,7 +9,7 @@
 // "Automation candidates" section for why that approach was rejected) and
 // does not replace the manual checklists in that document.
 //
-// Run: node scripts/test-interactive-contracts.mjs
+// Run: node scripts/tests/routing/test-interactive-contracts.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -17,7 +17,7 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 
 let passed = 0;
 let failed = 0;
@@ -160,7 +160,7 @@ test("key practice/exercise/exam module files exist", () => {
     // canonical, persisted exercise-id contract — see its own header
     // comment) lives alongside it for the same reason: both learning-setup
     // and practice import it, and neither may import the other. See
-    // scripts/test-exercise-id-contract.mjs for the id-set and
+    // scripts/tests/practice/test-exercise-id-contract.mjs for the id-set and
     // typing/four-word partition checks that file doesn't cover.
     "src/features/learning-setup/LevelCategorySelection.tsx",
     "src/features/learning-setup/ExerciseSelection.tsx",

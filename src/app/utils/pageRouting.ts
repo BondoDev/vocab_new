@@ -7,7 +7,7 @@
 // rather than duplicated.
 //
 // Ownership invariant: the literal `ROUTES` map intentionally stays in
-// src/app/App.tsx. scripts/test-interactive-contracts.mjs parses App.tsx's
+// src/app/App.tsx. scripts/tests/routing/test-interactive-contracts.mjs parses App.tsx's
 // source text for the `const ROUTES = { ... } as const;` block, so moving
 // that constant here would silently break the guard. Helpers below accept
 // the route map (or the slice they need) as a parameter instead of
@@ -34,7 +34,7 @@ import { resolveLevelTestSeoRoute } from "../../data/seo/levelTests";
 import { resolveVerbListRoute } from "../../data/seo/verbLists";
 
 // Shape of App.tsx's ROUTES map. The keys here must stay in sync with the
-// literal block in App.tsx (guarded by scripts/test-interactive-contracts.mjs).
+// literal block in App.tsx (guarded by scripts/tests/routing/test-interactive-contracts.mjs).
 export interface InteractiveRouteMap {
   language: string;
   levelCategory: string;

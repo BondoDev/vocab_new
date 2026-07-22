@@ -136,8 +136,8 @@ Several policy/orchestration files (`accountLanguageSave.ts`,
 `languageProfileSyncPolicy.ts`, `practiceRouteCanonicalizationPolicy.ts`,
 `storedLanguageAutoRedirectPolicy.ts`, `storedLanguagePreferencePolicy.ts`)
 are deliberately import-free, or import only erasable types, because
-Node-based regression scripts (`scripts/test-account-language-sync.mjs`,
-`scripts/test-practice-route-sync.mjs`) load them directly without a
+Node-based regression scripts (`scripts/tests/account/test-account-language-sync.mjs`,
+`scripts/tests/practice/test-practice-route-sync.mjs`) load them directly without a
 bundler.
 
 This constraint exists today and should be respected: before adding a

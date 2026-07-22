@@ -1,5 +1,5 @@
 // Deterministic guard for src/app/components/ui/ ownership, documented in
-// docs/ui-component-ownership.md. Complements scripts/test-interactive-contracts.mjs
+// docs/ui-component-ownership.md. Complements scripts/tests/routing/test-interactive-contracts.mjs
 // (which guards routing/profile-shell contracts) by guarding the shadcn/ui
 // primitive-library surface: the retained set stays reachable, the removed
 // set doesn't silently reappear, and no source file points at a missing

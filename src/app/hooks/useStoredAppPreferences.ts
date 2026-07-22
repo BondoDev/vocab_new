@@ -39,7 +39,7 @@ export interface AppPreferencesStorageKeys {
 
 export interface UseStoredAppPreferencesParams {
   // The literal STORAGE_KEYS object stays defined in App.tsx (source-text
-  // guarded by scripts/test-interactive-contracts.mjs) and is passed in here.
+  // guarded by scripts/tests/routing/test-interactive-contracts.mjs) and is passed in here.
   storageKeys: AppPreferencesStorageKeys;
   // Derived from App.tsx's initialPracticeRouteRef (a practice-URL match),
   // not the ref itself — the ref belongs to route parsing, which stays in

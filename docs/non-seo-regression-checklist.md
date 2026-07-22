@@ -11,7 +11,7 @@ SEO/sitemap/Worker output (already protected by
 `scripts/seo-baseline/current/` and `test:seo-output`).
 
 Automated guard: `npm run test:interactive-contracts`
-(`scripts/test-interactive-contracts.mjs`) — cheap, deterministic, file- and
+(`scripts/tests/routing/test-interactive-contracts.mjs`) — cheap, deterministic, file- and
 route-string-level checks only. It cannot replace the manual checklists
 below; see [Phase 8/9](#automation-candidates) for why.
 
@@ -464,7 +464,7 @@ instead.
 
 | Candidate | Classification | Notes |
 |---|---|---|
-| Primary interactive route strings exist and match between `App.tsx` and `Header.tsx` | automate now | implemented in `scripts/test-interactive-contracts.mjs` |
+| Primary interactive route strings exist and match between `App.tsx` and `Header.tsx` | automate now | implemented in `scripts/tests/routing/test-interactive-contracts.mjs` |
 | No duplicate route paths within `App.tsx`'s `ROUTES` | automate now | same script |
 | Profile route + profile shell components still exist and are wired (file existence + `<UserProfileDashboardPage` render call present) | automate now | same script |
 | This document contains all required sections and ID prefixes | automate now | same script (doc-completeness check, same pattern as `test-generated-data-ownership.mjs`) |

@@ -167,8 +167,8 @@ that call order:
 These invariants are enforced by focused regression scripts rather than
 restated here in full:
 
-- `scripts/test-practice-route-sync.mjs`
-- `scripts/test-account-language-sync.mjs`
+- `scripts/tests/practice/test-practice-route-sync.mjs`
+- `scripts/tests/account/test-account-language-sync.mjs`
 
 ## 9. Current exceptions that are intentional
 

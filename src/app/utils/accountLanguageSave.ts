@@ -2,7 +2,7 @@
 // lib/userProfile.ts or accountProfile.ts, both of which pull in
 // extensionless relative imports that Node's native TypeScript stripping
 // cannot resolve without a bundler - see storedLanguagePreferencePolicy.ts).
-// This is what lets scripts/test-account-language-sync.mjs exercise the real
+// This is what lets scripts/tests/account/test-account-language-sync.mjs exercise the real
 // save/retry/error-surfacing contract directly, with fake write functions
 // standing in for the real Supabase/localStorage calls.
 //

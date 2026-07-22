@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(__dirname, "..", "..", "..");
 
 const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "portuguese", "russian"];
 const SUPPORTED_LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"];

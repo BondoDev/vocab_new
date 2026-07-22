@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { loadWordRouteManifest } from "./lib/load-word-route-manifest.mjs";
-import { ROOT_DIR } from "./lib/compileTs.mjs";
+import { loadWordRouteManifest } from "../../lib/load-word-route-manifest.mjs";
+import { ROOT_DIR } from "../../lib/compileTs.mjs";
 
 function readJson(relativePath) {
   return JSON.parse(
