@@ -9,14 +9,14 @@
 // (the relocated files' provenance is recorded in git history).
 //
 // Read-only. No network. No browser. Node standard library only.
-// Run: node scripts/test-guidelines-ownership.mjs
+// Run: node scripts/tests/architecture/test-guidelines-ownership.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
-const ROOT_DIR = path.resolve(path.dirname(__filename), "..");
+const ROOT_DIR = path.resolve(path.dirname(__filename), "..", "..", "..");
 
 let passed = 0;
 let failed = 0;
@@ -54,7 +54,7 @@ const OLD_PATH_PATTERN = /guidelines[\\/](seo_level_test_content\.json|seo-cefr-
 // Files allowed to intentionally name the old guidelines/ paths — they
 // document the relocation rather than depending on it.
 const ALLOWED_SELF_REFERENCES = new Set([
-  path.join(ROOT_DIR, "scripts", "test-guidelines-ownership.mjs"),
+  path.join(ROOT_DIR, "scripts", "tests", "architecture", "test-guidelines-ownership.mjs"),
   path.join(ROOT_DIR, "docs", "generated-data.md"),
   path.join(ROOT_DIR, "docs", "import-boundaries.md"),
 ]);

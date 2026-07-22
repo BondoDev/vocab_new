@@ -2,7 +2,7 @@
 
 Machine-readable companion:
 [`scripts/import-boundaries/current/globs.json`](../scripts/import-boundaries/current/globs.json).
-Guard script: `npm run test:import-boundaries` (`scripts/test-import-boundaries.mjs`).
+Guard script: `npm run test:import-boundaries` (`scripts/tests/architecture/test-import-boundaries.mjs`).
 See [`docs/generated-data.md`](generated-data.md) for the full generated/mirrored-data
 ownership map (which directory is authoritative, which is a mirror, which
 sync command applies) — this document covers only the `import.meta.glob`

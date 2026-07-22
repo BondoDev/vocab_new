@@ -2,7 +2,7 @@
 # (src/assets/brand/favicon-master.png, 1024x1024 RGBA). Deterministic:
 # same master in -> byte-stable assets out (Pillow LANCZOS resampling,
 # optimize=True). Run only when the master artwork itself changes, then
-# re-run node scripts/test-brand-asset-ownership.mjs.
+# re-run node scripts/tests/architecture/test-brand-asset-ownership.mjs.
 #
 # Requires: Python 3 + Pillow (not an npm dependency by design — this is a
 # rare, manual asset-regeneration step, not part of the build).

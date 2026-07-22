@@ -5,14 +5,14 @@
 // tracked tree.
 //
 // Read-only. No network. No browser. Node standard library only.
-// Run: node scripts/test-legacy-poc-ownership.mjs
+// Run: node scripts/tests/architecture/test-legacy-poc-ownership.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
-const ROOT_DIR = path.resolve(path.dirname(__filename), "..");
+const ROOT_DIR = path.resolve(path.dirname(__filename), "..", "..", "..");
 
 let passed = 0;
 let failed = 0;
@@ -34,9 +34,9 @@ const REFERENCE_PATTERN = /cloudflare-word-renderer/;
 // Files allowed to intentionally name the deleted path — they document its
 // removal rather than depending on it.
 const ALLOWED_SELF_REFERENCES = new Set([
-  path.join(ROOT_DIR, "scripts", "test-legacy-poc-ownership.mjs"),
+  path.join(ROOT_DIR, "scripts", "tests", "architecture", "test-legacy-poc-ownership.mjs"),
   path.join(ROOT_DIR, "docs", "architecture.md"),
-  path.join(ROOT_DIR, "scripts", "test-architecture-documentation.mjs"),
+  path.join(ROOT_DIR, "scripts", "tests", "architecture", "test-architecture-documentation.mjs"),
 ]);
 
 const EXCLUDED_DIRS = new Set([

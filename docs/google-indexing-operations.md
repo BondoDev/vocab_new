@@ -7,7 +7,7 @@ when the operator wants to nudge indexing for new or changed pages.
 
 Audited and relocated 2026-07-16 (previously root-level `google-index.js`).
 Guard: `npm run test:operational-security`
-(`scripts/test-operational-security.mjs`), chained into
+(`scripts/tests/architecture/test-operational-security.mjs`), chained into
 `npm run test:architecture-guards`.
 
 ## Command

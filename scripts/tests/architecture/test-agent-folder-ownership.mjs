@@ -5,7 +5,7 @@
 // credential-looking file sits under any of the three folders.
 //
 // Read-only. No network. No credentials read. Node standard library only.
-// Run: node scripts/test-agent-folder-ownership.mjs
+// Run: node scripts/tests/architecture/test-agent-folder-ownership.mjs
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -13,7 +13,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
-const ROOT_DIR = path.resolve(path.dirname(__filename), "..");
+const ROOT_DIR = path.resolve(path.dirname(__filename), "..", "..", "..");
 const AGENT_FOLDERS = [".agents", ".claude", ".codex"];
 
 let passed = 0;

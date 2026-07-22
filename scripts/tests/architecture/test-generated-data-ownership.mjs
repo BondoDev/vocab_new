@@ -1,16 +1,16 @@
 // Deterministic guard for generated/duplicated data ownership, documented in
-// docs/generated-data.md. Complements scripts/test-import-boundaries.mjs
+// docs/generated-data.md. Complements scripts/tests/architecture/test-import-boundaries.mjs
 // (which guards the *shape* import.meta.glob and related loaders depend on)
 // by guarding *ownership drift*: dead artifacts silently reappearing, build
 // output getting committed, and public/ mirrors losing their documentation.
 //
-// Run: node scripts/test-generated-data-ownership.mjs
+// Run: node scripts/tests/architecture/test-generated-data-ownership.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs, ROOT_DIR } from "./lib/compileTs.mjs";
+import { compileTsToCommonJs, ROOT_DIR } from "../../lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 void __filename;
@@ -315,7 +315,7 @@ test("no runtime source fetches the removed public level-browse-preview URL", ()
   for (const dir of runtimeDirs) {
     for (const file of walkFiles(path.join(ROOT_DIR, dir), (abs) => /\.(ts|tsx|mjs|js|jsx)$/.test(abs))) {
       const rel = path.relative(ROOT_DIR, file).replace(/\\/g, "/");
-      if (rel === "scripts/test-generated-data-ownership.mjs") continue;
+      if (rel === "scripts/tests/architecture/test-generated-data-ownership.mjs") continue;
       const text = fs.readFileSync(file, "utf8");
       if (runtimePattern.test(text) || text.includes("public/seo/level-browse-preview")) {
         offenders.push(rel);

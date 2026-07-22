@@ -35,7 +35,7 @@ visible image logo (the header uses text-only branding in
 
 ```
 python scripts/generation/generate-brand-assets.py   # requires Pillow
-node scripts/test-brand-asset-ownership.mjs
+node scripts/tests/architecture/test-brand-asset-ownership.mjs
 ```
 
 Deterministic LANCZOS downsampling from the master. Icon variants use an 820 px
@@ -49,6 +49,6 @@ drop the master's C2PA metadata chunk automatically.
   and `workers/word-ssr/assets-full/` copies are build output — never edit them
   by hand and never treat them as sources.
 - Raising a size budget means editing both the table above and
-  `scripts/test-brand-asset-ownership.mjs` in the same change.
+  `scripts/tests/architecture/test-brand-asset-ownership.mjs` in the same change.
 - Don't reuse the favicon as a social image or vice versa — each consumer has
   its own asset.

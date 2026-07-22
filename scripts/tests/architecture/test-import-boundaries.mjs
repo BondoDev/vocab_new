@@ -12,12 +12,12 @@
 //   - scripts/test-level-browse-preview-completeness.mjs already asserts
 //     the exact 42-key match set for level-browse-preview/*.json.
 //
-// Run: node scripts/test-import-boundaries.mjs
+// Run: node scripts/tests/architecture/test-import-boundaries.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs, ROOT_DIR } from "./lib/compileTs.mjs";
+import { compileTsToCommonJs, ROOT_DIR } from "../../lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 void __filename;

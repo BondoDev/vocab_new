@@ -11,7 +11,7 @@ data directory in the repo: who owns it, who writes it, who reads it, and
 what happens if it's moved or deleted.
 
 Guard script: `npm run test:generated-data-ownership`
-(`scripts/test-generated-data-ownership.mjs`), wired into
+(`scripts/tests/architecture/test-generated-data-ownership.mjs`), wired into
 `npm run test:architecture-guards`.
 
 ## Ownership matrix

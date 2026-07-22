@@ -7,7 +7,7 @@ set regardless of actual usage). There is no `components.json` (shadcn CLI
 config) and no barrel/index file — every import is a direct relative path.
 
 Guard: `npm run test:ui-component-ownership`
-(`scripts/test-ui-component-ownership.mjs`), chained into
+(`scripts/tests/architecture/test-ui-component-ownership.mjs`), chained into
 `npm run test:architecture-guards`. It asserts the retained set stays
 exactly 9 files, none of the 39 removed files silently reappear, no import
 into `ui/` is dangling, and every retained file stays reachable from outside

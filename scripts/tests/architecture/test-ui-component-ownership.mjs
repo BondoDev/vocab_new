@@ -5,7 +5,7 @@
 // set doesn't silently reappear, and no source file points at a missing
 // ui/ component. Node stdlib only, read-only, deterministic.
 //
-// Run: node scripts/test-ui-component-ownership.mjs
+// Run: node scripts/tests/architecture/test-ui-component-ownership.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 const UI_DIR = path.join(ROOT_DIR, "src", "app", "components", "ui");
 const AUDIT_DOC = path.join(ROOT_DIR, "docs", "ui-component-ownership.md");
 

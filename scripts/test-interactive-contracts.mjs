@@ -1,7 +1,7 @@
 // Deterministic guard for interactive-application route/shell contracts,
 // documented in docs/non-seo-regression-checklist.md. Complements
-// scripts/test-generated-data-ownership.mjs and
-// scripts/test-import-boundaries.mjs (which guard data/import architecture)
+// scripts/tests/architecture/test-generated-data-ownership.mjs and
+// scripts/tests/architecture/test-import-boundaries.mjs (which guard data/import architecture)
 // by guarding the interactive routing/profile-shell surface those scripts
 // don't touch. Cheap, file/source-text-level checks only — deliberately
 // does not attempt to require() .tsx modules (they import .scss and

@@ -1,7 +1,7 @@
 # Dependency ownership
 
 Guard: `npm run test:dependency-ownership`
-(`scripts/test-dependency-ownership.mjs`), chained into
+(`scripts/tests/architecture/test-dependency-ownership.mjs`), chained into
 `npm run test:architecture-guards`. It asserts every direct dependency in
 `package.json` is documented below with proven current use, every
 previously-removed package stays removed, every retained UI package stays

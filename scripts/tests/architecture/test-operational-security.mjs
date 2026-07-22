@@ -8,7 +8,7 @@
 //
 // Read-only. No network. No Google API calls. No credentials read. Node
 // standard library only.
-// Run: node scripts/test-operational-security.mjs
+// Run: node scripts/tests/architecture/test-operational-security.mjs
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -16,7 +16,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
-const ROOT_DIR = path.resolve(path.dirname(__filename), "..");
+const ROOT_DIR = path.resolve(path.dirname(__filename), "..", "..", "..");
 
 let passed = 0;
 let failed = 0;

@@ -164,7 +164,7 @@
       "target": "n/a — formerly dist/vocabularyLevels/index.ts, server-build/vocabularyLevels/index.ts",
       "runtime": "n/a",
       "risk": "resolved",
-      "riskReason": "Formerly patched around the L1 leak by force-deleting the copied index.ts post-build. Made obsolete by removing public/vocabularyLevels/index.ts at the source (Vite's publicDir copy can no longer produce these files), and removed in the same change. See docs/generated-data.md and scripts/test-generated-data-ownership.mjs, which now guards against the raw .ts file being reintroduced."
+      "riskReason": "Formerly patched around the L1 leak by force-deleting the copied index.ts post-build. Made obsolete by removing public/vocabularyLevels/index.ts at the source (Vite's publicDir copy can no longer produce these files), and removed in the same change. See docs/generated-data.md and scripts/tests/architecture/test-generated-data-ownership.mjs, which now guards against the raw .ts file being reintroduced."
     },
     {
       "id": "L4",

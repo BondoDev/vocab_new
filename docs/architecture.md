@@ -374,17 +374,17 @@ deterministic, network-free Node script asserting one repository contract:
 |---|---|---|
 | `test:word-seo` | `test-word-seo-routes.mjs` | word-route SEO source contracts |
 | `test:level-browse-preview` | `test-level-browse-preview-completeness.mjs` | 42-key CEFR preview match set |
-| `test:import-boundaries` | `test-import-boundaries.mjs` | `import.meta.glob` match counts/eager-lazy (G1–G9) |
-| `test:generated-data-ownership` | `test-generated-data-ownership.mjs` | generated/mirrored data directories |
+| `test:import-boundaries` | `scripts/tests/architecture/test-import-boundaries.mjs` | `import.meta.glob` match counts/eager-lazy (G1–G9) |
+| `test:generated-data-ownership` | `scripts/tests/architecture/test-generated-data-ownership.mjs` | generated/mirrored data directories |
 | `test:interactive-contracts` | `test-interactive-contracts.mjs` | route strings, profile-shell wiring, localStorage keys |
-| `test:ui-component-ownership` | `test-ui-component-ownership.mjs` | `src/app/components/ui/` reachability |
-| `test:dependency-ownership` | `test-dependency-ownership.mjs` | `package.json` direct-dependency usage |
-| `test:legacy-poc-ownership` | `test-legacy-poc-ownership.mjs` | removed `poc/cloudflare-word-renderer/` stays removed |
-| `test:guidelines-ownership` | `test-guidelines-ownership.mjs` | `guidelines/` stays Markdown-only |
-| `test:operational-security` | `test-operational-security.mjs` | credential handling, legacy script paths |
-| `test:agent-folder-ownership` | `test-agent-folder-ownership.mjs` | `.agents/`/`.claude/`/`.codex/` stay untracked |
-| `test:brand-asset-ownership` | `test-brand-asset-ownership.mjs` | favicon/OG-image master and variants |
-| `test:architecture-documentation` | `test-architecture-documentation.mjs` | this document's paths/links/scripts stay wired to reality |
+| `test:ui-component-ownership` | `scripts/tests/architecture/test-ui-component-ownership.mjs` | `src/app/components/ui/` reachability |
+| `test:dependency-ownership` | `scripts/tests/architecture/test-dependency-ownership.mjs` | `package.json` direct-dependency usage |
+| `test:legacy-poc-ownership` | `scripts/tests/architecture/test-legacy-poc-ownership.mjs` | removed `poc/cloudflare-word-renderer/` stays removed |
+| `test:guidelines-ownership` | `scripts/tests/architecture/test-guidelines-ownership.mjs` | `guidelines/` stays Markdown-only |
+| `test:operational-security` | `scripts/tests/architecture/test-operational-security.mjs` | credential handling, legacy script paths |
+| `test:agent-folder-ownership` | `scripts/tests/architecture/test-agent-folder-ownership.mjs` | `.agents/`/`.claude/`/`.codex/` stay untracked |
+| `test:brand-asset-ownership` | `scripts/tests/architecture/test-brand-asset-ownership.mjs` | favicon/OG-image master and variants |
+| `test:architecture-documentation` | `scripts/tests/architecture/test-architecture-documentation.mjs` | this document's paths/links/scripts stay wired to reality |
 
 SEO/Worker-specific guards (`test:seo-output`,
 `test:word-worker:production-safety`) are chained separately, not part of

@@ -5,14 +5,14 @@
 // back in. See docs/architecture.md (2026-07-16 documentation audit).
 //
 // Read-only. No network. No browser. Node standard library only.
-// Run: node scripts/test-architecture-documentation.mjs
+// Run: node scripts/tests/architecture/test-architecture-documentation.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
-const ROOT_DIR = path.resolve(path.dirname(__filename), "..");
+const ROOT_DIR = path.resolve(path.dirname(__filename), "..", "..", "..");
 const DOCS_DIR = path.join(ROOT_DIR, "docs");
 const ARCHITECTURE_DOC = path.join(DOCS_DIR, "architecture.md");
 

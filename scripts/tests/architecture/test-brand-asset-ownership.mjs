@@ -8,14 +8,14 @@
 // silently return.
 //
 // Read-only. No network. No credentials read. Node standard library only.
-// Run: node scripts/test-brand-asset-ownership.mjs
+// Run: node scripts/tests/architecture/test-brand-asset-ownership.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
-const ROOT_DIR = path.resolve(path.dirname(__filename), "..");
+const ROOT_DIR = path.resolve(path.dirname(__filename), "..", "..", "..");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
 const MASTER_PATH = path.join(ROOT_DIR, "src", "assets", "brand", "favicon-master.png");
 const DOC_PATH = path.join(ROOT_DIR, "docs", "brand-asset-ownership.md");
