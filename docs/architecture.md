@@ -242,7 +242,7 @@ Guard/test scripts (actual `package.json` names): `test:jsonld-escaping`,
 `test:word-ssr-package` — chained together as `npm run test:seo-output`.
 Consistency between client rendering, prerender output, and Worker SSR
 output is additionally checked by the SEO/performance baseline capture-and-compare
-pair documented in [`scripts/seo-baseline/current/README.md`](../scripts/seo-baseline/current/README.md)
+pair documented in [`scripts/README.md`](../scripts/README.md)
 (`npm run seo-baseline:capture` / `seo-baseline:compare`).
 
 ## Prerendering vs. sitemap
@@ -455,7 +455,7 @@ contracts or recurring procedures.
 | `docs/google-indexing-operations.md` | manual Search Console indexing procedure |
 | `docs/non-seo-regression-checklist.md` | recurring manual/automated interactive-behavior checklist |
 | `workers/word-ssr/route-ownership.md` | Worker vs. static-asset route split (staging-verified) |
-| `scripts/seo-baseline/current/README.md` | SEO/performance baseline capture-and-compare usage |
+| `scripts/README.md` | `scripts/` subsystem ownership and architecture reference |
 
 Documents that recorded a single completed cleanup (dependency/UI-component
 audits' methodology, the guidelines/ folder relocation, the legacy
