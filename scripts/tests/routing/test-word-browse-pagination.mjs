@@ -70,7 +70,7 @@ async function main() {
 
   try {
     // src/entry-server.tsx is TSX importing React components; the existing
-    // HTTP-level test (scripts/test-word-ssr-http.mjs) exercises it through
+    // HTTP-level test (scripts/tests/ssr/test-word-ssr-http.mjs) exercises it through
     // the compiled server-build bundle. This script instead needs the raw
     // *runtime* resolution behavior, which server/word-ssr-runtime.mjs wraps
     // around the same compiled bundle, so we reuse that module exactly the

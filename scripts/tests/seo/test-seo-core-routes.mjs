@@ -11,7 +11,7 @@
  * Cloudflare dashboard rules (verified live 2026-07-14) that cannot be read
  * from the repo, so docs/deployment.md is asserted as the frozen record of
  * that behavior; the legacy word-URL 308 lives in the Worker source (runtime
- * behavior is exercised end-to-end by scripts/test-word-ssr-http.mjs and the
+ * behavior is exercised end-to-end by scripts/tests/ssr/test-word-ssr-http.mjs and the
  * route parsing by scripts/tests/routing/test-word-route-manifest.mjs).
  *
  * Run: node scripts/tests/seo/test-seo-core-routes.mjs
@@ -146,7 +146,7 @@ async function main() {
 
     test("Worker redirects legacy word URL formats with a permanent 308", () => {
       // Runtime behavior (308 + Location) is exercised end-to-end by
-      // scripts/test-word-ssr-http.mjs; this freezes the Worker source paths.
+      // scripts/tests/ssr/test-word-ssr-http.mjs; this freezes the Worker source paths.
       assert.match(workerSource, /legacy-single-hyphen/);
       assert.match(workerSource, /legacy-slug-format/);
       assert.match(workerSource, /status:\s*308/);

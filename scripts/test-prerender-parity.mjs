@@ -2,7 +2,7 @@
  * Prerender-vs-runtime parity tests.
  *
  * NEW coverage: this is the layer explicitly missing from the existing test
- * suite. scripts/test-word-ssr-http.mjs thoroughly exercises the *runtime*
+ * suite. scripts/tests/ssr/test-word-ssr-http.mjs thoroughly exercises the *runtime*
  * on-demand SSR path (server/word-ssr-runtime.mjs → server-build/entry-server.js),
  * and scripts/tests/seo/test-homepage-visibility.mjs / scripts/tests/seo/test-schema-graph.mjs inspect
  * *already-built* files under dist/ — but nothing currently proves that the

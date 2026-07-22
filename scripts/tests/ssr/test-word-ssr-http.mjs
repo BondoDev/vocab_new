@@ -4,16 +4,16 @@ import fsp from "node:fs/promises";
 import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { compileTsToCommonJs } from "./lib/compileTs.mjs";
-import { sendNodeResponse } from "../server/word-ssr-http.mjs";
+import { compileTsToCommonJs } from "../../lib/compileTs.mjs";
+import { sendNodeResponse } from "../../../server/word-ssr-http.mjs";
 import {
   handleBlockedWordApiRequest,
   handleInternalWordSsrRequest,
-} from "../server/word-ssr-handler.mjs";
+} from "../../../server/word-ssr-handler.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, "..");
+const rootDir = path.resolve(__dirname, "..", "..", "..");
 const distDir = path.join(rootDir, "dist");
 const siteOrigin = "https://www.fluentstellar.com";
 

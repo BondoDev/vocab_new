@@ -17,7 +17,7 @@
     "test:word-hydration": "node scripts/tests/runtime/test-word-hydration.mjs",
     "test:word-seo": "node scripts/tests/seo/test-word-seo-routes.mjs",
     "test:level-browse-preview": "node scripts/tests/routing/test-level-browse-preview-completeness.mjs",
-    "test:word-ssr-http": "node scripts/test-word-ssr-http.mjs",
+    "test:word-ssr-http": "node scripts/tests/ssr/test-word-ssr-http.mjs",
     "test:word-ssr-package": "node ./scripts/build/verify-word-ssr-package.mjs",
     "test:homepage-visibility": "node scripts/tests/seo/test-homepage-visibility.mjs",
     "test:jsonld-escaping": "node scripts/tests/seo/test-jsonld-escaping.mjs",

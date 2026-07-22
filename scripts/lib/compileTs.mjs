@@ -6,7 +6,7 @@
  * generated-data-ownership, word-route-manifest/verb-list loaders, and the
  * offline full-corpus tools in workers/word-ssr/).
  *
- * scripts/tests/seo/test-word-seo-routes.mjs, scripts/test-word-ssr-http.mjs,
+ * scripts/tests/seo/test-word-seo-routes.mjs, scripts/tests/ssr/test-word-ssr-http.mjs,
  * scripts/tests/seo/test-jsonld-escaping.mjs, and scripts/tests/seo/test-seo-core-routes.mjs each
  * keep their own independent inline copy of this pattern — consolidating them
  * onto this helper is a separate, later task, not done here.
