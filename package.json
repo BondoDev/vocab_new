@@ -14,7 +14,7 @@
     "dev": "vite",
     "test:brand-asset-ownership": "node scripts/tests/architecture/test-brand-asset-ownership.mjs",
     "test:word-route-manifest": "node scripts/tests/routing/test-word-route-manifest.mjs",
-    "test:word-hydration": "node scripts/test-word-hydration.mjs",
+    "test:word-hydration": "node scripts/tests/runtime/test-word-hydration.mjs",
     "test:word-seo": "node scripts/tests/seo/test-word-seo-routes.mjs",
     "test:level-browse-preview": "node scripts/tests/routing/test-level-browse-preview-completeness.mjs",
     "test:word-ssr-http": "node scripts/test-word-ssr-http.mjs",
