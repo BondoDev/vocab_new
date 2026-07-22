@@ -37,7 +37,7 @@
  *   scripts/tests/seo/test-homepage-visibility.mjs of skipping word-page checks with an
  *   explicit note when WORD_PRERENDER_LIMIT=0).
  *
- * Run: node scripts/test-prerender-parity.mjs
+ * Run: node scripts/tests/prerender/test-prerender-parity.mjs
  * Requires a prior `npm run build` (or at least `vite build` +
  * `vite build --ssr src/entry-server.tsx --outDir server-build` +
  * `node scripts/build/prerender.mjs`) so dist/ and server-build/ both exist.
@@ -48,7 +48,7 @@ import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { ROOT_DIR } from "./lib/compileTs.mjs";
+import { ROOT_DIR } from "../../lib/compileTs.mjs";
 
 const DIST_DIR = path.join(ROOT_DIR, "dist");
 const SITE_ORIGIN = "https://www.fluentstellar.com";

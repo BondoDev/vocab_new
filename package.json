@@ -23,7 +23,7 @@
     "test:jsonld-escaping": "node scripts/tests/seo/test-jsonld-escaping.mjs",
     "test:schema-graph": "node scripts/tests/seo/test-schema-graph.mjs",
     "test:word-browse-pagination": "node scripts/tests/routing/test-word-browse-pagination.mjs",
-    "test:prerender-parity": "node scripts/test-prerender-parity.mjs",
+    "test:prerender-parity": "node scripts/tests/prerender/test-prerender-parity.mjs",
     "test:sitemap-structure": "node scripts/tests/seo/test-sitemap-structure.mjs",
     "test:sitemap-lastmod": "node scripts/tests/seo/test-sitemap-lastmod-stability.mjs",
     "test:seo-core-routes": "node scripts/tests/seo/test-seo-core-routes.mjs",
