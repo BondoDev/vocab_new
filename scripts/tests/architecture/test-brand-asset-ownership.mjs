@@ -166,7 +166,7 @@ test("DEFAULT_OG_IMAGE in src/seo/site.ts matches the index.html og:image URL", 
 });
 
 test("tracked Worker client-asset manifests point faviconHref at an existing public asset", () => {
-  for (const rel of ["client-assets.json", "client-assets.full.json"]) {
+  for (const rel of ["client-assets.full.json"]) {
     const file = path.join(ROOT_DIR, "workers", "word-ssr", "data", rel);
     const data = JSON.parse(fs.readFileSync(file, "utf8"));
     assert.ok(data.faviconHref, `${rel} has no faviconHref`);

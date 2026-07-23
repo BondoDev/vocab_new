@@ -4,6 +4,15 @@
 // stays deleted and does not silently regain a reference somewhere in the
 // tracked tree.
 //
+// Also guards the obsolete 81-word sample Worker pipeline under
+// workers/word-ssr/ (src/index.ts + wrangler.toml + its own build/generation
+// scripts and fixture data), removed after Phase 9 of the workers/word-ssr/
+// cleanup found it had no package-script, CI, or production dependency —
+// see `git log --diff-filter=D --summary -- workers/word-ssr/src/index.ts`
+// for the removal commit. Same regression concern as the POC above: prove
+// it stays deleted and the surviving full-corpus Worker pipeline stays
+// intact.
+//
 // Read-only. No network. No browser. Node standard library only.
 // Run: node scripts/tests/architecture/test-legacy-poc-ownership.mjs
 import assert from "node:assert/strict";
@@ -125,6 +134,39 @@ test("build:word-worker:full targets workers/word-ssr", () => {
   const scriptContent = fs.readFileSync(path.join(ROOT_DIR, scriptFile), "utf8");
   assert.ok(/workers\/word-ssr/.test(scriptContent), "build:word-worker:full does not reference workers/word-ssr");
 });
+
+console.log("\n=== obsolete 81-word sample Worker pipeline ownership ===\n");
+
+const DELETED_SAMPLE_PATHS = [
+  "workers/word-ssr/build/build-worker.mjs",
+  "workers/word-ssr/generation/generate-staging-records.mjs",
+  "workers/word-ssr/src/index.ts",
+  "workers/word-ssr/config/wrangler.toml",
+  "workers/word-ssr/data/word-pages.english.a1.json",
+  "workers/word-ssr/data/aliases.english.a1.json",
+  "workers/word-ssr/data/browse-shard.english-a1.json",
+  "workers/word-ssr/data/manifest.json",
+  "workers/word-ssr/data/client-assets.json",
+];
+
+for (const relPath of DELETED_SAMPLE_PATHS) {
+  test(`${relPath} does not exist`, () => {
+    assert.ok(!fs.existsSync(path.join(ROOT_DIR, relPath)), `${relPath} was recreated`);
+  });
+}
+
+const SURVIVING_FULL_PIPELINE_PATHS = [
+  "workers/word-ssr/build/build-worker-full.mjs",
+  "workers/word-ssr/src/index.full.ts",
+  "workers/word-ssr/config/wrangler.full.toml",
+  "workers/word-ssr/config/wrangler.production.toml",
+];
+
+for (const relPath of SURVIVING_FULL_PIPELINE_PATHS) {
+  test(`${relPath} still exists`, () => {
+    assert.ok(fs.existsSync(path.join(ROOT_DIR, relPath)), `${relPath} is missing`);
+  });
+}
 
 console.log(`\n─────────────────────────────────────────`);
 console.log(`  ${passed} passed, ${failed} failed`);

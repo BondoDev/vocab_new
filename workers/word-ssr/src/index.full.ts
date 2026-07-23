@@ -1,9 +1,9 @@
 // STAGING-ONLY, FULL-CORPUS Cloudflare Worker. Scope: all 7 UI languages ×
 // all 7 target languages × all CEFR levels (~74,000 concepts / ~518,000
-// renderable canonical routes). This is a SEPARATE entry point from
-// src/index.ts (the original 81-word English-A1 sample, left untouched for
-// rollback) — see the final report's "Existing sample files and retirement
-// status" section for why both exist side by side.
+// renderable canonical routes). This is the only Worker entry point — the
+// earlier 81-word English-A1 sample (src/index.ts) was removed after
+// Phase 9 of the workers/word-ssr/ cleanup confirmed it had no production
+// dependency.
 //
 // Data comes from Cloudflare Workers Static Assets (env.ASSETS), NOT R2 —
 // R2 is not enabled on this account and must not be (no billing). See
@@ -189,8 +189,10 @@ function redirectResponse(
   runtimeConfig: ReturnType<typeof resolveWorkerRuntimeConfig>,
   dataVersion: string,
 ): Response {
-  // See src/index.ts for why encodeURI (not raw UTF-8) is required here —
-  // the Workers Headers API enforces ISO-8859-1 for header values.
+  // encodeURI (not raw UTF-8) is required here — the Workers Headers API
+  // enforces ISO-8859-1 for header values, so a raw non-ASCII byte (e.g.
+  // "é") would come back mojibake'd; percent-encoding keeps the path
+  // structure intact while staying ASCII-safe.
   return new Response("", {
     status: 308,
     headers: withDataVersionHeaders(

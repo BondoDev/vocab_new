@@ -36,14 +36,14 @@ invoking the Worker's `fetch` handler for any matching path.
 to `/about/` before serving `about/index.html` — an extra redirect hop
 production doesn't have (production, then Vercel, served `/about` directly
 as 200; the Cloudflare production config keeps that behavior). This is
-present in the **existing, untouched sample's** `wrangler.toml` too (tested
-directly — same behavior, not something introduced by this migration).
+present in Cloudflare Workers Static Assets' default `html_handling`
+generally (tested directly against the sample Worker's `wrangler.toml`
+before its removal — same behavior, not something introduced by this
+migration).
 `wrangler.full.toml` sets `html_handling = "drop-trailing-slash"` so `/about`
 resolves directly (matching production exactly) and `/about/` redirects to
 `/about` instead — the direction that actually preserves existing URLs/status
-codes. **Recommended, not applied:** the same one-line addition to the
-sample's `wrangler.toml`, left untouched per this task's "don't modify the
-sample beyond the documented X-Robots-Tag fix" scope.
+codes.
 
 ## Worker-intercepted (src/index.full.ts's `fetch` handler runs)
 

@@ -93,9 +93,10 @@ Local development
   ~85k-URL word corpus is infeasible; word pages stay SSR.
 - Rollback: redeploy a previous Worker version from the Cloudflare
   dashboard (Deployments → rollback), or rebuild from an earlier git commit
-  and `wrangler deploy` the same config. The 81-word sample Worker
-  (`src/index.ts` + `wrangler.toml`) is a kept-for-reference prototype, not
-  a production rollback path.
+  and `wrangler deploy` the same config. The earlier 81-word sample Worker
+  (`src/index.ts` + `wrangler.toml`) was never a rollback path and was
+  removed after Phase 9 of the `workers/word-ssr/` cleanup confirmed it had
+  no production dependency.
 
 ## Domain, redirects, and status behavior
 

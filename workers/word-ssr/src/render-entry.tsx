@@ -2,9 +2,9 @@
 // because App.tsx/WordSeoPage.tsx-adjacent code uses import.meta.glob
 // (Vite-only syntax) that plain esbuild cannot resolve. Vite statically
 // transforms those globs at build time regardless of target, which is why
-// this file is pre-bundled with `vite build --ssr` (see build-worker.mjs /
-// build-worker-full.mjs) and then imported by the Wrangler-bundled Worker
-// entry (src/index.ts / src/index.full.ts) as an already-bundled module.
+// this file is pre-bundled with `vite build --ssr` (see build-worker-full.mjs)
+// and then imported by the Wrangler-bundled Worker entry (src/index.full.ts)
+// as an already-bundled module.
 //
 // Renders `WordSeoPageView` — the shared, server-safe presentational
 // component extracted from `WordSeoPage.tsx` specifically so this SSR path

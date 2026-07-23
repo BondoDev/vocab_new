@@ -318,9 +318,10 @@ Orientation:
 - **Purpose**: SSR word pages, word-browse pagination, legacy-URL redirects,
   and the browse-shard JSON endpoint — the routes too numerous to prerender.
 - **Source**: `workers/word-ssr/src/index.full.ts` (production entry),
-  `render-entry.tsx` (SSR), `shard-store.ts` (concept-shard lookup). A
-  smaller `src/index.ts` + `wrangler.toml` sample is kept for reference
-  only, not a production rollback path.
+  `render-entry.tsx` (SSR), `shard-store.ts` (concept-shard lookup). This is
+  the only Worker pipeline — the earlier 81-word sample (`src/index.ts` +
+  `wrangler.toml`) was removed after Phase 9 of the `workers/word-ssr/`
+  cleanup confirmed it had no production dependency.
 - **Generated payload**: `generate-full-corpus.mjs` builds the data corpus
   and mints a UTC-dated `dataVersion`; `publish-shards.mjs` assembles
   `assets-full/` from `dist/**` plus the corpus; `scripts/build/build-word-worker-full.mjs`
