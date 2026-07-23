@@ -17,7 +17,6 @@ scripts/operations/state/
 .vercel
 
 workers/word-ssr/.wrangler/
-workers/word-ssr/worker-dist/
 workers/word-ssr/worker-dist-full/
 workers/word-ssr/assets-full/
 workers/word-ssr/data/full-corpus/
