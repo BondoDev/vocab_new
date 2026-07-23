@@ -1,12 +1,9 @@
-# STAGING-ONLY Wrangler configuration for the FULL-CORPUS Worker.
-# Separate from wrangler.toml (the original 81-word sample's config, kept
-# untouched for rollback) — see the final report's "Existing sample files
-# and retirement status" section. Same Worker NAME on purpose: only one of
-# these two configs is ever the "live" staging deployment at a time; the
-# other stays available via `wrangler dev --config <the other file>` for
-# comparison/rollback. No routes, no custom domains — local `wrangler dev`
-# (and, once explicitly requested, `wrangler deploy`) only ever touch
-# fluentstellar-word-staging.<subdomain>.workers.dev, never fluentstellar.com.
+# STAGING/LOCAL-PREVIEW Wrangler configuration for the FULL-CORPUS Worker.
+# No production routes, no custom domain. Local `wrangler dev --config
+# <this file>` uses it to verify the Worker in staging mode. An explicit
+# `wrangler deploy --config <this file>` would target the staging Worker
+# name, fluentstellar-word-staging.<subdomain>.workers.dev, never
+# fluentstellar.com.
 name = "fluentstellar-word-staging"
 main = "../worker-dist-full/index.full.js"
 compatibility_date = "2024-09-23"

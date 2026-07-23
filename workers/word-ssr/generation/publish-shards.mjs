@@ -2,9 +2,9 @@
 // Assets instead of R2 — no R2 account calls, no billing). Assembles
 // assets-full/, the single combined directory wrangler.full.toml's
 // `[assets] directory` points at:
-//   - a copy of ../../../dist/**     (the existing production client bundle —
-//                                      same files the sample Worker already
-//                                      serves via its own [assets] binding)
+//   - a copy of ../../../dist/**     (the existing production client
+//                                      bundle, copied into the Worker's
+//                                      Static Assets directory)
 //   - records/{dataVersion}/**       (the generated shard tree from
 //                                      generate-full-corpus.mjs)
 //   - records/latest/manifest.json   (stable version pointer — see the
