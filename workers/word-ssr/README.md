@@ -266,6 +266,27 @@ boundary (documented as G1, "high risk") — see
 [`docs/import-boundaries.md`](../../docs/import-boundaries.md) for the
 full boundary inventory rather than reproducing it here.
 
+## Public Worker routes
+
+Most Worker-intercepted routes are covered in
+[`docs/route-ownership.md`](docs/route-ownership.md). One route needs a
+standing callout here because its retention status isn't obvious from the
+route table alone:
+
+- **`/staging-assets/browse-shard/<language>/<level>.json`**
+  (`handleBrowseSearchShardRequest` in `src/index.full.ts`) — a public
+  JSON route that exposes the same generated browse-shard data the Worker
+  also uses internally for word-page SSR (browse pagination,
+  related/discovery word resolution). Current client-side browse search
+  uses a separate bundled implementation
+  (`src/data/seo/wordPages/word-browse-shards/`, loaded via
+  `wordBrowseSearchData.ts`) and does not call this route. No current
+  in-repository HTTP consumer of it is known. It is retained pending
+  production request-usage evidence — **do not remove or rename it
+  without first checking operational traffic and compatibility risk.**
+  See [`docs/route-ownership.md`](docs/route-ownership.md) for the full
+  route table and detail.
+
 ## Commands and tooling
 
 ### Supported package commands
