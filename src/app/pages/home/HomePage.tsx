@@ -9,6 +9,7 @@ import {
   type LanguageContinuePopupHandle,
 } from "./LanguageContinuePopup";
 import { createDistributedStarFieldImage } from "../../utils/starField";
+import "./language-page.scss";
 
 interface HomePageProps {
   yourLanguage: string;
