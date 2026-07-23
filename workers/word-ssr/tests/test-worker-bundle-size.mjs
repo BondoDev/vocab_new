@@ -172,6 +172,16 @@ test("compiled Worker bundle contains no staging hostname literal", () => {
   }
 });
 
+test("generate-full-corpus.mjs mints a neutral full- DATA_VERSION, not staging-full-", () => {
+  const source = fs.readFileSync(path.join(workerDir, "generation", "generate-full-corpus.mjs"), "utf8");
+  if (!/const DATA_VERSION = `full-/.test(source)) {
+    throw new Error("generate-full-corpus.mjs no longer mints a `full-`-prefixed DATA_VERSION");
+  }
+  if (/const DATA_VERSION = `staging-full-/.test(source)) {
+    throw new Error("generate-full-corpus.mjs still mints a staging-full- DATA_VERSION");
+  }
+});
+
 console.log(`\n─────────────────────────────────────────`);
 console.log(`  ${passed} passed, ${failed} failed`);
 console.log(`─────────────────────────────────────────\n`);

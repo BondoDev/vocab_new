@@ -34,7 +34,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const workerDir = path.resolve(__dirname, "..");
 const dataDir = path.join(workerDir, "data", "full-corpus");
 const BROWSE_PAGE_SIZE = 54;
-const DATA_VERSION = `staging-full-${new Date().toISOString().slice(0, 10)}-01`;
+const DATA_VERSION = `full-${new Date().toISOString().slice(0, 10)}-01`;
 
 const compiled = compileTsToCommonJs(".tmp-generate-full-corpus", [
   path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "wordRouteManifest.ts"),
