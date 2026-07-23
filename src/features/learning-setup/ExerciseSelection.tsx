@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import "../../styles/exercise_page.scss";
+import "./styles/exercise-selection.scss";
 import { motion } from "motion/react";
 import {
   Check,

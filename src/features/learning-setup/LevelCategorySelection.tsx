@@ -1,6 +1,6 @@
 ﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
-import "../../styles/filters_page.scss";
+import "./styles/level-category-selection.scss";
 import { ChevronLeft, ChevronDown, Check, X } from "lucide-react";
 // categories.json is exclusive to this component and moved with it (see
 // docs/generated-data.md — unlike vocabularyMetadata/*.json below, which
