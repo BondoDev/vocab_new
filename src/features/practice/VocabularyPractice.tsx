@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { motion } from "motion/react";
-import "../../styles/exercises.scss";
+import "./styles/exercises.scss";
 import { Volume2, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { ConnectWordsExercise } from "./exercises/ConnectWordsExercise";
