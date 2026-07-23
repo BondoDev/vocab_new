@@ -1,8 +1,10 @@
 # Route ownership (Phase 9)
 
-STAGING-ONLY. Describes which routes are served directly by Cloudflare
-Workers Static Assets (no Worker code runs) vs. intercepted by
-`src/index.full.ts`. Verified against the running `npx wrangler dev --config
+Describes which routes are served directly by Cloudflare Workers Static
+Assets (no Worker code runs) vs. intercepted by `src/index.full.ts`. The
+route ownership described below applies to both staging/local-preview and
+production; it was verified against the local staging configuration, using
+the running `npx wrangler dev --config
 workers/word-ssr/config/wrangler.full.toml --local` instance (run from the
 repository root) — see the status codes recorded below.
 
