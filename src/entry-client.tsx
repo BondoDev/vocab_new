@@ -5,7 +5,6 @@ import "flag-icons/css/flag-icons.min.css";
 import "./styles/index.css";
 import "./styles/language_page.scss";
 import "./styles/about_help_page.scss";
-import "./styles/header.scss";
 
 // Fire a route-specific chunk preload as early as possible.
 // renderToPipeableStream marks resolved lazy boundaries with <!--$-->, but

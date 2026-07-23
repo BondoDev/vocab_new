@@ -7,7 +7,6 @@ import "./styles/filters_page.scss";
 import "./styles/language_page.scss";
 import "./styles/exercise_page.scss";
 import "./styles/about_help_page.scss";
-import "./styles/header.scss";
 import "./styles/exercises.scss";
 
 createRoot(document.getElementById("root")!).render(

@@ -50,6 +50,7 @@ import {
   signUpWithPassword,
   type StoredSupabaseSession,
 } from "../../../lib/supabaseAuth";
+import "./styles/header.scss";
 
 const NAV_HREFS = {
   about: "/about",
