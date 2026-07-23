@@ -313,6 +313,10 @@ is the authoritative reference; this section only orients:
 route split, build/packaging commands, bundle-size limits, and production
 safety checks — lives in [`docs/deployment.md`](deployment.md) and
 [`workers/word-ssr/docs/route-ownership.md`](../workers/word-ssr/docs/route-ownership.md).
+For which file belongs in which subfolder of `workers/word-ssr/` (ownership
+and placement rules for new or moved files), see
+[`workers/word-ssr/README.md`](../workers/word-ssr/README.md) — this section
+stays a high-level orientation and does not repeat that guide's detail.
 Orientation:
 
 - **Purpose**: SSR word pages, word-browse pagination, legacy-URL redirects,

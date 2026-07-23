@@ -8,10 +8,13 @@ name = "fluentstellar-word-staging"
 main = "../worker-dist-full/index.full.js"
 compatibility_date = "2024-09-23"
 
-# See wrangler.toml's own comment for why no_bundle is required: the Worker
-# entry (src/index.full.ts) is pre-bundled by Vite (vite.worker.config.mjs),
-# not Wrangler's own esbuild, because it transitively imports WordSeoPage.tsx
-# which uses import.meta.glob (Vite-only syntax).
+# no_bundle is required because the Worker entry (src/index.full.ts, via
+# render-entry.tsx) uses import.meta.glob (Vite-only syntax, not supported by
+# Wrangler's own esbuild) to load interface data. Vite pre-bundles the entry
+# ahead of time (build/vite.worker.config.mjs, orchestrated by
+# build/build-worker-full.mjs) into worker-dist-full/index.full.js; no_bundle
+# tells Wrangler to deploy that already-bundled output directly instead of
+# rebundling it with esbuild.
 no_bundle = true
 
 [vars]

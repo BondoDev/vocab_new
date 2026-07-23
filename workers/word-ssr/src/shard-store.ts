@@ -1,4 +1,4 @@
-// STAGING-ONLY storage abstraction. A single interface (ShardStore) hides
+// Production storage abstraction. A single interface (ShardStore) hides
 // WHERE record shards physically live from the routing/rendering code in
 // index.full.ts, so the active backend can change without touching the
 // renderer. This exists specifically because the storage layer changed once

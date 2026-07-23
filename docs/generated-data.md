@@ -32,6 +32,10 @@ Guard script: `npm run test:generated-data-ownership`
 | `workers/word-ssr/data/full-corpus/` | generated build output | vocabulary + word-route-manifest + slugs | `workers/word-ssr/generation/generate-full-corpus.mjs` (Cloudflare remote build) | `workers/word-ssr/generation/publish-shards.mjs` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `workers/word-ssr/assets-full/` | Worker Static Asset directory | `dist/**` + `data/full-corpus/` | `workers/word-ssr/generation/publish-shards.mjs` (Cloudflare remote build) | **Worker runtime** — bound in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `workers/word-ssr/worker-dist-full/` | generated build output | `workers/word-ssr/src/index.full.ts` | `vite build --ssr` step of `build-worker-full.mjs` (Cloudflare remote build) | **Worker runtime** — `main` field in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
+| `workers/word-ssr/data/client-assets.full.json` | generated build output (tracked snapshot) | `dist/index.html` (script/style/preconnect/favicon tags emitted by the client build) | `workers/word-ssr/generation/publish-shards.mjs` | **Worker runtime** — read by `workers/word-ssr/src/index.full.ts` to build the `<head>`/`<script>` tags of every Worker-rendered word page | yes | medium — never hand-edit; no automated staleness check currently exists against `dist/index.html` |
+| `workers/word-ssr/data/publish-manifest.json` | generated build bookkeeping (tracked) | itself (prior publish run's checksums) | `workers/word-ssr/generation/publish-shards.mjs` (both producer and reader — incremental-publish checksum ledger) | none — build bookkeeping only, not application source data, not read by the Worker runtime | yes | low — never hand-edit |
+| `workers/word-ssr/data/full-corpus-census.json` | diagnostic snapshot (tracked) | itself (point-in-time report) | `workers/word-ssr/diagnostics/census-full-corpus.mjs` (manual, developer-run) | none found — diagnostic-only, not consumed by production runtime or any script | yes | low — never hand-edit |
+| `workers/word-ssr/data/sharding-measurement.json` | diagnostic snapshot (tracked) | itself (point-in-time report) | `workers/word-ssr/diagnostics/measure-shard-formats.mjs` (manual, developer-run) | none found — diagnostic-only, not consumed by production runtime or any script | yes | low — never hand-edit |
 | `dist/` | generated build output | `vite build` | `npm run build` | intermediate; feeds `server-build/` cleanup and `assets-full/` publish | no (gitignored) | low, ephemeral |
 | `server-build/` | generated build output | `vite build --ssr` | `npm run build` | `scripts/build/prerender.mjs`, `scripts/build/verify-word-ssr-package.mjs` | no (gitignored) | low, ephemeral |
 
@@ -163,12 +167,16 @@ change or reconfigure that Cloudflare setting — see `docs/deployment.md` for
 the authoritative deployment-flow description, which has been updated to
 match.
 
-Separately, `workers/word-ssr/generation/generate-full-corpus.mjs` and
-`workers/word-ssr/build/build-worker-full.mjs` both carry header comments calling
-this pipeline "STAGING-ONLY," but `wrangler.production.toml` uses the
-identical `assets-full`/`worker-dist-full` outputs for production. That
-comment appears stale relative to current usage — also flagged for
-visibility, not changed here.
+Previously, several files in this pipeline (including
+`workers/word-ssr/generation/generate-full-corpus.mjs` and
+`workers/word-ssr/build/build-worker-full.mjs`) carried header comments
+calling this pipeline "STAGING-ONLY," even though `wrangler.production.toml`
+uses the identical `assets-full`/`worker-dist-full` outputs for production.
+That terminology was corrected (Phase 12A, comments only, no behavior
+change) across the production-path build, generation, runtime, and
+bundle-size-test files; the manual diagnostics under
+`workers/word-ssr/diagnostics/` were left as-is, since their staging/local
+context is accurate.
 
 ## Regeneration commands
 
@@ -176,8 +184,10 @@ visibility, not changed here.
 |---|---|
 | `src/data/seo/wordPages/word-hub-pages/`, `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/common100Verbs/verbListLookup/` | `npm run generate:word-hub-data` |
 | `public/sitemaps/` | `npm run sitemap` |
-| `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/` | `npm run build:word-worker:full` |
+| `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/`, `workers/word-ssr/data/client-assets.full.json`, `workers/word-ssr/data/publish-manifest.json` | `npm run build:word-worker:full` |
 | `dist/`, `server-build/` | `npm run build` |
+| `workers/word-ssr/data/full-corpus-census.json` | `node workers/word-ssr/diagnostics/census-full-corpus.mjs` (manual, no package script) |
+| `workers/word-ssr/data/sharding-measurement.json` | `node workers/word-ssr/diagnostics/measure-shard-formats.mjs` (manual, no package script; requires `data/full-corpus/` already generated) |
 | `src/data/seo/vocabularyLevels/` content, `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json` | none — hand-maintained, no generator |
 | `public/vocabularyLevels/*.json` (mirror only, from source content) | `npm run sync:vocabulary-levels` (`scripts/generation/sync-vocabulary-levels.mjs`) |
 
@@ -195,8 +205,19 @@ visibility, not changed here.
   script treats them as a disposable mirror and will overwrite or remove them.
 - **Not allowed — will be overwritten:** `src/data/seo/wordPages/word-hub-pages/`,
   `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/common100Verbs/verbListLookup/`,
-  `public/sitemaps/`, and everything under `workers/word-ssr/data/full-corpus/`,
-  `assets-full/`, `worker-dist-full/`, `dist/`, `server-build/`.
+  `public/sitemaps/`, `workers/word-ssr/data/client-assets.full.json`,
+  `workers/word-ssr/data/publish-manifest.json`,
+  `workers/word-ssr/data/full-corpus-census.json`,
+  `workers/word-ssr/data/sharding-measurement.json`, and everything under
+  `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/`,
+  `dist/`, `server-build/`.
+  The four tracked `workers/word-ssr/data/*.json` files listed above are
+  generated snapshots (build bookkeeping and diagnostic reports), distinct
+  both from the gitignored `full-corpus/`/`assets-full/`/`worker-dist-full/`
+  build output in the same area and from hand-maintained source data
+  elsewhere in the repo (e.g. `src/data/vocabulary/`,
+  `src/data/seo/vocabularyLevels/`) — no automated freshness check currently
+  runs against any of the four.
 
 ## Drift detection
 

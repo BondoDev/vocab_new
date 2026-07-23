@@ -1,5 +1,6 @@
-// STAGING-ONLY, Node-based, OFFLINE generator (Phase 3 of the full-corpus
-// migration). Generalizes generate-staging-records.mjs's per-record shape
+// Node-based, OFFLINE generator (Phase 3 of the full-corpus migration) that
+// produces the production full-corpus data; also used for local
+// staging/preview builds. Generalizes generate-staging-records.mjs's per-record shape
 // and helper algorithms (isValidBrowseWordLemma / normalizeLemma / hashString
 // + gcd + selectDiscoveryConceptIds / wordToSlug) from one hardcoded 81-word
 // English-A1 sample to the full 7-language, 6-level corpus.

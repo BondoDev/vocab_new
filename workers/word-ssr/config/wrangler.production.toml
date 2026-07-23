@@ -1,9 +1,11 @@
-# PRODUCTION-READY Wrangler configuration for the FULL-CORPUS Worker.
-# This prepares the real production Worker artifact and origin/canonical
-# behavior, but intentionally declares NO routes and NO custom domains.
-# Deploying with this config updates only the named Worker and its
-# workers.dev preview; attaching www.fluentstellar.com remains a separate,
-# manual cutover step.
+# Production Wrangler configuration for the FULL-CORPUS Worker.
+# Deploying with this config updates the named production Worker
+# (fluentstellar-production) and its runtime origin/canonical behavior.
+# workers.dev exposure is disabled (workers_dev = false, below). This config
+# intentionally declares NO routes and NO custom domains — production domain
+# behavior (attaching www.fluentstellar.com) is controlled by Cloudflare
+# dashboard routes/custom-domain configuration, a separate manual cutover
+# step outside this file.
 name = "fluentstellar-production"
 main = "../worker-dist-full/index.full.js"
 compatibility_date = "2024-09-23"

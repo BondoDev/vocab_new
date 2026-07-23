@@ -1,4 +1,5 @@
-// STAGING-ONLY Vite config used solely to pre-bundle the Worker's SSR entry.
+// Vite config used to pre-bundle the Worker's SSR entry for both production
+// and local staging/preview builds.
 // noExternal forces Vite to inline npm dependencies (react, react-dom,
 // react-router-dom, lucide-react) into the output instead of leaving them as
 // bare specifiers Node would resolve from node_modules — Workers has no

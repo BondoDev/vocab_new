@@ -1,4 +1,4 @@
-// STAGING-ONLY. Built by Vite (not Wrangler's own esbuild) specifically
+// Production Worker SSR renderer. Built by Vite (not Wrangler's own esbuild) specifically
 // because App.tsx/WordSeoPage.tsx-adjacent code uses import.meta.glob
 // (Vite-only syntax) that plain esbuild cannot resolve. Vite statically
 // transforms those globs at build time regardless of target, which is why

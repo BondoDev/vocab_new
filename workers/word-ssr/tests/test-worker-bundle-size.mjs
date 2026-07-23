@@ -1,4 +1,4 @@
-// STAGING-ONLY hard architecture test. Fails the build/CI signal if the
+// Production Worker bundle-safety test. Fails the build/CI signal if the
 // full-corpus Worker's compiled output (workers/word-ssr/
 // worker-dist-full/) ever regresses back toward the bundle bloat this task
 // fixed — see the project's bundle-size migration report for the full

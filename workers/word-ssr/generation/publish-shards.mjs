@@ -1,5 +1,6 @@
-// STAGING-ONLY publish pipeline (Phase 5, revised: Cloudflare Workers Static
-// Assets instead of R2 — no R2 account calls, no billing). Assembles
+// Publish pipeline for the production full-corpus Worker (Phase 5, revised:
+// Cloudflare Workers Static Assets instead of R2 — no R2 account calls, no
+// billing); also used for local staging/preview builds. Assembles
 // assets-full/, the single combined directory wrangler.full.toml's
 // `[assets] directory` points at:
 //   - a copy of ../../../dist/**     (the existing production client

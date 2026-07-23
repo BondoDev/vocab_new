@@ -1,6 +1,9 @@
-// STAGING-ONLY build helper for the FULL-CORPUS Worker (src/index.full.ts).
-// Runs the offline steps needed before
-// `wrangler dev --config config/wrangler.full.toml` can run against fresh code:
+// Production build orchestrator for the FULL-CORPUS Worker (src/index.full.ts).
+// Invoked by `npm run build:word-worker:full` (via
+// scripts/build/build-word-worker-full.mjs) for production builds, and
+// directly runnable before `wrangler dev --config config/wrangler.full.toml`
+// for local staging/preview verification. Runs the offline steps needed in
+// either case:
 //   1. regenerate full-corpus records from the real vocabulary (Node, offline)
 //   2. publish those records (+ a copy of the client bundle) into assets-full/
 //   3. pre-bundle the Worker entry via Vite (resolves import.meta.glob,

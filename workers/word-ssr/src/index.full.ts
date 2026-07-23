@@ -1,4 +1,5 @@
-// STAGING-ONLY, FULL-CORPUS Cloudflare Worker. Scope: all 7 UI languages ×
+// Production FULL-CORPUS Cloudflare Worker — the deployed runtime entry
+// point (see wrangler.production.toml's `main`). Scope: all 7 UI languages ×
 // all 7 target languages × all CEFR levels (~74,000 concepts / ~518,000
 // renderable canonical routes). This is the only Worker entry point — the
 // earlier 81-word English-A1 sample (src/index.ts) was removed after
