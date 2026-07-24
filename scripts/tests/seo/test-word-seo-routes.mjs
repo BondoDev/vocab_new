@@ -258,22 +258,21 @@ const slugOnlyWordPageData = wordPageData.buildResolvedWordPageData({
 });
 assert.equal(slugOnlyWordPageData.wordEntry, null);
 
-const sitemapFiles = fs
-  .readdirSync(path.join(rootDir, "public", "sitemaps"))
-  .filter((name) => /^sitemap-words-.*\.xml$/.test(name));
-
-for (const sitemapFile of sitemapFiles) {
-  const xml = fs.readFileSync(path.join(rootDir, "public", "sitemaps", sitemapFile), "utf8");
-  assert.ok(!xml.includes("/english-word-about-A1-00001"), "legacy URLs must not appear in sitemaps");
-  assert.ok(!xml.includes("/english-word-about</loc>"), "slug-only URLs must not appear in sitemaps");
-  const locMatches = Array.from(xml.matchAll(/<loc>([^<]+)<\/loc>/g));
-  for (const [, loc] of locMatches) {
-    assert.ok(
-      /--(A1|A2|B1|B2|C1|C2)-\d{5}$/.test(loc),
-      `word sitemap URL must use canonical double-hyphen concept format: ${loc}`,
-    );
-  }
-}
+// Word pages are intentionally excluded from XML sitemap discovery (they
+// remain live, routable, and indexable — see src/seo/wordPages/wordMetadata.ts
+// and scripts/generation/generate-sitemap.mjs's INCLUDE_WORD_SITEMAPS gate),
+// so there is no generated sitemap-words-*.xml to spot-check here. The
+// canonical double-hyphen/legacy-format/slug-only invariants this loop used
+// to check against generated XML are covered more exhaustively against the
+// authoritative route-manifest source itself by
+// scripts/tests/routing/test-word-route-manifest.mjs.
+assert.deepEqual(
+  fs
+    .readdirSync(path.join(rootDir, "public", "sitemaps"))
+    .filter((name) => /^sitemap-words-.*\.xml$/.test(name)),
+  [],
+  "word sitemap files are intentionally absent from public/sitemaps/",
+);
 
 assert.equal(
   wordSlugs.buildWordPath("en", "english", "about", "A1-00001"),

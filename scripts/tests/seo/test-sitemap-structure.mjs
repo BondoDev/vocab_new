@@ -157,34 +157,35 @@ async function main() {
     });
   }
 
-  console.log("\n[4] Word sitemap canonical-shape conformance (exhaustive, not spot-check)");
-  const wordSitemapFiles = childFiles.filter((name) => /^sitemap-words-/.test(name));
-  test("at least one sitemap-words-*.xml file exists", () => assert.ok(wordSitemapFiles.length > 0));
+  console.log("\n[4] Word sitemap exclusion policy");
+  {
+    // Word SEO pages remain live, routable, and indexable (see
+    // src/seo/wordPages/wordMetadata.ts) — they are intentionally excluded
+    // from XML sitemap discovery only. Canonical-shape coverage for word
+    // routes lives in test-word-seo-routes.mjs, validated against the
+    // route-manifest source directly rather than a generated sitemap file.
+    const wordSitemapFiles = childFiles.filter((name) => /^sitemap-words-/.test(name));
+    test("no sitemap-words-*.xml files exist under public/sitemaps/", () => {
+      assert.deepEqual(wordSitemapFiles, []);
+    });
 
-  for (const fileName of wordSitemapFiles) {
-    const locs = allLocsByFile.get(fileName);
+    const indexXml = readFile("public/sitemap.xml");
+    const indexedFileNames = extractSitemapIndexEntries(indexXml).map((loc) => {
+      const url = new URL(loc);
+      return url.pathname.replace(/^\/+/, "");
+    });
 
-    test(`${fileName}: every URL uses the canonical double-hyphen concept-ID format`, () => {
-      const nonConforming = locs.filter((loc) => !/--(A1|A2|B1|B2|C1|C2)-\d{5}$/.test(loc));
+    test("sitemap.xml has no index entry referencing a word sitemap", () => {
       assert.deepEqual(
-        nonConforming.slice(0, 5),
+        indexedFileNames.filter((name) => /^sitemaps\/sitemap-words-/.test(name)),
         [],
-        `${nonConforming.length} non-conforming URL(s), e.g.: ${nonConforming.slice(0, 3).join(", ")}`,
       );
     });
 
-    test(`${fileName}: no URL contains a single-hyphen legacy concept suffix`, () => {
-      const legacyShaped = locs.filter((loc) => /-(A1|A2|B1|B2|C1|C2)-\d{5}$/.test(loc) && !/--/.test(loc));
-      assert.deepEqual(legacyShaped, []);
-    });
-
-    test(`${fileName}: no URL is slug-only (missing a concept ID entirely)`, () => {
-      const slugOnly = locs.filter((loc) => !/--(A1|A2|B1|B2|C1|C2)-\d{5}$/.test(loc) && /-word-/.test(loc));
-      assert.deepEqual(slugOnly, []);
-    });
-
-    test(`${fileName}: no URL points at an internal API route`, () => {
-      assert.ok(!locs.some((loc) => /\/api\//i.test(loc)));
+    test("sitemap.xml still indexes the expected non-word sitemap children", () => {
+      for (const expected of ["sitemaps/sitemap-core.xml", "sitemaps/sitemap-cefr.xml", "sitemaps/verb-lists.xml"]) {
+        assert.ok(indexedFileNames.includes(expected), `sitemap.xml is missing expected child: ${expected}`);
+      }
     });
   }
 

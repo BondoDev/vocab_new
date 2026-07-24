@@ -18,6 +18,13 @@ const WORD_SITEMAP_ALL_LEVELS = WORD_SITEMAP_LEVEL === "ALL";
 const WORD_SITEMAP_UI_LANG = (process.env.WORD_SITEMAP_UI_LANG || "ALL").trim().toLowerCase();
 const SITEMAP_CHUNK_SIZE = Number.parseInt(process.env.SITEMAP_CHUNK_SIZE || "50000", 10);
 
+// Word SEO pages stay live, routable, and indexable under their own metadata
+// policy (src/seo/wordPages/wordMetadata.ts) — this flag is an XML-sitemap
+// discovery decision only. Deleting generated sitemap-words-*.xml alone is
+// not enough: prebuild regenerates public/sitemaps/ from source on every
+// build, so exclusion has to live here.
+const INCLUDE_WORD_SITEMAPS = false;
+
 const CORE_ROUTES = [
   "/",
   // /languages, /languages/filters, /languages/filters/exercises,
@@ -377,7 +384,9 @@ async function main() {
     const vocabularyRoutes = await collectVocabularyRoutes();
     const levelTestRoutes = await collectLevelTestRoutes();
     const verbListRoutes = Array.from(new Set(verbListRegistryLoader.registry.getAllVerbListPaths())).sort();
-    const wordRoutesByPair = await collectWordRoutes(manifestLoader.manifest);
+    const wordRoutesByPair = INCLUDE_WORD_SITEMAPS
+      ? await collectWordRoutes(manifestLoader.manifest)
+      : new Map();
 
     // Manual-only lastmod: dates are frozen in the committed ledger and
     // never advance on rebuilds or data changes. To change them, edit

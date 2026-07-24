@@ -67,7 +67,7 @@ flowchart TD
     Source["Source code\nsrc/, workers/word-ssr/src/"] -->|vite build| ClientBundle["Client bundle\ndist/assets/*"]
     Source -->|vite build --ssr| SSRBundle["SSR bundle\nserver-build/entry-server.js"]
     SSRBundle -->|scripts/build/prerender.mjs| Prerendered["Prerendered HTML\ndist/**/index.html\n(2,670 routes)"]
-    VocabData["src/data/vocabulary, seo/**\n(source + generated mirrors)"] -->|scripts/generation/generate-sitemap.mjs| Sitemap["public/sitemap.xml +\npublic/sitemaps/*.xml\n(84,957 URLs)"]
+    VocabData["src/data/vocabulary, seo/**\n(source + generated mirrors)"] -->|scripts/generation/generate-sitemap.mjs| Sitemap["public/sitemap.xml +\npublic/sitemaps/*.xml\n(core/CEFR/verb-list only —\nword pages excluded by policy)"]
     VocabData -->|scripts/generation/generate-word-hub-data.mjs| HubData["wordPages/word-hub-pages/,\nwordPages/word-browse-shards/,\nverbLists/common100Verbs/verbListLookup/"]
     ClientBundle --> Publish["workers/word-ssr/generation/publish-shards.mjs"]
     Prerendered --> Publish
@@ -89,7 +89,7 @@ flowchart TD
 | Routes | `src/app/App.tsx` (`ROUTES`), `src/app/utils/pageRouting.ts` (`PageKey`, parsers), `src/data/seo/*Slugs.ts`, `vocabularyLevels/vocabularyLevelRoutes.ts`/`shared/hub.ts` | `getPrerenderRoutes()` output (prerendered set) | `test:interactive-contracts`, `test:word-seo` |
 | SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPages/wordPageData.ts`, `src/seo/metadata.ts` (compatibility facade re-exporting `src/seo/hubPages/{hubMetadata,hubTemplates}.ts`, `src/seo/levelTests/levelTestMetadata.ts`, `src/seo/verbLists/common100Verbs/common100VerbsMetadata.ts`, `src/seo/wordPages/{wordMetadata,wordTemplates}.ts`, `src/seo/shared/seoAlternates.ts`, `src/seo/vocabularyLevels/{seoFaq,seoSchema,seoTemplates,vocabularyMetadata}.ts`) | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
 | Prerendered pages | `src/entry-server.tsx` (`render`, `getPrerenderRoutes`) | `dist/**/index.html` (2,670 files) | `test:prerender-parity` |
-| Sitemap | `scripts/generation/generate-sitemap.mjs` + vocabulary/route data | `public/sitemap.xml`, `public/sitemaps/*.xml` (84,957 URLs) | `test:sitemap-structure`, `test:sitemap-lastmod` |
+| Sitemap | `scripts/generation/generate-sitemap.mjs` + vocabulary/route data | `public/sitemap.xml`, `public/sitemaps/*.xml` (core/CEFR/verb-list families; word pages intentionally excluded — see "Prerendering vs. sitemap") | `test:sitemap-structure`, `test:sitemap-lastmod` |
 | Word Worker | `workers/word-ssr/src/` | `worker-dist-full/`, `assets-full/`, `data/full-corpus/` (all gitignored) | `test:word-worker:production-safety` |
 | Vocabulary data | `src/data/vocabulary/`, `src/data/seo/vocabularyLevels/` (incl. `level-browse-preview/`, `seo-cefr-content.json`), `src/data/seo/levelTests/` | `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/common100Verbs/verbListLookup/`, `public/vocabularyLevels/*.json` (mirror) | [`docs/generated-data.md`](generated-data.md), `test:generated-data-ownership` |
 | UI components | `src/app/components/ui/` (9 retained Radix wrappers) | none | [`docs/ui-component-ownership.md`](ui-component-ownership.md), `test:ui-component-ownership` |
@@ -247,8 +247,8 @@ pair documented in [`scripts/README.md`](../scripts/README.md)
 
 ## Prerendering vs. sitemap
 
-**Prerendered pages: 2,670.** **Sitemap URLs: 84,957.** These are different
-things by design, not a discrepancy:
+**Prerendered pages: 2,670.** Sitemap coverage is narrower by design, not a
+discrepancy:
 
 - `src/entry-server.tsx`'s `getPrerenderRoutes()` returns the core app
   routes, all UI-language × practice-language practice-route combinations,
@@ -260,20 +260,28 @@ things by design, not a discrepancy:
   defaults to `0`, so a plain `npm run build` prerenders **zero** individual
   word pages — confirmed by reading `collectWordRoutesSubset()`'s
   early-return on a non-positive limit.
-- `scripts/generation/generate-sitemap.mjs` additionally enumerates one URL per
-  vocabulary word per UI language (the `sitemap-words-*.xml` children) —
-  **84,957 URLs total** across `public/sitemap.xml` + 10 child sitemaps
-  (verified by summing `<loc>` counts in the tracked
-  `public/sitemaps/*.xml` files, matching `scripts/seo-baseline/current/performance.json`'s
-  captured baseline).
-- The ~84,500 individual word-page URLs in the sitemap are **not** emitted
-  as static files. They resolve at request time through
-  `workers/word-ssr/`'s Worker `fetch` handler, which calls the same
-  `render()` function `scripts/build/prerender.mjs` uses, so the Worker returns
-  complete server-rendered HTML — full markup with SEO tags already
-  present, not a client-only shell that would need JavaScript to become
-  indexable. React then hydrates onto that markup in the browser exactly
-  as it does for a prerendered page.
+- `scripts/generation/generate-sitemap.mjs` runs during `npm run build`'s
+  `prebuild` step and writes `public/sitemap.xml` plus three child sitemaps —
+  `sitemap-core.xml`, `sitemap-cefr.xml` (CEFR vocabulary-level + level-test
+  routes), and `verb-lists.xml`. Individual word pages are intentionally
+  **excluded** from sitemap discovery: the generator's `INCLUDE_WORD_SITEMAPS`
+  policy gate defaults to `false` (2026-07-24 sitemap-policy reconciliation),
+  to focus sitemap discovery on the core/CEFR/verb-list families. This is a
+  sitemap-*discovery* decision only — word pages remain fully live, routable,
+  and indexable under their own metadata policy
+  (`src/seo/wordPages/wordMetadata.ts`); they simply aren't submitted via XML
+  sitemap. Being a source-level default rather than a one-off file deletion,
+  the exclusion holds across `npm run sitemap`, `npm run build`, CI, and
+  Cloudflare's remote build alike. The generated XML under `public/` is
+  tracked and must stay synchronized with the generator — drift is caught by
+  `npm run test:sitemap-structure`.
+- Word pages remain resolvable at request time through `workers/word-ssr/`'s
+  Worker `fetch` handler, which calls the same `render()` function
+  `scripts/build/prerender.mjs` uses, so the Worker returns complete
+  server-rendered HTML — full markup with SEO tags already present, not a
+  client-only shell that would need JavaScript to become indexable. React
+  then hydrates onto that markup in the browser exactly as it does for a
+  prerendered page.
 - Both prerendered HTML and Worker-rendered HTML are SEO-valid because they
   go through the identical `render()`/`renderSeoTags()` code path — the
   only difference is *when* rendering happens (build time vs. request
@@ -281,7 +289,7 @@ things by design, not a discrepancy:
 
 This is verifiable from code (`entry-server.tsx`, `scripts/build/prerender.mjs`,
 `generate-sitemap.mjs`, `route-ownership.md`) and from a local `dist/` +
-`public/sitemaps/` tree after `npm run build`; it has not been confirmed
+`public/sitemaps/` tree after `npm run sitemap`; it has not been confirmed
 against a live production crawl.
 
 ## Data generation

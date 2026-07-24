@@ -757,16 +757,16 @@ async function main() {
       assert.ok(practiceResponse.body.includes(`<div id="root">`));
     }
 
-    const sitemapXml = fs.readFileSync(
-      path.join(rootDir, "public", "sitemaps", "sitemap-words-en-en.xml"),
-      "utf8",
-    );
-    assert.ok(!/api\/word-ssr/i.test(sitemapXml), "API URLs must not appear in word sitemap");
-    const sitemapUrlMatch = sitemapXml.match(/<loc>https:\/\/www\.fluentstellar\.com([^<]+)<\/loc>/);
-    assert.ok(sitemapUrlMatch, "missing sitemap word URL");
-    const sitemapWordResponse = await request(baseUrl, sitemapUrlMatch[1]);
-    assert.equal(sitemapWordResponse.status, 200);
-    assert.ok(sitemapWordResponse.body.includes("application/ld+json"));
+    // Word pages are intentionally excluded from XML sitemaps (see
+    // scripts/generation/generate-sitemap.mjs's INCLUDE_WORD_SITEMAPS gate),
+    // so there is no sitemap-words-*.xml left to sample a route from or to
+    // check for leaked API URLs. Both concerns are already covered without
+    // it: `englishCanonicalResponse` above requests this same uiLang=en/
+    // targetLanguage=english route built from `wordSlugs.buildWordPath` (the
+    // authoritative route builder) and `assertWordHtml` already asserts the
+    // 200 status and JSON-LD presence checked here; `canonicalAfterApiResponse`
+    // above separately asserts canonical word pages never link to internal
+    // API routes.
 
     const googlebotHeaders = {
       "user-agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
