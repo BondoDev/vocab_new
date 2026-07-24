@@ -56,7 +56,6 @@ it to produce metadata.
   copy/templates; `hubPages/hubTemplates.ts` owns hub metadata
   copy/templates. `levelTests/levelTestMetadata.ts` owns level-test page
   metadata.
-  `vocabularyLevels/vocabularyMetadata.ts`,
   `vocabularyLevels/seoFaq.ts` (FAQ section),
   `vocabularyLevels/seoSchema.ts` (JSON-LD graph), and
   `vocabularyLevels/seoTemplates.ts` (vocabulary-level metadata templates
@@ -103,7 +102,6 @@ to preserve by inspection and review.
 | `wordPages/wordMetadata.ts` | Builds word-page `<title>`/description/canonical from word data — output behavior |
 | `hubPages/hubMetadata.ts` | Builds SEO hub and word-SEO-hub metadata |
 | `levelTests/levelTestMetadata.ts` | Builds level-test-page metadata |
-| `vocabularyLevels/vocabularyMetadata.ts` | Builds vocabulary-level-page metadata from vocabulary-level data |
 | `verbLists/common100Verbs/common100VerbsMetadata.ts` | Builds 100-most-common-verb-list-page metadata |
 | `vocabularyLevels/seoSchema.ts` | Builds the vocabulary-level-page JSON-LD structured-data graph |
 | `shared/seoAlternates.ts` | Builds hreflang alternate-link sets — a cross-family concern |
@@ -117,7 +115,7 @@ to preserve by inspection and review.
    don't duplicate data here.
 2. Name the module `<family>Metadata.ts` to match the existing
    convention (`wordPages/wordMetadata.ts`, `verbLists/common100Verbs/common100VerbsMetadata.ts`,
-   `vocabularyLevels/vocabularyMetadata.ts`). Put it in its own
+   `levelTests/levelTestMetadata.ts`). Put it in its own
    `<family>/` subfolder only once that family owns more than one file.
 3. Reuse `shared/seoAlternates.ts` and
    `routeMetadataPolicy.ts` where the concern is cross-family — don't

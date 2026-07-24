@@ -18,7 +18,7 @@ Guard script: `npm run test:generated-data-ownership`
 
 | Directory | Classification | Source of truth | Producer | Consumers | Committed? | Risk |
 |---|---|---|---|---|---|---|
-| `src/data/seo/vocabularyLevels/` | handwritten source | itself | manual (no generator) | client (SSR sync load), SSR (`fs` read), `src/seo/vocabularyLevels/vocabularyMetadata.ts` (via the `src/seo/metadata.ts` facade), `VocabularyLevelPage.tsx`, `scripts/generation/generate-sitemap.mjs` | yes | low |
+| `src/data/seo/vocabularyLevels/` | handwritten source | itself | manual (no generator) | `scripts/generation/generate-sitemap.mjs` (CEFR route enumeration only — deferred to a later phase), `scripts/generation/sync-vocabulary-levels.mjs` (source → `public/vocabularyLevels/` mirror) | yes | low |
 | `src/data/seo/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/seo/levelTests/index.ts`, `scripts/generation/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/levelTests/levelTestMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
 | `src/data/seo/vocabularyLevels/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
 | `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/seo/vocabularyLevels/` (must stay byte-identical) | `npm run sync:vocabulary-levels` (`scripts/generation/sync-vocabulary-levels.mjs`), run explicitly by the developer | browser `fetch()` from `src/data/seo/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | low — deterministic sync script plus a read-only `--check` mode wired into `test:generated-data-ownership` |
@@ -41,28 +41,25 @@ Guard script: `npm run test:generated-data-ownership`
 
 ## `src/data/seo/vocabularyLevels/` vs `public/vocabularyLevels/` — resolved finding
 
-**`src/data/seo/vocabularyLevels/` is authoritative for SEO `<head>` metadata.**
-`src/seo/vocabularyLevels/vocabularyMetadata.ts` (re-exported through the
-`src/seo/metadata.ts` compatibility facade — see Issue 15's module split) reads it directly for
-every vocabulary-level route's
-title/description/canonical, and it's the only copy `scripts/generation/generate-sitemap.mjs`
-reads to enumerate sitemap routes and the only copy the SSR sync loader reads
-from disk (`path.resolve(process.cwd(), "src", "data", "seo", "vocabularyLevels", ...)`).
-
-**Correction (2026-07-15 guidelines-folder audit): it is NOT the source of the
-visible page body on production `vocabularyLevel` routes.** `App.tsx`'s
-`"vocabularyLevel"` branch calls `findSeoCefrPreviewItem()`
-(`src/app/pages/vocabulary/devSeoCefrPreviewData.ts`, backed by
-`src/data/seo/vocabularyLevels/seo-cefr-content.json`) before falling back to
-`VocabularyLevelPage`/`vocabularyLevels`. Because that file has full 7×7×6
-coverage, the match always succeeds, so every production vocabulary-level
-page's hero/sections/FAQ content renders from `seo-cefr-content.json` via
-`DevSeoCefrPlaceholderPage`, while its `<head>` metadata still comes from
-`vocabularyLevels`. This is pre-existing application behavior, not something
-this audit changed — it's flagged here because the "dev preview"/"placeholder"
-naming of the module and component is misleading about their actual
-production role. Not redesigned or renamed as part of this audit (out of
-scope).
+**`src/data/seo/vocabularyLevels/` is no longer authoritative for anything
+rendered on production `vocabularyLevel` routes (updated: legacy fallback
+pipeline removal).** It previously was, via `src/seo/vocabularyLevels/vocabularyMetadata.ts`
+(re-exported through the `src/seo/metadata.ts` compatibility facade), which
+read it directly for every vocabulary-level route's `<head>` title/description/canonical
+as a fallback for when `App.tsx`'s `"vocabularyLevel"` branch found no matching
+`src/data/seo/vocabularyLevels/seo-cefr-content.json` entry. Because that file has
+full 7×7×6 coverage — an invariant an exhaustive guard (`test:vocabulary-level-coverage`)
+now enforces — that fallback was never actually reachable in production. The
+routing fallback, the component-level loader, and `vocabularyMetadata.ts` itself
+have since all been removed. Both the visible page body and `<head>` metadata for
+every vocabulary-level route now come exclusively from `seo-cefr-content.json`,
+via `findSeoCefrPreviewItem()` (`src/app/pages/vocabulary/devSeoCefrPreviewData.ts`)
+and `DevSeoCefrPlaceholderPage`. The "dev preview"/"placeholder" naming of that
+module and component remains misleading about their actual production role —
+not renamed as part of this cleanup (out of scope). `src/data/seo/vocabularyLevels/`
+(the `{ui}/{target}.json` matrix) remains only as the source
+`scripts/generation/generate-sitemap.mjs` reads to enumerate CEFR sitemap routes —
+deferred to a later phase.
 
 **`public/vocabularyLevels/*.json` is a required runtime mirror, not dead
 duplication.** `src/data/seo/vocabularyLevels/index.ts`'s client-side loader

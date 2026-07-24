@@ -4,11 +4,11 @@ import { sanitizeMetadataText } from "../shared/seoAlternates";
 import type { FaqItem } from "./seoTemplates";
 
 /**
- * Shared @graph assembly (WebPage + BreadcrumbList + FAQPage + optional ItemList) for
- * vocabulary-level pages. Used by both `buildVocabularySeoMetadata` and
- * `DevSeoCefrPlaceholderPage`, which currently serves the populated CEFR levels and
- * builds its own SeoMetadata via `seoMetadataOverride` rather than calling
- * `buildVocabularySeoMetadata` directly.
+ * @graph assembly (WebPage + BreadcrumbList + FAQPage + optional ItemList) for
+ * vocabulary-level pages. Called directly by `DevSeoCefrPlaceholderPage`, which
+ * builds `SeoMetadata` from `seo-cefr-content.json` and passes it to
+ * `VocabularyLevelPage` via `seoMetadataOverride` — the sole active vocabulary-level
+ * metadata path.
  */
 export function buildVocabularyJsonLdGraph({
   uiLang,

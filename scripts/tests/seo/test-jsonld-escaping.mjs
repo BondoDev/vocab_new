@@ -654,7 +654,7 @@ console.log("\n[10] Schema @type values in verbLists/common100Verbs/common100Ver
     .map((parts) => fs.readFileSync(path.join(rootDir, "src", "seo", ...parts), "utf8"))
     .join("\n");
 
-  test('"FAQPage" @type still present in buildVocabularySeoMetadata', () => {
+  test('"FAQPage" @type still present in buildVocabularyJsonLdGraph (seoSchema.ts)', () => {
     assert.ok(jsonLdSource.includes('"FAQPage"'));
   });
 

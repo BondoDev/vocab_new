@@ -5,7 +5,6 @@ export type { FaqItem } from "./vocabularyLevels/seoTemplates";
 export { buildVocabularyFaqSection } from "./vocabularyLevels/seoFaq";
 export { buildVerbListSeoMetadata } from "./verbLists/common100Verbs/common100VerbsMetadata";
 export { buildVocabularyJsonLdGraph } from "./vocabularyLevels/seoSchema";
-export { buildVocabularySeoMetadata } from "./vocabularyLevels/vocabularyMetadata";
 export { buildLevelTestSeoMetadata } from "./levelTests/levelTestMetadata";
 export { buildSeoHubMetadata, buildWordSeoHubMetadata } from "./hubPages/hubMetadata";
 export type { WordSeoMetadataParams } from "./wordPages/wordMetadata";
