@@ -6,15 +6,13 @@ import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES } from "../../../data/seo/
 import { getLevelTestSeoPath } from "../../../data/seo/levelTests";
 import { getSeoHubPath } from "../../../data/seo/shared/hub";
 import {
-  getVocabularyLevelContent,
-  loadVocabularyLevelContent,
   type CefrLevelCode,
   type TargetLanguageSlug,
   type UiLanguageCode,
   type VocabularyLevelContent,
 } from "../../../data/seo/vocabularyLevels";
-import { buildVocabularySeoMetadata, buildVocabularyFaqSection } from "../../../seo/metadata";
-import { SEOHead, useSeoSiteOrigin, type SeoMetadata } from "../../../seo/SeoContext";
+import { buildVocabularyFaqSection } from "../../../seo/metadata";
+import { SEOHead, type SeoMetadata } from "../../../seo/SeoContext";
 import { buildWordPath } from "../../../data/seo/wordPages/wordSlugs";
 import { isValidBrowseWordLemma } from "../../../data/seo/shared/browseWordValidation";
 import type { LevelBrowsePreviewData } from "../../../data/seo/vocabularyLevels/levelBrowseWords";
@@ -24,14 +22,14 @@ interface VocabularyLevelPageProps {
   targetLanguage: TargetLanguageSlug;
   level: CefrLevelCode;
   onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
-  contentOverride?: {
+  contentOverride: {
     file: {
       targetLanguage: TargetLanguageSlug;
       targetLanguageDisplayName: string;
     };
     levelContent: VocabularyLevelContent;
   };
-  seoMetadataOverride?: SeoMetadata | null;
+  seoMetadataOverride: SeoMetadata;
   heroTitleOverride?: string | null;
   browseLanguageNameOverride?: string | null;
   faqLanguageNameOverride?: string | null;
@@ -150,20 +148,6 @@ const CURIOSITY_TRANSLATIONS: Record<
       `Para alcançar o nível ${level}, você precisa de aproximadamente ${words} palavras. No entanto, apenas conhecer a lista não é suficiente — você precisa dominar o uso e a pronúncia.`,
     cta: "Iniciar prática",
   },
-};
-
-const HERO_TITLE_SUFFIX: Record<
-  UiLanguageCode,
-  (args: CuriosityArgs) => string
-> = {
-  en: ({ language, words }) => `Mastering ${words} ${language} words`,
-  es: ({ language, words }) => `domina ${words} palabras de ${language}`,
-  fr: ({ language, words }) => `maitrisez ${words} mots de ${language}`,
-  de: ({ language, words }) => `${words} ${language} Worter meistern`,
-  it: ({ language, words }) => `padroneggia ${words} parole di ${language}`,
-  pt: ({ language, words }) => `domine ${words} palavras de ${language}`,
-  ru: ({ language, level, words }) =>
-    `освойте ${words} слов уровня ${level} по ${language}`,
 };
 
 const WORDS_UNIT_BY_UI_LANG: Record<UiLanguageCode, string> = {
@@ -458,48 +442,7 @@ export function VocabularyLevelPage({
   initialBrowsePreview,
 }: VocabularyLevelPageProps) {
   const location = useLocation();
-  const siteOrigin = useSeoSiteOrigin();
   const wordsUnit = WORDS_UNIT_BY_UI_LANG[uiLang] ?? WORDS_UNIT_BY_UI_LANG.en;
-  const initialContentBundle =
-    contentOverride ?? getVocabularyLevelContent(uiLang, targetLanguage, level);
-  const [contentBundle, setContentBundle] = useState(initialContentBundle);
-  const [isContentLoading, setIsContentLoading] = useState(
-    () => !initialContentBundle,
-  );
-  const [contentLoadFailed, setContentLoadFailed] = useState(false);
-
-  useEffect(() => {
-    if (contentOverride) {
-      setContentBundle(contentOverride);
-      setIsContentLoading(false);
-      setContentLoadFailed(false);
-      return;
-    }
-
-    const cachedContent = getVocabularyLevelContent(uiLang, targetLanguage, level);
-    if (cachedContent) {
-      setContentBundle(cachedContent);
-      setIsContentLoading(false);
-      setContentLoadFailed(false);
-      return;
-    }
-
-    let cancelled = false;
-    setIsContentLoading(true);
-    setContentLoadFailed(false);
-
-    void loadVocabularyLevelContent(uiLang, targetLanguage, level).then((nextContent) => {
-      if (!cancelled) {
-        setContentBundle(nextContent);
-        setIsContentLoading(false);
-        setContentLoadFailed(!nextContent);
-      }
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [contentOverride, level, targetLanguage, uiLang]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -589,38 +532,9 @@ export function VocabularyLevelPage({
     };
   }, [initialBrowsePreview, levelDisplay, targetLanguage]);
 
-  if (!contentBundle) {
-    if (isContentLoading) {
-      return (
-        <div className="flex-1 flex items-center justify-center px-6 py-12 text-sm text-muted-foreground">
-          Loading...
-        </div>
-      );
-    }
-
-    if (contentLoadFailed) {
-      return (
-        <div className="flex-1 flex items-center justify-center px-6 py-12 text-sm text-muted-foreground">
-          Content unavailable.
-        </div>
-      );
-    }
-
-    return null;
-  }
-
-  const { levelContent } = contentBundle;
+  const { levelContent } = contentOverride;
   const wordMapCount = WORD_MAP[levelDisplay] ?? levelContent.wordCount.value;
   const curiosityT = CURIOSITY_TRANSLATIONS[uiLang] ?? CURIOSITY_TRANSLATIONS.en;
-  const seoMetadata =
-    seoMetadataOverride ??
-    buildVocabularySeoMetadata({
-      uiLang,
-      targetLanguage,
-      level,
-      pathname: location.pathname,
-      siteOrigin,
-    });
   const ctaText = levelContent.ctaText || `Start ${levelDisplay} Practice`;
   const relatedCopy = RELATED_LINKS_COPY[uiLang] ?? RELATED_LINKS_COPY.en;
   const localizedHeaders =
@@ -639,7 +553,7 @@ export function VocabularyLevelPage({
       : [levelContent.intro];
   const targetLanguageDisplayName = resolveTargetLanguageDisplayName(
     targetLanguage,
-    contentBundle.file.targetLanguageDisplayName,
+    contentOverride.file.targetLanguageDisplayName,
   );
   const internalNavigationLinks = SUPPORTED_LEVELS.filter((item) => item !== level).map(
     (nextLevel) => ({
@@ -673,16 +587,6 @@ export function VocabularyLevelPage({
     levelContent,
     wordsUnit,
   );
-  const heroTitleSuffix = "";
-  const heroTitleSuffixWithoutLevel = heroTitleSuffix
-    .replace(` ${levelDisplay} `, " ")
-    .replace(`${levelDisplay} `, "")
-    .replace(` ${levelDisplay}`, "")
-    .replace(`уровня ${levelDisplay} `, "")
-    .replace("уровня ", "");
-  const heroTitle = levelContent.title.includes(String(wordMapCount))
-    ? levelContent.title
-    : `${levelContent.title} - ${heroTitleSuffixWithoutLevel}`;
   const normalizedSearch = browseSearch.trim().toLowerCase();
   const activeBrowsePreview =
     browsePreview?.targetLanguage === targetLanguage &&
@@ -719,7 +623,7 @@ export function VocabularyLevelPage({
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">
-      {seoMetadata ? <SEOHead metadata={seoMetadata} /> : null}
+      <SEOHead metadata={seoMetadataOverride} />
       <div className="mx-auto w-full max-w-5xl space-y-8">
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <h1 className="text-3xl text-foreground md:text-4xl">

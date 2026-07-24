@@ -14,6 +14,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { compileTsToCommonJs, ROOT_DIR as LIB_ROOT_DIR } from "../../lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -250,6 +251,119 @@ test("docs/non-seo-regression-checklist.md marks daily-target and practice-persi
   const text = readFile("docs/non-seo-regression-checklist.md");
   assert.ok(text.includes("TARGET-DEFERRED-"), "missing TARGET-DEFERRED- IDs for the non-existent daily-target feature");
   assert.ok(text.includes("PROGRESS-DEFERRED-"), "missing PROGRESS-DEFERRED- IDs for unimplemented practice/exam persistence");
+});
+
+console.log("\n=== vocabulary-level fail-fast decision ===\n");
+
+// resolveVocabularyLevelRenderDecision (src/app/utils/vocabularyLevelRenderDecision.ts)
+// is a small, self-contained pure function with no import.meta.env/glob
+// dependency, so — unlike App.tsx/pageRouting.ts — it can be compiled and
+// called directly here rather than only source-text-matched.
+const vocabularyLevelDecisionModule = compileTsToCommonJs(
+  ".tmp-interactive-contracts-vocab-decision",
+  [path.join(LIB_ROOT_DIR, "src", "app", "utils", "vocabularyLevelRenderDecision.ts")],
+);
+const { resolveVocabularyLevelRenderDecision } = vocabularyLevelDecisionModule.require(
+  "src/app/utils/vocabularyLevelRenderDecision",
+);
+
+test("an unknown vocabulary-level route still produces the existing Not Found decision", () => {
+  assert.deepEqual(resolveVocabularyLevelRenderDecision(false, false), {
+    kind: "not-found",
+    message: "Invalid vocabulary practice page.",
+  });
+  // The route validity check must dominate — a nonsensical "no route but has
+  // content" input still reports the route problem, not the content one.
+  assert.deepEqual(resolveVocabularyLevelRenderDecision(false, true), {
+    kind: "not-found",
+    message: "Invalid vocabulary practice page.",
+  });
+});
+
+test("a registered route with simulated missing canonical content takes the new explicit failure path", () => {
+  assert.deepEqual(resolveVocabularyLevelRenderDecision(true, false), {
+    kind: "not-found",
+    message: "Vocabulary content unavailable.",
+  });
+});
+
+test("a registered route with canonical content resolves to content, not a failure", () => {
+  assert.deepEqual(resolveVocabularyLevelRenderDecision(true, true), { kind: "content" });
+});
+
+vocabularyLevelDecisionModule.cleanup();
+
+// Every currently registered valid combination reaching "content" here,
+// combined with test:vocabulary-level-coverage separately proving all 294
+// combinations have a seo-cefr-content.json entry, together prove every
+// real route still resolves through canonical content — this test does not
+// re-derive that 294-combination matrix itself.
+const appTsxVocabularyLevelBranch = appTsxSource.slice(
+  appTsxSource.indexOf('if (resolvedPage === "vocabularyLevel") {'),
+  appTsxSource.indexOf('if (resolvedPage === "seoHub") {'),
+);
+
+test('App.tsx\'s vocabularyLevel branch is wired through resolveVocabularyLevelRenderDecision', () => {
+  assert.ok(
+    appTsxVocabularyLevelBranch.length > 0,
+    'could not locate the "vocabularyLevel" branch in App.tsx',
+  );
+  assert.ok(
+    appTsxVocabularyLevelBranch.includes("resolveVocabularyLevelRenderDecision("),
+    "App.tsx's vocabularyLevel branch no longer calls resolveVocabularyLevelRenderDecision",
+  );
+  assert.ok(
+    appTsxVocabularyLevelBranch.includes('vocabularyLevelRenderDecision.kind === "not-found"'),
+    "App.tsx's vocabularyLevel branch no longer branches on the not-found decision",
+  );
+});
+
+test("App.tsx's vocabularyLevel branch no longer renders the legacy VocabularyLevelPage fallback", () => {
+  assert.ok(
+    !appTsxVocabularyLevelBranch.includes("<VocabularyLevelPage"),
+    "App.tsx's vocabularyLevel branch still renders <VocabularyLevelPage> directly — the silent fallback was not removed",
+  );
+  assert.ok(
+    !appTsxSource.includes('from "./pages/vocabulary/VocabularyLevelPage"'),
+    "App.tsx still imports VocabularyLevelPage even though its only render site was removed",
+  );
+});
+
+console.log("\n=== vocabulary-level runtime loader removal ===\n");
+
+// VocabularyLevelPage.tsx is a .tsx module (React + browser globals), so —
+// same reasoning as the rest of this file — it is source-text-matched
+// rather than compiled/required.
+const vocabularyLevelPageSourceForLoaderCheck = readFile(
+  "src/app/pages/vocabulary/VocabularyLevelPage.tsx",
+);
+
+test("VocabularyLevelPage.tsx no longer calls the removed 7x7 source/browser-fetch loaders", () => {
+  for (const removedSymbol of [
+    "getVocabularyLevelContent",
+    "loadVocabularyLevelContent",
+    "fetchVocabularyFile",
+  ]) {
+    assert.ok(
+      !vocabularyLevelPageSourceForLoaderCheck.includes(removedSymbol),
+      `VocabularyLevelPage.tsx still references ${removedSymbol}, which should have been removed with the runtime loader`,
+    );
+  }
+  assert.ok(
+    !/\bfetch\s*\(/.test(vocabularyLevelPageSourceForLoaderCheck),
+    "VocabularyLevelPage.tsx still calls fetch(...) — the browser-fetch loader to /vocabularyLevels/ should be gone",
+  );
+});
+
+test("VocabularyLevelPage.tsx requires contentOverride and seoMetadataOverride rather than treating them as optional fallback props", () => {
+  assert.ok(
+    vocabularyLevelPageSourceForLoaderCheck.includes("contentOverride: {"),
+    "contentOverride is still declared optional (contentOverride?:) in VocabularyLevelPageProps",
+  );
+  assert.ok(
+    vocabularyLevelPageSourceForLoaderCheck.includes("seoMetadataOverride: SeoMetadata;"),
+    "seoMetadataOverride is still declared optional/nullable in VocabularyLevelPageProps",
+  );
 });
 
 console.log(`\n─────────────────────────────────────────`);

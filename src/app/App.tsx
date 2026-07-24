@@ -19,7 +19,6 @@ import { HomePage } from "./pages/home/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
 import { UserProfileDashboardPage } from "../features/user-profile";
-import { VocabularyLevelPage } from "./pages/vocabulary/VocabularyLevelPage";
 import { LevelTestSeoPage } from "./pages/level-test/LevelTestSeoPage";
 import { SeoHubPage } from "./pages/SeoHubPage";
 import { VerbListSeoPage } from "./pages/verb-lists/common100Verbs/VerbListSeoPage";
@@ -61,6 +60,7 @@ import {
   parseWordSeoHubRoute,
   type RouteKey,
 } from "./utils/pageRouting";
+import { resolveVocabularyLevelRenderDecision } from "./utils/vocabularyLevelRenderDecision";
 import { useAuthSession } from "./hooks/useAuthSession";
 import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
@@ -782,42 +782,38 @@ function AppContent({
   }
 
   if (resolvedPage === "vocabularyLevel") {
-    if (!vocabularyRoute) {
+    const jsonBackedVocabularyItem = vocabularyRoute
+      ? findSeoCefrPreviewItem({
+          uiLanguage: vocabularyRoute.uiLang,
+          targetLanguage: vocabularyRoute.targetLanguage,
+          level: vocabularyRoute.level,
+        })
+      : null;
+    const vocabularyLevelRenderDecision = resolveVocabularyLevelRenderDecision(
+      Boolean(vocabularyRoute),
+      Boolean(jsonBackedVocabularyItem),
+    );
+
+    if (vocabularyLevelRenderDecision.kind === "not-found") {
       return (
         <div className="min-h-screen flex flex-col bg-background">
           <Header {...sharedHeaderProps} activePage="notFound" />
-          <NotFoundPage message="Invalid vocabulary practice page." />
+          <NotFoundPage message={vocabularyLevelRenderDecision.message} />
           {accountOnboardingDialog}
         </div>
       );
     }
 
-    const jsonBackedVocabularyItem = findSeoCefrPreviewItem({
-      uiLanguage: vocabularyRoute.uiLang,
-      targetLanguage: vocabularyRoute.targetLanguage,
-      level: vocabularyRoute.level,
-    });
-
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
         <Suspense fallback={<RouteLoadingFallback />}>
-          {jsonBackedVocabularyItem ? (
-            <DevSeoCefrPlaceholderPage
-              item={jsonBackedVocabularyItem}
-              onStartPractice={handleStartVocabularyPractice}
-              pathPrefix=""
-              initialBrowsePreview={initialBrowsePreviewData}
-            />
-          ) : (
-            <VocabularyLevelPage
-              uiLang={vocabularyRoute.uiLang}
-              targetLanguage={vocabularyRoute.targetLanguage}
-              level={vocabularyRoute.level}
-              onStartPractice={handleStartVocabularyPractice}
-              initialBrowsePreview={initialBrowsePreviewData}
-            />
-          )}
+          <DevSeoCefrPlaceholderPage
+            item={jsonBackedVocabularyItem}
+            onStartPractice={handleStartVocabularyPractice}
+            pathPrefix=""
+            initialBrowsePreview={initialBrowsePreviewData}
+          />
         </Suspense>
         {accountOnboardingDialog}
       </div>
