@@ -380,7 +380,7 @@ record, including domain/redirect/WAF behavior.
 
 ## Architecture guards
 
-`npm run test:architecture-guards` chains **13 guard groups**, each a
+`npm run test:architecture-guards` chains **14 guard groups**, each a
 deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
@@ -389,6 +389,7 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:level-browse-preview` | `scripts/tests/routing/test-level-browse-preview-completeness.mjs` | 42-key CEFR preview match set |
 | `test:import-boundaries` | `scripts/tests/architecture/test-import-boundaries.mjs` | `import.meta.glob` match counts/eager-lazy (G1–G9) |
 | `test:generated-data-ownership` | `scripts/tests/architecture/test-generated-data-ownership.mjs` | generated/mirrored data directories |
+| `test:vocabulary-level-coverage` | `scripts/tests/architecture/test-vocabulary-level-content-coverage.mjs` | `seo-cefr-content.json` exactly covers every registered vocabulary-level route (no missing/duplicate/unexpected combination) |
 | `test:interactive-contracts` | `scripts/tests/routing/test-interactive-contracts.mjs` | route strings, profile-shell wiring, localStorage keys |
 | `test:ui-component-ownership` | `scripts/tests/architecture/test-ui-component-ownership.mjs` | `src/app/components/ui/` reachability |
 | `test:dependency-ownership` | `scripts/tests/architecture/test-dependency-ownership.mjs` | `package.json` direct-dependency usage |
