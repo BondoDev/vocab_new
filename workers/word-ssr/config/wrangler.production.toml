@@ -24,3 +24,9 @@ WORKER_LOG_LABEL = "Production word worker"
 directory = "../assets-full"
 binding = "ASSETS"
 html_handling = "drop-trailing-slash"
+# Selective, not global: only /records/* is routed to the Worker first (see
+# the early guard in ../src/index.full.ts), which denies direct external
+# access to the generated record shards while leaving every other path
+# (including the Worker's own env.ASSETS.fetch() shard reads) asset-first.
+# Full rationale in docs/deployment.md.
+run_worker_first = ["/records/*"]

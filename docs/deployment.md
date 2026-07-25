@@ -86,6 +86,23 @@ Local development
   `fetch` handler only runs for paths that do not exist as files — in
   practice the SSR word routes (`…-word-…`), browse pagination, and the
   browse-shard JSON endpoint.
+- **`/records/*` direct access is denied.** Record shards live under
+  `assets-full/records/` because Worker SSR reads them internally through
+  the `ASSETS` binding (`env.ASSETS.fetch()` in `src/shard-store.ts`) —
+  that binding call goes straight to Static Assets regardless of any
+  routing rule below, so internal shard access is unaffected by this.
+  The shard data itself is non-sensitive vocabulary content already
+  exposed through public word pages; direct external `/records/*` access
+  is still denied because no external consumer needs it, and the fixed
+  `records/latest/manifest.json` path otherwise enumerates every shard in
+  the corpus — an unnecessary bulk-extraction shortcut compared to
+  crawling individual (WAF-challenged) word pages. Both
+  `wrangler.production.toml` and `wrangler.full.toml` set
+  `run_worker_first = ["/records/*"]` under `[assets]`, routing only that
+  path prefix to the Worker instead of Static Assets; `src/index.full.ts`'s
+  `fetch` handler returns a minimal `404` for any `/records` or
+  `/records/*` request before doing anything else, without calling
+  `env.ASSETS.fetch()` for it. Every other path stays asset-first.
 - Bundle-size limit: 3 MB gzip (Free-plan ceiling); the repo enforces a
   2.5 MB budget plus single-file output via
   `npm run test:word-worker:bundle-size`.

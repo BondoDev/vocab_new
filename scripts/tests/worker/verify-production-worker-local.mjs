@@ -66,6 +66,30 @@ async function render(pathname) {
   return workerModule.fetch(request, env, ctx);
 }
 
+// Direct /records/* access must be denied by the Worker's own guard, before
+// it ever reaches env.ASSETS.fetch() — the fake assetsFetcher above serves
+// real files from assets-full/, so if the guard regressed or were bypassed,
+// these would come back 200 with real manifest/shard JSON instead of 404.
+async function assertRecordsDenied(pathname) {
+  const response = await render(pathname);
+  assert.equal(response.status, 404, `direct ${pathname} request must return 404`);
+  assert.equal(
+    response.headers.get("content-type"),
+    "text/plain; charset=utf-8",
+    `direct ${pathname} denial must not return JSON or HTML content-type`,
+  );
+  const body = await response.text();
+  assert.equal(body, "Not Found", `direct ${pathname} denial must return a minimal body, not shard/HTML content`);
+}
+
+const { dataVersion: liveDataVersion } = JSON.parse(
+  await fs.readFile(path.join(assetsRoot, "records", "latest", "manifest.json"), "utf8"),
+);
+await assertRecordsDenied("/records");
+await assertRecordsDenied("/records/");
+await assertRecordsDenied("/records/latest/manifest.json");
+await assertRecordsDenied(`/records/${liveDataVersion}/concepts/english/a1.json`);
+
 const canonicalResponse = await render("/ru/english-word-wisdom--B2-04096");
 assert.equal(canonicalResponse.status, 200, "canonical production word page should return 200");
 assert.equal(canonicalResponse.headers.get("x-robots-tag"), null, "canonical production word page must not send global noindex");

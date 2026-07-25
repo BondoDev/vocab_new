@@ -31,14 +31,9 @@ WORKER_LOG_LABEL = "Staging word worker"
 #   assets-full/records/{dataVersion}/...   (shard data)
 #   assets-full/records/latest/manifest.json (stable version pointer)
 #
-# NOTE (documented, not yet acted on): this makes the shard JSON files
-# themselves publicly fetchable at their asset path (e.g.
-# /records/{version}/concepts/english/a1.json) — the same way any other
-# static asset is. That data isn't sensitive (it's the same vocabulary
-# content the rendered pages already expose), so this is an accepted,
-# low-risk characteristic of using Assets as the primary store for a
-# staging-only, noindex deployment; it would be worth gating (e.g. via
-# `run_worker_first` + an explicit check) before any production cutover.
+# Direct external access to /records/* is denied (see run_worker_first below
+# and the guard in src/index.full.ts) — full rationale in
+# docs/deployment.md.
 [assets]
 directory = "../assets-full"
 binding = "ASSETS"
@@ -52,3 +47,7 @@ binding = "ASSETS"
 # instead, which is the direction that actually preserves existing status
 # codes/URLs per this task's "preserve exactly: status codes" requirement.
 html_handling = "drop-trailing-slash"
+# Selective, not global: only /records/* is routed to the Worker first (see
+# src/index.full.ts's early guard); every other path stays asset-first. See
+# docs/deployment.md for the full rationale.
+run_worker_first = ["/records/*"]

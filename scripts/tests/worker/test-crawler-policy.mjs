@@ -11,9 +11,10 @@
 //      allows search-engine crawlers through the catch-all, and still points at
 //      the sitemap.
 //   2. The deployed copies of robots.txt (dist/, assets-full/) match public/.
-//   3. wrangler.production.toml keeps the Worker name, the asset-first
-//      serving default (no run_worker_first), and the host redirect off
-//      (no apex/www redirect loops).
+//   3. wrangler.production.toml keeps the Worker name, asset-first serving
+//      for everything except the selective /records/* run_worker_first
+//      rule (see docs/deployment.md), and the host redirect off (no
+//      apex/www redirect loops).
 //   4. Worker runtime sources never call global fetch() (no recursive
 //      self-requests; data access goes through the ASSETS binding only).
 //   5. Browser code has no setInterval polling (no hydration request loops).
@@ -141,8 +142,13 @@ assert.match(wranglerToml, /^name = "fluentstellar-production"$/m, "Worker name 
 assert.match(wranglerToml, /^\[assets\]$/m, "production config must keep the [assets] block");
 assert.match(wranglerToml, /^binding = "ASSETS"$/m, "assets binding must stay ASSETS");
 assert.ok(
-  !/run_worker_first\s*=\s*(true|\[)/.test(wranglerToml),
-  "run_worker_first must stay off: static assets must be served without invoking the Worker",
+  !/run_worker_first\s*=\s*true\b/.test(wranglerToml),
+  "run_worker_first must not be globally enabled: static assets must be served without invoking the Worker",
+);
+assert.match(
+  wranglerToml,
+  /^run_worker_first\s*=\s*\["\/records\/\*"\]$/m,
+  "run_worker_first must stay scoped to exactly [\"/records/*\"] - denies direct record access without routing other static assets through the Worker",
 );
 assert.match(
   wranglerToml,

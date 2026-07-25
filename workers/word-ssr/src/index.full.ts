@@ -525,6 +525,23 @@ export default {
     const runtimeConfig = resolveWorkerRuntimeConfig(env, request.url);
     try {
       const url = new URL(request.url);
+
+      // `/records/*` is routed here by wrangler's selective `run_worker_first`
+      // (not asset-first like other static paths) so direct external requests
+      // can be denied — the shard tree otherwise gives an unauthenticated
+      // bulk-enumeration shortcut over the full corpus via its manifest. This
+      // is not a confidentiality control (the data is the same non-sensitive
+      // vocabulary content the rendered word pages already expose); it only
+      // closes an unnecessary direct-fetch path. Worker-internal shard reads
+      // (loadManifest/getShard, below) call env.ASSETS.fetch() directly and
+      // never reach this handler, so they are unaffected.
+      if (url.pathname === "/records" || url.pathname.startsWith("/records/")) {
+        return new Response("Not Found", {
+          status: 404,
+          headers: { "Content-Type": "text/plain; charset=utf-8" },
+        });
+      }
+
       const hostRedirectLocation = getCanonicalHostRedirectLocation(request.url, runtimeConfig);
       if (hostRedirectLocation) {
         const manifest = await loadManifest(env.ASSETS, runtimeConfig.requestOrigin);
