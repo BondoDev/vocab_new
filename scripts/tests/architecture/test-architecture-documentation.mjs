@@ -1,6 +1,6 @@
 // Deterministic guard proving docs/architecture.md stays wired to the real
 // repository: the paths, docs, and package scripts it references actually
-// exist, README/CLAUDE.md point to it, and a couple of specific stale
+// exist, README/AGENTS.md point to it, and a couple of specific stale
 // claims (GitHub Pages deployment, guard-count drift) can't silently creep
 // back in. See docs/architecture.md (2026-07-16 documentation audit).
 //
@@ -157,15 +157,15 @@ test("README.md links to docs/architecture.md", () => {
   );
 });
 
-test("CLAUDE.md links to docs/architecture.md and does not claim a GitHub Pages deployment", () => {
-  const claudeMd = fs.readFileSync(path.join(ROOT_DIR, "CLAUDE.md"), "utf8");
+test("AGENTS.md links to docs/architecture.md and does not claim a GitHub Pages deployment", () => {
+  const agentsMd = fs.readFileSync(path.join(ROOT_DIR, "AGENTS.md"), "utf8");
   assert.ok(
-    claudeMd.includes("docs/architecture.md"),
-    "CLAUDE.md does not reference docs/architecture.md",
+    agentsMd.includes("docs/architecture.md"),
+    "AGENTS.md does not reference docs/architecture.md",
   );
   assert.ok(
-    !/Deployed to GitHub Pages/i.test(claudeMd),
-    "CLAUDE.md still claims the site is deployed to GitHub Pages (Cloudflare is authoritative — see docs/deployment.md)",
+    !/Deployed to GitHub Pages/i.test(agentsMd),
+    "AGENTS.md still claims the site is deployed to GitHub Pages (Cloudflare is authoritative — see docs/deployment.md)",
   );
 });
 

@@ -423,9 +423,9 @@ not project source. Git does not track empty directories, so a folder can
 exist on disk with zero effect on `git status` — that is expected, not a
 sign of repository drift. All three are wholesale-ignored in the tracked
 `.gitignore`. Canonical, shared instructions for AI assistants live in
-exactly one place: `CLAUDE.md` at the repository root. Never commit a file
+exactly one place: `AGENTS.md` at the repository root. Never commit a file
 from inside one of these folders; if a tool ever writes project instructions
-there, move the content into `CLAUDE.md` instead. To inspect these folders
+there, move the content into `AGENTS.md` instead. To inspect these folders
 safely:
 
 ```bash
@@ -494,4 +494,4 @@ narratives if needed.
 
 Do not run the full SEO suite, Worker build, or baseline comparison for
 changes that don't touch runtime code, build scripts, or generated-data
-ownership — see [`CLAUDE.md`](../CLAUDE.md)'s collaboration rules.
+ownership — see [`AGENTS.md`](../AGENTS.md)'s collaboration rules.

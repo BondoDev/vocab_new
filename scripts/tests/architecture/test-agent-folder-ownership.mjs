@@ -1,7 +1,7 @@
 // Guards the local agent-tool-folder boundaries established by the
 // 2026-07-16 audit (see docs/architecture.md, "Local-only state"). Protects: .agents/,
 // .claude/, and .codex/ never carry tracked files, the tracked .gitignore
-// covers all three, canonical instructions stay in CLAUDE.md, and no
+// covers all three, canonical instructions stay in AGENTS.md, and no
 // credential-looking file sits under any of the three folders.
 //
 // Read-only. No network. No credentials read. Node standard library only.
@@ -80,14 +80,14 @@ for (const folder of AGENT_FOLDERS) {
 
 console.log("\n=== canonical instruction guards ===\n");
 
-test("CLAUDE.md exists at the repository root", () => {
-  assert.ok(fs.existsSync(path.join(ROOT_DIR, "CLAUDE.md")), "CLAUDE.md is missing");
+test("AGENTS.md exists at the repository root", () => {
+  assert.ok(fs.existsSync(path.join(ROOT_DIR, "AGENTS.md")), "AGENTS.md is missing");
 });
 
 test("docs/architecture.md documents .agents/.claude/.codex as local-only ignored state", () => {
   const content = fs.readFileSync(path.join(ROOT_DIR, "docs", "architecture.md"), "utf8");
   assert.ok(
-    /\.agents\/.*\.claude\/.*\.codex\//.test(content) || /\.codex\/[\s\S]{0,400}CLAUDE\.md/i.test(content),
+    /\.agents\/.*\.claude\/.*\.codex\//.test(content) || /\.codex\/[\s\S]{0,400}AGENTS\.md/i.test(content),
     "docs/architecture.md no longer documents the .agents/.claude/.codex local-state contract"
   );
 });

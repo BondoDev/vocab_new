@@ -1,31 +1,54 @@
 # FluentStellar
 
-A CEFR-structured vocabulary-learning platform built with React 18, Vite,
-and TypeScript. Renders as a hybrid of build-time static pages and
-on-request Cloudflare Worker SSR, deployed to `www.fluentstellar.com`.
+FluentStellar is a CEFR-structured vocabulary-learning platform built with
+React 18, Vite 6, and TypeScript 5. It combines build-time static generation
+with on-request Cloudflare Worker SSR and is available at
+[www.fluentstellar.com](https://www.fluentstellar.com).
+
+## Requirements
+
+- Node.js
+- npm
+
+The repository does not currently declare a specific supported Node.js version.
 
 ## Getting started
 
 ```bash
 npm install
-npm run dev          # start the Vite dev server
+npm run dev
 ```
 
-## Common commands
+The development server is provided by Vite.
 
-```bash
-npm run dev                       # local development
-npm run build                     # full SSG build: prebuild → client → SSR → prerender
-npm run sitemap                   # regenerate the sitemap only
-npx tsc --noEmit                  # typecheck
-npm run test:architecture-guards  # run all repository-contract guards
-```
+## Main commands
 
-No unit-test framework is configured; guard scripts under `scripts/tests/**/test-*.mjs`
-provide deterministic, file-tree-level regression coverage instead.
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Start the local Vite development server. |
+| `npm run build` | Build the client and SSR bundles, prerender static routes, and verify the SSR package. |
+| `npm run sitemap` | Regenerate the sitemap files. |
+| `npx tsc --noEmit` | Run the TypeScript checker without emitting files. |
+| `npm run test:architecture-guards` | Run the repository architecture and ownership guards. |
+
+No conventional unit-test framework is configured. Deterministic guard and
+regression scripts under `scripts/tests/` provide the primary automated
+coverage.
 
 ## Architecture
 
-See [`docs/architecture.md`](docs/architecture.md) for the full system
-overview — rendering paths, ownership map, routing, SEO, data generation,
-the Cloudflare Worker, build/deployment flow, and architecture guards.
+- The React application and shared server-rendering entry points live under
+  `src/`.
+- `npm run build` generates client assets, an SSR bundle, and prerendered HTML
+  for the static route set.
+- The Cloudflare Worker under `workers/word-ssr/` renders the larger word-page
+  route set on request and serves the generated static assets.
+- Repository tooling for builds, generation, checks, and operations lives
+  under `scripts/`.
+
+## Documentation
+
+- [Architecture overview](docs/architecture.md)
+- [Deployment and production runtime](docs/deployment.md)
+- [Dependency ownership](docs/dependency-ownership.md)
+- [Scripts and regression tooling](scripts/README.md)
