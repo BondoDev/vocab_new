@@ -25,6 +25,14 @@ export function useStoredLanguageAutoRedirect({
   legacyPracticePath,
   exerciseSelectionPath,
 }: UseStoredLanguageAutoRedirectParams): void {
+  // One-shot per mount: once the redirect fires, this must never re-arm,
+  // even though isContinueDisabled/resolvedPage legitimately re-run this
+  // effect later (e.g. the user finishes selecting a language after the
+  // first check declined). Do not lift this into reactive state or add it
+  // (or the refs below) to the effect's dependency array — either would let
+  // a later re-run treat itself as a fresh initial entry and call
+  // navigate() again, causing a redirect loop / route oscillation instead
+  // of the intended single auto-redirect.
   const hasAutoRedirectedRef = useRef(false);
   const initialPathRef = useRef(initialPathname);
   const startedOnLanguagePageRef = useRef(startedOnLanguagePage);

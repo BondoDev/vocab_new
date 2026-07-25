@@ -27,6 +27,9 @@ const rootDir = path.resolve(__dirname, "..", "..", "..");
 const compiled = compileTsToCommonJs(".tmp-jsonld-escape-test", [
   path.join(rootDir, "src", "seo", "SeoContext.tsx"),
   path.join(rootDir, "src", "seo", "site.ts"),
+  path.join(rootDir, "src", "seo", "vocabularyLevels", "seoSchema.ts"),
+  path.join(rootDir, "src", "seo", "wordPages", "wordMetadata.ts"),
+  path.join(rootDir, "src", "seo", "verbLists", "common100Verbs", "common100VerbsMetadata.ts"),
 ]);
 const { require: requireCompiled, cleanup } = compiled;
 
@@ -637,71 +640,136 @@ console.log("\n[9] No duplicate JSON-LD during SSR injection");
   });
 }
 
-// ── [10] Schema @type values preserved in source ───────────────────────────────
+// ── [10] Real JSON-LD builder output (runtime, not source text) ────────────────
+//
+// Replaces a former raw-source-text grep over these three files (which could
+// false-pass on a comment/unrelated string, or false-fail after a
+// behavior-preserving refactor) with assertions against the actual parsed
+// @graph each builder produces, using the real exported functions compiled
+// above — proving the schema contract these pages depend on, not just that
+// some matching text exists somewhere in the file.
 
-console.log("\n[10] Schema @type values in verbLists/common100Verbs/common100VerbsMetadata.ts / seoSchema.ts / wordPages/wordMetadata.ts (not removed)");
+console.log("\n[10] Real JSON-LD builder output for vocabularyLevels/seoSchema.ts, wordPages/wordMetadata.ts, verbLists/common100Verbs/common100VerbsMetadata.ts");
 
 {
   // src/seo/metadata.ts was split (Issue 15) into a compatibility facade plus
   // focused modules; the JSON-LD-emitting builders these checks guard now
   // live in verbLists/common100Verbs/common100VerbsMetadata.ts, seoSchema.ts (buildVocabularyJsonLdGraph),
   // and wordPages/wordMetadata.ts — kept deliberately separate, not merged.
-  const jsonLdSource = [
-    ["verbLists", "common100Verbs", "common100VerbsMetadata.ts"],
-    ["vocabularyLevels", "seoSchema.ts"],
-    ["wordPages", "wordMetadata.ts"],
-  ]
-    .map((parts) => fs.readFileSync(path.join(rootDir, "src", "seo", ...parts), "utf8"))
-    .join("\n");
+  const { buildVocabularyJsonLdGraph } = requireCompiled("src/seo/vocabularyLevels/seoSchema");
+  const { buildWordSeoMetadata } = requireCompiled("src/seo/wordPages/wordMetadata");
+  const { buildVerbListSeoMetadata } = requireCompiled(
+    "src/seo/verbLists/common100Verbs/common100VerbsMetadata",
+  );
 
-  test('"FAQPage" @type still present in buildVocabularyJsonLdGraph (seoSchema.ts)', () => {
-    assert.ok(jsonLdSource.includes('"FAQPage"'));
+  const FORBIDDEN_TYPES = ["Course", "EducationalOccupationalProgram"];
+
+  function collectTypes(node, out = new Set()) {
+    if (Array.isArray(node)) {
+      node.forEach((n) => collectTypes(n, out));
+    } else if (node && typeof node === "object") {
+      if (typeof node["@type"] === "string") out.add(node["@type"]);
+      for (const value of Object.values(node)) collectTypes(value, out);
+    }
+    return out;
+  }
+
+  function assertNoForbiddenTypes(label, graph) {
+    const types = collectTypes(graph);
+    for (const forbidden of FORBIDDEN_TYPES) {
+      assert.ok(!types.has(forbidden), `${label}: forbidden @type "${forbidden}" present`);
+    }
+  }
+
+  const vocabJsonLd = JSON.parse(
+    buildVocabularyJsonLdGraph({
+      uiLang: "en",
+      targetLanguage: "english",
+      canonical: "https://www.fluentstellar.com/en/english-a1-vocabulary-practice",
+      origin: "https://www.fluentstellar.com",
+      title: "English A1 Vocabulary",
+      description: "Practice English A1 vocabulary.",
+      breadcrumbLabel: "English A1",
+      faqItems: [{ question: "What is A1?", answer: "The beginner CEFR level." }],
+    }),
+  );
+
+  test("buildVocabularyJsonLdGraph emits a FAQPage node with Question/Answer", () => {
+    const faq = vocabJsonLd["@graph"].find((n) => n["@type"] === "FAQPage");
+    assert.ok(faq, "no FAQPage node in @graph");
+    assert.equal(faq.mainEntity[0]["@type"], "Question");
+    assert.equal(faq.mainEntity[0].acceptedAnswer["@type"], "Answer");
   });
 
-  test('"DefinedTerm" @type still present in buildWordSeoMetadata', () => {
-    assert.ok(jsonLdSource.includes('"DefinedTerm"'));
+  test("buildVocabularyJsonLdGraph emits WebPage/BreadcrumbList nodes with #webpage/#breadcrumb ids", () => {
+    const webPage = vocabJsonLd["@graph"].find((n) => n["@type"] === "WebPage");
+    const breadcrumb = vocabJsonLd["@graph"].find((n) => n["@type"] === "BreadcrumbList");
+    assert.ok(webPage?.["@id"]?.endsWith("#webpage"));
+    assert.ok(breadcrumb?.["@id"]?.endsWith("#breadcrumb"));
   });
 
-  test('"Question" @type still present in FAQPage schema', () => {
-    assert.ok(jsonLdSource.includes('"Question"'));
+  test("buildVocabularyJsonLdGraph has no forbidden schema types", () => {
+    assertNoForbiddenTypes("seoSchema.ts", vocabJsonLd["@graph"]);
   });
 
-  test('"Answer" @type still present in acceptedAnswer', () => {
-    assert.ok(jsonLdSource.includes('"Answer"'));
+  const wordJsonLd = JSON.parse(
+    buildWordSeoMetadata({
+      uiLang: "en",
+      targetLanguage: "english",
+      targetLanguageDisplayName: "English",
+      wordLemma: "test",
+      conceptId: "A1-00001",
+      definition: "a trial or examination",
+      wordType: "noun",
+      cefrLevel: "A1",
+      pathname: "/en/english-word-test--A1-00001",
+      siteOrigin: "https://www.fluentstellar.com",
+    }).jsonLd,
+  );
+
+  test("buildWordSeoMetadata emits a DefinedTerm node with a DefinedTermSet", () => {
+    const term = wordJsonLd["@graph"].find((n) => n["@type"] === "DefinedTerm");
+    assert.ok(term, "no DefinedTerm node in @graph");
+    assert.equal(term.inDefinedTermSet["@type"], "DefinedTermSet");
   });
 
-  test('"DefinedTermSet" @type still present', () => {
-    assert.ok(jsonLdSource.includes('"DefinedTermSet"'));
+  test("buildWordSeoMetadata emits WebPage/BreadcrumbList nodes with #webpage/#breadcrumb ids", () => {
+    const webPage = wordJsonLd["@graph"].find((n) => n["@type"] === "WebPage");
+    const breadcrumb = wordJsonLd["@graph"].find((n) => n["@type"] === "BreadcrumbList");
+    assert.ok(webPage?.["@id"]?.endsWith("#webpage"));
+    assert.ok(breadcrumb?.["@id"]?.endsWith("#breadcrumb"));
   });
 
-  test('"WebPage" @type present in both builders', () => {
-    assert.ok(jsonLdSource.includes('"WebPage"'));
+  test("buildWordSeoMetadata has no forbidden schema types", () => {
+    assertNoForbiddenTypes("wordMetadata.ts", wordJsonLd["@graph"]);
   });
 
-  test('"BreadcrumbList" @type present in both builders', () => {
-    assert.ok(jsonLdSource.includes('"BreadcrumbList"'));
+  const verbListJsonLd = JSON.parse(
+    buildVerbListSeoMetadata({
+      uiLang: "en",
+      pathname: "/en/100-most-common-english-verbs",
+      siteOrigin: "https://www.fluentstellar.com",
+      targetLanguage: "english",
+      items: [{ id: "1", verb: "run" }],
+      getAllPaths: () => ["/en/100-most-common-english-verbs"],
+      getPath: () => "/en/100-most-common-english-verbs",
+      getContent: () => null,
+      canLinkItem: () => true,
+      getWordLemma: () => "run",
+    }).jsonLd,
+  );
+
+  test("buildVerbListSeoMetadata emits WebPage/ItemList/BreadcrumbList nodes with #webpage/#breadcrumb ids", () => {
+    const webPage = verbListJsonLd["@graph"].find((n) => n["@type"] === "WebPage");
+    const itemList = verbListJsonLd["@graph"].find((n) => n["@type"] === "ItemList");
+    const breadcrumb = verbListJsonLd["@graph"].find((n) => n["@type"] === "BreadcrumbList");
+    assert.ok(webPage?.["@id"]?.endsWith("#webpage"));
+    assert.ok(itemList, "no ItemList node in @graph");
+    assert.ok(breadcrumb?.["@id"]?.endsWith("#breadcrumb"));
   });
 
-  test('"@graph" key present in both builders', () => {
-    assert.ok(jsonLdSource.includes('"@graph"'));
-  });
-
-  test('"Course" is NOT present in source (forbidden type)', () => {
-    assert.ok(!jsonLdSource.includes('"Course"'));
-  });
-
-  test('"EducationalOccupationalProgram" is NOT present in source (forbidden type)', () => {
-    assert.ok(!jsonLdSource.includes('"EducationalOccupationalProgram"'));
-  });
-
-  test('"#breadcrumb" ID fragment present in both builders', () => {
-    const count = (jsonLdSource.match(/#breadcrumb/g) ?? []).length;
-    assert.ok(count >= 2, `Expected #breadcrumb in both builders, found ${count}`);
-  });
-
-  test('"#webpage" ID fragment present in both builders', () => {
-    const count = (jsonLdSource.match(/#webpage/g) ?? []).length;
-    assert.ok(count >= 2, `Expected #webpage in both builders, found ${count}`);
+  test("buildVerbListSeoMetadata has no forbidden schema types", () => {
+    assertNoForbiddenTypes("common100VerbsMetadata.ts", verbListJsonLd["@graph"]);
   });
 }
 

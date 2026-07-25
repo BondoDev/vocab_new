@@ -94,6 +94,15 @@ function injectRenderedPage(template, { appHtml, headTags, htmlLang }) {
   const rootStart = withHead.indexOf('<div id="root">');
   const bodyClose = withHead.lastIndexOf("</body>");
 
+  // dist/index.html's empty `<div id="root">...</div>` mount point (from
+  // Vite's client build) is expected here, but if that marker shape is ever
+  // missing or malformed, skip body injection instead of throwing — one
+  // route's unexpected template shape must not abort the whole prerender
+  // batch. `<head>` tags above are already injected either way, so the
+  // route keeps correct SEO metadata; it just falls back to client-side
+  // rendering (the shipped bundle hydrates the empty root on load) instead
+  // of shipping SSR markup baked into this file. Preserve this graceful,
+  // non-throwing fallback.
   if (rootStart === -1 || bodyClose === -1 || bodyClose <= rootStart) {
     return withHead;
   }
