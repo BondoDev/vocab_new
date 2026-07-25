@@ -132,88 +132,44 @@ test("no raw .ts/.tsx source files exist anywhere under public/", () => {
   assert.deepEqual(offenders, [], `raw TypeScript source found under public/ (Vite ships it as static output verbatim): ${offenders.join(", ")}`);
 });
 
-console.log("\n=== src/data/seo/vocabularyLevels/ completeness ===\n");
+console.log("\n=== src/data/seo/vocabularyLevels/ legacy matrix removal (Phase 7) ===\n");
 
-test("src/data/seo/vocabularyLevels/ has exactly one JSON file per UI-language x target-language pair", () => {
+test("src/data/seo/vocabularyLevels/ has no UI-language matrix folder (removed Phase 7 — 49-file legacy matrix had no runtime, SSR, sitemap, or build consumer)", () => {
   const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
-  const expected = [];
+  const offenders = SUPPORTED_UI_LANGUAGES.filter((ui) => fs.existsSync(path.join(baseDir, ui)));
+  assert.deepEqual(offenders, [], `legacy vocabulary-level matrix folder(s) reappeared under src/data/seo/vocabularyLevels: ${offenders.join(", ")}`);
+});
+
+test("no legacy {ui}/{target}.json vocabulary-level matrix file exists anywhere under src/data/seo/vocabularyLevels", () => {
+  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
+  const offenders = [];
   for (const ui of SUPPORTED_UI_LANGUAGES) {
     for (const target of SUPPORTED_TARGET_LANGUAGES) {
-      expected.push(`${ui}/${target}.json`);
+      const rel = `${ui}/${target}.json`;
+      if (fs.existsSync(path.join(baseDir, rel))) offenders.push(rel);
     }
   }
-  const missing = [];
-  for (const rel of expected) {
-    if (!fs.existsSync(path.join(baseDir, rel))) missing.push(rel);
-  }
-  assert.deepEqual(missing, [], `missing vocabulary-level file(s): ${missing.join(", ")}`);
+  assert.deepEqual(offenders, [], `legacy vocabulary-level matrix file(s) reappeared: ${offenders.join(", ")}`);
+});
 
+test("src/data/seo/vocabularyLevels/seo-cefr-content.json remains the sole canonical vocabulary-level content source", () => {
+  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
+  assert.ok(
+    fs.existsSync(path.join(baseDir, "seo-cefr-content.json")),
+    "seo-cefr-content.json is missing — canonical vocabulary-level content source must exist",
+  );
   // level-browse-preview/ is other CEFR vocabulary-level SEO data co-located
-  // under vocabularyLevels/, not a UI-language folder — excluded here.
+  // under vocabularyLevels/, not a legacy UI-language matrix folder.
   const actualDirs = fs
     .readdirSync(baseDir, { withFileTypes: true })
-    .filter((e) => e.isDirectory() && e.name !== "level-browse-preview")
+    .filter((e) => e.isDirectory())
     .map((e) => e.name)
     .sort();
-  assert.deepEqual(actualDirs, [...SUPPORTED_UI_LANGUAGES].sort(), "unexpected UI-language folder(s) under src/data/seo/vocabularyLevels");
-
-  for (const ui of actualDirs) {
-    const files = fs
-      .readdirSync(path.join(baseDir, ui))
-      .filter((f) => f.endsWith(".json"))
-      .sort();
-    assert.deepEqual(
-      files,
-      SUPPORTED_TARGET_LANGUAGES.map((t) => `${t}.json`).sort(),
-      `src/data/seo/vocabularyLevels/${ui} has an unexpected file set`,
-    );
-  }
-});
-
-test("all src/data/seo/vocabularyLevels/*.json files parse and have no duplicate normalized level keys", () => {
-  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
-  for (const ui of SUPPORTED_UI_LANGUAGES) {
-    for (const target of SUPPORTED_TARGET_LANGUAGES) {
-      const filePath = path.join(baseDir, ui, `${target}.json`);
-      const raw = fs.readFileSync(filePath, "utf8").replace(/^﻿/, "");
-      let parsed;
-      assert.doesNotThrow(() => {
-        parsed = JSON.parse(raw);
-      }, `${path.relative(ROOT_DIR, filePath)} is not valid JSON`);
-      const levelKeys = Object.keys(parsed.levels ?? {});
-      const normalized = levelKeys.map((k) => k.toLowerCase());
-      const dupes = normalized.filter((k, i) => normalized.indexOf(k) !== i);
-      assert.deepEqual(dupes, [], `${path.relative(ROOT_DIR, filePath)} has duplicate normalized level key(s): ${dupes.join(", ")}`);
-      const unexpectedLevels = levelKeys.filter((k) => !SUPPORTED_LEVELS.includes(k));
-      assert.deepEqual(unexpectedLevels, [], `${path.relative(ROOT_DIR, filePath)} has unexpected level key(s): ${unexpectedLevels.join(", ")}`);
-    }
-  }
-});
-
-test("no malformed vocabulary-level filenames (unexpected casing or extension) under src/ or public/ vocabularyLevels", () => {
-  const offenders = [];
-  for (const root of ["src/data/seo/vocabularyLevels", "public/vocabularyLevels"]) {
-    const baseDir = path.join(ROOT_DIR, ...root.split("/"));
-    if (!fs.existsSync(baseDir)) continue;
-    for (const ui of fs.readdirSync(baseDir, { withFileTypes: true }).filter((e) => e.isDirectory())) {
-      // level-browse-preview/ is other CEFR vocabulary-level SEO data
-      // co-located under src/data/seo/vocabularyLevels/, not a UI-language folder.
-      if (root === "src/data/seo/vocabularyLevels" && ui.name === "level-browse-preview") {
-        continue;
-      }
-      if (!SUPPORTED_UI_LANGUAGES.includes(ui.name)) {
-        offenders.push(`${root}/${ui.name} (unexpected UI-language folder name)`);
-        continue;
-      }
-      for (const file of fs.readdirSync(path.join(baseDir, ui.name))) {
-        const expectedName = SUPPORTED_TARGET_LANGUAGES.map((t) => `${t}.json`);
-        if (!expectedName.includes(file)) {
-          offenders.push(`${root}/${ui.name}/${file}`);
-        }
-      }
-    }
-  }
-  assert.deepEqual(offenders, [], `malformed vocabulary-level filename(s): ${offenders.join(", ")}`);
+  assert.deepEqual(
+    actualDirs,
+    ["level-browse-preview"],
+    "unexpected folder(s) under src/data/seo/vocabularyLevels — only level-browse-preview/ should remain",
+  );
 });
 
 console.log("\n=== vocabulary-level public mirror synchronization removal (Phase 6) ===\n");

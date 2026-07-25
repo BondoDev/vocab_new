@@ -173,7 +173,7 @@
       "target": "src/data/seo/vocabularyLevels/vocabularyLevelRoutes.ts",
       "runtime": "build-time generator",
       "risk": "low",
-      "riskReason": "Migrated off the fs.readdir matrix scan in Phase 5 of the vocabulary-level legacy cleanup; now sources CEFR sitemap routes from the application's own route registry instead of reading src/data/seo/vocabularyLevels/{uiLang}/ directly."
+      "riskReason": "Migrated off the fs.readdir matrix scan in Phase 5 of the vocabulary-level legacy cleanup; sources CEFR sitemap routes exclusively from the application's own route registry. The legacy src/data/seo/vocabularyLevels/{uiLang}/{target}.json matrix (49 files) it previously scanned was confirmed to have no remaining consumer and deleted in Phase 7; see docs/generated-data.md."
     },
     {
       "id": "L5",

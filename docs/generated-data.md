@@ -7,6 +7,10 @@ folder cleanup) to add `src/data/seo/levelTests/seo_level_test_content.json` and
 Updated 2026-07-25 (Phase 6 of the vocabulary-level legacy cleanup):
 `public/vocabularyLevels/`, its synchronization script, and its package
 scripts were removed as unconsumed generated infrastructure.
+Updated 2026-07-25 (Phase 7 of the vocabulary-level legacy cleanup): the
+49-file `src/data/seo/vocabularyLevels/{ui}/{target}.json` source matrix was
+removed after an audit found no remaining runtime, SSR, client, metadata,
+sitemap, build, or test consumer.
 Companion to [`docs/import-boundaries.md`](import-boundaries.md) (which
 guards the *shape* `import.meta.glob` and related loaders depend on). This
 document instead answers, for every generated or `src`/`public`-duplicated
@@ -21,11 +25,12 @@ Guard script: `npm run test:generated-data-ownership`
 
 | Directory | Classification | Source of truth | Producer | Consumers | Committed? | Risk |
 |---|---|---|---|---|---|---|
-| `src/data/seo/vocabularyLevels/` | handwritten source | itself | manual (no generator) | `scripts/generation/generate-sitemap.mjs` (CEFR route enumeration, via `getAllLocalizedVocabularyRoutes()` — the 49-file matrix itself is no longer read for this; see resolved finding below) | yes | low — pending a later phase auditing whether the 49-file matrix still has any consumer at all |
+| `src/data/seo/vocabularyLevels/` | route/type ownership (routing + browse-preview data; the 49-file legacy matrix was removed Phase 7) | itself | manual (no generator) | `scripts/generation/generate-sitemap.mjs` (CEFR route enumeration, via `getAllLocalizedVocabularyRoutes()`); `vocabularyLevelRoutes.ts` consumers app-wide | yes | low |
 | `src/data/seo/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/seo/levelTests/index.ts`, `scripts/generation/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/levelTests/levelTestMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
 | `src/data/seo/vocabularyLevels/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
 | ~~`public/vocabularyLevels/*.json` (49 files)~~ | *(removed Phase 6, 2026-07-25)* | — | — | none — the browser-fetch consumer was removed in an earlier phase, confirmed dead, and the mirror deleted | — | resolved |
 | ~~`public/vocabularyLevels/index.ts`~~ | *(removed 2026-07-15)* | — | — | none — confirmed dead, no import anywhere | — | resolved |
+| ~~`src/data/seo/vocabularyLevels/{ui}/{target}.json` (49-file source matrix)~~ | *(removed Phase 7, 2026-07-25)* | — | — | none — superseded by `seo-cefr-content.json` since Phase 2/3 of this cleanup; sitemap migrated off it in Phase 5; confirmed dead by full-repo audit | — | resolved |
 | `src/data/seo/wordPages/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generation/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
 | `src/data/seo/wordPages/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generation/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
 | `src/data/seo/vocabularyLevels/level-browse-preview/` | generated committed source, **no generator exists** | itself (hand-authored/one-time-generated) | none found | client + SSR (`levelBrowseWords.ts`, lazy glob G9) | yes | medium — must be hand-edited until a generator is written |
@@ -44,6 +49,18 @@ Guard script: `npm run test:generated-data-ownership`
 
 ## `src/data/seo/vocabularyLevels/` vs `public/vocabularyLevels/` — resolved finding
 
+**Update (Phase 7, 2026-07-25): the 49-file `src/data/seo/vocabularyLevels/{ui}/{target}.json`
+source matrix has been deleted.** A full-repo audit (searching for exact
+paths, filename-construction patterns, `import.meta.glob` boundaries,
+filesystem reads, and test/doc references) found no remaining runtime, SSR,
+client, metadata, sitemap, build, or synchronization consumer. Canonical
+vocabulary-level page content and metadata come exclusively from
+`seo-cefr-content.json`; CEFR sitemap route enumeration comes exclusively
+from `vocabularyLevelRoutes.ts`'s `getAllLocalizedVocabularyRoutes()`. The
+only remaining consumers of the matrix had been `test:generated-data-ownership`'s
+own presence guards (now replaced with absence guards) and stale prose in
+this document (now corrected) — see `scripts/tests/architecture/test-generated-data-ownership.mjs`.
+
 **Update (Phase 6, 2026-07-25): `public/vocabularyLevels/` has been deleted,
 along with its synchronization script and package scripts.** The finding
 below explains why the mirror was originally required and how it was kept in
@@ -54,10 +71,7 @@ enumeration was migrated off the `{ui}/{target}.json` matrix in the same
 cleanup (see `getAllLocalizedVocabularyRoutes()` above). `scripts/generation/sync-vocabulary-levels.mjs`
 and the `sync:vocabulary-levels`/`check:vocabulary-levels-sync` package
 scripts were deleted in the same change; `prebuild` no longer runs a
-mirror-sync check. `src/data/seo/vocabularyLevels/{ui}/{target}.json` (the 49
-source files) were intentionally **not** deleted in this phase — see the
-"Regeneration commands" and "Deletion rules" sections below for their
-current status.
+mirror-sync check.
 
 **`src/data/seo/vocabularyLevels/` is no longer authoritative for anything
 rendered on production `vocabularyLevel` routes (updated: legacy fallback
@@ -75,9 +89,10 @@ via `findSeoCefrPreviewItem()` (`src/app/pages/vocabulary/devSeoCefrPreviewData.
 and `DevSeoCefrPlaceholderPage`. The "dev preview"/"placeholder" naming of that
 module and component remains misleading about their actual production role —
 not renamed as part of this cleanup (out of scope). `src/data/seo/vocabularyLevels/`
-(the `{ui}/{target}.json` matrix) remains only as the source
-`scripts/generation/generate-sitemap.mjs` reads to enumerate CEFR sitemap routes —
-deferred to a later phase.
+now contains only route/type ownership (`index.ts`, `vocabularyLevelRoutes.ts`),
+the canonical content file (`seo-cefr-content.json`), and the unrelated
+`level-browse-preview/` data — the `{ui}/{target}.json` matrix itself was
+deleted in Phase 7 (see the update above).
 
 **`public/vocabularyLevels/*.json` was a required runtime mirror, not dead
 duplication — until the fetch consumer was removed.** `src/data/seo/vocabularyLevels/index.ts`'s
@@ -180,12 +195,11 @@ context is accurate.
 | `dist/`, `server-build/` | `npm run build` |
 | `workers/word-ssr/data/full-corpus-census.json` | `node workers/word-ssr/diagnostics/census-full-corpus.mjs` (manual, no package script) |
 | `workers/word-ssr/data/sharding-measurement.json` | `node workers/word-ssr/diagnostics/measure-shard-formats.mjs` (manual, no package script; requires `data/full-corpus/` already generated) |
-| `src/data/seo/vocabularyLevels/` content, `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json` | none — hand-maintained, no generator |
+| `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json` | none — hand-maintained, no generator |
 
 ## Manual-edit policy
 
-- **Allowed and expected:** `src/data/seo/vocabularyLevels/`,
-  `src/data/seo/vocabularyLevels/level-browse-preview/`,
+- **Allowed and expected:** `src/data/seo/vocabularyLevels/level-browse-preview/`,
   `src/data/seo/levelTests/seo_level_test_content.json`,
   `src/data/seo/vocabularyLevels/seo-cefr-content.json` (no generator exists for any of these).
 - **Not allowed — will be overwritten:** `src/data/seo/wordPages/word-hub-pages/`,
@@ -213,11 +227,11 @@ context is accurate.
   `public/vocabularyLevels/` mirror, the dead `public/vocabularyLevels/index.ts`,
   the sync script, and its package scripts cannot silently reappear; the
   removed `public/seo/level-browse-preview/` mirror cannot silently reappear;
-  no raw TypeScript exists under `public/`; `src/data/seo/vocabularyLevels/`
-  matches the expected UI-language × target-language matrix with valid,
-  non-duplicate JSON; the listed generated source directories exist and are
-  committed; and the listed Worker build-output directories stay gitignored
-  and untracked.
+  no raw TypeScript exists under `public/`; the removed 49-file
+  `src/data/seo/vocabularyLevels/{ui}/{target}.json` matrix cannot silently
+  reappear and `seo-cefr-content.json` remains the sole canonical content
+  file; the listed generated source directories exist and are committed; and
+  the listed Worker build-output directories stay gitignored and untracked.
 - `npm run test:level-browse-preview-completeness` (via
   `test:level-browse-preview`) — asserts the exact 42-key match set for
   `src/data/seo/vocabularyLevels/level-browse-preview/*.json`.

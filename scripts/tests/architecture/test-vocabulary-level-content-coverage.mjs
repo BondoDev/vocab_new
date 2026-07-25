@@ -3,14 +3,14 @@
 // SUPPORTED_UI_LANGUAGES x SUPPORTED_TARGET_LANGUAGES x SUPPORTED_LEVELS
 // (src/data/seo/shared/slugs.ts) — with no duplicate or unexpected entry.
 //
-// Why this exists: every vocabulary-level route currently resolves through
-// findSeoCefrPreviewItem() (devSeoCefrPreviewData.ts), which overrides
-// VocabularyLevelPage's own src/data/seo/vocabularyLevels/{ui}/{target}.json
-// fallback loader whenever a match exists. That fallback pipeline stays
-// dormant only because coverage happens to be complete today — nothing
-// enforced that until this guard. This test is a prerequisite for any
-// future decision about the dormant fallback pipeline; it does not remove
-// or alter that pipeline.
+// Why this exists: every vocabulary-level route resolves through
+// findSeoCefrPreviewItem() (devSeoCefrPreviewData.ts), which reads
+// seo-cefr-content.json exclusively for both page content and metadata.
+// The legacy src/data/seo/vocabularyLevels/{ui}/{target}.json matrix and its
+// component-level fallback-loading pipeline have been removed (Phase 7 of
+// the vocabulary-level legacy cleanup); seo-cefr-content.json is now the
+// sole canonical content source, so this guard is what keeps its coverage
+// complete going forward.
 //
 // Run: node scripts/tests/architecture/test-vocabulary-level-content-coverage.mjs
 import assert from "node:assert/strict";
