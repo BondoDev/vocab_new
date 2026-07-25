@@ -89,7 +89,7 @@ flowchart TD
 | Routes | `src/app/App.tsx` (`ROUTES`), `src/app/utils/pageRouting.ts` (`PageKey`, parsers), `src/data/seo/*Slugs.ts`, `vocabularyLevels/vocabularyLevelRoutes.ts`/`shared/hub.ts` | `getPrerenderRoutes()` output (prerendered set) | `test:interactive-contracts`, `test:word-seo` |
 | SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPages/wordPageData.ts`, `src/seo/metadata.ts` (compatibility facade re-exporting `src/seo/hubPages/{hubMetadata,hubTemplates}.ts`, `src/seo/levelTests/levelTestMetadata.ts`, `src/seo/verbLists/common100Verbs/common100VerbsMetadata.ts`, `src/seo/wordPages/{wordMetadata,wordTemplates}.ts`, `src/seo/shared/seoAlternates.ts`, `src/seo/vocabularyLevels/{seoFaq,seoSchema,seoTemplates,vocabularyMetadata}.ts`) | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
 | Prerendered pages | `src/entry-server.tsx` (`render`, `getPrerenderRoutes`) | `dist/**/index.html` (2,670 files) | `test:prerender-parity` |
-| Sitemap | `scripts/generation/generate-sitemap.mjs` + vocabulary/route data | `public/sitemap.xml`, `public/sitemaps/*.xml` (core/CEFR/verb-list families; word pages intentionally excluded — see "Prerendering vs. sitemap") | `test:sitemap-structure`, `test:sitemap-lastmod` |
+| Sitemap | `scripts/generation/generate-sitemap.mjs` + vocabulary/route data | `public/sitemap.xml`, `public/sitemaps/*.xml` (core/CEFR/verb-list families; word pages intentionally excluded — see "Prerendering vs. sitemap") | `test:sitemap-structure`, `test:sitemap-vocabulary-route-source`, `test:sitemap-lastmod` |
 | Word Worker | `workers/word-ssr/src/` | `worker-dist-full/`, `assets-full/`, `data/full-corpus/` (all gitignored) | `test:word-worker:production-safety` |
 | Vocabulary data | `src/data/vocabulary/`, `src/data/seo/vocabularyLevels/` (incl. `level-browse-preview/`, `seo-cefr-content.json`), `src/data/seo/levelTests/` | `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/common100Verbs/verbListLookup/` | [`docs/generated-data.md`](generated-data.md), `test:generated-data-ownership` |
 | UI components | `src/app/components/ui/` (9 retained Radix wrappers) | none | [`docs/ui-component-ownership.md`](ui-component-ownership.md), `test:ui-component-ownership` |
@@ -236,9 +236,12 @@ agree on what a given URL means.
 
 Guard/test scripts (actual `package.json` names): `test:jsonld-escaping`,
 `test:schema-graph`, `test:homepage-visibility`, `test:word-seo`,
-`test:seo-core-routes`, `test:sitemap-structure`, `test:sitemap-lastmod`,
-`test:prerender-parity`, `test:word-browse-pagination`, `test:word-ssr-http`,
-`test:word-ssr-package` — chained together as `npm run test:seo-output`.
+`test:seo-core-routes`, `test:sitemap-structure`,
+`test:sitemap-vocabulary-route-source` (verifies `sitemap-cefr.xml`
+vocabulary-level routes against `getAllLocalizedVocabularyRoutes()`),
+`test:sitemap-lastmod`, `test:prerender-parity`, `test:word-browse-pagination`,
+`test:word-ssr-http`, `test:word-ssr-package` — chained together as
+`npm run test:seo-output`.
 Consistency between client rendering, prerender output, and Worker SSR
 output is additionally checked by the SEO/performance baseline capture-and-compare
 pair documented in [`scripts/README.md`](../scripts/README.md)
