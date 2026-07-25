@@ -372,20 +372,28 @@ Local build (`npm run build`):
 Cloudflare deployment: pushes to `master` trigger Cloudflare Workers Builds
 (Git integration), which runs `npm run build && npm run build:word-worker:full`
 then Wrangler deploys automatically. This configuration lives only in the
-Cloudflare dashboard, not in this repository (no `.github/workflows/`
-exists — the pipeline runs inside Cloudflare's own infrastructure). See
+Cloudflare dashboard, not in this repository. See
 [`docs/deployment.md`](deployment.md) for the full, continuously-reverified
 record, including domain/redirect/WAF behavior.
 
+Separately, `.github/workflows/ci.yml` runs a lightweight GitHub Actions
+regression gate on every pull request and push to `master`: `test:feature-contracts`,
+then `npx tsc --noEmit`, `test:architecture-guards`, a production build with a
+tracked-file-drift check, and finally `test:seo-output`. This is a PR/push
+gate only — it is independent of and does not perform the Cloudflare
+deployment described above.
+
 ## Architecture guards
 
-`npm run test:architecture-guards` chains **14 guard groups**, each a
+`npm run test:architecture-guards` chains **16 guard groups**, each a
 deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
 |---|---|---|
 | `test:word-seo` | `scripts/tests/seo/test-word-seo-routes.mjs` | word-route SEO source contracts |
 | `test:level-browse-preview` | `scripts/tests/routing/test-level-browse-preview-completeness.mjs` | 42-key CEFR preview match set |
+| `test:word-route-manifest` | `scripts/tests/routing/test-word-route-manifest.mjs` | canonical/legacy word-route parsing and building (round-trip contract across all 7 target languages) |
+| `test:word-hydration` | `scripts/tests/runtime/test-word-hydration.mjs` | word-page hydration payload shape/size and lazy-loaded browse-search-data wiring |
 | `test:import-boundaries` | `scripts/tests/architecture/test-import-boundaries.mjs` | `import.meta.glob` match counts/eager-lazy (G1–G9) |
 | `test:generated-data-ownership` | `scripts/tests/architecture/test-generated-data-ownership.mjs` | generated/mirrored data directories |
 | `test:vocabulary-level-coverage` | `scripts/tests/architecture/test-vocabulary-level-content-coverage.mjs` | `seo-cefr-content.json` exactly covers every registered vocabulary-level route (no missing/duplicate/unexpected combination) |
@@ -489,6 +497,7 @@ narratives if needed.
 | Dependency change | `npm run test:dependency-ownership`, `npm run build` |
 | Brand asset change | `npm run test:brand-asset-ownership`, `npm run build` |
 | Interactive/profile-shell change | `npm run test:interactive-contracts` + relevant manual checklist in [`docs/non-seo-regression-checklist.md`](non-seo-regression-checklist.md) |
+| Practice-route, account-language-sync, or exercise-id change | `npm run test:feature-contracts` (chains `test:practice-route-sync`, `test:account-language-sync`, `test:exercise-id-contract` — CI runs this before `tsc`/build on every PR/push) |
 | Documentation-only change | confirm referenced paths/scripts still exist; `npm run test:architecture-guards` if a guarded doc changed |
 | Major release / route reorganization | full `npm run test:architecture-guards` + `npm run test:seo-output` + `npm run build` + manual smoke checklist |
 

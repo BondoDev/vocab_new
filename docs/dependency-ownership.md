@@ -32,6 +32,7 @@ peer or transitive dependency before removing it.
 
 | Package | Section | Declared version | Evidence of use | Classification |
 |---|---|---|---|---|
+| @cloudflare/workers-types | devDependencies | ^5.20260724.1 | ambient `types` entry in `workers/word-ssr/tsconfig.json`; Worker runtime/platform type declarations referenced in `workers/word-ssr/src/global.d.ts` | actively used (types) |
 | @radix-ui/react-alert-dialog | dependencies | 1.1.6 | `src/app/components/ui/alert-dialog.tsx` | actively used |
 | @radix-ui/react-dialog | dependencies | 1.1.6 | `src/app/components/ui/dialog.tsx` | actively used |
 | @radix-ui/react-dropdown-menu | dependencies | 2.1.6 | `src/app/components/ui/dropdown-menu.tsx` | actively used |
@@ -65,7 +66,7 @@ peer or transitive dependency before removing it.
 | typescript | devDependencies | 5.6.3 | `npx tsc --noEmit`, Vite build | actively used (build) |
 | vite | devDependencies | 6.3.5 | build tool, `npm run build`/`dev` | actively used (build) |
 
-**32 direct entries** (23 `dependencies`, 9 `devDependencies`; the
+**33 direct entries** (23 `dependencies`, 10 `devDependencies`; the
 `peerDependencies` block only restates `react`/`react-dom`, already listed).
 
 ## Previously removed (2026-07-15) — must not silently reappear

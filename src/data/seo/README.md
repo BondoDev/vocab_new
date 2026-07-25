@@ -93,6 +93,24 @@ from a *sibling* page-family folder (e.g. `verbLists/` importing from
 dependency. When you see one, check whether the symbol belongs in
 `shared/` instead of accepting the sideways import.
 
+**Allowed exception — canonical-route-owner imports.** A family (or
+app-level feature) importing a sibling family's canonical route
+builder, in order to link to or reference that family's own pages, is
+not the red flag above — it's a dependency on the route owner. The
+owning family stays the single authority for constructing and parsing
+its own canonical URLs; consumers must call that builder rather than
+duplicating its URL format. For example, `levelTests/` imports
+`buildLocalizedVocabularyPath` from `vocabularyLevels/` only to link to
+vocabulary-level pages, the same way word pages, verb lists, explore
+pages, the UI-language switcher, and the SEO hub already do — it does
+not construct or own vocabulary-level routes itself. The red flag is
+importing a sibling family's internal data-shaping, lookup, formatting,
+or other general-purpose implementation helpers to build or operate
+your own family's pages, not calling its public route API. Being
+called from many families doesn't move a canonical route builder to
+`shared/` on its own — semantic ownership decides that, not consumer
+count.
+
 ## Dependency direction
 
 - `src/seo/` may import from `src/data/seo/`.

@@ -42,10 +42,8 @@ jobs:
 
       # Cheapest, most specific checks first so a broken PR fails fast before
       # paying for the full build.
-      - name: Route/profile-language policy regression tests
-        run: |
-          npm run test:practice-route-sync
-          npm run test:account-language-sync
+      - name: Feature-policy contract tests (practice route, account language, exercise ids)
+        run: npm run test:feature-contracts
 
       - name: TypeScript validation
         run: npx tsc --noEmit

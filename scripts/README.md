@@ -272,10 +272,17 @@ as conventions to preserve by inspection and review.
   root-level shortcut — there is no root-level `scripts/` shortcut to
   use.
 - Composite npm commands (`test:architecture-guards`, `test:seo-output`,
-  `test:word-worker:production-safety`, `prebuild`) should invoke other
-  **named npm scripts** (`npm run -s test:foo`) rather than duplicating
-  a `node scripts/...` path inline, so a script's location can change
-  without touching every composite that depends on it.
+  `test:feature-contracts`, `test:word-worker:production-safety`,
+  `prebuild`) should invoke other **named npm scripts**
+  (`npm run -s test:foo`) rather than duplicating a `node scripts/...`
+  path inline, so a script's location can change without touching every
+  composite that depends on it. `test:feature-contracts` follows this
+  rule out of necessity, not just convention: its three members
+  (`test:practice-route-sync`, `test:account-language-sync`,
+  `test:exercise-id-contract`) each require the `--experimental-strip-types`
+  Node flag baked into their own script string, and calling them by
+  named script (rather than inlining their `node` command) is what
+  preserves that flag.
 - Adding a script to `prebuild`, `build`, or any CI-style composite is
   an architectural decision — it changes what runs on every build or
   guard invocation — not a convenience edit. Treat it with the same
@@ -334,8 +341,8 @@ prefix where one of the above already fits.
 5. Does it need a `package.json` command? (Routine/automated use: yes.
    Manual diagnostic: not necessarily.)
 6. Should it be part of a composite command (`test:architecture-guards`,
-   `test:seo-output`, `prebuild`, `build`)? Treat this as an
-   architectural decision, not a convenience edit.
+   `test:seo-output`, `test:feature-contracts`, `prebuild`, `build`)?
+   Treat this as an architectural decision, not a convenience edit.
 7. Is it safe for routine CI/build execution, or does it need a real
    browser, a live/staging URL, or a built Worker artifact that makes
    it manual-only?
