@@ -146,42 +146,6 @@ test("render-entry.tsx's ../../../src/data/interface resolves to the real src/da
   assert.ok(fs.existsSync(resolved), `resolved path does not exist: ${resolved}`);
 });
 
-console.log("\n=== public/ vs src/ duplication drift guard ===\n");
-
-test("public/vocabularyLevels/*.json stays byte-identical to src/data/seo/vocabularyLevels/*.json (known duplication, see docs/import-boundaries.md)", () => {
-  const publicDir = path.join(ROOT_DIR, "public", "vocabularyLevels");
-  const srcDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
-
-  // level-browse-preview/ and seo-cefr-content.json are other CEFR
-  // vocabulary-level SEO data co-located directly under src/data/seo/vocabularyLevels/
-  // (not part of the {ui}/{target}.json mirror this guard compares) — skipped
-  // at the top level only.
-  const SRC_TOP_LEVEL_NON_MIRROR_ENTRIES = new Set(["level-browse-preview", "seo-cefr-content.json"]);
-
-  function walkJson(dir, base = dir) {
-    const out = [];
-    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-      if (dir === base && SRC_TOP_LEVEL_NON_MIRROR_ENTRIES.has(entry.name)) continue;
-      const abs = path.join(dir, entry.name);
-      if (entry.isDirectory()) out.push(...walkJson(abs, base));
-      else if (entry.name.endsWith(".json")) out.push(path.relative(base, abs));
-    }
-    return out.sort();
-  }
-
-  const publicFiles = walkJson(publicDir);
-  const srcFiles = walkJson(srcDir);
-  assert.deepEqual(publicFiles, srcFiles, "public/vocabularyLevels and src/data/seo/vocabularyLevels JSON file sets differ");
-
-  const drifted = [];
-  for (const rel of publicFiles) {
-    const a = fs.readFileSync(path.join(publicDir, rel));
-    const b = fs.readFileSync(path.join(srcDir, rel));
-    if (!a.equals(b)) drifted.push(rel);
-  }
-  assert.deepEqual(drifted, [], `public/ copy has drifted from src/ copy for: ${drifted.join(", ")}`);
-});
-
 console.log(`\n─────────────────────────────────────────`);
 console.log(`  ${passed} passed, ${failed} failed`);
 console.log(`─────────────────────────────────────────\n`);

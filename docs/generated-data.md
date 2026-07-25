@@ -4,6 +4,9 @@ Audited 2026-07-15, source commit `80e52fe4`; updated same day (guidelines/
 folder cleanup) to add `src/data/seo/levelTests/seo_level_test_content.json` and
 `src/data/seo/vocabularyLevels/seo-cefr-content.json`, both relocated from `guidelines/`
 (which is human-guidance-only — see [`docs/architecture.md`](architecture.md)).
+Updated 2026-07-25 (Phase 6 of the vocabulary-level legacy cleanup):
+`public/vocabularyLevels/`, its synchronization script, and its package
+scripts were removed as unconsumed generated infrastructure.
 Companion to [`docs/import-boundaries.md`](import-boundaries.md) (which
 guards the *shape* `import.meta.glob` and related loaders depend on). This
 document instead answers, for every generated or `src`/`public`-duplicated
@@ -18,10 +21,10 @@ Guard script: `npm run test:generated-data-ownership`
 
 | Directory | Classification | Source of truth | Producer | Consumers | Committed? | Risk |
 |---|---|---|---|---|---|---|
-| `src/data/seo/vocabularyLevels/` | handwritten source | itself | manual (no generator) | `scripts/generation/generate-sitemap.mjs` (CEFR route enumeration only — deferred to a later phase), `scripts/generation/sync-vocabulary-levels.mjs` (source → `public/vocabularyLevels/` mirror) | yes | low |
+| `src/data/seo/vocabularyLevels/` | handwritten source | itself | manual (no generator) | `scripts/generation/generate-sitemap.mjs` (CEFR route enumeration, via `getAllLocalizedVocabularyRoutes()` — the 49-file matrix itself is no longer read for this; see resolved finding below) | yes | low — pending a later phase auditing whether the 49-file matrix still has any consumer at all |
 | `src/data/seo/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/seo/levelTests/index.ts`, `scripts/generation/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/levelTests/levelTestMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
 | `src/data/seo/vocabularyLevels/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
-| `public/vocabularyLevels/*.json` (49 files) | **public runtime asset — required mirror, not a duplicate** | `src/data/seo/vocabularyLevels/` (must stay byte-identical) | `npm run sync:vocabulary-levels` (`scripts/generation/sync-vocabulary-levels.mjs`), run explicitly by the developer | browser `fetch()` from `src/data/seo/vocabularyLevels/index.ts`; ships into `dist/`, `server-build/`, Worker `assets-full/` | yes | low — deterministic sync script plus a read-only `--check` mode wired into `test:generated-data-ownership` |
+| ~~`public/vocabularyLevels/*.json` (49 files)~~ | *(removed Phase 6, 2026-07-25)* | — | — | none — the browser-fetch consumer was removed in an earlier phase, confirmed dead, and the mirror deleted | — | resolved |
 | ~~`public/vocabularyLevels/index.ts`~~ | *(removed 2026-07-15)* | — | — | none — confirmed dead, no import anywhere | — | resolved |
 | `src/data/seo/wordPages/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generation/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
 | `src/data/seo/wordPages/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generation/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
@@ -40,6 +43,21 @@ Guard script: `npm run test:generated-data-ownership`
 | `server-build/` | generated build output | `vite build --ssr` | `npm run build` | `scripts/build/prerender.mjs`, `scripts/build/verify-word-ssr-package.mjs` | no (gitignored) | low, ephemeral |
 
 ## `src/data/seo/vocabularyLevels/` vs `public/vocabularyLevels/` — resolved finding
+
+**Update (Phase 6, 2026-07-25): `public/vocabularyLevels/` has been deleted,
+along with its synchronization script and package scripts.** The finding
+below explains why the mirror was originally required and how it was kept in
+sync; all of that is now historical. Once the browser-fetch consumer
+(`fetchVocabularyFile`, in the removed synchronous loader) was deleted in an
+earlier phase, the mirror had no remaining consumer, and sitemap route
+enumeration was migrated off the `{ui}/{target}.json` matrix in the same
+cleanup (see `getAllLocalizedVocabularyRoutes()` above). `scripts/generation/sync-vocabulary-levels.mjs`
+and the `sync:vocabulary-levels`/`check:vocabulary-levels-sync` package
+scripts were deleted in the same change; `prebuild` no longer runs a
+mirror-sync check. `src/data/seo/vocabularyLevels/{ui}/{target}.json` (the 49
+source files) were intentionally **not** deleted in this phase — see the
+"Regeneration commands" and "Deletion rules" sections below for their
+current status.
 
 **`src/data/seo/vocabularyLevels/` is no longer authoritative for anything
 rendered on production `vocabularyLevel` routes (updated: legacy fallback
@@ -61,19 +79,20 @@ not renamed as part of this cleanup (out of scope). `src/data/seo/vocabularyLeve
 `scripts/generation/generate-sitemap.mjs` reads to enumerate CEFR sitemap routes —
 deferred to a later phase.
 
-**`public/vocabularyLevels/*.json` is a required runtime mirror, not dead
-duplication.** `src/data/seo/vocabularyLevels/index.ts`'s client-side loader
-(`fetchVocabularyFile`) performs `fetch(`/vocabularyLevels/${ui}/${target}.json`)`
-from the browser whenever `VocabularyLevelPage.tsx` renders without
-prerendered/override content (client-side navigation between vocabulary-level
-pages after initial hydration). That URL is only servable because Vite's
-`publicDir` default copies `public/vocabularyLevels/` into `dist/` (and, via
-the SSR build, into `server-build/`), and from there
-`workers/word-ssr/generation/publish-shards.mjs` copies it into the Worker's
-`assets-full/`. **Deleting `public/vocabularyLevels/*.json` would break
-production client-side rendering of vocabulary-level pages.** All 49 JSON
-files were verified byte-identical to `src/data/seo/vocabularyLevels/` (SHA-256,
-per-file); this identity is now guarded by `npm run test:import-boundaries`.
+**`public/vocabularyLevels/*.json` was a required runtime mirror, not dead
+duplication — until the fetch consumer was removed.** `src/data/seo/vocabularyLevels/index.ts`'s
+client-side loader (`fetchVocabularyFile`) used to perform
+`fetch(`/vocabularyLevels/${ui}/${target}.json`)` from the browser whenever
+`VocabularyLevelPage.tsx` rendered without prerendered/override content
+(client-side navigation between vocabulary-level pages after initial
+hydration). That URL was only servable because Vite's `publicDir` default
+copied `public/vocabularyLevels/` into `dist/` (and, via the SSR build, into
+`server-build/`), and from there `workers/word-ssr/generation/publish-shards.mjs`
+copied it into the Worker's `assets-full/`. `VocabularyLevelPage.tsx` no
+longer performs this fetch (it now requires `contentOverride`/`seoMetadataOverride`
+as props instead), so the mirror had no remaining consumer and was deleted in
+Phase 6. While it existed, all 49 JSON files were kept verified
+byte-identical to `src/data/seo/vocabularyLevels/` (SHA-256, per-file).
 
 **`public/vocabularyLevels/index.ts` (226 lines) was dead and has been
 removed.** It was a self-contained loader module (explicit `import()`
@@ -90,41 +109,17 @@ the copied `dist/vocabularyLevels/index.ts` and
 `server-build/vocabularyLevels/index.ts` post-build) obsolete; those calls
 have been removed from that script.
 
-**Synchronization is deterministic but explicit, not automatic (2026-07-15
-follow-up).** `scripts/generation/sync-vocabulary-levels.mjs` derives the expected
-7×7 UI-language × target-language matrix from the same authoritative
-registry (`SUPPORTED_UI_LANGUAGES` / `SUPPORTED_TARGET_LANGUAGES` in
-`src/data/seo/shared/slugs.ts`) already used by `test:generated-data-ownership`,
-validates every source file (JSON parses, no unexpected/hidden/`.ts`/`.js`
-files, no unexpected nested directories, no duplicate logical key), then
-copies bytes exactly into `public/vocabularyLevels/`, removes stale public
-files/directories that no longer exist in source, and verifies SHA-256
-byte-identity of all 49 pairs afterward. It never touches
-`src/data/seo/vocabularyLevels/`.
-
-Two commands:
-
-- `npm run sync:vocabulary-levels` — writes `public/vocabularyLevels/` to
-  match `src/data/seo/vocabularyLevels/` (copies missing/changed files, removes
-  stale ones). Idempotent — running it twice with no source changes performs
-  zero writes.
-- `npm run check:vocabulary-levels-sync` — the same validation and diff,
-  read-only, exits non-zero on any drift. This is what
-  `npm run prebuild` and `npm run test:generated-data-ownership` run; neither
-  mutates tracked files.
-
-**Build policy: explicit synchronization plus prebuild verification, not
-automatic prebuild mutation.** Both trees are committed to git, so a build
-step that silently rewrote `public/vocabularyLevels/*.json` would produce
-uncommitted tracked changes a developer (or Cloudflare's remote build) could
-miss. Instead, `prebuild` runs `check:vocabulary-levels-sync` first (before
-`generate:word-hub-data` and `sitemap`) and fails loudly if the mirror has
-drifted, so a stale public mirror can never be deployed silently. Developers
-who edit `src/data/seo/vocabularyLevels/` must run
-`npm run sync:vocabulary-levels` and commit the resulting
-`public/vocabularyLevels/*.json` changes in the same change as the source
-edit — the same "update both" requirement as before, just with a script
-instead of a manual copy.
+**Synchronization was deterministic but explicit, not automatic (2026-07-15
+follow-up; removed Phase 6).** `scripts/generation/sync-vocabulary-levels.mjs`
+derived the expected 7×7 UI-language × target-language matrix from the same
+authoritative registry (`SUPPORTED_UI_LANGUAGES` / `SUPPORTED_TARGET_LANGUAGES`
+in `src/data/seo/shared/slugs.ts`), validated every source file, copied bytes
+exactly into `public/vocabularyLevels/`, removed stale public files, and
+verified SHA-256 byte-identity of all 49 pairs afterward — via two commands,
+`npm run sync:vocabulary-levels` (write) and `npm run check:vocabulary-levels-sync`
+(read-only check, previously run by `prebuild` and `test:generated-data-ownership`).
+Both commands and the script itself were deleted in Phase 6, once the mirror
+they maintained had no remaining consumer.
 
 ## `public/seo/level-browse-preview/` — resolved obsolete duplicate
 
@@ -186,7 +181,6 @@ context is accurate.
 | `workers/word-ssr/data/full-corpus-census.json` | `node workers/word-ssr/diagnostics/census-full-corpus.mjs` (manual, no package script) |
 | `workers/word-ssr/data/sharding-measurement.json` | `node workers/word-ssr/diagnostics/measure-shard-formats.mjs` (manual, no package script; requires `data/full-corpus/` already generated) |
 | `src/data/seo/vocabularyLevels/` content, `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json` | none — hand-maintained, no generator |
-| `public/vocabularyLevels/*.json` (mirror only, from source content) | `npm run sync:vocabulary-levels` (`scripts/generation/sync-vocabulary-levels.mjs`) |
 
 ## Manual-edit policy
 
@@ -194,12 +188,6 @@ context is accurate.
   `src/data/seo/vocabularyLevels/level-browse-preview/`,
   `src/data/seo/levelTests/seo_level_test_content.json`,
   `src/data/seo/vocabularyLevels/seo-cefr-content.json` (no generator exists for any of these).
-- **Allowed but must be mirrored:** `public/vocabularyLevels/*.json` — after
-  editing `src/data/seo/vocabularyLevels/`, run `npm run sync:vocabulary-levels`
-  and commit both trees together, or `npm run prebuild` (via
-  `check:vocabulary-levels-sync`) and `test:import-boundaries` will fail.
-  Never hand-edit files under `public/vocabularyLevels/` directly — the sync
-  script treats them as a disposable mirror and will overwrite or remove them.
 - **Not allowed — will be overwritten:** `src/data/seo/wordPages/word-hub-pages/`,
   `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/common100Verbs/verbListLookup/`,
   `public/sitemaps/`, `workers/word-ssr/data/client-assets.full.json`,
@@ -218,24 +206,17 @@ context is accurate.
 
 ## Drift detection
 
-- `npm run check:vocabulary-levels-sync` — read-only; asserts
-  `public/vocabularyLevels/*.json` is byte-identical to and has the same
-  49-file matrix as `src/data/seo/vocabularyLevels/*.json`. Runs first in
-  `npm run prebuild`, before `generate:word-hub-data` and `sitemap`, so a
-  stale public mirror fails the build loudly instead of deploying silently.
-- `npm run test:import-boundaries` — asserts `public/vocabularyLevels/*.json`
-  stays byte-identical to `src/data/seo/vocabularyLevels/*.json`, and asserts the
-  exact match-set/eager-lazy contract for every `import.meta.glob` boundary
-  (G1–G9) documented in `docs/import-boundaries.md`.
-- `npm run test:generated-data-ownership` — asserts the dead
-  `public/vocabularyLevels/index.ts` cannot silently reappear, the removed
-  `public/seo/level-browse-preview/` mirror cannot silently reappear, no raw
-  TypeScript exists under `public/`, `src/data/seo/vocabularyLevels/` matches the
-  expected UI-language × target-language matrix with valid, non-duplicate
-  JSON, `scripts/generation/sync-vocabulary-levels.mjs` exists and its `--check` mode
-  passes, the `sync:vocabulary-levels`/`check:vocabulary-levels-sync` package
-  scripts are wired up, the listed generated source directories exist and are
-  committed, and the listed Worker build-output directories stay gitignored
+- `npm run test:import-boundaries` — asserts the exact match-set/eager-lazy
+  contract for every `import.meta.glob` boundary (G1–G9) documented in
+  `docs/import-boundaries.md`.
+- `npm run test:generated-data-ownership` — asserts the removed
+  `public/vocabularyLevels/` mirror, the dead `public/vocabularyLevels/index.ts`,
+  the sync script, and its package scripts cannot silently reappear; the
+  removed `public/seo/level-browse-preview/` mirror cannot silently reappear;
+  no raw TypeScript exists under `public/`; `src/data/seo/vocabularyLevels/`
+  matches the expected UI-language × target-language matrix with valid,
+  non-duplicate JSON; the listed generated source directories exist and are
+  committed; and the listed Worker build-output directories stay gitignored
   and untracked.
 - `npm run test:level-browse-preview-completeness` (via
   `test:level-browse-preview`) — asserts the exact 42-key match set for
@@ -249,10 +230,9 @@ Moving any directory in the matrix above requires updating its producer
 script (if any) and every consumer glob/import/fetch path in the **same**
 change, then re-running `npm run test:import-boundaries` and
 `npm run test:generated-data-ownership` before anything else. If a `public/`
-mirror exists for the data being moved (as it does for `vocabularyLevels/`),
-update or intentionally retire the mirror in the same change — do not leave
-a stale duplicate behind. See `docs/import-boundaries.md`'s "Safe move
-checklist" for the full procedure.
+mirror exists for the data being moved, update or intentionally retire the
+mirror in the same change — do not leave a stale duplicate behind. See
+`docs/import-boundaries.md`'s "Safe move checklist" for the full procedure.
 
 ## Deletion rules
 

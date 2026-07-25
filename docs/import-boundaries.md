@@ -77,10 +77,9 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 
 | Consumer | Loader type | Target | Runtime | Risk |
 |---|---|---|---|---|
-| `src/data/seo/vocabularyLevels/index.ts` (`fetchVocabularyFile`) | `fetch(`/vocabularyLevels/${ui}/${target}.json`)` | `public/vocabularyLevels/{ui}/{target}.json` | client (browser, on navigation without prerendered/override content) | medium — `public/vocabularyLevels/*.json` is a **required runtime mirror**, not dead data; see `docs/generated-data.md` |
 | `src/contexts/LanguageContext.tsx` | explicit switch, 7 literal `import()` calls | `src/data/interface/{language}_interface.json` | client | medium — same directory as G1/G3 but hand-maintained in parallel; a new interface file is picked up by the globs but silently missed here unless also added |
 | `src/features/learning-setup/LevelCategorySelection.tsx` (`loadVocabularyMetadata`) | explicit switch, 7 literal lazy `import()` calls | `src/data/vocabularyMetadata/{language}.json` | client (browser `useEffect`, runs after mount — not executed during SSR/prerender, so it has no `entry-server.tsx`/Worker exposure) | medium — dual-maintenance risk of the same shape as the `LanguageContext.tsx` row above: adding an 8th UI/practice language requires a new `case` branch here even though the JSON file could be added to `src/data/vocabularyMetadata/` independently; a missing branch returns `null` and silently falls back to `DEFAULT_WORD_TYPES` instead of failing loudly |
-| `scripts/generation/generate-sitemap.mjs` | `fs.readdir` walk | `src/data/seo/vocabularyLevels/{ui}/` | build-time generator | low |
+| `scripts/generation/generate-sitemap.mjs` (`collectVocabularyRoutes`) | `getAllLocalizedVocabularyRoutes()` via `scripts/lib/load-vocabulary-level-routes.mjs` | `src/data/seo/vocabularyLevels/vocabularyLevelRoutes.ts` (route registry — no longer reads the `{ui}/{target}.json` matrix) | build-time generator | low |
 | `scripts/generation/generate-sitemap.mjs` (`collectLevelTestRoutes`) | `fs.readFile` | `src/data/seo/levelTests/seo_level_test_content.json` | build-time generator | low |
 | `src/data/seo/levelTests/index.ts` | static relative `import` | `./seo_level_test_content.json` | client + SSR | low |
 | `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` | static relative `import` | `../../../data/seo/vocabularyLevels/seo-cefr-content.json` | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low |
@@ -109,9 +108,8 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 
 1. Update the generator (`scripts/generation/generate-word-hub-data.mjs` for G4/G5/G6).
 2. Update every consumer glob pattern in the same change.
-3. If a `public/` copy exists for this data (as it does for
-   `vocabularyLevels/`), update or remove it in the same change — do not
-   leave a stale duplicate behind.
+3. If a `public/` copy exists for this data, update or remove it in the
+   same change — do not leave a stale duplicate behind.
 4. Verify no duplicate old copy remains anywhere in the tree.
 5. Verify the new path is safe on Cloudflare's Linux build environment
    (case-sensitive filesystem) — this repo's directories and filenames are
@@ -140,10 +138,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
    header comment). Any refactor that merges `WordSeoPage.tsx` and
    `WordSeoPageView.tsx`, or that moves this glob into a shared module, must
    not repeat that mistake.
-4. **`public/vocabularyLevels/`** (related loader, not a glob) — the JSON
-   files are a required runtime mirror fetched directly by the browser, not
-   an orphaned duplicate. See `docs/generated-data.md`.
-5. **G2/G3** (`entry-server.tsx`) — not fragile in isolation, but this file
+4. **G2/G3** (`entry-server.tsx`) — not fragile in isolation, but this file
    is a shared, load-bearing SSR entry point consumed by
    `scripts/build/prerender.mjs`, `server/word-ssr-runtime.mjs`, and
    `scripts/seo-baseline/capture.mjs` by its build output path
@@ -164,10 +159,6 @@ Documented as options, not implemented:
 - Reconcile G1/G3's glob-based interface loading with
   `LanguageContext.tsx`'s hand-written `import()` switch with one generated
   source of truth to remove the dual-maintenance risk.
-- Consider replacing `src/data/seo/vocabularyLevels/index.ts`'s browser
-  `fetch()`-from-`public/` strategy with a bundler-driven approach (e.g. a
-  generated per-language JS chunk) so the `public/vocabularyLevels/` JSON
-  mirror and its duplication guard are no longer needed at all.
 - Consider a shared alias (e.g. `@data/vocabulary`) for the vocabulary
   directory so G2/G7/G8's three separate relative-path spellings of the same
   target collapse to one stable reference.
