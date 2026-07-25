@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadWordRouteManifest } from "../lib/load-word-route-manifest.mjs";
 import { loadVerbListRegistry } from "../lib/load-verb-list-registry.mjs";
+import { loadVocabularyLevelRoutes } from "../lib/load-vocabulary-level-routes.mjs";
 import { createLastmodLedger } from "../lib/sitemap-lastmod.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -42,82 +43,6 @@ const CORE_ROUTES = [
   "/about",
   "/help",
 ];
-
-const TARGET_NAME_SLUGS = {
-  en: {
-    english: "english",
-    german: "german",
-    spanish: "spanish",
-    french: "french",
-    italian: "italian",
-    portuguese: "portuguese",
-    russian: "russian",
-  },
-  es: {
-    english: "ingles",
-    german: "aleman",
-    spanish: "espanol",
-    french: "frances",
-    italian: "italiano",
-    portuguese: "portugues",
-    russian: "ruso",
-  },
-  de: {
-    english: "englisch",
-    german: "deutsch",
-    spanish: "spanisch",
-    french: "franzoesisch",
-    italian: "italienisch",
-    portuguese: "portugiesisch",
-    russian: "russisch",
-  },
-  fr: {
-    english: "anglais",
-    german: "allemand",
-    spanish: "espagnol",
-    french: "francais",
-    italian: "italien",
-    portuguese: "portugais",
-    russian: "russe",
-  },
-  ru: {
-    english: "angliiskii",
-    german: "nemetskii",
-    spanish: "ispanskii",
-    french: "frantsuzskii",
-    italian: "italyanskii",
-    portuguese: "portugalskii",
-    russian: "russkii",
-  },
-  pt: {
-    english: "ingles",
-    german: "alemao",
-    spanish: "espanhol",
-    french: "frances",
-    italian: "italiano",
-    portuguese: "portugues",
-    russian: "russo",
-  },
-  it: {
-    english: "inglese",
-    german: "tedesco",
-    spanish: "spagnolo",
-    french: "francese",
-    italian: "italiano",
-    portuguese: "portoghese",
-    russian: "russo",
-  },
-};
-
-const SLUG_PATTERNS = {
-  en: (targetSlug, level) => `${targetSlug}-${level}-vocabulary-practice`,
-  es: (targetSlug, level) => `vocabulario-${targetSlug}-${level}-practica`,
-  de: (targetSlug, level) => `${targetSlug}-${level}-wortschatz-ueben`,
-  fr: (targetSlug, level) => `vocabulaire-${targetSlug}-${level}-pratique`,
-  ru: (targetSlug, level) => `slovar-${targetSlug}-${level}-praktika`,
-  pt: (targetSlug, level) => `vocabulario-${targetSlug}-${level}-pratica`,
-  it: (targetSlug, level) => `vocabolario-${targetSlug}-${level}-pratica`,
-};
 
 const UI_LANGUAGE_NAMES = {
   en: "english",
@@ -227,50 +152,14 @@ function xmlEscape(value) {
     .replaceAll("'", "&apos;");
 }
 
-async function collectVocabularyRoutes() {
-  const baseDir = path.join(ROOT_DIR, "src", "data", "seo", "vocabularyLevels");
-  const uiDirEntries = await fs.readdir(baseDir, { withFileTypes: true });
-  const routes = new Set();
-
-  for (const uiEntry of uiDirEntries) {
-    if (!uiEntry.isDirectory()) {
-      continue;
-    }
-    const uiLang = uiEntry.name;
-    if (!TARGET_NAME_SLUGS[uiLang] || !SLUG_PATTERNS[uiLang]) {
-      continue;
-    }
-
-    const uiDir = path.join(baseDir, uiLang);
-    const files = await fs.readdir(uiDir, { withFileTypes: true });
-
-    for (const file of files) {
-      if (!file.isFile() || !file.name.endsWith(".json")) {
-        continue;
-      }
-
-      const targetLanguage = file.name.replace(/\.json$/, "");
-      const localizedTargetSlug = TARGET_NAME_SLUGS[uiLang][targetLanguage];
-      if (!localizedTargetSlug) {
-        continue;
-      }
-
-      const filePath = path.join(uiDir, file.name);
-      const raw = await fs.readFile(filePath, "utf8");
-      const data = JSON.parse(raw.replace(/^\uFEFF/, ""));
-      const levels = data?.levels && typeof data.levels === "object" ? data.levels : {};
-
-      for (const [level, content] of Object.entries(levels)) {
-        if (!content || typeof content !== "object") {
-          continue;
-        }
-        const slug = SLUG_PATTERNS[uiLang](localizedTargetSlug, level);
-        routes.add(`/${uiLang}/${slug}`);
-      }
-    }
-  }
-
-  return Array.from(routes).sort();
+// Sourced from the application's own route registry
+// (src/data/seo/vocabularyLevels/vocabularyLevelRoutes.ts's
+// getAllLocalizedVocabularyRoutes()), not by scanning the legacy
+// src/data/seo/vocabularyLevels/{ui}/{target}.json matrix: that matrix is
+// no longer used for page rendering or metadata (see docs/generated-data.md).
+function collectVocabularyRoutes(vocabularyLevelRoutesModule) {
+  const routes = vocabularyLevelRoutesModule.getAllLocalizedVocabularyRoutes();
+  return Array.from(new Set(routes.map((route) => route.path))).sort();
 }
 
 async function collectLevelTestRoutes() {
@@ -362,6 +251,7 @@ function chunkArray(values, chunkSize) {
 async function main() {
   const manifestLoader = loadWordRouteManifest(".tmp-word-route-manifest-sitemap");
   const verbListRegistryLoader = loadVerbListRegistry(".tmp-verb-list-registry-sitemap");
+  const vocabularyLevelRoutesLoader = loadVocabularyLevelRoutes(".tmp-vocabulary-level-routes-sitemap");
   const publicDir = path.join(ROOT_DIR, "public");
   const sitemapsDir = path.join(publicDir, "sitemaps");
 
@@ -381,7 +271,7 @@ async function main() {
         .map((name) => fs.rm(path.join(publicDir, name), { force: true })),
     );
 
-    const vocabularyRoutes = await collectVocabularyRoutes();
+    const vocabularyRoutes = collectVocabularyRoutes(vocabularyLevelRoutesLoader.routes);
     const levelTestRoutes = await collectLevelTestRoutes();
     const verbListRoutes = Array.from(new Set(verbListRegistryLoader.registry.getAllVerbListPaths())).sort();
     const wordRoutesByPair = INCLUDE_WORD_SITEMAPS
@@ -469,6 +359,7 @@ async function main() {
   } finally {
     verbListRegistryLoader.cleanup();
     manifestLoader.cleanup();
+    vocabularyLevelRoutesLoader.cleanup();
   }
 }
 
