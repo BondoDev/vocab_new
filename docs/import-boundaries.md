@@ -85,7 +85,7 @@ Not `import.meta.glob`, but the same category of path-sensitivity:
 | `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` | static relative `import` | `../../../data/seo/vocabularyLevels/seo-cefr-content.json` | client + SSR — production content for `vocabularyLevel` routes, see `docs/generated-data.md` | low |
 | `scripts/generation/generate-word-hub-data.mjs` | generator + `fs.readdir` cleanup | `wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/common100Verbs/verbListLookup/` | build-time generator | low — but authoritative for G4/G5/G6 |
 | `scripts/build/prerender.mjs` | `fs.readdir` | `dist/assets/` | build-time | low |
-| `workers/word-ssr/generation/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being cleaned by `scripts/build/cleanup-word-build-artifacts.mjs` in the same build |
+| `workers/word-ssr/generation/publish-shards.mjs` | `fs.readdirSync` recursive walk | `dist/**` → `assets-full/` | build-time (Worker asset publish) | medium — depends on `dist/` already being fully built by `npm run build`'s earlier steps (including `scripts/build/copy-ssr-template.mjs`) in the same invocation |
 | `workers/word-ssr/diagnostics/measure-shard-formats.mjs` | `fs.readdirSync` | internal data dirs | staging-only measurement | low |
 | `scripts/tests/worker/test-crawler-policy.mjs` | `fs.readdirSync` walk | `workers/word-ssr/src/` | test-only | low — protective |
 | `scripts/build/verify-word-ssr-package.mjs` + 7 other `scripts/tests/**/test-*.mjs` | `fs.readdirSync`/`fs.readdir` | `dist/`, `public/sitemaps/`, `server-build/` | test/build-verification-only | low |

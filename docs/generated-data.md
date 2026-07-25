@@ -119,7 +119,7 @@ introduced the `fetch()`-based client loading strategy in
 not the accompanying `.ts` file, which appears to have been an incidental
 byproduct of copying the whole source directory into `public/` rather than a
 deliberate addition. Removing it also made
-`scripts/build/cleanup-word-build-artifacts.mjs`'s two `fs.rm` calls (which force-deleted
+`scripts/build/copy-ssr-template.mjs`'s two `fs.rm` calls (which force-deleted
 the copied `dist/vocabularyLevels/index.ts` and
 `server-build/vocabularyLevels/index.ts` post-build) obsolete; those calls
 have been removed from that script.

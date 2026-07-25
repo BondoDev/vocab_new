@@ -159,7 +159,7 @@
     },
     {
       "id": "L3",
-      "consumer": "scripts/build/cleanup-word-build-artifacts.mjs",
+      "consumer": "scripts/build/copy-ssr-template.mjs",
       "loaderType": "removed 2026-07-15",
       "target": "n/a — formerly dist/vocabularyLevels/index.ts, server-build/vocabularyLevels/index.ts",
       "runtime": "n/a",
@@ -200,7 +200,7 @@
       "target": "dist/** (copied into workers/word-ssr/assets-full/)",
       "runtime": "build-time (Worker Static Assets publishing)",
       "risk": "medium-order-dependent",
-      "riskReason": "Copies whatever currently exists in dist/. Depends on scripts/build/cleanup-word-build-artifacts.mjs (L3) having already run in the same npm run build invocation; if build:word-worker:full is ever run against a stale/uncleaned dist/, the L1 leak could reach Worker Static Assets."
+      "riskReason": "Copies whatever currently exists in dist/, so it depends on npm run build's earlier steps (including scripts/build/copy-ssr-template.mjs) having already produced a complete dist/ in the same invocation. The L1/L3 leak this risk reason historically referenced is fully resolved (see those entries) and no longer depends on this script."
     },
     {
       "id": "L8",

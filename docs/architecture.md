@@ -364,9 +364,9 @@ Local build (`npm run build`):
 2. `vite build` → client bundle in `dist/`.
 3. `vite build --ssr src/entry-server.tsx --outDir server-build` → SSR
    bundle.
-4. `scripts/build/cleanup-word-build-artifacts.mjs` — copies `dist/index.html`
-   → `server-build/ssr-template.html` (historically named: its earlier
-   stray-artifact-deletion step was removed once its only consumer was gone).
+4. `scripts/build/copy-ssr-template.mjs` — copies `dist/index.html` →
+   `server-build/ssr-template.html`, preparing the frontend HTML as the
+   SSR template consumed by the server/Worker packaging flow.
 5. `scripts/build/prerender.mjs` — SSGs all 2,670 routes into `dist/`.
 6. `scripts/build/verify-word-ssr-package.mjs` — smoke-tests the Node SSR runtime.
 

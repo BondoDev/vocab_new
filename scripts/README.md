@@ -104,9 +104,10 @@ scripts/
 ```
 
 - **`build/`** — entry points invoked by `npm run build` and its Worker
-  counterpart: prerendering the SSG output, cleaning stray build
-  artifacts, packaging the full-corpus Worker bundle, and verifying the
-  Node SSR package is complete. These are pipeline steps, not tests,
+  counterpart: prerendering the SSG output, copying the built
+  `dist/index.html` into `server-build/` as the SSR template, packaging
+  the full-corpus Worker bundle, and verifying the Node SSR package is
+  complete. These are pipeline steps, not tests,
   even though one of them (`verify-word-ssr-package.mjs`) is also
   wired to a `test:*` npm script.
 - **`data/`** — tracked JSON data that generation scripts read and

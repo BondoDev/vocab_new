@@ -81,12 +81,12 @@ test("public/vocabularyLevels/ does not exist (removed Phase 6 — obsolete runt
   assert.ok(!fs.existsSync(p), `${p} exists — the removed public mirror was reintroduced`);
 });
 
-test("scripts/build/cleanup-word-build-artifacts.mjs no longer targets the removed public/vocabularyLevels/index.ts artifact", () => {
-  const scriptPath = path.join(ROOT_DIR, "scripts", "build", "cleanup-word-build-artifacts.mjs");
+test("scripts/build/copy-ssr-template.mjs no longer targets the removed public/vocabularyLevels/index.ts artifact", () => {
+  const scriptPath = path.join(ROOT_DIR, "scripts", "build", "copy-ssr-template.mjs");
   const text = fs.readFileSync(scriptPath, "utf8");
   assert.ok(
     !text.includes("vocabularyLevels"),
-    "cleanup-word-build-artifacts.mjs still references vocabularyLevels — the obsolete deletion branch for the removed index.ts was reintroduced",
+    "copy-ssr-template.mjs still references vocabularyLevels — the obsolete deletion branch for the removed index.ts was reintroduced",
   );
 });
 
