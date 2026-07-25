@@ -25,7 +25,7 @@ const ENGLISH_VERB_LIST_PATH = path.join(
   "data",
   "seo",
   "verbLists",
-  "common100Verbs",
+  "shared",
   "list_of_100_most_used_verb.json",
 );
 

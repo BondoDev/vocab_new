@@ -59,6 +59,7 @@ src/data/seo/
   levelTests/         Level-test pages
   verbLists/          Verb-list page-family umbrella
     common100Verbs/   100-most-common-verb pages
+    shared/           Data shared only by verb-list subtypes
   wordPages/          Word detail/hub pages
   shared/             Cross-family data contracts (not a fifth family)
 ```
@@ -66,6 +67,12 @@ src/data/seo/
 Each page-family folder owns its own route helpers, data shaping, and
 lookup data. A file inside one family folder should not be the
 canonical home for another family's data.
+
+`verbLists/shared/` is narrower than the top-level `shared/` folder. It
+holds data shared by multiple verb-list subtypes, but not by unrelated SEO
+families. For example, `verbLists/shared/list_of_100_most_used_verb.json`
+is the base 100-verb list that can be reused by common-verb, past-form,
+or other 100-verb page subtypes.
 
 ## Shared folder criteria
 

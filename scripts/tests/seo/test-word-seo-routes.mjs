@@ -38,7 +38,7 @@ const { fixMojibake } = requireCompiled("src/utils/fixMojibake");
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 const spanishVocabulary = readJson("src/data/vocabulary/spanish/vocabulary.json");
-const englishVerbList = readJson("src/data/seo/verbLists/common100Verbs/list_of_100_most_used_verb.json");
+const englishVerbList = readJson("src/data/seo/verbLists/shared/list_of_100_most_used_verb.json");
 const normalizedEnglishVerbList = englishVerbList.map((item) => {
   const legacyId = String(item?.id ?? "").trim();
   if (legacyId) {
