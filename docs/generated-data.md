@@ -232,8 +232,9 @@ context is accurate.
   reappear and `seo-cefr-content.json` remains the sole canonical content
   file; the listed generated source directories exist and are committed; and
   the listed Worker build-output directories stay gitignored and untracked.
-- `npm run test:level-browse-preview-completeness` (via
-  `test:level-browse-preview`) — asserts the exact 42-key match set for
+- `npm run test:level-browse-preview` (runs
+  `scripts/tests/routing/test-level-browse-preview-completeness.mjs`) —
+  asserts the exact 42-key match set for
   `src/data/seo/vocabularyLevels/level-browse-preview/*.json`.
 - `workers/word-ssr/tests/test-worker-bundle-size.mjs` — asserts
   `word-browse-shards`' heavy export never reaches the Worker bundle.

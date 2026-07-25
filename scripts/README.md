@@ -114,9 +114,11 @@ scripts/
   sitemap `<lastmod>` ledger). This is script-owned workflow data, not
   application/domain data — it never ships to the browser.
 - **`generation/`** — scripts that generate or synchronize tracked
-  project data: the sitemap, word-hub/browse-shard/verb-list data, the
-  vocabulary-level public mirror, and (as the one non-Node exception)
-  brand-asset regeneration from a source master image.
+  project data: the sitemap, word-hub/browse-shard/verb-list data, and
+  (as the one non-Node exception) brand-asset regeneration from a
+  source master image. The former vocabulary-level public-mirror
+  synchronizer was deleted once its mirror (`public/vocabularyLevels/`)
+  had no remaining consumer — see [`docs/generated-data.md`](../docs/generated-data.md).
 - **`import-boundaries/current/`** — a human-maintained JSON record
   documenting `import.meta.glob` patterns and other path-sensitive
   loaders across the repository, used as a review reference alongside

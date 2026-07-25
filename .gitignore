@@ -23,7 +23,8 @@ workers/word-ssr/data/full-corpus/
 
 # Local agent-tool state (Claude Code, Codex, and similar). These folders are
 # recreated by the tools themselves and hold only local session/cache state,
-# never repository instructions — see docs/agent-tool-folders.md.
+# never repository instructions — see docs/architecture.md's "Local-only
+# state" section; canonical AI-assistant instructions live in AGENTS.md.
 .agents/
 .claude/
 .codex/

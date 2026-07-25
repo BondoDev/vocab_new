@@ -87,13 +87,13 @@ flowchart TD
 |---|---|---|---|
 | React application | `src/app/`, `src/contexts/`, `src/features/`, `src/lib/` | `dist/`, `server-build/` (gitignored) | `npx tsc --noEmit`, `npm run build` |
 | Routes | `src/app/App.tsx` (`ROUTES`), `src/app/utils/pageRouting.ts` (`PageKey`, parsers), `src/data/seo/*Slugs.ts`, `vocabularyLevels/vocabularyLevelRoutes.ts`/`shared/hub.ts` | `getPrerenderRoutes()` output (prerendered set) | `test:interactive-contracts`, `test:word-seo` |
-| SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPages/wordPageData.ts`, `src/seo/metadata.ts` (compatibility facade re-exporting `src/seo/hubPages/{hubMetadata,hubTemplates}.ts`, `src/seo/levelTests/levelTestMetadata.ts`, `src/seo/verbLists/common100Verbs/common100VerbsMetadata.ts`, `src/seo/wordPages/{wordMetadata,wordTemplates}.ts`, `src/seo/shared/seoAlternates.ts`, `src/seo/vocabularyLevels/{seoFaq,seoSchema,seoTemplates,vocabularyMetadata}.ts`) | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
+| SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPages/wordPageData.ts`, `src/seo/metadata.ts` (compatibility facade re-exporting `src/seo/hubPages/hubMetadata.ts`, `src/seo/levelTests/levelTestMetadata.ts`, `src/seo/verbLists/common100Verbs/common100VerbsMetadata.ts`, `src/seo/wordPages/wordMetadata.ts`, `src/seo/vocabularyLevels/{seoFaq,seoSchema,seoTemplates}.ts` — `hubTemplates.ts`, `wordTemplates.ts`, and `shared/seoAlternates.ts` are lower-level helpers those modules import internally, not re-exported by the facade itself) | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
 | Prerendered pages | `src/entry-server.tsx` (`render`, `getPrerenderRoutes`) | `dist/**/index.html` (2,670 files) | `test:prerender-parity` |
 | Sitemap | `scripts/generation/generate-sitemap.mjs` + vocabulary/route data | `public/sitemap.xml`, `public/sitemaps/*.xml` (core/CEFR/verb-list families; word pages intentionally excluded — see "Prerendering vs. sitemap") | `test:sitemap-structure`, `test:sitemap-vocabulary-route-source`, `test:sitemap-lastmod` |
 | Word Worker | `workers/word-ssr/src/` | `worker-dist-full/`, `assets-full/`, `data/full-corpus/` (all gitignored) | `test:word-worker:production-safety` |
 | Vocabulary data | `src/data/vocabulary/`, `src/data/seo/vocabularyLevels/` (incl. `level-browse-preview/`, `seo-cefr-content.json`), `src/data/seo/levelTests/` | `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/common100Verbs/verbListLookup/` | [`docs/generated-data.md`](generated-data.md), `test:generated-data-ownership` |
-| UI components | `src/app/components/ui/` (9 retained Radix wrappers) | none | [`docs/ui-component-ownership.md`](ui-component-ownership.md), `test:ui-component-ownership` |
-| Dependencies | `package.json` (32 direct entries) | none | [`docs/dependency-ownership.md`](dependency-ownership.md), `test:dependency-ownership` |
+| UI components | `src/app/components/ui/` (9 retained files: 8 UI primitives/wrappers plus the shared `cn()` class-name utility, `utils.ts`) | none | [`docs/ui-component-ownership.md`](ui-component-ownership.md), `test:ui-component-ownership` |
+| Dependencies | `package.json` (33 direct entries: 23 `dependencies`, 10 `devDependencies`) | none | [`docs/dependency-ownership.md`](dependency-ownership.md), `test:dependency-ownership` |
 | AI-assistant guidance | `guidelines/Guidelines.md` (Markdown-only) | none | `test:guidelines-ownership` |
 | Brand assets | `src/assets/brand/favicon-master.png` (not shipped) | `public/favicon.png`, `favicon.ico`, `apple-touch-icon.png`, `og-image.png` | [`docs/brand-asset-ownership.md`](brand-asset-ownership.md), `test:brand-asset-ownership` |
 | Operational scripts | `scripts/operations/` | `scripts/operations/state/indexed-progress.json` (gitignored) | [`docs/google-indexing-operations.md`](google-indexing-operations.md), `test:operational-security` |
@@ -234,14 +234,14 @@ agree on what a given URL means.
 - **Sitemap entries** — `scripts/generation/generate-sitemap.mjs`, reading vocabulary,
   level-test, and verb-list route data directly (not the rendered HTML).
 
-Guard/test scripts (actual `package.json` names): `test:jsonld-escaping`,
-`test:schema-graph`, `test:homepage-visibility`, `test:word-seo`,
-`test:seo-core-routes`, `test:sitemap-structure`,
+Guard/test scripts (actual `package.json` names): `test:word-ssr-http`,
+`test:word-ssr-package`, `test:homepage-visibility`, `test:jsonld-escaping`,
+`test:schema-graph`, `test:word-browse-pagination`, `test:prerender-parity`,
+`test:sitemap-structure`,
 `test:sitemap-vocabulary-route-source` (verifies `sitemap-cefr.xml`
 vocabulary-level routes against `getAllLocalizedVocabularyRoutes()`),
-`test:sitemap-lastmod`, `test:prerender-parity`, `test:word-browse-pagination`,
-`test:word-ssr-http`, `test:word-ssr-package` — chained together as
-`npm run test:seo-output`.
+`test:sitemap-lastmod`, `test:seo-core-routes`, `test:html-lang-init` —
+chained together as `npm run test:seo-output`.
 Consistency between client rendering, prerender output, and Worker SSR
 output is additionally checked by the SEO/performance baseline capture-and-compare
 pair documented in [`scripts/README.md`](../scripts/README.md)
@@ -364,8 +364,9 @@ Local build (`npm run build`):
 2. `vite build` → client bundle in `dist/`.
 3. `vite build --ssr src/entry-server.tsx --outDir server-build` → SSR
    bundle.
-4. `scripts/build/cleanup-word-build-artifacts.mjs` — removes stray artifacts,
-   copies `dist/index.html` → `server-build/ssr-template.html`.
+4. `scripts/build/cleanup-word-build-artifacts.mjs` — copies `dist/index.html`
+   → `server-build/ssr-template.html` (historically named: its earlier
+   stray-artifact-deletion step was removed once its only consumer was gone).
 5. `scripts/build/prerender.mjs` — SSGs all 2,670 routes into `dist/`.
 6. `scripts/build/verify-word-ssr-package.mjs` — smoke-tests the Node SSR runtime.
 

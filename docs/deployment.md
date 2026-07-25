@@ -45,8 +45,9 @@ Local development
     `src/data/seo/verbLists/common100Verbs/verbListLookup/`, `public/sitemap.xml`, `public/sitemaps/`)
   - `vite build` → `dist/` (client bundle + prerender template)
   - `vite build --ssr src/entry-server.tsx --outDir server-build`
-  - `scripts/build/cleanup-word-build-artifacts.mjs` (removes stray artifacts,
-    copies `dist/index.html` → `server-build/ssr-template.html`)
+  - `scripts/build/cleanup-word-build-artifacts.mjs` (copies `dist/index.html`
+    → `server-build/ssr-template.html`; historically named — its earlier
+    stray-artifact-deletion step was removed once its only consumer was gone)
   - `scripts/build/prerender.mjs` (SSG of all core/CEFR/hub/level-test/verb-list
     routes into `dist/`)
   - `scripts/build/verify-word-ssr-package.mjs` (smoke-tests the Node SSR runtime
