@@ -299,6 +299,10 @@ export function buildWordRouteLookupKey(
   return `${targetLanguage}:${wordSlug ?? ""}`;
 }
 
+// Parses the second path segment (`{targetLanguage}-word-{slug}[--{conceptId}]`)
+// alone, without the browse-page suffix handled by `parseWordRoutePathname`.
+// The branch order below implements the canonical/legacy precedence that
+// function's contract depends on — see the inline notes at each branch.
 function parseWordRouteSlug(
   uiLangRaw: string,
   slug: string,
@@ -323,6 +327,16 @@ function parseWordRouteSlug(
     };
   }
 
+  // Only the *first* "-word-" occurrence is treated as the family marker.
+  // Everything before it is the target-language slug, validated against a
+  // fixed enum immediately below; everything after it is the word slug,
+  // which may legitimately contain further "-word-" substrings as ordinary
+  // word content (e.g. a lemma like "cross word puzzle" slugifies to
+  // "cross-word-puzzle", which itself contains "-word-"). Because the
+  // target-language slug always precedes the marker and later occurrences
+  // can belong to the word slug, matching the last occurrence — or splitting
+  // on every occurrence — would misidentify the separator for slugs like
+  // that and corrupt the target-language/word-slug split.
   const wordMarkerIndex = decodedSlug.indexOf("-word-");
   if (wordMarkerIndex === -1) {
     return {
@@ -381,6 +395,13 @@ function parseWordRouteSlug(
     targetLanguage: targetLanguageRaw,
   } as const;
 
+  // An explicit "--{conceptId}" suffix is checked before the older
+  // single-hyphen legacy format handled further down. Checking in the other
+  // order would let a concept-id-bearing legacy URL — which also contains a
+  // plain hyphen before its concept id — be swallowed by the single-hyphen
+  // regex before its "--" separator is ever considered, misclassifying it
+  // and producing the wrong `kind` (and, downstream, the wrong redirect or
+  // not-found reason for consumers).
   const canonicalParts = suffix.split("--");
   if (suffix.includes("--") && canonicalParts.length !== 2) {
     return {
@@ -418,6 +439,14 @@ function parseWordRouteSlug(
       };
     }
 
+    // Canonical vs. legacy-slug-format is decided by comparing the raw slug
+    // text to its own normalized (slugified) form, not by a separate flag. A
+    // match means the URL already uses the canonical slug spelling; a
+    // mismatch means the URL used an alias/loosely-formatted slug that maps
+    // to the same word. Legacy-slug-format results are redirected to the
+    // true canonical slug by every consumer instead of being rendered
+    // directly, so this comparison — not the presence of a concept id alone —
+    // is what determines canonical ownership of the URL.
     if (normalizedWordSlug !== rawWordSlug) {
       return {
         kind: "legacy-slug-format",
@@ -435,6 +464,10 @@ function parseWordRouteSlug(
     };
   }
 
+  // Reached only when the suffix has no "--" concept-id separator at all
+  // (handled above). This regex recognizes the older single-hyphen-before-
+  // concept-id format so it can be redirected to the canonical "--"
+  // separator instead of being treated as an unparseable slug.
   const legacyMatch = detectLegacySingleHyphenSyntax(suffix);
   if (legacyMatch) {
     return {
@@ -506,6 +539,21 @@ export function parseWordRoute(
   }
 }
 
+// Public entry point for word-route classification. Accepts any pathname and
+// returns a typed result instead of throwing: `not-word-route` for pathnames
+// outside this family, `canonical` for a fully valid route, `legacy-*`
+// variants for supported older URL shapes that resolve to the same word, and
+// `unsupported-*` / `invalid-*` / `malformed-route` for inputs that don't map
+// to a valid word page. SSR rendering (`entry-server.tsx`) and the Cloudflare
+// Worker (`workers/word-ssr/src/index.full.ts`) both branch on this `kind` to
+// decide between rendering, redirecting a legacy URL to canonical, or
+// treating the route as not found — but each consumer owns its own response
+// status/body for the not-found and redirect cases; this function only owns
+// the `kind` classification, not the HTTP response. Reordering branches here
+// can reinterpret a canonical URL as legacy (spurious redirect), change
+// which slug owns a canonical URL, or change which not-found reason a route
+// gets — and that shift in `kind` affects both consumers identically, even
+// though their responses aren't identical.
 export function parseWordRoutePathname(pathname: string): ParsedWordRoutePathnameResult {
   const normalizedPathname = normalizeWordRoutePathname(pathname);
   const segments = normalizedPathname.replace(/^\/+/, "").split("/");
