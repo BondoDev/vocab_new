@@ -7,7 +7,12 @@ import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../../d
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../../data/seo/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../../data/seo/shared/hub";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../../data/seo/wordPages/wordSlugs";
-import { getVerbListPath, resolveVerbListRoute } from "../../../data/seo/verbLists";
+import {
+  getPastVerbFormsPath,
+  getVerbListPath,
+  resolvePastVerbFormsRoute,
+  resolveVerbListRoute,
+} from "../../../data/seo/verbLists";
 import {
   resolveWordSeoHubRoute,
   getWordSeoHubSummaryPath,
@@ -162,6 +167,17 @@ export function UILanguageSwitcher({
       if (verbListRoute) {
         const nextPath = getVerbListPath(verbListRoute.targetLanguage, code);
         if (nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+        setUILanguage(code);
+        setIsOpen(false);
+        return;
+      }
+
+      const pastVerbFormsRoute = resolvePastVerbFormsRoute(location.pathname);
+      if (pastVerbFormsRoute) {
+        const nextPath = getPastVerbFormsPath(pastVerbFormsRoute.targetLanguage, code);
+        if (nextPath && nextPath !== location.pathname) {
           navigate(nextPath);
         }
         setUILanguage(code);
