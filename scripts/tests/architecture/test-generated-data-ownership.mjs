@@ -273,7 +273,7 @@ for (const dir of [
   "src/data/seo/wordPages/word-hub-pages",
   "src/data/seo/wordPages/word-browse-shards",
   "src/data/seo/vocabularyLevels/level-browse-preview",
-  "src/data/seo/verbLists/common100Verbs/verbListLookup",
+  "src/data/seo/verbLists/shared/common100VerbLookup",
   "public/sitemaps",
 ]) {
   test(`${dir} exists and is committed to git`, () => {
@@ -312,7 +312,7 @@ test("docs/generated-data.md exists and names every high-risk directory", () => 
     "src/data/seo/wordPages/word-hub-pages",
     "src/data/seo/wordPages/word-browse-shards",
     "src/data/seo/vocabularyLevels/level-browse-preview",
-    "src/data/seo/verbLists/common100Verbs/verbListLookup",
+    "src/data/seo/verbLists/shared/common100VerbLookup",
     "public/sitemaps",
     "workers/word-ssr/data/full-corpus",
     "workers/word-ssr/assets-full",

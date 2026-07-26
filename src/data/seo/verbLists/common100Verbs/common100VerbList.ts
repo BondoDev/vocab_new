@@ -66,7 +66,7 @@ function normalizeVerbListItems(items: VerbListJsonItem[]): VerbListItem[] {
 
 export const BASE_VERB_LIST_ITEMS = normalizeVerbListItems(verbListJson as VerbListJsonItem[]);
 
-const vocabularyModules = import.meta.glob("./verbListLookup/*.json", {
+const vocabularyModules = import.meta.glob("../shared/common100VerbLookup/*.json", {
   eager: true,
 }) as Record<
   string,
@@ -74,13 +74,13 @@ const vocabularyModules = import.meta.glob("./verbListLookup/*.json", {
 >;
 
 const vocabularyByLanguageAndId: Record<TargetLanguageSlug, Map<string, CompactVocabularyItem>> = {
-  english: new Map(Object.entries(vocabularyModules["./verbListLookup/english.json"]?.default.byId ?? {})),
-  french: new Map(Object.entries(vocabularyModules["./verbListLookup/french.json"]?.default.byId ?? {})),
-  german: new Map(Object.entries(vocabularyModules["./verbListLookup/german.json"]?.default.byId ?? {})),
-  italian: new Map(Object.entries(vocabularyModules["./verbListLookup/italian.json"]?.default.byId ?? {})),
-  portuguese: new Map(Object.entries(vocabularyModules["./verbListLookup/portuguese.json"]?.default.byId ?? {})),
-  russian: new Map(Object.entries(vocabularyModules["./verbListLookup/russian.json"]?.default.byId ?? {})),
-  spanish: new Map(Object.entries(vocabularyModules["./verbListLookup/spanish.json"]?.default.byId ?? {})),
+  english: new Map(Object.entries(vocabularyModules["../shared/common100VerbLookup/english.json"]?.default.byId ?? {})),
+  french: new Map(Object.entries(vocabularyModules["../shared/common100VerbLookup/french.json"]?.default.byId ?? {})),
+  german: new Map(Object.entries(vocabularyModules["../shared/common100VerbLookup/german.json"]?.default.byId ?? {})),
+  italian: new Map(Object.entries(vocabularyModules["../shared/common100VerbLookup/italian.json"]?.default.byId ?? {})),
+  portuguese: new Map(Object.entries(vocabularyModules["../shared/common100VerbLookup/portuguese.json"]?.default.byId ?? {})),
+  russian: new Map(Object.entries(vocabularyModules["../shared/common100VerbLookup/russian.json"]?.default.byId ?? {})),
+  spanish: new Map(Object.entries(vocabularyModules["../shared/common100VerbLookup/spanish.json"]?.default.byId ?? {})),
 };
 
 function getVocabularyEntryForUiLanguage(id: string, uiLang: UiLanguageCode) {

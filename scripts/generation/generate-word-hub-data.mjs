@@ -16,8 +16,8 @@ const VERB_LIST_LOOKUP_OUTPUT_DIR = path.join(
   "data",
   "seo",
   "verbLists",
-  "common100Verbs",
-  "verbListLookup",
+  "shared",
+  "common100VerbLookup",
 );
 const ENGLISH_VERB_LIST_PATH = path.join(
   ROOT_DIR,

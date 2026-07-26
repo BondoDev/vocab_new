@@ -428,7 +428,7 @@ assert.ok(
   "word hub data should not eagerly import full vocabulary JSON files",
 );
 assert.ok(
-  commonVerbListSource.includes('import.meta.glob("./verbListLookup/*.json"'),
+  commonVerbListSource.includes('import.meta.glob("../shared/common100VerbLookup/*.json"'),
   "shared verb list data should read compact generated lookup JSON files",
 );
 assert.ok(
@@ -475,8 +475,8 @@ assert.ok(
   "verb list registry should build localized content lookup from shared JSON content",
 );
 assert.ok(
-  /["']common100Verbs["'][\s\S]*["']verbListLookup["']/.test(generateWordHubDataSource),
-  "word hub generator should write common-100 verb lookup JSON files to src/data/seo/verbLists/common100Verbs/verbListLookup",
+  /["']shared["'][\s\S]*["']common100VerbLookup["']/.test(generateWordHubDataSource),
+  "word hub generator should write common-100 verb lookup JSON files to src/data/seo/verbLists/shared/common100VerbLookup",
 );
 assert.ok(
   !/englishVerbList["'],\s*["']lookup/.test(generateWordHubDataSource),

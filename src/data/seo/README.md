@@ -71,8 +71,10 @@ canonical home for another family's data.
 `verbLists/shared/` is narrower than the top-level `shared/` folder. It
 holds data shared by multiple verb-list subtypes, but not by unrelated SEO
 families. For example, `verbLists/shared/list_of_100_most_used_verb.json`
-is the base 100-verb list that can be reused by common-verb, past-form,
-or other 100-verb page subtypes.
+is the base 100-verb list, and
+`verbLists/shared/common100VerbLookup/` is the generated compact
+vocabulary lookup for those concept IDs; both can be reused by
+common-verb, past-form, or other 100-verb page subtypes.
 
 ## Shared folder criteria
 
