@@ -37,6 +37,7 @@ Guard script: `npm run test:generated-data-ownership`
 | ~~`public/seo/level-browse-preview/`~~ | *(removed 2026-07-15; obsolete duplicate)* | `src/data/seo/vocabularyLevels/level-browse-preview/` remains authoritative | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | none found — no fetch, import, glob, sitemap, SSR, Worker, or service-worker consumer required the public URL | no | resolved |
 | `src/data/seo/verbLists/shared/common100VerbLookup/` | generated committed source | `verbLists/shared/list_of_100_most_used_verb.json` + vocabulary.json | `scripts/generation/generate-word-hub-data.mjs` | client + SSR (`common100VerbList.ts`, eager glob G6); not the Worker | yes | low |
 | `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json` | handwritten source (Phase 1 foundation, added 2026-07-26; up to 49 records — one per short-language-code `targetLanguage` x `uiLanguage` combination — authored by hand one combination at a time; a combination with no record yet simply has no content) | itself | manual (no generator) | `pastForms100VerbRegistry.ts` (validated via `pastForms100VerbRouteHelpers.ts`), transitively `PastVerbFormsSeoPage.tsx`, `src/entry-server.tsx` (prerender-route enumeration), `scripts/generation/generate-sitemap.mjs` (gated off while `PAST_VERB_FORMS_LAUNCHED` is false) | yes | low — the loader deliberately does not require all 49 combinations to be present (see `getMissingPastVerbFormsCombinations()` for an optional, non-blocking completeness check); a record with no `urlSlug` yet contributes no route/sitemap entry |
+| `src/data/seo/verbLists/pastForms100Verbs/pastForms/` | handwritten source, **no generator exists** (added 2026-07-27) | itself (hand-authored), keyed by `concept_id` from `verbLists/shared/list_of_100_most_used_verb.json` | none found | client + SSR (`pastForms100VerbFormsData.ts`, eager glob G10); not the Worker; drives `pastForms100VerbTableConfig.ts`'s `isTableReady` | yes | medium — one file per target language (`{targetLanguage}.json`), added by hand over time; a target language with no file simply renders the table placeholder (`getPastVerbFormsRowsById` returns `null`) |
 | `public/sitemaps/` | generated build output (committed) | word route manifest + verb registry + vocabulary data | `scripts/generation/generate-sitemap.mjs` (`npm run sitemap`) | search engines only; test-only in-repo consumers | yes | low |
 | `workers/word-ssr/data/full-corpus/` | generated build output | vocabulary + word-route-manifest + slugs | `workers/word-ssr/generation/generate-full-corpus.mjs` (Cloudflare remote build) | `workers/word-ssr/generation/publish-shards.mjs` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
 | `workers/word-ssr/assets-full/` | Worker Static Asset directory | `dist/**` + `data/full-corpus/` | `workers/word-ssr/generation/publish-shards.mjs` (Cloudflare remote build) | **Worker runtime** — bound in both `wrangler.full.toml` and `wrangler.production.toml` | **no** (gitignored) | medium — build-pipeline coupling, see remote-build note |
@@ -196,15 +197,16 @@ context is accurate.
 | `dist/`, `server-build/` | `npm run build` |
 | `workers/word-ssr/data/full-corpus-census.json` | `node workers/word-ssr/diagnostics/census-full-corpus.mjs` (manual, no package script) |
 | `workers/word-ssr/data/sharding-measurement.json` | `node workers/word-ssr/diagnostics/measure-shard-formats.mjs` (manual, no package script; requires `data/full-corpus/` already generated) |
-| `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json`, `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json` | none — hand-maintained, no generator |
+| `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json`, `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`, `src/data/seo/verbLists/pastForms100Verbs/pastForms/` | none — hand-maintained, no generator |
 
 ## Manual-edit policy
 
 - **Allowed and expected:** `src/data/seo/vocabularyLevels/level-browse-preview/`,
   `src/data/seo/levelTests/seo_level_test_content.json`,
   `src/data/seo/vocabularyLevels/seo-cefr-content.json`,
-  `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json` (no generator
-  exists for any of these).
+  `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`,
+  `src/data/seo/verbLists/pastForms100Verbs/pastForms/` (no generator exists
+  for any of these).
 - **Not allowed — will be overwritten:** `src/data/seo/wordPages/word-hub-pages/`,
   `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/verbLists/shared/common100VerbLookup/`,
   `public/sitemaps/`, `workers/word-ssr/data/client-assets.full.json`,

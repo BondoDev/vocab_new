@@ -1,30 +1,23 @@
-// Centralized per-target-language configuration for the future past-verb-
-// forms table's linguistic-dataset readiness. Column identity, order, and
-// localized labels are NOT owned here — that responsibility belongs to each
-// content record's own `pastForms`/`tableColumns` fields (see
-// pastForms100VerbRouteHelpers.ts), since those are localized per
-// (targetLanguage, uiLanguage) combination, not per target language alone.
-// This module only tracks whether a target language's actual verb-form row
-// dataset exists yet — a separate, non-localized, linguistic-domain concern.
-import { SUPPORTED_TARGET_LANGUAGES, type TargetLanguageSlug } from "../../shared/slugs";
+// Centralized per-target-language readiness for the past-verb-forms table.
+// Column identity, order, and localized labels are NOT owned here — that
+// responsibility belongs to each content record's own `pastForms`/
+// `tableColumns` fields (see pastForms100VerbRouteHelpers.ts), since those
+// are localized per (targetLanguage, uiLanguage) combination. isTableReady
+// is instead derived automatically from whether a target language has a row
+// dataset in ./pastForms/ (see pastForms100VerbFormsData.ts) — a language
+// becomes ready the moment its pastForms/{targetLanguage}.json file is
+// added, with no manual flag to flip.
+import { type TargetLanguageSlug } from "../../shared/slugs";
+import { getPastVerbFormsRowsById } from "./pastForms100VerbFormsData";
 
 export interface PastVerbFormsTableConfig {
   isTableReady: boolean;
   supportsRegularIrregularSplit: boolean;
 }
 
-function createDefaultTableConfig(): PastVerbFormsTableConfig {
+export function getPastVerbFormsTableConfig(targetLanguage: TargetLanguageSlug): PastVerbFormsTableConfig {
   return {
-    isTableReady: false,
+    isTableReady: getPastVerbFormsRowsById(targetLanguage) !== null,
     supportsRegularIrregularSplit: false,
   };
-}
-
-export const PAST_VERB_FORMS_TABLE_CONFIG: Record<TargetLanguageSlug, PastVerbFormsTableConfig> =
-  Object.fromEntries(
-    SUPPORTED_TARGET_LANGUAGES.map((targetLanguage) => [targetLanguage, createDefaultTableConfig()]),
-  ) as Record<TargetLanguageSlug, PastVerbFormsTableConfig>;
-
-export function getPastVerbFormsTableConfig(targetLanguage: TargetLanguageSlug): PastVerbFormsTableConfig {
-  return PAST_VERB_FORMS_TABLE_CONFIG[targetLanguage];
 }

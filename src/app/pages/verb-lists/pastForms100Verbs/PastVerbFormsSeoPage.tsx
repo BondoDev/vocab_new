@@ -1,21 +1,28 @@
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
+  canLinkVerbListItem,
   getAllPastVerbFormsPaths,
   getPastVerbFormsContent,
   getPastVerbFormsPath,
   getPastVerbFormsTableConfig,
   getVerbListPath,
+  getVerbListSpeechLang,
+  getVerbListTranslation,
+  getVerbListWordLemma,
+  VERB_LIST_ITEMS,
 } from "../../../../data/seo/verbLists";
 import { getLevelTestSeoPath } from "../../../../data/seo/levelTests";
 import { getSeoHubPath } from "../../../../data/seo/shared/hub";
 import { type TargetLanguageSlug, type UiLanguageCode } from "../../../../data/seo/shared/slugs";
 import { buildLocalizedVocabularyPath } from "../../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
+import { buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
+import { getPastVerbFormsRowsById } from "../../../../data/seo/verbLists/pastForms100Verbs/pastForms100VerbFormsData";
 import { buildPastVerbFormsSeoMetadata } from "../../../../seo/verbLists/pastForms100Verbs/pastVerbFormsMetadata";
 import { PAST_VERB_FORMS_DEV_PLACEHOLDER_MESSAGE } from "../../../../seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus";
 import { SEOHead, useSeoSiteOrigin } from "../../../../seo/SeoContext";
 import type { PastVerbFormsTableColumns } from "../../../../data/seo/verbLists/pastForms100Verbs/pastForms100VerbRouteHelpers";
-import { PastVerbFormsTableSection } from "./PastVerbFormsTableSection";
+import { PastVerbFormsTableSection, type PastVerbFormsRow } from "./PastVerbFormsTableSection";
 
 interface PastVerbFormsSeoPageProps {
   uiLang: UiLanguageCode;
@@ -67,6 +74,41 @@ export function PastVerbFormsSeoPage({
 
   const content = getPastVerbFormsContent(targetLanguage, uiLang);
   const tableConfig = getPastVerbFormsTableConfig(targetLanguage);
+  const speechLang = getVerbListSpeechLang(targetLanguage);
+
+  // Row data reuses the common100Verbs vocabulary lookup (translation,
+  // target-language infinitive, word-page linking) instead of duplicating
+  // any of it here — only the past-form values themselves are unique to
+  // this family. Canonical order/id set comes from VERB_LIST_ITEMS (the
+  // same shared 100-verb list common100Verbs uses), not from the row
+  // dataset's own file order.
+  const rows = useMemo<PastVerbFormsRow[]>(() => {
+    const formsById = getPastVerbFormsRowsById(targetLanguage);
+    if (!formsById) {
+      return [];
+    }
+
+    const result: PastVerbFormsRow[] = [];
+    for (const item of VERB_LIST_ITEMS) {
+      const forms = formsById.get(item.id);
+      if (!forms) {
+        continue;
+      }
+
+      const infinitive = getVerbListWordLemma(targetLanguage, item.id) || item.verb;
+      result.push({
+        id: item.id,
+        index: result.length + 1,
+        infinitive,
+        translation: getVerbListTranslation(item.id, uiLang),
+        href: canLinkVerbListItem(targetLanguage, item.id)
+          ? buildWordPath(uiLang, targetLanguage, infinitive, item.id)
+          : null,
+        forms,
+      });
+    }
+    return result;
+  }, [targetLanguage, uiLang]);
 
   const seoMetadata = buildPastVerbFormsSeoMetadata({
     uiLang,
@@ -155,6 +197,18 @@ export function PastVerbFormsSeoPage({
           )}
         </section>
 
+        <PastVerbFormsTableSection
+          tableConfig={tableConfig}
+          tableColumns={content?.tableColumns ?? EMPTY_TABLE_COLUMNS}
+          pastForms={content?.pastForms ?? []}
+          rows={rows}
+          speechLang={speechLang}
+          heading={content?.table.heading ?? ""}
+          description={content?.table.description ?? ""}
+          notes={content?.table.notes ?? []}
+          placeholderMessage={PAST_VERB_FORMS_DEV_PLACEHOLDER_MESSAGE}
+        />
+
         {hasOverviewContent ? (
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
             {content!.overview.heading ? (
@@ -171,16 +225,6 @@ export function PastVerbFormsSeoPage({
             ) : null}
           </section>
         ) : null}
-
-        <PastVerbFormsTableSection
-          tableConfig={tableConfig}
-          tableColumns={content?.tableColumns ?? EMPTY_TABLE_COLUMNS}
-          pastForms={content?.pastForms ?? []}
-          heading={content?.table.heading ?? ""}
-          description={content?.table.description ?? ""}
-          notes={content?.table.notes ?? []}
-          placeholderMessage={PAST_VERB_FORMS_DEV_PLACEHOLDER_MESSAGE}
-        />
 
         {hasHowToUseContent ? (
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8">

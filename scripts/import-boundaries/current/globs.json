@@ -136,6 +136,21 @@
       "namingContract": "{targetLanguage}-{cefrLevel}.json, 7 languages x 6 levels",
       "risk": "medium-hand-authored",
       "riskReason": "Unlike G4/G5/G6, no generator script currently writes this directory — it appears to be committed, hand-authored/one-time-generated data with no regeneration path in scripts/. Strongest existing test coverage of any glob (scripts/tests/routing/test-level-browse-preview-completeness.mjs asserts the exact 42-key match set and validates content)."
+    },
+    {
+      "id": "G10",
+      "consumer": "src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbFormsData.ts",
+      "line": 19,
+      "pattern": "./pastForms/*.json",
+      "options": { "eager": true },
+      "resolvesTo": "src/data/seo/verbLists/pastForms100Verbs/pastForms/*.json",
+      "runtime": "client + ssr (past-verb-forms table, PastVerbFormsSeoPage.tsx; not the Worker)",
+      "eager": true,
+      "expectedCount": "grows over time, not fixed",
+      "actualCount": 1,
+      "namingContract": "{targetLanguage}.json (TargetLanguageSlug full name, e.g. english.json), hand-authored one language at a time; each row keyed by concept_id from ../shared/list_of_100_most_used_verb.json",
+      "risk": "medium-hand-authored",
+      "riskReason": "Same risk shape as G9 — no generator script writes this directory, and its match count is expected to grow (not a fixed contract), so it is intentionally excluded from test-import-boundaries.mjs's exact-count assertions. getPastVerbFormsRowsById() returns null for any target language without a file yet, and pastForms100VerbTableConfig.ts derives isTableReady from that, so a missing file degrades to the table placeholder rather than a runtime error."
     }
   ],
   "relatedPathSensitiveLoaders": [
