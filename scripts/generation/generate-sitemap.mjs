@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadWordRouteManifest } from "../lib/load-word-route-manifest.mjs";
 import { loadVerbListRegistry } from "../lib/load-verb-list-registry.mjs";
+import { loadPastVerbFormsRegistry } from "../lib/load-past-verb-forms-registry.mjs";
 import { loadVocabularyLevelRoutes } from "../lib/load-vocabulary-level-routes.mjs";
 import { createLastmodLedger } from "../lib/sitemap-lastmod.mjs";
 
@@ -251,6 +252,7 @@ function chunkArray(values, chunkSize) {
 async function main() {
   const manifestLoader = loadWordRouteManifest(".tmp-word-route-manifest-sitemap");
   const verbListRegistryLoader = loadVerbListRegistry(".tmp-verb-list-registry-sitemap");
+  const pastVerbFormsRegistryLoader = loadPastVerbFormsRegistry(".tmp-past-verb-forms-registry-sitemap");
   const vocabularyLevelRoutesLoader = loadVocabularyLevelRoutes(".tmp-vocabulary-level-routes-sitemap");
   const publicDir = path.join(ROOT_DIR, "public");
   const sitemapsDir = path.join(publicDir, "sitemaps");
@@ -273,7 +275,18 @@ async function main() {
 
     const vocabularyRoutes = collectVocabularyRoutes(vocabularyLevelRoutesLoader.routes);
     const levelTestRoutes = await collectLevelTestRoutes();
-    const verbListRoutes = Array.from(new Set(verbListRegistryLoader.registry.getAllVerbListPaths())).sort();
+    // Past-verb-forms routes only join the verb-lists sitemap once
+    // PAST_VERB_FORMS_LAUNCHED flips to true (src/seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus.ts).
+    // Before launch, records are authored incrementally and any record
+    // without a urlSlug yet is skipped by getAllPastVerbFormsPaths() — this
+    // flag check makes the exclusion an explicit, centralized decision
+    // rather than an incidental side effect of unfilled data.
+    const pastVerbFormsRoutes = pastVerbFormsRegistryLoader.launchStatus.PAST_VERB_FORMS_LAUNCHED
+      ? pastVerbFormsRegistryLoader.registry.getAllPastVerbFormsPaths()
+      : [];
+    const verbListRoutes = Array.from(
+      new Set([...verbListRegistryLoader.registry.getAllVerbListPaths(), ...pastVerbFormsRoutes]),
+    ).sort();
     const wordRoutesByPair = INCLUDE_WORD_SITEMAPS
       ? await collectWordRoutes(manifestLoader.manifest)
       : new Map();
@@ -358,6 +371,7 @@ async function main() {
     );
   } finally {
     verbListRegistryLoader.cleanup();
+    pastVerbFormsRegistryLoader.cleanup();
     manifestLoader.cleanup();
     vocabularyLevelRoutesLoader.cleanup();
   }

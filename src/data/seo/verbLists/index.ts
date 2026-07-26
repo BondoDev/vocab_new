@@ -27,6 +27,18 @@ export {
   resolveVerbListRoute,
 } from "./common100Verbs/common100VerbRegistry";
 
+// "Past Forms of the 100 Most Common {Target Language} Verbs" — a sibling
+// verb-list subtype (see docs/architecture.md). Re-exported from this same
+// umbrella barrel so routing/SSR/sitemap consumers keep importing from one
+// place rather than reaching into a specific subtype folder.
+export {
+  getAllPastVerbFormsPaths,
+  getPastVerbFormsContent,
+  getPastVerbFormsPath,
+  getPastVerbFormsTableConfig,
+  resolvePastVerbFormsRoute,
+} from "./pastForms100Verbs/pastForms100VerbRegistry";
+
 export const VERB_LIST_ITEMS = BASE_VERB_LIST_ITEMS;
 export type SharedVerbListItem = VerbListItem;
 

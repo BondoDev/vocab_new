@@ -20,13 +20,14 @@ import {
   type TargetLanguageSlug,
 } from "../../../data/seo/shared/slugs";
 import { getLevelTestContent, getLevelTestSeoPath } from "../../../data/seo/levelTests";
+import { getPastVerbFormsContent, getPastVerbFormsPath } from "../../../data/seo/verbLists";
 import { TARGET_LANGUAGE_TO_UI_CODE } from "../../utils/pageRouting";
 
 export type TranslateFn = (key: string) => string;
 
 export interface ExploreTopic {
   id: string;
-  level: CefrLevelCode | "test" | "verbs";
+  level: CefrLevelCode | "test" | "verbs" | "pastVerbForms";
   label: string;
   path: string;
   kind: "level" | "test" | "custom";
@@ -100,6 +101,32 @@ export function withLevelTestExploreTopic(
       targetLanguage,
     },
   ];
+}
+
+// Entry-point topic for the "100 Most Common Verb Past Forms" page family
+// (src/data/seo/verbLists/pastForms100Verbs/). Returns null while that
+// (targetLanguage, uiLanguage) combination has no entryButtonLabel or
+// urlSlug authored yet, so a dropdown simply omits the entry until its
+// past-forms page is published — no code change needed at that point.
+export function buildPastVerbFormsExploreTopic(
+  targetLanguage: TargetLanguageSlug,
+  uiLanguage: UILanguage,
+): ExploreTopic | null {
+  const content = getPastVerbFormsContent(targetLanguage, uiLanguage);
+  const path = getPastVerbFormsPath(targetLanguage, uiLanguage);
+
+  if (!content?.entryButtonLabel || !path) {
+    return null;
+  }
+
+  return {
+    id: "past-verb-forms",
+    level: "pastVerbForms",
+    label: content.entryButtonLabel,
+    path,
+    kind: "custom",
+    targetLanguage,
+  };
 }
 
 // The only builder that needs `t`: its generic fallbacks localize the

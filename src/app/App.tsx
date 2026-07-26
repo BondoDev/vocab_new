@@ -22,6 +22,7 @@ import { UserProfileDashboardPage } from "../features/user-profile";
 import { LevelTestSeoPage } from "./pages/level-test/LevelTestSeoPage";
 import { SeoHubPage } from "./pages/SeoHubPage";
 import { VerbListSeoPage } from "./pages/verb-lists/common100Verbs/VerbListSeoPage";
+import { PastVerbFormsSeoPage } from "./pages/verb-lists/pastForms100Verbs/PastVerbFormsSeoPage";
 import { WordSeoPage } from "./pages/word-pages/detail/WordSeoPage";
 import { WordPageLayout } from "./pages/word-pages/detail/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./pages/vocabulary/DevSeoCefrPlaceholderPage";
@@ -52,6 +53,7 @@ import {
   pageFromPath,
   parseDevSeoCefrPlaceholderRoute,
   parseLevelTestSeoRoute,
+  parsePastVerbFormsSeoRoute,
   parsePracticeRoute,
   parseSeoHubRoute,
   parseVerbListSeoRoute,
@@ -257,6 +259,10 @@ function AppContent({
     () => parseVerbListSeoRoute(location.pathname),
     [location.pathname],
   );
+  const pastVerbFormsSeoRoute = useMemo(
+    () => parsePastVerbFormsSeoRoute(location.pathname),
+    [location.pathname],
+  );
   const seoHubRoute = useMemo(
     () => parseSeoHubRoute(location.pathname),
     [location.pathname],
@@ -297,6 +303,7 @@ function AppContent({
       case "vocabularyLevel":
       case "levelTestSeo":
       case "verbListSeo":
+      case "pastVerbFormsSeo":
       case "seoHub":
       case "wordSeoHub":
       case "devSeoCefrPlaceholder":
@@ -357,6 +364,7 @@ function AppContent({
         vocabularyRoute,
         levelTestSeoRoute,
         verbListSeoRoute,
+        pastVerbFormsSeoRoute,
         seoHubRoute,
         wordSeoHubRoute,
         wordRoute,
@@ -366,6 +374,7 @@ function AppContent({
       vocabularyRoute,
       levelTestSeoRoute,
       verbListSeoRoute,
+      pastVerbFormsSeoRoute,
       seoHubRoute,
       wordSeoHubRoute,
       wordRoute,
@@ -741,6 +750,32 @@ function AppContent({
           <VerbListSeoPage
             uiLang={verbListSeoRoute.uiLang}
             targetLanguage={verbListSeoRoute.targetLanguage}
+            onStartPractice={handleStartVocabularyPractice}
+          />
+        </Suspense>
+        {accountOnboardingDialog}
+      </div>
+    );
+  }
+
+  if (resolvedPage === "pastVerbFormsSeo") {
+    if (!pastVerbFormsSeoRoute) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header {...sharedHeaderProps} activePage="notFound" />
+          <NotFoundPage message="Invalid past-verb-forms page." />
+          {accountOnboardingDialog}
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <PastVerbFormsSeoPage
+            uiLang={pastVerbFormsSeoRoute.uiLang}
+            targetLanguage={pastVerbFormsSeoRoute.targetLanguage}
             onStartPractice={handleStartVocabularyPractice}
           />
         </Suspense>

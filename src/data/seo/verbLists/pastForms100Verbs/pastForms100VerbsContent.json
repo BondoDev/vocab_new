@@ -1,0 +1,908 @@
+[
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "en",
+    "urlSlug": "past-forms-100-most-common-english-verbs",
+    "entryButtonLabel": "English Verb Past Forms",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "translation": "Meaning"
+    },
+    "pastForms": [
+      { "key": "pastSimple", "label": "Past Simple" },
+      { "key": "pastParticiple", "label": "Past Participle" }
+    ],
+    "metadata": {
+      "title": "Past Forms of the 100 Most Common English Verbs",
+      "metaTitle": "100 Common English Verbs and Their Past Forms",
+      "metaDescription": "Study the Past Simple and Past Participle forms of 100 common English verbs, including useful regular and irregular verb patterns."
+    },
+    "hero": {
+      "heading": "Past Forms of the 100 Most Common English Verbs",
+      "subtitle": "Compare the Past Simple and Past Participle forms of essential English verbs in one practical reference.",
+      "introParagraphs": [
+        "This page brings together 100 frequently used English verbs with their Past Simple and Past Participle forms. The table helps you compare the infinitive with the two principal past forms needed for everyday speaking, writing, and comprehension.",
+        "Learning these forms is especially important because many common English verbs are irregular. Some use the same form in both columns, while others change their vowel, ending, or entire word form and must be learned individually."
+      ]
+    },
+    "overview": {
+      "heading": "How English Past Verb Forms Work",
+      "paragraphs": [
+        "Common verbs appear constantly in conversations, stories, instructions, emails, and other everyday contexts. Knowing their past forms allows you to describe completed events, talk about experiences, and understand sentences referring to earlier actions.",
+        "Regular English verbs normally form both the Past Simple and Past Participle with “-ed.” Irregular verbs follow different patterns: some change in both forms, some have one shared past form, and others remain identical to the infinitive."
+      ]
+    },
+    "table": {
+      "heading": "Table of 100 Common English Verb Past Forms",
+      "description": "Each row shows the verb in its infinitive form, its meaning, its Past Simple form, and its Past Participle form for quick comparison and review.",
+      "notes": [
+        "Regular verbs generally add “-ed,” although spelling changes may be required.",
+        "Irregular verbs do not follow one universal formation rule and should be learned by pattern or individually.",
+        "The Past Simple is used directly in completed past-time statements, such as “She wrote yesterday.”",
+        "The Past Participle is commonly used with auxiliary verbs, as in “She has written” or “It was written.”"
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study the Table",
+      "steps": [
+        {
+          "heading": "Start with the infinitive",
+          "text": "Read the base verb and confirm that you understand its meaning and common use."
+        },
+        {
+          "heading": "Compare both past forms",
+          "text": "Check whether the Past Simple and Past Participle are identical or formed differently."
+        },
+        {
+          "heading": "Identify the pattern",
+          "text": "Decide whether the verb is regular, follows a recognizable irregular pattern, or needs to be memorized separately."
+        },
+        {
+          "heading": "Use each form in context",
+          "text": "Write one sentence in the Past Simple and another using the Past Participle with a suitable auxiliary verb."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Remembering English Past Forms",
+      "items": [
+        {
+          "heading": "Group similar irregular verbs",
+          "text": "Learn verbs together when they share a pattern, such as sing–sang–sung or write–wrote–written."
+        },
+        {
+          "heading": "Notice spelling changes",
+          "text": "Pay attention to forms such as studied, stopped, and hoped, where spelling rules affect the regular “-ed” ending."
+        },
+        {
+          "heading": "Practise with auxiliary verbs",
+          "text": "Use past participles with have, has, had, be, and get so that you learn how the form works in real sentences."
+        },
+        {
+          "heading": "Review with spaced recall",
+          "text": "Test yourself after one day, several days, and one week instead of rereading the full list repeatedly."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Put the Verb Forms into Practice",
+      "description": "Review the most useful English verbs and practise using both past forms in meaningful sentences.",
+      "primaryLabel": "Practise English Verbs",
+      "secondaryLabel": "View 100 Common English Verbs"
+    },
+    "related": {
+      "heading": "Continue Learning English",
+      "items": [
+        { "key": "commonVerbs", "label": "100 Most Common English Verbs" },
+        { "key": "vocabularyLevels", "label": "English Vocabulary by Level" },
+        { "key": "levelTest", "label": "English Level Test" }
+      ]
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions About English Past Forms",
+      "items": [
+        {
+          "question": "What is the difference between the Past Simple and the Past Participle?",
+          "answer": "The Past Simple is used as the main verb for completed past actions, as in “They went home.” The Past Participle is usually used with an auxiliary verb, as in “They have gone home” or “The work was done.”"
+        },
+        {
+          "question": "How do regular English verbs form the past tense?",
+          "answer": "Most regular verbs add “-ed” to the infinitive, such as work–worked–worked. Spelling may change when a verb ends in “-e,” a consonant plus “-y,” or a short stressed vowel followed by one consonant."
+        },
+        {
+          "question": "Why are irregular English verbs difficult to learn?",
+          "answer": "Irregular verbs do not all follow the same rule, and their Past Simple and Past Participle forms may differ from each other. However, many verbs share patterns, so grouping similar forms can make them easier to remember."
+        },
+        {
+          "question": "What is the best way to memorize English past forms?",
+          "answer": "Learn a small number of verbs at a time and practise recalling all three forms without looking. Use each verb in short sentences and review difficult forms at increasing intervals."
+        },
+        {
+          "question": "Can the Past Participle be used without an auxiliary verb?",
+          "answer": "It is normally used with an auxiliary in perfect tenses or passive constructions, such as “has finished” or “was built.” It can also function like an adjective in expressions such as “a broken window,” but memorizing the table alone is not enough to master every use."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "es",
+    "urlSlug": "formas-pasadas-100-verbos-ingleses-mas-comunes",
+    "entryButtonLabel": "Estudiar las formas pasadas de los verbos ingleses",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Traducción al español"
+    },
+    "pastForms": [
+      { "key": "pastSimple", "label": "Pasado simple" },
+      { "key": "pastParticiple", "label": "Participio pasado" }
+    ],
+    "metadata": {
+      "title": "Formas pasadas de los 100 verbos ingleses más comunes",
+      "metaTitle": "100 verbos ingleses comunes y sus formas pasadas",
+      "metaDescription": "Consulta el pasado simple y el participio pasado de 100 verbos ingleses comunes, con formas regulares, irregulares y traducciones."
+    },
+    "hero": {
+      "heading": "Formas pasadas de los 100 verbos ingleses más comunes",
+      "subtitle": "Compara el pasado simple y el participio pasado de verbos esenciales en una sola tabla práctica.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos ingleses de uso frecuente junto con sus formas de pasado simple y participio pasado. La tabla permite comparar rápidamente el infinitivo, la traducción al español y las dos formas principales necesarias para hablar y escribir sobre acciones pasadas.",
+        "Aprender estas formas es especialmente importante porque muchos de los verbos más utilizados en inglés son irregulares. Algunos mantienen la misma forma, otros cambian una vocal o una terminación y varios presentan formas completamente distintas que conviene memorizar en contexto."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funcionan las formas pasadas en inglés",
+      "paragraphs": [
+        "Los verbos comunes aparecen constantemente en conversaciones, relatos, correos, instrucciones y textos cotidianos. Conocer sus formas pasadas permite describir acciones terminadas, contar experiencias y comprender mejor situaciones ocurridas anteriormente.",
+        "Los verbos regulares suelen formar tanto el pasado simple como el participio pasado añadiendo «-ed». Los verbos irregulares siguen patrones diversos: algunos cambian en ambas formas, otros comparten una única forma pasada y algunos no cambian respecto al infinitivo."
+      ]
+    },
+    "table": {
+      "heading": "Tabla de formas pasadas de 100 verbos ingleses",
+      "description": "Cada fila muestra el infinitivo, su traducción al español, la forma de pasado simple y el participio pasado para facilitar la comparación y el repaso.",
+      "notes": [
+        "Los verbos regulares suelen añadir «-ed», aunque pueden requerir cambios ortográficos.",
+        "Los verbos irregulares no siguen una única regla de formación y deben aprenderse por patrones o individualmente.",
+        "El pasado simple se usa para acciones terminadas, como en «She wrote yesterday».",
+        "El participio pasado suele aparecer con verbos auxiliares, como en «She has written» o «It was written»."
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar la tabla",
+      "steps": [
+        {
+          "heading": "Empieza por el infinitivo",
+          "text": "Lee el verbo en su forma base y comprueba que entiendes su significado y su uso habitual."
+        },
+        {
+          "heading": "Compara las dos formas",
+          "text": "Observa si el pasado simple y el participio pasado son iguales o se forman de manera diferente."
+        },
+        {
+          "heading": "Identifica el patrón",
+          "text": "Decide si el verbo es regular, sigue un patrón irregular reconocible o necesita memorizarse por separado."
+        },
+        {
+          "heading": "Utiliza cada forma",
+          "text": "Escribe una oración en pasado simple y otra con el participio pasado acompañado de un auxiliar adecuado."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para memorizar las formas pasadas",
+      "items": [
+        {
+          "heading": "Agrupa verbos similares",
+          "text": "Estudia juntos los verbos que siguen un mismo patrón, como sing–sang–sung o write–wrote–written."
+        },
+        {
+          "heading": "Observa la ortografía",
+          "text": "Presta atención a formas como studied, stopped y hoped, en las que las reglas ortográficas modifican la terminación «-ed»."
+        },
+        {
+          "heading": "Practica con auxiliares",
+          "text": "Usa los participios con have, has, had, be y get para aprender cómo funcionan dentro de oraciones reales."
+        },
+        {
+          "heading": "Repasa de forma espaciada",
+          "text": "Ponte a prueba después de un día, varios días y una semana, en lugar de releer toda la lista repetidamente."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Practica las formas verbales",
+      "description": "Repasa los verbos ingleses más útiles y utiliza ambas formas pasadas en oraciones con sentido.",
+      "primaryLabel": "Practicar verbos ingleses",
+      "secondaryLabel": "Ver los 100 verbos ingleses comunes"
+    },
+    "related": {
+      "heading": "Continúa aprendiendo inglés",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Los 100 verbos ingleses más comunes"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario inglés por niveles"
+        },
+        { "key": "levelTest", "label": "Prueba de nivel de inglés" }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre las formas pasadas en inglés",
+      "items": [
+        {
+          "question": "¿Cuál es la diferencia entre el pasado simple y el participio pasado?",
+          "answer": "El pasado simple funciona como verbo principal para expresar acciones terminadas, como en «They went home». El participio pasado suele utilizarse con un verbo auxiliar, como en «They have gone home» o «The work was done»."
+        },
+        {
+          "question": "¿Cómo forman el pasado los verbos regulares en inglés?",
+          "answer": "La mayoría añade «-ed» al infinitivo, como en work–worked–worked. La ortografía puede cambiar cuando el verbo termina en «-e», en consonante más «-y» o en una vocal corta seguida de una consonante."
+        },
+        {
+          "question": "¿Por qué son difíciles los verbos irregulares ingleses?",
+          "answer": "No siguen todos la misma regla y sus formas de pasado simple y participio pasado pueden ser distintas. Sin embargo, muchos comparten patrones, por lo que estudiarlos en grupos facilita su memorización."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las formas pasadas?",
+          "answer": "Aprende pocos verbos cada vez e intenta recordar sus tres formas sin mirar la tabla. Úsalos en oraciones breves y repasa con mayor frecuencia aquellos que te resulten más difíciles."
+        },
+        {
+          "question": "¿Puede utilizarse el participio pasado sin un verbo auxiliar?",
+          "answer": "Normalmente aparece con un auxiliar en los tiempos perfectos o en la voz pasiva, como en «has finished» o «was built». También puede funcionar como adjetivo en expresiones como «a broken window», pero memorizar la tabla por sí sola no basta para dominar todos sus usos."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "fr",
+    "urlSlug": "formes-passees-100-verbes-anglais-les-plus-courants",
+    "entryButtonLabel": "Étudier les formes passées des verbes anglais",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "translation": "Traduction française"
+    },
+    "pastForms": [
+      { "key": "pastSimple", "label": "Prétérit" },
+      { "key": "pastParticiple", "label": "Participe passé" }
+    ],
+    "metadata": {
+      "title": "Formes passées des 100 verbes anglais les plus courants",
+      "metaTitle": "100 verbes anglais courants et leurs formes passées",
+      "metaDescription": "Consultez le prétérit et le participe passé de 100 verbes anglais courants, avec leurs formes régulières, irrégulières et leur traduction."
+    },
+    "hero": {
+      "heading": "Formes passées des 100 verbes anglais les plus courants",
+      "subtitle": "Comparez le prétérit et le participe passé des verbes essentiels dans un tableau pratique.",
+      "introParagraphs": [
+        "Cette page réunit 100 verbes anglais très fréquents avec leur prétérit et leur participe passé. Le tableau permet de comparer rapidement l’infinitif, la traduction française et les deux principales formes utilisées pour parler et écrire au passé.",
+        "L’apprentissage de ces formes est essentiel, car de nombreux verbes anglais courants sont irréguliers. Certains conservent la même forme, d’autres modifient une voyelle ou une terminaison, et plusieurs doivent être mémorisés individuellement."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionnent les formes passées en anglais",
+      "paragraphs": [
+        "Les verbes courants apparaissent constamment dans les conversations, les récits, les courriels, les consignes et les textes du quotidien. Connaître leurs formes passées permet de raconter des événements terminés, de parler de ses expériences et de mieux comprendre les actions antérieures.",
+        "Les verbes réguliers forment généralement le prétérit et le participe passé en ajoutant « -ed ». Les verbes irréguliers suivent différents modèles : certains changent dans les deux formes, d’autres utilisent une seule forme passée et quelques-uns restent identiques à l’infinitif."
+      ]
+    },
+    "table": {
+      "heading": "Tableau des formes passées de 100 verbes anglais",
+      "description": "Chaque ligne présente l’infinitif, sa traduction française, le prétérit et le participe passé afin de faciliter la comparaison et la révision.",
+      "notes": [
+        "Les verbes réguliers ajoutent généralement « -ed », avec parfois des modifications orthographiques.",
+        "Les verbes irréguliers ne suivent pas une règle unique et doivent être appris par groupes ou individuellement.",
+        "Le prétérit s’emploie pour des actions terminées, comme dans « She wrote yesterday ».",
+        "Le participe passé s’utilise souvent avec un auxiliaire, comme dans « She has written » ou « It was written »."
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment étudier le tableau",
+      "steps": [
+        {
+          "heading": "Commencez par l’infinitif",
+          "text": "Lisez le verbe dans sa forme de base et vérifiez que vous comprenez son sens et son emploi courant."
+        },
+        {
+          "heading": "Comparez les deux formes",
+          "text": "Observez si le prétérit et le participe passé sont identiques ou formés différemment."
+        },
+        {
+          "heading": "Repérez le modèle",
+          "text": "Déterminez si le verbe est régulier, suit un modèle irrégulier reconnaissable ou doit être mémorisé séparément."
+        },
+        {
+          "heading": "Utilisez chaque forme",
+          "text": "Écrivez une phrase au prétérit et une autre avec le participe passé accompagné d’un auxiliaire adapté."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour mémoriser les formes passées",
+      "items": [
+        {
+          "heading": "Regroupez les verbes similaires",
+          "text": "Apprenez ensemble les verbes qui suivent le même modèle, comme sing–sang–sung ou write–wrote–written."
+        },
+        {
+          "heading": "Observez l’orthographe",
+          "text": "Faites attention à des formes comme studied, stopped et hoped, où les règles orthographiques modifient la terminaison « -ed »."
+        },
+        {
+          "heading": "Entraînez-vous avec les auxiliaires",
+          "text": "Utilisez les participes avec have, has, had, be et get pour comprendre leur fonctionnement dans des phrases réelles."
+        },
+        {
+          "heading": "Révisez à intervalles espacés",
+          "text": "Testez-vous après un jour, quelques jours puis une semaine au lieu de relire toute la liste plusieurs fois."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Mettez les formes verbales en pratique",
+      "description": "Révisez les verbes anglais les plus utiles et employez leurs deux formes passées dans des phrases complètes.",
+      "primaryLabel": "Pratiquer les verbes anglais",
+      "secondaryLabel": "Voir les 100 verbes anglais courants"
+    },
+    "related": {
+      "heading": "Poursuivez votre apprentissage de l’anglais",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Les 100 verbes anglais les plus courants"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire anglais par niveau"
+        },
+        { "key": "levelTest", "label": "Test de niveau d’anglais" }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur les formes passées en anglais",
+      "items": [
+        {
+          "question": "Quelle est la différence entre le prétérit et le participe passé ?",
+          "answer": "Le prétérit s’utilise comme verbe principal pour exprimer une action terminée, comme dans « They went home ». Le participe passé s’emploie généralement avec un auxiliaire, comme dans « They have gone home » ou « The work was done »."
+        },
+        {
+          "question": "Comment les verbes réguliers anglais forment-ils le passé ?",
+          "answer": "La plupart ajoutent « -ed » à l’infinitif, comme dans work–worked–worked. L’orthographe peut changer lorsque le verbe se termine par « -e », par une consonne suivie de « y » ou par une voyelle courte suivie d’une consonne."
+        },
+        {
+          "question": "Pourquoi les verbes irréguliers anglais sont-ils difficiles à apprendre ?",
+          "answer": "Ils ne suivent pas tous la même règle et leur prétérit peut être différent de leur participe passé. Toutefois, beaucoup partagent des modèles similaires, ce qui permet de les apprendre plus facilement par groupes."
+        },
+        {
+          "question": "Quelle est la meilleure méthode pour mémoriser les formes passées ?",
+          "answer": "Apprenez un petit nombre de verbes à la fois et essayez de rappeler leurs trois formes sans regarder. Utilisez-les ensuite dans de courtes phrases et révisez plus souvent les formes difficiles."
+        },
+        {
+          "question": "Le participe passé peut-il être utilisé sans auxiliaire ?",
+          "answer": "Il apparaît normalement avec un auxiliaire dans les temps composés ou à la voix passive, comme dans « has finished » ou « was built ». Il peut aussi fonctionner comme adjectif dans une expression telle que « a broken window », mais mémoriser le tableau ne suffit pas à maîtriser tous ses emplois."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "de",
+    "urlSlug": "vergangenheitsformen-100-haeufigste-englische-verben",
+    "entryButtonLabel": "Vergangenheitsformen englischer Verben lernen",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "translation": "Deutsche Übersetzung"
+    },
+    "pastForms": [
+      { "key": "pastSimple", "label": "Simple Past" },
+      { "key": "pastParticiple", "label": "Past Participle" }
+    ],
+    "metadata": {
+      "title": "Vergangenheitsformen der 100 häufigsten englischen Verben",
+      "metaTitle": "100 häufige englische Verben und ihre Vergangenheitsformen",
+      "metaDescription": "Lerne Simple Past und Past Participle von 100 häufigen englischen Verben mit regelmäßigen, unregelmäßigen Formen und Übersetzungen."
+    },
+    "hero": {
+      "heading": "Vergangenheitsformen der 100 häufigsten englischen Verben",
+      "subtitle": "Vergleiche Simple Past und Past Participle wichtiger englischer Verben in einer übersichtlichen Tabelle.",
+      "introParagraphs": [
+        "Auf dieser Seite findest du 100 häufig verwendete englische Verben mit ihrer Simple-Past-Form und ihrem Past Participle. Die Tabelle hilft dir, den Infinitiv, die deutsche Übersetzung und die beiden wichtigsten Vergangenheitsformen direkt miteinander zu vergleichen.",
+        "Das Lernen dieser Formen ist besonders wichtig, weil viele häufige englische Verben unregelmäßig sind. Manche behalten dieselbe Form, andere verändern einen Vokal oder eine Endung, und einige müssen als eigenständige Formen gelernt werden."
+      ]
+    },
+    "overview": {
+      "heading": "So funktionieren englische Vergangenheitsformen",
+      "paragraphs": [
+        "Häufige Verben kommen ständig in Gesprächen, Geschichten, E-Mails, Anleitungen und Alltagstexten vor. Wer ihre Vergangenheitsformen kennt, kann abgeschlossene Ereignisse beschreiben, über Erfahrungen sprechen und Aussagen über frühere Handlungen besser verstehen.",
+        "Regelmäßige englische Verben bilden das Simple Past und das Past Participle normalerweise mit der Endung „-ed“. Unregelmäßige Verben folgen unterschiedlichen Mustern: Manche verändern beide Formen, andere verwenden dieselbe Vergangenheitsform, und einige bleiben unverändert."
+      ]
+    },
+    "table": {
+      "heading": "Tabelle mit den Vergangenheitsformen von 100 englischen Verben",
+      "description": "Jede Zeile zeigt den Infinitiv, die deutsche Bedeutung, das Simple Past und das Past Participle zum schnellen Vergleichen und Wiederholen.",
+      "notes": [
+        "Regelmäßige Verben erhalten meist die Endung „-ed“, wobei Schreibweisen angepasst werden können.",
+        "Unregelmäßige Verben folgen keiner einheitlichen Regel und sollten nach Mustern oder einzeln gelernt werden.",
+        "Das Simple Past wird für abgeschlossene Handlungen verwendet, zum Beispiel in „She wrote yesterday“.",
+        "Das Past Participle steht häufig mit Hilfsverben, etwa in „She has written“ oder „It was written“."
+      ]
+    },
+    "howToUse": {
+      "heading": "So lernst du mit der Tabelle",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Infinitiv",
+          "text": "Lies das Verb in seiner Grundform und prüfe, ob du seine Bedeutung und typische Verwendung kennst."
+        },
+        {
+          "heading": "Vergleiche beide Formen",
+          "text": "Achte darauf, ob Simple Past und Past Participle gleich sind oder unterschiedlich gebildet werden."
+        },
+        {
+          "heading": "Erkenne das Muster",
+          "text": "Ordne das Verb als regelmäßig, als Teil eines erkennbaren unregelmäßigen Musters oder als einzeln zu lernende Form ein."
+        },
+        {
+          "heading": "Verwende jede Form im Satz",
+          "text": "Schreibe einen Satz im Simple Past und einen weiteren mit dem Past Participle und einem passenden Hilfsverb."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Merken englischer Vergangenheitsformen",
+      "items": [
+        {
+          "heading": "Ähnliche Verben zusammen lernen",
+          "text": "Lerne Verben gemeinsam, wenn sie demselben Muster folgen, zum Beispiel sing–sang–sung oder write–wrote–written."
+        },
+        {
+          "heading": "Auf Rechtschreibung achten",
+          "text": "Beachte Formen wie studied, stopped und hoped, bei denen Rechtschreibregeln die „-ed“-Endung beeinflussen."
+        },
+        {
+          "heading": "Mit Hilfsverben üben",
+          "text": "Verwende Past Participles mit have, has, had, be und get, damit du ihre Funktion in echten Sätzen verstehst."
+        },
+        {
+          "heading": "Mit Abständen wiederholen",
+          "text": "Teste dich nach einem Tag, einigen Tagen und einer Woche, statt die gesamte Liste immer wieder nur zu lesen."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Wende die Verbformen aktiv an",
+      "description": "Wiederhole wichtige englische Verben und verwende beide Vergangenheitsformen in sinnvollen Beispielsätzen.",
+      "primaryLabel": "Englische Verben üben",
+      "secondaryLabel": "100 häufige englische Verben ansehen"
+    },
+    "related": {
+      "heading": "Weiter Englisch lernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Die 100 häufigsten englischen Verben"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Englischer Wortschatz nach Niveau"
+        },
+        { "key": "levelTest", "label": "Englisch-Einstufungstest" }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zu englischen Vergangenheitsformen",
+      "items": [
+        {
+          "question": "Was ist der Unterschied zwischen Simple Past und Past Participle?",
+          "answer": "Das Simple Past wird als Hauptverb für abgeschlossene Handlungen verwendet, zum Beispiel in „They went home“. Das Past Participle steht normalerweise mit einem Hilfsverb, etwa in „They have gone home“ oder „The work was done“."
+        },
+        {
+          "question": "Wie bilden regelmäßige englische Verben die Vergangenheit?",
+          "answer": "Die meisten regelmäßigen Verben erhalten die Endung „-ed“, wie bei work–worked–worked. Die Schreibweise kann sich ändern, wenn ein Verb auf „-e“, auf Konsonant plus „y“ oder auf einen kurzen betonten Vokal mit folgendem Konsonanten endet."
+        },
+        {
+          "question": "Warum sind unregelmäßige englische Verben schwer zu lernen?",
+          "answer": "Sie folgen nicht alle derselben Regel, und Simple Past sowie Past Participle können unterschiedlich sein. Viele Verben gehören jedoch zu ähnlichen Mustern, sodass das Lernen in Gruppen leichter fällt."
+        },
+        {
+          "question": "Wie kann man englische Vergangenheitsformen am besten lernen?",
+          "answer": "Lerne jeweils nur wenige Verben und versuche, alle drei Formen ohne Hilfe abzurufen. Verwende sie in kurzen Sätzen und wiederhole schwierige Formen in regelmäßigen Abständen."
+        },
+        {
+          "question": "Kann das Past Participle ohne Hilfsverb verwendet werden?",
+          "answer": "Normalerweise steht es mit einem Hilfsverb in Perfect-Zeitformen oder im Passiv, wie in „has finished“ oder „was built“. Es kann auch wie ein Adjektiv verwendet werden, etwa in „a broken window“, aber das Auswendiglernen der Tabelle allein reicht nicht aus, um alle Verwendungen zu beherrschen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "it",
+    "urlSlug": "forme-passate-100-verbi-inglesi-piu-comuni",
+    "entryButtonLabel": "Studia le forme passate dei verbi inglesi",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "translation": "Traduzione italiana"
+    },
+    "pastForms": [
+      { "key": "pastSimple", "label": "Past Simple" },
+      { "key": "pastParticiple", "label": "Participio passato" }
+    ],
+    "metadata": {
+      "title": "Forme passate dei 100 verbi inglesi più comuni",
+      "metaTitle": "100 verbi inglesi comuni e le loro forme passate",
+      "metaDescription": "Consulta il Past Simple e il participio passato di 100 verbi inglesi comuni, con forme regolari, irregolari e traduzioni italiane."
+    },
+    "hero": {
+      "heading": "Forme passate dei 100 verbi inglesi più comuni",
+      "subtitle": "Confronta il Past Simple e il participio passato dei verbi essenziali in una tabella pratica.",
+      "introParagraphs": [
+        "Questa pagina raccoglie 100 verbi inglesi di uso frequente con le rispettive forme del Past Simple e del participio passato. La tabella permette di confrontare rapidamente l’infinito, la traduzione italiana e le due principali forme necessarie per parlare e scrivere di azioni passate.",
+        "Imparare queste forme è particolarmente importante perché molti dei verbi inglesi più comuni sono irregolari. Alcuni mantengono la stessa forma, altri cambiano una vocale o una terminazione, mentre altri ancora presentano forme diverse che devono essere memorizzate nel contesto."
+      ]
+    },
+    "overview": {
+      "heading": "Come funzionano le forme passate in inglese",
+      "paragraphs": [
+        "I verbi più comuni compaiono continuamente nelle conversazioni, nei racconti, nelle e-mail, nelle istruzioni e nei testi quotidiani. Conoscere le loro forme passate permette di descrivere eventi conclusi, parlare di esperienze e comprendere meglio azioni avvenute in precedenza.",
+        "I verbi inglesi regolari formano normalmente sia il Past Simple sia il participio passato aggiungendo «-ed». I verbi irregolari seguono invece schemi diversi: alcuni cambiano in entrambe le forme, altri usano un’unica forma passata e alcuni rimangono uguali all’infinito."
+      ]
+    },
+    "table": {
+      "heading": "Tabella delle forme passate di 100 verbi inglesi",
+      "description": "Ogni riga mostra l’infinito, la traduzione italiana, il Past Simple e il participio passato per facilitare il confronto e il ripasso.",
+      "notes": [
+        "I verbi regolari aggiungono generalmente «-ed», anche se possono essere necessarie modifiche ortografiche.",
+        "I verbi irregolari non seguono un’unica regola di formazione e vanno imparati per schemi o singolarmente.",
+        "Il Past Simple si usa per azioni concluse, come in «She wrote yesterday».",
+        "Il participio passato si usa spesso con un ausiliare, come in «She has written» o «It was written»."
+      ]
+    },
+    "howToUse": {
+      "heading": "Come studiare la tabella",
+      "steps": [
+        {
+          "heading": "Inizia dall’infinito",
+          "text": "Leggi il verbo nella forma base e verifica di comprenderne il significato e l’uso più comune."
+        },
+        {
+          "heading": "Confronta le due forme",
+          "text": "Osserva se il Past Simple e il participio passato sono uguali oppure vengono formati in modo diverso."
+        },
+        {
+          "heading": "Riconosci lo schema",
+          "text": "Stabilisci se il verbo è regolare, segue uno schema irregolare riconoscibile oppure deve essere memorizzato separatamente."
+        },
+        {
+          "heading": "Usa ogni forma in una frase",
+          "text": "Scrivi una frase al Past Simple e un’altra con il participio passato accompagnato da un ausiliare adatto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per ricordare le forme passate",
+      "items": [
+        {
+          "heading": "Raggruppa i verbi simili",
+          "text": "Studia insieme i verbi che seguono lo stesso schema, come sing–sang–sung o write–wrote–written."
+        },
+        {
+          "heading": "Osserva l’ortografia",
+          "text": "Presta attenzione a forme come studied, stopped e hoped, in cui le regole ortografiche modificano la terminazione «-ed»."
+        },
+        {
+          "heading": "Esercitati con gli ausiliari",
+          "text": "Usa i participi con have, has, had, be e get per capire come funzionano all’interno di frasi reali."
+        },
+        {
+          "heading": "Ripassa a intervalli",
+          "text": "Verifica ciò che ricordi dopo un giorno, alcuni giorni e una settimana, invece di rileggere sempre l’intera lista."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Metti in pratica le forme verbali",
+      "description": "Ripassa i verbi inglesi più utili e usa entrambe le forme passate in frasi significative.",
+      "primaryLabel": "Esercitati con i verbi inglesi",
+      "secondaryLabel": "Vedi i 100 verbi inglesi più comuni"
+    },
+    "related": {
+      "heading": "Continua a studiare l’inglese",
+      "items": [
+        { "key": "commonVerbs", "label": "I 100 verbi inglesi più comuni" },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario inglese per livello"
+        },
+        { "key": "levelTest", "label": "Test di livello di inglese" }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulle forme passate in inglese",
+      "items": [
+        {
+          "question": "Qual è la differenza tra Past Simple e participio passato?",
+          "answer": "Il Past Simple si usa come verbo principale per esprimere azioni concluse, come in «They went home». Il participio passato viene normalmente usato con un ausiliare, come in «They have gone home» o «The work was done»."
+        },
+        {
+          "question": "Come formano il passato i verbi inglesi regolari?",
+          "answer": "La maggior parte aggiunge «-ed» all’infinito, come in work–worked–worked. L’ortografia può cambiare quando il verbo termina in «-e», in consonante più «y» oppure in una vocale breve seguita da una consonante."
+        },
+        {
+          "question": "Perché i verbi inglesi irregolari sono difficili da imparare?",
+          "answer": "Non seguono tutti la stessa regola e il Past Simple può essere diverso dal participio passato. Tuttavia, molti condividono schemi simili, quindi studiarli in gruppi può renderli più facili da ricordare."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le forme passate?",
+          "answer": "Impara pochi verbi alla volta e prova a ricordare tutte e tre le forme senza guardare. Usali poi in frasi brevi e ripassa più spesso quelli che trovi più difficili."
+        },
+        {
+          "question": "Il participio passato può essere usato senza un ausiliare?",
+          "answer": "Normalmente compare con un ausiliare nei tempi perfetti o nella forma passiva, come in «has finished» o «was built». Può anche avere funzione aggettivale in espressioni come «a broken window», ma memorizzare la tabella da sola non basta per padroneggiarne tutti gli usi."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "pt",
+    "urlSlug": "formas-passadas-100-verbos-ingleses-mais-comuns",
+    "entryButtonLabel": "Estudar as formas passadas dos verbos ingleses",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Tradução em português"
+    },
+    "pastForms": [
+      { "key": "pastSimple", "label": "Past Simple" },
+      { "key": "pastParticiple", "label": "Particípio passado" }
+    ],
+    "metadata": {
+      "title": "Formas passadas dos 100 verbos ingleses mais comuns",
+      "metaTitle": "100 verbos ingleses comuns e suas formas passadas",
+      "metaDescription": "Consulte o Past Simple e o particípio passado de 100 verbos ingleses comuns, com formas regulares, irregulares e traduções."
+    },
+    "hero": {
+      "heading": "Formas passadas dos 100 verbos ingleses mais comuns",
+      "subtitle": "Compare o Past Simple e o particípio passado de verbos essenciais em uma tabela prática.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos ingleses de uso frequente com as suas formas no Past Simple e no particípio passado. A tabela permite comparar rapidamente o infinitivo, a tradução em português e as duas principais formas necessárias para falar e escrever sobre ações passadas.",
+        "Aprender essas formas é especialmente importante porque muitos dos verbos mais usados em inglês são irregulares. Alguns mantêm a mesma forma, outros mudam uma vogal ou uma terminação e vários apresentam formas diferentes que precisam ser memorizadas em contexto."
+      ]
+    },
+    "overview": {
+      "heading": "Como funcionam as formas passadas em inglês",
+      "paragraphs": [
+        "Os verbos mais comuns aparecem constantemente em conversas, histórias, e-mails, instruções e textos do dia a dia. Conhecer as suas formas passadas permite descrever acontecimentos concluídos, falar de experiências e compreender melhor ações ocorridas anteriormente.",
+        "Os verbos regulares em inglês normalmente formam tanto o Past Simple quanto o particípio passado acrescentando «-ed». Os verbos irregulares seguem padrões diferentes: alguns mudam nas duas formas, outros usam uma única forma passada e alguns permanecem iguais ao infinitivo."
+      ]
+    },
+    "table": {
+      "heading": "Tabela das formas passadas de 100 verbos ingleses",
+      "description": "Cada linha apresenta o infinitivo, a tradução em português, o Past Simple e o particípio passado para facilitar a comparação e a revisão.",
+      "notes": [
+        "Os verbos regulares geralmente recebem «-ed», embora possam exigir alterações ortográficas.",
+        "Os verbos irregulares não seguem uma única regra de formação e devem ser aprendidos por padrões ou individualmente.",
+        "O Past Simple é usado para ações concluídas, como em «She wrote yesterday».",
+        "O particípio passado costuma ser usado com verbos auxiliares, como em «She has written» ou «It was written»."
+      ]
+    },
+    "howToUse": {
+      "heading": "Como estudar a tabela",
+      "steps": [
+        {
+          "heading": "Comece pelo infinitivo",
+          "text": "Leia o verbo na forma base e confirme que compreende o seu significado e uso mais comum."
+        },
+        {
+          "heading": "Compare as duas formas",
+          "text": "Observe se o Past Simple e o particípio passado são iguais ou formados de maneiras diferentes."
+        },
+        {
+          "heading": "Identifique o padrão",
+          "text": "Determine se o verbo é regular, segue um padrão irregular reconhecível ou precisa ser memorizado separadamente."
+        },
+        {
+          "heading": "Use cada forma em contexto",
+          "text": "Escreva uma frase no Past Simple e outra com o particípio passado acompanhado de um auxiliar adequado."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para memorizar as formas passadas",
+      "items": [
+        {
+          "heading": "Agrupe verbos semelhantes",
+          "text": "Estude juntos os verbos que seguem o mesmo padrão, como sing–sang–sung ou write–wrote–written."
+        },
+        {
+          "heading": "Observe a ortografia",
+          "text": "Preste atenção a formas como studied, stopped e hoped, nas quais as regras ortográficas alteram a terminação «-ed»."
+        },
+        {
+          "heading": "Pratique com auxiliares",
+          "text": "Use os particípios com have, has, had, be e get para entender como funcionam em frases reais."
+        },
+        {
+          "heading": "Revise em intervalos",
+          "text": "Teste a sua memória depois de um dia, alguns dias e uma semana, em vez de apenas reler a lista completa."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Coloque as formas verbais em prática",
+      "description": "Revise os verbos ingleses mais úteis e use as duas formas passadas em frases com significado.",
+      "primaryLabel": "Praticar verbos ingleses",
+      "secondaryLabel": "Ver os 100 verbos ingleses mais comuns"
+    },
+    "related": {
+      "heading": "Continue aprendendo inglês",
+      "items": [
+        { "key": "commonVerbs", "label": "Os 100 verbos ingleses mais comuns" },
+        { "key": "vocabularyLevels", "label": "Vocabulário inglês por nível" },
+        { "key": "levelTest", "label": "Teste de nível de inglês" }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre as formas passadas em inglês",
+      "items": [
+        {
+          "question": "Qual é a diferença entre o Past Simple e o particípio passado?",
+          "answer": "O Past Simple é usado como verbo principal para expressar ações concluídas, como em «They went home». O particípio passado normalmente aparece com um verbo auxiliar, como em «They have gone home» ou «The work was done»."
+        },
+        {
+          "question": "Como os verbos regulares formam o passado em inglês?",
+          "answer": "A maioria acrescenta «-ed» ao infinitivo, como em work–worked–worked. A grafia pode mudar quando o verbo termina em «-e», em consoante seguida de «y» ou em uma vogal curta seguida de uma consoante."
+        },
+        {
+          "question": "Por que os verbos irregulares em inglês são difíceis de aprender?",
+          "answer": "Eles não seguem todos a mesma regra, e o Past Simple pode ser diferente do particípio passado. No entanto, muitos compartilham padrões semelhantes, por isso estudá-los em grupos pode facilitar a memorização."
+        },
+        {
+          "question": "Qual é a melhor maneira de memorizar as formas passadas?",
+          "answer": "Aprenda poucos verbos de cada vez e tente recordar as três formas sem consultar a tabela. Use-os em frases curtas e revise com mais frequência aqueles que considera mais difíceis."
+        },
+        {
+          "question": "O particípio passado pode ser usado sem um verbo auxiliar?",
+          "answer": "Normalmente ele aparece com um auxiliar nos tempos perfeitos ou na voz passiva, como em «has finished» ou «was built». Também pode funcionar como adjetivo em expressões como «a broken window», mas memorizar a tabela por si só não é suficiente para dominar todos os usos."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "en",
+    "uiLanguage": "ru",
+    "urlSlug": "formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-angliyskih-glagolov",
+    "entryButtonLabel": "Прошедшие формы английских глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "translation": "Перевод на русский"
+    },
+    "pastForms": [
+      { "key": "pastSimple", "label": "Простое прошедшее время" },
+      { "key": "pastParticiple", "label": "Причастие прошедшего времени" }
+    ],
+    "metadata": {
+      "title": "Прошедшие формы 100 самых употребительных английских глаголов",
+      "metaTitle": "100 английских глаголов и их прошедшие формы",
+      "metaDescription": "Изучите Past Simple и причастие прошедшего времени 100 распространённых английских глаголов с переводом и примерами форм."
+    },
+    "hero": {
+      "heading": "Прошедшие формы 100 самых употребительных английских глаголов",
+      "subtitle": "Сравнивайте Past Simple и причастие прошедшего времени важных английских глаголов в одной удобной таблице.",
+      "introParagraphs": [
+        "На этой странице собраны 100 часто употребляемых английских глаголов с формами Past Simple и Past Participle. Таблица позволяет быстро сравнить инфинитив, перевод на русский язык и две основные формы, необходимые для описания прошлых действий.",
+        "Изучение этих форм особенно важно, потому что многие распространённые английские глаголы являются неправильными. Одни сохраняют одинаковую форму, другие меняют гласную или окончание, а некоторые имеют полностью особые формы, которые лучше запоминать в контексте."
+      ]
+    },
+    "overview": {
+      "heading": "Как образуются прошедшие формы английских глаголов",
+      "paragraphs": [
+        "Частотные глаголы постоянно встречаются в разговорах, рассказах, письмах, инструкциях и повседневных текстах. Знание их прошедших форм помогает описывать завершённые события, говорить об опыте и лучше понимать действия, произошедшие ранее.",
+        "Правильные английские глаголы обычно образуют Past Simple и Past Participle с помощью окончания «-ed». Неправильные глаголы следуют разным моделям: некоторые изменяются в обеих формах, другие используют одну общую прошедшую форму, а отдельные глаголы не меняются вовсе."
+      ]
+    },
+    "table": {
+      "heading": "Таблица прошедших форм 100 английских глаголов",
+      "description": "В каждой строке указаны инфинитив, перевод на русский язык, форма Past Simple и Past Participle для удобного сравнения и повторения.",
+      "notes": [
+        "Правильные глаголы обычно получают окончание «-ed», однако написание основы иногда меняется.",
+        "Неправильные глаголы не подчиняются одному общему правилу, поэтому их полезно учить по группам или отдельно.",
+        "Past Simple используется для завершённых действий, например: «She wrote yesterday».",
+        "Past Participle часто употребляется со вспомогательными глаголами, например: «She has written» или «It was written»."
+      ]
+    },
+    "howToUse": {
+      "heading": "Как работать с таблицей",
+      "steps": [
+        {
+          "heading": "Начните с инфинитива",
+          "text": "Прочитайте глагол в начальной форме и убедитесь, что понимаете его значение и типичное употребление."
+        },
+        {
+          "heading": "Сравните две формы",
+          "text": "Проверьте, совпадают ли Past Simple и Past Participle или образуются по-разному."
+        },
+        {
+          "heading": "Определите модель",
+          "text": "Установите, является ли глагол правильным, относится ли он к узнаваемой группе неправильных глаголов или требует отдельного запоминания."
+        },
+        {
+          "heading": "Используйте формы в предложениях",
+          "text": "Составьте одно предложение в Past Simple и другое с Past Participle и подходящим вспомогательным глаголом."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Как лучше запоминать прошедшие формы",
+      "items": [
+        {
+          "heading": "Объединяйте похожие глаголы",
+          "text": "Учите вместе глаголы с одинаковой моделью изменения, например sing–sang–sung или write–wrote–written."
+        },
+        {
+          "heading": "Следите за написанием",
+          "text": "Обращайте внимание на формы studied, stopped и hoped, где правила орфографии влияют на добавление окончания «-ed»."
+        },
+        {
+          "heading": "Практикуйтесь со вспомогательными глаголами",
+          "text": "Используйте причастия с have, has, had, be и get, чтобы понимать их роль в реальных предложениях."
+        },
+        {
+          "heading": "Повторяйте с интервалами",
+          "text": "Проверяйте себя через день, несколько дней и неделю вместо многократного пассивного перечитывания списка."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Закрепите формы глаголов на практике",
+      "description": "Повторите самые полезные английские глаголы и используйте обе прошедшие формы в осмысленных предложениях.",
+      "primaryLabel": "Практиковать английские глаголы",
+      "secondaryLabel": "Открыть 100 частых английских глаголов"
+    },
+    "related": {
+      "heading": "Продолжить изучение английского языка",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных английских глаголов"
+        },
+        { "key": "vocabularyLevels", "label": "Английская лексика по уровням" },
+        { "key": "levelTest", "label": "Тест на уровень английского языка" }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о прошедших формах английских глаголов",
+      "items": [
+        {
+          "question": "В чём разница между Past Simple и Past Participle?",
+          "answer": "Past Simple используется как основная форма глагола для завершённых действий, например: «They went home». Past Participle обычно употребляется со вспомогательным глаголом, например: «They have gone home» или «The work was done»."
+        },
+        {
+          "question": "Как правильные английские глаголы образуют прошедшее время?",
+          "answer": "Большинство правильных глаголов добавляют окончание «-ed», как в work–worked–worked. Написание может меняться, если глагол оканчивается на «-e», согласную перед «y» или короткую ударную гласную с последующей согласной."
+        },
+        {
+          "question": "Почему неправильные английские глаголы трудно запоминать?",
+          "answer": "Они не подчиняются единому правилу, а формы Past Simple и Past Participle могут отличаться друг от друга. Однако многие глаголы образуют похожие группы, поэтому их изучение по моделям облегчает запоминание."
+        },
+        {
+          "question": "Как лучше всего запоминать прошедшие формы?",
+          "answer": "Учите небольшое количество глаголов за один раз и пытайтесь вспомнить все три формы без подсказки. Используйте их в коротких предложениях и чаще повторяйте те формы, которые вызывают затруднения."
+        },
+        {
+          "question": "Можно ли использовать Past Participle без вспомогательного глагола?",
+          "answer": "Обычно эта форма используется со вспомогательным глаголом в перфектных временах или пассивном залоге, например: «has finished» или «was built». Она также может выполнять функцию прилагательного, как в «a broken window», но одного запоминания таблицы недостаточно для освоения всех случаев употребления."
+        }
+      ]
+    }
+  }
+]

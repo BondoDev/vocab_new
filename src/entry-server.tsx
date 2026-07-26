@@ -9,7 +9,12 @@ import {
 import { getUiVocabularyLanguage, type UiLanguageCode } from "./data/seo/shared/slugs";
 import { getAllSeoHubPaths, resolveSeoHubRoute } from "./data/seo/shared/hub";
 import { getAllLevelTestSeoPaths, resolveLevelTestSeoRoute } from "./data/seo/levelTests";
-import { getAllVerbListPaths, resolveVerbListRoute } from "./data/seo/verbLists";
+import {
+  getAllPastVerbFormsPaths,
+  getAllVerbListPaths,
+  resolvePastVerbFormsRoute,
+  resolveVerbListRoute,
+} from "./data/seo/verbLists";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
@@ -186,6 +191,7 @@ export function getPrerenderRoutes(): string[] {
     ...getAllWordSeoHubPaths(),
     ...getAllLevelTestSeoPaths(),
     ...getAllVerbListPaths(),
+    ...getAllPastVerbFormsPaths(),
   ])];
 }
 
@@ -306,6 +312,11 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
   const verbListRoute = resolveVerbListRoute(url);
   if (verbListRoute) {
     return verbListRoute.uiLang;
+  }
+
+  const pastVerbFormsRoute = resolvePastVerbFormsRoute(url);
+  if (pastVerbFormsRoute) {
+    return pastVerbFormsRoute.uiLang;
   }
 
   const seoHubRoute = resolveSeoHubRoute(url);

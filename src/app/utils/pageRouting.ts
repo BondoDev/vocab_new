@@ -31,7 +31,7 @@ import {
   type WordSeoHubRoute,
 } from "../../data/seo/wordPages/wordHubRoutes";
 import { resolveLevelTestSeoRoute } from "../../data/seo/levelTests";
-import { resolveVerbListRoute } from "../../data/seo/verbLists";
+import { resolvePastVerbFormsRoute, resolveVerbListRoute } from "../../data/seo/verbLists";
 
 // Shape of App.tsx's ROUTES map. The keys here must stay in sync with the
 // literal block in App.tsx (guarded by scripts/tests/routing/test-interactive-contracts.mjs).
@@ -53,6 +53,7 @@ export type PageKey =
   | "vocabularyLevel"
   | "levelTestSeo"
   | "verbListSeo"
+  | "pastVerbFormsSeo"
   | "seoHub"
   | "wordSeoHub"
   | "wordPage"
@@ -71,6 +72,11 @@ export interface ParsedLevelTestSeoRoute {
 }
 
 export interface ParsedVerbListSeoRoute {
+  uiLang: UiLanguageCode;
+  targetLanguage: TargetLanguageSlug;
+}
+
+export interface ParsedPastVerbFormsSeoRoute {
   uiLang: UiLanguageCode;
   targetLanguage: TargetLanguageSlug;
 }
@@ -131,6 +137,10 @@ export function parseVerbListSeoRoute(path: string): ParsedVerbListSeoRoute | nu
   return resolveVerbListRoute(path);
 }
 
+export function parsePastVerbFormsSeoRoute(path: string): ParsedPastVerbFormsSeoRoute | null {
+  return resolvePastVerbFormsRoute(path);
+}
+
 export function parseSeoHubRoute(path: string): UiLanguageCode | null {
   return resolveSeoHubRoute(path);
 }
@@ -189,6 +199,7 @@ export function getRouteUILanguage(
     vocabularyRoute: ParsedVocabularyRoute | null;
     levelTestSeoRoute: ParsedLevelTestSeoRoute | null;
     verbListSeoRoute: ParsedVerbListSeoRoute | null;
+    pastVerbFormsSeoRoute: ParsedPastVerbFormsSeoRoute | null;
     seoHubRoute: UiLanguageCode | null;
     wordSeoHubRoute: ParsedWordSeoHubRoute | null;
     wordRoute: CanonicalWordPageRouteMatch | null;
@@ -201,6 +212,8 @@ export function getRouteUILanguage(
       return routes.levelTestSeoRoute?.uiLang ?? null;
     case "verbListSeo":
       return routes.verbListSeoRoute?.uiLang ?? null;
+    case "pastVerbFormsSeo":
+      return routes.pastVerbFormsSeoRoute?.uiLang ?? null;
     case "seoHub":
       return routes.seoHubRoute ?? null;
     case "wordSeoHub":
@@ -265,6 +278,9 @@ export const pageFromPath = (
       }
       if (parseVerbListSeoRoute(path)) {
         return "verbListSeo";
+      }
+      if (parsePastVerbFormsSeoRoute(path)) {
+        return "pastVerbFormsSeo";
       }
       if (parseAnyWordRoute(path)) {
         return "wordPage";

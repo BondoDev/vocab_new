@@ -6,6 +6,7 @@ import {
   buildFrenchExploreTopics,
   buildGermanExploreTopics,
   buildItalianExploreTopics,
+  buildPastVerbFormsExploreTopic,
   buildPortugueseExploreTopics,
   buildRussianExploreTopics,
   buildSpanishExploreTopics,
@@ -14,13 +15,16 @@ import {
   type TranslateFn,
 } from "./exploreTopics";
 
-// Extracted verbatim from src/app/App.tsx (AppContent). Every useMemo body,
-// dependency array, helper call, and appended level-test/verb-list entry is
-// unchanged — see docs/non-seo-regression-checklist.md and the Explore memo
-// audit that preceded this extraction. `examPath` is App.tsx's ROUTES.exam,
-// passed in rather than imported, matching how ./exploreTopics already
-// receives it (that module's `examFallbackPath` param) so this hook never
-// depends on App.tsx.
+// Originally extracted verbatim from src/app/App.tsx (AppContent) — see
+// docs/non-seo-regression-checklist.md and the Explore memo audit that
+// preceded that extraction. `examPath` is App.tsx's ROUTES.exam, passed in
+// rather than imported, matching how ./exploreTopics already receives it
+// (that module's `examFallbackPath` param) so this hook never depends on
+// App.tsx. Each per-target-language item list now also conditionally
+// appends a "past verb forms" entry (buildPastVerbFormsExploreTopic) after
+// the verb-list entry — it resolves to null and is simply omitted for any
+// (targetLanguage, uiLanguage) combination without authored past-forms
+// content yet.
 export function useExploreItems(
   uiLanguage: UILanguage,
   t: TranslateFn,
@@ -54,8 +58,9 @@ export function useExploreItems(
     () => buildRussianExploreTopics(uiLanguage),
     [uiLanguage],
   );
-  const englishExploreItems = useMemo(
-    () => [
+  const englishExploreItems = useMemo(() => {
+    const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("english", uiLanguage);
+    return [
       ...withLevelTestExploreTopic(
         englishExploreTopics,
         "english",
@@ -71,11 +76,12 @@ export function useExploreItems(
         kind: "custom" as const,
         targetLanguage: "english" as const,
       },
-    ],
-    [englishExploreTopics, uiLanguage],
-  );
-  const spanishExploreItems = useMemo(
-    () => [
+      ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+    ];
+  }, [englishExploreTopics, uiLanguage]);
+  const spanishExploreItems = useMemo(() => {
+    const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("spanish", uiLanguage);
+    return [
       ...withLevelTestExploreTopic(
         spanishExploreTopics,
         "spanish",
@@ -91,11 +97,12 @@ export function useExploreItems(
         kind: "custom" as const,
         targetLanguage: "spanish" as const,
       },
-    ],
-    [spanishExploreTopics, uiLanguage],
-  );
-  const frenchExploreItems = useMemo(
-    () => [
+      ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+    ];
+  }, [spanishExploreTopics, uiLanguage]);
+  const frenchExploreItems = useMemo(() => {
+    const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("french", uiLanguage);
+    return [
       ...withLevelTestExploreTopic(
         frenchExploreTopics,
         "french",
@@ -111,11 +118,12 @@ export function useExploreItems(
         kind: "custom" as const,
         targetLanguage: "french" as const,
       },
-    ],
-    [frenchExploreTopics, uiLanguage],
-  );
-  const germanExploreItems = useMemo(
-    () => [
+      ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+    ];
+  }, [frenchExploreTopics, uiLanguage]);
+  const germanExploreItems = useMemo(() => {
+    const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("german", uiLanguage);
+    return [
       ...withLevelTestExploreTopic(
         germanExploreTopics,
         "german",
@@ -131,11 +139,12 @@ export function useExploreItems(
         kind: "custom" as const,
         targetLanguage: "german" as const,
       },
-    ],
-    [germanExploreTopics, uiLanguage],
-  );
-  const italianExploreItems = useMemo(
-    () => [
+      ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+    ];
+  }, [germanExploreTopics, uiLanguage]);
+  const italianExploreItems = useMemo(() => {
+    const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("italian", uiLanguage);
+    return [
       ...withLevelTestExploreTopic(
         italianExploreTopics,
         "italian",
@@ -151,11 +160,12 @@ export function useExploreItems(
         kind: "custom" as const,
         targetLanguage: "italian" as const,
       },
-    ],
-    [italianExploreTopics, uiLanguage],
-  );
-  const portugueseExploreItems = useMemo(
-    () => [
+      ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+    ];
+  }, [italianExploreTopics, uiLanguage]);
+  const portugueseExploreItems = useMemo(() => {
+    const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("portuguese", uiLanguage);
+    return [
       ...withLevelTestExploreTopic(
         portugueseExploreTopics,
         "portuguese",
@@ -171,11 +181,12 @@ export function useExploreItems(
         kind: "custom" as const,
         targetLanguage: "portuguese" as const,
       },
-    ],
-    [portugueseExploreTopics, uiLanguage],
-  );
-  const russianExploreItems = useMemo(
-    () => [
+      ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+    ];
+  }, [portugueseExploreTopics, uiLanguage]);
+  const russianExploreItems = useMemo(() => {
+    const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("russian", uiLanguage);
+    return [
       ...withLevelTestExploreTopic(
         russianExploreTopics,
         "russian",
@@ -191,9 +202,9 @@ export function useExploreItems(
         kind: "custom" as const,
         targetLanguage: "russian" as const,
       },
-    ],
-    [russianExploreTopics, uiLanguage],
-  );
+      ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+    ];
+  }, [russianExploreTopics, uiLanguage]);
 
   return {
     en: englishExploreItems,
