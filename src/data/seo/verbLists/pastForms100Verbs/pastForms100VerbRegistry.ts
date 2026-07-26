@@ -19,6 +19,17 @@
 // every function below that depends on a real slug (getPastVerbFormsPath,
 // getAllPastVerbFormsPaths, resolvePastVerbFormsRoute) already handles that
 // case correctly, so no code here needs to change once slugs are filled in.
+//
+// Deliberately does NOT import/re-export getPastVerbFormsTableConfig:
+// scripts/lib/load-past-verb-forms-registry.mjs compiles this file (plus
+// its imports) to CommonJS for the Node-only sitemap generator, and that
+// compiler can't handle import.meta.glob. pastForms100VerbTableConfig.ts
+// transitively imports pastForms100VerbFormsData.ts, which uses
+// import.meta.glob to load ./pastForms/*.json — importing it from here
+// would break `npm run sitemap` (and Cloudflare's prebuild) even though the
+// sitemap script never calls that function. Client/SSR code should import
+// getPastVerbFormsTableConfig directly from ./pastForms100VerbTableConfig
+// (see ../index.ts) instead of expecting it from this registry.
 import pastVerbFormsContentJson from "./pastForms100VerbsContent.json";
 import {
   getUiVocabularyLanguage,
@@ -31,10 +42,6 @@ import {
   getPastVerbFormsContentEntry,
   type PastVerbFormsContentEntry,
 } from "./pastForms100VerbRouteHelpers";
-import {
-  getPastVerbFormsTableConfig,
-  type PastVerbFormsTableConfig,
-} from "./pastForms100VerbTableConfig";
 
 const PAST_VERB_FORMS_CONTENT_LOOKUP = buildPastVerbFormsContentLookup(pastVerbFormsContentJson);
 
@@ -83,5 +90,3 @@ export function resolvePastVerbFormsRoute(
 
   return null;
 }
-
-export { getPastVerbFormsTableConfig, type PastVerbFormsTableConfig };

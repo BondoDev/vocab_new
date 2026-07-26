@@ -35,9 +35,17 @@ export {
   getAllPastVerbFormsPaths,
   getPastVerbFormsContent,
   getPastVerbFormsPath,
-  getPastVerbFormsTableConfig,
   resolvePastVerbFormsRoute,
 } from "./pastForms100Verbs/pastForms100VerbRegistry";
+// Imported from the table-config module directly, NOT from
+// pastForms100VerbRegistry.ts — see that file's header comment. This module
+// (verbLists/index.ts) is itself client/SSR-only and is never compiled by
+// the Node-based sitemap generator, so importing the glob-backed table
+// config here is safe.
+export {
+  getPastVerbFormsTableConfig,
+  type PastVerbFormsTableConfig,
+} from "./pastForms100Verbs/pastForms100VerbTableConfig";
 
 export const VERB_LIST_ITEMS = BASE_VERB_LIST_ITEMS;
 export type SharedVerbListItem = VerbListItem;
