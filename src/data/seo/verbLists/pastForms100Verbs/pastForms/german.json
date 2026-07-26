@@ -1,0 +1,602 @@
+[
+  {
+    "concept_id": "A1-00008",
+    "preterite": "war",
+    "pastParticiple": "gewesen",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A1-00487",
+    "preterite": "hatte",
+    "pastParticiple": "gehabt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01701",
+    "preterite": "wurde",
+    "pastParticiple": "geworden",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A1-00167",
+    "preterite": "konnte",
+    "pastParticiple": "gekonnt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00687",
+    "preterite": "musste",
+    "pastParticiple": "gemusst",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01120",
+    "preterite": "wollte",
+    "pastParticiple": "gewollt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01787",
+    "preterite": "sollte",
+    "pastParticiple": "gesollt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00643",
+    "preterite": "durfte",
+    "pastParticiple": "gedurft",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00607",
+    "preterite": "mochte",
+    "pastParticiple": "gemocht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00633",
+    "preterite": "machte",
+    "pastParticiple": "gemacht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00292",
+    "preterite": "tat",
+    "pastParticiple": "getan",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00441",
+    "preterite": "ging",
+    "pastParticiple": "gegangen",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A1-00231",
+    "preterite": "kam",
+    "pastParticiple": "gekommen",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A1-00871",
+    "preterite": "sagte",
+    "pastParticiple": "gesagt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00956",
+    "preterite": "sprach",
+    "pastParticiple": "gesprochen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01012",
+    "preterite": "redete",
+    "pastParticiple": "geredet",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00049",
+    "preterite": "fragte",
+    "pastParticiple": "gefragt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00034",
+    "preterite": "antwortete",
+    "pastParticiple": "geantwortet",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00494",
+    "preterite": "hörte",
+    "pastParticiple": "gehört",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00879",
+    "preterite": "sah",
+    "pastParticiple": "gesehen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00621",
+    "preterite": "schaute",
+    "pastParticiple": "geschaut",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00383",
+    "preterite": "fand",
+    "pastParticiple": "gefunden",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01107",
+    "preterite": "suchte",
+    "pastParticiple": "gesucht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00584",
+    "preterite": "wusste",
+    "pastParticiple": "gewusst",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01117",
+    "preterite": "wachte auf",
+    "pastParticiple": "aufgewacht",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A1-01043",
+    "preterite": "dachte",
+    "pastParticiple": "gedacht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01482",
+    "preterite": "glaubte",
+    "pastParticiple": "geglaubt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01361",
+    "preterite": "verstand",
+    "pastParticiple": "verstanden",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01558",
+    "preterite": "studierte",
+    "pastParticiple": "studiert",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-00950",
+    "preterite": "bereitete vor",
+    "pastParticiple": "vorbereitet",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01160",
+    "preterite": "arbeitete",
+    "pastParticiple": "gearbeitet",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01118",
+    "preterite": "ging zu Fuß",
+    "pastParticiple": "zu Fuß gegangen",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A1-00615",
+    "preterite": "lebte",
+    "pastParticiple": "gelebt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00973",
+    "preterite": "blieb",
+    "pastParticiple": "geblieben",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "B1-02233",
+    "preterite": "ruhte sich aus",
+    "pastParticiple": "sich ausgeruht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00693",
+    "preterite": "brauchte",
+    "pastParticiple": "gebraucht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01011",
+    "preterite": "nahm",
+    "pastParticiple": "genommen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00436",
+    "preterite": "gab",
+    "pastParticiple": "gegeben",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00431",
+    "preterite": "bekam",
+    "pastParticiple": "bekommen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00139",
+    "preterite": "brachte",
+    "pastParticiple": "gebracht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00978",
+    "preterite": "hörte auf",
+    "pastParticiple": "aufgehört",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00158",
+    "preterite": "kaufte",
+    "pastParticiple": "gekauft",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00881",
+    "preterite": "verkaufte",
+    "pastParticiple": "verkauft",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00762",
+    "preterite": "bezahlte",
+    "pastParticiple": "bezahlt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-00296",
+    "preterite": "kostete",
+    "pastParticiple": "gekostet",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00322",
+    "preterite": "aß",
+    "pastParticiple": "gegessen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00308",
+    "preterite": "trank",
+    "pastParticiple": "getrunken",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00237",
+    "preterite": "kochte",
+    "pastParticiple": "gekocht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01125",
+    "preterite": "sah an",
+    "pastParticiple": "angesehen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00925",
+    "preterite": "schlief",
+    "pastParticiple": "geschlafen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00021",
+    "preterite": "stand auf",
+    "pastParticiple": "aufgestanden",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A1-00916",
+    "preterite": "saß",
+    "pastParticiple": "gesessen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00968",
+    "preterite": "stand",
+    "pastParticiple": "gestanden",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-00717",
+    "preterite": "lag",
+    "pastParticiple": "gelegen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00932",
+    "preterite": "lächelte",
+    "pastParticiple": "gelächelt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00817",
+    "preterite": "stellte",
+    "pastParticiple": "gestellt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "B1-04098",
+    "preterite": "setzte",
+    "pastParticiple": "gesetzt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00309",
+    "preterite": "fuhr",
+    "pastParticiple": "gefahren",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A2-01805",
+    "preterite": "reiste",
+    "pastParticiple": "gereist",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A1-00591",
+    "preterite": "lachte",
+    "pastParticiple": "gelacht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00859",
+    "preterite": "lief",
+    "pastParticiple": "gelaufen",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A1-00785",
+    "preterite": "spielte",
+    "pastParticiple": "gespielt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00828",
+    "preterite": "las",
+    "pastParticiple": "gelesen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01167",
+    "preterite": "schrieb",
+    "pastParticiple": "geschrieben",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00731",
+    "preterite": "öffnete",
+    "pastParticiple": "geöffnet",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00210",
+    "preterite": "schloss",
+    "pastParticiple": "geschlossen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00970",
+    "preterite": "fing an",
+    "pastParticiple": "angefangen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00088",
+    "preterite": "begann",
+    "pastParticiple": "begonnen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-00284",
+    "preterite": "setzte fort",
+    "pastParticiple": "fortgesetzt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01114",
+    "preterite": "wartete",
+    "pastParticiple": "gewartet",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00498",
+    "preterite": "half",
+    "pastParticiple": "geholfen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00903",
+    "preterite": "zeigte",
+    "pastParticiple": "gezeigt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-00460",
+    "preterite": "erklärte",
+    "pastParticiple": "erklärt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01022",
+    "preterite": "erzählte",
+    "pastParticiple": "erzählt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01104",
+    "preterite": "benutzte",
+    "pastParticiple": "benutzt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "B2-02656",
+    "preterite": "verwendete",
+    "pastParticiple": "verwendet",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01130",
+    "preterite": "trug",
+    "pastParticiple": "getragen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01088",
+    "preterite": "drehte",
+    "pastParticiple": "gedreht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00595",
+    "preterite": "lernte",
+    "pastParticiple": "gelernt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01117",
+    "preterite": "schickte",
+    "pastParticiple": "geschickt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01542",
+    "preterite": "plante",
+    "pastParticiple": "geplant",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00163",
+    "preterite": "rief an",
+    "pastParticiple": "angerufen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00650",
+    "preterite": "traf",
+    "pastParticiple": "getroffen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01111",
+    "preterite": "besuchte",
+    "pastParticiple": "besucht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00623",
+    "preterite": "liebte",
+    "pastParticiple": "geliebt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00679",
+    "preterite": "bewegte sich",
+    "pastParticiple": "sich bewegt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00371",
+    "preterite": "fühlte",
+    "pastParticiple": "gefühlt",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01742",
+    "preterite": "passierte",
+    "pastParticiple": "passiert",
+    "auxiliary": "sein"
+  },
+  {
+    "concept_id": "A2-00133",
+    "preterite": "gehörte",
+    "pastParticiple": "gehört",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A2-01814",
+    "preterite": "gewann",
+    "pastParticiple": "gewonnen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "B1-01577",
+    "preterite": "verlor",
+    "pastParticiple": "verloren",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "B2-00065",
+    "preterite": "veränderte",
+    "pastParticiple": "verändert",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00186",
+    "preterite": "änderte",
+    "pastParticiple": "geändert",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-01083",
+    "preterite": "versuchte",
+    "pastParticiple": "versucht",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00257",
+    "preterite": "weinte",
+    "pastParticiple": "geweint",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00406",
+    "preterite": "vergaß",
+    "pastParticiple": "vergessen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00836",
+    "preterite": "erinnerte sich",
+    "pastParticiple": "sich erinnert",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00600",
+    "preterite": "ließ",
+    "pastParticiple": "gelassen",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00511",
+    "preterite": "hielt",
+    "pastParticiple": "gehalten",
+    "auxiliary": "haben"
+  },
+  {
+    "concept_id": "A1-00596",
+    "preterite": "verließ",
+    "pastParticiple": "verlassen",
+    "auxiliary": "haben"
+  }
+]

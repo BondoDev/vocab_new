@@ -904,5 +904,918 @@
         }
       ]
     }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "en",
+    "urlSlug": "past-forms-100-most-common-german-verbs",
+    "entryButtonLabel": "German Verb Past Forms",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "translation": "English translation"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Präteritum" },
+      { "key": "pastParticiple", "label": "Past Participle" },
+      { "key": "auxiliary", "label": "Auxiliary" }
+    ],
+    "metadata": {
+      "title": "Past Forms of the 100 Most Common German Verbs",
+      "metaTitle": "100 Common German Verbs and Their Past Forms",
+      "metaDescription": "Study the Präteritum, past participle, and auxiliary of 100 common German verbs, including regular, irregular, and separable forms."
+    },
+    "hero": {
+      "heading": "Past Forms of the 100 Most Common German Verbs",
+      "subtitle": "Compare the Präteritum, past participle, and perfect-tense auxiliary of essential German verbs.",
+      "introParagraphs": [
+        "This page brings together 100 frequently used German verbs with their Präteritum form, past participle, and perfect-tense auxiliary. The table helps you compare the infinitive, English translation, and the principal forms needed to talk about past events in German.",
+        "Learning all three columns is useful because German uses different past forms in different contexts. The Präteritum is common in writing and with certain high-frequency verbs, while the past participle combines with haben or sein to form the Perfekt, which is widely used in spoken German."
+      ]
+    },
+    "overview": {
+      "heading": "How German Past Verb Forms Work",
+      "paragraphs": [
+        "Common German verbs appear constantly in conversations, stories, news, instructions, and everyday writing. Knowing their main past forms helps you describe completed actions, understand narratives, and choose the correct structure when speaking or writing about the past.",
+        "The Präteritum is a standalone past-tense form, while the past participle is used with an auxiliary verb to form the Perfekt and Plusquamperfekt. Most verbs use haben, but verbs expressing movement, a change of state, and a small number of other common verbs often use sein."
+      ]
+    },
+    "table": {
+      "heading": "Table of 100 Common German Verb Past Forms",
+      "description": "Each row shows the German infinitive, its English translation, the Präteritum, the past participle, and the auxiliary used to form the Perfekt.",
+      "notes": [
+        "Regular verbs usually form the Präteritum with a dental ending and the past participle with ge- and -t.",
+        "Strong and mixed verbs may change their stem vowel or use irregular endings.",
+        "Separable verbs usually place ge- between the prefix and the verb stem in the past participle.",
+        "The auxiliary column shows whether the Perfekt is formed with haben or sein; a few verbs may allow both depending on meaning or usage."
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study the Table",
+      "steps": [
+        {
+          "heading": "Start with the infinitive",
+          "text": "Read the German verb in its dictionary form and confirm that you understand its English meaning."
+        },
+        {
+          "heading": "Compare the Präteritum",
+          "text": "Notice whether the verb follows a regular pattern or changes its stem in the simple past."
+        },
+        {
+          "heading": "Learn the participle and auxiliary together",
+          "text": "Memorize the past participle together with haben or sein so that you can build the Perfekt correctly."
+        },
+        {
+          "heading": "Use both past structures",
+          "text": "Write one sentence in the Präteritum and another in the Perfekt to understand how the forms work in context."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Remembering German Past Forms",
+      "items": [
+        {
+          "heading": "Group verbs by pattern",
+          "text": "Learn weak, strong, and mixed verbs in separate groups so that recurring endings and vowel changes become easier to recognize."
+        },
+        {
+          "heading": "Memorize the auxiliary with the verb",
+          "text": "Treat forms such as ist gegangen and hat gemacht as complete learning units instead of memorizing the participle alone."
+        },
+        {
+          "heading": "Watch separable prefixes",
+          "text": "Pay attention to where ge- appears in forms such as aufgestanden and eingekauft, and note verbs that do not take ge-."
+        },
+        {
+          "heading": "Review in short cycles",
+          "text": "Test a small set after one day, several days, and one week, focusing more often on irregular and easily confused forms."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Put German Past Forms into Practice",
+      "description": "Review the most useful verbs and use their Präteritum and Perfekt forms in complete sentences.",
+      "primaryLabel": "Practice German Verbs",
+      "secondaryLabel": "View 100 Common German Verbs"
+    },
+    "related": {
+      "heading": "Continue Learning German",
+      "items": [
+        { "key": "commonVerbs", "label": "100 Most Common German Verbs" },
+        { "key": "vocabularyLevels", "label": "German Vocabulary by Level" },
+        { "key": "levelTest", "label": "German Level Test" }
+      ]
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions About German Past Forms",
+      "items": [
+        {
+          "question": "What is the difference between Präteritum and Perfekt in German?",
+          "answer": "The Präteritum is a single verb form used especially in writing, formal narration, and with common verbs such as sein, haben, and modal verbs. The Perfekt uses haben or sein plus a past participle and is very common in everyday spoken German."
+        },
+        {
+          "question": "How do regular German verbs form the past tense?",
+          "answer": "Regular verbs usually form the Präteritum with -te and the past participle with ge- plus the stem and -t, as in machen–machte–gemacht. Spelling adjustments may occur when the stem ends in certain consonants."
+        },
+        {
+          "question": "Why do some German verbs use sein instead of haben?",
+          "answer": "Many intransitive verbs of movement or change of state use sein, such as gehen and werden. Most other verbs use haben, but meaning and regional usage can affect the choice in a small number of cases."
+        },
+        {
+          "question": "How can I memorize German past forms effectively?",
+          "answer": "Learn the infinitive, Präteritum, past participle, and auxiliary as one set. Then use each verb in short Präteritum and Perfekt sentences and review difficult forms with spaced repetition."
+        },
+        {
+          "question": "Do all German past participles begin with ge-?",
+          "answer": "No. Verbs ending in -ieren and verbs with inseparable prefixes such as be-, ver-, er-, ent-, and zer- normally do not take ge-. Separable verbs usually place ge- between the prefix and the verb stem."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "es",
+    "urlSlug": "formas-pasadas-100-verbos-alemanes-mas-comunes",
+    "entryButtonLabel": "Formas pasadas de los verbos alemanes",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Traducción al español"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Präteritum" },
+      { "key": "pastParticiple", "label": "Participio pasado" },
+      { "key": "auxiliary", "label": "Auxiliar" }
+    ],
+    "metadata": {
+      "title": "Formas pasadas de los 100 verbos alemanes más comunes",
+      "metaTitle": "100 verbos alemanes y sus formas pasadas",
+      "metaDescription": "Consulta el Präteritum, el participio pasado y el auxiliar de 100 verbos alemanes comunes, con formas regulares, irregulares y separables."
+    },
+    "hero": {
+      "heading": "Formas pasadas de los 100 verbos alemanes más comunes",
+      "subtitle": "Compara el Präteritum, el participio pasado y el auxiliar de perfecto de verbos alemanes esenciales.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos alemanes de uso frecuente con su forma de Präteritum, su participio pasado y el auxiliar empleado en los tiempos compuestos. La tabla permite comparar el infinitivo, la traducción al español y las formas principales necesarias para hablar de acontecimientos pasados.",
+        "Aprender las tres columnas resulta útil porque el alemán emplea distintas estructuras según el contexto. El Präteritum aparece con frecuencia en la lengua escrita y con ciertos verbos muy comunes, mientras que el participio pasado se combina con haben o sein para formar el Perfekt, muy habitual en la lengua hablada."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funcionan las formas pasadas en alemán",
+      "paragraphs": [
+        "Los verbos alemanes más comunes aparecen constantemente en conversaciones, relatos, noticias, instrucciones y textos cotidianos. Conocer sus principales formas pasadas ayuda a describir acciones terminadas, comprender narraciones y elegir una estructura adecuada al hablar o escribir sobre el pasado.",
+        "El Präteritum es una forma verbal independiente, mientras que el participio pasado se utiliza con un auxiliar para formar el Perfekt y el Plusquamperfekt. La mayoría de los verbos usan haben, pero muchos verbos de movimiento, cambio de estado y algunos verbos frecuentes emplean sein."
+      ]
+    },
+    "table": {
+      "heading": "Tabla de formas pasadas de 100 verbos alemanes",
+      "description": "Cada fila muestra el infinitivo alemán, su traducción al español, el Präteritum, el participio pasado y el auxiliar utilizado para formar el Perfekt.",
+      "notes": [
+        "Los verbos débiles suelen formar el Präteritum con una terminación dental y el participio con ge- y -t.",
+        "Los verbos fuertes y mixtos pueden cambiar la vocal de la raíz o presentar terminaciones irregulares.",
+        "Los verbos separables suelen colocar ge- entre el prefijo y la raíz verbal en el participio pasado.",
+        "La columna del auxiliar indica si el Perfekt se forma con haben o sein; algunos verbos admiten ambos según el significado o el uso."
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar la tabla",
+      "steps": [
+        {
+          "heading": "Empieza por el infinitivo",
+          "text": "Lee el verbo alemán en su forma de diccionario y comprueba que entiendes su significado en español."
+        },
+        {
+          "heading": "Compara el Präteritum",
+          "text": "Observa si el verbo sigue un patrón regular o si cambia su raíz en el pasado simple."
+        },
+        {
+          "heading": "Aprende juntos el participio y el auxiliar",
+          "text": "Memoriza el participio pasado junto con haben o sein para poder formar correctamente el Perfekt."
+        },
+        {
+          "heading": "Usa las dos estructuras",
+          "text": "Escribe una oración en Präteritum y otra en Perfekt para comprender cómo funcionan ambas formas en contexto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para memorizar las formas pasadas en alemán",
+      "items": [
+        {
+          "heading": "Agrupa los verbos por patrón",
+          "text": "Estudia por separado los verbos débiles, fuertes y mixtos para reconocer mejor sus terminaciones y cambios vocálicos."
+        },
+        {
+          "heading": "Memoriza también el auxiliar",
+          "text": "Aprende expresiones como ist gegangen y hat gemacht como unidades completas, no solo el participio aislado."
+        },
+        {
+          "heading": "Observa los prefijos separables",
+          "text": "Fíjate en la posición de ge- en formas como aufgestanden y eingekauft, y distingue los verbos que no lo llevan."
+        },
+        {
+          "heading": "Repasa en ciclos breves",
+          "text": "Ponte a prueba después de un día, varios días y una semana, prestando más atención a las formas irregulares."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pon en práctica las formas pasadas",
+      "description": "Repasa los verbos alemanes más útiles y utiliza sus formas de Präteritum y Perfekt en oraciones completas.",
+      "primaryLabel": "Practicar verbos alemanes",
+      "secondaryLabel": "100 verbos alemanes más comunes"
+    },
+    "related": {
+      "heading": "Continúa aprendiendo alemán",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Los 100 verbos alemanes más comunes"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario alemán por niveles"
+        },
+        { "key": "levelTest", "label": "Prueba de nivel de alemán" }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre las formas pasadas en alemán",
+      "items": [
+        {
+          "question": "¿Cuál es la diferencia entre Präteritum y Perfekt en alemán?",
+          "answer": "El Präteritum es una forma verbal simple utilizada especialmente en la escritura, la narración formal y con verbos frecuentes como sein, haben y los verbos modales. El Perfekt se forma con haben o sein más un participio pasado y es muy común en el alemán hablado."
+        },
+        {
+          "question": "¿Cómo forman el pasado los verbos regulares en alemán?",
+          "answer": "Los verbos regulares suelen formar el Präteritum con -te y el participio pasado con ge-, la raíz y -t, como en machen–machte–gemacht. Pueden producirse pequeños ajustes ortográficos cuando la raíz termina en determinados sonidos."
+        },
+        {
+          "question": "¿Por qué algunos verbos alemanes usan sein en lugar de haben?",
+          "answer": "Muchos verbos intransitivos de movimiento o cambio de estado utilizan sein, como gehen y werden. La mayoría de los demás verbos usan haben, aunque el significado y el uso regional pueden influir en algunos casos."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las formas pasadas alemanas?",
+          "answer": "Aprende el infinitivo, el Präteritum, el participio pasado y el auxiliar como un único conjunto. Después, usa cada verbo en oraciones breves en Präteritum y Perfekt y repasa las formas difíciles con repetición espaciada."
+        },
+        {
+          "question": "¿Todos los participios pasados alemanes comienzan por ge-?",
+          "answer": "No. Los verbos terminados en -ieren y los que llevan prefijos inseparables como be-, ver-, er-, ent- y zer- normalmente no usan ge-. Los verbos separables suelen colocar ge- entre el prefijo y la raíz."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "fr",
+    "urlSlug": "formes-passees-100-verbes-allemands-les-plus-courants",
+    "entryButtonLabel": "Formes passées des verbes allemands",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "translation": "Traduction française"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Prétérit allemand" },
+      { "key": "pastParticiple", "label": "Participe passé" },
+      { "key": "auxiliary", "label": "Auxiliaire" }
+    ],
+    "metadata": {
+      "title": "Formes passées des 100 verbes allemands les plus courants",
+      "metaTitle": "100 verbes allemands et leurs formes passées",
+      "metaDescription": "Consultez le Präteritum, le participe passé et l’auxiliaire de 100 verbes allemands courants, réguliers, irréguliers et séparables."
+    },
+    "hero": {
+      "heading": "Formes passées des 100 verbes allemands les plus courants",
+      "subtitle": "Comparez le Präteritum, le participe passé et l’auxiliaire du parfait des verbes allemands essentiels.",
+      "introParagraphs": [
+        "Cette page réunit 100 verbes allemands très fréquents avec leur forme au Präteritum, leur participe passé et l’auxiliaire utilisé dans les temps composés. Le tableau permet de comparer rapidement l’infinitif, la traduction française et les formes principales nécessaires pour parler d’événements passés.",
+        "L’apprentissage de ces trois colonnes est utile, car l’allemand emploie différentes structures selon le contexte. Le Präteritum est fréquent à l’écrit et avec certains verbes très courants, tandis que le participe passé se combine avec haben ou sein pour former le Perfekt, largement utilisé à l’oral."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionnent les formes passées en allemand",
+      "paragraphs": [
+        "Les verbes allemands les plus courants apparaissent constamment dans les conversations, les récits, les actualités, les consignes et les textes du quotidien. Connaître leurs principales formes passées aide à décrire des actions terminées, à comprendre des narrations et à choisir une structure adaptée pour parler ou écrire au passé.",
+        "Le Präteritum est une forme verbale autonome, tandis que le participe passé s’emploie avec un auxiliaire pour former le Perfekt et le Plusquamperfekt. La majorité des verbes utilisent haben, mais de nombreux verbes de mouvement, de changement d’état et quelques verbes fréquents utilisent sein."
+      ]
+    },
+    "table": {
+      "heading": "Tableau des formes passées de 100 verbes allemands",
+      "description": "Chaque ligne présente l’infinitif allemand, sa traduction française, le Präteritum, le participe passé et l’auxiliaire utilisé pour former le Perfekt.",
+      "notes": [
+        "Les verbes faibles forment généralement le Präteritum avec une terminaison dentale et le participe avec ge- et -t.",
+        "Les verbes forts et mixtes peuvent modifier la voyelle du radical ou employer des terminaisons irrégulières.",
+        "Les verbes à particule séparable placent généralement ge- entre la particule et le radical dans le participe passé.",
+        "La colonne de l’auxiliaire indique si le Perfekt se forme avec haben ou sein ; certains verbes acceptent les deux selon le sens ou l’usage."
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment étudier le tableau",
+      "steps": [
+        {
+          "heading": "Commencez par l’infinitif",
+          "text": "Lisez le verbe allemand dans sa forme de dictionnaire et vérifiez que vous comprenez sa traduction française."
+        },
+        {
+          "heading": "Comparez le Präteritum",
+          "text": "Observez si le verbe suit un modèle régulier ou si son radical change au passé simple."
+        },
+        {
+          "heading": "Apprenez ensemble le participe et l’auxiliaire",
+          "text": "Mémorisez le participe passé avec haben ou sein afin de pouvoir former correctement le Perfekt."
+        },
+        {
+          "heading": "Utilisez les deux structures",
+          "text": "Écrivez une phrase au Präteritum et une autre au Perfekt pour comprendre leur emploi en contexte."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour mémoriser les formes passées allemandes",
+      "items": [
+        {
+          "heading": "Regroupez les verbes par modèle",
+          "text": "Apprenez séparément les verbes faibles, forts et mixtes afin de mieux reconnaître leurs terminaisons et changements vocaliques."
+        },
+        {
+          "heading": "Mémorisez aussi l’auxiliaire",
+          "text": "Apprenez des formes comme ist gegangen et hat gemacht comme des unités complètes plutôt que de retenir uniquement le participe."
+        },
+        {
+          "heading": "Observez les particules séparables",
+          "text": "Repérez la position de ge- dans des formes comme aufgestanden et eingekauft, ainsi que les verbes qui n’en prennent pas."
+        },
+        {
+          "heading": "Révisez par cycles courts",
+          "text": "Testez-vous après un jour, quelques jours puis une semaine, en accordant davantage d’attention aux formes irrégulières."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Mettez les formes passées en pratique",
+      "description": "Révisez les verbes allemands les plus utiles et employez leurs formes au Präteritum et au Perfekt dans des phrases complètes.",
+      "primaryLabel": "Pratiquer les verbes allemands",
+      "secondaryLabel": "Les 100 verbes allemands les plus courants"
+    },
+    "related": {
+      "heading": "Poursuivez votre apprentissage de l’allemand",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Les 100 verbes allemands les plus courants"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire allemand par niveau"
+        },
+        { "key": "levelTest", "label": "Test de niveau d’allemand" }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur les formes passées en allemand",
+      "items": [
+        {
+          "question": "Quelle est la différence entre le Präteritum et le Perfekt en allemand ?",
+          "answer": "Le Präteritum est une forme simple surtout utilisée à l’écrit, dans la narration formelle et avec des verbes fréquents comme sein, haben et les verbes modaux. Le Perfekt se construit avec haben ou sein suivi d’un participe passé et est très courant à l’oral."
+        },
+        {
+          "question": "Comment les verbes réguliers allemands forment-ils le passé ?",
+          "answer": "Les verbes réguliers forment généralement le Präteritum avec -te et le participe passé avec ge-, le radical et -t, comme dans machen–machte–gemacht. De légers ajustements orthographiques peuvent apparaître lorsque le radical se termine par certains sons."
+        },
+        {
+          "question": "Pourquoi certains verbes allemands utilisent-ils sein au lieu de haben ?",
+          "answer": "De nombreux verbes intransitifs de mouvement ou de changement d’état utilisent sein, comme gehen et werden. La plupart des autres verbes emploient haben, mais le sens et l’usage régional peuvent influencer le choix dans quelques cas."
+        },
+        {
+          "question": "Quelle est la meilleure manière de mémoriser les formes passées allemandes ?",
+          "answer": "Apprenez l’infinitif, le Präteritum, le participe passé et l’auxiliaire comme un seul ensemble. Utilisez ensuite chaque verbe dans de courtes phrases au Präteritum et au Perfekt, puis révisez les formes difficiles à intervalles espacés."
+        },
+        {
+          "question": "Tous les participes passés allemands commencent-ils par ge- ?",
+          "answer": "Non. Les verbes en -ieren et ceux qui possèdent un préfixe inséparable comme be-, ver-, er-, ent- ou zer- ne prennent généralement pas ge-. Les verbes à particule séparable placent habituellement ge- entre la particule et le radical."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "de",
+    "urlSlug": "vergangenheitsformen-100-haeufigste-deutsche-verben",
+    "entryButtonLabel": "Vergangenheitsformen deutscher Verben",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "translation": "Bedeutung"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Präteritum" },
+      { "key": "pastParticiple", "label": "Partizip II" },
+      { "key": "auxiliary", "label": "Hilfsverb" }
+    ],
+    "metadata": {
+      "title": "Vergangenheitsformen der 100 häufigsten deutschen Verben",
+      "metaTitle": "100 deutsche Verben und ihre Vergangenheitsformen",
+      "metaDescription": "Präteritum, Partizip II und Hilfsverb von 100 häufigen deutschen Verben in einer übersichtlichen Tabelle mit regelmäßigen und unregelmäßigen Formen."
+    },
+    "hero": {
+      "heading": "Vergangenheitsformen der 100 häufigsten deutschen Verben",
+      "subtitle": "Vergleiche Präteritum, Partizip II und Hilfsverb wichtiger deutscher Verben in einer praktischen Übersicht.",
+      "introParagraphs": [
+        "Auf dieser Seite findest du 100 häufig verwendete deutsche Verben mit ihrer Präteritumform, ihrem Partizip II und dem passenden Hilfsverb für das Perfekt. Die Tabelle zeigt außerdem den Infinitiv und die Bedeutung jedes Verbs, sodass du alle wichtigen Angaben direkt miteinander vergleichen kannst.",
+        "Das gemeinsame Lernen dieser Formen ist besonders nützlich, weil die deutsche Vergangenheit je nach Situation unterschiedlich gebildet wird. Das Präteritum kommt häufig in geschriebenen Texten und bei bestimmten Verben vor, während das Perfekt mit haben oder sein und dem Partizip II vor allem in der gesprochenen Sprache verbreitet ist."
+      ]
+    },
+    "overview": {
+      "heading": "So funktionieren die Vergangenheitsformen deutscher Verben",
+      "paragraphs": [
+        "Häufige Verben begegnen dir ständig in Gesprächen, Erzählungen, Nachrichten, Anleitungen und Alltagstexten. Wenn du ihre wichtigsten Vergangenheitsformen kennst, kannst du abgeschlossene Handlungen beschreiben, Geschichten besser verstehen und sicherer zwischen Präteritum und Perfekt wählen.",
+        "Das Präteritum ist eine eigenständige Verbform. Das Partizip II wird dagegen zusammen mit haben oder sein verwendet, um das Perfekt und das Plusquamperfekt zu bilden. Die meisten Verben verwenden haben, während viele Verben der Bewegung, Zustandsveränderung und einige weitere häufige Verben sein benötigen."
+      ]
+    },
+    "table": {
+      "heading": "Tabelle mit den Vergangenheitsformen von 100 deutschen Verben",
+      "description": "Jede Zeile enthält den Infinitiv, die Bedeutung, das Präteritum, das Partizip II und das Hilfsverb, mit dem das Perfekt gebildet wird.",
+      "notes": [
+        "Schwache Verben bilden das Präteritum meist mit -te und das Partizip II häufig mit ge- und -t.",
+        "Starke und gemischte Verben können ihren Stammvokal verändern oder unregelmäßige Endungen verwenden.",
+        "Bei trennbaren Verben steht ge- im Partizip II normalerweise zwischen Vorsilbe und Verbstamm.",
+        "Die Spalte mit dem Hilfsverb zeigt haben oder sein; bei einzelnen Verben kann die Wahl von Bedeutung oder Verwendung abhängen."
+      ]
+    },
+    "howToUse": {
+      "heading": "So arbeitest du mit der Tabelle",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Infinitiv",
+          "text": "Lies das Verb in seiner Grundform und prüfe, ob du seine Bedeutung und typische Verwendung kennst."
+        },
+        {
+          "heading": "Vergleiche das Präteritum",
+          "text": "Achte darauf, ob das Verb regelmäßig gebildet wird oder seinen Stamm im Präteritum verändert."
+        },
+        {
+          "heading": "Lerne Partizip und Hilfsverb zusammen",
+          "text": "Merke dir das Partizip II direkt mit haben oder sein, damit du das Perfekt korrekt bilden kannst."
+        },
+        {
+          "heading": "Verwende beide Vergangenheitsformen",
+          "text": "Schreibe einen Satz im Präteritum und einen weiteren im Perfekt, um den Gebrauch im Kontext zu üben."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Merken deutscher Vergangenheitsformen",
+      "items": [
+        {
+          "heading": "Nach Verbtypen gruppieren",
+          "text": "Lerne schwache, starke und gemischte Verben in getrennten Gruppen, damit wiederkehrende Endungen und Vokalwechsel leichter erkennbar werden."
+        },
+        {
+          "heading": "Das Hilfsverb mitlernen",
+          "text": "Präge dir Verbindungen wie ist gegangen und hat gemacht als vollständige Einheiten ein, statt nur das Partizip zu lernen."
+        },
+        {
+          "heading": "Auf Vorsilben achten",
+          "text": "Beobachte die Stellung von ge- bei Formen wie aufgestanden und eingekauft und merke dir, welche Vorsilben ge- ausschließen."
+        },
+        {
+          "heading": "Mit Abständen wiederholen",
+          "text": "Teste dich nach einem Tag, einigen Tagen und einer Woche und wiederhole unregelmäßige Formen häufiger als einfache regelmäßige Verben."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Vergangenheitsformen sicher anwenden",
+      "description": "Wiederhole wichtige deutsche Verben und verwende Präteritum und Perfekt in vollständigen Beispielsätzen.",
+      "primaryLabel": "Deutsche Verben üben",
+      "secondaryLabel": "100 häufige deutsche Verben"
+    },
+    "related": {
+      "heading": "Deutsch weiterlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Die 100 häufigsten deutschen Verben"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Deutscher Wortschatz nach Niveau"
+        },
+        { "key": "levelTest", "label": "Deutsch-Einstufungstest" }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zu deutschen Vergangenheitsformen",
+      "items": [
+        {
+          "question": "Was ist der Unterschied zwischen Präteritum und Perfekt?",
+          "answer": "Das Präteritum ist eine einfache Verbform und wird besonders häufig in geschriebenen Erzählungen verwendet. Das Perfekt besteht aus haben oder sein und dem Partizip II und ist in der gesprochenen Alltagssprache sehr verbreitet."
+        },
+        {
+          "question": "Wie bilden regelmäßige deutsche Verben die Vergangenheit?",
+          "answer": "Regelmäßige Verben bilden das Präteritum meist mit -te und das Partizip II mit ge-, dem Verbstamm und -t, zum Beispiel machen–machte–gemacht. Je nach Stammendung können zusätzliche Buchstaben nötig sein, wie bei arbeiten–arbeitete–gearbeitet."
+        },
+        {
+          "question": "Warum verwenden manche Verben sein statt haben?",
+          "answer": "Viele intransitive Verben der Bewegung oder Zustandsveränderung bilden das Perfekt mit sein, zum Beispiel gehen und werden. Die meisten übrigen Verben verwenden haben, wobei bei einigen Verben Bedeutung und Gebrauch die Wahl beeinflussen können."
+        },
+        {
+          "question": "Wie kann man deutsche Vergangenheitsformen am besten lernen?",
+          "answer": "Lerne Infinitiv, Präteritum, Partizip II und Hilfsverb als zusammengehörige Einheit. Verwende jedes Verb anschließend in einem Satz im Präteritum und in einem Satz im Perfekt und wiederhole schwierige Formen mit zeitlichen Abständen."
+        },
+        {
+          "question": "Beginnen alle deutschen Partizipien mit ge-?",
+          "answer": "Nein. Verben auf -ieren und Verben mit untrennbaren Vorsilben wie be-, ver-, er-, ent- und zer- erhalten normalerweise kein ge-. Bei trennbaren Verben steht ge- meist zwischen der Vorsilbe und dem Verbstamm."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "it",
+    "urlSlug": "forme-passate-100-verbi-tedeschi-piu-comuni",
+    "entryButtonLabel": "Forme passate dei verbi tedeschi",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "translation": "Traduzione italiana"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Präteritum" },
+      { "key": "pastParticiple", "label": "Participio passato" },
+      { "key": "auxiliary", "label": "Ausiliare" }
+    ],
+    "metadata": {
+      "title": "Forme passate dei 100 verbi tedeschi più comuni",
+      "metaTitle": "100 verbi tedeschi e le loro forme passate",
+      "metaDescription": "Consulta Präteritum, participio passato e ausiliare di 100 verbi tedeschi comuni, con forme regolari, irregolari e separabili."
+    },
+    "hero": {
+      "heading": "Forme passate dei 100 verbi tedeschi più comuni",
+      "subtitle": "Confronta Präteritum, participio passato e ausiliare dei verbi tedeschi essenziali in una tabella pratica.",
+      "introParagraphs": [
+        "Questa pagina raccoglie 100 verbi tedeschi di uso frequente con la forma del Präteritum, il participio passato e l’ausiliare utilizzato nei tempi composti. La tabella permette di confrontare direttamente l’infinito, la traduzione italiana e le principali forme necessarie per parlare di eventi passati.",
+        "Imparare insieme queste tre informazioni è particolarmente utile perché il tedesco usa strutture diverse a seconda del contesto. Il Präteritum è frequente nella lingua scritta e con alcuni verbi molto comuni, mentre il participio passato si combina con haben o sein per formare il Perfekt, ampiamente usato nella lingua parlata."
+      ]
+    },
+    "overview": {
+      "heading": "Come funzionano le forme passate in tedesco",
+      "paragraphs": [
+        "I verbi tedeschi più comuni compaiono continuamente nelle conversazioni, nei racconti, nelle notizie, nelle istruzioni e nei testi quotidiani. Conoscere le loro principali forme passate aiuta a descrivere azioni concluse, comprendere narrazioni e scegliere la struttura più adatta quando si parla o si scrive del passato.",
+        "Il Präteritum è una forma verbale autonoma, mentre il participio passato viene usato con un ausiliare per formare il Perfekt e il Plusquamperfekt. La maggior parte dei verbi usa haben, ma molti verbi di movimento, cambiamento di stato e alcuni altri verbi frequenti richiedono sein."
+      ]
+    },
+    "table": {
+      "heading": "Tabella delle forme passate di 100 verbi tedeschi",
+      "description": "Ogni riga mostra l’infinito tedesco, la traduzione italiana, il Präteritum, il participio passato e l’ausiliare usato per formare il Perfekt.",
+      "notes": [
+        "I verbi deboli formano generalmente il Präteritum con una terminazione in -te e il participio con ge- e -t.",
+        "I verbi forti e misti possono cambiare la vocale della radice o utilizzare terminazioni irregolari.",
+        "Nei verbi separabili, ge- si colloca normalmente tra il prefisso e la radice nel participio passato.",
+        "La colonna dell’ausiliare indica haben o sein; per alcuni verbi la scelta può dipendere dal significato o dall’uso."
+      ]
+    },
+    "howToUse": {
+      "heading": "Come studiare la tabella",
+      "steps": [
+        {
+          "heading": "Inizia dall’infinito",
+          "text": "Leggi il verbo tedesco nella forma del dizionario e verifica di comprenderne la traduzione italiana."
+        },
+        {
+          "heading": "Confronta il Präteritum",
+          "text": "Osserva se il verbo segue un modello regolare oppure modifica la radice nel passato semplice."
+        },
+        {
+          "heading": "Impara insieme participio e ausiliare",
+          "text": "Memorizza il participio passato insieme a haben o sein, così da poter formare correttamente il Perfekt."
+        },
+        {
+          "heading": "Usa entrambe le strutture",
+          "text": "Scrivi una frase al Präteritum e un’altra al Perfekt per capire come vengono impiegate nel contesto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per ricordare le forme passate tedesche",
+      "items": [
+        {
+          "heading": "Raggruppa i verbi per modello",
+          "text": "Studia separatamente i verbi deboli, forti e misti per riconoscere più facilmente terminazioni ricorrenti e cambiamenti vocalici."
+        },
+        {
+          "heading": "Memorizza anche l’ausiliare",
+          "text": "Impara combinazioni come ist gegangen e hat gemacht come unità complete, invece di ricordare soltanto il participio."
+        },
+        {
+          "heading": "Osserva i prefissi",
+          "text": "Presta attenzione alla posizione di ge- in forme come aufgestanden e eingekauft e individua i prefissi che ne impediscono l’uso."
+        },
+        {
+          "heading": "Ripassa a intervalli",
+          "text": "Verifica ciò che ricordi dopo un giorno, alcuni giorni e una settimana, dedicando più tempo alle forme irregolari."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Usa le forme passate con sicurezza",
+      "description": "Ripassa i verbi tedeschi più utili e utilizza Präteritum e Perfekt in frasi complete.",
+      "primaryLabel": "Esercitati con i verbi tedeschi",
+      "secondaryLabel": "100 verbi tedeschi più comuni"
+    },
+    "related": {
+      "heading": "Continua a studiare il tedesco",
+      "items": [
+        { "key": "commonVerbs", "label": "I 100 verbi tedeschi più comuni" },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario tedesco per livello"
+        },
+        { "key": "levelTest", "label": "Test di livello di tedesco" }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulle forme passate in tedesco",
+      "items": [
+        {
+          "question": "Qual è la differenza tra Präteritum e Perfekt?",
+          "answer": "Il Präteritum è una forma verbale semplice usata soprattutto nella lingua scritta e nella narrazione. Il Perfekt si forma con haben o sein e il participio passato ed è molto comune nel tedesco parlato quotidiano."
+        },
+        {
+          "question": "Come formano il passato i verbi tedeschi regolari?",
+          "answer": "I verbi regolari formano generalmente il Präteritum con -te e il participio passato con ge-, la radice e -t, come in machen–machte–gemacht. Possono essere necessari piccoli adattamenti ortografici quando la radice termina con determinati suoni."
+        },
+        {
+          "question": "Perché alcuni verbi tedeschi usano sein invece di haben?",
+          "answer": "Molti verbi intransitivi di movimento o cambiamento di stato usano sein, come gehen e werden. La maggior parte degli altri verbi utilizza haben, ma per alcuni la scelta può variare in base al significato o all’uso."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le forme passate tedesche?",
+          "answer": "Impara insieme infinito, Präteritum, participio passato e ausiliare come un unico gruppo. Usa poi ogni verbo in una breve frase al Präteritum e in una al Perfekt e ripassa le forme difficili a intervalli regolari."
+        },
+        {
+          "question": "Tutti i participi passati tedeschi iniziano con ge-?",
+          "answer": "No. I verbi in -ieren e quelli con prefissi inseparabili come be-, ver-, er-, ent- e zer- normalmente non prendono ge-. Nei verbi separabili, ge- si colloca generalmente tra il prefisso e la radice."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "pt",
+    "urlSlug": "formas-passadas-100-verbos-alemaes-mais-comuns",
+    "entryButtonLabel": "Formas passadas dos verbos alemães",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Tradução em português"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Präteritum" },
+      { "key": "pastParticiple", "label": "Particípio passado" },
+      { "key": "auxiliary", "label": "Auxiliar" }
+    ],
+    "metadata": {
+      "title": "Formas passadas dos 100 verbos alemães mais comuns",
+      "metaTitle": "100 verbos alemães e suas formas passadas",
+      "metaDescription": "Consulte o Präteritum, o particípio passado e o auxiliar de 100 verbos alemães comuns, incluindo formas regulares, irregulares e separáveis."
+    },
+    "hero": {
+      "heading": "Formas passadas dos 100 verbos alemães mais comuns",
+      "subtitle": "Compare o Präteritum, o particípio passado e o auxiliar do perfeito dos verbos alemães essenciais.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos alemães de uso frequente com a forma do Präteritum, o particípio passado e o auxiliar empregado nos tempos compostos. A tabela permite comparar diretamente o infinitivo, a tradução em português e as principais formas necessárias para falar sobre acontecimentos passados.",
+        "Aprender essas três informações em conjunto é especialmente útil porque o alemão utiliza estruturas diferentes conforme o contexto. O Präteritum é frequente na língua escrita e com determinados verbos muito comuns, enquanto o particípio passado se combina com haben ou sein para formar o Perfekt, amplamente usado na língua falada."
+      ]
+    },
+    "overview": {
+      "heading": "Como funcionam as formas passadas em alemão",
+      "paragraphs": [
+        "Os verbos alemães mais comuns aparecem constantemente em conversas, histórias, notícias, instruções e textos do dia a dia. Conhecer as suas principais formas passadas ajuda a descrever ações concluídas, compreender narrativas e escolher a estrutura adequada ao falar ou escrever sobre o passado.",
+        "O Präteritum é uma forma verbal independente, enquanto o particípio passado é usado com um auxiliar para formar o Perfekt e o Plusquamperfekt. A maioria dos verbos utiliza haben, mas muitos verbos de movimento, mudança de estado e alguns outros verbos frequentes exigem sein."
+      ]
+    },
+    "table": {
+      "heading": "Tabela das formas passadas de 100 verbos alemães",
+      "description": "Cada linha apresenta o infinitivo alemão, a tradução em português, o Präteritum, o particípio passado e o auxiliar usado para formar o Perfekt.",
+      "notes": [
+        "Os verbos fracos geralmente formam o Präteritum com a terminação -te e o particípio com ge- e -t.",
+        "Os verbos fortes e mistos podem alterar a vogal do radical ou apresentar terminações irregulares.",
+        "Nos verbos separáveis, ge- costuma aparecer entre o prefixo e o radical no particípio passado.",
+        "A coluna do auxiliar indica haben ou sein; em alguns verbos, a escolha pode depender do significado ou do uso."
+      ]
+    },
+    "howToUse": {
+      "heading": "Como estudar a tabela",
+      "steps": [
+        {
+          "heading": "Comece pelo infinitivo",
+          "text": "Leia o verbo alemão na forma de dicionário e confirme que compreende a sua tradução em português."
+        },
+        {
+          "heading": "Compare o Präteritum",
+          "text": "Observe se o verbo segue um padrão regular ou se altera o radical no passado simples."
+        },
+        {
+          "heading": "Aprenda o particípio com o auxiliar",
+          "text": "Memorize o particípio passado junto com haben ou sein para formar corretamente o Perfekt."
+        },
+        {
+          "heading": "Use as duas estruturas",
+          "text": "Escreva uma frase no Präteritum e outra no Perfekt para compreender como ambas funcionam em contexto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para memorizar as formas passadas em alemão",
+      "items": [
+        {
+          "heading": "Agrupe os verbos por padrão",
+          "text": "Estude separadamente os verbos fracos, fortes e mistos para reconhecer com mais facilidade terminações e mudanças vocálicas recorrentes."
+        },
+        {
+          "heading": "Memorize também o auxiliar",
+          "text": "Aprenda combinações como ist gegangen e hat gemacht como unidades completas, em vez de decorar apenas o particípio."
+        },
+        {
+          "heading": "Observe os prefixos",
+          "text": "Preste atenção à posição de ge- em formas como aufgestanden e eingekauft e identifique os prefixos que impedem o seu uso."
+        },
+        {
+          "heading": "Revise em intervalos",
+          "text": "Teste a sua memória depois de um dia, alguns dias e uma semana, dedicando mais atenção às formas irregulares."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Use as formas passadas com confiança",
+      "description": "Revise os verbos alemães mais úteis e empregue Präteritum e Perfekt em frases completas.",
+      "primaryLabel": "Praticar verbos alemães",
+      "secondaryLabel": "100 verbos alemães mais comuns"
+    },
+    "related": {
+      "heading": "Continue aprendendo alemão",
+      "items": [
+        { "key": "commonVerbs", "label": "Os 100 verbos alemães mais comuns" },
+        { "key": "vocabularyLevels", "label": "Vocabulário alemão por nível" },
+        { "key": "levelTest", "label": "Teste de nível de alemão" }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre as formas passadas em alemão",
+      "items": [
+        {
+          "question": "Qual é a diferença entre Präteritum e Perfekt?",
+          "answer": "O Präteritum é uma forma verbal simples, usada sobretudo na escrita, em narrativas e com alguns verbos frequentes. O Perfekt é formado com haben ou sein mais o particípio passado e é muito comum no alemão falado."
+        },
+        {
+          "question": "Como os verbos regulares alemães formam o passado?",
+          "answer": "Os verbos regulares normalmente formam o Präteritum com -te e o particípio passado com ge-, o radical e -t, como em machen–machte–gemacht. Pequenos ajustes ortográficos podem ocorrer quando o radical termina em determinados sons."
+        },
+        {
+          "question": "Por que alguns verbos alemães usam sein em vez de haben?",
+          "answer": "Muitos verbos intransitivos de movimento ou mudança de estado utilizam sein, como gehen e werden. A maioria dos outros verbos usa haben, embora o significado ou o uso possa influenciar a escolha em alguns casos."
+        },
+        {
+          "question": "Qual é a melhor forma de memorizar as formas passadas alemãs?",
+          "answer": "Aprenda o infinitivo, o Präteritum, o particípio passado e o auxiliar como um único conjunto. Depois, use cada verbo em frases curtas no Präteritum e no Perfekt e revise as formas difíceis com repetição espaçada."
+        },
+        {
+          "question": "Todos os particípios passados alemães começam com ge-?",
+          "answer": "Não. Os verbos terminados em -ieren e os que possuem prefixos inseparáveis como be-, ver-, er-, ent- e zer- normalmente não recebem ge-. Nos verbos separáveis, ge- costuma aparecer entre o prefixo e o radical."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "ru",
+    "urlSlug": "formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-nemetskih-glagolov",
+    "entryButtonLabel": "Прошедшие формы немецких глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "translation": "Перевод на русский"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Претерит" },
+      { "key": "pastParticiple", "label": "Причастие прошедшего времени" },
+      { "key": "auxiliary", "label": "Вспомогательный глагол" }
+    ],
+    "metadata": {
+      "title": "Прошедшие формы 100 самых употребительных немецких глаголов",
+      "metaTitle": "100 немецких глаголов и их прошедшие формы",
+      "metaDescription": "Изучите претерит, причастие прошедшего времени и вспомогательный глагол у 100 распространённых немецких глаголов."
+    },
+    "hero": {
+      "heading": "Прошедшие формы 100 самых употребительных немецких глаголов",
+      "subtitle": "Сравнивайте претерит, причастие прошедшего времени и вспомогательный глагол важных немецких глаголов.",
+      "introParagraphs": [
+        "На этой странице собраны 100 часто употребляемых немецких глаголов с формой Präteritum, причастием прошедшего времени и вспомогательным глаголом для составных времён. Таблица позволяет сопоставить инфинитив, перевод на русский язык и основные формы, необходимые для разговора о событиях в прошлом.",
+        "Полезно учить все три элемента вместе, поскольку немецкий язык использует разные прошедшие конструкции в зависимости от ситуации. Präteritum часто встречается в письменной речи и с некоторыми распространёнными глаголами, а причастие прошедшего времени сочетается с haben или sein при образовании Perfekt, особенно характерного для устной речи."
+      ]
+    },
+    "overview": {
+      "heading": "Как образуются прошедшие формы немецких глаголов",
+      "paragraphs": [
+        "Частотные немецкие глаголы постоянно встречаются в разговорах, рассказах, новостях, инструкциях и повседневных текстах. Знание их основных прошедших форм помогает описывать завершённые действия, понимать повествование и правильно выбирать между Präteritum и Perfekt.",
+        "Präteritum представляет собой самостоятельную форму прошедшего времени, а причастие прошедшего времени используется со вспомогательным глаголом при образовании Perfekt и Plusquamperfekt. Большинство глаголов употребляется с haben, однако многие глаголы движения, изменения состояния и некоторые другие распространённые глаголы требуют sein."
+      ]
+    },
+    "table": {
+      "heading": "Таблица прошедших форм 100 немецких глаголов",
+      "description": "В каждой строке указаны немецкий инфинитив, перевод на русский язык, Präteritum, причастие прошедшего времени и вспомогательный глагол для образования Perfekt.",
+      "notes": [
+        "Слабые глаголы обычно образуют Präteritum с окончанием -te, а причастие — с приставкой ge- и окончанием -t.",
+        "Сильные и смешанные глаголы могут изменять корневую гласную или использовать нерегулярные окончания.",
+        "У отделяемых глаголов ge- обычно ставится между приставкой и основой глагола.",
+        "Столбец вспомогательного глагола показывает haben или sein; у некоторых глаголов выбор зависит от значения или употребления."
+      ]
+    },
+    "howToUse": {
+      "heading": "Как работать с таблицей",
+      "steps": [
+        {
+          "heading": "Начните с инфинитива",
+          "text": "Прочитайте немецкий глагол в словарной форме и убедитесь, что понимаете его перевод на русский язык."
+        },
+        {
+          "heading": "Сравните форму Präteritum",
+          "text": "Определите, следует ли глагол регулярной модели или изменяет основу в простом прошедшем времени."
+        },
+        {
+          "heading": "Учите причастие вместе со вспомогательным глаголом",
+          "text": "Запоминайте причастие прошедшего времени вместе с haben или sein, чтобы правильно образовывать Perfekt."
+        },
+        {
+          "heading": "Используйте обе конструкции",
+          "text": "Составьте одно предложение в Präteritum и другое в Perfekt, чтобы понять различия в контексте."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Как запоминать прошедшие формы немецких глаголов",
+      "items": [
+        {
+          "heading": "Группируйте глаголы по моделям",
+          "text": "Учите слабые, сильные и смешанные глаголы отдельными группами, чтобы легче замечать повторяющиеся окончания и чередования гласных."
+        },
+        {
+          "heading": "Запоминайте вспомогательный глагол",
+          "text": "Учите сочетания ist gegangen и hat gemacht как целые единицы, а не только отдельные причастия."
+        },
+        {
+          "heading": "Следите за приставками",
+          "text": "Обращайте внимание на положение ge- в формах aufgestanden и eingekauft и запоминайте приставки, после которых ge- не используется."
+        },
+        {
+          "heading": "Повторяйте с интервалами",
+          "text": "Проверяйте себя через день, несколько дней и неделю, уделяя больше внимания неправильным и похожим формам."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Закрепите прошедшие формы на практике",
+      "description": "Повторите самые полезные немецкие глаголы и используйте Präteritum и Perfekt в полных предложениях.",
+      "primaryLabel": "Практиковать немецкие глаголы",
+      "secondaryLabel": "100 самых употребительных немецких глаголов"
+    },
+    "related": {
+      "heading": "Продолжить изучение немецкого языка",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных немецких глаголов"
+        },
+        { "key": "vocabularyLevels", "label": "Немецкая лексика по уровням" },
+        { "key": "levelTest", "label": "Тест на уровень немецкого языка" }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о прошедших формах немецких глаголов",
+      "items": [
+        {
+          "question": "В чём разница между Präteritum и Perfekt?",
+          "answer": "Präteritum — это простая форма прошедшего времени, особенно распространённая в письменных рассказах и с некоторыми частотными глаголами. Perfekt образуется с помощью haben или sein и причастия прошедшего времени и очень часто используется в разговорном немецком."
+        },
+        {
+          "question": "Как правильные немецкие глаголы образуют прошедшее время?",
+          "answer": "Слабые глаголы обычно образуют Präteritum с окончанием -te, а причастие — с помощью ge-, основы и окончания -t, например machen–machte–gemacht. При некоторых окончаниях основы могут потребоваться небольшие орфографические изменения."
+        },
+        {
+          "question": "Почему некоторые немецкие глаголы используют sein вместо haben?",
+          "answer": "Многие непереходные глаголы движения или изменения состояния употребляются с sein, например gehen и werden. Большинство остальных глаголов используют haben, хотя в отдельных случаях выбор может зависеть от значения или употребления."
+        },
+        {
+          "question": "Как лучше запоминать прошедшие формы немецких глаголов?",
+          "answer": "Учите инфинитив, Präteritum, причастие прошедшего времени и вспомогательный глагол как единый набор. Затем составляйте короткие предложения в Präteritum и Perfekt и повторяйте трудные формы через увеличивающиеся интервалы."
+        },
+        {
+          "question": "Все ли немецкие причастия прошедшего времени начинаются с ge-?",
+          "answer": "Нет. Глаголы на -ieren и глаголы с неотделяемыми приставками be-, ver-, er-, ent- и zer- обычно не получают ge-. У отделяемых глаголов ge- чаще всего ставится между приставкой и основой."
+        }
+      ]
+    }
   }
 ]
