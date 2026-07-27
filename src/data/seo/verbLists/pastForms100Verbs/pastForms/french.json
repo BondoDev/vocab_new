@@ -1,0 +1,602 @@
+[
+  {
+    "concept_id": "A1-00008",
+    "imperfect": "j’étais",
+    "pastParticiple": "été",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00487",
+    "imperfect": "j’avais",
+    "pastParticiple": "eu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01701",
+    "imperfect": "je devenais",
+    "pastParticiple": "devenu",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A1-00167",
+    "imperfect": "je pouvais",
+    "pastParticiple": "pu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00687",
+    "imperfect": "je devais",
+    "pastParticiple": "dû",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01120",
+    "imperfect": "je voulais",
+    "pastParticiple": "voulu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01787",
+    "imperfect": "je devais",
+    "pastParticiple": "dû",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00643",
+    "imperfect": "je pouvais",
+    "pastParticiple": "pu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00607",
+    "imperfect": "j’aimais",
+    "pastParticiple": "aimé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00633",
+    "imperfect": "je faisais",
+    "pastParticiple": "fait",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00292",
+    "imperfect": "je faisais",
+    "pastParticiple": "fait",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00441",
+    "imperfect": "j’allais",
+    "pastParticiple": "allé",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A1-00231",
+    "imperfect": "je venais",
+    "pastParticiple": "venu",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A1-00871",
+    "imperfect": "je disais",
+    "pastParticiple": "dit",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00956",
+    "imperfect": "je parlais",
+    "pastParticiple": "parlé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01012",
+    "imperfect": "je discutais",
+    "pastParticiple": "discuté",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00049",
+    "imperfect": "je demandais",
+    "pastParticiple": "demandé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00034",
+    "imperfect": "je répondais",
+    "pastParticiple": "répondu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00494",
+    "imperfect": "j’entendais",
+    "pastParticiple": "entendu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00879",
+    "imperfect": "je voyais",
+    "pastParticiple": "vu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00621",
+    "imperfect": "je regardais",
+    "pastParticiple": "regardé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00383",
+    "imperfect": "je trouvais",
+    "pastParticiple": "trouvé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01107",
+    "imperfect": "je cherchais",
+    "pastParticiple": "cherché",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00584",
+    "imperfect": "je savais",
+    "pastParticiple": "su",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01117",
+    "imperfect": "je me réveillais",
+    "pastParticiple": "réveillé",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A1-01043",
+    "imperfect": "je pensais",
+    "pastParticiple": "pensé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01482",
+    "imperfect": "je croyais",
+    "pastParticiple": "cru",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01361",
+    "imperfect": "je comprenais",
+    "pastParticiple": "compris",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01558",
+    "imperfect": "j’étudiais",
+    "pastParticiple": "étudié",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-00950",
+    "imperfect": "je préparais",
+    "pastParticiple": "préparé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01160",
+    "imperfect": "je travaillais",
+    "pastParticiple": "travaillé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01118",
+    "imperfect": "je marchais",
+    "pastParticiple": "marché",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00615",
+    "imperfect": "je vivais",
+    "pastParticiple": "vécu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00973",
+    "imperfect": "je restais",
+    "pastParticiple": "resté",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "B1-02233",
+    "imperfect": "je me reposais",
+    "pastParticiple": "reposé",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A1-00693",
+    "imperfect": "j’avais besoin",
+    "pastParticiple": "eu besoin",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01011",
+    "imperfect": "je prenais",
+    "pastParticiple": "pris",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00436",
+    "imperfect": "je donnais",
+    "pastParticiple": "donné",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00431",
+    "imperfect": "j’obtenais",
+    "pastParticiple": "obtenu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00139",
+    "imperfect": "j’apportais",
+    "pastParticiple": "apporté",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00978",
+    "imperfect": "j’arrêtais",
+    "pastParticiple": "arrêté",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00158",
+    "imperfect": "j’achetais",
+    "pastParticiple": "acheté",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00881",
+    "imperfect": "je vendais",
+    "pastParticiple": "vendu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00762",
+    "imperfect": "je payais",
+    "pastParticiple": "payé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-00296",
+    "imperfect": "je coûtais",
+    "pastParticiple": "coûté",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00322",
+    "imperfect": "je mangeais",
+    "pastParticiple": "mangé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00308",
+    "imperfect": "je buvais",
+    "pastParticiple": "bu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00237",
+    "imperfect": "je cuisinais",
+    "pastParticiple": "cuisiné",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01125",
+    "imperfect": "je regardais",
+    "pastParticiple": "regardé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00925",
+    "imperfect": "je dormais",
+    "pastParticiple": "dormi",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00021",
+    "imperfect": "je me levais",
+    "pastParticiple": "levé",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A1-00916",
+    "imperfect": "je m’asseyais",
+    "pastParticiple": "assis",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A1-00968",
+    "imperfect": "je me tenais debout",
+    "pastParticiple": "tenu debout",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A2-00717",
+    "imperfect": "je m’allongeais",
+    "pastParticiple": "allongé",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A1-00932",
+    "imperfect": "je souriais",
+    "pastParticiple": "souri",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00817",
+    "imperfect": "je mettais",
+    "pastParticiple": "mis",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "B1-04098",
+    "imperfect": "je plaçais",
+    "pastParticiple": "placé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00309",
+    "imperfect": "je conduisais",
+    "pastParticiple": "conduit",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01805",
+    "imperfect": "je voyageais",
+    "pastParticiple": "voyagé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00591",
+    "imperfect": "je riais",
+    "pastParticiple": "ri",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00859",
+    "imperfect": "je courais",
+    "pastParticiple": "couru",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00785",
+    "imperfect": "je jouais",
+    "pastParticiple": "joué",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00828",
+    "imperfect": "je lisais",
+    "pastParticiple": "lu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01167",
+    "imperfect": "j’écrivais",
+    "pastParticiple": "écrit",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00731",
+    "imperfect": "j’ouvrais",
+    "pastParticiple": "ouvert",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00210",
+    "imperfect": "je fermais",
+    "pastParticiple": "fermé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00970",
+    "imperfect": "je commençais",
+    "pastParticiple": "commencé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00088",
+    "imperfect": "je débutais",
+    "pastParticiple": "débuté",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-00284",
+    "imperfect": "je continuais",
+    "pastParticiple": "continué",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01114",
+    "imperfect": "j’attendais",
+    "pastParticiple": "attendu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00498",
+    "imperfect": "j’aidais",
+    "pastParticiple": "aidé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00903",
+    "imperfect": "je montrais",
+    "pastParticiple": "montré",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-00460",
+    "imperfect": "j’expliquais",
+    "pastParticiple": "expliqué",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01022",
+    "imperfect": "je racontais",
+    "pastParticiple": "raconté",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01104",
+    "imperfect": "j’utilisais",
+    "pastParticiple": "utilisé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "B2-02656",
+    "imperfect": "j’employais",
+    "pastParticiple": "employé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01130",
+    "imperfect": "je portais",
+    "pastParticiple": "porté",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01088",
+    "imperfect": "je tournais",
+    "pastParticiple": "tourné",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00595",
+    "imperfect": "j’apprenais",
+    "pastParticiple": "appris",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01117",
+    "imperfect": "j’envoyais",
+    "pastParticiple": "envoyé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01542",
+    "imperfect": "je planifiais",
+    "pastParticiple": "planifié",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00163",
+    "imperfect": "j’appelais",
+    "pastParticiple": "appelé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00650",
+    "imperfect": "je rencontrais",
+    "pastParticiple": "rencontré",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01111",
+    "imperfect": "je visitais",
+    "pastParticiple": "visité",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00623",
+    "imperfect": "j’aimais",
+    "pastParticiple": "aimé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00679",
+    "imperfect": "je bougeais",
+    "pastParticiple": "bougé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00371",
+    "imperfect": "je ressentais",
+    "pastParticiple": "ressenti",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01742",
+    "imperfect": "ça se passait",
+    "pastParticiple": "passé",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A2-00133",
+    "imperfect": "j’appartenais",
+    "pastParticiple": "appartenu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A2-01814",
+    "imperfect": "je gagnais",
+    "pastParticiple": "gagné",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "B1-01577",
+    "imperfect": "je perdais",
+    "pastParticiple": "perdu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "B2-00065",
+    "imperfect": "j’altérais",
+    "pastParticiple": "altéré",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00186",
+    "imperfect": "je changeais",
+    "pastParticiple": "changé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-01083",
+    "imperfect": "j’essayais",
+    "pastParticiple": "essayé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00257",
+    "imperfect": "je pleurais",
+    "pastParticiple": "pleuré",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00406",
+    "imperfect": "j’oubliais",
+    "pastParticiple": "oublié",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00836",
+    "imperfect": "je me souvenais",
+    "pastParticiple": "souvenu",
+    "auxiliary": "être"
+  },
+  {
+    "concept_id": "A1-00600",
+    "imperfect": "je laissais",
+    "pastParticiple": "laissé",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00511",
+    "imperfect": "je tenais",
+    "pastParticiple": "tenu",
+    "auxiliary": "avoir"
+  },
+  {
+    "concept_id": "A1-00596",
+    "imperfect": "je partais",
+    "pastParticiple": "parti",
+    "auxiliary": "être"
+  }
+]

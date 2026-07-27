@@ -2792,5 +2792,945 @@
         }
       ]
     }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "en",
+    "urlSlug": "past-forms-100-most-common-french-verbs",
+    "entryButtonLabel": "French Verb Past Forms",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "translation": "English translation"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imperfect" },
+      { "key": "pastParticiple", "label": "Past Participle" },
+      { "key": "auxiliary", "label": "Auxiliary" }
+    ],
+    "metadata": {
+      "title": "Past Forms of the 100 Most Common French Verbs",
+      "metaTitle": "100 Common French Verbs and Their Past Forms",
+      "metaDescription": "Explore the imperfect, past participle, and auxiliary of 100 common French verbs, including regular, irregular, and reflexive patterns."
+    },
+    "hero": {
+      "heading": "Past Forms of the 100 Most Common French Verbs",
+      "subtitle": "Compare the imperfect, past participle, and compound-tense auxiliary of essential French verbs.",
+      "introParagraphs": [
+        "This page brings together 100 frequently used French verbs with their imperfect form, past participle, and compound-tense auxiliary. The table lets you compare the infinitive, English translation, and the principal forms needed to describe past situations and build common past constructions.",
+        "Learning these forms together is useful because French expresses past meaning in several ways. The imperfect describes ongoing, repeated, or background situations, while the past participle combines with avoir or être to form compound tenses such as the passé composé."
+      ]
+    },
+    "overview": {
+      "heading": "How French Past Verb Forms Work",
+      "paragraphs": [
+        "Common French verbs appear constantly in conversations, stories, messages, instructions, and everyday texts. Knowing their main past forms helps you describe habits, background conditions, completed events, and experiences with greater accuracy.",
+        "The imperfect is a conjugated tense whose ending changes according to the subject. The past participle is a non-finite form used with an auxiliary, usually avoir and sometimes être, while certain contexts also require agreement in gender and number."
+      ]
+    },
+    "table": {
+      "heading": "Table of 100 Common French Verb Past Forms",
+      "description": "Each row shows the French infinitive, its English translation, a reference imperfect form, the past participle, and the auxiliary used to form compound tenses.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right",
+      "notes": [
+        "The imperfect is formed from the present-tense nous stem for most verbs, with endings that change according to person and number.",
+        "Regular -er verbs usually form the past participle with -é, while many -ir and -re verbs use -i or -u.",
+        "Most verbs form compound tenses with avoir, while many reflexive verbs and certain verbs of movement or change use être.",
+        "Past participles may agree in gender and number in constructions with être and in some structures with a preceding direct object."
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study the Table",
+      "steps": [
+        {
+          "heading": "Start with the infinitive",
+          "text": "Read the French verb in its dictionary form and confirm that you understand its English meaning."
+        },
+        {
+          "heading": "Examine the imperfect",
+          "text": "Notice whether the form follows the regular stem pattern or has an irregular stem, as with être."
+        },
+        {
+          "heading": "Learn the participle and auxiliary together",
+          "text": "Memorize the past participle with avoir or être so that you can build the passé composé correctly."
+        },
+        {
+          "heading": "Use both forms in context",
+          "text": "Write one sentence describing an ongoing or repeated past situation and another using the past participle in a compound tense."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Remembering French Past Forms",
+      "items": [
+        {
+          "heading": "Connect the imperfect to the nous form",
+          "text": "Use the present-tense nous form to identify the stem for most imperfect conjugations, then add the appropriate ending."
+        },
+        {
+          "heading": "Group participles by pattern",
+          "text": "Study regular -é, -i, and -u participles together and keep irregular forms such as fait, pris, and eu in a separate review set."
+        },
+        {
+          "heading": "Memorize the auxiliary with the verb",
+          "text": "Learn combinations such as a parlé and est allé as complete units instead of memorizing the participle alone."
+        },
+        {
+          "heading": "Practise agreement in examples",
+          "text": "Write short sentences with être and reflexive verbs so that gender and number agreement becomes easier to recognize."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Put French Past Forms into Practice",
+      "description": "Review essential French verbs and use the imperfect and compound past forms in meaningful sentences.",
+      "primaryLabel": "Practice French Verbs",
+      "secondaryLabel": "100 Most Common French Verbs"
+    },
+    "related": {
+      "heading": "Continue Learning French",
+      "items": [
+        { "key": "commonVerbs", "label": "100 Most Common French Verbs" },
+        { "key": "vocabularyLevels", "label": "French Vocabulary by Level" },
+        { "key": "levelTest", "label": "French Level Test" }
+      ]
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions About French Past Forms",
+      "items": [
+        {
+          "question": "What is the French imperfect used for?",
+          "answer": "The imperfect describes ongoing situations, repeated actions, habits, and background conditions in the past. It is often used when the beginning or end of the action is not the main focus."
+        },
+        {
+          "question": "How is the French imperfect formed?",
+          "answer": "For most verbs, remove -ons from the present-tense nous form and add the imperfect endings. The verb être is the main exception and uses the stem ét-."
+        },
+        {
+          "question": "How are regular French past participles formed?",
+          "answer": "Regular -er verbs usually replace -er with -é, as in parler–parlé. Many regular -ir verbs use -i, while regular -re verbs often use -u."
+        },
+        {
+          "question": "Why do some French verbs use être instead of avoir?",
+          "answer": "Most verbs use avoir, but reflexive verbs and a group of common intransitive verbs use être in compound tenses. When être is used, the past participle normally agrees with the subject in gender and number."
+        },
+        {
+          "question": "What is the best way to memorize French past forms?",
+          "answer": "Learn the infinitive, imperfect reference form, past participle, and auxiliary as one set. Then practise each verb in an imperfect sentence and a compound-tense sentence, reviewing irregular forms at spaced intervals."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "es",
+    "urlSlug": "formas-pasadas-100-verbos-franceses-mas-comunes",
+    "entryButtonLabel": "Formas pasadas de los verbos franceses",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Traducción al español"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imperfecto" },
+      { "key": "pastParticiple", "label": "Participio pasado" },
+      { "key": "auxiliary", "label": "Auxiliar" }
+    ],
+    "metadata": {
+      "title": "Formas pasadas de los 100 verbos franceses más comunes",
+      "metaTitle": "100 verbos franceses y sus formas pasadas",
+      "metaDescription": "Consulta el imperfecto, el participio pasado y el auxiliar de 100 verbos franceses comunes, con formas regulares, irregulares y pronominales."
+    },
+    "hero": {
+      "heading": "Formas pasadas de los 100 verbos franceses más comunes",
+      "subtitle": "Compara el imperfecto, el participio pasado y el auxiliar de los verbos franceses esenciales.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos franceses de uso frecuente con una forma de referencia en imperfecto, su participio pasado y el auxiliar utilizado en los tiempos compuestos. La tabla permite comparar el infinitivo, la traducción al español y las formas principales necesarias para describir situaciones y acciones pasadas.",
+        "Aprender estos elementos en conjunto resulta útil porque el francés expresa el pasado mediante estructuras diferentes. El imperfecto se emplea para hábitos, acciones en desarrollo y descripciones de fondo, mientras que el participio pasado se combina con avoir o être para formar tiempos compuestos como el passé composé."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funcionan las formas pasadas en francés",
+      "paragraphs": [
+        "Los verbos franceses más comunes aparecen constantemente en conversaciones, relatos, mensajes, instrucciones y textos cotidianos. Conocer sus principales formas pasadas ayuda a describir costumbres, situaciones de fondo, acontecimientos terminados y experiencias con mayor precisión.",
+        "El imperfecto es un tiempo conjugado cuyas terminaciones cambian según la persona y el número. El participio pasado es una forma no personal que se utiliza con un auxiliar, normalmente avoir y en determinados verbos être, y en algunos contextos debe concordar en género y número."
+      ]
+    },
+    "table": {
+      "heading": "Tabla de formas pasadas de 100 verbos franceses",
+      "description": "Cada fila muestra el infinitivo francés, su traducción al español, una forma de referencia en imperfecto, el participio pasado y el auxiliar utilizado para formar los tiempos compuestos.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha",
+      "notes": [
+        "El imperfecto se forma normalmente a partir de la raíz de la primera persona plural del presente y utiliza terminaciones distintas según el sujeto.",
+        "Los verbos regulares en -er suelen formar el participio con -é, mientras que muchos verbos en -ir y -re usan -i o -u.",
+        "La mayoría de los verbos utiliza avoir, mientras que los verbos pronominales y ciertos verbos de movimiento o cambio emplean être.",
+        "El participio puede concordar en género y número en construcciones con être y, en ciertos casos, con un complemento directo colocado antes del verbo."
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar la tabla",
+      "steps": [
+        {
+          "heading": "Empieza por el infinitivo",
+          "text": "Lee el verbo francés en su forma de diccionario y comprueba que entiendes su traducción al español."
+        },
+        {
+          "heading": "Examina el imperfecto",
+          "text": "Observa si la forma sigue el patrón regular de la raíz o presenta una raíz especial, como ocurre con être."
+        },
+        {
+          "heading": "Aprende juntos el participio y el auxiliar",
+          "text": "Memoriza el participio pasado con avoir o être para poder formar correctamente el passé composé."
+        },
+        {
+          "heading": "Utiliza ambas estructuras",
+          "text": "Escribe una oración que describa una acción habitual o en desarrollo y otra con el participio en un tiempo compuesto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para memorizar las formas pasadas francesas",
+      "items": [
+        {
+          "heading": "Relaciona el imperfecto con la forma nous",
+          "text": "Usa la forma de nous del presente para encontrar la raíz de la mayoría de los verbos y añade después la terminación correspondiente."
+        },
+        {
+          "heading": "Agrupa los participios por patrón",
+          "text": "Estudia juntos los participios regulares en -é, -i y -u y reserva un grupo aparte para formas irregulares como fait, pris y eu."
+        },
+        {
+          "heading": "Memoriza también el auxiliar",
+          "text": "Aprende combinaciones como a parlé y est allé como unidades completas, en lugar de recordar únicamente el participio."
+        },
+        {
+          "heading": "Practica la concordancia",
+          "text": "Escribe frases breves con être y verbos pronominales para reconocer mejor la concordancia de género y número."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pon en práctica las formas pasadas",
+      "description": "Repasa los verbos franceses más útiles y utiliza el imperfecto y los tiempos compuestos en oraciones completas.",
+      "primaryLabel": "Practicar verbos franceses",
+      "secondaryLabel": "100 verbos franceses más comunes"
+    },
+    "related": {
+      "heading": "Continúa aprendiendo francés",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Los 100 verbos franceses más comunes"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario francés por niveles"
+        },
+        { "key": "levelTest", "label": "Prueba de nivel de francés" }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre las formas pasadas en francés",
+      "items": [
+        {
+          "question": "¿Para qué se utiliza el imperfecto en francés?",
+          "answer": "El imperfecto describe situaciones en desarrollo, acciones repetidas, hábitos y circunstancias de fondo en el pasado. Suele emplearse cuando el inicio o el final de la acción no es el aspecto principal."
+        },
+        {
+          "question": "¿Cómo se forma el imperfecto francés?",
+          "answer": "En la mayoría de los verbos, se elimina -ons de la forma de nous del presente y se añaden las terminaciones del imperfecto. El verbo être es la principal excepción y utiliza la raíz ét-."
+        },
+        {
+          "question": "¿Cómo se forman los participios pasados regulares en francés?",
+          "answer": "Los verbos regulares en -er suelen sustituir esa terminación por -é, como parler–parlé. Muchos verbos regulares en -ir utilizan -i, mientras que los verbos en -re suelen emplear -u."
+        },
+        {
+          "question": "¿Por qué algunos verbos franceses usan être en vez de avoir?",
+          "answer": "La mayoría utiliza avoir, pero los verbos pronominales y un grupo de verbos intransitivos frecuentes emplean être en los tiempos compuestos. Cuando se usa être, el participio normalmente concuerda con el sujeto en género y número."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las formas pasadas francesas?",
+          "answer": "Aprende el infinitivo, una forma de referencia en imperfecto, el participio pasado y el auxiliar como un solo conjunto. Después, utiliza cada verbo en una oración en imperfecto y otra en un tiempo compuesto, y repasa las formas irregulares con intervalos crecientes."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "fr",
+    "urlSlug": "formes-passees-100-verbes-francais-les-plus-courants",
+    "entryButtonLabel": "Formes passées des verbes français",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "translation": "Signification"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imparfait" },
+      { "key": "pastParticiple", "label": "Participe passé" },
+      { "key": "auxiliary", "label": "Auxiliaire" }
+    ],
+    "metadata": {
+      "title": "Formes passées des 100 verbes français les plus courants",
+      "metaTitle": "100 verbes français et leurs formes passées",
+      "metaDescription": "Consultez l’imparfait, le participe passé et l’auxiliaire de 100 verbes français courants, réguliers, irréguliers et pronominaux."
+    },
+    "hero": {
+      "heading": "Formes passées des 100 verbes français les plus courants",
+      "subtitle": "Comparez l’imparfait, le participe passé et l’auxiliaire des verbes français essentiels.",
+      "introParagraphs": [
+        "Cette page réunit 100 verbes français très fréquents avec une forme de référence à l’imparfait, leur participe passé et l’auxiliaire utilisé dans les temps composés. Le tableau permet de comparer directement l’infinitif, la signification et les principales formes nécessaires pour parler de situations et d’actions passées.",
+        "Apprendre ces éléments ensemble est particulièrement utile, car le français exprime le passé au moyen de plusieurs structures. L’imparfait sert notamment à décrire des habitudes, des actions en cours et le contexte d’un récit, tandis que le participe passé s’associe à avoir ou être pour former des temps composés comme le passé composé."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionnent les formes passées en français",
+      "paragraphs": [
+        "Les verbes français les plus courants apparaissent constamment dans les conversations, les récits, les messages, les consignes et les textes du quotidien. Connaître leurs principales formes passées aide à décrire des habitudes, des situations de fond, des événements achevés et des expériences avec davantage de précision.",
+        "L’imparfait est un temps conjugué dont les terminaisons varient selon la personne et le nombre. Le participe passé est une forme non personnelle employée avec un auxiliaire, généralement avoir et parfois être, et peut devoir s’accorder en genre et en nombre selon la construction."
+      ]
+    },
+    "table": {
+      "heading": "Tableau des formes passées de 100 verbes français",
+      "description": "Chaque ligne présente l’infinitif, sa signification, une forme de référence à l’imparfait, le participe passé et l’auxiliaire utilisé pour former les temps composés.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite",
+      "notes": [
+        "Pour la plupart des verbes, l’imparfait se forme à partir du radical de la première personne du pluriel au présent, avec des terminaisons qui varient selon le sujet.",
+        "Les verbes réguliers en -er forment généralement leur participe passé en -é, tandis que de nombreux verbes en -ir et en -re utilisent -i ou -u.",
+        "La majorité des verbes emploient avoir, alors que les verbes pronominaux et certains verbes de mouvement ou de changement utilisent être.",
+        "Le participe passé peut s’accorder en genre et en nombre avec être et, dans certains cas, avec un complément d’objet direct placé avant le verbe."
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment étudier le tableau",
+      "steps": [
+        {
+          "heading": "Commencez par l’infinitif",
+          "text": "Lisez le verbe dans sa forme de dictionnaire et vérifiez que vous en comprenez le sens et l’emploi courant."
+        },
+        {
+          "heading": "Examinez l’imparfait",
+          "text": "Observez si la forme suit le modèle régulier du radical ou utilise un radical particulier, comme avec être."
+        },
+        {
+          "heading": "Apprenez ensemble le participe et l’auxiliaire",
+          "text": "Mémorisez le participe passé avec avoir ou être afin de former correctement le passé composé."
+        },
+        {
+          "heading": "Utilisez les deux structures",
+          "text": "Écrivez une phrase décrivant une action habituelle ou en cours et une autre utilisant le participe dans un temps composé."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour mémoriser les formes passées françaises",
+      "items": [
+        {
+          "heading": "Reliez l’imparfait à la forme nous",
+          "text": "Utilisez la forme de nous au présent pour trouver le radical de la plupart des verbes, puis ajoutez la terminaison appropriée."
+        },
+        {
+          "heading": "Regroupez les participes par modèle",
+          "text": "Apprenez ensemble les participes réguliers en -é, -i et -u, et placez les formes irrégulières comme fait, pris et eu dans un groupe séparé."
+        },
+        {
+          "heading": "Mémorisez aussi l’auxiliaire",
+          "text": "Apprenez des groupes comme a parlé et est allé comme des unités complètes plutôt que de retenir uniquement le participe."
+        },
+        {
+          "heading": "Entraînez-vous à l’accord",
+          "text": "Écrivez de courtes phrases avec être et des verbes pronominaux afin de mieux reconnaître les accords en genre et en nombre."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Mettez les formes passées en pratique",
+      "description": "Révisez les verbes français les plus utiles et employez l’imparfait et les temps composés dans des phrases complètes.",
+      "primaryLabel": "Pratiquer les verbes français",
+      "secondaryLabel": "Les 100 verbes français les plus courants"
+    },
+    "related": {
+      "heading": "Poursuivez votre apprentissage du français",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Les 100 verbes français les plus courants"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire français par niveau"
+        },
+        { "key": "levelTest", "label": "Test de niveau de français" }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur les formes passées en français",
+      "items": [
+        {
+          "question": "À quoi sert l’imparfait en français ?",
+          "answer": "L’imparfait décrit des situations en cours, des actions répétées, des habitudes et le cadre d’un récit dans le passé. Il est souvent employé lorsque le début ou la fin de l’action n’est pas l’information principale."
+        },
+        {
+          "question": "Comment forme-t-on l’imparfait en français ?",
+          "answer": "Pour la plupart des verbes, on retire -ons de la forme de nous au présent, puis on ajoute les terminaisons de l’imparfait. Le verbe être constitue l’exception principale et utilise le radical ét-."
+        },
+        {
+          "question": "Comment forme-t-on les participes passés réguliers ?",
+          "answer": "Les verbes réguliers en -er remplacent généralement cette terminaison par -é, comme parler–parlé. De nombreux verbes réguliers en -ir utilisent -i, tandis que les verbes en -re emploient souvent -u."
+        },
+        {
+          "question": "Pourquoi certains verbes utilisent-ils être au lieu d’avoir ?",
+          "answer": "La plupart des verbes emploient avoir, mais les verbes pronominaux et un groupe de verbes intransitifs fréquents utilisent être dans les temps composés. Avec être, le participe passé s’accorde normalement avec le sujet en genre et en nombre."
+        },
+        {
+          "question": "Quelle est la meilleure manière de mémoriser les formes passées françaises ?",
+          "answer": "Apprenez l’infinitif, une forme de référence à l’imparfait, le participe passé et l’auxiliaire comme un seul ensemble. Utilisez ensuite chaque verbe dans une phrase à l’imparfait et une autre à un temps composé, puis révisez les formes irrégulières à intervalles espacés."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "de",
+    "urlSlug": "vergangenheitsformen-100-haeufigste-franzoesische-verben",
+    "entryButtonLabel": "Vergangenheitsformen französischer Verben",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "translation": "Deutsche Übersetzung"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imparfait" },
+      { "key": "pastParticiple", "label": "Partizip Perfekt" },
+      { "key": "auxiliary", "label": "Hilfsverb" }
+    ],
+    "metadata": {
+      "title": "Vergangenheitsformen der 100 häufigsten französischen Verben",
+      "metaTitle": "100 französische Verben und ihre Vergangenheitsformen",
+      "metaDescription": "Imparfait, Partizip Perfekt und Hilfsverb von 100 häufigen französischen Verben mit regelmäßigen, unregelmäßigen und reflexiven Formen."
+    },
+    "hero": {
+      "heading": "Vergangenheitsformen der 100 häufigsten französischen Verben",
+      "subtitle": "Vergleiche Imparfait, Partizip Perfekt und Hilfsverb wichtiger französischer Verben in einer übersichtlichen Tabelle.",
+      "introParagraphs": [
+        "Auf dieser Seite findest du 100 häufig verwendete französische Verben mit einer Referenzform im Imparfait, ihrem Partizip Perfekt und dem Hilfsverb für zusammengesetzte Zeiten. Die Tabelle hilft dir, den Infinitiv, die deutsche Übersetzung und die wichtigsten Formen für Aussagen über vergangene Situationen und Handlungen direkt zu vergleichen.",
+        "Das gemeinsame Lernen dieser Angaben ist besonders nützlich, weil das Französische Vergangenheit mit unterschiedlichen Strukturen ausdrückt. Das Imparfait beschreibt Gewohnheiten, andauernde Handlungen und Hintergrundsituationen, während das Partizip Perfekt mit avoir oder être zusammengesetzte Zeiten wie das Passé composé bildet."
+      ]
+    },
+    "overview": {
+      "heading": "So funktionieren französische Vergangenheitsformen",
+      "paragraphs": [
+        "Häufige französische Verben begegnen dir ständig in Gesprächen, Erzählungen, Nachrichten, Anleitungen und Alltagstexten. Wer ihre wichtigsten Vergangenheitsformen kennt, kann frühere Gewohnheiten, begleitende Umstände, abgeschlossene Ereignisse und persönliche Erfahrungen genauer ausdrücken.",
+        "Das Imparfait ist eine konjugierte Zeitform, deren Endung sich nach Person und Zahl richtet. Das Partizip Perfekt ist eine nicht konjugierte Form, die meist mit avoir und bei bestimmten Verben mit être verwendet wird; je nach Konstruktion kann es außerdem an Genus und Numerus angepasst werden."
+      ]
+    },
+    "table": {
+      "heading": "Tabelle mit den Vergangenheitsformen von 100 französischen Verben",
+      "description": "Jede Zeile enthält den französischen Infinitiv, die deutsche Übersetzung, eine Referenzform im Imparfait, das Partizip Perfekt und das Hilfsverb für zusammengesetzte Zeiten.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen",
+      "notes": [
+        "Das Imparfait wird bei den meisten Verben aus dem Stamm der Präsensform mit nous und personenabhängigen Endungen gebildet.",
+        "Regelmäßige Verben auf -er bilden das Partizip meist mit -é, viele Verben auf -ir und -re mit -i oder -u.",
+        "Die meisten Verben verwenden avoir; reflexive Verben und bestimmte Verben der Bewegung oder Zustandsveränderung verwenden être.",
+        "Das Partizip kann sich bei Konstruktionen mit être und in bestimmten Fällen bei einem vorangestellten direkten Objekt nach Genus und Numerus richten."
+      ]
+    },
+    "howToUse": {
+      "heading": "So arbeitest du mit der Tabelle",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Infinitiv",
+          "text": "Lies das französische Verb in seiner Grundform und prüfe, ob du seine deutsche Bedeutung kennst."
+        },
+        {
+          "heading": "Untersuche das Imparfait",
+          "text": "Achte darauf, ob die Form dem regelmäßigen Stammmuster folgt oder einen besonderen Stamm verwendet, wie bei être."
+        },
+        {
+          "heading": "Lerne Partizip und Hilfsverb zusammen",
+          "text": "Merke dir das Partizip Perfekt direkt mit avoir oder être, damit du das Passé composé korrekt bilden kannst."
+        },
+        {
+          "heading": "Verwende beide Formen im Kontext",
+          "text": "Schreibe einen Satz über eine wiederholte oder andauernde Situation und einen weiteren mit dem Partizip in einer zusammengesetzten Zeit."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Merken französischer Vergangenheitsformen",
+      "items": [
+        {
+          "heading": "Das Imparfait mit der nous-Form verbinden",
+          "text": "Nutze die Präsensform mit nous, um bei den meisten Verben den Stamm zu finden, und ergänze anschließend die passende Endung."
+        },
+        {
+          "heading": "Partizipien nach Mustern gruppieren",
+          "text": "Lerne regelmäßige Partizipien auf -é, -i und -u gemeinsam und wiederhole unregelmäßige Formen wie fait, pris und eu separat."
+        },
+        {
+          "heading": "Das Hilfsverb mitlernen",
+          "text": "Präge dir Verbindungen wie a parlé und est allé als vollständige Einheiten ein, statt nur das Partizip zu lernen."
+        },
+        {
+          "heading": "Kongruenz in Beispielen üben",
+          "text": "Schreibe kurze Sätze mit être und reflexiven Verben, um die Anpassung nach Genus und Numerus sicherer zu erkennen."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Französische Vergangenheitsformen sicher anwenden",
+      "description": "Wiederhole wichtige französische Verben und verwende Imparfait und zusammengesetzte Vergangenheitsformen in vollständigen Sätzen.",
+      "primaryLabel": "Französische Verben üben",
+      "secondaryLabel": "100 häufige französische Verben"
+    },
+    "related": {
+      "heading": "Französisch weiterlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Die 100 häufigsten französischen Verben"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Französischer Wortschatz nach Niveau"
+        },
+        { "key": "levelTest", "label": "Französisch-Einstufungstest" }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zu französischen Vergangenheitsformen",
+      "items": [
+        {
+          "question": "Wofür wird das Imparfait im Französischen verwendet?",
+          "answer": "Das Imparfait beschreibt andauernde Situationen, wiederholte Handlungen, Gewohnheiten und Hintergrundinformationen in der Vergangenheit. Es wird häufig verwendet, wenn Anfang und Ende der Handlung nicht im Mittelpunkt stehen."
+        },
+        {
+          "question": "Wie wird das französische Imparfait gebildet?",
+          "answer": "Bei den meisten Verben entfernt man -ons von der Präsensform mit nous und fügt die Imparfait-Endungen hinzu. Das Verb être ist die wichtigste Ausnahme und verwendet den Stamm ét-."
+        },
+        {
+          "question": "Wie werden regelmäßige französische Partizipien gebildet?",
+          "answer": "Regelmäßige Verben auf -er ersetzen diese Endung normalerweise durch -é, wie bei parler–parlé. Viele Verben auf -ir verwenden -i, während Verben auf -re häufig -u bilden."
+        },
+        {
+          "question": "Warum verwenden einige französische Verben être statt avoir?",
+          "answer": "Die meisten Verben verwenden avoir, aber reflexive Verben und eine Gruppe häufiger intransitiver Verben bilden zusammengesetzte Zeiten mit être. Mit être richtet sich das Partizip normalerweise nach Genus und Numerus des Subjekts."
+        },
+        {
+          "question": "Wie kann man französische Vergangenheitsformen am besten lernen?",
+          "answer": "Lerne Infinitiv, Imparfaitform, Partizip Perfekt und Hilfsverb als zusammengehörige Einheit. Verwende jedes Verb anschließend in einem Imparfaitsatz und in einer zusammengesetzten Vergangenheitsform und wiederhole unregelmäßige Formen in zeitlichen Abständen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "it",
+    "urlSlug": "forme-passate-100-verbi-francesi-piu-comuni",
+    "entryButtonLabel": "Forme passate dei verbi francesi",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "translation": "Traduzione italiana"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imperfetto" },
+      { "key": "pastParticiple", "label": "Participio passato" },
+      { "key": "auxiliary", "label": "Ausiliare" }
+    ],
+    "metadata": {
+      "title": "Forme passate dei 100 verbi francesi più comuni",
+      "metaTitle": "100 verbi francesi e le loro forme passate",
+      "metaDescription": "Consulta imperfetto, participio passato e ausiliare di 100 verbi francesi comuni, con forme regolari, irregolari e pronominali."
+    },
+    "hero": {
+      "heading": "Forme passate dei 100 verbi francesi più comuni",
+      "subtitle": "Confronta imperfetto, participio passato e ausiliare dei verbi francesi essenziali in una tabella pratica.",
+      "introParagraphs": [
+        "Questa pagina raccoglie 100 verbi francesi di uso frequente con una forma di riferimento all’imperfetto, il participio passato e l’ausiliare impiegato nei tempi composti. La tabella permette di confrontare direttamente l’infinito, la traduzione italiana e le principali forme necessarie per parlare di situazioni e azioni passate.",
+        "Imparare insieme questi elementi è particolarmente utile perché il francese esprime il passato attraverso strutture diverse. L’imperfetto descrive abitudini, azioni in corso e circostanze di sfondo, mentre il participio passato si combina con avoir o être per formare tempi composti come il passé composé."
+      ]
+    },
+    "overview": {
+      "heading": "Come funzionano le forme passate in francese",
+      "paragraphs": [
+        "I verbi francesi più comuni compaiono continuamente nelle conversazioni, nei racconti, nei messaggi, nelle istruzioni e nei testi quotidiani. Conoscere le loro principali forme passate aiuta a descrivere abitudini, situazioni di sfondo, eventi conclusi ed esperienze con maggiore precisione.",
+        "L’imperfetto è un tempo coniugato le cui desinenze cambiano secondo la persona e il numero. Il participio passato è una forma non personale utilizzata con un ausiliare, generalmente avoir e in determinati casi être, e può richiedere l’accordo di genere e numero a seconda della costruzione."
+      ]
+    },
+    "table": {
+      "heading": "Tabella delle forme passate di 100 verbi francesi",
+      "description": "Ogni riga mostra l’infinito francese, la traduzione italiana, una forma di riferimento all’imperfetto, il participio passato e l’ausiliare utilizzato nei tempi composti.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra",
+      "notes": [
+        "Per la maggior parte dei verbi, l’imperfetto si forma dalla radice della forma presente con nous e con desinenze che cambiano in base al soggetto.",
+        "I verbi regolari in -er formano normalmente il participio in -é, mentre molti verbi in -ir e -re usano -i o -u.",
+        "La maggior parte dei verbi usa avoir, mentre i verbi pronominali e alcuni verbi di movimento o cambiamento impiegano être.",
+        "Il participio passato può concordare in genere e numero nelle costruzioni con être e, in alcuni casi, con un complemento oggetto diretto posto prima del verbo."
+      ]
+    },
+    "howToUse": {
+      "heading": "Come studiare la tabella",
+      "steps": [
+        {
+          "heading": "Inizia dall’infinito",
+          "text": "Leggi il verbo francese nella forma del dizionario e verifica di comprenderne la traduzione italiana."
+        },
+        {
+          "heading": "Esamina l’imperfetto",
+          "text": "Osserva se la forma segue il modello regolare della radice o utilizza una radice particolare, come accade con être."
+        },
+        {
+          "heading": "Impara insieme participio e ausiliare",
+          "text": "Memorizza il participio passato con avoir o être per poter formare correttamente il passé composé."
+        },
+        {
+          "heading": "Usa entrambe le forme nel contesto",
+          "text": "Scrivi una frase che descriva un’azione abituale o in corso e un’altra con il participio in un tempo composto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per ricordare le forme passate francesi",
+      "items": [
+        {
+          "heading": "Collega l’imperfetto alla forma nous",
+          "text": "Usa la forma presente con nous per individuare la radice della maggior parte dei verbi, poi aggiungi la desinenza appropriata."
+        },
+        {
+          "heading": "Raggruppa i participi per modello",
+          "text": "Studia insieme i participi regolari in -é, -i e -u e ripassa separatamente forme irregolari come fait, pris ed eu."
+        },
+        {
+          "heading": "Memorizza anche l’ausiliare",
+          "text": "Impara combinazioni come a parlé ed est allé come unità complete, invece di ricordare soltanto il participio."
+        },
+        {
+          "heading": "Esercitati con l’accordo",
+          "text": "Scrivi brevi frasi con être e verbi pronominali per riconoscere più facilmente l’accordo di genere e numero."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Usa con sicurezza le forme passate francesi",
+      "description": "Ripassa i verbi francesi più utili e utilizza l’imperfetto e i tempi composti in frasi complete.",
+      "primaryLabel": "Esercitati con i verbi francesi",
+      "secondaryLabel": "100 verbi francesi più comuni"
+    },
+    "related": {
+      "heading": "Continua a studiare il francese",
+      "items": [
+        { "key": "commonVerbs", "label": "I 100 verbi francesi più comuni" },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario francese per livello"
+        },
+        { "key": "levelTest", "label": "Test di livello di francese" }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulle forme passate in francese",
+      "items": [
+        {
+          "question": "A cosa serve l’imperfetto in francese?",
+          "answer": "L’imperfetto descrive situazioni in corso, azioni ripetute, abitudini e circostanze di sfondo nel passato. Si usa spesso quando l’inizio o la fine dell’azione non sono l’informazione principale."
+        },
+        {
+          "question": "Come si forma l’imperfetto francese?",
+          "answer": "Per la maggior parte dei verbi si elimina -ons dalla forma presente con nous e si aggiungono le desinenze dell’imperfetto. Il verbo être è l’eccezione principale e usa la radice ét-."
+        },
+        {
+          "question": "Come si formano i participi passati regolari in francese?",
+          "answer": "I verbi regolari in -er sostituiscono normalmente questa desinenza con -é, come parler–parlé. Molti verbi in -ir usano -i, mentre i verbi in -re formano spesso il participio in -u."
+        },
+        {
+          "question": "Perché alcuni verbi francesi usano être invece di avoir?",
+          "answer": "La maggior parte dei verbi usa avoir, ma i verbi pronominali e un gruppo di verbi intransitivi frequenti impiegano être nei tempi composti. Con être, il participio passato concorda normalmente con il soggetto in genere e numero."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le forme passate francesi?",
+          "answer": "Impara insieme infinito, forma dell’imperfetto, participio passato e ausiliare come un unico gruppo. Usa poi ogni verbo in una frase all’imperfetto e in una frase con un tempo composto, ripassando le forme irregolari a intervalli regolari."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "pt",
+    "urlSlug": "formas-passadas-100-verbos-franceses-mais-comuns",
+    "entryButtonLabel": "Formas passadas dos verbos franceses",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Tradução em português"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imperfeito" },
+      { "key": "pastParticiple", "label": "Particípio passado" },
+      { "key": "auxiliary", "label": "Auxiliar" }
+    ],
+    "metadata": {
+      "title": "Formas passadas dos 100 verbos franceses mais comuns",
+      "metaTitle": "100 verbos franceses e suas formas passadas",
+      "metaDescription": "Consulte o imperfeito, o particípio passado e o auxiliar de 100 verbos franceses comuns, com formas regulares, irregulares e pronominais."
+    },
+    "hero": {
+      "heading": "Formas passadas dos 100 verbos franceses mais comuns",
+      "subtitle": "Compare o imperfeito, o particípio passado e o auxiliar dos verbos franceses essenciais em uma tabela prática.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos franceses de uso frequente com uma forma de referência no imperfeito, o particípio passado e o auxiliar utilizado nos tempos compostos. A tabela permite comparar diretamente o infinitivo, a tradução em português e as principais formas necessárias para falar de situações e ações passadas.",
+        "Aprender esses elementos em conjunto é especialmente útil porque o francês expressa o passado por meio de estruturas diferentes. O imperfeito descreve hábitos, ações em curso e circunstâncias de fundo, enquanto o particípio passado se combina com avoir ou être para formar tempos compostos como o passé composé."
+      ]
+    },
+    "overview": {
+      "heading": "Como funcionam as formas passadas em francês",
+      "paragraphs": [
+        "Os verbos franceses mais comuns aparecem constantemente em conversas, histórias, mensagens, instruções e textos do dia a dia. Conhecer as suas principais formas passadas ajuda a descrever hábitos, situações de fundo, acontecimentos concluídos e experiências com maior precisão.",
+        "O imperfeito é um tempo conjugado cujas terminações mudam conforme a pessoa e o número. O particípio passado é uma forma não pessoal utilizada com um auxiliar, geralmente avoir e, em determinados casos, être, podendo exigir concordância de género e número conforme a construção."
+      ]
+    },
+    "table": {
+      "heading": "Tabela das formas passadas de 100 verbos franceses",
+      "description": "Cada linha apresenta o infinitivo francês, a tradução em português, uma forma de referência no imperfeito, o particípio passado e o auxiliar utilizado nos tempos compostos.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita",
+      "notes": [
+        "Para a maioria dos verbos, o imperfeito é formado a partir do radical da forma do presente com nous e de terminações que variam conforme o sujeito.",
+        "Os verbos regulares terminados em -er normalmente formam o particípio em -é, enquanto muitos verbos em -ir e -re usam -i ou -u.",
+        "A maioria dos verbos utiliza avoir, enquanto os verbos pronominais e certos verbos de movimento ou mudança empregam être.",
+        "O particípio passado pode concordar em género e número nas construções com être e, em alguns casos, com um complemento direto colocado antes do verbo."
+      ]
+    },
+    "howToUse": {
+      "heading": "Como estudar a tabela",
+      "steps": [
+        {
+          "heading": "Comece pelo infinitivo",
+          "text": "Leia o verbo francês na forma de dicionário e confirme que compreende a sua tradução em português."
+        },
+        {
+          "heading": "Examine o imperfeito",
+          "text": "Observe se a forma segue o padrão regular do radical ou utiliza um radical especial, como acontece com être."
+        },
+        {
+          "heading": "Aprenda o particípio com o auxiliar",
+          "text": "Memorize o particípio passado juntamente com avoir ou être para formar corretamente o passé composé."
+        },
+        {
+          "heading": "Use as duas estruturas em contexto",
+          "text": "Escreva uma frase que descreva uma ação habitual ou em curso e outra com o particípio em um tempo composto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para memorizar as formas passadas francesas",
+      "items": [
+        {
+          "heading": "Relacione o imperfeito com a forma nous",
+          "text": "Use a forma do presente com nous para encontrar o radical da maioria dos verbos e depois acrescente a terminação adequada."
+        },
+        {
+          "heading": "Agrupe os particípios por padrão",
+          "text": "Estude juntos os particípios regulares em -é, -i e -u e revise separadamente formas irregulares como fait, pris e eu."
+        },
+        {
+          "heading": "Memorize também o auxiliar",
+          "text": "Aprenda combinações como a parlé e est allé como unidades completas, em vez de decorar apenas o particípio."
+        },
+        {
+          "heading": "Pratique a concordância",
+          "text": "Escreva frases curtas com être e verbos pronominais para reconhecer melhor a concordância de género e número."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Use as formas passadas com confiança",
+      "description": "Revise os verbos franceses mais úteis e utilize o imperfeito e os tempos compostos em frases completas.",
+      "primaryLabel": "Praticar verbos franceses",
+      "secondaryLabel": "100 verbos franceses mais comuns"
+    },
+    "related": {
+      "heading": "Continue aprendendo francês",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Os 100 verbos franceses mais comuns"
+        },
+        { "key": "vocabularyLevels", "label": "Vocabulário francês por nível" },
+        { "key": "levelTest", "label": "Teste de nível de francês" }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre as formas passadas em francês",
+      "items": [
+        {
+          "question": "Para que serve o imperfeito em francês?",
+          "answer": "O imperfeito descreve situações em curso, ações repetidas, hábitos e circunstâncias de fundo no passado. Ele é usado com frequência quando o início ou o fim da ação não é a informação principal."
+        },
+        {
+          "question": "Como é formado o imperfeito em francês?",
+          "answer": "Para a maioria dos verbos, retira-se -ons da forma do presente com nous e acrescentam-se as terminações do imperfeito. O verbo être é a principal exceção e utiliza o radical ét-."
+        },
+        {
+          "question": "Como são formados os particípios passados regulares em francês?",
+          "answer": "Os verbos regulares em -er normalmente substituem essa terminação por -é, como em parler–parlé. Muitos verbos em -ir usam -i, enquanto os verbos em -re frequentemente formam o particípio em -u."
+        },
+        {
+          "question": "Por que alguns verbos franceses usam être em vez de avoir?",
+          "answer": "A maioria dos verbos utiliza avoir, mas os verbos pronominais e um grupo de verbos intransitivos frequentes empregam être nos tempos compostos. Com être, o particípio passado normalmente concorda com o sujeito em género e número."
+        },
+        {
+          "question": "Qual é a melhor forma de memorizar as formas passadas francesas?",
+          "answer": "Aprenda o infinitivo, uma forma de referência no imperfeito, o particípio passado e o auxiliar como um único conjunto. Depois, use cada verbo em uma frase no imperfeito e em outra com um tempo composto, revendo as formas irregulares em intervalos espaçados."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "ru",
+    "urlSlug": "formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-frantsuzskih-glagolov",
+    "entryButtonLabel": "Прошедшие формы французских глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "translation": "Перевод на русский"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Имперфект" },
+      { "key": "pastParticiple", "label": "Причастие прошедшего времени" },
+      { "key": "auxiliary", "label": "Вспомогательный глагол" }
+    ],
+    "metadata": {
+      "title": "Прошедшие формы 100 самых употребительных французских глаголов",
+      "metaTitle": "100 французских глаголов и их прошедшие формы",
+      "metaDescription": "Изучите имперфект, причастие прошедшего времени и вспомогательный глагол у 100 распространённых французских глаголов."
+    },
+    "hero": {
+      "heading": "Прошедшие формы 100 самых употребительных французских глаголов",
+      "subtitle": "Сравнивайте имперфект, причастие прошедшего времени и вспомогательный глагол основных французских глаголов.",
+      "introParagraphs": [
+        "На этой странице собраны 100 часто употребляемых французских глаголов со справочной формой имперфекта, причастием прошедшего времени и вспомогательным глаголом для составных времён. Таблица позволяет сопоставить инфинитив, перевод на русский язык и основные формы, необходимые для описания ситуаций и действий в прошлом.",
+        "Полезно учить эти элементы вместе, поскольку французский язык выражает прошедшее значение с помощью разных конструкций. Имперфект описывает привычки, длительные действия и фоновые обстоятельства, а причастие прошедшего времени сочетается с avoir или être при образовании составных времён, например passé composé."
+      ]
+    },
+    "overview": {
+      "heading": "Как образуются прошедшие формы французских глаголов",
+      "paragraphs": [
+        "Частотные французские глаголы постоянно встречаются в разговорах, рассказах, сообщениях, инструкциях и повседневных текстах. Знание их основных прошедших форм помогает точнее описывать привычки, фоновые ситуации, завершённые события и личный опыт.",
+        "Имперфект является спрягаемой формой, окончания которой зависят от лица и числа. Причастие прошедшего времени представляет собой неличную форму и используется со вспомогательным глаголом, обычно avoir, а в определённых случаях être; в некоторых конструкциях оно также согласуется в роде и числе."
+      ]
+    },
+    "table": {
+      "heading": "Таблица прошедших форм 100 французских глаголов",
+      "description": "В каждой строке указаны французский инфинитив, перевод на русский язык, справочная форма имперфекта, причастие прошедшего времени и вспомогательный глагол для составных времён.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо",
+      "notes": [
+        "У большинства глаголов имперфект образуется от основы формы настоящего времени с nous и получает окончания, зависящие от лица и числа.",
+        "Правильные глаголы на -er обычно образуют причастие с окончанием -é, а многие глаголы на -ir и -re — с окончаниями -i или -u.",
+        "Большинство глаголов употребляется с avoir, тогда как возвратные глаголы и некоторые глаголы движения или изменения состояния используют être.",
+        "Причастие прошедшего времени может согласовываться в роде и числе в конструкциях с être и в отдельных случаях с прямым дополнением, стоящим перед глаголом."
+      ]
+    },
+    "howToUse": {
+      "heading": "Как работать с таблицей",
+      "steps": [
+        {
+          "heading": "Начните с инфинитива",
+          "text": "Прочитайте французский глагол в словарной форме и убедитесь, что понимаете его перевод на русский язык."
+        },
+        {
+          "heading": "Изучите имперфект",
+          "text": "Определите, следует ли форма регулярной модели основы или использует особую основу, как в случае с être."
+        },
+        {
+          "heading": "Учите причастие вместе со вспомогательным глаголом",
+          "text": "Запоминайте причастие прошедшего времени вместе с avoir или être, чтобы правильно образовывать passé composé."
+        },
+        {
+          "heading": "Используйте обе конструкции",
+          "text": "Составьте одно предложение о привычном или длительном действии и другое с причастием в составном прошедшем времени."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Как запоминать прошедшие формы французских глаголов",
+      "items": [
+        {
+          "heading": "Связывайте имперфект с формой nous",
+          "text": "Используйте форму настоящего времени с nous, чтобы найти основу большинства глаголов, а затем добавляйте нужное окончание."
+        },
+        {
+          "heading": "Группируйте причастия по моделям",
+          "text": "Учите вместе правильные причастия на -é, -i и -u, а неправильные формы fait, pris и eu повторяйте отдельно."
+        },
+        {
+          "heading": "Запоминайте вспомогательный глагол",
+          "text": "Учите сочетания a parlé и est allé как целые единицы, а не только отдельные причастия."
+        },
+        {
+          "heading": "Практикуйте согласование",
+          "text": "Составляйте короткие предложения с être и возвратными глаголами, чтобы лучше распознавать согласование по роду и числу."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Закрепите прошедшие формы на практике",
+      "description": "Повторите самые полезные французские глаголы и используйте имперфект и составные прошедшие времена в полных предложениях.",
+      "primaryLabel": "Практиковать французские глаголы",
+      "secondaryLabel": "100 самых употребительных французских глаголов"
+    },
+    "related": {
+      "heading": "Продолжить изучение французского языка",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных французских глаголов"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Французская лексика по уровням"
+        },
+        { "key": "levelTest", "label": "Тест на уровень французского языка" }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о прошедших формах французских глаголов",
+      "items": [
+        {
+          "question": "Для чего используется имперфект во французском языке?",
+          "answer": "Имперфект описывает длительные ситуации, повторяющиеся действия, привычки и фоновые обстоятельства в прошлом. Он часто употребляется, когда начало или конец действия не являются главным содержанием высказывания."
+        },
+        {
+          "question": "Как образуется французский имперфект?",
+          "answer": "У большинства глаголов от формы настоящего времени с nous убирается окончание -ons, после чего добавляются окончания имперфекта. Главным исключением является глагол être, который использует основу ét-."
+        },
+        {
+          "question": "Как образуются правильные французские причастия прошедшего времени?",
+          "answer": "Правильные глаголы на -er обычно заменяют это окончание на -é, например parler–parlé. Многие глаголы на -ir используют -i, а глаголы на -re часто образуют причастие с -u."
+        },
+        {
+          "question": "Почему некоторые французские глаголы используют être вместо avoir?",
+          "answer": "Большинство глаголов употребляется с avoir, но возвратные глаголы и группа распространённых непереходных глаголов образуют составные времена с être. При употреблении être причастие обычно согласуется с подлежащим в роде и числе."
+        },
+        {
+          "question": "Как лучше запоминать прошедшие формы французских глаголов?",
+          "answer": "Учите инфинитив, справочную форму имперфекта, причастие прошедшего времени и вспомогательный глагол как единый набор. Затем используйте каждый глагол в предложении с имперфектом и в составном прошедшем времени, повторяя неправильные формы через увеличивающиеся интервалы."
+        }
+      ]
+    }
   }
 ]
