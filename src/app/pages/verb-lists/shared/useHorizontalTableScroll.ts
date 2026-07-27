@@ -4,9 +4,19 @@ export interface HorizontalScrollState {
   canScroll: boolean;
   atStart: boolean;
   atEnd: boolean;
+  // The scroll region's visible (viewport) width — distinct from the
+  // table's full scrollWidth. Lets a sticky-left element inside the table
+  // (e.g. a full-width search row) size itself to exactly what's on screen
+  // instead of the table's full scrollable width.
+  containerWidth: number;
 }
 
-const INITIAL_SCROLL_STATE: HorizontalScrollState = { canScroll: false, atStart: true, atEnd: true };
+const INITIAL_SCROLL_STATE: HorizontalScrollState = {
+  canScroll: false,
+  atStart: true,
+  atEnd: true,
+  containerWidth: 0,
+};
 
 // Tracks whether a horizontally-scrollable region actually overflows its
 // container, and which edge it's currently at, so a "swipe" hint and
@@ -30,6 +40,7 @@ export function useHorizontalTableScroll(dependencies: readonly unknown[]) {
         canScroll: node.scrollWidth > node.clientWidth + 1,
         atStart: node.scrollLeft <= 0,
         atEnd: node.scrollLeft >= node.scrollWidth - node.clientWidth - 1,
+        containerWidth: node.clientWidth,
       });
     };
 

@@ -12,6 +12,7 @@ import {
 import type { VerbListContent } from "../../../../data/seo/verbLists/common100Verbs/common100VerbRouteHelpers";
 import { SEOHead, type SeoMetadata } from "../../../../seo/SeoContext";
 import { useLanguage } from "../../../../contexts/LanguageContext";
+import { rowMatchesSearch } from "../shared/rowSearch";
 import { VerbListTableSection } from "./VerbListTableSection";
 
 export interface RichVerbListSeoRow {
@@ -96,14 +97,7 @@ export function RichVerbListSeoPage({
 
   const normalizedSearch = searchValue.trim().toLowerCase();
   const filteredRows = useMemo(
-    () =>
-      rows.filter((row) => {
-        if (!normalizedSearch) {
-          return true;
-        }
-
-        return row.verb.toLowerCase().includes(normalizedSearch);
-      }),
+    () => rows.filter((row) => rowMatchesSearch(normalizedSearch, [row.verb, row.translation, row.definition])),
     [normalizedSearch, rows],
   );
 
@@ -140,21 +134,7 @@ export function RichVerbListSeoPage({
         </section>
 
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
-          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div>
-              <h2 className="text-2xl text-foreground">{content.sections.verbListHeading}</h2>
-            </div>
-            <label className="flex w-full max-w-[22rem] shrink-0 text-sm text-foreground">
-              <span className="sr-only">{content.filters.searchPlaceholder}</span>
-              <input
-                type="search"
-                value={searchValue}
-                onChange={(event) => setSearchValue(event.target.value)}
-                placeholder={content.filters.searchPlaceholder}
-                className="w-full rounded-xl border border-primary/35 bg-primary/5 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
-              />
-            </label>
-          </div>
+          <h2 className="text-2xl text-foreground">{content.sections.verbListHeading}</h2>
 
           <VerbListTableSection
             rows={filteredRows}
@@ -169,6 +149,9 @@ export function RichVerbListSeoPage({
             scrollHint={content.table.scrollHint}
             scrollLeftLabel={content.table.scrollLeftLabel}
             scrollRightLabel={content.table.scrollRightLabel}
+            searchValue={searchValue}
+            onSearchChange={setSearchValue}
+            searchPlaceholder={content.filters.searchPlaceholder}
             noResultsMessage={filteredRows.length === 0 ? content.table.noResults : null}
           />
         </section>

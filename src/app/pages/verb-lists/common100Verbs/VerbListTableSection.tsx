@@ -2,6 +2,7 @@ import { Volume2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useHorizontalTableScroll } from "../shared/useHorizontalTableScroll";
 import { TableScrollControls } from "../shared/TableScrollControls";
+import { TableSearchRow } from "../shared/TableSearchRow";
 import {
   NUMBER_COLUMN_WIDTH,
   STICKY_BODY_CELL,
@@ -31,6 +32,9 @@ interface VerbListTableSectionProps {
   scrollHint: string;
   scrollLeftLabel: string;
   scrollRightLabel: string;
+  searchValue: string;
+  onSearchChange: (value: string) => void;
+  searchPlaceholder: string;
   noResultsMessage: string | null;
 }
 
@@ -51,8 +55,8 @@ const HINT_ID = "verb-list-scroll-hint";
 // "Rich" page and the no-localized-content "table only" fallback both
 // render the exact same table shape: number, verb, an optional
 // translation column, definition). Isolated here so both callers get
-// identical sticky/scroll/mobile behavior from one implementation instead
-// of two copies drifting apart.
+// identical sticky/scroll/mobile/search behavior from one implementation
+// instead of two copies drifting apart.
 export function VerbListTableSection({
   rows,
   showTranslationColumn,
@@ -66,61 +70,78 @@ export function VerbListTableSection({
   scrollHint,
   scrollLeftLabel,
   scrollRightLabel,
+  searchValue,
+  onSearchChange,
+  searchPlaceholder,
   noResultsMessage,
 }: VerbListTableSectionProps) {
   const { scrollRef, scrollState, scrollByPage } = useHorizontalTableScroll([
     rows.length,
     showTranslationColumn,
   ]);
+  const columnCount = showTranslationColumn ? 4 : 3;
 
   return (
-    <>
-      <div className="mt-5">
-        <TableScrollControls
-          scrollState={scrollState}
-          hint={scrollHint}
-          hintId={HINT_ID}
-          scrollLeftLabel={scrollLeftLabel}
-          scrollRightLabel={scrollRightLabel}
-          onScrollLeft={() => scrollByPage(-1)}
-          onScrollRight={() => scrollByPage(1)}
-        />
+    <div className="mt-5">
+      <TableScrollControls
+        scrollState={scrollState}
+        hint={scrollHint}
+        hintId={HINT_ID}
+        scrollLeftLabel={scrollLeftLabel}
+        scrollRightLabel={scrollRightLabel}
+        onScrollLeft={() => scrollByPage(-1)}
+        onScrollRight={() => scrollByPage(1)}
+      />
 
-        <div
-          ref={scrollRef}
-          role="region"
-          tabIndex={0}
-          aria-label={regionLabel || undefined}
-          aria-describedby={scrollState.canScroll && scrollHint ? HINT_ID : undefined}
-          className="overflow-x-auto rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-        >
-          <table className="w-full border-collapse text-left text-sm">
-            <thead>
+      <div
+        ref={scrollRef}
+        role="region"
+        tabIndex={0}
+        aria-label={regionLabel || undefined}
+        aria-describedby={scrollState.canScroll && scrollHint ? HINT_ID : undefined}
+        className="overflow-x-auto rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+      >
+        <table className="w-full border-collapse text-left text-sm">
+          <thead>
+            <TableSearchRow
+              colSpan={columnCount}
+              searchValue={searchValue}
+              onSearchChange={onSearchChange}
+              placeholder={searchPlaceholder}
+              containerWidth={scrollState.containerWidth}
+            />
+            <tr>
+              <th
+                style={{ width: NUMBER_COLUMN_WIDTH, minWidth: NUMBER_COLUMN_WIDTH, left: 0 }}
+                className={`${STICKY_HEADER_CELL} border-b border-border py-3 pl-1 pr-1 text-sm text-foreground`}
+              >
+                {numberLabel}
+              </th>
+              <th
+                style={{ left: NUMBER_COLUMN_WIDTH }}
+                className={`${STICKY_HEADER_CELL} ${scrollState.canScroll ? STICKY_EDGE_SHADOW : ""} min-w-[5.5rem] max-w-[7.5rem] border-b border-border py-3 pl-2 pr-3 text-sm text-foreground sm:min-w-[9rem] sm:max-w-none`}
+              >
+                {verbLabel}
+              </th>
+              {showTranslationColumn ? (
+                <th className="min-w-[7rem] border-b border-border py-3 pr-4 text-sm text-foreground">
+                  {translationLabel}
+                </th>
+              ) : null}
+              <th className="whitespace-nowrap border-b border-border py-3 pr-4 text-sm text-foreground">
+                {definitionLabel}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.length === 0 ? (
               <tr>
-                <th
-                  style={{ width: NUMBER_COLUMN_WIDTH, minWidth: NUMBER_COLUMN_WIDTH, left: 0 }}
-                  className={`${STICKY_HEADER_CELL} border-b border-border py-3 pl-1 pr-1 text-sm text-foreground`}
-                >
-                  {numberLabel}
-                </th>
-                <th
-                  style={{ left: NUMBER_COLUMN_WIDTH }}
-                  className={`${STICKY_HEADER_CELL} ${scrollState.canScroll ? STICKY_EDGE_SHADOW : ""} min-w-[5.5rem] max-w-[7.5rem] border-b border-border py-3 pl-2 pr-3 text-sm text-foreground sm:min-w-[9rem] sm:max-w-none`}
-                >
-                  {verbLabel}
-                </th>
-                {showTranslationColumn ? (
-                  <th className="min-w-[7rem] border-b border-border py-3 pr-4 text-sm text-foreground">
-                    {translationLabel}
-                  </th>
-                ) : null}
-                <th className="whitespace-nowrap border-b border-border py-3 pr-4 text-sm text-foreground">
-                  {definitionLabel}
-                </th>
+                <td colSpan={columnCount} className="py-6 text-center text-sm text-muted-foreground">
+                  {noResultsMessage}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
+            ) : (
+              rows.map((row) => (
                 <tr key={row.id}>
                   <td
                     style={{ width: NUMBER_COLUMN_WIDTH, minWidth: NUMBER_COLUMN_WIDTH, left: 0 }}
@@ -159,13 +180,11 @@ export function VerbListTableSection({
                     {row.definition || "-"}
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
-
-      {noResultsMessage ? <p className="mt-4 text-sm text-muted-foreground">{noResultsMessage}</p> : null}
-    </>
+    </div>
   );
 }

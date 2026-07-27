@@ -8,6 +8,7 @@ import type {
 import type { PastVerbFormsRowForms } from "../../../../data/seo/verbLists/pastForms100Verbs/pastForms100VerbFormsData";
 import { useHorizontalTableScroll } from "../shared/useHorizontalTableScroll";
 import { TableScrollControls } from "../shared/TableScrollControls";
+import { TableSearchRow } from "../shared/TableSearchRow";
 import {
   NUMBER_COLUMN_WIDTH,
   STICKY_BODY_CELL,
@@ -28,6 +29,12 @@ interface PastVerbFormsTableSectionProps {
   tableConfig: PastVerbFormsTableConfig;
   tableColumns: PastVerbFormsTableColumns;
   pastForms: PastVerbFormsFormColumn[];
+  // Whether the underlying (unfiltered) dataset has any rows at all — the
+  // "isTableReady" signal. Kept separate from `rows` (which is the
+  // search-filtered set actually rendered) so an empty search result
+  // doesn't get mistaken for "this target language has no data yet" and
+  // fall back to the dev placeholder.
+  hasRows: boolean;
   rows: PastVerbFormsRow[];
   speechLang: string;
   heading: string;
@@ -37,6 +44,10 @@ interface PastVerbFormsTableSectionProps {
   scrollRightLabel: string;
   notes: string[];
   placeholderMessage: string;
+  searchValue: string;
+  onSearchChange: (value: string) => void;
+  searchPlaceholder: string;
+  noResultsMessage: string;
 }
 
 function speakVerb(verb: string, speechLang: string) {
@@ -55,15 +66,16 @@ const HINT_ID = "past-verb-forms-scroll-hint";
 // Rendering boundary for the past-verb-forms table, isolated so its body can
 // be swapped without any other page code changing. Column identity/order/
 // labels come from tableColumns/pastForms (localized JSON content, per
-// targetLanguage x uiLanguage); tableConfig.isTableReady + a non-empty rows
-// array are the separate, non-localized signal that a target language's
-// actual verb-row dataset exists (see pastForms100VerbFormsData.ts /
+// targetLanguage x uiLanguage); tableConfig.isTableReady + hasRows are the
+// separate, non-localized signal that a target language's actual verb-row
+// dataset exists (see pastForms100VerbFormsData.ts /
 // pastForms100VerbTableConfig.ts) — both must be true to render the real
 // table instead of the placeholder.
 export function PastVerbFormsTableSection({
   tableConfig,
   tableColumns,
   pastForms,
+  hasRows,
   rows,
   speechLang,
   heading,
@@ -73,13 +85,18 @@ export function PastVerbFormsTableSection({
   scrollRightLabel,
   notes,
   placeholderMessage,
+  searchValue,
+  onSearchChange,
+  searchPlaceholder,
+  noResultsMessage,
 }: PastVerbFormsTableSectionProps) {
-  const canRenderTable = tableConfig.isTableReady && pastForms.length > 0 && rows.length > 0;
+  const canRenderTable = tableConfig.isTableReady && pastForms.length > 0 && hasRows;
   const { scrollRef, scrollState, scrollByPage } = useHorizontalTableScroll([
     canRenderTable,
     pastForms.length,
     rows.length,
   ]);
+  const columnCount = pastForms.length + 3;
 
   return (
     <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
@@ -108,6 +125,13 @@ export function PastVerbFormsTableSection({
           >
             <table className="w-full border-collapse text-left text-sm">
               <thead>
+                <TableSearchRow
+                  colSpan={columnCount}
+                  searchValue={searchValue}
+                  onSearchChange={onSearchChange}
+                  placeholder={searchPlaceholder}
+                  containerWidth={scrollState.containerWidth}
+                />
                 <tr>
                   <th
                     style={{ width: NUMBER_COLUMN_WIDTH, minWidth: NUMBER_COLUMN_WIDTH, left: 0 }}
@@ -135,49 +159,60 @@ export function PastVerbFormsTableSection({
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row) => (
-                  <tr key={row.id}>
-                    <td
-                      style={{ width: NUMBER_COLUMN_WIDTH, minWidth: NUMBER_COLUMN_WIDTH, left: 0 }}
-                      className={`${STICKY_BODY_CELL} border-b border-border/70 py-3 pl-1 pr-1 align-top text-sm text-muted-foreground`}
-                    >
-                      {row.index}
-                    </td>
-                    <td
-                      style={{ left: NUMBER_COLUMN_WIDTH }}
-                      className={`${STICKY_BODY_CELL} ${scrollState.canScroll ? STICKY_EDGE_SHADOW : ""} min-w-[5.5rem] max-w-[7.5rem] whitespace-normal break-words border-b border-border/70 py-3 pl-2 pr-3 align-top text-sm font-medium text-foreground sm:min-w-[9rem] sm:max-w-none sm:whitespace-nowrap`}
-                    >
-                      <div className="flex min-w-0 items-center gap-1.5">
-                        <button
-                          type="button"
-                          aria-label={row.infinitive}
-                          onClick={() => speakVerb(row.infinitive, speechLang)}
-                          className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-primary/80 transition hover:bg-primary/10 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
-                        >
-                          <Volume2 className="h-3.5 w-3.5" />
-                        </button>
-                        {row.href ? (
-                          <Link className="min-w-0 break-words text-primary transition hover:underline" to={row.href}>
-                            {row.infinitive}
-                          </Link>
-                        ) : (
-                          <span className="min-w-0 break-words">{row.infinitive}</span>
-                        )}
-                      </div>
-                    </td>
-                    {pastForms.map((form) => (
-                      <td
-                        key={form.key}
-                        className="min-w-[7rem] whitespace-nowrap border-b border-border/70 py-3 pr-4 align-top text-sm text-muted-foreground"
-                      >
-                        {row.forms[form.key] || "—"}
-                      </td>
-                    ))}
-                    <td className="min-w-[9rem] border-b border-border/70 py-3 pr-4 align-top text-sm text-muted-foreground">
-                      {row.translation || "—"}
+                {rows.length === 0 ? (
+                  <tr>
+                    <td colSpan={columnCount} className="py-6 text-center text-sm text-muted-foreground">
+                      {noResultsMessage}
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  rows.map((row) => (
+                    <tr key={row.id}>
+                      <td
+                        style={{ width: NUMBER_COLUMN_WIDTH, minWidth: NUMBER_COLUMN_WIDTH, left: 0 }}
+                        className={`${STICKY_BODY_CELL} border-b border-border/70 py-3 pl-1 pr-1 align-top text-sm text-muted-foreground`}
+                      >
+                        {row.index}
+                      </td>
+                      <td
+                        style={{ left: NUMBER_COLUMN_WIDTH }}
+                        className={`${STICKY_BODY_CELL} ${scrollState.canScroll ? STICKY_EDGE_SHADOW : ""} min-w-[5.5rem] max-w-[7.5rem] whitespace-normal break-words border-b border-border/70 py-3 pl-2 pr-3 align-top text-sm font-medium text-foreground sm:min-w-[9rem] sm:max-w-none sm:whitespace-nowrap`}
+                      >
+                        <div className="flex min-w-0 items-center gap-1.5">
+                          <button
+                            type="button"
+                            aria-label={row.infinitive}
+                            onClick={() => speakVerb(row.infinitive, speechLang)}
+                            className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-primary/80 transition hover:bg-primary/10 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                          >
+                            <Volume2 className="h-3.5 w-3.5" />
+                          </button>
+                          {row.href ? (
+                            <Link
+                              className="min-w-0 break-words text-primary transition hover:underline"
+                              to={row.href}
+                            >
+                              {row.infinitive}
+                            </Link>
+                          ) : (
+                            <span className="min-w-0 break-words">{row.infinitive}</span>
+                          )}
+                        </div>
+                      </td>
+                      {pastForms.map((form) => (
+                        <td
+                          key={form.key}
+                          className="min-w-[7rem] whitespace-nowrap border-b border-border/70 py-3 pr-4 align-top text-sm text-muted-foreground"
+                        >
+                          {row.forms[form.key] || "—"}
+                        </td>
+                      ))}
+                      <td className="min-w-[9rem] border-b border-border/70 py-3 pr-4 align-top text-sm text-muted-foreground">
+                        {row.translation || "—"}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

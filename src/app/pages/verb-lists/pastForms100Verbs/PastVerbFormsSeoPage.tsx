@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   canLinkVerbListItem,
@@ -22,6 +22,8 @@ import { buildPastVerbFormsSeoMetadata } from "../../../../seo/verbLists/pastFor
 import { PAST_VERB_FORMS_DEV_PLACEHOLDER_MESSAGE } from "../../../../seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus";
 import { SEOHead, useSeoSiteOrigin } from "../../../../seo/SeoContext";
 import type { PastVerbFormsTableColumns } from "../../../../data/seo/verbLists/pastForms100Verbs/pastForms100VerbRouteHelpers";
+import { getTableSearchCopy } from "../shared/tableSearchCopy";
+import { rowMatchesSearch } from "../shared/rowSearch";
 import { PastVerbFormsTableSection, type PastVerbFormsRow } from "./PastVerbFormsTableSection";
 
 interface PastVerbFormsSeoPageProps {
@@ -109,6 +111,20 @@ export function PastVerbFormsSeoPage({
     }
     return result;
   }, [targetLanguage, uiLang]);
+
+  // Full-row search: matches if the text appears in the infinitive, any
+  // dynamic past-form value, or the translation — never the row number,
+  // which carries no searchable meaning.
+  const [searchValue, setSearchValue] = useState("");
+  const normalizedSearch = searchValue.trim().toLowerCase();
+  const filteredRows = useMemo(
+    () =>
+      rows.filter((row) =>
+        rowMatchesSearch(normalizedSearch, [row.infinitive, row.translation, ...Object.values(row.forms)]),
+      ),
+    [normalizedSearch, rows],
+  );
+  const searchCopy = getTableSearchCopy(uiLang);
 
   const seoMetadata = buildPastVerbFormsSeoMetadata({
     uiLang,
@@ -201,7 +217,8 @@ export function PastVerbFormsSeoPage({
           tableConfig={tableConfig}
           tableColumns={content?.tableColumns ?? EMPTY_TABLE_COLUMNS}
           pastForms={content?.pastForms ?? []}
-          rows={rows}
+          hasRows={rows.length > 0}
+          rows={filteredRows}
           speechLang={speechLang}
           heading={content?.table.heading ?? ""}
           description={content?.table.description ?? ""}
@@ -210,6 +227,10 @@ export function PastVerbFormsSeoPage({
           scrollRightLabel={content?.table.scrollRightLabel ?? ""}
           notes={content?.table.notes ?? []}
           placeholderMessage={PAST_VERB_FORMS_DEV_PLACEHOLDER_MESSAGE}
+          searchValue={searchValue}
+          onSearchChange={setSearchValue}
+          searchPlaceholder={searchCopy.searchPlaceholder}
+          noResultsMessage={searchCopy.noResults}
         />
 
         {hasOverviewContent ? (
