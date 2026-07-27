@@ -147,7 +147,7 @@ export function PastVerbFormsTableSection({
                       style={{ left: NUMBER_COLUMN_WIDTH }}
                       className={`${STICKY_BODY_CELL} ${scrollState.canScroll ? STICKY_EDGE_SHADOW : ""} min-w-[5.5rem] max-w-[7.5rem] whitespace-normal break-words border-b border-border/70 py-3 pl-2 pr-3 align-top text-sm font-medium text-foreground sm:min-w-[9rem] sm:max-w-none sm:whitespace-nowrap`}
                     >
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex min-w-0 items-center gap-1.5">
                         <button
                           type="button"
                           aria-label={row.infinitive}
@@ -157,11 +157,11 @@ export function PastVerbFormsTableSection({
                           <Volume2 className="h-3.5 w-3.5" />
                         </button>
                         {row.href ? (
-                          <Link className="text-primary transition hover:underline" to={row.href}>
+                          <Link className="min-w-0 break-words text-primary transition hover:underline" to={row.href}>
                             {row.infinitive}
                           </Link>
                         ) : (
-                          row.infinitive
+                          <span className="min-w-0 break-words">{row.infinitive}</span>
                         )}
                       </div>
                     </td>
