@@ -1,0 +1,502 @@
+[
+  {
+    "concept_id": "A1-00008",
+    "preterite": "fui",
+    "pastParticiple": "sido"
+  },
+  {
+    "concept_id": "A1-00487",
+    "preterite": "tuve",
+    "pastParticiple": "tenido"
+  },
+  {
+    "concept_id": "A2-01701",
+    "preterite": "me convertí",
+    "pastParticiple": "convertido"
+  },
+  {
+    "concept_id": "A1-00167",
+    "preterite": "pude",
+    "pastParticiple": "podido"
+  },
+  {
+    "concept_id": "A1-00687",
+    "preterite": "debí",
+    "pastParticiple": "debido"
+  },
+  {
+    "concept_id": "A1-01120",
+    "preterite": "quise",
+    "pastParticiple": "querido"
+  },
+  {
+    "concept_id": "A2-01787",
+    "preterite": "debí",
+    "pastParticiple": "debido"
+  },
+  {
+    "concept_id": "A1-00643",
+    "preterite": "pude",
+    "pastParticiple": "podido"
+  },
+  {
+    "concept_id": "A1-00607",
+    "preterite": "gusté",
+    "pastParticiple": "gustado"
+  },
+  {
+    "concept_id": "A1-00633",
+    "preterite": "hice",
+    "pastParticiple": "hecho"
+  },
+  {
+    "concept_id": "A1-00292",
+    "preterite": "hice",
+    "pastParticiple": "hecho"
+  },
+  {
+    "concept_id": "A1-00441",
+    "preterite": "fui",
+    "pastParticiple": "ido"
+  },
+  {
+    "concept_id": "A1-00231",
+    "preterite": "vine",
+    "pastParticiple": "venido"
+  },
+  {
+    "concept_id": "A1-00871",
+    "preterite": "dije",
+    "pastParticiple": "dicho"
+  },
+  {
+    "concept_id": "A1-00956",
+    "preterite": "hablé",
+    "pastParticiple": "hablado"
+  },
+  {
+    "concept_id": "A1-01012",
+    "preterite": "hablé",
+    "pastParticiple": "hablado"
+  },
+  {
+    "concept_id": "A1-00049",
+    "preterite": "pregunté",
+    "pastParticiple": "preguntado"
+  },
+  {
+    "concept_id": "A1-00034",
+    "preterite": "respondí",
+    "pastParticiple": "respondido"
+  },
+  {
+    "concept_id": "A1-00494",
+    "preterite": "oí",
+    "pastParticiple": "oído"
+  },
+  {
+    "concept_id": "A1-00879",
+    "preterite": "vi",
+    "pastParticiple": "visto"
+  },
+  {
+    "concept_id": "A1-00621",
+    "preterite": "miré",
+    "pastParticiple": "mirado"
+  },
+  {
+    "concept_id": "A1-00383",
+    "preterite": "encontré",
+    "pastParticiple": "encontrado"
+  },
+  {
+    "concept_id": "A2-01107",
+    "preterite": "busqué",
+    "pastParticiple": "buscado"
+  },
+  {
+    "concept_id": "A1-00584",
+    "preterite": "supe",
+    "pastParticiple": "sabido"
+  },
+  {
+    "concept_id": "A1-01117",
+    "preterite": "me desperté",
+    "pastParticiple": "despertado"
+  },
+  {
+    "concept_id": "A1-01043",
+    "preterite": "pensé",
+    "pastParticiple": "pensado"
+  },
+  {
+    "concept_id": "A2-01482",
+    "preterite": "creí",
+    "pastParticiple": "creído"
+  },
+  {
+    "concept_id": "A2-01361",
+    "preterite": "entendí",
+    "pastParticiple": "entendido"
+  },
+  {
+    "concept_id": "A2-01558",
+    "preterite": "estudié",
+    "pastParticiple": "estudiado"
+  },
+  {
+    "concept_id": "A2-00950",
+    "preterite": "preparé",
+    "pastParticiple": "preparado"
+  },
+  {
+    "concept_id": "A1-01160",
+    "preterite": "trabajé",
+    "pastParticiple": "trabajado"
+  },
+  {
+    "concept_id": "A1-01118",
+    "preterite": "caminé",
+    "pastParticiple": "caminado"
+  },
+  {
+    "concept_id": "A1-00615",
+    "preterite": "viví",
+    "pastParticiple": "vivido"
+  },
+  {
+    "concept_id": "A1-00973",
+    "preterite": "me quedé",
+    "pastParticiple": "quedado"
+  },
+  {
+    "concept_id": "B1-02233",
+    "preterite": "descansé",
+    "pastParticiple": "descansado"
+  },
+  {
+    "concept_id": "A1-00693",
+    "preterite": "necesité",
+    "pastParticiple": "necesitado"
+  },
+  {
+    "concept_id": "A1-01011",
+    "preterite": "tomé",
+    "pastParticiple": "tomado"
+  },
+  {
+    "concept_id": "A1-00436",
+    "preterite": "di",
+    "pastParticiple": "dado"
+  },
+  {
+    "concept_id": "A1-00431",
+    "preterite": "obtuve",
+    "pastParticiple": "obtenido"
+  },
+  {
+    "concept_id": "A1-00139",
+    "preterite": "traje",
+    "pastParticiple": "traído"
+  },
+  {
+    "concept_id": "A1-00978",
+    "preterite": "paré",
+    "pastParticiple": "parado"
+  },
+  {
+    "concept_id": "A1-00158",
+    "preterite": "compré",
+    "pastParticiple": "comprado"
+  },
+  {
+    "concept_id": "A1-00881",
+    "preterite": "vendí",
+    "pastParticiple": "vendido"
+  },
+  {
+    "concept_id": "A1-00762",
+    "preterite": "pagué",
+    "pastParticiple": "pagado"
+  },
+  {
+    "concept_id": "A2-00296",
+    "preterite": "costé",
+    "pastParticiple": "costado"
+  },
+  {
+    "concept_id": "A1-00322",
+    "preterite": "comí",
+    "pastParticiple": "comido"
+  },
+  {
+    "concept_id": "A1-00308",
+    "preterite": "bebí",
+    "pastParticiple": "bebido"
+  },
+  {
+    "concept_id": "A1-00237",
+    "preterite": "cociné",
+    "pastParticiple": "cocinado"
+  },
+  {
+    "concept_id": "A1-01125",
+    "preterite": "vi",
+    "pastParticiple": "visto"
+  },
+  {
+    "concept_id": "A1-00925",
+    "preterite": "dormí",
+    "pastParticiple": "dormido"
+  },
+  {
+    "concept_id": "A1-00021",
+    "preterite": "me levanté",
+    "pastParticiple": "levantado"
+  },
+  {
+    "concept_id": "A1-00916",
+    "preterite": "me senté",
+    "pastParticiple": "sentado"
+  },
+  {
+    "concept_id": "A1-00968",
+    "preterite": "estuve de pie",
+    "pastParticiple": "estado de pie"
+  },
+  {
+    "concept_id": "A2-00717",
+    "preterite": "me acosté",
+    "pastParticiple": "acostado"
+  },
+  {
+    "concept_id": "A1-00932",
+    "preterite": "sonreí",
+    "pastParticiple": "sonreído"
+  },
+  {
+    "concept_id": "A1-00817",
+    "preterite": "puse",
+    "pastParticiple": "puesto"
+  },
+  {
+    "concept_id": "B1-04098",
+    "preterite": "coloqué",
+    "pastParticiple": "colocado"
+  },
+  {
+    "concept_id": "A1-00309",
+    "preterite": "conduje",
+    "pastParticiple": "conducido"
+  },
+  {
+    "concept_id": "A2-01805",
+    "preterite": "viajé",
+    "pastParticiple": "viajado"
+  },
+  {
+    "concept_id": "A1-00591",
+    "preterite": "me reí",
+    "pastParticiple": "reído"
+  },
+  {
+    "concept_id": "A1-00859",
+    "preterite": "corrí",
+    "pastParticiple": "corrido"
+  },
+  {
+    "concept_id": "A1-00785",
+    "preterite": "jugué",
+    "pastParticiple": "jugado"
+  },
+  {
+    "concept_id": "A1-00828",
+    "preterite": "leí",
+    "pastParticiple": "leído"
+  },
+  {
+    "concept_id": "A1-01167",
+    "preterite": "escribí",
+    "pastParticiple": "escrito"
+  },
+  {
+    "concept_id": "A1-00731",
+    "preterite": "abrí",
+    "pastParticiple": "abierto"
+  },
+  {
+    "concept_id": "A1-00210",
+    "preterite": "cerré",
+    "pastParticiple": "cerrado"
+  },
+  {
+    "concept_id": "A1-00970",
+    "preterite": "empecé",
+    "pastParticiple": "empezado"
+  },
+  {
+    "concept_id": "A1-00088",
+    "preterite": "comencé",
+    "pastParticiple": "comenzado"
+  },
+  {
+    "concept_id": "A2-00284",
+    "preterite": "continué",
+    "pastParticiple": "continuado"
+  },
+  {
+    "concept_id": "A1-01114",
+    "preterite": "esperé",
+    "pastParticiple": "esperado"
+  },
+  {
+    "concept_id": "A1-00498",
+    "preterite": "ayudé",
+    "pastParticiple": "ayudado"
+  },
+  {
+    "concept_id": "A1-00903",
+    "preterite": "mostré",
+    "pastParticiple": "mostrado"
+  },
+  {
+    "concept_id": "A2-00460",
+    "preterite": "expliqué",
+    "pastParticiple": "explicado"
+  },
+  {
+    "concept_id": "A1-01022",
+    "preterite": "conté",
+    "pastParticiple": "contado"
+  },
+  {
+    "concept_id": "A1-01104",
+    "preterite": "usé",
+    "pastParticiple": "usado"
+  },
+  {
+    "concept_id": "B2-02656",
+    "preterite": "utilicé",
+    "pastParticiple": "utilizado"
+  },
+  {
+    "concept_id": "A1-01130",
+    "preterite": "llevé",
+    "pastParticiple": "llevado"
+  },
+  {
+    "concept_id": "A1-01088",
+    "preterite": "giré",
+    "pastParticiple": "girado"
+  },
+  {
+    "concept_id": "A1-00595",
+    "preterite": "aprendí",
+    "pastParticiple": "aprendido"
+  },
+  {
+    "concept_id": "A2-01117",
+    "preterite": "envié",
+    "pastParticiple": "enviado"
+  },
+  {
+    "concept_id": "A2-01542",
+    "preterite": "planeé",
+    "pastParticiple": "planeado"
+  },
+  {
+    "concept_id": "A1-00163",
+    "preterite": "llamé",
+    "pastParticiple": "llamado"
+  },
+  {
+    "concept_id": "A1-00650",
+    "preterite": "conocí",
+    "pastParticiple": "conocido"
+  },
+  {
+    "concept_id": "A1-01111",
+    "preterite": "visité",
+    "pastParticiple": "visitado"
+  },
+  {
+    "concept_id": "A1-00623",
+    "preterite": "amé",
+    "pastParticiple": "amado"
+  },
+  {
+    "concept_id": "A1-00679",
+    "preterite": "me moví",
+    "pastParticiple": "movido"
+  },
+  {
+    "concept_id": "A1-00371",
+    "preterite": "sentí",
+    "pastParticiple": "sentido"
+  },
+  {
+    "concept_id": "A2-01742",
+    "preterite": "sucedí",
+    "pastParticiple": "sucedido"
+  },
+  {
+    "concept_id": "A2-00133",
+    "preterite": "pertenecí",
+    "pastParticiple": "pertenecido"
+  },
+  {
+    "concept_id": "A2-01814",
+    "preterite": "gané",
+    "pastParticiple": "ganado"
+  },
+  {
+    "concept_id": "B1-01577",
+    "preterite": "perdí",
+    "pastParticiple": "perdido"
+  },
+  {
+    "concept_id": "B2-00065",
+    "preterite": "alteré",
+    "pastParticiple": "alterado"
+  },
+  {
+    "concept_id": "A1-00186",
+    "preterite": "cambié",
+    "pastParticiple": "cambiado"
+  },
+  {
+    "concept_id": "A1-01083",
+    "preterite": "intenté",
+    "pastParticiple": "intentado"
+  },
+  {
+    "concept_id": "A1-00257",
+    "preterite": "lloré",
+    "pastParticiple": "llorado"
+  },
+  {
+    "concept_id": "A1-00406",
+    "preterite": "olvidé",
+    "pastParticiple": "olvidado"
+  },
+  {
+    "concept_id": "A1-00836",
+    "preterite": "recordé",
+    "pastParticiple": "recordado"
+  },
+  {
+    "concept_id": "A1-00600",
+    "preterite": "dejé",
+    "pastParticiple": "dejado"
+  },
+  {
+    "concept_id": "A1-00511",
+    "preterite": "sostuve",
+    "pastParticiple": "sostenido"
+  },
+  {
+    "concept_id": "A1-00596",
+    "preterite": "me fui",
+    "pastParticiple": "ido"
+  }
+]

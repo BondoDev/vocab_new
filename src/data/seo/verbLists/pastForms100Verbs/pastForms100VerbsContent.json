@@ -1859,5 +1859,938 @@
         }
       ]
     }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "en",
+    "urlSlug": "past-forms-100-most-common-spanish-verbs",
+    "entryButtonLabel": "Spanish Verb Past Forms",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "translation": "English translation"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Preterite" },
+      { "key": "pastParticiple", "label": "Past Participle" }
+    ],
+    "metadata": {
+      "title": "Past Forms of the 100 Most Common Spanish Verbs",
+      "metaTitle": "100 Common Spanish Verbs and Their Past Forms",
+      "metaDescription": "Explore the preterite and past participle of 100 common Spanish verbs, including regular patterns, irregular forms, and English translations."
+    },
+    "hero": {
+      "heading": "Past Forms of the 100 Most Common Spanish Verbs",
+      "subtitle": "Compare the preterite and past participle of essential Spanish verbs in one practical reference.",
+      "introParagraphs": [
+        "This page brings together 100 frequently used Spanish verbs with their preterite and past participle forms. The table lets you compare each infinitive with its English translation and the principal forms needed to discuss completed actions and build compound tenses.",
+        "Learning these forms is particularly useful because many common Spanish verbs are irregular. Some change their stem in the preterite, while others have an irregular past participle that cannot be formed by applying the standard endings alone."
+      ]
+    },
+    "overview": {
+      "heading": "How Spanish Past Verb Forms Work",
+      "paragraphs": [
+        "Common Spanish verbs appear constantly in conversations, stories, messages, instructions, and everyday texts. Knowing their past forms helps you describe completed events, talk about experiences, and recognize important verb patterns when reading or listening.",
+        "The preterite expresses actions viewed as completed in the past and changes according to grammatical person. The past participle is a non-finite form used with haber in compound tenses, such as the present perfect, and it can also appear in passive and adjectival constructions."
+      ]
+    },
+    "table": {
+      "heading": "Table of 100 Common Spanish Verb Past Forms",
+      "description": "Each row shows the Spanish infinitive, its English translation, a reference preterite form, and the past participle for quick comparison and review.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right",
+      "notes": [
+        "Regular -ar verbs normally form the past participle with -ado, while -er and -ir verbs usually use -ido.",
+        "Many common verbs have irregular preterite stems or endings that must be learned separately.",
+        "The preterite is conjugated for person and number, so its full form changes with the subject.",
+        "Past participles used with haber do not change for gender or number, but adjectival participles may agree with the noun."
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study the Table",
+      "steps": [
+        {
+          "heading": "Start with the infinitive",
+          "text": "Read the Spanish verb in its dictionary form and confirm that you understand its English meaning."
+        },
+        {
+          "heading": "Examine the preterite",
+          "text": "Notice whether the verb follows the regular -ar, -er, or -ir pattern or uses an irregular stem or ending."
+        },
+        {
+          "heading": "Compare the past participle",
+          "text": "Check whether the participle uses the regular -ado or -ido ending or has an irregular form."
+        },
+        {
+          "heading": "Use both forms in context",
+          "text": "Write a completed-action sentence in the preterite and a compound-tense sentence with haber and the past participle."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Remembering Spanish Past Forms",
+      "items": [
+        {
+          "heading": "Group verbs by ending",
+          "text": "Study -ar, -er, and -ir verbs separately so that regular preterite endings and participle patterns become easier to recognize."
+        },
+        {
+          "heading": "Learn irregular stems together",
+          "text": "Group verbs with related preterite patterns, such as tener–tuv-, estar–estuv-, and poder–pud-."
+        },
+        {
+          "heading": "Memorize irregular participles",
+          "text": "Give extra attention to forms such as hecho, dicho, visto, escrito, and puesto, which do not use the regular endings."
+        },
+        {
+          "heading": "Review complete sentences",
+          "text": "Practise each form in a short sentence and return to difficult verbs after one day, several days, and one week."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Put Spanish Past Forms into Practice",
+      "description": "Review essential Spanish verbs and use their preterite and past participle forms in meaningful sentences.",
+      "primaryLabel": "Practice Spanish Verbs",
+      "secondaryLabel": "100 Most Common Spanish Verbs"
+    },
+    "related": {
+      "heading": "Continue Learning Spanish",
+      "items": [
+        { "key": "commonVerbs", "label": "100 Most Common Spanish Verbs" },
+        { "key": "vocabularyLevels", "label": "Spanish Vocabulary by Level" },
+        { "key": "levelTest", "label": "Spanish Level Test" }
+      ]
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions About Spanish Past Forms",
+      "items": [
+        {
+          "question": "What is the Spanish preterite used for?",
+          "answer": "The preterite is used for actions presented as completed in the past, especially events with a clear beginning or end. It is also common when describing a sequence of finished actions."
+        },
+        {
+          "question": "How do regular Spanish verbs form the preterite?",
+          "answer": "Regular verbs use endings determined by the infinitive group and the grammatical subject. Verbs ending in -ar follow one set of endings, while -er and -ir verbs share another set."
+        },
+        {
+          "question": "How are regular Spanish past participles formed?",
+          "answer": "Most -ar verbs replace the infinitive ending with -ado, as in hablar–hablado. Most -er and -ir verbs use -ido, as in comer–comido and vivir–vivido."
+        },
+        {
+          "question": "What is the best way to memorize irregular Spanish past forms?",
+          "answer": "Learn irregular verbs in small groups based on shared stems or spelling patterns. Use each one in a preterite sentence and a sentence with haber, then review the forms through spaced recall."
+        },
+        {
+          "question": "Does the Spanish past participle change for gender and number?",
+          "answer": "When used with haber in a compound tense, the participle normally remains unchanged, as in he escrito and hemos escrito. When it functions as an adjective or appears in certain passive constructions, it may agree with the noun in gender and number."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "es",
+    "urlSlug": "formas-pasadas-100-verbos-espanoles-mas-comunes",
+    "entryButtonLabel": "Formas pasadas de los verbos españoles",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Significado"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Pretérito indefinido" },
+      { "key": "pastParticiple", "label": "Participio pasado" }
+    ],
+    "metadata": {
+      "title": "Formas pasadas de los 100 verbos españoles más comunes",
+      "metaTitle": "100 verbos españoles y sus formas pasadas",
+      "metaDescription": "Consulta el pretérito indefinido y el participio pasado de 100 verbos españoles comunes, con formas regulares e irregulares."
+    },
+    "hero": {
+      "heading": "Formas pasadas de los 100 verbos españoles más comunes",
+      "subtitle": "Compara el pretérito indefinido y el participio pasado de verbos esenciales en una tabla práctica.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos españoles de uso frecuente con su forma de pretérito indefinido y su participio pasado. La tabla permite comparar el infinitivo, el significado y las dos formas principales necesarias para describir acciones terminadas y construir tiempos compuestos.",
+        "Aprender estas formas es especialmente útil porque muchos verbos comunes presentan irregularidades. Algunos cambian la raíz o las terminaciones en el pretérito, mientras que otros tienen participios irregulares que no se forman únicamente con las terminaciones habituales."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funcionan las formas pasadas en español",
+      "paragraphs": [
+        "Los verbos más comunes aparecen constantemente en conversaciones, relatos, mensajes, instrucciones y textos cotidianos. Conocer sus formas pasadas permite contar hechos terminados, hablar de experiencias y reconocer estructuras frecuentes al leer o escuchar español.",
+        "El pretérito indefinido expresa acciones consideradas completas en el pasado y se conjuga según la persona y el número. El participio pasado es una forma no personal que se utiliza con haber en los tiempos compuestos y también puede aparecer en construcciones pasivas o con función de adjetivo."
+      ]
+    },
+    "table": {
+      "heading": "Tabla de formas pasadas de 100 verbos españoles",
+      "description": "Cada fila muestra el infinitivo, su significado, una forma de referencia del pretérito indefinido y el participio pasado para facilitar la comparación y el repaso.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha",
+      "notes": [
+        "Los verbos regulares terminados en -ar suelen formar el participio con -ado, mientras que los terminados en -er e -ir suelen usar -ido.",
+        "Muchos verbos frecuentes tienen raíces o terminaciones irregulares en el pretérito indefinido.",
+        "El pretérito se conjuga según la persona y el número, por lo que la forma completa cambia con el sujeto.",
+        "Los participios usados con haber permanecen invariables, pero pueden concordar en género y número cuando funcionan como adjetivos."
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar la tabla",
+      "steps": [
+        {
+          "heading": "Empieza por el infinitivo",
+          "text": "Lee el verbo en su forma de diccionario y comprueba que entiendes su significado y su uso habitual."
+        },
+        {
+          "heading": "Examina el pretérito",
+          "text": "Observa si el verbo sigue el patrón regular de -ar, -er o -ir o si presenta una raíz o terminación irregular."
+        },
+        {
+          "heading": "Compara el participio",
+          "text": "Comprueba si se forma regularmente con -ado o -ido o si tiene una forma irregular que debes memorizar."
+        },
+        {
+          "heading": "Utiliza ambas formas",
+          "text": "Escribe una oración con una acción terminada en pretérito y otra con haber más el participio pasado."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para memorizar las formas pasadas",
+      "items": [
+        {
+          "heading": "Agrupa los verbos por terminación",
+          "text": "Estudia por separado los verbos en -ar, -er e -ir para reconocer más fácilmente los patrones regulares."
+        },
+        {
+          "heading": "Relaciona raíces irregulares",
+          "text": "Aprende juntos verbos con cambios parecidos, como tener–tuv-, estar–estuv- y poder–pud-."
+        },
+        {
+          "heading": "Memoriza los participios irregulares",
+          "text": "Presta especial atención a formas como hecho, dicho, visto, escrito y puesto, que no siguen las terminaciones regulares."
+        },
+        {
+          "heading": "Repasa con oraciones completas",
+          "text": "Usa cada forma en una frase breve y vuelve a los verbos difíciles después de un día, varios días y una semana."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pon en práctica las formas pasadas",
+      "description": "Repasa los verbos españoles más útiles y utiliza el pretérito y el participio en oraciones con sentido.",
+      "primaryLabel": "Practicar verbos españoles",
+      "secondaryLabel": "100 verbos españoles más comunes"
+    },
+    "related": {
+      "heading": "Continúa aprendiendo español",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Los 100 verbos españoles más comunes"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario español por niveles"
+        },
+        { "key": "levelTest", "label": "Prueba de nivel de español" }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre las formas pasadas en español",
+      "items": [
+        {
+          "question": "¿Para qué se usa el pretérito indefinido en español?",
+          "answer": "Se utiliza para presentar acciones o acontecimientos como terminados en el pasado, especialmente cuando tienen un principio o un final claro. También es frecuente para narrar una secuencia de hechos concluidos."
+        },
+        {
+          "question": "¿Cómo forman el pretérito los verbos regulares?",
+          "answer": "Las terminaciones dependen del grupo del infinitivo y de la persona gramatical. Los verbos en -ar siguen un conjunto de terminaciones, mientras que los verbos en -er e -ir comparten otro."
+        },
+        {
+          "question": "¿Cómo se forman los participios pasados regulares?",
+          "answer": "La mayoría de los verbos en -ar sustituyen esa terminación por -ado, como hablar–hablado. Los verbos en -er e -ir suelen usar -ido, como comer–comido y vivir–vivido."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las formas irregulares?",
+          "answer": "Conviene agrupar los verbos según raíces o cambios parecidos y aprender pocos cada vez. Después, utiliza cada uno en una oración en pretérito y otra con haber, y repásalos con intervalos crecientes."
+        },
+        {
+          "question": "¿El participio pasado cambia de género y número?",
+          "answer": "Cuando se utiliza con haber en un tiempo compuesto, normalmente permanece invariable, como en he escrito y hemos escrito. Cuando funciona como adjetivo o forma parte de ciertas construcciones pasivas, puede concordar con el sustantivo."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "fr",
+    "urlSlug": "formes-passees-100-verbes-espagnols-les-plus-courants",
+    "entryButtonLabel": "Formes passées des verbes espagnols",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "translation": "Traduction française"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Prétérit espagnol" },
+      { "key": "pastParticiple", "label": "Participe passé" }
+    ],
+    "metadata": {
+      "title": "Formes passées des 100 verbes espagnols les plus courants",
+      "metaTitle": "100 verbes espagnols et leurs formes passées",
+      "metaDescription": "Consultez le prétérit et le participe passé de 100 verbes espagnols courants, avec des formes régulières, irrégulières et leur traduction."
+    },
+    "hero": {
+      "heading": "Formes passées des 100 verbes espagnols les plus courants",
+      "subtitle": "Comparez le prétérit espagnol et le participe passé des verbes essentiels dans un tableau pratique.",
+      "introParagraphs": [
+        "Cette page réunit 100 verbes espagnols très fréquents avec leur forme au prétérit et leur participe passé. Le tableau permet de comparer rapidement l’infinitif, la traduction française et les deux formes principales utiles pour décrire des actions terminées et construire les temps composés.",
+        "L’apprentissage de ces formes est particulièrement important, car de nombreux verbes courants présentent des irrégularités. Certains modifient leur radical ou leurs terminaisons au prétérit, tandis que d’autres possèdent un participe passé qui ne suit pas les règles habituelles."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionnent les formes passées en espagnol",
+      "paragraphs": [
+        "Les verbes espagnols les plus courants apparaissent constamment dans les conversations, les récits, les messages, les consignes et les textes du quotidien. Connaître leurs formes passées aide à raconter des événements terminés, à parler de ses expériences et à reconnaître des structures fréquentes à l’oral comme à l’écrit.",
+        "Le prétérit espagnol exprime des actions considérées comme achevées dans le passé et se conjugue selon la personne et le nombre. Le participe passé est une forme non personnelle employée avec haber dans les temps composés et peut également apparaître dans des constructions passives ou adjectivales."
+      ]
+    },
+    "table": {
+      "heading": "Tableau des formes passées de 100 verbes espagnols",
+      "description": "Chaque ligne présente l’infinitif espagnol, sa traduction française, une forme de référence au prétérit et le participe passé pour faciliter la comparaison et la révision.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite",
+      "notes": [
+        "Les verbes réguliers en -ar forment généralement le participe passé avec -ado, tandis que ceux en -er et -ir utilisent habituellement -ido.",
+        "De nombreux verbes fréquents possèdent un radical ou des terminaisons irrégulières au prétérit.",
+        "Le prétérit se conjugue selon la personne et le nombre, de sorte que la forme complète varie avec le sujet.",
+        "Les participes employés avec haber restent invariables, mais ils peuvent s’accorder lorsqu’ils fonctionnent comme adjectifs."
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment étudier le tableau",
+      "steps": [
+        {
+          "heading": "Commencez par l’infinitif",
+          "text": "Lisez le verbe dans sa forme de dictionnaire et vérifiez que vous comprenez sa traduction et son emploi courant."
+        },
+        {
+          "heading": "Examinez le prétérit",
+          "text": "Observez si le verbe suit le modèle régulier des verbes en -ar, -er ou -ir ou s’il présente une forme irrégulière."
+        },
+        {
+          "heading": "Comparez le participe passé",
+          "text": "Vérifiez s’il se forme régulièrement avec -ado ou -ido ou s’il possède une forme particulière à mémoriser."
+        },
+        {
+          "heading": "Utilisez les deux formes",
+          "text": "Écrivez une phrase exprimant une action terminée au prétérit et une autre avec haber suivi du participe passé."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour mémoriser les formes passées",
+      "items": [
+        {
+          "heading": "Regroupez les verbes par terminaison",
+          "text": "Étudiez séparément les verbes en -ar, -er et -ir afin de mieux reconnaître les modèles réguliers."
+        },
+        {
+          "heading": "Associez les radicaux irréguliers",
+          "text": "Apprenez ensemble les verbes qui partagent des changements similaires, comme tener–tuv-, estar–estuv- et poder–pud-."
+        },
+        {
+          "heading": "Mémorisez les participes irréguliers",
+          "text": "Accordez une attention particulière à des formes comme hecho, dicho, visto, escrito et puesto."
+        },
+        {
+          "heading": "Révisez avec des phrases complètes",
+          "text": "Employez chaque forme dans une phrase courte et revenez sur les verbes difficiles après un jour, quelques jours puis une semaine."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Mettez les formes passées en pratique",
+      "description": "Révisez les verbes espagnols les plus utiles et employez leur prétérit et leur participe dans des phrases complètes.",
+      "primaryLabel": "Pratiquer les verbes espagnols",
+      "secondaryLabel": "Les 100 verbes espagnols les plus courants"
+    },
+    "related": {
+      "heading": "Poursuivez votre apprentissage de l’espagnol",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Les 100 verbes espagnols les plus courants"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire espagnol par niveau"
+        },
+        { "key": "levelTest", "label": "Test de niveau d’espagnol" }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur les formes passées en espagnol",
+      "items": [
+        {
+          "question": "À quoi sert le prétérit en espagnol ?",
+          "answer": "Il sert à présenter une action ou un événement comme achevé dans le passé, en particulier lorsqu’il possède un début ou une fin clairement délimités. Il est également fréquent pour raconter une succession d’actions terminées."
+        },
+        {
+          "question": "Comment les verbes réguliers forment-ils le prétérit ?",
+          "answer": "Les terminaisons dépendent du groupe de l’infinitif et de la personne grammaticale. Les verbes en -ar suivent un ensemble de terminaisons, tandis que les verbes en -er et -ir en partagent un autre."
+        },
+        {
+          "question": "Comment forme-t-on les participes passés réguliers ?",
+          "answer": "La plupart des verbes en -ar remplacent cette terminaison par -ado, comme hablar–hablado. Les verbes en -er et -ir utilisent généralement -ido, comme comer–comido et vivir–vivido."
+        },
+        {
+          "question": "Quelle est la meilleure manière de mémoriser les formes irrégulières ?",
+          "answer": "Regroupez les verbes selon leurs radicaux ou leurs changements communs et apprenez-en un petit nombre à la fois. Utilisez ensuite chaque verbe dans une phrase au prétérit et une autre avec haber, puis révisez-les à intervalles espacés."
+        },
+        {
+          "question": "Le participe passé espagnol s’accorde-t-il en genre et en nombre ?",
+          "answer": "Lorsqu’il est employé avec haber dans un temps composé, il reste normalement invariable, comme dans he escrito et hemos escrito. Lorsqu’il fonctionne comme adjectif ou dans certaines constructions passives, il peut s’accorder avec le nom."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "de",
+    "urlSlug": "vergangenheitsformen-100-haeufigste-spanische-verben",
+    "entryButtonLabel": "Vergangenheitsformen spanischer Verben",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "translation": "Deutsche Übersetzung"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Indefinido" },
+      { "key": "pastParticiple", "label": "Partizip Perfekt" }
+    ],
+    "metadata": {
+      "title": "Vergangenheitsformen der 100 häufigsten spanischen Verben",
+      "metaTitle": "100 spanische Verben und ihre Vergangenheitsformen",
+      "metaDescription": "Indefinido und Partizip Perfekt von 100 häufigen spanischen Verben mit regelmäßigen, unregelmäßigen Formen und deutscher Übersetzung."
+    },
+    "hero": {
+      "heading": "Vergangenheitsformen der 100 häufigsten spanischen Verben",
+      "subtitle": "Vergleiche Indefinido und Partizip Perfekt wichtiger spanischer Verben in einer übersichtlichen Tabelle.",
+      "introParagraphs": [
+        "Auf dieser Seite findest du 100 häufig verwendete spanische Verben mit einer Referenzform im Indefinido und ihrem Partizip Perfekt. Die Tabelle hilft dir, den Infinitiv, die deutsche Übersetzung und die beiden wichtigen Vergangenheitsformen direkt miteinander zu vergleichen.",
+        "Das gemeinsame Lernen dieser Formen ist besonders nützlich, weil viele häufige spanische Verben unregelmäßig sind. Einige verändern im Indefinido ihren Stamm oder ihre Endungen, während andere ein unregelmäßiges Partizip besitzen, das nicht nach den üblichen Bildungsregeln entsteht."
+      ]
+    },
+    "overview": {
+      "heading": "So funktionieren spanische Vergangenheitsformen",
+      "paragraphs": [
+        "Häufige spanische Verben begegnen dir ständig in Gesprächen, Erzählungen, Nachrichten, Anleitungen und Alltagstexten. Wer ihre Vergangenheitsformen kennt, kann abgeschlossene Ereignisse beschreiben, über Erfahrungen sprechen und wichtige Strukturen beim Lesen und Hören schneller erkennen.",
+        "Das Indefinido beschreibt Handlungen, die als abgeschlossen und zeitlich begrenzt dargestellt werden, und wird nach Person und Zahl konjugiert. Das Partizip Perfekt ist eine unveränderte Verbform, die mit haber zusammengesetzte Zeiten bildet und außerdem in passivischen oder adjektivischen Konstruktionen vorkommen kann."
+      ]
+    },
+    "table": {
+      "heading": "Tabelle mit den Vergangenheitsformen von 100 spanischen Verben",
+      "description": "Jede Zeile enthält den spanischen Infinitiv, die deutsche Übersetzung, eine Referenzform im Indefinido und das Partizip Perfekt zum schnellen Vergleichen und Wiederholen.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen",
+      "notes": [
+        "Regelmäßige Verben auf -ar bilden das Partizip meist mit -ado, Verben auf -er und -ir gewöhnlich mit -ido.",
+        "Viele häufige Verben besitzen im Indefinido einen unregelmäßigen Stamm oder besondere Endungen.",
+        "Das Indefinido wird nach Person und Zahl konjugiert, daher verändert sich die vollständige Form je nach Subjekt.",
+        "Mit haber verwendete Partizipien bleiben unverändert; als Adjektiv können sie sich jedoch nach Genus und Numerus richten."
+      ]
+    },
+    "howToUse": {
+      "heading": "So arbeitest du mit der Tabelle",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Infinitiv",
+          "text": "Lies das spanische Verb in seiner Grundform und prüfe, ob du seine deutsche Bedeutung kennst."
+        },
+        {
+          "heading": "Untersuche das Indefinido",
+          "text": "Achte darauf, ob das Verb dem regelmäßigen Muster auf -ar, -er oder -ir folgt oder einen unregelmäßigen Stamm verwendet."
+        },
+        {
+          "heading": "Vergleiche das Partizip",
+          "text": "Prüfe, ob es regelmäßig mit -ado oder -ido gebildet wird oder eine besondere Form besitzt."
+        },
+        {
+          "heading": "Verwende beide Formen",
+          "text": "Schreibe einen Satz mit einer abgeschlossenen Handlung im Indefinido und einen weiteren mit haber und dem Partizip Perfekt."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Merken spanischer Vergangenheitsformen",
+      "items": [
+        {
+          "heading": "Nach Endungen gruppieren",
+          "text": "Lerne Verben auf -ar, -er und -ir getrennt, damit du die regelmäßigen Muster leichter erkennst."
+        },
+        {
+          "heading": "Unregelmäßige Stämme verbinden",
+          "text": "Präge dir verwandte Formen gemeinsam ein, zum Beispiel tener–tuv-, estar–estuv- und poder–pud-."
+        },
+        {
+          "heading": "Unregelmäßige Partizipien merken",
+          "text": "Wiederhole Formen wie hecho, dicho, visto, escrito und puesto häufiger, da sie nicht den Standardendungen folgen."
+        },
+        {
+          "heading": "Mit vollständigen Sätzen üben",
+          "text": "Verwende jede Form in einem kurzen Satz und wiederhole schwierige Verben nach einem Tag, einigen Tagen und einer Woche."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Spanische Vergangenheitsformen sicher anwenden",
+      "description": "Wiederhole wichtige Verben und verwende Indefinido und Partizip Perfekt in vollständigen Beispielsätzen.",
+      "primaryLabel": "Spanische Verben üben",
+      "secondaryLabel": "100 häufige spanische Verben"
+    },
+    "related": {
+      "heading": "Spanisch weiterlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Die 100 häufigsten spanischen Verben"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Spanischer Wortschatz nach Niveau"
+        },
+        { "key": "levelTest", "label": "Spanisch-Einstufungstest" }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zu spanischen Vergangenheitsformen",
+      "items": [
+        {
+          "question": "Wofür wird das Indefinido im Spanischen verwendet?",
+          "answer": "Das Indefinido beschreibt Handlungen und Ereignisse, die als abgeschlossen betrachtet werden. Es wird häufig für einzelne Ereignisse, klar begrenzte Zeiträume und aufeinanderfolgende abgeschlossene Handlungen verwendet."
+        },
+        {
+          "question": "Wie bilden regelmäßige spanische Verben das Indefinido?",
+          "answer": "Die Endungen richten sich nach der Infinitivgruppe und der grammatischen Person. Verben auf -ar verwenden eine Endungsreihe, während Verben auf -er und -ir weitgehend dieselben Endungen teilen."
+        },
+        {
+          "question": "Wie werden regelmäßige spanische Partizipien gebildet?",
+          "answer": "Verben auf -ar ersetzen die Infinitivendung normalerweise durch -ado, wie hablar–hablado. Verben auf -er und -ir verwenden meist -ido, wie comer–comido und vivir–vivido."
+        },
+        {
+          "question": "Wie kann man unregelmäßige spanische Vergangenheitsformen am besten lernen?",
+          "answer": "Lerne kleine Verbgruppen mit ähnlichen Stammwechseln oder Endungen. Verwende jedes Verb anschließend in einem Satz im Indefinido und in einer Konstruktion mit haber und wiederhole schwierige Formen in wachsenden Abständen."
+        },
+        {
+          "question": "Verändert sich das spanische Partizip nach Genus und Numerus?",
+          "answer": "In zusammengesetzten Zeiten mit haber bleibt das Partizip normalerweise unverändert, zum Beispiel in he escrito und hemos escrito. Als Adjektiv oder in bestimmten Passivkonstruktionen kann es sich jedoch an das Bezugswort anpassen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "it",
+    "urlSlug": "forme-passate-100-verbi-spagnoli-piu-comuni",
+    "entryButtonLabel": "Forme passate dei verbi spagnoli",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "translation": "Traduzione italiana"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Pretérito indefinido" },
+      { "key": "pastParticiple", "label": "Participio passato" }
+    ],
+    "metadata": {
+      "title": "Forme passate dei 100 verbi spagnoli più comuni",
+      "metaTitle": "100 verbi spagnoli e le loro forme passate",
+      "metaDescription": "Consulta il pretérito indefinido e il participio passato di 100 verbi spagnoli comuni, con forme regolari, irregolari e traduzioni italiane."
+    },
+    "hero": {
+      "heading": "Forme passate dei 100 verbi spagnoli più comuni",
+      "subtitle": "Confronta il pretérito indefinido e il participio passato dei verbi spagnoli essenziali in una tabella pratica.",
+      "introParagraphs": [
+        "Questa pagina raccoglie 100 verbi spagnoli di uso frequente con una forma di riferimento al pretérito indefinido e il relativo participio passato. La tabella permette di confrontare direttamente l’infinito, la traduzione italiana e le due forme principali utili per parlare di azioni concluse e costruire i tempi composti.",
+        "Imparare queste forme è particolarmente importante perché molti verbi spagnoli comuni sono irregolari. Alcuni modificano la radice o le desinenze nel pretérito indefinido, mentre altri presentano un participio passato che non segue le regole di formazione più comuni."
+      ]
+    },
+    "overview": {
+      "heading": "Come funzionano le forme passate in spagnolo",
+      "paragraphs": [
+        "I verbi spagnoli più comuni compaiono continuamente nelle conversazioni, nei racconti, nei messaggi, nelle istruzioni e nei testi quotidiani. Conoscere le loro forme passate aiuta a descrivere eventi conclusi, parlare di esperienze e riconoscere più facilmente strutture importanti durante la lettura e l’ascolto.",
+        "Il pretérito indefinido esprime azioni considerate concluse nel passato e si coniuga secondo la persona e il numero. Il participio passato è una forma non personale usata con haber nei tempi composti e può comparire anche in costruzioni passive o con funzione aggettivale."
+      ]
+    },
+    "table": {
+      "heading": "Tabella delle forme passate di 100 verbi spagnoli",
+      "description": "Ogni riga mostra l’infinito spagnolo, la traduzione italiana, una forma di riferimento al pretérito indefinido e il participio passato per facilitare il confronto e il ripasso.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra",
+      "notes": [
+        "I verbi regolari in -ar formano normalmente il participio con -ado, mentre quelli in -er e -ir usano in genere -ido.",
+        "Molti verbi frequenti presentano radici o desinenze irregolari nel pretérito indefinido.",
+        "Il pretérito si coniuga secondo persona e numero, quindi la forma completa cambia in base al soggetto.",
+        "I participi usati con haber rimangono invariabili, ma possono concordare in genere e numero quando funzionano come aggettivi."
+      ]
+    },
+    "howToUse": {
+      "heading": "Come studiare la tabella",
+      "steps": [
+        {
+          "heading": "Inizia dall’infinito",
+          "text": "Leggi il verbo spagnolo nella forma del dizionario e verifica di comprenderne la traduzione italiana."
+        },
+        {
+          "heading": "Esamina il pretérito",
+          "text": "Osserva se il verbo segue il modello regolare dei verbi in -ar, -er o -ir oppure presenta una radice irregolare."
+        },
+        {
+          "heading": "Confronta il participio",
+          "text": "Controlla se si forma regolarmente con -ado o -ido o se possiede una forma particolare da memorizzare."
+        },
+        {
+          "heading": "Usa entrambe le forme",
+          "text": "Scrivi una frase con un’azione conclusa al pretérito e un’altra con haber seguito dal participio passato."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per ricordare le forme passate spagnole",
+      "items": [
+        {
+          "heading": "Raggruppa i verbi per desinenza",
+          "text": "Studia separatamente i verbi in -ar, -er e -ir per riconoscere più facilmente gli schemi regolari."
+        },
+        {
+          "heading": "Collega le radici irregolari",
+          "text": "Impara insieme forme con cambiamenti simili, come tener–tuv-, estar–estuv- e poder–pud-."
+        },
+        {
+          "heading": "Memorizza i participi irregolari",
+          "text": "Dedica particolare attenzione a forme come hecho, dicho, visto, escrito e puesto, che non seguono le desinenze regolari."
+        },
+        {
+          "heading": "Ripassa con frasi complete",
+          "text": "Usa ogni forma in una breve frase e torna sui verbi difficili dopo un giorno, alcuni giorni e una settimana."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Usa con sicurezza le forme passate",
+      "description": "Ripassa i verbi spagnoli più utili e utilizza pretérito e participio passato in frasi complete.",
+      "primaryLabel": "Esercitati con i verbi spagnoli",
+      "secondaryLabel": "100 verbi spagnoli più comuni"
+    },
+    "related": {
+      "heading": "Continua a studiare lo spagnolo",
+      "items": [
+        { "key": "commonVerbs", "label": "I 100 verbi spagnoli più comuni" },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario spagnolo per livello"
+        },
+        { "key": "levelTest", "label": "Test di livello di spagnolo" }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulle forme passate in spagnolo",
+      "items": [
+        {
+          "question": "A cosa serve il pretérito indefinido in spagnolo?",
+          "answer": "Si usa per presentare azioni o eventi come conclusi nel passato, soprattutto quando hanno un inizio o una fine ben definiti. È anche frequente nella narrazione di una sequenza di fatti terminati."
+        },
+        {
+          "question": "Come formano il pretérito i verbi spagnoli regolari?",
+          "answer": "Le desinenze dipendono dal gruppo dell’infinito e dalla persona grammaticale. I verbi in -ar seguono una serie di desinenze, mentre quelli in -er e -ir ne condividono un’altra."
+        },
+        {
+          "question": "Come si formano i participi passati regolari?",
+          "answer": "La maggior parte dei verbi in -ar sostituisce questa desinenza con -ado, come hablar–hablado. I verbi in -er e -ir usano normalmente -ido, come comer–comido e vivir–vivido."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le forme irregolari?",
+          "answer": "Raggruppa i verbi in base alle radici o ai cambiamenti simili e imparane pochi alla volta. Usa poi ogni verbo in una frase al pretérito e in una con haber, ripassando le forme difficili a intervalli crescenti."
+        },
+        {
+          "question": "Il participio passato spagnolo cambia in genere e numero?",
+          "answer": "Quando viene usato con haber in un tempo composto, rimane normalmente invariabile, come in he escrito e hemos escrito. Quando funziona come aggettivo o compare in alcune costruzioni passive, può concordare con il nome."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "pt",
+    "urlSlug": "formas-passadas-100-verbos-espanhois-mais-comuns",
+    "entryButtonLabel": "Formas passadas dos verbos espanhóis",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Tradução em português"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Pretérito indefinido" },
+      { "key": "pastParticiple", "label": "Particípio passado" }
+    ],
+    "metadata": {
+      "title": "Formas passadas dos 100 verbos espanhóis mais comuns",
+      "metaTitle": "100 verbos espanhóis e suas formas passadas",
+      "metaDescription": "Consulte o pretérito indefinido e o particípio passado de 100 verbos espanhóis comuns, com formas regulares, irregulares e traduções."
+    },
+    "hero": {
+      "heading": "Formas passadas dos 100 verbos espanhóis mais comuns",
+      "subtitle": "Compare o pretérito indefinido e o particípio passado dos verbos espanhóis essenciais em uma tabela prática.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos espanhóis de uso frequente com uma forma de referência no pretérito indefinido e o respetivo particípio passado. A tabela permite comparar diretamente o infinitivo, a tradução em português e as duas formas principais usadas para falar de ações concluídas e construir tempos compostos.",
+        "Aprender essas formas é especialmente importante porque muitos verbos espanhóis comuns são irregulares. Alguns alteram o radical ou as terminações no pretérito indefinido, enquanto outros apresentam particípios passados que não seguem as regras de formação mais frequentes."
+      ]
+    },
+    "overview": {
+      "heading": "Como funcionam as formas passadas em espanhol",
+      "paragraphs": [
+        "Os verbos espanhóis mais comuns aparecem constantemente em conversas, histórias, mensagens, instruções e textos do dia a dia. Conhecer as suas formas passadas ajuda a descrever acontecimentos concluídos, falar de experiências e reconhecer estruturas importantes durante a leitura e a compreensão oral.",
+        "O pretérito indefinido expressa ações consideradas concluídas no passado e é conjugado de acordo com a pessoa e o número. O particípio passado é uma forma não pessoal usada com haber nos tempos compostos e também pode aparecer em construções passivas ou com função adjetiva."
+      ]
+    },
+    "table": {
+      "heading": "Tabela das formas passadas de 100 verbos espanhóis",
+      "description": "Cada linha apresenta o infinitivo espanhol, a tradução em português, uma forma de referência no pretérito indefinido e o particípio passado para facilitar a comparação e a revisão.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita",
+      "notes": [
+        "Os verbos regulares terminados em -ar normalmente formam o particípio com -ado, enquanto os terminados em -er e -ir costumam usar -ido.",
+        "Muitos verbos frequentes apresentam radicais ou terminações irregulares no pretérito indefinido.",
+        "O pretérito é conjugado de acordo com a pessoa e o número, por isso a forma completa muda conforme o sujeito.",
+        "Os particípios usados com haber permanecem invariáveis, mas podem concordar em género e número quando funcionam como adjetivos."
+      ]
+    },
+    "howToUse": {
+      "heading": "Como estudar a tabela",
+      "steps": [
+        {
+          "heading": "Comece pelo infinitivo",
+          "text": "Leia o verbo espanhol na forma de dicionário e confirme que compreende a sua tradução em português."
+        },
+        {
+          "heading": "Examine o pretérito",
+          "text": "Observe se o verbo segue o padrão regular dos verbos em -ar, -er ou -ir ou se apresenta um radical irregular."
+        },
+        {
+          "heading": "Compare o particípio",
+          "text": "Verifique se ele é formado regularmente com -ado ou -ido ou se possui uma forma especial que precisa ser memorizada."
+        },
+        {
+          "heading": "Use as duas formas",
+          "text": "Escreva uma frase com uma ação concluída no pretérito e outra com haber seguido do particípio passado."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para memorizar as formas passadas em espanhol",
+      "items": [
+        {
+          "heading": "Agrupe os verbos por terminação",
+          "text": "Estude separadamente os verbos em -ar, -er e -ir para reconhecer com mais facilidade os padrões regulares."
+        },
+        {
+          "heading": "Associe radicais irregulares",
+          "text": "Aprenda juntos verbos com mudanças semelhantes, como tener–tuv-, estar–estuv- e poder–pud-."
+        },
+        {
+          "heading": "Memorize particípios irregulares",
+          "text": "Dedique atenção especial a formas como hecho, dicho, visto, escrito e puesto, que não seguem as terminações regulares."
+        },
+        {
+          "heading": "Revise com frases completas",
+          "text": "Use cada forma em uma frase curta e retome os verbos difíceis depois de um dia, alguns dias e uma semana."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Use as formas passadas com confiança",
+      "description": "Revise os verbos espanhóis mais úteis e utilize o pretérito e o particípio passado em frases completas.",
+      "primaryLabel": "Praticar verbos espanhóis",
+      "secondaryLabel": "100 verbos espanhóis mais comuns"
+    },
+    "related": {
+      "heading": "Continue aprendendo espanhol",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Os 100 verbos espanhóis mais comuns"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulário espanhol por nível"
+        },
+        { "key": "levelTest", "label": "Teste de nível de espanhol" }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre as formas passadas em espanhol",
+      "items": [
+        {
+          "question": "Para que serve o pretérito indefinido em espanhol?",
+          "answer": "Ele é usado para apresentar ações ou acontecimentos como concluídos no passado, especialmente quando possuem início ou fim claramente definidos. Também é comum na narração de uma sequência de ações terminadas."
+        },
+        {
+          "question": "Como os verbos espanhóis regulares formam o pretérito?",
+          "answer": "As terminações dependem do grupo do infinitivo e da pessoa gramatical. Os verbos em -ar seguem um conjunto de terminações, enquanto os verbos em -er e -ir compartilham outro."
+        },
+        {
+          "question": "Como são formados os particípios passados regulares?",
+          "answer": "A maioria dos verbos em -ar substitui essa terminação por -ado, como em hablar–hablado. Os verbos em -er e -ir normalmente usam -ido, como em comer–comido e vivir–vivido."
+        },
+        {
+          "question": "Qual é a melhor maneira de memorizar as formas irregulares?",
+          "answer": "Agrupe os verbos de acordo com radicais ou mudanças semelhantes e aprenda poucos de cada vez. Depois, use cada verbo em uma frase no pretérito e em outra com haber, revendo as formas difíceis em intervalos crescentes."
+        },
+        {
+          "question": "O particípio passado espanhol varia em género e número?",
+          "answer": "Quando é usado com haber em um tempo composto, normalmente permanece invariável, como em he escrito e hemos escrito. Quando funciona como adjetivo ou aparece em certas construções passivas, pode concordar com o substantivo."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "ru",
+    "urlSlug": "formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-ispanskih-glagolov",
+    "entryButtonLabel": "Прошедшие формы испанских глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "translation": "Перевод на русский"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Претерит" },
+      { "key": "pastParticiple", "label": "Причастие прошедшего времени" }
+    ],
+    "metadata": {
+      "title": "Прошедшие формы 100 самых употребительных испанских глаголов",
+      "metaTitle": "100 испанских глаголов и их прошедшие формы",
+      "metaDescription": "Изучите претерит и причастие прошедшего времени 100 распространённых испанских глаголов с регулярными и неправильными формами."
+    },
+    "hero": {
+      "heading": "Прошедшие формы 100 самых употребительных испанских глаголов",
+      "subtitle": "Сравнивайте претерит и причастие прошедшего времени основных испанских глаголов в одной удобной таблице.",
+      "introParagraphs": [
+        "На этой странице собраны 100 часто употребляемых испанских глаголов с формой претерита и причастием прошедшего времени. Таблица позволяет сопоставить инфинитив, перевод на русский язык и две основные формы, необходимые для описания завершённых действий и образования составных времён.",
+        "Изучение этих форм особенно важно, потому что многие распространённые испанские глаголы являются неправильными. У одних меняется основа или окончания в претерите, а другие имеют особое причастие, которое нельзя образовать только по стандартным правилам."
+      ]
+    },
+    "overview": {
+      "heading": "Как образуются прошедшие формы испанских глаголов",
+      "paragraphs": [
+        "Частотные испанские глаголы постоянно встречаются в разговорах, рассказах, сообщениях, инструкциях и повседневных текстах. Знание их прошедших форм помогает описывать завершённые события, говорить о пережитом опыте и быстрее распознавать важные конструкции при чтении и аудировании.",
+        "Претерит выражает действия, представленные как завершённые в прошлом, и изменяется по лицам и числам. Причастие прошедшего времени является неличной формой, используется с haber в составных временах и также может встречаться в пассивных и определительных конструкциях."
+      ]
+    },
+    "table": {
+      "heading": "Таблица прошедших форм 100 испанских глаголов",
+      "description": "В каждой строке указаны испанский инфинитив, перевод на русский язык, справочная форма претерита и причастие прошедшего времени для удобного сравнения и повторения.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо",
+      "notes": [
+        "Правильные глаголы на -ar обычно образуют причастие с помощью -ado, а глаголы на -er и -ir — с помощью -ido.",
+        "Многие распространённые глаголы имеют неправильную основу или особые окончания в претерите.",
+        "Претерит изменяется по лицам и числам, поэтому полная форма зависит от подлежащего.",
+        "Причастия с haber остаются неизменными, но при употреблении в роли прилагательного могут согласовываться в роде и числе."
+      ]
+    },
+    "howToUse": {
+      "heading": "Как работать с таблицей",
+      "steps": [
+        {
+          "heading": "Начните с инфинитива",
+          "text": "Прочитайте испанский глагол в словарной форме и убедитесь, что понимаете его перевод на русский язык."
+        },
+        {
+          "heading": "Изучите форму претерита",
+          "text": "Проверьте, следует ли глагол правильной модели на -ar, -er или -ir либо использует неправильную основу."
+        },
+        {
+          "heading": "Сравните причастие",
+          "text": "Определите, образуется ли оно регулярно с помощью -ado или -ido либо имеет особую форму для запоминания."
+        },
+        {
+          "heading": "Используйте обе формы",
+          "text": "Составьте предложение с завершённым действием в претерите и ещё одно с haber и причастием прошедшего времени."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Как запоминать прошедшие формы испанских глаголов",
+      "items": [
+        {
+          "heading": "Группируйте по окончаниям",
+          "text": "Учите глаголы на -ar, -er и -ir отдельными группами, чтобы легче замечать регулярные модели."
+        },
+        {
+          "heading": "Связывайте неправильные основы",
+          "text": "Запоминайте вместе глаголы с похожими изменениями, например tener–tuv-, estar–estuv- и poder–pud-."
+        },
+        {
+          "heading": "Выделяйте неправильные причастия",
+          "text": "Уделяйте особое внимание формам hecho, dicho, visto, escrito и puesto, которые не образуются по стандартной модели."
+        },
+        {
+          "heading": "Повторяйте в полных предложениях",
+          "text": "Используйте каждую форму в короткой фразе и возвращайтесь к трудным глаголам через день, несколько дней и неделю."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Закрепите прошедшие формы на практике",
+      "description": "Повторите самые полезные испанские глаголы и используйте претерит и причастие в полных предложениях.",
+      "primaryLabel": "Практиковать испанские глаголы",
+      "secondaryLabel": "100 самых употребительных испанских глаголов"
+    },
+    "related": {
+      "heading": "Продолжить изучение испанского языка",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных испанских глаголов"
+        },
+        { "key": "vocabularyLevels", "label": "Испанская лексика по уровням" },
+        { "key": "levelTest", "label": "Тест на уровень испанского языка" }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о прошедших формах испанских глаголов",
+      "items": [
+        {
+          "question": "Для чего используется претерит в испанском языке?",
+          "answer": "Он используется для действий и событий, представленных как завершённые в прошлом, особенно если у них есть чёткие временные границы. Претерит также часто применяется при перечислении последовательных законченных действий."
+        },
+        {
+          "question": "Как правильные испанские глаголы образуют претерит?",
+          "answer": "Окончания зависят от группы инфинитива и грамматического лица. Глаголы на -ar используют один набор окончаний, а глаголы на -er и -ir в основном разделяют другой набор."
+        },
+        {
+          "question": "Как образуются правильные причастия прошедшего времени?",
+          "answer": "Большинство глаголов на -ar заменяют это окончание на -ado, например hablar–hablado. Глаголы на -er и -ir обычно используют -ido, как в comer–comido и vivir–vivido."
+        },
+        {
+          "question": "Как лучше запоминать неправильные прошедшие формы?",
+          "answer": "Объединяйте глаголы по похожим изменениям основы или окончаниям и учите небольшими группами. Затем используйте каждый глагол в предложении с претеритом и в конструкции с haber, повторяя трудные формы через увеличивающиеся интервалы."
+        },
+        {
+          "question": "Изменяется ли испанское причастие по родам и числам?",
+          "answer": "При употреблении с haber в составном времени причастие обычно остаётся неизменным, например he escrito и hemos escrito. В роли прилагательного или в некоторых пассивных конструкциях оно может согласовываться с существительным."
+        }
+      ]
+    }
   }
 ]
