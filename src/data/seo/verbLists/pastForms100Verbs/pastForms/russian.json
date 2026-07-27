@@ -1,0 +1,702 @@
+[
+  {
+    "concept_id": "A1-00008",
+    "pastMasculine": "был",
+    "pastFeminine": "была",
+    "pastNeuter": "было",
+    "pastPlural": "были"
+  },
+  {
+    "concept_id": "A1-00487",
+    "pastMasculine": "имел",
+    "pastFeminine": "имела",
+    "pastNeuter": "имело",
+    "pastPlural": "имели"
+  },
+  {
+    "concept_id": "A2-01701",
+    "pastMasculine": "стал",
+    "pastFeminine": "стала",
+    "pastNeuter": "стало",
+    "pastPlural": "стали"
+  },
+  {
+    "concept_id": "A1-00167",
+    "pastMasculine": "мог",
+    "pastFeminine": "могла",
+    "pastNeuter": "могло",
+    "pastPlural": "могли"
+  },
+  {
+    "concept_id": "A1-00687",
+    "pastMasculine": "должен был",
+    "pastFeminine": "должна была",
+    "pastNeuter": "должно было",
+    "pastPlural": "должны были"
+  },
+  {
+    "concept_id": "A1-01120",
+    "pastMasculine": "хотел",
+    "pastFeminine": "хотела",
+    "pastNeuter": "хотело",
+    "pastPlural": "хотели"
+  },
+  {
+    "concept_id": "A2-01787",
+    "pastMasculine": "должен был",
+    "pastFeminine": "должна была",
+    "pastNeuter": "должно было",
+    "pastPlural": "должны были"
+  },
+  {
+    "concept_id": "A1-00643",
+    "pastMasculine": "мог",
+    "pastFeminine": "могла",
+    "pastNeuter": "могло",
+    "pastPlural": "могли"
+  },
+  {
+    "concept_id": "A1-00607",
+    "pastMasculine": "нравился",
+    "pastFeminine": "нравилась",
+    "pastNeuter": "нравилось",
+    "pastPlural": "нравились"
+  },
+  {
+    "concept_id": "A1-00633",
+    "pastMasculine": "сделал",
+    "pastFeminine": "сделала",
+    "pastNeuter": "сделало",
+    "pastPlural": "сделали"
+  },
+  {
+    "concept_id": "A1-00292",
+    "pastMasculine": "делал",
+    "pastFeminine": "делала",
+    "pastNeuter": "делало",
+    "pastPlural": "делали"
+  },
+  {
+    "concept_id": "A1-00441",
+    "pastMasculine": "шёл",
+    "pastFeminine": "шла",
+    "pastNeuter": "шло",
+    "pastPlural": "шли"
+  },
+  {
+    "concept_id": "A1-00231",
+    "pastMasculine": "пришёл",
+    "pastFeminine": "пришла",
+    "pastNeuter": "пришло",
+    "pastPlural": "пришли"
+  },
+  {
+    "concept_id": "A1-00871",
+    "pastMasculine": "сказал",
+    "pastFeminine": "сказала",
+    "pastNeuter": "сказало",
+    "pastPlural": "сказали"
+  },
+  {
+    "concept_id": "A1-00956",
+    "pastMasculine": "говорил",
+    "pastFeminine": "говорила",
+    "pastNeuter": "говорило",
+    "pastPlural": "говорили"
+  },
+  {
+    "concept_id": "A1-01012",
+    "pastMasculine": "разговаривал",
+    "pastFeminine": "разговаривала",
+    "pastNeuter": "разговаривало",
+    "pastPlural": "разговаривали"
+  },
+  {
+    "concept_id": "A1-00049",
+    "pastMasculine": "спросил",
+    "pastFeminine": "спросила",
+    "pastNeuter": "спросило",
+    "pastPlural": "спросили"
+  },
+  {
+    "concept_id": "A1-00034",
+    "pastMasculine": "ответил",
+    "pastFeminine": "ответила",
+    "pastNeuter": "ответило",
+    "pastPlural": "ответили"
+  },
+  {
+    "concept_id": "A1-00494",
+    "pastMasculine": "слышал",
+    "pastFeminine": "слышала",
+    "pastNeuter": "слышало",
+    "pastPlural": "слышали"
+  },
+  {
+    "concept_id": "A1-00879",
+    "pastMasculine": "видел",
+    "pastFeminine": "видела",
+    "pastNeuter": "видело",
+    "pastPlural": "видели"
+  },
+  {
+    "concept_id": "A1-00621",
+    "pastMasculine": "смотрел",
+    "pastFeminine": "смотрела",
+    "pastNeuter": "смотрело",
+    "pastPlural": "смотрели"
+  },
+  {
+    "concept_id": "A1-00383",
+    "pastMasculine": "нашёл",
+    "pastFeminine": "нашла",
+    "pastNeuter": "нашло",
+    "pastPlural": "нашли"
+  },
+  {
+    "concept_id": "A2-01107",
+    "pastMasculine": "искал",
+    "pastFeminine": "искала",
+    "pastNeuter": "искало",
+    "pastPlural": "искали"
+  },
+  {
+    "concept_id": "A1-00584",
+    "pastMasculine": "знал",
+    "pastFeminine": "знала",
+    "pastNeuter": "знало",
+    "pastPlural": "знали"
+  },
+  {
+    "concept_id": "A1-01117",
+    "pastMasculine": "проснулся",
+    "pastFeminine": "проснулась",
+    "pastNeuter": "проснулось",
+    "pastPlural": "проснулись"
+  },
+  {
+    "concept_id": "A1-01043",
+    "pastMasculine": "думал",
+    "pastFeminine": "думала",
+    "pastNeuter": "думало",
+    "pastPlural": "думали"
+  },
+  {
+    "concept_id": "A2-01482",
+    "pastMasculine": "верил",
+    "pastFeminine": "верила",
+    "pastNeuter": "верило",
+    "pastPlural": "верили"
+  },
+  {
+    "concept_id": "A2-01361",
+    "pastMasculine": "понимал",
+    "pastFeminine": "понимала",
+    "pastNeuter": "понимало",
+    "pastPlural": "понимали"
+  },
+  {
+    "concept_id": "A2-01558",
+    "pastMasculine": "учился",
+    "pastFeminine": "училась",
+    "pastNeuter": "училось",
+    "pastPlural": "учились"
+  },
+  {
+    "concept_id": "A2-00950",
+    "pastMasculine": "готовил",
+    "pastFeminine": "готовила",
+    "pastNeuter": "готовило",
+    "pastPlural": "готовили"
+  },
+  {
+    "concept_id": "A1-01160",
+    "pastMasculine": "работал",
+    "pastFeminine": "работала",
+    "pastNeuter": "работало",
+    "pastPlural": "работали"
+  },
+  {
+    "concept_id": "A1-01118",
+    "pastMasculine": "ходил",
+    "pastFeminine": "ходила",
+    "pastNeuter": "ходило",
+    "pastPlural": "ходили"
+  },
+  {
+    "concept_id": "A1-00615",
+    "pastMasculine": "жил",
+    "pastFeminine": "жила",
+    "pastNeuter": "жило",
+    "pastPlural": "жили"
+  },
+  {
+    "concept_id": "A1-00973",
+    "pastMasculine": "оставался",
+    "pastFeminine": "оставалась",
+    "pastNeuter": "оставалось",
+    "pastPlural": "оставались"
+  },
+  {
+    "concept_id": "B1-02233",
+    "pastMasculine": "отдыхал",
+    "pastFeminine": "отдыхала",
+    "pastNeuter": "отдыхало",
+    "pastPlural": "отдыхали"
+  },
+  {
+    "concept_id": "A1-00693",
+    "pastMasculine": "нуждался",
+    "pastFeminine": "нуждалась",
+    "pastNeuter": "нуждалось",
+    "pastPlural": "нуждались"
+  },
+  {
+    "concept_id": "A1-01011",
+    "pastMasculine": "брал",
+    "pastFeminine": "брала",
+    "pastNeuter": "брало",
+    "pastPlural": "брали"
+  },
+  {
+    "concept_id": "A1-00436",
+    "pastMasculine": "давал",
+    "pastFeminine": "давала",
+    "pastNeuter": "давало",
+    "pastPlural": "давали"
+  },
+  {
+    "concept_id": "A1-00431",
+    "pastMasculine": "получил",
+    "pastFeminine": "получила",
+    "pastNeuter": "получило",
+    "pastPlural": "получили"
+  },
+  {
+    "concept_id": "A1-00139",
+    "pastMasculine": "принёс",
+    "pastFeminine": "принесла",
+    "pastNeuter": "принесло",
+    "pastPlural": "принесли"
+  },
+  {
+    "concept_id": "A1-00978",
+    "pastMasculine": "остановился",
+    "pastFeminine": "остановилась",
+    "pastNeuter": "остановилось",
+    "pastPlural": "остановились"
+  },
+  {
+    "concept_id": "A1-00158",
+    "pastMasculine": "купил",
+    "pastFeminine": "купила",
+    "pastNeuter": "купило",
+    "pastPlural": "купили"
+  },
+  {
+    "concept_id": "A1-00881",
+    "pastMasculine": "продал",
+    "pastFeminine": "продала",
+    "pastNeuter": "продало",
+    "pastPlural": "продали"
+  },
+  {
+    "concept_id": "A1-00762",
+    "pastMasculine": "заплатил",
+    "pastFeminine": "заплатила",
+    "pastNeuter": "заплатило",
+    "pastPlural": "заплатили"
+  },
+  {
+    "concept_id": "A2-00296",
+    "pastMasculine": "стоил",
+    "pastFeminine": "стоила",
+    "pastNeuter": "стоило",
+    "pastPlural": "стоили"
+  },
+  {
+    "concept_id": "A1-00322",
+    "pastMasculine": "ел",
+    "pastFeminine": "ела",
+    "pastNeuter": "ело",
+    "pastPlural": "ели"
+  },
+  {
+    "concept_id": "A1-00308",
+    "pastMasculine": "пил",
+    "pastFeminine": "пила",
+    "pastNeuter": "пило",
+    "pastPlural": "пили"
+  },
+  {
+    "concept_id": "A1-00237",
+    "pastMasculine": "готовил",
+    "pastFeminine": "готовила",
+    "pastNeuter": "готовило",
+    "pastPlural": "готовили"
+  },
+  {
+    "concept_id": "A1-01125",
+    "pastMasculine": "смотрел",
+    "pastFeminine": "смотрела",
+    "pastNeuter": "смотрело",
+    "pastPlural": "смотрели"
+  },
+  {
+    "concept_id": "A1-00925",
+    "pastMasculine": "спал",
+    "pastFeminine": "спала",
+    "pastNeuter": "спало",
+    "pastPlural": "спали"
+  },
+  {
+    "concept_id": "A1-00021",
+    "pastMasculine": "встал",
+    "pastFeminine": "встала",
+    "pastNeuter": "встало",
+    "pastPlural": "встали"
+  },
+  {
+    "concept_id": "A1-00916",
+    "pastMasculine": "сидел",
+    "pastFeminine": "сидела",
+    "pastNeuter": "сидело",
+    "pastPlural": "сидели"
+  },
+  {
+    "concept_id": "A1-00968",
+    "pastMasculine": "стоял",
+    "pastFeminine": "стояла",
+    "pastNeuter": "стояло",
+    "pastPlural": "стояли"
+  },
+  {
+    "concept_id": "A2-00717",
+    "pastMasculine": "лежал",
+    "pastFeminine": "лежала",
+    "pastNeuter": "лежало",
+    "pastPlural": "лежали"
+  },
+  {
+    "concept_id": "A1-00932",
+    "pastMasculine": "улыбался",
+    "pastFeminine": "улыбалась",
+    "pastNeuter": "улыбалось",
+    "pastPlural": "улыбались"
+  },
+  {
+    "concept_id": "A1-00817",
+    "pastMasculine": "положил",
+    "pastFeminine": "положила",
+    "pastNeuter": "положило",
+    "pastPlural": "положили"
+  },
+  {
+    "concept_id": "B1-04098",
+    "pastMasculine": "установил",
+    "pastFeminine": "установила",
+    "pastNeuter": "установило",
+    "pastPlural": "установили"
+  },
+  {
+    "concept_id": "A1-00309",
+    "pastMasculine": "водил",
+    "pastFeminine": "водила",
+    "pastNeuter": "водило",
+    "pastPlural": "водили"
+  },
+  {
+    "concept_id": "A2-01805",
+    "pastMasculine": "путешествовал",
+    "pastFeminine": "путешествовала",
+    "pastNeuter": "путешествовало",
+    "pastPlural": "путешествовали"
+  },
+  {
+    "concept_id": "A1-00591",
+    "pastMasculine": "смеялся",
+    "pastFeminine": "смеялась",
+    "pastNeuter": "смеялось",
+    "pastPlural": "смеялись"
+  },
+  {
+    "concept_id": "A1-00859",
+    "pastMasculine": "бежал",
+    "pastFeminine": "бежала",
+    "pastNeuter": "бежало",
+    "pastPlural": "бежали"
+  },
+  {
+    "concept_id": "A1-00785",
+    "pastMasculine": "играл",
+    "pastFeminine": "играла",
+    "pastNeuter": "играло",
+    "pastPlural": "играли"
+  },
+  {
+    "concept_id": "A1-00828",
+    "pastMasculine": "читал",
+    "pastFeminine": "читала",
+    "pastNeuter": "читало",
+    "pastPlural": "читали"
+  },
+  {
+    "concept_id": "A1-01167",
+    "pastMasculine": "писал",
+    "pastFeminine": "писала",
+    "pastNeuter": "писало",
+    "pastPlural": "писали"
+  },
+  {
+    "concept_id": "A1-00731",
+    "pastMasculine": "открыл",
+    "pastFeminine": "открыла",
+    "pastNeuter": "открыло",
+    "pastPlural": "открыли"
+  },
+  {
+    "concept_id": "A1-00210",
+    "pastMasculine": "закрыл",
+    "pastFeminine": "закрыла",
+    "pastNeuter": "закрыло",
+    "pastPlural": "закрыли"
+  },
+  {
+    "concept_id": "A1-00970",
+    "pastMasculine": "начал",
+    "pastFeminine": "начала",
+    "pastNeuter": "начало",
+    "pastPlural": "начали"
+  },
+  {
+    "concept_id": "A1-00088",
+    "pastMasculine": "начал",
+    "pastFeminine": "начала",
+    "pastNeuter": "начало",
+    "pastPlural": "начали"
+  },
+  {
+    "concept_id": "A2-00284",
+    "pastMasculine": "продолжил",
+    "pastFeminine": "продолжила",
+    "pastNeuter": "продолжило",
+    "pastPlural": "продолжили"
+  },
+  {
+    "concept_id": "A1-01114",
+    "pastMasculine": "ждал",
+    "pastFeminine": "ждала",
+    "pastNeuter": "ждало",
+    "pastPlural": "ждали"
+  },
+  {
+    "concept_id": "A1-00498",
+    "pastMasculine": "помог",
+    "pastFeminine": "помогла",
+    "pastNeuter": "помогло",
+    "pastPlural": "помогли"
+  },
+  {
+    "concept_id": "A1-00903",
+    "pastMasculine": "показал",
+    "pastFeminine": "показала",
+    "pastNeuter": "показало",
+    "pastPlural": "показали"
+  },
+  {
+    "concept_id": "A2-00460",
+    "pastMasculine": "объяснил",
+    "pastFeminine": "объяснила",
+    "pastNeuter": "объяснило",
+    "pastPlural": "объяснили"
+  },
+  {
+    "concept_id": "A1-01022",
+    "pastMasculine": "рассказал",
+    "pastFeminine": "рассказала",
+    "pastNeuter": "рассказало",
+    "pastPlural": "рассказали"
+  },
+  {
+    "concept_id": "A1-01104",
+    "pastMasculine": "использовал",
+    "pastFeminine": "использовала",
+    "pastNeuter": "использовало",
+    "pastPlural": "использовали"
+  },
+  {
+    "concept_id": "B2-02656",
+    "pastMasculine": "применял",
+    "pastFeminine": "применяла",
+    "pastNeuter": "применяло",
+    "pastPlural": "применяли"
+  },
+  {
+    "concept_id": "A1-01130",
+    "pastMasculine": "носил",
+    "pastFeminine": "носила",
+    "pastNeuter": "носило",
+    "pastPlural": "носили"
+  },
+  {
+    "concept_id": "A1-01088",
+    "pastMasculine": "поворачивал",
+    "pastFeminine": "поворачивала",
+    "pastNeuter": "поворачивало",
+    "pastPlural": "поворачивали"
+  },
+  {
+    "concept_id": "A1-00595",
+    "pastMasculine": "учился",
+    "pastFeminine": "училась",
+    "pastNeuter": "училось",
+    "pastPlural": "учились"
+  },
+  {
+    "concept_id": "A2-01117",
+    "pastMasculine": "отправил",
+    "pastFeminine": "отправила",
+    "pastNeuter": "отправило",
+    "pastPlural": "отправили"
+  },
+  {
+    "concept_id": "A2-01542",
+    "pastMasculine": "планировал",
+    "pastFeminine": "планировала",
+    "pastNeuter": "планировало",
+    "pastPlural": "планировали"
+  },
+  {
+    "concept_id": "A1-00163",
+    "pastMasculine": "позвонил",
+    "pastFeminine": "позвонила",
+    "pastNeuter": "позвонило",
+    "pastPlural": "позвонили"
+  },
+  {
+    "concept_id": "A1-00650",
+    "pastMasculine": "встретил",
+    "pastFeminine": "встретила",
+    "pastNeuter": "встретило",
+    "pastPlural": "встретили"
+  },
+  {
+    "concept_id": "A1-01111",
+    "pastMasculine": "посетил",
+    "pastFeminine": "посетила",
+    "pastNeuter": "посетило",
+    "pastPlural": "посетили"
+  },
+  {
+    "concept_id": "A1-00623",
+    "pastMasculine": "любил",
+    "pastFeminine": "любила",
+    "pastNeuter": "любило",
+    "pastPlural": "любили"
+  },
+  {
+    "concept_id": "A1-00679",
+    "pastMasculine": "двигался",
+    "pastFeminine": "двигалась",
+    "pastNeuter": "двигалось",
+    "pastPlural": "двигались"
+  },
+  {
+    "concept_id": "A1-00371",
+    "pastMasculine": "чувствовал",
+    "pastFeminine": "чувствовала",
+    "pastNeuter": "чувствовало",
+    "pastPlural": "чувствовали"
+  },
+  {
+    "concept_id": "A2-01742",
+    "pastMasculine": "происходил",
+    "pastFeminine": "происходила",
+    "pastNeuter": "происходило",
+    "pastPlural": "происходили"
+  },
+  {
+    "concept_id": "A2-00133",
+    "pastMasculine": "принадлежал",
+    "pastFeminine": "принадлежала",
+    "pastNeuter": "принадлежало",
+    "pastPlural": "принадлежали"
+  },
+  {
+    "concept_id": "A2-01814",
+    "pastMasculine": "выиграл",
+    "pastFeminine": "выиграла",
+    "pastNeuter": "выиграло",
+    "pastPlural": "выиграли"
+  },
+  {
+    "concept_id": "B1-01577",
+    "pastMasculine": "проиграл",
+    "pastFeminine": "проиграла",
+    "pastNeuter": "проиграло",
+    "pastPlural": "проиграли"
+  },
+  {
+    "concept_id": "B2-00065",
+    "pastMasculine": "изменил",
+    "pastFeminine": "изменила",
+    "pastNeuter": "изменило",
+    "pastPlural": "изменили"
+  },
+  {
+    "concept_id": "A1-00186",
+    "pastMasculine": "изменил",
+    "pastFeminine": "изменила",
+    "pastNeuter": "изменило",
+    "pastPlural": "изменили"
+  },
+  {
+    "concept_id": "A1-01083",
+    "pastMasculine": "попробовал",
+    "pastFeminine": "попробовала",
+    "pastNeuter": "попробовало",
+    "pastPlural": "попробовали"
+  },
+  {
+    "concept_id": "A1-00257",
+    "pastMasculine": "плакал",
+    "pastFeminine": "плакала",
+    "pastNeuter": "плакало",
+    "pastPlural": "плакали"
+  },
+  {
+    "concept_id": "A1-00406",
+    "pastMasculine": "забыл",
+    "pastFeminine": "забыла",
+    "pastNeuter": "забыло",
+    "pastPlural": "забыли"
+  },
+  {
+    "concept_id": "A1-00836",
+    "pastMasculine": "помнил",
+    "pastFeminine": "помнила",
+    "pastNeuter": "помнило",
+    "pastPlural": "помнили"
+  },
+  {
+    "concept_id": "A1-00600",
+    "pastMasculine": "позволил",
+    "pastFeminine": "позволила",
+    "pastNeuter": "позволило",
+    "pastPlural": "позволили"
+  },
+  {
+    "concept_id": "A1-00511",
+    "pastMasculine": "держал",
+    "pastFeminine": "держала",
+    "pastNeuter": "держало",
+    "pastPlural": "держали"
+  },
+  {
+    "concept_id": "A1-00596",
+    "pastMasculine": "ушёл",
+    "pastFeminine": "ушла",
+    "pastNeuter": "ушло",
+    "pastPlural": "ушли"
+  }
+]

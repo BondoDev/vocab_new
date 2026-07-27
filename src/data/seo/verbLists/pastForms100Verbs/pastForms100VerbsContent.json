@@ -5621,5 +5621,934 @@
         }
       ]
     }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "en",
+    "urlSlug": "past-forms-100-most-common-russian-verbs",
+    "entryButtonLabel": "Russian Verb Past Forms",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "translation": "English translation"
+    },
+    "pastForms": [
+      { "key": "pastMasculine", "label": "Masculine" },
+      { "key": "pastFeminine", "label": "Feminine" },
+      { "key": "pastNeuter", "label": "Neuter" },
+      { "key": "pastPlural", "label": "Plural" }
+    ],
+    "metadata": {
+      "title": "Past Forms of the 100 Most Common Russian Verbs",
+      "metaTitle": "100 Common Russian Verbs and Their Past Forms",
+      "metaDescription": "Explore the masculine, feminine, neuter, and plural past forms of 100 common Russian verbs, including regular and irregular patterns."
+    },
+    "hero": {
+      "heading": "Past Forms of the 100 Most Common Russian Verbs",
+      "subtitle": "Compare the four main past-tense forms of essential Russian verbs in one practical reference.",
+      "introParagraphs": [
+        "This page brings together 100 frequently used Russian verbs with their masculine, feminine, neuter, and plural past forms. The table helps you compare each infinitive with its English translation and see how the verb changes to agree with the subject.",
+        "Learning these forms together is useful because Russian past-tense verbs do not change by grammatical person. Instead, singular forms agree with the subject’s gender, while one shared plural form is used for all plural subjects."
+      ]
+    },
+    "overview": {
+      "heading": "How Russian Past Verb Forms Work",
+      "paragraphs": [
+        "Common Russian verbs appear constantly in conversations, stories, messages, instructions, and everyday texts. Knowing their past forms helps you describe completed and ongoing past actions, understand narratives, and match the verb correctly with the subject.",
+        "Russian past-tense forms are usually built from the infinitive stem with the suffix -л and gender- or number-specific endings. However, some common verbs lose part of the stem, change sounds, or form the masculine past without the expected -л, so irregular patterns should be learned separately."
+      ]
+    },
+    "table": {
+      "heading": "Table of 100 Common Russian Verb Past Forms",
+      "description": "Each row shows the Russian infinitive, its English translation, and the masculine, feminine, neuter, and plural past-tense forms for quick comparison and review.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right",
+      "notes": [
+        "The masculine singular form often ends in -л, although some common verbs have an irregular form without this suffix.",
+        "The feminine and neuter singular forms commonly end in -ла and -ло.",
+        "The plural form usually ends in -ли and does not distinguish gender.",
+        "Stress may shift between forms, so pronunciation should be learned together with spelling."
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study the Table",
+      "steps": [
+        {
+          "heading": "Start with the infinitive",
+          "text": "Read the Russian verb in its dictionary form and confirm that you understand its English meaning."
+        },
+        {
+          "heading": "Compare the singular forms",
+          "text": "Notice how the endings change for masculine, feminine, and neuter subjects."
+        },
+        {
+          "heading": "Check the plural form",
+          "text": "Compare the plural ending with the singular forms and note any stem or stress changes."
+        },
+        {
+          "heading": "Use each form in context",
+          "text": "Write four short sentences with он, она, оно, and они to practise agreement between the subject and the past-tense verb."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Remembering Russian Past Forms",
+      "items": [
+        {
+          "heading": "Learn forms with pronouns",
+          "text": "Practise each verb as он сделал, она сделала, оно сделало, and они сделали so that gender and number agreement becomes automatic."
+        },
+        {
+          "heading": "Mark stress explicitly",
+          "text": "Write a stress mark in your notes when pronunciation changes between forms, especially in frequently used irregular verbs."
+        },
+        {
+          "heading": "Group similar patterns",
+          "text": "Study verbs with the same endings or stem changes together, while keeping exceptional masculine forms in a separate review group."
+        },
+        {
+          "heading": "Review through recall",
+          "text": "Cover the table and produce all four forms from the infinitive, then repeat difficult verbs after one day, several days, and one week."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Put Russian Past Forms into Practice",
+      "description": "Review essential Russian verbs and use all four past-tense forms in complete sentences.",
+      "primaryLabel": "Practice Russian Verbs",
+      "secondaryLabel": "100 Most Common Russian Verbs"
+    },
+    "related": {
+      "heading": "Continue Learning Russian",
+      "items": [
+        { "key": "commonVerbs", "label": "100 Most Common Russian Verbs" },
+        { "key": "vocabularyLevels", "label": "Russian Vocabulary by Level" },
+        { "key": "levelTest", "label": "Russian Level Test" }
+      ]
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions About Russian Past Forms",
+      "items": [
+        {
+          "question": "How is the past tense formed in Russian?",
+          "answer": "Russian past-tense forms are usually built from the infinitive stem with the suffix -л and an ending that shows gender or number. Some verbs have stem changes or irregular masculine forms that must be learned separately."
+        },
+        {
+          "question": "Why do Russian past-tense verbs change by gender?",
+          "answer": "In the singular, the past-tense verb agrees with the grammatical gender of the subject. Masculine, feminine, and neuter subjects therefore use different forms, while all plural subjects share one plural form."
+        },
+        {
+          "question": "Do Russian past-tense verbs change by person?",
+          "answer": "No. The same past form is used with first-, second-, and third-person subjects as long as their gender and number are the same. For example, я делал and он делал use the same masculine form."
+        },
+        {
+          "question": "Are all Russian past forms regular?",
+          "answer": "No. Many verbs follow predictable endings, but some lose part of the infinitive stem, change consonants, or have a masculine form without -л. These frequent exceptions are best memorized as complete four-form sets."
+        },
+        {
+          "question": "What is the best way to memorize Russian past forms?",
+          "answer": "Learn each verb with он, она, оно, and они instead of memorizing isolated endings. Use the forms in short sentences, pay attention to stress, and review irregular verbs with spaced repetition."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "es",
+    "urlSlug": "formas-pasadas-100-verbos-rusos-mas-comunes",
+    "entryButtonLabel": "Formas pasadas de los verbos rusos",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Traducción al español"
+    },
+    "pastForms": [
+      { "key": "pastMasculine", "label": "Masculino" },
+      { "key": "pastFeminine", "label": "Femenino" },
+      { "key": "pastNeuter", "label": "Neutro" },
+      { "key": "pastPlural", "label": "Plural" }
+    ],
+    "metadata": {
+      "title": "Formas pasadas de los 100 verbos rusos más comunes",
+      "metaTitle": "100 verbos rusos y sus formas pasadas",
+      "metaDescription": "Consulta las formas masculina, femenina, neutra y plural del pasado de 100 verbos rusos comunes, con patrones regulares e irregulares."
+    },
+    "hero": {
+      "heading": "Formas pasadas de los 100 verbos rusos más comunes",
+      "subtitle": "Compara las cuatro formas principales del pasado de verbos rusos esenciales en una tabla práctica.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos rusos de uso frecuente con sus formas pasadas masculina, femenina, neutra y plural. La tabla permite comparar cada infinitivo con su traducción al español y observar cómo cambia el verbo para concordar con el sujeto.",
+        "Aprender las cuatro formas en conjunto es especialmente útil porque los verbos rusos en pasado no cambian según la persona gramatical. En singular concuerdan con el género del sujeto, mientras que todos los sujetos en plural utilizan una única forma plural."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funcionan las formas pasadas en ruso",
+      "paragraphs": [
+        "Los verbos rusos más comunes aparecen constantemente en conversaciones, relatos, mensajes, instrucciones y textos cotidianos. Conocer sus formas pasadas ayuda a describir acciones terminadas o en desarrollo, comprender narraciones y hacer concordar correctamente el verbo con el sujeto.",
+        "Las formas pasadas suelen construirse a partir de la raíz del infinitivo con el sufijo -л y terminaciones que indican género o número. Sin embargo, algunos verbos frecuentes pierden parte de la raíz, presentan cambios fonéticos o forman el masculino sin la -л esperada, por lo que conviene aprender aparte los patrones irregulares."
+      ]
+    },
+    "table": {
+      "heading": "Tabla de formas pasadas de 100 verbos rusos",
+      "description": "Cada fila muestra el infinitivo ruso, su traducción al español y las formas pasadas masculina, femenina, neutra y plural para facilitar la comparación y el repaso.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha",
+      "notes": [
+        "La forma masculina singular suele terminar en -л, aunque algunos verbos comunes presentan una forma irregular sin este sufijo.",
+        "Las formas femenina y neutra singular suelen terminar en -ла y -ло.",
+        "La forma plural normalmente termina en -ли y no distingue género.",
+        "El acento puede cambiar entre las formas, por lo que conviene aprender la pronunciación junto con la escritura."
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar la tabla",
+      "steps": [
+        {
+          "heading": "Empieza por el infinitivo",
+          "text": "Lee el verbo ruso en su forma de diccionario y comprueba que entiendes su traducción al español."
+        },
+        {
+          "heading": "Compara las formas singulares",
+          "text": "Observa cómo cambian las terminaciones con sujetos masculinos, femeninos y neutros."
+        },
+        {
+          "heading": "Revisa la forma plural",
+          "text": "Compárala con las formas singulares y presta atención a posibles cambios en la raíz o en el acento."
+        },
+        {
+          "heading": "Utiliza cada forma",
+          "text": "Escribe cuatro oraciones breves con он, она, оно y они para practicar la concordancia entre el sujeto y el verbo en pasado."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para memorizar las formas pasadas rusas",
+      "items": [
+        {
+          "heading": "Aprende las formas con pronombres",
+          "text": "Practica cada verbo en combinaciones como он сделал, она сделала, оно сделало y они сделали para automatizar la concordancia."
+        },
+        {
+          "heading": "Marca el acento",
+          "text": "Anota el acento cuando la pronunciación cambie entre las formas, especialmente en los verbos irregulares de uso frecuente."
+        },
+        {
+          "heading": "Agrupa patrones similares",
+          "text": "Estudia juntos los verbos con las mismas terminaciones o cambios de raíz y reserva un grupo aparte para los masculinos excepcionales."
+        },
+        {
+          "heading": "Repasa mediante recuerdo activo",
+          "text": "Oculta la tabla e intenta producir las cuatro formas a partir del infinitivo; vuelve a los verbos difíciles después de un día, varios días y una semana."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pon en práctica las formas pasadas",
+      "description": "Repasa los verbos rusos más útiles y utiliza sus cuatro formas pasadas en oraciones completas.",
+      "primaryLabel": "Practicar verbos rusos",
+      "secondaryLabel": "100 verbos rusos más comunes"
+    },
+    "related": {
+      "heading": "Continúa aprendiendo ruso",
+      "items": [
+        { "key": "commonVerbs", "label": "Los 100 verbos rusos más comunes" },
+        { "key": "vocabularyLevels", "label": "Vocabulario ruso por niveles" },
+        { "key": "levelTest", "label": "Prueba de nivel de ruso" }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre las formas pasadas en ruso",
+      "items": [
+        {
+          "question": "¿Cómo se forma el pasado en ruso?",
+          "answer": "Las formas pasadas suelen construirse a partir de la raíz del infinitivo con el sufijo -л y una terminación que indica género o número. Algunos verbos presentan cambios de raíz o formas masculinas irregulares que deben memorizarse por separado."
+        },
+        {
+          "question": "¿Por qué los verbos rusos en pasado cambian según el género?",
+          "answer": "En singular, el verbo en pasado concuerda con el género gramatical del sujeto. Por eso existen formas distintas para masculino, femenino y neutro, mientras que en plural se utiliza una sola forma."
+        },
+        {
+          "question": "¿Los verbos rusos en pasado cambian según la persona?",
+          "answer": "No. Se utiliza la misma forma con sujetos de primera, segunda o tercera persona siempre que tengan el mismo género y número. Por ejemplo, я делал y он делал usan la misma forma masculina."
+        },
+        {
+          "question": "¿Todas las formas pasadas rusas son regulares?",
+          "answer": "No. Muchos verbos siguen terminaciones previsibles, pero algunos pierden parte de la raíz, cambian consonantes o forman el masculino sin -л. Estas excepciones frecuentes se aprenden mejor como conjuntos completos de cuatro formas."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las formas pasadas rusas?",
+          "answer": "Aprende cada verbo con он, она, оно y они en lugar de memorizar terminaciones aisladas. Utiliza las formas en oraciones breves, presta atención al acento y repasa los verbos irregulares con repetición espaciada."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "fr",
+    "urlSlug": "formes-passees-100-verbes-russes-les-plus-courants",
+    "entryButtonLabel": "Formes passées des verbes russes",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "translation": "Traduction française"
+    },
+    "pastForms": [
+      { "key": "pastMasculine", "label": "Masculin" },
+      { "key": "pastFeminine", "label": "Féminin" },
+      { "key": "pastNeuter", "label": "Neutre" },
+      { "key": "pastPlural", "label": "Pluriel" }
+    ],
+    "metadata": {
+      "title": "Formes passées des 100 verbes russes les plus courants",
+      "metaTitle": "100 verbes russes et leurs formes passées",
+      "metaDescription": "Consultez les formes masculine, féminine, neutre et plurielle du passé de 100 verbes russes courants, réguliers et irréguliers."
+    },
+    "hero": {
+      "heading": "Formes passées des 100 verbes russes les plus courants",
+      "subtitle": "Comparez les quatre principales formes du passé des verbes russes essentiels dans un tableau pratique.",
+      "introParagraphs": [
+        "Cette page réunit 100 verbes russes très fréquents avec leurs formes passées masculine, féminine, neutre et plurielle. Le tableau permet de comparer chaque infinitif à sa traduction française et d’observer comment le verbe change pour s’accorder avec le sujet.",
+        "Apprendre ces quatre formes ensemble est particulièrement utile, car les verbes russes au passé ne varient pas selon la personne grammaticale. Au singulier, ils s’accordent avec le genre du sujet, tandis qu’une seule forme plurielle s’emploie avec tous les sujets au pluriel."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionnent les formes passées en russe",
+      "paragraphs": [
+        "Les verbes russes les plus courants apparaissent constamment dans les conversations, les récits, les messages, les consignes et les textes du quotidien. Connaître leurs formes passées aide à décrire des actions achevées ou en cours, à comprendre les narrations et à accorder correctement le verbe avec son sujet.",
+        "Les formes du passé se construisent généralement à partir du radical de l’infinitif avec le suffixe -л et des terminaisons indiquant le genre ou le nombre. Toutefois, certains verbes fréquents perdent une partie du radical, subissent des changements phonétiques ou forment le masculin sans le -л attendu, ce qui nécessite un apprentissage séparé."
+      ]
+    },
+    "table": {
+      "heading": "Tableau des formes passées de 100 verbes russes",
+      "description": "Chaque ligne présente l’infinitif russe, sa traduction française et les formes passées masculine, féminine, neutre et plurielle afin de faciliter la comparaison et la révision.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite",
+      "notes": [
+        "La forme masculine singulière se termine souvent par -л, mais certains verbes courants possèdent une forme irrégulière sans ce suffixe.",
+        "Les formes féminine et neutre singulières se terminent généralement par -ла et -ло.",
+        "La forme plurielle se termine habituellement par -ли et ne distingue pas le genre.",
+        "L’accent peut se déplacer d’une forme à l’autre ; il est donc utile d’apprendre la prononciation en même temps que l’orthographe."
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment étudier le tableau",
+      "steps": [
+        {
+          "heading": "Commencez par l’infinitif",
+          "text": "Lisez le verbe russe dans sa forme de dictionnaire et vérifiez que vous comprenez sa traduction française."
+        },
+        {
+          "heading": "Comparez les formes singulières",
+          "text": "Observez comment les terminaisons changent avec un sujet masculin, féminin ou neutre."
+        },
+        {
+          "heading": "Vérifiez la forme plurielle",
+          "text": "Comparez-la aux formes singulières et repérez les éventuels changements de radical ou d’accent."
+        },
+        {
+          "heading": "Utilisez chaque forme",
+          "text": "Écrivez quatre phrases courtes avec он, она, оно et они pour pratiquer l’accord entre le sujet et le verbe au passé."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour mémoriser les formes passées russes",
+      "items": [
+        {
+          "heading": "Apprenez les formes avec les pronoms",
+          "text": "Entraînez-vous avec des groupes comme он сделал, она сделала, оно сделало et они сделали afin d’automatiser l’accord."
+        },
+        {
+          "heading": "Indiquez l’accent",
+          "text": "Notez l’accent lorsque la prononciation varie entre les formes, en particulier avec les verbes irréguliers très fréquents."
+        },
+        {
+          "heading": "Regroupez les modèles similaires",
+          "text": "Étudiez ensemble les verbes qui partagent les mêmes terminaisons ou changements de radical et révisez séparément les formes masculines exceptionnelles."
+        },
+        {
+          "heading": "Révisez par rappel actif",
+          "text": "Cachez le tableau et essayez de produire les quatre formes à partir de l’infinitif, puis reprenez les verbes difficiles après un jour, quelques jours et une semaine."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Mettez les formes passées en pratique",
+      "description": "Révisez les verbes russes les plus utiles et employez leurs quatre formes passées dans des phrases complètes.",
+      "primaryLabel": "Pratiquer les verbes russes",
+      "secondaryLabel": "Les 100 verbes russes les plus courants"
+    },
+    "related": {
+      "heading": "Poursuivez votre apprentissage du russe",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Les 100 verbes russes les plus courants"
+        },
+        { "key": "vocabularyLevels", "label": "Vocabulaire russe par niveau" },
+        { "key": "levelTest", "label": "Test de niveau de russe" }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur les formes passées en russe",
+      "items": [
+        {
+          "question": "Comment forme-t-on le passé en russe ?",
+          "answer": "Les formes du passé se construisent généralement à partir du radical de l’infinitif avec le suffixe -л et une terminaison qui indique le genre ou le nombre. Certains verbes présentent des changements de radical ou des formes masculines irrégulières qu’il faut mémoriser séparément."
+        },
+        {
+          "question": "Pourquoi les verbes russes au passé changent-ils selon le genre ?",
+          "answer": "Au singulier, le verbe au passé s’accorde avec le genre grammatical du sujet. Il existe donc des formes différentes au masculin, au féminin et au neutre, tandis qu’une seule forme est utilisée au pluriel."
+        },
+        {
+          "question": "Les verbes russes au passé changent-ils selon la personne ?",
+          "answer": "Non. La même forme est utilisée avec les sujets de première, deuxième ou troisième personne lorsqu’ils ont le même genre et le même nombre. Par exemple, я делал et он делал emploient tous deux la forme masculine."
+        },
+        {
+          "question": "Toutes les formes passées russes sont-elles régulières ?",
+          "answer": "Non. De nombreux verbes suivent des terminaisons prévisibles, mais certains perdent une partie du radical, modifient une consonne ou forment le masculin sans -л. Il est préférable d’apprendre ces exceptions fréquentes comme des groupes complets de quatre formes."
+        },
+        {
+          "question": "Quelle est la meilleure manière de mémoriser les formes passées russes ?",
+          "answer": "Apprenez chaque verbe avec он, она, оно et они plutôt que de mémoriser des terminaisons isolées. Utilisez les formes dans de courtes phrases, faites attention à l’accent et révisez les verbes irréguliers à intervalles espacés."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "de",
+    "urlSlug": "vergangenheitsformen-100-haeufigste-russische-verben",
+    "entryButtonLabel": "Vergangenheitsformen russischer Verben",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "translation": "Deutsche Übersetzung"
+    },
+    "pastForms": [
+      { "key": "pastMasculine", "label": "Maskulinum" },
+      { "key": "pastFeminine", "label": "Femininum" },
+      { "key": "pastNeuter", "label": "Neutrum" },
+      { "key": "pastPlural", "label": "Plural" }
+    ],
+    "metadata": {
+      "title": "Vergangenheitsformen der 100 häufigsten russischen Verben",
+      "metaTitle": "100 russische Verben und ihre Vergangenheitsformen",
+      "metaDescription": "Maskuline, feminine, neutrale und plurale Vergangenheitsformen von 100 häufigen russischen Verben mit regelmäßigen und unregelmäßigen Mustern."
+    },
+    "hero": {
+      "heading": "Vergangenheitsformen der 100 häufigsten russischen Verben",
+      "subtitle": "Vergleiche die vier wichtigsten Vergangenheitsformen russischer Verben in einer übersichtlichen Tabelle.",
+      "introParagraphs": [
+        "Auf dieser Seite findest du 100 häufig verwendete russische Verben mit ihrer maskulinen, femininen, neutralen und pluralen Vergangenheitsform. Die Tabelle hilft dir, den Infinitiv, die deutsche Übersetzung und die Veränderungen des Verbs je nach Genus und Numerus des Subjekts direkt zu vergleichen.",
+        "Das gemeinsame Lernen aller vier Formen ist besonders wichtig, weil russische Verben in der Vergangenheit nicht nach der grammatischen Person verändert werden. Im Singular richtet sich die Form nach dem Genus des Subjekts, während für alle Subjekte im Plural dieselbe Pluralform verwendet wird."
+      ]
+    },
+    "overview": {
+      "heading": "So funktionieren russische Vergangenheitsformen",
+      "paragraphs": [
+        "Häufige russische Verben begegnen dir ständig in Gesprächen, Erzählungen, Nachrichten, Anleitungen und Alltagstexten. Wer ihre Vergangenheitsformen kennt, kann abgeschlossene und andauernde Handlungen beschreiben, Erzählungen besser verstehen und das Verb korrekt an das Subjekt anpassen.",
+        "Russische Vergangenheitsformen werden meist aus dem Infinitivstamm mit dem Suffix -л und einer Endung für Genus oder Numerus gebildet. Einige häufige Verben verändern jedoch ihren Stamm, verlieren Laute oder bilden die maskuline Form ohne das erwartete -л, weshalb unregelmäßige Muster gesondert gelernt werden sollten."
+      ]
+    },
+    "table": {
+      "heading": "Tabelle mit den Vergangenheitsformen von 100 russischen Verben",
+      "description": "Jede Zeile enthält den russischen Infinitiv, die deutsche Übersetzung sowie die maskuline, feminine, neutrale und plurale Vergangenheitsform.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen",
+      "notes": [
+        "Die maskuline Singularform endet häufig auf -л, einige häufige Verben besitzen jedoch eine unregelmäßige Form ohne dieses Suffix.",
+        "Die feminine und neutrale Singularform enden normalerweise auf -ла beziehungsweise -ло.",
+        "Die Pluralform endet meist auf -ли und unterscheidet nicht nach Genus.",
+        "Die Betonung kann sich zwischen den Formen verschieben, daher sollten Aussprache und Schreibweise gemeinsam gelernt werden."
+      ]
+    },
+    "howToUse": {
+      "heading": "So arbeitest du mit der Tabelle",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Infinitiv",
+          "text": "Lies das russische Verb in seiner Grundform und prüfe, ob du seine deutsche Bedeutung kennst."
+        },
+        {
+          "heading": "Vergleiche die Singularformen",
+          "text": "Achte darauf, wie sich die Endungen bei maskulinen, femininen und neutralen Subjekten verändern."
+        },
+        {
+          "heading": "Prüfe die Pluralform",
+          "text": "Vergleiche sie mit den Singularformen und beachte mögliche Veränderungen des Stamms oder der Betonung."
+        },
+        {
+          "heading": "Verwende jede Form im Satz",
+          "text": "Schreibe vier kurze Sätze mit он, она, оно und они, um die Übereinstimmung zwischen Subjekt und Vergangenheitsform zu üben."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Merken russischer Vergangenheitsformen",
+      "items": [
+        {
+          "heading": "Mit Pronomen lernen",
+          "text": "Übe jedes Verb in Verbindungen wie он сделал, она сделала, оно сделало und они сделали, damit die Übereinstimmung automatisch wird."
+        },
+        {
+          "heading": "Die Betonung markieren",
+          "text": "Kennzeichne in deinen Notizen die betonte Silbe, wenn sie sich zwischen den Formen verändert, besonders bei häufigen unregelmäßigen Verben."
+        },
+        {
+          "heading": "Ähnliche Muster gruppieren",
+          "text": "Lerne Verben mit gleichen Endungen oder Stammveränderungen gemeinsam und wiederhole außergewöhnliche maskuline Formen separat."
+        },
+        {
+          "heading": "Aktiv abrufen",
+          "text": "Decke die Tabelle ab und bilde alle vier Formen aus dem Infinitiv; wiederhole schwierige Verben nach einem Tag, einigen Tagen und einer Woche."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Russische Vergangenheitsformen sicher anwenden",
+      "description": "Wiederhole wichtige russische Verben und verwende alle vier Vergangenheitsformen in vollständigen Sätzen.",
+      "primaryLabel": "Russische Verben üben",
+      "secondaryLabel": "100 häufige russische Verben"
+    },
+    "related": {
+      "heading": "Russisch weiterlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Die 100 häufigsten russischen Verben"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Russischer Wortschatz nach Niveau"
+        },
+        { "key": "levelTest", "label": "Russisch-Einstufungstest" }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zu russischen Vergangenheitsformen",
+      "items": [
+        {
+          "question": "Wie wird die Vergangenheit im Russischen gebildet?",
+          "answer": "Russische Vergangenheitsformen werden meist aus dem Infinitivstamm mit dem Suffix -л und einer Endung für Genus oder Numerus gebildet. Einige Verben besitzen Stammveränderungen oder unregelmäßige maskuline Formen, die separat gelernt werden müssen."
+        },
+        {
+          "question": "Warum verändern sich russische Verben in der Vergangenheit nach Genus?",
+          "answer": "Im Singular stimmt das Verb in der Vergangenheit mit dem grammatischen Genus des Subjekts überein. Deshalb gibt es unterschiedliche maskuline, feminine und neutrale Formen, während im Plural nur eine gemeinsame Form verwendet wird."
+        },
+        {
+          "question": "Verändern sich russische Vergangenheitsformen nach Person?",
+          "answer": "Nein. Dieselbe Form wird mit Subjekten der ersten, zweiten und dritten Person verwendet, sofern Genus und Numerus gleich sind. Zum Beispiel verwenden я делал und он делал dieselbe maskuline Form."
+        },
+        {
+          "question": "Sind alle russischen Vergangenheitsformen regelmäßig?",
+          "answer": "Nein. Viele Verben folgen vorhersehbaren Endungen, aber einige verlieren Teile des Stamms, verändern Konsonanten oder bilden das Maskulinum ohne -л. Solche häufigen Ausnahmen lassen sich am besten als vollständige Vierergruppen lernen."
+        },
+        {
+          "question": "Wie kann man russische Vergangenheitsformen am besten lernen?",
+          "answer": "Lerne jedes Verb mit он, она, оно und они, statt nur einzelne Endungen auswendig zu lernen. Verwende die Formen in kurzen Sätzen, achte auf die Betonung und wiederhole unregelmäßige Verben in zeitlichen Abständen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "it",
+    "urlSlug": "forme-passate-100-verbi-russi-piu-comuni",
+    "entryButtonLabel": "Forme passate dei verbi russi",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "translation": "Traduzione italiana"
+    },
+    "pastForms": [
+      { "key": "pastMasculine", "label": "Maschile" },
+      { "key": "pastFeminine", "label": "Femminile" },
+      { "key": "pastNeuter", "label": "Neutro" },
+      { "key": "pastPlural", "label": "Plurale" }
+    ],
+    "metadata": {
+      "title": "Forme passate dei 100 verbi russi più comuni",
+      "metaTitle": "100 verbi russi e le loro forme passate",
+      "metaDescription": "Consulta le forme passate maschile, femminile, neutra e plurale di 100 verbi russi comuni, con schemi regolari e irregolari."
+    },
+    "hero": {
+      "heading": "Forme passate dei 100 verbi russi più comuni",
+      "subtitle": "Confronta le quattro principali forme del passato dei verbi russi in una tabella pratica.",
+      "introParagraphs": [
+        "Questa pagina raccoglie 100 verbi russi di uso frequente con le rispettive forme passate maschile, femminile, neutra e plurale. La tabella permette di confrontare l’infinito, la traduzione italiana e il modo in cui il verbo cambia per concordare con il soggetto.",
+        "Imparare insieme tutte e quattro le forme è particolarmente utile perché i verbi russi al passato non cambiano in base alla persona grammaticale. Al singolare concordano con il genere del soggetto, mentre tutti i soggetti plurali utilizzano un’unica forma plurale."
+      ]
+    },
+    "overview": {
+      "heading": "Come funzionano le forme passate in russo",
+      "paragraphs": [
+        "I verbi russi più comuni compaiono continuamente nelle conversazioni, nei racconti, nei messaggi, nelle istruzioni e nei testi quotidiani. Conoscere le loro forme passate aiuta a descrivere azioni concluse o in corso, comprendere le narrazioni e far concordare correttamente il verbo con il soggetto.",
+        "Le forme del passato si costruiscono normalmente dalla radice dell’infinito con il suffisso -л e una desinenza che indica genere o numero. Alcuni verbi frequenti, però, modificano la radice, perdono alcuni suoni o formano il maschile senza la -л prevista, perciò gli schemi irregolari vanno studiati separatamente."
+      ]
+    },
+    "table": {
+      "heading": "Tabella delle forme passate di 100 verbi russi",
+      "description": "Ogni riga mostra l’infinito russo, la traduzione italiana e le forme passate maschile, femminile, neutra e plurale per facilitare il confronto e il ripasso.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra",
+      "notes": [
+        "La forma maschile singolare termina spesso in -л, ma alcuni verbi comuni presentano una forma irregolare senza questo suffisso.",
+        "Le forme femminile e neutra singolare terminano generalmente in -ла e -ло.",
+        "La forma plurale termina normalmente in -ли e non distingue il genere.",
+        "L’accento può spostarsi tra le forme, quindi è utile imparare la pronuncia insieme alla grafia."
+      ]
+    },
+    "howToUse": {
+      "heading": "Come studiare la tabella",
+      "steps": [
+        {
+          "heading": "Inizia dall’infinito",
+          "text": "Leggi il verbo russo nella forma del dizionario e verifica di comprenderne la traduzione italiana."
+        },
+        {
+          "heading": "Confronta le forme singolari",
+          "text": "Osserva come cambiano le desinenze con soggetti maschili, femminili e neutri."
+        },
+        {
+          "heading": "Controlla la forma plurale",
+          "text": "Confrontala con le forme singolari e presta attenzione a eventuali cambiamenti della radice o dell’accento."
+        },
+        {
+          "heading": "Usa ogni forma in una frase",
+          "text": "Scrivi quattro brevi frasi con он, она, оно e они per esercitarti nella concordanza tra soggetto e verbo al passato."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per ricordare le forme passate russe",
+      "items": [
+        {
+          "heading": "Impara le forme con i pronomi",
+          "text": "Esercitati con combinazioni come он сделал, она сделала, оно сделало e они сделали per rendere automatica la concordanza."
+        },
+        {
+          "heading": "Segna l’accento",
+          "text": "Indica l’accento nei tuoi appunti quando la pronuncia cambia tra le forme, soprattutto nei verbi irregolari più frequenti."
+        },
+        {
+          "heading": "Raggruppa gli schemi simili",
+          "text": "Studia insieme i verbi con le stesse desinenze o modifiche della radice e ripassa separatamente le forme maschili eccezionali."
+        },
+        {
+          "heading": "Usa il richiamo attivo",
+          "text": "Copri la tabella e prova a produrre tutte e quattro le forme partendo dall’infinito, poi ripassa i verbi difficili a intervalli crescenti."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Usa con sicurezza le forme passate russe",
+      "description": "Ripassa i verbi russi più utili e utilizza tutte e quattro le forme passate in frasi complete.",
+      "primaryLabel": "Esercitati con i verbi russi",
+      "secondaryLabel": "100 verbi russi più comuni"
+    },
+    "related": {
+      "heading": "Continua a studiare il russo",
+      "items": [
+        { "key": "commonVerbs", "label": "I 100 verbi russi più comuni" },
+        { "key": "vocabularyLevels", "label": "Vocabolario russo per livello" },
+        { "key": "levelTest", "label": "Test di livello di russo" }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulle forme passate in russo",
+      "items": [
+        {
+          "question": "Come si forma il passato in russo?",
+          "answer": "Le forme del passato si costruiscono normalmente dalla radice dell’infinito con il suffisso -л e una desinenza che indica genere o numero. Alcuni verbi presentano modifiche della radice o forme maschili irregolari che devono essere memorizzate separatamente."
+        },
+        {
+          "question": "Perché i verbi russi al passato cambiano in base al genere?",
+          "answer": "Al singolare, il verbo al passato concorda con il genere grammaticale del soggetto. Esistono quindi forme diverse per il maschile, il femminile e il neutro, mentre al plurale si usa una sola forma comune."
+        },
+        {
+          "question": "I verbi russi al passato cambiano in base alla persona?",
+          "answer": "No. La stessa forma viene usata con soggetti di prima, seconda e terza persona quando genere e numero coincidono. Per esempio, я делал e он делал usano entrambi la forma maschile."
+        },
+        {
+          "question": "Tutte le forme passate russe sono regolari?",
+          "answer": "No. Molti verbi seguono desinenze prevedibili, ma alcuni perdono una parte della radice, modificano una consonante o formano il maschile senza -л. È preferibile imparare queste eccezioni frequenti come gruppi completi di quattro forme."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le forme passate russe?",
+          "answer": "Impara ogni verbo con он, она, оно e они invece di memorizzare desinenze isolate. Usa le forme in frasi brevi, presta attenzione all’accento e ripassa i verbi irregolari con ripetizione dilazionata."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "pt",
+    "urlSlug": "formas-passadas-100-verbos-russos-mais-comuns",
+    "entryButtonLabel": "Formas passadas dos verbos russos",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Tradução em português"
+    },
+    "pastForms": [
+      { "key": "pastMasculine", "label": "Masculino" },
+      { "key": "pastFeminine", "label": "Feminino" },
+      { "key": "pastNeuter", "label": "Neutro" },
+      { "key": "pastPlural", "label": "Plural" }
+    ],
+    "metadata": {
+      "title": "Formas passadas dos 100 verbos russos mais comuns",
+      "metaTitle": "100 verbos russos e suas formas passadas",
+      "metaDescription": "Consulte as formas masculina, feminina, neutra e plural do passado de 100 verbos russos comuns, com padrões regulares e irregulares."
+    },
+    "hero": {
+      "heading": "Formas passadas dos 100 verbos russos mais comuns",
+      "subtitle": "Compare as quatro principais formas do passado dos verbos russos em uma tabela prática.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos russos de uso frequente com as suas formas passadas masculina, feminina, neutra e plural. A tabela permite comparar o infinitivo, a tradução em português e a forma como o verbo muda para concordar com o sujeito.",
+        "Aprender as quatro formas em conjunto é especialmente útil porque os verbos russos no passado não mudam de acordo com a pessoa gramatical. No singular, concordam com o género do sujeito, enquanto todos os sujeitos no plural usam uma única forma plural."
+      ]
+    },
+    "overview": {
+      "heading": "Como funcionam as formas passadas em russo",
+      "paragraphs": [
+        "Os verbos russos mais comuns aparecem constantemente em conversas, histórias, mensagens, instruções e textos do dia a dia. Conhecer as suas formas passadas ajuda a descrever ações concluídas ou em curso, compreender narrativas e fazer o verbo concordar corretamente com o sujeito.",
+        "As formas do passado são normalmente construídas a partir do radical do infinitivo com o sufixo -л e uma terminação que indica género ou número. Alguns verbos frequentes, porém, alteram o radical, perdem certos sons ou formam o masculino sem o -л esperado, por isso os padrões irregulares devem ser estudados separadamente."
+      ]
+    },
+    "table": {
+      "heading": "Tabela das formas passadas de 100 verbos russos",
+      "description": "Cada linha apresenta o infinitivo russo, a tradução em português e as formas passadas masculina, feminina, neutra e plural para facilitar a comparação e a revisão.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita",
+      "notes": [
+        "A forma masculina singular costuma terminar em -л, mas alguns verbos comuns apresentam uma forma irregular sem esse sufixo.",
+        "As formas feminina e neutra singular normalmente terminam em -ла e -ло.",
+        "A forma plural geralmente termina em -ли e não distingue género.",
+        "A sílaba tónica pode mudar entre as formas, por isso é útil aprender a pronúncia juntamente com a escrita."
+      ]
+    },
+    "howToUse": {
+      "heading": "Como estudar a tabela",
+      "steps": [
+        {
+          "heading": "Comece pelo infinitivo",
+          "text": "Leia o verbo russo na forma de dicionário e confirme que compreende a sua tradução em português."
+        },
+        {
+          "heading": "Compare as formas singulares",
+          "text": "Observe como as terminações mudam com sujeitos masculinos, femininos e neutros."
+        },
+        {
+          "heading": "Verifique a forma plural",
+          "text": "Compare-a com as formas singulares e preste atenção a possíveis alterações no radical ou na sílaba tónica."
+        },
+        {
+          "heading": "Use cada forma em uma frase",
+          "text": "Escreva quatro frases curtas com он, она, оно e они para praticar a concordância entre o sujeito e o verbo no passado."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para memorizar as formas passadas russas",
+      "items": [
+        {
+          "heading": "Aprenda com os pronomes",
+          "text": "Pratique cada verbo em combinações como он сделал, она сделала, оно сделало e они сделали para automatizar a concordância."
+        },
+        {
+          "heading": "Marque a sílaba tónica",
+          "text": "Indique a tonicidade nas suas anotações quando a pronúncia mudar entre as formas, sobretudo nos verbos irregulares mais frequentes."
+        },
+        {
+          "heading": "Agrupe padrões semelhantes",
+          "text": "Estude juntos os verbos com as mesmas terminações ou alterações no radical e reveja separadamente as formas masculinas excecionais."
+        },
+        {
+          "heading": "Use a recordação ativa",
+          "text": "Cubra a tabela e tente produzir as quatro formas a partir do infinitivo, voltando aos verbos difíceis depois de um dia, alguns dias e uma semana."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Use as formas passadas com confiança",
+      "description": "Reveja os verbos russos mais úteis e utilize as quatro formas do passado em frases completas.",
+      "primaryLabel": "Praticar verbos russos",
+      "secondaryLabel": "100 verbos russos mais comuns"
+    },
+    "related": {
+      "heading": "Continue aprendendo russo",
+      "items": [
+        { "key": "commonVerbs", "label": "Os 100 verbos russos mais comuns" },
+        { "key": "vocabularyLevels", "label": "Vocabulário russo por nível" },
+        { "key": "levelTest", "label": "Teste de nível de russo" }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre as formas passadas em russo",
+      "items": [
+        {
+          "question": "Como se forma o passado em russo?",
+          "answer": "As formas do passado são normalmente construídas a partir do radical do infinitivo com o sufixo -л e uma terminação que indica género ou número. Alguns verbos apresentam alterações no radical ou formas masculinas irregulares que precisam ser memorizadas separadamente."
+        },
+        {
+          "question": "Por que os verbos russos no passado mudam de acordo com o género?",
+          "answer": "No singular, o verbo no passado concorda com o género gramatical do sujeito. Por isso existem formas diferentes para masculino, feminino e neutro, enquanto no plural se usa apenas uma forma comum."
+        },
+        {
+          "question": "Os verbos russos no passado mudam de acordo com a pessoa?",
+          "answer": "Não. A mesma forma é usada com sujeitos de primeira, segunda e terceira pessoa quando o género e o número são iguais. Por exemplo, я делал e он делал usam a mesma forma masculina."
+        },
+        {
+          "question": "Todas as formas passadas russas são regulares?",
+          "answer": "Não. Muitos verbos seguem terminações previsíveis, mas alguns perdem parte do radical, alteram consoantes ou formam o masculino sem -л. É melhor aprender essas exceções frequentes como conjuntos completos de quatro formas."
+        },
+        {
+          "question": "Qual é a melhor forma de memorizar as formas passadas russas?",
+          "answer": "Aprenda cada verbo com он, она, оно e они, em vez de memorizar terminações isoladas. Use as formas em frases curtas, preste atenção à tonicidade e reveja os verbos irregulares com repetição espaçada."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "ru",
+    "urlSlug": "formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-russkih-glagolov",
+    "entryButtonLabel": "Прошедшие формы русских глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "translation": "Значение"
+    },
+    "pastForms": [
+      { "key": "pastMasculine", "label": "Мужской род" },
+      { "key": "pastFeminine", "label": "Женский род" },
+      { "key": "pastNeuter", "label": "Средний род" },
+      { "key": "pastPlural", "label": "Множественное число" }
+    ],
+    "metadata": {
+      "title": "Формы прошедшего времени 100 самых употребительных русских глаголов",
+      "metaTitle": "100 русских глаголов и их прошедшие формы",
+      "metaDescription": "Изучите формы мужского, женского и среднего рода, а также множественного числа у 100 распространённых русских глаголов."
+    },
+    "hero": {
+      "heading": "Формы прошедшего времени 100 самых употребительных русских глаголов",
+      "subtitle": "Сравнивайте четыре основные формы прошедшего времени русских глаголов в одной удобной таблице.",
+      "introParagraphs": [
+        "На этой странице собраны 100 часто употребляемых русских глаголов с формами прошедшего времени мужского, женского и среднего рода, а также множественного числа. Таблица помогает сопоставить инфинитив, значение и изменения глагола в зависимости от рода и числа подлежащего.",
+        "Полезно учить все четыре формы вместе, потому что русские глаголы в прошедшем времени не изменяются по лицам. В единственном числе форма согласуется с родом подлежащего, а для всех подлежащих во множественном числе используется одна общая форма."
+      ]
+    },
+    "overview": {
+      "heading": "Как образуются формы прошедшего времени в русском языке",
+      "paragraphs": [
+        "Частотные русские глаголы постоянно встречаются в разговорах, рассказах, сообщениях, инструкциях и повседневных текстах. Знание их прошедших форм помогает описывать завершённые и длительные действия, понимать повествование и правильно согласовывать глагол с подлежащим.",
+        "Формы прошедшего времени обычно образуются от основы инфинитива с помощью суффикса -л и окончаний, указывающих на род или число. Однако у некоторых распространённых глаголов меняется основа, исчезают отдельные звуки или мужская форма образуется без ожидаемого -л, поэтому такие случаи лучше запоминать отдельно."
+      ]
+    },
+    "table": {
+      "heading": "Таблица прошедших форм 100 русских глаголов",
+      "description": "В каждой строке указаны инфинитив, значение и формы прошедшего времени мужского, женского и среднего рода, а также множественного числа.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо",
+      "notes": [
+        "Форма мужского рода единственного числа часто оканчивается на -л, но у некоторых распространённых глаголов встречается форма без этого суффикса.",
+        "Формы женского и среднего рода единственного числа обычно оканчиваются на -ла и -ло.",
+        "Форма множественного числа чаще всего оканчивается на -ли и не различает род.",
+        "Ударение может перемещаться между формами, поэтому произношение полезно запоминать вместе с написанием."
+      ]
+    },
+    "howToUse": {
+      "heading": "Как работать с таблицей",
+      "steps": [
+        {
+          "heading": "Начните с инфинитива",
+          "text": "Прочитайте глагол в словарной форме и убедитесь, что понимаете его основное значение."
+        },
+        {
+          "heading": "Сравните формы единственного числа",
+          "text": "Обратите внимание, как меняются окончания с подлежащими мужского, женского и среднего рода."
+        },
+        {
+          "heading": "Проверьте форму множественного числа",
+          "text": "Сопоставьте её с формами единственного числа и отметьте возможные изменения основы или ударения."
+        },
+        {
+          "heading": "Используйте каждую форму",
+          "text": "Составьте четыре коротких предложения с он, она, оно и они, чтобы закрепить согласование подлежащего с глаголом в прошедшем времени."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Как запоминать прошедшие формы русских глаголов",
+      "items": [
+        {
+          "heading": "Учите формы с местоимениями",
+          "text": "Повторяйте каждый глагол в сочетаниях он сделал, она сделала, оно сделало и они сделали, чтобы согласование стало автоматическим."
+        },
+        {
+          "heading": "Отмечайте ударение",
+          "text": "Ставьте знак ударения в своих записях, если его положение меняется между формами, особенно у частотных неправильных глаголов."
+        },
+        {
+          "heading": "Группируйте похожие модели",
+          "text": "Учите вместе глаголы с одинаковыми окончаниями или изменениями основы, а исключительные мужские формы повторяйте отдельно."
+        },
+        {
+          "heading": "Используйте активное вспоминание",
+          "text": "Закройте таблицу и попробуйте образовать все четыре формы по инфинитиву, затем вернитесь к трудным глаголам через день, несколько дней и неделю."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Закрепите прошедшие формы на практике",
+      "description": "Повторите самые полезные русские глаголы и используйте все четыре формы прошедшего времени в полных предложениях.",
+      "primaryLabel": "Практиковать русские глаголы",
+      "secondaryLabel": "100 самых употребительных русских глаголов"
+    },
+    "related": {
+      "heading": "Продолжить изучение русского языка",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных русских глаголов"
+        },
+        { "key": "vocabularyLevels", "label": "Русская лексика по уровням" },
+        { "key": "levelTest", "label": "Тест на уровень русского языка" }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о прошедших формах русских глаголов",
+      "items": [
+        {
+          "question": "Как образуется прошедшее время в русском языке?",
+          "answer": "Формы прошедшего времени обычно образуются от основы инфинитива с помощью суффикса -л и окончания, указывающего на род или число. У некоторых глаголов встречаются изменения основы или неправильные мужские формы, которые нужно запоминать отдельно."
+        },
+        {
+          "question": "Почему русские глаголы в прошедшем времени изменяются по родам?",
+          "answer": "В единственном числе глагол в прошедшем времени согласуется с грамматическим родом подлежащего. Поэтому существуют отдельные формы мужского, женского и среднего рода, а во множественном числе используется одна общая форма."
+        },
+        {
+          "question": "Изменяются ли русские глаголы в прошедшем времени по лицам?",
+          "answer": "Нет. Одна и та же форма используется с подлежащими первого, второго и третьего лица, если совпадают их род и число. Например, я делал и он делал используют одну и ту же форму мужского рода."
+        },
+        {
+          "question": "Все ли прошедшие формы русских глаголов образуются регулярно?",
+          "answer": "Нет. Многие глаголы следуют предсказуемым моделям, но некоторые теряют часть основы, изменяют согласные или образуют мужскую форму без -л. Такие частотные исключения лучше учить сразу как набор из четырёх форм."
+        },
+        {
+          "question": "Как лучше запоминать прошедшие формы русских глаголов?",
+          "answer": "Учите каждый глагол вместе с он, она, оно и они, а не как набор изолированных окончаний. Используйте формы в коротких предложениях, следите за ударением и повторяйте неправильные глаголы через увеличивающиеся интервалы."
+        }
+      ]
+    }
   }
 ]
