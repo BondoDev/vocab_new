@@ -3732,5 +3732,948 @@
         }
       ]
     }
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "en",
+    "urlSlug": "past-forms-100-most-common-italian-verbs",
+    "entryButtonLabel": "Italian Verb Past Forms",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "translation": "English translation"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imperfect" },
+      { "key": "pastParticiple", "label": "Past Participle" },
+      { "key": "auxiliary", "label": "Auxiliary" }
+    ],
+    "metadata": {
+      "title": "Past Forms of the 100 Most Common Italian Verbs",
+      "metaTitle": "100 Common Italian Verbs and Their Past Forms",
+      "metaDescription": "Explore the imperfect, past participle, and auxiliary of 100 common Italian verbs, including regular, irregular, and reflexive patterns."
+    },
+    "hero": {
+      "heading": "Past Forms of the 100 Most Common Italian Verbs",
+      "subtitle": "Compare the imperfect, past participle, and compound-tense auxiliary of essential Italian verbs.",
+      "introParagraphs": [
+        "This page brings together 100 frequently used Italian verbs with their imperfect form, past participle, and compound-tense auxiliary. The table helps you compare the infinitive, English translation, and the principal forms needed to describe past situations and build common past constructions.",
+        "Learning these forms together is useful because Italian expresses past meaning through different structures. The imperfect describes habits, ongoing actions, and background situations, while the past participle combines with avere or essere to form compound tenses such as the passato prossimo."
+      ]
+    },
+    "overview": {
+      "heading": "How Italian Past Verb Forms Work",
+      "paragraphs": [
+        "Common Italian verbs appear constantly in conversations, stories, messages, instructions, and everyday texts. Knowing their main past forms helps you describe repeated actions, background conditions, completed events, and personal experiences more accurately.",
+        "The imperfect is a conjugated tense whose ending changes according to the subject. The past participle is a non-finite form used with an auxiliary, usually avere and sometimes essere, and it may also change for gender and number in certain constructions."
+      ]
+    },
+    "table": {
+      "heading": "Table of 100 Common Italian Verb Past Forms",
+      "description": "Each row shows the Italian infinitive, its English translation, a reference imperfect form, the past participle, and the auxiliary used to form compound tenses.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right",
+      "notes": [
+        "Regular imperfect forms are built from the infinitive stem and use endings that change according to person and number.",
+        "Regular -are verbs usually form the past participle with -ato, -ere verbs with -uto, and -ire verbs with -ito.",
+        "Most verbs form compound tenses with avere, while reflexive verbs and many intransitive verbs use essere.",
+        "Past participles used with essere normally agree with the subject in gender and number; agreement with avere occurs only in specific constructions."
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study the Table",
+      "steps": [
+        {
+          "heading": "Start with the infinitive",
+          "text": "Read the Italian verb in its dictionary form and confirm that you understand its English meaning."
+        },
+        {
+          "heading": "Examine the imperfect",
+          "text": "Notice whether the form follows a regular -are, -ere, or -ire pattern or has an irregular stem."
+        },
+        {
+          "heading": "Learn the participle and auxiliary together",
+          "text": "Memorize the past participle with avere or essere so that you can build the passato prossimo correctly."
+        },
+        {
+          "heading": "Use both forms in context",
+          "text": "Write one sentence describing a repeated or ongoing past situation and another using the past participle in a compound tense."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Remembering Italian Past Forms",
+      "items": [
+        {
+          "heading": "Group verbs by conjugation",
+          "text": "Study -are, -ere, and -ire verbs separately so that regular imperfect endings and participle patterns become easier to recognize."
+        },
+        {
+          "heading": "Memorize the auxiliary with the verb",
+          "text": "Learn combinations such as ha parlato and è andato as complete units instead of memorizing the participle alone."
+        },
+        {
+          "heading": "Review irregular participles separately",
+          "text": "Give extra attention to forms such as fatto, detto, visto, preso, and scritto, which do not follow the regular endings."
+        },
+        {
+          "heading": "Practise agreement in sentences",
+          "text": "Write short examples with essere and reflexive verbs so that gender and number agreement becomes easier to recognize and apply."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Put Italian Past Forms into Practice",
+      "description": "Review essential Italian verbs and use the imperfect and compound past forms in meaningful sentences.",
+      "primaryLabel": "Practice Italian Verbs",
+      "secondaryLabel": "100 Most Common Italian Verbs"
+    },
+    "related": {
+      "heading": "Continue Learning Italian",
+      "items": [
+        { "key": "commonVerbs", "label": "100 Most Common Italian Verbs" },
+        { "key": "vocabularyLevels", "label": "Italian Vocabulary by Level" },
+        { "key": "levelTest", "label": "Italian Level Test" }
+      ]
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions About Italian Past Forms",
+      "items": [
+        {
+          "question": "What is the Italian imperfect used for?",
+          "answer": "The imperfect describes repeated actions, habits, ongoing situations, and background conditions in the past. It is often used when the beginning or end of the action is not the main focus."
+        },
+        {
+          "question": "How is the Italian imperfect formed?",
+          "answer": "Regular verbs use the infinitive stem and add endings that vary according to person and number. The three conjugation groups follow very similar patterns, although a few common verbs have irregular stems."
+        },
+        {
+          "question": "How are regular Italian past participles formed?",
+          "answer": "Regular -are verbs usually replace the infinitive ending with -ato, as in parlare–parlato. Regular -ere verbs generally use -uto, while -ire verbs normally use -ito."
+        },
+        {
+          "question": "Why do some Italian verbs use essere instead of avere?",
+          "answer": "Most transitive verbs use avere, while reflexive verbs and many intransitive verbs of movement, change, or state use essere. With essere, the past participle normally agrees with the subject in gender and number."
+        },
+        {
+          "question": "What is the best way to memorize Italian past forms?",
+          "answer": "Learn the infinitive, imperfect reference form, past participle, and auxiliary as one set. Then use each verb in an imperfect sentence and a compound-tense sentence, reviewing irregular forms at spaced intervals."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "es",
+    "urlSlug": "formas-pasadas-100-verbos-italianos-mas-comunes",
+    "entryButtonLabel": "Formas pasadas de los verbos italianos",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Traducción al español"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imperfecto" },
+      { "key": "pastParticiple", "label": "Participio pasado" },
+      { "key": "auxiliary", "label": "Auxiliar" }
+    ],
+    "metadata": {
+      "title": "Formas pasadas de los 100 verbos italianos más comunes",
+      "metaTitle": "100 verbos italianos y sus formas pasadas",
+      "metaDescription": "Consulta el imperfecto, el participio pasado y el auxiliar de 100 verbos italianos comunes, con formas regulares, irregulares y pronominales."
+    },
+    "hero": {
+      "heading": "Formas pasadas de los 100 verbos italianos más comunes",
+      "subtitle": "Compara el imperfecto, el participio pasado y el auxiliar de los verbos italianos esenciales.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos italianos de uso frecuente con una forma de referencia en imperfecto, su participio pasado y el auxiliar empleado en los tiempos compuestos. La tabla permite comparar el infinitivo, la traducción al español y las formas principales necesarias para describir situaciones y acciones pasadas.",
+        "Aprender estos elementos en conjunto resulta útil porque el italiano expresa el pasado mediante estructuras diferentes. El imperfecto se usa para hábitos, acciones en desarrollo y situaciones de fondo, mientras que el participio pasado se combina con avere o essere para formar tiempos compuestos como el passato prossimo."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funcionan las formas pasadas en italiano",
+      "paragraphs": [
+        "Los verbos italianos más comunes aparecen constantemente en conversaciones, relatos, mensajes, instrucciones y textos cotidianos. Conocer sus principales formas pasadas ayuda a describir acciones repetidas, situaciones de fondo, acontecimientos terminados y experiencias personales con mayor precisión.",
+        "El imperfecto es un tiempo conjugado cuyas terminaciones cambian según la persona y el número. El participio pasado es una forma no personal que se utiliza con un auxiliar, normalmente avere y en determinados casos essere, y puede concordar en género y número según la construcción."
+      ]
+    },
+    "table": {
+      "heading": "Tabla de formas pasadas de 100 verbos italianos",
+      "description": "Cada fila muestra el infinitivo italiano, su traducción al español, una forma de referencia en imperfecto, el participio pasado y el auxiliar utilizado para formar los tiempos compuestos.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha",
+      "notes": [
+        "Las formas regulares del imperfecto se construyen a partir de la raíz del infinitivo y usan terminaciones que cambian según la persona y el número.",
+        "Los verbos regulares en -are suelen formar el participio con -ato, los verbos en -ere con -uto y los verbos en -ire con -ito.",
+        "La mayoría de los verbos utiliza avere, mientras que los verbos pronominales y muchos verbos intransitivos emplean essere.",
+        "Los participios usados con essere normalmente concuerdan con el sujeto en género y número; con avere, la concordancia solo aparece en construcciones concretas."
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar la tabla",
+      "steps": [
+        {
+          "heading": "Empieza por el infinitivo",
+          "text": "Lee el verbo italiano en su forma de diccionario y comprueba que entiendes su traducción al español."
+        },
+        {
+          "heading": "Examina el imperfecto",
+          "text": "Observa si la forma sigue un patrón regular de -are, -ere o -ire o si presenta una raíz irregular."
+        },
+        {
+          "heading": "Aprende juntos el participio y el auxiliar",
+          "text": "Memoriza el participio pasado con avere o essere para poder formar correctamente el passato prossimo."
+        },
+        {
+          "heading": "Utiliza ambas estructuras",
+          "text": "Escribe una oración sobre una acción habitual o en desarrollo y otra con el participio en un tiempo compuesto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para memorizar las formas pasadas italianas",
+      "items": [
+        {
+          "heading": "Agrupa los verbos por conjugación",
+          "text": "Estudia por separado los verbos en -are, -ere e -ire para reconocer mejor los patrones regulares del imperfecto y del participio."
+        },
+        {
+          "heading": "Memoriza también el auxiliar",
+          "text": "Aprende combinaciones como ha parlato y è andato como unidades completas, en lugar de recordar únicamente el participio."
+        },
+        {
+          "heading": "Repasa los participios irregulares",
+          "text": "Presta especial atención a formas como fatto, detto, visto, preso y scritto, que no siguen las terminaciones regulares."
+        },
+        {
+          "heading": "Practica la concordancia",
+          "text": "Escribe frases breves con essere y verbos pronominales para reconocer y aplicar mejor la concordancia de género y número."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pon en práctica las formas pasadas",
+      "description": "Repasa los verbos italianos más útiles y utiliza el imperfecto y los tiempos compuestos en oraciones completas.",
+      "primaryLabel": "Practicar verbos italianos",
+      "secondaryLabel": "100 verbos italianos más comunes"
+    },
+    "related": {
+      "heading": "Continúa aprendiendo italiano",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Los 100 verbos italianos más comunes"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario italiano por niveles"
+        },
+        { "key": "levelTest", "label": "Prueba de nivel de italiano" }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre las formas pasadas en italiano",
+      "items": [
+        {
+          "question": "¿Para qué se utiliza el imperfecto en italiano?",
+          "answer": "El imperfecto describe acciones repetidas, hábitos, situaciones en desarrollo y circunstancias de fondo en el pasado. Suele utilizarse cuando el inicio o el final de la acción no es la información principal."
+        },
+        {
+          "question": "¿Cómo se forma el imperfecto italiano?",
+          "answer": "Los verbos regulares utilizan la raíz del infinitivo y añaden terminaciones que cambian según la persona y el número. Los tres grupos de conjugación siguen modelos muy parecidos, aunque algunos verbos frecuentes presentan raíces irregulares."
+        },
+        {
+          "question": "¿Cómo se forman los participios pasados regulares en italiano?",
+          "answer": "Los verbos regulares en -are suelen sustituir esa terminación por -ato, como parlare–parlato. Los verbos en -ere normalmente usan -uto y los verbos en -ire suelen usar -ito."
+        },
+        {
+          "question": "¿Por qué algunos verbos italianos usan essere en vez de avere?",
+          "answer": "La mayoría de los verbos transitivos utiliza avere, mientras que los verbos pronominales y muchos verbos intransitivos de movimiento, cambio o estado usan essere. Con essere, el participio normalmente concuerda con el sujeto en género y número."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las formas pasadas italianas?",
+          "answer": "Aprende el infinitivo, una forma de referencia en imperfecto, el participio pasado y el auxiliar como un solo conjunto. Después, utiliza cada verbo en una oración en imperfecto y otra en un tiempo compuesto, y repasa las formas irregulares con intervalos crecientes."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "fr",
+    "urlSlug": "formes-passees-100-verbes-italiens-les-plus-courants",
+    "entryButtonLabel": "Formes passées des verbes italiens",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "translation": "Traduction française"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imparfait" },
+      { "key": "pastParticiple", "label": "Participe passé" },
+      { "key": "auxiliary", "label": "Auxiliaire" }
+    ],
+    "metadata": {
+      "title": "Formes passées des 100 verbes italiens les plus courants",
+      "metaTitle": "100 verbes italiens et leurs formes passées",
+      "metaDescription": "Consultez l’imparfait, le participe passé et l’auxiliaire de 100 verbes italiens courants, réguliers, irréguliers et pronominaux."
+    },
+    "hero": {
+      "heading": "Formes passées des 100 verbes italiens les plus courants",
+      "subtitle": "Comparez l’imparfait, le participe passé et l’auxiliaire des verbes italiens essentiels.",
+      "introParagraphs": [
+        "Cette page réunit 100 verbes italiens très fréquents avec une forme de référence à l’imparfait, leur participe passé et l’auxiliaire utilisé dans les temps composés. Le tableau permet de comparer directement l’infinitif, la traduction française et les principales formes nécessaires pour parler de situations et d’actions passées.",
+        "Apprendre ces éléments ensemble est particulièrement utile, car l’italien exprime le passé au moyen de plusieurs structures. L’imparfait décrit notamment les habitudes, les actions en cours et les circonstances de fond, tandis que le participe passé s’associe à avere ou essere pour former des temps composés comme le passato prossimo."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionnent les formes passées en italien",
+      "paragraphs": [
+        "Les verbes italiens les plus courants apparaissent constamment dans les conversations, les récits, les messages, les consignes et les textes du quotidien. Connaître leurs principales formes passées aide à décrire des actions répétées, des situations de fond, des événements achevés et des expériences personnelles avec davantage de précision.",
+        "L’imparfait est un temps conjugué dont les terminaisons varient selon la personne et le nombre. Le participe passé est une forme non personnelle employée avec un auxiliaire, généralement avere et dans certains cas essere, et peut s’accorder en genre et en nombre selon la construction."
+      ]
+    },
+    "table": {
+      "heading": "Tableau des formes passées de 100 verbes italiens",
+      "description": "Chaque ligne présente l’infinitif italien, sa traduction française, une forme de référence à l’imparfait, le participe passé et l’auxiliaire utilisé pour former les temps composés.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite",
+      "notes": [
+        "Les formes régulières de l’imparfait se construisent à partir du radical de l’infinitif et utilisent des terminaisons qui varient selon la personne et le nombre.",
+        "Les verbes réguliers en -are forment généralement le participe en -ato, ceux en -ere en -uto et ceux en -ire en -ito.",
+        "La majorité des verbes utilisent avere, tandis que les verbes pronominaux et de nombreux verbes intransitifs emploient essere.",
+        "Les participes utilisés avec essere s’accordent normalement avec le sujet en genre et en nombre ; avec avere, l’accord n’apparaît que dans certaines constructions."
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment étudier le tableau",
+      "steps": [
+        {
+          "heading": "Commencez par l’infinitif",
+          "text": "Lisez le verbe italien dans sa forme de dictionnaire et vérifiez que vous comprenez sa traduction française."
+        },
+        {
+          "heading": "Examinez l’imparfait",
+          "text": "Observez si la forme suit un modèle régulier en -are, -ere ou -ire ou si elle présente un radical irrégulier."
+        },
+        {
+          "heading": "Apprenez ensemble le participe et l’auxiliaire",
+          "text": "Mémorisez le participe passé avec avere ou essere afin de former correctement le passato prossimo."
+        },
+        {
+          "heading": "Utilisez les deux structures",
+          "text": "Écrivez une phrase décrivant une action habituelle ou en cours et une autre avec le participe dans un temps composé."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour mémoriser les formes passées italiennes",
+      "items": [
+        {
+          "heading": "Regroupez les verbes par conjugaison",
+          "text": "Étudiez séparément les verbes en -are, -ere et -ire afin de mieux reconnaître les modèles réguliers de l’imparfait et du participe."
+        },
+        {
+          "heading": "Mémorisez aussi l’auxiliaire",
+          "text": "Apprenez des groupes comme ha parlato et è andato comme des unités complètes plutôt que de retenir uniquement le participe."
+        },
+        {
+          "heading": "Révisez les participes irréguliers",
+          "text": "Accordez une attention particulière à des formes comme fatto, detto, visto, preso et scritto, qui ne suivent pas les terminaisons régulières."
+        },
+        {
+          "heading": "Entraînez-vous à l’accord",
+          "text": "Écrivez de courtes phrases avec essere et des verbes pronominaux afin de mieux reconnaître et appliquer l’accord en genre et en nombre."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Mettez les formes passées en pratique",
+      "description": "Révisez les verbes italiens les plus utiles et employez l’imparfait et les temps composés dans des phrases complètes.",
+      "primaryLabel": "Pratiquer les verbes italiens",
+      "secondaryLabel": "Les 100 verbes italiens les plus courants"
+    },
+    "related": {
+      "heading": "Poursuivez votre apprentissage de l’italien",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Les 100 verbes italiens les plus courants"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire italien par niveau"
+        },
+        { "key": "levelTest", "label": "Test de niveau d’italien" }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur les formes passées en italien",
+      "items": [
+        {
+          "question": "À quoi sert l’imparfait en italien ?",
+          "answer": "L’imparfait décrit des actions répétées, des habitudes, des situations en cours et des circonstances de fond dans le passé. Il est souvent utilisé lorsque le début ou la fin de l’action n’est pas l’information principale."
+        },
+        {
+          "question": "Comment forme-t-on l’imparfait italien ?",
+          "answer": "Les verbes réguliers utilisent le radical de l’infinitif et ajoutent des terminaisons qui varient selon la personne et le nombre. Les trois groupes de conjugaison suivent des modèles très proches, même si certains verbes fréquents ont un radical irrégulier."
+        },
+        {
+          "question": "Comment forme-t-on les participes passés réguliers en italien ?",
+          "answer": "Les verbes réguliers en -are remplacent généralement cette terminaison par -ato, comme parlare–parlato. Les verbes en -ere utilisent normalement -uto et ceux en -ire emploient habituellement -ito."
+        },
+        {
+          "question": "Pourquoi certains verbes italiens utilisent-ils essere au lieu d’avere ?",
+          "answer": "La plupart des verbes transitifs utilisent avere, tandis que les verbes pronominaux et de nombreux verbes intransitifs de mouvement, de changement ou d’état emploient essere. Avec essere, le participe s’accorde normalement avec le sujet en genre et en nombre."
+        },
+        {
+          "question": "Quelle est la meilleure manière de mémoriser les formes passées italiennes ?",
+          "answer": "Apprenez l’infinitif, une forme de référence à l’imparfait, le participe passé et l’auxiliaire comme un seul ensemble. Utilisez ensuite chaque verbe dans une phrase à l’imparfait et une autre à un temps composé, puis révisez les formes irrégulières à intervalles espacés."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "de",
+    "urlSlug": "vergangenheitsformen-100-haeufigste-italienische-verben",
+    "entryButtonLabel": "Vergangenheitsformen italienischer Verben",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "translation": "Deutsche Übersetzung"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imperfetto" },
+      { "key": "pastParticiple", "label": "Partizip Perfekt" },
+      { "key": "auxiliary", "label": "Hilfsverb" }
+    ],
+    "metadata": {
+      "title": "Vergangenheitsformen der 100 häufigsten italienischen Verben",
+      "metaTitle": "100 italienische Verben und ihre Vergangenheitsformen",
+      "metaDescription": "Imperfetto, Partizip Perfekt und Hilfsverb von 100 häufigen italienischen Verben mit regelmäßigen, unregelmäßigen und reflexiven Formen."
+    },
+    "hero": {
+      "heading": "Vergangenheitsformen der 100 häufigsten italienischen Verben",
+      "subtitle": "Vergleiche Imperfetto, Partizip Perfekt und Hilfsverb wichtiger italienischer Verben in einer übersichtlichen Tabelle.",
+      "introParagraphs": [
+        "Auf dieser Seite findest du 100 häufig verwendete italienische Verben mit einer Referenzform im Imperfetto, ihrem Partizip Perfekt und dem Hilfsverb für zusammengesetzte Zeiten. Die Tabelle hilft dir, den Infinitiv, die deutsche Übersetzung und die wichtigsten Formen für Aussagen über vergangene Situationen und Handlungen direkt zu vergleichen.",
+        "Das gemeinsame Lernen dieser Angaben ist besonders nützlich, weil das Italienische Vergangenheit mit unterschiedlichen Strukturen ausdrückt. Das Imperfetto beschreibt Gewohnheiten, andauernde Handlungen und Hintergrundsituationen, während das Partizip Perfekt mit avere oder essere zusammengesetzte Zeiten wie das Passato prossimo bildet."
+      ]
+    },
+    "overview": {
+      "heading": "So funktionieren italienische Vergangenheitsformen",
+      "paragraphs": [
+        "Häufige italienische Verben begegnen dir ständig in Gesprächen, Erzählungen, Nachrichten, Anleitungen und Alltagstexten. Wer ihre wichtigsten Vergangenheitsformen kennt, kann frühere Gewohnheiten, begleitende Umstände, abgeschlossene Ereignisse und persönliche Erfahrungen genauer ausdrücken.",
+        "Das Imperfetto ist eine konjugierte Zeitform, deren Endung sich nach Person und Zahl richtet. Das Partizip Perfekt ist eine nicht konjugierte Form, die meist mit avere und bei bestimmten Verben mit essere verwendet wird; je nach Konstruktion kann es außerdem an Genus und Numerus angepasst werden."
+      ]
+    },
+    "table": {
+      "heading": "Tabelle mit den Vergangenheitsformen von 100 italienischen Verben",
+      "description": "Jede Zeile enthält den italienischen Infinitiv, die deutsche Übersetzung, eine Referenzform im Imperfetto, das Partizip Perfekt und das Hilfsverb für zusammengesetzte Zeiten.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen",
+      "notes": [
+        "Regelmäßige Imperfettoformen werden aus dem Infinitivstamm gebildet und erhalten personen- und zahlenabhängige Endungen.",
+        "Regelmäßige Verben auf -are bilden das Partizip meist mit -ato, Verben auf -ere mit -uto und Verben auf -ire mit -ito.",
+        "Die meisten Verben verwenden avere; reflexive Verben und viele intransitive Verben verwenden essere.",
+        "Mit essere richtet sich das Partizip normalerweise nach Genus und Numerus des Subjekts; mit avere tritt Kongruenz nur in bestimmten Konstruktionen auf."
+      ]
+    },
+    "howToUse": {
+      "heading": "So arbeitest du mit der Tabelle",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Infinitiv",
+          "text": "Lies das italienische Verb in seiner Grundform und prüfe, ob du seine deutsche Bedeutung kennst."
+        },
+        {
+          "heading": "Untersuche das Imperfetto",
+          "text": "Achte darauf, ob die Form einem regelmäßigen Muster auf -are, -ere oder -ire folgt oder einen unregelmäßigen Stamm verwendet."
+        },
+        {
+          "heading": "Lerne Partizip und Hilfsverb zusammen",
+          "text": "Merke dir das Partizip Perfekt direkt mit avere oder essere, damit du das Passato prossimo korrekt bilden kannst."
+        },
+        {
+          "heading": "Verwende beide Formen im Kontext",
+          "text": "Schreibe einen Satz über eine wiederholte oder andauernde Situation und einen weiteren mit dem Partizip in einer zusammengesetzten Zeit."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Merken italienischer Vergangenheitsformen",
+      "items": [
+        {
+          "heading": "Nach Konjugation gruppieren",
+          "text": "Lerne Verben auf -are, -ere und -ire getrennt, damit du regelmäßige Muster im Imperfetto und bei den Partizipien leichter erkennst."
+        },
+        {
+          "heading": "Das Hilfsverb mitlernen",
+          "text": "Präge dir Verbindungen wie ha parlato und è andato als vollständige Einheiten ein, statt nur das Partizip zu lernen."
+        },
+        {
+          "heading": "Unregelmäßige Partizipien wiederholen",
+          "text": "Achte besonders auf Formen wie fatto, detto, visto, preso und scritto, die nicht den regelmäßigen Endungen folgen."
+        },
+        {
+          "heading": "Kongruenz in Beispielen üben",
+          "text": "Schreibe kurze Sätze mit essere und reflexiven Verben, um die Anpassung nach Genus und Numerus sicherer anzuwenden."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Italienische Vergangenheitsformen sicher anwenden",
+      "description": "Wiederhole wichtige italienische Verben und verwende Imperfetto und zusammengesetzte Vergangenheitsformen in vollständigen Sätzen.",
+      "primaryLabel": "Italienische Verben üben",
+      "secondaryLabel": "100 häufige italienische Verben"
+    },
+    "related": {
+      "heading": "Italienisch weiterlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Die 100 häufigsten italienischen Verben"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Italienischer Wortschatz nach Niveau"
+        },
+        { "key": "levelTest", "label": "Italienisch-Einstufungstest" }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zu italienischen Vergangenheitsformen",
+      "items": [
+        {
+          "question": "Wofür wird das Imperfetto im Italienischen verwendet?",
+          "answer": "Das Imperfetto beschreibt wiederholte Handlungen, Gewohnheiten, andauernde Situationen und Hintergrundinformationen in der Vergangenheit. Es wird häufig verwendet, wenn Anfang und Ende der Handlung nicht im Mittelpunkt stehen."
+        },
+        {
+          "question": "Wie wird das italienische Imperfetto gebildet?",
+          "answer": "Regelmäßige Verben verwenden den Infinitivstamm und fügen Endungen hinzu, die sich nach Person und Zahl richten. Die drei Konjugationsgruppen folgen sehr ähnlichen Mustern, auch wenn einige häufige Verben unregelmäßige Stämme besitzen."
+        },
+        {
+          "question": "Wie werden regelmäßige italienische Partizipien gebildet?",
+          "answer": "Regelmäßige Verben auf -are ersetzen diese Endung meist durch -ato, wie bei parlare–parlato. Verben auf -ere verwenden normalerweise -uto und Verben auf -ire meist -ito."
+        },
+        {
+          "question": "Warum verwenden einige italienische Verben essere statt avere?",
+          "answer": "Die meisten transitiven Verben verwenden avere, während reflexive Verben und viele intransitive Verben der Bewegung, Veränderung oder des Zustands essere verwenden. Mit essere richtet sich das Partizip normalerweise nach Genus und Numerus des Subjekts."
+        },
+        {
+          "question": "Wie kann man italienische Vergangenheitsformen am besten lernen?",
+          "answer": "Lerne Infinitiv, Imperfettoform, Partizip Perfekt und Hilfsverb als zusammengehörige Einheit. Verwende jedes Verb anschließend in einem Imperfettosatz und in einer zusammengesetzten Vergangenheitsform und wiederhole unregelmäßige Formen in zeitlichen Abständen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "it",
+    "urlSlug": "forme-passate-100-verbi-italiani-piu-comuni",
+    "entryButtonLabel": "Forme passate dei verbi italiani",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "translation": "Significato"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imperfetto" },
+      { "key": "pastParticiple", "label": "Participio passato" },
+      { "key": "auxiliary", "label": "Ausiliare" }
+    ],
+    "metadata": {
+      "title": "Forme passate dei 100 verbi italiani più comuni",
+      "metaTitle": "100 verbi italiani e le loro forme passate",
+      "metaDescription": "Consulta imperfetto, participio passato e ausiliare di 100 verbi italiani comuni, con forme regolari, irregolari e pronominali."
+    },
+    "hero": {
+      "heading": "Forme passate dei 100 verbi italiani più comuni",
+      "subtitle": "Confronta imperfetto, participio passato e ausiliare dei verbi italiani essenziali in una tabella pratica.",
+      "introParagraphs": [
+        "Questa pagina raccoglie 100 verbi italiani di uso frequente con una forma di riferimento all’imperfetto, il participio passato e l’ausiliare impiegato nei tempi composti. La tabella permette di confrontare direttamente l’infinito, il significato e le principali forme necessarie per parlare di situazioni e azioni passate.",
+        "Imparare insieme questi elementi è particolarmente utile perché l’italiano esprime il passato attraverso strutture diverse. L’imperfetto descrive abitudini, azioni in corso e circostanze di sfondo, mentre il participio passato si combina con avere o essere per formare tempi composti come il passato prossimo."
+      ]
+    },
+    "overview": {
+      "heading": "Come funzionano le forme passate in italiano",
+      "paragraphs": [
+        "I verbi italiani più comuni compaiono continuamente nelle conversazioni, nei racconti, nei messaggi, nelle istruzioni e nei testi quotidiani. Conoscere le loro principali forme passate aiuta a descrivere azioni ripetute, situazioni di sfondo, eventi conclusi ed esperienze personali con maggiore precisione.",
+        "L’imperfetto è un tempo coniugato le cui desinenze cambiano secondo la persona e il numero. Il participio passato è una forma non personale utilizzata con un ausiliare, generalmente avere e in determinati casi essere, e può richiedere l’accordo di genere e numero a seconda della costruzione."
+      ]
+    },
+    "table": {
+      "heading": "Tabella delle forme passate di 100 verbi italiani",
+      "description": "Ogni riga mostra l’infinito, il significato, una forma di riferimento all’imperfetto, il participio passato e l’ausiliare utilizzato per formare i tempi composti.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra",
+      "notes": [
+        "Le forme regolari dell’imperfetto si costruiscono a partire dalla radice dell’infinito e usano desinenze che cambiano in base alla persona e al numero.",
+        "I verbi regolari in -are formano normalmente il participio in -ato, quelli in -ere in -uto e quelli in -ire in -ito.",
+        "La maggior parte dei verbi usa avere, mentre i verbi pronominali e molti verbi intransitivi impiegano essere.",
+        "I participi usati con essere concordano normalmente con il soggetto in genere e numero; con avere, l’accordo compare solo in costruzioni specifiche."
+      ]
+    },
+    "howToUse": {
+      "heading": "Come studiare la tabella",
+      "steps": [
+        {
+          "heading": "Inizia dall’infinito",
+          "text": "Leggi il verbo nella forma del dizionario e verifica di comprenderne il significato e l’uso più comune."
+        },
+        {
+          "heading": "Esamina l’imperfetto",
+          "text": "Osserva se la forma segue un modello regolare in -are, -ere o -ire oppure presenta una radice irregolare."
+        },
+        {
+          "heading": "Impara insieme participio e ausiliare",
+          "text": "Memorizza il participio passato con avere o essere per poter formare correttamente il passato prossimo."
+        },
+        {
+          "heading": "Usa entrambe le forme nel contesto",
+          "text": "Scrivi una frase che descriva un’azione abituale o in corso e un’altra con il participio in un tempo composto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per ricordare le forme passate italiane",
+      "items": [
+        {
+          "heading": "Raggruppa i verbi per coniugazione",
+          "text": "Studia separatamente i verbi in -are, -ere e -ire per riconoscere più facilmente gli schemi regolari dell’imperfetto e del participio."
+        },
+        {
+          "heading": "Memorizza anche l’ausiliare",
+          "text": "Impara combinazioni come ha parlato ed è andato come unità complete, invece di ricordare soltanto il participio."
+        },
+        {
+          "heading": "Ripassa i participi irregolari",
+          "text": "Dedica particolare attenzione a forme come fatto, detto, visto, preso e scritto, che non seguono le terminazioni regolari."
+        },
+        {
+          "heading": "Esercitati con l’accordo",
+          "text": "Scrivi brevi frasi con essere e verbi pronominali per riconoscere e applicare meglio l’accordo di genere e numero."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Usa con sicurezza le forme passate",
+      "description": "Ripassa i verbi italiani più utili e utilizza l’imperfetto e i tempi composti in frasi complete.",
+      "primaryLabel": "Esercitati con i verbi italiani",
+      "secondaryLabel": "100 verbi italiani più comuni"
+    },
+    "related": {
+      "heading": "Continua a studiare l’italiano",
+      "items": [
+        { "key": "commonVerbs", "label": "I 100 verbi italiani più comuni" },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario italiano per livello"
+        },
+        { "key": "levelTest", "label": "Test di livello di italiano" }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulle forme passate in italiano",
+      "items": [
+        {
+          "question": "A cosa serve l’imperfetto in italiano?",
+          "answer": "L’imperfetto descrive azioni ripetute, abitudini, situazioni in corso e circostanze di sfondo nel passato. Si usa spesso quando l’inizio o la fine dell’azione non sono l’informazione principale."
+        },
+        {
+          "question": "Come si forma l’imperfetto italiano?",
+          "answer": "I verbi regolari usano la radice dell’infinito e aggiungono desinenze che variano secondo la persona e il numero. I tre gruppi di coniugazione seguono modelli molto simili, anche se alcuni verbi frequenti presentano radici irregolari."
+        },
+        {
+          "question": "Come si formano i participi passati regolari in italiano?",
+          "answer": "I verbi regolari in -are sostituiscono normalmente questa terminazione con -ato, come parlare–parlato. I verbi in -ere usano di solito -uto e quelli in -ire impiegano generalmente -ito."
+        },
+        {
+          "question": "Perché alcuni verbi italiani usano essere invece di avere?",
+          "answer": "La maggior parte dei verbi transitivi usa avere, mentre i verbi pronominali e molti verbi intransitivi di movimento, cambiamento o stato impiegano essere. Con essere, il participio concorda normalmente con il soggetto in genere e numero."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le forme passate italiane?",
+          "answer": "Impara insieme infinito, forma dell’imperfetto, participio passato e ausiliare come un unico gruppo. Usa poi ogni verbo in una frase all’imperfetto e in una frase con un tempo composto, ripassando le forme irregolari a intervalli regolari."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "pt",
+    "urlSlug": "formas-passadas-100-verbos-italianos-mais-comuns",
+    "entryButtonLabel": "Formas passadas dos verbos italianos",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Tradução em português"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Imperfeito" },
+      { "key": "pastParticiple", "label": "Particípio passado" },
+      { "key": "auxiliary", "label": "Auxiliar" }
+    ],
+    "metadata": {
+      "title": "Formas passadas dos 100 verbos italianos mais comuns",
+      "metaTitle": "100 verbos italianos e suas formas passadas",
+      "metaDescription": "Consulte o imperfeito, o particípio passado e o auxiliar de 100 verbos italianos comuns, com formas regulares, irregulares e pronominais."
+    },
+    "hero": {
+      "heading": "Formas passadas dos 100 verbos italianos mais comuns",
+      "subtitle": "Compare o imperfeito, o particípio passado e o auxiliar dos verbos italianos essenciais em uma tabela prática.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos italianos de uso frequente com uma forma de referência no imperfeito, o particípio passado e o auxiliar utilizado nos tempos compostos. A tabela permite comparar diretamente o infinitivo, a tradução em português e as principais formas necessárias para falar de situações e ações passadas.",
+        "Aprender esses elementos em conjunto é especialmente útil porque o italiano expressa o passado por meio de estruturas diferentes. O imperfeito descreve hábitos, ações em curso e circunstâncias de fundo, enquanto o particípio passado se combina com avere ou essere para formar tempos compostos como o passato prossimo."
+      ]
+    },
+    "overview": {
+      "heading": "Como funcionam as formas passadas em italiano",
+      "paragraphs": [
+        "Os verbos italianos mais comuns aparecem constantemente em conversas, histórias, mensagens, instruções e textos do dia a dia. Conhecer as suas principais formas passadas ajuda a descrever ações repetidas, situações de fundo, acontecimentos concluídos e experiências pessoais com maior precisão.",
+        "O imperfeito é um tempo conjugado cujas terminações mudam conforme a pessoa e o número. O particípio passado é uma forma não pessoal utilizada com um auxiliar, geralmente avere e, em determinados casos, essere, podendo exigir concordância de género e número conforme a construção."
+      ]
+    },
+    "table": {
+      "heading": "Tabela das formas passadas de 100 verbos italianos",
+      "description": "Cada linha apresenta o infinitivo italiano, a tradução em português, uma forma de referência no imperfeito, o particípio passado e o auxiliar utilizado para formar os tempos compostos.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita",
+      "notes": [
+        "As formas regulares do imperfeito são construídas a partir do radical do infinitivo e recebem terminações que variam conforme a pessoa e o número.",
+        "Os verbos regulares terminados em -are normalmente formam o particípio em -ato, os verbos em -ere em -uto e os verbos em -ire em -ito.",
+        "A maioria dos verbos utiliza avere, enquanto os verbos pronominais e muitos verbos intransitivos empregam essere.",
+        "Os particípios usados com essere normalmente concordam com o sujeito em género e número; com avere, a concordância aparece apenas em construções específicas."
+      ]
+    },
+    "howToUse": {
+      "heading": "Como estudar a tabela",
+      "steps": [
+        {
+          "heading": "Comece pelo infinitivo",
+          "text": "Leia o verbo italiano na forma de dicionário e confirme que compreende a sua tradução em português."
+        },
+        {
+          "heading": "Examine o imperfeito",
+          "text": "Observe se a forma segue um padrão regular em -are, -ere ou -ire ou se apresenta um radical irregular."
+        },
+        {
+          "heading": "Aprenda o particípio com o auxiliar",
+          "text": "Memorize o particípio passado juntamente com avere ou essere para formar corretamente o passato prossimo."
+        },
+        {
+          "heading": "Use as duas estruturas em contexto",
+          "text": "Escreva uma frase que descreva uma ação habitual ou em curso e outra com o particípio em um tempo composto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para memorizar as formas passadas italianas",
+      "items": [
+        {
+          "heading": "Agrupe os verbos por conjugação",
+          "text": "Estude separadamente os verbos em -are, -ere e -ire para reconhecer com mais facilidade os padrões regulares do imperfeito e do particípio."
+        },
+        {
+          "heading": "Memorize também o auxiliar",
+          "text": "Aprenda combinações como ha parlato e è andato como unidades completas, em vez de decorar apenas o particípio."
+        },
+        {
+          "heading": "Revise os particípios irregulares",
+          "text": "Dedique atenção especial a formas como fatto, detto, visto, preso e scritto, que não seguem as terminações regulares."
+        },
+        {
+          "heading": "Pratique a concordância",
+          "text": "Escreva frases curtas com essere e verbos pronominais para reconhecer e aplicar melhor a concordância de género e número."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Use as formas passadas com confiança",
+      "description": "Revise os verbos italianos mais úteis e utilize o imperfeito e os tempos compostos em frases completas.",
+      "primaryLabel": "Praticar verbos italianos",
+      "secondaryLabel": "100 verbos italianos mais comuns"
+    },
+    "related": {
+      "heading": "Continue aprendendo italiano",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Os 100 verbos italianos mais comuns"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulário italiano por nível"
+        },
+        { "key": "levelTest", "label": "Teste de nível de italiano" }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre as formas passadas em italiano",
+      "items": [
+        {
+          "question": "Para que serve o imperfeito em italiano?",
+          "answer": "O imperfeito descreve ações repetidas, hábitos, situações em curso e circunstâncias de fundo no passado. Ele é usado com frequência quando o início ou o fim da ação não é a informação principal."
+        },
+        {
+          "question": "Como é formado o imperfeito em italiano?",
+          "answer": "Os verbos regulares usam o radical do infinitivo e acrescentam terminações que variam conforme a pessoa e o número. Os três grupos de conjugação seguem padrões muito semelhantes, embora alguns verbos frequentes tenham radicais irregulares."
+        },
+        {
+          "question": "Como são formados os particípios passados regulares em italiano?",
+          "answer": "Os verbos regulares em -are normalmente substituem essa terminação por -ato, como em parlare–parlato. Os verbos em -ere geralmente usam -uto e os verbos em -ire costumam usar -ito."
+        },
+        {
+          "question": "Por que alguns verbos italianos usam essere em vez de avere?",
+          "answer": "A maioria dos verbos transitivos utiliza avere, enquanto os verbos pronominais e muitos verbos intransitivos de movimento, mudança ou estado empregam essere. Com essere, o particípio normalmente concorda com o sujeito em género e número."
+        },
+        {
+          "question": "Qual é a melhor forma de memorizar as formas passadas italianas?",
+          "answer": "Aprenda o infinitivo, uma forma de referência no imperfeito, o particípio passado e o auxiliar como um único conjunto. Depois, use cada verbo em uma frase no imperfeito e em outra com um tempo composto, revendo as formas irregulares em intervalos espaçados."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "it",
+    "uiLanguage": "ru",
+    "urlSlug": "formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-italyanskih-glagolov",
+    "entryButtonLabel": "Прошедшие формы итальянских глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "translation": "Перевод на русский"
+    },
+    "pastForms": [
+      { "key": "imperfect", "label": "Имперфект" },
+      { "key": "pastParticiple", "label": "Причастие прошедшего времени" },
+      { "key": "auxiliary", "label": "Вспомогательный глагол" }
+    ],
+    "metadata": {
+      "title": "Прошедшие формы 100 самых употребительных итальянских глаголов",
+      "metaTitle": "100 итальянских глаголов и их прошедшие формы",
+      "metaDescription": "Изучите имперфект, причастие прошедшего времени и вспомогательный глагол у 100 распространённых итальянских глаголов."
+    },
+    "hero": {
+      "heading": "Прошедшие формы 100 самых употребительных итальянских глаголов",
+      "subtitle": "Сравнивайте имперфект, причастие прошедшего времени и вспомогательный глагол основных итальянских глаголов.",
+      "introParagraphs": [
+        "На этой странице собраны 100 часто употребляемых итальянских глаголов со справочной формой имперфекта, причастием прошедшего времени и вспомогательным глаголом для составных времён. Таблица позволяет сопоставить инфинитив, перевод на русский язык и основные формы, необходимые для описания ситуаций и действий в прошлом.",
+        "Полезно учить эти элементы вместе, поскольку итальянский язык выражает прошедшее значение с помощью разных конструкций. Имперфект описывает привычки, длительные действия и фоновые обстоятельства, а причастие прошедшего времени сочетается с avere или essere при образовании составных времён, например passato prossimo."
+      ]
+    },
+    "overview": {
+      "heading": "Как образуются прошедшие формы итальянских глаголов",
+      "paragraphs": [
+        "Частотные итальянские глаголы постоянно встречаются в разговорах, рассказах, сообщениях, инструкциях и повседневных текстах. Знание их основных прошедших форм помогает точнее описывать повторяющиеся действия, фоновые ситуации, завершённые события и личный опыт.",
+        "Имперфект является спрягаемой формой, окончания которой зависят от лица и числа. Причастие прошедшего времени представляет собой неличную форму и используется со вспомогательным глаголом, обычно avere, а в определённых случаях essere; в некоторых конструкциях оно также согласуется в роде и числе."
+      ]
+    },
+    "table": {
+      "heading": "Таблица прошедших форм 100 итальянских глаголов",
+      "description": "В каждой строке указаны итальянский инфинитив, перевод на русский язык, справочная форма имперфекта, причастие прошедшего времени и вспомогательный глагол для составных времён.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо",
+      "notes": [
+        "Правильные формы имперфекта образуются от основы инфинитива и получают окончания, зависящие от лица и числа.",
+        "Правильные глаголы на -are обычно образуют причастие с окончанием -ato, глаголы на -ere — с -uto, а глаголы на -ire — с -ito.",
+        "Большинство глаголов употребляется с avere, тогда как возвратные и многие непереходные глаголы используют essere.",
+        "Причастия с essere обычно согласуются с подлежащим в роде и числе; при avere согласование встречается только в отдельных конструкциях."
+      ]
+    },
+    "howToUse": {
+      "heading": "Как работать с таблицей",
+      "steps": [
+        {
+          "heading": "Начните с инфинитива",
+          "text": "Прочитайте итальянский глагол в словарной форме и убедитесь, что понимаете его перевод на русский язык."
+        },
+        {
+          "heading": "Изучите имперфект",
+          "text": "Определите, следует ли форма правильной модели на -are, -ere или -ire либо использует неправильную основу."
+        },
+        {
+          "heading": "Учите причастие вместе со вспомогательным глаголом",
+          "text": "Запоминайте причастие прошедшего времени вместе с avere или essere, чтобы правильно образовывать passato prossimo."
+        },
+        {
+          "heading": "Используйте обе конструкции",
+          "text": "Составьте одно предложение о привычном или длительном действии и другое с причастием в составном прошедшем времени."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Как запоминать прошедшие формы итальянских глаголов",
+      "items": [
+        {
+          "heading": "Группируйте по спряжениям",
+          "text": "Учите глаголы на -are, -ere и -ire отдельными группами, чтобы легче замечать правильные модели имперфекта и причастий."
+        },
+        {
+          "heading": "Запоминайте вспомогательный глагол",
+          "text": "Учите сочетания ha parlato и è andato как целые единицы, а не только отдельные причастия."
+        },
+        {
+          "heading": "Повторяйте неправильные причастия",
+          "text": "Уделяйте особое внимание формам fatto, detto, visto, preso и scritto, которые не образуются по стандартным окончаниям."
+        },
+        {
+          "heading": "Практикуйте согласование",
+          "text": "Составляйте короткие предложения с essere и возвратными глаголами, чтобы лучше распознавать и применять согласование по роду и числу."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Закрепите прошедшие формы на практике",
+      "description": "Повторите самые полезные итальянские глаголы и используйте имперфект и составные прошедшие времена в полных предложениях.",
+      "primaryLabel": "Практиковать итальянские глаголы",
+      "secondaryLabel": "100 самых употребительных итальянских глаголов"
+    },
+    "related": {
+      "heading": "Продолжить изучение итальянского языка",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных итальянских глаголов"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Итальянская лексика по уровням"
+        },
+        { "key": "levelTest", "label": "Тест на уровень итальянского языка" }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о прошедших формах итальянских глаголов",
+      "items": [
+        {
+          "question": "Для чего используется имперфект в итальянском языке?",
+          "answer": "Имперфект описывает повторяющиеся действия, привычки, длительные ситуации и фоновые обстоятельства в прошлом. Он часто употребляется, когда начало или конец действия не являются главным содержанием высказывания."
+        },
+        {
+          "question": "Как образуется итальянский имперфект?",
+          "answer": "Правильные глаголы используют основу инфинитива и добавляют окончания, зависящие от лица и числа. Три группы спряжения следуют очень похожим моделям, хотя у некоторых распространённых глаголов встречаются неправильные основы."
+        },
+        {
+          "question": "Как образуются правильные итальянские причастия прошедшего времени?",
+          "answer": "Правильные глаголы на -are обычно заменяют это окончание на -ato, например parlare–parlato. Глаголы на -ere чаще используют -uto, а глаголы на -ire — -ito."
+        },
+        {
+          "question": "Почему некоторые итальянские глаголы используют essere вместо avere?",
+          "answer": "Большинство переходных глаголов употребляется с avere, тогда как возвратные и многие непереходные глаголы движения, изменения или состояния используют essere. При essere причастие обычно согласуется с подлежащим в роде и числе."
+        },
+        {
+          "question": "Как лучше запоминать прошедшие формы итальянских глаголов?",
+          "answer": "Учите инфинитив, справочную форму имперфекта, причастие прошедшего времени и вспомогательный глагол как единый набор. Затем используйте каждый глагол в предложении с имперфектом и в составном прошедшем времени, повторяя неправильные формы через увеличивающиеся интервалы."
+        }
+      ]
+    }
   }
 ]

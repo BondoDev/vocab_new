@@ -1,0 +1,602 @@
+[
+  {
+    "concept_id": "A1-00008",
+    "imperfect": "ero",
+    "pastParticiple": "stato",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00487",
+    "imperfect": "avevo",
+    "pastParticiple": "avuto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01701",
+    "imperfect": "diventavo",
+    "pastParticiple": "diventato",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00167",
+    "imperfect": "potevo",
+    "pastParticiple": "potuto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00687",
+    "imperfect": "dovevo",
+    "pastParticiple": "dovuto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01120",
+    "imperfect": "volevo",
+    "pastParticiple": "voluto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01787",
+    "imperfect": "dovevo",
+    "pastParticiple": "dovuto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00643",
+    "imperfect": "potevo",
+    "pastParticiple": "potuto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00607",
+    "imperfect": "mi piaceva",
+    "pastParticiple": "piaciuto",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00633",
+    "imperfect": "facevo",
+    "pastParticiple": "fatto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00292",
+    "imperfect": "facevo",
+    "pastParticiple": "fatto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00441",
+    "imperfect": "andavo",
+    "pastParticiple": "andato",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00231",
+    "imperfect": "venivo",
+    "pastParticiple": "venuto",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00871",
+    "imperfect": "dicevo",
+    "pastParticiple": "detto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00956",
+    "imperfect": "parlavo",
+    "pastParticiple": "parlato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01012",
+    "imperfect": "discutevo",
+    "pastParticiple": "discusso",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00049",
+    "imperfect": "chiedevo",
+    "pastParticiple": "chiesto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00034",
+    "imperfect": "rispondevo",
+    "pastParticiple": "risposto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00494",
+    "imperfect": "sentivo",
+    "pastParticiple": "sentito",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00879",
+    "imperfect": "vedevo",
+    "pastParticiple": "visto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00621",
+    "imperfect": "guardavo",
+    "pastParticiple": "guardato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00383",
+    "imperfect": "trovavo",
+    "pastParticiple": "trovato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01107",
+    "imperfect": "cercavo",
+    "pastParticiple": "cercato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00584",
+    "imperfect": "sapevo",
+    "pastParticiple": "saputo",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01117",
+    "imperfect": "mi svegliavo",
+    "pastParticiple": "svegliato",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-01043",
+    "imperfect": "pensavo",
+    "pastParticiple": "pensato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01482",
+    "imperfect": "credevo",
+    "pastParticiple": "creduto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01361",
+    "imperfect": "capivo",
+    "pastParticiple": "capito",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01558",
+    "imperfect": "studiavo",
+    "pastParticiple": "studiato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-00950",
+    "imperfect": "preparavo",
+    "pastParticiple": "preparato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01160",
+    "imperfect": "lavoravo",
+    "pastParticiple": "lavorato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01118",
+    "imperfect": "camminavo",
+    "pastParticiple": "camminato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00615",
+    "imperfect": "vivevo",
+    "pastParticiple": "vissuto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00973",
+    "imperfect": "rimanevo",
+    "pastParticiple": "rimasto",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "B1-02233",
+    "imperfect": "mi riposavo",
+    "pastParticiple": "riposato",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00693",
+    "imperfect": "avevo bisogno",
+    "pastParticiple": "avuto bisogno",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01011",
+    "imperfect": "prendevo",
+    "pastParticiple": "preso",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00436",
+    "imperfect": "davo",
+    "pastParticiple": "dato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00431",
+    "imperfect": "ottenevo",
+    "pastParticiple": "ottenuto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00139",
+    "imperfect": "portavo",
+    "pastParticiple": "portato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00978",
+    "imperfect": "smettevo",
+    "pastParticiple": "smesso",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00158",
+    "imperfect": "compravo",
+    "pastParticiple": "comprato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00881",
+    "imperfect": "vendevo",
+    "pastParticiple": "venduto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00762",
+    "imperfect": "pagavo",
+    "pastParticiple": "pagato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-00296",
+    "imperfect": "costavo",
+    "pastParticiple": "costato",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00322",
+    "imperfect": "mangiavo",
+    "pastParticiple": "mangiato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00308",
+    "imperfect": "bevevo",
+    "pastParticiple": "bevuto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00237",
+    "imperfect": "cucinavo",
+    "pastParticiple": "cucinato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01125",
+    "imperfect": "guardavo",
+    "pastParticiple": "guardato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00925",
+    "imperfect": "dormivo",
+    "pastParticiple": "dormito",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00021",
+    "imperfect": "mi alzavo",
+    "pastParticiple": "alzato",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00916",
+    "imperfect": "mi sedevo",
+    "pastParticiple": "seduto",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00968",
+    "imperfect": "stavo in piedi",
+    "pastParticiple": "stato in piedi",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A2-00717",
+    "imperfect": "mi sdraiavo",
+    "pastParticiple": "sdraiato",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00932",
+    "imperfect": "sorridevo",
+    "pastParticiple": "sorriso",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00817",
+    "imperfect": "mettevo",
+    "pastParticiple": "messo",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "B1-04098",
+    "imperfect": "impostavo",
+    "pastParticiple": "impostato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00309",
+    "imperfect": "guidavo",
+    "pastParticiple": "guidato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01805",
+    "imperfect": "viaggiavo",
+    "pastParticiple": "viaggiato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00591",
+    "imperfect": "ridevo",
+    "pastParticiple": "riso",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00859",
+    "imperfect": "correvo",
+    "pastParticiple": "corso",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00785",
+    "imperfect": "giocavo",
+    "pastParticiple": "giocato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00828",
+    "imperfect": "leggevo",
+    "pastParticiple": "letto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01167",
+    "imperfect": "scrivevo",
+    "pastParticiple": "scritto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00731",
+    "imperfect": "aprivo",
+    "pastParticiple": "aperto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00210",
+    "imperfect": "chiudevo",
+    "pastParticiple": "chiuso",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00970",
+    "imperfect": "iniziavo",
+    "pastParticiple": "iniziato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00088",
+    "imperfect": "cominciavo",
+    "pastParticiple": "cominciato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-00284",
+    "imperfect": "continuavo",
+    "pastParticiple": "continuato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01114",
+    "imperfect": "aspettavo",
+    "pastParticiple": "aspettato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00498",
+    "imperfect": "aiutavo",
+    "pastParticiple": "aiutato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00903",
+    "imperfect": "mostravo",
+    "pastParticiple": "mostrato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-00460",
+    "imperfect": "spiegavo",
+    "pastParticiple": "spiegato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01022",
+    "imperfect": "raccontavo",
+    "pastParticiple": "raccontato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01104",
+    "imperfect": "usavo",
+    "pastParticiple": "usato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "B2-02656",
+    "imperfect": "utilizzavo",
+    "pastParticiple": "utilizzato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01130",
+    "imperfect": "indossavo",
+    "pastParticiple": "indossato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01088",
+    "imperfect": "giravo",
+    "pastParticiple": "girato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00595",
+    "imperfect": "imparavo",
+    "pastParticiple": "imparato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01117",
+    "imperfect": "mandavo",
+    "pastParticiple": "mandato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01542",
+    "imperfect": "pianificavo",
+    "pastParticiple": "pianificato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00163",
+    "imperfect": "chiamavo",
+    "pastParticiple": "chiamato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00650",
+    "imperfect": "incontravo",
+    "pastParticiple": "incontrato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01111",
+    "imperfect": "visitavo",
+    "pastParticiple": "visitato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00623",
+    "imperfect": "amavo",
+    "pastParticiple": "amato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00679",
+    "imperfect": "mi muovevo",
+    "pastParticiple": "mosso",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A1-00371",
+    "imperfect": "sentivo",
+    "pastParticiple": "sentito",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A2-01742",
+    "imperfect": "succedeva",
+    "pastParticiple": "successo",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A2-00133",
+    "imperfect": "appartenevo",
+    "pastParticiple": "appartenuto",
+    "auxiliary": "essere"
+  },
+  {
+    "concept_id": "A2-01814",
+    "imperfect": "vincevo",
+    "pastParticiple": "vinto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "B1-01577",
+    "imperfect": "perdevo",
+    "pastParticiple": "perso",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "B2-00065",
+    "imperfect": "alteravo",
+    "pastParticiple": "alterato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00186",
+    "imperfect": "cambiavo",
+    "pastParticiple": "cambiato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-01083",
+    "imperfect": "provavo",
+    "pastParticiple": "provato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00257",
+    "imperfect": "piangevo",
+    "pastParticiple": "pianto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00406",
+    "imperfect": "dimenticavo",
+    "pastParticiple": "dimenticato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00836",
+    "imperfect": "ricordavo",
+    "pastParticiple": "ricordato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00600",
+    "imperfect": "lasciavo",
+    "pastParticiple": "lasciato",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00511",
+    "imperfect": "tenevo",
+    "pastParticiple": "tenuto",
+    "auxiliary": "avere"
+  },
+  {
+    "concept_id": "A1-00596",
+    "imperfect": "partivo",
+    "pastParticiple": "partito",
+    "auxiliary": "essere"
+  }
+]
