@@ -14,7 +14,11 @@ import {
 } from "../../../../data/seo/verbLists";
 import { getLevelTestSeoPath } from "../../../../data/seo/levelTests";
 import { getSeoHubPath } from "../../../../data/seo/shared/hub";
-import { type TargetLanguageSlug, type UiLanguageCode } from "../../../../data/seo/shared/slugs";
+import {
+  getUiVocabularyLanguage,
+  type TargetLanguageSlug,
+  type UiLanguageCode,
+} from "../../../../data/seo/shared/slugs";
 import { buildLocalizedVocabularyPath } from "../../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import { buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
 import { getPastVerbFormsRowsById } from "../../../../data/seo/verbLists/pastForms100Verbs/pastForms100VerbFormsData";
@@ -112,17 +116,28 @@ export function PastVerbFormsSeoPage({
     return result;
   }, [targetLanguage, uiLang]);
 
+  // The translation column is redundant (and dropped) whenever the UI
+  // language's default vocabulary language is the same as the target
+  // language — e.g. a German UI visitor viewing German past forms would
+  // just see the infinitive repeated. Mirrors common100Verbs' identical
+  // showTranslationColumn check.
+  const showTranslationColumn = getUiVocabularyLanguage(uiLang) !== targetLanguage;
+
   // Full-row search: matches if the text appears in the infinitive, any
-  // dynamic past-form value, or the translation — never the row number,
-  // which carries no searchable meaning.
+  // dynamic past-form value, or (when shown) the translation — never the
+  // row number, which carries no searchable meaning.
   const [searchValue, setSearchValue] = useState("");
   const normalizedSearch = searchValue.trim().toLowerCase();
   const filteredRows = useMemo(
     () =>
       rows.filter((row) =>
-        rowMatchesSearch(normalizedSearch, [row.infinitive, row.translation, ...Object.values(row.forms)]),
+        rowMatchesSearch(normalizedSearch, [
+          row.infinitive,
+          ...(showTranslationColumn ? [row.translation] : []),
+          ...Object.values(row.forms),
+        ]),
       ),
-    [normalizedSearch, rows],
+    [normalizedSearch, rows, showTranslationColumn],
   );
   const searchCopy = getTableSearchCopy(uiLang);
 
@@ -217,6 +232,7 @@ export function PastVerbFormsSeoPage({
           tableConfig={tableConfig}
           tableColumns={content?.tableColumns ?? EMPTY_TABLE_COLUMNS}
           pastForms={content?.pastForms ?? []}
+          showTranslationColumn={showTranslationColumn}
           hasRows={rows.length > 0}
           rows={filteredRows}
           speechLang={speechLang}

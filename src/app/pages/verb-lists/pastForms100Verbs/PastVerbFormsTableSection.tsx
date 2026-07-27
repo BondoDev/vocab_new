@@ -29,6 +29,10 @@ interface PastVerbFormsTableSectionProps {
   tableConfig: PastVerbFormsTableConfig;
   tableColumns: PastVerbFormsTableColumns;
   pastForms: PastVerbFormsFormColumn[];
+  // False when the UI language's default vocabulary language is the same
+  // as the target language (e.g. a German UI visitor viewing German past
+  // forms) — the translation would just repeat the infinitive.
+  showTranslationColumn: boolean;
   // Whether the underlying (unfiltered) dataset has any rows at all — the
   // "isTableReady" signal. Kept separate from `rows` (which is the
   // search-filtered set actually rendered) so an empty search result
@@ -75,6 +79,7 @@ export function PastVerbFormsTableSection({
   tableConfig,
   tableColumns,
   pastForms,
+  showTranslationColumn,
   hasRows,
   rows,
   speechLang,
@@ -96,7 +101,7 @@ export function PastVerbFormsTableSection({
     pastForms.length,
     rows.length,
   ]);
-  const columnCount = pastForms.length + 3;
+  const columnCount = pastForms.length + 2 + (showTranslationColumn ? 1 : 0);
 
   return (
     <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
@@ -153,9 +158,11 @@ export function PastVerbFormsTableSection({
                       {form.label}
                     </th>
                   ))}
-                  <th className="min-w-[9rem] border-b border-border py-3 pr-4 text-sm text-foreground">
-                    {tableColumns.translation}
-                  </th>
+                  {showTranslationColumn ? (
+                    <th className="min-w-[9rem] border-b border-border py-3 pr-4 text-sm text-foreground">
+                      {tableColumns.translation}
+                    </th>
+                  ) : null}
                 </tr>
               </thead>
               <tbody>
@@ -207,9 +214,11 @@ export function PastVerbFormsTableSection({
                           {row.forms[form.key] || "—"}
                         </td>
                       ))}
-                      <td className="min-w-[9rem] border-b border-border/70 py-3 pr-4 align-top text-sm text-muted-foreground">
-                        {row.translation || "—"}
-                      </td>
+                      {showTranslationColumn ? (
+                        <td className="min-w-[9rem] border-b border-border/70 py-3 pr-4 align-top text-sm text-muted-foreground">
+                          {row.translation || "—"}
+                        </td>
+                      ) : null}
                     </tr>
                   ))
                 )}
