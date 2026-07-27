@@ -4675,5 +4675,951 @@
         }
       ]
     }
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "en",
+    "urlSlug": "past-forms-100-most-common-portuguese-verbs",
+    "entryButtonLabel": "Portuguese Verb Past Forms",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "translation": "English translation"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Preterite" },
+      { "key": "imperfect", "label": "Imperfect" },
+      { "key": "pastParticiple", "label": "Past Participle" }
+    ],
+    "metadata": {
+      "title": "Past Forms of the 100 Most Common Portuguese Verbs",
+      "metaTitle": "100 Common Portuguese Verbs and Their Past Forms",
+      "metaDescription": "Explore the preterite, imperfect, and past participle of 100 common Portuguese verbs, including regular and irregular patterns."
+    },
+    "hero": {
+      "heading": "Past Forms of the 100 Most Common Portuguese Verbs",
+      "subtitle": "Compare the preterite, imperfect, and past participle of essential Portuguese verbs in one practical reference.",
+      "introParagraphs": [
+        "This page brings together 100 frequently used Portuguese verbs with their preterite, imperfect, and past participle forms. The table helps you compare the infinitive, English translation, and the principal forms needed to describe completed actions, ongoing past situations, and compound tenses.",
+        "Learning these forms together is especially useful because Portuguese distinguishes between different kinds of past meaning. The preterite usually presents an action as completed, the imperfect describes habits or background situations, and the past participle is used in compound and passive constructions."
+      ]
+    },
+    "overview": {
+      "heading": "How Portuguese Past Verb Forms Work",
+      "paragraphs": [
+        "Common Portuguese verbs appear constantly in conversations, stories, messages, instructions, and everyday texts. Knowing their main past forms helps you describe finished events, repeated actions, past circumstances, and experiences more accurately.",
+        "The preterite and imperfect are conjugated forms whose endings change according to person and number. The past participle is a non-finite form, often used with ter or haver in compound tenses and with ser or estar in passive or resultative constructions."
+      ]
+    },
+    "table": {
+      "heading": "Table of 100 Common Portuguese Verb Past Forms",
+      "description": "Each row shows the Portuguese infinitive, its English translation, a reference preterite form, a reference imperfect form, and the past participle for quick comparison and review.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right",
+      "notes": [
+        "Regular verbs follow different conjugation patterns according to whether they end in -ar, -er, or -ir.",
+        "The preterite expresses actions viewed as completed, while the imperfect often describes habits, ongoing situations, or background details.",
+        "Many common verbs have irregular preterite stems or endings that should be learned separately.",
+        "Regular past participles usually end in -ado or -ido, but several frequent verbs have irregular forms such as feito, dito, and visto."
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study the Table",
+      "steps": [
+        {
+          "heading": "Start with the infinitive",
+          "text": "Read the Portuguese verb in its dictionary form and confirm that you understand its English meaning."
+        },
+        {
+          "heading": "Compare the two conjugated past forms",
+          "text": "Notice how the preterite presents a completed event while the imperfect describes a repeated, ongoing, or background situation."
+        },
+        {
+          "heading": "Check the past participle",
+          "text": "Identify whether the participle follows the regular -ado or -ido pattern or has an irregular form."
+        },
+        {
+          "heading": "Use all three forms in context",
+          "text": "Write one sentence in the preterite, one in the imperfect, and one compound or passive sentence with the past participle."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Remembering Portuguese Past Forms",
+      "items": [
+        {
+          "heading": "Group verbs by conjugation",
+          "text": "Study -ar, -er, and -ir verbs separately so that regular preterite, imperfect, and participle patterns become easier to recognize."
+        },
+        {
+          "heading": "Contrast completed and ongoing actions",
+          "text": "Create paired examples that show the same verb in the preterite and imperfect to understand the difference in viewpoint."
+        },
+        {
+          "heading": "Memorize irregular participles",
+          "text": "Give extra attention to forms such as feito, dito, visto, escrito, and posto, which do not follow the regular endings."
+        },
+        {
+          "heading": "Review in complete sentences",
+          "text": "Practise each form in a short sentence and return to difficult verbs after one day, several days, and one week."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Put Portuguese Past Forms into Practice",
+      "description": "Review essential Portuguese verbs and use the preterite, imperfect, and past participle in meaningful sentences.",
+      "primaryLabel": "Practice Portuguese Verbs",
+      "secondaryLabel": "100 Most Common Portuguese Verbs"
+    },
+    "related": {
+      "heading": "Continue Learning Portuguese",
+      "items": [
+        { "key": "commonVerbs", "label": "100 Most Common Portuguese Verbs" },
+        {
+          "key": "vocabularyLevels",
+          "label": "Portuguese Vocabulary by Level"
+        },
+        { "key": "levelTest", "label": "Portuguese Level Test" }
+      ]
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions About Portuguese Past Forms",
+      "items": [
+        {
+          "question": "What is the difference between the Portuguese preterite and imperfect?",
+          "answer": "The preterite presents an action as completed or bounded in the past. The imperfect describes repeated actions, ongoing situations, habits, or background circumstances without focusing on a clear endpoint."
+        },
+        {
+          "question": "How do regular Portuguese verbs form the preterite?",
+          "answer": "The endings depend on the verb group and grammatical person. Verbs ending in -ar use one pattern, while -er and -ir verbs follow closely related but distinct sets of endings."
+        },
+        {
+          "question": "How is the Portuguese imperfect formed?",
+          "answer": "Regular -ar verbs usually use endings based on -ava, while -er and -ir verbs generally use endings based on -ia. The form still changes according to person and number."
+        },
+        {
+          "question": "How are regular Portuguese past participles formed?",
+          "answer": "Most -ar verbs replace the infinitive ending with -ado, as in falar–falado. Most -er and -ir verbs use -ido, as in comer–comido and partir–partido."
+        },
+        {
+          "question": "What is the best way to memorize Portuguese past forms?",
+          "answer": "Learn the infinitive, preterite, imperfect, and participle as one set, then use each form in a different sentence. Contrast completed and ongoing past actions and review irregular forms with spaced repetition."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "es",
+    "urlSlug": "formas-pasadas-100-verbos-portugueses-mas-comunes",
+    "entryButtonLabel": "Formas pasadas de los verbos portugueses",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Traducción al español"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Pretérito perfecto simple" },
+      { "key": "imperfect", "label": "Pretérito imperfecto" },
+      { "key": "pastParticiple", "label": "Participio pasado" }
+    ],
+    "metadata": {
+      "title": "Formas pasadas de los 100 verbos portugueses más comunes",
+      "metaTitle": "100 verbos portugueses y sus formas pasadas",
+      "metaDescription": "Consulta el pretérito, el imperfecto y el participio pasado de 100 verbos portugueses comunes, con formas regulares e irregulares."
+    },
+    "hero": {
+      "heading": "Formas pasadas de los 100 verbos portugueses más comunes",
+      "subtitle": "Compara el pretérito, el imperfecto y el participio pasado de verbos portugueses esenciales en una tabla práctica.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos portugueses de uso frecuente con una forma de referencia en pretérito, otra en imperfecto y su participio pasado. La tabla permite comparar el infinitivo, la traducción al español y las principales formas necesarias para describir acciones terminadas, situaciones en desarrollo y tiempos compuestos.",
+        "Aprender estas tres formas en conjunto es especialmente útil porque el portugués distingue varios valores del pasado. El pretérito suele presentar una acción como concluida, el imperfecto describe hábitos o circunstancias de fondo y el participio pasado aparece en construcciones compuestas y pasivas."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funcionan las formas pasadas en portugués",
+      "paragraphs": [
+        "Los verbos portugueses más comunes aparecen constantemente en conversaciones, relatos, mensajes, instrucciones y textos cotidianos. Conocer sus principales formas pasadas ayuda a expresar hechos terminados, acciones repetidas, situaciones anteriores y experiencias con mayor precisión.",
+        "El pretérito y el imperfecto son formas conjugadas cuyas terminaciones cambian según la persona y el número. El participio pasado es una forma no personal que suele utilizarse con ter o haver en tiempos compuestos y con ser o estar en construcciones pasivas o de resultado."
+      ]
+    },
+    "table": {
+      "heading": "Tabla de formas pasadas de 100 verbos portugueses",
+      "description": "Cada fila muestra el infinitivo portugués, su traducción al español, una forma de referencia en pretérito, otra en imperfecto y el participio pasado para facilitar la comparación y el repaso.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha",
+      "notes": [
+        "Los verbos regulares siguen modelos diferentes según terminen en -ar, -er o -ir.",
+        "El pretérito presenta acciones consideradas terminadas, mientras que el imperfecto suele describir hábitos, situaciones en curso o detalles de fondo.",
+        "Muchos verbos frecuentes tienen raíces o terminaciones irregulares en el pretérito y conviene aprenderlos por separado.",
+        "Los participios regulares suelen terminar en -ado o -ido, pero varios verbos comunes presentan formas irregulares como feito, dito y visto."
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar la tabla",
+      "steps": [
+        {
+          "heading": "Empieza por el infinitivo",
+          "text": "Lee el verbo portugués en su forma de diccionario y comprueba que entiendes su traducción al español."
+        },
+        {
+          "heading": "Compara los dos tiempos conjugados",
+          "text": "Observa cómo el pretérito presenta un hecho terminado y el imperfecto una acción repetida, en curso o de fondo."
+        },
+        {
+          "heading": "Revisa el participio pasado",
+          "text": "Comprueba si sigue el patrón regular en -ado o -ido o si presenta una forma irregular."
+        },
+        {
+          "heading": "Utiliza las tres formas",
+          "text": "Escribe una oración en pretérito, otra en imperfecto y una tercera con el participio en una construcción compuesta o pasiva."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para memorizar las formas pasadas en portugués",
+      "items": [
+        {
+          "heading": "Agrupa los verbos por conjugación",
+          "text": "Estudia por separado los verbos en -ar, -er e -ir para reconocer mejor los patrones regulares del pretérito, el imperfecto y el participio."
+        },
+        {
+          "heading": "Contrasta acciones terminadas y en curso",
+          "text": "Crea pares de ejemplos con el mismo verbo en pretérito e imperfecto para comprender mejor la diferencia de perspectiva."
+        },
+        {
+          "heading": "Memoriza los participios irregulares",
+          "text": "Presta especial atención a formas como feito, dito, visto, escrito y posto, que no siguen las terminaciones regulares."
+        },
+        {
+          "heading": "Repasa con oraciones completas",
+          "text": "Usa cada forma en una frase breve y vuelve a los verbos difíciles después de un día, varios días y una semana."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pon en práctica las formas pasadas",
+      "description": "Repasa los verbos portugueses más útiles y utiliza el pretérito, el imperfecto y el participio en oraciones completas.",
+      "primaryLabel": "Practicar verbos portugueses",
+      "secondaryLabel": "100 verbos portugueses más comunes"
+    },
+    "related": {
+      "heading": "Continúa aprendiendo portugués",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Los 100 verbos portugueses más comunes"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario portugués por niveles"
+        },
+        { "key": "levelTest", "label": "Prueba de nivel de portugués" }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre las formas pasadas en portugués",
+      "items": [
+        {
+          "question": "¿Cuál es la diferencia entre el pretérito y el imperfecto en portugués?",
+          "answer": "El pretérito presenta una acción como terminada o limitada en el pasado. El imperfecto describe acciones repetidas, situaciones en curso, hábitos o circunstancias de fondo sin destacar un final concreto."
+        },
+        {
+          "question": "¿Cómo forman el pretérito los verbos regulares en portugués?",
+          "answer": "Las terminaciones dependen del grupo verbal y de la persona gramatical. Los verbos en -ar siguen un patrón, mientras que los verbos en -er e -ir utilizan conjuntos de terminaciones relacionados pero distintos."
+        },
+        {
+          "question": "¿Cómo se forma el imperfecto en portugués?",
+          "answer": "Los verbos regulares en -ar suelen utilizar terminaciones basadas en -ava. Los verbos en -er e -ir normalmente emplean terminaciones basadas en -ia, con variaciones según la persona y el número."
+        },
+        {
+          "question": "¿Cómo se forman los participios pasados regulares en portugués?",
+          "answer": "La mayoría de los verbos en -ar sustituye esa terminación por -ado, como falar–falado. Los verbos en -er e -ir suelen usar -ido, como comer–comido y partir–partido."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las formas pasadas en portugués?",
+          "answer": "Aprende el infinitivo, el pretérito, el imperfecto y el participio como un solo conjunto. Después, usa cada forma en una oración distinta, contrasta acciones terminadas y en desarrollo y repasa las formas irregulares con repetición espaciada."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "fr",
+    "urlSlug": "formes-passees-100-verbes-portugais-les-plus-courants",
+    "entryButtonLabel": "Formes passées des verbes portugais",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "translation": "Traduction française"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Prétérit" },
+      { "key": "imperfect", "label": "Imparfait" },
+      { "key": "pastParticiple", "label": "Participe passé" }
+    ],
+    "metadata": {
+      "title": "Formes passées des 100 verbes portugais les plus courants",
+      "metaTitle": "100 verbes portugais et leurs formes passées",
+      "metaDescription": "Consultez le prétérit, l’imparfait et le participe passé de 100 verbes portugais courants, avec des formes régulières et irrégulières."
+    },
+    "hero": {
+      "heading": "Formes passées des 100 verbes portugais les plus courants",
+      "subtitle": "Comparez le prétérit, l’imparfait et le participe passé des verbes portugais essentiels dans un tableau pratique.",
+      "introParagraphs": [
+        "Cette page réunit 100 verbes portugais très fréquents avec une forme de référence au prétérit, une autre à l’imparfait et leur participe passé. Le tableau permet de comparer directement l’infinitif, la traduction française et les principales formes nécessaires pour décrire des actions achevées, des situations en cours et des temps composés.",
+        "Apprendre ces trois formes ensemble est particulièrement utile, car le portugais distingue plusieurs manières d’exprimer le passé. Le prétérit présente généralement une action comme terminée, l’imparfait décrit des habitudes ou des circonstances de fond, et le participe passé apparaît dans des constructions composées et passives."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionnent les formes passées en portugais",
+      "paragraphs": [
+        "Les verbes portugais les plus courants apparaissent constamment dans les conversations, les récits, les messages, les consignes et les textes du quotidien. Connaître leurs principales formes passées aide à exprimer des événements achevés, des actions répétées, des situations antérieures et des expériences avec davantage de précision.",
+        "Le prétérit et l’imparfait sont des formes conjuguées dont les terminaisons varient selon la personne et le nombre. Le participe passé est une forme non personnelle souvent employée avec ter ou haver dans les temps composés, ainsi qu’avec ser ou estar dans certaines constructions passives ou résultatives."
+      ]
+    },
+    "table": {
+      "heading": "Tableau des formes passées de 100 verbes portugais",
+      "description": "Chaque ligne présente l’infinitif portugais, sa traduction française, une forme de référence au prétérit, une autre à l’imparfait et le participe passé pour faciliter la comparaison et la révision.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite",
+      "notes": [
+        "Les verbes réguliers suivent des modèles différents selon qu’ils se terminent par -ar, -er ou -ir.",
+        "Le prétérit exprime des actions considérées comme achevées, tandis que l’imparfait décrit souvent des habitudes, des situations en cours ou des éléments de contexte.",
+        "De nombreux verbes fréquents possèdent des radicaux ou des terminaisons irrégulières au prétérit et doivent être appris séparément.",
+        "Les participes réguliers se terminent généralement par -ado ou -ido, mais plusieurs verbes courants ont des formes irrégulières comme feito, dito et visto."
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment étudier le tableau",
+      "steps": [
+        {
+          "heading": "Commencez par l’infinitif",
+          "text": "Lisez le verbe portugais dans sa forme de dictionnaire et vérifiez que vous comprenez sa traduction française."
+        },
+        {
+          "heading": "Comparez les deux temps conjugués",
+          "text": "Observez comment le prétérit présente un fait achevé alors que l’imparfait décrit une action répétée, en cours ou de fond."
+        },
+        {
+          "heading": "Vérifiez le participe passé",
+          "text": "Déterminez s’il suit le modèle régulier en -ado ou -ido ou s’il possède une forme irrégulière."
+        },
+        {
+          "heading": "Utilisez les trois formes",
+          "text": "Écrivez une phrase au prétérit, une autre à l’imparfait et une troisième avec le participe dans une construction composée ou passive."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour mémoriser les formes passées portugaises",
+      "items": [
+        {
+          "heading": "Regroupez les verbes par conjugaison",
+          "text": "Étudiez séparément les verbes en -ar, -er et -ir afin de mieux reconnaître les modèles réguliers du prétérit, de l’imparfait et du participe."
+        },
+        {
+          "heading": "Contrastez les actions achevées et en cours",
+          "text": "Créez des paires d’exemples avec le même verbe au prétérit et à l’imparfait pour mieux comprendre la différence de point de vue."
+        },
+        {
+          "heading": "Mémorisez les participes irréguliers",
+          "text": "Accordez une attention particulière à des formes comme feito, dito, visto, escrito et posto, qui ne suivent pas les terminaisons régulières."
+        },
+        {
+          "heading": "Révisez avec des phrases complètes",
+          "text": "Employez chaque forme dans une phrase courte et revenez sur les verbes difficiles après un jour, quelques jours puis une semaine."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Mettez les formes passées en pratique",
+      "description": "Révisez les verbes portugais les plus utiles et employez le prétérit, l’imparfait et le participe dans des phrases complètes.",
+      "primaryLabel": "Pratiquer les verbes portugais",
+      "secondaryLabel": "Les 100 verbes portugais les plus courants"
+    },
+    "related": {
+      "heading": "Poursuivez votre apprentissage du portugais",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Les 100 verbes portugais les plus courants"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire portugais par niveau"
+        },
+        { "key": "levelTest", "label": "Test de niveau de portugais" }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur les formes passées en portugais",
+      "items": [
+        {
+          "question": "Quelle est la différence entre le prétérit et l’imparfait en portugais ?",
+          "answer": "Le prétérit présente une action comme achevée ou délimitée dans le passé. L’imparfait décrit des actions répétées, des situations en cours, des habitudes ou des circonstances de fond sans insister sur une fin précise."
+        },
+        {
+          "question": "Comment les verbes réguliers portugais forment-ils le prétérit ?",
+          "answer": "Les terminaisons dépendent du groupe verbal et de la personne grammaticale. Les verbes en -ar suivent un modèle, tandis que les verbes en -er et -ir utilisent des séries de terminaisons proches mais distinctes."
+        },
+        {
+          "question": "Comment forme-t-on l’imparfait en portugais ?",
+          "answer": "Les verbes réguliers en -ar utilisent généralement des terminaisons construites sur -ava. Les verbes en -er et -ir emploient le plus souvent des terminaisons construites sur -ia, avec des variations selon la personne et le nombre."
+        },
+        {
+          "question": "Comment forme-t-on les participes passés réguliers en portugais ?",
+          "answer": "La plupart des verbes en -ar remplacent cette terminaison par -ado, comme falar–falado. Les verbes en -er et -ir utilisent généralement -ido, comme comer–comido et partir–partido."
+        },
+        {
+          "question": "Quelle est la meilleure manière de mémoriser les formes passées portugaises ?",
+          "answer": "Apprenez l’infinitif, le prétérit, l’imparfait et le participe comme un seul ensemble. Utilisez ensuite chaque forme dans une phrase différente, opposez les actions achevées aux situations en cours et révisez les formes irrégulières à intervalles espacés."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "de",
+    "urlSlug": "vergangenheitsformen-100-haeufigste-portugiesische-verben",
+    "entryButtonLabel": "Vergangenheitsformen portugiesischer Verben",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "translation": "Deutsche Übersetzung"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Pretérito perfeito" },
+      { "key": "imperfect", "label": "Pretérito imperfeito" },
+      { "key": "pastParticiple", "label": "Partizip Perfekt" }
+    ],
+    "metadata": {
+      "title": "Vergangenheitsformen der 100 häufigsten portugiesischen Verben",
+      "metaTitle": "100 portugiesische Verben und ihre Vergangenheitsformen",
+      "metaDescription": "Pretérito perfeito, Pretérito imperfeito und Partizip Perfekt von 100 häufigen portugiesischen Verben mit regelmäßigen und unregelmäßigen Formen."
+    },
+    "hero": {
+      "heading": "Vergangenheitsformen der 100 häufigsten portugiesischen Verben",
+      "subtitle": "Vergleiche Pretérito perfeito, Pretérito imperfeito und Partizip Perfekt wichtiger portugiesischer Verben.",
+      "introParagraphs": [
+        "Auf dieser Seite findest du 100 häufig verwendete portugiesische Verben mit einer Referenzform im Pretérito perfeito, einer Form im Pretérito imperfeito und ihrem Partizip Perfekt. Die Tabelle hilft dir, den Infinitiv, die deutsche Übersetzung und die wichtigsten Formen für Aussagen über vergangene Handlungen direkt zu vergleichen.",
+        "Das gemeinsame Lernen dieser drei Formen ist besonders nützlich, weil das Portugiesische unterschiedliche Sichtweisen auf vergangene Ereignisse ausdrückt. Das Pretérito perfeito stellt eine Handlung meist als abgeschlossen dar, das Pretérito imperfeito beschreibt Gewohnheiten oder Hintergrundsituationen, und das Partizip Perfekt wird in zusammengesetzten sowie passivischen Konstruktionen verwendet."
+      ]
+    },
+    "overview": {
+      "heading": "So funktionieren portugiesische Vergangenheitsformen",
+      "paragraphs": [
+        "Häufige portugiesische Verben begegnen dir ständig in Gesprächen, Erzählungen, Nachrichten, Anleitungen und Alltagstexten. Wer ihre wichtigsten Vergangenheitsformen kennt, kann abgeschlossene Ereignisse, wiederholte Handlungen, frühere Umstände und persönliche Erfahrungen genauer ausdrücken.",
+        "Das Pretérito perfeito und das Pretérito imperfeito sind konjugierte Zeitformen, deren Endungen sich nach Person und Zahl richten. Das Partizip Perfekt ist eine nicht konjugierte Form, die häufig mit ter oder haver in zusammengesetzten Zeiten und mit ser oder estar in passivischen oder resultativen Konstruktionen verwendet wird."
+      ]
+    },
+    "table": {
+      "heading": "Tabelle mit den Vergangenheitsformen von 100 portugiesischen Verben",
+      "description": "Jede Zeile enthält den portugiesischen Infinitiv, die deutsche Übersetzung, eine Referenzform im Pretérito perfeito, eine Form im Pretérito imperfeito und das Partizip Perfekt.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen",
+      "notes": [
+        "Regelmäßige Verben folgen unterschiedlichen Mustern, je nachdem, ob sie auf -ar, -er oder -ir enden.",
+        "Das Pretérito perfeito beschreibt meist abgeschlossene Handlungen, während das Pretérito imperfeito häufig Gewohnheiten, andauernde Situationen oder Hintergrundinformationen ausdrückt.",
+        "Viele häufige Verben besitzen im Pretérito perfeito unregelmäßige Stämme oder Endungen, die separat gelernt werden sollten.",
+        "Regelmäßige Partizipien enden meist auf -ado oder -ido, doch häufige Verben können unregelmäßige Formen wie feito, dito und visto haben."
+      ]
+    },
+    "howToUse": {
+      "heading": "So arbeitest du mit der Tabelle",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Infinitiv",
+          "text": "Lies das portugiesische Verb in seiner Grundform und prüfe, ob du seine deutsche Bedeutung kennst."
+        },
+        {
+          "heading": "Vergleiche die beiden Vergangenheitszeiten",
+          "text": "Achte darauf, wie das Pretérito perfeito ein abgeschlossenes Ereignis darstellt und das Pretérito imperfeito eine wiederholte, andauernde oder begleitende Situation beschreibt."
+        },
+        {
+          "heading": "Prüfe das Partizip",
+          "text": "Bestimme, ob das Partizip regelmäßig auf -ado oder -ido endet oder eine unregelmäßige Form besitzt."
+        },
+        {
+          "heading": "Verwende alle drei Formen",
+          "text": "Schreibe einen Satz im Pretérito perfeito, einen im Pretérito imperfeito und einen weiteren mit dem Partizip in einer zusammengesetzten oder passivischen Konstruktion."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Merken portugiesischer Vergangenheitsformen",
+      "items": [
+        {
+          "heading": "Nach Konjugation gruppieren",
+          "text": "Lerne Verben auf -ar, -er und -ir getrennt, damit du regelmäßige Muster im Pretérito perfeito, im Pretérito imperfeito und bei den Partizipien leichter erkennst."
+        },
+        {
+          "heading": "Abgeschlossene und andauernde Handlungen vergleichen",
+          "text": "Bilde Satzpaare mit demselben Verb in beiden Vergangenheitszeiten, um den unterschiedlichen Blick auf das Ereignis zu verstehen."
+        },
+        {
+          "heading": "Unregelmäßige Partizipien wiederholen",
+          "text": "Achte besonders auf Formen wie feito, dito, visto, escrito und posto, die nicht den regelmäßigen Endungen folgen."
+        },
+        {
+          "heading": "Mit vollständigen Sätzen üben",
+          "text": "Verwende jede Form in einem kurzen Satz und wiederhole schwierige Verben nach einem Tag, einigen Tagen und einer Woche."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Portugiesische Vergangenheitsformen sicher anwenden",
+      "description": "Wiederhole wichtige portugiesische Verben und verwende Pretérito perfeito, Pretérito imperfeito und Partizip Perfekt in vollständigen Sätzen.",
+      "primaryLabel": "Portugiesische Verben üben",
+      "secondaryLabel": "100 häufige portugiesische Verben"
+    },
+    "related": {
+      "heading": "Portugiesisch weiterlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Die 100 häufigsten portugiesischen Verben"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Portugiesischer Wortschatz nach Niveau"
+        },
+        { "key": "levelTest", "label": "Portugiesisch-Einstufungstest" }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zu portugiesischen Vergangenheitsformen",
+      "items": [
+        {
+          "question": "Was ist der Unterschied zwischen Pretérito perfeito und Pretérito imperfeito?",
+          "answer": "Das Pretérito perfeito stellt eine Handlung als abgeschlossen oder zeitlich begrenzt dar. Das Pretérito imperfeito beschreibt wiederholte Handlungen, Gewohnheiten, andauernde Situationen oder Hintergrundumstände ohne Betonung eines klaren Endpunkts."
+        },
+        {
+          "question": "Wie bilden regelmäßige portugiesische Verben das Pretérito perfeito?",
+          "answer": "Die Endungen richten sich nach der Verbgruppe und der grammatischen Person. Verben auf -ar folgen einem Muster, während Verben auf -er und -ir verwandte, aber unterschiedliche Endungsreihen verwenden."
+        },
+        {
+          "question": "Wie wird das Pretérito imperfeito im Portugiesischen gebildet?",
+          "answer": "Regelmäßige Verben auf -ar verwenden meist Endungen auf der Grundlage von -ava. Verben auf -er und -ir verwenden gewöhnlich Endungen auf der Grundlage von -ia, die sich nach Person und Zahl verändern."
+        },
+        {
+          "question": "Wie werden regelmäßige portugiesische Partizipien gebildet?",
+          "answer": "Die meisten Verben auf -ar ersetzen diese Endung durch -ado, wie bei falar–falado. Verben auf -er und -ir verwenden meist -ido, wie bei comer–comido und partir–partido."
+        },
+        {
+          "question": "Wie kann man portugiesische Vergangenheitsformen am besten lernen?",
+          "answer": "Lerne Infinitiv, Pretérito perfeito, Pretérito imperfeito und Partizip als zusammengehörige Einheit. Verwende jede Form anschließend in einem eigenen Satz, vergleiche abgeschlossene mit andauernden Handlungen und wiederhole unregelmäßige Formen in zeitlichen Abständen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "it",
+    "urlSlug": "forme-passate-100-verbi-portoghesi-piu-comuni",
+    "entryButtonLabel": "Forme passate dei verbi portoghesi",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "translation": "Traduzione italiana"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Pretérito perfeito" },
+      { "key": "imperfect", "label": "Pretérito imperfeito" },
+      { "key": "pastParticiple", "label": "Participio passato" }
+    ],
+    "metadata": {
+      "title": "Forme passate dei 100 verbi portoghesi più comuni",
+      "metaTitle": "100 verbi portoghesi e le loro forme passate",
+      "metaDescription": "Consulta pretérito perfeito, pretérito imperfeito e participio passato di 100 verbi portoghesi comuni, regolari e irregolari."
+    },
+    "hero": {
+      "heading": "Forme passate dei 100 verbi portoghesi più comuni",
+      "subtitle": "Confronta pretérito perfeito, pretérito imperfeito e participio passato dei verbi portoghesi essenziali.",
+      "introParagraphs": [
+        "Questa pagina raccoglie 100 verbi portoghesi di uso frequente con una forma di riferimento al pretérito perfeito, una al pretérito imperfeito e il relativo participio passato. La tabella permette di confrontare direttamente l’infinito, la traduzione italiana e le principali forme necessarie per parlare di eventi conclusi, situazioni in corso e tempi composti.",
+        "Imparare insieme queste tre forme è particolarmente utile perché il portoghese distingue diversi modi di presentare il passato. Il pretérito perfeito descrive normalmente un’azione come conclusa, il pretérito imperfeito esprime abitudini o circostanze di sfondo e il participio passato viene usato in costruzioni composte e passive."
+      ]
+    },
+    "overview": {
+      "heading": "Come funzionano le forme passate in portoghese",
+      "paragraphs": [
+        "I verbi portoghesi più comuni compaiono continuamente nelle conversazioni, nei racconti, nei messaggi, nelle istruzioni e nei testi quotidiani. Conoscere le loro principali forme passate aiuta a descrivere eventi conclusi, azioni ripetute, situazioni precedenti ed esperienze personali con maggiore precisione.",
+        "Il pretérito perfeito e il pretérito imperfeito sono tempi coniugati le cui desinenze cambiano secondo la persona e il numero. Il participio passato è una forma non personale usata spesso con ter o haver nei tempi composti e con ser o estar in costruzioni passive o risultative."
+      ]
+    },
+    "table": {
+      "heading": "Tabella delle forme passate di 100 verbi portoghesi",
+      "description": "Ogni riga mostra l’infinito portoghese, la traduzione italiana, una forma di riferimento al pretérito perfeito, una al pretérito imperfeito e il participio passato.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra",
+      "notes": [
+        "I verbi regolari seguono schemi diversi a seconda che terminino in -ar, -er o -ir.",
+        "Il pretérito perfeito esprime normalmente azioni concluse, mentre il pretérito imperfeito descrive spesso abitudini, situazioni in corso o elementi di sfondo.",
+        "Molti verbi frequenti presentano radici o desinenze irregolari nel pretérito perfeito e devono essere studiati separatamente.",
+        "I participi regolari terminano generalmente in -ado o -ido, ma diversi verbi comuni hanno forme irregolari come feito, dito e visto."
+      ]
+    },
+    "howToUse": {
+      "heading": "Come studiare la tabella",
+      "steps": [
+        {
+          "heading": "Inizia dall’infinito",
+          "text": "Leggi il verbo portoghese nella forma del dizionario e verifica di comprenderne la traduzione italiana."
+        },
+        {
+          "heading": "Confronta i due tempi passati",
+          "text": "Osserva come il pretérito perfeito presenta un evento concluso e il pretérito imperfeito descrive un’azione ripetuta, in corso o di sfondo."
+        },
+        {
+          "heading": "Controlla il participio passato",
+          "text": "Verifica se segue il modello regolare in -ado o -ido oppure presenta una forma irregolare."
+        },
+        {
+          "heading": "Usa tutte e tre le forme",
+          "text": "Scrivi una frase al pretérito perfeito, una al pretérito imperfeito e una terza con il participio in una costruzione composta o passiva."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per ricordare le forme passate portoghesi",
+      "items": [
+        {
+          "heading": "Raggruppa i verbi per coniugazione",
+          "text": "Studia separatamente i verbi in -ar, -er e -ir per riconoscere più facilmente gli schemi regolari del pretérito perfeito, dell’imperfetto e del participio."
+        },
+        {
+          "heading": "Confronta azioni concluse e in corso",
+          "text": "Crea coppie di frasi con lo stesso verbo nei due tempi passati per comprendere meglio la diversa prospettiva sull’azione."
+        },
+        {
+          "heading": "Memorizza i participi irregolari",
+          "text": "Dedica particolare attenzione a forme come feito, dito, visto, escrito e posto, che non seguono le terminazioni regolari."
+        },
+        {
+          "heading": "Ripassa con frasi complete",
+          "text": "Usa ogni forma in una breve frase e torna sui verbi difficili dopo un giorno, alcuni giorni e una settimana."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Usa con sicurezza le forme passate portoghesi",
+      "description": "Ripassa i verbi portoghesi più utili e utilizza pretérito perfeito, pretérito imperfeito e participio passato in frasi complete.",
+      "primaryLabel": "Esercitati con i verbi portoghesi",
+      "secondaryLabel": "100 verbi portoghesi più comuni"
+    },
+    "related": {
+      "heading": "Continua a studiare il portoghese",
+      "items": [
+        { "key": "commonVerbs", "label": "I 100 verbi portoghesi più comuni" },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario portoghese per livello"
+        },
+        { "key": "levelTest", "label": "Test di livello di portoghese" }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulle forme passate in portoghese",
+      "items": [
+        {
+          "question": "Qual è la differenza tra pretérito perfeito e pretérito imperfeito?",
+          "answer": "Il pretérito perfeito presenta un’azione come conclusa o delimitata nel passato. Il pretérito imperfeito descrive azioni ripetute, abitudini, situazioni in corso o circostanze di sfondo senza mettere in evidenza un punto finale preciso."
+        },
+        {
+          "question": "Come formano il pretérito perfeito i verbi portoghesi regolari?",
+          "answer": "Le desinenze dipendono dal gruppo verbale e dalla persona grammaticale. I verbi in -ar seguono un modello, mentre quelli in -er e -ir utilizzano serie di desinenze simili ma distinte."
+        },
+        {
+          "question": "Come si forma il pretérito imperfeito in portoghese?",
+          "answer": "I verbi regolari in -ar usano normalmente desinenze basate su -ava. I verbi in -er e -ir impiegano generalmente desinenze basate su -ia, che cambiano secondo la persona e il numero."
+        },
+        {
+          "question": "Come si formano i participi passati regolari in portoghese?",
+          "answer": "La maggior parte dei verbi in -ar sostituisce questa terminazione con -ado, come falar–falado. I verbi in -er e -ir usano generalmente -ido, come comer–comido e partir–partido."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le forme passate portoghesi?",
+          "answer": "Impara insieme infinito, pretérito perfeito, pretérito imperfeito e participio come un unico gruppo. Usa poi ogni forma in una frase diversa, confronta azioni concluse e situazioni in corso e ripassa le forme irregolari a intervalli regolari."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "pt",
+    "urlSlug": "formas-passadas-100-verbos-portugueses-mais-comuns",
+    "entryButtonLabel": "Formas passadas dos verbos portugueses",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "translation": "Significado"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Pretérito perfeito" },
+      { "key": "imperfect", "label": "Pretérito imperfeito" },
+      { "key": "pastParticiple", "label": "Particípio passado" }
+    ],
+    "metadata": {
+      "title": "Formas passadas dos 100 verbos portugueses mais comuns",
+      "metaTitle": "100 verbos portugueses e suas formas passadas",
+      "metaDescription": "Consulte o pretérito perfeito, o pretérito imperfeito e o particípio passado de 100 verbos portugueses comuns, regulares e irregulares."
+    },
+    "hero": {
+      "heading": "Formas passadas dos 100 verbos portugueses mais comuns",
+      "subtitle": "Compare o pretérito perfeito, o pretérito imperfeito e o particípio passado dos verbos portugueses essenciais.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos portugueses de uso frequente com uma forma de referência no pretérito perfeito, outra no pretérito imperfeito e o respetivo particípio passado. A tabela permite comparar diretamente o infinitivo, o significado e as principais formas necessárias para falar de ações concluídas, situações em curso e tempos compostos.",
+        "Aprender estas três formas em conjunto é especialmente útil porque o português apresenta os acontecimentos passados de maneiras diferentes. O pretérito perfeito descreve normalmente uma ação como concluída, o pretérito imperfeito expressa hábitos ou circunstâncias de fundo e o particípio passado aparece em construções compostas e passivas."
+      ]
+    },
+    "overview": {
+      "heading": "Como funcionam as formas passadas em português",
+      "paragraphs": [
+        "Os verbos portugueses mais comuns aparecem constantemente em conversas, histórias, mensagens, instruções e textos do dia a dia. Conhecer as suas principais formas passadas ajuda a descrever acontecimentos concluídos, ações repetidas, situações anteriores e experiências com maior precisão.",
+        "O pretérito perfeito e o pretérito imperfeito são tempos conjugados cujas terminações mudam conforme a pessoa e o número. O particípio passado é uma forma não pessoal, frequentemente usada com ter ou haver nos tempos compostos e com ser ou estar em construções passivas ou resultativas."
+      ]
+    },
+    "table": {
+      "heading": "Tabela das formas passadas de 100 verbos portugueses",
+      "description": "Cada linha apresenta o infinitivo, o significado, uma forma de referência no pretérito perfeito, outra no pretérito imperfeito e o particípio passado para facilitar a comparação e a revisão.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita",
+      "notes": [
+        "Os verbos regulares seguem padrões diferentes conforme terminem em -ar, -er ou -ir.",
+        "O pretérito perfeito apresenta normalmente ações concluídas, enquanto o pretérito imperfeito costuma descrever hábitos, situações em curso ou elementos de fundo.",
+        "Muitos verbos frequentes possuem radicais ou terminações irregulares no pretérito perfeito e devem ser aprendidos separadamente.",
+        "Os particípios regulares terminam geralmente em -ado ou -ido, mas vários verbos comuns apresentam formas irregulares como feito, dito e visto."
+      ]
+    },
+    "howToUse": {
+      "heading": "Como estudar a tabela",
+      "steps": [
+        {
+          "heading": "Comece pelo infinitivo",
+          "text": "Leia o verbo na forma de dicionário e confirme que compreende o seu significado e uso mais comum."
+        },
+        {
+          "heading": "Compare os dois tempos conjugados",
+          "text": "Observe como o pretérito perfeito apresenta um acontecimento concluído e o pretérito imperfeito descreve uma ação repetida, em curso ou de fundo."
+        },
+        {
+          "heading": "Verifique o particípio passado",
+          "text": "Determine se o particípio segue o padrão regular em -ado ou -ido ou se possui uma forma irregular."
+        },
+        {
+          "heading": "Use as três formas",
+          "text": "Escreva uma frase no pretérito perfeito, outra no pretérito imperfeito e uma terceira com o particípio em uma construção composta ou passiva."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para memorizar as formas passadas",
+      "items": [
+        {
+          "heading": "Agrupe os verbos por conjugação",
+          "text": "Estude separadamente os verbos em -ar, -er e -ir para reconhecer com mais facilidade os padrões regulares dos dois tempos e do particípio."
+        },
+        {
+          "heading": "Compare ações concluídas e em curso",
+          "text": "Crie pares de frases com o mesmo verbo no pretérito perfeito e no pretérito imperfeito para compreender melhor a diferença de perspetiva."
+        },
+        {
+          "heading": "Memorize os particípios irregulares",
+          "text": "Dedique atenção especial a formas como feito, dito, visto, escrito e posto, que não seguem as terminações regulares."
+        },
+        {
+          "heading": "Revise com frases completas",
+          "text": "Use cada forma em uma frase curta e volte aos verbos difíceis depois de um dia, alguns dias e uma semana."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Use as formas passadas com confiança",
+      "description": "Revise os verbos portugueses mais úteis e utilize o pretérito perfeito, o pretérito imperfeito e o particípio em frases completas.",
+      "primaryLabel": "Praticar verbos portugueses",
+      "secondaryLabel": "100 verbos portugueses mais comuns"
+    },
+    "related": {
+      "heading": "Continue aprendendo português",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "Os 100 verbos portugueses mais comuns"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulário português por nível"
+        },
+        { "key": "levelTest", "label": "Teste de nível de português" }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre as formas passadas em português",
+      "items": [
+        {
+          "question": "Qual é a diferença entre o pretérito perfeito e o pretérito imperfeito?",
+          "answer": "O pretérito perfeito apresenta uma ação como concluída ou delimitada no passado. O pretérito imperfeito descreve ações repetidas, hábitos, situações em curso ou circunstâncias de fundo sem destacar um ponto final preciso."
+        },
+        {
+          "question": "Como os verbos regulares formam o pretérito perfeito?",
+          "answer": "As terminações dependem do grupo verbal e da pessoa gramatical. Os verbos em -ar seguem um padrão, enquanto os verbos em -er e -ir utilizam conjuntos de terminações semelhantes, mas distintos."
+        },
+        {
+          "question": "Como se forma o pretérito imperfeito em português?",
+          "answer": "Os verbos regulares em -ar normalmente usam terminações baseadas em -ava. Os verbos em -er e -ir geralmente utilizam terminações baseadas em -ia, que variam conforme a pessoa e o número."
+        },
+        {
+          "question": "Como se formam os particípios passados regulares?",
+          "answer": "A maioria dos verbos em -ar substitui essa terminação por -ado, como falar–falado. Os verbos em -er e -ir geralmente usam -ido, como comer–comido e partir–partido."
+        },
+        {
+          "question": "Qual é a melhor forma de memorizar as formas passadas portuguesas?",
+          "answer": "Aprenda o infinitivo, o pretérito perfeito, o pretérito imperfeito e o particípio como um único conjunto. Depois, use cada forma em uma frase diferente, compare ações concluídas e situações em curso e revise as formas irregulares em intervalos espaçados."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "pt",
+    "uiLanguage": "ru",
+    "urlSlug": "formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-portugalskih-glagolov",
+    "entryButtonLabel": "Прошедшие формы португальских глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "translation": "Перевод на русский"
+    },
+    "pastForms": [
+      { "key": "preterite", "label": "Претерит перфект" },
+      { "key": "imperfect", "label": "Претерит имперфект" },
+      { "key": "pastParticiple", "label": "Причастие прошедшего времени" }
+    ],
+    "metadata": {
+      "title": "Прошедшие формы 100 самых употребительных португальских глаголов",
+      "metaTitle": "100 португальских глаголов и их прошедшие формы",
+      "metaDescription": "Изучите претерит перфект, претерит имперфект и причастие прошедшего времени 100 распространённых португальских глаголов."
+    },
+    "hero": {
+      "heading": "Прошедшие формы 100 самых употребительных португальских глаголов",
+      "subtitle": "Сравнивайте претерит перфект, претерит имперфект и причастие прошедшего времени основных португальских глаголов.",
+      "introParagraphs": [
+        "На этой странице собраны 100 часто употребляемых португальских глаголов со справочной формой претерита перфекта, формой претерита имперфекта и причастием прошедшего времени. Таблица позволяет сопоставить инфинитив, перевод на русский язык и основные формы, необходимые для описания завершённых действий, длительных ситуаций и составных времён.",
+        "Полезно учить эти три формы вместе, поскольку португальский язык по-разному представляет события в прошлом. Претерит перфект обычно описывает действие как завершённое, претерит имперфект выражает привычки или фоновые обстоятельства, а причастие прошедшего времени используется в составных и пассивных конструкциях."
+      ]
+    },
+    "overview": {
+      "heading": "Как образуются прошедшие формы португальских глаголов",
+      "paragraphs": [
+        "Частотные португальские глаголы постоянно встречаются в разговорах, рассказах, сообщениях, инструкциях и повседневных текстах. Знание их основных прошедших форм помогает точнее описывать завершённые события, повторяющиеся действия, прошлые обстоятельства и личный опыт.",
+        "Претерит перфект и претерит имперфект являются спрягаемыми формами, окончания которых зависят от лица и числа. Причастие прошедшего времени представляет собой неличную форму и часто используется с ter или haver в составных временах, а также с ser или estar в пассивных и результативных конструкциях."
+      ]
+    },
+    "table": {
+      "heading": "Таблица прошедших форм 100 португальских глаголов",
+      "description": "В каждой строке указаны португальский инфинитив, перевод на русский язык, справочная форма претерита перфекта, форма претерита имперфекта и причастие прошедшего времени.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо",
+      "notes": [
+        "Правильные глаголы следуют разным моделям в зависимости от окончания инфинитива: -ar, -er или -ir.",
+        "Претерит перфект обычно описывает завершённые действия, а претерит имперфект — привычки, длительные ситуации или фоновые обстоятельства.",
+        "Многие распространённые глаголы имеют неправильные основы или окончания в претерите перфекте и требуют отдельного запоминания.",
+        "Правильные причастия обычно оканчиваются на -ado или -ido, но у ряда частотных глаголов встречаются неправильные формы feito, dito и visto."
+      ]
+    },
+    "howToUse": {
+      "heading": "Как работать с таблицей",
+      "steps": [
+        {
+          "heading": "Начните с инфинитива",
+          "text": "Прочитайте португальский глагол в словарной форме и убедитесь, что понимаете его перевод на русский язык."
+        },
+        {
+          "heading": "Сравните два прошедших времени",
+          "text": "Обратите внимание, что претерит перфект представляет событие как завершённое, а претерит имперфект описывает повторяющееся, длительное или фоновое действие."
+        },
+        {
+          "heading": "Проверьте причастие",
+          "text": "Определите, образуется ли причастие регулярно с помощью -ado или -ido либо имеет неправильную форму."
+        },
+        {
+          "heading": "Используйте все три формы",
+          "text": "Составьте одно предложение в претерите перфекте, другое в претерите имперфекте и третье с причастием в составной или пассивной конструкции."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Как запоминать прошедшие формы португальских глаголов",
+      "items": [
+        {
+          "heading": "Группируйте по спряжениям",
+          "text": "Учите глаголы на -ar, -er и -ir отдельными группами, чтобы легче замечать правильные модели обоих времён и причастий."
+        },
+        {
+          "heading": "Сравнивайте завершённые и длительные действия",
+          "text": "Составляйте пары предложений с одним глаголом в претерите перфекте и претерите имперфекте, чтобы понять различие в значении."
+        },
+        {
+          "heading": "Запоминайте неправильные причастия",
+          "text": "Уделяйте особое внимание формам feito, dito, visto, escrito и posto, которые не следуют стандартным окончаниям."
+        },
+        {
+          "heading": "Повторяйте в полных предложениях",
+          "text": "Используйте каждую форму в короткой фразе и возвращайтесь к трудным глаголам через день, несколько дней и неделю."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Закрепите прошедшие формы на практике",
+      "description": "Повторите самые полезные португальские глаголы и используйте претерит перфект, претерит имперфект и причастие в полных предложениях.",
+      "primaryLabel": "Практиковать португальские глаголы",
+      "secondaryLabel": "100 самых употребительных португальских глаголов"
+    },
+    "related": {
+      "heading": "Продолжить изучение португальского языка",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных португальских глаголов"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Португальская лексика по уровням"
+        },
+        { "key": "levelTest", "label": "Тест на уровень португальского языка" }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о прошедших формах португальских глаголов",
+      "items": [
+        {
+          "question": "В чём разница между претеритом перфектом и претеритом имперфектом?",
+          "answer": "Претерит перфект представляет действие как завершённое или ограниченное во времени. Претерит имперфект описывает повторяющиеся действия, привычки, длительные ситуации или фоновые обстоятельства без акцента на чётком завершении."
+        },
+        {
+          "question": "Как правильные португальские глаголы образуют претерит перфект?",
+          "answer": "Окончания зависят от группы глагола и грамматического лица. Глаголы на -ar следуют одной модели, а глаголы на -er и -ir используют близкие, но различающиеся наборы окончаний."
+        },
+        {
+          "question": "Как образуется претерит имперфект в португальском языке?",
+          "answer": "Правильные глаголы на -ar обычно используют окончания на основе -ava. Глаголы на -er и -ir, как правило, получают окончания на основе -ia, которые изменяются по лицам и числам."
+        },
+        {
+          "question": "Как образуются правильные причастия прошедшего времени?",
+          "answer": "Большинство глаголов на -ar заменяют это окончание на -ado, например falar–falado. Глаголы на -er и -ir обычно используют -ido, как в comer–comido и partir–partido."
+        },
+        {
+          "question": "Как лучше запоминать прошедшие формы португальских глаголов?",
+          "answer": "Учите инфинитив, претерит перфект, претерит имперфект и причастие как единый набор. Затем используйте каждую форму в отдельном предложении, сравнивайте завершённые и длительные действия и повторяйте неправильные формы через увеличивающиеся интервалы."
+        }
+      ]
+    }
   }
 ]
