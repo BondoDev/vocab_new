@@ -38,7 +38,10 @@
       "verb": "Verb",
       "definition": "Definition",
       "wordPage": "Translation",
-      "noResults": "No verbs match the current filters."
+      "noResults": "No verbs match the current filters.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right"
     },
     "learningTips": [
       "Start with 10 verbs per day instead of trying to memorize the full list at once.",
@@ -116,7 +119,10 @@
       "verb": "Verbo",
       "definition": "Definición",
       "wordPage": "Traducción",
-      "noResults": "Ningún verbo coincide con los filtros actuales."
+      "noResults": "Ningún verbo coincide con los filtros actuales.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha"
     },
     "learningTips": [
       "Empieza con 10 verbos al día en lugar de intentar memorizar toda la lista de una sola vez.",
@@ -194,7 +200,10 @@
       "verb": "Verb",
       "definition": "Definition",
       "wordPage": "Übersetzung",
-      "noResults": "Keine Verben entsprechen den aktuellen Filtern."
+      "noResults": "Keine Verben entsprechen den aktuellen Filtern.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen"
     },
     "learningTips": [
       "Beginne mit 10 Verben pro Tag, anstatt zu versuchen, die gesamte Liste auf einmal auswendig zu lernen.",
@@ -272,7 +281,10 @@
       "verb": "Verbe",
       "definition": "Définition",
       "wordPage": "Traduction",
-      "noResults": "Aucun verbe ne correspond aux filtres actuels."
+      "noResults": "Aucun verbe ne correspond aux filtres actuels.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite"
     },
     "learningTips": [
       "Commencez par 10 verbes par jour au lieu d’essayer de mémoriser toute la liste en une seule fois.",
@@ -350,7 +362,10 @@
       "verb": "Verbo",
       "definition": "Definizione",
       "wordPage": "Traduzione",
-      "noResults": "Nessun verbo corrisponde ai filtri attuali."
+      "noResults": "Nessun verbo corrisponde ai filtri attuali.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra"
     },
     "learningTips": [
       "Inizia con 10 verbi al giorno invece di cercare di memorizzare l'intero elenco in una sola volta.",
@@ -428,7 +443,10 @@
       "verb": "Verbo",
       "definition": "Definição",
       "wordPage": "Tradução",
-      "noResults": "Nenhum verbo corresponde aos filtros atuais."
+      "noResults": "Nenhum verbo corresponde aos filtros atuais.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita"
     },
     "learningTips": [
       "Comece com 10 verbos por dia, em vez de tentar memorizar toda a lista de uma só vez.",
@@ -506,7 +524,10 @@
       "verb": "Глагол",
       "definition": "Определение",
       "wordPage": "Перевод",
-      "noResults": "Нет глаголов, соответствующих выбранным фильтрам."
+      "noResults": "Нет глаголов, соответствующих выбранным фильтрам.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо"
     },
     "learningTips": [
       "Начните с 10 глаголов в день, вместо того чтобы пытаться запомнить весь список сразу.",
@@ -584,7 +605,10 @@
       "verb": "German verb",
       "definition": "English meaning",
       "wordPage": "View word",
-      "noResults": "No matching German verbs found."
+      "noResults": "No matching German verbs found.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right"
     },
     "learningTips": [
       "Study a small group of German verbs each day instead of trying to memorise the entire list at once.",
@@ -662,7 +686,10 @@
       "verb": "Verbo en alemán",
       "definition": "Significado en español",
       "wordPage": "Ver ficha",
-      "noResults": "No se encontraron verbos alemanes que coincidan con la búsqueda."
+      "noResults": "No se encontraron verbos alemanes que coincidan con la búsqueda.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha"
     },
     "learningTips": [
       "Estudia cada día un grupo pequeño de verbos alemanes en lugar de intentar memorizar toda la lista de una vez.",
@@ -740,7 +767,10 @@
       "verb": "Verbe allemand",
       "definition": "Sens en français",
       "wordPage": "Voir la fiche",
-      "noResults": "Aucun verbe allemand ne correspond à votre recherche."
+      "noResults": "Aucun verbe allemand ne correspond à votre recherche.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite"
     },
     "learningTips": [
       "Étudiez chaque jour un petit groupe de verbes allemands au lieu d’essayer de mémoriser toute la liste en une seule fois.",
@@ -818,7 +848,10 @@
       "verb": "Deutsches Verb",
       "definition": "Bedeutung",
       "wordPage": "Wortseite öffnen",
-      "noResults": "Keine passenden deutschen Verben gefunden."
+      "noResults": "Keine passenden deutschen Verben gefunden.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen"
     },
     "learningTips": [
       "Lerne täglich nur eine kleine Gruppe deutscher Verben, damit du ihre Bedeutungen und Formen zuverlässig behältst.",
@@ -896,7 +929,10 @@
       "verb": "Verbo tedesco",
       "definition": "Significato in italiano",
       "wordPage": "Apri la scheda",
-      "noResults": "Nessun verbo tedesco corrisponde alla ricerca."
+      "noResults": "Nessun verbo tedesco corrisponde alla ricerca.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra"
     },
     "learningTips": [
       "Studia ogni giorno un piccolo gruppo di verbi tedeschi invece di tentare di memorizzare l’intera lista in una volta.",
@@ -974,7 +1010,10 @@
       "verb": "Verbo em alemão",
       "definition": "Significado em português",
       "wordPage": "Ver página",
-      "noResults": "Nenhum verbo alemão correspondente foi encontrado."
+      "noResults": "Nenhum verbo alemão correspondente foi encontrado.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita"
     },
     "learningTips": [
       "Estude diariamente um pequeno grupo de verbos alemães em vez de tentar memorizar toda a lista de uma só vez.",
@@ -1052,7 +1091,10 @@
       "verb": "Немецкий глагол",
       "definition": "Значение на русском",
       "wordPage": "Открыть страницу",
-      "noResults": "Подходящие немецкие глаголы не найдены."
+      "noResults": "Подходящие немецкие глаголы не найдены.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо"
     },
     "learningTips": [
       "Учите ежедневно небольшую группу немецких глаголов, а не пытайтесь запомнить весь список за один раз.",
@@ -1130,7 +1172,10 @@
       "verb": "Spanish verb",
       "definition": "English meaning",
       "wordPage": "View word",
-      "noResults": "No matching Spanish verbs found."
+      "noResults": "No matching Spanish verbs found.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right"
     },
     "learningTips": [
       "Study a manageable group of Spanish verbs each day and review them before adding new ones.",
@@ -1208,7 +1253,10 @@
       "verb": "Verbo en español",
       "definition": "Significado",
       "wordPage": "Ver ficha",
-      "noResults": "No se encontraron verbos españoles que coincidan con la búsqueda."
+      "noResults": "No se encontraron verbos españoles que coincidan con la búsqueda.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha"
     },
     "learningTips": [
       "Estudia cada día un grupo manejable de verbos españoles y repásalos antes de añadir otros nuevos.",
@@ -1286,7 +1334,10 @@
       "verb": "Verbe espagnol",
       "definition": "Sens en français",
       "wordPage": "Voir la fiche",
-      "noResults": "Aucun verbe espagnol ne correspond à votre recherche."
+      "noResults": "Aucun verbe espagnol ne correspond à votre recherche.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite"
     },
     "learningTips": [
       "Étudiez chaque jour un petit groupe de verbes espagnols et révisez-les avant d’en ajouter de nouveaux.",
@@ -1364,7 +1415,10 @@
       "verb": "Spanisches Verb",
       "definition": "Deutsche Bedeutung",
       "wordPage": "Wortseite öffnen",
-      "noResults": "Keine passenden spanischen Verben gefunden."
+      "noResults": "Keine passenden spanischen Verben gefunden.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen"
     },
     "learningTips": [
       "Lerne täglich eine überschaubare Gruppe spanischer Verben und wiederhole sie, bevor du neue hinzufügst.",
@@ -1442,7 +1496,10 @@
       "verb": "Verbo spagnolo",
       "definition": "Significato in italiano",
       "wordPage": "Apri la scheda",
-      "noResults": "Nessun verbo spagnolo corrisponde alla ricerca."
+      "noResults": "Nessun verbo spagnolo corrisponde alla ricerca.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra"
     },
     "learningTips": [
       "Studia ogni giorno un gruppo gestibile di verbi spagnoli e ripassali prima di aggiungerne di nuovi.",
@@ -1520,7 +1577,10 @@
       "verb": "Verbo em espanhol",
       "definition": "Significado em português",
       "wordPage": "Ver página",
-      "noResults": "Nenhum verbo espanhol correspondente foi encontrado."
+      "noResults": "Nenhum verbo espanhol correspondente foi encontrado.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita"
     },
     "learningTips": [
       "Estude diariamente um grupo pequeno de verbos espanhóis e revise-os antes de acrescentar novos.",
@@ -1598,7 +1658,10 @@
       "verb": "Испанский глагол",
       "definition": "Значение на русском",
       "wordPage": "Открыть страницу",
-      "noResults": "Подходящие испанские глаголы не найдены."
+      "noResults": "Подходящие испанские глаголы не найдены.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо"
     },
     "learningTips": [
       "Учите ежедневно небольшую группу испанских глаголов и повторяйте её перед добавлением новых слов.",
@@ -1676,7 +1739,10 @@
       "verb": "French verb",
       "definition": "English meaning",
       "wordPage": "View word",
-      "noResults": "No matching French verbs found."
+      "noResults": "No matching French verbs found.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right"
     },
     "learningTips": [
       "Study a manageable group of French verbs each day and review them before adding new ones.",
@@ -1754,7 +1820,10 @@
       "verb": "Verbo en francés",
       "definition": "Significado en español",
       "wordPage": "Ver ficha",
-      "noResults": "No se encontraron verbos franceses que coincidan con la búsqueda."
+      "noResults": "No se encontraron verbos franceses que coincidan con la búsqueda.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha"
     },
     "learningTips": [
       "Estudia cada día un grupo manejable de verbos franceses y repásalos antes de añadir otros nuevos.",
@@ -1832,7 +1901,10 @@
       "verb": "Verbe français",
       "definition": "Signification",
       "wordPage": "Voir la fiche",
-      "noResults": "Aucun verbe français ne correspond à votre recherche."
+      "noResults": "Aucun verbe français ne correspond à votre recherche.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite"
     },
     "learningTips": [
       "Étudiez chaque jour un petit groupe de verbes français et révisez-le avant d’ajouter de nouveaux mots.",
@@ -1910,7 +1982,10 @@
       "verb": "Französisches Verb",
       "definition": "Deutsche Bedeutung",
       "wordPage": "Wortseite öffnen",
-      "noResults": "Keine passenden französischen Verben gefunden."
+      "noResults": "Keine passenden französischen Verben gefunden.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen"
     },
     "learningTips": [
       "Lerne täglich eine überschaubare Gruppe französischer Verben und wiederhole sie, bevor du neue hinzufügst.",
@@ -1988,7 +2063,10 @@
       "verb": "Verbo francese",
       "definition": "Significato in italiano",
       "wordPage": "Apri la scheda",
-      "noResults": "Nessun verbo francese corrisponde alla ricerca."
+      "noResults": "Nessun verbo francese corrisponde alla ricerca.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra"
     },
     "learningTips": [
       "Studia ogni giorno un gruppo gestibile di verbi francesi e ripassali prima di aggiungerne di nuovi.",
@@ -2066,7 +2144,10 @@
       "verb": "Verbo em francês",
       "definition": "Significado em português",
       "wordPage": "Ver página",
-      "noResults": "Nenhum verbo francês correspondente foi encontrado."
+      "noResults": "Nenhum verbo francês correspondente foi encontrado.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita"
     },
     "learningTips": [
       "Estude diariamente um grupo pequeno de verbos franceses e revise-os antes de acrescentar novos.",
@@ -2144,7 +2225,10 @@
       "verb": "Французский глагол",
       "definition": "Значение на русском",
       "wordPage": "Открыть страницу",
-      "noResults": "Подходящие французские глаголы не найдены."
+      "noResults": "Подходящие французские глаголы не найдены.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо"
     },
     "learningTips": [
       "Учите ежедневно небольшую группу французских глаголов и повторяйте её перед добавлением новых слов.",
@@ -2222,7 +2306,10 @@
       "verb": "Italian verb",
       "definition": "English meaning",
       "wordPage": "View word",
-      "noResults": "No matching Italian verbs found."
+      "noResults": "No matching Italian verbs found.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right"
     },
     "learningTips": [
       "Study a manageable group of Italian verbs each day and review them before adding new ones.",
@@ -2300,7 +2387,10 @@
       "verb": "Verbo en italiano",
       "definition": "Significado en español",
       "wordPage": "Ver ficha",
-      "noResults": "No se encontraron verbos italianos que coincidan con la búsqueda."
+      "noResults": "No se encontraron verbos italianos que coincidan con la búsqueda.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha"
     },
     "learningTips": [
       "Estudia cada día un grupo manejable de verbos italianos y repásalos antes de añadir otros nuevos.",
@@ -2378,7 +2468,10 @@
       "verb": "Verbe italien",
       "definition": "Sens en français",
       "wordPage": "Voir la fiche",
-      "noResults": "Aucun verbe italien ne correspond à votre recherche."
+      "noResults": "Aucun verbe italien ne correspond à votre recherche.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite"
     },
     "learningTips": [
       "Étudiez chaque jour un petit groupe de verbes italiens et révisez-le avant d’ajouter de nouveaux mots.",
@@ -2456,7 +2549,10 @@
       "verb": "Italienisches Verb",
       "definition": "Deutsche Bedeutung",
       "wordPage": "Wortseite öffnen",
-      "noResults": "Keine passenden italienischen Verben gefunden."
+      "noResults": "Keine passenden italienischen Verben gefunden.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen"
     },
     "learningTips": [
       "Lerne täglich eine überschaubare Gruppe italienischer Verben und wiederhole sie, bevor du neue hinzufügst.",
@@ -2534,7 +2630,10 @@
       "verb": "Verbo italiano",
       "definition": "Significato",
       "wordPage": "Apri la scheda",
-      "noResults": "Nessun verbo italiano corrisponde alla ricerca."
+      "noResults": "Nessun verbo italiano corrisponde alla ricerca.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra"
     },
     "learningTips": [
       "Studia ogni giorno un piccolo gruppo di verbi italiani e ripassalo prima di aggiungere nuovi vocaboli.",
@@ -2612,7 +2711,10 @@
       "verb": "Verbo em italiano",
       "definition": "Significado em português",
       "wordPage": "Ver página",
-      "noResults": "Nenhum verbo italiano correspondente foi encontrado."
+      "noResults": "Nenhum verbo italiano correspondente foi encontrado.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita"
     },
     "learningTips": [
       "Estude diariamente um grupo pequeno de verbos italianos e revise-o antes de acrescentar novos.",
@@ -2690,7 +2792,10 @@
       "verb": "Итальянский глагол",
       "definition": "Значение на русском",
       "wordPage": "Открыть страницу",
-      "noResults": "Подходящие итальянские глаголы не найдены."
+      "noResults": "Подходящие итальянские глаголы не найдены.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо"
     },
     "learningTips": [
       "Учите ежедневно небольшую группу итальянских глаголов и повторяйте её перед добавлением новых слов.",
@@ -2768,7 +2873,10 @@
       "verb": "Portuguese verb",
       "definition": "English meaning",
       "wordPage": "View word",
-      "noResults": "No matching Portuguese verbs found."
+      "noResults": "No matching Portuguese verbs found.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right"
     },
     "learningTips": [
       "Study a manageable group of Portuguese verbs each day and review them before adding new ones.",
@@ -2846,7 +2954,10 @@
       "verb": "Verbo en portugués",
       "definition": "Significado en español",
       "wordPage": "Ver ficha",
-      "noResults": "No se encontraron verbos portugueses que coincidan con la búsqueda."
+      "noResults": "No se encontraron verbos portugueses que coincidan con la búsqueda.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha"
     },
     "learningTips": [
       "Estudia cada día un grupo manejable de verbos portugueses y repásalos antes de añadir otros nuevos.",
@@ -2924,7 +3035,10 @@
       "verb": "Verbe portugais",
       "definition": "Sens en français",
       "wordPage": "Voir la fiche",
-      "noResults": "Aucun verbe portugais ne correspond à votre recherche."
+      "noResults": "Aucun verbe portugais ne correspond à votre recherche.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite"
     },
     "learningTips": [
       "Étudiez chaque jour un petit groupe de verbes portugais et révisez-le avant d’ajouter de nouveaux mots.",
@@ -3002,7 +3116,10 @@
       "verb": "Portugiesisches Verb",
       "definition": "Deutsche Bedeutung",
       "wordPage": "Wortseite öffnen",
-      "noResults": "Keine passenden portugiesischen Verben gefunden."
+      "noResults": "Keine passenden portugiesischen Verben gefunden.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen"
     },
     "learningTips": [
       "Lerne täglich eine überschaubare Gruppe portugiesischer Verben und wiederhole sie, bevor du neue hinzufügst.",
@@ -3080,7 +3197,10 @@
       "verb": "Verbo em português",
       "definition": "Significado",
       "wordPage": "Ver página",
-      "noResults": "Nenhum verbo português correspondente foi encontrado."
+      "noResults": "Nenhum verbo português correspondente foi encontrado.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita"
     },
     "learningTips": [
       "Estude diariamente um pequeno grupo de verbos portugueses e revise-o antes de acrescentar novos.",
@@ -3158,7 +3278,10 @@
       "verb": "Verbo portoghese",
       "definition": "Significato in italiano",
       "wordPage": "Apri la scheda",
-      "noResults": "Nessun verbo portoghese corrisponde alla ricerca."
+      "noResults": "Nessun verbo portoghese corrisponde alla ricerca.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra"
     },
     "learningTips": [
       "Studia ogni giorno un piccolo gruppo di verbi portoghesi e ripassalo prima di aggiungere nuovi vocaboli.",
@@ -3236,7 +3359,10 @@
       "verb": "Португальский глагол",
       "definition": "Значение на русском",
       "wordPage": "Открыть страницу",
-      "noResults": "Подходящие португальские глаголы не найдены."
+      "noResults": "Подходящие португальские глаголы не найдены.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо"
     },
     "learningTips": [
       "Учите ежедневно небольшую группу португальских глаголов и повторяйте её перед добавлением новых слов.",
@@ -3314,7 +3440,10 @@
       "verb": "Russian verb",
       "definition": "English meaning",
       "wordPage": "View word",
-      "noResults": "No matching Russian verbs found."
+      "noResults": "No matching Russian verbs found.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right"
     },
     "learningTips": [
       "Study a manageable group of Russian verbs each day and review them before adding new ones.",
@@ -3392,7 +3521,10 @@
       "verb": "Verbo en ruso",
       "definition": "Significado en español",
       "wordPage": "Ver ficha",
-      "noResults": "No se encontraron verbos rusos que coincidan con la búsqueda."
+      "noResults": "No se encontraron verbos rusos que coincidan con la búsqueda.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha"
     },
     "learningTips": [
       "Estudia cada día un grupo manejable de verbos rusos y repásalos antes de añadir otros nuevos.",
@@ -3470,7 +3602,10 @@
       "verb": "Verbe russe",
       "definition": "Sens en français",
       "wordPage": "Voir la fiche",
-      "noResults": "Aucun verbe russe ne correspond à votre recherche."
+      "noResults": "Aucun verbe russe ne correspond à votre recherche.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite"
     },
     "learningTips": [
       "Étudiez chaque jour un petit groupe de verbes russes et révisez-le avant d’ajouter de nouveaux mots.",
@@ -3548,7 +3683,10 @@
       "verb": "Russisches Verb",
       "definition": "Deutsche Bedeutung",
       "wordPage": "Wortseite öffnen",
-      "noResults": "Keine passenden russischen Verben gefunden."
+      "noResults": "Keine passenden russischen Verben gefunden.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen"
     },
     "learningTips": [
       "Lerne täglich eine überschaubare Gruppe russischer Verben und wiederhole sie, bevor du neue hinzufügst.",
@@ -3626,7 +3764,10 @@
       "verb": "Verbo russo",
       "definition": "Significato in italiano",
       "wordPage": "Apri la scheda",
-      "noResults": "Nessun verbo russo corrisponde alla ricerca."
+      "noResults": "Nessun verbo russo corrisponde alla ricerca.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra"
     },
     "learningTips": [
       "Studia ogni giorno un piccolo gruppo di verbi russi e ripassalo prima di aggiungere nuovi vocaboli.",
@@ -3704,7 +3845,10 @@
       "verb": "Verbo em russo",
       "definition": "Significado em português",
       "wordPage": "Ver página",
-      "noResults": "Nenhum verbo russo correspondente foi encontrado."
+      "noResults": "Nenhum verbo russo correspondente foi encontrado.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita"
     },
     "learningTips": [
       "Estude diariamente um pequeno grupo de verbos russos e revise-o antes de acrescentar novos.",
@@ -3782,7 +3926,10 @@
       "verb": "Русский глагол",
       "definition": "Значение",
       "wordPage": "Открыть страницу",
-      "noResults": "Подходящие русские глаголы не найдены."
+      "noResults": "Подходящие русские глаголы не найдены.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо"
     },
     "learningTips": [
       "Учите ежедневно небольшую группу русских глаголов и повторяйте её перед добавлением новых слов.",

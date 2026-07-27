@@ -39,6 +39,12 @@ export interface VerbListContent {
     definition: string;
     wordPage: string;
     noResults: string;
+    // Localized "swipe to see more columns" hint and horizontal-scroll
+    // button labels, shown only when the table actually overflows its
+    // container (mirrors pastForms100VerbRouteHelpers.ts's table fields).
+    scrollHint: string;
+    scrollLeftLabel: string;
+    scrollRightLabel: string;
   };
   learningTips: string[];
   relatedLinks: {

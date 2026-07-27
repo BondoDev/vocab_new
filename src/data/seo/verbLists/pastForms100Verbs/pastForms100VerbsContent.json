@@ -36,6 +36,9 @@
     "table": {
       "heading": "Table of 100 Common English Verb Past Forms",
       "description": "Each row shows the verb in its infinitive form, its meaning, its Past Simple form, and its Past Participle form for quick comparison and review.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right",
       "notes": [
         "Regular verbs generally add “-ed,” although spelling changes may be required.",
         "Irregular verbs do not follow one universal formation rule and should be learned by pattern or individually.",
@@ -162,6 +165,9 @@
     "table": {
       "heading": "Tabla de formas pasadas de 100 verbos ingleses",
       "description": "Cada fila muestra el infinitivo, su traducción al español, la forma de pasado simple y el participio pasado para facilitar la comparación y el repaso.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha",
       "notes": [
         "Los verbos regulares suelen añadir «-ed», aunque pueden requerir cambios ortográficos.",
         "Los verbos irregulares no siguen una única regla de formación y deben aprenderse por patrones o individualmente.",
@@ -294,6 +300,9 @@
     "table": {
       "heading": "Tableau des formes passées de 100 verbes anglais",
       "description": "Chaque ligne présente l’infinitif, sa traduction française, le prétérit et le participe passé afin de faciliter la comparaison et la révision.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite",
       "notes": [
         "Les verbes réguliers ajoutent généralement « -ed », avec parfois des modifications orthographiques.",
         "Les verbes irréguliers ne suivent pas une règle unique et doivent être appris par groupes ou individuellement.",
@@ -426,6 +435,9 @@
     "table": {
       "heading": "Tabelle mit den Vergangenheitsformen von 100 englischen Verben",
       "description": "Jede Zeile zeigt den Infinitiv, die deutsche Bedeutung, das Simple Past und das Past Participle zum schnellen Vergleichen und Wiederholen.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen",
       "notes": [
         "Regelmäßige Verben erhalten meist die Endung „-ed“, wobei Schreibweisen angepasst werden können.",
         "Unregelmäßige Verben folgen keiner einheitlichen Regel und sollten nach Mustern oder einzeln gelernt werden.",
@@ -558,6 +570,9 @@
     "table": {
       "heading": "Tabella delle forme passate di 100 verbi inglesi",
       "description": "Ogni riga mostra l’infinito, la traduzione italiana, il Past Simple e il participio passato per facilitare il confronto e il ripasso.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra",
       "notes": [
         "I verbi regolari aggiungono generalmente «-ed», anche se possono essere necessarie modifiche ortografiche.",
         "I verbi irregolari non seguono un’unica regola di formazione e vanno imparati per schemi o singolarmente.",
@@ -687,6 +702,9 @@
     "table": {
       "heading": "Tabela das formas passadas de 100 verbos ingleses",
       "description": "Cada linha apresenta o infinitivo, a tradução em português, o Past Simple e o particípio passado para facilitar a comparação e a revisão.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita",
       "notes": [
         "Os verbos regulares geralmente recebem «-ed», embora possam exigir alterações ortográficas.",
         "Os verbos irregulares não seguem uma única regra de formação e devem ser aprendidos por padrões ou individualmente.",
@@ -813,6 +831,9 @@
     "table": {
       "heading": "Таблица прошедших форм 100 английских глаголов",
       "description": "В каждой строке указаны инфинитив, перевод на русский язык, форма Past Simple и Past Participle для удобного сравнения и повторения.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо",
       "notes": [
         "Правильные глаголы обычно получают окончание «-ed», однако написание основы иногда меняется.",
         "Неправильные глаголы не подчиняются одному общему правилу, поэтому их полезно учить по группам или отдельно.",
@@ -943,6 +964,9 @@
     "table": {
       "heading": "Table of 100 Common German Verb Past Forms",
       "description": "Each row shows the German infinitive, its English translation, the Präteritum, the past participle, and the auxiliary used to form the Perfekt.",
+      "scrollHint": "Swipe horizontally to view all columns.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right",
       "notes": [
         "Regular verbs usually form the Präteritum with a dental ending and the past participle with ge- and -t.",
         "Strong and mixed verbs may change their stem vowel or use irregular endings.",
@@ -1070,6 +1094,9 @@
     "table": {
       "heading": "Tabla de formas pasadas de 100 verbos alemanes",
       "description": "Cada fila muestra el infinitivo alemán, su traducción al español, el Präteritum, el participio pasado y el auxiliar utilizado para formar el Perfekt.",
+      "scrollHint": "Desliza horizontalmente para ver todas las columnas.",
+      "scrollLeftLabel": "Desplazar tabla a la izquierda",
+      "scrollRightLabel": "Desplazar tabla a la derecha",
       "notes": [
         "Los verbos débiles suelen formar el Präteritum con una terminación dental y el participio con ge- y -t.",
         "Los verbos fuertes y mixtos pueden cambiar la vocal de la raíz o presentar terminaciones irregulares.",
@@ -1203,6 +1230,9 @@
     "table": {
       "heading": "Tableau des formes passées de 100 verbes allemands",
       "description": "Chaque ligne présente l’infinitif allemand, sa traduction française, le Präteritum, le participe passé et l’auxiliaire utilisé pour former le Perfekt.",
+      "scrollHint": "Faites défiler horizontalement pour afficher toutes les colonnes.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite",
       "notes": [
         "Les verbes faibles forment généralement le Präteritum avec une terminaison dentale et le participe avec ge- et -t.",
         "Les verbes forts et mixtes peuvent modifier la voyelle du radical ou employer des terminaisons irrégulières.",
@@ -1336,6 +1366,9 @@
     "table": {
       "heading": "Tabelle mit den Vergangenheitsformen von 100 deutschen Verben",
       "description": "Jede Zeile enthält den Infinitiv, die Bedeutung, das Präteritum, das Partizip II und das Hilfsverb, mit dem das Perfekt gebildet wird.",
+      "scrollHint": "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen",
       "notes": [
         "Schwache Verben bilden das Präteritum meist mit -te und das Partizip II häufig mit ge- und -t.",
         "Starke und gemischte Verben können ihren Stammvokal verändern oder unregelmäßige Endungen verwenden.",
@@ -1469,6 +1502,9 @@
     "table": {
       "heading": "Tabella delle forme passate di 100 verbi tedeschi",
       "description": "Ogni riga mostra l’infinito tedesco, la traduzione italiana, il Präteritum, il participio passato e l’ausiliare usato per formare il Perfekt.",
+      "scrollHint": "Scorri orizzontalmente per visualizzare tutte le colonne.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra",
       "notes": [
         "I verbi deboli formano generalmente il Präteritum con una terminazione in -te e il participio con ge- e -t.",
         "I verbi forti e misti possono cambiare la vocale della radice o utilizzare terminazioni irregolari.",
@@ -1599,6 +1635,9 @@
     "table": {
       "heading": "Tabela das formas passadas de 100 verbos alemães",
       "description": "Cada linha apresenta o infinitivo alemão, a tradução em português, o Präteritum, o particípio passado e o auxiliar usado para formar o Perfekt.",
+      "scrollHint": "Deslize horizontalmente para ver todas as colunas.",
+      "scrollLeftLabel": "Rolar a tabela para a esquerda",
+      "scrollRightLabel": "Rolar a tabela para a direita",
       "notes": [
         "Os verbos fracos geralmente formam o Präteritum com a terminação -te e o particípio com ge- e -t.",
         "Os verbos fortes e mistos podem alterar a vogal do radical ou apresentar terminações irregulares.",
@@ -1726,6 +1765,9 @@
     "table": {
       "heading": "Таблица прошедших форм 100 немецких глаголов",
       "description": "В каждой строке указаны немецкий инфинитив, перевод на русский язык, Präteritum, причастие прошедшего времени и вспомогательный глагол для образования Perfekt.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо",
       "notes": [
         "Слабые глаголы обычно образуют Präteritum с окончанием -te, а причастие — с приставкой ge- и окончанием -t.",
         "Сильные и смешанные глаголы могут изменять корневую гласную или использовать нерегулярные окончания.",

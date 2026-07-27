@@ -76,6 +76,9 @@ const FALLBACK_COPY = {
     definition: "Definition",
     noResults: "No matching verbs found.",
     pronounceLabel: "Hear pronunciation",
+    scrollHint: "Swipe horizontally to view all columns.",
+    scrollLeftLabel: "Scroll table left",
+    scrollRightLabel: "Scroll table right",
   },
   es: {
     pageTitle: (language: string) => `100 verbos ${language} mas comunes`,
@@ -86,6 +89,9 @@ const FALLBACK_COPY = {
     definition: "Definicion",
     noResults: "No se encontraron verbos.",
     pronounceLabel: "Escuchar pronunciacion",
+    scrollHint: "Desliza horizontalmente para ver todas las columnas.",
+    scrollLeftLabel: "Desplazar tabla a la izquierda",
+    scrollRightLabel: "Desplazar tabla a la derecha",
   },
   de: {
     pageTitle: (language: string) => `100 haeufigste ${language}e Verben`,
@@ -96,6 +102,9 @@ const FALLBACK_COPY = {
     definition: "Definition",
     noResults: "Keine passenden Verben gefunden.",
     pronounceLabel: "Aussprache anhoeren",
+    scrollHint: "Wischen Sie horizontal, um alle Spalten anzuzeigen.",
+    scrollLeftLabel: "Tabelle nach links scrollen",
+    scrollRightLabel: "Tabelle nach rechts scrollen",
   },
   fr: {
     pageTitle: (language: string) => `100 verbes ${language} les plus courants`,
@@ -106,6 +115,9 @@ const FALLBACK_COPY = {
     definition: "Definition",
     noResults: "Aucun verbe correspondant.",
     pronounceLabel: "Ecouter la prononciation",
+    scrollHint: "Faites defiler horizontalement pour afficher toutes les colonnes.",
+    scrollLeftLabel: "Faire defiler le tableau vers la gauche",
+    scrollRightLabel: "Faire defiler le tableau vers la droite",
   },
   it: {
     pageTitle: (language: string) => `100 verbi ${language} piu comuni`,
@@ -116,6 +128,9 @@ const FALLBACK_COPY = {
     definition: "Definizione",
     noResults: "Nessun verbo trovato.",
     pronounceLabel: "Ascolta la pronuncia",
+    scrollHint: "Scorri orizzontalmente per visualizzare tutte le colonne.",
+    scrollLeftLabel: "Scorri la tabella a sinistra",
+    scrollRightLabel: "Scorri la tabella a destra",
   },
   pt: {
     pageTitle: (language: string) => `100 verbos ${language} mais comuns`,
@@ -126,6 +141,9 @@ const FALLBACK_COPY = {
     definition: "Definicao",
     noResults: "Nenhum verbo encontrado.",
     pronounceLabel: "Ouvir pronuncia",
+    scrollHint: "Deslize horizontalmente para ver todas as colunas.",
+    scrollLeftLabel: "Rolar a tabela para a esquerda",
+    scrollRightLabel: "Rolar a tabela para a direita",
   },
   ru: {
     pageTitle: (language: string) => `100 samykh chastykh ${language} glagolov`,
@@ -136,6 +154,9 @@ const FALLBACK_COPY = {
     definition: "Opredelenie",
     noResults: "Podhodyashchie glagoly ne naydeny.",
     pronounceLabel: "Uslyshat proiznoshenie",
+    scrollHint: "Prokrutite tablitsu po gorizontali, chtoby uvidet vse stolbtsy.",
+    scrollLeftLabel: "Prokrutit tablitsu vlevo",
+    scrollRightLabel: "Prokrutit tablitsu vpravo",
   },
 } as const satisfies Record<
   UiLanguageCode,
@@ -147,6 +168,9 @@ const FALLBACK_COPY = {
     definition: string;
     noResults: string;
     pronounceLabel: string;
+    scrollHint: string;
+    scrollLeftLabel: string;
+    scrollRightLabel: string;
   }
 >;
 
@@ -172,6 +196,9 @@ export function getFallbackVerbListCopy(
     definition: copy.definition,
     noResults: copy.noResults,
     pronounceLabel: copy.pronounceLabel,
+    scrollHint: copy.scrollHint,
+    scrollLeftLabel: copy.scrollLeftLabel,
+    scrollRightLabel: copy.scrollRightLabel,
     number: "№",
   };
 }

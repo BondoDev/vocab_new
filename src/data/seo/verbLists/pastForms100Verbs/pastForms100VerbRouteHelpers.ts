@@ -57,6 +57,12 @@ export interface PastVerbFormsOverview {
 export interface PastVerbFormsTableSectionContent {
   heading: string;
   description: string;
+  // Localized "swipe to see more columns" hint and horizontal-scroll-button
+  // labels, shown only when the dynamic-width table actually overflows its
+  // container (any viewport, not just narrow ones).
+  scrollHint: string;
+  scrollLeftLabel: string;
+  scrollRightLabel: string;
   notes: string[];
 }
 
@@ -305,6 +311,9 @@ function validateContentEntryShape(value: unknown, index: number): PastVerbForms
   const table = assertObject(record.table, "table", entryLabel);
   assertString(table.heading, "table.heading", entryLabel);
   assertString(table.description, "table.description", entryLabel);
+  assertString(table.scrollHint, "table.scrollHint", entryLabel);
+  assertString(table.scrollLeftLabel, "table.scrollLeftLabel", entryLabel);
+  assertString(table.scrollRightLabel, "table.scrollRightLabel", entryLabel);
   assertStringArray(table.notes, "table.notes", entryLabel);
 
   const howToUse = assertObject(record.howToUse, "howToUse", entryLabel);

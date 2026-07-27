@@ -205,6 +205,9 @@ export function PastVerbFormsSeoPage({
           speechLang={speechLang}
           heading={content?.table.heading ?? ""}
           description={content?.table.description ?? ""}
+          scrollHint={content?.table.scrollHint ?? ""}
+          scrollLeftLabel={content?.table.scrollLeftLabel ?? ""}
+          scrollRightLabel={content?.table.scrollRightLabel ?? ""}
           notes={content?.table.notes ?? []}
           placeholderMessage={PAST_VERB_FORMS_DEV_PLACEHOLDER_MESSAGE}
         />

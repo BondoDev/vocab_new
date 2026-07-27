@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Volume2 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   getUiVocabularyLanguage,
   TARGET_LANGUAGE_TO_UI_LANGUAGE,
@@ -10,6 +9,7 @@ import {
 import { getFallbackVerbListCopy } from "../../../../data/seo/verbLists/common100Verbs/common100VerbFallbackCopy";
 import { SEOHead, type SeoMetadata } from "../../../../seo/SeoContext";
 import { useLanguage } from "../../../../contexts/LanguageContext";
+import { VerbListTableSection } from "./VerbListTableSection";
 
 export interface VerbListSeoTableOnlyRow {
   id: string;
@@ -26,17 +26,6 @@ interface VerbListSeoTableOnlyPageProps {
   speechLang: string;
   rows: VerbListSeoTableOnlyRow[];
   seoMetadata: SeoMetadata;
-}
-
-function speakVerb(verb: string, speechLang: string) {
-  if (typeof window === "undefined" || !window.speechSynthesis) {
-    return;
-  }
-
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(verb);
-  utterance.lang = speechLang;
-  window.speechSynthesis.speak(utterance);
 }
 
 export function VerbListSeoTableOnlyPage({
@@ -97,68 +86,21 @@ export function VerbListSeoTableOnlyPage({
             </label>
           </div>
 
-          <div className="mt-5 overflow-x-auto">
-            <table className="w-full min-w-[42rem] border-collapse text-left table-fixed">
-              <thead>
-                <tr>
-                  <th className="w-20 border-b border-border py-3 pr-4 text-sm text-foreground">
-                    {fallbackCopy.number}
-                  </th>
-                  <th className="w-40 border-b border-border py-3 pr-4 text-sm text-foreground">
-                    {targetLanguageName}
-                  </th>
-                  {showTranslationColumn ? (
-                    <th className="w-36 border-b border-border py-3 pr-4 text-sm text-foreground">
-                      {uiLanguageName}
-                    </th>
-                  ) : null}
-                  <th className="border-b border-border py-3 text-sm text-foreground">
-                    {fallbackCopy.definition}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredRows.map((row) => (
-                  <tr key={row.id}>
-                    <td className="border-b border-border/70 py-3 pr-4 align-top text-sm text-muted-foreground">
-                      {row.index}
-                    </td>
-                    <td className="border-b border-border/70 py-3 pr-4 align-middle text-sm font-medium text-foreground">
-                      <div className="inline-flex items-center gap-1.5">
-                        <button
-                          type="button"
-                          aria-label={`${fallbackCopy.pronounceLabel}: ${row.verb}`}
-                          onClick={() => speakVerb(row.verb, speechLang)}
-                          className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-primary/80 transition hover:bg-primary/10 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
-                        >
-                          <Volume2 className="h-3.5 w-3.5" />
-                        </button>
-                        {row.href ? (
-                          <Link className="text-primary transition hover:underline" to={row.href}>
-                            {row.verb}
-                          </Link>
-                        ) : (
-                          row.verb
-                        )}
-                      </div>
-                    </td>
-                    {showTranslationColumn ? (
-                      <td className="border-b border-border/70 py-3 pr-4 align-top text-sm">
-                        {row.translation ? <span className="text-muted-foreground">{row.translation}</span> : <span className="text-muted-foreground">-</span>}
-                      </td>
-                    ) : null}
-                    <td className="border-b border-border/70 py-3 align-top text-sm text-muted-foreground">
-                      {row.definition || "-"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {filteredRows.length === 0 ? (
-            <p className="mt-4 text-sm text-muted-foreground">{fallbackCopy.noResults}</p>
-          ) : null}
+          <VerbListTableSection
+            rows={filteredRows}
+            showTranslationColumn={showTranslationColumn}
+            speechLang={speechLang}
+            numberLabel={fallbackCopy.number}
+            verbLabel={targetLanguageName}
+            translationLabel={uiLanguageName}
+            definitionLabel={fallbackCopy.definition}
+            pronounceLabel={fallbackCopy.pronounceLabel}
+            regionLabel={fallbackCopy.pageTitle}
+            scrollHint={fallbackCopy.scrollHint}
+            scrollLeftLabel={fallbackCopy.scrollLeftLabel}
+            scrollRightLabel={fallbackCopy.scrollRightLabel}
+            noResultsMessage={filteredRows.length === 0 ? fallbackCopy.noResults : null}
+          />
         </section>
       </div>
     </main>
