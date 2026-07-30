@@ -187,6 +187,14 @@ async function collectLevelTestRoutes() {
 
 function buildSitemapXml(paths, options = {}) {
   const comment = options.comment ? String(options.comment).trim() : "";
+  const sections = Array.isArray(options.sections)
+    ? options.sections
+        .map((section) => ({
+          comment: typeof section?.comment === "string" ? section.comment.trim() : "",
+          paths: Array.isArray(section?.paths) ? section.paths : [],
+        }))
+        .filter((section) => section.paths.length > 0)
+    : [];
   // Stable, ledger-resolved date (see scripts/lib/sitemap-lastmod.mjs) —
   // stamping the build date here re-announces the whole corpus as changed
   // on every deploy and triggers full recrawls (2026-07-12 incident).
@@ -204,13 +212,29 @@ function buildSitemapXml(paths, options = {}) {
     lines.push("");
   }
 
-  for (const route of paths) {
+  const writeUrl = (route) => {
     const loc = `${SITE_URL}${route}`;
     lines.push("  <url>");
     lines.push(`    <loc>${xmlEscape(loc)}</loc>`);
     lines.push(`    <lastmod>${lastmod}</lastmod>`);
     lines.push("  </url>");
     lines.push("");
+  };
+
+  if (sections.length > 0) {
+    for (const section of sections) {
+      if (section.comment) {
+        lines.push(`  <!-- ${xmlEscape(section.comment)} -->`);
+        lines.push("");
+      }
+      for (const route of section.paths) {
+        writeUrl(route);
+      }
+    }
+  } else {
+    for (const route of paths) {
+      writeUrl(route);
+    }
   }
 
   lines.push("</urlset>");
@@ -281,12 +305,25 @@ async function main() {
     // without a urlSlug yet is skipped by getAllPastVerbFormsPaths() — this
     // flag check makes the exclusion an explicit, centralized decision
     // rather than an incidental side effect of unfilled data.
+    const commonVerbListRoutes = Array.from(
+      new Set(verbListRegistryLoader.registry.getAllVerbListPaths()),
+    ).sort();
     const pastVerbFormsRoutes = pastVerbFormsRegistryLoader.launchStatus.PAST_VERB_FORMS_LAUNCHED
-      ? pastVerbFormsRegistryLoader.registry.getAllPastVerbFormsPaths()
+      ? Array.from(new Set(pastVerbFormsRegistryLoader.registry.getAllPastVerbFormsPaths())).sort()
       : [];
     const verbListRoutes = Array.from(
-      new Set([...verbListRegistryLoader.registry.getAllVerbListPaths(), ...pastVerbFormsRoutes]),
+      new Set([...commonVerbListRoutes, ...pastVerbFormsRoutes]),
     ).sort();
+    const verbListSections = [
+      {
+        comment: "Most common 100 verbs SEO pages.",
+        paths: commonVerbListRoutes,
+      },
+      {
+        comment: "Past tense forms of 100 common verbs SEO pages.",
+        paths: pastVerbFormsRoutes,
+      },
+    ];
     const wordRoutesByPair = INCLUDE_WORD_SITEMAPS
       ? await collectWordRoutes(manifestLoader.manifest)
       : new Map();
@@ -325,7 +362,12 @@ async function main() {
       const lastmod = resolveLastmod(`sitemaps/${verbListsName}`);
       await fs.writeFile(
         path.join(sitemapsDir, verbListsName),
-        buildSitemapXml(verbListRoutes, { lastmod }),
+        buildSitemapXml(verbListRoutes, {
+          comment:
+            "Dedicated sitemap for verb-list SEO pages. Add future verb-list page families here under their own section comments.",
+          lastmod,
+          sections: verbListSections,
+        }),
         "utf8",
       );
       sitemapFiles.push({ fileName: `sitemaps/${verbListsName}`, lastmod });

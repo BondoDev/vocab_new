@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- Dedicated sitemap for verb-list SEO pages. Add future verb-list page families here under their own section comments. -->
+
+  <!-- Most common 100 verbs SEO pages. -->
+
   <url>
     <loc>https://www.fluentstellar.com/de/100-haeufigste-deutsche-verben</loc>
     <lastmod>2026-07-12</lastmod>
@@ -243,6 +247,253 @@
 
   <url>
     <loc>https://www.fluentstellar.com/ru/100-samykh-chastykh-russkikh-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <!-- Past tense forms of 100 common verbs SEO pages. -->
+
+  <url>
+    <loc>https://www.fluentstellar.com/de/vergangenheitsformen-100-haeufigste-deutsche-verben</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/de/vergangenheitsformen-100-haeufigste-englische-verben</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/de/vergangenheitsformen-100-haeufigste-franzoesische-verben</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/de/vergangenheitsformen-100-haeufigste-italienische-verben</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/de/vergangenheitsformen-100-haeufigste-portugiesische-verben</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/de/vergangenheitsformen-100-haeufigste-russische-verben</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/de/vergangenheitsformen-100-haeufigste-spanische-verben</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/past-forms-100-most-common-english-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/past-forms-100-most-common-french-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/past-forms-100-most-common-german-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/past-forms-100-most-common-italian-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/past-forms-100-most-common-portuguese-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/past-forms-100-most-common-russian-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/en/past-forms-100-most-common-spanish-verbs</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/formas-pasadas-100-verbos-alemanes-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/formas-pasadas-100-verbos-espanoles-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/formas-pasadas-100-verbos-franceses-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/formas-pasadas-100-verbos-ingleses-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/formas-pasadas-100-verbos-italianos-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/formas-pasadas-100-verbos-portugueses-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/es/formas-pasadas-100-verbos-rusos-mas-comunes</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/formes-passees-100-verbes-allemands-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/formes-passees-100-verbes-anglais-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/formes-passees-100-verbes-espagnols-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/formes-passees-100-verbes-francais-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/formes-passees-100-verbes-italiens-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/formes-passees-100-verbes-portugais-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/fr/formes-passees-100-verbes-russes-les-plus-courants</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/forme-passate-100-verbi-francesi-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/forme-passate-100-verbi-inglesi-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/forme-passate-100-verbi-italiani-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/forme-passate-100-verbi-portoghesi-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/forme-passate-100-verbi-russi-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/forme-passate-100-verbi-spagnoli-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/it/forme-passate-100-verbi-tedeschi-piu-comuni</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/pt/formas-passadas-100-verbos-alemaes-mais-comuns</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/pt/formas-passadas-100-verbos-espanhois-mais-comuns</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/pt/formas-passadas-100-verbos-franceses-mais-comuns</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/pt/formas-passadas-100-verbos-ingleses-mais-comuns</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/pt/formas-passadas-100-verbos-italianos-mais-comuns</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/pt/formas-passadas-100-verbos-portugueses-mais-comuns</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/pt/formas-passadas-100-verbos-russos-mais-comuns</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-angliyskih-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-frantsuzskih-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-ispanskih-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-italyanskih-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-nemetskih-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-portugalskih-glagolov</loc>
+    <lastmod>2026-07-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.fluentstellar.com/ru/formy-proshedshego-vremeni-100-samyh-upotrebitelnyh-russkih-glagolov</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
 

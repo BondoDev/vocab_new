@@ -145,15 +145,15 @@ mirroring `src/data/seo/verbLists/` and `src/seo/verbLists/`; `common100Verbs/`
 holds `VerbListSeoPage.tsx` (route entry), `RichVerbListSeoPage.tsx`
 (rich-content view), and `VerbListSeoTableOnlyPage.tsx` (fallback view,
 runtime-coupled to common100Verbs fallback copy). `pastForms100Verbs/` is a
-second, Phase 1-only sibling subtype (`PastVerbFormsSeoPage.tsx` +
-`PastVerbFormsTableSection.tsx`) for the "Past Forms of the 100 Most Common
-{Target Language} Verbs" family — its own registry, metadata builder, and a
-`PAST_VERB_FORMS_LAUNCHED` flag (`src/seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus.ts`)
-keep it `noindex, follow` and out of the sitemap until a later phase authors
-real content and canonical slugs. Future verb-list families (e.g. irregular,
-modal, or separable verbs) would live as further sibling subtype folders
-under `verb-lists/`; shared extraction across subtypes should happen only
-once a subtype genuinely reuses another's implementation, not preemptively.
+sibling subtype (`PastVerbFormsSeoPage.tsx` + `PastVerbFormsTableSection.tsx`)
+for the "Past Forms of the 100 Most Common {Target Language} Verbs" family.
+Its registry and metadata builder own that subtype's routing and SEO policy;
+the `PAST_VERB_FORMS_LAUNCHED` flag (`src/seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus.ts`)
+keeps the current 49 authored canonical pages indexable and included in
+`verb-lists.xml`. Future verb-list families (e.g. irregular, modal, or
+separable verbs) would live as further sibling subtype folders under
+`verb-lists/`; shared extraction across subtypes should happen only once a
+subtype genuinely reuses another's implementation, not preemptively.
 `src/app/pages/vocabulary/` owns the Vocabulary Level/CEFR page family:
 `VocabularyLevelPage.tsx` (the production vocabulary-level rendering flow),
 `DevSeoCefrPlaceholderPage.tsx`, and `devSeoCefrPreviewData.ts`. Despite their

@@ -5,7 +5,7 @@
 // constant to true is the entire launch step for indexing policy — it does
 // not, by itself, add real slugs/content; that still comes from populating
 // pastForms100VerbsContent.json.
-export const PAST_VERB_FORMS_LAUNCHED = false;
+export const PAST_VERB_FORMS_LAUNCHED = true;
 
 export const PAST_VERB_FORMS_PRELAUNCH_ROBOTS = "noindex, follow";
 
