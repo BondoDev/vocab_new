@@ -50,6 +50,36 @@
       "status": "En developpement",
       "title": "Votre profil prend forme",
       "description": "Nous preparons cet espace pour votre historique d'apprentissage, vos reglages enregistres et vos informations de progression. Il sera bientot pret."
+    },
+    "sidebar": {
+      "aria": {
+        "userSummary": "Resume utilisateur",
+        "profileSections": "Sections du profil",
+        "closeProfileMenu": "Fermer le menu du profil"
+      },
+      "mobileMenu": "Menu du profil",
+      "groups": {
+        "main": "Principal",
+        "learning": "Apprentissage",
+        "insights": "Suivi",
+        "system": "Systeme"
+      },
+      "items": {
+        "dashboard": "Tableau de bord",
+        "learning": "Apprentissage",
+        "vocabulary": "Vocabulaire",
+        "myLists": "Mes listes",
+        "progress": "Progression",
+        "settings": "Parametres"
+      },
+      "actions": {
+        "signOut": "Se deconnecter"
+      }
+    },
+    "learningSection": {
+      "ariaLabel": "Section apprentissage",
+      "title": "Apprentissage",
+      "description": "Terminez les objectifs d'apprentissage d'aujourd'hui et renforcez les mots que vous avez deja etudies."
     }
   },
   "aboutPage": {

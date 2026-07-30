@@ -50,6 +50,36 @@
       "status": "In sviluppo",
       "title": "Il tuo profilo sta prendendo forma",
       "description": "Stiamo preparando questo spazio per la tua cronologia di apprendimento, le impostazioni salvate e le informazioni sui progressi. Sara pronto presto."
+    },
+    "sidebar": {
+      "aria": {
+        "userSummary": "Riepilogo utente",
+        "profileSections": "Sezioni del profilo",
+        "closeProfileMenu": "Chiudi menu profilo"
+      },
+      "mobileMenu": "Menu profilo",
+      "groups": {
+        "main": "Principale",
+        "learning": "Apprendimento",
+        "insights": "Statistiche",
+        "system": "Sistema"
+      },
+      "items": {
+        "dashboard": "Dashboard",
+        "learning": "Apprendimento",
+        "vocabulary": "Vocabolario",
+        "myLists": "Le mie liste",
+        "progress": "Progressi",
+        "settings": "Impostazioni"
+      },
+      "actions": {
+        "signOut": "Esci"
+      }
+    },
+    "learningSection": {
+      "ariaLabel": "Sezione apprendimento",
+      "title": "Apprendimento",
+      "description": "Completa gli obiettivi di apprendimento di oggi e rafforza le parole che hai gia studiato."
     }
   },
   "aboutPage": {

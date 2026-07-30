@@ -65,26 +65,26 @@ const NAV_HREFS = {
 
 const ACCOUNT_NAV_GROUPS = [
   {
-    label: "Main",
+    labelKey: "userProfile.sidebar.groups.main",
     items: [
-      { id: "dashboard", label: "Dashboard", icon: UserRound, action: "profile" as const },
-      { id: "practice", label: "Learning", icon: Target, disabled: true },
+      { id: "dashboard", labelKey: "userProfile.sidebar.items.dashboard", icon: UserRound, action: "profile" as const },
+      { id: "practice", labelKey: "userProfile.sidebar.items.learning", icon: Target, disabled: true },
     ],
   },
   {
-    label: "Learning",
+    labelKey: "userProfile.sidebar.groups.learning",
     items: [
-      { id: "vocabulary", label: "Vocabulary", icon: BookOpenText, disabled: true },
-      { id: "my-lists", label: "My Lists", icon: ListPlus, disabled: true },
+      { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText, disabled: true },
+      { id: "my-lists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus, disabled: true },
     ],
   },
   {
-    label: "Insights",
-    items: [{ id: "progress", label: "Progress", icon: ChartSpline, disabled: true }],
+    labelKey: "userProfile.sidebar.groups.insights",
+    items: [{ id: "progress", labelKey: "userProfile.sidebar.items.progress", icon: ChartSpline, disabled: true }],
   },
   {
-    label: "System",
-    items: [{ id: "settings", label: "Settings", icon: Settings, disabled: true }],
+    labelKey: "userProfile.sidebar.groups.system",
+    items: [{ id: "settings", labelKey: "userProfile.sidebar.items.settings", icon: Settings, disabled: true }],
   },
 ] as const;
 
@@ -845,9 +845,9 @@ export function Header({
                       {accountDisplayName}
                     </DropdownMenuLabel>
                     {ACCOUNT_NAV_GROUPS.map((group) => (
-                      <div key={group.label}>
+                      <div key={group.labelKey}>
                         <div className="px-3 pb-1 pt-2 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[#8b7fb0]">
-                          {group.label}
+                          {t(group.labelKey)}
                         </div>
                         {group.items.map((item) => {
                           const Icon = item.icon;
@@ -860,7 +860,7 @@ export function Header({
                               className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
                             >
                               <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
-                              <span className="block w-full text-center">{item.label}</span>
+                              <span className="block w-full text-center">{t(item.labelKey)}</span>
                             </DropdownMenuItem>
                           );
                         })}
@@ -872,7 +872,7 @@ export function Header({
                       className="rounded-xl px-3 py-2.5 text-sm text-[#b42318] hover:bg-[#fff1f2] hover:text-[#b42318] focus:bg-[#fff1f2] focus:text-[#b42318] [&_svg]:absolute [&_svg]:left-3"
                     >
                       <LogOut size={16} strokeWidth={1.8} aria-hidden="true" />
-                      <span className="block w-full text-center">Sign out</span>
+                      <span className="block w-full text-center">{t("userProfile.sidebar.actions.signOut")}</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -996,8 +996,8 @@ export function Header({
 
                 <div className="header-mobile-account-menu__list">
                   {ACCOUNT_NAV_GROUPS.map((group) => (
-                    <div key={group.label} className="header-mobile-account-group">
-                      <div className="header-mobile-account-group__label">{group.label}</div>
+                    <div key={group.labelKey} className="header-mobile-account-group">
+                      <div className="header-mobile-account-group__label">{t(group.labelKey)}</div>
                       {group.items.map((item) => {
                         const Icon = item.icon;
                         const itemAction =
@@ -1014,7 +1014,7 @@ export function Header({
                             <span className="header-mobile-account-item__icon" aria-hidden="true">
                               <Icon size={17} strokeWidth={1.8} />
                             </span>
-                            <span className="header-mobile-account-item__label">{item.label}</span>
+                            <span className="header-mobile-account-item__label">{t(item.labelKey)}</span>
                           </button>
                         );
                       })}
@@ -1028,7 +1028,7 @@ export function Header({
                     <span className="header-mobile-account-item__icon" aria-hidden="true">
                       <LogOut size={17} strokeWidth={1.8} />
                     </span>
-                    <span className="header-mobile-account-item__label">Sign out</span>
+                    <span className="header-mobile-account-item__label">{t("userProfile.sidebar.actions.signOut")}</span>
                   </button>
                 </div>
               </div>

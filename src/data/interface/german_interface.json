@@ -50,6 +50,36 @@
       "status": "In Entwicklung",
       "title": "Dein Profil nimmt Gestalt an",
       "description": "Wir bereiten diesen Bereich fuer deinen Lernverlauf, gespeicherte Einstellungen und Fortschrittsuebersichten vor. Er ist bald bereit."
+    },
+    "sidebar": {
+      "aria": {
+        "userSummary": "Benutzeruebersicht",
+        "profileSections": "Profilbereiche",
+        "closeProfileMenu": "Profilmenue schliessen"
+      },
+      "mobileMenu": "Profilmenue",
+      "groups": {
+        "main": "Hauptbereich",
+        "learning": "Lernen",
+        "insights": "Einblicke",
+        "system": "System"
+      },
+      "items": {
+        "dashboard": "Dashboard",
+        "learning": "Lernen",
+        "vocabulary": "Wortschatz",
+        "myLists": "Meine Listen",
+        "progress": "Fortschritt",
+        "settings": "Einstellungen"
+      },
+      "actions": {
+        "signOut": "Abmelden"
+      }
+    },
+    "learningSection": {
+      "ariaLabel": "Lernbereich",
+      "title": "Lernen",
+      "description": "Erledige die heutigen Lernziele und festige Woerter, die du bereits gelernt hast."
     }
   },
   "aboutPage": {

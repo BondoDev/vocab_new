@@ -50,6 +50,36 @@
       "status": "In development",
       "title": "Your profile is taking shape",
       "description": "We are building this space for your learning history, saved settings, and progress insights. It will be ready soon."
+    },
+    "sidebar": {
+      "aria": {
+        "userSummary": "User summary",
+        "profileSections": "Profile sections",
+        "closeProfileMenu": "Close profile menu"
+      },
+      "mobileMenu": "Profile Menu",
+      "groups": {
+        "main": "Main",
+        "learning": "Learning",
+        "insights": "Insights",
+        "system": "System"
+      },
+      "items": {
+        "dashboard": "Dashboard",
+        "learning": "Learning",
+        "vocabulary": "Vocabulary",
+        "myLists": "My Lists",
+        "progress": "Progress",
+        "settings": "Settings"
+      },
+      "actions": {
+        "signOut": "Sign out"
+      }
+    },
+    "learningSection": {
+      "ariaLabel": "Learning section",
+      "title": "Learning",
+      "description": "Complete today's learning goals and reinforce words you've already studied."
     }
   },
   "aboutPage": {
