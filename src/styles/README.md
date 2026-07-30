@@ -83,7 +83,16 @@ Current owner-local examples:
 - `src/features/practice/styles/exercises.scss` — owned by
   `VocabularyPractice.tsx` and the exercise-type components it renders.
 - `src/features/user-profile/styles/user-profile-sidebar.scss` — owned by
-  `UserProfileSidebar.tsx`.
+  `UserProfileSidebar.tsx` (also holds the profile shell's own
+  `.user-profile-dashboard*` layout classes, imported transitively via the
+  sidebar's import today).
+- `src/features/user-profile/sections/dashboard/dashboard-section.scss` —
+  owned by `DashboardSection.tsx`, colocated in the same section folder.
+- `src/features/user-profile/sections/learning/learning-section.scss` —
+  jointly owned by `LearningSection.tsx` and `DailyGoalSelector.tsx` (its
+  only consumer), colocated in the same section folder. One file per
+  section folder rather than one per component — see that file's own
+  section comments for which rules belong to which component.
 
 These are current architecture, not a migration in progress.
 

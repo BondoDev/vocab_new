@@ -107,7 +107,8 @@ or by the app shell itself. This split is being introduced in phases as
 part of an ongoing `src/app/components/` cleanup — so far `About.tsx`,
 `Help.tsx`, `ExplorePage.tsx`, and `VocabularyLevelExam.tsx` have moved to
 `src/app/pages/`, and the profile route/shell has moved to
-`src/features/user-profile/` (`pages/UserProfileDashboardPage.tsx`,
+`src/features/user-profile/` (`sections/UserProfileDashboardPage.tsx`,
+`sections/dashboard/DashboardSection.tsx`, `sections/learning/LearningSection.tsx`,
 `components/UserProfileSidebar.tsx`, `styles/user-profile-sidebar.scss`,
 public entry point `index.ts`). Global authentication/session infrastructure
 (`src/lib/supabaseAuth.ts`, `src/lib/userProfile.ts`) and shared

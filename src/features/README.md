@@ -163,9 +163,10 @@ avoided, and internal symmetry across features is not required.
 
 Current evidence: `practice` has multiple internal layers
 (`components/`, `exercises/`, `utils/`); `learning-setup` stays mostly
-flat; `user-profile` has `pages/`, `components/`, `styles/`. All three
-shapes are correct for their own complexity, not for consistency with
-each other.
+flat; `user-profile` has `sections/` (one subfolder per profile section,
+e.g. `sections/learning/`), `components/`, `styles/`. All three shapes
+are correct for their own complexity, not for consistency with each
+other.
 
 ## Public Entry Points
 

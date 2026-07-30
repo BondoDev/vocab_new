@@ -29,67 +29,6 @@
   padding: clamp(0.3rem, 1.5vw, 0.8rem) 0 0;
 }
 
-.user-profile-dashboard__section-header {
-  max-width: 46rem;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.user-profile-dashboard__section-title {
-  margin: 0;
-  color: #2f2755;
-  font-size: clamp(1.9rem, 3vw, 2.6rem);
-  line-height: 1.12;
-}
-
-.user-profile-dashboard__section-description {
-  max-width: 40rem;
-  margin: 0.75rem auto 0;
-  color: var(--color-muted-foreground);
-  font-size: 1.02rem;
-  line-height: 1.6;
-}
-
-.user-profile-dashboard__notice {
-  width: min(100%, 42rem);
-  margin: clamp(2rem, 8vh, 5rem) auto 0;
-  padding: clamp(1.5rem, 4vw, 2.75rem);
-  border: 1px solid color-mix(in srgb, var(--color-border) 82%, white);
-  border-radius: 1.5rem;
-  color: #2f2755;
-  text-align: center;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(249, 246, 255, 0.9)),
-    var(--color-card);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.78),
-    0 18px 42px rgba(70, 53, 120, 0.1);
-}
-
-.user-profile-dashboard__notice-kicker {
-  margin: 0 0 0.8rem;
-  color: #6b5ca0;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
-
-.user-profile-dashboard__notice-title {
-  margin: 0;
-  color: #2f2755;
-  font-size: clamp(1.65rem, 3vw, 2.35rem);
-  line-height: 1.12;
-}
-
-.user-profile-dashboard__notice-description {
-  max-width: 34rem;
-  margin: 1rem auto 0;
-  color: var(--color-muted-foreground);
-  font-size: 1rem;
-  line-height: 1.65;
-}
-
 .user-profile-sidebar {
   min-width: 0;
 }
@@ -99,7 +38,7 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.85rem 1rem;
-  border: 1px solid color-mix(in srgb, var(--color-border) 92%, white);
+  border: 1px solid color-mix(in srgb, var(--border) 92%, white);
   border-radius: 999px;
   color: #3d2f69;
   background: rgba(255, 255, 255, 0.88);
@@ -116,7 +55,7 @@
 .user-profile-sidebar__surface {
   width: 100%;
   padding: 1rem;
-  border: 1px solid color-mix(in srgb, var(--color-border) 88%, white);
+  border: 1px solid color-mix(in srgb, var(--border) 88%, white);
   border-radius: 1.75rem;
   background:
     linear-gradient(
@@ -124,7 +63,7 @@
       rgba(255, 255, 255, 0.96),
       rgba(249, 245, 255, 0.88)
     ),
-    var(--color-card);
+    var(--card);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.74),
     0 18px 38px rgba(70, 53, 120, 0.08);
@@ -135,7 +74,7 @@
   flex-direction: column;
   gap: 1rem;
   padding: 0.35rem 0.15rem 1.2rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 72%, white);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 72%, white);
 }
 
 .user-profile-sidebar__identity {
@@ -179,7 +118,7 @@
 
 .user-profile-sidebar__meta {
   margin: 0.28rem 0 0;
-  color: var(--color-muted-foreground);
+  color: var(--muted-foreground);
   font-size: 0.92rem;
 }
 
@@ -199,7 +138,7 @@
 .user-profile-sidebar__group-label {
   margin: 0;
   padding: 0 0.5rem;
-  color: color-mix(in srgb, var(--color-muted-foreground) 88%, white);
+  color: color-mix(in srgb, var(--muted-foreground) 88%, white);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -404,11 +343,11 @@
     flex: 1 1 auto;
     overflow-y: auto;
     padding: 1.15rem 1rem 1.2rem;
-    border: 1px solid color-mix(in srgb, var(--color-border) 84%, white);
+    border: 1px solid color-mix(in srgb, var(--border) 84%, white);
     border-radius: 1.65rem;
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 240, 255, 0.92)),
-      var(--color-card);
+      var(--card);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.82),
       0 14px 30px rgba(22, 12, 46, 0.08);

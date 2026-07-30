@@ -1,0 +1,247 @@
+/* ============================================================
+   LearningSection.tsx — section header + indicators grid layout.
+   ============================================================ */
+
+.learning-section {
+  &__header {
+    max-width: 46rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__title {
+    margin: 0;
+    color: #2f2755;
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+    line-height: 1.12;
+  }
+
+  &__description {
+    max-width: 40rem;
+    margin: 0.75rem auto 0;
+    color: var(--muted-foreground);
+    font-size: 1.02rem;
+    line-height: 1.6;
+  }
+
+  &__indicators {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .learning-section__indicators {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .learning-section__indicators {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Placeholder cells for Daily Streak / Reviews Due — see LearningSection.tsx
+   for the removal note; drop these rules alongside that markup. */
+.learning-indicator-placeholder {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--card) 50%, transparent);
+
+  &__label {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  &__status {
+    margin: 0.5rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .learning-indicator-placeholder {
+    padding: 0.875rem;
+  }
+}
+
+/* ============================================================
+   DailyGoalSelector.tsx — the compact Daily Goal card rendered
+   as one cell of the indicators grid above.
+   ============================================================ */
+
+.daily-goal-selector {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+@media (min-width: 640px) {
+  .daily-goal-selector {
+    padding: 0.875rem;
+  }
+}
+
+.daily-goal-selector__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.daily-goal-selector__title {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.daily-goal-selector__summary {
+  text-align: right;
+  line-height: 1.25;
+}
+
+.daily-goal-selector__summary-value {
+  margin: 0;
+}
+
+.daily-goal-selector__summary-number {
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.daily-goal-selector__summary-unit {
+  margin-left: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.daily-goal-selector__recommended {
+  margin: 0.125rem 0 0;
+  color: color-mix(in srgb, var(--primary) 80%, transparent);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &--hidden {
+    visibility: hidden;
+  }
+}
+
+.daily-goal-selector__options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+}
+
+.daily-goal-selector__option {
+  display: flex;
+  height: 2rem;
+  min-width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--background);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+    background: var(--accent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+
+  &--selected {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+
+    &:hover {
+      border-color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 10%, transparent);
+    }
+  }
+}
+
+.daily-goal-selector__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 0.5rem;
+  row-gap: 0.25rem;
+  margin-top: 0.625rem;
+}
+
+.daily-goal-selector__pace {
+  display: flex;
+  min-width: 0;
+  min-height: 2rem;
+  flex: 1 1 0%;
+  align-items: center;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.daily-goal-selector__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.daily-goal-selector__confirmation {
+  color: var(--muted-foreground);
+  font-size: 11px;
+}
+
+.daily-goal-selector__save {
+  border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
+  border-radius: calc(var(--radius) - 2px);
+  padding: 0.25rem 0.625rem;
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
+  transition: background-color 180ms ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}

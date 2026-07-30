@@ -11,13 +11,30 @@ depend on — those are shared infrastructure and stay outside this folder
 
 ## 2. Current structure
 
-- `pages/` — route-level profile pages (currently `UserProfileDashboardPage.tsx`,
-  rendered by `src/app/App.tsx`'s `profile` route)
-- `components/` — profile-only reusable components consumed exclusively by
-  files in this feature (currently `UserProfileSidebar.tsx`, used only by
+- `sections/` — route-level profile sections, one subfolder per section id:
+  - `UserProfileDashboardPage.tsx` — the shell rendered by `src/app/App.tsx`'s
+    `profile` route; owns the sidebar layout, the active-section state, and
+    switches between section components
+  - `dashboard/DashboardSection.tsx` — the `dashboard` section's content
+  - `dashboard/dashboard-section.scss` — its styles, colocated in the same
+    section folder
+  - `learning/LearningSection.tsx` — the `learning` section's content
+  - `learning/DailyGoalSelector.tsx` — learning-only Daily Goal control,
+    consumed exclusively by `LearningSection`
+  - `learning/learning-section.scss` — one shared stylesheet for both
+    components above (not one file per component); its own section
+    comments mark which rules belong to `LearningSection` vs.
+    `DailyGoalSelector`, imported once by `LearningSection.tsx`
+  Each section subfolder owns its own `.scss` file(s) rather than sharing
+  the feature-level `styles/` folder. Add a new `sections/<id>/` subfolder
+  only once that section has real content to hold — do not create empty
+  section folders in advance (see section 6).
+- `components/` — profile-only reusable components shared across more than
+  one section (currently `UserProfileSidebar.tsx`, used only by
   `UserProfileDashboardPage`)
-- `styles/` — styles owned by and colocated with this feature's components
-  (currently `user-profile-sidebar.scss`)
+- `styles/` — styles shared across the feature that are not owned by a
+  single section (currently `user-profile-sidebar.scss`, which also holds
+  the profile shell's own layout classes)
 - `index.ts` — the feature's public entry point; the only path external
   consumers should import from
 
@@ -65,13 +82,16 @@ External consumers must import through the feature's public entry point:
 import { UserProfileDashboardPage } from "../features/user-profile";
 ```
 
-Never import a deep internal path (e.g. `../features/user-profile/pages/UserProfileDashboardPage`)
+Never import a deep internal path (e.g. `../features/user-profile/sections/UserProfileDashboardPage`)
 from outside this feature. Only export from `index.ts` what an external
 consumer genuinely needs — internal components like `UserProfileSidebar`
 stay unexported until something outside this feature actually needs them.
 
-Internal files should use direct relative imports to each other (`pages/`
-importing from `components/`, `components/` importing from `styles/`).
+Internal files should use direct relative imports to each other (`sections/`
+importing from `components/`, `components/` importing from `styles/`). A
+section subfolder (e.g. `sections/learning/`) may hold files private to that
+section alone, like `DailyGoalSelector.tsx`; only promote a file to the
+shared `components/` folder once a second section genuinely needs it.
 Do not import the feature's own `index.ts` barrel from inside the feature —
 it adds an unnecessary indirection and risks a circular import.
 

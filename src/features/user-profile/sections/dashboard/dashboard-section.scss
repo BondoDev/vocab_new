@@ -1,0 +1,43 @@
+/* Owned by DashboardSection.tsx. */
+
+.dashboard-section {
+  &__notice {
+    width: min(100%, 42rem);
+    margin: clamp(2rem, 8vh, 5rem) auto 0;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border: 1px solid color-mix(in srgb, var(--border) 82%, white);
+    border-radius: 1.5rem;
+    color: #2f2755;
+    text-align: center;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(249, 246, 255, 0.9)),
+      var(--card);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.78),
+      0 18px 42px rgba(70, 53, 120, 0.1);
+  }
+
+  &__notice-kicker {
+    margin: 0 0 0.8rem;
+    color: #6b5ca0;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__notice-title {
+    margin: 0;
+    color: #2f2755;
+    font-size: clamp(1.65rem, 3vw, 2.35rem);
+    line-height: 1.12;
+  }
+
+  &__notice-description {
+    max-width: 34rem;
+    margin: 1rem auto 0;
+    color: var(--muted-foreground);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+}

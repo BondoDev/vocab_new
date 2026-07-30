@@ -5,6 +5,8 @@ import {
   UserProfileSidebar,
   type UserProfileSectionId,
 } from "../components/UserProfileSidebar";
+import { DashboardSection } from "./dashboard/DashboardSection";
+import { LearningSection } from "./learning/LearningSection";
 
 interface UserProfileDashboardPageProps {
   nickname?: string;
@@ -42,28 +44,7 @@ export function UserProfileDashboardPage({
             }
           >
             {nickname ? <span className="sr-only">{nickname}</span> : null}
-            {isLearningSection ? (
-              <header className="user-profile-dashboard__section-header">
-                <h1 className="user-profile-dashboard__section-title">
-                  {t("userProfile.learningSection.title")}
-                </h1>
-                <p className="user-profile-dashboard__section-description">
-                  {t("userProfile.learningSection.description")}
-                </p>
-              </header>
-            ) : (
-              <div className="user-profile-dashboard__notice" role="status">
-                <p className="user-profile-dashboard__notice-kicker">
-                  {t("userProfile.developmentNotice.status")}
-                </p>
-                <h1 className="user-profile-dashboard__notice-title">
-                  {t("userProfile.developmentNotice.title")}
-                </h1>
-                <p className="user-profile-dashboard__notice-description">
-                  {t("userProfile.developmentNotice.description")}
-                </p>
-              </div>
-            )}
+            {isLearningSection ? <LearningSection /> : <DashboardSection />}
           </section>
         </div>
       </section>

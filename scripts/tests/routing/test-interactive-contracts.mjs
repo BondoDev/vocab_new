@@ -136,7 +136,7 @@ console.log("\n=== profile shell wiring (unfinished by design — see docs/non-s
 
 test("profile shell component files exist", () => {
   const missing = [
-    "src/features/user-profile/pages/UserProfileDashboardPage.tsx",
+    "src/features/user-profile/sections/UserProfileDashboardPage.tsx",
     "src/features/user-profile/components/UserProfileSidebar.tsx",
   ].filter((p) => !fileExists(p));
   assert.deepEqual(missing, [], `missing profile shell file(s): ${missing.join(", ")}`);
