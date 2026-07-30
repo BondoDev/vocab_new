@@ -68,7 +68,7 @@ const ACCOUNT_NAV_GROUPS = [
     label: "Main",
     items: [
       { id: "dashboard", label: "Dashboard", icon: UserRound, action: "profile" as const },
-      { id: "practice", label: "Practice", icon: Target, disabled: true },
+      { id: "practice", label: "Learning", icon: Target, disabled: true },
     ],
   },
   {
