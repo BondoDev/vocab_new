@@ -461,3 +461,199 @@
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 18%, transparent);
   }
 }
+
+/* ============================================================
+   LearningModeCards.tsx — three workflow-selection rows below the
+   summary cards (Study New Words / Review Words / Custom Practice).
+   Each is one wide horizontal row (icon, text, action) stacked
+   vertically — a workflow list, not a dashboard widget grid — with
+   purple/blue/orange giving each mode its own identity.
+   ============================================================ */
+
+.learning-mode-cards {
+  margin-top: 1.5rem;
+
+  &__header {
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  &__description {
+    margin: 0.2rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.85rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Reserves layout space so the confirmation line never causes a reflow
+     when it appears/disappears. */
+  &__confirmation {
+    min-height: 1.1rem;
+    margin: 0.75rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.8rem;
+  }
+}
+
+.learning-mode-card {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-left-width: 3px;
+  border-radius: calc(var(--radius) + 2px);
+  background: var(--card);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+
+  &__main {
+    display: flex;
+    flex: 1 1 16rem;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  &__icon {
+    display: flex;
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: calc(var(--radius) - 2px);
+  }
+
+  &__content {
+    min-width: 0;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  &__description {
+    margin: 0.3rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  &__meta {
+    margin: 0.5rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  &__button {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    /* Fixed width so "Start Learning" / "Start Review" / "Start Practice"
+       render as the same size regardless of label length. */
+    width: 9.5rem;
+    padding: 0.55rem 1.1rem;
+    border: none;
+    border-radius: calc(var(--radius) - 2px);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      filter 150ms ease,
+      transform 150ms ease;
+
+    &:hover {
+      filter: brightness(0.94);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--card),
+        0 0 0 4px var(--ring);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+}
+
+@media (max-width: 639.98px) {
+  .learning-mode-card {
+    padding: 1rem;
+  }
+}
+
+.learning-mode-card--purple {
+  border-left-color: var(--primary);
+
+  .learning-mode-card__icon {
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary);
+  }
+
+  .learning-mode-card__button {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
+
+.learning-mode-card--blue {
+  border-left-color: var(--chart-2);
+
+  .learning-mode-card__icon {
+    background: color-mix(in srgb, var(--chart-2) 14%, transparent);
+    color: var(--chart-2);
+  }
+
+  .learning-mode-card__button {
+    background: var(--chart-2);
+  }
+}
+
+.learning-mode-card--orange {
+  /* Warm, energetic orange rather than the green used elsewhere on the
+     page (DailyStreakCard) — Custom Practice needed its own identity,
+     not a third card wearing the "success" color. */
+  --mode-orange: #f59e0b;
+
+  border-left-color: var(--mode-orange);
+
+  .learning-mode-card__icon {
+    background: color-mix(in srgb, var(--mode-orange) 14%, transparent);
+    color: var(--mode-orange);
+  }
+
+  .learning-mode-card__button {
+    background: var(--mode-orange);
+  }
+}

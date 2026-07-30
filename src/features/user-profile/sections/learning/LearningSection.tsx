@@ -2,6 +2,7 @@ import { useLanguage } from "../../../../contexts/LanguageContext";
 import { DailyGoalSelector } from "./DailyGoalSelector";
 import { TodayProgressCard } from "./TodayProgressCard";
 import { DailyStreakCard } from "./DailyStreakCard";
+import { LearningModeCards } from "./LearningModeCards";
 import "./learning-section.scss";
 
 export function LearningSection() {
@@ -22,6 +23,7 @@ export function LearningSection() {
         <TodayProgressCard />
         <DailyStreakCard />
       </div>
+      <LearningModeCards />
     </>
   );
 }
