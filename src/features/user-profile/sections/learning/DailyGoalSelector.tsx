@@ -54,9 +54,12 @@ export function DailyGoalSelector() {
   };
 
   return (
-    <section aria-labelledby="daily-goal-heading" className="daily-goal-selector">
+    <section
+      aria-labelledby="daily-goal-heading"
+      className="learning-kpi-card daily-goal-selector"
+    >
       <div className="daily-goal-selector__header">
-        <h2 id="daily-goal-heading" className="daily-goal-selector__title">
+        <h2 id="daily-goal-heading" className="learning-kpi-card__title">
           Daily Goal
         </h2>
         <div className="daily-goal-selector__summary">

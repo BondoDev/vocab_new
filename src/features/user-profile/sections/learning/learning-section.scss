@@ -44,34 +44,47 @@
   }
 }
 
-/* Placeholder cells for Daily Streak / Reviews Due — see LearningSection.tsx
-   for the removal note; drop these rules alongside that markup. */
-.learning-indicator-placeholder {
+/* ============================================================
+   Shared compact KPI-card shell — Daily Goal, Today's Progress, and
+   Daily Streak all use this for consistent dimensions, border, radius,
+   padding, and title styling. Each card adds its own inner layout on top.
+   ============================================================ */
+
+.learning-kpi-card {
   display: flex;
+  justify-content: space-between;
   height: 100%;
   flex-direction: column;
-  justify-content: space-between;
   padding: 0.75rem;
-  border: 1px dashed var(--border);
+  border: 1px solid color-mix(in srgb, var(--primary) 12%, var(--border));
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--card) 50%, transparent);
+  background: var(--card);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 20px -14px color-mix(in srgb, var(--primary) 45%, transparent);
 
-  &__label {
+  &__title {
     margin: 0;
     color: var(--foreground);
     font-size: 0.875rem;
     font-weight: 500;
   }
 
-  &__status {
-    margin: 0.5rem 0 0;
-    color: var(--muted-foreground);
-    font-size: 0.75rem;
+  /* Shared "Today" / "This week" status pill shape — each card sets its own
+     semantic color below (info blue / success green) rather than inheriting
+     the brand purple used for Daily Goal's interactive controls. */
+  &__chip {
+    flex-shrink: 0;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    white-space: nowrap;
   }
 }
 
 @media (min-width: 640px) {
-  .learning-indicator-placeholder {
+  .learning-kpi-card {
     padding: 0.875rem;
   }
 }
@@ -82,19 +95,7 @@
    ============================================================ */
 
 .daily-goal-selector {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--card);
-}
-
-@media (min-width: 640px) {
-  .daily-goal-selector {
-    padding: 0.875rem;
-  }
+  min-width: 316px;
 }
 
 .daily-goal-selector__header {
@@ -102,13 +103,6 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.5rem;
-}
-
-.daily-goal-selector__title {
-  margin: 0;
-  color: var(--foreground);
-  font-size: 0.875rem;
-  font-weight: 500;
 }
 
 .daily-goal-selector__summary {
@@ -237,5 +231,233 @@
   &:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+/* ============================================================
+   TodayProgressCard.tsx — zero-state daily-progress summary.
+   Content stacks with a compact, fixed rhythm from the top rather
+   than being spread across the row's full height with space-between —
+   that spreading was the source of the previous empty-card look.
+   ============================================================ */
+
+.today-progress-card {
+  /* Info blue: this card is progress-reporting, not a brand/interactive
+     control, so it reads as "information" rather than reusing Daily Goal's
+     purple. --chart-2 is the app's existing blue swatch (already themed for
+     dark mode in theme.css), reused here instead of inventing a new color. */
+  --info: var(--chart-2);
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__chip {
+    background: color-mix(in srgb, var(--info) 14%, transparent);
+    color: color-mix(in srgb, var(--info) 65%, var(--foreground));
+  }
+
+  &__metric {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+  }
+
+  &__value {
+    color: var(--info);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__unit {
+    color: var(--muted-foreground);
+    font-size: 0.8rem;
+  }
+
+  &__progress-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.1rem;
+  }
+
+  &__bar {
+    flex: 1 1 auto;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--info) 10%, var(--muted));
+    overflow: hidden;
+  }
+
+  &__bar-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: var(--info);
+    transition: width 220ms ease;
+  }
+
+  &__percent {
+    flex-shrink: 0;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+  }
+
+  /* Subtle tinted inner strip grouping the two breakdown metrics — deliberately
+     one shared panel rather than two bordered mini-cards. */
+  &__breakdown {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 0.15rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  &__metric-group {
+    display: flex;
+    flex: 1 1 0%;
+    align-items: center;
+    gap: 0.3rem;
+    min-width: 0;
+    border-radius: 5%;
+    background: color-mix(in srgb, var(--info) 7%, transparent);
+  }
+
+  &__metric-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 1.05rem;
+    height: 1.05rem;
+    border-radius: calc(var(--radius) - 4px);
+    background: color-mix(in srgb, var(--info) 16%, transparent);
+    color: var(--info);
+  }
+
+  &__metric-text {
+    display: flex;
+    flex: 1 1 0%;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  &__metric-label {
+    color: var(--muted-foreground);
+    font-size: 0.7rem;
+  }
+
+  &__metric-value {
+    color: var(--foreground);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+}
+
+/* ============================================================
+   DailyStreakCard.tsx — zero-state weekly consistency summary.
+   Same compact top-down rhythm as TodayProgressCard above.
+   ============================================================ */
+
+.daily-streak-card {
+  /* Success green: streaks/consistency are a "positive learning state," kept
+     distinct from Daily Goal's brand purple and Today's Progress's info blue.
+     No green exists in the shared theme tokens yet, so this is defined
+     locally rather than added to the global token set for one feature. */
+  --success: #22c55e;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__chip {
+    background: color-mix(in srgb, var(--success) 16%, transparent);
+    color: color-mix(in srgb, var(--success) 50%, var(--foreground));
+  }
+
+  &__metric {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.25rem;
+  }
+
+  &__primary {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+  }
+
+  &__value {
+    color: var(--success);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__unit {
+    color: var(--muted-foreground);
+    font-size: 0.8rem;
+  }
+
+  /* Compact secondary pill rather than plain trailing text. */
+  &__best {
+    flex-shrink: 0;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--muted-foreground) 12%, transparent);
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  /* Subtle tinted weekly strip — same shape language as the breakdown
+     panel in TodayProgressCard. Amber/warning is intentionally unused here:
+     it's reserved for future overdue-review / weak-word indicators once
+     those states exist, not for anything in this zero-state card. */
+  &__week {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.3rem;
+    padding: 0.28rem 0.5rem;
+    border-radius: calc(var(--radius) - 2px);
+    background: color-mix(in srgb, var(--success) 7%, transparent);
+  }
+
+  &__day-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+  &__day-label {
+    color: var(--muted-foreground);
+    font-size: 0.65rem;
+    font-weight: 500;
+  }
+
+  &__day-marker {
+    width: 1rem;
+    height: 1rem;
+    border-radius: calc(var(--radius) - 6px);
+    border: 1.5px solid var(--border);
+    background: color-mix(in srgb, var(--success) 5%, var(--muted));
+  }
+
+  /* Prepared for real data — not reachable while every day stays inactive. */
+  &__day-marker--active {
+    border-color: var(--success);
+    background: var(--success);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 18%, transparent);
   }
 }

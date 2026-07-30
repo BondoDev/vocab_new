@@ -17,6 +17,12 @@ working in that folder.
   need a warning.
 - Summarize command output instead of dumping large logs. Keep progress updates
   concise and report meaningful findings, changes, and verification results.
+- Scale verification to the size and risk of the change. A small, low-risk
+  edit (copy tweak, reordering elements, a rename) does not need a
+  type-check, a guard-test run, or a browser/Playwright verification pass —
+  reserve that level of checking for changes where logic, layout, or
+  behavior could plausibly break. Do not run tests or audits "just in case"
+  on trivial changes; it inflates task time without reducing real risk.
 
 Suggested warning: `This may require a broader scan/build and use more tokens. Proceed?`
 
