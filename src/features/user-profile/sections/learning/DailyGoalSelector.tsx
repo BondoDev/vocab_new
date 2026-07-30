@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Toast, useAutoDismissMessage } from "./Toast";
+import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
 
 interface DailyGoalOption {
   value: number;

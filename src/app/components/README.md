@@ -21,6 +21,7 @@ src/app/components/
   layout/             # global navigation and application chrome
   ui/                 # domain-agnostic UI primitives (Radix/shadcn-style)
   LanguageSelector.tsx # app-specific component shared by unrelated owners
+  Toast.tsx           # generic auto-dismissing confirmation, shared by unrelated owners
 ```
 
 ## Root-level components
@@ -41,6 +42,15 @@ codes, flags, translation strings), not just generic markup.
 Do not create `selectors/`, `language/`, `forms/`, or `shared/` for this
 single file — one file does not justify a subfolder (see "Creating a new
 subfolder").
+
+**Second example:** `Toast.tsx` is a small auto-dismissing confirmation
+(hook + portalled component) used by unrelated `src/features/` owners for
+local-only "saved"/"selected" feedback. Unlike `LanguageSelector.tsx`, it
+has no app-context dependency at all — it would fit the domain-agnostic
+criteria for `ui/`, but that folder is a specifically audited
+shadcn/Radix-primitive inventory with a guard asserting its exact file set
+(see `docs/ui-component-ownership.md`); a hand-built, non-shadcn addition
+stays out of that audit and lives at the components root instead.
 
 ## dialogs/
 

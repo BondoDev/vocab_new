@@ -5,7 +5,7 @@ import {
   SlidersHorizontal,
   type LucideIcon,
 } from "lucide-react";
-import { Toast, useAutoDismissMessage } from "./Toast";
+import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
 
 type LearningModeVariant = "purple" | "blue" | "orange";
 
