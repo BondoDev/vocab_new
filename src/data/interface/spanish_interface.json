@@ -44,6 +44,14 @@
     "saving": "Guardando...",
     "cancel": "Cancelar"
   },
+  "userProfile": {
+    "developmentNotice": {
+      "ariaLabel": "Estado del panel de perfil",
+      "status": "En desarrollo",
+      "title": "Tu perfil esta tomando forma",
+      "description": "Estamos preparando este espacio para tu historial de aprendizaje, configuracion guardada e informacion de progreso. Estara listo pronto."
+    }
+  },
   "aboutPage": {
     "back": "Atras",
     "p1": "FLUENTSTELLAR esta disenado para practicar vocabulario de forma activa, no para navegar de forma pasiva.",
@@ -439,4 +447,3 @@
     "confirmExitLeave": "Salir de la prueba"
   }
 }
-

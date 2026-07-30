@@ -44,6 +44,14 @@
     "saving": "Enregistrement...",
     "cancel": "Annuler"
   },
+  "userProfile": {
+    "developmentNotice": {
+      "ariaLabel": "Etat du tableau de bord du profil",
+      "status": "En developpement",
+      "title": "Votre profil prend forme",
+      "description": "Nous preparons cet espace pour votre historique d'apprentissage, vos reglages enregistres et vos informations de progression. Il sera bientot pret."
+    }
+  },
   "aboutPage": {
     "back": "Retour",
     "p1": "FLUENTSTELLAR est concu pour la pratique active du vocabulaire, pas pour une navigation passive.",
@@ -444,4 +452,3 @@
     "confirmExitLeave": "Quitter le test"
   }
 }
-

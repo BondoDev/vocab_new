@@ -44,6 +44,14 @@
     "saving": "Saving...",
     "cancel": "Cancel"
   },
+  "userProfile": {
+    "developmentNotice": {
+      "ariaLabel": "Profile dashboard status",
+      "status": "In development",
+      "title": "Your profile is taking shape",
+      "description": "We are building this space for your learning history, saved settings, and progress insights. It will be ready soon."
+    }
+  },
   "aboutPage": {
     "back": "Back",
     "p1": "FLUENTSTELLAR is designed for active vocabulary practice, not passive browsing.",
@@ -444,4 +452,3 @@
     "confirmExitLeave": "Leave test"
   }
 }
-

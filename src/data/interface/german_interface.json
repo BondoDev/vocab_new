@@ -44,6 +44,14 @@
     "saving": "Wird gespeichert...",
     "cancel": "Abbrechen"
   },
+  "userProfile": {
+    "developmentNotice": {
+      "ariaLabel": "Status des Profil-Dashboards",
+      "status": "In Entwicklung",
+      "title": "Dein Profil nimmt Gestalt an",
+      "description": "Wir bereiten diesen Bereich fuer deinen Lernverlauf, gespeicherte Einstellungen und Fortschrittsuebersichten vor. Er ist bald bereit."
+    }
+  },
   "aboutPage": {
     "back": "Zurück",
     "p1": "FLUENTSTELLAR ist für aktives Wortschatztraining gedacht, nicht für passives Durchblättern.",
@@ -439,4 +447,3 @@
     "confirmExitLeave": "Test verlassen"
   }
 }
-
