@@ -74,29 +74,25 @@ export function DailyGoalSelector() {
         </div>
       </div>
 
-      <div role="group" aria-label="Daily word goal" className="daily-goal-selector__options">
-        {DAILY_GOAL_OPTIONS.map((option) => {
-          const isSelected = option.value === goal;
-          return (
-            <button
-              key={option.value}
-              type="button"
-              aria-pressed={isSelected}
-              onClick={() => setGoal(option.value)}
-              className={`daily-goal-selector__option ${
-                isSelected ? "daily-goal-selector__option--selected" : ""
-              }`}
-            >
-              {option.value}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="daily-goal-selector__meta">
-        <p className="daily-goal-selector__pace">
-          {selectedOption.paceLabel} · Approximately {selectedOption.estimateLabel} min
-        </p>
+      <div className="daily-goal-selector__options-row">
+        <div role="group" aria-label="Daily word goal" className="daily-goal-selector__options">
+          {DAILY_GOAL_OPTIONS.map((option) => {
+            const isSelected = option.value === goal;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                aria-pressed={isSelected}
+                onClick={() => setGoal(option.value)}
+                className={`daily-goal-selector__option ${
+                  isSelected ? "daily-goal-selector__option--selected" : ""
+                }`}
+              >
+                {option.value}
+              </button>
+            );
+          })}
+        </div>
         <div className="daily-goal-selector__actions">
           <span aria-live="polite" className="daily-goal-selector__confirmation">
             {confirmationVisible ? "Goal updated for this preview." : ""}
@@ -106,6 +102,10 @@ export function DailyGoalSelector() {
           </button>
         </div>
       </div>
+
+      <p className="daily-goal-selector__pace">
+        {selectedOption.paceLabel} · Approximately {selectedOption.estimateLabel} min
+      </p>
     </section>
   );
 }
