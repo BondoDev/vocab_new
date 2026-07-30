@@ -28,7 +28,7 @@ const SIDEBAR_NAV_GROUPS: SidebarNavGroup[] = [
     label: "Main",
     items: [
       { id: "dashboard", label: "Dashboard", icon: Home, isActive: true },
-      { id: "practice", label: "Practice", icon: Target },
+      { id: "practice", label: "Learning", icon: Target },
     ],
   },
   {
