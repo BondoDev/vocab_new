@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   BrainCircuit,
@@ -6,6 +5,7 @@ import {
   SlidersHorizontal,
   type LucideIcon,
 } from "lucide-react";
+import { Toast, useAutoDismissMessage } from "./Toast";
 
 type LearningModeVariant = "purple" | "blue" | "orange";
 
@@ -54,31 +54,14 @@ const LEARNING_MODES: LearningModeConfig[] = [
   },
 ];
 
-const SELECTION_MESSAGE_VISIBLE_MS = 3000;
-
 // Styled by learning-section.scss (imported by LearningSection.tsx, the
 // only place this component is rendered) rather than its own stylesheet.
 export function LearningModeCards() {
-  const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
-  const confirmationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (confirmationTimeoutRef.current) {
-        clearTimeout(confirmationTimeoutRef.current);
-      }
-    };
-  }, []);
+  const { message: selectionMessage, show: showSelection } = useAutoDismissMessage();
 
   const handleSelect = (title: string) => {
     // Preview-only: no real learning session starts here yet.
-    setSelectedTitle(title);
-    if (confirmationTimeoutRef.current) {
-      clearTimeout(confirmationTimeoutRef.current);
-    }
-    confirmationTimeoutRef.current = setTimeout(() => {
-      setSelectedTitle(null);
-    }, SELECTION_MESSAGE_VISIBLE_MS);
+    showSelection(`${title} selected`);
   };
 
   return (
@@ -98,9 +81,7 @@ export function LearningModeCards() {
         ))}
       </div>
 
-      <p className="learning-mode-cards__confirmation" aria-live="polite">
-        {selectedTitle ? `${selectedTitle} selected` : ""}
-      </p>
+      <Toast message={selectionMessage} />
     </section>
   );
 }

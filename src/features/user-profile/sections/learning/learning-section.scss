@@ -202,18 +202,6 @@
   font-size: 0.75rem;
 }
 
-.daily-goal-selector__actions {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.daily-goal-selector__confirmation {
-  color: var(--muted-foreground);
-  font-size: 11px;
-}
-
 .daily-goal-selector__save {
   border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
   border-radius: calc(var(--radius) - 2px);
@@ -497,15 +485,6 @@
     flex-direction: column;
     gap: 0.75rem;
   }
-
-  /* Reserves layout space so the confirmation line never causes a reflow
-     when it appears/disappears. */
-  &__confirmation {
-    min-height: 1.1rem;
-    margin: 0.75rem 0 0;
-    color: var(--muted-foreground);
-    font-size: 0.8rem;
-  }
 }
 
 .learning-mode-card {
@@ -655,5 +634,53 @@
 
   .learning-mode-card__button {
     background: var(--mode-orange);
+  }
+}
+
+/* ============================================================
+   Toast.tsx — shared auto-dismissing confirmation, portalled to
+   document.body. Used by DailyGoalSelector's "Save Goal" and
+   LearningModeCards' mode-selection feedback instead of each owning a
+   separate inline aria-live line.
+   ============================================================ */
+
+.learning-toast {
+  position: fixed;
+  top: 5.5rem;
+  right: 1.25rem;
+  z-index: 80;
+  max-width: 20rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.4rem);
+  pointer-events: none;
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease,
+    visibility 200ms;
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 639.98px) {
+  .learning-toast {
+    /* Stays near the top, not the bottom — the mobile nav has its own
+       floating "Profile Menu" trigger anchored to the bottom edge. */
+    top: 3.75rem;
+    right: 0.75rem;
+    left: 0.75rem;
+    max-width: none;
   }
 }
