@@ -79,7 +79,88 @@
     "learningSection": {
       "ariaLabel": "Lernbereich",
       "title": "Lernen",
-      "description": "Erledige die heutigen Lernziele und festige Woerter, die du bereits gelernt hast."
+      "description": "Erledige die heutigen Lernziele und festige Woerter, die du bereits gelernt hast.",
+      "dailyGoal": {
+        "title": "Tagesziel",
+        "wordsPerDay": "Woerter/Tag",
+        "recommended": "Empfohlen",
+        "ariaLabel": "Taegliches Wortziel",
+        "saveButton": "Speichern",
+        "savedToast": "Ziel fuer diese Vorschau aktualisiert.",
+        "approximately": "Ungefaehr",
+        "minutesUnit": "Min.",
+        "paces": {
+          "light": "Leichtes Tempo",
+          "balanced": "Ausgewogenes Tempo",
+          "steady": "Stetiges Tempo",
+          "intensive": "Intensives Tempo",
+          "veryIntensive": "Sehr intensives Tempo"
+        }
+      },
+      "todayProgress": {
+        "title": "Heutiger Fortschritt",
+        "chip": "Heute",
+        "completedUnit": "abgeschlossen",
+        "newWords": "Neue Woerter",
+        "reviews": "Wiederholungen",
+        "aria": {
+          "completedToday": "heute abgeschlossen",
+          "ofPlannedItems": "der geplanten Elemente",
+          "newWords": "neue Woerter",
+          "reviews": "Wiederholungen"
+        }
+      },
+      "dailyStreak": {
+        "title": "Taegliche Serie",
+        "chip": "Diese Woche",
+        "daysUnit": "Tage",
+        "bestPrefix": "Bestwert:",
+        "weekAriaLabel": "Aktivitaet dieser Woche",
+        "status": {
+          "activityCompleted": "Aktivitaet abgeschlossen",
+          "noActivity": "keine Aktivitaet"
+        },
+        "weekdays": {
+          "monShort": "M",
+          "tueShort": "D",
+          "wedShort": "M",
+          "thuShort": "D",
+          "friShort": "F",
+          "satShort": "S",
+          "sunShort": "S",
+          "monday": "Montag",
+          "tuesday": "Dienstag",
+          "wednesday": "Mittwoch",
+          "thursday": "Donnerstag",
+          "friday": "Freitag",
+          "saturday": "Samstag",
+          "sunday": "Sonntag"
+        }
+      },
+      "modeCards": {
+        "title": "Lernen starten",
+        "description": "Waehle, wie du heute mit deinem Wortschatzlernen fortfahren moechtest.",
+        "modes": {
+          "studyNewWords": {
+            "title": "Neue Woerter lernen",
+            "description": "Setze deine strukturierte Wortschatzfolge fort und lerne die neuen Woerter von heute.",
+            "metaLine": "15 Woerter uebrig - Ungefaehr 12-15 Min.",
+            "buttonLabel": "Lernen starten"
+          },
+          "reviewWords": {
+            "title": "Woerter wiederholen",
+            "description": "Wiederhole bereits gelernte Woerter nach ihrem Spaced-Repetition-Plan.",
+            "metaLine": "Keine Wiederholungen geplant",
+            "buttonLabel": "Wiederholung starten"
+          },
+          "customPractice": {
+            "title": "Eigene Uebung",
+            "description": "Waehle eigene Woerter, Listen, Filter, Niveaus und Uebungen.",
+            "metaLine": "Aktuelles Niveau A2 - Alle Kategorien",
+            "buttonLabel": "Uebung starten"
+          }
+        }
+      }
     }
   },
   "aboutPage": {

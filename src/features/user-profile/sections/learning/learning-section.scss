@@ -4,7 +4,7 @@
 
 .learning-section {
   &__header {
-    max-width: 46rem;
+    max-width: 100%;
     margin: 0 auto;
     text-align: center;
   }
@@ -17,7 +17,7 @@
   }
 
   &__description {
-    max-width: 40rem;
+    max-width: 100%;
     margin: 0.75rem auto 0;
     color: var(--muted-foreground);
     font-size: 1.02rem;
@@ -209,6 +209,7 @@
   color: var(--primary);
   font-size: 0.75rem;
   font-weight: 500;
+  white-space: nowrap;
   background: color-mix(in srgb, var(--primary) 5%, transparent);
   transition: background-color 180ms ease;
 
@@ -549,9 +550,9 @@
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
-    /* Fixed width so "Start Learning" / "Start Review" / "Start Practice"
-       render as the same size regardless of label length. */
-    width: 9.5rem;
+    box-sizing: border-box;
+    width: 13rem;
+    max-width: 100%;
     padding: 0.55rem 1.1rem;
     border: none;
     border-radius: calc(var(--radius) - 2px);
@@ -582,6 +583,10 @@
     &:disabled {
       cursor: not-allowed;
       opacity: 0.5;
+    }
+
+    svg {
+      flex-shrink: 0;
     }
   }
 }

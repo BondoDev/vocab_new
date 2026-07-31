@@ -79,7 +79,88 @@
     "learningSection": {
       "ariaLabel": "Section apprentissage",
       "title": "Apprentissage",
-      "description": "Terminez les objectifs d'apprentissage d'aujourd'hui et renforcez les mots que vous avez deja etudies."
+      "description": "Terminez les objectifs d'apprentissage d'aujourd'hui et renforcez les mots que vous avez deja etudies.",
+      "dailyGoal": {
+        "title": "Objectif quotidien",
+        "wordsPerDay": "mots/jour",
+        "recommended": "Recommande",
+        "ariaLabel": "Objectif quotidien de mots",
+        "saveButton": "Enregistrer",
+        "savedToast": "Objectif mis a jour pour cet apercu.",
+        "approximately": "Environ",
+        "minutesUnit": "min",
+        "paces": {
+          "light": "Rythme leger",
+          "balanced": "Rythme equilibre",
+          "steady": "Rythme regulier",
+          "intensive": "Rythme intensif",
+          "veryIntensive": "Rythme tres intensif"
+        }
+      },
+      "todayProgress": {
+        "title": "Progression du jour",
+        "chip": "Aujourd'hui",
+        "completedUnit": "termine",
+        "newWords": "Nouveaux mots",
+        "reviews": "Revisions",
+        "aria": {
+          "completedToday": "termines aujourd'hui",
+          "ofPlannedItems": "des elements prevus",
+          "newWords": "nouveaux mots",
+          "reviews": "revisions"
+        }
+      },
+      "dailyStreak": {
+        "title": "Serie quotidienne",
+        "chip": "Cette semaine",
+        "daysUnit": "jours",
+        "bestPrefix": "Meilleur :",
+        "weekAriaLabel": "Activite de cette semaine",
+        "status": {
+          "activityCompleted": "activite terminee",
+          "noActivity": "aucune activite"
+        },
+        "weekdays": {
+          "monShort": "L",
+          "tueShort": "M",
+          "wedShort": "M",
+          "thuShort": "J",
+          "friShort": "V",
+          "satShort": "S",
+          "sunShort": "D",
+          "monday": "Lundi",
+          "tuesday": "Mardi",
+          "wednesday": "Mercredi",
+          "thursday": "Jeudi",
+          "friday": "Vendredi",
+          "saturday": "Samedi",
+          "sunday": "Dimanche"
+        }
+      },
+      "modeCards": {
+        "title": "Commencer a apprendre",
+        "description": "Choisissez comment poursuivre votre apprentissage du vocabulaire aujourd'hui.",
+        "modes": {
+          "studyNewWords": {
+            "title": "Etudier de nouveaux mots",
+            "description": "Continuez votre sequence structuree de vocabulaire et apprenez les nouveaux mots du jour.",
+            "metaLine": "15 mots restants - Environ 12-15 min",
+            "buttonLabel": "Commencer"
+          },
+          "reviewWords": {
+            "title": "Reviser les mots",
+            "description": "Revisez les mots deja etudies selon leur calendrier de repetition espacee.",
+            "metaLine": "Aucune revision prevue",
+            "buttonLabel": "Commencer la revision"
+          },
+          "customPractice": {
+            "title": "Pratique personnalisee",
+            "description": "Choisissez vos propres mots, listes, filtres, niveaux et exercices.",
+            "metaLine": "Niveau actuel A2 - Toutes les categories",
+            "buttonLabel": "Commencer la pratique"
+          }
+        }
+      }
     }
   },
   "aboutPage": {

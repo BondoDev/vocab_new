@@ -79,7 +79,88 @@
     "learningSection": {
       "ariaLabel": "Seccion de aprendizaje",
       "title": "Aprendizaje",
-      "description": "Completa los objetivos de aprendizaje de hoy y refuerza las palabras que ya has estudiado."
+      "description": "Completa los objetivos de aprendizaje de hoy y refuerza las palabras que ya has estudiado.",
+      "dailyGoal": {
+        "title": "Meta diaria",
+        "wordsPerDay": "palabras/dia",
+        "recommended": "Recomendado",
+        "ariaLabel": "Meta diaria de palabras",
+        "saveButton": "Guardar",
+        "savedToast": "Meta actualizada para esta vista previa.",
+        "approximately": "Aproximadamente",
+        "minutesUnit": "min",
+        "paces": {
+          "light": "Ritmo ligero",
+          "balanced": "Ritmo equilibrado",
+          "steady": "Ritmo constante",
+          "intensive": "Ritmo intensivo",
+          "veryIntensive": "Ritmo muy intensivo"
+        }
+      },
+      "todayProgress": {
+        "title": "Progreso de hoy",
+        "chip": "Hoy",
+        "completedUnit": "completado",
+        "newWords": "Palabras nuevas",
+        "reviews": "Repasos",
+        "aria": {
+          "completedToday": "completado hoy",
+          "ofPlannedItems": "de los elementos planificados",
+          "newWords": "palabras nuevas",
+          "reviews": "repasos"
+        }
+      },
+      "dailyStreak": {
+        "title": "Racha diaria",
+        "chip": "Esta semana",
+        "daysUnit": "dias",
+        "bestPrefix": "Mejor:",
+        "weekAriaLabel": "Actividad de esta semana",
+        "status": {
+          "activityCompleted": "actividad completada",
+          "noActivity": "sin actividad"
+        },
+        "weekdays": {
+          "monShort": "L",
+          "tueShort": "M",
+          "wedShort": "X",
+          "thuShort": "J",
+          "friShort": "V",
+          "satShort": "S",
+          "sunShort": "D",
+          "monday": "Lunes",
+          "tuesday": "Martes",
+          "wednesday": "Miercoles",
+          "thursday": "Jueves",
+          "friday": "Viernes",
+          "saturday": "Sabado",
+          "sunday": "Domingo"
+        }
+      },
+      "modeCards": {
+        "title": "Empezar a aprender",
+        "description": "Elige como quieres continuar tu aprendizaje de vocabulario hoy.",
+        "modes": {
+          "studyNewWords": {
+            "title": "Estudiar palabras nuevas",
+            "description": "Continua tu secuencia estructurada de vocabulario y aprende las palabras nuevas de hoy.",
+            "metaLine": "Quedan 15 palabras - Aproximadamente 12-15 min",
+            "buttonLabel": "Empezar aprendizaje"
+          },
+          "reviewWords": {
+            "title": "Repasar palabras",
+            "description": "Repasa palabras ya estudiadas segun su calendario de repeticion espaciada.",
+            "metaLine": "No hay repasos programados",
+            "buttonLabel": "Empezar repaso"
+          },
+          "customPractice": {
+            "title": "Practica personalizada",
+            "description": "Elige tus propias palabras, listas, filtros, niveles y ejercicios.",
+            "metaLine": "Nivel actual A2 - Todas las categorias",
+            "buttonLabel": "Empezar practica"
+          }
+        }
+      }
     }
   },
   "aboutPage": {

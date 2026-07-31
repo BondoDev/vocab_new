@@ -79,7 +79,88 @@
     "learningSection": {
       "ariaLabel": "Learning section",
       "title": "Learning",
-      "description": "Complete today's learning goals and reinforce words you've already studied."
+      "description": "Complete today's learning goals and reinforce words you've already studied.",
+      "dailyGoal": {
+        "title": "Daily Goal",
+        "wordsPerDay": "words/day",
+        "recommended": "Recommended",
+        "ariaLabel": "Daily word goal",
+        "saveButton": "Save Goal",
+        "savedToast": "Goal updated for this preview.",
+        "approximately": "Approximately",
+        "minutesUnit": "min",
+        "paces": {
+          "light": "Light pace",
+          "balanced": "Balanced pace",
+          "steady": "Steady pace",
+          "intensive": "Intensive pace",
+          "veryIntensive": "Very intensive pace"
+        }
+      },
+      "todayProgress": {
+        "title": "Today's Progress",
+        "chip": "Today",
+        "completedUnit": "completed",
+        "newWords": "New words",
+        "reviews": "Reviews",
+        "aria": {
+          "completedToday": "completed today",
+          "ofPlannedItems": "of planned items",
+          "newWords": "new words",
+          "reviews": "reviews"
+        }
+      },
+      "dailyStreak": {
+        "title": "Daily Streak",
+        "chip": "This week",
+        "daysUnit": "days",
+        "bestPrefix": "Best:",
+        "weekAriaLabel": "This week's activity",
+        "status": {
+          "activityCompleted": "activity completed",
+          "noActivity": "no activity"
+        },
+        "weekdays": {
+          "monShort": "M",
+          "tueShort": "T",
+          "wedShort": "W",
+          "thuShort": "T",
+          "friShort": "F",
+          "satShort": "S",
+          "sunShort": "S",
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday",
+          "sunday": "Sunday"
+        }
+      },
+      "modeCards": {
+        "title": "Start Learning",
+        "description": "Choose how you want to continue your vocabulary learning today.",
+        "modes": {
+          "studyNewWords": {
+            "title": "Study New Words",
+            "description": "Continue through your structured vocabulary sequence and learn today's new words.",
+            "metaLine": "15 words remaining - Approximately 12-15 min",
+            "buttonLabel": "Start Learning"
+          },
+          "reviewWords": {
+            "title": "Review Words",
+            "description": "Review previously studied words according to their spaced-repetition schedule.",
+            "metaLine": "No reviews scheduled",
+            "buttonLabel": "Start Review"
+          },
+          "customPractice": {
+            "title": "Custom Practice",
+            "description": "Choose your own words, lists, filters, levels, and exercises.",
+            "metaLine": "Current level A2 - All categories",
+            "buttonLabel": "Start Practice"
+          }
+        }
+      }
     }
   },
   "aboutPage": {

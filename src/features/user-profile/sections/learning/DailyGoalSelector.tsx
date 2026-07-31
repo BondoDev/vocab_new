@@ -1,32 +1,41 @@
 import { useState } from "react";
 import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
+import { useLanguage } from "../../../../contexts/LanguageContext";
 
 interface DailyGoalOption {
   value: number;
-  paceLabel: string;
+  paceLabelKey: string;
   estimateLabel: string;
   recommended?: boolean;
 }
 
 const DAILY_GOAL_OPTIONS: DailyGoalOption[] = [
-  { value: 10, paceLabel: "Light pace", estimateLabel: "8–10" },
-  { value: 15, paceLabel: "Balanced pace", estimateLabel: "12–15", recommended: true },
-  { value: 20, paceLabel: "Steady pace", estimateLabel: "16–20" },
-  { value: 30, paceLabel: "Intensive pace", estimateLabel: "24–30" },
-  { value: 50, paceLabel: "Very intensive pace", estimateLabel: "40–50" },
+  { value: 10, paceLabelKey: "userProfile.learningSection.dailyGoal.paces.light", estimateLabel: "8-10" },
+  {
+    value: 15,
+    paceLabelKey: "userProfile.learningSection.dailyGoal.paces.balanced",
+    estimateLabel: "12-15",
+    recommended: true,
+  },
+  { value: 20, paceLabelKey: "userProfile.learningSection.dailyGoal.paces.steady", estimateLabel: "16-20" },
+  {
+    value: 30,
+    paceLabelKey: "userProfile.learningSection.dailyGoal.paces.intensive",
+    estimateLabel: "24-30",
+  },
+  {
+    value: 50,
+    paceLabelKey: "userProfile.learningSection.dailyGoal.paces.veryIntensive",
+    estimateLabel: "40-50",
+  },
 ];
 
 const DEFAULT_GOAL = 15;
 
 // Preview-only local state. When the daily goal ships for real, this is the
-// seam that should read/write the authenticated user's profile (Supabase)
-// and feed the Study New Words session + daily completion calculations.
-// Sized as one cell of the compact learning-indicators grid — see
-// LearningSection.tsx — not as a standalone full-width panel.
-// Styles live in ./learning-section.scss (imported by LearningSection.tsx,
-// the only place this component is ever rendered) rather than a separate
-// stylesheet of its own.
+// integration point for the authenticated user's saved profile goal.
 export function DailyGoalSelector() {
+  const { t } = useLanguage();
   const [goal, setGoal] = useState<number>(DEFAULT_GOAL);
   const { message: confirmationMessage, show: showConfirmation } = useAutoDismissMessage();
 
@@ -34,8 +43,8 @@ export function DailyGoalSelector() {
     DAILY_GOAL_OPTIONS.find((option) => option.value === goal) ?? DAILY_GOAL_OPTIONS[1];
 
   const handleSave = () => {
-    // No backend write yet — this only confirms the local preview selection.
-    showConfirmation("Goal updated for this preview.");
+    // No backend write yet - this only confirms the local preview selection.
+    showConfirmation(t("userProfile.learningSection.dailyGoal.savedToast"));
   };
 
   return (
@@ -45,25 +54,31 @@ export function DailyGoalSelector() {
     >
       <div className="daily-goal-selector__header">
         <h2 id="daily-goal-heading" className="learning-kpi-card__title">
-          Daily Goal
+          {t("userProfile.learningSection.dailyGoal.title")}
         </h2>
         <div className="daily-goal-selector__summary">
           <p className="daily-goal-selector__summary-value">
             <span className="daily-goal-selector__summary-number">{goal}</span>
-            <span className="daily-goal-selector__summary-unit">words/day</span>
+            <span className="daily-goal-selector__summary-unit">
+              {t("userProfile.learningSection.dailyGoal.wordsPerDay")}
+            </span>
           </p>
           <p
             className={`daily-goal-selector__recommended ${
               selectedOption.recommended ? "" : "daily-goal-selector__recommended--hidden"
             }`}
           >
-            Recommended
+            {t("userProfile.learningSection.dailyGoal.recommended")}
           </p>
         </div>
       </div>
 
       <div className="daily-goal-selector__options-row">
-        <div role="group" aria-label="Daily word goal" className="daily-goal-selector__options">
+        <div
+          role="group"
+          aria-label={t("userProfile.learningSection.dailyGoal.ariaLabel")}
+          className="daily-goal-selector__options"
+        >
           {DAILY_GOAL_OPTIONS.map((option) => {
             const isSelected = option.value === goal;
             return (
@@ -82,12 +97,14 @@ export function DailyGoalSelector() {
           })}
         </div>
         <button type="button" onClick={handleSave} className="daily-goal-selector__save">
-          Save Goal
+          {t("userProfile.learningSection.dailyGoal.saveButton")}
         </button>
       </div>
 
       <p className="daily-goal-selector__pace">
-        {selectedOption.paceLabel} · Approximately {selectedOption.estimateLabel} min
+        {t(selectedOption.paceLabelKey)} {" - "}
+        {t("userProfile.learningSection.dailyGoal.approximately")} {selectedOption.estimateLabel}{" "}
+        {t("userProfile.learningSection.dailyGoal.minutesUnit")}
       </p>
 
       <Toast message={confirmationMessage} />
