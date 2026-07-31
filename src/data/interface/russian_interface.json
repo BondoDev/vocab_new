@@ -493,15 +493,10 @@
       },
       "todayProgress": {
         "title": "Прогресс за сегодня",
-        "chip": "Сегодня",
-        "completedUnit": "выполнено",
-        "newWords": "Новые слова",
-        "reviews": "Повторения",
+        "wordsUnit": "слов",
         "aria": {
-          "completedToday": "выполнено сегодня",
-          "ofPlannedItems": "от запланированных заданий",
-          "newWords": "новых слов",
-          "reviews": "повторений"
+          "of": "из",
+          "dailyWordsCompleted": "ежедневных слов выполнено"
         }
       },
       "dailyStreak": {

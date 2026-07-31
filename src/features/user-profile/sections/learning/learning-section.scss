@@ -25,10 +25,50 @@
   }
 
   &__indicators {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-start below 1184px: rows can hold a partial set of cards while
+       wrapping, so space-between here would stretch gaps unevenly depending
+       on how many cards land on the last row. Overridden to space-between
+       once all three cards force onto one nowrap row at >=1184px below. */
+    justify-content: flex-start;
+    align-items: stretch;
     gap: 0.75rem;
     margin-top: 1rem;
+  }
+}
+
+/* Forces the wide three-across row explicitly at the same 1184px breakpoint
+   Today's Progress uses to switch to its circular variant — without this,
+   the row could still organically wrap a few pixels earlier/later than the
+   visual switch, momentarily showing the circular card wrapped onto its
+   own row instead of staying beside Daily Goal/Daily Streak. */
+@media (min-width: 1184px) {
+  .learning-section__indicators {
+    flex-wrap: nowrap;
+    /* space-between here (not flex-start): all three cards are always
+       present on this single nowrap row, so spreading the leftover width
+       evenly between them reads as intentionally aligned instead of
+       clumped to the left with empty space on the right. */
+    justify-content: space-between;
+  }
+
+  /* Visual-only reorder to Goal, Progress, Streak at wide widths via
+     `order` — the underlying DOM/render order in LearningSection.tsx stays
+     Goal, Streak, Progress, which is what makes Today's Progress (forced
+     to 100% width below this breakpoint) wrap to its own row while Goal
+     and Streak stay paired above it. Reordering the DOM instead of just
+     the visual order would break that pairing below 1184px. */
+  .daily-goal-selector {
+    order: 1;
+  }
+
+  .today-progress-card {
+    order: 2;
+  }
+
+  .daily-streak-card {
+    order: 3;
   }
 }
 
@@ -53,7 +93,12 @@
 .learning-kpi-card {
   display: flex;
   justify-content: space-between;
-  height: 100%;
+  /* No explicit height here — the flex container's align-items: stretch
+     (default) already equalizes card heights within a row. An explicit
+     height: 100% conflicts with stretch when the container's own height
+     is content-derived rather than an explicit value: percentage heights
+     don't resolve against an indefinite containing block, so each card
+     was falling back to its own natural (unequal) height instead. */
   flex-direction: column;
   padding: 0.75rem;
   border: 1px solid color-mix(in srgb, var(--primary) 12%, var(--border));
@@ -95,7 +140,10 @@
    ============================================================ */
 
 .daily-goal-selector {
-  min-width: 316px;
+  /* Fixed width (not just min-width) so it stays exactly equal to Daily
+     Streak's width even though the two cards' own content would otherwise
+     size them differently. */
+  width: 316px;
 }
 
 .daily-goal-selector__header {
@@ -236,116 +284,192 @@
      purple. --chart-2 is the app's existing blue swatch (already themed for
      dark mode in theme.css), reused here instead of inventing a new color. */
   --info: var(--chart-2);
+  width: 12rem;
+  /* Without this floor, flex-shrink dumps all the squeeze from Daily
+     Goal/Daily Streak's hard 316px min-widths onto this card alone,
+     crushing it down to a thin sliver before the row ever wraps. Only
+     matters for the >=1184px circular layout — below that breakpoint the
+     card forces its own full-row width instead (see the media query). */
+  min-width: 11rem;
 
-  &__header {
+  &__title {
+    text-align: center;
+  }
+
+  /* Circular variant — visible at >=1184px, hidden below it. */
+  &__circular {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Horizontal variant — hidden at >=1184px, shown below it. Both variants
+     stay in the DOM at all times (sharing the same progressRatio/srLabel
+     from the component, not duplicating the calculation) rather than being
+     conditionally rendered; display: none removes the inactive one from
+     the accessibility tree, so only one progressbar is ever exposed. */
+  &__horizontal {
+    display: none;
+    width: 100%;
+    flex-direction: column;
     gap: 0.5rem;
   }
 
-  &__chip {
-    background: color-mix(in srgb, var(--info) 14%, transparent);
-    color: color-mix(in srgb, var(--info) 65%, var(--foreground));
+  &__ring-wrap {
+    position: relative;
+    display: flex;
+    width: 6rem;
+    height: 6rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
   }
 
-  &__metric {
+  &__ring {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Stroke reduced from 7 to 5 (viewBox units) — thinner independent of the
+     smaller physical size above, so the ring reads as delicate rather than
+     just "the same ring, shrunk." */
+  &__ring-track {
+    fill: none;
+    stroke: color-mix(in srgb, var(--info) 10%, var(--muted));
+    stroke-width: 5;
+  }
+
+  &__ring-fill {
+    fill: none;
+    stroke: var(--info);
+    stroke-width: 5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Centered inside the ring via absolute inset + flex column/center — the
+     previous version used align-items: baseline, which only aligns flex
+     items relative to each other, not the whole line to the container's
+     vertical center, so the text sat high instead of centered in the ring. */
+  &__ring-value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    pointer-events: none;
+  }
+
+  &__ring-completed {
+    color: var(--foreground);
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+    transition: color 200ms ease;
+  }
+
+  /* "of 15" as one line, but "of" and the goal number are sized/weighted
+     separately below so the number itself reads as the stronger half. */
+  &__ring-goal {
     display: flex;
     align-items: baseline;
-    gap: 0.35rem;
-    margin-top: 0.15rem;
-  }
-
-  &__value {
-    color: var(--info);
-    font-size: 1.5rem;
-    font-weight: 700;
+    gap: 0.2rem;
     line-height: 1;
   }
 
-  &__unit {
+  &__ring-goal-label {
     color: var(--muted-foreground);
-    font-size: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 500;
   }
 
-  &__progress-row {
+  &__ring-goal-value {
+    color: var(--foreground);
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  /* Horizontal variant's own parts — title/ratio row + a plain pill track. */
+  &__horizontal-header {
     display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.1rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.3rem 0.75rem;
   }
 
-  &__bar {
-    flex: 1 1 auto;
-    height: 0.5rem;
+  &__horizontal-title {
+    margin: 0;
+    text-align: left;
+  }
+
+  &__horizontal-ratio {
+    margin: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  &__horizontal-completed {
+    color: var(--foreground);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  &__horizontal-meta {
+    color: var(--muted-foreground);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  &__horizontal-track {
+    width: 100%;
+    height: 0.7rem;
     border-radius: 999px;
     background: color-mix(in srgb, var(--info) 10%, var(--muted));
     overflow: hidden;
   }
 
-  &__bar-fill {
+  &__horizontal-fill {
     height: 100%;
     border-radius: inherit;
     background: var(--info);
-    transition: width 220ms ease;
+    transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
   }
+}
 
-  &__percent {
-    flex-shrink: 0;
-    color: var(--muted-foreground);
-    font-size: 0.75rem;
-  }
-
-  /* Subtle tinted inner strip grouping the two breakdown metrics — deliberately
-     one shared panel rather than two bordered mini-cards. */
-  &__breakdown {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    margin-top: 0.15rem;
-    padding: 0.15rem 0.5rem;
-  }
-
-  &__metric-group {
-    display: flex;
-    flex: 1 1 0%;
-    align-items: center;
-    gap: 0.3rem;
-    min-width: 0;
-    border-radius: 5%;
-    background: color-mix(in srgb, var(--info) 7%, transparent);
-  }
-
-  &__metric-icon {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    width: 1.05rem;
-    height: 1.05rem;
-    border-radius: calc(var(--radius) - 4px);
-    background: color-mix(in srgb, var(--info) 16%, transparent);
-    color: var(--info);
-  }
-
-  &__metric-text {
-    display: flex;
-    flex: 1 1 0%;
-    align-items: baseline;
+/* Below 1184px: the horizontal strip replaces the circular card, and the
+   card itself spans the full row instead of sitting at its compact square
+   width — .learning-section__indicators' flex-wrap relies on this
+   full-width takeover to keep Daily Goal + Daily Streak paired on the row
+   above regardless of exact container width. */
+@media (max-width: 1183.98px) {
+  /* Daily Goal and Daily Streak are the only two items on this row (Today's
+     Progress wraps to its own full-width row below), so space-between
+     spreads them to the row's full width the same way it does at >=1184px,
+     instead of the flex-start clump used as the wrap fallback for rows that
+     could hold a partial/uneven set of cards. */
+  .learning-section__indicators {
     justify-content: space-between;
-    gap: 0.35rem;
+  }
+
+  .today-progress-card {
+    width: 100%;
     min-width: 0;
+    flex-basis: 100%;
   }
 
-  &__metric-label {
-    color: var(--muted-foreground);
-    font-size: 0.7rem;
+  .today-progress-card__circular {
+    display: none;
   }
 
-  &__metric-value {
-    color: var(--foreground);
-    font-size: 0.9rem;
-    font-weight: 600;
+  .today-progress-card__horizontal {
+    display: flex;
   }
 }
 
@@ -360,6 +484,12 @@
      No green exists in the shared theme tokens yet, so this is defined
      locally rather than added to the global token set for one feature. */
   --success: #22c55e;
+
+  /* Fixed width (not just min-width) matching Daily Goal's, so the two
+     cards stay exactly equal even though their own content would
+     otherwise size them differently — the indicators row is a flex
+     layout, not equal-width grid columns. */
+  width: 316px;
 
   &__header {
     display: flex;

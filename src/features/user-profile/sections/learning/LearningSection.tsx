@@ -20,8 +20,8 @@ export function LearningSection() {
       </header>
       <div className="learning-section__indicators">
         <DailyGoalSelector />
-        <TodayProgressCard />
         <DailyStreakCard />
+        <TodayProgressCard />
       </div>
       <LearningModeCards />
     </>

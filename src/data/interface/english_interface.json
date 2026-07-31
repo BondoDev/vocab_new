@@ -99,15 +99,10 @@
       },
       "todayProgress": {
         "title": "Today's Progress",
-        "chip": "Today",
-        "completedUnit": "completed",
-        "newWords": "New words",
-        "reviews": "Reviews",
+        "wordsUnit": "words",
         "aria": {
-          "completedToday": "completed today",
-          "ofPlannedItems": "of planned items",
-          "newWords": "new words",
-          "reviews": "reviews"
+          "of": "of",
+          "dailyWordsCompleted": "daily words completed"
         }
       },
       "dailyStreak": {

@@ -99,15 +99,10 @@
       },
       "todayProgress": {
         "title": "Progressi di oggi",
-        "chip": "Oggi",
-        "completedUnit": "completati",
-        "newWords": "Parole nuove",
-        "reviews": "Ripassi",
+        "wordsUnit": "parole",
         "aria": {
-          "completedToday": "completati oggi",
-          "ofPlannedItems": "degli elementi pianificati",
-          "newWords": "parole nuove",
-          "reviews": "ripassi"
+          "of": "su",
+          "dailyWordsCompleted": "parole giornaliere completate"
         }
       },
       "dailyStreak": {

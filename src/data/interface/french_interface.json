@@ -99,15 +99,10 @@
       },
       "todayProgress": {
         "title": "Progression du jour",
-        "chip": "Aujourd'hui",
-        "completedUnit": "termine",
-        "newWords": "Nouveaux mots",
-        "reviews": "Revisions",
+        "wordsUnit": "mots",
         "aria": {
-          "completedToday": "termines aujourd'hui",
-          "ofPlannedItems": "des elements prevus",
-          "newWords": "nouveaux mots",
-          "reviews": "revisions"
+          "of": "sur",
+          "dailyWordsCompleted": "mots quotidiens termines"
         }
       },
       "dailyStreak": {

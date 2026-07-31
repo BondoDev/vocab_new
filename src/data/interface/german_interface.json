@@ -99,15 +99,10 @@
       },
       "todayProgress": {
         "title": "Heutiger Fortschritt",
-        "chip": "Heute",
-        "completedUnit": "abgeschlossen",
-        "newWords": "Neue Woerter",
-        "reviews": "Wiederholungen",
+        "wordsUnit": "Woerter",
         "aria": {
-          "completedToday": "heute abgeschlossen",
-          "ofPlannedItems": "der geplanten Elemente",
-          "newWords": "neue Woerter",
-          "reviews": "Wiederholungen"
+          "of": "von",
+          "dailyWordsCompleted": "tagliche Woerter abgeschlossen"
         }
       },
       "dailyStreak": {
