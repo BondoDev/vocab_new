@@ -86,7 +86,8 @@
         "recommended": "Recommande",
         "ariaLabel": "Objectif quotidien de mots",
         "saveButton": "Enregistrer",
-        "savedToast": "Objectif mis a jour pour cet apercu.",
+        "savedToast": "Objectif quotidien enregistre.",
+        "saveError": "Impossible d'enregistrer votre objectif quotidien. Veuillez reessayer.",
         "approximately": "Environ",
         "minutesUnit": "min",
         "paces": {

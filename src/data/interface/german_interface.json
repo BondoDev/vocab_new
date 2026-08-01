@@ -86,7 +86,8 @@
         "recommended": "Empfohlen",
         "ariaLabel": "Taegliches Wortziel",
         "saveButton": "Speichern",
-        "savedToast": "Ziel fuer diese Vorschau aktualisiert.",
+        "savedToast": "Tagesziel gespeichert.",
+        "saveError": "Das Tagesziel konnte nicht gespeichert werden. Bitte versuche es erneut.",
         "approximately": "Ungefaehr",
         "minutesUnit": "Min.",
         "paces": {

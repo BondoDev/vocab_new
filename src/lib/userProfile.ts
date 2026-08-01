@@ -11,6 +11,8 @@ const USER_PROFILE_KEY_PREFIX = "app.userProfile";
 
 export type LanguageLevelCode = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 
+export const DEFAULT_DAILY_GOAL = 15;
+
 export interface UserProfile {
   nickname: string;
   languageLevel: LanguageLevelCode | "";
@@ -20,6 +22,7 @@ export interface UserProfile {
   nativeLanguage: UILanguage | "";
   practiceLanguage: UILanguage | "";
   onboardingCompleted: boolean;
+  dailyGoal: number;
   updatedAt: string | null;
 }
 
@@ -32,6 +35,7 @@ export const EMPTY_USER_PROFILE: UserProfile = {
   nativeLanguage: "",
   practiceLanguage: "",
   onboardingCompleted: false,
+  dailyGoal: DEFAULT_DAILY_GOAL,
   updatedAt: null,
 };
 
@@ -112,6 +116,19 @@ function normalizeBirthDay(value: unknown): string {
   return trimmed;
 }
 
+function normalizeDailyGoal(value: unknown): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return DEFAULT_DAILY_GOAL;
+  }
+
+  const rounded = Math.round(value);
+  if (rounded < 1 || rounded > 999) {
+    return DEFAULT_DAILY_GOAL;
+  }
+
+  return rounded;
+}
+
 function normalizeLanguageLevel(value: unknown): LanguageLevelCode | "" {
   if (
     value === "A1" ||
@@ -137,6 +154,7 @@ interface UserProfilesRow {
   birth_month: number | null;
   birth_day: number | null;
   onboarding_completed: boolean | null;
+  daily_goal: number | null;
   updated_at: string | null;
 }
 
@@ -192,6 +210,7 @@ function toSupabaseProfilePatch(profile: Partial<UserProfile>) {
     birth_month: normalized.birthMonth ? Number(normalized.birthMonth) : null,
     birth_day: normalized.birthDay ? Number(normalized.birthDay) : null,
     onboarding_completed: normalized.onboardingCompleted,
+    daily_goal: normalized.dailyGoal,
     updated_at: timestamp,
     last_active_at: timestamp,
   };
@@ -218,6 +237,7 @@ function fromSupabaseProfileRow(row: UserProfilesRow | null | undefined): Partia
         ? String(row.birth_day).padStart(2, "0")
         : "",
     onboardingCompleted: Boolean(row.onboarding_completed),
+    dailyGoal: normalizeDailyGoal(row.daily_goal),
     updatedAt: row.updated_at ?? null,
   };
 }
@@ -233,6 +253,7 @@ export function normalizeUserProfile(value: Partial<UserProfile> | null | undefi
   const birthDay = normalizeBirthDay(value?.birthDay);
   const nativeLanguage = normalizeLanguage(value?.nativeLanguage);
   const practiceLanguage = normalizeLanguage(value?.practiceLanguage);
+  const dailyGoal = normalizeDailyGoal(value?.dailyGoal);
   const onboardingCompleted = Boolean(
     value?.onboardingCompleted &&
       nickname &&
@@ -253,6 +274,7 @@ export function normalizeUserProfile(value: Partial<UserProfile> | null | undefi
     nativeLanguage,
     practiceLanguage,
     onboardingCompleted,
+    dailyGoal,
     updatedAt:
       typeof value?.updatedAt === "string" && value.updatedAt.trim()
         ? value.updatedAt
@@ -315,7 +337,7 @@ export async function readSupabaseUserProfile(
 
   const rows = await supabaseProfileRequest<UserProfilesRow[]>(
     session,
-    `/rest/v1/user_profiles?id=eq.${encodeURIComponent(userId)}&select=id,nickname,native_language,learning_language,current_level,user_age,birth_month,birth_day,onboarding_completed,updated_at`,
+    `/rest/v1/user_profiles?id=eq.${encodeURIComponent(userId)}&select=id,nickname,native_language,learning_language,current_level,user_age,birth_month,birth_day,onboarding_completed,daily_goal,updated_at`,
     {
       method: "GET",
     },

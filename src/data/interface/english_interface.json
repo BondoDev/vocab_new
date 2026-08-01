@@ -86,7 +86,8 @@
         "recommended": "Recommended",
         "ariaLabel": "Daily word goal",
         "saveButton": "Save Goal",
-        "savedToast": "Goal updated for this preview.",
+        "savedToast": "Daily goal saved.",
+        "saveError": "We could not save your daily goal. Please try again.",
         "approximately": "Approximately",
         "minutesUnit": "min",
         "paces": {

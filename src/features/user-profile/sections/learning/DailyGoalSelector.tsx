@@ -1,7 +1,18 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
+import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { useLanguage } from "../../../../contexts/LanguageContext";
+import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
+import {
+  DEFAULT_DAILY_GOAL,
+  EMPTY_USER_PROFILE,
+  readStoredUserProfile,
+  readSupabaseUserProfile,
+  writeStoredUserProfile,
+  writeSupabaseUserProfile,
+  type UserProfile,
+} from "../../../../lib/userProfile";
 import { useIsCompactLearningSummary } from "./useIsCompactLearningSummary";
 
 interface DailyGoalOption {
@@ -32,24 +43,100 @@ const DAILY_GOAL_OPTIONS: DailyGoalOption[] = [
   },
 ];
 
-const DEFAULT_GOAL = 15;
-
-// Preview-only local state. When the daily goal ships for real, this is the
-// integration point for the authenticated user's saved profile goal.
 export function DailyGoalSelector() {
   const { t } = useLanguage();
-  const [goal, setGoal] = useState<number>(DEFAULT_GOAL);
+  const { authUserId } = useAuthSession();
+  const [goal, setGoal] = useState<number>(DEFAULT_DAILY_GOAL);
+  const [savedProfile, setSavedProfile] = useState<UserProfile>(EMPTY_USER_PROFILE);
+  const [isProfileLoaded, setIsProfileLoaded] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const { message: confirmationMessage, show: showConfirmation } = useAutoDismissMessage();
   const isCompact = useIsCompactLearningSummary();
   const [isExpanded, setIsExpanded] = useState(false);
   const panelId = useId();
 
+  useEffect(() => {
+    if (!authUserId) {
+      setSavedProfile(EMPTY_USER_PROFILE);
+      setGoal(DEFAULT_DAILY_GOAL);
+      setIsProfileLoaded(true);
+      return;
+    }
+
+    let cancelled = false;
+    setIsProfileLoaded(false);
+    const storedProfile = readStoredUserProfile(authUserId);
+    if (storedProfile) {
+      setSavedProfile(storedProfile);
+      setGoal(storedProfile.dailyGoal);
+    }
+
+    void (async () => {
+      try {
+        const session = getStoredSupabaseSession();
+        const supabaseProfile = session ? await readSupabaseUserProfile(session) : null;
+        if (cancelled) {
+          return;
+        }
+
+        if (supabaseProfile) {
+          const nextProfile: UserProfile = {
+            ...(storedProfile ?? EMPTY_USER_PROFILE),
+            ...supabaseProfile,
+          };
+          setSavedProfile(nextProfile);
+          setGoal(nextProfile.dailyGoal);
+        }
+
+        setIsProfileLoaded(true);
+      } catch {
+        if (!cancelled) {
+          setIsProfileLoaded(true);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [authUserId]);
+
   const selectedOption =
     DAILY_GOAL_OPTIONS.find((option) => option.value === goal) ?? DAILY_GOAL_OPTIONS[1];
 
   const handleSave = () => {
-    // No backend write yet - this only confirms the local preview selection.
-    showConfirmation(t("userProfile.learningSection.dailyGoal.savedToast"));
+    if (isSaving || !isProfileLoaded) {
+      return;
+    }
+
+    if (!authUserId) {
+      showConfirmation(t("userProfile.learningSection.dailyGoal.savedToast"));
+      return;
+    }
+
+    const session = getStoredSupabaseSession();
+    if (!session) {
+      return;
+    }
+
+    setIsSaving(true);
+    const patchedProfile: UserProfile = { ...savedProfile, dailyGoal: goal };
+
+    void writeSupabaseUserProfile(session, patchedProfile)
+      .then((supabaseProfile) => {
+        const nextProfile = writeStoredUserProfile(authUserId, {
+          ...patchedProfile,
+          ...supabaseProfile,
+        });
+        setSavedProfile(nextProfile);
+        showConfirmation(t("userProfile.learningSection.dailyGoal.savedToast"));
+      })
+      .catch(() => {
+        showConfirmation(t("userProfile.learningSection.dailyGoal.saveError"));
+      })
+      .finally(() => {
+        setIsSaving(false);
+      });
   };
 
   const detailContent = (
@@ -77,7 +164,12 @@ export function DailyGoalSelector() {
             );
           })}
         </div>
-        <button type="button" onClick={handleSave} className="daily-goal-selector__save">
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={isSaving || !isProfileLoaded}
+          className="daily-goal-selector__save"
+        >
           {t("userProfile.learningSection.dailyGoal.saveButton")}
         </button>
       </div>

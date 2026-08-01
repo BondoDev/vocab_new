@@ -86,7 +86,8 @@
         "recommended": "Consigliato",
         "ariaLabel": "Obiettivo giornaliero di parole",
         "saveButton": "Salva",
-        "savedToast": "Obiettivo aggiornato per questa anteprima.",
+        "savedToast": "Obiettivo giornaliero salvato.",
+        "saveError": "Impossibile salvare l'obiettivo giornaliero. Riprova.",
         "approximately": "Circa",
         "minutesUnit": "min",
         "paces": {

@@ -86,7 +86,8 @@
         "recommended": "Recomendado",
         "ariaLabel": "Meta diaria de palavras",
         "saveButton": "Salvar",
-        "savedToast": "Meta atualizada para esta pre-visualizacao.",
+        "savedToast": "Meta diaria salva.",
+        "saveError": "Nao foi possivel salvar sua meta diaria. Tente novamente.",
         "approximately": "Aproximadamente",
         "minutesUnit": "min",
         "paces": {
