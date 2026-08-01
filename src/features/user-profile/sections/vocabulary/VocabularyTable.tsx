@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, MoreHorizontal, Star, Volume2 } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 
@@ -81,6 +82,27 @@ export function VocabularyTable() {
   );
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [activePage, setActivePage] = useState(1);
+
+  useEffect(() => {
+    if (!openMenuId) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (
+        target instanceof Element &&
+        (target.closest(".vocabulary-row-actions__menu-wrap") ||
+          target.closest(".vocabulary-more-menu"))
+      ) {
+        return;
+      }
+      setOpenMenuId(null);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [openMenuId]);
 
   const toggleFavorite = (id: string) => {
     setFavoriteIds((current) => {
@@ -290,6 +312,58 @@ function RowActions({
   hideFavorite,
 }: RowActionsProps) {
   const { t } = useLanguage();
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const [menuStyle, setMenuStyle] = useState<CSSProperties>({
+    position: "fixed",
+    visibility: "hidden",
+  });
+
+  useLayoutEffect(() => {
+    if (!isMenuOpen) {
+      setMenuStyle({
+        position: "fixed",
+        visibility: "hidden",
+      });
+      return;
+    }
+
+    const updateMenuPosition = () => {
+      const button = buttonRef.current;
+      const menu = menuRef.current;
+      if (!button || !menu) {
+        return;
+      }
+
+      const gap = 6;
+      const buttonRect = button.getBoundingClientRect();
+      const menuRect = menu.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const hasRoomBelow = buttonRect.bottom + gap + menuRect.height <= viewportHeight;
+      const top = hasRoomBelow
+        ? buttonRect.bottom + gap
+        : buttonRect.top - gap - menuRect.height;
+
+      setMenuStyle({
+        position: "fixed",
+        visibility: "visible",
+        top: Math.max(gap, Math.min(top, viewportHeight - menuRect.height - gap)),
+        left: Math.max(
+          gap,
+          Math.min(buttonRect.right - menuRect.width, viewportWidth - menuRect.width - gap),
+        ),
+      });
+    };
+
+    updateMenuPosition();
+    window.addEventListener("resize", updateMenuPosition);
+    window.addEventListener("scroll", updateMenuPosition, true);
+    return () => {
+      window.removeEventListener("resize", updateMenuPosition);
+      window.removeEventListener("scroll", updateMenuPosition, true);
+    };
+  }, [isMenuOpen]);
 
   return (
     <div className="vocabulary-row-actions">
@@ -307,6 +381,7 @@ function RowActions({
 
       <div className="vocabulary-row-actions__menu-wrap">
         <button
+          ref={buttonRef}
           type="button"
           className="vocabulary-more-button"
           aria-haspopup="menu"
@@ -318,19 +393,27 @@ function RowActions({
         </button>
 
         {isMenuOpen ? (
-          <div className="vocabulary-more-menu" role="menu">
-            {MENU_ACTION_KEYS.map((key) => (
-              <button
-                key={key}
-                type="button"
-                role="menuitem"
-                className="vocabulary-more-menu__item"
-                onClick={onCloseMenu}
-              >
-                {t(key)}
-              </button>
-            ))}
-          </div>
+          createPortal(
+            <div
+              ref={menuRef}
+              className="vocabulary-more-menu"
+              role="menu"
+              style={menuStyle}
+            >
+              {MENU_ACTION_KEYS.map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  role="menuitem"
+                  className="vocabulary-more-menu__item"
+                  onClick={onCloseMenu}
+                >
+                  {t(key)}
+                </button>
+              ))}
+            </div>,
+            document.body,
+          )
         ) : null}
       </div>
     </div>

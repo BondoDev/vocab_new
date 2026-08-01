@@ -475,7 +475,9 @@ function AppContent({
     onFilters: () => handleRequireLanguages("levelCategory"),
     onExercises: () => handleRequireLanguages("exerciseSelection"),
     onExplore: () => navigate(ROUTES.explore),
-    onProfile: () => navigate(ROUTES.profile),
+    onProfile: (section?: "dashboard" | "learning" | "vocabulary") => {
+      navigate(section ? `${ROUTES.profile}?section=${section}` : ROUTES.profile);
+    },
     authSession,
     accountNickname: userProfile.nickname,
     onAuthSessionChange: handleAuthSessionChange,

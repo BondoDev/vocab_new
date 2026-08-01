@@ -439,6 +439,7 @@
 
 .vocabulary-table-scroll {
   overflow-x: auto;
+  overflow-y: visible;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -587,9 +588,6 @@
 }
 
 .vocabulary-more-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 0.3rem);
   z-index: 20;
   display: flex;
   min-width: 9.5rem;

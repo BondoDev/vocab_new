@@ -63,18 +63,20 @@ const NAV_HREFS = {
   profile: "/profile",
 } as const;
 
+type AccountProfileSection = "dashboard" | "learning" | "vocabulary";
+
 const ACCOUNT_NAV_GROUPS = [
   {
     labelKey: "userProfile.sidebar.groups.main",
     items: [
-      { id: "dashboard", labelKey: "userProfile.sidebar.items.dashboard", icon: UserRound, action: "profile" as const },
-      { id: "practice", labelKey: "userProfile.sidebar.items.learning", icon: Target, disabled: true },
+      { id: "dashboard", labelKey: "userProfile.sidebar.items.dashboard", icon: UserRound, section: "dashboard" as const },
+      { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target, section: "learning" as const },
     ],
   },
   {
     labelKey: "userProfile.sidebar.groups.learning",
     items: [
-      { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText, disabled: true },
+      { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText, section: "vocabulary" as const },
       { id: "my-lists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus, disabled: true },
     ],
   },
@@ -252,7 +254,7 @@ interface HeaderProps {
   onFilters?: () => void;
   onExercises?: () => void;
   onExplore?: () => void;
-  onProfile?: () => void;
+  onProfile?: (section?: AccountProfileSection) => void;
   activePage?:
     | "about"
     | "help"
@@ -331,12 +333,12 @@ export function Header({
   const authButtonLabel = authSession
     ? nicknameInitial || "Account"
     : loginLabel;
-  const goToProfile = () => {
+  const goToProfile = (section?: AccountProfileSection) => {
     setIsMenuOpen(false);
     setIsMobileAccountMenuOpen(false);
     setIsDesktopMoreOpen(false);
     setIsAuthDialogOpen(false);
-    onProfile?.();
+    onProfile?.(section);
   };
 
   useEffect(() => {
@@ -621,9 +623,9 @@ export function Header({
     `header-desktop-link ${isActive(...pages) ? "is-active" : ""}`;
   const desktopAuthButtonClassName =
     "header-desktop-control header-auth-nav";
-  const handleAccountNavItemSelect = (action?: "profile") => {
-    if (action === "profile") {
-      goToProfile();
+  const handleAccountNavItemSelect = (section?: AccountProfileSection) => {
+    if (section) {
+      goToProfile(section);
     }
   };
   const createNavClickHandler = (action?: () => void) => (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -856,7 +858,7 @@ export function Header({
                             <DropdownMenuItem
                               key={item.id}
                               disabled={Boolean(item.disabled)}
-                              onSelect={() => handleAccountNavItemSelect(item.action)}
+                              onSelect={() => handleAccountNavItemSelect(item.section)}
                               className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
                             >
                               <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
@@ -1000,8 +1002,9 @@ export function Header({
                       <div className="header-mobile-account-group__label">{t(group.labelKey)}</div>
                       {group.items.map((item) => {
                         const Icon = item.icon;
-                        const itemAction =
-                          item.action === "profile" ? goToProfile : undefined;
+                        const itemAction = item.section
+                          ? () => goToProfile(item.section)
+                          : undefined;
 
                         return (
                           <button

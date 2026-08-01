@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import type { LanguageLevelCode } from "../../../lib/userProfile";
 import { useLanguage, type UILanguage } from "../../../contexts/LanguageContext";
 import {
@@ -21,13 +22,27 @@ const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
   vocabulary: "userProfile.vocabularySection.ariaLabel",
 };
 
+function resolveProfileSection(search: string): UserProfileSectionId {
+  const section = new URLSearchParams(search).get("section");
+  return section === "learning" || section === "vocabulary" || section === "dashboard"
+    ? section
+    : "dashboard";
+}
+
 export function UserProfileDashboardPage({
   nickname,
   practiceLanguage,
   languageLevel,
 }: UserProfileDashboardPageProps) {
   const { t } = useLanguage();
-  const [activeSection, setActiveSection] = useState<UserProfileSectionId>("learning");
+  const location = useLocation();
+  const [activeSection, setActiveSection] = useState<UserProfileSectionId>(() =>
+    resolveProfileSection(location.search),
+  );
+
+  useEffect(() => {
+    setActiveSection(resolveProfileSection(location.search));
+  }, [location.search]);
 
   return (
     <main className="user-profile-dashboard flex-1">
