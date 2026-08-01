@@ -135,6 +135,89 @@
 }
 
 /* ============================================================
+   Shared accordion shell — the collapsed/expandable row rendered by
+   DailyGoalSelector.tsx and DailyStreakCard.tsx only below 644px (see
+   useIsCompactLearningSummary.ts). Sits inside .learning-kpi-card, so it
+   inherits that shell's border/radius/shadow/padding; nothing here changes
+   the >=644px markup or styling.
+   ============================================================ */
+
+.learning-kpi-card__accordion-trigger {
+  display: flex;
+  width: 100%;
+  /* ~56-64px total row height once the card's own padding is added on
+     top (0.75rem top + bottom at this width). */
+  min-height: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border: none;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+    border-radius: calc(var(--radius) - 4px);
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+.learning-kpi-card__accordion-right {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.learning-kpi-card__accordion-value {
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.learning-kpi-card__chevron {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+/* Collapsed by default (max-height/opacity/padding all animate together);
+   `visibility` is included in the transition using the same
+   invisible-until-transition-ends technique already used by Toast.tsx —
+   it also removes the collapsed panel's buttons from tab order and the
+   accessibility tree without an abrupt display:none jump cut. */
+.learning-kpi-card__accordion-panel {
+  overflow: hidden;
+  max-height: 0;
+  padding-top: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    max-height 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 200ms ease,
+    padding-top 250ms ease,
+    visibility 300ms;
+
+  &--open {
+    max-height: 30rem;
+    padding-top: 0.625rem;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* ============================================================
    DailyGoalSelector.tsx — the compact Daily Goal card rendered
    as one cell of the indicators grid above.
    ============================================================ */
@@ -683,6 +766,16 @@
     box-sizing: border-box;
     width: 13rem;
     max-width: 100%;
+    /* Auto left/right margins are a no-op on the wide row — `__main`'s own
+       flex-grow already consumes all the line's free space there, leaving
+       none for these to distribute. Once the card is too narrow to fit
+       both and the button wraps onto its own line, it's the only item on
+       that line, so the same free space these margins were absorbing
+       nothing from now exists entirely on that line and gets split evenly
+       on both sides, centering the button instead of leaving it flush
+       left (the default for a lone item under `justify-content:
+       space-between`). */
+    margin: 0 auto;
     padding: 0.55rem 1.1rem;
     border: none;
     border-radius: calc(var(--radius) - 2px);
@@ -769,5 +862,87 @@
 
   .learning-mode-card__button {
     background: var(--mode-orange);
+  }
+}
+
+/* ============================================================
+   Compact mobile summary (<644px) — Daily Goal and Daily Streak collapse
+   into accordion rows (see the accordion shell above) and Today's Progress
+   is reordered to the top, so the Start Learning section
+   (LearningModeCards.tsx) appears much higher on the page. Driven in
+   tandem with the JS `useIsCompactLearningSummary` matchMedia hook, which
+   swaps in the accordion markup at the same 643.98px threshold used here.
+
+   Down to 540px, the two collapsed accordions stay paired side by side on
+   one row (same pairing as the >=644px tablet layout, just narrower and
+   collapsed) — only Today's Progress forces its own full-width row above
+   them. Below 540px there isn't enough room left for two columns of
+   accordion rows without the collapsed value text/chevron crowding, so
+   they drop to a single full-width column like Today's Progress.
+
+   Placed at the end of the file (rather than alongside the shared/card
+   rules above) so these overrides win the cascade against the earlier
+   unconditional `.daily-goal-selector`/`.daily-streak-card` widths and the
+   `.learning-mode-cards` margins — same later-in-source-order technique
+   the existing `@media (max-width: 1183.98px)` block above already relies
+   on for `.today-progress-card`.
+   ============================================================ */
+@media (max-width: 643.98px) {
+  .learning-section__indicators {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* Tighter than the 0.75rem used above 644px — collapsed accordion rows
+       read as one compact stack rather than a spaced-out card list. */
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  /* Today's Progress first, then the two collapsed accordions — DOM order
+     stays Goal/Streak/Progress (see LearningSection.tsx) so this is a
+     visual-only reorder, same technique as the >=1184px block above.
+     Today's Progress's own width/flex-basis is already forced to 100% by
+     the existing @media (max-width: 1183.98px) block above, so only
+     `order` needs setting here. */
+  .today-progress-card {
+    order: 1;
+  }
+
+  .daily-goal-selector {
+    order: 2;
+  }
+
+  .daily-streak-card {
+    order: 3;
+  }
+
+  /* Shrinks the runway between the summary cards and Start Learning so the
+     three learning-mode cards are visible without excessive scrolling. */
+  .learning-mode-cards {
+    margin-top: 0.75rem;
+  }
+
+  .learning-mode-cards__header {
+    margin-top: 0.5rem;
+  }
+}
+
+/* 644px down to 540px: Daily Goal + Daily Streak paired on one row. */
+@media (min-width: 540px) and (max-width: 643.98px) {
+  .daily-goal-selector,
+  .daily-streak-card {
+    width: auto;
+    min-width: 0;
+    flex: 1 1 calc(50% - 0.25rem);
+  }
+}
+
+/* Below 540px: not enough width left for two accordion columns, so both
+   drop to their own full-width row, same as Today's Progress above them. */
+@media (max-width: 539.98px) {
+  .daily-goal-selector,
+  .daily-streak-card {
+    width: 100%;
+    flex-basis: 100%;
   }
 }

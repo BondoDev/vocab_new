@@ -1,4 +1,7 @@
+import { useId, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
+import { useIsCompactLearningSummary } from "./useIsCompactLearningSummary";
 
 // Hardcoded zero-state preview for a brand-new user. Replace with real
 // streak data from daily statistics once that pipeline exists.
@@ -20,18 +23,12 @@ const WEEK_DAYS = [
 export function DailyStreakCard() {
   const { t } = useLanguage();
   const { currentStreakDays, bestStreakDays } = DAILY_STREAK_PREVIEW;
+  const isCompact = useIsCompactLearningSummary();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const panelId = useId();
 
-  return (
-    <div className="learning-kpi-card daily-streak-card">
-      <div className="daily-streak-card__header">
-        <p className="learning-kpi-card__title">
-          {t("userProfile.learningSection.dailyStreak.title")}
-        </p>
-        <span className="learning-kpi-card__chip daily-streak-card__chip">
-          {t("userProfile.learningSection.dailyStreak.chip")}
-        </span>
-      </div>
-
+  const detailContent = (
+    <>
       <div className="daily-streak-card__metric">
         <div className="daily-streak-card__primary">
           <span className="daily-streak-card__value">{currentStreakDays}</span>
@@ -76,6 +73,63 @@ export function DailyStreakCard() {
           );
         })}
       </div>
+    </>
+  );
+
+  // Below ~644px this collapses into an accordion row (see
+  // learning-section.scss) so Daily Goal + Daily Streak stop pushing the
+  // Start Learning section down the page. Desktop/tablet keep the original
+  // always-expanded markup untouched below.
+  if (isCompact) {
+    return (
+      <div className="learning-kpi-card daily-streak-card">
+        <button
+          type="button"
+          className="learning-kpi-card__accordion-trigger"
+          aria-expanded={isExpanded}
+          aria-controls={panelId}
+          onClick={() => setIsExpanded((prev) => !prev)}
+        >
+          <span className="learning-kpi-card__title">
+            {t("userProfile.learningSection.dailyStreak.title")}
+          </span>
+          <span className="learning-kpi-card__accordion-right">
+            <span className="learning-kpi-card__accordion-value">
+              {currentStreakDays} {t("userProfile.learningSection.dailyStreak.daysUnit")}
+            </span>
+            <ChevronDown
+              aria-hidden="true"
+              className={`learning-kpi-card__chevron ${
+                isExpanded ? "learning-kpi-card__chevron--open" : ""
+              }`}
+            />
+          </span>
+        </button>
+
+        <div
+          id={panelId}
+          className={`learning-kpi-card__accordion-panel ${
+            isExpanded ? "learning-kpi-card__accordion-panel--open" : ""
+          }`}
+        >
+          <div className="learning-kpi-card__accordion-panel-inner">{detailContent}</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="learning-kpi-card daily-streak-card">
+      <div className="daily-streak-card__header">
+        <p className="learning-kpi-card__title">
+          {t("userProfile.learningSection.dailyStreak.title")}
+        </p>
+        <span className="learning-kpi-card__chip daily-streak-card__chip">
+          {t("userProfile.learningSection.dailyStreak.chip")}
+        </span>
+      </div>
+
+      {detailContent}
     </div>
   );
 }
