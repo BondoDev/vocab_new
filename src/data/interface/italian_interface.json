@@ -156,6 +156,98 @@
           }
         }
       }
+    },
+    "vocabularySection": {
+      "ariaLabel": "Sezione vocabolario",
+      "title": "Vocabolario",
+      "subtitle": "Sfoglia e gestisci le parole che hai imparato.",
+      "search": {
+        "placeholder": "Cerca parole...",
+        "ariaLabel": "Cerca nel vocabolario"
+      },
+      "addWord": {
+        "label": "Aggiungi parola",
+        "toast": "Aggiungi parola e per ora un'azione di anteprima."
+      },
+      "summaryCards": {
+        "learning": {
+          "title": "In apprendimento",
+          "description": "Parole che stai imparando ora"
+        },
+        "known": {
+          "title": "Conosciute",
+          "description": "Parole che conosci bene"
+        },
+        "mastered": {
+          "title": "Padroneggiate",
+          "description": "Parole che hai mantenuto a lungo termine"
+        },
+        "favorites": {
+          "title": "Preferite",
+          "description": "Parole che hai contrassegnato come preferite"
+        }
+      },
+      "tabs": {
+        "ariaLabel": "Categorie del vocabolario",
+        "all": "Tutte le parole",
+        "learning": "In apprendimento",
+        "known": "Conosciute",
+        "mastered": "Padroneggiate",
+        "favorites": "Preferite"
+      },
+      "filters": {
+        "label": "Filtri",
+        "level": "Livello",
+        "partOfSpeech": "Categoria grammaticale",
+        "status": "Stato",
+        "any": "Qualsiasi",
+        "partsOfSpeech": {
+          "noun": "Sostantivo",
+          "verb": "Verbo",
+          "adjective": "Aggettivo",
+          "adverb": "Avverbio"
+        },
+        "statusOptions": {
+          "learning": "In apprendimento",
+          "known": "Conosciute",
+          "mastered": "Padroneggiate"
+        }
+      },
+      "table": {
+        "columns": {
+          "word": "Parola",
+          "translation": "Traduzione",
+          "level": "Livello",
+          "status": "Stato",
+          "lastReviewed": "Ultima revisione",
+          "actions": "Azioni"
+        },
+        "audioAriaLabel": "Riproduci pronuncia",
+        "favoriteAriaLabel": "Attiva/disattiva preferito",
+        "moreActionsAriaLabel": "Altre azioni",
+        "menu": {
+          "viewDetails": "Visualizza dettagli",
+          "addToList": "Aggiungi a lista",
+          "practiceWord": "Esercitati sulla parola"
+        },
+        "statuses": {
+          "learning": "In apprendimento",
+          "known": "Conosciute",
+          "mastered": "Padroneggiate"
+        },
+        "lastReviewed": {
+          "today": "Oggi",
+          "twoDaysAgo": "2 giorni fa",
+          "fiveDaysAgo": "5 giorni fa",
+          "oneWeekAgo": "1 settimana fa"
+        }
+      },
+      "pagination": {
+        "previewingSampleRows": "Anteprima di righe di esempio",
+        "previous": "Precedente",
+        "next": "Successivo",
+        "rowsPerPage": "Righe per pagina"
+      }
     }
   },
   "aboutPage": {

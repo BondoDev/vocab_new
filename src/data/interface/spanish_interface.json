@@ -156,6 +156,98 @@
           }
         }
       }
+    },
+    "vocabularySection": {
+      "ariaLabel": "Seccion de vocabulario",
+      "title": "Vocabulario",
+      "subtitle": "Explora y gestiona las palabras que has aprendido.",
+      "search": {
+        "placeholder": "Buscar palabras...",
+        "ariaLabel": "Buscar vocabulario"
+      },
+      "addWord": {
+        "label": "Anadir palabra",
+        "toast": "Anadir palabra es una accion de vista previa por ahora."
+      },
+      "summaryCards": {
+        "learning": {
+          "title": "Aprendiendo",
+          "description": "Palabras que estas aprendiendo actualmente"
+        },
+        "known": {
+          "title": "Conocidas",
+          "description": "Palabras que conoces bien"
+        },
+        "mastered": {
+          "title": "Dominadas",
+          "description": "Palabras que has retenido a largo plazo"
+        },
+        "favorites": {
+          "title": "Favoritas",
+          "description": "Palabras que marcaste como favoritas"
+        }
+      },
+      "tabs": {
+        "ariaLabel": "Categorias de vocabulario",
+        "all": "Todas las palabras",
+        "learning": "Aprendiendo",
+        "known": "Conocidas",
+        "mastered": "Dominadas",
+        "favorites": "Favoritas"
+      },
+      "filters": {
+        "label": "Filtros",
+        "level": "Nivel",
+        "partOfSpeech": "Categoria gramatical",
+        "status": "Estado",
+        "any": "Cualquiera",
+        "partsOfSpeech": {
+          "noun": "Sustantivo",
+          "verb": "Verbo",
+          "adjective": "Adjetivo",
+          "adverb": "Adverbio"
+        },
+        "statusOptions": {
+          "learning": "Aprendiendo",
+          "known": "Conocidas",
+          "mastered": "Dominadas"
+        }
+      },
+      "table": {
+        "columns": {
+          "word": "Palabra",
+          "translation": "Traduccion",
+          "level": "Nivel",
+          "status": "Estado",
+          "lastReviewed": "Ultima revision",
+          "actions": "Acciones"
+        },
+        "audioAriaLabel": "Reproducir pronunciacion",
+        "favoriteAriaLabel": "Alternar favorito",
+        "moreActionsAriaLabel": "Mas acciones",
+        "menu": {
+          "viewDetails": "Ver detalles",
+          "addToList": "Anadir a lista",
+          "practiceWord": "Practicar palabra"
+        },
+        "statuses": {
+          "learning": "Aprendiendo",
+          "known": "Conocidas",
+          "mastered": "Dominadas"
+        },
+        "lastReviewed": {
+          "today": "Hoy",
+          "twoDaysAgo": "Hace 2 dias",
+          "fiveDaysAgo": "Hace 5 dias",
+          "oneWeekAgo": "Hace 1 semana"
+        }
+      },
+      "pagination": {
+        "previewingSampleRows": "Mostrando filas de ejemplo",
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "rowsPerPage": "Filas por pagina"
+      }
     }
   },
   "aboutPage": {

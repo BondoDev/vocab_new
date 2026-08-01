@@ -156,6 +156,98 @@
           }
         }
       }
+    },
+    "vocabularySection": {
+      "ariaLabel": "Vokabelbereich",
+      "title": "Vokabeln",
+      "subtitle": "Durchsuche und verwalte die Woerter, die du gelernt hast.",
+      "search": {
+        "placeholder": "Woerter suchen...",
+        "ariaLabel": "Vokabeln durchsuchen"
+      },
+      "addWord": {
+        "label": "Wort hinzufuegen",
+        "toast": "Wort hinzufuegen ist derzeit nur eine Vorschau-Aktion."
+      },
+      "summaryCards": {
+        "learning": {
+          "title": "Lernen",
+          "description": "Woerter, die du gerade lernst"
+        },
+        "known": {
+          "title": "Bekannt",
+          "description": "Woerter, die du gut kennst"
+        },
+        "mastered": {
+          "title": "Gemeistert",
+          "description": "Woerter, die du dauerhaft behalten hast"
+        },
+        "favorites": {
+          "title": "Favoriten",
+          "description": "Woerter, die du als Favorit markiert hast"
+        }
+      },
+      "tabs": {
+        "ariaLabel": "Vokabelkategorien",
+        "all": "Alle Woerter",
+        "learning": "Lernen",
+        "known": "Bekannt",
+        "mastered": "Gemeistert",
+        "favorites": "Favoriten"
+      },
+      "filters": {
+        "label": "Filter",
+        "level": "Niveau",
+        "partOfSpeech": "Wortart",
+        "status": "Status",
+        "any": "Beliebig",
+        "partsOfSpeech": {
+          "noun": "Nomen",
+          "verb": "Verb",
+          "adjective": "Adjektiv",
+          "adverb": "Adverb"
+        },
+        "statusOptions": {
+          "learning": "Lernen",
+          "known": "Bekannt",
+          "mastered": "Gemeistert"
+        }
+      },
+      "table": {
+        "columns": {
+          "word": "Wort",
+          "translation": "Uebersetzung",
+          "level": "Niveau",
+          "status": "Status",
+          "lastReviewed": "Zuletzt wiederholt",
+          "actions": "Aktionen"
+        },
+        "audioAriaLabel": "Aussprache abspielen",
+        "favoriteAriaLabel": "Favorit umschalten",
+        "moreActionsAriaLabel": "Weitere Aktionen",
+        "menu": {
+          "viewDetails": "Details ansehen",
+          "addToList": "Zu Liste hinzufuegen",
+          "practiceWord": "Wort ueben"
+        },
+        "statuses": {
+          "learning": "Lernen",
+          "known": "Bekannt",
+          "mastered": "Gemeistert"
+        },
+        "lastReviewed": {
+          "today": "Heute",
+          "twoDaysAgo": "Vor 2 Tagen",
+          "fiveDaysAgo": "Vor 5 Tagen",
+          "oneWeekAgo": "Vor 1 Woche"
+        }
+      },
+      "pagination": {
+        "previewingSampleRows": "Beispielzeilen als Vorschau",
+        "previous": "Zurueck",
+        "next": "Weiter",
+        "rowsPerPage": "Zeilen pro Seite"
+      }
     }
   },
   "aboutPage": {

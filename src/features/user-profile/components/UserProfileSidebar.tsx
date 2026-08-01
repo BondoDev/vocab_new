@@ -23,10 +23,10 @@ type SidebarNavGroup = {
   }>;
 };
 
-export type UserProfileSectionId = "dashboard" | "learning";
+export type UserProfileSectionId = "dashboard" | "learning" | "vocabulary";
 
 function isUserProfileSectionId(value: string): value is UserProfileSectionId {
-  return value === "dashboard" || value === "learning";
+  return value === "dashboard" || value === "learning" || value === "vocabulary";
 }
 
 const SIDEBAR_NAV_GROUPS: SidebarNavGroup[] = [

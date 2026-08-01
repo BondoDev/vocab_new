@@ -7,12 +7,19 @@ import {
 } from "../components/UserProfileSidebar";
 import { DashboardSection } from "./dashboard/DashboardSection";
 import { LearningSection } from "./learning/LearningSection";
+import { VocabularySection } from "./vocabulary/VocabularySection";
 
 interface UserProfileDashboardPageProps {
   nickname?: string;
   practiceLanguage?: UILanguage | "";
   languageLevel?: LanguageLevelCode | "";
 }
+
+const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
+  dashboard: "userProfile.developmentNotice.ariaLabel",
+  learning: "userProfile.learningSection.ariaLabel",
+  vocabulary: "userProfile.vocabularySection.ariaLabel",
+};
 
 export function UserProfileDashboardPage({
   nickname,
@@ -21,7 +28,6 @@ export function UserProfileDashboardPage({
 }: UserProfileDashboardPageProps) {
   const { t } = useLanguage();
   const [activeSection, setActiveSection] = useState<UserProfileSectionId>("learning");
-  const isLearningSection = activeSection === "learning";
 
   return (
     <main className="user-profile-dashboard flex-1">
@@ -37,14 +43,12 @@ export function UserProfileDashboardPage({
 
           <section
             className="user-profile-dashboard__content"
-            aria-label={
-              isLearningSection
-                ? t("userProfile.learningSection.ariaLabel")
-                : t("userProfile.developmentNotice.ariaLabel")
-            }
+            aria-label={t(SECTION_ARIA_LABEL_KEYS[activeSection])}
           >
             {nickname ? <span className="sr-only">{nickname}</span> : null}
-            {isLearningSection ? <LearningSection /> : <DashboardSection />}
+            {activeSection === "learning" ? <LearningSection /> : null}
+            {activeSection === "vocabulary" ? <VocabularySection /> : null}
+            {activeSection === "dashboard" ? <DashboardSection /> : null}
           </section>
         </div>
       </section>

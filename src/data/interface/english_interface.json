@@ -156,6 +156,98 @@
           }
         }
       }
+    },
+    "vocabularySection": {
+      "ariaLabel": "Vocabulary section",
+      "title": "Vocabulary",
+      "subtitle": "Browse and manage the words you've learned.",
+      "search": {
+        "placeholder": "Search words...",
+        "ariaLabel": "Search vocabulary"
+      },
+      "addWord": {
+        "label": "Add Word",
+        "toast": "Add Word is a preview action for now."
+      },
+      "summaryCards": {
+        "learning": {
+          "title": "Learning",
+          "description": "Words you're currently learning"
+        },
+        "known": {
+          "title": "Known",
+          "description": "Words you know well"
+        },
+        "mastered": {
+          "title": "Mastered",
+          "description": "Words you've retained long-term"
+        },
+        "favorites": {
+          "title": "Favorites",
+          "description": "Words you marked as favorites"
+        }
+      },
+      "tabs": {
+        "ariaLabel": "Vocabulary categories",
+        "all": "All Words",
+        "learning": "Learning",
+        "known": "Known",
+        "mastered": "Mastered",
+        "favorites": "Favorites"
+      },
+      "filters": {
+        "label": "Filters",
+        "level": "Level",
+        "partOfSpeech": "Part of speech",
+        "status": "Status",
+        "any": "Any",
+        "partsOfSpeech": {
+          "noun": "Noun",
+          "verb": "Verb",
+          "adjective": "Adjective",
+          "adverb": "Adverb"
+        },
+        "statusOptions": {
+          "learning": "Learning",
+          "known": "Known",
+          "mastered": "Mastered"
+        }
+      },
+      "table": {
+        "columns": {
+          "word": "Word",
+          "translation": "Translation",
+          "level": "Level",
+          "status": "Status",
+          "lastReviewed": "Last Reviewed",
+          "actions": "Actions"
+        },
+        "audioAriaLabel": "Play pronunciation",
+        "favoriteAriaLabel": "Toggle favorite",
+        "moreActionsAriaLabel": "More actions",
+        "menu": {
+          "viewDetails": "View details",
+          "addToList": "Add to list",
+          "practiceWord": "Practice word"
+        },
+        "statuses": {
+          "learning": "Learning",
+          "known": "Known",
+          "mastered": "Mastered"
+        },
+        "lastReviewed": {
+          "today": "Today",
+          "twoDaysAgo": "2 days ago",
+          "fiveDaysAgo": "5 days ago",
+          "oneWeekAgo": "1 week ago"
+        }
+      },
+      "pagination": {
+        "previewingSampleRows": "Previewing sample rows",
+        "previous": "Previous",
+        "next": "Next",
+        "rowsPerPage": "Rows per page"
+      }
     }
   },
   "aboutPage": {

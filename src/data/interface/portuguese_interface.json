@@ -156,6 +156,98 @@
           }
         }
       }
+    },
+    "vocabularySection": {
+      "ariaLabel": "Secao de vocabulario",
+      "title": "Vocabulario",
+      "subtitle": "Explore e gerencie as palavras que voce aprendeu.",
+      "search": {
+        "placeholder": "Buscar palavras...",
+        "ariaLabel": "Buscar vocabulario"
+      },
+      "addWord": {
+        "label": "Adicionar palavra",
+        "toast": "Adicionar palavra e uma acao de pre-visualizacao por enquanto."
+      },
+      "summaryCards": {
+        "learning": {
+          "title": "Aprendendo",
+          "description": "Palavras que voce esta aprendendo agora"
+        },
+        "known": {
+          "title": "Conhecidas",
+          "description": "Palavras que voce conhece bem"
+        },
+        "mastered": {
+          "title": "Dominadas",
+          "description": "Palavras que voce reteve a longo prazo"
+        },
+        "favorites": {
+          "title": "Favoritas",
+          "description": "Palavras que voce marcou como favoritas"
+        }
+      },
+      "tabs": {
+        "ariaLabel": "Categorias de vocabulario",
+        "all": "Todas as palavras",
+        "learning": "Aprendendo",
+        "known": "Conhecidas",
+        "mastered": "Dominadas",
+        "favorites": "Favoritas"
+      },
+      "filters": {
+        "label": "Filtros",
+        "level": "Nivel",
+        "partOfSpeech": "Classe gramatical",
+        "status": "Status",
+        "any": "Qualquer",
+        "partsOfSpeech": {
+          "noun": "Substantivo",
+          "verb": "Verbo",
+          "adjective": "Adjetivo",
+          "adverb": "Adverbio"
+        },
+        "statusOptions": {
+          "learning": "Aprendendo",
+          "known": "Conhecidas",
+          "mastered": "Dominadas"
+        }
+      },
+      "table": {
+        "columns": {
+          "word": "Palavra",
+          "translation": "Traducao",
+          "level": "Nivel",
+          "status": "Status",
+          "lastReviewed": "Ultima revisao",
+          "actions": "Acoes"
+        },
+        "audioAriaLabel": "Reproduzir pronuncia",
+        "favoriteAriaLabel": "Alternar favorito",
+        "moreActionsAriaLabel": "Mais acoes",
+        "menu": {
+          "viewDetails": "Ver detalhes",
+          "addToList": "Adicionar a lista",
+          "practiceWord": "Praticar palavra"
+        },
+        "statuses": {
+          "learning": "Aprendendo",
+          "known": "Conhecidas",
+          "mastered": "Dominadas"
+        },
+        "lastReviewed": {
+          "today": "Hoje",
+          "twoDaysAgo": "2 dias atras",
+          "fiveDaysAgo": "5 dias atras",
+          "oneWeekAgo": "1 semana atras"
+        }
+      },
+      "pagination": {
+        "previewingSampleRows": "Pre-visualizando linhas de exemplo",
+        "previous": "Anterior",
+        "next": "Proximo",
+        "rowsPerPage": "Linhas por pagina"
+      }
     }
   },
   "aboutPage": {

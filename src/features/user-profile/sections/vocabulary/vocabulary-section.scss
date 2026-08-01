@@ -1,0 +1,789 @@
+/* ============================================================
+   VocabularySection.tsx — page header (title/subtitle left, search +
+   Add Word right on wide screens) and the outer panel that holds the
+   tabs/table.
+   ============================================================ */
+
+.vocabulary-section__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.vocabulary-section__heading {
+  min-width: 0;
+}
+
+.vocabulary-section__title {
+  margin: 0;
+  color: #2f2755;
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
+.vocabulary-section__subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.vocabulary-section__header-controls {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.vocabulary-section__search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 15rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted-foreground);
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+
+  &:focus-within {
+    border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 16%, transparent);
+  }
+
+  input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: none;
+    color: var(--foreground);
+    font-size: 0.875rem;
+
+    &::placeholder {
+      color: var(--muted-foreground);
+    }
+  }
+}
+
+.vocabulary-section__add-word {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    filter 150ms ease,
+    transform 150ms ease;
+
+  &:hover {
+    filter: brightness(0.94);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
+  }
+}
+
+.vocabulary-section__panel {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 2px);
+  background: var(--card);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+/* ============================================================
+   VocabularySummaryCards.tsx — four compact KPI cards. Neutral card
+   surface; the accent color (purple/green/amber/rose) is limited to the
+   icon container, the value, and the thin decorative line at the bottom
+   (see the vocabulary task brief - keeps the cards restrained rather
+   than fully colored blocks).
+   ============================================================ */
+
+.vocabulary-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 399.98px) {
+  .vocabulary-summary-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .vocabulary-summary-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.vocabulary-summary-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 20px -14px rgba(15, 23, 42, 0.12);
+
+  &__header {
+    /* Icon in column 1, title in column 2, and an empty phantom column 3
+       the same width as the icon - the icon's width is "cancelled out" by
+       the matching empty space on the right, so the title centers against
+       the card's full width instead of just the space beside the icon. */
+    display: grid;
+    grid-template-columns: 2.5rem 1fr 2.5rem;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  &__icon {
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: calc(var(--radius) - 2px);
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  &__value {
+    margin: 0.3rem 0 0;
+    font-size: 1.85rem;
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  &__description {
+    margin: 0.35rem 0 0.9rem;
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  &__status-line {
+    display: block;
+    margin-top: auto;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--muted);
+  }
+}
+
+.vocabulary-summary-card--purple {
+  .vocabulary-summary-card__icon {
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+    color: var(--primary);
+  }
+
+  .vocabulary-summary-card__value {
+    color: var(--primary);
+  }
+
+  .vocabulary-summary-card__status-line {
+    background: linear-gradient(
+      90deg,
+      var(--primary) 0%,
+      color-mix(in srgb, var(--primary) 12%, var(--muted)) 100%
+    );
+  }
+}
+
+.vocabulary-summary-card--green {
+  /* No green exists in the shared theme tokens yet, so this is defined
+     locally rather than added to the global token set for one feature -
+     same precedent as DailyStreakCard's --success. */
+  --vocab-green: #22c55e;
+
+  .vocabulary-summary-card__icon {
+    background: color-mix(in srgb, var(--vocab-green) 14%, transparent);
+    color: var(--vocab-green);
+  }
+
+  .vocabulary-summary-card__value {
+    color: var(--vocab-green);
+  }
+
+  .vocabulary-summary-card__status-line {
+    background: linear-gradient(
+      90deg,
+      var(--vocab-green) 0%,
+      color-mix(in srgb, var(--vocab-green) 12%, var(--muted)) 100%
+    );
+  }
+}
+
+.vocabulary-summary-card--amber {
+  /* Scoped locally rather than reusing --chart-1, same precedent as
+     LearningModeCards' --mode-orange. */
+  --vocab-amber: #f59e0b;
+
+  .vocabulary-summary-card__icon {
+    background: color-mix(in srgb, var(--vocab-amber) 16%, transparent);
+    color: var(--vocab-amber);
+  }
+
+  .vocabulary-summary-card__value {
+    color: var(--vocab-amber);
+  }
+
+  .vocabulary-summary-card__status-line {
+    background: linear-gradient(
+      90deg,
+      var(--vocab-amber) 0%,
+      color-mix(in srgb, var(--vocab-amber) 12%, var(--muted)) 100%
+    );
+  }
+}
+
+.vocabulary-summary-card--rose {
+  /* A softer rose than --destructive, which is reserved for error states
+     elsewhere in the app. */
+  --vocab-rose: #f43f5e;
+
+  .vocabulary-summary-card__icon {
+    background: color-mix(in srgb, var(--vocab-rose) 14%, transparent);
+    color: var(--vocab-rose);
+  }
+
+  .vocabulary-summary-card__value {
+    color: var(--vocab-rose);
+  }
+
+  .vocabulary-summary-card__status-line {
+    background: linear-gradient(
+      90deg,
+      var(--vocab-rose) 0%,
+      color-mix(in srgb, var(--vocab-rose) 12%, var(--muted)) 100%
+    );
+  }
+}
+
+/* ============================================================
+   VocabularyTabs.tsx — text tabs with an active underline, plus the
+   Filters button/panel on the same row.
+   ============================================================ */
+
+.vocabulary-tabs-row {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.vocabulary-tabs-row__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 1.25rem;
+  min-width: 0;
+}
+
+.vocabulary-tab {
+  padding: 0.4rem 0.05rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-radius: calc(var(--radius) - 6px);
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+
+  &__count {
+    margin-left: 0.2rem;
+    opacity: 0.75;
+    font-weight: 500;
+  }
+}
+
+.vocabulary-tab--active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.vocabulary-filters-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease,
+    background-color 150ms ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+.vocabulary-filters-button--active {
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  color: var(--primary);
+}
+
+.vocabulary-filters-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: color-mix(in srgb, var(--muted) 45%, transparent);
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  &__label {
+    color: var(--muted-foreground);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  &__select {
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 4px);
+    background: var(--card);
+    color: var(--foreground);
+    font-size: 0.85rem;
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--ring);
+    }
+  }
+}
+
+/* ============================================================
+   VocabularyTable.tsx — desktop table, badges, row actions, the mobile
+   stacked-card fallback, and pagination. The table and the mobile list
+   both render at all times; CSS toggles which one is visible per
+   breakpoint (see the 639.98px query at the end of this file).
+   ============================================================ */
+
+.vocabulary-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vocabulary-table {
+  width: 100%;
+  min-width: 40rem;
+  border-collapse: collapse;
+  text-align: left;
+
+  thead th {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted-foreground);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 0.7rem 0.75rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    color: var(--foreground);
+    font-size: 0.875rem;
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover td {
+    background: color-mix(in srgb, var(--primary) 4%, transparent);
+  }
+}
+
+.vocabulary-table__actions-head {
+  text-align: right;
+}
+
+.vocabulary-table__word-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.vocabulary-table__word {
+  font-weight: 600;
+}
+
+.vocabulary-table__audio-icon {
+  display: inline-flex;
+  color: var(--muted-foreground);
+}
+
+.vocabulary-table__translation {
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+}
+
+.vocabulary-table__meta {
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.vocabulary-level-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: calc(var(--radius) - 4px);
+  background: color-mix(in srgb, var(--chart-2) 16%, transparent);
+  color: color-mix(in srgb, var(--chart-2) 55%, var(--foreground));
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.vocabulary-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vocabulary-status-badge--learning {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary);
+}
+
+.vocabulary-status-badge--known {
+  --vocab-green: #22c55e;
+  background: color-mix(in srgb, var(--vocab-green) 16%, transparent);
+  color: color-mix(in srgb, var(--vocab-green) 50%, var(--foreground));
+}
+
+.vocabulary-status-badge--mastered {
+  --vocab-amber: #f59e0b;
+  background: color-mix(in srgb, var(--vocab-amber) 18%, transparent);
+  color: color-mix(in srgb, var(--vocab-amber) 45%, var(--foreground));
+}
+
+.vocabulary-row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3rem;
+
+  &__menu-wrap {
+    position: relative;
+  }
+}
+
+.vocabulary-favorite-button,
+.vocabulary-more-button {
+  display: inline-flex;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: calc(var(--radius) - 4px);
+  background: none;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--muted-foreground) 12%, transparent);
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+.vocabulary-favorite-button[aria-pressed="true"] {
+  color: #f59e0b;
+}
+
+.vocabulary-more-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.3rem);
+  z-index: 20;
+  display: flex;
+  min-width: 9.5rem;
+  flex-direction: column;
+  padding: 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--card);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
+
+  &__item {
+    padding: 0.45rem 0.6rem;
+    border: none;
+    border-radius: calc(var(--radius) - 6px);
+    background: none;
+    color: var(--foreground);
+    font-size: 0.82rem;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+      background: color-mix(in srgb, var(--primary) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--ring);
+    }
+  }
+}
+
+.vocabulary-mobile-list {
+  display: none;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  gap: 0.65rem;
+  list-style: none;
+}
+
+.vocabulary-mobile-card {
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--card);
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__translation {
+    margin: 0.4rem 0 0;
+    color: var(--foreground);
+    font-size: 0.85rem;
+  }
+
+  &__badges {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.55rem;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.55rem;
+  }
+}
+
+.vocabulary-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.vocabulary-pagination__summary {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+}
+
+.vocabulary-pagination__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.vocabulary-pagination__nav,
+.vocabulary-pagination__page {
+  display: inline-flex;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+.vocabulary-pagination__page--active {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.vocabulary-pagination__ellipsis {
+  padding: 0 0.2rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+}
+
+.vocabulary-pagination__rows-per-page {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+}
+
+.vocabulary-pagination__rows-select {
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 0.8rem;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+/* ============================================================
+   Mobile (<640px) — search goes full width, Add Word stays full width
+   for an easy tap target, and the table swaps for the stacked card list.
+   Same 639.98/640 breakpoint pair already used elsewhere in this feature
+   (see learning-section.scss).
+   ============================================================ */
+@media (max-width: 639.98px) {
+  .vocabulary-section__header {
+    align-items: stretch;
+  }
+
+  .vocabulary-section__header-controls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .vocabulary-section__search {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .vocabulary-section__add-word {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .vocabulary-section__panel {
+    padding: 1rem;
+  }
+
+  .vocabulary-table-scroll {
+    display: none;
+  }
+
+  .vocabulary-mobile-list {
+    display: flex;
+  }
+}

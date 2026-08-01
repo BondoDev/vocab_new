@@ -550,6 +550,98 @@
           }
         }
       }
+    },
+    "vocabularySection": {
+      "ariaLabel": "Раздел словаря",
+      "title": "Словарь",
+      "subtitle": "Просматривайте и управляйте изученными словами.",
+      "search": {
+        "placeholder": "Поиск слов...",
+        "ariaLabel": "Поиск по словарю"
+      },
+      "addWord": {
+        "label": "Добавить слово",
+        "toast": "Добавление слова пока доступно только в режиме предпросмотра."
+      },
+      "summaryCards": {
+        "learning": {
+          "title": "Изучаю",
+          "description": "Слова, которые вы сейчас изучаете"
+        },
+        "known": {
+          "title": "Знакомые",
+          "description": "Слова, которые вы хорошо знаете"
+        },
+        "mastered": {
+          "title": "Освоенные",
+          "description": "Слова, которые вы запомнили надолго"
+        },
+        "favorites": {
+          "title": "Избранное",
+          "description": "Слова, отмеченные как избранные"
+        }
+      },
+      "tabs": {
+        "ariaLabel": "Категории словаря",
+        "all": "Все слова",
+        "learning": "Изучаю",
+        "known": "Знакомые",
+        "mastered": "Освоенные",
+        "favorites": "Избранное"
+      },
+      "filters": {
+        "label": "Фильтры",
+        "level": "Уровень",
+        "partOfSpeech": "Часть речи",
+        "status": "Статус",
+        "any": "Любой",
+        "partsOfSpeech": {
+          "noun": "Существительное",
+          "verb": "Глагол",
+          "adjective": "Прилагательное",
+          "adverb": "Наречие"
+        },
+        "statusOptions": {
+          "learning": "Изучаю",
+          "known": "Знакомые",
+          "mastered": "Освоенные"
+        }
+      },
+      "table": {
+        "columns": {
+          "word": "Слово",
+          "translation": "Перевод",
+          "level": "Уровень",
+          "status": "Статус",
+          "lastReviewed": "Последнее повторение",
+          "actions": "Действия"
+        },
+        "audioAriaLabel": "Воспроизвести произношение",
+        "favoriteAriaLabel": "Переключить избранное",
+        "moreActionsAriaLabel": "Дополнительные действия",
+        "menu": {
+          "viewDetails": "Посмотреть детали",
+          "addToList": "Добавить в список",
+          "practiceWord": "Практиковать слово"
+        },
+        "statuses": {
+          "learning": "Изучаю",
+          "known": "Знакомые",
+          "mastered": "Освоенные"
+        },
+        "lastReviewed": {
+          "today": "Сегодня",
+          "twoDaysAgo": "2 дня назад",
+          "fiveDaysAgo": "5 дней назад",
+          "oneWeekAgo": "1 неделю назад"
+        }
+      },
+      "pagination": {
+        "previewingSampleRows": "Предпросмотр примерных строк",
+        "previous": "Назад",
+        "next": "Далее",
+        "rowsPerPage": "Строк на странице"
+      }
     }
   }
 }

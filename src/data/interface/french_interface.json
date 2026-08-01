@@ -156,6 +156,98 @@
           }
         }
       }
+    },
+    "vocabularySection": {
+      "ariaLabel": "Section vocabulaire",
+      "title": "Vocabulaire",
+      "subtitle": "Parcourez et gerez les mots que vous avez appris.",
+      "search": {
+        "placeholder": "Rechercher des mots...",
+        "ariaLabel": "Rechercher dans le vocabulaire"
+      },
+      "addWord": {
+        "label": "Ajouter un mot",
+        "toast": "Ajouter un mot est pour l'instant une action d'apercu."
+      },
+      "summaryCards": {
+        "learning": {
+          "title": "En apprentissage",
+          "description": "Mots que vous apprenez actuellement"
+        },
+        "known": {
+          "title": "Connus",
+          "description": "Mots que vous connaissez bien"
+        },
+        "mastered": {
+          "title": "Maitrises",
+          "description": "Mots que vous retenez sur le long terme"
+        },
+        "favorites": {
+          "title": "Favoris",
+          "description": "Mots que vous avez marques comme favoris"
+        }
+      },
+      "tabs": {
+        "ariaLabel": "Categories de vocabulaire",
+        "all": "Tous les mots",
+        "learning": "En apprentissage",
+        "known": "Connus",
+        "mastered": "Maitrises",
+        "favorites": "Favoris"
+      },
+      "filters": {
+        "label": "Filtres",
+        "level": "Niveau",
+        "partOfSpeech": "Nature grammaticale",
+        "status": "Statut",
+        "any": "Tous",
+        "partsOfSpeech": {
+          "noun": "Nom",
+          "verb": "Verbe",
+          "adjective": "Adjectif",
+          "adverb": "Adverbe"
+        },
+        "statusOptions": {
+          "learning": "En apprentissage",
+          "known": "Connus",
+          "mastered": "Maitrises"
+        }
+      },
+      "table": {
+        "columns": {
+          "word": "Mot",
+          "translation": "Traduction",
+          "level": "Niveau",
+          "status": "Statut",
+          "lastReviewed": "Derniere revision",
+          "actions": "Actions"
+        },
+        "audioAriaLabel": "Ecouter la prononciation",
+        "favoriteAriaLabel": "Basculer le favori",
+        "moreActionsAriaLabel": "Plus d'actions",
+        "menu": {
+          "viewDetails": "Voir les details",
+          "addToList": "Ajouter a une liste",
+          "practiceWord": "Pratiquer le mot"
+        },
+        "statuses": {
+          "learning": "En apprentissage",
+          "known": "Connus",
+          "mastered": "Maitrises"
+        },
+        "lastReviewed": {
+          "today": "Aujourd'hui",
+          "twoDaysAgo": "Il y a 2 jours",
+          "fiveDaysAgo": "Il y a 5 jours",
+          "oneWeekAgo": "Il y a 1 semaine"
+        }
+      },
+      "pagination": {
+        "previewingSampleRows": "Apercu de lignes d'exemple",
+        "previous": "Precedent",
+        "next": "Suivant",
+        "rowsPerPage": "Lignes par page"
+      }
     }
   },
   "aboutPage": {
