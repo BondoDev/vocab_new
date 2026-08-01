@@ -42,6 +42,14 @@ export function useAutoDismissMessage(durationMs: number = DEFAULT_DURATION_MS) 
 // than a colocated stylesheet, since as an app-wide primitive it has no
 // single feature folder to own an SCSS file.
 export function Toast({ message }: { message: string | null }) {
+  // document.body doesn't exist during SSR/prerendering (entry-server.tsx
+  // has no DOM), and /profile — which always mounts a Toast via
+  // DailyGoalSelector's LearningSection — is a prerendered route. Skip the
+  // portal there; the client hydrates and mounts it normally afterward.
+  if (typeof document === "undefined") {
+    return null;
+  }
+
   return createPortal(
     <div
       role="status"
