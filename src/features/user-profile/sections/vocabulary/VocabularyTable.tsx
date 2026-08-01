@@ -120,6 +120,8 @@ export function VocabularyTable() {
     t(`userProfile.vocabularySection.table.statuses.${status}`);
   const lastReviewedLabel = (key: string) =>
     t(`userProfile.vocabularySection.table.lastReviewed.${key}`);
+  const reviewedLabel = (key: string) =>
+    t(`userProfile.vocabularySection.table.reviewedLabel.${key}`);
 
   return (
     <div className="vocabulary-table-container">
@@ -192,33 +194,10 @@ export function VocabularyTable() {
                   <Volume2 size={13} strokeWidth={2} aria-hidden="true" />
                 </span>
               </div>
-              <button
-                type="button"
-                className="vocabulary-favorite-button"
-                aria-pressed={favoriteIds.has(word.id)}
-                aria-label={t("userProfile.vocabularySection.table.favoriteAriaLabel")}
-                onClick={() => toggleFavorite(word.id)}
-              >
-                <Star
-                  size={16}
-                  strokeWidth={2}
-                  aria-hidden="true"
-                  fill={favoriteIds.has(word.id) ? "currentColor" : "none"}
-                />
-              </button>
-            </div>
 
-            <p className="vocabulary-mobile-card__translation">{word.translation}</p>
-
-            <div className="vocabulary-mobile-card__badges">
-              <span className="vocabulary-level-badge">{word.level}</span>
-              <span className={`vocabulary-status-badge vocabulary-status-badge--${word.status}`}>
-                {statusLabel(word.status)}
-              </span>
-            </div>
-
-            <div className="vocabulary-mobile-card__bottom">
-              <span className="vocabulary-table__meta">{lastReviewedLabel(word.lastReviewedKey)}</span>
+              {/* Favorite + more together, top-right - keeps the row the card
+                  would later become tappable-for-details free of any other
+                  interactive element competing for space below it. */}
               <RowActions
                 word={word}
                 isFavorite={favoriteIds.has(word.id)}
@@ -230,8 +209,22 @@ export function VocabularyTable() {
                   )
                 }
                 onCloseMenu={() => setOpenMenuId(null)}
-                hideFavorite
               />
+            </div>
+
+            <p className="vocabulary-mobile-card__translation">{word.translation}</p>
+
+            <div className="vocabulary-mobile-card__meta-row">
+              <span className="vocabulary-level-badge">{word.level}</span>
+              <span className={`vocabulary-status-badge vocabulary-status-badge--${word.status}`}>
+                {statusLabel(word.status)}
+              </span>
+              <span className="vocabulary-mobile-card__meta-sep" aria-hidden="true">
+                &bull;
+              </span>
+              <span className="vocabulary-mobile-card__meta-text">
+                {reviewedLabel(word.lastReviewedKey)}
+              </span>
             </div>
           </li>
         ))}

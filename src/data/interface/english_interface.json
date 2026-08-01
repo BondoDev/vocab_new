@@ -240,6 +240,12 @@
           "twoDaysAgo": "2 days ago",
           "fiveDaysAgo": "5 days ago",
           "oneWeekAgo": "1 week ago"
+        },
+        "reviewedLabel": {
+          "today": "Reviewed today",
+          "twoDaysAgo": "Reviewed 2 days ago",
+          "fiveDaysAgo": "Reviewed 5 days ago",
+          "oneWeekAgo": "Reviewed 1 week ago"
         }
       },
       "pagination": {

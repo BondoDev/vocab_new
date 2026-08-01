@@ -240,6 +240,12 @@
           "twoDaysAgo": "Hace 2 dias",
           "fiveDaysAgo": "Hace 5 dias",
           "oneWeekAgo": "Hace 1 semana"
+        },
+        "reviewedLabel": {
+          "today": "Revisado hoy",
+          "twoDaysAgo": "Revisado hace 2 dias",
+          "fiveDaysAgo": "Revisado hace 5 dias",
+          "oneWeekAgo": "Revisado hace 1 semana"
         }
       },
       "pagination": {

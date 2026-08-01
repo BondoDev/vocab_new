@@ -634,6 +634,12 @@
           "twoDaysAgo": "2 дня назад",
           "fiveDaysAgo": "5 дней назад",
           "oneWeekAgo": "1 неделю назад"
+        },
+        "reviewedLabel": {
+          "today": "Проверено сегодня",
+          "twoDaysAgo": "Проверено 2 дня назад",
+          "fiveDaysAgo": "Проверено 5 дней назад",
+          "oneWeekAgo": "Проверено 1 неделю назад"
         }
       },
       "pagination": {
