@@ -89,6 +89,11 @@ const VocabularyPractice = lazy(() =>
     default: module.VocabularyPractice,
   })),
 );
+const NewWordStudyPreparation = lazy(() =>
+  import("../features/study-new-words/NewWordStudyPreparation").then((module) => ({
+    default: module.NewWordStudyPreparation,
+  })),
+);
 const VocabularyLevelExam = lazy(() =>
   import("./pages/VocabularyLevelExam").then((module) => ({
     default: module.VocabularyLevelExam,
@@ -152,6 +157,7 @@ const ROUTES = {
   about: "/about",
   help: "/help",
   profile: "/profile",
+  newWordStudy: "/learning/new-words",
 } as const;
 
 function AppContent({
@@ -468,6 +474,10 @@ function AppContent({
     );
   };
 
+  // Study New Words needs no query-param tagging (unlike Custom Practice) —
+  // it has its own dedicated route, so plain handleRequireLanguages is enough.
+  const handleStartNewWordStudy = () => handleRequireLanguages("newWordStudy");
+
   const handleContinueToPractice = () => {
     if (isContinueDisabled) {
       popupRef.current?.show({ delayMs: 0 });
@@ -677,7 +687,28 @@ function AppContent({
           practiceLanguage={userProfile.practiceLanguage}
           languageLevel={userProfile.languageLevel}
           onStartCustomPractice={handleStartCustomPractice}
+          onStartNewWordStudy={handleStartNewWordStudy}
         />
+        {accountOnboardingDialog}
+      </div>
+    );
+  }
+
+  if (resolvedPage === "newWordStudy") {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
+        <Header {...sharedHeaderProps} activePage="profile" />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <NewWordStudyPreparation
+            authUserId={authUserId}
+            isProfileLoaded={isProfileLoaded}
+            practiceLanguage={practiceLanguage}
+            yourLanguage={yourLanguage}
+            dailyGoal={userProfile.dailyGoal}
+            onBack={() => navigate(`${ROUTES.profile}?section=learning`)}
+          />
+        </Suspense>
         {accountOnboardingDialog}
       </div>
     );

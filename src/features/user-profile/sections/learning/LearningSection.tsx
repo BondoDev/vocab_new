@@ -7,9 +7,13 @@ import "./learning-section.scss";
 
 interface LearningSectionProps {
   onStartCustomPractice?: () => void;
+  onStartNewWordStudy?: () => void;
 }
 
-export function LearningSection({ onStartCustomPractice }: LearningSectionProps) {
+export function LearningSection({
+  onStartCustomPractice,
+  onStartNewWordStudy,
+}: LearningSectionProps) {
   const { t } = useLanguage();
 
   return (
@@ -27,7 +31,10 @@ export function LearningSection({ onStartCustomPractice }: LearningSectionProps)
         <DailyStreakCard />
         <TodayProgressCard />
       </div>
-      <LearningModeCards onStartCustomPractice={onStartCustomPractice} />
+      <LearningModeCards
+        onStartCustomPractice={onStartCustomPractice}
+        onStartNewWordStudy={onStartNewWordStudy}
+      />
     </>
   );
 }

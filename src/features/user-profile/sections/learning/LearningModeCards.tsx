@@ -19,11 +19,12 @@ interface LearningModeConfig {
   buttonLabelKey: string;
 }
 
-// Study New Words and Review Words are hardcoded zero/preview state for a
-// brand-new user — they stay inert until the structured-learning backend
-// exists. Custom Practice is wired below to the existing exercises/practice
-// flow instead, since that flow already exists and deliberately does not
-// touch structured-learning progress.
+// Review Words stays hardcoded zero/preview state for a brand-new user — it
+// stays inert until the structured-learning backend exists for it. Custom
+// Practice is wired to the existing exercises/practice flow (which
+// deliberately does not touch structured-learning progress), and Study New
+// Words is wired to its own dedicated, currently read-only queue-preparation
+// flow (see src/features/study-new-words/).
 const LEARNING_MODES: LearningModeConfig[] = [
   {
     id: "study-new-words",
@@ -56,12 +57,22 @@ const LEARNING_MODES: LearningModeConfig[] = [
 
 interface LearningModeCardsProps {
   onStartCustomPractice?: () => void;
+  onStartNewWordStudy?: () => void;
 }
 
 // Styled by learning-section.scss (imported by LearningSection.tsx, the
 // only place this component is rendered) rather than its own stylesheet.
-export function LearningModeCards({ onStartCustomPractice }: LearningModeCardsProps) {
+export function LearningModeCards({
+  onStartCustomPractice,
+  onStartNewWordStudy,
+}: LearningModeCardsProps) {
   const { t } = useLanguage();
+
+  const getOnClick = (modeId: string): (() => void) | undefined => {
+    if (modeId === "custom-practice") return onStartCustomPractice;
+    if (modeId === "study-new-words") return onStartNewWordStudy;
+    return undefined;
+  };
 
   return (
     <section className="learning-mode-cards" aria-labelledby="learning-mode-cards-heading">
@@ -76,11 +87,7 @@ export function LearningModeCards({ onStartCustomPractice }: LearningModeCardsPr
 
       <div className="learning-mode-cards__list">
         {LEARNING_MODES.map((mode) => (
-          <LearningModeCard
-            key={mode.id}
-            mode={mode}
-            onClick={mode.id === "custom-practice" ? onStartCustomPractice : undefined}
-          />
+          <LearningModeCard key={mode.id} mode={mode} onClick={getOnClick(mode.id)} />
         ))}
       </div>
     </section>

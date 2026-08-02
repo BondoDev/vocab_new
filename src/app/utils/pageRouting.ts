@@ -45,6 +45,7 @@ export interface InteractiveRouteMap {
   about: string;
   help: string;
   profile: string;
+  newWordStudy: string;
 }
 
 export type RouteKey = keyof InteractiveRouteMap;
@@ -263,6 +264,8 @@ export const pageFromPath = (
       return "help";
     case routes.profile:
       return "profile";
+    case routes.newWordStudy:
+      return "newWordStudy";
     default: {
       if (import.meta.env.DEV && parseDevSeoCefrPlaceholderRoute(path)) {
         return "devSeoCefrPlaceholder";
