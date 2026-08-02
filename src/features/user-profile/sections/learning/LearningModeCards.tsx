@@ -19,8 +19,11 @@ interface LearningModeConfig {
   buttonLabelKey: string;
 }
 
-// Hardcoded zero/preview state for a brand-new user. Once real workflows
-// exist, each card's onClick should route into its own session.
+// Study New Words and Review Words are hardcoded zero/preview state for a
+// brand-new user — they stay inert until the structured-learning backend
+// exists. Custom Practice is wired below to the existing exercises/practice
+// flow instead, since that flow already exists and deliberately does not
+// touch structured-learning progress.
 const LEARNING_MODES: LearningModeConfig[] = [
   {
     id: "study-new-words",
@@ -51,9 +54,13 @@ const LEARNING_MODES: LearningModeConfig[] = [
   },
 ];
 
+interface LearningModeCardsProps {
+  onStartCustomPractice?: () => void;
+}
+
 // Styled by learning-section.scss (imported by LearningSection.tsx, the
 // only place this component is rendered) rather than its own stylesheet.
-export function LearningModeCards() {
+export function LearningModeCards({ onStartCustomPractice }: LearningModeCardsProps) {
   const { t } = useLanguage();
 
   return (
@@ -69,14 +76,24 @@ export function LearningModeCards() {
 
       <div className="learning-mode-cards__list">
         {LEARNING_MODES.map((mode) => (
-          <LearningModeCard key={mode.id} mode={mode} />
+          <LearningModeCard
+            key={mode.id}
+            mode={mode}
+            onClick={mode.id === "custom-practice" ? onStartCustomPractice : undefined}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-function LearningModeCard({ mode }: { mode: LearningModeConfig }) {
+function LearningModeCard({
+  mode,
+  onClick,
+}: {
+  mode: LearningModeConfig;
+  onClick?: () => void;
+}) {
   const { t } = useLanguage();
   const Icon = mode.icon;
 
@@ -94,7 +111,7 @@ function LearningModeCard({ mode }: { mode: LearningModeConfig }) {
         </div>
       </div>
 
-      <button type="button" className="learning-mode-card__button">
+      <button type="button" className="learning-mode-card__button" onClick={onClick}>
         {t(mode.buttonLabelKey)}
         <ArrowRight size={15} aria-hidden="true" />
       </button>

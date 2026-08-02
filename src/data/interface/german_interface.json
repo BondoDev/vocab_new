@@ -521,6 +521,8 @@
   "exerciseSelection": {
     "title": "Übungstypen auswählen",
     "subtitle": "Alle Übungen sind ausgewählt. Passe sie bei Bedarf an.",
+    "customPracticeTitle": "Eigene Übung",
+    "customPracticeSubtitle": "Wähle deine Übungen und Filter für diese Übungssitzung.",
     "back": "Zurück",
     "helpTitle": "Übungserklärung",
     "helpButtonAria": "Übungserklärung öffnen",

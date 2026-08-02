@@ -33,6 +33,10 @@ interface ExerciseSelectionProps {
   setSelectedExercises: (exercises: string[]) => void;
   onBack: () => void;
   onContinue: () => void;
+  // True only when the caller resolved this from the `source=custom-practice`
+  // URL param (see App.tsx) — never inferred here from auth, history, or
+  // filter state.
+  isCustomPracticeContext?: boolean;
 }
 
 interface ExerciseGroupItem {
@@ -160,6 +164,7 @@ export function ExerciseSelection({
   setSelectedExercises,
   onBack,
   onContinue,
+  isCustomPracticeContext = false,
 }: ExerciseSelectionProps) {
   const { t } = useLanguage();
   const [helpExerciseId, setHelpExerciseId] = useState<string | null>(null);
@@ -309,10 +314,14 @@ export function ExerciseSelection({
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <h2 className="text-2xl md:text-3xl lg:text-4xl text-foreground leading-tight">
-              {t("exerciseSelection.title")}
+              {isCustomPracticeContext
+                ? t("exerciseSelection.customPracticeTitle")
+                : t("exerciseSelection.title")}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto">
-              {t("exerciseSelection.subtitle")}
+              {isCustomPracticeContext
+                ? t("exerciseSelection.customPracticeSubtitle")
+                : t("exerciseSelection.subtitle")}
             </p>
           </motion.div>
 

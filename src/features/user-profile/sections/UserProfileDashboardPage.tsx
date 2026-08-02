@@ -14,6 +14,7 @@ interface UserProfileDashboardPageProps {
   nickname?: string;
   practiceLanguage?: UILanguage | "";
   languageLevel?: LanguageLevelCode | "";
+  onStartCustomPractice?: () => void;
 }
 
 const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
@@ -33,6 +34,7 @@ export function UserProfileDashboardPage({
   nickname,
   practiceLanguage,
   languageLevel,
+  onStartCustomPractice,
 }: UserProfileDashboardPageProps) {
   const { t } = useLanguage();
   const location = useLocation();
@@ -61,7 +63,9 @@ export function UserProfileDashboardPage({
             aria-label={t(SECTION_ARIA_LABEL_KEYS[activeSection])}
           >
             {nickname ? <span className="sr-only">{nickname}</span> : null}
-            {activeSection === "learning" ? <LearningSection /> : null}
+            {activeSection === "learning" ? (
+              <LearningSection onStartCustomPractice={onStartCustomPractice} />
+            ) : null}
             {activeSection === "vocabulary" ? <VocabularySection /> : null}
             {activeSection === "dashboard" ? <DashboardSection /> : null}
           </section>

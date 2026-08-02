@@ -283,6 +283,14 @@ function AppContent({
     () => pageFromPath(location.pathname, ROUTES),
     [location.pathname],
   );
+  // Explicit source of truth for "did this Exercises visit originate from the
+  // authenticated Learning page's Custom Practice card": read straight from
+  // the URL (never inferred from auth/history/state), so it survives a
+  // refresh and stays correct if the query string picks up other params.
+  const isCustomPracticeSource = useMemo(
+    () => new URLSearchParams(location.search).get("source") === "custom-practice",
+    [location.search],
+  );
   const [openExploreLanguage, setOpenExploreLanguage] =
     useState<UILanguage | null>(null);
   const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] =
@@ -450,18 +458,32 @@ function AppContent({
     requireLanguagesBeforeContinue(() => navigate(ROUTES[nextPage]));
   };
 
+  // Same "languages required" gate as handleRequireLanguages("exerciseSelection"),
+  // but tags the destination with ?source=custom-practice so the Exercises
+  // page can show Custom Practice context. Reuses the existing Exercises
+  // route/gate rather than a new one.
+  const handleStartCustomPractice = () => {
+    requireLanguagesBeforeContinue(() =>
+      navigate(`${ROUTES.exerciseSelection}?source=custom-practice`),
+    );
+  };
+
   const handleContinueToPractice = () => {
     if (isContinueDisabled) {
       popupRef.current?.show({ delayMs: 0 });
       return;
     }
 
+    const practiceRoute = buildPracticeRoute(
+      yourLanguage as UILanguage,
+      practiceLanguage as UILanguage,
+      ROUTES,
+    );
+    // Carries the Custom Practice origin into the session URL (not just
+    // component state) so it survives a page refresh; this is frontend-only
+    // context and is not written to Supabase.
     navigate(
-      buildPracticeRoute(
-        yourLanguage as UILanguage,
-        practiceLanguage as UILanguage,
-        ROUTES,
-      ),
+      isCustomPracticeSource ? `${practiceRoute}?source=custom-practice` : practiceRoute,
     );
   };
 
@@ -570,8 +592,16 @@ function AppContent({
           <ExerciseSelection
             selectedExercises={selectedExercises}
             setSelectedExercises={setSelectedExercises}
-            onBack={() => navigate(ROUTES.levelCategory)}
+            // A Custom Practice entry bypasses the ordinary
+            // language/filters -> exercises path, so Back returns to the
+            // Learning page it came from instead of the filters step.
+            onBack={() =>
+              isCustomPracticeSource
+                ? navigate(`${ROUTES.profile}?section=learning`)
+                : navigate(ROUTES.levelCategory)
+            }
             onContinue={handleContinueToPractice}
+            isCustomPracticeContext={isCustomPracticeSource}
           />
         </Suspense>
         {accountOnboardingDialog}
@@ -646,6 +676,7 @@ function AppContent({
           nickname={userProfile.nickname}
           practiceLanguage={userProfile.practiceLanguage}
           languageLevel={userProfile.languageLevel}
+          onStartCustomPractice={handleStartCustomPractice}
         />
         {accountOnboardingDialog}
       </div>

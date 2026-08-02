@@ -158,6 +158,8 @@
   "exerciseSelection": {
     "title": "Выберите упражнения",
     "subtitle": "Все упражнения выбраны. При желании настройте.",
+    "customPracticeTitle": "Своя практика",
+    "customPracticeSubtitle": "Выберите упражнения и фильтры для этой тренировки.",
     "back": "Назад",
     "helpTitle": "Описание упражнения",
     "helpButtonAria": "Открыть описание упражнения",

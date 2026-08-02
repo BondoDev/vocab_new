@@ -521,6 +521,8 @@
   "exerciseSelection": {
     "title": "Scegli esercizi di pratica",
     "subtitle": "Tutti gli esercizi sono selezionati. Personalizza se vuoi.",
+    "customPracticeTitle": "Pratica personalizzata",
+    "customPracticeSubtitle": "Scegli i tuoi esercizi e filtri per questa sessione di pratica.",
     "back": "Indietro",
     "helpTitle": "Spiegazione esercizio",
     "helpButtonAria": "Apri spiegazione esercizio",

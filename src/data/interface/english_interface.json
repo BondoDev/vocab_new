@@ -526,6 +526,8 @@
   "exerciseSelection": {
     "title": "Choose practice exercises",
     "subtitle": "All exercises are selected. Customize if you like.",
+    "customPracticeTitle": "Custom Practice",
+    "customPracticeSubtitle": "Choose your exercises and filters for this practice session.",
     "back": "Back",
     "helpTitle": "Exercise explanation",
     "helpButtonAria": "Open exercise explanation",
