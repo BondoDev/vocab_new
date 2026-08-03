@@ -93,6 +93,10 @@ export function TodayProgressCard() {
 
   const ringDisplayRatio = Math.max(display.progressRatio, MIN_VISIBLE_ARC_RATIO);
   const ringOffset = RING_CIRCUMFERENCE * (1 - ringDisplayRatio);
+  // progressRatio is already clamped to 1 exactly when completed >= goal
+  // (and 0 for an invalid/missing goal — see computeTodayProgressDisplay),
+  // so this is also the "goal reached" signal for the ring/bar color.
+  const isGoalComplete = !isLoading && display.progressRatio >= 1;
 
   const title = t("userProfile.learningSection.todayProgress.title");
   const ofWord = t("userProfile.learningSection.todayProgress.aria.of");
@@ -104,7 +108,9 @@ export function TodayProgressCard() {
 
   return (
     <div
-      className={`learning-kpi-card today-progress-card ${isLoading ? "today-progress-card--loading" : ""}`}
+      className={`learning-kpi-card today-progress-card ${isLoading ? "today-progress-card--loading" : ""} ${
+        isGoalComplete ? "today-progress-card--complete" : ""
+      }`}
     >
       <div className="today-progress-card__circular">
         <p className="learning-kpi-card__title today-progress-card__title">{title}</p>

@@ -120,7 +120,15 @@ export function NewWordStudyPreparation({
         yourLanguage={yourLanguage}
         dailyGoal={state.result.dailyGoal}
         wordsCompletedToday={state.result.wordsCompletedToday}
-        onExit={() => setIsSessionActive(false)}
+        // Both the mid-session Exit confirmation and the session-complete
+        // screen's "Return to Learning" button use this — it must navigate
+        // to the real Learning page (same as the Back button above), not
+        // just flip back to this component's own queue-preview screen.
+        // Flipping back would also show a stale queue result: Phase 3 now
+        // writes real persistence during the session, so the previously
+        // loaded `result` (remainingToday, selectedQueueLength, etc.) is no
+        // longer accurate by the time the user exits or finishes.
+        onExit={onBack}
       />
     );
   }

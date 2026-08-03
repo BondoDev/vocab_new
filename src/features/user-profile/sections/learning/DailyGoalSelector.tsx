@@ -113,8 +113,15 @@ export function DailyGoalSelector({ onDailyGoalChange }: DailyGoalSelectorProps)
   const selectedOption =
     DAILY_GOAL_OPTIONS.find((option) => option.value === goal) ?? DAILY_GOAL_OPTIONS[1];
 
+  // True whenever the selected goal already matches what's saved — right
+  // after load (nothing to save yet) and again immediately after a
+  // successful save (savedProfile.dailyGoal is updated to match `goal` in
+  // the .then() below). Picking a different option changes `goal`, which
+  // makes this false again and re-enables Save.
+  const isUnchanged = goal === savedProfile.dailyGoal;
+
   const handleSave = () => {
-    if (isSaving || !isProfileLoaded) {
+    if (isSaving || !isProfileLoaded || isUnchanged) {
       return;
     }
 
@@ -177,7 +184,7 @@ export function DailyGoalSelector({ onDailyGoalChange }: DailyGoalSelectorProps)
         <button
           type="button"
           onClick={handleSave}
-          disabled={isSaving || !isProfileLoaded}
+          disabled={isSaving || !isProfileLoaded || isUnchanged}
           className="daily-goal-selector__save"
         >
           {t("userProfile.learningSection.dailyGoal.saveButton")}

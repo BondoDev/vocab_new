@@ -295,7 +295,12 @@ export function NewWordStudySession({
 
           {isSessionComplete && (
             <NewWordStudyComplete
-              wordsCompleted={state.completedConceptIds.length}
+              // Today's full count (words completed before this session +
+              // words completed in it), not just this session's queue —
+              // matches the screen's own "Today's new words completed"
+              // title and the Word X of Y label's same convention. A
+              // learner who finishes 4 earlier and 6 now must see 10, not 6.
+              wordsCompleted={progress.completedWords}
               practiceLanguage={practiceLanguage}
               onReturnToLearning={onExit}
             />

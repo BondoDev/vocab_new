@@ -342,15 +342,25 @@
   font-weight: 500;
   white-space: nowrap;
   background: color-mix(in srgb, var(--primary) 5%, transparent);
-  transition: background-color 180ms ease;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    opacity 180ms ease;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: color-mix(in srgb, var(--primary) 10%, transparent);
   }
 
   &:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px var(--ring);
+  }
+
+  /* Covers both "nothing to save yet" and "just saved successfully" — see
+     DailyGoalSelector.tsx's isUnchanged/isSaving/!isProfileLoaded guard. */
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
@@ -362,11 +372,21 @@
    ============================================================ */
 
 .today-progress-card {
-  /* Info blue: this card is progress-reporting, not a brand/interactive
-     control, so it reads as "information" rather than reusing Daily Goal's
-     purple. --chart-2 is the app's existing blue swatch (already themed for
-     dark mode in theme.css), reused here instead of inventing a new color. */
+  /* Info blue: kept only for the neutral loading-skeleton tint below
+     (--chart-2, already themed for dark mode) — the ring/bar itself no
+     longer uses it now that its color is a goal-progress signal (see
+     --progress-color). */
   --info: var(--chart-2);
+  /* Amber while the daily goal isn't reached yet, matching the amber
+     already used elsewhere for an in-progress/attention state (e.g.
+     Vocabulary's --vocab-amber). Success green (same value as
+     DailyStreakCard's locally-scoped --success) once the goal is met — see
+     the .today-progress-card--complete override below. Neither is a shared
+     theme token; both are scoped locally here, same precedent as
+     DailyStreakCard's own --success. */
+  --warning: #f59e0b;
+  --success: #22c55e;
+  --progress-color: var(--warning);
   width: 12rem;
   /* Without this floor, flex-shrink dumps all the squeeze from Daily
      Goal/Daily Streak's hard 316px min-widths onto this card alone,
@@ -374,6 +394,13 @@
      matters for the >=1184px circular layout — below that breakpoint the
      card forces its own full-row width instead (see the media query). */
   min-width: 11rem;
+
+  /* Applied once the daily goal is actually reached (completed >= goal) —
+     overrides --progress-color for every element below that reads it,
+     rather than repeating a color swap per element. */
+  &.today-progress-card--complete {
+    --progress-color: var(--success);
+  }
 
   &__title {
     text-align: center;
@@ -422,16 +449,19 @@
      just "the same ring, shrunk." */
   &__ring-track {
     fill: none;
-    stroke: color-mix(in srgb, var(--info) 10%, var(--muted));
+    stroke: color-mix(in srgb, var(--progress-color) 10%, var(--muted));
     stroke-width: 5;
+    transition: stroke 300ms ease;
   }
 
   &__ring-fill {
     fill: none;
-    stroke: var(--info);
+    stroke: var(--progress-color);
     stroke-width: 5;
     stroke-linecap: round;
-    transition: stroke-dashoffset 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      stroke-dashoffset 500ms cubic-bezier(0.4, 0, 0.2, 1),
+      stroke 300ms ease;
   }
 
   /* Centered inside the ring via absolute inset + flex column/center — the
@@ -514,15 +544,17 @@
     width: 100%;
     height: 0.7rem;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--info) 10%, var(--muted));
+    background: color-mix(in srgb, var(--progress-color) 10%, var(--muted));
     overflow: hidden;
   }
 
   &__horizontal-fill {
     height: 100%;
     border-radius: inherit;
-    background: var(--info);
-    transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--progress-color);
+    transition:
+      width 400ms cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 300ms ease;
   }
 
   /* Restrained loading placeholders — same footprint as the real numbers
@@ -694,11 +726,33 @@
     background: color-mix(in srgb, var(--success) 5%, var(--muted));
   }
 
-  /* Prepared for real data — not reachable while every day stays inactive. */
+  /* Applied to a weekday whose user_daily_stats.new_words_completed met
+     that day's daily goal — see computeDailyStreakSummary. */
   &__day-marker--active {
     border-color: var(--success);
     background: var(--success);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 18%, transparent);
+  }
+
+  /* Loading placeholders — same footprint as the real content they stand
+     in for (see DailyStreakCard.tsx's isLoading branches), so the card
+     never resizes once real data arrives. Same pulse animation as
+     TodayProgressCard's own skeletons. */
+  &__skeleton {
+    display: inline-block;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--success) 14%, var(--muted));
+    animation: today-progress-skeleton-pulse 1.4s ease-in-out infinite;
+
+    &--value {
+      width: 2.5rem;
+      height: 1.35rem;
+    }
+
+    &--inline {
+      width: 2.75rem;
+      height: 0.85rem;
+    }
   }
 }
 

@@ -13,6 +13,7 @@ import {
   type StoredSupabaseSession,
 } from "./supabaseAuth";
 import type { WordState } from "../data/learning/wordReviewSchedule";
+import { addDaysISO } from "../data/learning/dailyStreak";
 
 interface UserWordProgressRow {
   word_id: string;
@@ -366,4 +367,59 @@ export async function updateWordProgressFavorite(
   } catch {
     throw new VocabularyFavoriteUpdateError("We couldn't update this favorite. Please try again.");
   }
+}
+
+// ---------------------------------------------------------------------
+// Daily Streak card — reads the recent user_daily_stats history a streak is
+// computed from (see src/data/learning/dailyStreak.ts for the actual
+// current/best-streak and current-week math; this function only fetches
+// the raw rows).
+// ---------------------------------------------------------------------
+
+// Bounds the lookback window instead of an unbounded historical query —
+// generous enough to cover a full year of best-streak history without the
+// request growing as an account ages.
+const DAILY_STREAK_LOOKBACK_DAYS = 400;
+
+export interface DailyStreakStatRow {
+  dateISO: string;
+  newWordsCompleted: number;
+}
+
+interface UserDailyStatsStreakRawRow {
+  stat_date?: unknown;
+  new_words_completed?: unknown;
+}
+
+export async function readDailyStreakStats(
+  session: StoredSupabaseSession,
+  targetLanguage: string,
+  todayISO: string,
+): Promise<DailyStreakStatRow[]> {
+  const userId = session.user?.id;
+  if (!userId || !targetLanguage || !todayISO) {
+    return [];
+  }
+
+  const sinceDateISO = addDaysISO(todayISO, -DAILY_STREAK_LOOKBACK_DAYS);
+
+  const rawRows = await supabaseProgressRequest<UserDailyStatsStreakRawRow[]>(
+    session,
+    `/rest/v1/user_daily_stats?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(
+      targetLanguage,
+    )}&stat_date=gte.${encodeURIComponent(sinceDateISO)}&select=stat_date,new_words_completed`,
+  );
+
+  const rows: DailyStreakStatRow[] = [];
+  for (const raw of rawRows) {
+    if (typeof raw.stat_date !== "string") {
+      continue;
+    }
+    const rawCount = raw.new_words_completed;
+    rows.push({
+      dateISO: raw.stat_date,
+      newWordsCompleted: typeof rawCount === "number" && Number.isFinite(rawCount) ? rawCount : 0,
+    });
+  }
+  return rows;
 }

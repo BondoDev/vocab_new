@@ -1,61 +1,134 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
+import { useAuthSession } from "../../../../app/hooks/useAuthSession";
+import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
+import {
+  DEFAULT_DAILY_GOAL,
+  readStoredUserProfile,
+  readSupabaseUserProfile,
+} from "../../../../lib/userProfile";
+import { readDailyStreakStats } from "../../../../lib/newWordProgress";
+import { getLocalCalendarDateISO } from "../../../../data/learning/localStudyDate";
+import { computeDailyStreakSummary, type DailyStreakSummary } from "../../../../data/learning/dailyStreak";
 import { useIsCompactLearningSummary } from "./useIsCompactLearningSummary";
 
-// Hardcoded zero-state preview for a brand-new user. Replace with real
-// streak data from daily statistics once that pipeline exists.
-const DAILY_STREAK_PREVIEW = {
+const WEEK_DAYS = [
+  { shortKey: "monShort", fullKey: "monday" },
+  { shortKey: "tueShort", fullKey: "tuesday" },
+  { shortKey: "wedShort", fullKey: "wednesday" },
+  { shortKey: "thuShort", fullKey: "thursday" },
+  { shortKey: "friShort", fullKey: "friday" },
+  { shortKey: "satShort", fullKey: "saturday" },
+  { shortKey: "sunShort", fullKey: "sunday" },
+] as const;
+
+const EMPTY_SUMMARY: DailyStreakSummary = {
   currentStreakDays: 0,
   bestStreakDays: 0,
+  currentWeek: [],
 };
 
-const WEEK_DAYS = [
-  { shortKey: "monShort", fullKey: "monday", active: false },
-  { shortKey: "tueShort", fullKey: "tuesday", active: false },
-  { shortKey: "wedShort", fullKey: "wednesday", active: false },
-  { shortKey: "thuShort", fullKey: "thursday", active: false },
-  { shortKey: "friShort", fullKey: "friday", active: false },
-  { shortKey: "satShort", fullKey: "saturday", active: false },
-  { shortKey: "sunShort", fullKey: "sunday", active: false },
-];
+type LoadState = { status: "loading" } | { status: "ready"; summary: DailyStreakSummary };
 
+// Own self-contained load, matching DailyGoalSelector/TodayProgressCard's
+// precedent in this feature: reads its own copy of the authenticated
+// profile (for target language + daily goal) rather than depending on prop
+// threading from App.tsx, then reads the recent user_daily_stats history a
+// streak is computed from (see readDailyStreakStats and
+// computeDailyStreakSummary — this component only renders their output).
 export function DailyStreakCard() {
   const { t } = useLanguage();
-  const { currentStreakDays, bestStreakDays } = DAILY_STREAK_PREVIEW;
+  const { authUserId } = useAuthSession();
+  const [state, setState] = useState<LoadState>({ status: "loading" });
   const isCompact = useIsCompactLearningSummary();
   const [isExpanded, setIsExpanded] = useState(false);
   const panelId = useId();
+
+  useEffect(() => {
+    if (!authUserId) {
+      setState({ status: "ready", summary: EMPTY_SUMMARY });
+      return;
+    }
+
+    let cancelled = false;
+    setState({ status: "loading" });
+    const storedProfile = readStoredUserProfile(authUserId);
+
+    void (async () => {
+      try {
+        const session = getStoredSupabaseSession();
+        const supabaseProfile = session ? await readSupabaseUserProfile(session) : null;
+        if (cancelled) return;
+
+        const targetLanguage = supabaseProfile?.practiceLanguage || storedProfile?.practiceLanguage || "";
+        const dailyGoal = supabaseProfile?.dailyGoal ?? storedProfile?.dailyGoal ?? DEFAULT_DAILY_GOAL;
+
+        if (!session || !targetLanguage) {
+          setState({ status: "ready", summary: EMPTY_SUMMARY });
+          return;
+        }
+
+        const todayISO = getLocalCalendarDateISO();
+        const stats = await readDailyStreakStats(session, targetLanguage, todayISO);
+        if (cancelled) return;
+
+        setState({ status: "ready", summary: computeDailyStreakSummary(stats, dailyGoal, todayISO) });
+      } catch (error) {
+        if (cancelled) return;
+        console.warn("DailyStreakCard: failed to load streak data.", error);
+        setState({ status: "ready", summary: EMPTY_SUMMARY });
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [authUserId]);
+
+  const isLoading = state.status === "loading";
+  const summary = state.status === "ready" ? state.summary : EMPTY_SUMMARY;
+  const { currentStreakDays, bestStreakDays, currentWeek } = summary;
 
   const detailContent = (
     <>
       <div className="daily-streak-card__metric">
         <div className="daily-streak-card__primary">
-          <span className="daily-streak-card__value">{currentStreakDays}</span>
-          <span className="daily-streak-card__unit">
+          {isLoading ? (
+            <span className="daily-streak-card__skeleton daily-streak-card__skeleton--value" aria-hidden="true" />
+          ) : (
+            <>
+              <span className="daily-streak-card__value">{currentStreakDays}</span>
+              <span className="daily-streak-card__unit">
+                {t("userProfile.learningSection.dailyStreak.daysUnit")}
+              </span>
+            </>
+          )}
+        </div>
+        {!isLoading && (
+          <span className="daily-streak-card__best">
+            {t("userProfile.learningSection.dailyStreak.bestPrefix")} {bestStreakDays}{" "}
             {t("userProfile.learningSection.dailyStreak.daysUnit")}
           </span>
-        </div>
-        <span className="daily-streak-card__best">
-          {t("userProfile.learningSection.dailyStreak.bestPrefix")} {bestStreakDays}{" "}
-          {t("userProfile.learningSection.dailyStreak.daysUnit")}
-        </span>
+        )}
       </div>
 
       <div
         className="daily-streak-card__week"
         role="list"
         aria-label={t("userProfile.learningSection.dailyStreak.weekAriaLabel")}
+        aria-busy={isLoading}
       >
         {WEEK_DAYS.map((day, index) => {
           const dayName = t(`userProfile.learningSection.dailyStreak.weekdays.${day.fullKey}`);
-          const status = day.active
+          const isActive = !isLoading && currentWeek[index]?.isComplete === true;
+          const status = isActive
             ? t("userProfile.learningSection.dailyStreak.status.activityCompleted")
             : t("userProfile.learningSection.dailyStreak.status.noActivity");
 
           return (
             <div
-              key={`${day.fullKey}-${index}`}
+              key={day.fullKey}
               role="listitem"
               aria-label={`${dayName}: ${status}`}
               className="daily-streak-card__day-col"
@@ -66,7 +139,7 @@ export function DailyStreakCard() {
               <span
                 aria-hidden="true"
                 className={`daily-streak-card__day-marker ${
-                  day.active ? "daily-streak-card__day-marker--active" : ""
+                  isActive ? "daily-streak-card__day-marker--active" : ""
                 }`}
               />
             </div>
@@ -95,7 +168,13 @@ export function DailyStreakCard() {
           </span>
           <span className="learning-kpi-card__accordion-right">
             <span className="learning-kpi-card__accordion-value">
-              {currentStreakDays} {t("userProfile.learningSection.dailyStreak.daysUnit")}
+              {isLoading ? (
+                <span className="daily-streak-card__skeleton daily-streak-card__skeleton--inline" aria-hidden="true" />
+              ) : (
+                <>
+                  {currentStreakDays} {t("userProfile.learningSection.dailyStreak.daysUnit")}
+                </>
+              )}
             </span>
             <ChevronDown
               aria-hidden="true"
