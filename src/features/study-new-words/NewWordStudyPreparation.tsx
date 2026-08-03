@@ -1,11 +1,26 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import { ChevronLeft, Check } from "lucide-react";
+import {
+  CheckCircle2,
+  ChevronLeft,
+  GraduationCap,
+  Languages,
+  ListChecks,
+  Play,
+  Target,
+} from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { loadNewWordStudyQueue } from "./loadNewWordStudyQueue";
 import { NewWordStudySession } from "./NewWordStudySession";
 import { GUIDED_EXERCISE_COUNT } from "./newWordStudySessionState";
 import type { NewWordStudyQueueResult } from "../../data/learning/newWordStudyQueue";
+// Visual styling for this component (and its LoadingBlock/MessageBlock/
+// ResultBlock/InfoItem/SessionExplainItem helpers below) lives in
+// ./styles/study-new-words.scss — this file only assigns the semantic class
+// names. NewWordStudySession.tsx also imports that stylesheet, but this
+// component is its own entry point (rendered before a session starts), so it
+// imports it too rather than relying on import order across components.
+import "./styles/study-new-words.scss";
 
 interface NewWordStudyPreparationProps {
   authUserId: string | null;
@@ -42,9 +57,7 @@ export function NewWordStudyPreparation({
   // never writes anything that would change what Phase 1 already loaded.
   const [isSessionActive, setIsSessionActive] = useState(false);
 
-  const hasRequiredProfileContext = Boolean(
-    authUserId && practiceLanguage && yourLanguage && dailyGoal > 0,
-  );
+  const hasRequiredProfileContext = Boolean(authUserId && practiceLanguage && yourLanguage && dailyGoal > 0);
 
   useEffect(() => {
     if (!isProfileLoaded) {
@@ -105,50 +118,51 @@ export function NewWordStudyPreparation({
         queue={state.result.selectedQueue}
         practiceLanguage={practiceLanguage}
         yourLanguage={yourLanguage}
+        dailyGoal={state.result.dailyGoal}
+        wordsCompletedToday={state.result.wordsCompletedToday}
         onExit={() => setIsSessionActive(false)}
       />
     );
   }
 
   return (
-    <div className="study-new-words-page flex-1 min-h-0 flex flex-col bg-background px-4 md:px-8 py-6">
-      <div className="max-w-2xl w-full mx-auto">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
-        >
-          <ChevronLeft className="w-5 h-5" />
+    <div className="study-new-words-page">
+      <div className="study-new-words-page-body">
+        <button onClick={onBack} className="study-new-words-back-button">
+          <ChevronLeft className="study-new-words-back-icon" aria-hidden="true" />
           <span>{t("studyNewWords.backButton")}</span>
         </button>
 
-        <h1 className="text-2xl md:text-3xl font-semibold text-foreground mb-3 break-words">{title}</h1>
+        <div className="study-new-words-panel">
+          <div className="study-new-words-header-icon" aria-hidden="true">
+            <GraduationCap className="study-new-words-header-icon-svg" />
+          </div>
 
-        {state.status === "loading" && <LoadingBlock message={t("studyNewWords.loading")} />}
+          <h1 className="study-new-words-title">{title}</h1>
 
-        {state.status === "missingProfile" && (
-          <MessageBlock message={t("studyNewWords.missingProfileMessage")} />
-        )}
+          {state.status === "loading" && <LoadingBlock message={t("studyNewWords.loading")} />}
 
-        {state.status === "error" && (
-          <MessageBlock message={t("studyNewWords.errorMessage")}>
-            <button
-              type="button"
-              onClick={handleRetry}
-              className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
-            >
-              {t("studyNewWords.retryButton")}
-            </button>
-          </MessageBlock>
-        )}
+          {state.status === "missingProfile" && (
+            <MessageBlock message={t("studyNewWords.missingProfileMessage")} />
+          )}
 
-        {state.status === "result" && (
-          <ResultBlock
-            result={state.result}
-            practiceLanguage={practiceLanguage}
-            t={t}
-            onBeginSession={() => setIsSessionActive(true)}
-          />
-        )}
+          {state.status === "error" && (
+            <MessageBlock message={t("studyNewWords.errorMessage")}>
+              <button type="button" onClick={handleRetry} className="study-new-words-retry-button">
+                {t("studyNewWords.retryButton")}
+              </button>
+            </MessageBlock>
+          )}
+
+          {state.status === "result" && (
+            <ResultBlock
+              result={state.result}
+              practiceLanguage={practiceLanguage}
+              t={t}
+              onBeginSession={() => setIsSessionActive(true)}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
@@ -156,20 +170,17 @@ export function NewWordStudyPreparation({
 
 function LoadingBlock({ message }: { message: string }) {
   return (
-    <div className="flex flex-col items-center justify-center text-center py-16">
-      <div
-        className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full mb-4 animate-spin"
-        aria-hidden="true"
-      />
-      <p className="text-muted-foreground">{message}</p>
+    <div className="study-new-words-loading-block">
+      <div className="study-new-words-spinner" aria-hidden="true" />
+      <p className="study-new-words-loading-message">{message}</p>
     </div>
   );
 }
 
 function MessageBlock({ message, children }: { message: string; children?: ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center text-center py-16 gap-4">
-      <p className="text-foreground max-w-md break-words">{message}</p>
+    <div className="study-new-words-message-block">
+      <p className="study-new-words-message-text">{message}</p>
       {children}
     </div>
   );
@@ -202,27 +213,39 @@ function ResultBlock({
   }
 
   const languageName = t(`languageNames.${practiceLanguage}`);
+  const isBeginDisabled = result.selectedQueueLength === 0;
 
   return (
-    <div>
-      <p className="text-base md:text-lg text-muted-foreground mb-5 max-w-prose break-words">
-        {t("studyNewWords.aboutToLearnPrefix")} {result.selectedQueueLength}
-        {t("studyNewWords.aboutToLearnSuffix")}
+    <div className="study-new-words-preview">
+      {/* Only the dynamic values (word count, language) are emphasized —
+          the rest of the sentence stays regular weight so it doesn't read
+          as "everything purple". */}
+      <p className="study-new-words-summary">
+        {t("studyNewWords.aboutToLearnPrefix")}{" "}
+        <span className="study-new-words-summary-value">{result.selectedQueueLength}</span>
+        {t("studyNewWords.aboutToLearnSuffix")}{" "}
+        <span className="study-new-words-summary-value">{languageName}</span>.
       </p>
 
-      <div className="flex flex-wrap gap-2 mb-6">
-        <InfoChip label={t("studyNewWords.targetLanguageLabel")} value={languageName} />
-        <InfoChip
+      <div className="study-new-words-info-grid">
+        <InfoItem
+          icon={<Languages className="study-new-words-info-item-icon-svg" aria-hidden="true" />}
+          label={t("studyNewWords.targetLanguageLabel")}
+          value={languageName}
+        />
+        <InfoItem
+          icon={<Target className="study-new-words-info-item-icon-svg" aria-hidden="true" />}
           label={t("studyNewWords.dailyGoalLabel")}
           value={`${result.dailyGoal} ${t("userProfile.learningSection.dailyGoal.wordsPerDay")}`}
         />
       </div>
 
-      <div className="mb-7">
-        <h2 className="text-sm font-semibold text-foreground mb-3">
-          {t("studyNewWords.sessionExplainHeading")}
-        </h2>
-        <ul className="space-y-2.5">
+      <div className="study-new-words-checklist">
+        <div className="study-new-words-checklist-header">
+          <ListChecks className="study-new-words-checklist-header-icon" aria-hidden="true" />
+          <h2 className="study-new-words-checklist-heading">{t("studyNewWords.sessionExplainHeading")}</h2>
+        </div>
+        <ul className="study-new-words-checklist-list">
           <SessionExplainItem>{t("studyNewWords.sessionExplainBullet1")}</SessionExplainItem>
           <SessionExplainItem>
             {t("studyNewWords.sessionExplainExercisesPrefix")} {GUIDED_EXERCISE_COUNT}
@@ -235,30 +258,36 @@ function ResultBlock({
       <button
         type="button"
         onClick={onBeginSession}
-        disabled={result.selectedQueueLength === 0}
-        aria-disabled={result.selectedQueueLength === 0}
-        className="w-full sm:w-auto px-10 py-3.5 rounded-lg bg-primary text-primary-foreground text-base font-semibold shadow-sm hover:bg-primary/90 active:bg-primary/95 transition-colors disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
+        disabled={isBeginDisabled}
+        aria-disabled={isBeginDisabled}
+        className="study-new-words-begin-button"
       >
-        {t("studyNewWords.beginSessionButton")}
+        <Play className="study-new-words-begin-button-icon" aria-hidden="true" />
+        <span>{t("studyNewWords.beginSessionButton")}</span>
       </button>
     </div>
   );
 }
 
-function InfoChip({ label, value }: { label: string; value: string }) {
+function InfoItem({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
-    <div className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/40 px-3 py-1.5 text-sm min-w-0">
-      <span className="text-muted-foreground shrink-0">{label}:</span>
-      <span className="font-medium text-foreground break-words">{value}</span>
+    <div className="study-new-words-info-item">
+      <span className="study-new-words-info-item-icon" aria-hidden="true">
+        {icon}
+      </span>
+      <span className="study-new-words-info-item-body">
+        <span className="study-new-words-info-item-label">{label}</span>
+        <span className="study-new-words-info-item-value">{value}</span>
+      </span>
     </div>
   );
 }
 
 function SessionExplainItem({ children }: { children: ReactNode }) {
   return (
-    <li className="flex items-start gap-2.5 text-sm text-foreground/90">
-      <Check className="w-4 h-4 mt-0.5 shrink-0 text-primary" aria-hidden="true" />
-      <span className="break-words">{children}</span>
+    <li className="study-new-words-checklist-item">
+      <CheckCircle2 className="study-new-words-checklist-item-icon" aria-hidden="true" />
+      <span className="study-new-words-checklist-item-text">{children}</span>
     </li>
   );
 }

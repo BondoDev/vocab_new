@@ -43,7 +43,16 @@ const DAILY_GOAL_OPTIONS: DailyGoalOption[] = [
   },
 ];
 
-export function DailyGoalSelector() {
+interface DailyGoalSelectorProps {
+  // Called with the newly saved goal once the Supabase write succeeds, so
+  // the App-level userProfile state (which this component does not share —
+  // it loads/saves its own copy) can be kept in sync. Without this, other
+  // screens reading userProfile.dailyGoal (e.g. NewWordStudyPreparation)
+  // keep showing the pre-change value until the page is reloaded.
+  onDailyGoalChange?: (dailyGoal: number) => void;
+}
+
+export function DailyGoalSelector({ onDailyGoalChange }: DailyGoalSelectorProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
   const [goal, setGoal] = useState<number>(DEFAULT_DAILY_GOAL);
@@ -129,6 +138,7 @@ export function DailyGoalSelector() {
           ...supabaseProfile,
         });
         setSavedProfile(nextProfile);
+        onDailyGoalChange?.(nextProfile.dailyGoal);
         showConfirmation(t("userProfile.learningSection.dailyGoal.savedToast"));
       })
       .catch(() => {

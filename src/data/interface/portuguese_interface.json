@@ -103,7 +103,8 @@
         "wordsUnit": "palavras",
         "aria": {
           "of": "de",
-          "dailyWordsCompleted": "palavras diarias concluidas"
+          "dailyWordsCompleted": "palavras diarias concluidas",
+          "loading": "Carregando seu progresso de hoje..."
         }
       },
       "dailyStreak": {
@@ -170,6 +171,22 @@
         "label": "Adicionar palavra",
         "toast": "Adicionar palavra e uma acao de pre-visualizacao por enquanto."
       },
+      "loadError": "Algo deu errado ao carregar seu vocabulario.",
+      "retryButton": "Tentar novamente",
+      "favoriteError": "Nao foi possivel atualizar o favorito. Tente novamente.",
+      "emptyStates": {
+        "noWordsYetTitle": "Ainda sem palavras",
+        "noWordsYetMessage": "Complete uma sessao de Estudar palavras novas para comecar a construir seu vocabulario.",
+        "noWordsYetAction": "Estudar palavras novas",
+        "noSearchMatches": "Nenhuma palavra corresponde a sua busca.",
+        "noTabWords": {
+          "all": "Nenhuma palavra para esta visualizacao.",
+          "learning": "Ainda sem palavras em aprendizado.",
+          "known": "Ainda sem palavras conhecidas.",
+          "mastered": "Ainda sem palavras dominadas.",
+          "favorites": "Ainda sem palavras favoritas."
+        }
+      },
       "summaryCards": {
         "learning": {
           "title": "Aprendendo",
@@ -220,11 +237,14 @@
           "translation": "Traducao",
           "level": "Nivel",
           "status": "Status",
-          "lastReviewed": "Ultima revisao",
+          "lastPracticed": "Ultima pratica",
           "actions": "Acoes"
         },
         "audioAriaLabel": "Reproduzir pronuncia",
-        "favoriteAriaLabel": "Alternar favorito",
+        "addFavoriteAriaLabelPrefix": "Adicionar",
+        "addFavoriteAriaLabelSuffix": "aos favoritos",
+        "removeFavoriteAriaLabelPrefix": "Remover",
+        "removeFavoriteAriaLabelSuffix": "dos favoritos",
         "moreActionsAriaLabel": "Mais acoes",
         "menu": {
           "viewDetails": "Ver detalhes",
@@ -236,21 +256,16 @@
           "known": "Conhecidas",
           "mastered": "Dominadas"
         },
-        "lastReviewed": {
+        "lastPracticed": {
           "today": "Hoje",
-          "twoDaysAgo": "2 dias atras",
-          "fiveDaysAgo": "5 dias atras",
-          "oneWeekAgo": "1 semana atras"
-        },
-        "reviewedLabel": {
-          "today": "Revisado hoje",
-          "twoDaysAgo": "Revisado 2 dias atras",
-          "fiveDaysAgo": "Revisado 5 dias atras",
-          "oneWeekAgo": "Revisado 1 semana atras"
+          "yesterday": "Ontem",
+          "daysAgoSuffix": "dias atras",
+          "never": "Nunca"
         }
       },
       "pagination": {
-        "previewingSampleRows": "Pre-visualizando linhas de exemplo",
+        "showingPrefix": "Mostrando",
+        "showingConnector": "de",
         "previous": "Anterior",
         "next": "Proximo",
         "rowsPerPage": "Linhas por pagina"
@@ -574,6 +589,9 @@
     "exampleSentenceLabel": "Exemplo",
     "wordCompleteTitle": "Palavra aprendida",
     "nextWordButton": "Proxima palavra",
+    "savingProgress": "Salvando progresso...",
+    "saveErrorMessage": "Nao conseguimos salvar esta palavra. Verifique sua conexao e tente novamente.",
+    "sessionExpiredMessage": "Sua sessao expirou. Faca login novamente.",
     "wordLearnedToastPrefix": "Palavra",
     "wordLearnedToastSuffix": "aprendida.",
     "wordPositionPrefix": "Palavra",
@@ -583,13 +601,13 @@
     "sessionCompleteWordsLabel": "Palavras concluidas",
     "returnToLearningButton": "Voltar para Aprendizado",
     "leaveSessionTitle": "Sair da sessao?",
-    "leaveSessionDescription": "O progresso desta sessao nao foi salvo.",
+    "leaveSessionDescription": "As palavras que voce ja concluiu nesta sessao estao salvas. A palavra atual ainda nao foi salva.",
     "leaveSessionConfirm": "Sair da sessao",
     "leaveSessionStay": "Continuar na sessao",
     "exitSessionAria": "Sair da sessao",
     "sessionErrorMessage": "Algo deu errado com sua sessao de estudo.",
     "aboutToLearnPrefix": "Voce esta prestes a aprender",
-    "aboutToLearnSuffix": " novas palavras.",
+    "aboutToLearnSuffix": " novas palavras em",
     "sessionExplainHeading": "Durante esta sessao voce vai:",
     "sessionExplainBullet1": "Aprender as palavras novas de hoje",
     "sessionExplainExercisesPrefix": "Completar",

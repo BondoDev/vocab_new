@@ -103,7 +103,8 @@
         "wordsUnit": "mots",
         "aria": {
           "of": "sur",
-          "dailyWordsCompleted": "mots quotidiens termines"
+          "dailyWordsCompleted": "mots quotidiens termines",
+          "loading": "Chargement de votre progression du jour..."
         }
       },
       "dailyStreak": {
@@ -170,6 +171,22 @@
         "label": "Ajouter un mot",
         "toast": "Ajouter un mot est pour l'instant une action d'apercu."
       },
+      "loadError": "Une erreur s'est produite lors du chargement de votre vocabulaire.",
+      "retryButton": "Reessayer",
+      "favoriteError": "Impossible de mettre a jour le favori. Veuillez reessayer.",
+      "emptyStates": {
+        "noWordsYetTitle": "Aucun mot pour l'instant",
+        "noWordsYetMessage": "Terminez une session Etudier de nouveaux mots pour commencer a construire votre vocabulaire.",
+        "noWordsYetAction": "Etudier de nouveaux mots",
+        "noSearchMatches": "Aucun mot ne correspond a votre recherche.",
+        "noTabWords": {
+          "all": "Aucun mot ne correspond a cet affichage.",
+          "learning": "Aucun mot en apprentissage pour l'instant.",
+          "known": "Aucun mot connu pour l'instant.",
+          "mastered": "Aucun mot maitrise pour l'instant.",
+          "favorites": "Aucun mot favori pour l'instant."
+        }
+      },
       "summaryCards": {
         "learning": {
           "title": "En apprentissage",
@@ -220,11 +237,14 @@
           "translation": "Traduction",
           "level": "Niveau",
           "status": "Statut",
-          "lastReviewed": "Derniere revision",
+          "lastPracticed": "Derniere pratique",
           "actions": "Actions"
         },
         "audioAriaLabel": "Ecouter la prononciation",
-        "favoriteAriaLabel": "Basculer le favori",
+        "addFavoriteAriaLabelPrefix": "Ajouter",
+        "addFavoriteAriaLabelSuffix": "aux favoris",
+        "removeFavoriteAriaLabelPrefix": "Retirer",
+        "removeFavoriteAriaLabelSuffix": "des favoris",
         "moreActionsAriaLabel": "Plus d'actions",
         "menu": {
           "viewDetails": "Voir les details",
@@ -236,21 +256,16 @@
           "known": "Connus",
           "mastered": "Maitrises"
         },
-        "lastReviewed": {
+        "lastPracticed": {
           "today": "Aujourd'hui",
-          "twoDaysAgo": "Il y a 2 jours",
-          "fiveDaysAgo": "Il y a 5 jours",
-          "oneWeekAgo": "Il y a 1 semaine"
-        },
-        "reviewedLabel": {
-          "today": "Revise aujourd'hui",
-          "twoDaysAgo": "Revise il y a 2 jours",
-          "fiveDaysAgo": "Revise il y a 5 jours",
-          "oneWeekAgo": "Revise il y a 1 semaine"
+          "yesterday": "Hier",
+          "daysAgoSuffix": "jours",
+          "never": "Jamais"
         }
       },
       "pagination": {
-        "previewingSampleRows": "Apercu de lignes d'exemple",
+        "showingPrefix": "Affichage de",
+        "showingConnector": "sur",
         "previous": "Precedent",
         "next": "Suivant",
         "rowsPerPage": "Lignes par page"
@@ -579,6 +594,9 @@
     "exampleSentenceLabel": "Exemple",
     "wordCompleteTitle": "Mot appris",
     "nextWordButton": "Mot suivant",
+    "savingProgress": "Enregistrement en cours...",
+    "saveErrorMessage": "Nous n'avons pas pu enregistrer ce mot. Verifiez votre connexion et reessayez.",
+    "sessionExpiredMessage": "Votre session a expire. Veuillez vous reconnecter.",
     "wordLearnedToastPrefix": "Mot",
     "wordLearnedToastSuffix": "appris.",
     "wordPositionPrefix": "Mot",
@@ -588,13 +606,13 @@
     "sessionCompleteWordsLabel": "Mots termines",
     "returnToLearningButton": "Retour a Apprentissage",
     "leaveSessionTitle": "Quitter la session ?",
-    "leaveSessionDescription": "La progression de cette session n'a pas ete enregistree.",
+    "leaveSessionDescription": "Les mots deja termines dans cette session sont enregistres. Le mot en cours n'a pas encore ete enregistre.",
     "leaveSessionConfirm": "Quitter la session",
     "leaveSessionStay": "Rester dans la session",
     "exitSessionAria": "Quitter la session",
     "sessionErrorMessage": "Un probleme est survenu avec votre session d'etude.",
     "aboutToLearnPrefix": "Vous allez apprendre",
-    "aboutToLearnSuffix": " nouveaux mots.",
+    "aboutToLearnSuffix": " nouveaux mots en",
     "sessionExplainHeading": "Pendant cette session, vous allez :",
     "sessionExplainBullet1": "Apprendre les nouveaux mots du jour",
     "sessionExplainExercisesPrefix": "Terminer",

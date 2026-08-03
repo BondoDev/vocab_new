@@ -59,7 +59,9 @@ interface GuidedExerciseAdapterProps {
 // VocabularyPractice.tsx uses, via exercises.scss (imported once by
 // NewWordStudySession.tsx) — so a guided exercise looks like the same
 // exercise card the user already knows from ordinary practice, not a
-// separate ad hoc design.
+// separate ad hoc design. This component's own layout styling (everything
+// beyond those shared hook classes) lives in ../styles/study-new-words.scss,
+// also imported by NewWordStudySession.tsx.
 export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete }: GuidedExerciseAdapterProps) {
   const { t } = useLanguage();
   const [status, setStatus] = useState<ExerciseStatus>(INITIAL_STATUS);
@@ -116,25 +118,18 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
   };
 
   return (
-    <div className="practice-card-shell w-full max-w-2xl mx-auto">
-      <div
-        className="practice-card bg-card border border-border rounded-2xl p-3 md:p-5 shadow-sm transition-all duration-300 ease-in-out flex flex-col relative"
-        style={practiceCardStyle}
-      >
-        <p className="mx-auto max-w-[34rem] text-center text-sm text-gray-500 leading-relaxed font-medium mb-0">
-          {t(INSTRUCTION_KEY[step])}
-        </p>
+    <div className="practice-card-shell guided-exercise-shell">
+      <div className="practice-card guided-exercise-card" style={practiceCardStyle}>
+        <p className="guided-exercise-instruction">{t(INSTRUCTION_KEY[step])}</p>
 
-        <div className="exercise-main-content flex-1 pt-0">
+        <div className="exercise-main-content guided-exercise-main-content">
           {/* Native-language prompt, shown above the exercise input for all
               three steps — matches VocabularyPractice.tsx's own layout (the
               user sees their native word, types/assembles the target word). */}
-          <div className="exercise-word-area space-y-6 mb-0">
-            <div className="exercise-guess-word-container min-h-[60px] flex items-center justify-center">
-              <div className="text-center">
-                <h2 className="exercise-guess-word text-4xl md:text-5xl font-bold text-foreground">
-                  {item.translation}
-                </h2>
+          <div className="exercise-word-area guided-exercise-word-area">
+            <div className="exercise-guess-word-container guided-exercise-guess-word-container">
+              <div className="guided-exercise-guess-word-inner">
+                <h2 className="exercise-guess-word guided-exercise-guess-word">{item.translation}</h2>
               </div>
             </div>
 
@@ -169,26 +164,26 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
               ordinary flow applies to the sentence needs inflected.json,
               which Phase 1's resolver deliberately doesn't fetch, so the
               sentence renders plain here. */}
-          <div className="exercise-help-sections space-y-2 mb-0 mt-4 sm:mt-6">
+          <div className="exercise-help-sections guided-exercise-help-sections">
             {item.definition && (
-              <div className="border border-border rounded-lg overflow-hidden">
+              <div className="guided-exercise-collapsible">
                 <button
                   type="button"
                   onClick={() => setShowDefinition(!showDefinition)}
-                  className="exercise-see-definition-button w-full flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm hover:bg-muted active:bg-muted/80 transition-colors text-left"
+                  className="exercise-see-definition-button guided-exercise-toggle-button"
                 >
-                  <span className="font-medium">{t("practice.seeDefinition")}</span>
+                  <span className="guided-exercise-toggle-label">{t("practice.seeDefinition")}</span>
                   {showDefinition ? (
-                    <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                    <ChevronUp className="guided-exercise-toggle-icon" />
                   ) : (
-                    <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                    <ChevronDown className="guided-exercise-toggle-icon" />
                   )}
                 </button>
                 <div
-                  className="transition-all duration-300 ease-in-out overflow-hidden"
+                  className="guided-exercise-collapsible-panel"
                   style={{ maxHeight: showDefinition ? "150px" : "0px", opacity: showDefinition ? 1 : 0 }}
                 >
-                  <div className="exercise-definition-content px-3 py-2.5 sm:px-4 sm:py-3 bg-muted/40 sm:bg-muted/50 text-xs sm:text-sm border-t">
+                  <div className="exercise-definition-content guided-exercise-content-block">
                     {item.definition}
                   </div>
                 </div>
@@ -196,26 +191,26 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
             )}
 
             {item.exampleSentence && (status.isCorrect || status.usedShowWord) && (
-              <div className="border border-border rounded-lg overflow-hidden">
+              <div className="guided-exercise-collapsible">
                 <button
                   type="button"
                   onClick={() => setShowSentence(!showSentence)}
-                  className="exercise-see-sentence-button w-full flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm hover:bg-muted active:bg-muted/80 transition-colors text-left"
+                  className="exercise-see-sentence-button guided-exercise-toggle-button"
                 >
-                  <span className="font-medium">{t("practice.seeInSentence")}</span>
+                  <span className="guided-exercise-toggle-label">{t("practice.seeInSentence")}</span>
                   {showSentence ? (
-                    <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                    <ChevronUp className="guided-exercise-toggle-icon" />
                   ) : (
-                    <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                    <ChevronDown className="guided-exercise-toggle-icon" />
                   )}
                 </button>
                 <div
-                  className="transition-all duration-300 ease-in-out overflow-hidden"
+                  className="guided-exercise-collapsible-panel"
                   style={{ maxHeight: showSentence ? "180px" : "0px", opacity: showSentence ? 1 : 0 }}
                 >
-                  <div className="exercise-sentence-content px-3 py-2.5 sm:px-4 sm:py-3 bg-muted/40 sm:bg-muted/50 text-xs sm:text-sm border-t italic">
-                    <div className="relative">
-                      <span className="block leading-relaxed pr-10">
+                  <div className="exercise-sentence-content guided-exercise-content-block guided-exercise-content-block--italic">
+                    <div className="guided-exercise-sentence-row">
+                      <span className="guided-exercise-sentence-text">
                         {'"'}
                         {item.exampleSentence}
                         {'"'}
@@ -223,10 +218,10 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
                       <button
                         type="button"
                         onClick={() => speakGuidedWord(item.exampleSentence!, practiceLanguage)}
-                        className="absolute top-1/2 -translate-y-1/2 right-0 p-1.5 sm:p-2 hover:bg-muted rounded-lg text-muted-foreground transition-colors"
+                        className="guided-exercise-sentence-speak-button"
                         aria-label={t("practice.listenToSentence")}
                       >
-                        <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
+                        <Volume2 className="guided-exercise-sentence-speak-icon" aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -236,16 +231,12 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
           </div>
         </div>
 
-        <div className="flex items-center justify-end pt-4 border-t border-border">
+        <div className="guided-exercise-footer">
           <button
             type="button"
             onClick={handleContinue}
             disabled={!isStepComplete}
-            className={`practice-next-button px-6 py-2.5 rounded-lg font-medium transition-all ${
-              isStepComplete
-                ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                : "bg-muted text-muted-foreground cursor-not-allowed opacity-60"
-            }`}
+            className={`practice-next-button guided-exercise-next-button ${isStepComplete ? "is-complete" : ""}`}
           >
             {t("practice.nextAction")}
           </button>

@@ -8,11 +8,13 @@ import "./learning-section.scss";
 interface LearningSectionProps {
   onStartCustomPractice?: () => void;
   onStartNewWordStudy?: () => void;
+  onDailyGoalChange?: (dailyGoal: number) => void;
 }
 
 export function LearningSection({
   onStartCustomPractice,
   onStartNewWordStudy,
+  onDailyGoalChange,
 }: LearningSectionProps) {
   const { t } = useLanguage();
 
@@ -27,7 +29,7 @@ export function LearningSection({
         </p>
       </header>
       <div className="learning-section__indicators">
-        <DailyGoalSelector />
+        <DailyGoalSelector onDailyGoalChange={onDailyGoalChange} />
         <DailyStreakCard />
         <TodayProgressCard />
       </div>

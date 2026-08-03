@@ -1,28 +1,24 @@
 import { BookOpen, CircleCheck, Heart, Star, type LucideIcon } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
+import type { VocabularyCounts } from "../../../../data/learning/vocabularyCategory";
 
 type SummaryCardVariant = "purple" | "green" | "amber" | "rose";
 
 interface SummaryCardConfig {
-  id: string;
+  id: keyof VocabularyCounts;
   titleKey: string;
   descriptionKey: string;
   icon: LucideIcon;
   variant: SummaryCardVariant;
-  value: number;
 }
 
-// Hardcoded zero-state preview for a brand-new user, mirroring the
-// LearningModeCards precedent. Replace with real vocabulary counts once
-// that data pipeline exists.
-const SUMMARY_CARDS: SummaryCardConfig[] = [
+const SUMMARY_CARD_CONFIGS: SummaryCardConfig[] = [
   {
     id: "learning",
     titleKey: "userProfile.vocabularySection.summaryCards.learning.title",
     descriptionKey: "userProfile.vocabularySection.summaryCards.learning.description",
     icon: BookOpen,
     variant: "purple",
-    value: 0,
   },
   {
     id: "known",
@@ -30,7 +26,6 @@ const SUMMARY_CARDS: SummaryCardConfig[] = [
     descriptionKey: "userProfile.vocabularySection.summaryCards.known.description",
     icon: CircleCheck,
     variant: "green",
-    value: 0,
   },
   {
     id: "mastered",
@@ -38,7 +33,6 @@ const SUMMARY_CARDS: SummaryCardConfig[] = [
     descriptionKey: "userProfile.vocabularySection.summaryCards.mastered.description",
     icon: Star,
     variant: "amber",
-    value: 0,
   },
   {
     id: "favorites",
@@ -46,16 +40,24 @@ const SUMMARY_CARDS: SummaryCardConfig[] = [
     descriptionKey: "userProfile.vocabularySection.summaryCards.favorites.description",
     icon: Heart,
     variant: "rose",
-    value: 0,
   },
 ];
 
-export function VocabularySummaryCards() {
+interface VocabularySummaryCardsProps {
+  counts: VocabularyCounts;
+  isLoading: boolean;
+}
+
+// Real counts replace the old hardcoded zero-state preview — see
+// loadVocabularyProgress.ts for how `counts` is computed (from every
+// persisted user_word_progress row, independent of which ones resolve to
+// visible vocabulary data).
+export function VocabularySummaryCards({ counts, isLoading }: VocabularySummaryCardsProps) {
   const { t } = useLanguage();
 
   return (
     <div className="vocabulary-summary-cards">
-      {SUMMARY_CARDS.map((card) => {
+      {SUMMARY_CARD_CONFIGS.map((card) => {
         const Icon = card.icon;
 
         return (
@@ -69,7 +71,14 @@ export function VocabularySummaryCards() {
               </span>
               <h3 className="vocabulary-summary-card__title">{t(card.titleKey)}</h3>
             </div>
-            <p className="vocabulary-summary-card__value">{card.value}</p>
+            {isLoading ? (
+              <span
+                className="vocabulary-summary-card__value-skeleton"
+                aria-hidden="true"
+              />
+            ) : (
+              <p className="vocabulary-summary-card__value">{counts[card.id]}</p>
+            )}
             <p className="vocabulary-summary-card__description">{t(card.descriptionKey)}</p>
             <span className="vocabulary-summary-card__status-line" aria-hidden="true" />
           </div>

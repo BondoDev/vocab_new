@@ -103,7 +103,8 @@
         "wordsUnit": "Woerter",
         "aria": {
           "of": "von",
-          "dailyWordsCompleted": "tagliche Woerter abgeschlossen"
+          "dailyWordsCompleted": "tagliche Woerter abgeschlossen",
+          "loading": "Dein heutiger Fortschritt wird geladen..."
         }
       },
       "dailyStreak": {
@@ -170,6 +171,22 @@
         "label": "Wort hinzufuegen",
         "toast": "Wort hinzufuegen ist derzeit nur eine Vorschau-Aktion."
       },
+      "loadError": "Beim Laden deines Wortschatzes ist ein Fehler aufgetreten.",
+      "retryButton": "Erneut versuchen",
+      "favoriteError": "Favorit konnte nicht aktualisiert werden. Bitte versuche es erneut.",
+      "emptyStates": {
+        "noWordsYetTitle": "Noch keine Woerter",
+        "noWordsYetMessage": "Schliesse eine Sitzung von Neue Woerter lernen ab, um deinen Wortschatz aufzubauen.",
+        "noWordsYetAction": "Neue Woerter lernen",
+        "noSearchMatches": "Keine Woerter entsprechen deiner Suche.",
+        "noTabWords": {
+          "all": "Keine Woerter fuer diese Ansicht.",
+          "learning": "Noch keine Woerter in Bearbeitung.",
+          "known": "Noch keine bekannten Woerter.",
+          "mastered": "Noch keine gemeisterten Woerter.",
+          "favorites": "Noch keine favorisierten Woerter."
+        }
+      },
       "summaryCards": {
         "learning": {
           "title": "Lernen",
@@ -220,11 +237,14 @@
           "translation": "Uebersetzung",
           "level": "Niveau",
           "status": "Status",
-          "lastReviewed": "Zuletzt wiederholt",
+          "lastPracticed": "Zuletzt geuebt",
           "actions": "Aktionen"
         },
         "audioAriaLabel": "Aussprache abspielen",
-        "favoriteAriaLabel": "Favorit umschalten",
+        "addFavoriteAriaLabelPrefix": "Zu Favoriten hinzufuegen:",
+        "addFavoriteAriaLabelSuffix": "",
+        "removeFavoriteAriaLabelPrefix": "Aus Favoriten entfernen:",
+        "removeFavoriteAriaLabelSuffix": "",
         "moreActionsAriaLabel": "Weitere Aktionen",
         "menu": {
           "viewDetails": "Details ansehen",
@@ -236,21 +256,16 @@
           "known": "Bekannt",
           "mastered": "Gemeistert"
         },
-        "lastReviewed": {
+        "lastPracticed": {
           "today": "Heute",
-          "twoDaysAgo": "Vor 2 Tagen",
-          "fiveDaysAgo": "Vor 5 Tagen",
-          "oneWeekAgo": "Vor 1 Woche"
-        },
-        "reviewedLabel": {
-          "today": "Heute ueberprueft",
-          "twoDaysAgo": "Vor 2 Tagen ueberprueft",
-          "fiveDaysAgo": "Vor 5 Tagen ueberprueft",
-          "oneWeekAgo": "Vor 1 Woche ueberprueft"
+          "yesterday": "Gestern",
+          "daysAgoSuffix": "Tage",
+          "never": "Nie"
         }
       },
       "pagination": {
-        "previewingSampleRows": "Beispielzeilen als Vorschau",
+        "showingPrefix": "Anzeige von",
+        "showingConnector": "von",
         "previous": "Zurueck",
         "next": "Weiter",
         "rowsPerPage": "Zeilen pro Seite"
@@ -574,6 +589,9 @@
     "exampleSentenceLabel": "Beispiel",
     "wordCompleteTitle": "Wort gelernt",
     "nextWordButton": "Nächstes Wort",
+    "savingProgress": "Fortschritt wird gespeichert...",
+    "saveErrorMessage": "Wir konnten dieses Wort nicht speichern. Überprüfe deine Verbindung und versuche es erneut.",
+    "sessionExpiredMessage": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
     "wordLearnedToastPrefix": "Wort",
     "wordLearnedToastSuffix": "gelernt.",
     "wordPositionPrefix": "Wort",
@@ -583,13 +601,13 @@
     "sessionCompleteWordsLabel": "Wörter abgeschlossen",
     "returnToLearningButton": "Zurück zum Lernen",
     "leaveSessionTitle": "Sitzung verlassen?",
-    "leaveSessionDescription": "Dein Fortschritt in dieser Sitzung wurde nicht gespeichert.",
+    "leaveSessionDescription": "Wörter, die du in dieser Sitzung bereits abgeschlossen hast, sind gespeichert. Das aktuelle Wort wurde noch nicht gespeichert.",
     "leaveSessionConfirm": "Sitzung verlassen",
     "leaveSessionStay": "In der Sitzung bleiben",
     "exitSessionAria": "Sitzung verlassen",
     "sessionErrorMessage": "Bei deiner Lernsitzung ist ein Fehler aufgetreten.",
     "aboutToLearnPrefix": "Du lernst gleich",
-    "aboutToLearnSuffix": " neue Wörter.",
+    "aboutToLearnSuffix": " neue Wörter auf",
     "sessionExplainHeading": "In dieser Sitzung wirst du:",
     "sessionExplainBullet1": "Die neuen Wörter von heute lernen",
     "sessionExplainExercisesPrefix": "Absolviere",

@@ -103,7 +103,8 @@
         "wordsUnit": "parole",
         "aria": {
           "of": "su",
-          "dailyWordsCompleted": "parole giornaliere completate"
+          "dailyWordsCompleted": "parole giornaliere completate",
+          "loading": "Caricamento dei progressi di oggi in corso..."
         }
       },
       "dailyStreak": {
@@ -170,6 +171,22 @@
         "label": "Aggiungi parola",
         "toast": "Aggiungi parola e per ora un'azione di anteprima."
       },
+      "loadError": "Si e verificato un errore durante il caricamento del tuo vocabolario.",
+      "retryButton": "Riprova",
+      "favoriteError": "Impossibile aggiornare il preferito. Riprova.",
+      "emptyStates": {
+        "noWordsYetTitle": "Ancora nessuna parola",
+        "noWordsYetMessage": "Completa una sessione di Studia parole nuove per iniziare a costruire il tuo vocabolario.",
+        "noWordsYetAction": "Studia parole nuove",
+        "noSearchMatches": "Nessuna parola corrisponde alla tua ricerca.",
+        "noTabWords": {
+          "all": "Nessuna parola per questa visualizzazione.",
+          "learning": "Ancora nessuna parola in apprendimento.",
+          "known": "Ancora nessuna parola conosciuta.",
+          "mastered": "Ancora nessuna parola padroneggiata.",
+          "favorites": "Ancora nessuna parola preferita."
+        }
+      },
       "summaryCards": {
         "learning": {
           "title": "In apprendimento",
@@ -220,11 +237,14 @@
           "translation": "Traduzione",
           "level": "Livello",
           "status": "Stato",
-          "lastReviewed": "Ultima revisione",
+          "lastPracticed": "Ultima pratica",
           "actions": "Azioni"
         },
         "audioAriaLabel": "Riproduci pronuncia",
-        "favoriteAriaLabel": "Attiva/disattiva preferito",
+        "addFavoriteAriaLabelPrefix": "Aggiungi",
+        "addFavoriteAriaLabelSuffix": "ai preferiti",
+        "removeFavoriteAriaLabelPrefix": "Rimuovi",
+        "removeFavoriteAriaLabelSuffix": "dai preferiti",
         "moreActionsAriaLabel": "Altre azioni",
         "menu": {
           "viewDetails": "Visualizza dettagli",
@@ -236,21 +256,16 @@
           "known": "Conosciute",
           "mastered": "Padroneggiate"
         },
-        "lastReviewed": {
+        "lastPracticed": {
           "today": "Oggi",
-          "twoDaysAgo": "2 giorni fa",
-          "fiveDaysAgo": "5 giorni fa",
-          "oneWeekAgo": "1 settimana fa"
-        },
-        "reviewedLabel": {
-          "today": "Rivisto oggi",
-          "twoDaysAgo": "Rivisto 2 giorni fa",
-          "fiveDaysAgo": "Rivisto 5 giorni fa",
-          "oneWeekAgo": "Rivisto 1 settimana fa"
+          "yesterday": "Ieri",
+          "daysAgoSuffix": "giorni fa",
+          "never": "Mai"
         }
       },
       "pagination": {
-        "previewingSampleRows": "Anteprima di righe di esempio",
+        "showingPrefix": "Visualizzazione di",
+        "showingConnector": "su",
         "previous": "Precedente",
         "next": "Successivo",
         "rowsPerPage": "Righe per pagina"
@@ -574,6 +589,9 @@
     "exampleSentenceLabel": "Esempio",
     "wordCompleteTitle": "Parola imparata",
     "nextWordButton": "Parola successiva",
+    "savingProgress": "Salvataggio in corso...",
+    "saveErrorMessage": "Non siamo riusciti a salvare questa parola. Controlla la tua connessione e riprova.",
+    "sessionExpiredMessage": "La tua sessione e scaduta. Accedi di nuovo.",
     "wordLearnedToastPrefix": "Parola",
     "wordLearnedToastSuffix": "imparata.",
     "wordPositionPrefix": "Parola",
@@ -583,13 +601,13 @@
     "sessionCompleteWordsLabel": "Parole completate",
     "returnToLearningButton": "Torna ad Apprendimento",
     "leaveSessionTitle": "Uscire dalla sessione?",
-    "leaveSessionDescription": "I progressi di questa sessione non sono stati salvati.",
+    "leaveSessionDescription": "Le parole gia completate in questa sessione sono salvate. La parola attuale non e stata ancora salvata.",
     "leaveSessionConfirm": "Esci dalla sessione",
     "leaveSessionStay": "Rimani nella sessione",
     "exitSessionAria": "Esci dalla sessione",
     "sessionErrorMessage": "Si e verificato un problema con la sessione di studio.",
     "aboutToLearnPrefix": "Stai per imparare",
-    "aboutToLearnSuffix": " nuove parole.",
+    "aboutToLearnSuffix": " nuove parole in",
     "sessionExplainHeading": "Durante questa sessione:",
     "sessionExplainBullet1": "Imparerai le parole nuove di oggi",
     "sessionExplainExercisesPrefix": "Completerai",

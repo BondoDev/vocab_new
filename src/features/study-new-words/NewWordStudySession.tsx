@@ -13,6 +13,9 @@ import {
   AlertDialogTitle,
 } from "../../app/components/ui/alert-dialog";
 import type { ResolvedStudyQueueItem } from "../../data/learning/newWordStudyQueue";
+import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
+import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
+import { completeNewWordStudy, NewWordStudyPersistenceError } from "../../lib/newWordProgress";
 import {
   createInitialSessionState,
   getCurrentQueueItem,
@@ -28,6 +31,10 @@ import { NewWordStudyComplete } from "./NewWordStudyComplete";
 // VocabularyPractice.tsx imports this same stylesheet for the same reason.
 // Not forked/duplicated, just reused from its one owning location.
 import "../practice/styles/exercises.scss";
+// Owns the semantic classes NewWordInfoStep.tsx and GuidedExerciseAdapter.tsx
+// render into (see that file's own header comment for the ownership split
+// against exercises.scss above).
+import "./styles/study-new-words.scss";
 
 interface NewWordStudySessionProps {
   queue: ResolvedStudyQueueItem[];
@@ -37,15 +44,37 @@ interface NewWordStudySessionProps {
   // translation (not hardcoded: read from the same app-level language state
   // NewWordStudyPreparation already has).
   yourLanguage: string;
+  // Phase 1's queue-prep result already knows both of these — threaded
+  // through so the progress bar/label can count against the whole day's
+  // goal instead of resetting to "of <this session's remaining queue
+  // length>" whenever a learner leaves mid-goal and starts a new session
+  // later the same day. See newWordStudySessionState.ts's getSessionProgress.
+  dailyGoal: number;
+  wordsCompletedToday: number;
   // Used both for "Exit" (with confirmation) and "Return to Learning" on the
   // completion screen — both ultimately return to the same place.
   onExit: () => void;
 }
 
-export function NewWordStudySession({ queue, practiceLanguage, yourLanguage, onExit }: NewWordStudySessionProps) {
+export function NewWordStudySession({
+  queue,
+  practiceLanguage,
+  yourLanguage,
+  dailyGoal,
+  wordsCompletedToday,
+  onExit,
+}: NewWordStudySessionProps) {
   const { t } = useLanguage();
-  const [state, dispatch] = useReducer(reduceSessionState, queue, createInitialSessionState);
+  const [state, dispatch] = useReducer(
+    reduceSessionState,
+    { queue, dailyGoal, wordsCompletedBeforeSession: wordsCompletedToday },
+    createInitialSessionState,
+  );
   const [isExitConfirmOpen, setIsExitConfirmOpen] = useState(false);
+  // Only meaningful while currentStep === "save_error": picks between the
+  // generic retryable-failure copy and the session-expired copy, without
+  // ever rendering the underlying Supabase/PostgreSQL error text itself.
+  const [isSaveErrorSessionExpired, setIsSaveErrorSessionExpired] = useState(false);
   const stepContainerRef = useRef<HTMLDivElement | null>(null);
   const { message: wordLearnedToast, show: showWordLearnedToast } = useAutoDismissMessage();
 
@@ -63,6 +92,70 @@ export function NewWordStudySession({ queue, practiceLanguage, yourLanguage, onE
   // wherever focus happened to be on the previous step.
   useEffect(() => {
     stepContainerRef.current?.focus();
+  }, [state.currentStep, state.currentWordIndex]);
+
+  // Phase 3 persistence boundary: fires exactly once per entry into
+  // "saving_word" (on first arrival straight from full_typing, and again
+  // each time RETRY_SAVE re-enters it from save_error). Deliberately keyed
+  // only on currentStep/currentWordIndex, not the full state object — see
+  // the BEGIN effect above for the same pattern in this file.
+  useEffect(() => {
+    if (state.currentStep !== "saving_word") {
+      return;
+    }
+
+    const item = getCurrentQueueItem(state);
+    if (!item) {
+      dispatch({ type: "SAVE_FAILED" });
+      return;
+    }
+
+    const session = getStoredSupabaseSession();
+    if (!session) {
+      setIsSaveErrorSessionExpired(true);
+      dispatch({ type: "SAVE_FAILED" });
+      return;
+    }
+
+    let cancelled = false;
+
+    void completeNewWordStudy({
+      session,
+      conceptId: item.conceptId,
+      targetLanguage: practiceLanguage,
+      // Recomputed fresh at the moment this word is persisted (not captured
+      // once at queue-load time) — same helper Phase 1 uses, so a session
+      // that happens to cross local midnight counts each word toward the
+      // day it actually finished on, matching what a fresh queue load would
+      // also decide. No completion timestamp is sent here — the database
+      // generates it (now()) inside complete_new_word_study so the browser
+      // clock never controls last_practiced_at/next_review_at.
+      statDateISO: getLocalCalendarDateISO(),
+    })
+      .then(() => {
+        if (cancelled) return;
+        setIsSaveErrorSessionExpired(false);
+        // item is the word that just finished — captured before dispatch,
+        // since SAVE_SUCCEEDED may move state.currentWordIndex on (or to
+        // session_complete) within this same update.
+        showWordLearnedToast(
+          `${t("studyNewWords.wordLearnedToastPrefix")} "${item.targetWord}" ${t(
+            "studyNewWords.wordLearnedToastSuffix",
+          )}`,
+        );
+        dispatch({ type: "SAVE_SUCCEEDED" });
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        console.warn("NewWordStudySession: failed to save the completed word.", error);
+        setIsSaveErrorSessionExpired(error instanceof NewWordStudyPersistenceError && !error.retryable);
+        dispatch({ type: "SAVE_FAILED" });
+      });
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.currentStep, state.currentWordIndex]);
 
   const currentItem = getCurrentQueueItem(state);
@@ -83,23 +176,27 @@ export function NewWordStudySession({ queue, practiceLanguage, yourLanguage, onE
     onExit();
   };
 
+  const handleRetrySave = () => {
+    dispatch({ type: "RETRY_SAVE" });
+  };
+
   return (
-    <div className="new-word-study-session flex-1 min-h-0 flex flex-col bg-background px-4 md:px-8 py-6">
-      <div className="max-w-2xl w-full mx-auto flex-1 flex flex-col">
+    <div className="new-word-study-session">
+      <div className="new-word-study-session-body">
         {!isSessionComplete && (
-          <div className="flex flex-col gap-3 mb-6">
-            <div className="flex items-center justify-between gap-3">
+          <div className="new-word-study-session-header">
+            <div className="new-word-study-session-header-row">
               <button
                 type="button"
                 onClick={handleExitClick}
                 aria-label={t("studyNewWords.exitSessionAria")}
-                className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                className="new-word-study-exit-button"
               >
-                <LogOut className="w-4 h-4" aria-hidden="true" />
-                <span className="text-sm">{t("studyNewWords.exitSessionAria")}</span>
+                <LogOut className="new-word-study-exit-icon" aria-hidden="true" />
+                <span className="new-word-study-exit-label">{t("studyNewWords.exitSessionAria")}</span>
               </button>
 
-              <p className="text-sm text-muted-foreground whitespace-nowrap">
+              <p className="new-word-study-progress-text">
                 {t("studyNewWords.wordPositionPrefix")} {progress.currentPosition}{" "}
                 {t("studyNewWords.ofConnector")} {progress.totalWords}
                 {exerciseStepNumber !== null && (
@@ -119,10 +216,10 @@ export function NewWordStudySession({ queue, practiceLanguage, yourLanguage, onE
               aria-label={`${t("studyNewWords.wordPositionPrefix")} ${progress.currentPosition} ${t(
                 "studyNewWords.ofConnector",
               )} ${progress.totalWords}`}
-              className="h-1.5 w-full bg-muted rounded-full overflow-hidden"
+              className="new-word-study-progress-track"
             >
               <div
-                className="h-full bg-primary transition-[width]"
+                className="new-word-study-progress-fill"
                 style={{
                   width:
                     progress.totalWords > 0
@@ -138,15 +235,11 @@ export function NewWordStudySession({ queue, practiceLanguage, yourLanguage, onE
             screen-reader users without needing a separate live-region element
             per step. tabIndex=-1 lets the focus-movement effect above target
             this container directly. */}
-        <div ref={stepContainerRef} tabIndex={-1} aria-live="polite" className="outline-none flex-1">
+        <div ref={stepContainerRef} tabIndex={-1} aria-live="polite" className="new-word-study-step-container">
           {!currentItem && !isSessionComplete && (
-            <div className="flex flex-col items-center text-center gap-4 py-16">
-              <p className="text-foreground max-w-md break-words">{t("studyNewWords.sessionErrorMessage")}</p>
-              <button
-                type="button"
-                onClick={onExit}
-                className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
-              >
+            <div className="new-word-study-error-block">
+              <p className="new-word-study-error-message">{t("studyNewWords.sessionErrorMessage")}</p>
+              <button type="button" onClick={onExit} className="new-word-study-error-back-button">
                 {t("studyNewWords.backButton")}
               </button>
             </div>
@@ -168,22 +261,36 @@ export function NewWordStudySession({ queue, practiceLanguage, yourLanguage, onE
               item={currentItem}
               practiceLanguage={practiceLanguage}
               onComplete={(outcome) => {
-                // Completing full_typing finishes the word and the reducer
-                // advances immediately (no intermediate "word learned"
-                // step/screen) — a toast is the only acknowledgment. The
-                // word must be read from currentItem here, before dispatch,
-                // since the reducer may already move to the next word (or
-                // session_complete) within this same update.
-                if (guidedExerciseStep === "full_typing") {
-                  showWordLearnedToast(
-                    `${t("studyNewWords.wordLearnedToastPrefix")} "${currentItem.targetWord}" ${t(
-                      "studyNewWords.wordLearnedToastSuffix",
-                    )}`,
-                  );
-                }
+                // Completing full_typing doesn't finish the word here — it
+                // hands off to the saving_word persistence boundary (see the
+                // effect above). The "word learned" toast fires from that
+                // effect only once the save actually succeeds, not
+                // immediately on exercise completion.
                 dispatch({ type: "COMPLETE_EXERCISE", step: guidedExerciseStep, outcome });
               }}
             />
+          )}
+
+          {currentItem && state.currentStep === "saving_word" && (
+            <div className="new-word-study-saving-block" role="status" aria-live="polite">
+              <div className="study-new-words-spinner" aria-hidden="true" />
+              <p className="new-word-study-saving-message">{t("studyNewWords.savingProgress")}</p>
+            </div>
+          )}
+
+          {currentItem && state.currentStep === "save_error" && (
+            <div className="new-word-study-error-block">
+              <p className="new-word-study-error-message">
+                {t(
+                  isSaveErrorSessionExpired
+                    ? "studyNewWords.sessionExpiredMessage"
+                    : "studyNewWords.saveErrorMessage",
+                )}
+              </p>
+              <button type="button" onClick={handleRetrySave} className="new-word-study-error-back-button">
+                {t("studyNewWords.retryButton")}
+              </button>
+            </div>
           )}
 
           {isSessionComplete && (
@@ -197,16 +304,16 @@ export function NewWordStudySession({ queue, practiceLanguage, yourLanguage, onE
       </div>
 
       <AlertDialog open={isExitConfirmOpen} onOpenChange={setIsExitConfirmOpen}>
-        <AlertDialogContent className="w-[90vw] max-w-[90vw] gap-3 px-5 py-5 sm:w-fit sm:max-w-md">
-          <AlertDialogHeader className="gap-2">
+        <AlertDialogContent className="new-word-study-exit-dialog-content">
+          <AlertDialogHeader className="new-word-study-exit-dialog-header">
             <AlertDialogTitle>{t("studyNewWords.leaveSessionTitle")}</AlertDialogTitle>
             <AlertDialogDescription>{t("studyNewWords.leaveSessionDescription")}</AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="sm:justify-end">
-            <AlertDialogCancel className="sm:flex-none">
+          <AlertDialogFooter className="new-word-study-exit-dialog-footer">
+            <AlertDialogCancel className="new-word-study-exit-dialog-button">
               {t("studyNewWords.leaveSessionStay")}
             </AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmExit} className="sm:flex-none">
+            <AlertDialogAction onClick={handleConfirmExit} className="new-word-study-exit-dialog-button">
               {t("studyNewWords.leaveSessionConfirm")}
             </AlertDialogAction>
           </AlertDialogFooter>

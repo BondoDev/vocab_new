@@ -1,4 +1,7 @@
 import { useLanguage } from "../../contexts/LanguageContext";
+// Visual styling lives in ./styles/study-new-words.scss (imported by
+// NewWordStudySession.tsx, this component's sole renderer) — this file only
+// assigns the semantic class names.
 
 interface NewWordStudyCompleteProps {
   wordsCompleted: number;
@@ -19,24 +22,16 @@ export function NewWordStudyComplete({
   const languageName = t(`languageNames.${practiceLanguage}`);
 
   return (
-    <div className="flex flex-col items-center text-center gap-4 py-16">
-      <h1 className="text-2xl md:text-3xl font-semibold text-foreground break-words">
-        {t("studyNewWords.sessionCompleteTitle")}
-      </h1>
+    <div className="new-word-study-complete">
+      <h1 className="new-word-study-complete-title">{t("studyNewWords.sessionCompleteTitle")}</h1>
 
-      <div className="rounded-lg border border-border px-6 py-4 min-w-[12rem]">
-        <p className="text-3xl font-bold text-foreground">{wordsCompleted}</p>
-        <p className="text-xs text-muted-foreground uppercase tracking-wide mt-1">
-          {t("studyNewWords.sessionCompleteWordsLabel")}
-        </p>
-        <p className="text-sm text-muted-foreground mt-2 break-words">{languageName}</p>
+      <div className="new-word-study-complete-stat">
+        <p className="new-word-study-complete-count">{wordsCompleted}</p>
+        <p className="new-word-study-complete-count-label">{t("studyNewWords.sessionCompleteWordsLabel")}</p>
+        <p className="new-word-study-complete-language">{languageName}</p>
       </div>
 
-      <button
-        type="button"
-        onClick={onReturnToLearning}
-        className="mt-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
-      >
+      <button type="button" onClick={onReturnToLearning} className="new-word-study-complete-button">
         {t("studyNewWords.returnToLearningButton")}
       </button>
     </div>

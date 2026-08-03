@@ -222,6 +222,36 @@
     border-radius: 999px;
     background: var(--muted);
   }
+
+  /* Same footprint as the real value text it stands in for, so the card
+     never resizes once real counts arrive (see
+     VocabularySummaryCards.tsx's isLoading branch). */
+  &__value-skeleton {
+    display: block;
+    width: 2.5rem;
+    height: 1.85rem;
+    margin: 0.3rem auto 0;
+    border-radius: calc(var(--radius) - 6px);
+    background: var(--muted);
+    animation: vocabulary-skeleton-pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes vocabulary-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vocabulary-summary-card__value-skeleton,
+  .vocabulary-loading-row {
+    animation-duration: 3.2s;
+  }
 }
 
 .vocabulary-summary-card--purple {
@@ -797,6 +827,76 @@
   &:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+/* ============================================================
+   Loading / empty / error states — replace the table area only; summary
+   cards and tabs above stay mounted throughout (see VocabularySection.tsx).
+   ============================================================ */
+
+.vocabulary-loading-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.25rem 0 0.5rem;
+}
+
+.vocabulary-loading-row {
+  height: 2.75rem;
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--muted);
+  animation: vocabulary-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.vocabulary-message-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 2.5rem 1rem;
+  text-align: center;
+
+  &__title {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  &__text {
+    margin: 0;
+    max-width: 32rem;
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+.vocabulary-retry-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 150ms ease;
+
+  &:hover {
+    filter: brightness(0.94);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
   }
 }
 

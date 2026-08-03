@@ -82,6 +82,16 @@ Current owner-local examples:
   owned by `LevelCategorySelection.tsx`.
 - `src/features/practice/styles/exercises.scss` — owned by
   `VocabularyPractice.tsx` and the exercise-type components it renders.
+- `src/features/study-new-words/styles/study-new-words.scss` — owned by
+  every component in that feature folder (`NewWordInfoStep.tsx`,
+  `GuidedExerciseAdapter.tsx`, `NewWordStudySession.tsx`,
+  `NewWordStudyComplete.tsx`, `NewWordStudyPreparation.tsx`), imported by
+  the feature's two entry points, `NewWordStudySession.tsx` and
+  `NewWordStudyPreparation.tsx`. `GuidedExerciseAdapter.tsx` also renders
+  into several shared hook classes owned by `exercises.scss` above (e.g.
+  `.practice-card`, `.exercise-guess-word`) — this file only adds the
+  additional classes specific to this adapter and does not restyle those
+  shared selectors.
 - `src/features/user-profile/styles/user-profile-sidebar.scss` — owned by
   `UserProfileSidebar.tsx` (also holds the profile shell's own
   `.user-profile-dashboard*` layout classes, imported transitively via the

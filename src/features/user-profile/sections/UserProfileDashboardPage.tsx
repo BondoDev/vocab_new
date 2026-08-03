@@ -16,6 +16,12 @@ interface UserProfileDashboardPageProps {
   languageLevel?: LanguageLevelCode | "";
   onStartCustomPractice?: () => void;
   onStartNewWordStudy?: () => void;
+  // Lets the Learning section's DailyGoalSelector (which owns its own
+  // load/save round-trip to Supabase) push a successfully saved goal back up
+  // into App.tsx's userProfile state — without this, other places reading
+  // userProfile.dailyGoal (e.g. NewWordStudyPreparation) keep showing the
+  // value from the last full profile load until the page is reloaded.
+  onDailyGoalChange?: (dailyGoal: number) => void;
 }
 
 const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
@@ -37,6 +43,7 @@ export function UserProfileDashboardPage({
   languageLevel,
   onStartCustomPractice,
   onStartNewWordStudy,
+  onDailyGoalChange,
 }: UserProfileDashboardPageProps) {
   const { t } = useLanguage();
   const location = useLocation();
@@ -69,9 +76,12 @@ export function UserProfileDashboardPage({
               <LearningSection
                 onStartCustomPractice={onStartCustomPractice}
                 onStartNewWordStudy={onStartNewWordStudy}
+                onDailyGoalChange={onDailyGoalChange}
               />
             ) : null}
-            {activeSection === "vocabulary" ? <VocabularySection /> : null}
+            {activeSection === "vocabulary" ? (
+              <VocabularySection onStartNewWordStudy={onStartNewWordStudy} />
+            ) : null}
             {activeSection === "dashboard" ? <DashboardSection /> : null}
           </section>
         </div>

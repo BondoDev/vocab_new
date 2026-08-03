@@ -688,6 +688,9 @@ function AppContent({
           languageLevel={userProfile.languageLevel}
           onStartCustomPractice={handleStartCustomPractice}
           onStartNewWordStudy={handleStartNewWordStudy}
+          onDailyGoalChange={(dailyGoal) =>
+            setUserProfile((previous) => ({ ...previous, dailyGoal }))
+          }
         />
         {accountOnboardingDialog}
       </div>

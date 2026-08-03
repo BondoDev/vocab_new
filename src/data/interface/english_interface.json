@@ -103,7 +103,8 @@
         "wordsUnit": "words",
         "aria": {
           "of": "of",
-          "dailyWordsCompleted": "daily words completed"
+          "dailyWordsCompleted": "daily words completed",
+          "loading": "Loading today's progress..."
         }
       },
       "dailyStreak": {
@@ -170,6 +171,22 @@
         "label": "Add Word",
         "toast": "Add Word is a preview action for now."
       },
+      "loadError": "Something went wrong loading your vocabulary.",
+      "retryButton": "Try again",
+      "favoriteError": "Couldn't update favorite. Please try again.",
+      "emptyStates": {
+        "noWordsYetTitle": "No words yet",
+        "noWordsYetMessage": "Complete a Study New Words session to start building your vocabulary.",
+        "noWordsYetAction": "Study New Words",
+        "noSearchMatches": "No words match your search.",
+        "noTabWords": {
+          "all": "No words match this view.",
+          "learning": "No learning words yet.",
+          "known": "No known words yet.",
+          "mastered": "No mastered words yet.",
+          "favorites": "No favorite words yet."
+        }
+      },
       "summaryCards": {
         "learning": {
           "title": "Learning",
@@ -220,11 +237,14 @@
           "translation": "Translation",
           "level": "Level",
           "status": "Status",
-          "lastReviewed": "Last Reviewed",
+          "lastPracticed": "Last practised",
           "actions": "Actions"
         },
         "audioAriaLabel": "Play pronunciation",
-        "favoriteAriaLabel": "Toggle favorite",
+        "addFavoriteAriaLabelPrefix": "Add",
+        "addFavoriteAriaLabelSuffix": "to favorites",
+        "removeFavoriteAriaLabelPrefix": "Remove",
+        "removeFavoriteAriaLabelSuffix": "from favorites",
         "moreActionsAriaLabel": "More actions",
         "menu": {
           "viewDetails": "View details",
@@ -236,21 +256,16 @@
           "known": "Known",
           "mastered": "Mastered"
         },
-        "lastReviewed": {
+        "lastPracticed": {
           "today": "Today",
-          "twoDaysAgo": "2 days ago",
-          "fiveDaysAgo": "5 days ago",
-          "oneWeekAgo": "1 week ago"
-        },
-        "reviewedLabel": {
-          "today": "Reviewed today",
-          "twoDaysAgo": "Reviewed 2 days ago",
-          "fiveDaysAgo": "Reviewed 5 days ago",
-          "oneWeekAgo": "Reviewed 1 week ago"
+          "yesterday": "Yesterday",
+          "daysAgoSuffix": "days ago",
+          "never": "Never"
         }
       },
       "pagination": {
-        "previewingSampleRows": "Previewing sample rows",
+        "showingPrefix": "Showing",
+        "showingConnector": "of",
         "previous": "Previous",
         "next": "Next",
         "rowsPerPage": "Rows per page"
@@ -579,6 +594,9 @@
     "exampleSentenceLabel": "Example",
     "wordCompleteTitle": "Word learned",
     "nextWordButton": "Next Word",
+    "savingProgress": "Saving progress…",
+    "saveErrorMessage": "We couldn't save this word. Check your connection and try again.",
+    "sessionExpiredMessage": "Your session has expired. Please sign in again.",
     "wordLearnedToastPrefix": "Word",
     "wordLearnedToastSuffix": "learned.",
     "wordPositionPrefix": "Word",
@@ -588,13 +606,13 @@
     "sessionCompleteWordsLabel": "Words completed",
     "returnToLearningButton": "Return to Learning",
     "leaveSessionTitle": "Leave session?",
-    "leaveSessionDescription": "Your progress in this session has not been saved.",
+    "leaveSessionDescription": "Words you've already completed in this session are saved. The word you're currently on has not been saved yet.",
     "leaveSessionConfirm": "Leave session",
     "leaveSessionStay": "Stay in session",
     "exitSessionAria": "Exit session",
     "sessionErrorMessage": "Something went wrong with your study session.",
     "aboutToLearnPrefix": "You are about to learn",
-    "aboutToLearnSuffix": " new words.",
+    "aboutToLearnSuffix": " new words in",
     "sessionExplainHeading": "During this session you will:",
     "sessionExplainBullet1": "Learn today's new words",
     "sessionExplainExercisesPrefix": "Complete",

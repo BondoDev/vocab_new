@@ -1,0 +1,1109 @@
+// Owned by every component in this feature folder — NewWordInfoStep.tsx,
+// GuidedExerciseAdapter.tsx, NewWordStudySession.tsx, NewWordStudyComplete.tsx,
+// and NewWordStudyPreparation.tsx (see src/styles/README.md for the
+// ownership rule this repo follows). Imported once by NewWordStudySession.tsx
+// and NewWordStudyPreparation.tsx, the feature's two entry components,
+// alongside ../../practice/styles/exercises.scss (whose shared
+// `.practice-card` / `.exercise-*` hook classes GuidedExerciseAdapter also
+// renders into and intentionally does not redefine here).
+
+// =====================================================================
+// NewWordInfoStep
+// =====================================================================
+
+.new-word-info-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+
+  @media (min-width: 768px) {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+.new-word-info-card {
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  padding: 1.5rem 1.25rem;
+
+  @media (min-width: 640px) {
+    padding: 1.75rem;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 600px;
+    padding: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 640px;
+  }
+}
+
+.new-word-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+
+    & > * + * {
+      border-left: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+    }
+  }
+}
+
+.new-word-info-section-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: color-mix(in oklab, var(--muted-foreground) 80%, transparent);
+}
+
+.new-word-info-col--target {
+  @media (min-width: 768px) {
+    padding-right: 1.75rem;
+  }
+}
+
+.new-word-info-word-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 0.25rem;
+}
+
+.new-word-info-word {
+  min-width: 0;
+  max-width: 100%;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+  line-height: 1.25;
+
+  @media (min-width: 768px) {
+    font-size: 2.25rem;
+  }
+}
+
+// Shared hover/active/focus-visible treatment for this card's two primary
+// (filled) action buttons — audio-play and continue. Each button also
+// carries its own size/shape class below.
+.new-word-info-action-button {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in oklab, var(--primary) 90%, transparent);
+  }
+
+  &:active {
+    background-color: color-mix(in oklab, var(--primary) 95%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--background),
+      0 0 0 4px color-mix(in oklab, var(--primary) 50%, transparent);
+  }
+}
+
+.new-word-info-audio-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 999px;
+}
+
+.new-word-info-audio-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.new-word-info-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.new-word-info-badge {
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.new-word-info-badge--level {
+  text-transform: uppercase;
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.new-word-info-badge--grammar {
+  background-color: color-mix(in oklab, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+
+.new-word-info-col--translation {
+  margin-top: 1.5rem;
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+    padding-left: 1.75rem;
+  }
+}
+
+.new-word-info-translation {
+  margin-top: 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+.new-word-info-definition {
+  margin-top: 0.625rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  overflow-wrap: break-word;
+
+  @media (min-width: 768px) {
+    font-size: 0.95rem;
+  }
+}
+
+.new-word-info-example {
+  margin-top: 1.5rem;
+}
+
+.new-word-info-example-box {
+  margin-top: 0.375rem;
+  border-radius: 0.5rem;
+  border-left: 3px solid color-mix(in oklab, var(--primary) 40%, transparent);
+  background-color: color-mix(in oklab, var(--muted) 40%, transparent);
+  padding: 0.625rem 1rem 0.625rem 0.875rem;
+}
+
+.new-word-info-example-text {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: color-mix(in oklab, var(--foreground) 85%, transparent);
+  overflow-wrap: break-word;
+
+  @media (min-width: 768px) {
+    font-size: 0.95rem;
+  }
+}
+
+.new-word-info-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+}
+
+.new-word-info-helper {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  margin-bottom: 0.625rem;
+}
+
+.new-word-info-helper-count {
+  font-weight: 600;
+  color: color-mix(in oklab, var(--foreground) 80%, transparent);
+}
+
+.new-word-info-continue-button {
+  width: 100%;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+// =====================================================================
+// GuidedExerciseAdapter
+// =====================================================================
+//
+// `.practice-card-shell`, `.practice-card`, `.exercise-main-content`,
+// `.exercise-word-area`, `.exercise-guess-word-container`,
+// `.exercise-guess-word`, `.exercise-help-sections`,
+// `.exercise-see-definition-button`, `.exercise-see-sentence-button`,
+// `.exercise-definition-content`, `.exercise-sentence-content`, and
+// `.practice-next-button` are shared hook classes also rendered by
+// VocabularyPractice.tsx and styled centrally (base rules plus per-breakpoint
+// overrides) in ../../practice/styles/exercises.scss. They deliberately keep
+// their exact names here and are not restyled in this file — the classes
+// below only carry the extra layout declarations specific to this adapter,
+// applied as an additional className alongside the shared one.
+
+.guided-exercise-shell {
+  width: 100%;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.guided-exercise-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 0.75rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: all 300ms ease-in-out;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  @media (min-width: 768px) {
+    padding: 1.25rem;
+  }
+}
+
+.guided-exercise-instruction {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 34rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.625;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.guided-exercise-main-content {
+  flex: 1 1 0%;
+  padding-top: 0;
+}
+
+.guided-exercise-word-area {
+  margin-bottom: 0;
+
+  & > * + * {
+    margin-top: 1.5rem;
+  }
+}
+
+.guided-exercise-guess-word-container {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guided-exercise-guess-word-inner {
+  text-align: center;
+}
+
+.guided-exercise-guess-word {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--foreground);
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+}
+
+.guided-exercise-help-sections {
+  margin-bottom: 0;
+  margin-top: 1rem;
+
+  & > * + * {
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    margin-top: 1.5rem;
+  }
+}
+
+.guided-exercise-collapsible {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.guided-exercise-toggle-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 0.75rem;
+  font-size: 0.75rem;
+  text-align: left;
+  transition: background-color 150ms ease;
+
+  @media (min-width: 640px) {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+.guided-exercise-toggle-label {
+  font-weight: 500;
+}
+
+.guided-exercise-toggle-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+
+  @media (min-width: 640px) {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.guided-exercise-collapsible-panel {
+  transition: all 300ms ease-in-out;
+  overflow: hidden;
+}
+
+.guided-exercise-content-block {
+  padding: 0.625rem 0.75rem;
+  background-color: color-mix(in oklab, var(--muted) 40%, transparent);
+  font-size: 0.75rem;
+  border-top: 1px solid var(--border);
+
+  @media (min-width: 640px) {
+    padding: 0.75rem 1rem;
+    background-color: color-mix(in oklab, var(--muted) 50%, transparent);
+    font-size: 0.875rem;
+  }
+}
+
+.guided-exercise-content-block--italic {
+  font-style: italic;
+}
+
+.guided-exercise-sentence-row {
+  position: relative;
+}
+
+.guided-exercise-sentence-text {
+  display: block;
+  line-height: 1.625;
+  padding-right: 2.5rem;
+}
+
+.guided-exercise-sentence-speak-button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  padding: 0.375rem;
+  border-radius: 0.5rem;
+  color: var(--muted-foreground);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+
+  &:hover {
+    background-color: var(--muted);
+  }
+
+  @media (min-width: 640px) {
+    padding: 0.5rem;
+  }
+}
+
+.guided-exercise-sentence-speak-icon {
+  width: 1rem;
+  height: 1rem;
+
+  @media (min-width: 640px) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.guided-exercise-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.guided-exercise-next-button {
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 150ms ease;
+
+  &.is-complete {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+
+    &:hover {
+      background-color: color-mix(in oklab, var(--primary) 90%, transparent);
+    }
+  }
+
+  &:not(.is-complete) {
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// =====================================================================
+// NewWordStudySession (session shell — not NewWordInfoStep/
+// GuidedExerciseAdapter/NewWordStudyComplete, which own their own sections)
+// =====================================================================
+
+.new-word-study-session {
+  flex: 1 1 0%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  padding: 1.5rem 1rem;
+
+  @media (min-width: 768px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.new-word-study-session-body {
+  max-width: 42rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-word-study-session-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.new-word-study-session-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.new-word-study-exit-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+}
+
+.new-word-study-exit-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.new-word-study-exit-label {
+  font-size: 0.875rem;
+}
+
+.new-word-study-progress-text {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.new-word-study-progress-track {
+  height: 0.375rem;
+  width: 100%;
+  background-color: var(--muted);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.new-word-study-progress-fill {
+  height: 100%;
+  background-color: var(--primary);
+  transition: width 200ms ease;
+}
+
+.new-word-study-step-container {
+  outline: none;
+  flex: 1 1 0%;
+}
+
+.new-word-study-error-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.new-word-study-error-message {
+  color: var(--foreground);
+  max-width: 28rem;
+  overflow-wrap: break-word;
+}
+
+.new-word-study-error-back-button {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in oklab, var(--primary) 90%, transparent);
+  }
+}
+
+.new-word-study-exit-dialog-content {
+  width: 90vw;
+  max-width: 90vw;
+  gap: 0.75rem;
+  padding: 1.25rem;
+
+  @media (min-width: 640px) {
+    width: fit-content;
+    max-width: 28rem;
+  }
+}
+
+.new-word-study-exit-dialog-header {
+  gap: 0.5rem;
+}
+
+.new-word-study-exit-dialog-footer {
+  @media (min-width: 640px) {
+    justify-content: flex-end;
+  }
+}
+
+.new-word-study-exit-dialog-button {
+  @media (min-width: 640px) {
+    flex: none;
+  }
+}
+
+// =====================================================================
+// Phase 3 persistence-boundary blocks: saving_word / save_error. Sit inside
+// the same .new-word-study-step-container as NewWordInfoStep/
+// GuidedExerciseAdapter, so they reuse .new-word-study-error-block/
+// .new-word-study-error-message/.new-word-study-error-back-button (already
+// defined above) and .study-new-words-spinner (defined in the
+// NewWordStudyPreparation section) rather than duplicating that layout for
+// one more state. There is no word_complete block — a successful save
+// advances straight to the next word, acknowledged only by a toast (see
+// NewWordStudySession.tsx).
+// =====================================================================
+
+.new-word-study-saving-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.25rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.new-word-study-saving-message {
+  color: var(--muted-foreground);
+}
+
+// =====================================================================
+// NewWordStudyComplete
+// =====================================================================
+
+.new-word-study-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.new-word-study-complete-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+
+  @media (min-width: 768px) {
+    font-size: 1.875rem;
+  }
+}
+
+.new-word-study-complete-stat {
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  min-width: 12rem;
+}
+
+.new-word-study-complete-count {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.new-word-study-complete-count-label {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  margin-top: 0.25rem;
+}
+
+.new-word-study-complete-language {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin-top: 0.5rem;
+  overflow-wrap: break-word;
+}
+
+.new-word-study-complete-button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in oklab, var(--primary) 90%, transparent);
+  }
+}
+
+// =====================================================================
+// NewWordStudyPreparation
+// =====================================================================
+//
+// Visual language deliberately mirrors the Learning page's own card system
+// (see learning-section.scss: .learning-kpi-card, .learning-mode-card) —
+// same --radius-based corner rounding, the same soft
+// "0 1px 2px + faint primary-tinted glow" shadow formula, and the same
+// color-mix(in srgb, var(--primary) X%, ...) approach for tinted surfaces —
+// rather than inventing a new visual system for one screen.
+
+.study-new-words-page {
+  flex: 1 1 0%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  padding: 1.5rem 1rem 2.5rem;
+
+  @media (min-width: 768px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @media (max-width: 368px) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.study-new-words-page-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // .study-new-words-panel is width:100% of this container, so its rendered
+  // width is set here — kept narrower than a generic content column so the
+  // panel reads as one focused, comfortably-proportioned card rather than a
+  // wide form. Also keeps the back button aligned to the same left edge as
+  // the panel below it.
+  max-width: 34rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.study-new-words-back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  // Comfortable mobile tap target without visually growing into a button —
+  // the extra height is invisible padding, not a background/border.
+  padding: 0.375rem 0.25rem;
+  margin: -0.375rem -0.25rem 1rem;
+  border-radius: calc(var(--radius) - 4px);
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+.study-new-words-back-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.study-new-words-panel {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--primary) 10%, var(--border));
+  border-radius: calc(var(--radius) + 6px);
+  background: var(--card);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 12px 28px -18px color-mix(in srgb, var(--primary) 40%, transparent);
+  padding: 1.75rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  @media (min-width: 640px) {
+    padding: 2.25rem 2rem 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    padding: 2.5rem 3rem 3rem;
+  }
+}
+
+.study-new-words-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.study-new-words-header-icon-svg {
+  width: 2.125rem;
+  height: 2.125rem;
+  stroke-width: 1.75;
+}
+
+.study-new-words-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.625rem;
+  overflow-wrap: break-word;
+
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+.study-new-words-retry-button {
+  padding: 0.625rem 1.25rem;
+  border-radius: calc(var(--radius) - 2px);
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--primary) 90%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
+  }
+}
+
+.study-new-words-loading-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+@keyframes study-new-words-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.study-new-words-spinner {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 3px solid color-mix(in srgb, var(--primary) 18%, transparent);
+  border-top-color: var(--primary);
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  animation: study-new-words-spin 0.8s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 2.4s;
+  }
+}
+
+.study-new-words-loading-message {
+  color: var(--muted-foreground);
+}
+
+.study-new-words-message-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  gap: 1rem;
+}
+
+.study-new-words-message-text {
+  color: var(--foreground);
+  max-width: 28rem;
+  overflow-wrap: break-word;
+}
+
+.study-new-words-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+// Only the dynamic values inside get the accent treatment (see
+// .study-new-words-summary-value) — the sentence itself stays regular
+// foreground/weight so it doesn't read as "everything purple".
+.study-new-words-summary {
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  max-width: 42ch;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+
+  @media (min-width: 768px) {
+    font-size: 1.0625rem;
+  }
+}
+
+.study-new-words-summary-value {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.study-new-words-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.625rem;
+  width: 100%;
+  margin-top: 1.5rem;
+  text-align: left;
+
+  @media (min-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.study-new-words-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--background);
+}
+
+.study-new-words-info-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  flex-shrink: 0;
+  border-radius: calc(var(--radius) - 4px);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+
+.study-new-words-info-item-icon-svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.study-new-words-info-item-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.study-new-words-info-item-label {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.study-new-words-info-item-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+}
+
+// Softly tinted lavender panel — deliberately not another bordered white
+// card, so it reads as one distinct "what happens next" zone rather than a
+// third nested card competing with .study-new-words-panel itself.
+.study-new-words-checklist {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1.125rem 1.25rem;
+  border-radius: calc(var(--radius) + 2px);
+  background: color-mix(in srgb, var(--primary) 6%, var(--background));
+  text-align: left;
+}
+
+.study-new-words-checklist-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.study-new-words-checklist-header-icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.study-new-words-checklist-heading {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.study-new-words-checklist-list {
+  & > * + * {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+}
+
+.study-new-words-checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  color: var(--foreground);
+}
+
+.study-new-words-checklist-item-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.study-new-words-checklist-item-text {
+  overflow-wrap: break-word;
+}
+
+.study-new-words-begin-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 1.75rem;
+  padding: 0.9rem 1.5rem;
+  border-radius: calc(var(--radius) - 2px);
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition:
+    background-color 150ms ease,
+    transform 150ms ease;
+
+  &:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--primary) 90%, transparent);
+  }
+
+  &:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--primary) 95%, transparent);
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
+  }
+}
+
+.study-new-words-begin-button-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+}

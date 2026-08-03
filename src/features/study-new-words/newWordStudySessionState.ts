@@ -16,6 +16,24 @@ export type SessionStep =
   | "broken_word"
   | "half_word"
   | "full_typing"
+  // Phase 3 persistence boundary: entered the instant full_typing finishes,
+  // left only by SAVE_SUCCEEDED/SAVE_FAILED. The session component is
+  // responsible for issuing the completion-persistence write while this step
+  // is showing and dispatching one of those two actions with the result —
+  // nothing in this reducer performs the write itself (see test 10 in
+  // scripts/tests/learning/test-new-word-study-session.mjs, which still
+  // guards that no Supabase call is ever imported/reachable from this file).
+  //
+  // There is no separate "word_complete" screen: a successful save advances
+  // straight to the next word's intro (or session_complete) in the same
+  // SAVE_SUCCEEDED transition — the session component's job is only to show
+  // a brief acknowledgment (a toast), not to block on an extra Next Word
+  // click. See SAVE_SUCCEEDED below.
+  | "saving_word"
+  // Reached only after the RPC call failed. currentWordOutcomes and
+  // currentWordIndex are untouched, so RETRY_SAVE can return to saving_word
+  // without repeating any of the three exercises.
+  | "save_error"
   | "session_complete";
 
 // The fixed teaching order (greater support -> full recall). This is a
@@ -76,9 +94,31 @@ export interface SessionState {
   currentWordOutcomes: CurrentWordOutcomes;
   hasStarted: boolean;
   isComplete: boolean;
+  // The full daily target (e.g. 15), not this session's queue length. A
+  // session's queue only ever holds the *remaining* words for today
+  // (dailyGoal - wordsCompletedBeforeSession, from Phase 1's selection
+  // logic), so using queue.length as "totalWords" would make progress reset
+  // to "of <remaining>" every time a learner returns mid-goal instead of
+  // continuing to count against the whole day — see getSessionProgress.
+  dailyGoal: number;
+  // How many new words were already completed today *before* this session
+  // began (read once from Phase 1's queue-prep result, then held fixed for
+  // the session's lifetime — this session's own completions accumulate
+  // separately in completedConceptIds so the two are never double-counted).
+  wordsCompletedBeforeSession: number;
 }
 
-export function createInitialSessionState(queue: ResolvedStudyQueueItem[]): SessionState {
+export interface CreateInitialSessionStateParams {
+  queue: ResolvedStudyQueueItem[];
+  dailyGoal: number;
+  wordsCompletedBeforeSession: number;
+}
+
+export function createInitialSessionState({
+  queue,
+  dailyGoal,
+  wordsCompletedBeforeSession,
+}: CreateInitialSessionStateParams): SessionState {
   return {
     queue,
     currentWordIndex: 0,
@@ -87,13 +127,27 @@ export function createInitialSessionState(queue: ResolvedStudyQueueItem[]): Sess
     currentWordOutcomes: emptyOutcomes(),
     hasStarted: false,
     isComplete: false,
+    dailyGoal,
+    wordsCompletedBeforeSession,
   };
 }
 
 export type SessionAction =
   | { type: "BEGIN" }
   | { type: "START_EXERCISES" }
-  | { type: "COMPLETE_EXERCISE"; step: GuidedExerciseStep; outcome: ExerciseOutcome };
+  | { type: "COMPLETE_EXERCISE"; step: GuidedExerciseStep; outcome: ExerciseOutcome }
+  // Dispatched by the session component once the completion-persistence
+  // write resolves successfully (including the idempotent "already
+  // completed" case, which the requirement treats as a safe success, not an
+  // error). This is also what advances the queue — see the reducer case
+  // below.
+  | { type: "SAVE_SUCCEEDED" }
+  // Dispatched once the RPC call rejects. Never advances the queue.
+  | { type: "SAVE_FAILED" }
+  // Dispatched by the Retry action in the save_error UI. The component reads
+  // currentStep === "saving_word" (again) as its cue to re-issue the exact
+  // same idempotent RPC request.
+  | { type: "RETRY_SAVE" };
 
 export function reduceSessionState(state: SessionState, action: SessionAction): SessionState {
   switch (action.type) {
@@ -140,40 +194,59 @@ export function reduceSessionState(state: SessionState, action: SessionAction): 
         return { ...state, currentStep: NEXT_STEP[action.step], currentWordOutcomes };
       }
 
-      // Completing the last exercise finishes the word: advance straight to
-      // the next word's intro (or session_complete if this was the last
-      // queued word) — there is no separate "word learned" step to visit.
-      // The session component shows a toast for this instead, using the
-      // word it already holds before dispatching this action.
-      //
-      // NOTE(Phase 3 persistence boundary): this is the exact moment a
-      // future phase should atomically write one user_word_progress row +
-      // increment user_daily_stats for this word (see this module's header
-      // and the feature's top-level comments for the full plan). Nothing is
-      // written here — Phase 2 is frontend-only.
-      const finishedItem = state.queue[state.currentWordIndex];
-      const completedConceptIds = finishedItem
-        ? [...state.completedConceptIds, finishedItem.conceptId]
-        : state.completedConceptIds;
-      const isLastWord = state.currentWordIndex >= state.queue.length - 1;
+      // Completing the last exercise no longer finishes the word directly:
+      // it hands off to the persistence boundary. The word is only counted
+      // "done" (added to completedConceptIds) once SAVE_SUCCEEDED confirms
+      // the write — see that case below.
+      return { ...state, currentStep: "saving_word", currentWordOutcomes };
+    }
 
+    case "SAVE_SUCCEEDED": {
+      if (state.currentStep !== "saving_word") {
+        return state;
+      }
+
+      const finishedItem = state.queue[state.currentWordIndex];
+      // Guards against double-counting if SAVE_SUCCEEDED is ever dispatched
+      // twice for the same word (defense in depth — the RPC itself is the
+      // real idempotency guarantee, this just keeps local state consistent
+      // with it).
+      const alreadyCounted = finishedItem ? state.completedConceptIds.includes(finishedItem.conceptId) : true;
+      const completedConceptIds =
+        finishedItem && !alreadyCounted
+          ? [...state.completedConceptIds, finishedItem.conceptId]
+          : state.completedConceptIds;
+
+      // A successful save advances the queue immediately — there is no
+      // intermediate "word_complete" screen/button to wait on. The session
+      // component shows a brief toast acknowledgment using the word it
+      // already held before dispatching this action.
+      const isLastWord = state.currentWordIndex >= state.queue.length - 1;
       if (isLastWord) {
-        return {
-          ...state,
-          currentWordOutcomes,
-          completedConceptIds,
-          currentStep: "session_complete",
-          isComplete: true,
-        };
+        return { ...state, completedConceptIds, currentStep: "session_complete", isComplete: true };
       }
 
       return {
         ...state,
-        currentWordOutcomes: emptyOutcomes(),
         completedConceptIds,
+        currentWordOutcomes: emptyOutcomes(),
         currentWordIndex: state.currentWordIndex + 1,
         currentStep: "word_intro",
       };
+    }
+
+    case "SAVE_FAILED": {
+      if (state.currentStep !== "saving_word") {
+        return state;
+      }
+      return { ...state, currentStep: "save_error" };
+    }
+
+    case "RETRY_SAVE": {
+      if (state.currentStep !== "save_error") {
+        return state;
+      }
+      return { ...state, currentStep: "saving_word" };
     }
 
     default:
@@ -191,15 +264,25 @@ export interface SessionProgress {
   completedWords: number;
 }
 
-// Rule (documented once, applied everywhere): the horizontal progress bar
-// fill represents *completed* words (completedConceptIds.length), while the
-// "Word X of Y" label shows the *current* position (currentWordIndex + 1).
-// Example: viewing word 4 of 15 -> label "Word 4 of 15", fill "3 of 15".
+// Rule (documented once, applied everywhere): both numbers are relative to
+// the *whole day's* goal (dailyGoal), not this session's queue length —
+// completedWords includes words finished earlier today, before this session
+// even started, and currentPosition continues counting from there. This
+// matters for a learner who leaves mid-goal and comes back later: their
+// second session's queue only holds the remaining words, but "Word X of Y"
+// must keep counting against the original daily goal instead of resetting
+// to "of <remaining>". Example: goal 15, 5 already done earlier today,
+// viewing the 4th word of this session's (10-word) queue -> label
+// "Word 9 of 15", fill "8 of 15" (5 earlier + 3 completed this session).
 export function getSessionProgress(state: SessionState): SessionProgress {
+  const totalWords = state.dailyGoal > 0 ? state.dailyGoal : state.queue.length;
   return {
-    currentPosition: Math.min(state.currentWordIndex + 1, Math.max(state.queue.length, 1)),
-    totalWords: state.queue.length,
-    completedWords: state.completedConceptIds.length,
+    currentPosition: Math.min(
+      state.wordsCompletedBeforeSession + state.currentWordIndex + 1,
+      Math.max(totalWords, 1),
+    ),
+    totalWords,
+    completedWords: state.wordsCompletedBeforeSession + state.completedConceptIds.length,
   };
 }
 

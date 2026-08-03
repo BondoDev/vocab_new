@@ -1,34 +1,41 @@
 import { useId, useState } from "react";
 import { Filter } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
+import type { VocabularyTabId } from "./vocabularyFiltering";
 
-export type VocabularyTabId = "all" | "learning" | "known" | "mastered" | "favorites";
+export type { VocabularyTabId } from "./vocabularyFiltering";
 
 interface TabConfig {
   id: VocabularyTabId;
   labelKey: string;
-  count: number | null;
+  // "all" has no count badge (matching the previous preview's design) —
+  // every other tab always shows one, even when it's 0.
+  showCount: boolean;
 }
 
-// Hardcoded zero counts for a brand-new user preview - see
-// VocabularySummaryCards.tsx for the matching summary-card values.
 const TABS: TabConfig[] = [
-  { id: "all", labelKey: "userProfile.vocabularySection.tabs.all", count: null },
-  { id: "learning", labelKey: "userProfile.vocabularySection.tabs.learning", count: 0 },
-  { id: "known", labelKey: "userProfile.vocabularySection.tabs.known", count: 0 },
-  { id: "mastered", labelKey: "userProfile.vocabularySection.tabs.mastered", count: 0 },
-  { id: "favorites", labelKey: "userProfile.vocabularySection.tabs.favorites", count: 0 },
+  { id: "all", labelKey: "userProfile.vocabularySection.tabs.all", showCount: false },
+  { id: "learning", labelKey: "userProfile.vocabularySection.tabs.learning", showCount: true },
+  { id: "known", labelKey: "userProfile.vocabularySection.tabs.known", showCount: true },
+  { id: "mastered", labelKey: "userProfile.vocabularySection.tabs.mastered", showCount: true },
+  { id: "favorites", labelKey: "userProfile.vocabularySection.tabs.favorites", showCount: true },
 ];
+
+export type VocabularyTabCounts = Record<VocabularyTabId, number>;
 
 interface VocabularyTabsProps {
   activeTab: VocabularyTabId;
   onTabChange: (tabId: VocabularyTabId) => void;
+  // Real per-tab counts (see VocabularySection.tsx) — computed the same way
+  // as the summary cards, from persisted progress rows, not from the
+  // currently-visible/resolved row list alone.
+  counts: VocabularyTabCounts;
 }
 
 // Filters panel state is local and preview-only: it toggles a compact panel
 // of native selects with no filtering logic behind it (see the vocabulary
 // task brief - real filtering is a future backend-connected feature).
-export function VocabularyTabs({ activeTab, onTabChange }: VocabularyTabsProps) {
+export function VocabularyTabs({ activeTab, onTabChange, counts }: VocabularyTabsProps) {
   const { t } = useLanguage();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const filtersPanelId = useId();
@@ -53,9 +60,7 @@ export function VocabularyTabs({ activeTab, onTabChange }: VocabularyTabsProps) 
               onClick={() => onTabChange(tab.id)}
             >
               {t(tab.labelKey)}
-              {tab.count !== null ? (
-                <span className="vocabulary-tab__count">({tab.count})</span>
-              ) : null}
+              {tab.showCount ? <span className="vocabulary-tab__count">({counts[tab.id]})</span> : null}
             </button>
           );
         })}

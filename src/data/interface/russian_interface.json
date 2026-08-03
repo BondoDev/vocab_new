@@ -211,6 +211,9 @@
     "exampleSentenceLabel": "Пример",
     "wordCompleteTitle": "Слово изучено",
     "nextWordButton": "Следующее слово",
+    "savingProgress": "Сохранение прогресса...",
+    "saveErrorMessage": "Не удалось сохранить это слово. Проверьте подключение и попробуйте снова.",
+    "sessionExpiredMessage": "Ваша сессия истекла. Пожалуйста, войдите снова.",
     "wordLearnedToastPrefix": "Слово",
     "wordLearnedToastSuffix": "изучено.",
     "wordPositionPrefix": "Слово",
@@ -220,13 +223,13 @@
     "sessionCompleteWordsLabel": "Изучено слов",
     "returnToLearningButton": "Назад к обучению",
     "leaveSessionTitle": "Выйти из сессии?",
-    "leaveSessionDescription": "Прогресс этой сессии не был сохранен.",
+    "leaveSessionDescription": "Слова, которые вы уже завершили в этой сессии, сохранены. Текущее слово еще не сохранено.",
     "leaveSessionConfirm": "Выйти из сессии",
     "leaveSessionStay": "Остаться в сессии",
     "exitSessionAria": "Выйти из сессии",
     "sessionErrorMessage": "Что-то пошло не так с вашей учебной сессией.",
     "aboutToLearnPrefix": "Вы собираетесь выучить",
-    "aboutToLearnSuffix": " новых слов.",
+    "aboutToLearnSuffix": " новых слов на языке:",
     "sessionExplainHeading": "В этой сессии вы:",
     "sessionExplainBullet1": "Изучите новые слова на сегодня",
     "sessionExplainExercisesPrefix": "Выполните",
@@ -545,7 +548,8 @@
         "wordsUnit": "слов",
         "aria": {
           "of": "из",
-          "dailyWordsCompleted": "ежедневных слов выполнено"
+          "dailyWordsCompleted": "ежедневных слов выполнено",
+          "loading": "Загрузка сегодняшнего прогресса..."
         }
       },
       "dailyStreak": {
@@ -612,6 +616,22 @@
         "label": "Добавить слово",
         "toast": "Добавление слова пока доступно только в режиме предпросмотра."
       },
+      "loadError": "Не удалось загрузить ваш словарный запас.",
+      "retryButton": "Повторить",
+      "favoriteError": "Не удалось обновить избранное. Попробуйте снова.",
+      "emptyStates": {
+        "noWordsYetTitle": "Пока нет слов",
+        "noWordsYetMessage": "Завершите сессию «Изучать новые слова», чтобы начать пополнять словарный запас.",
+        "noWordsYetAction": "Изучать новые слова",
+        "noSearchMatches": "Нет слов, соответствующих вашему запросу.",
+        "noTabWords": {
+          "all": "Нет слов для этого раздела.",
+          "learning": "Пока нет изучаемых слов.",
+          "known": "Пока нет знакомых слов.",
+          "mastered": "Пока нет освоенных слов.",
+          "favorites": "Пока нет избранных слов."
+        }
+      },
       "summaryCards": {
         "learning": {
           "title": "Изучаю",
@@ -662,11 +682,14 @@
           "translation": "Перевод",
           "level": "Уровень",
           "status": "Статус",
-          "lastReviewed": "Последнее повторение",
+          "lastPracticed": "Последняя практика",
           "actions": "Действия"
         },
         "audioAriaLabel": "Воспроизвести произношение",
-        "favoriteAriaLabel": "Переключить избранное",
+        "addFavoriteAriaLabelPrefix": "Добавить",
+        "addFavoriteAriaLabelSuffix": "в избранное",
+        "removeFavoriteAriaLabelPrefix": "Удалить",
+        "removeFavoriteAriaLabelSuffix": "из избранного",
         "moreActionsAriaLabel": "Дополнительные действия",
         "menu": {
           "viewDetails": "Посмотреть детали",
@@ -678,21 +701,16 @@
           "known": "Знакомые",
           "mastered": "Освоенные"
         },
-        "lastReviewed": {
+        "lastPracticed": {
           "today": "Сегодня",
-          "twoDaysAgo": "2 дня назад",
-          "fiveDaysAgo": "5 дней назад",
-          "oneWeekAgo": "1 неделю назад"
-        },
-        "reviewedLabel": {
-          "today": "Проверено сегодня",
-          "twoDaysAgo": "Проверено 2 дня назад",
-          "fiveDaysAgo": "Проверено 5 дней назад",
-          "oneWeekAgo": "Проверено 1 неделю назад"
+          "yesterday": "Вчера",
+          "daysAgoSuffix": "дней назад",
+          "never": "Никогда"
         }
       },
       "pagination": {
-        "previewingSampleRows": "Предпросмотр примерных строк",
+        "showingPrefix": "Показано",
+        "showingConnector": "из",
         "previous": "Назад",
         "next": "Далее",
         "rowsPerPage": "Строк на странице"
