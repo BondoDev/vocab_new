@@ -38,8 +38,14 @@ test("docs/architecture.md exists and is non-empty", () => {
   assert.ok(content.trim().length > 500, "docs/architecture.md looks empty or too short");
 });
 
+// Normalized to LF once, here, so every regex/split below (most notably the
+// "\n\n(?=## )" section-boundary match a few tests down) doesn't have to
+// special-case CRLF. Windows checkouts (core.autocrlf) can materialize this
+// file with \r\n line endings; a literal "\n\n" never appears in that case
+// (blank lines become "\r\n\r\n", which contains no bare "\n\n" substring),
+// silently breaking any downstream regex that assumes LF-only newlines.
 const architectureContent = fs.existsSync(ARCHITECTURE_DOC)
-  ? fs.readFileSync(ARCHITECTURE_DOC, "utf8")
+  ? fs.readFileSync(ARCHITECTURE_DOC, "utf8").replace(/\r\n/g, "\n")
   : "";
 
 // Key authoritative source/build paths the document depends on staying real.

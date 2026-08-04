@@ -122,15 +122,57 @@ test("src/app/App.tsx does not reintroduce an auth-driven redirect to /profile",
     !appTsxSource.includes("previousAuthUserIdRef"),
     "src/app/App.tsx must not reintroduce previousAuthUserIdRef — successful authentication preserves the current route (users open /profile explicitly via the account menu)",
   );
-  const navigateToProfileMatches = appTsxSource.match(/navigate\(ROUTES\.profile\)/g) ?? [];
-  assert.equal(
-    navigateToProfileMatches.length,
-    1,
-    `expected exactly one navigate(ROUTES.profile) call (the explicit onProfile handler), found ${navigateToProfileMatches.length}`,
+
+  // The invariant that actually matters is "no navigate-to-/profile call
+  // sits inside a useEffect" (i.e. nothing fires on mount/auth-state-change
+  // on its own) — not any particular literal call shape. onProfile
+  // legitimately grew an optional `section` param so the account menu can
+  // deep-link into a specific dashboard section
+  // (`${ROUTES.profile}?section=${section}`), and several explicit "back to
+  // Learning" handlers build that same deep link; neither is an
+  // auto-redirect. Scan every useEffect body in the file and fail if any of
+  // them reference ROUTES.profile at all.
+  const effectHeadPattern = /useEffect\(\s*\(\)\s*=>\s*\{/g;
+  const offendingEffects = [];
+  let headMatch;
+  while ((headMatch = effectHeadPattern.exec(appTsxSource)) !== null) {
+    const braceStart = headMatch.index + headMatch[0].length - 1;
+    let depth = 0;
+    let end = -1;
+    for (let i = braceStart; i < appTsxSource.length; i++) {
+      if (appTsxSource[i] === "{") depth++;
+      else if (appTsxSource[i] === "}") {
+        depth -= 1;
+        if (depth === 0) {
+          end = i;
+          break;
+        }
+      }
+    }
+    assert.ok(end !== -1, "found an unbalanced useEffect(() => { ... }) block while scanning App.tsx");
+    const body = appTsxSource.slice(braceStart, end + 1);
+    if (body.includes("ROUTES.profile")) {
+      offendingEffects.push(body);
+    }
+  }
+  assert.deepEqual(
+    offendingEffects,
+    [],
+    "a useEffect body in App.tsx references ROUTES.profile — this looks like a reintroduced auth-driven redirect; profile navigation must stay confined to explicit user-triggered handlers (onProfile, onBack, ...)",
   );
+
+  // The explicit account-menu handler must still exist and still be able to
+  // reach /profile (bare, or deep-linked to a section).
+  assert.match(
+    appTsxSource,
+    /onProfile:\s*\([^)]*\)\s*=>/,
+    "sharedHeaderProps.onProfile handler is missing from src/app/App.tsx",
+  );
+  const onProfileIndex = appTsxSource.indexOf("onProfile:");
+  const onProfileWindow = appTsxSource.slice(onProfileIndex, onProfileIndex + 300);
   assert.ok(
-    appTsxSource.includes("onProfile: () => navigate(ROUTES.profile)"),
-    "the sole navigate(ROUTES.profile) call must be the explicit sharedHeaderProps.onProfile handler, not an auth-driven redirect",
+    onProfileWindow.includes("ROUTES.profile"),
+    "sharedHeaderProps.onProfile must navigate to ROUTES.profile",
   );
 });
 
