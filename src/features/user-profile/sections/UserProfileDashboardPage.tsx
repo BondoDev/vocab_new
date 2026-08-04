@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import type { LanguageLevelCode } from "../../../lib/userProfile";
+import type { LanguageLevelCode, UserProfile } from "../../../lib/userProfile";
 import { useLanguage, type UILanguage } from "../../../contexts/LanguageContext";
 import {
   UserProfileSidebar,
@@ -14,11 +14,16 @@ interface UserProfileDashboardPageProps {
   nickname?: string;
   practiceLanguage?: UILanguage | "";
   languageLevel?: LanguageLevelCode | "";
+  // App.tsx's single shared profile load, threaded through to the Learning
+  // section (Daily Goal, Daily Streak, Today's Progress) so none of them
+  // fetch their own copy of the profile.
+  userProfile: UserProfile;
+  isProfileLoaded: boolean;
   onStartCustomPractice?: () => void;
   onStartNewWordStudy?: () => void;
   onStartReviewWords?: () => void;
   // Lets the Learning section's DailyGoalSelector (which owns its own
-  // load/save round-trip to Supabase) push a successfully saved goal back up
+  // save round-trip to Supabase) push a successfully saved goal back up
   // into App.tsx's userProfile state — without this, other places reading
   // userProfile.dailyGoal (e.g. NewWordStudyPreparation) keep showing the
   // value from the last full profile load until the page is reloaded.
@@ -42,6 +47,8 @@ export function UserProfileDashboardPage({
   nickname,
   practiceLanguage,
   languageLevel,
+  userProfile,
+  isProfileLoaded,
   onStartCustomPractice,
   onStartNewWordStudy,
   onStartReviewWords,
@@ -76,6 +83,8 @@ export function UserProfileDashboardPage({
             {nickname ? <span className="sr-only">{nickname}</span> : null}
             {activeSection === "learning" ? (
               <LearningSection
+                userProfile={userProfile}
+                isProfileLoaded={isProfileLoaded}
                 onStartCustomPractice={onStartCustomPractice}
                 onStartNewWordStudy={onStartNewWordStudy}
                 onStartReviewWords={onStartReviewWords}

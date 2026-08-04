@@ -696,6 +696,8 @@ function AppContent({
           nickname={userProfile.nickname}
           practiceLanguage={userProfile.practiceLanguage}
           languageLevel={userProfile.languageLevel}
+          userProfile={userProfile}
+          isProfileLoaded={isProfileLoaded}
           onStartCustomPractice={handleStartCustomPractice}
           onStartNewWordStudy={handleStartNewWordStudy}
           onStartReviewWords={handleStartReviewWords}

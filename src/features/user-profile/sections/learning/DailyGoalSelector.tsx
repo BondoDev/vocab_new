@@ -5,10 +5,6 @@ import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import {
-  DEFAULT_DAILY_GOAL,
-  EMPTY_USER_PROFILE,
-  readStoredUserProfile,
-  readSupabaseUserProfile,
   writeStoredUserProfile,
   writeSupabaseUserProfile,
   type UserProfile,
@@ -44,81 +40,51 @@ const DAILY_GOAL_OPTIONS: DailyGoalOption[] = [
 ];
 
 interface DailyGoalSelectorProps {
+  // The Learning dashboard's single shared profile (see App.tsx's
+  // useUserProfileLoad, threaded down through LearningSection) — this
+  // component no longer loads its own copy. The full object (not just
+  // dailyGoal) is needed because saving a new goal writes the whole
+  // profile row back to Supabase (see handleSave/toSupabaseProfilePatch),
+  // and it must not clobber the other saved fields with stale defaults.
+  userProfile: UserProfile;
+  isProfileLoaded: boolean;
   // Called with the newly saved goal once the Supabase write succeeds, so
-  // the App-level userProfile state (which this component does not share —
-  // it loads/saves its own copy) can be kept in sync. Without this, other
-  // screens reading userProfile.dailyGoal (e.g. NewWordStudyPreparation)
-  // keep showing the pre-change value until the page is reloaded.
+  // the App-level userProfile state can be kept in sync. Without this,
+  // other components reading userProfile.dailyGoal (Today's Progress,
+  // Daily Streak, NewWordStudyPreparation, ...) keep showing the
+  // pre-change value until the page is reloaded.
   onDailyGoalChange?: (dailyGoal: number) => void;
 }
 
-export function DailyGoalSelector({ onDailyGoalChange }: DailyGoalSelectorProps) {
+export function DailyGoalSelector({ userProfile, isProfileLoaded, onDailyGoalChange }: DailyGoalSelectorProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
-  const [goal, setGoal] = useState<number>(DEFAULT_DAILY_GOAL);
-  const [savedProfile, setSavedProfile] = useState<UserProfile>(EMPTY_USER_PROFILE);
-  const [isProfileLoaded, setIsProfileLoaded] = useState(false);
+  const [goal, setGoal] = useState<number>(userProfile.dailyGoal);
   const [isSaving, setIsSaving] = useState(false);
   const { message: confirmationMessage, show: showConfirmation } = useAutoDismissMessage();
   const isCompact = useIsCompactLearningSummary();
   const [isExpanded, setIsExpanded] = useState(false);
   const panelId = useId();
 
+  // Re-syncs the selectable goal whenever the shared profile's saved value
+  // changes — on the initial load, and again after this component's own
+  // save round-trip updates it via onDailyGoalChange. Depending only on
+  // the saved number (not the whole userProfile object) means this never
+  // fires — and never clobbers an in-progress unsaved selection — just
+  // because an unrelated profile field changed.
   useEffect(() => {
-    if (!authUserId) {
-      setSavedProfile(EMPTY_USER_PROFILE);
-      setGoal(DEFAULT_DAILY_GOAL);
-      setIsProfileLoaded(true);
-      return;
-    }
-
-    let cancelled = false;
-    setIsProfileLoaded(false);
-    const storedProfile = readStoredUserProfile(authUserId);
-    if (storedProfile) {
-      setSavedProfile(storedProfile);
-      setGoal(storedProfile.dailyGoal);
-    }
-
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        const supabaseProfile = session ? await readSupabaseUserProfile(session) : null;
-        if (cancelled) {
-          return;
-        }
-
-        if (supabaseProfile) {
-          const nextProfile: UserProfile = {
-            ...(storedProfile ?? EMPTY_USER_PROFILE),
-            ...supabaseProfile,
-          };
-          setSavedProfile(nextProfile);
-          setGoal(nextProfile.dailyGoal);
-        }
-
-        setIsProfileLoaded(true);
-      } catch {
-        if (!cancelled) {
-          setIsProfileLoaded(true);
-        }
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [authUserId]);
+    setGoal(userProfile.dailyGoal);
+  }, [userProfile.dailyGoal]);
 
   const selectedOption =
     DAILY_GOAL_OPTIONS.find((option) => option.value === goal) ?? DAILY_GOAL_OPTIONS[1];
 
   // True whenever the selected goal already matches what's saved — right
   // after load (nothing to save yet) and again immediately after a
-  // successful save (savedProfile.dailyGoal is updated to match `goal` in
-  // the .then() below). Picking a different option changes `goal`, which
+  // successful save (userProfile.dailyGoal is updated to match `goal` via
+  // onDailyGoalChange). Picking a different option changes `goal`, which
   // makes this false again and re-enables Save.
-  const isUnchanged = goal === savedProfile.dailyGoal;
+  const isUnchanged = goal === userProfile.dailyGoal;
 
   const handleSave = () => {
     if (isSaving || !isProfileLoaded || isUnchanged) {
@@ -136,7 +102,7 @@ export function DailyGoalSelector({ onDailyGoalChange }: DailyGoalSelectorProps)
     }
 
     setIsSaving(true);
-    const patchedProfile: UserProfile = { ...savedProfile, dailyGoal: goal };
+    const patchedProfile: UserProfile = { ...userProfile, dailyGoal: goal };
 
     void writeSupabaseUserProfile(session, patchedProfile)
       .then((supabaseProfile) => {
@@ -144,7 +110,6 @@ export function DailyGoalSelector({ onDailyGoalChange }: DailyGoalSelectorProps)
           ...patchedProfile,
           ...supabaseProfile,
         });
-        setSavedProfile(nextProfile);
         onDailyGoalChange?.(nextProfile.dailyGoal);
         showConfirmation(t("userProfile.learningSection.dailyGoal.savedToast"));
       })

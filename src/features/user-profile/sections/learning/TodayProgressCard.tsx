@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import {
-  DEFAULT_DAILY_GOAL,
-  readStoredUserProfile,
-  readSupabaseUserProfile,
-} from "../../../../lib/userProfile";
+import type { UserProfile } from "../../../../lib/userProfile";
 import { readTodayNewWordsCompleted } from "../../../../lib/newWordProgress";
 import { getLocalCalendarDateISO } from "../../../../data/learning/localStudyDate";
 import { computeTodayProgressDisplay } from "../../../../data/learning/todayProgressDisplay";
@@ -19,22 +15,25 @@ const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 // track at 0%, matching that layout's own design.
 const MIN_VISIBLE_ARC_RATIO = 0.03;
 
-// Own self-contained load, matching DailyGoalSelector's precedent in this
-// same section: reads its own copy of the authenticated profile (for
-// target language + daily goal) rather than depending on prop threading
-// from App.tsx, and its own read of today's new-word count via Phase 1/3's
-// existing readTodayNewWordsCompleted helper — no new Supabase query shape
-// is introduced here.
-type LoadState =
-  | { status: "loading" }
-  | { status: "ready"; completed: number; goal: number };
+// practiceLanguage/dailyGoal come from the Learning dashboard's single
+// shared profile load (see App.tsx's useUserProfileLoad, threaded down
+// through LearningSection) rather than a copy fetched by this component —
+// only today's new-word count (readTodayNewWordsCompleted) is this
+// component's own request.
+type LoadState = { status: "loading" } | { status: "ready"; completed: number };
+
+interface TodayProgressCardProps {
+  practiceLanguage: UserProfile["practiceLanguage"];
+  dailyGoal: UserProfile["dailyGoal"];
+  isProfileLoaded: boolean;
+}
 
 // Below ~1184px the card switches from the circular ring to a horizontal
 // strip (see learning-section.scss); both variants are driven by this one
 // progressRatio/srLabel pair rather than duplicating the calculation, and
 // only one is ever visible — the other is `display: none`, which also
 // removes it from the accessibility tree automatically.
-export function TodayProgressCard() {
+export function TodayProgressCard({ practiceLanguage, dailyGoal, isProfileLoaded }: TodayProgressCardProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
   const [state, setState] = useState<LoadState>({ status: "loading" });
@@ -43,48 +42,56 @@ export function TodayProgressCard() {
     if (!authUserId) {
       // Signed-out visitor: trivially "0 of the default goal" — there is no
       // account to read progress from, and this must never crash the page.
-      setState({ status: "ready", completed: 0, goal: DEFAULT_DAILY_GOAL });
+      setState({ status: "ready", completed: 0 });
+      return;
+    }
+
+    if (!isProfileLoaded) {
+      // The shared profile load (App.tsx) is still in flight — wait for it
+      // rather than fetching with a not-yet-known target language.
+      setState({ status: "loading" });
+      return;
+    }
+
+    if (!practiceLanguage) {
+      // Profile loaded, but no target language chosen yet — same "safe
+      // fallback, not a crash" contract as a signed-out visitor.
+      setState({ status: "ready", completed: 0 });
       return;
     }
 
     let cancelled = false;
     setState({ status: "loading" });
-    const storedProfile = readStoredUserProfile(authUserId);
 
     void (async () => {
       try {
         const session = getStoredSupabaseSession();
-        const supabaseProfile = session ? await readSupabaseUserProfile(session) : null;
-        if (cancelled) return;
-
-        const targetLanguage = supabaseProfile?.practiceLanguage || storedProfile?.practiceLanguage || "";
-        const goal = supabaseProfile?.dailyGoal ?? storedProfile?.dailyGoal ?? DEFAULT_DAILY_GOAL;
-
-        if (!session || !targetLanguage) {
-          // No usable session or no target language chosen yet — same "safe
-          // fallback, not a crash" contract as a signed-out visitor.
-          setState({ status: "ready", completed: 0, goal });
+        if (!session) {
+          if (!cancelled) setState({ status: "ready", completed: 0 });
           return;
         }
 
-        const completed = await readTodayNewWordsCompleted(session, targetLanguage, getLocalCalendarDateISO());
+        const completed = await readTodayNewWordsCompleted(session, practiceLanguage, getLocalCalendarDateISO());
         if (cancelled) return;
-        setState({ status: "ready", completed, goal });
+        setState({ status: "ready", completed });
       } catch (error) {
         if (cancelled) return;
         console.warn("TodayProgressCard: failed to load today's progress.", error);
-        setState({ status: "ready", completed: 0, goal: storedProfile?.dailyGoal ?? DEFAULT_DAILY_GOAL });
+        setState({ status: "ready", completed: 0 });
       }
     })();
 
     return () => {
       cancelled = true;
     };
-  }, [authUserId]);
+  }, [authUserId, isProfileLoaded, practiceLanguage]);
 
   const isLoading = state.status === "loading";
   const completed = state.status === "ready" ? state.completed : 0;
-  const goal = state.status === "ready" ? state.goal : DEFAULT_DAILY_GOAL;
+  // Read directly from the prop (not cached in state) so a daily-goal
+  // change made elsewhere on the page (Daily Goal card) updates this
+  // card's ring/bar immediately, without an extra fetch.
+  const goal = dailyGoal;
   const display = computeTodayProgressDisplay(completed, goal);
 
   if (display.hasInvalidGoal && !isLoading) {

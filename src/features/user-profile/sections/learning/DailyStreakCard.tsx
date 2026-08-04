@@ -3,12 +3,8 @@ import { ChevronDown } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import {
-  DEFAULT_DAILY_GOAL,
-  readStoredUserProfile,
-  readSupabaseUserProfile,
-} from "../../../../lib/userProfile";
-import { readDailyStreakStats } from "../../../../lib/newWordProgress";
+import type { UserProfile } from "../../../../lib/userProfile";
+import { readDailyStreakStats, type DailyStreakStatRow } from "../../../../lib/newWordProgress";
 import { getLocalCalendarDateISO } from "../../../../data/learning/localStudyDate";
 import { computeDailyStreakSummary, type DailyStreakSummary } from "../../../../data/learning/dailyStreak";
 import { useIsCompactLearningSummary } from "./useIsCompactLearningSummary";
@@ -29,15 +25,21 @@ const EMPTY_SUMMARY: DailyStreakSummary = {
   currentWeek: [],
 };
 
-type LoadState = { status: "loading" } | { status: "ready"; summary: DailyStreakSummary };
+type LoadState = { status: "loading" } | { status: "ready"; stats: DailyStreakStatRow[] };
 
-// Own self-contained load, matching DailyGoalSelector/TodayProgressCard's
-// precedent in this feature: reads its own copy of the authenticated
-// profile (for target language + daily goal) rather than depending on prop
-// threading from App.tsx, then reads the recent user_daily_stats history a
-// streak is computed from (see readDailyStreakStats and
-// computeDailyStreakSummary — this component only renders their output).
-export function DailyStreakCard() {
+interface DailyStreakCardProps {
+  practiceLanguage: UserProfile["practiceLanguage"];
+  dailyGoal: UserProfile["dailyGoal"];
+  isProfileLoaded: boolean;
+}
+
+// practiceLanguage/dailyGoal come from the Learning dashboard's single
+// shared profile load (see App.tsx's useUserProfileLoad, threaded down
+// through LearningSection) rather than a copy fetched by this component —
+// only the recent user_daily_stats history a streak is computed from
+// (readDailyStreakStats) is this component's own request; the summary
+// itself is a pure client computation (computeDailyStreakSummary).
+export function DailyStreakCard({ practiceLanguage, dailyGoal, isProfileLoaded }: DailyStreakCardProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
   const [state, setState] = useState<LoadState>({ status: "loading" });
@@ -47,47 +49,57 @@ export function DailyStreakCard() {
 
   useEffect(() => {
     if (!authUserId) {
-      setState({ status: "ready", summary: EMPTY_SUMMARY });
+      setState({ status: "ready", stats: [] });
+      return;
+    }
+
+    if (!isProfileLoaded) {
+      // The shared profile load (App.tsx) is still in flight — wait for it
+      // rather than fetching with a not-yet-known target language.
+      setState({ status: "loading" });
+      return;
+    }
+
+    if (!practiceLanguage) {
+      setState({ status: "ready", stats: [] });
       return;
     }
 
     let cancelled = false;
     setState({ status: "loading" });
-    const storedProfile = readStoredUserProfile(authUserId);
 
     void (async () => {
       try {
         const session = getStoredSupabaseSession();
-        const supabaseProfile = session ? await readSupabaseUserProfile(session) : null;
-        if (cancelled) return;
-
-        const targetLanguage = supabaseProfile?.practiceLanguage || storedProfile?.practiceLanguage || "";
-        const dailyGoal = supabaseProfile?.dailyGoal ?? storedProfile?.dailyGoal ?? DEFAULT_DAILY_GOAL;
-
-        if (!session || !targetLanguage) {
-          setState({ status: "ready", summary: EMPTY_SUMMARY });
+        if (!session) {
+          if (!cancelled) setState({ status: "ready", stats: [] });
           return;
         }
 
-        const todayISO = getLocalCalendarDateISO();
-        const stats = await readDailyStreakStats(session, targetLanguage, todayISO);
+        const stats = await readDailyStreakStats(session, practiceLanguage, getLocalCalendarDateISO());
         if (cancelled) return;
-
-        setState({ status: "ready", summary: computeDailyStreakSummary(stats, dailyGoal, todayISO) });
+        setState({ status: "ready", stats });
       } catch (error) {
         if (cancelled) return;
         console.warn("DailyStreakCard: failed to load streak data.", error);
-        setState({ status: "ready", summary: EMPTY_SUMMARY });
+        setState({ status: "ready", stats: [] });
       }
     })();
 
     return () => {
       cancelled = true;
     };
-  }, [authUserId]);
+  }, [authUserId, isProfileLoaded, practiceLanguage]);
 
   const isLoading = state.status === "loading";
-  const summary = state.status === "ready" ? state.summary : EMPTY_SUMMARY;
+  const stats = state.status === "ready" ? state.stats : [];
+  // Recomputed from the dailyGoal prop on every render (not cached in
+  // state) so a daily-goal change made elsewhere on the page (Daily Goal
+  // card) updates the streak immediately, without refetching stats that
+  // don't depend on the goal.
+  const summary = isLoading
+    ? EMPTY_SUMMARY
+    : computeDailyStreakSummary(stats, dailyGoal, getLocalCalendarDateISO());
   const { currentStreakDays, bestStreakDays, currentWeek } = summary;
 
   const detailContent = (
