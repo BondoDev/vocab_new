@@ -130,7 +130,36 @@ above):
 
 Still open, deliberately out of scope for this migration too: item 3,
 `review_events.user_id`'s missing foreign key and
-`review_events.word_progress_id`'s unspecified `ON DELETE` behavior.
+`review_events.word_progress_id`'s unspecified `ON DELETE` behavior — closed
+by Corrective Migration 3, below.
+
+## Corrective Migration 3 — review_events referential integrity
+
+`migrations/20260805150000_add_review_events_referential_integrity.sql`
+closes the last remaining baseline imperfection (item 3 above / the
+baseline's own item 6):
+
+- Adds a new, explicitly named foreign key,
+  `review_events_user_id_fkey` (`review_events.user_id` ->
+  `auth.users.id`, `ON DELETE CASCADE`) — no foreign key existed on this
+  column before.
+- Drops and re-adds `review_events.word_progress_id`'s existing foreign key
+  as `review_events_word_progress_id_fkey` (`review_events.word_progress_id`
+  -> `user_word_progress.id`), now with an explicit name and
+  `ON DELETE CASCADE` in place of the prior unnamed, `NO ACTION` default.
+
+Product decision behind `CASCADE`: `review_events` is `complete_word_review`'s
+own idempotency ledger (its replay-guard lookup by `event_id` +
+`user_id`) and is not read anywhere else in the frontend, so review history
+has no reason to outlive the user or progress row it belongs to. Before this
+migration is applied, run the read-only validation queries in the migration
+file's own header comment in the Supabase SQL Editor to confirm zero
+orphaned/mismatched `review_events` rows exist, and to confirm the live name
+of the existing `word_progress_id` foreign key matches
+`review_events_word_progress_id_fkey` before the `DROP CONSTRAINT` runs.
+
+With this migration applied, every open item from the baseline migration's
+`PROPOSED NEXT MIGRATIONS` list is closed.
 
 ## What happens next
 
