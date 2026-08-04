@@ -340,11 +340,20 @@ export class VocabularyFavoriteUpdateError extends Error {
   }
 }
 
-// Updates exactly one row's is_favorite flag, scoped by both the row's own
-// id AND the authenticated user's id. RLS is expected to already restrict
-// updates to the caller's own rows; filtering by user_id here too is
-// defense in depth — if RLS were ever misconfigured, this still can't touch
-// another user's row (the request would just match zero rows instead).
+// Mirrors the RPC's RETURNS TABLE(word_progress_id, is_favorite) column
+// names exactly (snake_case, as PostgREST returns them).
+interface SetWordProgressFavoriteRpcRow {
+  word_progress_id?: unknown;
+  is_favorite?: unknown;
+}
+
+// Updates exactly one row's is_favorite flag via the set_word_progress_favorite
+// RPC — never a direct PATCH to user_word_progress (that table only grants
+// authenticated clients SELECT; every protected write, including this one,
+// goes through a SECURITY DEFINER RPC). The RPC derives the caller from
+// auth.uid() server-side and scopes its update by both the row's own id and
+// that caller id, so this client can only ever act as the authenticated
+// user, never on another user's row or any other column.
 export async function updateWordProgressFavorite(
   session: StoredSupabaseSession,
   progressRowId: string,
@@ -355,17 +364,29 @@ export async function updateWordProgressFavorite(
     throw new VocabularyFavoriteUpdateError("Missing authenticated session or word.");
   }
 
+  let rows: SetWordProgressFavoriteRpcRow[] | SetWordProgressFavoriteRpcRow;
   try {
-    await supabaseProgressMutationRequest<unknown>(
+    rows = await supabaseProgressMutationRequest<SetWordProgressFavoriteRpcRow[] | SetWordProgressFavoriteRpcRow>(
       session,
-      `/rest/v1/user_word_progress?id=eq.${encodeURIComponent(progressRowId)}&user_id=eq.${encodeURIComponent(
-        userId,
-      )}`,
-      { is_favorite: isFavorite },
-      "PATCH",
+      "/rest/v1/rpc/set_word_progress_favorite",
+      {
+        p_word_progress_id: progressRowId,
+        p_is_favorite: isFavorite,
+      },
     );
-  } catch {
+  } catch (error) {
+    if (error instanceof Error && /jwt|session|unauthorized|401/i.test(error.message)) {
+      throw new VocabularyFavoriteUpdateError("Your session has expired. Please sign in again.");
+    }
+    // Never surface the raw Supabase/PostgreSQL message to the UI — only
+    // this safe, generic failure copy, matching completeNewWordStudy /
+    // completeWordReview's precedent above.
     throw new VocabularyFavoriteUpdateError("We couldn't update this favorite. Please try again.");
+  }
+
+  const row = Array.isArray(rows) ? rows[0] : rows;
+  if (!row || typeof row.word_progress_id !== "string" || typeof row.is_favorite !== "boolean") {
+    throw new VocabularyFavoriteUpdateError("set_word_progress_favorite returned a malformed row.");
   }
 }
 
