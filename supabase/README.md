@@ -107,6 +107,31 @@ this baseline task:
    account-onboarding write path, which is out of scope for this baseline
    and was not audited here.
 
+## Corrective Migration 2 — non-negative constraints, anon RPC EXECUTE revoked
+
+`migrations/20260805130000_add_learning_non_negative_constraints_and_revoke_anon_rpc.sql`
+closes two more items from the baseline's imperfection list (items 2 and 4
+above):
+
+- Adds four explicitly-named, single-column, immediately-validated `CHECK
+  (... >= 0)` constraints: `user_word_progress_correct_streak_non_negative`,
+  `user_daily_stats_new_words_completed_non_negative`,
+  `user_daily_stats_reviews_completed_non_negative`, and
+  `user_daily_stats_study_time_seconds_non_negative`. Before this migration
+  is applied, run the two read-only validation queries in the migration
+  file's own header comment in the Supabase SQL Editor to confirm zero
+  violating rows exist — required because the tables already held live data
+  at the time this migration was written.
+- Revokes `anon`'s `EXECUTE` grant on `complete_new_word_study(text, text,
+  date)` and `complete_word_review(uuid, uuid, text, date)`. Both RPCs
+  already reject an unauthenticated caller internally, so this only removes
+  an unnecessary privilege layer — `authenticated`/`service_role`/`postgres`
+  keep `EXECUTE`, and neither RPC's body changes.
+
+Still open, deliberately out of scope for this migration too: item 3,
+`review_events.user_id`'s missing foreign key and
+`review_events.word_progress_id`'s unspecified `ON DELETE` behavior.
+
 ## What happens next
 
 Corrective changes are separate, individually-reviewed follow-up migrations

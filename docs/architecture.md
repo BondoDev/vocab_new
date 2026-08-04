@@ -397,7 +397,7 @@ deployment described above.
 
 ## Architecture guards
 
-`npm run test:architecture-guards` chains **16 guard groups**, each a
+`npm run test:architecture-guards` chains **18 guard groups**, each a
 deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
@@ -418,6 +418,8 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:agent-folder-ownership` | `scripts/tests/architecture/test-agent-folder-ownership.mjs` | `.agents/`/`.claude/`/`.codex/` stay untracked |
 | `test:brand-asset-ownership` | `scripts/tests/architecture/test-brand-asset-ownership.mjs` | favicon/OG-image master and variants |
 | `test:architecture-documentation` | `scripts/tests/architecture/test-architecture-documentation.mjs` | this document's paths/links/scripts stay wired to reality |
+| `test:protected-learning-writes-boundary` | `scripts/tests/architecture/test-protected-learning-writes-boundary.mjs` | `authenticated` only reaches `user_word_progress`/`user_daily_stats` via SELECT or the learning RPCs, never a direct write |
+| `test:learning-non-negative-values-contract` | `scripts/tests/architecture/test-learning-non-negative-values-contract.mjs` | no application code assigns a negative value/sentinel to `correct_streak` or the daily-stats counters (see corrective migration 2's non-negative `CHECK` constraints in `supabase/README.md`) |
 
 SEO/Worker-specific guards (`test:seo-output`,
 `test:word-worker:production-safety`) are chained separately, not part of
