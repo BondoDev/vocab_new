@@ -69,8 +69,27 @@ test("5. Default randomFn (Math.random) is used when none is injected", () => {
   assert.ok(nextReviewAt.getTime() > completedAt.getTime());
 });
 
-test("6. Unconfigured word_state throws instead of silently defaulting", () => {
-  assert.throws(() => computeNextReviewAt({ wordState: "learning", completedAt, randomFn: () => 0.5 }), /no configured base interval/);
+test("6. An unrecognized word_state throws instead of silently defaulting", () => {
+  assert.throws(
+    () => computeNextReviewAt({ wordState: "not_a_real_state", completedAt, randomFn: () => 0.5 }),
+    /no configured base interval/,
+  );
+});
+
+console.log("\n=== computeNextReviewAt (all five states — Review Words Phase 3) ===\n");
+
+test("7. Every WordState has a configured base interval, in days: seen 1, learning 3, familiar 10, strong 45, mastered 180", () => {
+  assert.equal(BASE_REVIEW_INTERVAL_MS_BY_STATE.seen, 1 * ONE_DAY_MS);
+  assert.equal(BASE_REVIEW_INTERVAL_MS_BY_STATE.learning, 3 * ONE_DAY_MS);
+  assert.equal(BASE_REVIEW_INTERVAL_MS_BY_STATE.familiar, 10 * ONE_DAY_MS);
+  assert.equal(BASE_REVIEW_INTERVAL_MS_BY_STATE.strong, 45 * ONE_DAY_MS);
+  assert.equal(BASE_REVIEW_INTERVAL_MS_BY_STATE.mastered, 180 * ONE_DAY_MS);
+});
+
+test("8. computeNextReviewAt no longer throws for any of the five states", () => {
+  for (const wordState of ["seen", "learning", "familiar", "strong", "mastered"]) {
+    assert.doesNotThrow(() => computeNextReviewAt({ wordState, completedAt, randomFn: () => 0.5 }));
+  }
 });
 
 console.log(`\n─────────────────────────────────────────`);

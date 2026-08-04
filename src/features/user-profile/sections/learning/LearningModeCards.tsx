@@ -19,12 +19,11 @@ interface LearningModeConfig {
   buttonLabelKey: string;
 }
 
-// Review Words stays hardcoded zero/preview state for a brand-new user — it
-// stays inert until the structured-learning backend exists for it. Custom
-// Practice is wired to the existing exercises/practice flow (which
-// deliberately does not touch structured-learning progress), and Study New
-// Words is wired to its own dedicated, currently read-only queue-preparation
-// flow (see src/features/study-new-words/).
+// Custom Practice is wired to the existing exercises/practice flow (which
+// deliberately does not touch structured-learning progress). Study New
+// Words and Review Words are each wired to their own dedicated, currently
+// read-only queue-preparation flow (see src/features/study-new-words/ and
+// src/features/review-words/ respectively).
 const LEARNING_MODES: LearningModeConfig[] = [
   {
     id: "study-new-words",
@@ -58,6 +57,7 @@ const LEARNING_MODES: LearningModeConfig[] = [
 interface LearningModeCardsProps {
   onStartCustomPractice?: () => void;
   onStartNewWordStudy?: () => void;
+  onStartReviewWords?: () => void;
 }
 
 // Styled by learning-section.scss (imported by LearningSection.tsx, the
@@ -65,12 +65,14 @@ interface LearningModeCardsProps {
 export function LearningModeCards({
   onStartCustomPractice,
   onStartNewWordStudy,
+  onStartReviewWords,
 }: LearningModeCardsProps) {
   const { t } = useLanguage();
 
   const getOnClick = (modeId: string): (() => void) | undefined => {
     if (modeId === "custom-practice") return onStartCustomPractice;
     if (modeId === "study-new-words") return onStartNewWordStudy;
+    if (modeId === "review-words") return onStartReviewWords;
     return undefined;
   };
 

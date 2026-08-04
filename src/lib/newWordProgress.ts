@@ -370,6 +370,234 @@ export async function updateWordProgressFavorite(
 }
 
 // ---------------------------------------------------------------------
+// Review Words Phase 1 — read-only progress load feeding the pure hybrid
+// review-queue engine (src/data/learning/reviewQueue.ts). Selects the extra
+// scheduling columns (correct_streak, next_review_at, created_at) that
+// readUserWordProgress's Vocabulary-page read above doesn't need, scoped by
+// the same user_id + target_language isolation as every other read in this
+// module — a German progress row can never enter a Spanish review queue.
+// ---------------------------------------------------------------------
+
+interface UserWordProgressReviewRawRow {
+  id?: unknown;
+  word_id?: unknown;
+  word_state?: unknown;
+  correct_streak?: unknown;
+  last_practiced_at?: unknown;
+  next_review_at?: unknown;
+  created_at?: unknown;
+}
+
+export interface UserWordProgressReviewRow {
+  id: string;
+  wordId: string;
+  wordState: WordState;
+  correctStreak: number;
+  lastPracticedAt: string | null;
+  nextReviewAt: string | null;
+  createdAt: string | null;
+}
+
+// Read-only: no insert/update/upsert/RPC call anywhere in this function —
+// Review Words Phase 1 must never write to user_word_progress.
+export async function readUserWordProgressForReview(
+  session: StoredSupabaseSession,
+  targetLanguage: string,
+): Promise<UserWordProgressReviewRow[]> {
+  const userId = session.user?.id;
+  if (!userId || !targetLanguage) {
+    return [];
+  }
+
+  const rawRows = await supabaseProgressRequest<UserWordProgressReviewRawRow[]>(
+    session,
+    `/rest/v1/user_word_progress?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(
+      targetLanguage,
+    )}&select=id,word_id,word_state,correct_streak,last_practiced_at,next_review_at,created_at`,
+  );
+
+  const rows: UserWordProgressReviewRow[] = [];
+  for (const raw of rawRows) {
+    // Skips a malformed row rather than crashing queue selection over one
+    // bad row — matching readUserWordProgress's own precedent above.
+    if (typeof raw.id !== "string" || typeof raw.word_id !== "string" || !isWordState(raw.word_state)) {
+      continue;
+    }
+
+    const correctStreakRaw = raw.correct_streak;
+    rows.push({
+      id: raw.id,
+      wordId: raw.word_id,
+      wordState: raw.word_state,
+      correctStreak: typeof correctStreakRaw === "number" && Number.isFinite(correctStreakRaw) ? correctStreakRaw : 0,
+      lastPracticedAt: typeof raw.last_practiced_at === "string" ? raw.last_practiced_at : null,
+      nextReviewAt: typeof raw.next_review_at === "string" ? raw.next_review_at : null,
+      createdAt: typeof raw.created_at === "string" ? raw.created_at : null,
+    });
+  }
+
+  return rows;
+}
+
+// ---------------------------------------------------------------------
+// Review Words Phase 3 — persists exactly one individual word-review
+// outcome via the complete_word_review RPC. Mirrors completeNewWordStudy's
+// shape and safety properties (single atomic call, idempotent by design,
+// never sends a client-computed timestamp/state/streak — see that
+// function's own header for the same reasoning). The RPC derives the
+// user from auth.uid(), locks the owned progress row, and recalculates the
+// resulting state/streak/deadline entirely server-side; this client only
+// supplies the four inputs the RPC actually needs.
+// ---------------------------------------------------------------------
+
+export type ReviewResult = "correct" | "incorrect" | "skipped";
+
+// Thrown by completeWordReview instead of letting a raw Supabase/PostgreSQL
+// error reach the UI — same precedent as NewWordStudyPersistenceError.
+export class ReviewPersistenceError extends Error {
+  readonly retryable: boolean;
+
+  constructor(message: string, retryable: boolean) {
+    super(message);
+    this.name = "ReviewPersistenceError";
+    this.retryable = retryable;
+  }
+}
+
+export interface CompleteWordReviewParams {
+  session: StoredSupabaseSession;
+  // Stable per-word-encounter id generated once when the review session
+  // plan is built (see reviewSessionPlan.ts) and reused verbatim across
+  // network/auth/component retries — never regenerated per attempt. This is
+  // what makes the RPC call idempotent.
+  eventId: string;
+  // The user_word_progress row id this encounter is for (from the already-
+  // prepared review queue — never a concept/word id).
+  wordProgressId: string;
+  result: ReviewResult;
+  // Local calendar date (YYYY-MM-DD), same getLocalCalendarDateISO() helper
+  // Study New Words uses.
+  statDateISO: string;
+}
+
+// Mirrors the RPC's RETURNS TABLE column names exactly (snake_case, as
+// PostgREST returns them) before normalization into CompleteWordReviewResult.
+interface CompleteWordReviewRpcRow {
+  already_processed?: unknown;
+  previous_state?: unknown;
+  new_state?: unknown;
+  previous_correct_streak?: unknown;
+  new_correct_streak?: unknown;
+  promoted?: unknown;
+  demoted?: unknown;
+  result?: unknown;
+  reviews_completed_today?: unknown;
+  last_practiced_at?: unknown;
+  next_review_at?: unknown;
+}
+
+export interface CompleteWordReviewResult {
+  alreadyProcessed: boolean;
+  previousState: WordState;
+  newState: WordState;
+  previousCorrectStreak: number;
+  newCorrectStreak: number;
+  promoted: boolean;
+  demoted: boolean;
+  result: ReviewResult;
+  reviewsCompletedToday: number;
+  lastPracticedAt: string;
+  nextReviewAt: string;
+}
+
+function parseCompleteWordReviewRow(row: CompleteWordReviewRpcRow | undefined): CompleteWordReviewResult {
+  if (!row) {
+    throw new ReviewPersistenceError("complete_word_review returned no row.", true);
+  }
+
+  if (
+    !isWordState(row.previous_state) ||
+    !isWordState(row.new_state) ||
+    typeof row.result !== "string" ||
+    !["correct", "incorrect", "skipped"].includes(row.result) ||
+    typeof row.last_practiced_at !== "string" ||
+    typeof row.next_review_at !== "string"
+  ) {
+    throw new ReviewPersistenceError("complete_word_review returned a malformed row.", false);
+  }
+
+  const previousCorrectStreak = row.previous_correct_streak;
+  const newCorrectStreak = row.new_correct_streak;
+  const reviewsCompletedToday = row.reviews_completed_today;
+
+  return {
+    alreadyProcessed: Boolean(row.already_processed),
+    previousState: row.previous_state,
+    newState: row.new_state,
+    previousCorrectStreak:
+      typeof previousCorrectStreak === "number" && Number.isFinite(previousCorrectStreak) ? previousCorrectStreak : 0,
+    newCorrectStreak: typeof newCorrectStreak === "number" && Number.isFinite(newCorrectStreak) ? newCorrectStreak : 0,
+    promoted: Boolean(row.promoted),
+    demoted: Boolean(row.demoted),
+    result: row.result as ReviewResult,
+    reviewsCompletedToday:
+      typeof reviewsCompletedToday === "number" && Number.isFinite(reviewsCompletedToday) ? reviewsCompletedToday : 0,
+    lastPracticedAt: row.last_practiced_at,
+    nextReviewAt: row.next_review_at,
+  };
+}
+
+// Persists exactly one review encounter: one call, one atomic RPC
+// transaction (verify ownership + lock the row, apply the state/streak
+// transition, recalculate the deadline, upsert-increment
+// user_daily_stats.reviews_completed, record the review event). Safe to
+// retry verbatim (same eventId) on double-click/network-retry/component
+// retry — the RPC's review_events primary key makes it idempotent: a
+// retried event id returns the originally-applied transition without
+// touching user_word_progress or user_daily_stats again.
+//
+// user_id is deliberately not a parameter here or on the RPC (derived from
+// auth.uid() server-side), and neither is previous state/streak/next
+// state/a completion timestamp — the RPC always recomputes those from the
+// locked database row, never trusts them from the client. See this
+// function's CompleteWordReviewParams above, which has no fields for any
+// of that.
+export async function completeWordReview(params: CompleteWordReviewParams): Promise<CompleteWordReviewResult> {
+  const { session, eventId, wordProgressId, result, statDateISO } = params;
+
+  if (!session.access_token || !session.user?.id) {
+    throw new ReviewPersistenceError("Missing authenticated session.", false);
+  }
+  if (!eventId || !wordProgressId || !result || !statDateISO) {
+    throw new ReviewPersistenceError("Missing required fields to save this review.", false);
+  }
+
+  let rows: CompleteWordReviewRpcRow[] | CompleteWordReviewRpcRow;
+  try {
+    rows = await supabaseProgressMutationRequest<CompleteWordReviewRpcRow[] | CompleteWordReviewRpcRow>(
+      session,
+      "/rest/v1/rpc/complete_word_review",
+      {
+        p_event_id: eventId,
+        p_word_progress_id: wordProgressId,
+        p_result: result,
+        p_stat_date: statDateISO,
+      },
+    );
+  } catch (error) {
+    if (error instanceof Error && /jwt|session|unauthorized|401/i.test(error.message)) {
+      throw new ReviewPersistenceError("Your session has expired. Please sign in again.", false);
+    }
+    // Never surface the raw Supabase/PostgreSQL message to the UI — only
+    // this safe, generic, retryable-failure copy.
+    throw new ReviewPersistenceError("We couldn't save this review. Check your connection and try again.", true);
+  }
+
+  const row = Array.isArray(rows) ? rows[0] : rows;
+  return parseCompleteWordReviewRow(row);
+}
+
+// ---------------------------------------------------------------------
 // Daily Streak card — reads the recent user_daily_stats history a streak is
 // computed from (see src/data/learning/dailyStreak.ts for the actual
 // current/best-streak and current-week math; this function only fetches

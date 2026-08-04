@@ -94,6 +94,11 @@ const NewWordStudyPreparation = lazy(() =>
     default: module.NewWordStudyPreparation,
   })),
 );
+const ReviewWordsPreparation = lazy(() =>
+  import("../features/review-words/ReviewWordsPreparation").then((module) => ({
+    default: module.ReviewWordsPreparation,
+  })),
+);
 const VocabularyLevelExam = lazy(() =>
   import("./pages/VocabularyLevelExam").then((module) => ({
     default: module.VocabularyLevelExam,
@@ -158,6 +163,7 @@ const ROUTES = {
   help: "/help",
   profile: "/profile",
   newWordStudy: "/learning/new-words",
+  reviewWords: "/learning/review",
 } as const;
 
 function AppContent({
@@ -478,6 +484,10 @@ function AppContent({
   // it has its own dedicated route, so plain handleRequireLanguages is enough.
   const handleStartNewWordStudy = () => handleRequireLanguages("newWordStudy");
 
+  // Review Words is its own dedicated structured-learning route — never the
+  // ordinary configurable Exercises page and never Custom Practice's route.
+  const handleStartReviewWords = () => handleRequireLanguages("reviewWords");
+
   const handleContinueToPractice = () => {
     if (isContinueDisabled) {
       popupRef.current?.show({ delayMs: 0 });
@@ -688,6 +698,7 @@ function AppContent({
           languageLevel={userProfile.languageLevel}
           onStartCustomPractice={handleStartCustomPractice}
           onStartNewWordStudy={handleStartNewWordStudy}
+          onStartReviewWords={handleStartReviewWords}
           onDailyGoalChange={(dailyGoal) =>
             setUserProfile((previous) => ({ ...previous, dailyGoal }))
           }
@@ -710,6 +721,26 @@ function AppContent({
             yourLanguage={yourLanguage}
             dailyGoal={userProfile.dailyGoal}
             onBack={() => navigate(`${ROUTES.profile}?section=learning`)}
+          />
+        </Suspense>
+        {accountOnboardingDialog}
+      </div>
+    );
+  }
+
+  if (resolvedPage === "reviewWords") {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
+        <Header {...sharedHeaderProps} activePage="profile" />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <ReviewWordsPreparation
+            authUserId={authUserId}
+            isProfileLoaded={isProfileLoaded}
+            practiceLanguage={practiceLanguage}
+            yourLanguage={yourLanguage}
+            onBack={() => navigate(`${ROUTES.profile}?section=learning`)}
+            onStartNewWordStudy={handleStartNewWordStudy}
           />
         </Suspense>
         {accountOnboardingDialog}

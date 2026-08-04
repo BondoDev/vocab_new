@@ -28,12 +28,51 @@ truth without importing from another feature's private folder.
   owner if additional non-learning consumers appear.
 - `wordReviewSchedule.ts` - import-free review-deadline calculation
   (`computeNextReviewAt`) and centralized per-word-state base review
-  intervals. Documents (and is unit-tested against) the same "base interval +
-  one-time jitter" formula the `complete_new_word_study` database function
-  applies when it sets `next_review_at` on insert — the two must be kept in
-  sync by hand, since the RPC cannot import TypeScript. A future Review Words
-  phase should read `BASE_REVIEW_INTERVAL_MS_BY_STATE` from here instead of
-  hardcoding its own per-state intervals.
+  intervals, now populated for all five states (seen/learning/familiar/
+  strong/mastered — 1/3/10/45/180 days). Documents (and is unit-tested
+  against) the same "base interval + one-time ±10% jitter" formula two SQL
+  functions apply when they set `next_review_at`, each computed from the
+  database's own clock: `complete_new_word_study` (Study New Words — always
+  writes "seen") and `complete_word_review` (Review Words Phase 3 — can
+  write any of the five states). Both are SQL and cannot import TypeScript,
+  so if either this map or the jitter fraction changes, update the matching
+  SQL by hand.
+- `reviewOutcomeTransition.ts` - pure outcome-mapping
+  (`determineReviewOutcome`) and state-transition (`computeReviewStateTransition`)
+  logic for Review Words Phase 3, mirroring the `complete_word_review` SQL
+  function's promotion thresholds/demotion map/streak rules exactly. The
+  database recalculates from its own locked row and remains authoritative;
+  this module exists so the same rules are unit-testable without one. Only a
+  type-only `WordState` import.
+- `reviewQueueConfig.ts` - centralized, single-module configuration for the
+  Review Words hybrid *selection* engine (Phase 1): session size default,
+  per-state weighted-random weights, per-state overdue-urgency multipliers,
+  the overdue session share target, the recent-practice cooldown
+  thresholds/factors, the deadline-approach factor shape, and
+  `REVIEW_SMALL_LIBRARY_WORD_COUNT_THRESHOLD` (100) — below this many total
+  learned words, the two-hour "just practiced" cooldown tier is bypassed
+  entirely so a learner reviewing right after an early Study New Words
+  session isn't met with an empty queue. Base review intervals live solely
+  in `wordReviewSchedule.ts` now (the write-side phase that actually needed
+  them arrived) — import from there instead of keeping a second copy here.
+  Import-free apart from a type-only `WordState` import.
+- `reviewQueueWeights.ts` - two focused, reusable, injectable-random helpers:
+  `weightedSampleWithoutReplacement` (Efraimidis-Spirakis weighted sampling
+  without replacement) and `shuffleWithRandomFn` (Fisher-Yates with an
+  injected random source, unlike `src/utils/shuffleArray.ts`). Zero imports.
+  Also reused by `src/features/review-words/reviewSessionPlan.ts` (Phase 2)
+  for its own typing/group exercise randomization — a generic shuffle
+  helper, not the queue-selection algorithm itself.
+- `reviewQueue.ts` - the pure hybrid review-queue selection engine
+  (`selectReviewQueue`) plus a resolver-injected orchestration layer
+  (`selectReviewQueueWithResolution`) that backfills selections whose
+  vocabulary concept fails to resolve. Never recalculates `next_review_at` —
+  it only reads the already-persisted deadline. Never imports Supabase,
+  React, routing, or vocabulary data; see the module's own header comment for
+  the full algorithm (overdue-priority formula, recency cooldown,
+  deadline-approach factor, overdue/random pool composition, small-library
+  cooldown bypass). Selection and persistence remain separate concerns —
+  Review Words Phase 3 (`complete_word_review`) never touches this file.
 
 ## Ownership Rules
 

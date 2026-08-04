@@ -7,6 +7,7 @@ import { DesktopSpecialCharacters } from "./DesktopSpecialCharacters";
 import { MobileKeyboard } from "./MobileKeyboard";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { type KeyboardLanguage } from "./layouts";
+import { isCompletedWrongAttempt } from "./completedWrongAttempt";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface HalfWrittenExerciseProps {
@@ -19,6 +20,13 @@ interface HalfWrittenExerciseProps {
     hasTypedAnswer: boolean;
     usedShowWord: boolean;
     usedHintForBrokenWord: boolean;
+    // Optional, additive field (existing callers that don't read it are
+    // unaffected): true once the typed portion has reached the missing
+    // portion's full length while not matching it — a genuinely completed,
+    // wrong guess, never a merely-incomplete in-progress one. Latches true
+    // for the rest of this word's lifetime once set, even if the input is
+    // later corrected.
+    hasCompletedWrongAttempt?: boolean;
   }) => void;
 }
 
@@ -42,6 +50,7 @@ export function HalfWrittenExercise({
   const [isCorrect, setIsCorrect] = useState(false);
   const [hasTypedAnswer, setHasTypedAnswer] = useState(false);
   const [usedShowWord, setUsedShowWord] = useState(false);
+  const [hasCompletedWrongAttempt, setHasCompletedWrongAttempt] = useState(false);
   const [caretIndex, setCaretIndex] = useState(0);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
@@ -110,6 +119,7 @@ export function HalfWrittenExercise({
     setIsCorrect(false);
     setHasTypedAnswer(false);
     setUsedShowWord(false);
+    setHasCompletedWrongAttempt(false);
     setCaretIndex(0);
     setIsInputFocused(false);
     setLineCount(1);
@@ -181,6 +191,17 @@ export function HalfWrittenExercise({
     const correct =
       userAnswer === missingPart || userAnswer === missingPartInflected;
 
+    // Latches the instant the typed portion has reached the missing
+    // portion's full length (same length inputProps.maxLength already caps
+    // input to) and doesn't match — a genuinely completed, wrong guess,
+    // never a merely-incomplete in-progress one. Computed from the
+    // freshly-derived `correct` value above (not the `isCorrect` state,
+    // which only updates on the next render) so this can't lag a render
+    // behind.
+    if (isCompletedWrongAttempt(userInput.length, missingPart.length, correct)) {
+      setHasCompletedWrongAttempt(true);
+    }
+
     setIsCorrect(correct);
   }, [userInput, currentWord, currentPrompt, visibleLetterCount]);
 
@@ -190,8 +211,9 @@ export function HalfWrittenExercise({
       hasTypedAnswer,
       usedShowWord,
       usedHintForBrokenWord: false,
+      hasCompletedWrongAttempt,
     });
-  }, [isCorrect, hasTypedAnswer, usedShowWord, onStatusChange]);
+  }, [isCorrect, hasTypedAnswer, usedShowWord, hasCompletedWrongAttempt, onStatusChange]);
 
   useEffect(() => {
     if (!isCorrect || window.innerWidth >= 1024) return;

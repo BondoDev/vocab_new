@@ -7,6 +7,7 @@ import { DesktopSpecialCharacters } from "./DesktopSpecialCharacters";
 import { MobileKeyboard } from "./MobileKeyboard";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { type KeyboardLanguage } from "./layouts";
+import { isCompletedWrongAttempt } from "./completedWrongAttempt";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface WordTypingExerciseProps {
@@ -19,6 +20,16 @@ interface WordTypingExerciseProps {
     hasTypedAnswer: boolean;
     usedShowWord: boolean;
     usedHintForBrokenWord: boolean;
+    // Optional, additive fields (existing callers that don't read them are
+    // unaffected): true once the typed input has reached the target
+    // word's full length while not matching it — a genuinely completed,
+    // wrong guess, never a merely-incomplete in-progress one. Latches true
+    // for the rest of this word's lifetime once set, even if the input is
+    // later corrected. usedHint mirrors usedHintForBrokenWord's role for
+    // this exercise's own hint affordance (letter reveal), which was
+    // previously not reported at all.
+    hasCompletedWrongAttempt?: boolean;
+    usedHint?: boolean;
   }) => void;
 }
 
@@ -40,6 +51,7 @@ export function WordTypingExercise({
   const [revealedHintIndices, setRevealedHintIndices] = useState<number[]>([]);
   const [hasTypedAnswer, setHasTypedAnswer] = useState(false);
   const [usedShowWord, setUsedShowWord] = useState(false);
+  const [hasCompletedWrongAttempt, setHasCompletedWrongAttempt] = useState(false);
   const [caretIndex, setCaretIndex] = useState(0);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
@@ -91,6 +103,7 @@ export function WordTypingExercise({
     setRevealedHintIndices([]);
     setHasTypedAnswer(false);
     setUsedShowWord(false);
+    setHasCompletedWrongAttempt(false);
     setCaretIndex(0);
     setIsInputFocused(false);
     setLineCount(1);
@@ -158,6 +171,20 @@ export function WordTypingExercise({
       userAnswer === correctAnswer || userAnswer === inflectedAnswer;
 
     setIsCorrect(correct);
+
+    // Latches the instant every required character position has been
+    // filled (input reached the target word's full length) and the
+    // completed word doesn't match — a genuinely finished, wrong guess,
+    // never a merely-incomplete in-progress one ("A", "Ap", "App" typing
+    // toward "Apple" never trips this; "Aplle" — full length, wrong — does).
+    // Computed from the freshly-derived `correct` value above rather than
+    // the `isCorrect` state (which only updates on the next render), so
+    // this can't lag a render behind. Uses the untrimmed length against the
+    // same length UniversalExerciseInput's maxLength already caps input to.
+    const targetLength = currentWord.word_lemma?.length ?? 0;
+    if (isCompletedWrongAttempt(userInput.length, targetLength, correct)) {
+      setHasCompletedWrongAttempt(true);
+    }
   }, [userInput, currentWord, currentPrompt]);
 
   useEffect(() => {
@@ -166,8 +193,10 @@ export function WordTypingExercise({
       hasTypedAnswer,
       usedShowWord,
       usedHintForBrokenWord: false,
+      hasCompletedWrongAttempt,
+      usedHint: revealedHintIndices.length > 0,
     });
-  }, [isCorrect, hasTypedAnswer, usedShowWord, onStatusChange]);
+  }, [isCorrect, hasTypedAnswer, usedShowWord, hasCompletedWrongAttempt, revealedHintIndices, onStatusChange]);
 
   useEffect(() => {
     if (!isCorrect) return;

@@ -1,0 +1,812 @@
+// Owned by ReviewWordsPreparation.tsx — the only component in this feature
+// folder for Phase 1 (see src/styles/README.md for the ownership rule this
+// repo follows). Mirrors src/features/study-new-words/styles/study-new-words.scss's
+// tokens/shapes (same --primary/--card/--border/--radius design-system
+// variables) so this reads as the same product, not a visually distinct
+// one-off screen.
+
+.review-words-page {
+  flex: 1 1 0%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  padding: 1.5rem 1rem 2.5rem;
+
+  @media (min-width: 768px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.review-words-page-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 34rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.review-words-back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  padding: 0.375rem 0.25rem;
+  margin: -0.375rem -0.25rem 1rem;
+  border-radius: calc(var(--radius) - 4px);
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--background),
+      0 0 0 4px color-mix(in oklab, var(--primary) 50%, transparent);
+  }
+}
+
+.review-words-back-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.review-words-panel {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--primary) 10%, var(--border));
+  border-radius: calc(var(--radius) + 6px);
+  background: var(--card);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 12px 28px -18px color-mix(in srgb, var(--primary) 40%, transparent);
+  padding: 1.75rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.review-words-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.review-words-header-icon-svg {
+  width: 2.125rem;
+  height: 2.125rem;
+  stroke-width: 1.75;
+}
+
+.review-words-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+.review-words-subtitle {
+  margin-top: 0.375rem;
+  margin-bottom: 0.625rem;
+  color: var(--muted-foreground);
+  max-width: 32ch;
+  overflow-wrap: break-word;
+}
+
+.review-words-retry-button {
+  padding: 0.625rem 1.25rem;
+  border-radius: calc(var(--radius) - 2px);
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--primary) 90%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
+  }
+}
+
+.review-words-loading-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+@keyframes review-words-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.review-words-spinner {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 3px solid color-mix(in srgb, var(--primary) 18%, transparent);
+  border-top-color: var(--primary);
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  animation: review-words-spin 0.8s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 2.4s;
+  }
+}
+
+.review-words-loading-message {
+  color: var(--muted-foreground);
+}
+
+.review-words-message-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  gap: 1rem;
+}
+
+.review-words-message-text {
+  color: var(--foreground);
+  max-width: 28rem;
+  overflow-wrap: break-word;
+}
+
+.review-words-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.review-words-summary {
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  max-width: 42ch;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+
+  @media (min-width: 768px) {
+    font-size: 1.0625rem;
+  }
+}
+
+.review-words-summary-value {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.review-words-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.625rem;
+  width: 100%;
+  margin-top: 1.5rem;
+  text-align: left;
+
+  @media (min-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.review-words-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--background);
+}
+
+.review-words-info-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  flex-shrink: 0;
+  border-radius: calc(var(--radius) - 4px);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+
+.review-words-info-item-icon-svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.review-words-info-item-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.review-words-info-item-label {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.review-words-info-item-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+}
+
+.review-words-begin-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 1.75rem;
+  padding: 0.9rem 1.5rem;
+  border-radius: calc(var(--radius) - 2px);
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition:
+    background-color 150ms ease,
+    transform 150ms ease;
+
+  &:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--primary) 90%, transparent);
+  }
+
+  &:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--primary) 95%, transparent);
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
+  }
+}
+
+.review-words-begin-button-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+}
+
+// =====================================================================
+// ReviewSession (Phase 2) — mirrors study-new-words.scss's
+// .new-word-study-session-* shapes/tokens (same design-system variables) so
+// the review flow reads as the same product as the guided study flow, not a
+// visually distinct one-off. Owned by ReviewSession.tsx, ReviewSessionComplete.tsx,
+// and the two step adapters in ./steps/.
+// =====================================================================
+
+.review-session {
+  flex: 1 1 0%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  padding: 1.5rem 1rem;
+
+  @media (min-width: 768px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.review-session-body {
+  max-width: 42rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-session-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.review-session-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.review-session-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--background),
+      0 0 0 4px color-mix(in oklab, var(--primary) 50%, transparent);
+  }
+}
+
+.review-session-back-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.review-session-progress-text {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.review-session-progress-track {
+  height: 0.375rem;
+  width: 100%;
+  background-color: var(--muted);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.review-session-progress-fill {
+  height: 100%;
+  background-color: var(--primary);
+  transition: width 200ms ease;
+}
+
+.review-session-step-container {
+  outline: none;
+  flex: 1 1 0%;
+}
+
+.review-session-error-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.review-session-error-message {
+  color: var(--foreground);
+  max-width: 28rem;
+  overflow-wrap: break-word;
+}
+
+// saving_review / review_save_error — represents the just-completed word
+// contextually (word text only, no interactive exercise) while its
+// complete_word_review call is in flight or being retried.
+.review-session-saving-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.375rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.review-session-saving-word {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+}
+
+.review-session-saving-message {
+  color: var(--muted-foreground);
+}
+
+.review-session-error-retry-button {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in oklab, var(--primary) 90%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--background),
+      0 0 0 4px var(--ring);
+  }
+}
+
+// =====================================================================
+// ReviewExerciseAdapter / ReviewGroupExerciseAdapter
+// =====================================================================
+
+.review-exercise-shell {
+  width: 100%;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.review-exercise-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 0.75rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: all 300ms ease-in-out;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 640px) {
+    padding: 1.5rem;
+  }
+}
+
+.review-exercise-instruction {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 34rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  line-height: 1.625;
+  font-weight: 500;
+}
+
+.review-exercise-main-content {
+  flex: 1 1 0%;
+  padding-top: 0;
+}
+
+.review-group-exercise-main-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.review-exercise-word-area {
+  margin-bottom: 0;
+
+  & > * + * {
+    margin-top: 1.5rem;
+  }
+}
+
+.review-exercise-guess-word-container {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-exercise-guess-word-inner {
+  text-align: center;
+}
+
+.review-exercise-guess-word {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--foreground);
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+}
+
+.review-exercise-help-sections {
+  margin-bottom: 0;
+  margin-top: 1rem;
+
+  & > * + * {
+    margin-top: 0.5rem;
+  }
+}
+
+.review-exercise-collapsible {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.review-exercise-toggle-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 0.75rem;
+  font-size: 0.75rem;
+  text-align: left;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in oklab, var(--muted) 40%, transparent);
+  }
+}
+
+.review-exercise-toggle-label {
+  font-weight: 500;
+}
+
+.review-exercise-toggle-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+
+.review-exercise-collapsible-panel {
+  transition: all 300ms ease-in-out;
+  overflow: hidden;
+}
+
+.review-exercise-content-block {
+  padding: 0.625rem 0.75rem;
+  background-color: color-mix(in oklab, var(--muted) 40%, transparent);
+  font-size: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.review-exercise-content-block--italic {
+  font-style: italic;
+}
+
+.review-exercise-sentence-row {
+  position: relative;
+}
+
+.review-exercise-sentence-text {
+  display: block;
+  line-height: 1.625;
+  padding-right: 2.5rem;
+}
+
+.review-exercise-sentence-speak-button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  padding: 0.375rem;
+  border-radius: 0.5rem;
+  color: var(--muted-foreground);
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+}
+
+.review-exercise-sentence-speak-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.review-exercise-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.review-exercise-skip-button {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  color: var(--muted-foreground);
+  font-weight: 500;
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
+  }
+}
+
+.review-exercise-next-button {
+  // Stays right-aligned whether or not the Skip button is present (it's
+  // hidden once the exercise is complete) — margin-left: auto rather than
+  // relying on justify-content, which would otherwise re-anchor a lone
+  // remaining flex child to the start instead of the end.
+  margin-left: auto;
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 150ms ease;
+
+  &.is-complete {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  &:disabled {
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
+  }
+}
+
+// =====================================================================
+// block_complete
+// =====================================================================
+
+.review-session-block-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.review-session-block-complete-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--primary);
+}
+
+.review-session-block-complete-heading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.review-session-block-complete-button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in oklab, var(--primary) 90%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
+  }
+}
+
+// =====================================================================
+// ReviewSessionComplete
+// =====================================================================
+
+.review-session-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.review-session-complete-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.review-session-complete-icon-svg {
+  width: 1.875rem;
+  height: 1.875rem;
+}
+
+.review-session-complete-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+
+  @media (min-width: 768px) {
+    font-size: 1.875rem;
+  }
+}
+
+.review-session-complete-count {
+  color: var(--muted-foreground);
+}
+
+.review-session-complete-count-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.review-session-complete-button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in oklab, var(--primary) 90%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--card),
+      0 0 0 4px var(--ring);
+  }
+}

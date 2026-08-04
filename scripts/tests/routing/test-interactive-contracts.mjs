@@ -74,6 +74,7 @@ const EXPECTED_ROUTES = {
   help: "/help",
   profile: "/profile",
   newWordStudy: "/learning/new-words",
+  reviewWords: "/learning/review",
 };
 
 test("src/app/App.tsx ROUTES contains exactly the expected primary interactive routes", () => {
