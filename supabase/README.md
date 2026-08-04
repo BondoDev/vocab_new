@@ -80,7 +80,8 @@ here so the next migration can address them deliberately, one at a time:
 5. **Excessive table-level grants across the board** (see above) —
    `TRUNCATE`/`REFERENCES`/`TRIGGER`/`MAINTAIN` granted to `anon`/
    `authenticated` on all four tables with no application need for any of
-   them.
+   them. Closed for `review_events` by Corrective Migration 4, below; still
+   open for `user_profiles`, `user_word_progress`, and `user_daily_stats`.
 
 ### Promotion thresholds — confirmed intentional, not a bug
 
@@ -158,8 +159,39 @@ orphaned/mismatched `review_events` rows exist, and to confirm the live name
 of the existing `word_progress_id` foreign key matches
 `review_events_word_progress_id_fkey` before the `DROP CONSTRAINT` runs.
 
-With this migration applied, every open item from the baseline migration's
-`PROPOSED NEXT MIGRATIONS` list is closed.
+With this migration applied, every baseline `PROPOSED NEXT MIGRATIONS` item
+except item 3 (`review_events`' excessive `anon`/`authenticated` table
+grants) is closed — item 3 is closed next, by Corrective Migration 4.
+
+## Corrective Migration 4 — review_events client privileges revoked
+
+`migrations/20260805170000_revoke_review_events_client_privileges.sql`
+closes the baseline's last remaining `PROPOSED NEXT MIGRATIONS` item (item 3
+/ this README's "Known imperfections" item 5, scoped to `review_events`):
+
+- Revokes every table privilege (`INSERT, SELECT, UPDATE, DELETE, TRUNCATE,
+  REFERENCES, TRIGGER, MAINTAIN`) on `public.review_events` from `anon`.
+- Revokes the same full privilege set on `public.review_events` from
+  `authenticated`.
+- `postgres` and `service_role` keep every privilege they already held —
+  neither is touched by this migration.
+
+No application behavior changes: `review_events` is written only by
+`complete_word_review`, which is `SECURITY DEFINER` and therefore writes as
+its owner (`postgres`) regardless of the calling role's own table grants.
+No frontend code selects, inserts, updates, or deletes `review_events`
+directly. RLS was already enabled on `review_events` with zero policies
+(baseline migration), so `anon`/`authenticated` could not actually touch
+this table before this migration either — this migration removes the
+now-redundant grant layer underneath that RLS lockdown, per this README's
+own "grant-level defense in depth" note above. No policy is added. No
+read-only validation queries are required before applying it — it changes
+role privileges only, no rows and no constraints.
+
+With this migration applied, every baseline `PROPOSED NEXT MIGRATIONS` item
+is closed, except the broader (all-four-table) excessive-grants cleanup
+tracked as this README's "Known imperfections" item 5 for `user_profiles`,
+`user_word_progress`, and `user_daily_stats`.
 
 ## What happens next
 
