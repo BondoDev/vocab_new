@@ -5,7 +5,8 @@ import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import type { UserProfile } from "../../../../lib/userProfile";
-import { updateWordProgressFavorite } from "../../../../lib/newWordProgress";
+import { updateWordProgressFavorite, VocabularyFavoriteUpdateError } from "../../../../lib/newWordProgress";
+import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
 import { type VocabularyCounts } from "../../../../data/learning/vocabularyCategory";
 import { loadVocabularyProgress, type ResolvedVocabularyRow } from "./loadVocabularyProgress";
 import {
@@ -97,7 +98,14 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
         setState({ status: "result", data: { ...result, targetLanguage } });
       } catch (error) {
         if (cancelled) return;
-        console.warn("VocabularySection: failed to load vocabulary progress.", error);
+        // Read-only page load: this stays one generic message + Retry
+        // regardless of cause (see this refactor's scoping notes), but the
+        // structured diagnostics logged here now include the classified
+        // category/code/status instead of just the raw error object.
+        console.warn(
+          "VocabularySection: failed to load vocabulary progress.",
+          describeSupabaseError("loadVocabularyProgress", error),
+        );
         setState({ status: "error" });
       }
     })();
@@ -126,7 +134,7 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
 
     const session = getStoredSupabaseSession();
     if (!session) {
-      showConfirmation(t("userProfile.vocabularySection.favoriteError"));
+      showConfirmation(t("supabaseErrors.sessionExpired"));
       return;
     }
 
@@ -151,6 +159,11 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
 
     void updateWordProgressFavorite(session, row.id, nextIsFavorite)
       .catch((error) => {
+        // Full structured diagnostics were already logged inside
+        // updateWordProgressFavorite's own catch (src/lib/newWordProgress.ts),
+        // where the raw Supabase/PostgREST error is still available — this
+        // only logs the already-sanitized domain error for screen-level
+        // context.
         console.warn("VocabularySection: failed to update favorite.", error);
         setState((prev) => {
           if (prev.status !== "result") return prev;
@@ -166,7 +179,8 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
             },
           };
         });
-        showConfirmation(t("userProfile.vocabularySection.favoriteError"));
+        const category = error instanceof VocabularyFavoriteUpdateError ? error.category : "unknown";
+        showConfirmation(t(resolveSupabaseErrorMessageKey(category, "userProfile.vocabularySection.favoriteError")));
       })
       .finally(() => {
         setTogglingIds((prev) => {

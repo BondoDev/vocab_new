@@ -743,5 +743,11 @@
     "confirmExitDescription": "Se perdera tu progreso actual en la prueba.",
     "confirmExitStay": "Seguir en la prueba",
     "confirmExitLeave": "Salir de la prueba"
+  },
+  "supabaseErrors": {
+    "sessionExpired": "Tu sesion ha expirado. Por favor, inicia sesion de nuevo.",
+    "forbidden": "Esta accion no esta permitida.",
+    "temporarilyUnavailable": "Esta funcion no esta disponible temporalmente. Intentalo de nuevo en unos momentos.",
+    "network": "Problema de conexion. Revisa tu conexion a internet e intentalo de nuevo."
   }
 }

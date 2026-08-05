@@ -98,11 +98,21 @@ test("7. Failures are wrapped in VocabularyFavoriteUpdateError — no raw Supaba
   assert.match(fnMatch[1], /catch \(error\)[\s\S]*throw new VocabularyFavoriteUpdateError/);
 });
 
-test("8. Session/auth failures are distinguished from generic failures, matching completeNewWordStudy/completeWordReview's precedent", () => {
+test("8. Session/auth failures are distinguished from generic failures via the shared classifier, matching completeNewWordStudy/completeWordReview's precedent", () => {
   const fnMatch = libSource.match(/export async function updateWordProgressFavorite\(([\s\S]*?)\n\}/);
   const body = fnMatch[1];
-  assert.match(body, /jwt\|session\|unauthorized\|401/i, "must test for the same auth-failure signature as the other two RPCs");
+  // Previously a hand-copied /jwt|session|unauthorized|401/i regex, now
+  // routed through the shared classifier — see
+  // scripts/tests/architecture/test-supabase-error-handling.mjs for the
+  // dedicated guard against that duplicated-regex pattern ever coming back.
+  assert.match(body, /classifySupabaseError\(error\)/, "must classify the raw error via the shared classifier");
+  assert.match(body, /category === "unauthenticated"/, "must branch on the classified unauthenticated category");
   assert.match(body, /session has expired/i, "must surface a distinct expired-session message");
+  assert.match(
+    libSource,
+    /class VocabularyFavoriteUpdateError extends Error \{\s*readonly category: SupabaseErrorCategory;/,
+    "VocabularyFavoriteUpdateError must carry a classified category, not just a message",
+  );
 });
 
 test("9. readUserWordProgress scopes reads by both user_id and target_language (language isolation)", () => {

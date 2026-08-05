@@ -4,6 +4,7 @@ import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import type { UserProfile } from "../../../../lib/userProfile";
 import { readTodayNewWordsCompleted } from "../../../../lib/newWordProgress";
+import { describeSupabaseError } from "../../../../lib/supabaseError";
 import { getLocalCalendarDateISO } from "../../../../data/learning/localStudyDate";
 import { computeTodayProgressDisplay } from "../../../../data/learning/todayProgressDisplay";
 
@@ -76,7 +77,10 @@ export function TodayProgressCard({ practiceLanguage, dailyGoal, isProfileLoaded
         setState({ status: "ready", completed });
       } catch (error) {
         if (cancelled) return;
-        console.warn("TodayProgressCard: failed to load today's progress.", error);
+        console.warn(
+          "TodayProgressCard: failed to load today's progress.",
+          describeSupabaseError("readTodayNewWordsCompleted", error),
+        );
         setState({ status: "ready", completed: 0 });
       }
     })();

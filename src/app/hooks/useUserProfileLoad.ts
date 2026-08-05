@@ -13,6 +13,7 @@ import {
   readStoredUserProfile,
   type UserProfile,
 } from "../../lib/userProfile";
+import { describeSupabaseError } from "../../lib/supabaseError";
 import {
   buildFallbackUserProfile,
   buildMergedUserProfile,
@@ -127,10 +128,18 @@ export function useUserProfileLoad({
         );
         setAccountOnboardingError(null);
         setIsProfileLoaded(true);
-      } catch {
+      } catch (error) {
         if (cancelled) {
           return;
         }
+
+        // Falls back to the locally-stored/default profile either way (see
+        // buildFallbackUserProfile below) — this was previously silent, so
+        // a failed load was indistinguishable from "the account genuinely
+        // has no saved profile yet." Structured, privacy-safe diagnostics
+        // now make the actual cause (session/permissions/network/...)
+        // visible in development without changing that fallback behavior.
+        console.warn("useUserProfileLoad: failed to load the user profile.", describeSupabaseError("readSupabaseUserProfile", error));
 
         const fallbackProfile = buildFallbackUserProfile({
           storedProfile,

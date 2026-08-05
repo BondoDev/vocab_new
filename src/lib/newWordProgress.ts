@@ -12,6 +12,11 @@ import {
   supabaseRequest,
   type StoredSupabaseSession,
 } from "./supabaseAuth";
+import {
+  classifySupabaseError,
+  describeSupabaseError,
+  type SupabaseErrorCategory,
+} from "./supabaseError";
 import type { WordState } from "../data/learning/wordReviewSchedule";
 import { addDaysISO } from "../data/learning/dailyStreak";
 
@@ -111,18 +116,19 @@ export async function readTodayNewWordsCompleted(
 }
 
 // Thrown by completeNewWordStudy instead of letting a raw Supabase/
-// PostgreSQL error reach the UI. `retryable` distinguishes "try the same
-// request again" (network blip, transient DB error) from "the session
-// itself is the problem" (expired/missing auth) — the caller decides what to
-// do with that distinction; this phase's UI always offers Retry either way,
-// since re-authentication is out of scope here.
+// PostgreSQL error reach the UI. `category` (see src/lib/supabaseError.ts)
+// replaces the previous plain `retryable` boolean: the caller picks its
+// user-facing message from it (session-expired / temporarily-unavailable /
+// this-action-not-permitted / connection-problem / this phase's own
+// generic retry copy) instead of a single collapsed retryable/not-retryable
+// split.
 export class NewWordStudyPersistenceError extends Error {
-  readonly retryable: boolean;
+  readonly category: SupabaseErrorCategory;
 
-  constructor(message: string, retryable: boolean) {
+  constructor(message: string, category: SupabaseErrorCategory) {
     super(message);
     this.name = "NewWordStudyPersistenceError";
-    this.retryable = retryable;
+    this.category = category;
   }
 }
 
@@ -192,7 +198,7 @@ function parseCompleteNewWordStudyRow(
   row: CompleteNewWordStudyRpcRow | undefined,
 ): CompleteNewWordStudyResult {
   if (!row) {
-    throw new NewWordStudyPersistenceError("complete_new_word_study returned no row.", true);
+    throw new NewWordStudyPersistenceError("complete_new_word_study returned no row.", "unexpected_response");
   }
 
   const rawCount = row.new_words_completed_today;
@@ -225,10 +231,10 @@ export async function completeNewWordStudy(
   const { session, conceptId, targetLanguage, statDateISO } = params;
 
   if (!session.access_token || !session.user?.id) {
-    throw new NewWordStudyPersistenceError("Missing authenticated session.", false);
+    throw new NewWordStudyPersistenceError("Missing authenticated session.", "unauthenticated");
   }
   if (!conceptId || !targetLanguage || !statDateISO) {
-    throw new NewWordStudyPersistenceError("Missing required fields to save this word.", false);
+    throw new NewWordStudyPersistenceError("Missing required fields to save this word.", "validation");
   }
 
   let rows: CompleteNewWordStudyRpcRow[] | CompleteNewWordStudyRpcRow;
@@ -243,14 +249,24 @@ export async function completeNewWordStudy(
       },
     );
   } catch (error) {
-    if (error instanceof Error && /jwt|session|unauthorized|401/i.test(error.message)) {
-      throw new NewWordStudyPersistenceError("Your session has expired. Please sign in again.", false);
+    const category = classifySupabaseError(error);
+    // Structured, privacy-safe diagnostics logged here (where the raw
+    // Supabase/PostgREST error — code/status/details/hint — is still
+    // available) rather than at the UI layer, which only ever sees the
+    // generic message below. See src/lib/supabaseError.ts's own header for
+    // what this deliberately excludes (tokens, session objects, email).
+    console.warn("newWordProgress: completeNewWordStudy failed.", describeSupabaseError("completeNewWordStudy", error));
+
+    if (category === "unauthenticated") {
+      throw new NewWordStudyPersistenceError("Your session has expired. Please sign in again.", category);
     }
     // Never surface the raw Supabase/PostgreSQL message to the UI — only
-    // this safe, generic, retryable-failure copy.
+    // this safe, generic, retry copy. The caller picks a more specific
+    // safe message for forbidden/missing_rpc/network via `category`
+    // instead (see NewWordStudySession.tsx).
     throw new NewWordStudyPersistenceError(
       "We couldn't save this word. Check your connection and try again.",
-      true,
+      category,
     );
   }
 
@@ -333,10 +349,16 @@ export async function readUserWordProgress(
 
 // User-safe wrapper — never exposes a raw Supabase/PostgreSQL error to the
 // Favorite button's UI, matching NewWordStudyPersistenceError's precedent.
+// `category` (see src/lib/supabaseError.ts) lets the caller pick a
+// session-expired / not-permitted / temporarily-unavailable / connection-
+// problem message instead of always showing the same generic copy.
 export class VocabularyFavoriteUpdateError extends Error {
-  constructor(message: string) {
+  readonly category: SupabaseErrorCategory;
+
+  constructor(message: string, category: SupabaseErrorCategory) {
     super(message);
     this.name = "VocabularyFavoriteUpdateError";
+    this.category = category;
   }
 }
 
@@ -360,8 +382,11 @@ export async function updateWordProgressFavorite(
   isFavorite: boolean,
 ): Promise<void> {
   const userId = session.user?.id;
-  if (!userId || !progressRowId) {
-    throw new VocabularyFavoriteUpdateError("Missing authenticated session or word.");
+  if (!userId) {
+    throw new VocabularyFavoriteUpdateError("Missing authenticated session or word.", "unauthenticated");
+  }
+  if (!progressRowId) {
+    throw new VocabularyFavoriteUpdateError("Missing authenticated session or word.", "validation");
   }
 
   let rows: SetWordProgressFavoriteRpcRow[] | SetWordProgressFavoriteRpcRow;
@@ -375,18 +400,25 @@ export async function updateWordProgressFavorite(
       },
     );
   } catch (error) {
-    if (error instanceof Error && /jwt|session|unauthorized|401/i.test(error.message)) {
-      throw new VocabularyFavoriteUpdateError("Your session has expired. Please sign in again.");
+    const category = classifySupabaseError(error);
+    // See completeNewWordStudy's own catch above for why this logs here
+    // (full structured diagnostics) rather than at the UI layer.
+    console.warn("newWordProgress: updateWordProgressFavorite failed.", describeSupabaseError("updateWordProgressFavorite", error));
+
+    if (category === "unauthenticated") {
+      throw new VocabularyFavoriteUpdateError("Your session has expired. Please sign in again.", category);
     }
     // Never surface the raw Supabase/PostgreSQL message to the UI — only
     // this safe, generic failure copy, matching completeNewWordStudy /
-    // completeWordReview's precedent above.
-    throw new VocabularyFavoriteUpdateError("We couldn't update this favorite. Please try again.");
+    // completeWordReview's precedent above. VocabularySection.tsx picks a
+    // more specific safe message for forbidden/missing_rpc/network via
+    // `category` instead.
+    throw new VocabularyFavoriteUpdateError("We couldn't update this favorite. Please try again.", category);
   }
 
   const row = Array.isArray(rows) ? rows[0] : rows;
   if (!row || typeof row.word_progress_id !== "string" || typeof row.is_favorite !== "boolean") {
-    throw new VocabularyFavoriteUpdateError("set_word_progress_favorite returned a malformed row.");
+    throw new VocabularyFavoriteUpdateError("set_word_progress_favorite returned a malformed row.", "unexpected_response");
   }
 }
 
@@ -474,14 +506,16 @@ export async function readUserWordProgressForReview(
 export type ReviewResult = "correct" | "incorrect" | "skipped";
 
 // Thrown by completeWordReview instead of letting a raw Supabase/PostgreSQL
-// error reach the UI — same precedent as NewWordStudyPersistenceError.
+// error reach the UI — same precedent as NewWordStudyPersistenceError,
+// including `category` (see src/lib/supabaseError.ts) in place of the
+// previous plain `retryable` boolean.
 export class ReviewPersistenceError extends Error {
-  readonly retryable: boolean;
+  readonly category: SupabaseErrorCategory;
 
-  constructor(message: string, retryable: boolean) {
+  constructor(message: string, category: SupabaseErrorCategory) {
     super(message);
     this.name = "ReviewPersistenceError";
-    this.retryable = retryable;
+    this.category = category;
   }
 }
 
@@ -533,7 +567,7 @@ export interface CompleteWordReviewResult {
 
 function parseCompleteWordReviewRow(row: CompleteWordReviewRpcRow | undefined): CompleteWordReviewResult {
   if (!row) {
-    throw new ReviewPersistenceError("complete_word_review returned no row.", true);
+    throw new ReviewPersistenceError("complete_word_review returned no row.", "unexpected_response");
   }
 
   if (
@@ -544,7 +578,7 @@ function parseCompleteWordReviewRow(row: CompleteWordReviewRpcRow | undefined): 
     typeof row.last_practiced_at !== "string" ||
     typeof row.next_review_at !== "string"
   ) {
-    throw new ReviewPersistenceError("complete_word_review returned a malformed row.", false);
+    throw new ReviewPersistenceError("complete_word_review returned a malformed row.", "unexpected_response");
   }
 
   const previousCorrectStreak = row.previous_correct_streak;
@@ -583,14 +617,24 @@ function parseCompleteWordReviewRow(row: CompleteWordReviewRpcRow | undefined): 
 // locked database row, never trusts them from the client. See this
 // function's CompleteWordReviewParams above, which has no fields for any
 // of that.
+//
+// Idempotency/conflict note: a *retried* eventId is not an error case at
+// all — the RPC itself detects it (review_events' primary key) and returns
+// a normal success row with already_processed: true, which this function
+// returns like any other result (see parseCompleteWordReviewRow above).
+// A genuine "conflict" classification below (an unexpected duplicate-key
+// failure this RPC's own idempotency contract does not explain) is
+// therefore never treated as success — it falls through to the same
+// generic retry message as any other unclassified failure, exactly like
+// before this refactor.
 export async function completeWordReview(params: CompleteWordReviewParams): Promise<CompleteWordReviewResult> {
   const { session, eventId, wordProgressId, result, statDateISO } = params;
 
   if (!session.access_token || !session.user?.id) {
-    throw new ReviewPersistenceError("Missing authenticated session.", false);
+    throw new ReviewPersistenceError("Missing authenticated session.", "unauthenticated");
   }
   if (!eventId || !wordProgressId || !result || !statDateISO) {
-    throw new ReviewPersistenceError("Missing required fields to save this review.", false);
+    throw new ReviewPersistenceError("Missing required fields to save this review.", "validation");
   }
 
   let rows: CompleteWordReviewRpcRow[] | CompleteWordReviewRpcRow;
@@ -606,12 +650,19 @@ export async function completeWordReview(params: CompleteWordReviewParams): Prom
       },
     );
   } catch (error) {
-    if (error instanceof Error && /jwt|session|unauthorized|401/i.test(error.message)) {
-      throw new ReviewPersistenceError("Your session has expired. Please sign in again.", false);
+    const category = classifySupabaseError(error);
+    // See completeNewWordStudy's own catch above for why this logs here
+    // (full structured diagnostics) rather than at the UI layer.
+    console.warn("newWordProgress: completeWordReview failed.", describeSupabaseError("completeWordReview", error));
+
+    if (category === "unauthenticated") {
+      throw new ReviewPersistenceError("Your session has expired. Please sign in again.", category);
     }
     // Never surface the raw Supabase/PostgreSQL message to the UI — only
-    // this safe, generic, retryable-failure copy.
-    throw new ReviewPersistenceError("We couldn't save this review. Check your connection and try again.", true);
+    // this safe, generic, retry copy. The caller picks a more specific
+    // safe message for forbidden/missing_rpc/network via `category`
+    // instead (see ReviewSession.tsx).
+    throw new ReviewPersistenceError("We couldn't save this review. Check your connection and try again.", category);
   }
 
   const row = Array.isArray(rows) ? rows[0] : rows;
