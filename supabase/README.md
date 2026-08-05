@@ -287,13 +287,55 @@ Cloudflare rollback path still points at the previous build). Custom
 Practice has no legacy signature at all — `complete_custom_practice_word` was
 introduced directly in its final form.
 
+**Stage 3 status: migration prepared (Corrective Migration 6, below), not
+yet confirmed safe to apply.** See that section for the exact gate.
+
+## Corrective Migration 6 — legacy learning RPC signatures dropped
+
+`migrations/20260805200000_drop_legacy_learning_rpc_signatures.sql` is stage
+3 of the rollout table above: it drops exactly the two now-obsolete legacy
+signatures —
+
+- `complete_new_word_study(text, text, date)` — **removed**
+- `complete_word_review(uuid, uuid, text, date)` — **removed**
+
+using `DROP FUNCTION IF EXISTS`, no `CASCADE`. Nothing else changes: the
+duration-aware signatures
+(`complete_new_word_study(text, text, date, integer)`,
+`complete_word_review(uuid, uuid, text, date, integer)`) and
+`complete_custom_practice_word(uuid, text, date, integer)` are untouched —
+`DROP FUNCTION` targets one exact signature, never a same-named function
+with a different parameter list. No table, column, constraint, index,
+policy, or grant on any remaining function is touched.
+
+**Compatibility phase is now complete on paper** — the rollout table above
+no longer has an open stage once this migration is applied — **but
+application itself is gated**, not automatic just because this file exists.
+Do not apply this migration until all of the following are independently
+confirmed live (not just merged to `master` in git):
+
+1. the duration-aware frontend build is the one actually deployed and
+   serving production traffic on Cloudflare;
+2. a live Study New Words smoke test passes;
+3. a live Review Words smoke test passes;
+4. a live Custom Practice smoke test passes;
+5. no rollback to a pre-duration-aware Cloudflare deployment is expected or
+   queued.
+
+**After this migration is applied, an older Cloudflare build must never be
+redeployed/rolled back to.** Such a build calls the now-dropped 3-arg/4-arg
+signatures; PostgREST will return `PGRST202` ("could not find the
+function") for every Study New Words / Review Words save attempt from that
+build — it would not silently record 0 seconds the way it did during the
+Corrective Migration 5 compatibility window, it would fail outright.
+
 ## What happens next
 
 Corrective changes are separate, individually-reviewed follow-up migrations
 — never folded into the baseline above. See the numbered list at the bottom
-of the migration file itself for the current proposed order. The next
-learning-system migration on top of Corrective Migration 5 above is the
-legacy-signature cleanup described in that section.
+of the migration file itself for the current proposed order. With
+Corrective Migration 6 applied, the learning-mode-time-tracking rollout
+begun in Corrective Migration 5 is fully complete.
 
 ## Working with this folder going forward
 
