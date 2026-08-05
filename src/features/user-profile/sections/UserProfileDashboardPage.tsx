@@ -15,8 +15,8 @@ interface UserProfileDashboardPageProps {
   practiceLanguage?: UILanguage | "";
   languageLevel?: LanguageLevelCode | "";
   // App.tsx's single shared profile load, threaded through to the Learning
-  // section (Daily Goal, Daily Streak, Today's Progress) so none of them
-  // fetch their own copy of the profile.
+  // section (Daily Goal, Daily Streak, Today's Progress) and the Vocabulary
+  // section so none of them fetch their own copy of the profile.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
   onStartCustomPractice?: () => void;
@@ -92,7 +92,11 @@ export function UserProfileDashboardPage({
               />
             ) : null}
             {activeSection === "vocabulary" ? (
-              <VocabularySection onStartNewWordStudy={onStartNewWordStudy} />
+              <VocabularySection
+                userProfile={userProfile}
+                isProfileLoaded={isProfileLoaded}
+                onStartNewWordStudy={onStartNewWordStudy}
+              />
             ) : null}
             {activeSection === "dashboard" ? <DashboardSection /> : null}
           </section>

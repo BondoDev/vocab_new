@@ -397,7 +397,7 @@ deployment described above.
 
 ## Architecture guards
 
-`npm run test:architecture-guards` chains **19 guard groups**, each a
+`npm run test:architecture-guards` chains **20 guard groups**, each a
 deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
@@ -421,6 +421,7 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:protected-learning-writes-boundary` | `scripts/tests/architecture/test-protected-learning-writes-boundary.mjs` | `authenticated` only reaches `user_word_progress`/`user_daily_stats` via SELECT or the learning RPCs, never a direct write |
 | `test:learning-non-negative-values-contract` | `scripts/tests/architecture/test-learning-non-negative-values-contract.mjs` | no application code assigns a negative value/sentinel to `correct_streak` or the daily-stats counters (see corrective migration 2's non-negative `CHECK` constraints in `supabase/README.md`) |
 | `test:learning-profile-data-flow` | `scripts/tests/architecture/test-learning-profile-data-flow.mjs` | the Learning dashboard loads the signed-in user's profile exactly once (App.tsx) and threads it down as props, instead of Daily Goal/Daily Streak/Today's Progress each fetching their own copy |
+| `test:vocabulary-profile-data-flow` | `scripts/tests/architecture/test-vocabulary-profile-data-flow.mjs` | the Vocabulary dashboard section reuses the Learning dashboard's single App.tsx profile load instead of fetching its own copy on every mount |
 
 SEO/Worker-specific guards (`test:seo-output`,
 `test:word-worker:production-safety`) are chained separately, not part of
