@@ -9,6 +9,9 @@ import { fileURLToPath } from "node:url";
 import {
   detectBrowserTimezone,
 } from "../../../src/app/utils/browserTimezone.ts";
+import {
+  parseCurrentLearningDateRpcResponse,
+} from "../../../src/lib/learningDateValidation.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
@@ -79,8 +82,8 @@ globalThis.Intl = originalIntl;
 const userProfileSource = read("src/lib/userProfile.ts");
 const userProfileTimezoneSource = read("src/lib/userProfileTimezone.ts");
 const loadHookSource = read("src/app/hooks/useUserProfileLoad.ts");
-const newWordProgressSource = read("src/lib/newWordProgress.ts");
-const customPracticeSource = read("src/lib/customPracticeProgress.ts");
+const learningDateSource = read("src/lib/learningDate.ts");
+const learningDateValidationSource = read("src/lib/learningDateValidation.ts");
 
 test("5. Profile load selects timezone and timezone_updated_at", () => {
   assert.match(userProfileSource, /select=id,nickname,native_language,learning_language,current_level,user_age,birth_month,birth_day,onboarding_completed,daily_goal,updated_at,timezone,timezone_updated_at/);
@@ -156,9 +159,44 @@ test("12. No geolocation, IP lookup, offset storage, or timezone logging is intr
   assert.doesNotMatch(timezoneSources, /console\.log\([^)]*timezone/i);
 });
 
-test("13. Learning RPC p_stat_date request bodies remain unchanged in this phase", () => {
-  assert.match(newWordProgressSource, /p_stat_date:\s*statDateISO/);
-  assert.match(customPracticeSource, /p_stat_date:\s*statDateISO/);
+test("13. Server learning-date RPC has no browser-date fallback", () => {
+  assert.match(learningDateSource, /"\/rest\/v1\/rpc\/get_current_learning_date"/);
+  assert.match(learningDateSource, /parseCurrentLearningDateRpcResponse/);
+  assert.match(learningDateValidationSource, /LEARNING_DATE_PATTERN/);
+  assert.match(learningDateValidationSource, /Date\.UTC/);
+  assert.doesNotMatch(`${learningDateSource}\n${learningDateValidationSource}`, /Date\.parse|getLocalCalendarDateISO|Date\.now/);
+});
+
+test("14. Server learning-date parser accepts exactly one valid row", () => {
+  assert.equal(parseCurrentLearningDateRpcResponse([{ stat_date: "2026-02-28" }]), "2026-02-28");
+});
+
+test("15. Server learning-date parser rejects invalid response shapes", () => {
+  assert.throws(() => parseCurrentLearningDateRpcResponse([]), /unexpected row count/);
+  assert.throws(() => parseCurrentLearningDateRpcResponse([{ stat_date: "2026-02-28" }, { stat_date: "2026-03-01" }]), /unexpected row count/);
+  assert.throws(() => parseCurrentLearningDateRpcResponse({ stat_date: "2026-02-28" }), /non-array response/);
+  assert.throws(() => parseCurrentLearningDateRpcResponse([null]), /malformed row/);
+  assert.throws(() => parseCurrentLearningDateRpcResponse([["2026-02-28"]]), /malformed row/);
+  assert.throws(() => parseCurrentLearningDateRpcResponse([{ value: "2026-02-28" }]), /malformed date/);
+});
+
+test("16. Server learning-date parser rejects malformed or impossible calendar dates", () => {
+  for (const badDate of [
+    "2026-13-01",
+    "2026-00-10",
+    "2026-01-00",
+    "2026-02-30",
+    "2025-02-29",
+    " 2026-02-28",
+    "2026-02-28 ",
+    "date=2026-02-28",
+  ]) {
+    assert.throws(() => parseCurrentLearningDateRpcResponse([{ stat_date: badDate }]), /malformed date/);
+  }
+});
+
+test("17. Server learning-date parser accepts valid leap day", () => {
+  assert.equal(parseCurrentLearningDateRpcResponse([{ stat_date: "2024-02-29" }]), "2024-02-29");
 });
 
 console.log(`\n-----------------------------------------`);

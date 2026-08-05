@@ -12,8 +12,7 @@ export type LastPracticedDisplay =
   | { kind: "yesterday" }
   | { kind: "daysAgo"; days: number };
 
-// Compares local calendar dates (matching src/data/learning/localStudyDate.ts's
-// device-local-timezone convention), not raw millisecond deltas â€” otherwise a
+// Compares local calendar dates, not raw millisecond deltas — otherwise a
 // word practiced at 11pm yesterday and viewed at 1am today could read as
 // "0 days ago" instead of "Yesterday" depending on time-of-day, not calendar
 // day.

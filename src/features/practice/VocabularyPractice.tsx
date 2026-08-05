@@ -27,7 +27,6 @@ import {
 } from "../../exercises/exerciseTheme";
 import { FOUR_WORD_EXERCISE_IDS } from "../../exercises/exerciseIds";
 import { createActiveWordTimer, type ActiveWordTimer } from "../../data/learning/activeWordTimer";
-import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeCustomPracticeWord } from "../../lib/customPracticeProgress";
 
@@ -480,7 +479,6 @@ export function VocabularyPractice({
           session,
           eventId,
           targetLanguage: practiceLanguage,
-          statDateISO: getLocalCalendarDateISO(),
           customPracticeTimeSeconds,
         }).catch((error) => {
           // Best-effort: a failed practice-time save never surfaces to the

@@ -1,4 +1,5 @@
-// Architecture guard for Timezone Phase 1's profile write boundary.
+// Architecture guard for the timezone profile boundary and server-derived
+// learning-date ownership.
 //
 // Run: node scripts/tests/architecture/test-timezone-profile-boundary.mjs
 import assert from "node:assert/strict";
@@ -86,15 +87,20 @@ test("3. No Settings timezone UI is introduced in this phase", () => {
   assert.deepEqual(offenders, [], `unexpected timezone Settings UI reference(s): ${offenders.join(", ")}`);
 });
 
-test("4. Learning date/streak ownership remains unchanged", () => {
+test("4. Authoritative learning paths use server-derived dates, not browser-local dates", () => {
   const learningSources = [
     read("src/lib/newWordProgress.ts"),
     read("src/lib/customPracticeProgress.ts"),
+    read("src/lib/learningDate.ts"),
     read("src/data/learning/dailyStreak.ts"),
-    read("src/data/learning/localStudyDate.ts"),
+    read("src/features/study-new-words/loadNewWordStudyQueue.ts"),
+    read("src/features/user-profile/sections/learning/TodayProgressCard.tsx"),
+    read("src/features/user-profile/sections/learning/DailyStreakCard.tsx"),
   ].join("\n");
-  assert.match(learningSources, /p_stat_date:\s*statDateISO/);
-  assert.match(learningSources, /getLocalCalendarDateISO/);
+  assert.match(learningSources, /get_current_learning_date/);
+  assert.match(learningSources, /getCurrentLearningDate/);
+  assert.doesNotMatch(learningSources, /p_stat_date:\s*statDateISO/);
+  assert.doesNotMatch(learningSources, /getLocalCalendarDateISO/);
   assert.doesNotMatch(learningSources, /initialize_user_timezone|timezone_updated_at/);
 });
 

@@ -1,6 +1,6 @@
 // Focused guard for the complete_word_review RPC contract on the frontend
 // side: exactly four arguments (p_event_id, p_word_progress_id, p_result,
-// p_stat_date), and no client-supplied user id/previous state/streak/next
+// and no client-supplied user id/previous state/streak/next
 // state/completion timestamp anywhere in the call path. Same rationale as
 // test-complete-new-word-study-contract.mjs for why this is a source-text
 // guard rather than a runtime unit test: src/lib/newWordProgress.ts
@@ -51,7 +51,7 @@ test("1. CompleteWordReviewParams has no previousState/currentStreak/newState/co
   assert.doesNotMatch(body, /previousState|currentStreak|newState|completedAt|userId/i);
 });
 
-test("2. The RPC request body sends exactly p_event_id, p_word_progress_id, p_result, p_stat_date, p_review_time_seconds", () => {
+test("2. The RPC request body sends exactly p_event_id, p_word_progress_id, p_result, p_review_time_seconds", () => {
   const bodyMatch = libSource.match(/"\/rest\/v1\/rpc\/complete_word_review",\s*\{([\s\S]*?)\},\s*\);/);
   assert.ok(bodyMatch, "the complete_word_review RPC call body must be found");
   const body = bodyMatch[1];
@@ -59,14 +59,13 @@ test("2. The RPC request body sends exactly p_event_id, p_word_progress_id, p_re
   assert.match(body, /p_event_id\s*:\s*eventId/, "must send p_event_id");
   assert.match(body, /p_word_progress_id\s*:\s*wordProgressId/, "must send p_word_progress_id");
   assert.match(body, /p_result\s*:\s*result/, "must send p_result");
-  assert.match(body, /p_stat_date\s*:\s*statDateISO/, "must send p_stat_date");
   assert.match(body, /p_review_time_seconds\s*:\s*reviewTimeSeconds/, "must send p_review_time_seconds");
 
   const sentKeys = [...body.matchAll(/(\w+)\s*:/g)].map((match) => match[1]);
   assert.deepEqual(
     sentKeys.sort(),
-    ["p_event_id", "p_result", "p_review_time_seconds", "p_stat_date", "p_word_progress_id"].sort(),
-    "must send exactly these five keys — nothing else",
+    ["p_event_id", "p_result", "p_review_time_seconds", "p_word_progress_id"].sort(),
+    "must send exactly these four keys — nothing else",
   );
 });
 
@@ -78,15 +77,15 @@ test("3. No client-supplied user id, previous state, streak, or completion times
   assert.doesNotMatch(libSource, /p_completed_at|p_reviewed_at/, "no client completion timestamp field must appear");
 });
 
-test("4. completeWordReview's call site in ReviewSession.tsx passes only session/eventId/wordProgressId/result/statDateISO/reviewTimeSeconds", () => {
+test("4. completeWordReview's call site in ReviewSession.tsx passes only session/eventId/wordProgressId/result/reviewTimeSeconds", () => {
   const callMatch = sessionSource.match(/completeWordReview\(\{([\s\S]*?)\}\)/);
   assert.ok(callMatch, "the completeWordReview(...) call site must be found in ReviewSession.tsx");
   const callBody = callMatch[1];
   const passedKeys = [...callBody.matchAll(/^\s*(\w+)\s*[,:]/gm)].map((match) => match[1]);
   assert.deepEqual(
     passedKeys.sort(),
-    ["eventId", "result", "reviewTimeSeconds", "session", "statDateISO", "wordProgressId"].sort(),
-    "must pass exactly these six fields",
+    ["eventId", "result", "reviewTimeSeconds", "session", "wordProgressId"].sort(),
+    "must pass exactly these five fields",
   );
 });
 

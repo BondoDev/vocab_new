@@ -475,6 +475,31 @@ succeeds). Custom Practice has no such screen today and this phase does not
 add one — its time-save is fire-and-forget and never blocks or errors
 visibly; its idempotency ledger is what keeps a lost/duplicated call safe.
 
+## Server-derived learning dates
+
+Learning date attribution is authoritative on the database side. The active
+Study, Review, and Custom Practice RPC signatures do not accept
+`p_stat_date`; they derive one date from Supabase server time and
+`user_profiles.timezone`, falling back to UTC when the stored timezone is
+null, blank, invalid, or the profile row is missing. The old date-taking
+RPC signatures remain only as temporary compatibility wrappers and ignore
+their client date argument.
+
+Study stores `user_word_progress.first_studied_stat_date` on the first
+successful completion and never changes it on duplicate retries. Review
+stores `review_events.stat_date`; Custom Practice stores
+`custom_practice_events.stat_date`. Duplicate retries reuse those stored
+dates, so a retry after midnight or after a timezone change does not move
+an already-successful event to another day. Offline saves count on the
+server submission day because no client event date is trusted.
+
+Frontend dashboard reads call `get_current_learning_date()` before filtering
+`user_daily_stats`, so Today's Progress, Daily Streak, and Study queue
+preparation agree with write attribution. Local device time is no longer
+authoritative for learning stats. Historical `user_daily_stats` rows are
+unchanged, and the streak completion rule remains
+`new_words_completed >= current profile daily_goal`.
+
 # Shared Exercise Components
 
 All three learning modes reuse the same exercise implementations.

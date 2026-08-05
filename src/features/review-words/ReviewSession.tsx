@@ -16,7 +16,6 @@ import { ReviewSessionComplete } from "./ReviewSessionComplete";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeWordReview, ReviewPersistenceError } from "../../lib/newWordProgress";
 import { resolveSupabaseErrorMessageKey, type SupabaseErrorCategory } from "../../lib/supabaseError";
-import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
 import { createActiveWordTimer, type ActiveWordTimer } from "../../data/learning/activeWordTimer";
 // Shared .practice-card-shell/.practice-card/.exercise-* hook classes that
 // ReviewExerciseAdapter/ReviewGroupExerciseAdapter render into — the same
@@ -145,7 +144,6 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
       // completeNewWordStudy's own precedent — the database still
       // generates the actual timestamp (now()) inside complete_word_review;
       // this is only which calendar day the review counts toward.
-      statDateISO: getLocalCalendarDateISO(),
       reviewTimeSeconds,
     })
       .then((result) => {

@@ -84,9 +84,6 @@ export interface CompleteCustomPracticeWordParams {
   // is a separate encounter with its own fresh event id.
   eventId: string;
   targetLanguage: string;
-  // Local calendar date (YYYY-MM-DD), same getLocalCalendarDateISO() helper
-  // Study New Words / Review Words use.
-  statDateISO: string;
   // Frozen output of an ActiveWordTimer covering exactly one single-word
   // exercise (brokenWord/halfWritten/wordTyping) — never a four-word group
   // exercise's duration (connectWords/listening are excluded from
@@ -102,13 +99,17 @@ export interface CompleteCustomPracticeWordParams {
 interface CompleteCustomPracticeWordRpcRow {
   already_processed?: unknown;
   custom_practice_time_seconds_today?: unknown;
+  stat_date?: unknown;
 }
+
+const LEARNING_STAT_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 export interface CompleteCustomPracticeWordResult {
   // True only on an idempotent retry of an event id already processed —
   // mirrors complete_word_review's already_processed contract.
   alreadyProcessed: boolean;
   customPracticeTimeSecondsToday: number;
+  statDateISO: string | null;
 }
 
 function parseCompleteCustomPracticeWordRow(
@@ -119,10 +120,16 @@ function parseCompleteCustomPracticeWordRow(
   }
 
   const rawTimeToday = row.custom_practice_time_seconds_today;
+  const statDate = row.stat_date;
+  if (statDate != null && (typeof statDate !== "string" || !LEARNING_STAT_DATE_PATTERN.test(statDate))) {
+    throw new CustomPracticePersistenceError("RPC returned a malformed stat_date.", "unexpected_response");
+  }
+
   return {
     alreadyProcessed: Boolean(row.already_processed),
     customPracticeTimeSecondsToday:
       typeof rawTimeToday === "number" && Number.isFinite(rawTimeToday) ? rawTimeToday : 0,
+    statDateISO: typeof statDate === "string" ? statDate : null,
   };
 }
 
@@ -141,12 +148,12 @@ function parseCompleteCustomPracticeWordRow(
 export async function completeCustomPracticeWord(
   params: CompleteCustomPracticeWordParams,
 ): Promise<CompleteCustomPracticeWordResult> {
-  const { session, eventId, targetLanguage, statDateISO, customPracticeTimeSeconds } = params;
+  const { session, eventId, targetLanguage, customPracticeTimeSeconds } = params;
 
   if (!session.access_token || !session.user?.id) {
     throw new CustomPracticePersistenceError("Missing authenticated session.", "unauthenticated");
   }
-  if (!eventId || !targetLanguage || !statDateISO) {
+  if (!eventId || !targetLanguage) {
     throw new CustomPracticePersistenceError("Missing required fields to save this practice time.", "validation");
   }
   // Never sends a negative/decimal/above-cap/missing duration — the RPC
@@ -164,7 +171,6 @@ export async function completeCustomPracticeWord(
     >(session, "/rest/v1/rpc/complete_custom_practice_word", {
       p_event_id: eventId,
       p_target_language: targetLanguage,
-      p_stat_date: statDateISO,
       p_custom_practice_time_seconds: customPracticeTimeSeconds,
     });
   } catch (error) {

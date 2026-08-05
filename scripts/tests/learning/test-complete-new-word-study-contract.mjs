@@ -1,5 +1,5 @@
 // Focused guard for the finalized complete_new_word_study RPC contract:
-// exactly three arguments (p_word_id, p_target_language, p_stat_date), and
+// exactly three arguments (p_word_id, p_target_language, p_study_time_seconds), and
 // no client-supplied completion timestamp anywhere in the call path. This
 // can't be exercised as a runtime unit test because src/lib/newWordProgress.ts
 // transitively imports src/lib/supabaseAuth.ts, which reads
@@ -50,7 +50,7 @@ test("1. CompleteNewWordStudyParams no longer has a completion-timestamp field",
   assert.doesNotMatch(paramsBlockMatch[1], /completedAt/i, "must not declare a completedAt/completedAtISO field");
 });
 
-test("2. The RPC request body sends exactly p_word_id, p_target_language, p_stat_date, p_study_time_seconds", () => {
+test("2. The RPC request body sends exactly p_word_id, p_target_language, p_study_time_seconds", () => {
   const bodyMatch = libSource.match(
     /"\/rest\/v1\/rpc\/complete_new_word_study",\s*\{([\s\S]*?)\},\s*\);/,
   );
@@ -59,14 +59,13 @@ test("2. The RPC request body sends exactly p_word_id, p_target_language, p_stat
 
   assert.match(body, /p_word_id\s*:\s*conceptId/, "must send p_word_id");
   assert.match(body, /p_target_language\s*:\s*targetLanguage/, "must send p_target_language");
-  assert.match(body, /p_stat_date\s*:\s*statDateISO/, "must send p_stat_date");
   assert.match(body, /p_study_time_seconds\s*:\s*studyTimeSeconds/, "must send p_study_time_seconds");
 
   const sentKeys = [...body.matchAll(/(\w+)\s*:/g)].map((match) => match[1]);
   assert.deepEqual(
     sentKeys.sort(),
-    ["p_stat_date", "p_study_time_seconds", "p_target_language", "p_word_id"].sort(),
-    "must send exactly these four keys — no p_completed_at or anything else",
+    ["p_study_time_seconds", "p_target_language", "p_word_id"].sort(),
+    "must send exactly these three keys — no p_completed_at or anything else",
   );
 });
 
@@ -87,7 +86,7 @@ test("4. Database time is documented as the source of completion timestamps", ()
   );
 });
 
-test("5. completeNewWordStudy's call site passes only session/conceptId/targetLanguage/statDateISO/studyTimeSeconds", () => {
+test("5. completeNewWordStudy's call site passes only session/conceptId/targetLanguage/studyTimeSeconds", () => {
   const callMatch = sessionSource.match(/completeNewWordStudy\(\{([\s\S]*?)\}\)/);
   assert.ok(callMatch, "the completeNewWordStudy(...) call site must be found in NewWordStudySession.tsx");
   const callBody = callMatch[1];
@@ -96,8 +95,8 @@ test("5. completeNewWordStudy's call site passes only session/conceptId/targetLa
   const passedKeys = [...callBody.matchAll(/^\s*(\w+)\s*[,:]/gm)].map((match) => match[1]);
   assert.deepEqual(
     passedKeys.sort(),
-    ["conceptId", "session", "statDateISO", "studyTimeSeconds", "targetLanguage"].sort(),
-    "must pass exactly these five fields — no completedAtISO",
+    ["conceptId", "session", "studyTimeSeconds", "targetLanguage"].sort(),
+    "must pass exactly these four fields — no completedAtISO",
   );
 });
 

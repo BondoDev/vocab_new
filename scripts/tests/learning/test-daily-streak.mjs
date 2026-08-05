@@ -3,7 +3,7 @@
 //
 // Run: node --experimental-strip-types scripts/tests/learning/test-daily-streak.mjs
 import assert from "node:assert/strict";
-import { computeDailyStreakSummary } from "../../../src/data/learning/dailyStreak.ts";
+import { addDaysISO, computeDailyStreakSummary } from "../../../src/data/learning/dailyStreak.ts";
 
 let passed = 0;
 let failed = 0;
@@ -144,6 +144,45 @@ test("16. A negative/non-finite goal is handled safely, not crashed on", () => {
     const summary = computeDailyStreakSummary([stat(TODAY, 100)], badGoal, TODAY);
     assert.equal(summary.currentStreakDays, 0);
   }
+});
+
+console.log("\n=== deterministic date-only arithmetic ===\n");
+
+test("17. addDaysISO subtracts across month end using UTC date-only arithmetic", () => {
+  assert.equal(addDaysISO("2026-03-01", -1), "2026-02-28");
+});
+
+test("18. addDaysISO subtracts across year end using UTC date-only arithmetic", () => {
+  assert.equal(addDaysISO("2026-01-01", -1), "2025-12-31");
+});
+
+test("19. addDaysISO handles leap day", () => {
+  assert.equal(addDaysISO("2024-03-01", -1), "2024-02-29");
+  assert.equal(addDaysISO("2024-02-29", 1), "2024-03-01");
+});
+
+test("20. Week-start calculation remains Monday-first across month boundaries", () => {
+  const summary = computeDailyStreakSummary([], GOAL, "2026-03-01");
+  assert.deepEqual(
+    summary.currentWeek.map((d) => d.dateISO),
+    ["2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01"],
+  );
+});
+
+test("21. DST transition-adjacent dates do not shift the date-only result", () => {
+  assert.equal(addDaysISO("2026-03-08", 1), "2026-03-09");
+  assert.equal(addDaysISO("2026-11-01", 1), "2026-11-02");
+});
+
+test("22. Date arithmetic is independent of host-timezone assumptions", () => {
+  const dates = ["2026-03-08", "2026-11-01", "2024-02-29", "2026-01-01"];
+  const results = dates.map((dateISO) => [addDaysISO(dateISO, -1), addDaysISO(dateISO, 1)]);
+  assert.deepEqual(results, [
+    ["2026-03-07", "2026-03-09"],
+    ["2026-10-31", "2026-11-02"],
+    ["2024-02-28", "2024-03-01"],
+    ["2025-12-31", "2026-01-02"],
+  ]);
 });
 
 console.log(`\n─────────────────────────────────────────`);

@@ -13,7 +13,8 @@
 // Words does not exist yet, and the streak is specifically "did you meet
 // your new-word goal that day," matching Today's Progress's own scope).
 export interface DailyStreakDayStat {
-  // Local calendar date (YYYY-MM-DD), matching getLocalCalendarDateISO.
+  // Authoritative learning date (YYYY-MM-DD), derived by the database from
+  // server time and the profile timezone before this pure helper receives it.
   dateISO: string;
   newWordsCompleted: number;
 }
@@ -35,22 +36,29 @@ export interface DailyStreakSummary {
 
 // Exported so lib/newWordProgress.ts can compute the streak lookback
 // window's start date without duplicating this date arithmetic.
-export function addDaysISO(dateISO: string, days: number): string {
+function parseDateOnlyUTC(dateISO: string): Date {
   const [year, month, day] = dateISO.split("-").map(Number);
-  const date = new Date(year, month - 1, day);
-  date.setDate(date.getDate() + days);
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
+  return new Date(Date.UTC(year, month - 1, day));
+}
+
+function formatDateOnlyUTC(date: Date): string {
+  const yyyy = date.getUTCFullYear();
+  const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(date.getUTCDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
 }
 
-// Date.getDay() is 0=Sunday..6=Saturday; WEEK_DAYS is Monday-first, so
+export function addDaysISO(dateISO: string, days: number): string {
+  const date = parseDateOnlyUTC(dateISO);
+  date.setUTCDate(date.getUTCDate() + days);
+  return formatDateOnlyUTC(date);
+}
+
+// Date.getUTCDay() is 0=Sunday..6=Saturday; WEEK_DAYS is Monday-first, so
 // Sunday needs a -6 offset instead of the usual 1-dayOfWeek.
 function mondayOfWeek(dateISO: string): string {
-  const [year, month, day] = dateISO.split("-").map(Number);
-  const date = new Date(year, month - 1, day);
-  const dayOfWeek = date.getDay();
+  const date = parseDateOnlyUTC(dateISO);
+  const dayOfWeek = date.getUTCDay();
   const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
   return addDaysISO(dateISO, diffToMonday);
 }

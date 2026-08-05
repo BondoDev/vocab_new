@@ -123,8 +123,12 @@ silently initializes it through `initialize_user_timezone(text)` only when
 the stored value is null; PostgreSQL validates the value against
 `pg_catalog.pg_timezone_names`. Manual timezone correction belongs to a
 future Settings page. Learning RPCs still temporarily receive
-client-provided `p_stat_date`, so this stored timezone does not yet control
-daily-stat attribution, streaks, or historical `user_daily_stats` rows.
+client-provided `p_stat_date` only through compatibility wrappers; current
+frontend builds call no-date RPC signatures. Daily-stat attribution now uses
+Supabase server time plus `user_profiles.timezone`, falling back to UTC when
+the profile row/timezone is missing, blank, or invalid. Historical
+`user_daily_stats` rows are not rewritten, and manual timezone correction
+still belongs to a future Settings page.
 `src/app/components/layout/` owns shared application layout/navigation
 components — the global header, its UI-language switcher, and the
 scroll-to-top control (`Header.tsx`, `UILanguageSwitcher.tsx`,
@@ -432,7 +436,7 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:learning-profile-data-flow` | `scripts/tests/architecture/test-learning-profile-data-flow.mjs` | the Learning dashboard loads the signed-in user's profile exactly once (App.tsx) and threads it down as props, instead of Daily Goal/Daily Streak/Today's Progress each fetching their own copy |
 | `test:vocabulary-profile-data-flow` | `scripts/tests/architecture/test-vocabulary-profile-data-flow.mjs` | the Vocabulary dashboard section reuses the Learning dashboard's single App.tsx profile load instead of fetching its own copy on every mount |
 | `test:supabase-error-handling` | `scripts/tests/architecture/test-supabase-error-handling.mjs` | Study New Words/Review Words/favorite/profile-save all classify Supabase/PostgREST failures through the shared `src/lib/supabaseError.ts` module instead of duplicated message-regex checks, and never render raw Supabase error text |
-| `test:timezone-profile-boundary` | `scripts/tests/architecture/test-timezone-profile-boundary.mjs` | timezone writes stay isolated to `initialize_user_timezone`, generic profile upserts cannot modify timezone, no Settings UI is introduced yet, and learning date/streak ownership remains unchanged |
+| `test:timezone-profile-boundary` | `scripts/tests/architecture/test-timezone-profile-boundary.mjs` | timezone writes stay isolated to `initialize_user_timezone`, generic profile upserts cannot modify timezone, no Settings UI is introduced yet, and authoritative learning reads/writes use the server-derived learning date |
 
 SEO/Worker-specific guards (`test:seo-output`,
 `test:word-worker:production-safety`) are chained separately, not part of

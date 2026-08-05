@@ -40,14 +40,13 @@ const practiceSource = fs.readFileSync(
 
 console.log("\n=== complete_custom_practice_word RPC contract ===\n");
 
-test("1. The RPC request body sends exactly p_event_id, p_target_language, p_stat_date, p_custom_practice_time_seconds", () => {
+test("1. The RPC request body sends exactly p_event_id, p_target_language, p_custom_practice_time_seconds", () => {
   const bodyMatch = libSource.match(/"\/rest\/v1\/rpc\/complete_custom_practice_word",\s*\{([\s\S]*?)\}\)/);
   assert.ok(bodyMatch, "the complete_custom_practice_word RPC call body must be found");
   const body = bodyMatch[1];
 
   assert.match(body, /p_event_id\s*:\s*eventId/, "must send p_event_id");
   assert.match(body, /p_target_language\s*:\s*targetLanguage/, "must send p_target_language");
-  assert.match(body, /p_stat_date\s*:\s*statDateISO/, "must send p_stat_date");
   assert.match(
     body,
     /p_custom_practice_time_seconds\s*:\s*customPracticeTimeSeconds/,
@@ -57,8 +56,8 @@ test("1. The RPC request body sends exactly p_event_id, p_target_language, p_sta
   const sentKeys = [...body.matchAll(/(\w+)\s*:/g)].map((match) => match[1]);
   assert.deepEqual(
     sentKeys.sort(),
-    ["p_custom_practice_time_seconds", "p_event_id", "p_stat_date", "p_target_language"].sort(),
-    "must send exactly these four keys — no word/concept id, exercise type, or correctness outcome",
+    ["p_custom_practice_time_seconds", "p_event_id", "p_target_language"].sort(),
+    "must send exactly these three keys — no word/concept id, exercise type, or correctness outcome",
   );
 });
 

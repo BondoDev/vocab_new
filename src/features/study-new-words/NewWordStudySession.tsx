@@ -13,7 +13,6 @@ import {
   AlertDialogTitle,
 } from "../../app/components/ui/alert-dialog";
 import type { ResolvedStudyQueueItem } from "../../data/learning/newWordStudyQueue";
-import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
 import { createActiveWordTimer, type ActiveWordTimer } from "../../data/learning/activeWordTimer";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeNewWordStudy, NewWordStudyPersistenceError } from "../../lib/newWordProgress";
@@ -179,7 +178,6 @@ export function NewWordStudySession({
       // also decide. No completion timestamp is sent here — the database
       // generates it (now()) inside complete_new_word_study so the browser
       // clock never controls last_practiced_at/next_review_at.
-      statDateISO: getLocalCalendarDateISO(),
       studyTimeSeconds,
     })
       .then(() => {

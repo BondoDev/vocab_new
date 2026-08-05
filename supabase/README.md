@@ -351,11 +351,47 @@ per-user IANA timezone storage without changing learning attribution yet:
   grants. The initialization RPC sets a transaction-local flag before its own
   scoped update.
 
-This phase deliberately does **not** change
+This phase deliberately did **not** change
 `complete_new_word_study`, `complete_word_review`, or
-`complete_custom_practice_word`: they still accept client-provided
+`complete_custom_practice_word`: they still accepted client-provided
 `p_stat_date`. Server-derived `stat_date`, streak-rule changes, Settings UI,
-and any historical `user_daily_stats` treatment are later phases.
+and any historical `user_daily_stats` treatment were deferred to later
+phases.
+
+## Timezone Phase 2 - server-derived learning dates
+
+`migrations/20260806150000_add_server_derived_learning_dates.sql` stops
+trusting client-provided learning dates for new frontend builds:
+
+- Adds `resolve_authenticated_learning_date()`, a private
+  `SECURITY DEFINER` helper with an empty `search_path`. It requires
+  `auth.uid()`, reads `public.user_profiles.timezone`, accepts only values
+  present in `pg_catalog.pg_timezone_names`, falls back to `UTC` when the
+  profile row/timezone is missing, blank, or invalid, and returns
+  `(statement_timestamp() at time zone resolved_timezone)::date`.
+- Adds `get_current_learning_date()`, an authenticated-only RPC that exposes
+  the same date to frontend read paths. It has no user-controlled date input.
+- Adds no-`p_stat_date` primary signatures for Study, Review, and Custom
+  Practice. These derive `v_stat_date` once per call and use it for
+  `user_daily_stats` attribution.
+- Keeps the existing date-taking signatures as temporary compatibility
+  wrappers. They ignore `p_stat_date` completely and delegate to the new
+  server-derived implementations. Do not remove these wrappers until the new
+  frontend build is live and rollback to older request bodies is no longer
+  expected.
+- Adds `user_word_progress.first_studied_stat_date date null`, set only on
+  the first successful Study completion. Duplicate Study saves do not change
+  it and do not increment another date. Existing progress rows remain null.
+- Adds nullable `review_events.stat_date` and
+  `custom_practice_events.stat_date`. New events populate these from the
+  server-derived date; historical ledger rows are not backfilled.
+- Duplicate Review and Custom Practice retries reuse the originally stored
+  event `stat_date`, so a retry after midnight or after a timezone change
+  does not move the event to a new day. Offline requests count on the server
+  submission day because no client event date is trusted.
+- No historical `user_daily_stats` rows are rewritten, no Settings UI is
+  added, and the streak completion rule remains unchanged:
+  `new_words_completed >= current profile daily_goal`.
 
 ## What happens next
 

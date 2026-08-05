@@ -4,7 +4,7 @@
 // Read-only — this module performs no Supabase writes.
 import type { StoredSupabaseSession } from "../../lib/supabaseAuth";
 import { readStudiedConceptIds, readTodayNewWordsCompleted } from "../../lib/newWordProgress";
-import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
+import { getCurrentLearningDate } from "../../lib/learningDate";
 import {
   computeRemainingDailyTarget,
   filterEligibleArrangedEntries,
@@ -59,7 +59,7 @@ export async function loadNewWordStudyQueue({
     throw new Error(`loadNewWordStudyQueue: unsupported language pair "${targetLanguage}"/"${nativeLanguage}".`);
   }
 
-  const statDateISO = getLocalCalendarDateISO();
+  const statDateISO = await getCurrentLearningDate(session);
   const arrangedEntries = getArrangedEntries();
 
   const [studiedConceptIds, wordsCompletedToday] = await Promise.all([

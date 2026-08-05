@@ -5,8 +5,8 @@ import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import type { UserProfile } from "../../../../lib/userProfile";
 import { readTodayNewWordsCompleted } from "../../../../lib/newWordProgress";
 import { describeSupabaseError } from "../../../../lib/supabaseError";
-import { getLocalCalendarDateISO } from "../../../../data/learning/localStudyDate";
 import { computeTodayProgressDisplay } from "../../../../data/learning/todayProgressDisplay";
+import { getCurrentLearningDate } from "../../../../lib/learningDate";
 
 const RING_RADIUS = 32;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
@@ -72,7 +72,8 @@ export function TodayProgressCard({ practiceLanguage, dailyGoal, isProfileLoaded
           return;
         }
 
-        const completed = await readTodayNewWordsCompleted(session, practiceLanguage, getLocalCalendarDateISO());
+        const statDateISO = await getCurrentLearningDate(session);
+        const completed = await readTodayNewWordsCompleted(session, practiceLanguage, statDateISO);
         if (cancelled) return;
         setState({ status: "ready", completed });
       } catch (error) {

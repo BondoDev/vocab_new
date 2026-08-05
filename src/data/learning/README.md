@@ -22,10 +22,6 @@ truth without importing from another feature's private folder.
   already-studied concepts, applies the daily target, and returns resolved queue
   metadata. It stays here because it is pure learning-plan logic over shared
   data, not React UI or a feature-private component.
-- `localStudyDate.ts` - small local-calendar date helper used by learning
-  progress reads until the app has a broader user-timezone system. This is
-  runtime support logic rather than a dataset; keep it narrow and revisit its
-  owner if additional non-learning consumers appear.
 - `wordReviewSchedule.ts` - import-free review-deadline calculation
   (`computeNextReviewAt`) and centralized per-word-state base review
   intervals, now populated for all five states (seen/learning/familiar/
