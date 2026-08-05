@@ -151,7 +151,16 @@ test("6. Loading and error states remain represented in all three cards", () => 
   assert.match(todayProgressCard, /console\.warn/, "TodayProgressCard must keep dev logging on failure");
 });
 
-test("7. No Supabase migration or learning-RPC file is touched by this refactor", () => {
+test("7. No Supabase migration is touched by this refactor", () => {
+  // Originally also blacklisted src/lib/newWordProgress.ts, scoped to this
+  // guard's own Learning-profile-data-flow diff at the time it was written
+  // (Cleanup 1 had no reason to touch it). As a permanent, diff-against-
+  // master check that clause would incorrectly block every later, unrelated,
+  // explicitly-sanctioned change to that file too — e.g. Cleanup 3's
+  // src/lib/supabaseError.ts classifier adoption (see
+  // test-supabase-error-handling.mjs, which owns guarding *that* file's
+  // scope now). Migrations remain evergreen: no legitimate frontend
+  // refactor should ever touch supabase/.
   const mergeBase = git(["merge-base", "master", "HEAD"]).trim();
   const changed = new Set();
   const collect = (out) => out.split("\n").map((line) => line.trim()).filter(Boolean).forEach((f) => changed.add(f));
@@ -161,14 +170,8 @@ test("7. No Supabase migration or learning-RPC file is touched by this refactor"
   collect(git(["diff", "--name-only", "HEAD"]));
   collect(git(["diff", "--name-only", "--cached"]));
 
-  const offenders = [...changed].filter(
-    (file) => file.startsWith("supabase/") || file === "src/lib/newWordProgress.ts",
-  );
-  assert.deepEqual(
-    offenders,
-    [],
-    `this refactor must not touch migrations or RPC-calling modules: ${offenders.join(", ")}`,
-  );
+  const offenders = [...changed].filter((file) => file.startsWith("supabase/"));
+  assert.deepEqual(offenders, [], `this refactor must not touch migrations: ${offenders.join(", ")}`);
 });
 
 console.log(`\n─────────────────────────────────────────`);

@@ -5,6 +5,7 @@ import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import type { UserProfile } from "../../../../lib/userProfile";
 import { readDailyStreakStats, type DailyStreakStatRow } from "../../../../lib/newWordProgress";
+import { describeSupabaseError } from "../../../../lib/supabaseError";
 import { getLocalCalendarDateISO } from "../../../../data/learning/localStudyDate";
 import { computeDailyStreakSummary, type DailyStreakSummary } from "../../../../data/learning/dailyStreak";
 import { useIsCompactLearningSummary } from "./useIsCompactLearningSummary";
@@ -81,7 +82,7 @@ export function DailyStreakCard({ practiceLanguage, dailyGoal, isProfileLoaded }
         setState({ status: "ready", stats });
       } catch (error) {
         if (cancelled) return;
-        console.warn("DailyStreakCard: failed to load streak data.", error);
+        console.warn("DailyStreakCard: failed to load streak data.", describeSupabaseError("readDailyStreakStats", error));
         setState({ status: "ready", stats: [] });
       }
     })();

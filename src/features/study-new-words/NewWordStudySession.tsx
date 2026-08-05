@@ -16,6 +16,7 @@ import type { ResolvedStudyQueueItem } from "../../data/learning/newWordStudyQue
 import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeNewWordStudy, NewWordStudyPersistenceError } from "../../lib/newWordProgress";
+import { resolveSupabaseErrorMessageKey, type SupabaseErrorCategory } from "../../lib/supabaseError";
 import {
   createInitialSessionState,
   getCurrentQueueItem,
@@ -71,10 +72,12 @@ export function NewWordStudySession({
     createInitialSessionState,
   );
   const [isExitConfirmOpen, setIsExitConfirmOpen] = useState(false);
-  // Only meaningful while currentStep === "save_error": picks between the
-  // generic retryable-failure copy and the session-expired copy, without
-  // ever rendering the underlying Supabase/PostgreSQL error text itself.
-  const [isSaveErrorSessionExpired, setIsSaveErrorSessionExpired] = useState(false);
+  // Only meaningful while currentStep === "save_error": the classified
+  // category (src/lib/supabaseError.ts) picks which safe message to show —
+  // session-expired, not-permitted, temporarily-unavailable, connection-
+  // problem, or this screen's own generic retry copy — without ever
+  // rendering the underlying Supabase/PostgreSQL error text itself.
+  const [saveErrorCategory, setSaveErrorCategory] = useState<SupabaseErrorCategory | null>(null);
   const stepContainerRef = useRef<HTMLDivElement | null>(null);
   const { message: wordLearnedToast, show: showWordLearnedToast } = useAutoDismissMessage();
 
@@ -112,7 +115,7 @@ export function NewWordStudySession({
 
     const session = getStoredSupabaseSession();
     if (!session) {
-      setIsSaveErrorSessionExpired(true);
+      setSaveErrorCategory("unauthenticated");
       dispatch({ type: "SAVE_FAILED" });
       return;
     }
@@ -134,7 +137,7 @@ export function NewWordStudySession({
     })
       .then(() => {
         if (cancelled) return;
-        setIsSaveErrorSessionExpired(false);
+        setSaveErrorCategory(null);
         // item is the word that just finished — captured before dispatch,
         // since SAVE_SUCCEEDED may move state.currentWordIndex on (or to
         // session_complete) within this same update.
@@ -147,8 +150,13 @@ export function NewWordStudySession({
       })
       .catch((error) => {
         if (cancelled) return;
+        // Full structured diagnostics were already logged inside
+        // completeNewWordStudy's own catch (src/lib/newWordProgress.ts),
+        // where the raw Supabase/PostgREST error is still available — this
+        // only logs the already-sanitized domain error for screen-level
+        // context.
         console.warn("NewWordStudySession: failed to save the completed word.", error);
-        setIsSaveErrorSessionExpired(error instanceof NewWordStudyPersistenceError && !error.retryable);
+        setSaveErrorCategory(error instanceof NewWordStudyPersistenceError ? error.category : "unknown");
         dispatch({ type: "SAVE_FAILED" });
       });
 
@@ -282,9 +290,15 @@ export function NewWordStudySession({
             <div className="new-word-study-error-block">
               <p className="new-word-study-error-message">
                 {t(
-                  isSaveErrorSessionExpired
+                  // unauthenticated keeps this screen's own pre-existing
+                  // session-expired copy (unchanged behavior/translations);
+                  // forbidden/missing_rpc/network use the new shared
+                  // messages; everything else keeps this screen's existing
+                  // generic retry copy — never one universal message for
+                  // every category.
+                  saveErrorCategory === "unauthenticated"
                     ? "studyNewWords.sessionExpiredMessage"
-                    : "studyNewWords.saveErrorMessage",
+                    : resolveSupabaseErrorMessageKey(saveErrorCategory ?? "unknown", "studyNewWords.saveErrorMessage"),
                 )}
               </p>
               <button type="button" onClick={handleRetrySave} className="new-word-study-error-back-button">

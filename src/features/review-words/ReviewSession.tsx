@@ -15,6 +15,7 @@ import { ReviewExerciseErrorBoundary } from "./ReviewExerciseErrorBoundary";
 import { ReviewSessionComplete } from "./ReviewSessionComplete";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeWordReview, ReviewPersistenceError } from "../../lib/newWordProgress";
+import { resolveSupabaseErrorMessageKey, type SupabaseErrorCategory } from "../../lib/supabaseError";
 import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
 // Shared .practice-card-shell/.practice-card/.exercise-* hook classes that
 // ReviewExerciseAdapter/ReviewGroupExerciseAdapter render into — the same
@@ -50,12 +51,12 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
     createInitialReviewSessionState(initialQueue),
   );
   const stepContainerRef = useRef<HTMLDivElement | null>(null);
-  // Only meaningful while currentStep === "review_save_error": picks
-  // between the generic retryable-failure copy and the session-expired
-  // copy, without ever rendering the underlying Supabase/PostgreSQL error
-  // text itself — same precedent as NewWordStudySession.tsx's
-  // isSaveErrorSessionExpired.
-  const [isSaveErrorSessionExpired, setIsSaveErrorSessionExpired] = useState(false);
+  // Only meaningful while currentStep === "review_save_error": the
+  // classified category (src/lib/supabaseError.ts) picks which safe
+  // message to show, without ever rendering the underlying Supabase/
+  // PostgreSQL error text itself — same precedent as
+  // NewWordStudySession.tsx's saveErrorCategory.
+  const [saveErrorCategory, setSaveErrorCategory] = useState<SupabaseErrorCategory | null>(null);
 
   useEffect(() => {
     dispatch({ type: "BEGIN" });
@@ -90,7 +91,7 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
 
     const session = getStoredSupabaseSession();
     if (!session) {
-      setIsSaveErrorSessionExpired(true);
+      setSaveErrorCategory("unauthenticated");
       dispatch({ type: "SAVE_REVIEW_FAILED" });
       return;
     }
@@ -110,7 +111,7 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
     })
       .then((result) => {
         if (cancelled) return;
-        setIsSaveErrorSessionExpired(false);
+        setSaveErrorCategory(null);
         dispatch({
           type: "SAVE_REVIEW_SUCCEEDED",
           result: { newState: result.newState, newCorrectStreak: result.newCorrectStreak },
@@ -118,8 +119,13 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
       })
       .catch((error) => {
         if (cancelled) return;
+        // Full structured diagnostics were already logged inside
+        // completeWordReview's own catch (src/lib/newWordProgress.ts),
+        // where the raw Supabase/PostgREST error is still available — this
+        // only logs the already-sanitized domain error for screen-level
+        // context.
         console.warn("ReviewSession: failed to save the review outcome.", error);
-        setIsSaveErrorSessionExpired(error instanceof ReviewPersistenceError && !error.retryable);
+        setSaveErrorCategory(error instanceof ReviewPersistenceError ? error.category : "unknown");
         dispatch({ type: "SAVE_REVIEW_FAILED" });
       });
 
@@ -243,7 +249,16 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
             <div className="review-session-error-block">
               <p className="review-session-saving-word">{currentWordItem.targetWord}</p>
               <p className="review-session-error-message">
-                {t(isSaveErrorSessionExpired ? "reviewWords.sessionExpiredMessage" : "reviewWords.saveErrorMessage")}
+                {t(
+                  // Same precedent as NewWordStudySession.tsx: unauthenticated
+                  // keeps this screen's own pre-existing session-expired copy;
+                  // forbidden/missing_rpc/network use the new shared
+                  // messages; everything else keeps the existing generic
+                  // retry copy.
+                  saveErrorCategory === "unauthenticated"
+                    ? "reviewWords.sessionExpiredMessage"
+                    : resolveSupabaseErrorMessageKey(saveErrorCategory ?? "unknown", "reviewWords.saveErrorMessage"),
+                )}
               </p>
               <button type="button" onClick={handleRetrySave} className="review-session-error-retry-button">
                 {t("reviewWords.retryButton")}

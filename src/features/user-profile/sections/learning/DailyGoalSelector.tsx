@@ -9,6 +9,7 @@ import {
   writeSupabaseUserProfile,
   type UserProfile,
 } from "../../../../lib/userProfile";
+import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
 import { useIsCompactLearningSummary } from "./useIsCompactLearningSummary";
 
 interface DailyGoalOption {
@@ -113,8 +114,12 @@ export function DailyGoalSelector({ userProfile, isProfileLoaded, onDailyGoalCha
         onDailyGoalChange?.(nextProfile.dailyGoal);
         showConfirmation(t("userProfile.learningSection.dailyGoal.savedToast"));
       })
-      .catch(() => {
-        showConfirmation(t("userProfile.learningSection.dailyGoal.saveError"));
+      .catch((error) => {
+        const diagnostics = describeSupabaseError("writeSupabaseUserProfile", error);
+        console.warn("DailyGoalSelector: failed to save the daily goal.", diagnostics);
+        showConfirmation(
+          t(resolveSupabaseErrorMessageKey(diagnostics.category, "userProfile.learningSection.dailyGoal.saveError")),
+        );
       })
       .finally(() => {
         setIsSaving(false);

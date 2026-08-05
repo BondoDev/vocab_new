@@ -11,6 +11,7 @@ import {
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { loadNewWordStudyQueue } from "./loadNewWordStudyQueue";
+import { describeSupabaseError } from "../../lib/supabaseError";
 import { NewWordStudySession } from "./NewWordStudySession";
 import { GUIDED_EXERCISE_COUNT } from "./newWordStudySessionState";
 import type { NewWordStudyQueueResult } from "../../data/learning/newWordStudyQueue";
@@ -94,7 +95,10 @@ export function NewWordStudyPreparation({
       })
       .catch((error) => {
         if (cancelled) return;
-        console.warn("NewWordStudyPreparation: failed to load the study queue.", error);
+        console.warn(
+          "NewWordStudyPreparation: failed to load the study queue.",
+          describeSupabaseError("loadNewWordStudyQueue", error),
+        );
         setState({ status: "error" });
       });
 

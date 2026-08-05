@@ -121,27 +121,66 @@ function isSessionExpiringSoon(session: StoredSupabaseSession | null | undefined
   return Date.now() >= expiresAtMs - 60_000;
 }
 
+// Thrown by supabaseRequest for any non-2xx HTTP response — i.e. a real
+// response was received from Supabase (auth or PostgREST), just not a
+// successful one. Carries the structured fields a PostgREST error body
+// exposes (code/details/hint) plus the HTTP status, so callers can classify
+// failures via src/lib/supabaseError.ts's classifySupabaseError instead of
+// pattern-matching `.message` text. Extends Error (not a new base type) so
+// every existing `error instanceof Error` / `error.message` check across
+// the app keeps working unchanged.
+export class SupabaseRequestError extends Error {
+  readonly status: number;
+  readonly code: string | null;
+  readonly details: string | null;
+  readonly hint: string | null;
+
+  constructor(
+    message: string,
+    status: number,
+    options: { code?: string | null; details?: string | null; hint?: string | null } = {},
+  ) {
+    super(message);
+    this.name = "SupabaseRequestError";
+    this.status = status;
+    this.code = options.code ?? null;
+    this.details = options.details ?? null;
+    this.hint = options.hint ?? null;
+  }
+}
+
+interface SupabaseErrorResponseBody {
+  msg?: string;
+  error_description?: string;
+  message?: string;
+  code?: string;
+  details?: string;
+  hint?: string;
+}
+
 export async function supabaseRequest<TResponse>(
   path: string,
   options: RequestInit,
 ): Promise<TResponse> {
   ensureSupabaseConfig();
 
+  // A fetch() rejection (offline, DNS failure, CORS, a reset connection)
+  // means no HTTP response was ever received — it propagates as-is here,
+  // never repackaged into a SupabaseRequestError (which always represents a
+  // real, if unsuccessful, HTTP response). classifySupabaseError recognizes
+  // this shape (a bare TypeError, no status/code) as the "network" category.
   const response = await fetch(`${SUPABASE_URL}${path}`, options);
-  const data = (await response.json().catch(() => ({}))) as
-    | TResponse
-    | { msg?: string; error_description?: string; message?: string };
+  const data = (await response.json().catch(() => ({}))) as TResponse | SupabaseErrorResponseBody;
 
   if (!response.ok) {
+    const errorBody = data as SupabaseErrorResponseBody;
     const message =
-      (data as { msg?: string; error_description?: string; message?: string })
-        .msg ||
-      (data as { msg?: string; error_description?: string; message?: string })
-        .error_description ||
-      (data as { msg?: string; error_description?: string; message?: string })
-        .message ||
-      "Authentication request failed.";
-    throw new Error(message);
+      errorBody.msg || errorBody.error_description || errorBody.message || "Authentication request failed.";
+    throw new SupabaseRequestError(message, response.status, {
+      code: errorBody.code ?? null,
+      details: errorBody.details ?? null,
+      hint: errorBody.hint ?? null,
+    });
   }
 
   return data as TResponse;

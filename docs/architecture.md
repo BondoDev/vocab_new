@@ -397,7 +397,7 @@ deployment described above.
 
 ## Architecture guards
 
-`npm run test:architecture-guards` chains **20 guard groups**, each a
+`npm run test:architecture-guards` chains **21 guard groups**, each a
 deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
@@ -422,6 +422,7 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:learning-non-negative-values-contract` | `scripts/tests/architecture/test-learning-non-negative-values-contract.mjs` | no application code assigns a negative value/sentinel to `correct_streak` or the daily-stats counters (see corrective migration 2's non-negative `CHECK` constraints in `supabase/README.md`) |
 | `test:learning-profile-data-flow` | `scripts/tests/architecture/test-learning-profile-data-flow.mjs` | the Learning dashboard loads the signed-in user's profile exactly once (App.tsx) and threads it down as props, instead of Daily Goal/Daily Streak/Today's Progress each fetching their own copy |
 | `test:vocabulary-profile-data-flow` | `scripts/tests/architecture/test-vocabulary-profile-data-flow.mjs` | the Vocabulary dashboard section reuses the Learning dashboard's single App.tsx profile load instead of fetching its own copy on every mount |
+| `test:supabase-error-handling` | `scripts/tests/architecture/test-supabase-error-handling.mjs` | Study New Words/Review Words/favorite/profile-save all classify Supabase/PostgREST failures through the shared `src/lib/supabaseError.ts` module instead of duplicated message-regex checks, and never render raw Supabase error text |
 
 SEO/Worker-specific guards (`test:seo-output`,
 `test:word-worker:production-safety`) are chained separately, not part of

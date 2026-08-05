@@ -4,6 +4,7 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { loadReviewQueue } from "./loadReviewQueue";
 import type { LoadReviewQueueResult } from "./loadReviewQueue";
+import { describeSupabaseError } from "../../lib/supabaseError";
 import { ReviewSession } from "./ReviewSession";
 import "./styles/review-words.scss";
 
@@ -75,7 +76,10 @@ export function ReviewWordsPreparation({
       })
       .catch((error) => {
         if (cancelled) return;
-        console.warn("ReviewWordsPreparation: failed to load the review queue.", error);
+        console.warn(
+          "ReviewWordsPreparation: failed to load the review queue.",
+          describeSupabaseError("loadReviewQueue", error),
+        );
         setState({ status: "error" });
       });
 
