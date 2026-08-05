@@ -17,6 +17,7 @@ import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeWordReview, ReviewPersistenceError } from "../../lib/newWordProgress";
 import { resolveSupabaseErrorMessageKey, type SupabaseErrorCategory } from "../../lib/supabaseError";
 import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
+import { createActiveWordTimer, type ActiveWordTimer } from "../../data/learning/activeWordTimer";
 // Shared .practice-card-shell/.practice-card/.exercise-* hook classes that
 // ReviewExerciseAdapter/ReviewGroupExerciseAdapter render into — the same
 // stylesheet NewWordStudySession.tsx imports for the same reason (see that
@@ -58,6 +59,14 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
   // NewWordStudySession.tsx's saveErrorCategory.
   const [saveErrorCategory, setSaveErrorCategory] = useState<SupabaseErrorCategory | null>(null);
 
+  // Same lazy-once-per-instance pattern as NewWordStudySession.tsx — see
+  // that file's own comment for why the `if (current === null)` guard (not
+  // the useRef initial-value expression) is what matters under StrictMode.
+  const wordTimerRef = useRef<ActiveWordTimer | null>(null);
+  if (wordTimerRef.current === null) {
+    wordTimerRef.current = createActiveWordTimer();
+  }
+
   useEffect(() => {
     dispatch({ type: "BEGIN" });
     // Runs once per mount only — ReviewWordsPreparation mounts this
@@ -65,6 +74,28 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
     // already-prepared queue rather than rebuilding it.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Stops accumulation and detaches the visibility listener on unmount/
+  // navigation — same precedent as NewWordStudySession.tsx.
+  useEffect(() => {
+    return () => {
+      wordTimerRef.current?.dispose();
+    };
+  }, []);
+
+  // Starts a fresh per-word timer exactly once per word_exercise entry —
+  // never during group_exercise (four-word group exercises are
+  // reinforcement-only and their time is not attributed to any single
+  // word — see reviewSessionState.ts's own precedent of never persisting
+  // them). reset() before start() guarantees each word's review begins
+  // timing from zero.
+  useEffect(() => {
+    if (state.currentStep !== "word_exercise") {
+      return;
+    }
+    wordTimerRef.current?.reset();
+    wordTimerRef.current?.start();
+  }, [state.currentBlockIndex, state.currentWordIndexInBlock, state.currentStep]);
 
   useEffect(() => {
     stepContainerRef.current?.focus();
@@ -96,6 +127,13 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
       return;
     }
 
+    // freeze() locks this word's active review duration the instant its
+    // exercise reached a final outcome (word_exercise -> saving_review).
+    // A RETRY_SAVE_REVIEW re-entry into this same effect calls freeze()
+    // again and gets back the identical cached value — never recomputed,
+    // never increased, timer never restarted across a retry.
+    const reviewTimeSeconds = wordTimerRef.current?.freeze() ?? 0;
+
     let cancelled = false;
 
     void completeWordReview({
@@ -108,6 +146,7 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
       // generates the actual timestamp (now()) inside complete_word_review;
       // this is only which calendar day the review counts toward.
       statDateISO: getLocalCalendarDateISO(),
+      reviewTimeSeconds,
     })
       .then((result) => {
         if (cancelled) return;

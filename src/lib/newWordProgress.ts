@@ -19,6 +19,8 @@ import {
 } from "./supabaseError";
 import type { WordState } from "../data/learning/wordReviewSchedule";
 import { addDaysISO } from "../data/learning/dailyStreak";
+import { isValidWordTimeSeconds } from "../data/learning/activeWordTimer";
+export { isValidWordTimeSeconds } from "../data/learning/activeWordTimer";
 
 interface UserWordProgressRow {
   word_id: string;
@@ -142,6 +144,13 @@ export interface CompleteNewWordStudyParams {
   // that helper's own header comment for the device-local-timezone
   // limitation this inherits.
   statDateISO: string;
+  // Frozen output of an ActiveWordTimer (src/data/learning/activeWordTimer.ts)
+  // covering this word's full 3-exercise sequence — never a per-exercise
+  // duration. Validated client-side (isValidWordTimeSeconds, re-exported
+  // below) before ever reaching the request body; the database independently
+  // re-validates the same bounds inside complete_new_word_study and never
+  // trusts this value either.
+  studyTimeSeconds: number;
 }
 
 // Mirrors the RPC's RETURNS TABLE(inserted, already_completed,
@@ -222,18 +231,28 @@ function parseCompleteNewWordStudyRow(
 // The RPC also takes no completion-timestamp parameter: last_practiced_at
 // and next_review_at are both derived from the database's own clock
 // (v_completed_at := now() inside complete_new_word_study), never from the
-// browser. Only p_word_id/p_target_language/p_stat_date are sent — see this
-// function's own CompleteNewWordStudyParams above, which has no
-// completedAtISO field to accidentally wire up.
+// browser. Exactly four fields are sent — p_word_id/p_target_language/
+// p_stat_date/p_study_time_seconds — see this function's own
+// CompleteNewWordStudyParams above, which has no completedAtISO field to
+// accidentally wire up. p_study_time_seconds is the frozen output of an
+// ActiveWordTimer covering this word's whole 3-exercise sequence, never a
+// per-exercise duration and never a value computed from Date.now() at save
+// time.
 export async function completeNewWordStudy(
   params: CompleteNewWordStudyParams,
 ): Promise<CompleteNewWordStudyResult> {
-  const { session, conceptId, targetLanguage, statDateISO } = params;
+  const { session, conceptId, targetLanguage, statDateISO, studyTimeSeconds } = params;
 
   if (!session.access_token || !session.user?.id) {
     throw new NewWordStudyPersistenceError("Missing authenticated session.", "unauthenticated");
   }
   if (!conceptId || !targetLanguage || !statDateISO) {
+    throw new NewWordStudyPersistenceError("Missing required fields to save this word.", "validation");
+  }
+  // Never sends a negative/decimal/above-cap/missing duration — the RPC
+  // (complete_new_word_study(text, text, date, integer)) independently
+  // re-validates the same 0-300 bound and never trusts this check alone.
+  if (!isValidWordTimeSeconds(studyTimeSeconds)) {
     throw new NewWordStudyPersistenceError("Missing required fields to save this word.", "validation");
   }
 
@@ -246,6 +265,7 @@ export async function completeNewWordStudy(
         p_word_id: conceptId,
         p_target_language: targetLanguage,
         p_stat_date: statDateISO,
+        p_study_time_seconds: studyTimeSeconds,
       },
     );
   } catch (error) {
@@ -533,6 +553,12 @@ export interface CompleteWordReviewParams {
   // Local calendar date (YYYY-MM-DD), same getLocalCalendarDateISO() helper
   // Study New Words uses.
   statDateISO: string;
+  // Frozen output of an ActiveWordTimer covering this word's single review
+  // exercise (word_exercise -> WORD_OUTCOME_DETERMINED) — never a group
+  // exercise's shared duration. Validated client-side via
+  // isValidWordTimeSeconds before ever reaching the request body; the RPC
+  // independently re-validates the same 0-300 bound.
+  reviewTimeSeconds: number;
 }
 
 // Mirrors the RPC's RETURNS TABLE column names exactly (snake_case, as
@@ -616,7 +642,10 @@ function parseCompleteWordReviewRow(row: CompleteWordReviewRpcRow | undefined): 
 // state/a completion timestamp — the RPC always recomputes those from the
 // locked database row, never trusts them from the client. See this
 // function's CompleteWordReviewParams above, which has no fields for any
-// of that.
+// of that. p_review_time_seconds is the one new field: the frozen output of
+// an ActiveWordTimer covering this word's single review exercise, added to
+// review_time_seconds only — study_time_seconds is never touched by this
+// call.
 //
 // Idempotency/conflict note: a *retried* eventId is not an error case at
 // all — the RPC itself detects it (review_events' primary key) and returns
@@ -628,12 +657,18 @@ function parseCompleteWordReviewRow(row: CompleteWordReviewRpcRow | undefined): 
 // generic retry message as any other unclassified failure, exactly like
 // before this refactor.
 export async function completeWordReview(params: CompleteWordReviewParams): Promise<CompleteWordReviewResult> {
-  const { session, eventId, wordProgressId, result, statDateISO } = params;
+  const { session, eventId, wordProgressId, result, statDateISO, reviewTimeSeconds } = params;
 
   if (!session.access_token || !session.user?.id) {
     throw new ReviewPersistenceError("Missing authenticated session.", "unauthenticated");
   }
   if (!eventId || !wordProgressId || !result || !statDateISO) {
+    throw new ReviewPersistenceError("Missing required fields to save this review.", "validation");
+  }
+  // Never sends a negative/decimal/above-cap/missing duration — the RPC
+  // (complete_word_review(uuid, uuid, text, date, integer)) independently
+  // re-validates the same 0-300 bound and never trusts this check alone.
+  if (!isValidWordTimeSeconds(reviewTimeSeconds)) {
     throw new ReviewPersistenceError("Missing required fields to save this review.", "validation");
   }
 
@@ -646,6 +681,7 @@ export async function completeWordReview(params: CompleteWordReviewParams): Prom
         p_event_id: eventId,
         p_word_progress_id: wordProgressId,
         p_result: result,
+        p_review_time_seconds: reviewTimeSeconds,
         p_stat_date: statDateISO,
       },
     );

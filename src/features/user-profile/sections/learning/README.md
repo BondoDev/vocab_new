@@ -6,11 +6,11 @@ FluentStellar provides three different learning modes, each designed for a diffe
 
 Although they all use the same exercise components, they affect the user's learning progress differently.
 
-| Learning mode | Purpose | Updates learning progress |
-|--------------|---------|---------------------------|
-| Study New Words | Learn new vocabulary | ✅ Yes |
-| Review Words | Reinforce previously learned vocabulary | ✅ Yes |
-| Custom Practice | Free practice without affecting progress | ❌ No |
+| Learning mode | Purpose | Updates learning progress | Tracks active time |
+|--------------|---------|---------------------------|---------------------|
+| Study New Words | Learn new vocabulary | ✅ Yes | ✅ `study_time_seconds` |
+| Review Words | Reinforce previously learned vocabulary | ✅ Yes | ✅ `review_time_seconds` |
+| Custom Practice | Free practice without affecting progress | ❌ No | ✅ `custom_practice_time_seconds` only — see "Active-Time Tracking" below |
 
 ---
 
@@ -70,12 +70,15 @@ Initial values:
 The same operation also updates:
 
 `user_daily_stats.new_words_completed`
+`user_daily_stats.study_time_seconds` (the word's active exercise time — see "Active-Time Tracking" below)
 
 using an atomic database transaction.
 
 Each word can only be inserted once.
 
-Duplicate saves are prevented.
+Duplicate saves are prevented — and because the time increment lives in the
+same atomic transaction as the count increment, a duplicate/retried save
+never double-counts either one.
 
 ---
 
@@ -355,7 +358,12 @@ This prevents duplicate state changes caused by:
 - browser refreshes
 - repeated RPC calls
 
-Review persistence is fully atomic.
+Review persistence is fully atomic — including `user_daily_stats.
+review_time_seconds`, incremented in the same transaction as `reviews_
+completed` and the same idempotency event, so a replayed review event never
+double-counts either one. See "Active-Time Tracking" below. Reinforcement
+(group) exercises are never timed or persisted — only each word's individual
+typing exercise is.
 
 ---
 
@@ -382,14 +390,90 @@ Custom Practice intentionally does **not** update:
 - learning state;
 - correct streak;
 - review deadlines;
-- daily learning statistics;
-- spaced repetition progress.
+- `new_words_completed` / `reviews_completed`;
+- spaced repetition progress;
+- `user_word_progress` in any way;
+- `review_events`.
 
-It behaves exactly like a sandbox.
+It behaves exactly like a sandbox for progress purposes.
 
-Future versions may store separate practice statistics without affecting structured learning.
+As of Learning Statistics Phase 1, Custom Practice records exactly one
+thing: active time spent per single-word typing exercise (Broken Word, Half
+Word, Full Word Typing), written to `user_daily_stats.
+custom_practice_time_seconds` through a narrow, dedicated RPC
+(`complete_custom_practice_word`) and its own idempotency ledger
+(`custom_practice_events` — deliberately not `review_events`, whose schema
+describes a state transition Custom Practice must never produce). Four-word
+group exercises (Connect Words, Listening) are not timed in this phase. See
+"Active-Time Tracking" below.
 
 ---
+
+# Active-Time Tracking (Learning Statistics Phase 1)
+
+## Three independent columns
+
+`user_daily_stats` gained two columns alongside the existing
+`study_time_seconds`:
+
+| Column | Meaning |
+|---|---|
+| `study_time_seconds` | Active time from Study New Words only |
+| `review_time_seconds` | Active time from Review Words only |
+| `custom_practice_time_seconds` | Active time from Custom Practice only |
+
+`total_time_seconds` is **never stored**. It is derived at read time as
+`study_time_seconds + review_time_seconds + custom_practice_time_seconds`
+(`src/lib/learningTimeStats.ts`). As of this phase, no UI displays any of
+these — the data contract exists for a future Statistics page.
+
+## Word-level timing, not per-exercise
+
+Time is measured per completed word, across every exercise that word's mode
+requires — not saved after each individual exercise. A Study New Words word
+(3 exercises: Broken Word, Half Word, Full Word Typing) contributes one
+combined duration. A Review Words word (1 typing exercise) contributes its
+own duration; its group/reinforcement exercise is never timed. A Custom
+Practice single-word exercise contributes its own duration; four-word group
+exercises are not timed in this phase.
+
+## Visible-tab-only, capped, whole-second
+
+The shared timer (`src/data/learning/activeWordTimer.ts`) starts once a word
+is fully visible, pauses immediately if the tab is hidden
+(`document.visibilityState`), resumes when visible again, and freezes the
+instant the word's exercise sequence finishes. Duration is
+`floor(activeMilliseconds / 1000)`, capped at `MAX_WORD_TIME_SECONDS` (300)
+— one named constant the frontend and every one of the three RPCs
+independently enforce. No `setInterval`, no live-updating display, no
+localStorage, no mouse/keyboard activity tracking in this phase.
+
+## Idempotency — why a retry never double-counts
+
+Each mode's existing idempotency mechanism is what the time increment rides
+on, not a separate check:
+
+- **Study New Words** — `user_word_progress`'s unique
+  `(user_id, word_id, target_language)` constraint. A retry's insert
+  conflicts and does nothing, so the `if v_inserted` branch that adds
+  `p_study_time_seconds` never runs a second time.
+- **Review Words** — `review_events.event_id`, now inserted *before*
+  `user_word_progress`/`user_daily_stats` are touched (closing a race the
+  original write order had — see `supabase/README.md`'s Corrective
+  Migration 5). A retried or concurrently-duplicated event id adds
+  `p_review_time_seconds` zero additional times.
+- **Custom Practice** — its own new `custom_practice_events.event_id`
+  ledger, `ON CONFLICT (event_id) DO NOTHING` as the atomic gate.
+
+## Error/retry behavior
+
+On a failed save, the frozen duration and event id (where applicable) are
+reused verbatim on retry — the timer is never restarted, the duration is
+never recomputed or increased. Study New Words and Review Words keep their
+existing blocking save-and-retry UI (word does not advance until the save
+succeeds). Custom Practice has no such screen today and this phase does not
+add one — its time-save is fire-and-forget and never blocks or errors
+visibly; its idempotency ledger is what keeps a lost/duplicated call safe.
 
 # Shared Exercise Components
 

@@ -14,6 +14,7 @@ import {
 } from "../../app/components/ui/alert-dialog";
 import type { ResolvedStudyQueueItem } from "../../data/learning/newWordStudyQueue";
 import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
+import { createActiveWordTimer, type ActiveWordTimer } from "../../data/learning/activeWordTimer";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeNewWordStudy, NewWordStudyPersistenceError } from "../../lib/newWordProgress";
 import { resolveSupabaseErrorMessageKey, type SupabaseErrorCategory } from "../../lib/supabaseError";
@@ -81,6 +82,20 @@ export function NewWordStudySession({
   const stepContainerRef = useRef<HTMLDivElement | null>(null);
   const { message: wordLearnedToast, show: showWordLearnedToast } = useAutoDismissMessage();
 
+  // Lazily created exactly once per component instance (the `if (current
+  // === null)` guard, not the useRef initial-value expression itself, is
+  // what makes this safe under React StrictMode's double-render — see
+  // src/data/learning/activeWordTimer.ts's own header for why this must
+  // never be a setInterval-based clock). One instance covers this whole
+  // session; reset() is called at the start of every new word rather than
+  // creating a fresh instance per word, so there is exactly one
+  // visibilitychange listener for the session's lifetime, removed by
+  // dispose() on unmount below.
+  const wordTimerRef = useRef<ActiveWordTimer | null>(null);
+  if (wordTimerRef.current === null) {
+    wordTimerRef.current = createActiveWordTimer();
+  }
+
   useEffect(() => {
     dispatch({ type: "BEGIN" });
     // Runs once per mount only — NewWordStudyPreparation mounts this
@@ -88,6 +103,29 @@ export function NewWordStudySession({
     // BEGIN dispatch on mount is the session's entire startup.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Stops the timer's active-time accumulation and detaches its visibility
+  // listener on unmount/navigation (exiting the session, browser back,
+  // route change) — never left running after this component is gone.
+  useEffect(() => {
+    return () => {
+      wordTimerRef.current?.dispose();
+    };
+  }, []);
+
+  // Starts a fresh per-word timer exactly once per word: fires on mount for
+  // the first word (currentStep is already "word_intro" at creation) and
+  // again every time SAVE_SUCCEEDED advances to the next word's word_intro.
+  // reset() before start() guarantees each word begins from zero — never
+  // reused from state.currentWordOutcomes: the word is now "fully ready
+  // and visible" (NewWordInfoStep is what's on screen for word_intro).
+  useEffect(() => {
+    if (state.currentStep !== "word_intro") {
+      return;
+    }
+    wordTimerRef.current?.reset();
+    wordTimerRef.current?.start();
+  }, [state.currentWordIndex, state.currentStep]);
 
   // Moves focus to the new step's container whenever the visible step
   // changes (including repeated word_intro visits across different words),
@@ -120,6 +158,14 @@ export function NewWordStudySession({
       return;
     }
 
+    // freeze() locks the word's active duration the instant the final
+    // exercise was submitted (full_typing -> saving_word). Calling it again
+    // on a RETRY_SAVE re-entry into this same effect returns the identical
+    // cached value (see ActiveWordTimer.freeze()'s own contract) — the
+    // duration is never recomputed, never increased, and the timer is never
+    // restarted across a retry.
+    const studyTimeSeconds = wordTimerRef.current?.freeze() ?? 0;
+
     let cancelled = false;
 
     void completeNewWordStudy({
@@ -134,13 +180,16 @@ export function NewWordStudySession({
       // generates it (now()) inside complete_new_word_study so the browser
       // clock never controls last_practiced_at/next_review_at.
       statDateISO: getLocalCalendarDateISO(),
+      studyTimeSeconds,
     })
       .then(() => {
         if (cancelled) return;
         setSaveErrorCategory(null);
         // item is the word that just finished — captured before dispatch,
         // since SAVE_SUCCEEDED may move state.currentWordIndex on (or to
-        // session_complete) within this same update.
+        // session_complete) within this same update. The word_intro effect
+        // above resets/restarts the timer for whatever word comes next; this
+        // effect never touches the timer again after a successful save.
         showWordLearnedToast(
           `${t("studyNewWords.wordLearnedToastPrefix")} "${item.targetWord}" ${t(
             "studyNewWords.wordLearnedToastSuffix",
@@ -154,7 +203,9 @@ export function NewWordStudySession({
         // completeNewWordStudy's own catch (src/lib/newWordProgress.ts),
         // where the raw Supabase/PostgREST error is still available — this
         // only logs the already-sanitized domain error for screen-level
-        // context.
+        // context. The frozen duration is left exactly as-is — Retry
+        // re-enters this same effect and freeze() returns the same cached
+        // seconds again.
         console.warn("NewWordStudySession: failed to save the completed word.", error);
         setSaveErrorCategory(error instanceof NewWordStudyPersistenceError ? error.category : "unknown");
         dispatch({ type: "SAVE_FAILED" });

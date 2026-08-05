@@ -428,6 +428,21 @@ SEO/Worker-specific guards (`test:seo-output`,
 `test:word-worker:production-safety`) are chained separately, not part of
 `test:architecture-guards` — see [Validation commands](#validation-commands).
 
+## Learning statistics
+
+Study New Words, Review Words, and Custom Practice each track their own
+active-time column on `user_daily_stats` (`study_time_seconds`,
+`review_time_seconds`, `custom_practice_time_seconds`) via a shared timer
+utility (`src/data/learning/activeWordTimer.ts`); a derived
+`totalTimeSeconds` is computed at read time only
+(`src/lib/learningTimeStats.ts`) and never stored. Full design (word-level
+timing, the 300-second cap, per-mode idempotency, and the temporary
+duration-aware/legacy RPC signatures pending a follow-up cleanup migration)
+is documented in
+[`src/features/user-profile/sections/learning/README.md`](../src/features/user-profile/sections/learning/README.md)
+and `supabase/README.md`'s Corrective Migration 5 section — not duplicated
+here.
+
 ## Operations
 
 Operational scripts live under `scripts/operations/`. The only current one

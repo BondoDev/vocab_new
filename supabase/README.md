@@ -193,11 +193,107 @@ is closed, except the broader (all-four-table) excessive-grants cleanup
 tracked as this README's "Known imperfections" item 5 for `user_profiles`,
 `user_word_progress`, and `user_daily_stats`.
 
+## Corrective Migration 5 — learning-mode active-time tracking
+
+`migrations/20260805190000_add_learning_mode_time_tracking.sql` adds
+per-learning-mode active-time statistics (Learning Statistics Phase 1):
+
+- **Reconciles two live-only objects.** `review_time_seconds` and
+  `custom_practice_time_seconds` (both `integer not null default 0`) plus
+  their non-negative `CHECK` constraints were added directly to the live
+  `user_daily_stats` table outside of any migration. This migration brings
+  the repository in line with the live schema using catalog-guarded,
+  idempotent DDL: `ADD COLUMN IF NOT EXISTS` for the columns, and a `DO $$
+  ... $$` block per constraint that checks `pg_constraint`/
+  `pg_get_constraintdef` first and only adds the constraint if it's
+  genuinely missing — an existing same-named constraint with an unexpected
+  definition makes the migration fail loudly (`RAISE EXCEPTION`) rather than
+  being silently accepted. Both statements are no-ops on the live database
+  and real DDL on a fresh database built from this repository's migrations
+  alone.
+- **`study_time_seconds`** already existed (baseline + Corrective Migration
+  2's non-negative constraint) and is untouched in shape — only its RPC's
+  signature changes (below).
+- **total_time_seconds is never stored.** Every reader derives it as
+  `study_time_seconds + review_time_seconds + custom_practice_time_seconds`
+  at read time — see `src/lib/learningTimeStats.ts`.
+- **Duration-aware RPC signatures, added alongside the existing ones** (see
+  "Legacy RPC cleanup" below for the rollout/removal plan):
+  - `complete_new_word_study(text, text, date, integer)` — adds
+    `p_study_time_seconds`, validated `0-300`, added to `study_time_seconds`
+    only on the same first-completion branch that already gates
+    `new_words_completed`. A retry of an already-completed word increments
+    neither.
+  - `complete_word_review(uuid, uuid, text, date, integer)` — adds
+    `p_review_time_seconds`, validated `0-300`, added to
+    `review_time_seconds` only (never `study_time_seconds`). Also
+    **reorders** the write sequence versus the existing 4-arg function: the
+    `review_events` row is now `INSERT`ed (`ON CONFLICT (event_id) DO
+    NOTHING`) *before* `user_word_progress`/`user_daily_stats` are touched,
+    closing a latent TOCTOU race in the original ordering where two truly
+    concurrent requests with the same `event_id` could both pass the
+    "not found" replay check and both apply the transition before either
+    committed. State thresholds/demotion rules/streak logic/deadline math
+    are byte-identical to the existing function — only the write order and
+    the new duration parameter changed.
+  - `complete_custom_practice_word(uuid, text, date, integer)` — new, no
+    legacy predecessor. See "Custom Practice ledger" below.
+- **Custom Practice ledger: `public.custom_practice_events`.** Custom
+  Practice never wrote to Supabase before this migration. `review_events` is
+  deliberately **not** reused for it: several of its columns
+  (`previous_state`/`new_state`/`previous_correct_streak`/
+  `new_correct_streak`/`promoted`/`demoted`/`word_progress_id` — the last one
+  `NOT NULL`) describe a spaced-repetition state transition Custom Practice
+  must never produce and has no row to point at. The new table is minimal —
+  `event_id` primary key (the sole idempotency gate, exactly like
+  `review_events.event_id`), `user_id`, `target_language`, one duration
+  column (bounded `0-300`), `created_at`. RLS enabled with zero policies and
+  no `anon`/`authenticated` table grants — the same lockdown shape
+  `review_events` has today (post Corrective Migration 4) — so
+  `complete_custom_practice_word` (`SECURITY DEFINER`) is the only write
+  path. The RPC never touches `user_word_progress`, never inserts into
+  `review_events`, never increments `new_words_completed`/
+  `reviews_completed` — only `custom_practice_time_seconds`, gated by
+  whether its own `ON CONFLICT (event_id) DO NOTHING` insert actually
+  affected a row.
+- **Grants on every new signature**: `postgres`/`authenticated`/
+  `service_role` EXECUTE; `anon` explicitly excluded (matching both existing
+  RPCs' already-corrected state, Corrective Migration 2) — `PUBLIC`'s default
+  implicit grant on function creation is revoked first, then re-granted only
+  to the three roles above.
+
+### Legacy RPC cleanup (required follow-up, not part of this migration)
+
+This migration is intentionally **additive-only** for
+`complete_new_word_study`/`complete_word_review`: their pre-existing 3-arg /
+4-arg signatures are *not* dropped, only redefined as thin wrappers that
+delegate to the new duration-aware signature with `0` seconds
+(`select * from public.complete_new_word_study(p_word_id, p_target_language,
+p_stat_date, 0)`, and the equivalent for `complete_word_review`) — no
+duplicated business logic in either wrapper. This is a deliberate staged
+rollout, because a Supabase migration deploy and a Cloudflare frontend
+deploy are not atomic with each other:
+
+| Stage | Supabase | Frontend | Behavior |
+|---|---|---|---|
+| 1 (this migration) | New + legacy signatures both live | Old build still calls legacy 3-/4-arg signatures | Legacy calls succeed, record 0 seconds |
+| 2 | Unchanged | New build calls the duration-aware signatures | Real durations recorded |
+| 3 (future cleanup migration) | Legacy 3-arg/4-arg signatures dropped | New build only (verified live) | — |
+
+**Do not drop the legacy signatures in the same deployment as stage 2** — do
+so only in a separate, later migration, once the new frontend build is
+deployed and confirmed to be the only thing calling these RPCs (e.g. no
+Cloudflare rollback path still points at the previous build). Custom
+Practice has no legacy signature at all — `complete_custom_practice_word` was
+introduced directly in its final form.
+
 ## What happens next
 
 Corrective changes are separate, individually-reviewed follow-up migrations
 — never folded into the baseline above. See the numbered list at the bottom
-of the migration file itself for the current proposed order.
+of the migration file itself for the current proposed order. The next
+learning-system migration on top of Corrective Migration 5 above is the
+legacy-signature cleanup described in that section.
 
 ## Working with this folder going forward
 

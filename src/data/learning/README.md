@@ -73,6 +73,23 @@ truth without importing from another feature's private folder.
   deadline-approach factor, overdue/random pool composition, small-library
   cooldown bypass). Selection and persistence remain separate concerns —
   Review Words Phase 3 (`complete_word_review`) never touches this file.
+- `activeWordTimer.ts` - Learning Statistics Phase 1's shared, testable
+  active-time timer (`createActiveWordTimer`), used by all three learning
+  modes (Study New Words, Review Words, Custom Practice) to measure exactly
+  one word's active exercise time. Monotonic clock only (`performance.now()`
+  by default, injectable), no `setInterval`, no React state, no
+  localStorage, no mouse/keyboard tracking — the only external signal it
+  reacts to is `document.visibilityState` (pauses immediately when hidden,
+  resumes when visible again), via an injectable document-like target so it
+  stays usable in tests/SSR. One instance per session component, reset+
+  started per word, `freeze()`d once the word's exercise sequence finishes
+  (idempotent — a save retry gets back the exact same cached duration, never
+  recomputed). Exports `MAX_WORD_TIME_SECONDS` (300) and
+  `isValidWordTimeSeconds`, the same bound/shape both the frontend
+  (`src/lib/newWordProgress.ts`, `src/lib/customPracticeProgress.ts`) and the
+  database (`complete_new_word_study`/`complete_word_review`/
+  `complete_custom_practice_word`) independently validate — see
+  `supabase/README.md`'s Corrective Migration 5 section. Zero imports.
 
 ## Ownership Rules
 

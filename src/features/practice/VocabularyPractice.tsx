@@ -26,6 +26,10 @@ import {
   type MotionCssVars,
 } from "../../exercises/exerciseTheme";
 import { FOUR_WORD_EXERCISE_IDS } from "../../exercises/exerciseIds";
+import { createActiveWordTimer, type ActiveWordTimer } from "../../data/learning/activeWordTimer";
+import { getLocalCalendarDateISO } from "../../data/learning/localStudyDate";
+import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
+import { completeCustomPracticeWord } from "../../lib/customPracticeProgress";
 
 type PracticeCardCssVars = MotionCssVars<"--practice-card-bg" | "--practice-card-border">;
 
@@ -121,6 +125,24 @@ export function VocabularyPractice({
   const cardSwitchTimeoutRef = useRef<number | null>(null);
   const forcedTypingRepeatQueueRef = useRef<TypingRepeatEntry[]>([]);
   const resumeIndexAfterForcedRepeatRef = useRef<number | null>(null);
+  // Active-time tracking for Custom Practice (Phase 1): one shared timer
+  // instance per component (lazily created once — same pattern as
+  // NewWordStudySession.tsx/ReviewSession.tsx, see either file's own
+  // comment for why the `if (current === null)` guard is what matters
+  // under StrictMode), reset+restarted per single-word exercise. Only
+  // brokenWord/halfWritten/wordTyping (single-word typing exercises) are
+  // timed and persisted — connectWords/listening (four-word group
+  // exercises) are excluded in this phase, matching Review Words' own
+  // precedent of never persisting its group exercises.
+  const customPracticeTimerRef = useRef<ActiveWordTimer | null>(null);
+  if (customPracticeTimerRef.current === null) {
+    customPracticeTimerRef.current = createActiveWordTimer();
+  }
+  // Fresh per-exercise-encounter id, minted alongside the timer reset below
+  // and reused for exactly one completeCustomPracticeWord call — never
+  // regenerated for the same on-screen exercise, so a duplicate submission
+  // (e.g. a StrictMode double-invoked effect) is idempotent server-side.
+  const customPracticeEventIdRef = useRef<string | null>(null);
   const isUsableLemma = (value: unknown): value is string =>
     typeof value === "string" && value.trim().length > 0 && value.trim() !== "-";
 
@@ -407,10 +429,68 @@ export function VocabularyPractice({
     });
   }, [currentExerciseType, currentIndex]);
 
+  // Starts a fresh timer + fresh event id for every new single-word
+  // exercise presentation — keyed on cardBlinkKey (not just
+  // currentIndex/currentExerciseType) because a forced repeat can re-show
+  // the exact same word+exercise combination later in the session;
+  // cardBlinkKey increments on every handleNext call (see below), so it's
+  // the true "this is a new on-screen exercise instance" signal, matching
+  // the visual remount key each exercise component already uses. Four-word
+  // group exercises (connectWords/listening) never start a timer — see this
+  // file's own header comment on customPracticeTimerRef above.
+  useEffect(() => {
+    if (isLoading || words.length === 0 || isFourWordExercise(currentExerciseType)) {
+      return;
+    }
+    customPracticeTimerRef.current?.reset();
+    customPracticeTimerRef.current?.start();
+    customPracticeEventIdRef.current = crypto.randomUUID();
+  }, [currentIndex, currentExerciseType, cardBlinkKey, isLoading, words.length, isFourWordExercise]);
+
+  // Stops accumulation and detaches the visibility listener on unmount/
+  // navigation (Back, route change) — same precedent as
+  // NewWordStudySession.tsx/ReviewSession.tsx.
+  useEffect(() => {
+    return () => {
+      customPracticeTimerRef.current?.dispose();
+    };
+  }, []);
+
   const runNextStep = (wasExplicitSkip = false) => {
     let result: "correct" | "incorrect" | "skipped";
     const wasTyped = exerciseStatus.hasTypedAnswer;
     const wasRevealed = exerciseStatus.usedShowWord;
+
+    // Freeze + persist this single-word exercise's active duration the
+    // instant it's being left — regardless of correct/incorrect/revealed/
+    // skipped outcome (per the confirmed Phase 1 scope: every completed
+    // single-word exercise advance is one timed event). Four-word group
+    // exercises are excluded — no timer was ever started for them above, so
+    // there is nothing to freeze. This never blocks advancing to the next
+    // exercise: unlike Study New Words/Review Words, Custom Practice has no
+    // save-boundary screen today, and this phase does not add one — the
+    // RPC call is fire-and-forget, its own idempotency (event id) is what
+    // keeps a lost/duplicated call safe, not a blocking retry UI.
+    if (currentWord && !isFourWordExercise(currentExerciseType)) {
+      const customPracticeTimeSeconds = customPracticeTimerRef.current?.freeze() ?? 0;
+      const eventId = customPracticeEventIdRef.current;
+      const session = getStoredSupabaseSession();
+      if (eventId && session) {
+        void completeCustomPracticeWord({
+          session,
+          eventId,
+          targetLanguage: practiceLanguage,
+          statDateISO: getLocalCalendarDateISO(),
+          customPracticeTimeSeconds,
+        }).catch((error) => {
+          // Best-effort: a failed practice-time save never surfaces to the
+          // UI or blocks the exercise flow in this phase — only logged for
+          // diagnostics, matching completeNewWordStudy/completeWordReview's
+          // own structured-diagnostics-only-on-failure precedent.
+          console.warn("VocabularyPractice: failed to save custom practice time.", error);
+        });
+      }
+    }
 
     if (isFourWordExercise(currentExerciseType)) {
       result = exerciseStatus.isCorrect ? "correct" : "skipped";

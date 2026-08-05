@@ -50,7 +50,7 @@ test("1. CompleteNewWordStudyParams no longer has a completion-timestamp field",
   assert.doesNotMatch(paramsBlockMatch[1], /completedAt/i, "must not declare a completedAt/completedAtISO field");
 });
 
-test("2. The RPC request body sends exactly p_word_id, p_target_language, p_stat_date", () => {
+test("2. The RPC request body sends exactly p_word_id, p_target_language, p_stat_date, p_study_time_seconds", () => {
   const bodyMatch = libSource.match(
     /"\/rest\/v1\/rpc\/complete_new_word_study",\s*\{([\s\S]*?)\},\s*\);/,
   );
@@ -60,12 +60,13 @@ test("2. The RPC request body sends exactly p_word_id, p_target_language, p_stat
   assert.match(body, /p_word_id\s*:\s*conceptId/, "must send p_word_id");
   assert.match(body, /p_target_language\s*:\s*targetLanguage/, "must send p_target_language");
   assert.match(body, /p_stat_date\s*:\s*statDateISO/, "must send p_stat_date");
+  assert.match(body, /p_study_time_seconds\s*:\s*studyTimeSeconds/, "must send p_study_time_seconds");
 
   const sentKeys = [...body.matchAll(/(\w+)\s*:/g)].map((match) => match[1]);
   assert.deepEqual(
     sentKeys.sort(),
-    ["p_stat_date", "p_target_language", "p_word_id"].sort(),
-    "must send exactly these three keys — no p_completed_at or anything else",
+    ["p_stat_date", "p_study_time_seconds", "p_target_language", "p_word_id"].sort(),
+    "must send exactly these four keys — no p_completed_at or anything else",
   );
 });
 
@@ -86,7 +87,7 @@ test("4. Database time is documented as the source of completion timestamps", ()
   );
 });
 
-test("5. completeNewWordStudy's call site passes only session/conceptId/targetLanguage/statDateISO", () => {
+test("5. completeNewWordStudy's call site passes only session/conceptId/targetLanguage/statDateISO/studyTimeSeconds", () => {
   const callMatch = sessionSource.match(/completeNewWordStudy\(\{([\s\S]*?)\}\)/);
   assert.ok(callMatch, "the completeNewWordStudy(...) call site must be found in NewWordStudySession.tsx");
   const callBody = callMatch[1];
@@ -95,9 +96,26 @@ test("5. completeNewWordStudy's call site passes only session/conceptId/targetLa
   const passedKeys = [...callBody.matchAll(/^\s*(\w+)\s*[,:]/gm)].map((match) => match[1]);
   assert.deepEqual(
     passedKeys.sort(),
-    ["conceptId", "session", "statDateISO", "targetLanguage"].sort(),
-    "must pass exactly these four fields — no completedAtISO",
+    ["conceptId", "session", "statDateISO", "studyTimeSeconds", "targetLanguage"].sort(),
+    "must pass exactly these five fields — no completedAtISO",
   );
+});
+
+test("6. studyTimeSeconds is validated via isValidWordTimeSeconds before ever reaching the request body", () => {
+  assert.match(
+    libSource,
+    /isValidWordTimeSeconds\(studyTimeSeconds\)/,
+    "completeNewWordStudy must validate studyTimeSeconds client-side before sending it",
+  );
+});
+
+test("7. studyTimeSeconds is the frozen output of an ActiveWordTimer, not a per-exercise duration", () => {
+  assert.match(sessionSource, /createActiveWordTimer/, "NewWordStudySession.tsx must use the shared timer utility");
+  assert.match(sessionSource, /wordTimerRef\.current\?\.freeze\(\)/, "must freeze the timer to obtain studyTimeSeconds");
+});
+
+test("8. The timer is disposed on unmount (no leaked visibility listener)", () => {
+  assert.match(sessionSource, /wordTimerRef\.current\?\.dispose\(\)/, "NewWordStudySession.tsx must dispose its timer on unmount");
 });
 
 console.log(`\n─────────────────────────────────────────`);
