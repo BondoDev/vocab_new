@@ -269,6 +269,7 @@ interface HeaderProps {
   authSession?: StoredSupabaseSession | null;
   accountNickname?: string;
   onAuthSessionChange?: (session: StoredSupabaseSession | null) => void;
+  onSignedOut?: () => void;
 }
 
 export function Header({
@@ -284,6 +285,7 @@ export function Header({
   authSession: controlledAuthSession,
   accountNickname,
   onAuthSessionChange,
+  onSignedOut,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileAccountMenuOpen, setIsMobileAccountMenuOpen] = useState(false);
@@ -390,7 +392,8 @@ export function Header({
       await signOutSupabase(currentSession);
     } catch (error) {
       setAuthError(error instanceof Error ? error.message : "Sign out failed.");
-      setIsAuthDialogOpen(true);
+    } finally {
+      onSignedOut?.();
     }
   };
 

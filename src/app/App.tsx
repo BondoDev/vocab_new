@@ -523,6 +523,7 @@ function AppContent({
     authSession,
     accountNickname: userProfile.nickname,
     onAuthSessionChange: handleAuthSessionChange,
+    onSignedOut: () => navigate(ROUTES.exerciseSelection),
   };
 
   const handleStartExam = () => {

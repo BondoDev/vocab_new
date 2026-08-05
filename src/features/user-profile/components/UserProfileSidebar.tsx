@@ -70,12 +70,10 @@ function SidebarInner({
   onSectionChange,
 }: SidebarInnerProps) {
   const { t } = useLanguage();
-  const displayName = nickname?.trim() || "Bondo";
-  const avatarLabel = displayName.charAt(0).toUpperCase() || "B";
-  const learningLanguageLabel = practiceLanguage
-    ? t(`languageNames.${practiceLanguage}`)
-    : t("languageNames.de");
-  const learningLevelLabel = languageLevel || "A2";
+  const displayName = nickname?.trim() || "Account";
+  const avatarLabel = displayName.charAt(0).toUpperCase();
+  const learningLanguageLabel = practiceLanguage ? t(`languageNames.${practiceLanguage}`) : "";
+  const learningMeta = [learningLanguageLabel, languageLevel].filter(Boolean).join(" • ");
 
   return (
     <div className="user-profile-sidebar__surface">
@@ -86,9 +84,7 @@ function SidebarInner({
           </div>
           <div className="user-profile-sidebar__identity-copy">
             <h2 className="user-profile-sidebar__name">{displayName}</h2>
-            <p className="user-profile-sidebar__meta">
-              {learningLanguageLabel} <span aria-hidden="true">&bull;</span> {learningLevelLabel}
-            </p>
+            {learningMeta ? <p className="user-profile-sidebar__meta">{learningMeta}</p> : null}
           </div>
         </div>
       </section>
