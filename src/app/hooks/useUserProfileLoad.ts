@@ -9,8 +9,10 @@ import {
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import {
   EMPTY_USER_PROFILE,
+  initializeUserTimezone,
   readSupabaseUserProfile,
   readStoredUserProfile,
+  writeStoredUserProfile,
   type UserProfile,
 } from "../../lib/userProfile";
 import { describeSupabaseError } from "../../lib/supabaseError";
@@ -19,6 +21,7 @@ import {
   buildMergedUserProfile,
   shouldOpenAccountOnboarding,
 } from "../utils/accountProfile";
+import { detectBrowserTimezone } from "../utils/browserTimezone";
 import { resolveHydratedLanguagePair } from "../utils/languageProfileSyncPolicy";
 
 interface UseUserProfileLoadParams {
@@ -128,6 +131,42 @@ export function useUserProfileLoad({
         );
         setAccountOnboardingError(null);
         setIsProfileLoaded(true);
+
+        if (session && hasSupabaseProfileRow && !nextProfile.timezone) {
+          const detectedTimezone = detectBrowserTimezone();
+          if (detectedTimezone) {
+            void initializeUserTimezone(session, detectedTimezone)
+              .then((result) => {
+                if (cancelled || !result.timezone) {
+                  return;
+                }
+
+                setUserProfile((current) => {
+                  if (current.timezone) {
+                    return current;
+                  }
+
+                  const nextProfileWithTimezone = {
+                    ...current,
+                    timezone: result.timezone,
+                    timezoneUpdatedAt: result.timezoneUpdatedAt,
+                  };
+                  writeStoredUserProfile(authUserId, nextProfileWithTimezone);
+                  return nextProfileWithTimezone;
+                });
+              })
+              .catch((error) => {
+                if (cancelled) {
+                  return;
+                }
+
+                console.warn(
+                  "useUserProfileLoad: failed to initialize the user timezone.",
+                  describeSupabaseError("initializeUserTimezone", error),
+                );
+              });
+          }
+        }
       } catch (error) {
         if (cancelled) {
           return;

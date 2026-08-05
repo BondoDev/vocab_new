@@ -251,7 +251,7 @@ export async function completeNewWordStudy(
   }
   // Never sends a negative/decimal/above-cap/missing duration — the RPC
   // (complete_new_word_study(text, text, date, integer)) independently
-  // re-validates the same 0-300 bound and never trusts this check alone.
+  // re-validates the same 0 to 300 bound and never trusts this check alone.
   if (!isValidWordTimeSeconds(studyTimeSeconds)) {
     throw new NewWordStudyPersistenceError("Missing required fields to save this word.", "validation");
   }
@@ -557,7 +557,7 @@ export interface CompleteWordReviewParams {
   // exercise (word_exercise -> WORD_OUTCOME_DETERMINED) — never a group
   // exercise's shared duration. Validated client-side via
   // isValidWordTimeSeconds before ever reaching the request body; the RPC
-  // independently re-validates the same 0-300 bound.
+  // independently re-validates the same 0 to 300 bound.
   reviewTimeSeconds: number;
 }
 
@@ -667,7 +667,7 @@ export async function completeWordReview(params: CompleteWordReviewParams): Prom
   }
   // Never sends a negative/decimal/above-cap/missing duration — the RPC
   // (complete_word_review(uuid, uuid, text, date, integer)) independently
-  // re-validates the same 0-300 bound and never trusts this check alone.
+  // re-validates the same 0 to 300 bound and never trusts this check alone.
   if (!isValidWordTimeSeconds(reviewTimeSeconds)) {
     throw new ReviewPersistenceError("Missing required fields to save this review.", "validation");
   }

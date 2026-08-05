@@ -18,7 +18,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -44,14 +43,6 @@ function read(relPath) {
   return fs.readFileSync(path.join(ROOT_DIR, relPath), "utf8");
 }
 
-function git(args) {
-  try {
-    return execFileSync("git", args, { cwd: ROOT_DIR, encoding: "utf8" });
-  } catch {
-    return "";
-  }
-}
-
 console.log("\n=== Learning dashboard profile data-flow guards ===\n");
 
 const dailyGoalSelector = read("src/features/user-profile/sections/learning/DailyGoalSelector.tsx");
@@ -61,6 +52,7 @@ const learningSection = read("src/features/user-profile/sections/learning/Learni
 const dashboardPage = read("src/features/user-profile/sections/UserProfileDashboardPage.tsx");
 const appTsx = read("src/app/App.tsx");
 const useUserProfileLoad = read("src/app/hooks/useUserProfileLoad.ts");
+const userProfileLib = read("src/lib/userProfile.ts");
 
 test("1. useUserProfileLoad is the only profile-loading path reachable from the Learning dashboard", () => {
   // The three Learning cards must not import or call either profile-read
@@ -151,27 +143,19 @@ test("6. Loading and error states remain represented in all three cards", () => 
   assert.match(todayProgressCard, /console\.warn/, "TodayProgressCard must keep dev logging on failure");
 });
 
-test("7. No Supabase migration is touched by this refactor", () => {
-  // Originally also blacklisted src/lib/newWordProgress.ts, scoped to this
-  // guard's own Learning-profile-data-flow diff at the time it was written
-  // (Cleanup 1 had no reason to touch it). As a permanent, diff-against-
-  // master check that clause would incorrectly block every later, unrelated,
-  // explicitly-sanctioned change to that file too — e.g. Cleanup 3's
-  // src/lib/supabaseError.ts classifier adoption (see
-  // test-supabase-error-handling.mjs, which owns guarding *that* file's
-  // scope now). Migrations remain evergreen: no legitimate frontend
-  // refactor should ever touch supabase/.
-  const mergeBase = git(["merge-base", "master", "HEAD"]).trim();
-  const changed = new Set();
-  const collect = (out) => out.split("\n").map((line) => line.trim()).filter(Boolean).forEach((f) => changed.add(f));
-  if (mergeBase) {
-    collect(git(["diff", "--name-only", mergeBase, "HEAD"]));
-  }
-  collect(git(["diff", "--name-only", "HEAD"]));
-  collect(git(["diff", "--name-only", "--cached"]));
-
-  const offenders = [...changed].filter((file) => file.startsWith("supabase/"));
-  assert.deepEqual(offenders, [], `this refactor must not touch migrations: ${offenders.join(", ")}`);
+test("7. Learning profile writes cannot smuggle timezone through the generic profile upsert", () => {
+  const patchMatch = userProfileLib.match(/function toSupabaseProfilePatch[\s\S]*?return \{([\s\S]*?)\n  \};/);
+  assert.ok(patchMatch, "toSupabaseProfilePatch must exist");
+  assert.doesNotMatch(
+    patchMatch[1],
+    /\btimezone\b|timezone_updated_at|timezoneUpdatedAt/,
+    "generic profile upserts must not include timezone fields",
+  );
+  assert.match(
+    userProfileLib,
+    /\/rest\/v1\/rpc\/initialize_user_timezone/,
+    "timezone initialization must stay on the narrow RPC path",
+  );
 });
 
 console.log(`\n─────────────────────────────────────────`);

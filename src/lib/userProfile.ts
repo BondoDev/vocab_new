@@ -6,6 +6,11 @@ import {
   supabaseRequest,
   type StoredSupabaseSession,
 } from "./supabaseAuth";
+import { ClassifiedSupabaseError } from "./supabaseError";
+import {
+  parseInitializeUserTimezoneRow,
+  type InitializeUserTimezoneResult,
+} from "./userProfileTimezone";
 
 const USER_PROFILE_KEY_PREFIX = "app.userProfile";
 
@@ -24,6 +29,8 @@ export interface UserProfile {
   onboardingCompleted: boolean;
   dailyGoal: number;
   updatedAt: string | null;
+  timezone: string | null;
+  timezoneUpdatedAt: string | null;
 }
 
 export const EMPTY_USER_PROFILE: UserProfile = {
@@ -37,6 +44,8 @@ export const EMPTY_USER_PROFILE: UserProfile = {
   onboardingCompleted: false,
   dailyGoal: DEFAULT_DAILY_GOAL,
   updatedAt: null,
+  timezone: null,
+  timezoneUpdatedAt: null,
 };
 
 export function startsWithLetter(value: string): boolean {
@@ -156,6 +165,8 @@ interface UserProfilesRow {
   onboarding_completed: boolean | null;
   daily_goal: number | null;
   updated_at: string | null;
+  timezone: string | null;
+  timezone_updated_at: string | null;
 }
 
 function getAuthorizedHeaders(session: StoredSupabaseSession) {
@@ -216,6 +227,14 @@ function toSupabaseProfilePatch(profile: Partial<UserProfile>) {
   };
 }
 
+function normalizeTimezone(value: unknown): string | null {
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+function normalizeTimestamp(value: unknown): string | null {
+  return typeof value === "string" && value.trim() ? value : null;
+}
+
 function fromSupabaseProfileRow(row: UserProfilesRow | null | undefined): Partial<UserProfile> {
   if (!row) {
     return {};
@@ -238,7 +257,9 @@ function fromSupabaseProfileRow(row: UserProfilesRow | null | undefined): Partia
         : "",
     onboardingCompleted: Boolean(row.onboarding_completed),
     dailyGoal: normalizeDailyGoal(row.daily_goal),
-    updatedAt: row.updated_at ?? null,
+    updatedAt: normalizeTimestamp(row.updated_at),
+    timezone: normalizeTimezone(row.timezone),
+    timezoneUpdatedAt: normalizeTimestamp(row.timezone_updated_at),
   };
 }
 
@@ -279,6 +300,8 @@ export function normalizeUserProfile(value: Partial<UserProfile> | null | undefi
       typeof value?.updatedAt === "string" && value.updatedAt.trim()
         ? value.updatedAt
         : null,
+    timezone: normalizeTimezone(value?.timezone),
+    timezoneUpdatedAt: normalizeTimestamp(value?.timezoneUpdatedAt),
   };
 }
 
@@ -337,7 +360,7 @@ export async function readSupabaseUserProfile(
 
   const rows = await supabaseProfileRequest<UserProfilesRow[]>(
     session,
-    `/rest/v1/user_profiles?id=eq.${encodeURIComponent(userId)}&select=id,nickname,native_language,learning_language,current_level,user_age,birth_month,birth_day,onboarding_completed,daily_goal,updated_at`,
+    `/rest/v1/user_profiles?id=eq.${encodeURIComponent(userId)}&select=id,nickname,native_language,learning_language,current_level,user_age,birth_month,birth_day,onboarding_completed,daily_goal,updated_at,timezone,timezone_updated_at`,
     {
       method: "GET",
     },
@@ -348,6 +371,37 @@ export async function readSupabaseUserProfile(
   }
 
   return fromSupabaseProfileRow(rows[0]);
+}
+
+export async function initializeUserTimezone(
+  session: StoredSupabaseSession,
+  timezone: string,
+): Promise<InitializeUserTimezoneResult> {
+  const userId = session.user?.id;
+  if (!userId) {
+    throw new Error("Missing authenticated user.");
+  }
+
+  const rows = await supabaseProfileRequest<unknown[] | unknown>(
+    session,
+    "/rest/v1/rpc/initialize_user_timezone",
+    {
+      method: "POST",
+      body: JSON.stringify({ p_timezone: timezone }),
+    },
+  );
+
+  if (Array.isArray(rows)) {
+    if (rows.length !== 1) {
+      throw new ClassifiedSupabaseError(
+        "initialize_user_timezone returned an unexpected number of rows.",
+        "unexpected_response",
+      );
+    }
+    return parseInitializeUserTimezoneRow(rows[0]);
+  }
+
+  return parseInitializeUserTimezoneRow(rows);
 }
 
 export async function writeSupabaseUserProfile(

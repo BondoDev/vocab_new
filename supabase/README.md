@@ -329,6 +329,34 @@ function") for every Study New Words / Review Words save attempt from that
 build — it would not silently record 0 seconds the way it did during the
 Corrective Migration 5 compatibility window, it would fail outright.
 
+## Timezone Phase 1 - profile timezone foundation
+
+`migrations/20260806120000_add_user_timezone_foundation.sql` adds optional
+per-user IANA timezone storage without changing learning attribution yet:
+
+- Adds `user_profiles.timezone text null` and
+  `user_profiles.timezone_updated_at timestamptz null`. Neither column has a
+  default, and the migration does not backfill or rewrite existing profile
+  rows.
+- Adds `initialize_user_timezone(text)`, a narrow `SECURITY DEFINER` RPC with
+  an empty `search_path`. It requires `auth.uid()`, trims and validates the
+  supplied value against `pg_catalog.pg_timezone_names`, and updates only the
+  caller's existing profile row.
+- Automatic initialization writes only when `user_profiles.timezone is null`.
+  If another tab or earlier request already stored a timezone, the RPC returns
+  the stored value and does not overwrite it. Manual replacement is deferred
+  to a future Settings flow with a separate contract.
+- Adds a trigger guard that blocks direct `INSERT`/`UPDATE` changes to
+  `timezone` and `timezone_updated_at` through the broad legacy profile table
+  grants. The initialization RPC sets a transaction-local flag before its own
+  scoped update.
+
+This phase deliberately does **not** change
+`complete_new_word_study`, `complete_word_review`, or
+`complete_custom_practice_word`: they still accept client-provided
+`p_stat_date`. Server-derived `stat_date`, streak-rule changes, Settings UI,
+and any historical `user_daily_stats` treatment are later phases.
+
 ## What happens next
 
 Corrective changes are separate, individually-reviewed follow-up migrations

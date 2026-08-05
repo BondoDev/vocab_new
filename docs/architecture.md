@@ -116,6 +116,15 @@ account/onboarding behavior (`src/app/hooks/useAccountOnboarding.ts`,
 `useAccountLanguageConfirm.ts`, `useUserProfileLoad.ts`, the
 `AccountOnboardingDialog`/`AccountLanguageConfirmDialog` components) remain
 outside the feature — they are consumed by more than just the profile page.
+`user_profiles.timezone` stores an optional IANA timezone for authenticated
+users. The browser detects it with
+`Intl.DateTimeFormat().resolvedOptions().timeZone` after profile load and
+silently initializes it through `initialize_user_timezone(text)` only when
+the stored value is null; PostgreSQL validates the value against
+`pg_catalog.pg_timezone_names`. Manual timezone correction belongs to a
+future Settings page. Learning RPCs still temporarily receive
+client-provided `p_stat_date`, so this stored timezone does not yet control
+daily-stat attribution, streaks, or historical `user_daily_stats` rows.
 `src/app/components/layout/` owns shared application layout/navigation
 components — the global header, its UI-language switcher, and the
 scroll-to-top control (`Header.tsx`, `UILanguageSwitcher.tsx`,
@@ -397,7 +406,7 @@ deployment described above.
 
 ## Architecture guards
 
-`npm run test:architecture-guards` chains **21 guard groups**, each a
+`npm run test:architecture-guards` chains **22 guard groups**, each a
 deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
@@ -423,6 +432,7 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:learning-profile-data-flow` | `scripts/tests/architecture/test-learning-profile-data-flow.mjs` | the Learning dashboard loads the signed-in user's profile exactly once (App.tsx) and threads it down as props, instead of Daily Goal/Daily Streak/Today's Progress each fetching their own copy |
 | `test:vocabulary-profile-data-flow` | `scripts/tests/architecture/test-vocabulary-profile-data-flow.mjs` | the Vocabulary dashboard section reuses the Learning dashboard's single App.tsx profile load instead of fetching its own copy on every mount |
 | `test:supabase-error-handling` | `scripts/tests/architecture/test-supabase-error-handling.mjs` | Study New Words/Review Words/favorite/profile-save all classify Supabase/PostgREST failures through the shared `src/lib/supabaseError.ts` module instead of duplicated message-regex checks, and never render raw Supabase error text |
+| `test:timezone-profile-boundary` | `scripts/tests/architecture/test-timezone-profile-boundary.mjs` | timezone writes stay isolated to `initialize_user_timezone`, generic profile upserts cannot modify timezone, no Settings UI is introduced yet, and learning date/streak ownership remains unchanged |
 
 SEO/Worker-specific guards (`test:seo-output`,
 `test:word-worker:production-safety`) are chained separately, not part of
