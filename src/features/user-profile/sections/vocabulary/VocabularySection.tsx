@@ -4,7 +4,7 @@ import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { readStoredUserProfile, readSupabaseUserProfile } from "../../../../lib/userProfile";
+import type { UserProfile } from "../../../../lib/userProfile";
 import { updateWordProgressFavorite } from "../../../../lib/newWordProgress";
 import { type VocabularyCounts } from "../../../../data/learning/vocabularyCategory";
 import { loadVocabularyProgress, type ResolvedVocabularyRow } from "./loadVocabularyProgress";
@@ -34,10 +34,16 @@ type LoadState =
   | { status: "result"; data: VocabularyPageData };
 
 interface VocabularySectionProps {
+  // App.tsx's single shared profile load (useUserProfileLoad), threaded
+  // down the same way LearningSection/DailyStreakCard already consume it —
+  // practiceLanguage/nativeLanguage below come from this prop instead of a
+  // second copy fetched here.
+  userProfile: UserProfile;
+  isProfileLoaded: boolean;
   onStartNewWordStudy?: () => void;
 }
 
-export function VocabularySection({ onStartNewWordStudy }: VocabularySectionProps) {
+export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWordStudy }: VocabularySectionProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
   const [state, setState] = useState<LoadState>({ status: "loading" });
@@ -49,32 +55,37 @@ export function VocabularySection({ onStartNewWordStudy }: VocabularySectionProp
   const [togglingIds, setTogglingIds] = useState<ReadonlySet<string>>(new Set());
   const { message: confirmationMessage, show: showConfirmation } = useAutoDismissMessage();
 
-  // Own self-contained load, matching DailyGoalSelector/TodayProgressCard's
-  // precedent in this feature: reads its own copy of the authenticated
-  // profile (for target + native language) rather than depending on prop
-  // threading from App.tsx, then loads vocabulary progress for that
-  // language pair. Re-running only on authUserId/retryToken change (not on
-  // every render) is what keeps this a "load once per active language"
-  // fetch rather than one per keystroke/tab click — search and tabs filter
-  // the already-loaded rows client-side (see the derived values below).
+  const targetLanguage = userProfile.practiceLanguage;
+  const nativeLanguage = userProfile.nativeLanguage;
+
+  // Loads vocabulary progress for the shared profile's target/native
+  // language pair — the profile itself is no longer fetched here (see
+  // VocabularySectionProps above); this effect only waits for it
+  // (isProfileLoaded) the same way DailyStreakCard/TodayProgressCard do.
+  // Re-running on authUserId/isProfileLoaded/targetLanguage/nativeLanguage/
+  // retryToken (not on every render) keeps this a "load once per active
+  // language" fetch rather than one per keystroke/tab click — search and
+  // tabs filter the already-loaded rows client-side (see the derived
+  // values below).
   useEffect(() => {
     if (!authUserId) {
       setState({ status: "result", data: { rows: [], counts: EMPTY_COUNTS, targetLanguage: "" } });
       return;
     }
 
+    if (!isProfileLoaded) {
+      // The shared profile load (App.tsx) is still in flight — wait for it
+      // rather than fetching with a not-yet-known target language.
+      setState({ status: "loading" });
+      return;
+    }
+
     let cancelled = false;
     setState({ status: "loading" });
-    const storedProfile = readStoredUserProfile(authUserId);
 
     void (async () => {
       try {
         const session = getStoredSupabaseSession();
-        const supabaseProfile = session ? await readSupabaseUserProfile(session) : null;
-        if (cancelled) return;
-
-        const targetLanguage = supabaseProfile?.practiceLanguage || storedProfile?.practiceLanguage || "";
-        const nativeLanguage = supabaseProfile?.nativeLanguage || storedProfile?.nativeLanguage || "";
 
         if (!session || !targetLanguage || !nativeLanguage) {
           setState({ status: "result", data: { rows: [], counts: EMPTY_COUNTS, targetLanguage } });
@@ -94,7 +105,7 @@ export function VocabularySection({ onStartNewWordStudy }: VocabularySectionProp
     return () => {
       cancelled = true;
     };
-  }, [authUserId, retryToken]);
+  }, [authUserId, isProfileLoaded, targetLanguage, nativeLanguage, retryToken]);
 
   const loadedTargetLanguage = state.status === "result" ? state.data.targetLanguage : null;
 
