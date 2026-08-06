@@ -23,8 +23,13 @@ const GOAL = 15;
 // Wednesday, 2026-08-19 (2026-08-17 is a Monday).
 const TODAY = "2026-08-19";
 
-function stat(dateISO, newWordsCompleted) {
-  return { dateISO, newWordsCompleted };
+// dailyGoal defaults to null (no stored per-row snapshot) so every existing
+// call site below exercises the legacy fallback-to-current-profile-goal
+// path unchanged — matching every row's real state before Streak Phase 1's
+// migration. Pass an explicit dailyGoal to exercise the stored-snapshot
+// override path instead (see the "per-row goal snapshot" suite below).
+function stat(dateISO, newWordsCompleted, dailyGoal = null) {
+  return { dateISO, newWordsCompleted, dailyGoal };
 }
 
 console.log("\n=== current week activity ===\n");
@@ -144,6 +149,70 @@ test("16. A negative/non-finite goal is handled safely, not crashed on", () => {
     const summary = computeDailyStreakSummary([stat(TODAY, 100)], badGoal, TODAY);
     assert.equal(summary.currentStreakDays, 0);
   }
+});
+
+console.log("\n=== per-row goal snapshot (Streak Phase 1) ===\n");
+
+test("23. A stored row goal overrides the current profile goal (row goal lower than current)", () => {
+  // Stored goal was 10 the day this row was written; the current profile
+  // goal has since been raised to 20. 12 words meets the row's own frozen
+  // goal, so the day must still read complete.
+  const summary = computeDailyStreakSummary([stat(TODAY, 12, 10)], 20, TODAY);
+  const today = summary.currentWeek.find((day) => day.dateISO === TODAY);
+  assert.equal(today.isComplete, true);
+  assert.equal(summary.currentStreakDays, 1);
+});
+
+test("24. A stored row goal overrides the current profile goal (row goal higher than current)", () => {
+  // Stored goal was 30 the day this row was written; the current profile
+  // goal has since been lowered to 10. 12 words falls short of the row's
+  // own frozen goal, so the day must not be retroactively completed.
+  const summary = computeDailyStreakSummary([stat(TODAY, 12, 30)], 10, TODAY);
+  const today = summary.currentWeek.find((day) => day.dateISO === TODAY);
+  assert.equal(today.isComplete, false);
+  assert.equal(summary.currentStreakDays, 0);
+});
+
+test("25. A null row goal falls back to the current profile goal", () => {
+  const complete = computeDailyStreakSummary([stat(TODAY, 15, null)], 15, TODAY);
+  const incomplete = computeDailyStreakSummary([stat(TODAY, 15, null)], 20, TODAY);
+  assert.equal(complete.currentWeek.find((day) => day.dateISO === TODAY).isComplete, true);
+  assert.equal(incomplete.currentWeek.find((day) => day.dateISO === TODAY).isComplete, false);
+});
+
+test("26. Mixed legacy (null) and snapshotted (stored) history both resolve correctly in the same streak", () => {
+  const stats = [
+    stat(TODAY, 20, 20), // today: stored goal 20, met
+    stat("2026-08-18", 20, null), // yesterday: legacy row, meets the current profile goal (20)
+    stat("2026-08-17", 10, 10), // stored goal 10, met — despite being below the current profile goal
+  ];
+  const summary = computeDailyStreakSummary(stats, 20, TODAY);
+  assert.equal(summary.currentStreakDays, 3);
+  assert.equal(summary.bestStreakDays, 3);
+});
+
+test("27. Raising the current goal does not invalidate a row with a stored lower goal", () => {
+  const stats = [stat(TODAY, 10, 10), stat("2026-08-18", 10, 10), stat("2026-08-17", 10, 10)];
+  const summary = computeDailyStreakSummary(stats, 999, TODAY);
+  assert.equal(summary.currentStreakDays, 3);
+});
+
+test("28. Lowering the current goal does not retroactively complete a row with a stored higher goal", () => {
+  const stats = [stat(TODAY, 5, 50), stat("2026-08-18", 5, 50)];
+  const summary = computeDailyStreakSummary(stats, 1, TODAY);
+  assert.equal(summary.currentStreakDays, 0);
+  assert.equal(summary.bestStreakDays, 0);
+});
+
+test("29. A row's own invalid stored goal (non-positive) is treated as never completable, not silently falling back to the current profile goal", () => {
+  const summary = computeDailyStreakSummary([stat(TODAY, 100, 0)], 15, TODAY);
+  const today = summary.currentWeek.find((day) => day.dateISO === TODAY);
+  // `??` (nullish coalescing) only falls back on null/undefined, never on
+  // a falsy-but-present 0 — so a stored 0 is used as-is, fails the
+  // Number.isFinite(candidate) && candidate > 0 guard, and the day is
+  // correctly never completable. The DB CHECK forbids a real 0 from ever
+  // being stored; this only pins the defensive behavior if one appeared.
+  assert.equal(today.isComplete, false);
 });
 
 console.log("\n=== deterministic date-only arithmetic ===\n");

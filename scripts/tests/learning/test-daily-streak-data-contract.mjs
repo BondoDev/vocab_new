@@ -48,12 +48,26 @@ test("3. Bounded by a stat_date gte lookback, not an unbounded historical query"
   assert.match(fnMatch[1], /stat_date=gte\.\$\{encodeURIComponent\(\s*sinceDateISO,?\s*\)\}/);
 });
 
-test("4. Selects only stat_date and new_words_completed", () => {
-  assert.match(fnMatch[1], /select=stat_date,new_words_completed/);
+test("4. Selects stat_date, new_words_completed, and the Streak Phase 1 daily_goal snapshot", () => {
+  assert.match(fnMatch[1], /select=stat_date,new_words_completed,daily_goal/);
 });
 
 test("5. Read-only: no insert/update/PATCH/POST verb in this function", () => {
   assert.doesNotMatch(fnMatch[1], /"PATCH"|"POST"/);
+});
+
+test("6. DailyStreakStatRow carries a dailyGoal: number | null field", () => {
+  assert.match(libSource, /export interface DailyStreakStatRow \{[\s\S]*?dailyGoal: number \| null;[\s\S]*?\}/);
+});
+
+test("7. A malformed non-null daily_goal is rejected (row skipped), never silently coerced", () => {
+  // Scoped to readDailyStreakStats's own body (fnMatch[1]) — newWordProgress.ts
+  // has two other "for (const raw of rawRows)" loops (readUserWordProgress,
+  // readUserWordProgressForReview) that would otherwise false-match first.
+  const parseBlock = fnMatch[1].match(/for \(const raw of rawRows\) \{[\s\S]*?\r?\n  \}\r?\n  return rows;/);
+  assert.ok(parseBlock, "readDailyStreakStats row-parsing loop must exist");
+  assert.match(parseBlock[0], /typeof rawGoal === "number" && Number\.isFinite\(rawGoal\)/);
+  assert.match(parseBlock[0], /continue;/);
 });
 
 console.log(`\n─────────────────────────────────────────`);

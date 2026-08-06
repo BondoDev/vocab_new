@@ -11,6 +11,7 @@ import {
   parseInitializeUserTimezoneRow,
   type InitializeUserTimezoneResult,
 } from "./userProfileTimezone";
+import { parseUpdateDailyGoalRow, type UpdateDailyGoalResult } from "./dailyGoalUpdate";
 
 const USER_PROFILE_KEY_PREFIX = "app.userProfile";
 
@@ -402,6 +403,45 @@ export async function initializeUserTimezone(
   }
 
   return parseInitializeUserTimezoneRow(rows);
+}
+
+// Streak Phase 1's narrow goal-update path — replaces DailyGoalSelector's
+// previous call to the broad writeSupabaseUserProfile upsert below (which
+// re-sends all 11 profile fields for a single-field change). Sends only
+// p_daily_goal; the update_daily_goal RPC (see
+// supabase/migrations/20260806190000_add_daily_goal_snapshot_and_update_rpc.sql)
+// derives the caller and today's date server-side, updates
+// user_profiles.daily_goal, and syncs today's (only today's)
+// user_daily_stats.daily_goal rows in the same transaction.
+export async function updateDailyGoal(
+  session: StoredSupabaseSession,
+  dailyGoal: number,
+): Promise<UpdateDailyGoalResult> {
+  const userId = session.user?.id;
+  if (!userId) {
+    throw new Error("Missing authenticated user.");
+  }
+
+  const rows = await supabaseProfileRequest<unknown[] | unknown>(
+    session,
+    "/rest/v1/rpc/update_daily_goal",
+    {
+      method: "POST",
+      body: JSON.stringify({ p_daily_goal: dailyGoal }),
+    },
+  );
+
+  if (Array.isArray(rows)) {
+    if (rows.length !== 1) {
+      throw new ClassifiedSupabaseError(
+        "update_daily_goal returned an unexpected number of rows.",
+        "unexpected_response",
+      );
+    }
+    return parseUpdateDailyGoalRow(rows[0]);
+  }
+
+  return parseUpdateDailyGoalRow(rows);
 }
 
 export async function writeSupabaseUserProfile(

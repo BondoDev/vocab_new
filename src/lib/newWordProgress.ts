@@ -734,14 +734,23 @@ export async function completeWordReview(params: CompleteWordReviewParams): Prom
 // request growing as an account ages.
 const DAILY_STREAK_LOOKBACK_DAYS = 400;
 
+// dailyGoal is this row's own Streak Phase 1 snapshot (see
+// supabase/migrations/20260806190000_add_daily_goal_snapshot_and_update_rpc.sql)
+// — null for any row written before that migration, or (in principle) a
+// row whose value column genuinely came back null. src/data/learning/
+// dailyStreak.ts falls back to the current profile goal only when this is
+// null; a stored value always wins, frozen to whatever goal was active the
+// day the row was created.
 export interface DailyStreakStatRow {
   dateISO: string;
   newWordsCompleted: number;
+  dailyGoal: number | null;
 }
 
 interface UserDailyStatsStreakRawRow {
   stat_date?: unknown;
   new_words_completed?: unknown;
+  daily_goal?: unknown;
 }
 
 export async function readDailyStreakStats(
@@ -760,7 +769,7 @@ export async function readDailyStreakStats(
     session,
     `/rest/v1/user_daily_stats?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(
       targetLanguage,
-    )}&stat_date=gte.${encodeURIComponent(sinceDateISO)}&select=stat_date,new_words_completed`,
+    )}&stat_date=gte.${encodeURIComponent(sinceDateISO)}&select=stat_date,new_words_completed,daily_goal`,
   );
 
   const rows: DailyStreakStatRow[] = [];
@@ -768,10 +777,25 @@ export async function readDailyStreakStats(
     if (typeof raw.stat_date !== "string") {
       continue;
     }
+
+    const rawGoal = raw.daily_goal;
+    let dailyGoal: number | null;
+    if (rawGoal === null || rawGoal === undefined) {
+      dailyGoal = null;
+    } else if (typeof rawGoal === "number" && Number.isFinite(rawGoal)) {
+      dailyGoal = rawGoal;
+    } else {
+      // Malformed non-null daily_goal — skip the whole row rather than
+      // silently guessing a fallback for a value the schema's own CHECK
+      // constraint should make unreachable.
+      continue;
+    }
+
     const rawCount = raw.new_words_completed;
     rows.push({
       dateISO: raw.stat_date,
       newWordsCompleted: typeof rawCount === "number" && Number.isFinite(rawCount) ? rawCount : 0,
+      dailyGoal,
     });
   }
   return rows;

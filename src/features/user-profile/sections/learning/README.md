@@ -498,9 +498,45 @@ server submission day because no client event date is trusted.
 Frontend dashboard reads call `get_current_learning_date()` before filtering
 `user_daily_stats`, so Today's Progress, Daily Streak, and Study queue
 preparation agree with write attribution. Local device time is no longer
-authoritative for learning stats. Historical `user_daily_stats` rows are
-unchanged, and the streak completion rule remains
-`new_words_completed >= current profile daily_goal`.
+authoritative for learning stats.
+
+## Streak Phase 1 — per-row daily-goal snapshots
+
+`user_daily_stats.daily_goal` (nullable, added by
+`supabase/migrations/20260806190000_add_daily_goal_snapshot_and_update_rpc.sql`)
+is a per-day snapshot of the goal that was active when that row was
+created — **not** a live mirror of the profile setting. Study, Review, and
+Custom Practice all stamp it from the caller's current profile goal
+(`coalesce(profile daily_goal, 15)`) the moment they create a new day's row,
+whichever of the three happens first; only `new_words_completed` from Study
+ever feeds streak completion, so Reviews and Custom Practice still never
+complete a streak day on their own even though they can create — and stamp
+the goal on — that day's row.
+
+Today's snapshot changes live when the user changes today's goal: the
+narrow `update_daily_goal` RPC updates `user_profiles.daily_goal` and every
+`user_daily_stats` row the caller owns for the server-derived current date
+(every `target_language`, in the same transaction). Previous dates are
+never touched by that RPC or by anything else — once a day is no longer
+"today," its stored snapshot is frozen for good.
+
+The streak calculation (`src/data/learning/dailyStreak.ts`) resolves the
+goal a row is judged against as `row.dailyGoal ?? currentProfileDailyGoal`:
+a stored snapshot always wins over the live profile goal; the current
+profile goal is used only as a fallback for legacy rows written before this
+migration, which permanently have `daily_goal = null` — **no historical
+backfill was performed**, and none is planned, because there is no
+trustworthy record of what the goal actually was on any day before this
+snapshot existed. `streak_completed` remains a derived, not stored, value —
+computed fresh from `new_words_completed` and the resolved goal on every
+read, same as before this phase.
+
+`DailyGoalSelector` now saves through the narrow `update_daily_goal` RPC
+(via `src/lib/userProfile.ts`'s `updateDailyGoal`) instead of the broad
+profile upsert every other profile-save flow still uses — it sends only the
+new goal, not the whole cached profile. Manual timezone Settings remains a
+separate, unfinished feature (see "Timezone Phase 1" in
+`supabase/README.md`) — this phase does not touch it.
 
 # Shared Exercise Components
 
