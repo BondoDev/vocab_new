@@ -7,8 +7,9 @@ import {
 import { useLanguage } from "../../contexts/LanguageContext";
 import type { StoredSupabaseSession } from "../../lib/supabaseAuth";
 import {
-  writeSupabaseUserProfile,
+  completeUserProfileOnboarding,
   writeStoredUserProfile,
+  type CompleteUserProfileOnboardingInput,
   type UserProfile,
 } from "../../lib/userProfile";
 import {
@@ -86,8 +87,25 @@ export function useAccountOnboarding({
 
     try {
       const profileToSave = submitPreparation.profile;
+      // Narrow write: only the seven onboarding-owned fields are sent —
+      // complete_user_profile_onboarding (see
+      // supabase/migrations/20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql)
+      // derives the caller and sets onboarding_completed server-side, and
+      // never touches daily_goal or either timezone column, instead of
+      // this component re-sending the whole cached profile like the
+      // previous broad upsert did. submitPreparation.ok === true above
+      // already guarantees every field below is non-empty.
+      const onboardingInput: CompleteUserProfileOnboardingInput = {
+        nickname: profileToSave.nickname,
+        nativeLanguage: profileToSave.nativeLanguage as CompleteUserProfileOnboardingInput["nativeLanguage"],
+        practiceLanguage: profileToSave.practiceLanguage as CompleteUserProfileOnboardingInput["practiceLanguage"],
+        languageLevel: profileToSave.languageLevel as CompleteUserProfileOnboardingInput["languageLevel"],
+        age: profileToSave.age as number,
+        birthMonth: profileToSave.birthMonth,
+        birthDay: profileToSave.birthDay,
+      };
       const supabaseProfile = authSession
-        ? await writeSupabaseUserProfile(authSession, profileToSave)
+        ? await completeUserProfileOnboarding(authSession, onboardingInput)
         : {};
       const nextProfile = writeStoredUserProfile(submitPreparation.authUserId, {
         ...profileToSave,

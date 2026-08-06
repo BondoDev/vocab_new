@@ -17,9 +17,12 @@
 // standing in for the real Supabase/localStorage calls.
 //
 // src/app/hooks/useAccountLanguageConfirm.ts is the thin wrapper that calls
-// this with the real writeSupabaseUserProfile/writeStoredUserProfile, and
-// is also the one that translates the returned key into display text (see
-// ACCOUNT_LANGUAGE_SAVE_FALLBACK_KEY below) — this module stays React-free.
+// this with the real updateUserProfileLanguages (Profile Phase 1's narrow
+// language-change RPC — see
+// supabase/migrations/20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql)
+// /writeStoredUserProfile, and is also the one that translates the returned
+// key into display text (see ACCOUNT_LANGUAGE_SAVE_FALLBACK_KEY below) —
+// this module stays React-free.
 import {
   classifySupabaseError,
   describeSupabaseError,
@@ -32,7 +35,10 @@ export type AccountLanguageSaveResult<TProfile> =
 
 export interface SaveAccountLanguagePairParams<TProfile, TSupabaseResult> {
   buildPatchedProfile: () => TProfile;
-  writeSupabaseUserProfile: (profile: TProfile) => Promise<TSupabaseResult>;
+  // Named generically (not writeSupabaseUserProfile) because the real
+  // injected implementation is the narrow updateUserProfileLanguages RPC
+  // call, not a broad profile upsert — see useAccountLanguageConfirm.ts.
+  writeLanguagesToSupabase: (profile: TProfile) => Promise<TSupabaseResult>;
   writeStoredUserProfile: (profile: TProfile & TSupabaseResult) => TProfile;
 }
 
@@ -59,7 +65,7 @@ export async function saveAccountLanguagePair<TProfile, TSupabaseResult>(
 ): Promise<AccountLanguageSaveResult<TProfile>> {
   try {
     const patchedProfile = params.buildPatchedProfile();
-    const supabaseResult = await params.writeSupabaseUserProfile(patchedProfile);
+    const supabaseResult = await params.writeLanguagesToSupabase(patchedProfile);
     const nextProfile = params.writeStoredUserProfile({
       ...patchedProfile,
       ...supabaseResult,

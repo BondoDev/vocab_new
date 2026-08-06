@@ -74,19 +74,44 @@ test("2. DailyGoalSelector never calls the broad profile upsert (writeSupabaseUs
   assert.match(selectorSource, /updateDailyGoal/);
 });
 
-test("3. writeSupabaseUserProfile remains the write path for onboarding and language-confirm profile saves", () => {
-  const offenders = [];
-  const expectedCallers = [
-    "src/app/hooks/useAccountOnboarding.ts",
-    "src/app/hooks/useAccountLanguageConfirm.ts",
-  ];
-  for (const relPath of expectedCallers) {
+test("3. Onboarding and language-confirm profile saves use their own narrow RPCs — the broad writeSupabaseUserProfile upsert no longer exists anywhere (Profile Phase 1)", () => {
+  const expectedCallers = {
+    "src/app/hooks/useAccountOnboarding.ts": "completeUserProfileOnboarding",
+    "src/app/hooks/useAccountLanguageConfirm.ts": "updateUserProfileLanguages",
+  };
+  const missing = [];
+  for (const [relPath, expectedSymbol] of Object.entries(expectedCallers)) {
     const content = fs.readFileSync(path.join(ROOT_DIR, relPath), "utf8");
-    if (!content.includes("writeSupabaseUserProfile")) {
+    if (!content.includes(expectedSymbol)) {
+      missing.push(`${relPath} (expected ${expectedSymbol})`);
+    }
+  }
+  assert.deepEqual(missing, [], `expected narrow-RPC call(s) missing: ${missing.join(", ")}`);
+
+  // Comments referencing the removed symbol by name (historical explanation
+  // of what Profile Phase 1 replaced) are fine and expected — only a real
+  // call expression or an import naming it would indicate the function
+  // still exists and is reachable.
+  const offenders = [];
+  for (const file of sourceFiles) {
+    const relPath = path.relative(ROOT_DIR, file).replace(/\\/g, "/");
+    const content = fs.readFileSync(file, "utf8");
+    const isLiveReference =
+      /\bwriteSupabaseUserProfile\s*\(/.test(content) ||
+      /import\s*\{[^}]*\bwriteSupabaseUserProfile\b[^}]*\}/.test(content);
+    if (isLiveReference) {
       offenders.push(relPath);
     }
   }
-  assert.deepEqual(offenders, [], `expected writeSupabaseUserProfile call(s) missing from: ${offenders.join(", ")}`);
+  assert.deepEqual(offenders, [], `unexpected live writeSupabaseUserProfile call/import in: ${offenders.join(", ")}`);
+});
+
+test("3b. src/lib/userProfile.ts no longer exports writeSupabaseUserProfile or toSupabaseProfilePatch", () => {
+  const userProfileSource = fs.readFileSync(path.join(SRC_DIR, "lib", "userProfile.ts"), "utf8");
+  assert.doesNotMatch(userProfileSource, /export\s+(async\s+)?function\s+writeSupabaseUserProfile/);
+  assert.doesNotMatch(userProfileSource, /function\s+toSupabaseProfilePatch/);
+  assert.match(userProfileSource, /export\s+async\s+function\s+completeUserProfileOnboarding/);
+  assert.match(userProfileSource, /export\s+async\s+function\s+updateUserProfileLanguages/);
 });
 
 test("4. The daily-streak read path selects the per-row daily_goal snapshot", () => {

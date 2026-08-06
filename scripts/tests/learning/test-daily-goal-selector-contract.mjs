@@ -117,9 +117,11 @@ test("7. DailyGoalSelector keeps its existing loading/disabled/error-toast behav
   assert.match(selectorSource, /saveError/);
 });
 
-test("8. Onboarding and language-confirm profile writes are untouched — still use the broad upsert", () => {
-  assert.match(onboardingSource, /writeSupabaseUserProfile/);
-  assert.match(languageConfirmSource, /writeSupabaseUserProfile/);
+test("8. Onboarding and language-confirm profile writes use their own narrow RPCs, never the removed broad upsert (Profile Phase 1)", () => {
+  assert.match(onboardingSource, /completeUserProfileOnboarding/);
+  assert.match(languageConfirmSource, /updateUserProfileLanguages/);
+  assert.doesNotMatch(onboardingSource, /writeSupabaseUserProfile/);
+  assert.doesNotMatch(languageConfirmSource, /writeSupabaseUserProfile/);
 });
 
 console.log(`\n─────────────────────────────────────────`);

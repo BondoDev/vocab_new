@@ -11,7 +11,19 @@ import {
   parseInitializeUserTimezoneRow,
   type InitializeUserTimezoneResult,
 } from "./userProfileTimezone";
-import { parseUpdateDailyGoalRow, type UpdateDailyGoalResult } from "./dailyGoalUpdate";
+import {
+  parseUpdateDailyGoalRow,
+  isSupportedDailyGoalValue,
+  type UpdateDailyGoalResult,
+} from "./dailyGoalUpdate";
+import {
+  parseCompleteUserProfileOnboardingRow,
+  type CompleteUserProfileOnboardingResult,
+} from "./userProfileOnboarding";
+import {
+  parseUpdateUserProfileLanguagesRow,
+  type UpdateUserProfileLanguagesResult,
+} from "./userProfileLanguages";
 
 const USER_PROFILE_KEY_PREFIX = "app.userProfile";
 
@@ -126,17 +138,15 @@ function normalizeBirthDay(value: unknown): string {
   return trimmed;
 }
 
+// Exactly the five supported presets (10, 15, 20, 30, 50) — not a numeric
+// range. Delegates to dailyGoalUpdate.ts's isSupportedDailyGoalValue (the
+// same check update_daily_goal's own response parser uses) instead of
+// maintaining a second, looser definition of "valid daily goal" here. Any
+// other value (malformed localStorage cache, a legacy value predating the
+// exact-preset database CHECK, ...) falls back to the safe default rather
+// than being accepted or rounded.
 function normalizeDailyGoal(value: unknown): number {
-  if (typeof value !== "number" || !Number.isFinite(value)) {
-    return DEFAULT_DAILY_GOAL;
-  }
-
-  const rounded = Math.round(value);
-  if (rounded < 1 || rounded > 999) {
-    return DEFAULT_DAILY_GOAL;
-  }
-
-  return rounded;
+  return isSupportedDailyGoalValue(value) ? value : DEFAULT_DAILY_GOAL;
 }
 
 function normalizeLanguageLevel(value: unknown): LanguageLevelCode | "" {
@@ -207,25 +217,6 @@ async function supabaseProfileRequest<TResponse>(
       },
     });
   }
-}
-
-function toSupabaseProfilePatch(profile: Partial<UserProfile>) {
-  const normalized = normalizeUserProfile(profile);
-  const timestamp = new Date().toISOString();
-
-  return {
-    nickname: normalized.nickname || null,
-    native_language: normalized.nativeLanguage || null,
-    learning_language: normalized.practiceLanguage || null,
-    current_level: normalized.languageLevel || null,
-    user_age: normalized.age,
-    birth_month: normalized.birthMonth ? Number(normalized.birthMonth) : null,
-    birth_day: normalized.birthDay ? Number(normalized.birthDay) : null,
-    onboarding_completed: normalized.onboardingCompleted,
-    daily_goal: normalized.dailyGoal,
-    updated_at: timestamp,
-    last_active_at: timestamp,
-  };
 }
 
 function normalizeTimezone(value: unknown): string | null {
@@ -406,8 +397,10 @@ export async function initializeUserTimezone(
 }
 
 // Streak Phase 1's narrow goal-update path — replaces DailyGoalSelector's
-// previous call to the broad writeSupabaseUserProfile upsert below (which
-// re-sends all 11 profile fields for a single-field change). Sends only
+// previous call to the broad writeSupabaseUserProfile upsert (removed in
+// Profile Phase 1 — see completeUserProfileOnboarding/
+// updateUserProfileLanguages below for its narrow replacements), which
+// re-sent all 11 profile fields for a single-field change. Sends only
 // p_daily_goal; the update_daily_goal RPC (see
 // supabase/migrations/20260806190000_add_daily_goal_snapshot_and_update_rpc.sql)
 // derives the caller and today's date server-side, updates
@@ -444,31 +437,143 @@ export async function updateDailyGoal(
   return parseUpdateDailyGoalRow(rows);
 }
 
-export async function writeSupabaseUserProfile(
+// Profile Phase 1's narrow onboarding path — replaces the former broad
+// writeSupabaseUserProfile upsert (POST /rest/v1/user_profiles, direct table
+// write) that onboarding used to call. Sends only the seven fields
+// onboarding owns; complete_user_profile_onboarding (see
+// supabase/migrations/20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql)
+// derives the caller server-side, sets onboarding_completed itself, and
+// never touches daily_goal/timezone/timezone_updated_at/created_at/
+// is_new_user — a stale or default-valued in-memory dailyGoal can no longer
+// be re-sent and silently overwrite a value saved through the narrow
+// update_daily_goal path. authenticated no longer holds direct INSERT/
+// UPDATE privileges on user_profiles at all (same migration) — this RPC is
+// the only remaining way to create or complete onboarding for a profile row
+// from the frontend.
+function fromCompleteUserProfileOnboardingResult(
+  result: CompleteUserProfileOnboardingResult,
+): Partial<UserProfile> {
+  return {
+    nickname: result.nickname,
+    nativeLanguage: result.nativeLanguage,
+    practiceLanguage: result.learningLanguage,
+    languageLevel: result.currentLevel,
+    age: result.userAge,
+    birthMonth: String(result.birthMonth).padStart(2, "0"),
+    birthDay: String(result.birthDay).padStart(2, "0"),
+    onboardingCompleted: result.onboardingCompleted,
+    dailyGoal: result.dailyGoal,
+    timezone: result.timezone,
+    timezoneUpdatedAt: result.timezoneUpdatedAt,
+    updatedAt: result.updatedAt,
+  };
+}
+
+export interface CompleteUserProfileOnboardingInput {
+  nickname: string;
+  nativeLanguage: UILanguage;
+  practiceLanguage: UILanguage;
+  languageLevel: LanguageLevelCode;
+  age: number;
+  // Two-digit strings ("01".."12" / "01".."31"), matching UserProfile's own
+  // birthMonth/birthDay representation — converted to integers only in the
+  // request body sent to the RPC below.
+  birthMonth: string;
+  birthDay: string;
+}
+
+export async function completeUserProfileOnboarding(
   session: StoredSupabaseSession,
-  profile: Partial<UserProfile>,
+  input: CompleteUserProfileOnboardingInput,
 ): Promise<Partial<UserProfile>> {
   const userId = session.user?.id;
   if (!userId) {
     throw new Error("Missing authenticated user.");
   }
 
-  const payload = {
-    id: userId,
-    ...toSupabaseProfilePatch(profile),
-  };
-
-  const rows = await supabaseProfileRequest<UserProfilesRow[]>(
+  const rows = await supabaseProfileRequest<unknown[] | unknown>(
     session,
-    "/rest/v1/user_profiles",
+    "/rest/v1/rpc/complete_user_profile_onboarding",
     {
       method: "POST",
-      headers: {
-        Prefer: "resolution=merge-duplicates,return=representation,missing=default",
-      },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        p_nickname: input.nickname,
+        p_native_language: input.nativeLanguage,
+        p_learning_language: input.practiceLanguage,
+        p_current_level: input.languageLevel,
+        p_user_age: input.age,
+        p_birth_month: Number(input.birthMonth),
+        p_birth_day: Number(input.birthDay),
+      }),
     },
   );
 
-  return fromSupabaseProfileRow(rows[0]);
+  if (Array.isArray(rows)) {
+    if (rows.length !== 1) {
+      throw new ClassifiedSupabaseError(
+        "complete_user_profile_onboarding returned an unexpected number of rows.",
+        "unexpected_response",
+      );
+    }
+    return fromCompleteUserProfileOnboardingResult(parseCompleteUserProfileOnboardingRow(rows[0]));
+  }
+
+  return fromCompleteUserProfileOnboardingResult(parseCompleteUserProfileOnboardingRow(rows));
+}
+
+// Profile Phase 1's narrow language-change path — replaces the former broad
+// writeSupabaseUserProfile upsert the account-language-confirm popup used to
+// call. Sends only the two language fields; update_user_profile_languages
+// (same migration as above) updates only native_language/learning_language/
+// updated_at and rejects a caller with no existing profile row rather than
+// implicitly creating an incomplete one. daily_goal, timezone, onboarding
+// fields, and demographic fields are structurally unreachable through this
+// path.
+function fromUpdateUserProfileLanguagesResult(
+  result: UpdateUserProfileLanguagesResult,
+): Partial<UserProfile> {
+  return {
+    nativeLanguage: result.nativeLanguage,
+    practiceLanguage: result.learningLanguage,
+    updatedAt: result.updatedAt,
+  };
+}
+
+export interface UpdateUserProfileLanguagesInput {
+  nativeLanguage: UILanguage;
+  practiceLanguage: UILanguage;
+}
+
+export async function updateUserProfileLanguages(
+  session: StoredSupabaseSession,
+  input: UpdateUserProfileLanguagesInput,
+): Promise<Partial<UserProfile>> {
+  const userId = session.user?.id;
+  if (!userId) {
+    throw new Error("Missing authenticated user.");
+  }
+
+  const rows = await supabaseProfileRequest<unknown[] | unknown>(
+    session,
+    "/rest/v1/rpc/update_user_profile_languages",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        p_native_language: input.nativeLanguage,
+        p_learning_language: input.practiceLanguage,
+      }),
+    },
+  );
+
+  if (Array.isArray(rows)) {
+    if (rows.length !== 1) {
+      throw new ClassifiedSupabaseError(
+        "update_user_profile_languages returned an unexpected number of rows.",
+        "unexpected_response",
+      );
+    }
+    return fromUpdateUserProfileLanguagesResult(parseUpdateUserProfileLanguagesRow(rows[0]));
+  }
+
+  return fromUpdateUserProfileLanguagesResult(parseUpdateUserProfileLanguagesRow(rows));
 }

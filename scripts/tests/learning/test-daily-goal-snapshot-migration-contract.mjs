@@ -136,7 +136,18 @@ test("5. Study/Review/Custom-Practice INSERT branches all supply daily_goal from
     assert.ok(validationMatch, `${name} must validate the resolved goal against the exact preset set, not a 1-200 range`);
     assertExactPresetSet(validationMatch[0], `${name}'s resolved-goal validation`);
     assert.doesNotMatch(block, /v_daily_goal\s*<\s*1\s*or\s*v_daily_goal\s*>\s*200/i, `${name} must not use a 1-200 range comparison`);
-    assert.match(block, /insert into public\.user_daily_stats \([\s\S]*?daily_goal[\s\S]*?\) *\n *values/i, `${name}'s INSERT column list must include daily_goal`);
+    // ` *\r?\n *` (not the original ` *\n *`) — this repository's checkout
+    // uses CRLF line endings, so a bare `\n` here left a `\r` unconsumed
+    // right before it (` *` only matches literal spaces, never `\r`),
+    // making this assertion fail to match real CRLF source even though the
+    // structure it checks for was correct. `\r?\n` matches the line break
+    // itself under either convention while still requiring an actual line
+    // break between the INSERT column list's closing `)` and `values` —
+    // the same structural claim as before, not a looser one (a bare `\s*`
+    // in its place would also accept `) values` on a single line, which
+    // this migration's own formatting never produces and which would be a
+    // meaningfully broader match than intended).
+    assert.match(block, /insert into public\.user_daily_stats \([\s\S]*?daily_goal[\s\S]*?\) *\r?\n *values/i, `${name}'s INSERT column list must include daily_goal`);
   }
 });
 

@@ -181,13 +181,29 @@ test("8. Counts and favorites are computed from progress rows scoped to the curr
   );
 });
 
-test("9. Vocabulary profile writes cannot smuggle timezone through the generic profile upsert", () => {
-  const patchMatch = userProfileLib.match(/function toSupabaseProfilePatch[\s\S]*?return \{([\s\S]*?)\n  \};/);
-  assert.ok(patchMatch, "toSupabaseProfilePatch must exist");
+test("9. Vocabulary profile writes cannot smuggle timezone through either narrow profile RPC (Profile Phase 1 removed the generic upsert entirely)", () => {
   assert.doesNotMatch(
-    patchMatch[1],
-    /\btimezone\b|timezone_updated_at|timezoneUpdatedAt/,
-    "generic profile upserts must not include timezone fields",
+    userProfileLib,
+    /function toSupabaseProfilePatch/,
+    "the broad generic profile upsert must no longer exist",
+  );
+  const onboardingFnMatch = userProfileLib.match(/export async function completeUserProfileOnboarding\(([\s\S]*?)\r?\n\}/);
+  const languagesFnMatch = userProfileLib.match(/export async function updateUserProfileLanguages\(([\s\S]*?)\r?\n\}/);
+  assert.ok(onboardingFnMatch, "completeUserProfileOnboarding must exist");
+  assert.ok(languagesFnMatch, "updateUserProfileLanguages must exist");
+  const onboardingBodyMatch = onboardingFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
+  const languagesBodyMatch = languagesFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
+  assert.ok(onboardingBodyMatch, "completeUserProfileOnboarding must send a JSON request body");
+  assert.ok(languagesBodyMatch, "updateUserProfileLanguages must send a JSON request body");
+  assert.doesNotMatch(
+    onboardingBodyMatch[1],
+    /\btimezone\b|timezone_updated_at|p_timezone/i,
+    "the onboarding RPC's request body must not include any timezone field",
+  );
+  assert.doesNotMatch(
+    languagesBodyMatch[1],
+    /\btimezone\b|timezone_updated_at|p_timezone/i,
+    "the language-change RPC's request body must not include any timezone field",
   );
   assert.match(
     userProfileLib,

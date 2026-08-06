@@ -96,10 +96,22 @@ test("6. UserProfile represents timezone as nullable and does not force UTC", ()
   assert.doesNotMatch(userProfileSource, /timezone:\s*"UTC"/);
 });
 
-test("7. Generic profile upsert payload does not send timezone fields", () => {
-  const patchMatch = userProfileSource.match(/function toSupabaseProfilePatch[\s\S]*?return \{([\s\S]*?)\n  \};/);
-  assert.ok(patchMatch, "toSupabaseProfilePatch body must be found");
-  assert.doesNotMatch(patchMatch[1], /\btimezone\b|timezone_updated_at|timezoneUpdatedAt/);
+test("7. Neither narrow profile RPC's request body sends timezone fields (Profile Phase 1 removed the generic upsert entirely)", () => {
+  assert.doesNotMatch(
+    userProfileSource,
+    /function toSupabaseProfilePatch/,
+    "the broad generic profile upsert must no longer exist",
+  );
+  const onboardingFnMatch = userProfileSource.match(/export async function completeUserProfileOnboarding\(([\s\S]*?)\r?\n\}/);
+  const languagesFnMatch = userProfileSource.match(/export async function updateUserProfileLanguages\(([\s\S]*?)\r?\n\}/);
+  assert.ok(onboardingFnMatch, "completeUserProfileOnboarding must exist");
+  assert.ok(languagesFnMatch, "updateUserProfileLanguages must exist");
+  const onboardingBodyMatch = onboardingFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
+  const languagesBodyMatch = languagesFnMatch[1].match(/body:\s*JSON\.stringify\(\{([\s\S]*?)\}\),/);
+  assert.ok(onboardingBodyMatch, "completeUserProfileOnboarding must send a JSON request body");
+  assert.ok(languagesBodyMatch, "updateUserProfileLanguages must send a JSON request body");
+  assert.doesNotMatch(onboardingBodyMatch[1], /\btimezone\b|timezone_updated_at|p_timezone/i);
+  assert.doesNotMatch(languagesBodyMatch[1], /\btimezone\b|timezone_updated_at|p_timezone/i);
 });
 
 test("8. Timezone initialization uses the narrow RPC helper", () => {

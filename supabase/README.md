@@ -80,8 +80,10 @@ here so the next migration can address them deliberately, one at a time:
 5. **Excessive table-level grants across the board** (see above) —
    `TRUNCATE`/`REFERENCES`/`TRIGGER`/`MAINTAIN` granted to `anon`/
    `authenticated` on all four tables with no application need for any of
-   them. Closed for `review_events` by Corrective Migration 4, below; still
-   open for `user_profiles`, `user_word_progress`, and `user_daily_stats`.
+   them. Closed for `user_word_progress`/`user_daily_stats` by Corrective
+   Migration 1, for `review_events` by Corrective Migration 4, and for
+   `user_profiles` by Profile Phase 1, below — no table in this baseline
+   still carries this imperfection as of Profile Phase 1.
 
 ### Promotion thresholds — confirmed intentional, not a bug
 
@@ -500,6 +502,88 @@ though nothing about those rows themselves had changed.
   every existing row has `daily_goal = null` and keeps comparing against
   the current profile goal exactly as before. Accuracy only improves going
   forward, as new goal-stamped rows accumulate.
+
+## Profile Phase 1 — narrow onboarding/language-change RPCs, user_profiles write restriction
+
+`migrations/20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql`
+closes the one remaining item from this README's "Known imperfections" list
+that no earlier corrective migration had touched: `user_profiles` itself.
+Every other learning table (`user_word_progress`/`user_daily_stats`,
+Corrective Migration 1; `review_events`, Corrective Migration 4) had already
+moved to narrow, ownership-checked `SECURITY DEFINER` RPC writes with
+`authenticated` reduced to `SELECT` only — `user_profiles` still granted
+`authenticated`/`anon` the full standard privilege set, with a single
+ownership-scoped `FOR ALL` RLS policy as the only backstop, and the
+frontend's broad `writeSupabaseUserProfile` upsert (a direct
+`POST /rest/v1/user_profiles` re-sending the entire cached profile object)
+was still the only write path for onboarding and the account-language-confirm
+popup.
+
+- **Two new narrow RPCs**, matching `update_daily_goal`/
+  `initialize_user_timezone`'s existing shape exactly (`SECURITY DEFINER`,
+  `SET search_path TO ''`, `auth.uid()`-derived caller, `authenticated`-only
+  `EXECUTE`, `anon`/`PUBLIC` excluded):
+  - `complete_user_profile_onboarding(p_nickname, p_native_language,
+    p_learning_language, p_current_level, p_user_age, p_birth_month,
+    p_birth_day)` — the only path that may set onboarding fields or
+    `onboarding_completed` (always `true`, never a parameter). A single
+    atomic `INSERT ... ON CONFLICT (id) DO UPDATE` handles both a missing
+    profile row (new row gets the table's own `daily_goal` default of `15`,
+    a `null` timezone, and its `created_at` default — none of those three
+    columns is ever named in the INSERT column list) and an existing one
+    (the `DO UPDATE SET` list never names `daily_goal`/`timezone`/
+    `timezone_updated_at`/`created_at`/`is_new_user` either, so a
+    resubmission structurally cannot touch any of them). `last_active_at`
+    and `updated_at` are both stamped from the function's own server-side
+    `now()` on either branch.
+  - `update_user_profile_languages(p_native_language, p_learning_language)`
+    — the only path that may change `native_language`/`learning_language`
+    after onboarding. Updates only those two columns plus `updated_at`;
+    rejects a caller with no existing profile row (`SQLSTATE P0002`, matching
+    `update_daily_goal`'s identical precedent) instead of implicitly creating
+    an incomplete one.
+- **Seven new precondition-guarded `CHECK` constraints** on `user_profiles`,
+  mirroring `src/lib/userProfile.ts`'s own frontend normalizers exactly:
+  `native_language`/`learning_language` (the seven supported codes),
+  `current_level` (`A1`-`C2`), `user_age` (`10`-`100`), `birth_month`
+  (`1`-`12`), `birth_day` (`1`-`31`), and `nickname` (non-empty after trim,
+  at most 40 characters — deliberately **not** reproducing the frontend's
+  Unicode "starts with a letter" rule, which stays frontend-only; see the
+  migration's own header for why). Each constraint is guarded by a `DO`
+  block that counts violating existing rows and raises a named exception
+  before adding the constraint, the same confirm-before-constrain pattern
+  Streak Phase 1 used for `user_profiles_daily_goal_allowed_values_check`.
+  The existing `daily_goal` `CHECK` is untouched.
+- **`user_profiles` RLS and grants tightened to match the other three
+  tables**: the old ownership-scoped `FOR ALL` policy
+  (`"Users can manage their profiles"`) is replaced with a named
+  ownership-scoped `FOR SELECT` policy (`"Users can view their own
+  profile"`) — every write now goes through a `SECURITY DEFINER` RPC that
+  bypasses RLS as its owner (`postgres`) regardless. `authenticated` is
+  revoked down to `SELECT` only; `anon` loses every direct privilege on the
+  table. `postgres`/`service_role` are untouched.
+- **Frontend**: `writeSupabaseUserProfile` and its `toSupabaseProfilePatch`
+  payload builder are removed from `src/lib/userProfile.ts` entirely — no
+  file in `src/` constructs a direct `user_profiles` table mutation anymore.
+  `useAccountOnboarding.ts` calls `completeUserProfileOnboarding`;
+  `useAccountLanguageConfirm.ts` (via `accountLanguageSave.ts`, whose
+  injected-write parameter was renamed from `writeSupabaseUserProfile` to
+  `writeLanguagesToSupabase` to stop naming a function that no longer
+  exists) calls `updateUserProfileLanguages`. Both RPCs' responses are
+  strictly parsed by dedicated modules
+  (`src/lib/userProfileOnboarding.ts`, `src/lib/userProfileLanguages.ts`)
+  following `dailyGoalUpdate.ts`/`userProfileTimezone.ts`'s existing
+  parse-and-throw-`unexpected_response` precedent — never silently coerced.
+- **`normalizeDailyGoal`** (`src/lib/userProfile.ts`) now delegates to
+  `dailyGoalUpdate.ts`'s `isSupportedDailyGoalValue` instead of its own
+  looser `1`-`999` range check, so the frontend's fallback behavior for a
+  malformed/legacy stored `daily_goal` matches the database's exact-preset
+  `CHECK` and `update_daily_goal`'s own validation exactly.
+- **Not applied.** Like every migration in this repository, this one ships
+  prepared and reviewed only. See the migration file's own header for its
+  full preflight-query list, rollback considerations, and the explicit
+  "not applied" statement, and this repository's Profile Phase 1 task report
+  for the same confirmation.
 
 ## What happens next
 

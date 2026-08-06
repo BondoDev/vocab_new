@@ -207,7 +207,7 @@ async function main() {
 
     const result = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "fr", practiceLanguage: "de", nickname: "Al" }),
-      writeSupabaseUserProfile: async (profile) => {
+      writeLanguagesToSupabase: async (profile) => {
         supabaseCalls += 1;
         lastSupabasePatch = profile;
         return { updatedAt: "2026-07-18T00:00:00.000Z" };
@@ -230,7 +230,7 @@ async function main() {
   await test("successful save returns the merged profile for the caller to adopt as the new in-memory state", async () => {
     const result = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-      writeSupabaseUserProfile: async () => ({ onboardingCompleted: true }),
+      writeLanguagesToSupabase: async () => ({ onboardingCompleted: true }),
       writeStoredUserProfile: (profile) => profile,
     });
     assert.equal(result.ok, true);
@@ -245,7 +245,7 @@ async function main() {
     let storageCalls = 0;
     const result = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-      writeSupabaseUserProfile: async () => {
+      writeLanguagesToSupabase: async () => {
         throw new Error("Network unreachable");
       },
       writeStoredUserProfile: (profile) => {
@@ -273,7 +273,7 @@ async function main() {
     authError.status = 401;
     const result = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-      writeSupabaseUserProfile: async () => {
+      writeLanguagesToSupabase: async () => {
         throw authError;
       },
       writeStoredUserProfile: (profile) => profile,
@@ -287,7 +287,7 @@ async function main() {
     forbiddenError.code = "42501";
     const result = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-      writeSupabaseUserProfile: async () => {
+      writeLanguagesToSupabase: async () => {
         throw forbiddenError;
       },
       writeStoredUserProfile: (profile) => profile,
@@ -301,7 +301,7 @@ async function main() {
     missingRpcError.code = "PGRST202";
     const result = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-      writeSupabaseUserProfile: async () => {
+      writeLanguagesToSupabase: async () => {
         throw missingRpcError;
       },
       writeStoredUserProfile: (profile) => profile,
@@ -313,7 +313,7 @@ async function main() {
   await test("a bare network TypeError resolves to the shared network translation key", async () => {
     const result = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-      writeSupabaseUserProfile: async () => {
+      writeLanguagesToSupabase: async () => {
         throw new TypeError("Failed to fetch");
       },
       writeStoredUserProfile: (profile) => profile,
@@ -327,7 +327,7 @@ async function main() {
     validationError.code = "23514";
     const validationResult = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-      writeSupabaseUserProfile: async () => {
+      writeLanguagesToSupabase: async () => {
         throw validationError;
       },
       writeStoredUserProfile: (profile) => profile,
@@ -339,7 +339,7 @@ async function main() {
     conflictError.code = "23505";
     const conflictResult = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-      writeSupabaseUserProfile: async () => {
+      writeLanguagesToSupabase: async () => {
         throw conflictError;
       },
       writeStoredUserProfile: (profile) => profile,
@@ -351,7 +351,7 @@ async function main() {
   await test("failure with a non-Error throw still surfaces a clear, non-empty translation key (no silent swallow)", async () => {
     const result = await saveAccountLanguagePair({
       buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-      writeSupabaseUserProfile: async () => {
+      writeLanguagesToSupabase: async () => {
         throw "boom";
       },
       writeStoredUserProfile: (profile) => profile,
@@ -368,7 +368,7 @@ async function main() {
     try {
       await saveAccountLanguagePair({
         buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-        writeSupabaseUserProfile: async () => {
+        writeLanguagesToSupabase: async () => {
           throw new Error("duplicate key value violates unique constraint \"user_profiles_pkey\"");
         },
         writeStoredUserProfile: (profile) => profile,
@@ -394,7 +394,7 @@ async function main() {
     const attempt = () =>
       saveAccountLanguagePair({
         buildPatchedProfile: () => ({ nativeLanguage: "en", practiceLanguage: "es" }),
-        writeSupabaseUserProfile: async (profile) => {
+        writeLanguagesToSupabase: async (profile) => {
           supabaseCalls += 1;
           if (shouldFail) {
             throw new Error("transient failure");
@@ -499,7 +499,14 @@ async function main() {
   // source-text-checked here; that fix's own catch-block behavior is
   // covered instead by scripts/tests/architecture/test-supabase-error-handling.mjs,
   // since it's a structural/classification concern, not language-sync
-  // wiring.
+  // wiring. Profile Phase 1 (2026-08-06) replaced onboarding's broad
+  // writeSupabaseUserProfile upsert with the narrow
+  // complete_user_profile_onboarding RPC — see
+  // scripts/tests/account/test-user-profile-onboarding-response.mjs and
+  // scripts/tests/architecture/test-user-profiles-narrow-write-boundary.mjs
+  // for that RPC's own dedicated coverage; this file's onboarding checks
+  // below only prove the still-unchanged live-language-state wiring and that
+  // the broad upsert is gone.
   const onboardingHookSource = readFile("src/app/hooks/useAccountOnboarding.ts");
 
   await test("editing the onboarding form's native language still updates live app state directly (no extra confirmation)", () => {
@@ -512,10 +519,11 @@ async function main() {
     assert.match(onboardingHookSource, /setPracticeLanguage\(patch\.practiceLanguage\)/);
   });
 
-  await test("submitting onboarding still validates and saves the final submitted values to Supabase and local storage", () => {
+  await test("submitting onboarding still validates and saves the final submitted values via the narrow onboarding RPC and local storage", () => {
     assert.match(onboardingHookSource, /prepareAccountOnboardingSubmit/);
-    assert.match(onboardingHookSource, /writeSupabaseUserProfile\(authSession, profileToSave\)/);
+    assert.match(onboardingHookSource, /completeUserProfileOnboarding\(authSession, onboardingInput\)/);
     assert.match(onboardingHookSource, /writeStoredUserProfile\(/);
+    assert.doesNotMatch(onboardingHookSource, /writeSupabaseUserProfile/);
   });
 
   await test("useUserProfileLoad still merges from anonymous yourLanguage/practiceLanguage when no stored/Supabase profile exists", () => {

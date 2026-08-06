@@ -43,10 +43,11 @@ const DAILY_GOAL_OPTIONS: DailyGoalOption[] = [
 interface DailyGoalSelectorProps {
   // The Learning dashboard's single shared profile (see App.tsx's
   // useUserProfileLoad, threaded down through LearningSection) — this
-  // component no longer loads its own copy. The full object (not just
-  // dailyGoal) is needed because saving a new goal writes the whole
-  // profile row back to Supabase (see handleSave/toSupabaseProfilePatch),
-  // and it must not clobber the other saved fields with stale defaults.
+  // component no longer loads its own copy. Saving a new goal only ever
+  // sends p_daily_goal to the narrow update_daily_goal RPC (see handleSave
+  // below) — the full userProfile object is needed here only to read the
+  // currently-saved value (isUnchanged/initial `goal` state), never to
+  // rebuild a write payload from it.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
   // Called with the newly saved goal once the Supabase write succeeds, so

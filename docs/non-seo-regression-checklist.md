@@ -224,12 +224,15 @@ this document.
 - [ ] Filter selections persist across refresh (`app.selectedLevel`,
       `app.selectedCategories`, `app.selectedLevels`,
       `app.selectedWordTypes`, `app.selectedExercises`)
-- [ ] Account onboarding submit writes to Supabase `user_profiles` and the
-      dialog closes on success
+- [ ] Account onboarding submit calls the `complete_user_profile_onboarding`
+      RPC and the dialog closes on success
 - [ ] Account onboarding submit shows a visible error on network failure,
       does not silently fail
-- [ ] Repeated onboarding submits do not create duplicate rows (upsert via
-      `Prefer: resolution=merge-duplicates` — verify this contract holds)
+- [ ] Repeated onboarding submits do not create duplicate rows and do not
+      reset an already-saved daily goal or timezone
+- [ ] Account-language confirmation ("Save to account") calls the
+      `update_user_profile_languages` RPC and updates only the language
+      pair
 - [ ] **Practice/exam answers are not expected to persist anywhere** — do
       not flag this as a bug
 
@@ -365,9 +368,10 @@ typing/four-word classification *and* the setup option list in
 
 | ID | Feature | Preconditions | Steps | Expected result | Status | Automation candidate |
 |---|---|---|---|---|---|---|
-| PROGRESS-01 | Onboarding write | Logged in, incomplete profile | Complete onboarding dialog | `POST /rest/v1/user_profiles` succeeds, dialog closes | current | manual only (writes real data — use test account) |
-| PROGRESS-02 | Onboarding upsert idempotency | Onboarding already complete | Trigger onboarding again (e.g. edit + resubmit) | No duplicate row (`Prefer: resolution=merge-duplicates`) | current | manual only |
+| PROGRESS-01 | Onboarding write | Logged in, incomplete profile | Complete onboarding dialog | `POST /rest/v1/rpc/complete_user_profile_onboarding` succeeds (request contains only `p_nickname`/`p_native_language`/`p_learning_language`/`p_current_level`/`p_user_age`/`p_birth_month`/`p_birth_day` — no user ID, `p_daily_goal`, or timezone field), dialog closes, returned profile reflected in the UI | current | manual only (writes real data — use test account) |
+| PROGRESS-02 | Onboarding upsert idempotency | Onboarding already complete, a daily goal and timezone are already saved | Trigger onboarding again (e.g. edit + resubmit) | No duplicate row (`INSERT ... ON CONFLICT (id) DO UPDATE` makes this idempotent by construction); the previously-saved daily goal and timezone remain unchanged | current | manual only |
 | PROGRESS-03 | Onboarding network failure | Simulate offline/failed request | Submit onboarding | Visible error, dialog stays open, no partial write assumed | current | manual |
+| PROGRESS-04 | Account-language confirmation write | Logged in, saved language pair differs from the current selection | Trigger "Save to account" from the Languages-page confirmation popup | `POST /rest/v1/rpc/update_user_profile_languages` succeeds (request contains only `p_native_language`/`p_learning_language` — no complete profile object, no user ID), updated language pair appears in the UI, and daily goal/timezone/nickname/level/age/birth fields remain unchanged | current | manual only (writes real data — use test account) |
 | PROGRESS-DEFERRED-01 | Practice answer persistence | — | — | **Not implemented** — do not test as if it exists | deferred | n/a |
 | PROGRESS-DEFERRED-02 | Session/attempt history persistence | — | — | **Not implemented** | deferred | n/a |
 

@@ -9,8 +9,9 @@ import { useState, type Dispatch, type SetStateAction } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import type { StoredSupabaseSession } from "../../lib/supabaseAuth";
 import {
-  writeSupabaseUserProfile,
+  updateUserProfileLanguages,
   writeStoredUserProfile,
+  type UpdateUserProfileLanguagesInput,
   type UserProfile,
 } from "../../lib/userProfile";
 import { buildLanguageSyncedProfile } from "../utils/accountProfile";
@@ -104,7 +105,19 @@ export function useAccountLanguageConfirm({
     void saveAccountLanguagePair<UserProfile, Partial<UserProfile>>({
       buildPatchedProfile: () =>
         buildLanguageSyncedProfile(userProfile, { yourLanguage, practiceLanguage }),
-      writeSupabaseUserProfile: (profile) => writeSupabaseUserProfile(authSession, profile),
+      // Narrow write: only the two language fields are sent —
+      // update_user_profile_languages (see
+      // supabase/migrations/20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql)
+      // updates only native_language/learning_language/updated_at and
+      // cannot touch daily_goal, timezone, onboarding fields, or
+      // demographic fields, no matter what the rest of `profile` contains.
+      writeLanguagesToSupabase: (profile) => {
+        const input: UpdateUserProfileLanguagesInput = {
+          nativeLanguage: profile.nativeLanguage as UpdateUserProfileLanguagesInput["nativeLanguage"],
+          practiceLanguage: profile.practiceLanguage as UpdateUserProfileLanguagesInput["practiceLanguage"],
+        };
+        return updateUserProfileLanguages(authSession, input);
+      },
       writeStoredUserProfile: (profile) => writeStoredUserProfile(authUserId, profile),
     }).then((result) => {
       setIsSaving(false);
