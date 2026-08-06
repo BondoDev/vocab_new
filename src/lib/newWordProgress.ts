@@ -266,7 +266,7 @@ export async function completeNewWordStudy(
     throw new NewWordStudyPersistenceError("Missing required fields to save this word.", "validation");
   }
   // Never sends a negative/decimal/above-cap/missing duration — the RPC
-  // (complete_new_word_study(text, text, date, integer)) independently
+  // (complete_new_word_study(text, text, integer)) independently
   // re-validates the same 0 to 300 bound and never trusts this check alone.
   if (!isValidWordTimeSeconds(studyTimeSeconds)) {
     throw new NewWordStudyPersistenceError("Missing required fields to save this word.", "validation");
@@ -684,7 +684,7 @@ export async function completeWordReview(params: CompleteWordReviewParams): Prom
     throw new ReviewPersistenceError("Missing required fields to save this review.", "validation");
   }
   // Never sends a negative/decimal/above-cap/missing duration — the RPC
-  // (complete_word_review(uuid, uuid, text, date, integer)) independently
+  // (complete_word_review(uuid, uuid, text, integer)) independently
   // re-validates the same 0 to 300 bound and never trusts this check alone.
   if (!isValidWordTimeSeconds(reviewTimeSeconds)) {
     throw new ReviewPersistenceError("Missing required fields to save this review.", "validation");

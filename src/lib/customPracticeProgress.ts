@@ -157,7 +157,7 @@ export async function completeCustomPracticeWord(
     throw new CustomPracticePersistenceError("Missing required fields to save this practice time.", "validation");
   }
   // Never sends a negative/decimal/above-cap/missing duration — the RPC
-  // (complete_custom_practice_word(uuid, text, date, integer))
+  // (complete_custom_practice_word(uuid, text, integer))
   // independently re-validates the same 0-300 bound and never trusts this
   // check alone.
   if (!isValidWordTimeSeconds(customPracticeTimeSeconds)) {

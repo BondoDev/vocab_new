@@ -374,11 +374,10 @@ trusting client-provided learning dates for new frontend builds:
 - Adds no-`p_stat_date` primary signatures for Study, Review, and Custom
   Practice. These derive `v_stat_date` once per call and use it for
   `user_daily_stats` attribution.
-- Keeps the existing date-taking signatures as temporary compatibility
-  wrappers. They ignore `p_stat_date` completely and delegate to the new
-  server-derived implementations. Do not remove these wrappers until the new
-  frontend build is live and rollback to older request bodies is no longer
-  expected.
+- Kept the existing date-taking signatures as temporary compatibility
+  wrappers. They ignored `p_stat_date` completely and delegated to the new
+  server-derived implementations. See "Timezone Phase 2 cleanup" below for
+  their removal.
 - Adds `user_word_progress.first_studied_stat_date date null`, set only on
   the first successful Study completion. Duplicate Study saves do not change
   it and do not increment another date. Existing progress rows remain null.
@@ -392,6 +391,38 @@ trusting client-provided learning dates for new frontend builds:
 - No historical `user_daily_stats` rows are rewritten, no Settings UI is
   added, and the streak completion rule remains unchanged:
   `new_words_completed >= current profile daily_goal`.
+
+## Timezone Phase 2 cleanup — server-date compatibility wrappers removed
+
+`migrations/20260806180000_remove_server_date_compatibility_wrappers.sql`
+drops the three now-obsolete Timezone Phase 2 wrapper signatures —
+
+- `complete_new_word_study(text, text, date, integer)` — **removed**
+- `complete_word_review(uuid, uuid, text, date, integer)` — **removed**
+- `complete_custom_practice_word(uuid, text, date, integer)` — **removed**
+
+using `DROP FUNCTION IF EXISTS`, no `CASCADE`. Nothing else changes: the
+active no-`p_stat_date` signatures
+(`complete_new_word_study(text, text, integer)`,
+`complete_word_review(uuid, uuid, text, integer)`,
+`complete_custom_practice_word(uuid, text, integer)`),
+`get_current_learning_date()`, and `resolve_authenticated_learning_date()`
+are untouched — `DROP FUNCTION` targets one exact signature, never a
+same-named function with a different parameter list. No table, column,
+constraint, index, policy, or grant on any remaining function is touched,
+and no data is rewritten.
+
+The frontend that ships alongside this migration sends no `p_stat_date` on
+any Study, Review, or Custom Practice save — confirmed by a repo-wide guard
+in `scripts/tests/learning/test-remove-server-date-compatibility-wrappers-migration-contract.mjs`.
+No rollback to a pre-Timezone-Phase-2 frontend build is planned. **After
+this migration is applied, an older build that still sends `p_stat_date`
+can no longer save Study New Words, Review Words, or Custom Practice
+progress at all** — PostgREST returns `PGRST202` ("could not find the
+function") for its calls instead of the graceful ignored-parameter behavior
+the wrappers previously provided. Historical `user_daily_stats` rows and
+`review_events`/`custom_practice_events` ledger rows (including rows with a
+`null` `stat_date` predating Timezone Phase 2) are unaffected.
 
 ## What happens next
 

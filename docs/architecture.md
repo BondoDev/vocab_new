@@ -122,11 +122,13 @@ users. The browser detects it with
 silently initializes it through `initialize_user_timezone(text)` only when
 the stored value is null; PostgreSQL validates the value against
 `pg_catalog.pg_timezone_names`. Manual timezone correction belongs to a
-future Settings page. Learning RPCs still temporarily receive
-client-provided `p_stat_date` only through compatibility wrappers; current
-frontend builds call no-date RPC signatures. Daily-stat attribution now uses
-Supabase server time plus `user_profiles.timezone`, falling back to UTC when
-the profile row/timezone is missing, blank, or invalid. Historical
+future Settings page. Learning RPCs no longer accept client-provided
+`p_stat_date` at all — the temporary compatibility wrappers were dropped
+once the server-derived frontend build became the only caller; an older
+build that still sends `p_stat_date` now fails outright with `PGRST202`
+instead of being silently accepted. Daily-stat attribution uses Supabase
+server time plus `user_profiles.timezone`, falling back to UTC when the
+profile row/timezone is missing, blank, or invalid. Historical
 `user_daily_stats` rows are not rewritten, and manual timezone correction
 still belongs to a future Settings page.
 `src/app/components/layout/` owns shared application layout/navigation

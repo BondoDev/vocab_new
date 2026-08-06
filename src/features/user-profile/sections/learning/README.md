@@ -477,13 +477,15 @@ visibly; its idempotency ledger is what keeps a lost/duplicated call safe.
 
 ## Server-derived learning dates
 
-Learning date attribution is authoritative on the database side. The active
+Learning date attribution is authoritative on the database side. The
 Study, Review, and Custom Practice RPC signatures do not accept
 `p_stat_date`; they derive one date from Supabase server time and
 `user_profiles.timezone`, falling back to UTC when the stored timezone is
 null, blank, invalid, or the profile row is missing. The old date-taking
-RPC signatures remain only as temporary compatibility wrappers and ignore
-their client date argument.
+signatures existed only as temporary compatibility wrappers during the
+staged rollout and have since been dropped — an older frontend build that
+still sends `p_stat_date` now fails outright with `PGRST202` instead of
+being silently accepted.
 
 Study stores `user_word_progress.first_studied_stat_date` on the first
 successful completion and never changes it on duplicate retries. Review
