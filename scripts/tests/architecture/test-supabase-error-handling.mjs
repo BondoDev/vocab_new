@@ -65,6 +65,13 @@ const reviewSession = read("src/features/review-words/ReviewSession.tsx");
 const vocabularySection = read("src/features/user-profile/sections/vocabulary/VocabularySection.tsx");
 const dailyGoalSelector = read("src/features/user-profile/sections/learning/DailyGoalSelector.tsx");
 const useUserProfileLoad = read("src/app/hooks/useUserProfileLoad.ts");
+// Phase 1 profile-write gap fix (2026-08-06): the onboarding-save and
+// account-language-save catch paths used to bypass this shared classifier
+// entirely, returning/setting the raw error.message string. Both now
+// classify through supabaseError.ts like every other write path above.
+const useAccountOnboarding = read("src/app/hooks/useAccountOnboarding.ts");
+const useAccountLanguageConfirm = read("src/app/hooks/useAccountLanguageConfirm.ts");
+const accountLanguageSave = read("src/app/utils/accountLanguageSave.ts");
 
 test("1. src/lib/supabaseError.ts exists and exports the stable classification API", () => {
   assert.match(supabaseErrorLib, /export type SupabaseErrorCategory\s*=/);
@@ -215,6 +222,8 @@ test("12. Raw Supabase error text (.message/.details/.hint off a caught error) i
     "VocabularySection.tsx": vocabularySection,
     "DailyGoalSelector.tsx": dailyGoalSelector,
     "useUserProfileLoad.ts": useUserProfileLoad,
+    "useAccountOnboarding.ts": useAccountOnboarding,
+    "accountLanguageSave.ts": accountLanguageSave,
   };
   for (const [file, source] of Object.entries(filesToCheck)) {
     assert.doesNotMatch(
@@ -288,6 +297,114 @@ test("15. Supabase-error refactor guard does not own unrelated timezone migratio
     [],
     `this refactor guard still protects learning migrations and review/study-transition state machines: ${offenders.join(", ")}`,
   );
+});
+
+console.log("\n=== Phase 1: profile-write gap fix (useAccountOnboarding.ts / accountLanguageSave.ts) ===\n");
+
+test("16. Both files classify through the shared supabaseError.ts API instead of hand-rolling their own logic", () => {
+  for (const [label, source] of [
+    ["useAccountOnboarding.ts", useAccountOnboarding],
+    ["accountLanguageSave.ts", accountLanguageSave],
+  ]) {
+    assert.match(source, /classifySupabaseError\(error\)/, `${label} must classify the caught error`);
+    assert.match(source, /describeSupabaseError\(/, `${label} must log structured diagnostics`);
+    assert.match(source, /resolveSupabaseErrorMessageKey\(/, `${label} must resolve its message via the shared helper`);
+  }
+});
+
+test("17. Neither file renders or returns the raw error.message/.details/.hint, and neither defines a new local classifier", () => {
+  for (const [label, source] of [
+    ["useAccountOnboarding.ts", useAccountOnboarding],
+    ["accountLanguageSave.ts", accountLanguageSave],
+  ]) {
+    assert.doesNotMatch(
+      source,
+      /error instanceof Error\s*&&\s*error\.message/,
+      `${label} must not branch on error.message directly (the old raw-message-leak pattern)`,
+    );
+    assert.doesNotMatch(
+      source,
+      /:\s*error\.message/,
+      `${label} must never assign/return error.message as a user-facing value`,
+    );
+    // No hand-rolled classification regex (the exact anti-pattern
+    // classifySupabaseError replaced everywhere else — see this file's own
+    // header and test 4 above).
+    assert.doesNotMatch(
+      source,
+      /\/jwt\|session\|unauthorized\|401\//,
+      `${label} must not reintroduce the fragile duplicated auth-failure regex`,
+    );
+  }
+});
+
+test("18. Hard-coded Supabase/PostgREST codes remain centralized in src/lib/supabaseError.ts — neither new file introduces its own", () => {
+  const CODE_PATTERN = /PGRST\d{3}|"23505"|"42501"|"22P02"|"22023"|"P0002"/;
+  for (const [label, source] of [
+    ["useAccountOnboarding.ts", useAccountOnboarding],
+    ["accountLanguageSave.ts", accountLanguageSave],
+  ]) {
+    assert.doesNotMatch(source, CODE_PATTERN, `${label} must not hard-code a Supabase/PostgREST code directly`);
+  }
+});
+
+test("19. The existing JWT-refresh retry mechanism is untouched by this fix (still exactly 2 occurrences in newWordProgress.ts, unrelated to this task)", () => {
+  const occurrences = (newWordProgress.match(/\/jwt expired\/i/g) ?? []).length;
+  assert.equal(occurrences, 2, "the Phase 1 profile-write fix must not touch the intentionally-kept refresh-retry check");
+  assert.doesNotMatch(useAccountOnboarding, /jwt expired/i);
+  assert.doesNotMatch(accountLanguageSave, /jwt expired/i);
+});
+
+test("20. SupabaseErrorCategory's 8 categories are unchanged by this fix (no new/renamed category introduced)", () => {
+  const match = supabaseErrorLib.match(/export type SupabaseErrorCategory\s*=([\s\S]*?);/);
+  assert.ok(match, "SupabaseErrorCategory type must be found");
+  const categories = [...match[1].matchAll(/"([a-z_]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(
+    categories.sort(),
+    [
+      "conflict",
+      "forbidden",
+      "missing_rpc",
+      "network",
+      "unauthenticated",
+      "unexpected_response",
+      "unknown",
+      "validation",
+    ],
+    "this fix must not add, remove, or rename an error category",
+  );
+});
+
+test("21. useAccountLanguageConfirm.ts translates the classified key (never renders a bare translation key or a raw message)", () => {
+  assert.match(useAccountLanguageConfirm, /import \{ useLanguage \} from "\.\.\/\.\.\/contexts\/LanguageContext"/);
+  assert.match(useAccountLanguageConfirm, /setSaveError\(t\(result\.error\)\)/);
+  assert.doesNotMatch(useAccountLanguageConfirm, /setSaveError\(result\.error\)/, "must not store the bare untranslated key");
+});
+
+test("22. The two new fallback locale keys exist in all 7 locales with non-empty values, alongside the untouched supabaseErrors.* keys", () => {
+  const LOCALE_FILES = [
+    "english_interface.json",
+    "german_interface.json",
+    "spanish_interface.json",
+    "french_interface.json",
+    "italian_interface.json",
+    "portuguese_interface.json",
+    "russian_interface.json",
+  ];
+  for (const fileName of LOCALE_FILES) {
+    const data = JSON.parse(read(`src/data/interface/${fileName}`));
+    assert.ok(
+      typeof data.accountOnboarding?.saveError === "string" && data.accountOnboarding.saveError.trim().length > 0,
+      `${fileName} is missing a non-empty accountOnboarding.saveError`,
+    );
+    assert.ok(
+      typeof data.accountLanguageConfirm?.saveError === "string" &&
+        data.accountLanguageConfirm.saveError.trim().length > 0,
+      `${fileName} is missing a non-empty accountLanguageConfirm.saveError`,
+    );
+    // Unrelated to this fix - confirms it didn't disturb the existing keys.
+    assert.equal(typeof data.accountLanguageConfirm?.cancel, "string");
+  }
 });
 
 console.log(`\n─────────────────────────────────────────`);

@@ -42,7 +42,11 @@
     "saveToAccount": "Guardar en mi cuenta",
     "useSelected": "Usar estos idiomas por ahora",
     "saving": "Guardando...",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "saveError": "No pudimos guardar tus idiomas en tu cuenta. Intentalo de nuevo."
+  },
+  "accountOnboarding": {
+    "saveError": "No pudimos guardar tu perfil. Intentalo de nuevo."
   },
   "userProfile": {
     "developmentNotice": {

@@ -42,7 +42,11 @@
     "saveToAccount": "Salva nel mio account",
     "useSelected": "Usa queste lingue per ora",
     "saving": "Salvataggio...",
-    "cancel": "Annulla"
+    "cancel": "Annulla",
+    "saveError": "Non siamo riusciti a salvare le tue lingue nel tuo account. Riprova."
+  },
+  "accountOnboarding": {
+    "saveError": "Non siamo riusciti a salvare il tuo profilo. Riprova."
   },
   "userProfile": {
     "developmentNotice": {
