@@ -42,7 +42,11 @@
     "saveToAccount": "In meinem Konto speichern",
     "useSelected": "Diese Sprachen vorerst verwenden",
     "saving": "Wird gespeichert...",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "saveError": "Deine Sprachen konnten nicht in deinem Konto gespeichert werden. Bitte versuche es erneut."
+  },
+  "accountOnboarding": {
+    "saveError": "Dein Profil konnte nicht gespeichert werden. Bitte versuche es erneut."
   },
   "userProfile": {
     "developmentNotice": {

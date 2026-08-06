@@ -6,6 +6,7 @@
 // writes to Supabase except the explicit "Save to account" action.
 import { useState, type Dispatch, type SetStateAction } from "react";
 
+import { useLanguage } from "../../contexts/LanguageContext";
 import type { StoredSupabaseSession } from "../../lib/supabaseAuth";
 import {
   writeSupabaseUserProfile,
@@ -51,6 +52,7 @@ export function useAccountLanguageConfirm({
   practiceLanguage,
   proceed,
 }: UseAccountLanguageConfirmParams): UseAccountLanguageConfirmResult {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -110,8 +112,11 @@ export function useAccountLanguageConfirm({
       if (result.ok === false) {
         // Keep the popup open with the failure visible and the user's
         // selections untouched, so they can retry or fall back to
-        // "Use selected languages".
-        setSaveError(result.error);
+        // "Use selected languages". result.error is a translation key (see
+        // accountLanguageSave.ts's own header) — never a raw Supabase/
+        // PostgreSQL message — translated here since that module stays
+        // React/i18n-free for Node-testability.
+        setSaveError(t(result.error));
         return;
       }
 

@@ -42,7 +42,11 @@
     "saveToAccount": "Enregistrer dans mon compte",
     "useSelected": "Utiliser ces langues pour l'instant",
     "saving": "Enregistrement...",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "saveError": "Nous n'avons pas pu enregistrer vos langues dans votre compte. Veuillez reessayer."
+  },
+  "accountOnboarding": {
+    "saveError": "Nous n'avons pas pu enregistrer votre profil. Veuillez reessayer."
   },
   "userProfile": {
     "developmentNotice": {
