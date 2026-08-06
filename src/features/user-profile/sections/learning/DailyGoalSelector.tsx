@@ -6,7 +6,7 @@ import { useLanguage } from "../../../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import {
   writeStoredUserProfile,
-  writeSupabaseUserProfile,
+  updateDailyGoal,
   type UserProfile,
 } from "../../../../lib/userProfile";
 import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
@@ -103,19 +103,26 @@ export function DailyGoalSelector({ userProfile, isProfileLoaded, onDailyGoalCha
     }
 
     setIsSaving(true);
-    const patchedProfile: UserProfile = { ...userProfile, dailyGoal: goal };
 
-    void writeSupabaseUserProfile(session, patchedProfile)
-      .then((supabaseProfile) => {
+    // Narrow write: only p_daily_goal is sent — update_daily_goal (see
+    // supabase/migrations/20260806190000_add_daily_goal_snapshot_and_update_rpc.sql)
+    // updates the saved goal and syncs today's stats row(s) server-side in
+    // one transaction, instead of this component re-sending the whole
+    // cached profile like the previous broad upsert did.
+    // writeStoredUserProfile below is a local cache write only (never a
+    // network call), so folding the confirmed goal into the existing
+    // userProfile object here cannot clobber anything on the server.
+    void updateDailyGoal(session, goal)
+      .then((result) => {
         const nextProfile = writeStoredUserProfile(authUserId, {
-          ...patchedProfile,
-          ...supabaseProfile,
+          ...userProfile,
+          dailyGoal: result.dailyGoal,
         });
         onDailyGoalChange?.(nextProfile.dailyGoal);
         showConfirmation(t("userProfile.learningSection.dailyGoal.savedToast"));
       })
       .catch((error) => {
-        const diagnostics = describeSupabaseError("writeSupabaseUserProfile", error);
+        const diagnostics = describeSupabaseError("updateDailyGoal", error);
         console.warn("DailyGoalSelector: failed to save the daily goal.", diagnostics);
         showConfirmation(
           t(resolveSupabaseErrorMessageKey(diagnostics.category, "userProfile.learningSection.dailyGoal.saveError")),

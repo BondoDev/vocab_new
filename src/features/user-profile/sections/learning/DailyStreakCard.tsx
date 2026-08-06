@@ -98,8 +98,11 @@ export function DailyStreakCard({ practiceLanguage, dailyGoal, isProfileLoaded }
   const todayISO = state.status === "ready" ? state.todayISO : null;
   // Recomputed from the dailyGoal prop on every render (not cached in
   // state) so a daily-goal change made elsewhere on the page (Daily Goal
-  // card) updates the streak immediately, without refetching stats that
-  // don't depend on the goal.
+  // card) updates today's square immediately, without refetching stats
+  // that don't depend on the goal. dailyGoal here is only the *fallback*
+  // computeDailyStreakSummary uses for a row with no stored per-row
+  // snapshot (Streak Phase 1) — a row that already has one uses that
+  // instead, so past days stay frozen even as this prop changes.
   const summary = isLoading || !todayISO
     ? EMPTY_SUMMARY
     : computeDailyStreakSummary(stats, dailyGoal, todayISO);

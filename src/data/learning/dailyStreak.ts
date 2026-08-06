@@ -6,17 +6,22 @@
 // scripts/tests/learning/test-daily-streak.mjs.
 //
 // A day "counts" toward the streak when that day's new_words_completed
-// (from user_daily_stats) is >= the CURRENT daily goal — there is no
-// historical per-day goal stored, so, like Today's Progress, this always
-// compares against today's goal setting rather than whatever the goal was
-// on that historical day. Reviews are deliberately not included (Review
-// Words does not exist yet, and the streak is specifically "did you meet
-// your new-word goal that day," matching Today's Progress's own scope).
+// (from user_daily_stats) is >= the goal applicable to that day: the row's
+// own Streak Phase 1 snapshot (dailyGoal) when one is stored, falling back
+// to the current profile goal only for legacy rows written before that
+// snapshot existed (dailyGoal null). See
+// supabase/migrations/20260806190000_add_daily_goal_snapshot_and_update_rpc.sql
+// and this module's buildCompletionMap below. Reviews and Custom Practice
+// are deliberately not included — the streak is specifically "did you meet
+// your new-word goal that day," matching Today's Progress's own scope.
 export interface DailyStreakDayStat {
   // Authoritative learning date (YYYY-MM-DD), derived by the database from
   // server time and the profile timezone before this pure helper receives it.
   dateISO: string;
   newWordsCompleted: number;
+  // This row's own frozen goal snapshot, or null for a legacy
+  // (pre-Streak-Phase-1) row with no stored value — see buildCompletionMap.
+  dailyGoal: number | null;
 }
 
 export interface DailyStreakWeekDay {
@@ -63,26 +68,40 @@ function mondayOfWeek(dateISO: string): string {
   return addDaysISO(dateISO, diffToMonday);
 }
 
+// Resolves the goal a single row is judged against: its own stored
+// snapshot when present, otherwise currentProfileDailyGoal (the legacy
+// fallback for rows written before Streak Phase 1). Returns null when
+// neither source is a usable positive goal, so callers can treat that day
+// as never completable rather than dividing by (or comparing against) a
+// bad value.
+function resolveEffectiveGoal(rowDailyGoal: number | null, currentProfileDailyGoal: number): number | null {
+  const candidate = rowDailyGoal ?? currentProfileDailyGoal;
+  return Number.isFinite(candidate) && candidate > 0 ? candidate : null;
+}
+
 function buildCompletionMap(
   stats: readonly DailyStreakDayStat[],
-  dailyGoal: number,
+  currentProfileDailyGoal: number,
 ): Map<string, boolean> {
   const map = new Map<string, boolean>();
-  if (!Number.isFinite(dailyGoal) || dailyGoal <= 0) {
-    return map;
-  }
   for (const stat of stats) {
-    map.set(stat.dateISO, stat.newWordsCompleted >= dailyGoal);
+    const effectiveGoal = resolveEffectiveGoal(stat.dailyGoal, currentProfileDailyGoal);
+    map.set(stat.dateISO, effectiveGoal !== null && stat.newWordsCompleted >= effectiveGoal);
   }
   return map;
 }
 
 export function computeDailyStreakSummary(
   stats: readonly DailyStreakDayStat[],
-  dailyGoal: number,
+  // The signed-in user's current user_profiles.daily_goal — used only as
+  // the fallback for rows with no stored per-row snapshot (dailyGoal
+  // null). A row with its own stored goal always uses that instead,
+  // regardless of what the current profile goal is today. See
+  // resolveEffectiveGoal/buildCompletionMap above.
+  currentProfileDailyGoal: number,
   todayISO: string,
 ): DailyStreakSummary {
-  const completionByDate = buildCompletionMap(stats, dailyGoal);
+  const completionByDate = buildCompletionMap(stats, currentProfileDailyGoal);
 
   // Current streak: walk backward from today. An incomplete "today" does
   // not break the streak on its own (the day isn't over) — it just means

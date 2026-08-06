@@ -389,8 +389,10 @@ trusting client-provided learning dates for new frontend builds:
   does not move the event to a new day. Offline requests count on the server
   submission day because no client event date is trusted.
 - No historical `user_daily_stats` rows are rewritten, no Settings UI is
-  added, and the streak completion rule remains unchanged:
-  `new_words_completed >= current profile daily_goal`.
+  added, and the streak completion rule at this point was still
+  `new_words_completed >= current profile daily_goal` applied uniformly to
+  every row — see "Streak Phase 1" below for why that was a bug and how it
+  was fixed.
 
 ## Timezone Phase 2 cleanup — server-date compatibility wrappers removed
 
@@ -423,6 +425,81 @@ function") for its calls instead of the graceful ignored-parameter behavior
 the wrappers previously provided. Historical `user_daily_stats` rows and
 `review_events`/`custom_practice_events` ledger rows (including rows with a
 `null` `stat_date` predating Timezone Phase 2) are unaffected.
+
+## Streak Phase 1 — historical daily-goal snapshots
+
+`migrations/20260806190000_add_daily_goal_snapshot_and_update_rpc.sql` fixes
+a real accuracy bug in the Daily Streak card: `computeDailyStreakSummary`
+(`src/data/learning/dailyStreak.ts`) had always compared *every*
+`user_daily_stats` row — today's and every past day's alike — against the
+*current* `user_profiles.daily_goal`. Raising or lowering today's goal
+therefore silently changed whether past days counted as "complete," even
+though nothing about those rows themselves had changed.
+
+- Adds `user_daily_stats.daily_goal integer null`, a per-row goal snapshot,
+  with a named `user_daily_stats_daily_goal_allowed_values_check` CHECK
+  (`daily_goal is null or daily_goal in (10, 15, 20, 30, 50)`) — the exact
+  five supported presets, not a numeric range: an in-range-but-unsupported
+  value like `25` or `199` is rejected exactly like `0` or `999`. No
+  default, no backfill — every row that existed before this migration keeps
+  `daily_goal = null` permanently; nothing rewrites a historical row, ever.
+- Adds a matching named CHECK on `user_profiles.daily_goal`
+  (`user_profiles_daily_goal_allowed_values_check`, `in (10, 15, 20, 30, 50)`),
+  guarded by an explicit precondition check that raises a clear, named
+  exception instead of silently normalizing or generically failing if any
+  existing profile already holds a value outside that exact set. The
+  frontend's `DailyGoalSelector` has only ever offered `10/15/20/30/50`, so
+  this is a defense-in-depth constraint, not expected to reject any real
+  row.
+- `complete_new_word_study`, `complete_word_review`, and
+  `complete_custom_practice_word` are recreated with identical behavior
+  (authentication, ownership, validation, server-derived `stat_date`,
+  timing, counters, state transitions, deadlines, idempotency, concurrency,
+  original event-date replay, `SECURITY DEFINER`, empty `search_path`, and
+  the named `user_daily_stats_language_date_unique` conflict target are all
+  unchanged) — their INSERT branches now additionally stamp `daily_goal`
+  from the caller's current profile (`coalesce(profile daily_goal, 15)`,
+  validated against the exact `10, 15, 20, 30, 50` preset set) onto a
+  brand-new row. Their `ON CONFLICT DO UPDATE`
+  branches deliberately do **not** touch `daily_goal` — once a row exists,
+  only `update_daily_goal` may change its stored goal, and only for today's
+  row. Review and Custom Practice can both still create today's row first
+  (and stamp its goal) without that row ever counting toward a streak —
+  streak completion still depends solely on `new_words_completed`, which
+  only Study ever increments.
+- Adds `update_daily_goal(p_daily_goal integer)`, a narrow
+  `SECURITY DEFINER` RPC with an empty `search_path`. It requires
+  `auth.uid()`, rejects a null goal or any value outside the exact
+  `10, 15, 20, 30, 50` preset set with SQLSTATE `22023`,
+  fails clearly if no `user_profiles` row exists for the caller, resolves
+  today's date once via `resolve_authenticated_learning_date()`, updates
+  `user_profiles.daily_goal`/`updated_at`, and updates `daily_goal` on every
+  `user_daily_stats` row the caller owns for that exact date — across every
+  `target_language`, since the goal is profile-wide, never per-language.
+  Previous dates are never matched by its `WHERE stat_date = ...` clause.
+  Grants exclude `anon`/`public`; `authenticated`/`postgres`/`service_role`
+  can execute it. Two racing calls are plain last-write-wins — no table-wide
+  lock is introduced.
+- `DailyGoalSelector` now calls `update_daily_goal` (via
+  `src/lib/userProfile.ts`'s `updateDailyGoal`) instead of the broad
+  `writeSupabaseUserProfile` upsert every other profile-save flow still
+  uses — it sends only `p_daily_goal`, not the whole cached profile.
+  Onboarding and the account language-confirm save are unchanged and still
+  use the broad upsert; this phase does not touch either.
+- The streak read/compute path (`readDailyStreakStats` in
+  `src/lib/newWordProgress.ts`, `computeDailyStreakSummary` in
+  `src/data/learning/dailyStreak.ts`) now selects each row's own
+  `daily_goal` and resolves the goal a row is judged against as
+  `row.dailyGoal ?? currentProfileDailyGoal` — a stored value always wins;
+  the current profile goal is only ever the fallback for a legacy
+  (pre-Streak-Phase-1) row with no stored snapshot. `TodayProgressCard`
+  needed no change: `update_daily_goal` keeps today's row's snapshot and
+  the live profile value in sync in the same transaction, so they never
+  disagree for "today."
+- Net effect on existing accounts: nothing changes on the day this ships —
+  every existing row has `daily_goal = null` and keeps comparing against
+  the current profile goal exactly as before. Accuracy only improves going
+  forward, as new goal-stamped rows accumulate.
 
 ## What happens next
 

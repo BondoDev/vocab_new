@@ -412,7 +412,7 @@ deployment described above.
 
 ## Architecture guards
 
-`npm run test:architecture-guards` chains **22 guard groups**, each a
+`npm run test:architecture-guards` chains **23 guard groups**, each a
 deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
@@ -439,6 +439,7 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:vocabulary-profile-data-flow` | `scripts/tests/architecture/test-vocabulary-profile-data-flow.mjs` | the Vocabulary dashboard section reuses the Learning dashboard's single App.tsx profile load instead of fetching its own copy on every mount |
 | `test:supabase-error-handling` | `scripts/tests/architecture/test-supabase-error-handling.mjs` | Study New Words/Review Words/favorite/profile-save all classify Supabase/PostgREST failures through the shared `src/lib/supabaseError.ts` module instead of duplicated message-regex checks, and never render raw Supabase error text |
 | `test:timezone-profile-boundary` | `scripts/tests/architecture/test-timezone-profile-boundary.mjs` | timezone writes stay isolated to `initialize_user_timezone`, generic profile upserts cannot modify timezone, no Settings UI is introduced yet, and authoritative learning reads/writes use the server-derived learning date |
+| `test:daily-goal-narrow-write-boundary` | `scripts/tests/architecture/test-daily-goal-narrow-write-boundary.mjs` | Streak Phase 1: `DailyGoalSelector` saves only through the narrow `update_daily_goal` RPC (no other file calls it), onboarding/language-confirm keep using the broad profile upsert, the streak read path selects each row's own `daily_goal` snapshot, the pure streak model resolves it per-row instead of one profile goal applied uniformly, and the snapshot migration never bulk-rewrites existing rows |
 
 SEO/Worker-specific guards (`test:seo-output`,
 `test:word-worker:production-safety`) are chained separately, not part of
