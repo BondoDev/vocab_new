@@ -17,7 +17,14 @@ const migrationPath = path.join(
   "migrations",
   "20260806150000_add_server_derived_learning_dates.sql",
 );
+const conflictTargetFixMigrationPath = path.join(
+  ROOT_DIR,
+  "supabase",
+  "migrations",
+  "20260806170000_fix_learning_rpc_daily_stats_conflict_targets.sql",
+);
 const source = fs.readFileSync(migrationPath, "utf8");
+const conflictTargetFixSource = fs.readFileSync(conflictTargetFixMigrationPath, "utf8");
 
 let passed = 0;
 let failed = 0;
@@ -33,8 +40,8 @@ function test(name, fn) {
   }
 }
 
-function functionBlock(name, signaturePattern) {
-  const match = source.match(
+function functionBlock(name, signaturePattern, sql = source) {
+  const match = sql.match(
     new RegExp(
       `create or replace function public\\.${name}\\(\\s*${signaturePattern}\\s*\\)[\\s\\S]*?\\$function\\$;`,
       "i",
@@ -174,6 +181,44 @@ test("9. Client execution grants exclude anon/public for every new and wrapper R
     assert.match(source, new RegExp(`revoke execute on function public\\.${signature} from anon;`, "i"));
     assert.match(source, new RegExp(`grant execute on function public\\.${signature} to authenticated;`, "i"));
   }
+});
+
+test("10. Corrective migration fixes primary RPC daily-stat conflict targets", () => {
+  const primarySignatures = [
+    ["complete_new_word_study", "p_word_id text,\\s*p_target_language text,\\s*p_study_time_seconds integer"],
+    ["complete_word_review", "p_event_id uuid,\\s*p_word_progress_id uuid,\\s*p_result text,\\s*p_review_time_seconds integer"],
+    ["complete_custom_practice_word", "p_event_id uuid,\\s*p_target_language text,\\s*p_custom_practice_time_seconds integer"],
+  ];
+
+  for (const [name, signature] of primarySignatures) {
+    const block = functionBlock(name, signature, conflictTargetFixSource);
+    assert.match(block, /on conflict on constraint user_daily_stats_language_date_unique/i);
+    assert.doesNotMatch(block, /on conflict\s*\(\s*user_id\s*,\s*target_language\s*,\s*stat_date\s*\)/i);
+    assert.match(block, /security definer/i);
+    assert.match(block, /set search_path to ''/i);
+  }
+});
+
+test("11. Corrective migration replaces only the three primary RPCs", () => {
+  const createFunctionMatches = [...conflictTargetFixSource.matchAll(/create or replace function public\.(\w+)\(/gi)]
+    .map((match) => match[1]);
+  assert.deepEqual(createFunctionMatches, [
+    "complete_new_word_study",
+    "complete_word_review",
+    "complete_custom_practice_word",
+  ]);
+  assert.doesNotMatch(conflictTargetFixSource, /p_stat_date date/i);
+  assert.doesNotMatch(conflictTargetFixSource, /\bgrant\b|\brevoke\b/i);
+});
+
+test("12. Compatibility wrappers still delegate correctly", () => {
+  const study = functionBlock("complete_new_word_study", "p_word_id text,\\s*p_target_language text,\\s*p_stat_date date,\\s*p_study_time_seconds integer");
+  const review = functionBlock("complete_word_review", "p_event_id uuid,\\s*p_word_progress_id uuid,\\s*p_result text,\\s*p_stat_date date,\\s*p_review_time_seconds integer");
+  const custom = functionBlock("complete_custom_practice_word", "p_event_id uuid,\\s*p_target_language text,\\s*p_stat_date date,\\s*p_custom_practice_time_seconds integer");
+
+  assert.match(study, /complete_new_word_study\(p_word_id, p_target_language, p_study_time_seconds\)/);
+  assert.match(review, /complete_word_review\(p_event_id, p_word_progress_id, p_result, p_review_time_seconds\)/);
+  assert.match(custom, /complete_custom_practice_word\(p_event_id, p_target_language, p_custom_practice_time_seconds\)/);
 });
 
 console.log(`\n-----------------------------------------`);
