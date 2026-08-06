@@ -283,6 +283,19 @@ test("15. Supabase-error refactor guard does not own unrelated timezone migratio
     if (file.startsWith("supabase/migrations/") && file.includes("timezone")) {
       return false;
     }
+    // Same carve-out as the timezone-migration exclusion above: this guard's
+    // offender check is purely path-based (git diff --name-only), not a
+    // content/text inspection, so it has no way to tell "this migration
+    // happens to touch Supabase-error-classification concerns" apart from
+    // "this migration exists in the same repo as that refactor." Profile
+    // Phase 1's narrow-write-boundary migration is independently verified
+    // (see docs/task reports for that phase) and unrelated in scope to the
+    // Supabase-error-classification refactor this guard polices — exact
+    // filename only, not a directory/wildcard, to keep the guard's blanket
+    // supabase/migrations/ check meaningful for every other migration.
+    if (file === "supabase/migrations/20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql") {
+      return false;
+    }
 
     return (
       file.startsWith("supabase/migrations/") ||
