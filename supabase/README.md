@@ -490,18 +490,102 @@ though nothing about those rows themselves had changed.
   use the broad upsert; this phase does not touch either.
 - The streak read/compute path (`readDailyStreakStats` in
   `src/lib/newWordProgress.ts`, `computeDailyStreakSummary` in
-  `src/data/learning/dailyStreak.ts`) now selects each row's own
-  `daily_goal` and resolves the goal a row is judged against as
-  `row.dailyGoal ?? currentProfileDailyGoal` — a stored value always wins;
-  the current profile goal is only ever the fallback for a legacy
-  (pre-Streak-Phase-1) row with no stored snapshot. `TodayProgressCard`
-  needed no change: `update_daily_goal` keeps today's row's snapshot and
-  the live profile value in sync in the same transaction, so they never
-  disagree for "today."
-- Net effect on existing accounts: nothing changes on the day this ships —
-  every existing row has `daily_goal = null` and keeps comparing against
-  the current profile goal exactly as before. Accuracy only improves going
-  forward, as new goal-stamped rows accumulate.
+  `src/data/learning/dailyStreak.ts`) selects each row's own `daily_goal`
+  and originally resolved the goal a row is judged against as
+  `row.dailyGoal ?? currentProfileDailyGoal` — a stored value always won;
+  the *current* profile goal was the fallback for a legacy (pre-Streak-
+  Phase-1) row with no stored snapshot. **This fallback shape was corrected
+  after initial rollout — see "Streak Phase 1 corrective fix" below for the
+  fixed-constant replacement actually in place today.** `TodayProgressCard`
+  needed no change either way: `update_daily_goal` keeps today's row's
+  snapshot and the live profile value in sync in the same transaction, so
+  they never disagree for "today," and `TodayProgressCard` (unlike
+  `DailyStreakCard`) legitimately still reads the live `dailyGoal` prop for
+  that reason.
+- Net effect on existing accounts at the time this phase first shipped:
+  nothing changed on the day it shipped — every existing row had
+  `daily_goal = null` and kept comparing against the current profile goal
+  exactly as before. See the corrective fix below for why that mattered in
+  practice and how it was resolved.
+
+## Streak Phase 1 corrective fix — legacy fallback frozen to a constant
+
+Streak Phase 1 above closed the bug for any row with a stored snapshot, but
+left one gap: a legacy row (`daily_goal IS NULL`) still resolved against
+`currentProfileDailyGoal` — the *live*, mutable `user_profiles.daily_goal`
+— so changing today's goal could still silently change whether an old,
+already-earned day read as "complete." Because Streak Phase 1 shipped with
+no backfill, effectively every row written before that migration is a
+legacy row, so this gap reproduced the exact symptom the migration was
+meant to fix, for essentially all pre-existing history.
+
+- `src/data/learning/dailyStreak.ts` now resolves a row's goal as
+  `row.dailyGoal ?? LEGACY_DAILY_GOAL`, a **fixed, exported constant** —
+  never the live profile goal. `computeDailyStreakSummary` no longer takes
+  a current-goal parameter at all, so there is no path, today or in the
+  future, by which the profile goal can reach historical completion again;
+  the removal is enforced at the type/signature level, not just by
+  convention.
+- `DailyStreakCard.tsx` no longer accepts or reads a `dailyGoal` prop —
+  `LearningSection.tsx` no longer passes one to it. `TodayProgressCard`
+  (a different component, showing *today's* live progress) is unaffected
+  and keeps reading the live profile goal, correctly.
+- **`LEGACY_DAILY_GOAL` is `10`, the minimum of the five supported daily-goal
+  presets (10/15/20/30/50) — not `15`, the `user_profiles.daily_goal` table
+  default.** An initial version of this fix used `15`, matching the table
+  default; that was itself wrong, discovered against real production
+  history: rows exist where the user confirms they completed their actual
+  goal (e.g. exactly 10 new words on a `daily_goal IS NULL` legacy row) that
+  a `15` fallback would misclassify as failed, silently erasing an earned
+  streak day — the same class of bug this whole corrective fix exists to
+  eliminate, just moved from "the live profile goal" to "a fixed but
+  wrong constant." `10` avoids that specific failure mode (no legacy row
+  can ever be wrongly marked failed merely for meeting the lowest goal any
+  account could have had), at the cost of the opposite, milder risk:
+  over-crediting a legacy row whose real goal was actually higher than 10.
+  Both directions are unavoidable — the original per-day goal for these
+  rows was never recorded and cannot be reconstructed either way; `10` is
+  the least-wrong fixed approximation available, not a claim of exact
+  accuracy. New rows (written by any of the three learning RPCs, after
+  Streak Phase 1) always carry their own exact stamped goal and never use
+  this fallback at all.
+- No migration, schema change, or data backfill was part of this fix — it
+  is a pure frontend (and test/documentation) change. No production
+  `user_daily_stats` or `user_profiles` row was read, rewritten, or
+  otherwise touched, and none will be: the exact historical goal for a
+  legacy row is unrecoverable, so this fix does not attempt to guess it
+  per-row, only to pick a single fixed, documented, non-live default.
+
+### Calendar day-status model (green/red/neutral)
+
+The Daily Streak card's weekly strip renders one of four states per day —
+`src/data/learning/dailyStreak.ts`'s `DailyStreakDayStatus` is the single
+source of truth both the streak-count math and `DailyStreakCard.tsx`'s
+rendering derive from, so the two can never disagree about what a given day
+means:
+
+- **`completed`** (green, `--success`) — `new_words_completed` met the
+  day's effective goal. Applies to today and any past date alike.
+- **`failed`** (red, the shared `--destructive` theme token) — a *past*
+  date whose effective goal was not met, **including a past date with no
+  `user_daily_stats` row at all**. A missing row is not treated as
+  "unknown" — no recorded goal completion on a day that has already ended
+  is exactly a day the goal wasn't met. Nothing is inserted into the
+  database to represent this; the calendar still only ever generates seven
+  displayed dates client-side and classifies whichever of them have no
+  matching row.
+- **`inProgress`** (neutral) — today, before its goal is met. Never colored
+  as failed: the day isn't over, so there's still time. Matches the
+  existing "today incomplete doesn't break an intact streak through
+  yesterday" streak-count rule — this is that same principle applied to
+  the calendar's own coloring.
+- **`future`** (neutral) — any date later than today. Always neutral,
+  regardless of whether a row could theoretically exist for it (it can't).
+
+Every accessible label (`Completed` / `Goal not completed` / `In progress`
+/ `Future date`, translated across all 7 locales) is attached via each day
+list item's `aria-label`, independent of color — the distinction is never
+color-only.
 
 ## Profile Phase 1 — narrow onboarding/language-change RPCs, user_profiles write restriction
 

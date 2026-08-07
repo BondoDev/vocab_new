@@ -118,8 +118,10 @@
         "bestPrefix": "Melhor:",
         "weekAriaLabel": "Atividade desta semana",
         "status": {
-          "activityCompleted": "atividade concluida",
-          "noActivity": "sem atividade"
+          "completed": "Concluido",
+          "failed": "Meta nao atingida",
+          "inProgress": "Em andamento",
+          "future": "Data futura"
         },
         "weekdays": {
           "monShort": "S",

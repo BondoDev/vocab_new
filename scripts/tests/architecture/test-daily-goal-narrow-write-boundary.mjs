@@ -121,10 +121,130 @@ test("4. The daily-streak read path selects the per-row daily_goal snapshot", ()
   assert.match(fnMatch[1], /select=stat_date,new_words_completed,daily_goal/);
 });
 
-test("5. The pure streak model resolves each row's own goal, never one profile goal applied uniformly", () => {
+test("5. The pure streak model resolves each row's own goal, never the live/mutable current profile goal", () => {
   const dailyStreakSource = fs.readFileSync(path.join(SRC_DIR, "data", "learning", "dailyStreak.ts"), "utf8");
-  assert.match(dailyStreakSource, /rowDailyGoal \?\? currentProfileDailyGoal/);
+  // A stored snapshot always wins; a legacy (null) row falls back to a
+  // fixed constant, never to any value the caller supplies — proven at the
+  // type level too, since computeDailyStreakSummary has no such parameter
+  // to supply one through (see test-daily-streak.mjs's own arity guard).
+  assert.match(dailyStreakSource, /rowDailyGoal \?\? LEGACY_DAILY_GOAL/);
   assert.match(dailyStreakSource, /dailyGoal: number \| null;/);
+  // Checks for a *live* usage (a typed parameter, or an argument/closing
+  // paren directly after the identifier) rather than banning the word
+  // outright — the file legitimately still explains in prose why it has
+  // no such parameter anymore.
+  assert.doesNotMatch(
+    dailyStreakSource,
+    /currentProfileDailyGoal\s*[:,)]/,
+    "the live user_profiles.daily_goal must never be threaded into historical streak completion as an actual parameter/argument",
+  );
+  assert.match(
+    dailyStreakSource,
+    /export function computeDailyStreakSummary\(\s*stats: readonly DailyStreakDayStat\[\],\s*todayISO: string,\s*\): DailyStreakSummary/,
+    "computeDailyStreakSummary must take only (stats, todayISO) — no current-goal parameter",
+  );
+});
+
+test("5b. DailyStreakCard never receives or forwards a dailyGoal prop into the streak computation", () => {
+  const dailyStreakCardSource = fs.readFileSync(
+    path.join(SRC_DIR, "features", "user-profile", "sections", "learning", "DailyStreakCard.tsx"),
+    "utf8",
+  );
+  const learningSectionSource = fs.readFileSync(
+    path.join(SRC_DIR, "features", "user-profile", "sections", "learning", "LearningSection.tsx"),
+    "utf8",
+  );
+  // Checks for a *live* reference (a props field, a destructured
+  // parameter, or an argument passed to computeDailyStreakSummary) rather
+  // than banning the word "dailyGoal" outright — the file legitimately
+  // still explains in prose why it has none.
+  assert.doesNotMatch(
+    dailyStreakCardSource,
+    /interface DailyStreakCardProps\s*\{[^}]*dailyGoal/s,
+    "DailyStreakCardProps must not declare a dailyGoal field",
+  );
+  assert.doesNotMatch(
+    dailyStreakCardSource,
+    /export function DailyStreakCard\([^)]*dailyGoal/s,
+    "DailyStreakCard must not destructure a dailyGoal parameter",
+  );
+  assert.doesNotMatch(
+    dailyStreakCardSource,
+    /computeDailyStreakSummary\([^)]*dailyGoal/s,
+    "DailyStreakCard must not pass dailyGoal into computeDailyStreakSummary",
+  );
+  // Matches the whole <DailyStreakCard ... /> JSX tag as one block (rather
+  // than pinning an exact prop order/count) so this guard survives an
+  // unrelated prop being added later, while still proving dailyGoal is
+  // never among them.
+  const dailyStreakCardJsxMatch = learningSectionSource.match(/<DailyStreakCard\s+([\s\S]*?)\/>/);
+  assert.ok(dailyStreakCardJsxMatch, "LearningSection must render <DailyStreakCard ... />");
+  assert.match(dailyStreakCardJsxMatch[1], /practiceLanguage=\{userProfile\.practiceLanguage\}/);
+  assert.match(dailyStreakCardJsxMatch[1], /isProfileLoaded=\{isProfileLoaded\}/);
+  assert.doesNotMatch(
+    dailyStreakCardJsxMatch[1],
+    /dailyGoal/,
+    "LearningSection must not pass dailyGoal to DailyStreakCard",
+  );
+});
+
+test("5c. A successful daily-goal save — and only a successful save — triggers DailyStreakCard's refresh", () => {
+  const learningSectionSource = fs.readFileSync(
+    path.join(SRC_DIR, "features", "user-profile", "sections", "learning", "LearningSection.tsx"),
+    "utf8",
+  );
+  const dailyStreakCardSource = fs.readFileSync(
+    path.join(SRC_DIR, "features", "user-profile", "sections", "learning", "DailyStreakCard.tsx"),
+    "utf8",
+  );
+  const selectorSource = fs.readFileSync(
+    path.join(SRC_DIR, "features", "user-profile", "sections", "learning", "DailyGoalSelector.tsx"),
+    "utf8",
+  );
+
+  // LearningSection owns the token and increments it inside the handler it
+  // passes to DailyGoalSelector as onDailyGoalChange — not inside a .catch.
+  assert.match(learningSectionSource, /const \[streakRefreshToken, setStreakRefreshToken\] = useState\(0\)/);
+  assert.match(
+    learningSectionSource,
+    /const handleDailyGoalChange = \(dailyGoal: number\) => \{\s*setStreakRefreshToken\(\(token\) => token \+ 1\);\s*onDailyGoalChange\?\.\(dailyGoal\);\s*\};/,
+    "handleDailyGoalChange must increment the token and forward to onDailyGoalChange, in that order",
+  );
+  assert.match(
+    learningSectionSource,
+    /<DailyGoalSelector[\s\S]*?onDailyGoalChange=\{handleDailyGoalChange\}[\s\S]*?\/>/,
+    "DailyGoalSelector must receive the wrapping handler, not the raw onDailyGoalChange prop",
+  );
+  const dailyStreakCardJsxMatch = learningSectionSource.match(/<DailyStreakCard\s+([\s\S]*?)\/>/);
+  assert.match(dailyStreakCardJsxMatch[1], /streakRefreshToken=\{streakRefreshToken\}/);
+
+  // DailyGoalSelector's own onDailyGoalChange call site must stay inside a
+  // success branch (.then), never in its .catch — this is what makes a
+  // failed save leave LearningSection's token (and therefore
+  // DailyStreakCard) untouched. Split on the .then(/.catch(/.finally(
+  // boundaries themselves (rather than a brace-balancing regex, which
+  // can't handle the nested object literal inside the .then branch) to
+  // isolate each branch's own text.
+  const handleSaveMatch = selectorSource.match(/const handleSave = \(\) => \{[\s\S]*?\n  \};/);
+  assert.ok(handleSaveMatch, "DailyGoalSelector's handleSave must exist");
+  const [, afterThen] = handleSaveMatch[0].split(/\.then\(\(result\) => \{/);
+  assert.ok(afterThen, "handleSave must have a .then((result) => { ... branch");
+  const [thenBody, afterCatch] = afterThen.split(/\.catch\(\(error\) => \{/);
+  assert.ok(afterCatch, "handleSave must have a .catch((error) => { ... branch");
+  const [catchBody] = afterCatch.split(/\.finally\(/);
+  assert.ok(catchBody, "handleSave must have a .finally( branch closing the catch body");
+  assert.match(thenBody, /onDailyGoalChange\?\.\(nextProfile\.dailyGoal\)/);
+  assert.doesNotMatch(
+    catchBody,
+    /onDailyGoalChange/,
+    "a failed save must never call onDailyGoalChange — that would falsely bump the streak-refresh token",
+  );
+
+  // The refetch effect must actually depend on the token — otherwise
+  // bumping it would be a no-op.
+  const effectMatch = dailyStreakCardSource.match(/useEffect\(\(\) => \{[\s\S]*?\}, \[([^\]]*)\]\);/);
+  assert.ok(effectMatch, "DailyStreakCard's fetch effect must exist");
+  assert.match(effectMatch[1], /\bstreakRefreshToken\b/);
 });
 
 test("6. Streak Phase 1's migration never bulk-rewrites existing user_profiles or user_daily_stats rows", () => {

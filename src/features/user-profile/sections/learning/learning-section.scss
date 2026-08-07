@@ -727,11 +727,29 @@
   }
 
   /* Applied to a weekday whose user_daily_stats.new_words_completed met
-     that day's daily goal — see computeDailyStreakSummary. */
-  &__day-marker--active {
+     that day's effective daily goal (today or any past date) — see
+     computeDailyStreakSummary/classifyDayStatus's "completed" status. */
+  &__day-marker--completed {
     border-color: var(--success);
     background: var(--success);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 18%, transparent);
+  }
+
+  /* Applied to a *past* weekday that did not meet its effective goal,
+     including one with no user_daily_stats row at all — see
+     classifyDayStatus's "failed" status. Uses the shared --destructive
+     theme token (src/styles/theme.css) rather than a locally-scoped color:
+     unlike --success above (no green exists in the shared token set), an
+     error/failure color already does, and this is exactly that same
+     failure semantic, not a softer variant of it (contrast
+     vocabulary-section.scss's --vocab-rose, which deliberately avoids
+     --destructive for a non-error accent). Today-in-progress and future
+     days are deliberately excluded from ever reaching this class — see
+     DailyStreakCard.tsx's DAY_STATUS_MARKER_CLASSES. */
+  &__day-marker--failed {
+    border-color: var(--destructive);
+    background: var(--destructive);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 18%, transparent);
   }
 
   /* Loading placeholders — same footprint as the real content they stand

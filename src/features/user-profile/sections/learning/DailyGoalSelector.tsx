@@ -50,11 +50,18 @@ interface DailyGoalSelectorProps {
   // rebuild a write payload from it.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
-  // Called with the newly saved goal once the Supabase write succeeds, so
-  // the App-level userProfile state can be kept in sync. Without this,
-  // other components reading userProfile.dailyGoal (Today's Progress,
-  // Daily Streak, NewWordStudyPreparation, ...) keep showing the
-  // pre-change value until the page is reloaded.
+  // Called with the newly saved goal once the Supabase write succeeds —
+  // never on a failed save, only from the .then() branch of handleSave
+  // below — so the App-level userProfile state can be kept in sync.
+  // Without this, other components reading userProfile.dailyGoal for the
+  // *current* day (Today's Progress, NewWordStudyPreparation, ...) keep
+  // showing the pre-change value until the page is reloaded. Daily Streak
+  // deliberately does not read userProfile.dailyGoal at all — historical
+  // completion must never depend on it (see src/data/learning/
+  // dailyStreak.ts) — but LearningSection.tsx wraps this same callback to
+  // also bump DailyStreakCard's opaque streakRefreshToken on success, so
+  // it still refetches today's now-updated stored goal without ever being
+  // handed the goal value itself.
   onDailyGoalChange?: (dailyGoal: number) => void;
 }
 

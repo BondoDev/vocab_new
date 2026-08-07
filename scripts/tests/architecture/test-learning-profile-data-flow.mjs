@@ -101,8 +101,20 @@ test("3. DailyGoalSelector, DailyStreakCard, and TodayProgressCard each receive 
   );
   assert.match(
     dailyStreakCard,
-    /interface DailyStreakCardProps\s*\{[^}]*practiceLanguage:[^}]*dailyGoal:/s,
-    "DailyStreakCard must accept typed practiceLanguage/dailyGoal props",
+    /interface DailyStreakCardProps\s*\{[^}]*practiceLanguage:/s,
+    "DailyStreakCard must accept a typed practiceLanguage prop",
+  );
+  // Unlike DailyGoalSelector/TodayProgressCard, DailyStreakCard must NOT
+  // accept dailyGoal at all: the live, mutable current profile goal has no
+  // legitimate role in historical streak completion (see
+  // src/data/learning/dailyStreak.ts). This is the inverse of this guard's
+  // usual "must accept" shape, on purpose. Checks the props interface
+  // specifically (not the whole file) so the component's own prose
+  // explaining the omission doesn't trip this guard.
+  assert.doesNotMatch(
+    dailyStreakCard,
+    /interface DailyStreakCardProps\s*\{[^}]*dailyGoal/s,
+    "DailyStreakCardProps must not declare a dailyGoal field",
   );
   assert.match(
     todayProgressCard,
@@ -113,7 +125,19 @@ test("3. DailyGoalSelector, DailyStreakCard, and TodayProgressCard each receive 
 
 test("4. LearningSection wires the single shared profile down to all three cards", () => {
   assert.match(learningSection, /<DailyGoalSelector\s+userProfile=\{userProfile\}/);
-  assert.match(learningSection, /<DailyStreakCard\s+practiceLanguage=\{userProfile\.practiceLanguage\}\s+dailyGoal=\{userProfile\.dailyGoal\}/);
+  // Matches the whole <DailyStreakCard ... /> tag as one block rather than
+  // pinning an exact prop order/count (see streakRefreshToken, added by
+  // the Streak Phase 1 corrective refresh fix) — still proves dailyGoal is
+  // never among its props.
+  const dailyStreakCardJsxMatch = learningSection.match(/<DailyStreakCard\s+([\s\S]*?)\/>/);
+  assert.ok(dailyStreakCardJsxMatch, "LearningSection must render <DailyStreakCard ... />");
+  assert.match(dailyStreakCardJsxMatch[1], /practiceLanguage=\{userProfile\.practiceLanguage\}/);
+  assert.match(dailyStreakCardJsxMatch[1], /isProfileLoaded=\{isProfileLoaded\}/);
+  assert.doesNotMatch(
+    dailyStreakCardJsxMatch[1],
+    /dailyGoal/,
+    "DailyStreakCard must never receive dailyGoal",
+  );
   assert.match(learningSection, /<TodayProgressCard\s+practiceLanguage=\{userProfile\.practiceLanguage\}\s+dailyGoal=\{userProfile\.dailyGoal\}/);
 });
 

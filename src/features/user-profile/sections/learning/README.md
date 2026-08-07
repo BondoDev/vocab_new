@@ -521,15 +521,21 @@ never touched by that RPC or by anything else — once a day is no longer
 "today," its stored snapshot is frozen for good.
 
 The streak calculation (`src/data/learning/dailyStreak.ts`) resolves the
-goal a row is judged against as `row.dailyGoal ?? currentProfileDailyGoal`:
-a stored snapshot always wins over the live profile goal; the current
-profile goal is used only as a fallback for legacy rows written before this
-migration, which permanently have `daily_goal = null` — **no historical
+goal a row is judged against as `row.dailyGoal ?? LEGACY_DAILY_GOAL`: a
+stored snapshot always wins; a legacy row written before this migration,
+which permanently has `daily_goal = null`, falls back to a **fixed
+constant** (`LEGACY_DAILY_GOAL`, `10` — the minimum of the five supported
+presets, not the table's `15` default; see "Streak Phase 1 corrective fix"
+below for why) — never to the live profile goal. `computeDailyStreakSummary`
+takes no current-goal parameter at all, so nothing about the live
+`user_profiles.daily_goal` can reach historical completion. **No historical
 backfill was performed**, and none is planned, because there is no
 trustworthy record of what the goal actually was on any day before this
-snapshot existed. `streak_completed` remains a derived, not stored, value —
-computed fresh from `new_words_completed` and the resolved goal on every
-read, same as before this phase.
+snapshot existed — the fixed fallback is a deliberately approximate,
+permanently stable stand-in, not an attempted reconstruction.
+`streak_completed` remains a derived, not stored, value — computed fresh
+from `new_words_completed` and the resolved goal on every read, same as
+before this phase.
 
 `DailyGoalSelector` now saves through the narrow `update_daily_goal` RPC
 (via `src/lib/userProfile.ts`'s `updateDailyGoal`) instead of the broad
@@ -537,6 +543,64 @@ profile upsert every other profile-save flow still uses — it sends only the
 new goal, not the whole cached profile. Manual timezone Settings remains a
 separate, unfinished feature (see "Timezone Phase 1" in
 `supabase/README.md`) — this phase does not touch it.
+
+### Streak Phase 1 corrective fix — legacy fallback frozen to a constant
+
+The fallback above originally read `row.dailyGoal ?? currentProfileDailyGoal`
+— the *live*, mutable profile goal — so a legacy row's completion could
+still change whenever the user changed today's goal. Because Streak Phase 1
+shipped with no backfill, essentially every pre-existing row was (and,
+absent a backfill, remains) a legacy row, so this reproduced the exact
+historical-recalculation symptom the migration was meant to fix, for nearly
+all real accounts.
+
+The fix hard-codes the fallback to the exported `LEGACY_DAILY_GOAL`
+constant and removes the current-goal parameter from
+`computeDailyStreakSummary` entirely — enforced by the function's signature
+(`(stats, todayISO)`, two parameters), not just by convention.
+`DailyStreakCard.tsx` correspondingly no longer accepts or reads a
+`dailyGoal` prop, and `LearningSection.tsx` no longer passes one to it.
+`TodayProgressCard` is a separate component showing *today's* live
+progress and is unaffected — it still reads the live profile goal, and
+correctly should. This corrective fix is frontend/test/documentation only:
+no migration, schema change, or production data backfill was involved, and
+no `user_daily_stats`/`user_profiles` row was read or touched to make it.
+
+**`LEGACY_DAILY_GOAL` is `10`, not `15`.** The first version of this fix
+used `15` (matching `user_profiles.daily_goal`'s own table default), which
+turned out to be its own, smaller version of the same bug: real production
+history has legacy (`daily_goal IS NULL`) rows the user confirms they
+actually completed — e.g. exactly 10 new words on a day they met a real
+goal of 10 — that a `15` fallback would wrongly read as failed, erasing an
+earned streak day. `10`, the minimum of the five supported presets, is the
+only fixed value that can never wrongly fail a legacy row for meeting the
+lowest goal any account could have had. It is still only an approximation
+— a legacy row whose real goal was actually higher than 10 will be
+over-credited — but the original per-day goal for these rows was never
+recorded and cannot be reconstructed in either direction; `10` is the
+least-wrong fixed choice available, not a claim of exact historical
+accuracy.
+
+**Calendar day-status model.** `DailyStreakDayStatus` (`"completed" |
+"failed" | "inProgress" | "future"`, exported from `dailyStreak.ts`) is the
+single classification both the streak-count math and
+`DailyStreakCard.tsx`'s weekly-strip rendering derive from:
+
+- `completed` — met its effective goal; renders green (`--success`).
+- `failed` — a *past* date that didn't meet its effective goal, **including
+  a past date with no `user_daily_stats` row at all** (a missing row is
+  itself a failed day, not an unknown one); renders red (the shared
+  `--destructive` theme token). Nothing is written to the database to
+  produce this — the calendar still only generates seven dates client-side
+  and classifies whichever have no matching row.
+- `inProgress` — today, before its goal is met; neutral, never red, because
+  the day isn't over.
+- `future` — any date after today; always neutral.
+
+Every day also carries an accessible label (`Completed` / `Goal not
+completed` / `In progress` / `Future date`, localized in all 7 interface
+files) via its list item's `aria-label` — the distinction is never
+color-only.
 
 # Shared Exercise Components
 

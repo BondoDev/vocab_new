@@ -590,8 +590,10 @@
         "bestPrefix": "Лучший результат:",
         "weekAriaLabel": "Активность за эту неделю",
         "status": {
-          "activityCompleted": "активность выполнена",
-          "noActivity": "нет активности"
+          "completed": "Выполнено",
+          "failed": "Цель не достигнута",
+          "inProgress": "В процессе",
+          "future": "Будущая дата"
         },
         "weekdays": {
           "monShort": "П",
