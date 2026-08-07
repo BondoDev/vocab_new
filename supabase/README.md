@@ -838,10 +838,15 @@ level against `pg_catalog.pg_timezone_names`, not by a table `CHECK`.
 
 **Not part of this architecture** — future work, not documented as done
 here: manual timezone correction (a Settings page), cross-tab
-synchronization, learning-progress reset, live Supabase E2E test
-infrastructure, and the Statistics page. (Account deletion's backend
+synchronization, learning-progress reset (its backend primitive exists —
+see "Learning Progress Reset" below — but stays unreachable from any
+session, by design), and the Statistics page. (Account deletion's backend
 primitive now exists — see "Account Deletion" below — but it has no
-frontend UI yet, so it isn't part of *this* summary either.)
+frontend UI yet, so it isn't part of *this* summary either.) A live
+Supabase E2E test suite now exists — see "Live Supabase E2E tests" below —
+covering this profile architecture plus authentication, the learning RPCs,
+and RLS/grant behavior against a real deployed project; it is opt-in and
+separate from this repository's static contract tests.
 
 ## Account Deletion — backend primitive (2026-08-08)
 
@@ -1629,6 +1634,100 @@ versioned migration (see "Future activation" above), not a step this task
 performs. Do not describe this feature as production-ready until a
 Settings UI with an explicit confirmation step exists, the client wiring
 calls this RPC, and the future activation migration has been applied.
+
+## Live Supabase E2E tests (2026-08-08)
+
+`scripts/tests/live/` is a real, opt-in end-to-end suite that exercises a
+deployed Supabase project over the network — authentication, the four
+narrow `user_profiles` RPCs, the three learning RPCs, RLS ownership, direct-
+write rejection, and the disabled state of `reset_learning_language_progress`.
+It complements, and does not replace, this repository's static migration/
+source-text contract tests (`test:feature-contracts`,
+`test:architecture-guards`): those catch repository regressions instantly
+with no network access; this suite is the only thing in the repository that
+can catch an *unapplied* migration, a grant/RLS mismatch between a migration
+file and the live database, an Auth integration problem, or RPC response
+drift — none of which a static test reading `.sql` files can ever detect.
+
+### Running it
+
+```bash
+npm run test:supabase-live
+```
+
+Required environment variables (the run fails immediately, with a clear
+message, if any are missing — never a silent skip or a faked result):
+
+```text
+SUPABASE_URL                 # the target project's REST URL, e.g. https://xxxx.supabase.co
+SUPABASE_ANON_KEY             # that project's anon public API key
+SUPABASE_SERVICE_ROLE_KEY     # that project's service_role key — Node test process only, never a VITE_-prefixed variable, never committed
+```
+
+Optional:
+
+```text
+SUPABASE_LIVE_TEST_TIMEOUT_MS  # per-request timeout in ms (default 15000)
+```
+
+These are deliberately **not** read from `VITE_SUPABASE_URL`/
+`VITE_SUPABASE_ANON_KEY` (this repository's existing `.env` convention) even
+though the values may end up identical — this repository has no staging
+project, so `VITE_SUPABASE_URL` is presumably the production project, and an
+automatic fallback would let a forgotten `SUPABASE_URL` silently point a
+destructive test suite at production. Set the three variables above
+explicitly, either exported in your shell or in a local, gitignored
+`.env.supabase-live` file (already covered by this repository's `.env.*`
+`.gitignore` pattern) — `npm run test:supabase-live` loads that file
+automatically via Node's `--env-file-if-exists` if it's present, and does
+nothing if it's absent.
+
+**Run this only against the Supabase project you intend to test.** The
+suite creates and deletes real Auth users and writes real rows. This
+repository has no staging/test Supabase project today — if you ever add
+one, prefer it over production for this suite.
+
+### What it does
+
+- Creates two disposable, admin-created, pre-confirmed Auth users (`A` and
+  `B`) per run — never an existing personal account, never a shared
+  long-lived fixture account. Pre-confirmed (`email_confirm: true` via the
+  Admin API) because the suite cannot assume the live project's
+  email-confirmation setting; see `scripts/tests/live/lib/disposableUser.mjs`
+  for why.
+- Signs in as both normally (password grant, anon key) and runs every
+  scenario scoped to their own data only.
+- Feeds live RPC responses through the real frontend parser functions
+  (`src/lib/userProfileOnboarding.ts`, `userProfileLanguages.ts`,
+  `dailyGoalUpdate.ts`, `userProfileTimezone.ts`,
+  `learningDateValidation.ts`) wherever those parsers don't transitively
+  depend on `src/lib/supabaseAuth.ts` (which needs a Vite build to resolve
+  `import.meta.env` and cannot be imported from a bare Node process) — see
+  `scripts/tests/live/scenarios/learningRpcs.mjs`'s header for the one
+  place (the three learning RPCs' own unexported parsers) where this
+  suite re-asserts the same field/type contract directly instead.
+- Deletes both Auth users at the end (`try`/`finally`, runs even on
+  failure), exercising the live FK-cascade architecture documented in
+  "Account Deletion" below, then privileged-verifies (service role) that no
+  rows remain in `user_profiles`, `user_word_progress`, `user_daily_stats`,
+  `review_events`, or `custom_practice_events` for either user. If cleanup
+  itself fails, the run exits non-zero and prints the disposable user's id
+  and email for manual removal — it never fails silently.
+- Never touches the `delete-account` Edge Function, never reads or writes
+  `ACCOUNT_DELETION_ENABLED`, and never grants `authenticated` `EXECUTE` on
+  `reset_learning_language_progress` — cleanup uses the Admin API's
+  `deleteUser` directly (the same primitive `delete-account` uses
+  internally, just invoked here for test teardown), and the reset-RPC
+  scenario only ever calls it as an ordinary `authenticated` session to
+  confirm it is still rejected.
+
+### Not covered here
+
+Account deletion and learning-progress reset are deliberately **not**
+exercised end-to-end by this suite (out of scope for the task that built
+it) beyond the two safety checks above (a real Auth-user deletion for
+cleanup, and confirming the reset RPC stays unreachable). Neither backend
+primitive's own live activation flow is tested.
 
 ## What happens next
 

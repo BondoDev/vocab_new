@@ -1,4 +1,10 @@
-import { ClassifiedSupabaseError } from "./supabaseError";
+// Imported with an explicit .ts extension — matches
+// userProfileOnboarding.ts/userProfileLanguages.ts/dailyGoalUpdate.ts's own
+// precedent (see their headers) so this file stays loadable directly via
+// Node's native TypeScript stripping, e.g. by
+// scripts/tests/live/scenarios/timezone.mjs. No behavior change under Vite
+// either way — its bundler resolver accepts both forms.
+import { ClassifiedSupabaseError } from "./supabaseError.ts";
 
 interface InitializeUserTimezoneRpcRow {
   timezone?: unknown;
