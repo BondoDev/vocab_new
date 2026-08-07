@@ -242,13 +242,16 @@ test("18. Completing all four words of a full block moves to group_exercise", ()
   assert.ok(GROUP_EXERCISE_POOL.includes(block.groupExerciseId));
 });
 
-test("19. Completing the group exercise of a non-final block moves to block_complete", () => {
+test("19. Completing the group exercise of a non-final block starts the next block immediately", () => {
   let { state } = beginSession(8);
   for (let i = 0; i < 4; i++) {
     state = completeCurrentWord(state);
   }
   state = reduceReviewSessionState(state, { type: "GROUP_EXERCISE_COMPLETE", success: true });
-  assert.equal(state.currentStep, "block_complete");
+  assert.equal(state.currentStep, "word_exercise");
+  assert.equal(state.currentBlockIndex, 1);
+  assert.equal(state.currentWordIndexInBlock, 0);
+  assert.equal(getCurrentWordAssignment(state).queueIndex, 4);
   assert.equal(state.groupResults.length, 1);
   assert.equal(state.groupResults[0].conceptIds.length, 4);
   assert.deepEqual(
@@ -257,13 +260,14 @@ test("19. Completing the group exercise of a non-final block moves to block_comp
   );
 });
 
-test("20. CONTINUE_AFTER_BLOCK moves to the next block's first word", () => {
+test("20. CONTINUE_AFTER_BLOCK is stale after a group exercise auto-continues", () => {
   let { state } = beginSession(8);
   for (let i = 0; i < 4; i++) {
     state = completeCurrentWord(state);
   }
   state = reduceReviewSessionState(state, { type: "GROUP_EXERCISE_COMPLETE", success: true });
-  state = reduceReviewSessionState(state, { type: "CONTINUE_AFTER_BLOCK" });
+  const unchanged = reduceReviewSessionState(state, { type: "CONTINUE_AFTER_BLOCK" });
+  assert.equal(unchanged, state);
   assert.equal(state.currentStep, "word_exercise");
   assert.equal(state.currentBlockIndex, 1);
   assert.equal(getCurrentWordAssignment(state).queueIndex, 4);
@@ -281,8 +285,9 @@ test("21. A full 20-word session walks through five blocks to session_complete, 
     // SAVE_REVIEW_SUCCEEDED — it has its own single-shot action.
     state = reduceReviewSessionState(state, { type: "GROUP_EXERCISE_COMPLETE", success: true });
     if (block < 4) {
-      assert.equal(state.currentStep, "block_complete");
-      state = reduceReviewSessionState(state, { type: "CONTINUE_AFTER_BLOCK" });
+      assert.equal(state.currentStep, "word_exercise");
+      assert.equal(state.currentBlockIndex, block + 1);
+      assert.equal(getCurrentWordAssignment(state).queueIndex, (block + 1) * 4);
     }
   }
   assert.equal(state.currentStep, "session_complete");
@@ -300,8 +305,8 @@ test("22. A 17-word session's trailing remainder skips group_exercise/block_comp
       state = completeCurrentWord(state);
     }
     state = reduceReviewSessionState(state, { type: "GROUP_EXERCISE_COMPLETE", success: true });
-    assert.equal(state.currentStep, "block_complete");
-    state = reduceReviewSessionState(state, { type: "CONTINUE_AFTER_BLOCK" });
+    assert.equal(state.currentStep, "word_exercise");
+    assert.equal(state.currentBlockIndex, block + 1);
   }
   assert.equal(state.currentStep, "word_exercise");
   state = completeCurrentWord(state, "incorrect");
@@ -322,9 +327,9 @@ test("23. No word is ever skipped over: every wordResults entry ends saved acros
     }
     if (state.currentStep === "group_exercise") {
       state = reduceReviewSessionState(state, { type: "GROUP_EXERCISE_COMPLETE", success: true });
-    }
-    if (state.currentStep === "block_complete") {
-      state = reduceReviewSessionState(state, { type: "CONTINUE_AFTER_BLOCK" });
+      if (block < 4) {
+        assert.equal(state.currentStep, "word_exercise");
+      }
     }
   }
   assert.equal(state.currentStep, "session_complete");

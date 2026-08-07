@@ -191,8 +191,8 @@ function updateWordResult(
 
 // Shared by SAVE_REVIEW_SUCCEEDED and (for a block with no group exercise)
 // the tail end of a session: decides whether to move to the next word in
-// this block, into this block's group exercise, into block_complete-bound
-// group exercise, or straight to session_complete.
+// this block, into this block's group exercise, or straight to
+// session_complete.
 function advanceAfterWordSaved(state: ReviewSessionState, wordResults: ReviewWordResult[]): ReviewSessionState {
   const block = getCurrentBlock(state);
   if (!block) {
@@ -308,7 +308,14 @@ export function reduceReviewSessionState(
 
       const hasNextBlock = state.currentBlockIndex + 1 < state.plan.blocks.length;
       if (hasNextBlock) {
-        return { ...state, wordResults, groupResults, currentStep: "block_complete" };
+        return {
+          ...state,
+          wordResults,
+          groupResults,
+          currentBlockIndex: state.currentBlockIndex + 1,
+          currentWordIndexInBlock: 0,
+          currentStep: "word_exercise",
+        };
       }
       return { ...state, wordResults, groupResults, currentStep: "session_complete", isComplete: true };
     }
