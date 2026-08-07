@@ -39,6 +39,7 @@ import {
   normalizeTimezone,
   normalizeTimestamp,
   normalizeUserProfile,
+  buildStoredUserProfile,
   isUserProfileComplete,
 } from "../app/utils/accountProfileCompleteness";
 
@@ -197,11 +198,7 @@ export function readStoredUserProfile(userId: string): UserProfile | null {
 }
 
 export function writeStoredUserProfile(userId: string, profile: Partial<UserProfile>): UserProfile {
-  const nextProfile = normalizeUserProfile({
-    ...profile,
-    onboardingCompleted: isUserProfileComplete(profile),
-    updatedAt: new Date().toISOString(),
-  });
+  const nextProfile = buildStoredUserProfile(profile);
 
   if (canUseLocalStorage()) {
     window.localStorage.setItem(buildStorageKey(userId), JSON.stringify(nextProfile));

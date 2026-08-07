@@ -43,6 +43,7 @@ import {
   resolveHydratedLanguagePair,
   shouldConfirmAccountLanguageChange,
 } from "../../../src/app/utils/languageProfileSyncPolicy.ts";
+import { buildStoredUserProfile } from "../../../src/app/utils/accountProfileCompleteness.ts";
 import { saveAccountLanguagePair } from "../../../src/app/utils/accountLanguageSave.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -225,6 +226,35 @@ async function main() {
     assert.equal(lastSupabasePatch.practiceLanguage, "de");
     assert.equal(lastStoragePatch.updatedAt, "2026-07-18T00:00:00.000Z");
     assert.equal(result.ok, true);
+  });
+
+  await test("language save storage preserves update_user_profile_languages's returned server updated_at", async () => {
+    const serverTimestamp = "2026-08-07T10:11:12.000Z";
+    const result = await saveAccountLanguagePair({
+      buildPatchedProfile: () => ({
+        nickname: "Al",
+        languageLevel: "B1",
+        age: 25,
+        birthMonth: "05",
+        birthDay: "20",
+        nativeLanguage: "fr",
+        practiceLanguage: "de",
+        onboardingCompleted: true,
+        dailyGoal: 15,
+        updatedAt: "2026-08-01T00:00:00.000Z",
+        timezone: "Asia/Tbilisi",
+        timezoneUpdatedAt: "2026-08-01T00:00:00.000Z",
+      }),
+      writeLanguagesToSupabase: async () => ({
+        nativeLanguage: "fr",
+        practiceLanguage: "de",
+        updatedAt: serverTimestamp,
+      }),
+      writeStoredUserProfile: (profile) => buildStoredUserProfile(profile),
+    });
+
+    assert.equal(result.ok, true);
+    assert.equal(result.profile.updatedAt, serverTimestamp);
   });
 
   await test("successful save returns the merged profile for the caller to adopt as the new in-memory state", async () => {

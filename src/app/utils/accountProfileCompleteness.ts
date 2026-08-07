@@ -164,6 +164,13 @@ export function normalizeUserProfile(value: Partial<UserProfile> | null | undefi
   };
 }
 
+export function buildStoredUserProfile(value: Partial<UserProfile>): UserProfile {
+  return normalizeUserProfile({
+    ...value,
+    onboardingCompleted: isUserProfileComplete(value),
+  });
+}
+
 export function isUserProfileComplete(profile: Partial<UserProfile> | null | undefined): boolean {
   const normalized = normalizeUserProfile(profile);
   return Boolean(

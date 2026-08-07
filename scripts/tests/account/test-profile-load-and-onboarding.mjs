@@ -35,6 +35,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   normalizeUserProfile,
+  buildStoredUserProfile,
   isUserProfileComplete,
 } from "../../../src/app/utils/accountProfileCompleteness.ts";
 import {
@@ -469,6 +470,40 @@ async function main() {
   console.log("     by a bundler-free Node script either. These checks pin the lifecycle");
   console.log("     contract structurally instead — the same tradeoff documented in");
   console.log("     test-account-language-sync.mjs and test-learning-profile-data-flow.mjs.)");
+
+  console.log("\n[6] stored profile timestamp ownership");
+
+  test("writeStoredUserProfile normalization preserves the supplied authoritative server updatedAt", () => {
+    const serverTimestamp = "2026-08-07T10:11:12.000Z";
+    const stored = buildStoredUserProfile(withField({ updatedAt: serverTimestamp }));
+    assert.equal(stored.updatedAt, serverTimestamp);
+  });
+
+  test("writeStoredUserProfile normalization leaves updatedAt null when no authoritative server value is supplied", () => {
+    const stored = buildStoredUserProfile(withField({ updatedAt: null }));
+    assert.equal(stored.updatedAt, null);
+  });
+
+  test("onboarding storage merge preserves complete_user_profile_onboarding's returned server updated_at", () => {
+    const requestProfile = withField({
+      nickname: "RequestNick",
+      updatedAt: "2026-08-01T00:00:00.000Z",
+    });
+    const rpcProfile = {
+      nickname: "ServerNick",
+      updatedAt: "2026-08-07T10:11:12.000Z",
+    };
+    const stored = buildStoredUserProfile({ ...requestProfile, ...rpcProfile });
+    assert.equal(stored.nickname, "ServerNick");
+    assert.equal(stored.updatedAt, "2026-08-07T10:11:12.000Z");
+  });
+
+  test("profile storage code does not generate a browser timestamp for updatedAt", () => {
+    const source = read("src/lib/userProfile.ts");
+    const match = source.match(/export function writeStoredUserProfile\([\s\S]*?\n\}/);
+    assert.ok(match, "could not locate writeStoredUserProfile");
+    assert.doesNotMatch(match[0], /new Date\(|Date\.now\(|toISOString\(/);
+  });
 
   const loadHookSource = read("src/app/hooks/useUserProfileLoad.ts");
   const effectBodyMatch = loadHookSource.match(
