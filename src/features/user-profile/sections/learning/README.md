@@ -569,9 +569,12 @@ before this phase.
 
 `DailyGoalSelector` now saves through the narrow `update_daily_goal` RPC
 (via `src/lib/userProfile.ts`'s `updateDailyGoal`) instead of the broad
-profile upsert every other profile-save flow still uses — it sends only the
-new goal, not the whole cached profile. Manual timezone Settings remains a
-separate, unfinished feature (see "Timezone Phase 1" in
+profile upsert every other profile-save flow used at the time this phase
+shipped — it sends only the new goal, not the whole cached profile.
+(Onboarding and language-confirm later moved onto their own narrow RPCs too,
+in Profile Phase 1 — see `supabase/README.md` — so no profile-save flow uses
+the broad upsert anymore; it no longer exists.) Manual timezone Settings
+remains a separate, unfinished feature (see "Timezone Phase 1" in
 `supabase/README.md`) — this phase does not touch it.
 
 ### Streak Phase 1 corrective fix — legacy fallback frozen to a constant

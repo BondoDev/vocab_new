@@ -385,6 +385,19 @@ deno_version = 2
 # [edge_runtime.secrets]
 # secret_key = "env(SECRET_VALUE)"
 
+# Per-function config. Explicit here rather than left to the CLI/platform
+# default so JWT verification for this privileged function is a deliberate,
+# reviewable choice, not an implicit one — see supabase/README.md's "Account
+# Deletion" section. verify_jwt = true means Supabase's own gateway rejects
+# a request with a missing/invalid/expired bearer token before it ever
+# reaches the function; delete-account's own adminClient.auth.getUser(token)
+# check underneath is a second, independent verification (it also confirms
+# the user still exists, which platform-level JWT verification alone does
+# not), not a replacement for this. Do not set this to false without a
+# concrete architectural reason — none exists today.
+[functions.delete-account]
+verify_jwt = true
+
 [analytics]
 enabled = true
 port = 54327

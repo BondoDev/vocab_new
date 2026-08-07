@@ -485,10 +485,12 @@ though nothing about those rows themselves had changed.
   lock is introduced.
 - `DailyGoalSelector` now calls `update_daily_goal` (via
   `src/lib/userProfile.ts`'s `updateDailyGoal`) instead of the broad
-  `writeSupabaseUserProfile` upsert every other profile-save flow still
-  uses — it sends only `p_daily_goal`, not the whole cached profile.
-  Onboarding and the account language-confirm save are unchanged and still
-  use the broad upsert; this phase does not touch either.
+  `writeSupabaseUserProfile` upsert every other profile-save flow used at
+  the time this phase shipped — it sends only `p_daily_goal`, not the whole
+  cached profile. Onboarding and the account language-confirm save are
+  unchanged by *this* phase and still used the broad upsert as of Streak
+  Phase 1 — Profile Phase 1 below is what later moved both onto their own
+  narrow RPCs and removed `writeSupabaseUserProfile` entirely.
 - The streak read/compute path (`readDailyStreakStats` in
   `src/lib/newWordProgress.ts`, `computeDailyStreakSummary` in
   `src/data/learning/dailyStreak.ts`) selects each row's own `daily_goal`
@@ -695,12 +697,938 @@ changes it away from its default — no RPC, trigger, or direct write sets
 `is_new_user = false` or references it at all — no frontend runtime
 read/write, and no repo-owned analytics/admin/automation dependency.
 `shouldOpenAccountOnboarding` (`src/app/utils/accountProfile.ts`) already
-decides onboarding entirely from profile-row presence and
-`onboarding_completed`, so removal does not touch onboarding behavior.
+decides onboarding entirely from profile-row presence and required-field
+completeness (`isUserProfileComplete`, not the raw `onboarding_completed`
+column — see the Profile Audit's `onboarding_completed` semantics section
+below), so removal does not touch onboarding behavior.
 
 No current SQL function references `is_new_user` in its body, `INSERT`/`SET`
 column list, or `RETURNS TABLE` shape, so this migration only drops the
 column — no RPC needed replacing.
+
+## Profile Audit — `onboarding_completed` semantics (2026-08-07)
+
+Audited on request, distinct from the `is_new_user`/`last_active_at`
+removals above: `onboarding_completed` (`boolean not null default false`)
+is **kept, not removed**. Current semantics are a hybrid invariant, already
+implemented rather than newly designed:
+
+- **The only writer is `complete_user_profile_onboarding`.** It always sets
+  `onboarding_completed = true` (a literal, never a parameter) and only
+  after validating all seven required fields (`nickname`, both languages,
+  `current_level`, `user_age`, `birth_month`, `birth_day`). Nothing sets it
+  back to `false` — no other RPC, trigger, or direct write touches this
+  column at all (`authenticated` has had no direct table write access since
+  Profile Phase 1 above).
+- **So going forward, `onboarding_completed = true` implies the required
+  fields were valid at write time**, and — because no RPC can null or
+  invalidate those fields afterward (`update_user_profile_languages`
+  requires a valid language pair; `update_daily_goal`/
+  `initialize_user_timezone` never touch onboarding fields) — stays implied
+  for the row's lifetime under any app-driven path. Rows written before
+  Profile Phase 1's `CHECK` constraints/RPC restriction existed (i.e.
+  through the old broad `writeSupabaseUserProfile` upsert) are the only
+  way this invariant could be violated historically; no backfill has been
+  needed or run because of the next point.
+- **`normalizeUserProfile` (`src/app/utils/accountProfileCompleteness.ts`)
+  re-derives the client-facing `onboardingCompleted` as `raw flag AND all
+  seven fields present`** on every read (Supabase row, `localStorage`
+  cache, or RPC response), independent of the frontend/DB constraint
+  history above. A row with `onboarding_completed = true` but incomplete
+  fields — however it arose — is never surfaced to the app as complete.
+- **The onboarding-reopen decision itself
+  (`shouldOpenAccountOnboarding`) does not read the flag at all** — it
+  opens onboarding whenever no Supabase profile row exists yet, or
+  `isUserProfileComplete` finds a required field missing/invalid,
+  recomputed directly from the fields rather than trusting
+  `onboarding_completed`. This means the flag and the UI's decision are
+  independently derived, and — because of the invariant above — always
+  agree in practice; `scripts/tests/account/test-profile-load-and-onboarding.mjs`
+  pins both the agreement and the (structurally unreachable today, but
+  handled safely either way) disagreement cases explicitly.
+
+Net effect: `onboarding_completed` is not currently read anywhere to gate
+behavior, but it is not dead weight either — it is the database's own
+explicit "onboarding was completed" event, held consistent with the
+required fields by construction. Removing it would be a schema
+simplification with no behavior change today, not a bug fix; if desired,
+treat it as its own follow-up migration (touching the RPC's `RETURNS
+TABLE` shape, `readSupabaseUserProfile`'s `select=` list,
+`normalizeUserProfile`, and every contract test enumerated by this
+audit — `test-restrict-user-profiles-writes-migration-contract.mjs`,
+`test-profile-load-and-onboarding.mjs`, `test-user-profile-onboarding-response.mjs`,
+`test-account-language-sync.mjs`, `test-daily-goal-snapshot-migration-contract.mjs`,
+`test-timezone-initialization.mjs`, and
+`test-user-timezone-foundation-migration-contract.mjs`), not this audit.
+
+## Profile architecture — current state summary (2026-08-08)
+
+The sections above (Profile Phase 1–3, the timezone/streak phases, the
+`onboarding_completed` audit) are the historical record of how
+`user_profiles` reached its current shape. This section is a consolidated,
+current-state reference — it doesn't repeat their reasoning, only their
+conclusions. Everything below reflects the migrations as authored in this
+folder and is enforced by this repo's static contract tests
+(`test:architecture-guards`, `test:feature-contracts`); there is no live
+Supabase E2E suite (see `docs/architecture.md`), so nothing here claims to
+be independently confirmed against a running production database beyond
+what the original baseline audit's `[CATALOG-CONFIRMED]` catalog queries
+already established.
+
+**Reads.** `useUserProfileLoad` (`src/app/hooks/useUserProfileLoad.ts`),
+mounted once from `src/app/App.tsx`, is the frontend's one authenticated
+`user_profiles` SELECT path (`readSupabaseUserProfile` in
+`src/lib/userProfile.ts`). Every profile/learning/vocabulary dashboard
+component consumes the loaded `userProfile` via props/state threaded down
+from there rather than fetching its own copy — guarded by
+`test:learning-profile-data-flow` and `test:vocabulary-profile-data-flow`
+(`docs/architecture.md`'s guard table). The SELECT itself is owner-scoped
+(`"Users can view their own profile"`, `auth.uid() = id`); `anon` holds no
+privilege on the table at all.
+
+**Writes are RPC-only.** `authenticated` has no direct INSERT/UPDATE/DELETE
+on `user_profiles` (revoked in Profile Phase 1); every mutation goes
+through one of four narrow RPCs, each `SECURITY DEFINER` with an empty
+`search_path`, each deriving the caller from `auth.uid()` rather than
+accepting a user id, each owning a disjoint column set:
+
+| RPC | Owns | Never touches |
+|---|---|---|
+| `complete_user_profile_onboarding` | `nickname`, `native_language`, `learning_language`, `current_level`, `user_age`, `birth_month`, `birth_day`, `onboarding_completed` (always `true`) | `daily_goal`, `timezone`, `timezone_updated_at`, `created_at` |
+| `update_user_profile_languages` | `native_language`, `learning_language` | everything else — rejects a caller with no existing row instead of creating one |
+| `update_daily_goal` | `daily_goal`, plus today's `user_daily_stats.daily_goal` snapshot(s) | onboarding fields, timezone |
+| `initialize_user_timezone` | `timezone`, `timezone_updated_at` — only while `timezone is null` | onboarding fields, `daily_goal` |
+
+None of the four needs `user_profiles` table-level write grants — each
+executes as its owner (`postgres`) regardless of the calling role, which is
+why `authenticated`'s own table grant can be `SELECT`-only.
+
+**`updated_at`** is the server-owned timestamp of the row's most recent
+mutation, stamped by whichever RPC wrote last. The frontend never
+generates its own value for it (`normalizeTimestamp`/`normalizeUserProfile`
+in `src/lib/userProfile.ts` / `src/app/utils/accountProfileCompleteness.ts`
+only ever pass through a string already present, never `Date.now()` or
+similar). Not every RPC returns a fresh one, though:
+`complete_user_profile_onboarding` and `update_user_profile_languages` both
+do, so the client's cached value is current after those calls, but
+`update_daily_goal`'s `RETURNS TABLE` (`daily_goal`, `stat_date`,
+`updated_daily_stats_rows`) does not, even though its SQL body bumps
+`user_profiles.updated_at` server-side. In that case
+`DailyGoalSelector.tsx` spreads the existing in-memory profile and
+overwrites only `dailyGoal`, so the client's cached `updatedAt` is left at
+the previous known authoritative server value rather than a fabricated
+browser timestamp — it is simply stale by one write until the next full
+profile load.
+
+**`onboarding_completed`** — DB-owned explicit completion-event marker, not
+itself the UI's onboarding-reopen source of truth; see "Profile Audit —
+`onboarding_completed` semantics" above for the full analysis.
+
+**Removed fields.** `last_active_at` (Profile Phase 2) and `is_new_user`
+(Profile Phase 3) no longer exist as columns — both are historical only,
+not open questions.
+
+**Validation** mirrors the frontend normalizers exactly: `native_language`/
+`learning_language` in the 7 supported UI language codes; `current_level`
+in `A1`–`C2`; `user_age` `10`–`100`; `birth_month` `1`–`12`; `birth_day`
+`1`–`31`; `nickname` non-empty after trim, ≤40 characters; `daily_goal` in
+`10, 15, 20, 30, 50` (Profile Phase 1's seven `CHECK` constraints plus the
+pre-existing `daily_goal` preset check). `timezone` is validated at the RPC
+level against `pg_catalog.pg_timezone_names`, not by a table `CHECK`.
+
+**Not part of this architecture** — future work, not documented as done
+here: manual timezone correction (a Settings page), cross-tab
+synchronization, learning-progress reset, live Supabase E2E test
+infrastructure, and the Statistics page. (Account deletion's backend
+primitive now exists — see "Account Deletion" below — but it has no
+frontend UI yet, so it isn't part of *this* summary either.)
+
+## Account Deletion — backend primitive (2026-08-08)
+
+Audited on request: whether deleting the Supabase Auth user safely removes
+all user-owned data, and if so, where a secure server-side deletion
+operation should live. No Settings UI was built — this section documents
+the backend-only capability now in place for future Settings integration.
+
+### User-data ownership map
+
+Every table that stores per-user data, confirmed by reading every migration
+in this folder (`grep create table` across `supabase/migrations/` returns
+exactly these five):
+
+| Table | User FK | References | `ON DELETE` | Safe on account deletion? |
+|---|---|---|---|---|
+| `user_profiles` | `id` | `auth.users(id)` | `CASCADE` (baseline) | Yes |
+| `user_word_progress` | `user_id` | `auth.users(id)` | `CASCADE` (baseline) | Yes |
+| `user_daily_stats` | `user_id` | `auth.users(id)` | `CASCADE` (baseline) | Yes |
+| `review_events` | `user_id` | `auth.users(id)` | `CASCADE` (Corrective Migration 3 — **no FK existed at all before this**) | Yes, as of Corrective Migration 3 |
+| `review_events` | `word_progress_id` | `user_word_progress(id)` | `CASCADE` (Corrective Migration 3 — was `NO ACTION` before) | Yes, as of Corrective Migration 3 |
+| `custom_practice_events` | `user_id` | `auth.users(id)` | `CASCADE` (Corrective Migration 5) | Yes |
+
+All six foreign keys are direct or one-hop-transitive references to
+`auth.users(id)`; none are "no FK, manually-tracked id" (`review_events.user_id`
+was exactly that gap until Corrective Migration 3 closed it — see that
+migration's own header for the product decision and the read-only
+validation queries it required first). No table stores a user identifier
+without a foreign key today. `is_favorite` is a column on
+`user_word_progress`, not a separate favorites table — there is no sixth
+user-owned table hiding there.
+
+**Caveat carried over from every other section of this README**: these
+foreign keys are correct *as authored in this repository's migrations*.
+Like every migration here, Corrective Migration 3 in particular ships
+prepared and reviewed, not automatically applied — see its own header and
+this README's Corrective Migration 3 section. **Before this Edge Function
+is ever deployed for real use, confirm live (e.g. the same
+`pg_constraint`/`pg_get_constraintdef` catalog-query approach the baseline
+audit used) that `review_events.user_id` actually has its foreign key and
+that `review_events.word_progress_id` is actually `ON DELETE CASCADE` and
+not the pre-Corrective-Migration-3 `NO ACTION`.** If Corrective Migration 3
+were not yet live, deleting a user with existing review history would
+either fail outright (word_progress_id still `NO ACTION`, blocking the
+cascade) or leave orphaned `review_events` rows behind (user_id had no FK
+at all) — this is the one gap that would matter.
+
+### Non-table dependencies
+
+- **Storage**: `supabase/config.toml`'s `[storage]` block is the unmodified
+  Supabase CLI template (buckets commented out, no bucket ever configured).
+  No code in `src/` calls any Supabase Storage API
+  (`.storage.from(...)`/`getPublicUrl`/`createSignedUrl` — none found
+  repo-wide). Nothing to clean up here.
+- **Edge Functions**: none existed before this task (`supabase/functions/`
+  did not exist). `delete-account` (below) is the first.
+- **Triggers**: the only trigger in the schema,
+  `prevent_direct_user_timezone_write` on `user_profiles`
+  (Timezone Phase 1), fires `before insert or update` only — never `delete`
+  — so it cannot interfere with the row being removed by cascade.
+- **Scheduled jobs**: no `pg_cron`/`cron.schedule` usage anywhere in
+  `supabase/migrations/`.
+- **Analytics/notification tables**: none exist in this schema — Google
+  Analytics (`VITE_GA_MEASUREMENT_ID`) is a client-side script tag, not a
+  Supabase table, and out of scope for a database deletion primitive.
+- **External IDs stored in repository-owned systems**: none found — no
+  repo-owned table stores a third-party subscription/billing/CRM id keyed
+  to a user.
+- **`service_role` key**: not present anywhere in this repository today —
+  no `.env`/`.env.example` entry, no Cloudflare Worker binding
+  (`docs/deployment.md` lists only `VITE_GA_MEASUREMENT_ID`/
+  `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`/`SITE_ORIGIN`/`SITE_URL` on
+  the production Worker), no `@supabase/supabase-js` dependency in
+  `package.json` (the frontend calls Auth/PostgREST REST endpoints
+  directly — `src/lib/supabaseAuth.ts` — with only the anon key). Deleting
+  `auth.users` alone is therefore sufficient for every repository-owned
+  system; nothing else in this repo needs to be told about a deletion
+  separately.
+
+### Why deletion runs as a Supabase Edge Function
+
+`supabase/functions/delete-account/index.ts` — the only place in this
+repository's architecture appropriate for a `service_role`-holding
+operation:
+
+- The Cloudflare Worker (`workers/word-ssr/`) is a public, unauthenticated
+  word-page SSR renderer with a hard bundle-size budget
+  (`docs/architecture.md`) and no session-handling code of any kind — it
+  was deliberately not used, to avoid mixing a privileged secret and a
+  security-sensitive operation into an unrelated, tightly-constrained
+  production Worker.
+  There is no other Cloudflare Worker or server route anywhere in this
+  repository (`docs/deployment.md`: Cloudflare serves static assets plus
+  this one Worker; the SPA itself ships no server code of its own).
+- Supabase Edge Functions run entirely outside the browser, can hold
+  `SUPABASE_SERVICE_ROLE_KEY` as a function secret (`supabase secrets set`),
+  and are the platform's own purpose-built mechanism for exactly this
+  operation.
+- The `service_role` key is set only as an Edge Function secret — never a
+  `VITE_`-prefixed variable, so Vite can never inline it into a browser
+  bundle (every existing `VITE_SUPABASE_*` variable in this repo is the
+  anon key only — confirmed above).
+
+**Platform-level JWT verification**: `supabase/config.toml` declares
+`[functions.delete-account]` with `verify_jwt = true` explicitly, rather
+than relying on the CLI/platform default. This means Supabase's own gateway
+rejects a request with a missing/invalid/expired bearer token before it
+ever reaches the function — a second, independent layer in front of the
+function's own `adminClient.auth.getUser(token)` check, not a replacement
+for it (only the in-function check also confirms the user still *exists*,
+which platform-level verification alone does not). No concrete
+architectural reason exists to disable it, so it stays on.
+
+**Identity**: the function derives the caller exclusively from their own
+bearer token (`adminClient.auth.getUser(token)`), which both validates the
+JWT and confirms the backing `auth.users` row still exists. It never reads
+`user_id`/`target_user_id`/`email` from the request — there is no such
+parameter anywhere in the function, the same shape every narrow RPC in this
+repository already uses (`complete_user_profile_onboarding`,
+`update_user_profile_languages`, `update_daily_goal`,
+`initialize_user_timezone` — none accept a caller-supplied id either).
+Missing/malformed/expired/already-deleted-user tokens are all rejected the
+same way (401 `unauthenticated`); a misconfigured deployment (missing
+`SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY`) fails closed (500
+`server_misconfigured`) rather than silently falling back to an
+unprivileged client.
+
+**Cascade**: the function performs exactly one call,
+`adminClient.auth.admin.deleteUser(callerId)` — no manual per-table
+deletes. Every user-owned table's cascade (above) does the rest,
+transactionally, as part of that single `DELETE FROM auth.users` statement.
+Foreign-key cascade actions execute under the privileged connection
+Supabase Auth itself uses, not through PostgREST/`authenticated`'s own
+grants — so the SELECT-only/RPC-only write restrictions this repo's other
+migrations added to these tables (Profile Phase 1, Corrective Migration 1)
+have no bearing on whether the cascade succeeds.
+
+**Failure behavior**: a failed `deleteUser` call returns 502
+`delete_failed`, never a false 200. Because there is no manual multi-step
+deletion (cascade only), there is no partially-deleted state to leave
+behind on failure — Postgres either commits the whole cascade or rolls it
+all back.
+
+**Idempotency**: a retried call after a successful deletion resends the
+same, now-stale access token. `getUser(token)` looks the user up by id on
+every call and correctly reports "not found" for an already-deleted
+account — the retry is rejected as `unauthenticated`, the same as any other
+invalid token, never treated as a special case.
+
+### Production deployment gate — `ACCOUNT_DELETION_ENABLED`
+
+Everything above makes the *code* safe; this gate is what makes *deploying*
+it safe before genuine reauthentication exists. A second server-side Edge
+Function secret, `ACCOUNT_DELETION_ENABLED`, must equal the exact string
+`"true"` or the function refuses to delete anything:
+
+```text
+request
+  ↓
+method check (POST only) → 405 otherwise
+  ↓
+server-config check (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY present) → 500 otherwise
+  ↓
+bearer-token check → 401 otherwise
+  ↓
+identity resolved via adminClient.auth.getUser(token) → 401 otherwise
+  ↓
+ACCOUNT_DELETION_ENABLED !== "true" → 403 { "error": "account_deletion_disabled" }
+  ↓
+adminClient.auth.admin.deleteUser(callerId)
+```
+
+- **Read only from `Deno.env.get("ACCOUNT_DELETION_ENABLED")`** — never from
+  the request (no header/body/query lookup of that name anywhere in the
+  function), so nothing a caller sends can influence it.
+- **Exact-match, not truthy**: the comparison is
+  `ACCOUNT_DELETION_ENABLED !== "true"`, with no `.toLowerCase()`/`.trim()`/
+  `Boolean()` coercion. A missing secret (`undefined`), `"false"`, `"True"`,
+  `"TRUE"`, `" true"`, `"1"` — every one of these fails the same exact
+  comparison and disables deletion identically. Exactly one spelling
+  enables it.
+- **Checked after identity, before the delete call**: an unauthenticated
+  caller gets a plain 401 and learns nothing about whether deletion is
+  enabled; a fully-authenticated caller hitting a disabled deployment gets
+  exactly `{ "error": "account_deletion_disabled" }` and a `403` — no
+  reason, no configuration value, nothing else.
+- **This is what makes it safe to commit, push, and deploy today.** With
+  the secret unset (or explicitly `"false"`) in the deployed project, the
+  function is live and fully reachable, but structurally cannot delete
+  anyone — every authenticated call reaches the gate and stops there.
+
+### Deployment procedure
+
+Two distinct, non-overlapping states — do not conflate "deployed" with
+"enabled":
+
+**Production now.** Deploy `delete-account` (`supabase functions deploy
+delete-account`) with `ACCOUNT_DELETION_ENABLED` either left unset or set
+explicitly to `false`:
+
+```bash
+supabase secrets set ACCOUNT_DELETION_ENABLED=false
+```
+
+Result: the function is live at `/functions/v1/delete-account`, fully
+reachable, correctly authenticates callers — and cannot delete a single
+account. Every authenticated request reaches the gate in the previous
+section and stops there with `403 account_deletion_disabled`. This is the
+state this task prepares; it does not flip the flag.
+
+**Future Settings launch.** Only after all of the following exist and are
+verified, in order:
+
+1. a real Settings "Delete account" UI with an explicit confirmation step;
+2. genuine reauthentication (password re-entry or provider-specific
+   equivalent — see "Reauthentication" below), tested end-to-end;
+3. the live cascade check immediately below, re-run and confirmed clean on
+   the actual production database (not inferred from migration files);
+4. `node scripts/tests/account/test-delete-account-function-contract.mjs`
+   passing.
+
+Only then:
+
+```bash
+supabase secrets set ACCOUNT_DELETION_ENABLED=true
+```
+
+Do not set this during any task that hasn't independently verified all four
+items above. Until it is set, "deployed" and "enabled" are different
+states, and this repository's own tests only ever verify the code — never
+the live secret's actual deployed value, which is Supabase-project
+configuration outside this repository's source control.
+
+### Live cascade verification (must be run against the live project)
+
+The FK audit in this section's ownership map is correct *as authored in
+this repository's migrations*, exactly like every other schema claim in
+this README (see the baseline migration's own confidence notes). It is
+**not** independently confirmed against the live production database from
+this environment — no database password or CLI access token is available
+here (the same constraint the baseline migration's own header documents).
+Migration files describe intent, not deployed state — `supabase/README.md`
+itself says as much for every other migration ("ships prepared and
+reviewed, not automatically applied").
+
+Run this in the Supabase SQL Editor (or `psql`) against the live project
+before ever setting `ACCOUNT_DELETION_ENABLED=true`:
+
+```sql
+select
+  tbl.relname as table_name,
+  col.attname as column_name,
+  ref_ns.nspname as references_schema,
+  ref.relname as references_table,
+  case c.confdeltype
+    when 'c' then 'CASCADE'
+    when 'a' then 'NO ACTION'
+    when 'r' then 'RESTRICT'
+    when 'n' then 'SET NULL'
+    when 'd' then 'SET DEFAULT'
+    else c.confdeltype::text
+  end as on_delete
+from pg_constraint c
+join pg_class tbl on tbl.oid = c.conrelid
+join pg_namespace tbl_ns on tbl_ns.oid = tbl.relnamespace
+join pg_class ref on ref.oid = c.confrelid
+join pg_namespace ref_ns on ref_ns.oid = ref.relnamespace
+join pg_attribute col on col.attrelid = c.conrelid and col.attnum = c.conkey[1]
+where c.contype = 'f'
+  and tbl_ns.nspname = 'public'
+  and tbl.relname in (
+    'user_profiles', 'user_word_progress', 'user_daily_stats',
+    'review_events', 'custom_practice_events'
+  )
+order by tbl.relname, col.attname;
+```
+
+Expected result — exactly these six rows, every `on_delete` reading
+`CASCADE`:
+
+| table_name | column_name | references_schema | references_table | on_delete |
+|---|---|---|---|---|
+| `custom_practice_events` | `user_id` | `auth` | `users` | `CASCADE` |
+| `review_events` | `user_id` | `auth` | `users` | `CASCADE` |
+| `review_events` | `word_progress_id` | `public` | `user_word_progress` | `CASCADE` |
+| `user_daily_stats` | `user_id` | `auth` | `users` | `CASCADE` |
+| `user_profiles` | `id` | `auth` | `users` | `CASCADE` |
+| `user_word_progress` | `user_id` | `auth` | `users` | `CASCADE` |
+
+Any row missing, any `on_delete` other than `CASCADE`, or any extra
+`public`-schema foreign key referencing `auth.users`/`user_word_progress`
+not in this list means the live schema has drifted from what this
+repository's migrations describe — **do not enable deletion** until the
+gap is closed (either by applying the missing migration or by reconciling
+this table with the actual live state) and this query is re-run clean.
+
+### Reauthentication — deliberately not enforced yet
+
+FluentStellar currently supports exactly two sign-in methods
+(`src/lib/supabaseAuth.ts`): email/password (`signInWithPassword`/
+`signUpWithPassword`) and Google OAuth via PKCE (`signInWithGoogleOAuth`).
+No magic-link or other provider is wired into the frontend, regardless of
+what `supabase/config.toml`'s local-dev template enables/disables (that
+file is CLI scaffolding for local development, not a record of the live
+project's provider configuration).
+
+A Supabase-issued JWT does carry enough metadata in principle to back a
+"recently authenticated" check server-side (an `amr` claim with a
+timestamp per authentication factor). This function does not implement
+one: nothing in this repository decodes or validates JWT claims anywhere
+today, and a bare session-age check is a weak, easily-misleading proxy for
+actual reauthentication — a long-lived session kept alive by silent token
+refreshes can look "old" without the user ever re-proving their password,
+while a genuinely fresh sign-in and a bare page reload can look
+identical. Building a check like that now, with no UI that would ever force
+a fresh sign-in immediately before calling this function, would be the
+"weak pseudo-reauthentication mechanism" this task was explicitly told not
+to invent.
+
+Options for a future Settings task, in increasing order of rigor:
+password users could be prompted to re-enter their password immediately
+before the delete call (verified via a fresh `signInWithPassword`, not a
+claims check); Google OAuth users would need a provider-specific
+equivalent (re-consent / re-authorization), since there is no password to
+re-check; or the function could require a session whose `amr` timestamp is
+within a short window, decoded and verified server-side, as a
+weaker-but-still-real fallback. All three depend on frontend/provider work
+this task deliberately excludes. Until one exists, this function stays
+**authenticated-only** (any currently-valid session may call it) and is not
+wired into any frontend code path.
+
+### Session behavior after deletion
+
+Not independently tested against a live project (no Supabase E2E
+infrastructure exists — see the "Profile architecture" section above), but
+follows directly from how Supabase Auth resolves a token: an outstanding
+refresh token becomes unusable immediately (the user record it would mint a
+new access token for no longer exists). An already-issued, not-yet-expired
+access token remains signature-valid until its own `exp`, but is
+functionally inert — every RLS policy in this schema is `auth.uid() = ...`-
+scoped, and the data it could ever have matched no longer exists after the
+cascade, so there is nothing left for a stale token to read or write. A
+future Settings UI should still call `signOutSupabase()` immediately after
+a successful `{ deleted: true }` response — not because the token is
+exploitable, but to clear `localStorage` and in-memory app state
+proactively rather than leaving a dead session sitting around until natural
+expiry.
+
+### Deliberately not built in this task
+
+No Settings page, delete-account button, confirmation modal, password
+input, or success screen — see this section's own scope exclusions. No
+frontend client wrapper was added either: every existing narrow RPC caller
+in `src/lib/userProfile.ts` exists because something in the app already
+calls it, and this repo has an established pattern of removing exactly this
+kind of unused code once it's identified (`is_new_user`/`last_active_at`
+above) — adding an unused `deleteAccount()` wrapper now would immediately
+be exactly that kind of dead code. A future Settings task should add the
+client call (`POST /functions/v1/delete-account` with the caller's own
+bearer token, matching the pattern in `src/lib/supabaseAuth.ts`) alongside
+the UI that actually uses it, then call `signOutSupabase()` on success and
+redirect away from any authenticated route.
+
+The function is now safe to commit, push, and deploy — deployment and
+enablement are deliberately two separate events, gated by
+`ACCOUNT_DELETION_ENABLED` above. Do not describe this feature as
+production-ready until every item in "Deployment procedure"'s Future
+Settings launch checklist exists and has been verified; a deployed function
+with deletion disabled is infrastructure in place, not a shipped feature.
+
+## Learning Progress Reset — backend primitive (2026-08-08)
+
+Audited on request: a backend primitive for "reset all learning progress,
+history, statistics, and achievements for one specific learning language
+belonging to the authenticated user," for a future Settings page that will
+list the caller's studied languages with a **Reset progress** button next to
+each one. No Settings UI was built — this section documents the
+backend-only capability now in place, the same shape the Account Deletion
+section above documents for its own primitive.
+
+### Per-language data map
+
+Every table that stores per-user learning data, confirmed against the same
+`grep create table` sweep the Account Deletion audit above used (still
+exactly five user-owned tables — no new table exists):
+
+| Table | User ownership | Language discriminator | What it stores | Reset deletes it? |
+|---|---|---|---|---|
+| `user_word_progress` | `user_id` | `target_language` (direct column) | Word state (seen/learning/familiar/strong/mastered), correct streak, `is_favorite`, last-practiced/next-review timestamps — one row per (user, word, language) | Yes |
+| `user_daily_stats` | `user_id` | `target_language` (direct column) | Per-day new-words/reviews/study-time/review-time/custom-practice-time counters, plus a `daily_goal` snapshot — the Daily Streak card's only data source | Yes |
+| `review_events` | `user_id` (no FK before Corrective Migration 3 — see caveat below) | `target_language` (direct column, mirrors its parent `user_word_progress` row exactly — confirmed in `complete_word_review`'s own `INSERT`) | Immutable review-history ledger: previous/new state, previous/new streak, promoted/demoted flags, result | Yes |
+| `custom_practice_events` | `user_id` (FK, `on delete cascade`) | `target_language` (direct column) | Custom Practice's own idempotency ledger + time-tracking, entirely independent of `user_word_progress` | Yes |
+| `user_profiles` | `id` | none (single active `learning_language`, not a per-language table) | Account identity, native language, onboarding fields, `daily_goal`, timezone, and the single currently-active `learning_language` | No — see "Active-language behavior" below |
+
+All four progress tables have a **direct** `target_language` column — none
+of this reset's scoping depends on tracing an indirect relationship through
+a parent row, unlike the account-deletion audit's own caveat about
+`review_events.word_progress_id`. `is_favorite` is confirmed still a column
+on `user_word_progress`, not a separate table (same confirmation the
+Account Deletion audit made) — deleting a language's `user_word_progress`
+rows deletes that language's favorite state too, which is what "all data …
+deleted" requires (verified against `src/lib/newWordProgress.ts`'s favorite
+read/write paths, both scoped by `target_language`).
+
+### Achievements
+
+`grep`-confirmed: no `achievement`/`milestone` table exists in any migration
+in this folder, and no occurrence of "achievement" or "milestone" (any
+case) exists anywhere in this repository's TypeScript source
+(`src/**/*.{ts,tsx}`). Achievements are **not implemented** — not persisted,
+not derived, not present in profile metadata. There is therefore nothing
+beyond the four tables above for this primitive to reset today; a real
+achievement system, if ever built, would need its own audit and its own
+addition to this reset's scope. This task does not invent one.
+
+### Exact reset semantics
+
+Deletes, scoped to `(auth.uid(), p_target_language)` only:
+
+- `user_word_progress` rows for that language — word state, streak,
+  last-practiced/next-review timestamps, and favorite flags.
+- `user_daily_stats` rows for that language — daily new-word/review/
+  study-time counters and the daily-goal snapshot. Because the Daily Streak
+  card (`src/data/learning/dailyStreak.ts`) computes current/best streak
+  entirely from these rows (no separate streak table exists — same
+  conclusion the Account Deletion audit's ownership map already implies),
+  deleting them returns that language's streak display to empty without a
+  separate "reset streak" step.
+- `review_events` rows for that language — the full review-history ledger.
+- `custom_practice_events` rows for that language — Custom Practice's
+  history and time-tracking ledger.
+
+Preserved, untouched by this function:
+
+- the account/auth identity itself (`auth.users` is never referenced by
+  this function's executable code);
+- `user_profiles` in its entirety, including `native_language` and the
+  currently-active `learning_language` (see "Active-language behavior");
+- every other studied language's rows in all four tables above — every
+  `DELETE` is scoped by `target_language`, never by `user_id` alone
+  (contract-tested, see below).
+
+### Language identity
+
+Validated against the exact same seven-code allow-list
+`user_profiles.native_language`/`learning_language` were constrained to in
+Profile Phase 1 (`user_profiles_native_language_allowed_values_check`/
+`user_profiles_learning_language_allowed_values_check`, both
+`in ('en','es','fr','pt','it','de','ru')`):
+`SUPPORTED_LANGUAGE_CODES` in `src/lib/userProfileOnboarding.ts` is the same
+list on the frontend side. None of the four progress tables have ever had
+a CHECK constraint on their own `target_language` column (confirmed absent
+by grepping every migration file for `target_language` alongside
+`check`/`in (`) — every row was still written by frontend code that only
+ever supplies one of these seven codes, so this validation is not narrower
+than what the data already conforms to; it is what rejects "unsupported
+language codes" as required. The caller identity comes exclusively from
+`auth.uid()` — there is no `p_user_id`/`p_target_user_id` parameter
+anywhere in the function's signature, the same shape every narrow RPC in
+this repository already uses.
+
+### Backend architecture: a Postgres RPC, not an Edge Function
+
+Unlike account deletion, which needs `auth.admin.deleteUser` (an Auth Admin
+API call, requiring `service_role` and therefore an Edge Function),
+resetting learning progress touches only tables already in Postgres, and
+`auth.uid()` is directly available inside an ordinary `SECURITY DEFINER`
+PL/pgSQL function — no Admin API, no `service_role` key, no Edge Function
+runtime needed at all. A single function body already executes atomically;
+wrapping it in an Edge Function would add a network hop and a second place
+to keep the identity/validation contract in sync, for no transactional or
+security benefit. This matches the task's own stated preference: "a narrow
+authenticated PostgreSQL RPC … optionally invoked directly by the future
+client."
+
+`public.reset_learning_language_progress(p_target_language text)`
+(`supabase/migrations/20260808120000_add_learning_language_progress_reset_rpc.sql`):
+
+- `SECURITY DEFINER`, `SET search_path TO ''`, `EXECUTE` granted to
+  `postgres`/`service_role` only — `anon`, `authenticated`, and `PUBLIC` are
+  all explicitly revoked. This is a deliberate departure from every other
+  narrow RPC in this schema (which all grant `authenticated` `EXECUTE`) —
+  see "Deployment safety" below for why `authenticated` is withheld here.
+- Derives the caller exclusively from `auth.uid()`.
+- Rejects a null/unsupported `p_target_language` before touching a single
+  row. There is no runtime deployment-gate check inside the function body at
+  all — see "Deployment safety" below.
+
+### Transaction and cascade behavior
+
+The four `DELETE` statements run inside one PL/pgSQL function body, which
+executes as a single atomic unit — they either all commit or (on any
+earlier error, e.g. identity/language validation raising) none of them do.
+There is no multi-step client-driven sequence, so nothing partially reset
+is ever observable, mirroring account deletion's own single-`DELETE`
+atomicity guarantee.
+
+**Deletion order deliberately does not rely on FK cascade.** `review_events`
+and `custom_practice_events` are deleted FIRST, by their own direct
+`(user_id, target_language)` columns — never by relying on
+`review_events.word_progress_id`'s cascade — so the later
+`user_word_progress` delete can never hit a foreign-key violation
+regardless of whether Corrective Migration 3
+(`review_events.word_progress_id` `ON DELETE CASCADE`) is actually live.
+This is a meaningful difference from the account-deletion primitive, which
+*does* structurally require that cascade to be live and documents a
+mandatory pre-enablement live-catalog check for exactly that reason (see
+"Live cascade verification" above) — **this reset primitive needs no
+equivalent live-catalog check before enabling**, because it never depends
+on any FK's `ON DELETE` behavior in the first place. `user_daily_stats` is
+deleted last; nothing else references it.
+
+### Active-language behavior
+
+`user_profiles.learning_language` (the single currently-active language) is
+never read or written by this function — confirmed by the migration
+containing no reference to `user_profiles` at all. Resetting the language a
+user is currently configured to learn is not special-cased because it
+doesn't need to be: `NewWordStudyPreparation.tsx` and every other
+learning-queue entry point read progress by
+`(auth.uid(), practiceLanguage)` (`practiceLanguage` being
+`learning_language`), and the vocabulary catalog itself
+(`src/data/vocabulary/...`) is static content with no dependency on any
+`user_word_progress` row. After a reset, the next queue build for that
+language simply finds zero owned rows and behaves exactly as it already
+does for a brand-new learner of that language — resetting German removes
+German progress; the user may remain configured to learn German, now with
+zero progress, exactly as this task's own product semantics specify.
+
+### Favorites
+
+Confirmed (`src/lib/newWordProgress.ts`): `is_favorite` is read/written only
+as a column on `user_word_progress`, scoped by `target_language` on every
+query. There is no separate favorites table and no language-independent
+favorite state to preserve — deleting a language's `user_word_progress`
+rows correctly clears that language's favorites along with everything else,
+matching "all data and progress for that language should be deleted."
+
+### Review/event ledgers
+
+Both `review_events` and `custom_practice_events` carry their own direct
+`target_language` column (confirmed in the baseline and Corrective
+Migration 5 table definitions) — this function deletes from both directly
+by `(user_id, target_language)`, never by relying on any FK cascade from
+`user_word_progress` (see "Transaction and cascade behavior" above). Every
+`DELETE` statement in this function names both `user_id` and
+`target_language` in its `WHERE` clause — contract-tested (see below) to
+guarantee no statement is ever scoped by `user_id` alone, which is what
+prevents another language's events from ever being deleted accidentally.
+
+### Daily stats and streaks
+
+`user_daily_stats` is keyed by `(user_id, target_language, stat_date)`
+(`user_daily_stats_language_date_unique`, baseline migration) — confirmed
+already covered above. Resetting a language deletes every historical
+`stat_date` row for that language only; since the Daily Streak card derives
+current/best streak and the calendar day-status model entirely from these
+rows (`computeDailyStreakSummary`, `src/data/learning/dailyStreak.ts`), both
+return to empty for that language specifically. Other languages' rows are
+untouched — the `target_language` predicate on every `DELETE` guarantees
+this the same way it does for the ledgers above.
+
+### Idempotency
+
+Every `DELETE` is a plain predicate match with no existence precondition —
+a language with zero rows in a given table simply deletes zero rows there,
+with no error path. A repeated call, or a call for a language the caller
+never studied, succeeds identically every time:
+
+```json
+{
+  "reset": true,
+  "target_language": "de",
+  "word_progress_deleted": 0,
+  "daily_stats_deleted": 0,
+  "review_events_deleted": 0,
+  "custom_practice_events_deleted": 0
+}
+```
+
+Row counts are included (the response is still narrow — four integers and
+two echoed/fixed fields, nothing about row contents) because they are
+useful, stable, and cheap (`GET DIAGNOSTICS ... = ROW_COUNT` after each
+`DELETE`, no extra query).
+
+### Validation
+
+Rejected inside the function body, in this order:
+
+1. no authenticated caller (`auth.uid()` null) — `errcode 28000`.
+2. null/empty `p_target_language` — `errcode 22023`.
+3. `p_target_language` outside the seven-code allow-list — `errcode 22023`.
+
+There is no fourth, deployment-gate rejection inside the function anymore —
+see "Deployment safety" below. In production today, no caller reaches any
+of the three checks above in the first place: PostgreSQL itself rejects the
+call at the privilege layer (`errcode 42501`, "permission denied for
+function reset_learning_language_progress") before the function is ever
+invoked, because neither `anon` nor `authenticated` holds `EXECUTE` on it.
+Only `postgres`/`service_role` — which never reach this function through
+PostgREST/a browser session — can actually get as far as checks 1-3.
+
+A language the caller has never studied is **not** treated as a not-found
+error — it succeeds idempotently with every count at zero, per this task's
+own stated preference and matching this function's general idempotency
+model.
+
+### Deployment safety — PostgreSQL `EXECUTE` privilege, not a runtime flag
+
+**This section supersedes an earlier revision of this migration**, which
+gated the destructive path behind a runtime check inside the function body
+— a Postgres configuration parameter, `app.learning_progress_reset_enabled`,
+read with `current_setting(..., true)`, set out-of-band with
+`alter database postgres set app.learning_progress_reset_enabled = 'true';`.
+That design has been **removed entirely** (no `current_setting(...)` call
+and no `app.learning_progress_reset_enabled` reference remain anywhere in
+the migration's executable code — contract-tested, see below) and replaced
+with PostgreSQL's own `EXECUTE` privilege system, for two concrete reasons:
+
+- **No out-of-band step to forget or lose track of.** The old gate depended
+  on a manually-run `alter database` statement that lives outside this
+  repository's version control entirely — this README could describe the
+  intended live state but never verify it actually matched. `GRANT`/`REVOKE`
+  statements are ordinary SQL, so the entire gate is now expressed as
+  migration file content, reviewable and diffable like everything else in
+  `supabase/migrations/`.
+- **Enforced earlier, by a layer that cannot be bypassed by a future edit to
+  this function.** A runtime flag only rejects a call after PostgREST has
+  already authenticated the caller, routed the request, and invoked the
+  function — refusal was a choice the function body made for itself, which
+  means a future edit to that body could in principle get the check wrong.
+  `EXECUTE` privilege is checked by PostgreSQL itself, before the function
+  is invoked at all — there is no code path inside
+  `reset_learning_language_progress`, now or after any future change to it,
+  that runs before that check or could accidentally skip it.
+
+Section 2 of the migration (`supabase/migrations/
+20260808120000_add_learning_language_progress_reset_rpc.sql`) revokes
+`EXECUTE` from `PUBLIC`, `anon`, **and `authenticated`**, and grants it only
+to `postgres`/`service_role`:
+
+```sql
+revoke execute on function public.reset_learning_language_progress(text) from public;
+revoke execute on function public.reset_learning_language_progress(text) from anon;
+revoke execute on function public.reset_learning_language_progress(text) from authenticated;
+grant execute on function public.reset_learning_language_progress(text) to postgres;
+grant execute on function public.reset_learning_language_progress(text) to service_role;
+-- Deliberately no `grant execute ... to authenticated;` in this migration.
+```
+
+```text
+browser session (always anon or authenticated via PostgREST)
+  ↓
+PostgreSQL checks EXECUTE privilege on reset_learning_language_progress
+  ↓
+neither anon nor authenticated holds it
+  ↓
+"permission denied for function reset_learning_language_progress" (errcode 42501)
+  — the function body never runs; auth.uid() is never evaluated;
+    p_target_language is never validated; no table is ever touched.
+```
+
+**This is what makes it safe to commit, push, and deploy today.** Once this
+migration is applied to the live project, the function exists, is fully
+defined, and is fully deployed — but it is unreachable from any real
+browser session, because neither role a browser session can ever hold
+(`anon` or `authenticated`) has been granted `EXECUTE`. No further
+out-of-band step is required to keep it disabled; the migration itself, as
+written, already leaves it disabled.
+
+### Future activation
+
+Only after all of the following exist and are verified:
+
+1. a real Settings "Reset progress" UI, listing the caller's studied
+   languages;
+2. an explicit destructive confirmation step before the call is ever made;
+3. the client wiring that calls this RPC and handles its response (see
+   "Deliberately not built" below);
+4. `node scripts/tests/learning/test-learning-progress-reset-migration-contract.mjs`
+   passing.
+
+should production ever receive:
+
+```sql
+grant execute on function public.reset_learning_language_progress(text)
+to authenticated;
+```
+
+**As its own new, separately reviewed, versioned migration file** — not an
+ad-hoc SQL command run by hand against the live project. This is the
+repository-tracked equivalent of flipping `ACCOUNT_DELETION_ENABLED=true`
+for the account-deletion primitive, except here the activation step itself
+lives in `supabase/migrations/` history rather than in project-level
+secrets/config outside this repository's source control — the exact moment
+this destructive capability became reachable from the browser is then a
+reviewable, revertable commit like any other schema change, not a
+config-panel toggle this README can only describe and never verify. Do not
+add this grant during any task that hasn't independently verified all four
+items above.
+
+### Reauthentication
+
+Not added, for the same reasoning the Account Deletion section above
+already documents for its own primitive: nothing in this repository
+decodes/validates JWT claims today, and there is no UI that would ever
+force a fresh sign-in immediately before calling this function. Resetting
+one language's progress is also meaningfully less destructive than deleting
+the account itself — no data outside the selected language is touched, and
+the account, every other language's history, and the account's own
+identity all survive untouched. This function is authenticated-only,
+matching every other narrow RPC in this schema. Revisit only if a future
+Settings task finds a concrete product reason to require it.
+
+### Live prerequisites before enabling
+
+Unlike account deletion, this primitive has **no live-catalog cascade check
+to run** before activation — see "Transaction and cascade behavior" above:
+every delete is scoped by explicit predicates, never by relying on any
+table's `ON DELETE` behavior, so its correctness does not depend on which
+corrective migrations happen to be live. The only live prerequisite is the
+migration itself
+(`20260808120000_add_learning_language_progress_reset_rpc.sql`) actually
+being applied to the live project before the future activation migration
+("Future activation" above) is ever applied on top of it.
+
+### Client invalidation requirements (future Settings integration)
+
+Confirmed no persisted client-side cache of progress data exists to worry
+about: the only `localStorage` entries this codebase writes for a signed-in
+learner are the cached `UserProfile` object (`src/lib/userProfile.ts` —
+account-identity/profile fields only, no progress/stats) and UI navigation
+preferences (`app.yourLanguage`/`app.selectedLevel`/etc.,
+`src/app/App.tsx`/`useStoredAppPreferences.ts` — which language pair and
+CEFR level are currently selected for browsing, not learning-progress data
+itself). Every word-progress/daily-stat/streak read in this codebase goes
+live to Supabase's REST API on each load (`src/lib/newWordProgress.ts`) —
+there is no offline queue or cached learning-progress snapshot that could
+resurrect deleted state after a successful reset. This is not a blocker.
+
+What a future Settings integration must still do after a successful
+`{ reset: true, ... }` response, purely so the UI reflects the reset
+immediately instead of on next full reload:
+
+- refetch (or clear in-memory) any already-loaded word queue, review queue,
+  or Daily Streak data for the reset language;
+- refetch the studied-language list itself if the Settings page derives it
+  from distinct `target_language` values (a language with zero remaining
+  rows should disappear from — or zero out on — that list);
+- leave `user_profiles`/`learning_language` state completely alone — this
+  reset does not change it, so no profile refetch is required on account of
+  this call specifically.
+
+No cross-tab sync, confirmation modal, or Reset Progress button is built in
+this task — see "Deliberately not built" below.
+
+### Deliberately not built in this task
+
+No Settings page, studied-language list, Reset Progress button, or
+confirmation modal. No frontend client wrapper was added either — the same
+reasoning the Account Deletion section gives for not adding an unused
+`deleteAccount()` wrapper applies here: nothing in the frontend calls this
+RPC yet, and adding a wrapper now would be exactly the kind of unused code
+this repository has an established pattern of removing once identified. A
+future Settings task should call
+`POST /rest/v1/rpc/reset_learning_language_progress` (or the
+`@supabase/supabase-js` RPC helper, once/if this repository adopts it) with
+`{ p_target_language: "de" }` and the caller's own session, behind an
+explicit destructive confirmation step:
+
+```text
+Settings
+→ studied-language list
+→ Reset progress
+→ explicit destructive confirmation
+→ call reset_learning_language_progress for that language
+→ clear/refetch local learning state for that language (see above)
+→ show zero progress for that language
+```
+
+The migration is now safe to commit, push, and deploy exactly as written —
+applying this migration and granting `authenticated` `EXECUTE` are
+deliberately two separate events, the latter a future, separately
+versioned migration (see "Future activation" above), not a step this task
+performs. Do not describe this feature as production-ready until a
+Settings UI with an explicit confirmation step exists, the client wiring
+calls this RPC, and the future activation migration has been applied.
 
 ## What happens next
 
