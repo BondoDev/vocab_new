@@ -121,6 +121,30 @@ async function main() {
         assert.match(metadata.robots ?? "", /noindex/i);
       });
     }
+
+    for (const learningPath of ["/learning/new-words", "/learning/review"]) {
+      test(`${learningPath} is classified public-app, not invalid`, () => {
+        assert.equal(routeMetadataPolicy.classifyRouteMetadata(learningPath), "public-app");
+      });
+
+      test(`${learningPath} does not receive Not Found metadata`, () => {
+        const metadata = routeMetadataPolicy.buildRouteMetadata(
+          learningPath,
+          "https://www.fluentstellar.com",
+        );
+        assert.notEqual(metadata.title, "Page Not Found | FluentStellar");
+        assert.match(metadata.robots ?? "", /noindex/i);
+      });
+    }
+
+    test("custom-practice source route keeps exercise metadata, not Not Found metadata", () => {
+      const metadata = routeMetadataPolicy.buildRouteMetadata(
+        "/languages/filters/exercises?source=custom-practice",
+        "https://www.fluentstellar.com",
+      );
+      assert.equal(metadata.title, "Vocabulary Exercises - FluentStellar");
+      assert.match(metadata.robots ?? "", /noindex/i);
+    });
   }
 
   console.log("\n[3] canonical-host and legacy-URL redirect contract (Cloudflare)");

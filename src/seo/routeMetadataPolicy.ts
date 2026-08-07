@@ -49,6 +49,16 @@ const PUBLIC_APP_METADATA: Record<string, { title: string; description: string }
     description:
       "Explore FluentStellar language-learning tools, vocabulary routes, and practice pages from one hub.",
   },
+  "/learning/new-words": {
+    title: "Study New Words | FluentStellar",
+    description:
+      "Start a guided FluentStellar session for learning new vocabulary words from your daily goal.",
+  },
+  "/learning/review": {
+    title: "Review Words | FluentStellar",
+    description:
+      "Review due FluentStellar vocabulary words with structured recall practice.",
+  },
 } as const;
 
 export type RouteMetadataClass =
