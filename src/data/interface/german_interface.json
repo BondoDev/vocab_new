@@ -84,6 +84,8 @@
       "ariaLabel": "Lernbereich",
       "title": "Lernen",
       "description": "Erledige die heutigen Lernziele und festige Woerter, die du bereits gelernt hast.",
+      "dateLoadError": "Das heutige Lerndatum konnte nicht geladen werden. Bitte versuche es erneut.",
+      "dateRetryButton": "Erneut versuchen",
       "dailyGoal": {
         "title": "Tagesziel",
         "wordsPerDay": "Woerter/Tag",

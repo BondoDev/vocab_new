@@ -84,6 +84,8 @@
       "ariaLabel": "Section apprentissage",
       "title": "Apprentissage",
       "description": "Terminez les objectifs d'apprentissage d'aujourd'hui et renforcez les mots que vous avez deja etudies.",
+      "dateLoadError": "Impossible de charger la date d'apprentissage d'aujourd'hui. Veuillez reessayer.",
+      "dateRetryButton": "Reessayer",
       "dailyGoal": {
         "title": "Objectif quotidien",
         "wordsPerDay": "mots/jour",

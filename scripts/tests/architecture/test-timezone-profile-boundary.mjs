@@ -125,6 +125,13 @@ test("4. Authoritative learning paths use server-derived dates, not browser-loca
     read("src/lib/learningDate.ts"),
     read("src/data/learning/dailyStreak.ts"),
     read("src/features/study-new-words/loadNewWordStudyQueue.ts"),
+    // LearningSection.tsx is the Learning dashboard's single frontend owner
+    // of getCurrentLearningDate() (see test:learning-section-date-ownership) —
+    // TodayProgressCard/DailyStreakCard receive todayISO as a prop instead
+    // of calling the RPC themselves, so they no longer reference it
+    // directly; included here anyway so this guard keeps proving the whole
+    // Learning dashboard read path, not just the cards, stays server-dated.
+    read("src/features/user-profile/sections/learning/LearningSection.tsx"),
     read("src/features/user-profile/sections/learning/TodayProgressCard.tsx"),
     read("src/features/user-profile/sections/learning/DailyStreakCard.tsx"),
   ].join("\n");

@@ -84,6 +84,8 @@
       "ariaLabel": "Learning section",
       "title": "Learning",
       "description": "Complete today's learning goals and reinforce words you've already studied.",
+      "dateLoadError": "We couldn't load today's learning date. Please try again.",
+      "dateRetryButton": "Try again",
       "dailyGoal": {
         "title": "Daily Goal",
         "wordsPerDay": "words/day",

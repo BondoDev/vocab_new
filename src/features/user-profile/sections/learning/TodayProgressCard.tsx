@@ -6,7 +6,6 @@ import type { UserProfile } from "../../../../lib/userProfile";
 import { readTodayNewWordsCompleted } from "../../../../lib/newWordProgress";
 import { describeSupabaseError } from "../../../../lib/supabaseError";
 import { computeTodayProgressDisplay } from "../../../../data/learning/todayProgressDisplay";
-import { getCurrentLearningDate } from "../../../../lib/learningDate";
 
 const RING_RADIUS = 32;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
@@ -18,15 +17,44 @@ const MIN_VISIBLE_ARC_RATIO = 0.03;
 
 // practiceLanguage/dailyGoal come from the Learning dashboard's single
 // shared profile load (see App.tsx's useUserProfileLoad, threaded down
-// through LearningSection) rather than a copy fetched by this component —
-// only today's new-word count (readTodayNewWordsCompleted) is this
-// component's own request.
-type LoadState = { status: "loading" } | { status: "ready"; completed: number };
+// through LearningSection) rather than a copy fetched by this component;
+// todayISO/todayISOStatus come from LearningSection's own single
+// getCurrentLearningDate() call (see that file's header) — this component
+// no longer calls getCurrentLearningDate itself. Only today's new-word
+// count (readTodayNewWordsCompleted) is this component's own request.
+//
+// "blocked" (distinct from "loading") is what this card enters when
+// todayISOStatus is "error": LearningSection's shared date request failed
+// and already shows the one parent-level error/retry banner, so this card
+// must neither perform its own read against a date it doesn't have, nor
+// present a successful "0 completed" as though it were real data — a
+// failed date fetch is not equivalent to zero progress. Rendering-wise
+// "blocked" is treated the same as "loading" (see isLoading below): a
+// neutral skeleton placeholder, never the numeric ring/bar.
+type LoadState = { status: "loading" } | { status: "ready"; completed: number } | { status: "blocked" };
 
 interface TodayProgressCardProps {
   practiceLanguage: UserProfile["practiceLanguage"];
   dailyGoal: UserProfile["dailyGoal"];
   isProfileLoaded: boolean;
+  // The authoritative current learning date, owned and fetched exactly
+  // once by LearningSection. null whenever todayISOStatus isn't "ready".
+  todayISO: string | null;
+  // LearningSection's own LearningDateState.status, passed straight
+  // through:
+  //   "loading"     — the shared date request (or the profile load it
+  //                    waits on) is still in flight; this card mirrors it.
+  //   "ready"       — todayISO is populated; this card performs its own
+  //                    statistics read once practiceLanguage is also known.
+  //   "unavailable" — legitimately no session (signed out, or auth/profile
+  //                    not ready) — the existing safe "0 completed"
+  //                    fallback applies, same as before this contract
+  //                    changed.
+  //   "error"       — the shared date request genuinely failed. This card
+  //                    must not run its own read and must not present a
+  //                    "0 completed" result as if it were successfully
+  //                    loaded data — see "blocked" above.
+  todayISOStatus: "loading" | "ready" | "unavailable" | "error";
 }
 
 // Below ~1184px the card switches from the circular ring to a horizontal
@@ -34,7 +62,13 @@ interface TodayProgressCardProps {
 // progressRatio/srLabel pair rather than duplicating the calculation, and
 // only one is ever visible — the other is `display: none`, which also
 // removes it from the accessibility tree automatically.
-export function TodayProgressCard({ practiceLanguage, dailyGoal, isProfileLoaded }: TodayProgressCardProps) {
+export function TodayProgressCard({
+  practiceLanguage,
+  dailyGoal,
+  isProfileLoaded,
+  todayISO,
+  todayISOStatus,
+}: TodayProgressCardProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
   const [state, setState] = useState<LoadState>({ status: "loading" });
@@ -47,16 +81,30 @@ export function TodayProgressCard({ practiceLanguage, dailyGoal, isProfileLoaded
       return;
     }
 
-    if (!isProfileLoaded) {
-      // The shared profile load (App.tsx) is still in flight — wait for it
-      // rather than fetching with a not-yet-known target language.
+    if (!isProfileLoaded || todayISOStatus === "loading") {
+      // The shared profile load (App.tsx) or LearningSection's shared
+      // date load is still in flight — wait for both rather than fetching
+      // with a not-yet-known target language or date.
       setState({ status: "loading" });
       return;
     }
 
-    if (!practiceLanguage) {
-      // Profile loaded, but no target language chosen yet — same "safe
-      // fallback, not a crash" contract as a signed-out visitor.
+    if (todayISOStatus === "error") {
+      // LearningSection's shared date request genuinely failed — it
+      // already shows the one parent-level error/retry banner. This card
+      // must not attempt its own read (there is no date to read with), and
+      // must not present a "0 completed" result as though it were
+      // successfully loaded data: a failed date fetch is not the same as
+      // zero progress. See "blocked" in LoadState above.
+      setState({ status: "blocked" });
+      return;
+    }
+
+    if (!practiceLanguage || !todayISO) {
+      // Profile loaded, but no target language chosen yet, or
+      // todayISOStatus is "unavailable" (signed out / no session — a
+      // legitimate, expected state, not a failure) — same "safe fallback,
+      // not a crash" contract as a signed-out visitor.
       setState({ status: "ready", completed: 0 });
       return;
     }
@@ -72,8 +120,7 @@ export function TodayProgressCard({ practiceLanguage, dailyGoal, isProfileLoaded
           return;
         }
 
-        const statDateISO = await getCurrentLearningDate(session);
-        const completed = await readTodayNewWordsCompleted(session, practiceLanguage, statDateISO);
+        const completed = await readTodayNewWordsCompleted(session, practiceLanguage, todayISO);
         if (cancelled) return;
         setState({ status: "ready", completed });
       } catch (error) {
@@ -89,9 +136,12 @@ export function TodayProgressCard({ practiceLanguage, dailyGoal, isProfileLoaded
     return () => {
       cancelled = true;
     };
-  }, [authUserId, isProfileLoaded, practiceLanguage]);
+  }, [authUserId, isProfileLoaded, practiceLanguage, todayISO, todayISOStatus]);
 
-  const isLoading = state.status === "loading";
+  // Covers both a genuine in-flight fetch ("loading") and a parent-level
+  // date error this card can't act on ("blocked") — both render the same
+  // neutral skeleton placeholder below, never the numeric ring/bar/count.
+  const isLoading = state.status !== "ready";
   const completed = state.status === "ready" ? state.completed : 0;
   // Read directly from the prop (not cached in state) so a daily-goal
   // change made elsewhere on the page (Daily Goal card) updates this

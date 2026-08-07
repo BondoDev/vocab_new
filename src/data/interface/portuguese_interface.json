@@ -84,6 +84,8 @@
       "ariaLabel": "Secao de aprendizagem",
       "title": "Aprendizagem",
       "description": "Conclua as metas de aprendizagem de hoje e reforce as palavras que voce ja estudou.",
+      "dateLoadError": "Nao foi possivel carregar a data de aprendizagem de hoje. Tente novamente.",
+      "dateRetryButton": "Tentar novamente",
       "dailyGoal": {
         "title": "Meta diaria",
         "wordsPerDay": "palavras/dia",

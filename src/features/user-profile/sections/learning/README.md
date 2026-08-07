@@ -500,6 +500,36 @@ Frontend dashboard reads call `get_current_learning_date()` before filtering
 preparation agree with write attribution. Local device time is no longer
 authoritative for learning stats.
 
+On the Learning dashboard specifically, `LearningSection.tsx` is the single
+frontend owner of that call: it calls `getCurrentLearningDate()` exactly
+once per mount (waiting for auth/profile readiness, refetching only on an
+authenticated-user change or an explicit retry after a failure — never on a
+practice-language change, since the date itself does not depend on the
+target language) and passes the result down to both `TodayProgressCard` and
+`DailyStreakCard` as two props: `todayISO: string | null` and
+`todayISOStatus: "loading" | "ready" | "unavailable" | "error"`. Neither
+card calls `getCurrentLearningDate()` itself; each still owns only its own
+statistics read (`readTodayNewWordsCompleted` / `readDailyStreakStats`),
+performed only once `todayISOStatus` is `"ready"`.
+
+`todayISOStatus` exists specifically so a genuine RPC failure is never
+indistinguishable from "no session" on the card side. A failed date fetch
+is a parent-level dependency failure: `LearningSection` shows the one
+Retry banner (`isDateError`/`handleRetryDateLoad`), and each card enters
+its own `{ status: "blocked" }` load state — never fetching its own
+statistics, and never presenting a "0 completed" / empty-stats result as
+though it were successfully loaded data. Both cards render `"blocked"`
+identically to their normal `"loading"` state (the same skeleton
+placeholder), so there is no second, card-level error message. A
+legitimately signed-out/no-session visitor (`todayISOStatus ===
+"unavailable"`) is unaffected by this and keeps the pre-existing "ready,
+0/empty" fallback, since that state is expected and not a failure. A
+failed statistics read (as opposed to a failed date fetch) remains
+card-specific, unchanged from before. A successful daily-goal save still
+bumps `streakRefreshToken` to refetch `DailyStreakCard`'s stored rows, but
+never causes a second `getCurrentLearningDate()` call — the authoritative
+date does not change when the goal changes.
+
 ## Streak Phase 1 — per-row daily-goal snapshots
 
 `user_daily_stats.daily_goal` (nullable, added by

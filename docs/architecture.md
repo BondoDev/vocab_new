@@ -130,7 +130,15 @@ instead of being silently accepted. Daily-stat attribution uses Supabase
 server time plus `user_profiles.timezone`, falling back to UTC when the
 profile row/timezone is missing, blank, or invalid. Historical
 `user_daily_stats` rows are not rewritten, and manual timezone correction
-still belongs to a future Settings page.
+still belongs to a future Settings page. On the Learning dashboard,
+`LearningSection.tsx` is the single frontend owner of the
+`get_current_learning_date()` call for the mounted dashboard — it fetches
+once and passes the result down to `TodayProgressCard` and
+`DailyStreakCard` as `todayISO`/`todayISOStatus` props, so a failed fetch
+is distinguishable from a legitimate no-session state; neither card calls
+it directly (see
+[`src/features/user-profile/sections/learning/README.md`](../src/features/user-profile/sections/learning/README.md)'s
+"Server-derived learning dates" section).
 `src/app/components/layout/` owns shared application layout/navigation
 components — the global header, its UI-language switcher, and the
 scroll-to-top control (`Header.tsx`, `UILanguageSwitcher.tsx`,
@@ -436,6 +444,7 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:protected-learning-writes-boundary` | `scripts/tests/architecture/test-protected-learning-writes-boundary.mjs` | `authenticated` only reaches `user_word_progress`/`user_daily_stats` via SELECT or the learning RPCs, never a direct write |
 | `test:learning-non-negative-values-contract` | `scripts/tests/architecture/test-learning-non-negative-values-contract.mjs` | no application code assigns a negative value/sentinel to `correct_streak` or the daily-stats counters (see corrective migration 2's non-negative `CHECK` constraints in `supabase/README.md`) |
 | `test:learning-profile-data-flow` | `scripts/tests/architecture/test-learning-profile-data-flow.mjs` | the Learning dashboard loads the signed-in user's profile exactly once (App.tsx) and threads it down as props, instead of Daily Goal/Daily Streak/Today's Progress each fetching their own copy |
+| `test:learning-section-date-ownership` | `scripts/tests/architecture/test-learning-section-date-ownership.mjs` | `LearningSection` is the Learning dashboard's single frontend owner of `getCurrentLearningDate()`, threading `todayISO`/`todayISOStatus` down to `TodayProgressCard`/`DailyStreakCard` as props instead of each card calling the RPC itself; a date `"error"` blocks both cards' own requests and never presents a zero/empty result as successfully-loaded data, and neither a practice-language change nor a daily-goal save triggers a second date request |
 | `test:vocabulary-profile-data-flow` | `scripts/tests/architecture/test-vocabulary-profile-data-flow.mjs` | the Vocabulary dashboard section reuses the Learning dashboard's single App.tsx profile load instead of fetching its own copy on every mount |
 | `test:supabase-error-handling` | `scripts/tests/architecture/test-supabase-error-handling.mjs` | Study New Words/Review Words/favorite/profile-save all classify Supabase/PostgREST failures through the shared `src/lib/supabaseError.ts` module instead of duplicated message-regex checks, and never render raw Supabase error text |
 | `test:timezone-profile-boundary` | `scripts/tests/architecture/test-timezone-profile-boundary.mjs` | timezone writes stay isolated to `initialize_user_timezone`, neither narrow profile RPC (`complete_user_profile_onboarding`, `update_user_profile_languages`) can modify timezone, no Settings UI is introduced yet, and authoritative learning reads/writes use the server-derived learning date |
@@ -453,10 +462,12 @@ active-time column on `user_daily_stats` (`study_time_seconds`,
 `review_time_seconds`, `custom_practice_time_seconds`) via a shared timer
 utility (`src/data/learning/activeWordTimer.ts`); a derived
 `totalTimeSeconds` is computed at read time only
-(`src/lib/learningTimeStats.ts`) and never stored. Full design (word-level
-timing, the 300-second cap, per-mode idempotency, and the temporary
-duration-aware/legacy RPC signatures pending a follow-up cleanup migration)
-is documented in
+(`src/lib/learningTimeStats.ts`) and never stored. The temporary
+duration-aware/legacy RPC signatures introduced during the staged rollout
+have since been dropped (see `test:drop-legacy-learning-rpc-signatures-migration-contract`)
+— there is no follow-up cleanup migration still pending. Full design
+(word-level timing, the 300-second cap, per-mode idempotency) is documented
+in
 [`src/features/user-profile/sections/learning/README.md`](../src/features/user-profile/sections/learning/README.md)
 and `supabase/README.md`'s Corrective Migration 5 section — not duplicated
 here.

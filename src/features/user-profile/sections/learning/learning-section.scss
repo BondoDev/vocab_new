@@ -36,6 +36,57 @@
     gap: 0.75rem;
     margin-top: 1rem;
   }
+
+  /* Shown only when LearningSection's single shared getCurrentLearningDate()
+     call fails (not for a signed-out visitor, which is expected and silent —
+     see LearningDateState in LearningSection.tsx). DailyStreakCard and
+     TodayProgressCard keep rendering their own existing empty/zero fallback
+     beneath this, exactly as a date failure already fell back before this
+     component owned the request — this banner is the one new piece of UI,
+     giving that previously-silent failure a visible, retryable surface
+     instead of two cards separately doing so. */
+  &__date-error {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--destructive) 35%, var(--border));
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--destructive) 8%, var(--card));
+  }
+
+  &__date-error-text {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 0.875rem;
+  }
+
+  &__date-error-retry {
+    flex-shrink: 0;
+    padding: 0.45rem 1rem;
+    border: none;
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 150ms ease;
+
+    &:hover {
+      filter: brightness(0.94);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--card),
+        0 0 0 4px var(--ring);
+    }
+  }
 }
 
 /* Forces the wide three-across row explicitly at the same 1184px breakpoint
