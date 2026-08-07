@@ -102,7 +102,7 @@ this baseline task:
    across this audit. Purpose/ownership unknown.
 2. Some live `user_profiles` columns (`nickname`, `native_language`,
    `learning_language`, `current_level`, `user_age`, `birth_month`,
-   `birth_day`, `last_active_at`) are `NOT NULL` in PostgreSQL, while the
+   `birth_day`) are `NOT NULL` in PostgreSQL, while the
    corresponding frontend read types (`UserProfilesRow` in
    `src/lib/userProfile.ts`) may permit `null`. This baseline preserves the
    live schema as deployed and does not resolve that application/schema
@@ -617,9 +617,9 @@ popup.
     columns is ever named in the INSERT column list) and an existing one
     (the `DO UPDATE SET` list never names `daily_goal`/`timezone`/
     `timezone_updated_at`/`created_at`/`is_new_user` either, so a
-    resubmission structurally cannot touch any of them). `last_active_at`
-    and `updated_at` are both stamped from the function's own server-side
-    `now()` on either branch.
+    resubmission structurally cannot touch any of them). `updated_at` is
+    stamped from the function's own server-side `now()` on either branch.
+    `last_active_at` was later removed by Profile Phase 2 below.
   - `update_user_profile_languages(p_native_language, p_learning_language)`
     — the only path that may change `native_language`/`learning_language`
     after onboarding. Updates only those two columns plus `updated_at`;
@@ -668,6 +668,22 @@ popup.
   full preflight-query list, rollback considerations, and the explicit
   "not applied" statement, and this repository's Profile Phase 1 task report
   for the same confirmation.
+
+## Profile Phase 2 - unused last_active_at removal
+
+`migrations/20260807130000_drop_unused_user_profiles_last_active_at.sql`
+removes the unused `user_profiles.last_active_at` column. Repository evidence
+showed no frontend runtime read/write, no RPC return value, no repo-owned
+analytics/admin/automation dependency, and no product behavior that consumed
+a general "last active" profile timestamp. The only active writer was
+`complete_user_profile_onboarding`, where Profile Phase 1 had stamped it
+incidentally alongside `updated_at`.
+
+The migration replaces `complete_user_profile_onboarding` with the same
+signature, return shape, validation, `SECURITY DEFINER`/empty `search_path`,
+auth checks, and grants, but its `INSERT` and `ON CONFLICT DO UPDATE` lists
+no longer name `last_active_at`. It then drops the column. `updated_at`
+remains the server-owned profile mutation timestamp.
 
 ## What happens next
 

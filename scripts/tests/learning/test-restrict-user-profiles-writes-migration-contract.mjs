@@ -27,6 +27,12 @@ const MIGRATION_PATH = path.join(
   "migrations",
   "20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql",
 );
+const DROP_LAST_ACTIVE_AT_MIGRATION_PATH = path.join(
+  ROOT_DIR,
+  "supabase",
+  "migrations",
+  "20260807130000_drop_unused_user_profiles_last_active_at.sql",
+);
 
 let passed = 0;
 let failed = 0;
@@ -42,27 +48,29 @@ function test(name, fn) {
   }
 }
 
-test("0. The new migration file exists, named later than every prior migration", () => {
+test("0. Profile Phase 1 and Profile Phase 2 migration files exist in chronological order", () => {
   assert.ok(fs.existsSync(BASELINE_PATH), "baseline migration file is missing");
-  assert.ok(fs.existsSync(MIGRATION_PATH), "new migration file is missing");
+  assert.ok(fs.existsSync(MIGRATION_PATH), "Profile Phase 1 migration file is missing");
+  assert.ok(fs.existsSync(DROP_LAST_ACTIVE_AT_MIGRATION_PATH), "Profile Phase 2 migration file is missing");
   const migrationsDir = path.join(ROOT_DIR, "supabase", "migrations");
   const allNames = fs.readdirSync(migrationsDir).filter((name) => name.endsWith(".sql")).sort();
   assert.equal(
     allNames[allNames.length - 1],
-    path.basename(MIGRATION_PATH),
-    "the new migration must sort after every other migration filename",
+    path.basename(DROP_LAST_ACTIVE_AT_MIGRATION_PATH),
+    "the Profile Phase 2 migration must sort after every other migration filename",
   );
 });
 
 const source = fs.readFileSync(MIGRATION_PATH, "utf8");
+const dropLastActiveAtSource = fs.readFileSync(DROP_LAST_ACTIVE_AT_MIGRATION_PATH, "utf8");
 const baselineSource = fs.readFileSync(BASELINE_PATH, "utf8");
 
-function functionBlock(name, signaturePattern) {
+function functionBlock(name, signaturePattern, sourceText = source) {
   const re = new RegExp(
     `create or replace function public\\.${name}\\(\\s*${signaturePattern}\\s*\\)[\\s\\S]*?\\$function\\$;`,
     "i",
   );
-  const match = source.match(re);
+  const match = sourceText.match(re);
   assert.ok(match, `${name}(${signaturePattern}) block must exist`);
   return match[0];
 }
@@ -163,7 +171,7 @@ console.log("\n=== Profile Phase 1: complete_user_profile_onboarding RPC ===\n")
 
 const onboardingSig =
   "p_nickname text,\\s*p_native_language text,\\s*p_learning_language text,\\s*p_current_level text,\\s*p_user_age integer,\\s*p_birth_month integer,\\s*p_birth_day integer";
-const onboardingRpc = functionBlock("complete_user_profile_onboarding", onboardingSig);
+const onboardingRpc = functionBlock("complete_user_profile_onboarding", onboardingSig, dropLastActiveAtSource);
 
 test("6. Uses SECURITY DEFINER with an empty search_path", () => {
   assert.match(onboardingRpc, /security definer/i);
@@ -225,13 +233,13 @@ test("13. onboarding_completed is always set to true by the function itself, nev
   assert.doesNotMatch(onboardingRpc, /p_onboarding_completed/i);
 });
 
-test("14. last_active_at and updated_at are both stamped from the function's own server-side v_now, on both branches", () => {
+test("14. updated_at is stamped from the function's own server-side v_now, and last_active_at is no longer written", () => {
   assert.match(onboardingRpc, /v_now timestamptz := now\(\)/i);
   const insertMatch = onboardingRpc.match(/insert into public\.user_profiles \(([\s\S]*?)\)\s*\n\s*values/i);
-  assert.match(insertMatch[1], /last_active_at/i);
+  assert.doesNotMatch(insertMatch[1], /last_active_at/i);
   assert.match(insertMatch[1], /updated_at/i);
   const setMatch = onboardingRpc.match(/on conflict \(id\) do update\s+set([\s\S]*?);/i);
-  assert.match(setMatch[1], /last_active_at = excluded\.last_active_at/i);
+  assert.doesNotMatch(setMatch[1], /last_active_at/i);
   assert.match(setMatch[1], /updated_at = excluded\.updated_at/i);
 });
 
@@ -247,16 +255,16 @@ console.log("\n=== Profile Phase 1: complete_user_profile_onboarding grants ===\
 
 test("16. PUBLIC's and anon's EXECUTE grants are explicitly revoked; authenticated/postgres/service_role receive EXECUTE", () => {
   const sig = "text, text, text, text, integer, integer, integer";
-  assert.match(source, new RegExp(`revoke execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) from public;`, "i"));
-  assert.match(source, new RegExp(`revoke execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) from anon;`, "i"));
-  assert.match(source, new RegExp(`grant execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) to postgres;`, "i"));
-  assert.match(source, new RegExp(`grant execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) to authenticated;`, "i"));
-  assert.match(source, new RegExp(`grant execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) to service_role;`, "i"));
+  assert.match(dropLastActiveAtSource, new RegExp(`revoke execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) from public;`, "i"));
+  assert.match(dropLastActiveAtSource, new RegExp(`revoke execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) from anon;`, "i"));
+  assert.match(dropLastActiveAtSource, new RegExp(`grant execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) to postgres;`, "i"));
+  assert.match(dropLastActiveAtSource, new RegExp(`grant execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) to authenticated;`, "i"));
+  assert.match(dropLastActiveAtSource, new RegExp(`grant execute on function public\\.complete_user_profile_onboarding\\(${sig}\\) to service_role;`, "i"));
 });
 
 test("16b. No grant execute statement on complete_user_profile_onboarding ever targets anon or public — a stray re-grant elsewhere in the file would fail this", () => {
   const grantsToRoles = [
-    ...source.matchAll(/grant execute on function public\.complete_user_profile_onboarding\([^)]*\) to (\w+);/gi),
+    ...dropLastActiveAtSource.matchAll(/grant execute on function public\.complete_user_profile_onboarding\([^)]*\) to (\w+);/gi),
   ].map((match) => match[1].toLowerCase());
   assert.deepEqual(
     [...new Set(grantsToRoles)].sort(),
@@ -429,6 +437,51 @@ test("31. The baseline migration's user_profiles table definition and existing d
 console.log(`\n─────────────────────────────────────────`);
 console.log(`  ${passed} passed, ${failed} failed`);
 console.log(`─────────────────────────────────────────\n`);
+
+console.log("\n=== Profile Phase 2: unused last_active_at removal ===\n");
+
+test("32. Profile Phase 2 drops user_profiles.last_active_at", () => {
+  assert.match(
+    dropLastActiveAtSource,
+    /alter table public\.user_profiles\s+drop column if exists last_active_at;/i,
+  );
+});
+
+test("33. Profile Phase 2 replaces only the onboarding RPC and does not broaden profile write authority", () => {
+  assert.match(dropLastActiveAtSource, /create or replace function public\.complete_user_profile_onboarding/i);
+  assert.doesNotMatch(dropLastActiveAtSource, /create or replace function public\.update_user_profile_languages/i);
+  assert.doesNotMatch(dropLastActiveAtSource, /create or replace function public\.update_daily_goal/i);
+  assert.doesNotMatch(dropLastActiveAtSource, /create or replace function public\.initialize_user_timezone/i);
+  assert.doesNotMatch(dropLastActiveAtSource, /grant\s+(insert|update|delete|all)/i);
+});
+
+test("34. Current frontend code does not declare or consume a lastActiveAt profile property", () => {
+  const searchableRoots = ["src"];
+  const offenders = [];
+  for (const root of searchableRoots) {
+    const stack = [path.join(ROOT_DIR, root)];
+    while (stack.length > 0) {
+      const current = stack.pop();
+      for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+        const fullPath = path.join(current, entry.name);
+        if (entry.isDirectory()) {
+          stack.push(fullPath);
+          continue;
+        }
+        if (!/\.(?:ts|tsx|js|jsx|mjs)$/.test(entry.name)) continue;
+        const relativePath = path.relative(ROOT_DIR, fullPath).replace(/\\/g, "/");
+        if (relativePath === "scripts/tests/learning/test-restrict-user-profiles-writes-migration-contract.mjs") continue;
+        const content = fs.readFileSync(fullPath, "utf8");
+        if (/lastActiveAt|last_active_at/.test(content)) {
+          offenders.push(relativePath);
+        }
+      }
+    }
+  }
+  assert.deepEqual(offenders, [], `unexpected runtime/test dependency on last_active_at: ${offenders.join(", ")}`);
+});
+
+console.log(`\nFinal total: ${passed} passed, ${failed} failed\n`);
 
 if (failed > 0) {
   process.exitCode = 1;
