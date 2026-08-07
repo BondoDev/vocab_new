@@ -33,6 +33,12 @@ const DROP_LAST_ACTIVE_AT_MIGRATION_PATH = path.join(
   "migrations",
   "20260807130000_drop_unused_user_profiles_last_active_at.sql",
 );
+const DROP_IS_NEW_USER_MIGRATION_PATH = path.join(
+  ROOT_DIR,
+  "supabase",
+  "migrations",
+  "20260807140000_drop_unused_user_profiles_is_new_user.sql",
+);
 
 let passed = 0;
 let failed = 0;
@@ -48,21 +54,23 @@ function test(name, fn) {
   }
 }
 
-test("0. Profile Phase 1 and Profile Phase 2 migration files exist in chronological order", () => {
+test("0. Profile Phase 1, Phase 2, and Phase 3 migration files exist in chronological order", () => {
   assert.ok(fs.existsSync(BASELINE_PATH), "baseline migration file is missing");
   assert.ok(fs.existsSync(MIGRATION_PATH), "Profile Phase 1 migration file is missing");
   assert.ok(fs.existsSync(DROP_LAST_ACTIVE_AT_MIGRATION_PATH), "Profile Phase 2 migration file is missing");
+  assert.ok(fs.existsSync(DROP_IS_NEW_USER_MIGRATION_PATH), "Profile Phase 3 migration file is missing");
   const migrationsDir = path.join(ROOT_DIR, "supabase", "migrations");
   const allNames = fs.readdirSync(migrationsDir).filter((name) => name.endsWith(".sql")).sort();
   assert.equal(
     allNames[allNames.length - 1],
-    path.basename(DROP_LAST_ACTIVE_AT_MIGRATION_PATH),
-    "the Profile Phase 2 migration must sort after every other migration filename",
+    path.basename(DROP_IS_NEW_USER_MIGRATION_PATH),
+    "the Profile Phase 3 migration must sort after every other migration filename",
   );
 });
 
 const source = fs.readFileSync(MIGRATION_PATH, "utf8");
 const dropLastActiveAtSource = fs.readFileSync(DROP_LAST_ACTIVE_AT_MIGRATION_PATH, "utf8");
+const dropIsNewUserSource = fs.readFileSync(DROP_IS_NEW_USER_MIGRATION_PATH, "utf8");
 const baselineSource = fs.readFileSync(BASELINE_PATH, "utf8");
 
 function functionBlock(name, signaturePattern, sourceText = source) {
@@ -479,6 +487,67 @@ test("34. Current frontend code does not declare or consume a lastActiveAt profi
     }
   }
   assert.deepEqual(offenders, [], `unexpected runtime/test dependency on last_active_at: ${offenders.join(", ")}`);
+});
+
+console.log("\n=== Profile Phase 3: unused is_new_user removal ===\n");
+
+test("35. Profile Phase 3 drops user_profiles.is_new_user", () => {
+  assert.match(
+    dropIsNewUserSource,
+    /alter table public\.user_profiles\s+drop column if exists is_new_user;/i,
+  );
+});
+
+test("36. Profile Phase 3 does not replace or broaden any RPC — is_new_user was never referenced by one", () => {
+  assert.doesNotMatch(dropIsNewUserSource, /create or replace function/i);
+  assert.doesNotMatch(dropIsNewUserSource, /grant\s+(insert|update|delete|all)/i);
+});
+
+test("37. Neither Profile Phase 1's nor Profile Phase 2's onboarding RPC ever names is_new_user in its INSERT or SET list", () => {
+  for (const rpcSource of [source, dropLastActiveAtSource]) {
+    const insertMatch = rpcSource.match(/insert into public\.user_profiles \(([\s\S]*?)\)\s*\n\s*values/i);
+    assert.doesNotMatch(insertMatch[1], /is_new_user/i);
+    const setMatch = rpcSource.match(/on conflict \(id\) do update\s+set([\s\S]*?);/i);
+    assert.doesNotMatch(setMatch[1], /is_new_user/i);
+  }
+});
+
+test("38. Current frontend code does not declare or consume an isNewUser profile property", () => {
+  const searchableRoots = ["src"];
+  const offenders = [];
+  for (const root of searchableRoots) {
+    const stack = [path.join(ROOT_DIR, root)];
+    while (stack.length > 0) {
+      const current = stack.pop();
+      for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+        const fullPath = path.join(current, entry.name);
+        if (entry.isDirectory()) {
+          stack.push(fullPath);
+          continue;
+        }
+        if (!/\.(?:ts|tsx|js|jsx|mjs)$/.test(entry.name)) continue;
+        const relativePath = path.relative(ROOT_DIR, fullPath).replace(/\\/g, "/");
+        if (relativePath === "scripts/tests/learning/test-restrict-user-profiles-writes-migration-contract.mjs") continue;
+        const content = fs.readFileSync(fullPath, "utf8");
+        if (/isNewUser|is_new_user/.test(content)) {
+          offenders.push(relativePath);
+        }
+      }
+    }
+  }
+  assert.deepEqual(offenders, [], `unexpected runtime/test dependency on is_new_user: ${offenders.join(", ")}`);
+});
+
+test("39. shouldOpenAccountOnboarding remains driven only by profile-row presence and completeness, never is_new_user", () => {
+  const accountProfilePath = path.join(ROOT_DIR, "src", "app", "utils", "accountProfile.ts");
+  const accountProfileSource = fs.readFileSync(accountProfilePath, "utf8");
+  const fnMatch = accountProfileSource.match(
+    /export function shouldOpenAccountOnboarding\([\s\S]*?\n\}/,
+  );
+  assert.ok(fnMatch, "shouldOpenAccountOnboarding must still exist in src/app/utils/accountProfile.ts");
+  assert.doesNotMatch(fnMatch[0], /isNewUser|is_new_user/i);
+  assert.match(fnMatch[0], /hasSupabaseProfileRow/);
+  assert.match(fnMatch[0], /isUserProfileComplete/);
 });
 
 console.log(`\nFinal total: ${passed} passed, ${failed} failed\n`);

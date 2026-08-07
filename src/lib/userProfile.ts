@@ -308,10 +308,10 @@ export async function updateDailyGoal(
 // onboarding owns; complete_user_profile_onboarding (see
 // supabase/migrations/20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql)
 // derives the caller server-side, sets onboarding_completed itself, and
-// never touches daily_goal/timezone/timezone_updated_at/created_at/
-// is_new_user — a stale or default-valued in-memory dailyGoal can no longer
-// be re-sent and silently overwrite a value saved through the narrow
-// update_daily_goal path. authenticated no longer holds direct INSERT/
+// never touches daily_goal/timezone/timezone_updated_at/created_at — a
+// stale or default-valued in-memory dailyGoal can no longer be re-sent
+// and silently overwrite a value saved through the narrow update_daily_goal
+// path. authenticated no longer holds direct INSERT/
 // UPDATE privileges on user_profiles at all (same migration) — this RPC is
 // the only remaining way to create or complete onboarding for a profile row
 // from the frontend.

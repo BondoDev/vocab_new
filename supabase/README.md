@@ -99,7 +99,8 @@ this baseline task:
 
 1. **`user_profiles.is_new_user`** (`boolean not null default true`) exists
    and is not read or written anywhere in the frontend TypeScript reviewed
-   across this audit. Purpose/ownership unknown.
+   across this audit. Purpose/ownership unknown. Later removed — see
+   Profile Phase 3 below.
 2. Some live `user_profiles` columns (`nickname`, `native_language`,
    `learning_language`, `current_level`, `user_age`, `birth_month`,
    `birth_day`) are `NOT NULL` in PostgreSQL, while the
@@ -684,6 +685,22 @@ signature, return shape, validation, `SECURITY DEFINER`/empty `search_path`,
 auth checks, and grants, but its `INSERT` and `ON CONFLICT DO UPDATE` lists
 no longer name `last_active_at`. It then drops the column. `updated_at`
 remains the server-owned profile mutation timestamp.
+
+## Profile Phase 3 - unused is_new_user removal
+
+`migrations/20260807140000_drop_unused_user_profiles_is_new_user.sql`
+removes the unused `user_profiles.is_new_user` column
+(`boolean not null default true`). Repository evidence showed nothing ever
+changes it away from its default — no RPC, trigger, or direct write sets
+`is_new_user = false` or references it at all — no frontend runtime
+read/write, and no repo-owned analytics/admin/automation dependency.
+`shouldOpenAccountOnboarding` (`src/app/utils/accountProfile.ts`) already
+decides onboarding entirely from profile-row presence and
+`onboarding_completed`, so removal does not touch onboarding behavior.
+
+No current SQL function references `is_new_user` in its body, `INSERT`/`SET`
+column list, or `RETURNS TABLE` shape, so this migration only drops the
+column — no RPC needed replacing.
 
 ## What happens next
 
