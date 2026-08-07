@@ -1,9 +1,16 @@
+// isUserProfileComplete/normalizeLanguage/normalizeUserProfile come from
+// accountProfileCompleteness.ts (not userProfile.ts) so this file stays
+// loadable directly by a bundler-free Node test script — see that module's
+// header for why userProfile.ts itself cannot be. Explicit ".ts" extension
+// so Node's native TypeScript stripping (which has no bundler resolution)
+// can resolve the specifier; tsconfig's allowImportingTsExtensions permits
+// this for tsc/Vite too.
 import {
   isUserProfileComplete,
   normalizeLanguage,
   normalizeUserProfile,
-  type UserProfile,
-} from "../../lib/userProfile";
+} from "./accountProfileCompleteness.ts";
+import type { UserProfile } from "../../lib/userProfile";
 
 interface CurrentProfileLanguages {
   yourLanguage: string;

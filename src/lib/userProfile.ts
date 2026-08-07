@@ -13,7 +13,6 @@ import {
 } from "./userProfileTimezone";
 import {
   parseUpdateDailyGoalRow,
-  isSupportedDailyGoalValue,
   type UpdateDailyGoalResult,
 } from "./dailyGoalUpdate";
 import {
@@ -24,12 +23,35 @@ import {
   parseUpdateUserProfileLanguagesRow,
   type UpdateUserProfileLanguagesResult,
 } from "./userProfileLanguages";
+// Profile-completeness normalization (normalizeUserProfile,
+// isUserProfileComplete, the per-field normalizers, and DEFAULT_DAILY_GOAL)
+// moved to accountProfileCompleteness.ts (test/profile-load-and-onboarding,
+// 2026-08-07) so it can be loaded directly by a bundler-free Node test
+// script — see that file's header for why. Re-exported below so every
+// existing consumer of these four names from "../../lib/userProfile" is
+// unaffected.
+import {
+  DEFAULT_DAILY_GOAL,
+  normalizeLanguage,
+  normalizeLanguageLevel,
+  normalizeAge,
+  normalizeDailyGoal,
+  normalizeTimezone,
+  normalizeTimestamp,
+  normalizeUserProfile,
+  isUserProfileComplete,
+} from "../app/utils/accountProfileCompleteness";
+
+export {
+  DEFAULT_DAILY_GOAL,
+  normalizeLanguage,
+  normalizeUserProfile,
+  isUserProfileComplete,
+};
 
 const USER_PROFILE_KEY_PREFIX = "app.userProfile";
 
 export type LanguageLevelCode = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
-
-export const DEFAULT_DAILY_GOAL = 15;
 
 export interface UserProfile {
   nickname: string;
@@ -71,97 +93,6 @@ function canUseLocalStorage(): boolean {
 
 function buildStorageKey(userId: string) {
   return `${USER_PROFILE_KEY_PREFIX}.${userId}`;
-}
-
-export function normalizeLanguage(value: unknown): UILanguage | "" {
-  if (
-    value === "en" ||
-    value === "es" ||
-    value === "fr" ||
-    value === "pt" ||
-    value === "it" ||
-    value === "de" ||
-    value === "ru"
-  ) {
-    return value;
-  }
-
-  return "";
-}
-
-function normalizeAge(value: unknown): number | null {
-  if (typeof value !== "number" || !Number.isFinite(value)) {
-    return null;
-  }
-
-  const rounded = Math.round(value);
-  if (rounded < 10 || rounded > 100) {
-    return null;
-  }
-
-  return rounded;
-}
-
-function normalizeBirthMonth(value: unknown): string {
-  if (typeof value !== "string") {
-    return "";
-  }
-
-  const trimmed = value.trim();
-  if (!/^\d{2}$/.test(trimmed)) {
-    return "";
-  }
-
-  const month = Number(trimmed);
-  if (month < 1 || month > 12) {
-    return "";
-  }
-
-  return trimmed;
-}
-
-function normalizeBirthDay(value: unknown): string {
-  if (typeof value !== "string") {
-    return "";
-  }
-
-  const trimmed = value.trim();
-  if (!/^\d{2}$/.test(trimmed)) {
-    return "";
-  }
-
-  const day = Number(trimmed);
-  if (day < 1 || day > 31) {
-    return "";
-  }
-
-  return trimmed;
-}
-
-// Exactly the five supported presets (10, 15, 20, 30, 50) — not a numeric
-// range. Delegates to dailyGoalUpdate.ts's isSupportedDailyGoalValue (the
-// same check update_daily_goal's own response parser uses) instead of
-// maintaining a second, looser definition of "valid daily goal" here. Any
-// other value (malformed localStorage cache, a legacy value predating the
-// exact-preset database CHECK, ...) falls back to the safe default rather
-// than being accepted or rounded.
-function normalizeDailyGoal(value: unknown): number {
-  return isSupportedDailyGoalValue(value) ? value : DEFAULT_DAILY_GOAL;
-}
-
-function normalizeLanguageLevel(value: unknown): LanguageLevelCode | "" {
-  if (
-    value === "A1" ||
-    value === "A2" ||
-    value === "B1" ||
-    value === "B2" ||
-    value === "C1" ||
-    value === "C2"
-  ) {
-    return value;
-  }
-
-  return "";
 }
 
 interface UserProfilesRow {
@@ -219,14 +150,6 @@ async function supabaseProfileRequest<TResponse>(
   }
 }
 
-function normalizeTimezone(value: unknown): string | null {
-  return typeof value === "string" && value.trim() ? value.trim() : null;
-}
-
-function normalizeTimestamp(value: unknown): string | null {
-  return typeof value === "string" && value.trim() ? value : null;
-}
-
 function fromSupabaseProfileRow(row: UserProfilesRow | null | undefined): Partial<UserProfile> {
   if (!row) {
     return {};
@@ -253,61 +176,6 @@ function fromSupabaseProfileRow(row: UserProfilesRow | null | undefined): Partia
     timezone: normalizeTimezone(row.timezone),
     timezoneUpdatedAt: normalizeTimestamp(row.timezone_updated_at),
   };
-}
-
-export function normalizeUserProfile(value: Partial<UserProfile> | null | undefined): UserProfile {
-  const nickname =
-    typeof value?.nickname === "string"
-      ? value.nickname.trim().slice(0, 40)
-      : EMPTY_USER_PROFILE.nickname;
-  const languageLevel = normalizeLanguageLevel(value?.languageLevel);
-  const age = normalizeAge(value?.age);
-  const birthMonth = normalizeBirthMonth(value?.birthMonth);
-  const birthDay = normalizeBirthDay(value?.birthDay);
-  const nativeLanguage = normalizeLanguage(value?.nativeLanguage);
-  const practiceLanguage = normalizeLanguage(value?.practiceLanguage);
-  const dailyGoal = normalizeDailyGoal(value?.dailyGoal);
-  const onboardingCompleted = Boolean(
-    value?.onboardingCompleted &&
-      nickname &&
-      languageLevel &&
-      age !== null &&
-      birthMonth &&
-      birthDay &&
-      nativeLanguage &&
-      practiceLanguage,
-  );
-
-  return {
-    nickname,
-    languageLevel,
-    age,
-    birthMonth,
-    birthDay,
-    nativeLanguage,
-    practiceLanguage,
-    onboardingCompleted,
-    dailyGoal,
-    updatedAt:
-      typeof value?.updatedAt === "string" && value.updatedAt.trim()
-        ? value.updatedAt
-        : null,
-    timezone: normalizeTimezone(value?.timezone),
-    timezoneUpdatedAt: normalizeTimestamp(value?.timezoneUpdatedAt),
-  };
-}
-
-export function isUserProfileComplete(profile: Partial<UserProfile> | null | undefined): boolean {
-  const normalized = normalizeUserProfile(profile);
-  return Boolean(
-    normalized.nickname &&
-      normalized.languageLevel &&
-      normalized.age !== null &&
-      normalized.birthMonth &&
-      normalized.birthDay &&
-      normalized.nativeLanguage &&
-      normalized.practiceLanguage,
-  );
 }
 
 export function readStoredUserProfile(userId: string): UserProfile | null {
