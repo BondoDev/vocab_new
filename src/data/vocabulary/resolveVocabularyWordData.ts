@@ -36,16 +36,44 @@ function indexByConceptId(entries: unknown[]): Map<string, RawVocabularyEntry> {
   return index;
 }
 
+// Same shape VocabularyPractice.tsx already reads from inflected.json: a
+// concept_id plus one or more "word_inflected..." keys whose naming varies
+// by language file (e.g. "word_inflected1" for English, "word_inflected-1"/
+// "word_inflected-2" for German — the second used for a separable prefix).
+function indexInflectedFormsByConceptId(entries: unknown[]): Map<string, string[]> {
+  const index = new Map<string, string[]>();
+  for (const raw of entries) {
+    const entry = raw as Record<string, unknown>;
+    const conceptId = typeof entry?.concept_id === "string" ? entry.concept_id : null;
+    if (!conceptId || index.has(conceptId)) {
+      continue;
+    }
+    const forms = Object.entries(entry)
+      .filter(([key, value]) => /inflected/i.test(key) && typeof value === "string" && value.trim())
+      .map(([, value]) => (value as string).trim());
+    if (forms.length > 0) {
+      index.set(conceptId, forms);
+    }
+  }
+  return index;
+}
+
 // A concept resolves only when both the target-language and native-language
 // vocabulary.json files have a usable entry for it — matching
 // VocabularyPractice.tsx's existing behavior, where a concept id missing on
 // either side is unusable for practice.
+//
+// `targetInflectedEntries` is optional (defaults to none) so existing
+// callers that don't need the example sentence's highlighted-word forms
+// (e.g. Review Words) don't have to load or pass inflected.json.
 export function buildVocabularyConceptResolver(
   targetLanguageEntries: unknown[],
   nativeLanguageEntries: unknown[],
+  targetInflectedEntries: unknown[] = [],
 ): (conceptId: string) => ResolvedConceptWordData | null {
   const targetByConceptId = indexByConceptId(targetLanguageEntries);
   const nativeByConceptId = indexByConceptId(nativeLanguageEntries);
+  const inflectedFormsByConceptId = indexInflectedFormsByConceptId(targetInflectedEntries);
 
   return (conceptId: string): ResolvedConceptWordData | null => {
     const targetEntry = targetByConceptId.get(conceptId);
@@ -66,16 +94,32 @@ export function buildVocabularyConceptResolver(
           ? nativeEntry.definiton
           : undefined;
 
+    const exampleSentence =
+      typeof targetEntry.sentence === "string" && targetEntry.sentence.trim()
+        ? targetEntry.sentence
+        : undefined;
+
+    // The native-language entry's own `sentence` field is that same
+    // concept's example sentence written in the native language — not a
+    // generated translation — matching how `translation`/`definition`
+    // already read the parallel nativeEntry field for the same concept_id.
+    const exampleSentenceTranslation =
+      exampleSentence && typeof nativeEntry.sentence === "string" && nativeEntry.sentence.trim()
+        ? nativeEntry.sentence
+        : undefined;
+
+    const exampleSentenceInflectedForms =
+      exampleSentence ? inflectedFormsByConceptId.get(conceptId) : undefined;
+
     return {
       targetWord: targetEntry.word_lemma as string,
       translation: nativeEntry.word_lemma as string,
       definition,
       grammarType: typeof targetEntry.type === "string" ? targetEntry.type : undefined,
       level: typeof targetEntry.level === "string" ? targetEntry.level : undefined,
-      exampleSentence:
-        typeof targetEntry.sentence === "string" && targetEntry.sentence.trim()
-          ? targetEntry.sentence
-          : undefined,
+      exampleSentence,
+      exampleSentenceTranslation,
+      exampleSentenceInflectedForms,
     };
   };
 }

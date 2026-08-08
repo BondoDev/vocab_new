@@ -29,6 +29,19 @@ const VOCABULARY_IMPORTERS: Record<string, () => Promise<{ default: unknown[] }>
   ru: () => import("../../data/vocabulary/russian/vocabulary.json"),
 };
 
+// Same per-UI-code dynamic-import map VocabularyPractice.tsx uses to look up
+// each concept's inflected/separable word forms for its own target language
+// — duplicated for the same reason VOCABULARY_IMPORTERS above is.
+const INFLECTED_IMPORTERS: Record<string, () => Promise<{ default: unknown[] }>> = {
+  en: () => import("../../data/inflected/english/inflected.json"),
+  es: () => import("../../data/inflected/spanish/inflected.json"),
+  fr: () => import("../../data/inflected/french/inflected.json"),
+  de: () => import("../../data/inflected/german/inflected.json"),
+  it: () => import("../../data/inflected/italian/inflected.json"),
+  pt: () => import("../../data/inflected/portuguese/inflected.json"),
+  ru: () => import("../../data/inflected/russian/inflected.json"),
+};
+
 // Parsed/sorted/deduped once per module load (the arranged file doesn't
 // change at runtime) instead of on every call, to avoid re-sorting ~10k
 // entries on each queue load.
@@ -86,14 +99,20 @@ export async function loadNewWordStudyQueue({
     });
   }
 
-  const [targetModule, nativeModule] = await Promise.all([
+  const [targetModule, nativeModule, targetInflectedModule] = await Promise.all([
     VOCABULARY_IMPORTERS[targetLanguage](),
     VOCABULARY_IMPORTERS[nativeLanguage](),
+    // Optional: not every target language has an inflected.json, and a
+    // missing/failed import must not block the word-info card from
+    // rendering — it only loses the highlighted-word forms in that case.
+    INFLECTED_IMPORTERS[targetLanguage]?.().catch(() => ({ default: [] })) ??
+      Promise.resolve({ default: [] }),
   ]);
 
   const resolveConcept = buildVocabularyConceptResolver(
     Array.isArray(targetModule.default) ? targetModule.default : [],
     Array.isArray(nativeModule.default) ? nativeModule.default : [],
+    Array.isArray(targetInflectedModule.default) ? targetInflectedModule.default : [],
   );
 
   return selectNewWordStudyQueue({

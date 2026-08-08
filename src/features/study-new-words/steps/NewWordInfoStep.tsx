@@ -1,8 +1,13 @@
+import { useMemo } from "react";
 import { Volume2 } from "lucide-react";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import type { ResolvedStudyQueueItem } from "../../../data/learning/newWordStudyQueue";
 import { speakGuidedWord } from "../utils/speakGuidedWord";
 import { GUIDED_EXERCISE_COUNT } from "../newWordStudySessionState";
+// Same word-highlighting utility VocabularyPractice.tsx already uses to bold
+// a concept's conjugated/separated forms inside its example sentence —
+// reused here rather than re-implemented so both flows highlight identically.
+import { highlightInflectedWords } from "../../practice/utils/highlightInflectedWords";
 
 interface NewWordInfoStepProps {
   item: ResolvedStudyQueueItem;
@@ -37,14 +42,13 @@ function SectionLabel({ children }: { children: string }) {
 // happens once the guided exercises (broken/half/full) are done, so this
 // step has exactly one action: hand off to the exercise sequence.
 //
-// Two-column on desktop (md+): left column is entirely "target language"
-// (language label, word, audio, CEFR/grammar badges), right column is
-// entirely "translation language" (language label, translation, definition).
-// That split is what makes the language relationship legible at a glance —
-// everything on the left belongs to one language, everything on the right
-// to the other — and it uses the card's width instead of leaving it empty
-// next to a short word. Collapses to a single stacked column on mobile
-// (target-language block first, then translation-language block).
+// Single centered column at every width: the target-language block
+// (language label, word, audio, CEFR/grammar badges) sits on top, with the
+// translation-language block (language label, translation, definition)
+// directly below it, separated by a divider. That top-to-bottom order
+// mirrors reading a word and then its meaning, and keeping everything
+// centered keeps the card feeling like one focused unit rather than a
+// form with columns.
 //
 // Visual styling for this component lives in
 // ../styles/study-new-words.scss (imported once by NewWordStudySession.tsx)
@@ -64,11 +68,23 @@ export function NewWordInfoStep({ item, practiceLanguage, yourLanguage, onContin
   const targetLanguageName = t(`languageNames.${practiceLanguage}`);
   const nativeLanguageName = t(`languageNames.${yourLanguage}`);
 
+  // highlightInflectedWords reads its forms off arbitrary "*inflected*"-named
+  // keys (see that module), so item.exampleSentenceInflectedForms — already
+  // scoped to this one concept by the data resolver — is adapted into a
+  // single synthetic entry rather than needing a concept_id to filter by.
+  const highlightedExampleSentence = useMemo(() => {
+    if (!item.exampleSentence) return "";
+    const forms = item.exampleSentenceInflectedForms;
+    if (!forms?.length) return item.exampleSentence;
+    const syntheticEntry = Object.fromEntries(forms.map((form, index) => [`word_inflected-${index}`, form]));
+    return highlightInflectedWords(item.exampleSentence, practiceLanguage, [syntheticEntry]);
+  }, [item.exampleSentence, item.exampleSentenceInflectedForms, practiceLanguage]);
+
   return (
     <div className="new-word-info-step">
       <div className="new-word-info-card">
         <div className="new-word-info-grid">
-          {/* Target-language column: identity + audio + metadata. */}
+          {/* Target-language block: identity + audio + metadata, centered on top. */}
           <div className="new-word-info-col--target">
             <SectionLabel>{targetLanguageName}</SectionLabel>
             <div className="new-word-info-word-row">
@@ -97,10 +113,10 @@ export function NewWordInfoStep({ item, practiceLanguage, yourLanguage, onContin
             )}
           </div>
 
-          {/* Translation-language column: everything here belongs to the
-              user's native language, mirroring the left column's structure
+          {/* Translation-language block: everything here belongs to the
+              user's native language, mirroring the block above it
               (language label first, then the strongest text, then
-              supporting detail) so the two sides read as a clear pair. */}
+              supporting detail), placed directly below with a divider. */}
           <div className="new-word-info-col--translation">
             <SectionLabel>{nativeLanguageName}</SectionLabel>
             <p className="new-word-info-translation">{item.translation}</p>
@@ -109,15 +125,39 @@ export function NewWordInfoStep({ item, practiceLanguage, yourLanguage, onContin
           </div>
         </div>
 
-        {/* Example: full width below the two columns, left-accented "quote"
-            treatment (not a plain box) so it reads as a learning aid rather
-            than a disabled input. No example-translation field exists on
-            the resolved queue item, so none is invented here. */}
+        {/* Example: full width below the two blocks, soft tinted "card"
+            treatment (not an input-like bordered box) so it reads as a
+            learning aid. The conjugated/separable word forms are bolded via
+            highlightedExampleSentence, and the native-language translation
+            — read from the same concept's own vocabulary.json entry, never
+            generated — renders directly under the target sentence when
+            present. The speak button on the right reuses speakGuidedWord
+            (same TTS call already wired to the word-audio button above and
+            to GuidedExerciseAdapter's own sentence-speak button) so pressing
+            it reads item.exampleSentence aloud in practiceLanguage. */}
         {item.exampleSentence && (
           <div className="new-word-info-example">
             <SectionLabel>{t("studyNewWords.exampleSentenceLabel")}</SectionLabel>
             <div className="new-word-info-example-box">
-              <p className="new-word-info-example-text">{item.exampleSentence}</p>
+              <div className="new-word-info-example-row">
+                <div className="new-word-info-example-content">
+                  <p
+                    className="new-word-info-example-text"
+                    dangerouslySetInnerHTML={{ __html: highlightedExampleSentence }}
+                  />
+                  {item.exampleSentenceTranslation && (
+                    <p className="new-word-info-example-translation">{item.exampleSentenceTranslation}</p>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => speakGuidedWord(item.exampleSentence!, practiceLanguage)}
+                  aria-label={t("practice.listenToSentence")}
+                  className="new-word-info-example-speak-button"
+                >
+                  <Volume2 className="new-word-info-example-speak-icon" aria-hidden="true" />
+                </button>
+              </div>
             </div>
           </div>
         )}

@@ -33,15 +33,13 @@
   border: 1px solid var(--border);
   background-color: var(--card);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  padding: 1.5rem 1.25rem;
-
-  @media (min-width: 640px) {
-    padding: 1.75rem;
-  }
+  // Flat 24px (p-6) at every breakpoint — was stepping up to 1.75rem/2rem on
+  // sm/md, which read as too much whitespace around the now-centered,
+  // narrower (420px) content column.
+  padding: 1.5rem;
 
   @media (min-width: 768px) {
     max-width: 600px;
-    padding: 2rem;
   }
 
   @media (min-width: 1024px) {
@@ -50,18 +48,13 @@
 }
 
 .new-word-info-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-
-    & > * + * {
-      border-left: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .new-word-info-section-label {
@@ -73,15 +66,17 @@
 }
 
 .new-word-info-col--target {
-  @media (min-width: 768px) {
-    padding-right: 1.75rem;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .new-word-info-word-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 0.625rem;
   margin-top: 0.25rem;
 }
@@ -89,6 +84,10 @@
 .new-word-info-word {
   min-width: 0;
   max-width: 100%;
+  // Explicit body sans (not the inherited display/heading font) — Manrope's
+  // lowercase "l" carries enough shape distinction from "1"/capital "I"
+  // that a target word can't be misread by font choice alone.
+  font-family: var(--font-family-sans);
   font-size: 1.875rem;
   font-weight: 700;
   color: var(--foreground);
@@ -143,6 +142,7 @@
 .new-word-info-badges {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-top: 0.75rem;
@@ -167,12 +167,13 @@
 }
 
 .new-word-info-col--translation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   margin-top: 1.5rem;
-
-  @media (min-width: 768px) {
-    margin-top: 0;
-    padding-left: 1.75rem;
-  }
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
 }
 
 .new-word-info-translation {
@@ -199,15 +200,69 @@
 }
 
 .new-word-info-example {
+  width: 100%;
+  max-width: 420px;
   margin-top: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+// Soft tinted "card" treatment — no heavy border and no left accent bar, so
+// this reads as a gentle aside rather than an input or an alert.
 .new-word-info-example-box {
   margin-top: 0.375rem;
-  border-radius: 0.5rem;
-  border-left: 3px solid color-mix(in oklab, var(--primary) 40%, transparent);
-  background-color: color-mix(in oklab, var(--muted) 40%, transparent);
-  padding: 0.625rem 1rem 0.625rem 0.875rem;
+  border-radius: 0.75rem;
+  background-color: color-mix(in oklab, var(--muted) 45%, transparent);
+  padding: 0.875rem 1rem;
+}
+
+// Sentence (+ translation) on the left, speak button on the right — a flex
+// row rather than the audio-button's absolute-positioning trick elsewhere in
+// this file, because this block's height varies (translation line present
+// or not) and a flex row keeps the button vertically centered either way.
+.new-word-info-example-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.new-word-info-example-content {
+  flex: 1;
+  min-width: 0;
+}
+
+// Ghost/ muted styling (not the filled-primary treatment used by the word
+// audio button and continue button above) — this is a secondary, in-context
+// action inside an already-soft tinted box, not a primary call to action.
+.new-word-info-example-speak-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  color: var(--muted-foreground);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in oklab, var(--foreground) 8%, transparent);
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--background),
+      0 0 0 4px color-mix(in oklab, var(--primary) 50%, transparent);
+  }
+}
+
+.new-word-info-example-speak-icon {
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .new-word-info-example-text {
@@ -216,13 +271,37 @@
   color: color-mix(in oklab, var(--foreground) 85%, transparent);
   overflow-wrap: break-word;
 
+  // The conjugated verb / separable prefix highlighted by
+  // highlightInflectedWords — bold plus the theme accent color so it stands
+  // out from the rest of the (italic, muted) sentence at a glance.
+  strong {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
   @media (min-width: 768px) {
     font-size: 0.95rem;
   }
 }
 
+.new-word-info-example-translation {
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+  overflow-wrap: break-word;
+
+  @media (min-width: 768px) {
+    font-size: 0.875rem;
+  }
+}
+
 .new-word-info-footer {
+  width: 100%;
+  max-width: 420px;
   margin-top: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
   padding-top: 1rem;
   border-top: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
 }
