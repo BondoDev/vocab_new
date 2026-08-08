@@ -1,0 +1,336 @@
+/* ============================================================
+   VocabularyGrowthSection.tsx — header (title/subtitle), range selector,
+   and the loading/empty/error states around the chart. Sits below
+   Milestones on the Progress page. Not collapsible (unlike Milestones) —
+   always visible, matching the task brief's own layout mockup.
+   ============================================================ */
+
+.vocabulary-growth-section {
+  margin-top: 1.5rem;
+}
+
+.vocabulary-growth-section__header {
+  margin-bottom: 0.85rem;
+}
+
+.vocabulary-growth-section__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.vocabulary-growth-section__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 1.9rem;
+  height: 1.9rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(var(--radius) - 2px);
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary);
+}
+
+.vocabulary-growth-section__title {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.vocabulary-growth-section__subtitle {
+  margin: 0.3rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* Compact pill-style range selector — wraps naturally on narrow screens
+   rather than overflowing or shrinking to unreadable text. */
+.vocabulary-growth-section__ranges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.9rem 0;
+}
+
+.vocabulary-growth-section__range-button {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  padding: 0.35rem 0.85rem;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+
+  &--active {
+    border-color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 12%, var(--card));
+    color: var(--primary);
+  }
+}
+
+.vocabulary-growth-section__panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 1rem;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 20px -14px rgba(15, 23, 42, 0.12);
+}
+
+.vocabulary-growth-section__skeleton {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--muted);
+  animation: vocabulary-growth-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.vocabulary-growth-section__error {
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.vocabulary-growth-section__error-text {
+  margin: 0 0 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.vocabulary-growth-section__error-retry {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--muted);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+.vocabulary-growth-section__empty {
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.vocabulary-growth-section__empty-title {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.vocabulary-growth-section__empty-message {
+  margin: 0.4rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.vocabulary-growth-section__empty-action {
+  display: inline-block;
+  margin-top: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--primary);
+  color: var(--primary-foreground, #fff);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+@keyframes vocabulary-growth-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vocabulary-growth-section__skeleton {
+    animation-duration: 3.2s;
+  }
+}
+
+/* ============================================================
+   VocabularyGrowthChart.tsx — the hand-written SVG chart itself.
+   Category colors reused exactly from the Vocabulary page's own summary
+   cards (vocabulary-section.scss): --primary for Learning; local
+   --vocab-green/--vocab-amber equivalents for Known/Mastered, since no
+   green/amber token exists in the shared theme set yet (same precedent
+   vocabulary-section.scss itself already documents).
+   ============================================================ */
+
+.vocabulary-growth-chart {
+  --growth-learning: var(--primary);
+  --growth-known: #22c55e;
+  --growth-mastered: #f59e0b;
+}
+
+.vocabulary-growth-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.vocabulary-growth-chart__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.vocabulary-growth-chart__legend-swatch {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+
+  &--inline {
+    width: 0.55rem;
+    height: 0.55rem;
+  }
+}
+
+.vocabulary-growth-chart__legend-label {
+  color: var(--foreground);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* Horizontally scrollable rather than shrinking indefinitely: the SVG
+   holds a real pixel floor (min-width below) so axis/date labels never
+   become unreadable on narrow screens — the wrap scrolls internally
+   instead of overflowing the page. On any container wider than that
+   floor (desktop/tablet/most phones in landscape) the SVG simply fills
+   100% of the available width and no scrollbar ever appears. */
+.vocabulary-growth-chart__plot-wrap {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vocabulary-growth-chart__svg {
+  display: block;
+  width: 100%;
+  min-width: 480px;
+  height: auto;
+  touch-action: pan-y;
+}
+
+.vocabulary-growth-chart__gridline {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.vocabulary-growth-chart__axis-label {
+  fill: var(--muted-foreground);
+  font-size: 10px;
+}
+
+.vocabulary-growth-chart__line {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.vocabulary-growth-chart__point {
+  stroke: var(--card);
+  stroke-width: 2;
+}
+
+.vocabulary-growth-chart__hover-line {
+  stroke: var(--muted-foreground);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.6;
+}
+
+.vocabulary-growth-chart__hover-point {
+  stroke: var(--card);
+  stroke-width: 2;
+}
+
+.vocabulary-growth-chart__tooltip {
+  position: absolute;
+  z-index: 1;
+  min-width: 9rem;
+  transform: translate(-50%, -100%) translateY(-0.5rem);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--card);
+  padding: 0.55rem 0.7rem;
+  box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.25);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.vocabulary-growth-chart__tooltip-date {
+  margin: 0 0 0.35rem;
+  color: var(--foreground);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.vocabulary-growth-chart__tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.15rem 0;
+}
+
+.vocabulary-growth-chart__tooltip-label {
+  color: var(--muted-foreground);
+  font-size: 0.74rem;
+}
+
+.vocabulary-growth-chart__tooltip-value {
+  margin-left: auto;
+  color: var(--foreground);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.vocabulary-growth-chart__tooltip-row--total {
+  margin-top: 0.3rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--border);
+}

@@ -329,6 +329,8 @@ interface UserWordProgressFullRawRow {
   word_state?: unknown;
   is_favorite?: unknown;
   last_practiced_at?: unknown;
+  created_at?: unknown;
+  first_studied_stat_date?: unknown;
 }
 
 export interface UserWordProgressFullRow {
@@ -337,13 +339,24 @@ export interface UserWordProgressFullRow {
   wordState: WordState;
   isFavorite: boolean;
   lastPracticedAt: string | null;
+  // Added for Vocabulary Growth's history reconstruction (see
+  // src/data/learning/vocabularyGrowth.ts). createdAt is the table's own
+  // NOT NULL created_at; null here only if a response row is somehow
+  // malformed. firstStudiedStatDate is the server-derived learning date
+  // (nullable — legacy rows written before
+  // 20260806150000_add_server_derived_learning_dates.sql have none); pass
+  // both to resolveWordCreatedDateISO rather than assuming either alone.
+  createdAt: string | null;
+  firstStudiedStatDate: string | null;
 }
 
 // Read-only: loads every persisted progress row for the Vocabulary page's
-// summary counts/tabs/table, scoped to one target language the same way
-// readStudiedConceptIds already is (user_id + target_language together,
-// never user_id alone) so a different practice language's progress can
-// never leak into this one's counts or list.
+// summary counts/tabs/table (and, via the two extra columns above,
+// Vocabulary Growth's word-creation dates — see
+// loadVocabularyGrowthHistory.ts), scoped to one target language the same
+// way readStudiedConceptIds already is (user_id + target_language
+// together, never user_id alone) so a different practice language's
+// progress can never leak into this one's counts or list.
 export async function readUserWordProgress(
   session: StoredSupabaseSession,
   targetLanguage: string,
@@ -357,7 +370,7 @@ export async function readUserWordProgress(
     session,
     `/rest/v1/user_word_progress?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(
       targetLanguage,
-    )}&select=id,word_id,word_state,is_favorite,last_practiced_at`,
+    )}&select=id,word_id,word_state,is_favorite,last_practiced_at,created_at,first_studied_stat_date`,
   );
 
   const rows: UserWordProgressFullRow[] = [];
@@ -376,6 +389,8 @@ export async function readUserWordProgress(
       wordState: raw.word_state,
       isFavorite: Boolean(raw.is_favorite),
       lastPracticedAt: typeof raw.last_practiced_at === "string" ? raw.last_practiced_at : null,
+      createdAt: typeof raw.created_at === "string" ? raw.created_at : null,
+      firstStudiedStatDate: typeof raw.first_studied_stat_date === "string" ? raw.first_studied_stat_date : null,
     });
   }
 
@@ -798,5 +813,144 @@ export async function readDailyStreakStats(
       dailyGoal,
     });
   }
+  return rows;
+}
+
+// ---------------------------------------------------------------------
+// Milestones (Phase 1) — reads every user_daily_stats row for one target
+// language, unbounded. Unlike readDailyStreakStats's 400-day lookback
+// (which only needs to support a *displayed* best-streak window), the
+// Milestones Reviews track needs a true lifetime sum of reviews_completed,
+// so this cannot apply the same bound. user_daily_stats has at most one row
+// per calendar day per user/language, so even several years of history is
+// a small request. Also feeds the Consistency track's current-streak
+// computation (src/data/learning/milestoneStreak.ts) via the same rows —
+// one request serves both tracks, per the "load once, evaluate all tracks
+// locally" requirement.
+// ---------------------------------------------------------------------
+
+export interface MilestoneDailyStatRow {
+  dateISO: string;
+  newWordsCompleted: number;
+  reviewsCompleted: number;
+}
+
+interface UserDailyStatsMilestoneRawRow {
+  stat_date?: unknown;
+  new_words_completed?: unknown;
+  reviews_completed?: unknown;
+}
+
+export async function readMilestoneDailyStats(
+  session: StoredSupabaseSession,
+  targetLanguage: string,
+): Promise<MilestoneDailyStatRow[]> {
+  const userId = session.user?.id;
+  if (!userId || !targetLanguage) {
+    return [];
+  }
+
+  const rawRows = await supabaseProgressRequest<UserDailyStatsMilestoneRawRow[]>(
+    session,
+    `/rest/v1/user_daily_stats?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(
+      targetLanguage,
+    )}&select=stat_date,new_words_completed,reviews_completed`,
+  );
+
+  const rows: MilestoneDailyStatRow[] = [];
+  for (const raw of rawRows) {
+    if (typeof raw.stat_date !== "string") {
+      continue;
+    }
+
+    const rawNewWords = raw.new_words_completed;
+    const rawReviews = raw.reviews_completed;
+    rows.push({
+      dateISO: raw.stat_date,
+      newWordsCompleted: typeof rawNewWords === "number" && Number.isFinite(rawNewWords) ? rawNewWords : 0,
+      reviewsCompleted: typeof rawReviews === "number" && Number.isFinite(rawReviews) ? rawReviews : 0,
+    });
+  }
+  return rows;
+}
+
+// ---------------------------------------------------------------------
+// Vocabulary Growth — reads the caller's own review_events state
+// transitions via the narrow read_vocabulary_growth_events RPC (see
+// supabase/migrations/20260808130000_add_vocabulary_growth_events_rpc.sql).
+// review_events itself stays exactly as locked down as before (RLS
+// enabled, zero policies, no anon/authenticated table grant) — this goes
+// through the RPC, not a direct table read, the same way every write in
+// this file already goes through complete_new_word_study/
+// complete_word_review rather than a direct INSERT/UPDATE.
+// ---------------------------------------------------------------------
+
+export interface VocabularyGrowthEventRow {
+  wordProgressId: string;
+  previousState: WordState;
+  newState: WordState;
+  // Already resolved server-side by the RPC (stat_date, falling back to a
+  // UTC slice of last_practiced_at for legacy pre-stat_date rows) — see
+  // that migration's own header. Feed straight into
+  // src/data/learning/vocabularyGrowth.ts's VocabularyGrowthEventInput.eventDateISO.
+  eventDateISO: string;
+}
+
+interface VocabularyGrowthEventRawRow {
+  word_progress_id?: unknown;
+  previous_state?: unknown;
+  new_state?: unknown;
+  event_date?: unknown;
+}
+
+export async function readVocabularyGrowthEvents(
+  session: StoredSupabaseSession,
+  targetLanguage: string,
+): Promise<VocabularyGrowthEventRow[]> {
+  if (!session.user?.id || !targetLanguage) {
+    return [];
+  }
+
+  let rawRows: VocabularyGrowthEventRawRow[];
+  try {
+    rawRows = await supabaseProgressMutationRequest<VocabularyGrowthEventRawRow[]>(
+      session,
+      "/rest/v1/rpc/read_vocabulary_growth_events",
+      { p_target_language: targetLanguage },
+    );
+  } catch (error) {
+    // Read-only load, same "log full diagnostics, let the caller decide
+    // the user-facing message" contract as readDailyStreakStats/
+    // readMilestoneDailyStats — never a write, so nothing to roll back.
+    console.warn(
+      "newWordProgress: readVocabularyGrowthEvents failed.",
+      describeSupabaseError("readVocabularyGrowthEvents", error),
+    );
+    throw error;
+  }
+
+  const rows: VocabularyGrowthEventRow[] = [];
+  for (const raw of rawRows) {
+    if (
+      typeof raw.word_progress_id !== "string" ||
+      !isWordState(raw.previous_state) ||
+      !isWordState(raw.new_state) ||
+      typeof raw.event_date !== "string"
+    ) {
+      // Skips a malformed row rather than crashing the whole chart over
+      // one bad event — the RPC's own column types/constraints should
+      // make this unreachable, but stays defensive regardless (same
+      // precedent as readUserWordProgress above).
+      continue;
+    }
+
+    rows.push({
+      wordProgressId: raw.word_progress_id,
+      previousState: raw.previous_state,
+      newState: raw.new_state,
+      eventDateISO: raw.event_date,
+    });
+  }
+
   return rows;
 }

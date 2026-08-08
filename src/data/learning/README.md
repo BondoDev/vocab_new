@@ -87,6 +87,44 @@ truth without importing from another feature's private folder.
   `complete_custom_practice_word`) independently validate — see
   `supabase/README.md`'s Corrective Migration 5 section. Zero imports.
 
+- `milestones.ts` - the centralized milestone system (Phase 1): the
+  ascending, hand-authored per-track target lists (Vocabulary/Mastery/
+  Reviews/Consistency) and the pure `evaluateMilestoneTrack`/
+  `evaluateAllMilestoneTracks` engine that turns already-computed metrics
+  (learned/mastered word counts, total reviews, current streak days) into
+  per-track progress — current value, next/previous milestone, clamped
+  progress ratio, and track-complete state. Import-free, no translated
+  labels (those live in the interface JSON files, keyed by each
+  milestone's stable `id`). No persistence, no unlock history, no
+  notifications yet — see this module's own header for what Phase 2 would
+  add.
+- `milestoneStreak.ts` - pure current-streak computation for the Milestones
+  Consistency track (`computeMilestoneStreak`), distinct from
+  `dailyStreak.ts`'s goal-based Daily Streak card streak: a day here
+  qualifies from any recorded activity (`new_words_completed > 0` OR
+  `reviews_completed > 0`), not from meeting a daily goal. Only imports
+  `addDaysISO` from `dailyStreak.ts`.
+- `vocabularyGrowth.ts` - pure history-reconstruction/aggregation engine
+  for the Progress page's "Vocabulary Growth" chart
+  (`computeVocabularyGrowthHistory`, `filterVocabularyGrowthByRange`,
+  `applyCurrentDayOverride`, `resolveWordCreatedDateISO`). Reuses
+  `vocabularyCategory.ts`'s own `mapWordStateToVocabularyCategory` — no new
+  state model. Wired to real Supabase data via
+  `src/features/user-profile/sections/progress/loadVocabularyGrowthHistory.ts`,
+  which calls the narrow `read_vocabulary_growth_events` RPC
+  (`supabase/migrations/20260808130000_add_vocabulary_growth_events_rpc.sql`)
+  — `review_events` itself stays exactly as locked down as before (RLS
+  enabled, zero policies, no client table grant); this RPC is the smallest
+  fix that exposes a caller's own transition history without reopening
+  that table broadly. Operates entirely on already-resolved YYYY-MM-DD
+  dates (the RPC resolves `stat_date`/`last_practiced_at` server-side; the
+  loader resolves `user_word_progress.first_studied_stat_date`/`created_at`
+  client-side via `resolveWordCreatedDateISO`) — see this module's own file
+  header for the full data-model finding and
+  `scripts/tests/learning/test-vocabulary-growth.mjs` for coverage. Only
+  imports `mapWordStateToVocabularyCategory` from `vocabularyCategory.ts`
+  and `addDaysISO` from `dailyStreak.ts`.
+
 ## Ownership Rules
 
 - Keep shared learning-plan datasets in this folder.

@@ -1,0 +1,791 @@
+/* ============================================================
+   ProgressSection.tsx — the Progress page's own compact page header
+   (title "Progress" + a short subtitle), same shape as
+   VocabularySection's/LearningSection's own headers. Distinct from, and
+   sits above, MilestonesSection's own collapsed-trigger title/subtitle
+   ("Milestones" / its own copy) — see ProgressSection.tsx's header
+   comment for why these are two different translation keys. Kept short
+   (no large hero treatment) so it leaves room for Milestones plus future
+   sibling sections (Vocabulary Growth, Learning Calendar, Activity
+   Charts).
+   ============================================================ */
+
+.progress-section__header {
+  text-align: center;
+}
+
+.progress-section__heading {
+  min-width: 0;
+}
+
+.progress-section__title {
+  margin: 0;
+  color: #2f2755;
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
+.progress-section__subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.progress-section__header + .milestones-section {
+  margin-top: 1.5rem;
+}
+
+/* ============================================================
+   MilestonesSection.tsx — Level 1 of the two-level accordion (Progress
+   page -> Milestones section -> milestone track -> milestone path). The
+   whole section is one collapsed-by-default disclosure: collapsed, only
+   `.milestones-section__trigger` is visible, laid out as a named-area CSS
+   grid with two zones — `left` (icon/title/subtitle, ~35-40% wide on
+   desktop) and `stats` (one compact per-track statistic, filling the rest
+   of the row) — plus a large circular `chevron` button pinned to the far
+   right. No track rows, no paths, no single-total badge: the per-track
+   statistics already communicate meaningful progress before the user
+   expands anything. This is what used to be ProgressSection.tsx's own
+   always-visible page header; folding it into the trigger itself removed a
+   redundant second "Milestones" heading.
+   ============================================================ */
+
+.milestones-section {
+  width: 100%;
+}
+
+.milestones-section__heading {
+  margin: 0;
+}
+
+/* The whole header — left zone, stats, and the chevron — is one button, so
+   the entire block (not just the chevron) reads as clickable, with one
+   shared hover/focus treatment. The chevron's own hover/active styling
+   below is layered on top of this via a descendant selector, so it reads
+   as its own affordance without being a second, illegally-nested button. */
+.milestones-section__trigger {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 1rem 1.1rem;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 20px -14px rgba(15, 23, 42, 0.12);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--primary) 3%, var(--card));
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--ring),
+      0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+}
+
+/* Desktop/tablet: one row, three named areas ("left" ~35-40%, "stats"
+   filling the remaining width, "chevron" at the far right) — the two-zone
+   balance the redesign brief asks for, using the grid's own column sizing
+   rather than flex leftover-space tricks. `align-items: center` keeps
+   left/stats/chevron vertically centered against each other as one row,
+   including on mobile where "left"+"chevron" share a row. */
+.milestones-section__header-row {
+  display: grid;
+  grid-template-columns: minmax(9rem, 38%) minmax(0, 1fr) auto;
+  grid-template-areas: "left stats chevron";
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+}
+
+.milestones-section__zone-left {
+  grid-area: left;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.milestones-section__title-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.milestones-section__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(var(--radius) - 2px);
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary);
+}
+
+.milestones-section__title {
+  min-width: 0;
+  overflow-wrap: break-word;
+  color: var(--foreground);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.milestones-section__subtitle {
+  overflow-wrap: break-word;
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  /* Left-aligned under the icon+title, not the full row's icon column. */
+  padding-left: 2.6rem;
+}
+
+/* Four equal-width compact statistics filling the "stats" grid area. */
+.milestones-section__stats {
+  grid-area: stats;
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem 1.25rem;
+}
+
+@media (max-width: 1023.98px) {
+  /* Tablet: title stays left, but four columns is too tight — reflow the
+     statistics into a 2x2 grid within the same "stats" area. */
+  .milestones-section__header-row {
+    grid-template-columns: minmax(8rem, 34%) minmax(0, 1fr) auto;
+  }
+
+  .milestones-section__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 0.7rem;
+  }
+}
+
+@media (max-width: 639.98px) {
+  /* Mobile: stack — title row first (with the chevron kept beside it, not
+     pushed below the statistics), the 2x2 statistics grid underneath. */
+  .milestones-section__header-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "left chevron"
+      "stats stats";
+    row-gap: 0.9rem;
+  }
+}
+
+/* No icon, pill, or card chrome — just label / value / hairline bar, per
+   the redesign brief's "compact statistic, not a colored pill" direction.
+   The category accent color is used sparingly, only on the bar fill. */
+.milestones-section__stat {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  &--vocabulary {
+    --milestone-color: var(--primary);
+  }
+
+  &--mastery {
+    --milestone-color: #f59e0b;
+  }
+
+  &--reviews {
+    --milestone-color: var(--chart-2);
+  }
+
+  &--consistency {
+    --milestone-color: #22c55e;
+  }
+}
+
+/* Icon + label row. Small and lightweight — no pill/circle background —
+   the icon just sits inline with its label, tinted with the track's own
+   accent color (used "mainly for icon + progress-line fill" per the
+   redesign brief; the label/value text stays neutral for readability). */
+.milestones-section__stat-top {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.milestones-section__stat-icon {
+  flex-shrink: 0;
+  color: var(--milestone-color);
+}
+
+.milestones-section__stat-label {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 639.98px) {
+  /* Mobile: two narrower columns (see .milestones-section__stats' own
+     media query) can't always fit "icon + full translated label" on one
+     line — allow the label to wrap onto a second line instead of
+     truncating it, rather than forcing an ellipsis that could hide most
+     of a longer translated category name. */
+  .milestones-section__stat-top {
+    align-items: flex-start;
+  }
+
+  .milestones-section__stat-label {
+    overflow: visible;
+    text-align: left;
+    text-overflow: clip;
+    white-space: normal;
+  }
+}
+
+.milestones-section__stat-value {
+  overflow-wrap: break-word;
+  color: var(--foreground);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* A real progress bar, not a decorative accent rule: taller than the
+   original hairline and given its own tinted (not neutral-muted) track so
+   the filled vs. remaining portion reads clearly at a glance. */
+.milestones-section__stat-bar {
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--milestone-color) 14%, var(--muted));
+  overflow: hidden;
+}
+
+.milestones-section__stat-bar-fill {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  border-radius: inherit;
+  background: var(--milestone-color);
+  box-shadow: 0 0 4px 0 color-mix(in srgb, var(--milestone-color) 55%, transparent);
+  transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Same footprint as the real statistics row, so the header never resizes
+   once real metrics arrive. */
+.milestones-section__stats-skeleton {
+  grid-area: stats;
+  display: block;
+  width: 100%;
+  height: 2.6rem;
+  border-radius: calc(var(--radius) - 6px);
+  background: var(--muted);
+  animation: milestone-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+/* The chevron button — a large (~44px) circular target that reads as its
+   own affordance even though it's part of the single header <button>
+   (see .milestones-section__trigger's own comment for why it isn't a
+   second, illegally-nested <button>). Sits at the far right on every
+   breakpoint, vertically near the title thanks to the grid's
+   align-items: start above. */
+.milestones-section__chevron-button {
+  display: inline-flex;
+  grid-area: chevron;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  transition:
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 150ms ease;
+}
+
+.milestones-section__trigger:hover .milestones-section__chevron-button {
+  background: color-mix(in srgb, var(--primary) 14%, var(--muted));
+  color: var(--primary);
+  box-shadow: 0 4px 10px -4px rgba(15, 23, 42, 0.22);
+  transform: translateY(-1px);
+}
+
+.milestones-section__trigger:active .milestones-section__chevron-button {
+  background: color-mix(in srgb, var(--primary) 20%, var(--muted));
+  box-shadow: none;
+  transform: translateY(0) scale(0.93);
+}
+
+.milestones-section__trigger:focus-visible .milestones-section__chevron-button {
+  background: color-mix(in srgb, var(--primary) 14%, var(--muted));
+  color: var(--primary);
+}
+
+.milestones-section__chevron {
+  width: 1.4rem;
+  height: 1.4rem;
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+/* Collapsed by default (max-height/opacity animate together); `visibility`
+   is included in the transition using the same invisible-until-transition-
+   ends technique the Level 2 track rows already use below (and
+   DailyStreakCard's own compact accordion before that) — it also removes
+   the collapsed panel's content from tab order and the accessibility tree
+   without an abrupt display:none jump cut. */
+.milestones-section__panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    max-height 360ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 220ms ease,
+    visibility 360ms;
+
+  &--open {
+    /* Generous enough for four collapsed track rows plus one expanded
+       track's path + details (see .milestone-row__panel's own max-height
+       for that inner budget). */
+    max-height: 60rem;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.milestones-section__panel-inner {
+  padding-top: 0.75rem;
+}
+
+.milestones-section__error {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  text-align: center;
+}
+
+.milestones-section__error-text {
+  margin: 0 0 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.milestones-section__error-retry {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--muted);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+/* ============================================================
+   Level 2 accordion shell (MilestoneAccordionRow.tsx) — a vertical stack of
+   four collapsed-by-default track rows, unchanged in behavior from the
+   previous redesign; only its container is now nested one level deeper,
+   inside Level 1's panel above, instead of sitting directly on the page.
+   ============================================================ */
+
+.milestones-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.milestone-row {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 20px -14px rgba(15, 23, 42, 0.12);
+  transition: border-color 200ms ease;
+
+  /* No amber/blue/green exist in the shared theme tokens yet, so these are
+     scoped locally rather than added to the global token set for one
+     feature — same precedent as VocabularySummaryCards'
+     --vocab-amber/--vocab-green and DailyStreakCard's --success. */
+  &--vocabulary {
+    --milestone-color: var(--primary);
+  }
+
+  &--mastery {
+    --milestone-color: #f59e0b;
+  }
+
+  &--reviews {
+    --milestone-color: var(--chart-2);
+  }
+
+  &--consistency {
+    --milestone-color: #22c55e;
+  }
+
+  &--expanded {
+    border-color: color-mix(in srgb, var(--milestone-color) 35%, var(--border));
+  }
+}
+
+.milestone-row__heading {
+  margin: 0;
+}
+
+/* ~72-84px tall including the card's own border, matching the redesign
+   brief's collapsed-row target. */
+.milestone-row__trigger {
+  display: flex;
+  width: 100%;
+  min-height: 4.75rem;
+  align-items: center;
+  gap: 0.75rem;
+  border: none;
+  padding: 0.9rem 1rem;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--milestone-color) 4%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--ring);
+  }
+}
+
+.milestone-row__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(var(--radius) - 2px);
+  background: color-mix(in srgb, var(--milestone-color) 14%, transparent);
+  color: var(--milestone-color);
+}
+
+.milestone-row__main {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.milestone-row__title {
+  overflow-wrap: break-word;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.milestone-row__progress-line {
+  overflow-wrap: break-word;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  font-weight: 500;
+
+  &--complete {
+    color: var(--milestone-color);
+    font-weight: 600;
+  }
+}
+
+/* Optional thin collapsed-state progress bar (redesign brief: "Optionally
+   include a thin progress bar"). Omitted entirely for a completed track —
+   MilestoneRowSummary renders only the text line in that case. */
+.milestone-row__bar {
+  display: block;
+  width: 100%;
+  height: 0.3rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--milestone-color) 12%, var(--muted));
+  overflow: hidden;
+}
+
+.milestone-row__bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--milestone-color);
+  transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.milestone-row__chevron {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+.milestone-row__skeleton {
+  display: block;
+  width: 55%;
+  height: 0.85rem;
+  border-radius: calc(var(--radius) - 6px);
+  background: var(--muted);
+  animation: milestone-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+/* Collapsed by default (max-height/opacity/padding animate together);
+   `visibility` is included in the transition using the same
+   invisible-until-transition-ends technique Phase 1's DailyStreakCard
+   accordion already uses (learning-section.scss) — it also removes the
+   collapsed panel's content from tab order and the accessibility tree
+   without an abrupt display:none jump cut. Generous max-height: the path
+   plus up to three lines of detail text needs more room than the Daily
+   Streak accordion's own panel did. */
+.milestone-row__panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    max-height 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 200ms ease,
+    visibility 320ms;
+
+  &--open {
+    max-height: 16rem;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.milestone-row__panel-inner {
+  padding: 0 1rem 1.1rem;
+}
+
+/* ============================================================
+   MilestoneRowDetails — the concise text under the path (never a "View all
+   milestones" link/button per the redesign brief).
+   ============================================================ */
+
+.milestone-row__details {
+  margin-top: 0.85rem;
+}
+
+.milestone-row__next {
+  margin: 0;
+  overflow-wrap: break-word;
+  font-size: 0.85rem;
+}
+
+.milestone-row__next-label {
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.milestone-row__next-title {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.milestone-row__ratio {
+  margin: 0.2rem 0 0;
+  overflow-wrap: break-word;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+}
+
+.milestone-row__reached {
+  margin: 0.35rem 0 0;
+  overflow-wrap: break-word;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.milestone-row__details--complete {
+  margin-top: 0.85rem;
+  color: var(--milestone-color);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+@keyframes milestone-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .milestone-row__skeleton,
+  .milestone-row__bar-fill,
+  .milestone-path__circle {
+    animation-duration: 3.2s;
+    transition-duration: 0ms;
+  }
+}
+
+/* ============================================================
+   MilestonePath.tsx — the "journey" visualization: a moving window of
+   milestone nodes connected by a horizontal line (see
+   milestonePathWindow.ts for the windowing rule). Horizontally scrollable
+   rather than shrinking on narrow screens, so labels never become
+   unreadable — see the redesign brief's Mobile section.
+   ============================================================ */
+
+.milestone-path {
+  padding-top: 0.15rem;
+}
+
+.milestone-path__scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  /* A little breathing room so the scrollbar (where the platform renders
+     an overlay-less one) doesn't sit flush against the nodes. */
+  padding-bottom: 0.2rem;
+}
+
+.milestone-path__track {
+  display: flex;
+  align-items: flex-start;
+  width: max-content;
+  min-width: 100%;
+}
+
+.milestone-path__node-wrap {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Vertically centered on the shared 2.5rem circle-slot height below (see
+   milestone-path__circle-slot) via margin-top, so the line meets every
+   circle — small or large — at the same point. */
+.milestone-path__connector {
+  width: 1.5rem;
+  height: 2px;
+  flex-shrink: 0;
+  margin-top: 1.24rem;
+  background: var(--border);
+}
+
+.milestone-path__connector--filled {
+  background: var(--milestone-color);
+}
+
+.milestone-path__node {
+  display: flex;
+  min-width: 3.5rem;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.3rem;
+}
+
+/* Fixed size regardless of which circle variant it holds — this is what
+   keeps every node's label lined up in a straight row even though the
+   "current" circle inside is visually larger than a completed/future one. */
+.milestone-path__circle-slot {
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.milestone-path__circle {
+  display: flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted-foreground);
+  transition:
+    width 200ms ease,
+    height 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.milestone-path__node--completed .milestone-path__circle {
+  border-color: var(--milestone-color);
+  background: var(--milestone-color);
+  color: #fff;
+}
+
+.milestone-path__node--current .milestone-path__circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-width: 3px;
+  border-color: var(--milestone-color);
+  background: color-mix(in srgb, var(--milestone-color) 16%, var(--card));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--milestone-color) 14%, transparent);
+  color: var(--milestone-color);
+}
+
+.milestone-path__value {
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.milestone-path__node--completed .milestone-path__value {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.milestone-path__node--current .milestone-path__value {
+  color: var(--foreground);
+  font-weight: 700;
+}

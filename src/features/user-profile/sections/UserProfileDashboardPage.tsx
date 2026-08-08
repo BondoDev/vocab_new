@@ -9,6 +9,7 @@ import {
 import { DashboardSection } from "./dashboard/DashboardSection";
 import { LearningSection } from "./learning/LearningSection";
 import { VocabularySection } from "./vocabulary/VocabularySection";
+import { ProgressSection } from "./progress/ProgressSection";
 
 interface UserProfileDashboardPageProps {
   nickname?: string;
@@ -34,11 +35,12 @@ const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
   dashboard: "userProfile.developmentNotice.ariaLabel",
   learning: "userProfile.learningSection.ariaLabel",
   vocabulary: "userProfile.vocabularySection.ariaLabel",
+  progress: "userProfile.progressSection.ariaLabel",
 };
 
 function resolveProfileSection(search: string): UserProfileSectionId {
   const section = new URLSearchParams(search).get("section");
-  return section === "learning" || section === "vocabulary" || section === "dashboard"
+  return section === "learning" || section === "vocabulary" || section === "progress" || section === "dashboard"
     ? section
     : "dashboard";
 }
@@ -93,6 +95,13 @@ export function UserProfileDashboardPage({
             ) : null}
             {activeSection === "vocabulary" ? (
               <VocabularySection
+                userProfile={userProfile}
+                isProfileLoaded={isProfileLoaded}
+                onStartNewWordStudy={onStartNewWordStudy}
+              />
+            ) : null}
+            {activeSection === "progress" ? (
+              <ProgressSection
                 userProfile={userProfile}
                 isProfileLoaded={isProfileLoaded}
                 onStartNewWordStudy={onStartNewWordStudy}

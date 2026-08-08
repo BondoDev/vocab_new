@@ -1635,6 +1635,67 @@ performs. Do not describe this feature as production-ready until a
 Settings UI with an explicit confirmation step exists, the client wiring
 calls this RPC, and the future activation migration has been applied.
 
+## Vocabulary Growth — narrow read-only RPC (2026-08-08)
+
+Migration: `20260808130000_add_vocabulary_growth_events_rpc.sql`.
+
+The Progress page's "Vocabulary Growth" chart reconstructs historical
+Learning/Known/Mastered counts over time. `user_word_progress` alone only
+stores each word's *current* state, so accurate reconstruction needs
+`review_events`' own `previous_state -> new_state` transition history (see
+`src/data/learning/vocabularyGrowth.ts`'s pure reconstruction engine).
+
+`review_events` has RLS enabled with **zero policies** for any role
+(baseline migration) and every direct table privilege was explicitly
+revoked from `anon`/`authenticated`
+(`20260805170000_revoke_review_events_client_privileges.sql`) — at the time,
+correctly, since nothing needed to read it. That lockdown is **not**
+reopened here. Instead this migration adds one narrow, purpose-built RPC,
+`public.read_vocabulary_growth_events(p_target_language text, p_since_date
+date default null)`, mirroring `get_current_learning_date`'s exact
+security shape:
+
+- `SECURITY DEFINER`, `search_path = ''`, every object schema-qualified.
+- Caller derived exclusively from `auth.uid()` — no `p_user_id`/
+  `p_target_user_id` parameter exists.
+- `p_target_language` required, validated against the same seven-code
+  allow-list `native_language`/`learning_language` already use.
+- `p_since_date` optional (default `null` = no lower bound) — deliberately
+  never forces a bound, so the UI's "All time" range can never be silently
+  truncated by a caller that forgets to pass one; the frontend loader
+  always requests the unbounded history once and filters 7/30/90-day
+  ranges locally.
+- Returns exactly four columns: `word_progress_id`, `previous_state`,
+  `new_state`, `event_date` — no `event_id`, no `user_id`, no
+  `result`/streak/`promoted`/`demoted` columns, no other user's rows.
+- Read only (a single `select`) — no insert/update/delete anywhere in the
+  function body.
+- `EXECUTE`: revoked from `public`/`anon` (explicitly), granted to
+  `postgres`/`authenticated`/`service_role` — the same three-role set every
+  other client-facing learning RPC in this schema already carries.
+
+`review_events`' own RLS (still zero policies) and table grants (`anon`/
+`authenticated` still hold none) are completely untouched — the RPC reads
+through them as `postgres` (its own owner), exactly like `complete_word_review`
+already writes through them today.
+
+**Timestamp column, verified against the live schema before writing this** —
+`review_events` has no `reviewed_at` column. Its two authoritative "when"
+columns (confirmed from `complete_word_review`'s own current `INSERT` list,
+`20260806190000_add_daily_goal_snapshot_and_update_rpc.sql`) are `stat_date
+date` (nullable — the server-derived learning date, added by
+`20260806150000_add_server_derived_learning_dates.sql`, populated on every
+row written since, `null` on older rows since that migration does not
+backfill) and `last_practiced_at timestamptz` (always present). The RPC
+resolves these server-side via
+`coalesce(stat_date, (last_practiced_at at time zone 'utc')::date)` into one
+always-non-null `event_date`, so the TypeScript reconstruction engine never
+needs to know about the fallback. `user_word_progress.first_studied_stat_date`
+has the identical nullable-legacy shape for word-creation dates, resolved
+client-side by `vocabularyGrowth.ts`'s own `resolveWordCreatedDateISO`
+(that table is already directly readable by its owner, so no RPC was
+needed for it).
+
 ## Live Supabase E2E tests (2026-08-08)
 
 `scripts/tests/live/` is a real, opt-in end-to-end suite that exercises a

@@ -278,6 +278,87 @@
         "next": "Weiter",
         "rowsPerPage": "Zeilen pro Seite"
       }
+    },
+    "progressPage": {
+      "title": "Fortschritt",
+      "subtitle": "Verfolge deinen langfristigen Lernfortschritt."
+    },
+    "progressSection": {
+      "ariaLabel": "Fortschrittsbereich",
+      "title": "Meilensteine",
+      "subtitle": "Verfolge deine langfristigen Lernmeilensteine.",
+      "loadError": "Beim Laden deiner Meilensteine ist ein Fehler aufgetreten.",
+      "retryButton": "Erneut versuchen",
+      "tracks": {
+        "vocabulary": "Wortschatz",
+        "mastery": "Beherrschung",
+        "reviews": "Wiederholungen",
+        "consistency": "Beständigkeit"
+      },
+      "nextMilestoneLabel": "Nächstes Ziel:",
+      "completedLabel": "Abgeschlossen",
+      "milestoneReachedLabel": "Meilenstein erreicht",
+      "ofLabel": "von",
+      "units": {
+        "word": "Wort",
+        "words": "Wörter",
+        "review": "Wiederholung",
+        "reviews": "Wiederholungen",
+        "day": "Tag",
+        "days": "Tage"
+      },
+      "milestones": {
+        "learned-1": "Erstes gelerntes Wort",
+        "learned-10": "10 gelernte Wörter",
+        "learned-25": "25 gelernte Wörter",
+        "learned-50": "50 gelernte Wörter",
+        "learned-100": "100 gelernte Wörter",
+        "learned-250": "250 gelernte Wörter",
+        "learned-500": "500 gelernte Wörter",
+        "learned-1000": "1.000 gelernte Wörter",
+        "learned-2500": "2.500 gelernte Wörter",
+        "learned-5000": "5.000 gelernte Wörter",
+        "learned-10000": "10.000 gelernte Wörter",
+        "mastered-1": "Erstes gemeistertes Wort",
+        "mastered-10": "10 gemeisterte Wörter",
+        "mastered-25": "25 gemeisterte Wörter",
+        "mastered-50": "50 gemeisterte Wörter",
+        "mastered-100": "100 gemeisterte Wörter",
+        "mastered-250": "250 gemeisterte Wörter",
+        "mastered-500": "500 gemeisterte Wörter",
+        "mastered-1000": "1.000 gemeisterte Wörter",
+        "reviews-1": "Erste Wiederholung",
+        "reviews-100": "100 Wiederholungen",
+        "reviews-500": "500 Wiederholungen",
+        "reviews-1000": "1.000 Wiederholungen",
+        "reviews-5000": "5.000 Wiederholungen",
+        "reviews-10000": "10.000 Wiederholungen",
+        "streak-3": "3-Tage-Streak",
+        "streak-7": "7-Tage-Streak",
+        "streak-14": "14-Tage-Streak",
+        "streak-30": "30-Tage-Streak",
+        "streak-50": "50-Tage-Streak",
+        "streak-100": "100-Tage-Streak",
+        "streak-365": "365-Tage-Streak"
+      }
+    },
+    "vocabularyGrowthSection": {
+      "ariaLabel": "Bereich Wortschatzentwicklung",
+      "title": "Wortschatzentwicklung",
+      "subtitle": "Sieh, wie sich dein Wortschatz im Laufe der Zeit verändert.",
+      "loadError": "Beim Laden deiner Wortschatzentwicklung ist ein Fehler aufgetreten.",
+      "retryButton": "Erneut versuchen",
+      "totalLabel": "Gesamt",
+      "emptyState": {
+        "title": "Noch kein Wortschatzfortschritt.",
+        "message": "Schließe eine Sitzung „Neue Wörter lernen“ ab, um deinen Fortschrittsverlauf aufzubauen."
+      },
+      "ranges": {
+        "sevenDays": "7 Tage",
+        "thirtyDays": "30 Tage",
+        "ninetyDays": "90 Tage",
+        "allTime": "Gesamter Zeitraum"
+      }
     }
   },
   "aboutPage": {
