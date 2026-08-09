@@ -1,38 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
-import { useAuthSession } from "../../../../app/hooks/useAuthSession";
-import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { getCurrentLearningDate } from "../../../../lib/learningDate";
-import { describeSupabaseError } from "../../../../lib/supabaseError";
 import type { UserProfile } from "../../../../lib/userProfile";
+import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
 import { DailyGoalSelector } from "./DailyGoalSelector";
 import { TodayProgressCard } from "./TodayProgressCard";
 import { DailyStreakCard } from "./DailyStreakCard";
 import { LearningModeCards } from "./LearningModeCards";
 import "./learning-section.scss";
 
-// LearningSection is the single frontend owner of the current authoritative
-// learning date for the whole mounted Learning dashboard — it calls
-// getCurrentLearningDate() exactly once per normal mount and threads the
-// resulting todayISO/todayISOStatus down to both TodayProgressCard and
-// DailyStreakCard as props. Neither card calls getCurrentLearningDate
-// itself anymore (see their own file headers). Unlike an earlier version of
-// this contract, "unavailable" (signed-out/no-session — expected, silent)
-// and "error" (an actual failed authenticated request — logged, surfaces
-// the retry banner below) are passed down as distinct statuses, not
-// collapsed into the same todayISO: null signal: a failed request is not
-// equivalent to "zero completed words" or "no streak history", so each card
-// must be able to tell the two apart and suppress its own display for a
-// genuine error instead of quietly presenting an empty/zero result as if it
-// were successfully loaded. dateState.status is passed straight through as
-// todayISOStatus — see each card's own header for exactly how it changes
-// that card's fetch-gating and rendering.
-type LearningDateState =
-  | { status: "loading" }
-  | { status: "ready"; todayISO: string }
-  | { status: "unavailable" }
-  | { status: "error" };
-
+// The authoritative current learning date is no longer owned by this
+// component — as of Phase 1 of the profile-section data optimization,
+// UserProfileDashboardPage's useProfileSharedProgressData is the single
+// frontend owner of getCurrentLearningDate() for the whole /profile
+// dashboard (Learning, Vocabulary, and Progress alike), fetched once and
+// threaded down here as todayISO/todayISOStatus props (see
+// useProfileSharedProgressData.ts's own header, and this feature's
+// learning/README.md section for the full contract). This component still
+// threads todayISO/todayISOStatus down to both TodayProgressCard and
+// DailyStreakCard as props exactly as before — neither card calls
+// getCurrentLearningDate itself, and "unavailable" (signed-out/no-session —
+// expected, silent) and "error" (a genuine failed authenticated request —
+// logged, surfaces the retry banner below) remain distinct statuses so
+// neither card mistakes a failed request for "zero completed words" or "no
+// streak history".
 interface LearningSectionProps {
   // Loaded once at the top of the app (App.tsx's useUserProfileLoad) and
   // threaded down here — Daily Goal, Daily Streak, and Today's Progress
@@ -40,6 +30,15 @@ interface LearningSectionProps {
   // copy of the profile.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
+  // The shared learning date and its status, owned by
+  // UserProfileDashboardPage's useProfileSharedProgressData — see this
+  // file's header above.
+  todayISO: string | null;
+  todayISOStatus: ProfileSharedDataStatus;
+  // Bumps the shared hook's own retry token; this is the only way to
+  // re-request the shared date after a failure — there is no local retry
+  // state here anymore.
+  onRetryLearningDate: () => void;
   onStartCustomPractice?: () => void;
   onStartNewWordStudy?: () => void;
   onStartReviewWords?: () => void;
@@ -49,13 +48,15 @@ interface LearningSectionProps {
 export function LearningSection({
   userProfile,
   isProfileLoaded,
+  todayISO,
+  todayISOStatus,
+  onRetryLearningDate,
   onStartCustomPractice,
   onStartNewWordStudy,
   onStartReviewWords,
   onDailyGoalChange,
 }: LearningSectionProps) {
   const { t } = useLanguage();
-  const { authUserId } = useAuthSession();
 
   // Opaque refresh trigger for DailyStreakCard's own user_daily_stats
   // fetch — carries no goal value itself, just a reason to refetch.
@@ -67,10 +68,8 @@ export function LearningSection({
   // completion stays exactly as impervious to the live profile goal as
   // computeDailyStreakSummary's own signature already guarantees; this
   // only widens *when* DailyStreakCard re-reads the authoritative rows,
-  // never *what* it judges them against. Deliberately NOT a dependency of
-  // the date-loading effect below — a goal save never changes the
-  // authoritative current date, so it must never trigger a second
-  // getCurrentLearningDate() call.
+  // never *what* it judges them against. A goal save never touches the
+  // shared learning date, so it never calls onRetryLearningDate.
   const [streakRefreshToken, setStreakRefreshToken] = useState(0);
 
   const handleDailyGoalChange = (dailyGoal: number) => {
@@ -78,69 +77,7 @@ export function LearningSection({
     onDailyGoalChange?.(dailyGoal);
   };
 
-  const [dateState, setDateState] = useState<LearningDateState>({ status: "loading" });
-  // Bumping this is the only way to re-run the date-loading effect once
-  // authUserId/isProfileLoaded are stable — a dedicated retry action for
-  // the shared date, independent of streakRefreshToken above.
-  const [dateRetryToken, setDateRetryToken] = useState(0);
-
-  useEffect(() => {
-    if (!authUserId) {
-      // Signed-out visitor: no session to call the RPC with. Both cards
-      // already fall back to their own signed-out-safe zero/empty state
-      // regardless of todayISO, so this never performs a fetch.
-      setDateState({ status: "unavailable" });
-      return;
-    }
-
-    if (!isProfileLoaded) {
-      // The shared profile load (App.tsx) is still in flight — wait for it,
-      // same contract every card here already follows.
-      setDateState({ status: "loading" });
-      return;
-    }
-
-    let cancelled = false;
-    setDateState({ status: "loading" });
-
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        if (!session) {
-          if (!cancelled) setDateState({ status: "unavailable" });
-          return;
-        }
-
-        const todayISO = await getCurrentLearningDate(session);
-        if (cancelled) return;
-        setDateState({ status: "ready", todayISO });
-      } catch (error) {
-        if (cancelled) return;
-        console.warn(
-          "LearningSection: failed to load the current learning date.",
-          describeSupabaseError("getCurrentLearningDate", error),
-        );
-        setDateState({ status: "error" });
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-    // practiceLanguage is deliberately not a dependency — the authoritative
-    // date does not depend on the target language, and refetching it on a
-    // language change would just be a duplicate RPC call. Each card's own
-    // data effect still depends on practiceLanguage for its own read.
-  }, [authUserId, isProfileLoaded, dateRetryToken]);
-
-  const todayISO = dateState.status === "ready" ? dateState.todayISO : null;
-  // The one discriminant both cards receive — see LearningDateState above
-  // and each card's own header for what "loading"/"ready"/"unavailable"/
-  // "error" changes about its fetch-gating and rendering.
-  const todayISOStatus = dateState.status;
-  const isDateError = dateState.status === "error";
-
-  const handleRetryDateLoad = () => setDateRetryToken((token) => token + 1);
+  const isDateError = todayISOStatus === "error";
 
   return (
     <>
@@ -159,7 +96,7 @@ export function LearningSection({
           </p>
           <button
             type="button"
-            onClick={handleRetryDateLoad}
+            onClick={onRetryLearningDate}
             className="learning-section__date-error-retry"
           >
             {t("userProfile.learningSection.dateRetryButton")}

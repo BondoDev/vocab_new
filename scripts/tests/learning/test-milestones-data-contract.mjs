@@ -73,8 +73,13 @@ const orchestratorSource = fs.readFileSync(
   "utf8",
 );
 
-test("7. Reuses readUserWordProgress and readMilestoneDailyStats — no duplicate data-loading infrastructure", () => {
-  assert.match(orchestratorSource, /readUserWordProgress/);
+test("7. Accepts already-loaded progressRows (Phase 1's shared word-progress source) and reuses readMilestoneDailyStats — no duplicate data-loading infrastructure", () => {
+  // Phase 1 of the profile-section data optimization: progressRows are
+  // fetched once by UserProfileDashboardPage's shared
+  // useProfileSharedProgressData and passed in here — this orchestrator no
+  // longer calls readUserWordProgress itself.
+  assert.doesNotMatch(orchestratorSource, /readUserWordProgress\(/);
+  assert.match(orchestratorSource, /progressRows: UserWordProgressFullRow\[\];/);
   assert.match(orchestratorSource, /readMilestoneDailyStats/);
 });
 

@@ -149,35 +149,49 @@ test("6. VocabularySection derives its target/native language from the shared pr
     "must read nativeLanguage from the userProfile prop",
   );
   const effectMatch = vocabularySection.match(
-    /}, \[authUserId, isProfileLoaded, targetLanguage, nativeLanguage, retryToken\]\);/,
+    /}, \[isProfileLoaded, targetLanguage, nativeLanguage, wordProgressRows, wordProgressStatus, retryToken\]\);/,
   );
   assert.ok(
     effectMatch,
-    "the vocabulary-progress load effect must depend on targetLanguage/nativeLanguage (derived from the profile prop) so a practiceLanguage change reloads it without a page refresh",
+    "the vocabulary-progress resolution effect must depend on targetLanguage/nativeLanguage (derived from the profile prop) and wordProgressRows/wordProgressStatus (the shared source) so a practiceLanguage change or a shared-row refresh reacts without a page refresh",
   );
 });
 
-test("7. Loading, signed-out, and not-yet-loaded-profile states remain represented", () => {
-  assert.match(vocabularySection, /if \(!authUserId\) \{/, "must keep the signed-out branch");
+test("7. Loading, signed-out (shared-unavailable), and not-yet-loaded-profile states remain represented", () => {
+  // Phase 1: the signed-out/no-session branch moved to
+  // UserProfileDashboardPage's shared useProfileSharedProgressData (which
+  // resolves wordProgressStatus === "unavailable" for that case) — this
+  // section reacts to that shared status instead of reading authUserId
+  // itself.
+  assert.match(vocabularySection, /if \(wordProgressStatus === "unavailable"\) \{/, "must keep the shared-unavailable (signed-out) branch");
   assert.match(
     vocabularySection,
-    /if \(!isProfileLoaded\) \{/,
-    "must wait for the shared profile load before fetching vocabulary progress",
+    /if \(!isProfileLoaded \|\| !targetLanguage \|\| !nativeLanguage\) \{/,
+    "must wait for the shared profile load and a known language pair before resolving vocabulary progress",
   );
   assert.match(vocabularySection, /status: "loading"/, "must keep a loading state");
   assert.match(vocabularySection, /console\.warn/, "must keep dev logging on failure");
 });
 
-test("8. Counts and favorites are computed from progress rows scoped to the current practice language, not re-fetched profile state", () => {
+test("8. Counts and favorites are computed from the shared word-progress rows scoped to the current practice language, not a second fetch", () => {
+  // Phase 1: loadVocabularyProgress no longer fetches user_word_progress
+  // itself — it accepts the already-loaded rows from
+  // UserProfileDashboardPage's shared useProfileSharedProgressData (see
+  // that hook's own header) and only resolves them against vocabulary.json.
+  assert.doesNotMatch(
+    loadVocabularyProgress,
+    /readUserWordProgress\(/,
+    "loadVocabularyProgress must not fetch user_word_progress itself anymore — rows are passed in",
+  );
   assert.match(
     loadVocabularyProgress,
-    /readUserWordProgress\(session, targetLanguage\)/,
-    "loadVocabularyProgress must scope reads by the passed-in targetLanguage",
+    /progressRows: UserWordProgressFullRow\[\];/,
+    "loadVocabularyProgress must accept already-loaded progressRows",
   );
   assert.match(
     vocabularySection,
-    /loadVocabularyProgress\(\{ session, targetLanguage, nativeLanguage \}\)/,
-    "VocabularySection must call loadVocabularyProgress with the profile-derived language pair",
+    /loadVocabularyProgress\(\{ progressRows: wordProgressRows, targetLanguage, nativeLanguage \}\)/,
+    "VocabularySection must call loadVocabularyProgress with the shared progressRows and the profile-derived language pair",
   );
 });
 

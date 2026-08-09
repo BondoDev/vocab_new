@@ -3,9 +3,10 @@ import { TrendingUp } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { getCurrentLearningDate } from "../../../../lib/learningDate";
 import { describeSupabaseError } from "../../../../lib/supabaseError";
 import type { UserProfile } from "../../../../lib/userProfile";
+import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
+import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
 import type { VocabularyGrowthDayCounts, VocabularyGrowthRange } from "../../../../data/learning/vocabularyGrowth";
 import { loadVocabularyGrowthHistory, filterVocabularyGrowthByRange } from "./loadVocabularyGrowthHistory";
 import { VocabularyGrowthChart } from "./VocabularyGrowthChart";
@@ -30,18 +31,38 @@ interface VocabularyGrowthSectionProps {
   // fetched here.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
+  // The shared learning date and active-language word-progress rows, owned
+  // and fetched exactly once by UserProfileDashboardPage's
+  // useProfileSharedProgressData (see that hook's own header) — this
+  // section no longer calls getCurrentLearningDate or readUserWordProgress
+  // itself. Still owns its own readVocabularyGrowthEvents fetch (see
+  // loadVocabularyGrowthHistory.ts).
+  todayISO: string | null;
+  todayISOStatus: ProfileSharedDataStatus;
+  onRetryLearningDate: () => void;
+  wordProgressRows: UserWordProgressFullRow[];
+  wordProgressStatus: ProfileSharedDataStatus;
+  onRetryWordProgress: () => void;
   onStartNewWordStudy?: () => void;
 }
 
 // The Progress page's second section, below Milestones — a real,
 // Supabase-backed multi-series line chart (Learning/Known/Mastered over
-// time). Owns its own current-learning-date fetch (getCurrentLearningDate)
-// the same way MilestonesSection does, since it has no sibling component
-// to share that date with. Loads the *full* available history exactly
-// once per language/session (loadVocabularyGrowthHistory.ts); switching
-// the 7/30/90/all range re-slices that same already-loaded array locally
+// time). Loads the *full* available history exactly once per language/
+// session (loadVocabularyGrowthHistory.ts); switching the 7/30/90/all
+// range re-slices that same already-loaded array locally
 // (filterVocabularyGrowthByRange) — never a second Supabase round trip.
-export function VocabularyGrowthSection({ userProfile, isProfileLoaded, onStartNewWordStudy }: VocabularyGrowthSectionProps) {
+export function VocabularyGrowthSection({
+  userProfile,
+  isProfileLoaded,
+  todayISO,
+  todayISOStatus,
+  onRetryLearningDate,
+  wordProgressRows,
+  wordProgressStatus,
+  onRetryWordProgress,
+  onStartNewWordStudy,
+}: VocabularyGrowthSectionProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
   const [state, setState] = useState<LoadState>({ status: "loading" });
@@ -56,12 +77,20 @@ export function VocabularyGrowthSection({ userProfile, isProfileLoaded, onStartN
       return;
     }
 
-    if (!isProfileLoaded) {
+    if (!isProfileLoaded || todayISOStatus === "loading" || wordProgressStatus === "loading") {
       setState({ status: "loading" });
       return;
     }
 
-    if (!targetLanguage) {
+    if (todayISOStatus === "error" || wordProgressStatus === "error") {
+      // One of the two shared sources genuinely failed — surface this
+      // section's own error/retry UI rather than presenting an empty
+      // result as though it were successfully loaded data.
+      setState({ status: "error" });
+      return;
+    }
+
+    if (!targetLanguage || !todayISO) {
       setState({ status: "ready", history: [], todayISO: "" });
       return;
     }
@@ -77,8 +106,12 @@ export function VocabularyGrowthSection({ userProfile, isProfileLoaded, onStartN
           return;
         }
 
-        const todayISO = await getCurrentLearningDate(session);
-        const history = await loadVocabularyGrowthHistory({ session, targetLanguage, todayISO });
+        const history = await loadVocabularyGrowthHistory({
+          session,
+          progressRows: wordProgressRows,
+          targetLanguage,
+          todayISO,
+        });
         if (cancelled) return;
         setState({ status: "ready", history, todayISO });
       } catch (error) {
@@ -99,18 +132,29 @@ export function VocabularyGrowthSection({ userProfile, isProfileLoaded, onStartN
     // language and confirm chart data changes" manual-verification step).
     // range is deliberately NOT a dependency: it only re-slices the
     // already-loaded fullHistory below, never triggers a new load.
-  }, [authUserId, isProfileLoaded, targetLanguage, retryToken]);
+  }, [authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, retryToken]);
 
   const isLoading = state.status === "loading";
   const isError = state.status === "error";
   const fullHistory = state.status === "ready" ? state.history : [];
-  const todayISO = state.status === "ready" ? state.todayISO : "";
+  const chartTodayISO = state.status === "ready" ? state.todayISO : "";
   const isEmpty = state.status === "ready" && fullHistory.length === 0;
 
   const visibleData = useMemo(
-    () => (fullHistory.length > 0 ? filterVocabularyGrowthByRange(fullHistory, range, todayISO) : []),
-    [fullHistory, range, todayISO],
+    () => (fullHistory.length > 0 ? filterVocabularyGrowthByRange(fullHistory, range, chartTodayISO) : []),
+    [fullHistory, range, chartTodayISO],
   );
+
+  // A single Retry covers whichever of the three sources actually failed
+  // (the shared date, the shared word-progress rows, or this section's own
+  // readVocabularyGrowthEvents) — retrying an already-"ready" shared source
+  // is a harmless no-visible-change background refresh (see
+  // useProfileSharedProgressData.ts's preserve-on-refresh behavior).
+  const handleRetry = () => {
+    onRetryLearningDate();
+    onRetryWordProgress();
+    setRetryToken((token) => token + 1);
+  };
 
   return (
     <section className="vocabulary-growth-section" aria-label={t("userProfile.vocabularyGrowthSection.title")}>
@@ -151,7 +195,7 @@ export function VocabularyGrowthSection({ userProfile, isProfileLoaded, onStartN
             <button
               type="button"
               className="vocabulary-growth-section__error-retry"
-              onClick={() => setRetryToken((token) => token + 1)}
+              onClick={handleRetry}
             >
               {t("userProfile.vocabularyGrowthSection.retryButton")}
             </button>

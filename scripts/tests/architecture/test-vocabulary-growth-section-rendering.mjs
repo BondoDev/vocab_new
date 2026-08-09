@@ -90,17 +90,24 @@ test("7. Default range is 30 days", () => {
 
 test("8. Selecting a range only updates local state (setRange) — it never triggers a new Supabase load", () => {
   // The range-button onClick must call setRange, and setRange must not
-  // appear anywhere in the load-effect's own dependency array (only
-  // authUserId/isProfileLoaded/targetLanguage/retryToken may) — a
+  // appear anywhere in the load-effect's own dependency array — a
   // regression here would silently turn every range click into a fresh
-  // network round trip, defeating "filter locally, don't refetch".
+  // network round trip, defeating "filter locally, don't refetch". Phase 1
+  // added todayISO/todayISOStatus/wordProgressRows/wordProgressStatus (the
+  // shared sources from useProfileSharedProgressData) to that dependency
+  // array in place of the section's own now-removed date/progress fetch.
   assert.match(sectionSource, /onClick=\{\(\) => setRange\(option\.value\)\}/);
-  const effectDeps = sectionSource.match(/\}, \[authUserId, isProfileLoaded, targetLanguage, retryToken\]\);/);
-  assert.ok(effectDeps, "the load effect's dependency array must be exactly [authUserId, isProfileLoaded, targetLanguage, retryToken] — range must not appear in it");
+  const effectDeps = sectionSource.match(
+    /\}, \[authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, retryToken\]\);/,
+  );
+  assert.ok(
+    effectDeps,
+    "the load effect's dependency array must be exactly [authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, retryToken] — range must not appear in it",
+  );
 });
 
 test("9. The visible chart data is derived via filterVocabularyGrowthByRange(fullHistory, range, ...) — a local slice, not a refetch", () => {
-  assert.match(sectionSource, /filterVocabularyGrowthByRange\(fullHistory, range, todayISO\)/);
+  assert.match(sectionSource, /filterVocabularyGrowthByRange\(fullHistory, range, chartTodayISO\)/);
 });
 
 console.log("\n=== No Supabase writes anywhere in the section/chart components ===\n");

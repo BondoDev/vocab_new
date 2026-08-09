@@ -500,35 +500,65 @@ Frontend dashboard reads call `get_current_learning_date()` before filtering
 preparation agree with write attribution. Local device time is no longer
 authoritative for learning stats.
 
-On the Learning dashboard specifically, `LearningSection.tsx` is the single
-frontend owner of that call: it calls `getCurrentLearningDate()` exactly
-once per mount (waiting for auth/profile readiness, refetching only on an
-authenticated-user change or an explicit retry after a failure — never on a
-practice-language change, since the date itself does not depend on the
-target language) and passes the result down to both `TodayProgressCard` and
-`DailyStreakCard` as two props: `todayISO: string | null` and
-`todayISOStatus: "loading" | "ready" | "unavailable" | "error"`. Neither
-card calls `getCurrentLearningDate()` itself; each still owns only its own
-statistics read (`readTodayNewWordsCompleted` / `readDailyStreakStats`),
-performed only once `todayISOStatus` is `"ready"`.
+As of Phase 1 of the profile-section data optimization, the single frontend
+owner of that call is no longer `LearningSection.tsx` — it is
+`useProfileSharedProgressData` (`src/features/user-profile/sections/
+useProfileSharedProgressData.ts`), called exactly once from
+`UserProfileDashboardPage`, the common parent of the Learning, Vocabulary,
+and Progress sections. That hook calls `getCurrentLearningDate()` (waiting
+for auth/profile readiness, refetching on an authenticated-user change, a
+`user_profiles.timezone` change, or an explicit retry after a failure —
+never on a practice-language change, since the date itself does not depend
+on the target language) and exposes the result as two values —
+`todayISO: string | null` and
+`todayISOStatus: "loading" | "ready" | "unavailable" | "error"` — threaded
+down as props through every section that needs them. `LearningSection`
+passes them straight through to `TodayProgressCard` and `DailyStreakCard`
+exactly as before; neither card, nor any section, calls
+`getCurrentLearningDate()` itself. Because `UserProfileDashboardPage`
+itself never unmounts while switching the active section, switching
+Learning -> Vocabulary -> Progress -> Learning causes no additional date
+requests for an unchanged (user, timezone) context — only the previously
+inactive section's own remaining reads (its own `user_daily_stats` fetch)
+run again.
 
-`todayISOStatus` exists specifically so a genuine RPC failure is never
-indistinguishable from "no session" on the card side. A failed date fetch
-is a parent-level dependency failure: `LearningSection` shows the one
-Retry banner (`isDateError`/`handleRetryDateLoad`), and each card enters
-its own `{ status: "blocked" }` load state — never fetching its own
-statistics, and never presenting a "0 completed" / empty-stats result as
-though it were successfully loaded data. Both cards render `"blocked"`
+The same hook is also the single owner of the signed-in user's
+active-target-language `user_word_progress` rows (`readUserWordProgress`),
+previously fetched separately by the Vocabulary section, Milestones, and
+Vocabulary Growth. It exposes those as `wordProgressRows` +
+`wordProgressStatus` (the same four-value status union), reset whenever the
+active target language changes (these rows are language-scoped) as well as
+on an authenticated-user change. `completeNewWordStudy`/`completeWordReview`
+(`src/lib/newWordProgress.ts`) each call `notifyWordProgressChanged()`
+(`src/lib/sharedProgressInvalidation.ts`) once their write succeeds — the
+narrow invalidation/refetch mechanism this hook subscribes to, so a real
+learning/review mutation refreshes the shared rows without depending on
+`UserProfileDashboardPage` happening to unmount/remount across a route
+change. A background refresh (a retry, a timezone change, or an
+invalidation ping) for an *unchanged* context never regresses an
+already-loaded `todayISO`/`wordProgressRows` value back to a loading/error
+state — it keeps serving the last good value until the new one arrives, so
+dependent counters never visually reset to zero; only a genuine first-load
+failure for that context surfaces `"error"`.
+
+`todayISOStatus`/`wordProgressStatus` exist specifically so a genuine RPC
+failure is never indistinguishable from "no session" on the consuming
+side. A failed date fetch is a shared-dependency failure: `LearningSection`
+shows the one Retry banner (`isDateError`/`onRetryLearningDate`), and each
+card enters its own `{ status: "blocked" }` load state — never fetching its
+own statistics, and never presenting a "0 completed" / empty-stats result
+as though it were successfully loaded data. Both cards render `"blocked"`
 identically to their normal `"loading"` state (the same skeleton
 placeholder), so there is no second, card-level error message. A
 legitimately signed-out/no-session visitor (`todayISOStatus ===
 "unavailable"`) is unaffected by this and keeps the pre-existing "ready,
 0/empty" fallback, since that state is expected and not a failure. A
-failed statistics read (as opposed to a failed date fetch) remains
-card-specific, unchanged from before. A successful daily-goal save still
-bumps `streakRefreshToken` to refetch `DailyStreakCard`'s stored rows, but
-never causes a second `getCurrentLearningDate()` call — the authoritative
-date does not change when the goal changes.
+failed statistics read (as opposed to a failed shared-date/word-progress
+fetch) remains section-specific, unchanged from before. A successful
+daily-goal save still bumps `streakRefreshToken` to refetch
+`DailyStreakCard`'s stored rows, but never causes a second
+`getCurrentLearningDate()` call — the authoritative date does not change
+when the goal changes.
 
 ## Streak Phase 1 — per-row daily-goal snapshots
 

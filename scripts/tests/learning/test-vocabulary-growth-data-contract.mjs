@@ -103,8 +103,13 @@ const loaderPath = path.join(
 const loaderSource = fs.readFileSync(loaderPath, "utf8");
 const loaderLiveCode = stripLineComments(loaderSource);
 
-test("8. Reuses readUserWordProgress and readVocabularyGrowthEvents — no duplicate data-loading infrastructure", () => {
-  assert.match(loaderLiveCode, /readUserWordProgress/);
+test("8. Accepts already-loaded progressRows (Phase 1's shared word-progress source) and reuses readVocabularyGrowthEvents — no duplicate data-loading infrastructure", () => {
+  // Phase 1 of the profile-section data optimization: progressRows are
+  // fetched once by UserProfileDashboardPage's shared
+  // useProfileSharedProgressData and passed in here — this orchestrator no
+  // longer calls readUserWordProgress itself.
+  assert.doesNotMatch(loaderLiveCode, /readUserWordProgress\(/);
+  assert.match(loaderLiveCode, /progressRows: UserWordProgressFullRow\[\];/);
   assert.match(loaderLiveCode, /readVocabularyGrowthEvents/);
 });
 

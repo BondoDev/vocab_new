@@ -1,12 +1,12 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
-import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import type { UserProfile } from "../../../../lib/userProfile";
-import { updateWordProgressFavorite, VocabularyFavoriteUpdateError } from "../../../../lib/newWordProgress";
+import { updateWordProgressFavorite, VocabularyFavoriteUpdateError, type UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
 import { type VocabularyCounts } from "../../../../data/learning/vocabularyCategory";
+import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
 import { loadVocabularyProgress, type ResolvedVocabularyRow } from "./loadVocabularyProgress";
 import { filterVocabularyRowsByTab, type VocabularyTabId } from "./vocabularyFiltering";
 import { adjustFavoritesCount, applyFavoriteToggle, canStartFavoriteToggle } from "./vocabularyFavoriteState";
@@ -36,12 +36,28 @@ interface VocabularySectionProps {
   // second copy fetched here.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
+  // The shared active-language user_word_progress rows, owned and fetched
+  // exactly once by UserProfileDashboardPage's useProfileSharedProgressData
+  // (see that hook's own header) — this section no longer calls
+  // readUserWordProgress itself. This effect only waits for
+  // wordProgressStatus to become "ready" and then resolves the already-
+  // loaded rows against vocabulary.json (still a local async step — see the
+  // effect below).
+  wordProgressRows: UserWordProgressFullRow[];
+  wordProgressStatus: ProfileSharedDataStatus;
+  onRetryWordProgress: () => void;
   onStartNewWordStudy?: () => void;
 }
 
-export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWordStudy }: VocabularySectionProps) {
+export function VocabularySection({
+  userProfile,
+  isProfileLoaded,
+  wordProgressRows,
+  wordProgressStatus,
+  onRetryWordProgress,
+  onStartNewWordStudy,
+}: VocabularySectionProps) {
   const { t } = useLanguage();
-  const { authUserId } = useAuthSession();
   const [state, setState] = useState<LoadState>({ status: "loading" });
   const [retryToken, setRetryToken] = useState(0);
   const [activeTab, setActiveTab] = useState<VocabularyTabId>("all");
@@ -53,23 +69,39 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
   const targetLanguage = userProfile.practiceLanguage;
   const nativeLanguage = userProfile.nativeLanguage;
 
-  // Loads vocabulary progress for the shared profile's target/native
-  // language pair — the profile itself is no longer fetched here (see
-  // VocabularySectionProps above); this effect only waits for it
-  // (isProfileLoaded) the same way DailyStreakCard/TodayProgressCard do.
-  // Re-running on authUserId/isProfileLoaded/targetLanguage/nativeLanguage/
-  // retryToken (not on every render) keeps this a "load once per active
-  // language" fetch rather than one per tab click — the active tab filters
-  // the already-loaded rows client-side (see the derived values below).
+  // Resolves the shared word-progress rows against vocabulary.json for the
+  // profile's target/native language pair. Waits on wordProgressStatus the
+  // same way it previously waited on isProfileLoaded — "loading" or
+  // "unavailable" (no session / no target language yet) both keep this
+  // section's own state in step with the shared source instead of
+  // resolving against a not-yet-known or stale row set. A shared-fetch
+  // "error" is surfaced directly (no local resolution to attempt); Retry
+  // calls onRetryWordProgress, the shared hook's own retry action, rather
+  // than a purely local token. Re-running on
+  // wordProgressStatus/wordProgressRows/targetLanguage/nativeLanguage/
+  // retryToken (not on every render) keeps this a "resolve once per loaded
+  // row set" effect rather than one per tab click — the active tab filters
+  // the already-resolved rows client-side (see the derived values below).
   useEffect(() => {
-    if (!authUserId) {
+    if (wordProgressStatus === "unavailable") {
       setState({ status: "result", data: { rows: [], counts: EMPTY_COUNTS, targetLanguage: "" } });
       return;
     }
 
-    if (!isProfileLoaded) {
-      // The shared profile load (App.tsx) is still in flight — wait for it
-      // rather than fetching with a not-yet-known target language.
+    if (wordProgressStatus === "loading") {
+      setState({ status: "loading" });
+      return;
+    }
+
+    if (wordProgressStatus === "error") {
+      setState({ status: "error" });
+      return;
+    }
+
+    if (!isProfileLoaded || !targetLanguage || !nativeLanguage) {
+      // The shared row set is ready, but the profile itself hasn't
+      // resolved a language pair yet — wait rather than resolving against
+      // an unknown language.
       setState({ status: "loading" });
       return;
     }
@@ -79,14 +111,13 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
 
     void (async () => {
       try {
-        const session = getStoredSupabaseSession();
-
-        if (!session || !targetLanguage || !nativeLanguage) {
-          setState({ status: "result", data: { rows: [], counts: EMPTY_COUNTS, targetLanguage } });
-          return;
-        }
-
-        const result = await loadVocabularyProgress({ session, targetLanguage, nativeLanguage });
+        // No session check here: resolution is a local step (vocabulary.json
+        // dynamic import + concept lookup, no Supabase call) — the shared
+        // hook already gates wordProgressStatus === "ready" on a valid
+        // session (see useProfileSharedProgressData.ts), so reaching this
+        // branch already implies one existed for the fetch that produced
+        // wordProgressRows.
+        const result = await loadVocabularyProgress({ progressRows: wordProgressRows, targetLanguage, nativeLanguage });
         if (cancelled) return;
         setState({ status: "result", data: { ...result, targetLanguage } });
       } catch (error) {
@@ -96,7 +127,7 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
         // structured diagnostics logged here now include the classified
         // category/code/status instead of just the raw error object.
         console.warn(
-          "VocabularySection: failed to load vocabulary progress.",
+          "VocabularySection: failed to resolve vocabulary progress.",
           describeSupabaseError("loadVocabularyProgress", error),
         );
         setState({ status: "error" });
@@ -106,7 +137,7 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
     return () => {
       cancelled = true;
     };
-  }, [authUserId, isProfileLoaded, targetLanguage, nativeLanguage, retryToken]);
+  }, [isProfileLoaded, targetLanguage, nativeLanguage, wordProgressRows, wordProgressStatus, retryToken]);
 
   const loadedTargetLanguage = state.status === "result" ? state.data.targetLanguage : null;
 
@@ -119,7 +150,10 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
     setPage(1);
   }, [activeTab, pageSize, loadedTargetLanguage]);
 
-  const handleRetry = () => setRetryToken((token) => token + 1);
+  const handleRetry = () => {
+    onRetryWordProgress();
+    setRetryToken((token) => token + 1);
+  };
 
   const handleToggleFavorite = (row: ResolvedVocabularyRow) => {
     if (state.status !== "result") return;

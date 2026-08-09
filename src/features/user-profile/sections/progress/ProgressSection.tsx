@@ -1,5 +1,7 @@
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import type { UserProfile } from "../../../../lib/userProfile";
+import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
+import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
 import { MilestonesSection } from "./MilestonesSection";
 import { VocabularyGrowthSection } from "./VocabularyGrowthSection";
 import "./progress-section.scss";
@@ -7,6 +9,16 @@ import "./progress-section.scss";
 interface ProgressSectionProps {
   userProfile: UserProfile;
   isProfileLoaded: boolean;
+  // The shared learning date and active-language word-progress rows, owned
+  // and fetched exactly once by UserProfileDashboardPage's
+  // useProfileSharedProgressData — forwarded straight through to both
+  // children (no logic of its own here); see that hook's own header.
+  todayISO: string | null;
+  todayISOStatus: ProfileSharedDataStatus;
+  onRetryLearningDate: () => void;
+  wordProgressRows: UserWordProgressFullRow[];
+  wordProgressStatus: ProfileSharedDataStatus;
+  onRetryWordProgress: () => void;
   onStartNewWordStudy?: () => void;
 }
 
@@ -22,7 +34,17 @@ interface ProgressSectionProps {
 // those, rendered directly below Milestones; future sections (Learning
 // Calendar, Activity Charts) have an obvious place to be added the same
 // way.
-export function ProgressSection({ userProfile, isProfileLoaded, onStartNewWordStudy }: ProgressSectionProps) {
+export function ProgressSection({
+  userProfile,
+  isProfileLoaded,
+  todayISO,
+  todayISOStatus,
+  onRetryLearningDate,
+  wordProgressRows,
+  wordProgressStatus,
+  onRetryWordProgress,
+  onStartNewWordStudy,
+}: ProgressSectionProps) {
   const { t } = useLanguage();
 
   return (
@@ -34,10 +56,25 @@ export function ProgressSection({ userProfile, isProfileLoaded, onStartNewWordSt
         </div>
       </header>
 
-      <MilestonesSection userProfile={userProfile} isProfileLoaded={isProfileLoaded} />
+      <MilestonesSection
+        userProfile={userProfile}
+        isProfileLoaded={isProfileLoaded}
+        todayISO={todayISO}
+        todayISOStatus={todayISOStatus}
+        onRetryLearningDate={onRetryLearningDate}
+        wordProgressRows={wordProgressRows}
+        wordProgressStatus={wordProgressStatus}
+        onRetryWordProgress={onRetryWordProgress}
+      />
       <VocabularyGrowthSection
         userProfile={userProfile}
         isProfileLoaded={isProfileLoaded}
+        todayISO={todayISO}
+        todayISOStatus={todayISOStatus}
+        onRetryLearningDate={onRetryLearningDate}
+        wordProgressRows={wordProgressRows}
+        wordProgressStatus={wordProgressStatus}
+        onRetryWordProgress={onRetryWordProgress}
         onStartNewWordStudy={onStartNewWordStudy}
       />
     </>

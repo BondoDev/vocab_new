@@ -21,6 +21,7 @@ import type { WordState } from "../data/learning/wordReviewSchedule";
 import { addDaysISO } from "../data/learning/dailyStreak";
 import { isValidWordTimeSeconds } from "../data/learning/activeWordTimer";
 export { isValidWordTimeSeconds } from "../data/learning/activeWordTimer";
+import { notifyWordProgressChanged } from "./sharedProgressInvalidation";
 
 interface UserWordProgressRow {
   word_id: string;
@@ -306,7 +307,12 @@ export async function completeNewWordStudy(
   }
 
   const row = Array.isArray(rows) ? rows[0] : rows;
-  return parseCompleteNewWordStudyRow(row);
+  const result = parseCompleteNewWordStudyRow(row);
+  // This write is the only path that inserts a user_word_progress row —
+  // the profile dashboard's shared active-language rows (see
+  // sharedProgressInvalidation.ts's own header) may now be stale.
+  notifyWordProgressChanged();
+  return result;
 }
 
 // ---------------------------------------------------------------------
@@ -734,7 +740,12 @@ export async function completeWordReview(params: CompleteWordReviewParams): Prom
   }
 
   const row = Array.isArray(rows) ? rows[0] : rows;
-  return parseCompleteWordReviewRow(row);
+  const parsedResult = parseCompleteWordReviewRow(row);
+  // This write is the only path that transitions an existing
+  // user_word_progress row's word_state — see sharedProgressInvalidation.ts's
+  // own header for what subscribing to this signal does and doesn't affect.
+  notifyWordProgressChanged();
+  return parsedResult;
 }
 
 // ---------------------------------------------------------------------

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import type { LanguageLevelCode, UserProfile } from "../../../lib/userProfile";
 import { useLanguage, type UILanguage } from "../../../contexts/LanguageContext";
+import { useAuthSession } from "../../../app/hooks/useAuthSession";
 import {
   UserProfileSidebar,
   type UserProfileSectionId,
@@ -10,6 +11,7 @@ import { DashboardSection } from "./dashboard/DashboardSection";
 import { LearningSection } from "./learning/LearningSection";
 import { VocabularySection } from "./vocabulary/VocabularySection";
 import { ProgressSection } from "./progress/ProgressSection";
+import { useProfileSharedProgressData } from "./useProfileSharedProgressData";
 
 interface UserProfileDashboardPageProps {
   nickname?: string;
@@ -66,6 +68,27 @@ export function UserProfileDashboardPage({
     setActiveSection(resolveProfileSection(location.search));
   }, [location.search]);
 
+  // Phase 1 of the profile-section data optimization: the authoritative
+  // current learning date and the active-language user_word_progress rows
+  // are each fetched exactly once here, above Learning/Vocabulary/Progress,
+  // and threaded down as props — see useProfileSharedProgressData.ts's own
+  // header for the full contract. None of the three sections below fetches
+  // either itself anymore.
+  const { authUserId } = useAuthSession();
+  const {
+    todayISO,
+    todayISOStatus,
+    retryLearningDate,
+    wordProgressRows,
+    wordProgressStatus,
+    retryWordProgress,
+  } = useProfileSharedProgressData({
+    authUserId,
+    isProfileLoaded,
+    targetLanguage: userProfile.practiceLanguage,
+    timezone: userProfile.timezone,
+  });
+
   return (
     <main className="user-profile-dashboard flex-1">
       <section className="user-profile-dashboard__shell">
@@ -87,6 +110,9 @@ export function UserProfileDashboardPage({
               <LearningSection
                 userProfile={userProfile}
                 isProfileLoaded={isProfileLoaded}
+                todayISO={todayISO}
+                todayISOStatus={todayISOStatus}
+                onRetryLearningDate={retryLearningDate}
                 onStartCustomPractice={onStartCustomPractice}
                 onStartNewWordStudy={onStartNewWordStudy}
                 onStartReviewWords={onStartReviewWords}
@@ -97,6 +123,9 @@ export function UserProfileDashboardPage({
               <VocabularySection
                 userProfile={userProfile}
                 isProfileLoaded={isProfileLoaded}
+                wordProgressRows={wordProgressRows}
+                wordProgressStatus={wordProgressStatus}
+                onRetryWordProgress={retryWordProgress}
                 onStartNewWordStudy={onStartNewWordStudy}
               />
             ) : null}
@@ -104,6 +133,12 @@ export function UserProfileDashboardPage({
               <ProgressSection
                 userProfile={userProfile}
                 isProfileLoaded={isProfileLoaded}
+                todayISO={todayISO}
+                todayISOStatus={todayISOStatus}
+                onRetryLearningDate={retryLearningDate}
+                wordProgressRows={wordProgressRows}
+                wordProgressStatus={wordProgressStatus}
+                onRetryWordProgress={retryWordProgress}
                 onStartNewWordStudy={onStartNewWordStudy}
               />
             ) : null}
