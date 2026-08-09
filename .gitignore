@@ -2,8 +2,19 @@ node_modules
 
 node_modules/
 
-dist/
-server-build/
+# No trailing slash on dist/server-build/the workers/word-ssr build-output
+# entries below (deliberately, unlike dist-retry-*//server-build-retry-*/):
+# `git check-ignore` can only confirm a directory-only (trailing-slash)
+# pattern matches a path that doesn't yet exist on disk by seeing a trailing
+# slash on the *query* path too — it can't otherwise tell the pathname is
+# meant to be a directory. scripts/tests/architecture/test-generated-data-ownership.mjs
+# queries these paths without one, and CI's architecture-guards step runs
+# before the build step that generates them, so a trailing slash here made
+# the guard spuriously report a covered path as "not gitignored" on a clean
+# checkout. A bare pathname pattern matches the directory just as well and
+# has no such ambiguity.
+dist
+server-build
 dist-retry-*/
 server-build-retry-*/
 .env
@@ -17,9 +28,9 @@ scripts/operations/state/
 .vercel
 
 workers/word-ssr/.wrangler/
-workers/word-ssr/worker-dist-full/
-workers/word-ssr/assets-full/
-workers/word-ssr/data/full-corpus/
+workers/word-ssr/worker-dist-full
+workers/word-ssr/assets-full
+workers/word-ssr/data/full-corpus
 
 # Local agent-tool state (Claude Code, Codex, and similar). These folders are
 # recreated by the tools themselves and hold only local session/cache state,

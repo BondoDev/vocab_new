@@ -296,6 +296,15 @@ test("15. Supabase-error refactor guard does not own unrelated timezone migratio
     if (file === "supabase/migrations/20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql") {
       return false;
     }
+    // Same carve-out again: Vocabulary Growth's read_vocabulary_growth_events
+    // RPC (Progress page) is a narrow, independently-reviewed, read-only RPC
+    // over review_events — unrelated in scope to the Supabase-error-
+    // classification refactor this guard polices, and not a change to any
+    // learning-write RPC or review/study-transition state machine. Exact
+    // filename only, same reasoning as the two exemptions above.
+    if (file === "supabase/migrations/20260808130000_add_vocabulary_growth_events_rpc.sql") {
+      return false;
+    }
 
     return (
       file.startsWith("supabase/migrations/") ||
