@@ -1,11 +1,15 @@
-// Orchestrates the Vocabulary Growth chart's real data: loads the active
-// user/target-language's word-creation rows and review-event transitions
-// exactly once, then feeds both into the already-existing pure
-// reconstruction engine (src/data/learning/vocabularyGrowth.ts) — this
-// file duplicates none of that logic, it only fetches and shapes the two
-// inputs that engine expects. Read-only; performs no Supabase writes.
+// Orchestrates the Vocabulary Growth chart's real data: combines the
+// active-language user_word_progress rows — as of Phase 1 of the
+// profile-section data optimization, passed in already-loaded from
+// UserProfileDashboardPage's shared useProfileSharedProgressData rather
+// than fetched here (see that hook's own header) — with review-event
+// transitions (still fetched here), then feeds both into the
+// already-existing pure reconstruction engine
+// (src/data/learning/vocabularyGrowth.ts) — this file duplicates none of
+// that logic, it only fetches/shapes the one remaining input that engine
+// expects. Read-only; performs no Supabase writes.
 import type { StoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { readUserWordProgress, readVocabularyGrowthEvents } from "../../../../lib/newWordProgress";
+import { readVocabularyGrowthEvents, type UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import { computeVocabularyCounts } from "../../../../data/learning/vocabularyCategory";
 import {
   computeVocabularyGrowthHistory,
@@ -19,6 +23,11 @@ import {
 
 export interface LoadVocabularyGrowthHistoryParams {
   session: StoredSupabaseSession;
+  // Already-loaded active-language rows — see this file's own header.
+  // Callers must not pass rows for a different language than
+  // targetLanguage below; UserProfileDashboardPage's shared hook already
+  // guarantees this (it resets the rows on a target-language change).
+  progressRows: UserWordProgressFullRow[];
   // Milestones is language-specific (see loadMilestoneMetrics.ts); this
   // loader follows the identical contract — switching the active target
   // language must show that language's own vocabulary growth, never a
@@ -40,13 +49,11 @@ export interface LoadVocabularyGrowthHistoryParams {
 // a second import to slice what this function already returned.
 export async function loadVocabularyGrowthHistory({
   session,
+  progressRows,
   targetLanguage,
   todayISO,
 }: LoadVocabularyGrowthHistoryParams): Promise<VocabularyGrowthDayCounts[]> {
-  const [progressRows, eventRows] = await Promise.all([
-    readUserWordProgress(session, targetLanguage),
-    readVocabularyGrowthEvents(session, targetLanguage),
-  ]);
+  const eventRows = await readVocabularyGrowthEvents(session, targetLanguage);
 
   const words: VocabularyGrowthWordInput[] = [];
   for (const row of progressRows) {

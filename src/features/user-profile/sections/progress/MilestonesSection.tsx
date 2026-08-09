@@ -3,9 +3,10 @@ import { ChevronDown, Trophy } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { getCurrentLearningDate } from "../../../../lib/learningDate";
 import { describeSupabaseError } from "../../../../lib/supabaseError";
 import type { UserProfile } from "../../../../lib/userProfile";
+import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
+import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
 import {
   MILESTONE_TRACK_IDS,
   evaluateAllMilestoneTracks,
@@ -45,6 +46,19 @@ interface MilestonesSectionProps {
   // component fetches no profile of its own.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
+  // The shared learning date and active-language word-progress rows, owned
+  // and fetched exactly once by UserProfileDashboardPage's
+  // useProfileSharedProgressData (see that hook's own header) — this
+  // section no longer calls getCurrentLearningDate or readUserWordProgress
+  // itself. Still owns its own readMilestoneDailyStats fetch (see
+  // loadMilestoneMetrics.ts) — user_daily_stats is not consolidated in
+  // Phase 1.
+  todayISO: string | null;
+  todayISOStatus: ProfileSharedDataStatus;
+  onRetryLearningDate: () => void;
+  wordProgressRows: UserWordProgressFullRow[];
+  wordProgressStatus: ProfileSharedDataStatus;
+  onRetryWordProgress: () => void;
 }
 
 // Level 1 of the two-level accordion (Progress page -> Milestones section
@@ -63,14 +77,16 @@ interface MilestonesSectionProps {
 // (MilestoneAccordionRow), each independently expandable exactly as before
 // (only one open at a time) — that machinery is unchanged from the
 // previous redesign.
-//
-// Reusable by both the Progress section (this Phase's only wired-in host)
-// and a future Dashboard page — this component owns its own
-// current-learning-date fetch (getCurrentLearningDate) rather than
-// depending on LearningSection's, since it has no sibling cards to share
-// that date with here; see loadMilestoneMetrics.ts for why todayISO is only
-// needed for the Consistency track's streak walk.
-export function MilestonesSection({ userProfile, isProfileLoaded }: MilestonesSectionProps) {
+export function MilestonesSection({
+  userProfile,
+  isProfileLoaded,
+  todayISO,
+  todayISOStatus,
+  onRetryLearningDate,
+  wordProgressRows,
+  wordProgressStatus,
+  onRetryWordProgress,
+}: MilestonesSectionProps) {
   const { t, uiLanguage } = useLanguage();
   const { authUserId } = useAuthSession();
   const [state, setState] = useState<LoadState>({ status: "loading" });
@@ -92,12 +108,20 @@ export function MilestonesSection({ userProfile, isProfileLoaded }: MilestonesSe
       return;
     }
 
-    if (!isProfileLoaded) {
+    if (!isProfileLoaded || todayISOStatus === "loading" || wordProgressStatus === "loading") {
       setState({ status: "loading" });
       return;
     }
 
-    if (!targetLanguage) {
+    if (todayISOStatus === "error" || wordProgressStatus === "error") {
+      // One of the two shared sources genuinely failed — surface this
+      // section's own error/retry UI rather than presenting a zero/empty
+      // result as though it were successfully loaded data.
+      setState({ status: "error" });
+      return;
+    }
+
+    if (!targetLanguage || !todayISO) {
       setState({ status: "ready", results: ZERO_RESULTS });
       return;
     }
@@ -113,8 +137,7 @@ export function MilestonesSection({ userProfile, isProfileLoaded }: MilestonesSe
           return;
         }
 
-        const todayISO = await getCurrentLearningDate(session);
-        const results = await loadMilestoneMetrics({ session, targetLanguage, todayISO });
+        const results = await loadMilestoneMetrics({ session, progressRows: wordProgressRows, targetLanguage, todayISO });
         if (cancelled) return;
         setState({ status: "ready", results });
       } catch (error) {
@@ -127,7 +150,7 @@ export function MilestonesSection({ userProfile, isProfileLoaded }: MilestonesSe
     return () => {
       cancelled = true;
     };
-  }, [authUserId, isProfileLoaded, targetLanguage, retryToken]);
+  }, [authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, retryToken]);
 
   const isError = state.status === "error";
   const results = state.status === "ready" ? state.results : null;
@@ -141,6 +164,19 @@ export function MilestonesSection({ userProfile, isProfileLoaded }: MilestonesSe
       }
       return next;
     });
+  };
+
+  // A single Retry covers whichever of the three sources actually failed
+  // (the shared date, the shared word-progress rows, or this section's own
+  // readMilestoneDailyStats) — this section can't tell which one from the
+  // collapsed "error" status alone, so it re-requests all three; retrying
+  // an already-"ready" shared source is a harmless no-visible-change
+  // background refresh (see useProfileSharedProgressData.ts's
+  // preserve-on-refresh behavior).
+  const handleRetry = () => {
+    onRetryLearningDate();
+    onRetryWordProgress();
+    setRetryToken((token) => token + 1);
   };
 
   return (
@@ -200,7 +236,7 @@ export function MilestonesSection({ userProfile, isProfileLoaded }: MilestonesSe
               <button
                 type="button"
                 className="milestones-section__error-retry"
-                onClick={() => setRetryToken((token) => token + 1)}
+                onClick={handleRetry}
               >
                 {t("userProfile.progressSection.retryButton")}
               </button>

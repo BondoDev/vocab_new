@@ -1,18 +1,25 @@
-// Architecture guard for "Frontend Cleanup: Share Current Learning Date":
-// LearningSection.tsx must be the Learning dashboard's single frontend
-// owner of getCurrentLearningDate() — it calls the RPC exactly once per
-// mount and threads the result down to TodayProgressCard and
-// DailyStreakCard as two props: todayISO (string | null) and
-// todayISOStatus ("loading" | "ready" | "unavailable" | "error"). Neither
-// card may call getCurrentLearningDate itself, and neither the date effect
-// nor a daily-goal save may cause a second/duplicate date request.
+// Architecture guard for "Frontend Cleanup: Share Current Learning Date",
+// updated for Phase 1 of the profile-section data optimization:
+// useProfileSharedProgressData.ts (called once from UserProfileDashboardPage,
+// the common parent of Learning/Vocabulary/Progress) is the whole /profile
+// dashboard's single frontend owner of getCurrentLearningDate() — it calls
+// the RPC exactly once per (authUserId, timezone) context and exposes the
+// result as todayISO (string | null) and todayISOStatus ("loading" |
+// "ready" | "unavailable" | "error"), threaded down through LearningSection
+// to TodayProgressCard and DailyStreakCard as props. No section may call
+// getCurrentLearningDate itself, and neither a practice-language change nor
+// a daily-goal save may cause a second/duplicate date request.
 //
-// Before this cleanup, TodayProgressCard and DailyStreakCard each
-// independently called getCurrentLearningDate() inside their own fetch
-// effect, doubling the RPC call for a single Learning dashboard mount.
+// Before the original cleanup this guard covered, TodayProgressCard and
+// DailyStreakCard each independently called getCurrentLearningDate() inside
+// their own fetch effect, doubling the RPC call for a single Learning
+// dashboard mount. Before Phase 1 (this version), LearningSection,
+// MilestonesSection, and VocabularyGrowthSection each independently called
+// it once per mount, so switching Learning -> Vocabulary -> Progress ->
+// Learning re-issued the RPC on every section switch.
 //
-// A second, later defect (corrected by this version of the guard): the
-// original todayISO/isTodayISOLoading two-prop contract collapsed a
+// A second, later defect (corrected by an earlier version of this guard):
+// the original todayISO/isTodayISOLoading two-prop contract collapsed a
 // genuine RPC failure ("error") and a legitimate no-session state
 // ("unavailable") into the exact same signal (todayISO: null,
 // isTodayISOLoading: false), so both cards silently rendered their normal
@@ -36,7 +43,8 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
-const LEARNING_DIR = path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "learning");
+const SECTIONS_DIR = path.join(ROOT_DIR, "src", "features", "user-profile", "sections");
+const LEARNING_DIR = path.join(SECTIONS_DIR, "learning");
 
 let passed = 0;
 let failed = 0;
@@ -54,6 +62,10 @@ function test(name, fn) {
 
 function read(fileName) {
   return fs.readFileSync(path.join(LEARNING_DIR, fileName), "utf8");
+}
+
+function readSection(fileName) {
+  return fs.readFileSync(path.join(SECTIONS_DIR, fileName), "utf8");
 }
 
 // Strips `// ...` line-comment text (these files use only line comments,
@@ -85,17 +97,19 @@ console.log("\n=== Learning dashboard current-date ownership guards ===\n");
 const learningSection = read("LearningSection.tsx");
 const todayProgressCard = read("TodayProgressCard.tsx");
 const dailyStreakCard = read("DailyStreakCard.tsx");
+const sharedHook = readSection("useProfileSharedProgressData.ts");
 const learningSectionLive = stripLineComments(learningSection);
 const todayProgressCardLive = stripLineComments(todayProgressCard);
 const dailyStreakCardLive = stripLineComments(dailyStreakCard);
+const sharedHookLive = stripLineComments(sharedHook);
 
-test("1. LearningSection imports and calls getCurrentLearningDate exactly once (live code, not prose)", () => {
+test("1. useProfileSharedProgressData imports and calls getCurrentLearningDate exactly once (live code, not prose)", () => {
   assert.match(
-    learningSectionLive,
-    /import\s*\{\s*getCurrentLearningDate\s*\}\s*from\s*"..\/..\/..\/..\/lib\/learningDate"/,
-    "LearningSection must import getCurrentLearningDate from src/lib/learningDate.ts",
+    sharedHookLive,
+    /import\s*\{\s*getCurrentLearningDate\s*\}\s*from\s*"..\/..\/..\/lib\/learningDate"/,
+    "useProfileSharedProgressData must import getCurrentLearningDate from src/lib/learningDate.ts",
   );
-  const callCount = (learningSectionLive.match(/getCurrentLearningDate\(/g) || []).length;
+  const callCount = (sharedHookLive.match(/getCurrentLearningDate\(/g) || []).length;
   // 1 import specifier occurrence is excluded by the pattern below (it has
   // no trailing "(" as an import binding) — this only counts call-like
   // `getCurrentLearningDate(` occurrences, e.g. the real `await
@@ -103,6 +117,11 @@ test("1. LearningSection imports and calls getCurrentLearningDate exactly once (
   // diagnostic label argument `"getCurrentLearningDate"` (a string, no
   // trailing paren, so also excluded). Expect exactly one real call site.
   assert.equal(callCount, 1, `expected exactly one live getCurrentLearningDate( call site, found ${callCount}`);
+});
+
+test("1b. LearningSection no longer imports or calls getCurrentLearningDate (live code, not prose)", () => {
+  assert.doesNotMatch(learningSectionLive, /getCurrentLearningDate/, "LearningSection must not reference getCurrentLearningDate in live code");
+  assert.doesNotMatch(learningSectionLive, /from\s*"..\/..\/..\/..\/lib\/learningDate"/, "LearningSection must not import from lib/learningDate");
 });
 
 test("2. TodayProgressCard no longer imports or calls getCurrentLearningDate (live code, not prose)", () => {
@@ -259,9 +278,9 @@ test('11. Date "ready" is the only status under which each card\'s own request r
 
 test('12. Date "unavailable" remains distinguishable from "error" — both at the type level and in each card\'s branching', () => {
   assert.match(
-    learningSectionLive,
-    /type LearningDateState =\s*\|\s*\{\s*status:\s*"loading"\s*\}\s*\|\s*\{\s*status:\s*"ready";\s*todayISO:\s*string\s*\}\s*\|\s*\{\s*status:\s*"unavailable"\s*\}\s*\|\s*\{\s*status:\s*"error"\s*\}/,
-    "LearningDateState must declare loading/ready/unavailable/error as four distinct variants",
+    sharedHookLive,
+    /export type ProfileSharedDataStatus = "loading" \| "ready" \| "unavailable" \| "error";/,
+    "ProfileSharedDataStatus must declare loading/ready/unavailable/error as four distinct string values",
   );
   for (const [label, liveSource] of [
     ["TodayProgressCard", todayProgressCardLive],
@@ -286,50 +305,40 @@ test('12. Date "unavailable" remains distinguishable from "error" — both at th
   }
 });
 
-test("13. LearningSection's date-loading effect is scoped to auth/profile readiness and its own retry token only — never practiceLanguage or streakRefreshToken", () => {
+test("13. useProfileSharedProgressData's date-loading effect is scoped to auth/profile readiness, timezone, and its own retry token only — never targetLanguage", () => {
   // Isolates the specific effect that calls getCurrentLearningDate (rather
-  // than matching the first useEffect in the file, which — unlike the
-  // single-effect card components — is no longer a safe assumption here
-  // now that LearningSection could grow more than one effect over time).
-  const dateEffectMatch = learningSection.match(
+  // than matching the first useEffect in the file — the hook declares more
+  // than one).
+  const dateEffectMatch = sharedHook.match(
     /useEffect\(\(\) => \{(?:(?!useEffect)[\s\S])*?getCurrentLearningDate[\s\S]*?\}, \[([^\]]*)\]\);/,
   );
-  assert.ok(dateEffectMatch, "LearningSection's date-loading effect must exist and call getCurrentLearningDate within its own body");
+  assert.ok(dateEffectMatch, "useProfileSharedProgressData's date-loading effect must exist and call getCurrentLearningDate within its own body");
   const deps = dateEffectMatch[1];
   assert.match(deps, /\bauthUserId\b/, "the date effect must depend on authUserId (refetch on account change)");
   assert.match(deps, /\bisProfileLoaded\b/, "the date effect must depend on isProfileLoaded (wait for profile readiness)");
+  assert.match(deps, /\btimezone\b/, "the date effect must depend on timezone (refetch when user_profiles.timezone changes)");
   assert.match(deps, /\bdateRetryToken\b/, "the date effect must depend on its own retry token");
   assert.doesNotMatch(
     deps,
-    /\bpracticeLanguage\b/,
-    "the date effect must not depend on practiceLanguage — the authoritative date does not depend on the target language",
-  );
-  assert.doesNotMatch(
-    deps,
-    /\bstreakRefreshToken\b/,
-    "the date effect must not depend on streakRefreshToken — a daily-goal save must never refetch the current learning date",
+    /\btargetLanguage\b/,
+    "the date effect must not depend on targetLanguage — the authoritative date does not depend on the target language",
   );
 });
 
-test('14. A shared-date retry action exists, is wired to a real control, is distinct from streakRefreshToken, and triggers exactly one new date request', () => {
-  assert.match(learningSection, /const \[dateRetryToken, setDateRetryToken\] = useState\(0\);/);
-  assert.match(learningSection, /setDateRetryToken\(\(token\) => token \+ 1\)/);
-  assert.match(learningSection, /onClick=\{handleRetryDateLoad\}/, "the retry control must be wired to a click handler");
-  // handleRetryDateLoad must bump only dateRetryToken, never
-  // streakRefreshToken — a retry of the failed date must not also force an
-  // unrelated stats refetch as a side effect.
-  const handlerMatch = learningSectionLive.match(/const handleRetryDateLoad = \(\) => ([^;]+);/);
-  assert.ok(handlerMatch, "handleRetryDateLoad must exist");
-  assert.doesNotMatch(handlerMatch[1], /streakRefreshToken|setStreakRefreshToken/, "the retry handler must not touch streakRefreshToken");
+test('14. A shared-date retry action exists and is exposed for consumers to wire to a real control', () => {
+  assert.match(sharedHook, /const \[dateRetryToken, setDateRetryToken\] = useState\(0\);/);
+  assert.match(sharedHook, /retryLearningDate: \(\) => setDateRetryToken\(\(token\) => token \+ 1\),/);
+  assert.match(learningSection, /onClick=\{onRetryLearningDate\}/, "LearningSection's retry control must be wired to the shared retryLearningDate action");
+  assert.doesNotMatch(learningSectionLive, /setDateRetryToken|dateRetryToken/, "LearningSection must not own any local date-retry token anymore");
   // getCurrentLearningDate itself is called exactly once in live source
   // (test 1) inside an effect whose only re-run triggers are
-  // authUserId/isProfileLoaded/dateRetryToken (test 13) — together these
-  // prove one Retry click produces exactly one new call, not a burst.
+  // authUserId/isProfileLoaded/timezone/dateRetryToken (test 13) — together
+  // these prove one Retry click produces exactly one new call, not a burst.
 });
 
-test("15. LearningSection's README documents the single-owner date contract and the error-vs-unavailable distinction", () => {
+test("15. The Learning README documents the new single-owner date contract and the error-vs-unavailable distinction", () => {
   const readme = fs.readFileSync(path.join(LEARNING_DIR, "README.md"), "utf8");
-  assert.match(readme, /LearningSection\.tsx.{0,80}single\s+frontend\s+owner/s);
+  assert.match(readme, /single\s+frontend\s+owner[\s\S]{0,120}useProfileSharedProgressData/);
   assert.match(readme, /todayISOStatus/, "the README must document the todayISOStatus contract, not just todayISO");
   assert.match(readme, /"blocked"/, "the README must document each card's blocked state on a date error");
 });

@@ -1,10 +1,12 @@
 // Orchestrates Phase 4's Vocabulary page data: (1) the full set of a user's
-// user_word_progress rows for one target language, (2) the per-language
+// user_word_progress rows for one target language — as of Phase 1 of the
+// profile-section data optimization, passed in already-loaded from
+// UserProfileDashboardPage's shared useProfileSharedProgressData rather
+// than fetched here (see that hook's own header) — (2) the per-language
 // vocabulary.json data, and (3) Study New Words' own concept-resolution
-// utility — into one ready-to-render result. Read-only; Favorites writes go
+// utility, into one ready-to-render result. Read-only; Favorites writes go
 // through updateWordProgressFavorite in lib/newWordProgress.ts instead.
-import type { StoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { readUserWordProgress } from "../../../../lib/newWordProgress";
+import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import {
   computeVocabularyCounts,
   mapWordStateToVocabularyCategory,
@@ -44,7 +46,12 @@ export interface ResolvedVocabularyRow {
 }
 
 export interface LoadVocabularyProgressParams {
-  session: StoredSupabaseSession;
+  // Already-loaded rows for the active target language — see this file's
+  // own header. Callers must not pass rows for a different language than
+  // targetLanguage below; UserProfileDashboardPage's shared hook already
+  // guarantees this (it resets the rows on a target-language change), so
+  // this function itself performs no cross-check.
+  progressRows: UserWordProgressFullRow[];
   targetLanguage: string;
   nativeLanguage: string;
 }
@@ -60,7 +67,7 @@ export interface VocabularyProgressResult {
 // category/favorites. Only the *visible list* skips it, with a development
 // warning naming the progress row id, concept id, and target language.
 export async function loadVocabularyProgress({
-  session,
+  progressRows,
   targetLanguage,
   nativeLanguage,
 }: LoadVocabularyProgressParams): Promise<VocabularyProgressResult> {
@@ -68,7 +75,6 @@ export async function loadVocabularyProgress({
     throw new Error(`loadVocabularyProgress: unsupported language pair "${targetLanguage}"/"${nativeLanguage}".`);
   }
 
-  const progressRows = await readUserWordProgress(session, targetLanguage);
   const counts = computeVocabularyCounts(progressRows);
 
   // Skip the vocabulary.json import entirely when there is nothing to
