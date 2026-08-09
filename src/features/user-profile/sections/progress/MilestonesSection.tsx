@@ -27,6 +27,13 @@ const ZERO_RESULTS: MilestoneResults = evaluateAllMilestoneTracks({
   currentStreakDays: 0,
 });
 
+const MILESTONE_ROW_TRACK_IDS: readonly MilestoneTrackId[] = [
+  "vocabulary",
+  "reviews",
+  "mastery",
+  "consistency",
+];
+
 type LoadState =
   | { status: "loading" }
   | { status: "ready"; results: MilestoneResults }
@@ -200,7 +207,7 @@ export function MilestonesSection({ userProfile, isProfileLoaded }: MilestonesSe
             </div>
           ) : (
             <div className="milestones-accordion" aria-busy={isLoading}>
-              {MILESTONE_TRACK_IDS.map((track) => (
+              {MILESTONE_ROW_TRACK_IDS.map((track) => (
                 <MilestoneAccordionRow
                   key={track}
                   track={track}

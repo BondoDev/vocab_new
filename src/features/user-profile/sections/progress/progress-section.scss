@@ -672,11 +672,11 @@
 }
 
 /* ============================================================
-   MilestonePath.tsx — the "journey" visualization: a moving window of
-   milestone nodes connected by a horizontal line (see
-   milestonePathWindow.ts for the windowing rule). Horizontally scrollable
-   rather than shrinking on narrow screens, so labels never become
-   unreadable — see the redesign brief's Mobile section.
+   MilestonePath.tsx — the "journey" visualization: every configured
+   milestone node for the track, connected by a horizontal line.
+   Horizontally scrollable rather than shrinking on narrow screens, so
+   labels never become unreadable — see the redesign brief's Mobile
+   section.
    ============================================================ */
 
 .milestone-path {

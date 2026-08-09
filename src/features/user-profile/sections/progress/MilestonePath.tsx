@@ -1,20 +1,20 @@
 import { Check } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import type { MilestoneTrackId, MilestoneTrackResult } from "../../../../data/learning/milestones";
-import { selectMilestonePathWindow } from "./milestonePathWindow";
+import { selectMilestonePathNodes } from "./milestonePathWindow";
 
 interface MilestonePathProps {
   track: MilestoneTrackId;
   result: MilestoneTrackResult;
 }
 
-// The "journey" visualization inside an expanded accordion row: a moving
-// window of milestone nodes (see milestonePathWindow.ts) connected by a
-// horizontal line — completed milestones as filled checkmarked circles, the
-// active target as one large highlighted circle, everything after it as
-// empty muted circles. Purely presentational; every number here already
-// comes from the unchanged milestone engine (MilestoneTrackResult) — this
-// component computes no milestone logic of its own.
+// The "journey" visualization inside an expanded accordion row: every
+// configured milestone for the track connected by a horizontal line —
+// completed milestones as filled checkmarked circles, the active target as
+// one large highlighted circle, everything after it as empty muted circles.
+// Purely presentational; every number here already comes from the unchanged
+// milestone engine (MilestoneTrackResult) — this component computes no
+// milestone logic of its own.
 //
 // Deliberately aria-hidden as a whole: a per-node "10 completed, 25
 // completed, 50 current target…" announcement would need translated
@@ -26,7 +26,7 @@ interface MilestonePathProps {
 // decorative graphic loses nothing.
 export function MilestonePath({ track, result }: MilestonePathProps) {
   const { uiLanguage } = useLanguage();
-  const nodes = selectMilestonePathWindow(track, result);
+  const nodes = selectMilestonePathNodes(track, result);
 
   return (
     <div className="milestone-path" aria-hidden="true">
