@@ -349,6 +349,7 @@
       "loadError": "Ocurrió un error al cargar el historial de tu vocabulario.",
       "retryButton": "Intentar de nuevo",
       "totalLabel": "Total",
+      "chartAriaLabel": "Gráfico de crecimiento del vocabulario. Usa las flechas izquierda y derecha para moverte entre fechas.",
       "emptyState": {
         "title": "Aún no hay progreso de vocabulario.",
         "message": "Completa una sesión de Estudiar palabras nuevas para empezar a crear tu historial de progreso."

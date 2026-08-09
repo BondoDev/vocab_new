@@ -349,6 +349,7 @@
       "loadError": "Si è verificato un errore nel caricamento della cronologia del tuo vocabolario.",
       "retryButton": "Riprova",
       "totalLabel": "Totale",
+      "chartAriaLabel": "Grafico della crescita del vocabolario. Usa le frecce sinistra e destra per spostarti tra le date.",
       "emptyState": {
         "title": "Nessun progresso del vocabolario ancora.",
         "message": "Completa una sessione di Studia parole nuove per iniziare a costruire la cronologia dei tuoi progressi."

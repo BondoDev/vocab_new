@@ -243,6 +243,11 @@
 .vocabulary-growth-chart__plot-wrap {
   position: relative;
   overflow-x: auto;
+  // overflow-y stays hidden — it isn't what clips the tooltip. The tooltip
+  // itself is a normal child of this box, and VocabularyGrowthChart.tsx
+  // clamps its computed top/left to stay within [0, clientHeight] /
+  // [scrollLeft, scrollLeft + clientWidth] before rendering it, so it
+  // never needs to escape this box's bounds in the first place.
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
@@ -289,11 +294,27 @@
   stroke-width: 2;
 }
 
+/* The transparent pointer-capture rect doubles as the chart's single
+   keyboard-focusable control (tabIndex + role="slider" in the component) —
+   give it the same visible focus ring every other interactive control in
+   this file uses (.vocabulary-growth-section__range-button above). */
+.vocabulary-growth-chart__interactive-layer {
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
+}
+
 .vocabulary-growth-chart__tooltip {
   position: absolute;
   z-index: 1;
   min-width: 9rem;
-  transform: translate(-50%, -100%) translateY(-0.5rem);
+  /* Horizontal centering only — the component computes an exact top/left
+     in px (boundary-aware: flips above/below and clamps horizontally to
+     stay inside .plot-wrap), so no vertical transform is applied here. */
+  transform: translateX(-50%);
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) - 4px);
   background: var(--card);
