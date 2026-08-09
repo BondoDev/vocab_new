@@ -85,6 +85,17 @@ export interface ResolvedConceptWordData {
   // Only populated when the target-language vocabulary.json entry already
   // has one — Phase 2's word-info step must never fabricate an example.
   exampleSentence?: string;
+  // The same concept_id's `sentence` field read from the native-language
+  // vocabulary.json instead of the target-language one — i.e. the existing
+  // example sentence's own translation, not a generated one. Only populated
+  // when both exampleSentence and its native-language counterpart exist.
+  exampleSentenceTranslation?: string;
+  // Raw inflected/separable word forms (e.g. ["Hör", "zu"] for "zuhören")
+  // read from the target language's inflected.json for this concept_id —
+  // the same source VocabularyPractice.tsx already uses to bold a word's
+  // conjugated/separated forms inside its example sentence. Only populated
+  // when exampleSentence exists and a matching inflected.json entry exists.
+  exampleSentenceInflectedForms?: string[];
 }
 
 export interface ResolvedStudyQueueItem extends ResolvedConceptWordData {

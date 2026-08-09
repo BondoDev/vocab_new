@@ -420,7 +420,7 @@ deployment described above.
 
 ## Architecture guards
 
-`npm run test:architecture-guards` chains **23 guard groups**, each a
+`npm run test:architecture-guards` chains **26 guard groups**, each a
 deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
@@ -450,6 +450,7 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:timezone-profile-boundary` | `scripts/tests/architecture/test-timezone-profile-boundary.mjs` | timezone writes stay isolated to `initialize_user_timezone`, neither narrow profile RPC (`complete_user_profile_onboarding`, `update_user_profile_languages`) can modify timezone, no Settings UI is introduced yet, and authoritative learning reads/writes use the server-derived learning date |
 | `test:daily-goal-narrow-write-boundary` | `scripts/tests/architecture/test-daily-goal-narrow-write-boundary.mjs` | Streak Phase 1: `DailyGoalSelector` saves only through the narrow `update_daily_goal` RPC (no other file calls it), onboarding/language-confirm use their own narrow RPCs (Profile Phase 1) rather than the removed broad upsert, the streak read path selects each row's own `daily_goal` snapshot, the snapshot migration never bulk-rewrites existing rows, and (Streak Phase 1 corrective fix) the pure streak model resolves each row's own goal or a fixed `LEGACY_DAILY_GOAL` constant — never the live current profile goal, which `computeDailyStreakSummary` no longer even accepts as a parameter — and `DailyStreakCard` never receives or forwards a `dailyGoal` prop |
 | `test:user-profiles-narrow-write-boundary` | `scripts/tests/architecture/test-user-profiles-narrow-write-boundary.mjs` | Profile Phase 1: no frontend file constructs a direct `user_profiles` table mutation or references the removed `writeSupabaseUserProfile`, onboarding calls only `completeUserProfileOnboarding` and language-confirm calls only `updateUserProfileLanguages`, neither RPC's request body can include `daily_goal`/timezone fields, and both RPC response parsers reject malformed rows |
+| `test:vocabulary-growth-section-rendering` | `scripts/tests/architecture/test-vocabulary-growth-section-rendering.mjs` | Vocabulary Growth is actually wired into the Progress page's real render tree below Milestones (not just an unused component), its 7/30/90/all range controls exist and switch data locally without refetching, and no Supabase write verb appears anywhere in the section/chart components |
 
 SEO/Worker-specific guards (`test:seo-output`,
 `test:word-worker:production-safety`) are chained separately, not part of

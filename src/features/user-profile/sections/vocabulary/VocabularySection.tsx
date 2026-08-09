@@ -1,5 +1,4 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { Plus, Search } from "lucide-react";
 import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { useLanguage } from "../../../../contexts/LanguageContext";
@@ -9,11 +8,7 @@ import { updateWordProgressFavorite, VocabularyFavoriteUpdateError } from "../..
 import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
 import { type VocabularyCounts } from "../../../../data/learning/vocabularyCategory";
 import { loadVocabularyProgress, type ResolvedVocabularyRow } from "./loadVocabularyProgress";
-import {
-  filterVocabularyRowsByTab,
-  filterVocabularyRowsBySearch,
-  type VocabularyTabId,
-} from "./vocabularyFiltering";
+import { filterVocabularyRowsByTab, type VocabularyTabId } from "./vocabularyFiltering";
 import { adjustFavoritesCount, applyFavoriteToggle, canStartFavoriteToggle } from "./vocabularyFavoriteState";
 import { VocabularySummaryCards } from "./VocabularySummaryCards";
 import { VocabularyTabs, type VocabularyTabCounts } from "./VocabularyTabs";
@@ -49,7 +44,6 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
   const { authUserId } = useAuthSession();
   const [state, setState] = useState<LoadState>({ status: "loading" });
   const [retryToken, setRetryToken] = useState(0);
-  const [searchValue, setSearchValue] = useState("");
   const [activeTab, setActiveTab] = useState<VocabularyTabId>("all");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(PAGE_SIZE_DEFAULT);
@@ -65,9 +59,8 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
   // (isProfileLoaded) the same way DailyStreakCard/TodayProgressCard do.
   // Re-running on authUserId/isProfileLoaded/targetLanguage/nativeLanguage/
   // retryToken (not on every render) keeps this a "load once per active
-  // language" fetch rather than one per keystroke/tab click — search and
-  // tabs filter the already-loaded rows client-side (see the derived
-  // values below).
+  // language" fetch rather than one per tab click — the active tab filters
+  // the already-loaded rows client-side (see the derived values below).
   useEffect(() => {
     if (!authUserId) {
       setState({ status: "result", data: { rows: [], counts: EMPTY_COUNTS, targetLanguage: "" } });
@@ -118,13 +111,13 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
   const loadedTargetLanguage = state.status === "result" ? state.data.targetLanguage : null;
 
   // Resets pagination whenever the visible data set could change shape —
-  // a new tab, a new search term, a new page size, or (via
-  // loadedTargetLanguage) a freshly loaded language — but deliberately NOT
-  // on every state update, so a Favorites toggle (which also calls
-  // setState) never silently bounces the user back to page 1.
+  // a new tab, a new page size, or (via loadedTargetLanguage) a freshly
+  // loaded language — but deliberately NOT on every state update, so a
+  // Favorites toggle (which also calls setState) never silently bounces
+  // the user back to page 1.
   useEffect(() => {
     setPage(1);
-  }, [activeTab, searchValue, pageSize, loadedTargetLanguage]);
+  }, [activeTab, pageSize, loadedTargetLanguage]);
 
   const handleRetry = () => setRetryToken((token) => token + 1);
 
@@ -191,11 +184,6 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
       });
   };
 
-  const handleAddWord = () => {
-    // No backend write yet - this only confirms the local preview action.
-    showConfirmation(t("userProfile.vocabularySection.addWord.toast"));
-  };
-
   const isLoading = state.status === "loading";
   const isError = state.status === "error";
   const data = state.status === "result" ? state.data : null;
@@ -211,14 +199,12 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
 
   const allRows = data?.rows ?? [];
   const tabFilteredRows = filterVocabularyRowsByTab(allRows, activeTab);
-  const visibleRows = filterVocabularyRowsBySearch(tabFilteredRows, searchValue);
-  const totalPages = Math.max(1, Math.ceil(visibleRows.length / pageSize));
+  const totalPages = Math.max(1, Math.ceil(tabFilteredRows.length / pageSize));
   const clampedPage = Math.min(page, totalPages);
   const pageStartIndex = (clampedPage - 1) * pageSize;
-  const pagedRows = visibleRows.slice(pageStartIndex, pageStartIndex + pageSize);
+  const pagedRows = tabFilteredRows.slice(pageStartIndex, pageStartIndex + pageSize);
 
   const hasAnyVocabulary = counts.total > 0;
-  const hasSearchTerm = searchValue.trim().length > 0;
 
   return (
     <>
@@ -226,24 +212,6 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
         <div className="vocabulary-section__heading">
           <h1 className="vocabulary-section__title">{t("userProfile.vocabularySection.title")}</h1>
           <p className="vocabulary-section__subtitle">{t("userProfile.vocabularySection.subtitle")}</p>
-        </div>
-
-        <div className="vocabulary-section__header-controls">
-          <label className="vocabulary-section__search">
-            <Search size={16} strokeWidth={2} aria-hidden="true" />
-            <input
-              type="search"
-              value={searchValue}
-              onChange={(event) => setSearchValue(event.target.value)}
-              placeholder={t("userProfile.vocabularySection.search.placeholder")}
-              aria-label={t("userProfile.vocabularySection.search.ariaLabel")}
-            />
-          </label>
-
-          <button type="button" className="vocabulary-section__add-word" onClick={handleAddWord}>
-            <Plus size={16} strokeWidth={2.2} aria-hidden="true" />
-            {t("userProfile.vocabularySection.addWord.label")}
-          </button>
         </div>
       </header>
 
@@ -273,12 +241,10 @@ export function VocabularySection({ userProfile, isProfileLoaded, onStartNewWord
           </VocabularyMessageBlock>
         ) : tabFilteredRows.length === 0 ? (
           <VocabularyMessageBlock message={t(`userProfile.vocabularySection.emptyStates.noTabWords.${activeTab}`)} />
-        ) : visibleRows.length === 0 && hasSearchTerm ? (
-          <VocabularyMessageBlock message={t("userProfile.vocabularySection.emptyStates.noSearchMatches")} />
         ) : (
           <VocabularyTable
             rows={pagedRows}
-            totalFilteredCount={visibleRows.length}
+            totalFilteredCount={tabFilteredRows.length}
             page={clampedPage}
             totalPages={totalPages}
             onPageChange={setPage}

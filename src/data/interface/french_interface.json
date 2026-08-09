@@ -278,6 +278,87 @@
         "next": "Suivant",
         "rowsPerPage": "Lignes par page"
       }
+    },
+    "progressPage": {
+      "title": "Progression",
+      "subtitle": "Suivez vos progrès d’apprentissage à long terme."
+    },
+    "progressSection": {
+      "ariaLabel": "Section progression",
+      "title": "Jalons",
+      "subtitle": "Suivez vos jalons d'apprentissage à long terme.",
+      "loadError": "Une erreur est survenue lors du chargement de vos jalons.",
+      "retryButton": "Réessayer",
+      "tracks": {
+        "vocabulary": "Vocabulaire",
+        "mastery": "Maîtrise",
+        "reviews": "Révisions",
+        "consistency": "Régularité"
+      },
+      "nextMilestoneLabel": "Prochain :",
+      "completedLabel": "Terminé",
+      "milestoneReachedLabel": "Jalon atteint",
+      "ofLabel": "sur",
+      "units": {
+        "word": "mot",
+        "words": "mots",
+        "review": "révision",
+        "reviews": "révisions",
+        "day": "jour",
+        "days": "jours"
+      },
+      "milestones": {
+        "learned-1": "Premier mot appris",
+        "learned-10": "10 mots appris",
+        "learned-25": "25 mots appris",
+        "learned-50": "50 mots appris",
+        "learned-100": "100 mots appris",
+        "learned-250": "250 mots appris",
+        "learned-500": "500 mots appris",
+        "learned-1000": "1 000 mots appris",
+        "learned-2500": "2 500 mots appris",
+        "learned-5000": "5 000 mots appris",
+        "learned-10000": "10 000 mots appris",
+        "mastered-1": "Premier mot maîtrisé",
+        "mastered-10": "10 mots maîtrisés",
+        "mastered-25": "25 mots maîtrisés",
+        "mastered-50": "50 mots maîtrisés",
+        "mastered-100": "100 mots maîtrisés",
+        "mastered-250": "250 mots maîtrisés",
+        "mastered-500": "500 mots maîtrisés",
+        "mastered-1000": "1 000 mots maîtrisés",
+        "reviews-1": "Première révision",
+        "reviews-100": "100 révisions",
+        "reviews-500": "500 révisions",
+        "reviews-1000": "1 000 révisions",
+        "reviews-5000": "5 000 révisions",
+        "reviews-10000": "10 000 révisions",
+        "streak-3": "Série de 3 jours",
+        "streak-7": "Série de 7 jours",
+        "streak-14": "Série de 14 jours",
+        "streak-30": "Série de 30 jours",
+        "streak-50": "Série de 50 jours",
+        "streak-100": "Série de 100 jours",
+        "streak-365": "Série de 365 jours"
+      }
+    },
+    "vocabularyGrowthSection": {
+      "ariaLabel": "Section évolution du vocabulaire",
+      "title": "Évolution du vocabulaire",
+      "subtitle": "Découvrez comment votre vocabulaire évolue au fil du temps.",
+      "loadError": "Une erreur est survenue lors du chargement de l’historique de votre vocabulaire.",
+      "retryButton": "Réessayer",
+      "totalLabel": "Total",
+      "emptyState": {
+        "title": "Aucune progression de vocabulaire pour le moment.",
+        "message": "Terminez une session Étudier de nouveaux mots pour commencer à créer votre historique de progression."
+      },
+      "ranges": {
+        "sevenDays": "7 jours",
+        "thirtyDays": "30 jours",
+        "ninetyDays": "90 jours",
+        "allTime": "Depuis le début"
+      }
     }
   },
   "aboutPage": {

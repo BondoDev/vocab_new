@@ -59,13 +59,17 @@ test("0. Profile Phase 1, Phase 2, and Phase 3 migration files exist in chronolo
   assert.ok(fs.existsSync(MIGRATION_PATH), "Profile Phase 1 migration file is missing");
   assert.ok(fs.existsSync(DROP_LAST_ACTIVE_AT_MIGRATION_PATH), "Profile Phase 2 migration file is missing");
   assert.ok(fs.existsSync(DROP_IS_NEW_USER_MIGRATION_PATH), "Profile Phase 3 migration file is missing");
-  const migrationsDir = path.join(ROOT_DIR, "supabase", "migrations");
-  const allNames = fs.readdirSync(migrationsDir).filter((name) => name.endsWith(".sql")).sort();
-  assert.equal(
-    allNames[allNames.length - 1],
-    path.basename(DROP_IS_NEW_USER_MIGRATION_PATH),
-    "the Profile Phase 3 migration must sort after every other migration filename",
-  );
+
+  // Scoped to these three phases' own relative order, not every migration
+  // filename in the repo — an unrelated, legitimately later migration (e.g.
+  // 20260808130000_add_vocabulary_growth_events_rpc.sql) must not fail this.
+  // Filenames share the YYYYMMDDHHMMSS_ prefix convention, so a plain string
+  // comparison is equivalent to chronological order here.
+  const phase1Name = path.basename(MIGRATION_PATH);
+  const phase2Name = path.basename(DROP_LAST_ACTIVE_AT_MIGRATION_PATH);
+  const phase3Name = path.basename(DROP_IS_NEW_USER_MIGRATION_PATH);
+  assert.ok(phase1Name < phase2Name, "Profile Phase 1 migration must sort chronologically before Phase 2");
+  assert.ok(phase2Name < phase3Name, "Profile Phase 2 migration must sort chronologically before Phase 3");
 });
 
 const source = fs.readFileSync(MIGRATION_PATH, "utf8");

@@ -204,19 +204,40 @@ export async function refreshSupabaseSession(
   session: StoredSupabaseSession,
 ): Promise<StoredSupabaseSession> {
   if (!session.refresh_token) {
+    storeSession(null);
     throw new Error("Missing refresh token. Sign in again.");
   }
 
-  const payload = await supabaseRequest<AuthResponse>(
-    "/auth/v1/token?grant_type=refresh_token",
-    {
-      method: "POST",
-      headers: getAuthHeaders(),
-      body: JSON.stringify({
-        refresh_token: session.refresh_token,
-      }),
-    },
-  );
+  let payload: AuthResponse;
+  try {
+    payload = await supabaseRequest<AuthResponse>(
+      "/auth/v1/token?grant_type=refresh_token",
+      {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({
+          refresh_token: session.refresh_token,
+        }),
+      },
+    );
+  } catch (error) {
+    // A SupabaseRequestError here means GoTrue actually responded and
+    // rejected this refresh_token (expired, already rotated, revoked,
+    // "Refresh Token Not Found") — the stored session can never succeed as
+    // a refresh again. Clearing it here, at the one place every caller's
+    // refresh eventually funnels through, is what stops each caller's own
+    // "Try again" from re-sending the same dead token forever: the
+    // AUTH_SESSION_CHANGED_EVENT this fires flips useAuthSession's
+    // authUserId to null app-wide, so callers see "signed out" instead of
+    // repeating the same failed request. A bare network failure (fetch()
+    // itself throwing — offline, DNS, CORS) is not a SupabaseRequestError
+    // and must NOT clear the session; that's a transient condition, not
+    // proof the token is invalid.
+    if (error instanceof SupabaseRequestError) {
+      storeSession(null);
+    }
+    throw error;
+  }
 
   const nextSession = normalizeSession(payload);
   if (!nextSession) {

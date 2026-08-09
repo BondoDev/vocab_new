@@ -1,15 +1,10 @@
 /* ============================================================
-   VocabularySection.tsx — page header (title/subtitle left, search +
-   Add Word right on wide screens) and the outer panel that holds the
-   tabs/table.
+   VocabularySection.tsx — page header (title/subtitle) and the outer
+   panel that holds the tabs/table.
    ============================================================ */
 
 .vocabulary-section__header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
+  text-align: center;
 }
 
 .vocabulary-section__heading {
@@ -28,98 +23,6 @@
   color: var(--muted-foreground);
   font-size: 0.95rem;
   line-height: 1.5;
-}
-
-.vocabulary-section__header-controls {
-  /* justify-content: space-between on the header only redistributes space
-     when both items share a line - once this wraps onto its own line
-     below the title, a single-item line falls back to flex-start, so
-     without this it snaps back to the left edge instead of staying
-     right-aligned. margin-left: auto keeps it flush right in both
-     states. */
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 0.65rem;
-  margin-left: auto;
-}
-
-/* Force the title onto its own full-width row so search + Add Word
-   consistently wrap to row 2 (right-aligned via the margin-left: auto
-   above) instead of only wrapping in the narrow band where they'd
-   otherwise just barely not fit on one line. */
-@media (max-width: 1099.98px) {
-  .vocabulary-section__heading {
-    flex-basis: 100%;
-  }
-}
-
-.vocabulary-section__search {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 15rem;
-  padding: 0.55rem 0.9rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--card);
-  color: var(--muted-foreground);
-  transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
-
-  &:focus-within {
-    border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 16%, transparent);
-  }
-
-  input {
-    flex: 1 1 auto;
-    min-width: 0;
-    border: none;
-    outline: none;
-    background: none;
-    color: var(--foreground);
-    font-size: 0.875rem;
-
-    &::placeholder {
-      color: var(--muted-foreground);
-    }
-  }
-}
-
-.vocabulary-section__add-word {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 1.1rem;
-  border: none;
-  border-radius: calc(var(--radius) - 2px);
-  background: var(--primary);
-  color: var(--primary-foreground);
-  font-size: 0.875rem;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition:
-    filter 150ms ease,
-    transform 150ms ease;
-
-  &:hover {
-    filter: brightness(0.94);
-  }
-
-  &:active {
-    transform: translateY(1px);
-  }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 2px var(--card),
-      0 0 0 4px var(--ring);
-  }
 }
 
 .vocabulary-section__panel {
@@ -901,32 +804,11 @@
 }
 
 /* ============================================================
-   Mobile (<640px) — search goes full width, Add Word stays full width
-   for an easy tap target, and the table swaps for the stacked card list.
-   Same 639.98/640 breakpoint pair already used elsewhere in this feature
-   (see learning-section.scss).
+   Mobile (<640px) — the table swaps for the stacked card list. Same
+   639.98/640 breakpoint pair already used elsewhere in this feature (see
+   learning-section.scss).
    ============================================================ */
 @media (max-width: 639.98px) {
-  .vocabulary-section__header {
-    align-items: stretch;
-  }
-
-  .vocabulary-section__header-controls {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-  }
-
-  .vocabulary-section__search {
-    width: 100%;
-    min-width: 0;
-  }
-
-  .vocabulary-section__add-word {
-    justify-content: center;
-    width: 100%;
-  }
-
   .vocabulary-section__panel {
     padding: 1rem;
   }
