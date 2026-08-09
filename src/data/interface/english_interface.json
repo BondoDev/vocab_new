@@ -349,6 +349,7 @@
       "loadError": "Something went wrong loading your vocabulary growth history.",
       "retryButton": "Try again",
       "totalLabel": "Total",
+      "chartAriaLabel": "Vocabulary growth chart. Use the left and right arrow keys to move between dates.",
       "emptyState": {
         "title": "No vocabulary progress yet.",
         "message": "Complete a Study New Words session to start building your progress history."

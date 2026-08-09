@@ -349,6 +349,7 @@
       "loadError": "Beim Laden deiner Wortschatzentwicklung ist ein Fehler aufgetreten.",
       "retryButton": "Erneut versuchen",
       "totalLabel": "Gesamt",
+      "chartAriaLabel": "Diagramm zur Wortschatzentwicklung. Verwende die linke und rechte Pfeiltaste, um zwischen den Daten zu wechseln.",
       "emptyState": {
         "title": "Noch kein Wortschatzfortschritt.",
         "message": "Schließe eine Sitzung „Neue Wörter lernen“ ab, um deinen Fortschrittsverlauf aufzubauen."
