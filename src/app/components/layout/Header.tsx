@@ -42,7 +42,6 @@ import {
 } from "../ui/dropdown-menu";
 import {
   getStoredSupabaseSession,
-  handleSupabaseAuthRedirect,
   sendPasswordRecoveryEmail,
   signInWithGoogleOAuth,
   signInWithPassword,
@@ -270,6 +269,12 @@ interface HeaderProps {
   accountNickname?: string;
   onAuthSessionChange?: (session: StoredSupabaseSession | null) => void;
   onSignedOut?: () => void;
+  // Surfaces a redirect-time auth failure (e.g. a denied Google OAuth
+  // consent) that AppContent's useSupabaseAuthRedirect hook caught -
+  // Header no longer runs its own copy of that redirect handling, so this
+  // is how the error still reaches the login dialog exactly as before.
+  authRedirectError?: string | null;
+  onAuthRedirectErrorHandled?: () => void;
 }
 
 export function Header({
@@ -286,6 +291,8 @@ export function Header({
   accountNickname,
   onAuthSessionChange,
   onSignedOut,
+  authRedirectError,
+  onAuthRedirectErrorHandled,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileAccountMenuOpen, setIsMobileAccountMenuOpen] = useState(false);
@@ -398,38 +405,34 @@ export function Header({
   };
 
   useEffect(() => {
-    let cancelled = false;
+    // Auto-closes the login/signup dialog once a session lands - covers the
+    // Google OAuth redirect case (the dialog was left open while the
+    // browser round-tripped to Google and back), the same way the old
+    // in-Header redirect effect used to before AppContent's
+    // useSupabaseAuthRedirect hook became the sole redirect handler.
+    // Ordinary email login/signup already close the dialog themselves right
+    // after a successful submit, so this is a harmless no-op there.
+    if (controlledAuthSession) {
+      setIsAuthDialogOpen(false);
+      resetAuthForm();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [controlledAuthSession]);
 
-    void handleSupabaseAuthRedirect()
-      .then((result) => {
-        if (cancelled) return;
-        if (result.error) {
-          setAuthError(result.error);
-          setAuthMode("login");
-          setIsAuthDialogOpen(true);
-          return;
-        }
-        if (result.session) {
-          setAuthSession(result.session);
-          onAuthSessionChange?.(result.session);
-          setAuthMode("login");
-          resetAuthForm();
-          setIsAuthDialogOpen(false);
-        }
-      })
-      .catch((error) => {
-        if (cancelled) return;
-        setAuthError(
-          error instanceof Error ? error.message : "Google sign-in failed.",
-        );
-        setAuthMode("login");
-        setIsAuthDialogOpen(true);
-      });
+  // Surfaces a redirect-time failure (e.g. a denied Google OAuth consent)
+  // caught by AppContent's single redirect handler. onAuthRedirectErrorHandled
+  // clears it upstream so this can't re-fire for the same failure.
+  useEffect(() => {
+    if (!authRedirectError) {
+      return;
+    }
 
-    return () => {
-      cancelled = true;
-    };
-  }, [onAuthSessionChange]);
+    setAuthError(authRedirectError);
+    setAuthMode("login");
+    setIsAuthDialogOpen(true);
+    onAuthRedirectErrorHandled?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authRedirectError]);
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof document === "undefined") {

@@ -429,17 +429,38 @@ function clearAuthParamsFromUrl() {
   url.searchParams.delete("error");
   url.searchParams.delete("error_code");
   url.searchParams.delete("error_description");
+  // GoTrue's implicit-flow recovery redirect puts `type=recovery` in the
+  // hash (cleared below via url.hash = ""); this query-string deletion is
+  // defensive in case a future redirect shape ever surfaces `type` there
+  // instead, so no recovery/auth parameter of either shape can survive a
+  // page refresh.
+  url.searchParams.delete("type");
   url.hash = "";
   window.history.replaceState({}, document.title, `${url.pathname}${url.search}`);
+}
+
+export interface SupabaseAuthRedirectResult {
+  changed: boolean;
+  session: StoredSupabaseSession | null;
+  error: string | null;
+  // True when this redirect established a password-recovery session (the
+  // user clicked a "reset your password" email link) rather than an
+  // ordinary login/signup/OAuth session. Verified against GoTrue's actual
+  // recovery redirect: since sendPasswordRecoveryEmail's POST /auth/v1/recover
+  // call below never sends code_challenge/code_challenge_method, GoTrue
+  // always resolves the recovery link through the implicit/hash-token flow
+  // and appends `type=recovery` to the URL fragment alongside
+  // access_token/refresh_token - never through the `?code=` PKCE branch.
+  recovery: boolean;
 }
 
 // Header and AppContent both call this on mount; the flag ensures only the
 // first caller performs the (single-use) code/token exchange per page load.
 let redirectHandledThisLoad = false;
 
-export async function handleSupabaseAuthRedirect() {
+export async function handleSupabaseAuthRedirect(): Promise<SupabaseAuthRedirectResult> {
   if (typeof window === "undefined" || redirectHandledThisLoad) {
-    return { changed: false, session: null as StoredSupabaseSession | null, error: null as string | null };
+    return { changed: false, session: null, error: null, recovery: false };
   }
   redirectHandledThisLoad = true;
 
@@ -451,6 +472,7 @@ export async function handleSupabaseAuthRedirect() {
   const hashRefreshToken = hashParams.get("refresh_token");
 
   if (hashAccessToken && hashRefreshToken) {
+    const isRecovery = hashParams.get("type") === "recovery";
     const session: StoredSupabaseSession = {
       access_token: hashAccessToken,
       refresh_token: hashRefreshToken,
@@ -466,26 +488,26 @@ export async function handleSupabaseAuthRedirect() {
     const hydratedSession = await populateSessionUser(session);
     storeSession(hydratedSession);
     clearAuthParamsFromUrl();
-    return { changed: true, session: hydratedSession, error: null };
+    return { changed: true, session: hydratedSession, error: null, recovery: isRecovery };
   }
 
   if (errorDescription) {
     clearAuthParamsFromUrl();
-    return { changed: false, session: null, error: decodeURIComponent(errorDescription) };
+    return { changed: false, session: null, error: decodeURIComponent(errorDescription), recovery: false };
   }
 
   if (authCode) {
     if (!getStoredPkceVerifier()) {
       clearAuthParamsFromUrl();
-      return { changed: false, session: null, error: null };
+      return { changed: false, session: null, error: null, recovery: false };
     }
 
     const session = await exchangeCodeForSession(authCode);
     clearAuthParamsFromUrl();
-    return { changed: true, session, error: null };
+    return { changed: true, session, error: null, recovery: false };
   }
 
-  return { changed: false, session: null, error: null };
+  return { changed: false, session: null, error: null, recovery: false };
 }
 
 export async function fetchSupabaseAuthUser(
@@ -512,6 +534,31 @@ export async function updateSupabaseAuthUserMetadata(
     },
     body: JSON.stringify({
       data: metadata,
+    }),
+  });
+}
+
+// Updates the password of whichever user the given session's access token
+// authenticates as - GoTrue's "Update user" endpoint (PUT /auth/v1/user,
+// verified against the official Supabase Auth API reference) authenticates
+// purely off the Authorization: Bearer token, exactly like
+// updateSupabaseAuthUserMetadata above. Deliberately takes a session, not a
+// user ID: there is no request shape for "update this other user's
+// password" here, only "update the password of whoever this access token
+// belongs to" - which is what makes it safe to drive from a
+// password-recovery session.
+export async function updateSupabaseAuthUserPassword(
+  session: StoredSupabaseSession,
+  password: string,
+): Promise<SupabaseAuthUser> {
+  return supabaseRequest<SupabaseAuthUser>("/auth/v1/user", {
+    method: "PUT",
+    headers: {
+      ...getAuthHeaders(),
+      Authorization: `Bearer ${session.access_token}`,
+    },
+    body: JSON.stringify({
+      password,
     }),
   });
 }
