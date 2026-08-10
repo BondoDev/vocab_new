@@ -517,3 +517,650 @@
     justify-self: center;
   }
 }
+
+/* ============================================================
+   Dashboard Phase 3 — the four supporting cards (VocabularyOverviewCard,
+   StudyActivityCard, WordsLearnedCard, MilestonePreviewCard) in a
+   responsive 2x2 grid below the hero. Deliberately light/white — the
+   opposite visual weight from the hero's dark banner (see the Phase
+   brief's "supporting cards should feel lighter than the hero") — reusing
+   the exact card-panel recipe already established by
+   vocabulary-growth-section.scss's own `__panel` (border/radius/shadow),
+   not a new visual language.
+   ============================================================ */
+
+.dashboard-supporting-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 899.98px) {
+  .dashboard-supporting-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Shared card shell + header/error/action styles, reused by all four
+   cards below (each card's own root class only adds what's specific to
+   it — the category columns, the chart, the bars, the milestone rows). */
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 20px -14px rgba(15, 23, 42, 0.12);
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  &__eyebrow {
+    color: var(--muted-foreground);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__link-button {
+    border: none;
+    background: none;
+    padding: 0;
+    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--ring);
+      border-radius: 2px;
+    }
+  }
+
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    margin-top: 0.9rem;
+    align-self: flex-start;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease;
+
+    &:hover {
+      border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+      background: color-mix(in srgb, var(--primary) 6%, var(--card));
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--ring);
+    }
+  }
+
+  &__error {
+    padding: 1rem 0;
+    text-align: center;
+  }
+
+  &__error-text {
+    margin: 0 0 0.6rem;
+    color: var(--muted-foreground);
+    font-size: 0.85rem;
+  }
+
+  &__error-retry {
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.95);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--card),
+        0 0 0 4px var(--ring);
+    }
+  }
+}
+
+/* ------------------------------------------------------------
+   Card A — VocabularyOverviewCard: three compact columns, not a donut
+   chart (see the Phase brief's explicit "Do NOT use a big donut chart").
+   ------------------------------------------------------------ */
+.vocabulary-overview-card {
+  &__columns {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  &__column {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-bottom: 0.4rem;
+    border-radius: calc(var(--radius) - 4px);
+  }
+
+  &__column--purple &__icon {
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+    color: var(--primary);
+  }
+
+  &__column--green &__icon {
+    --vocab-green: #22c55e;
+    background: color-mix(in srgb, var(--vocab-green) 14%, transparent);
+    color: var(--vocab-green);
+  }
+
+  &__column--amber &__icon {
+    --vocab-amber: #f59e0b;
+    background: color-mix(in srgb, var(--vocab-amber) 16%, transparent);
+    color: var(--vocab-amber);
+  }
+
+  &__label {
+    margin: 0 0 0.15rem;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+  }
+
+  &__value {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  &__skeleton {
+    display: block;
+    width: 2.5rem;
+    height: 1.4rem;
+    border-radius: calc(var(--radius) - 6px);
+    background: var(--muted);
+    animation: dashboard-card-skeleton-pulse 1.4s ease-in-out infinite;
+  }
+}
+
+/* ------------------------------------------------------------
+   Card B — StudyActivityCard: grouped New Words / Reviews bars, a range
+   selector shown only once expanded, and a lightweight CSS-only hover/
+   focus tooltip per bar-group (no JS positioning — a deliberately simpler
+   mechanism than VocabularyGrowthChart's own boundary-aware tooltip,
+   appropriate for a compact dashboard card rather than a full analytics
+   chart).
+   ------------------------------------------------------------ */
+.study-activity-card {
+  &__ranges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__range-button {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--card);
+    padding: 0.3rem 0.7rem;
+    color: var(--muted-foreground);
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease;
+
+    &:hover {
+      border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--ring);
+    }
+
+    &--active {
+      border-color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 12%, var(--card));
+      color: var(--primary);
+    }
+  }
+
+  &__legend {
+    display: flex;
+    gap: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
+
+  &__legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--muted-foreground);
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  &__legend-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+  }
+
+  &__legend-item--new &__legend-dot {
+    background: var(--primary);
+  }
+
+  &__legend-item--reviews &__legend-dot {
+    background: var(--chart-2);
+  }
+
+  &__skeleton {
+    display: block;
+    width: 100%;
+    height: 6.5rem;
+    border-radius: calc(var(--radius) - 4px);
+    background: var(--muted);
+    animation: dashboard-card-skeleton-pulse 1.4s ease-in-out infinite;
+  }
+
+  &__chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.35rem;
+    height: 6.5rem;
+
+    &--expanded {
+      gap: 0.2rem;
+    }
+  }
+
+  &__bar-group {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    min-width: 0;
+    border-radius: calc(var(--radius) - 6px);
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--ring);
+    }
+
+    &:hover,
+    &:focus-visible {
+      .study-activity-card__tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -0.25rem);
+      }
+    }
+  }
+
+  &__bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.15rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__bar-track {
+    flex: 1 1 0;
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    min-width: 0.2rem;
+    border-radius: 999px 999px 2px 2px;
+    background: color-mix(in srgb, var(--muted-foreground) 8%, transparent);
+    overflow: hidden;
+  }
+
+  &__bar-fill {
+    width: 100%;
+    min-height: 2px;
+    border-radius: inherit;
+    transition: height 300ms ease;
+
+    &--new {
+      background: var(--primary);
+    }
+
+    &--reviews {
+      background: var(--chart-2);
+    }
+  }
+
+  &__bar-label {
+    margin-top: 0.3rem;
+    color: var(--muted-foreground);
+    font-size: 0.65rem;
+  }
+
+  &__tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    z-index: 1;
+    transform: translate(-50%, 0);
+    margin-bottom: 0.35rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: calc(var(--radius) - 4px);
+    background: var(--foreground);
+    color: var(--background);
+    font-size: 0.7rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 120ms ease,
+      transform 120ms ease;
+  }
+
+  &__tooltip-period {
+    margin: 0 0 0.15rem;
+    font-weight: 700;
+  }
+
+  &__tooltip-row {
+    margin: 0;
+  }
+}
+
+/* ------------------------------------------------------------
+   Card C — WordsLearnedCard: deliberately a different shape from Study
+   Activity (large total + small comparison + single-series vertical
+   bars) — see the Phase brief's "should look different... to avoid
+   duplication."
+   ------------------------------------------------------------ */
+.words-learned-card {
+  &__totals {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+
+  &__total {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  &__total-unit {
+    color: var(--muted-foreground);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  &__comparison {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    &--up {
+      color: #22c55e;
+    }
+
+    &--down {
+      color: var(--destructive);
+    }
+  }
+
+  &__empty-message {
+    margin: 0 0 0.6rem;
+    color: var(--muted-foreground);
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  &__bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.4rem;
+    height: 4.5rem;
+  }
+
+  &__bar-col {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    min-width: 0;
+  }
+
+  &__bar-track {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+    border-radius: 999px 999px 2px 2px;
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+    overflow: hidden;
+  }
+
+  &__bar-fill {
+    width: 100%;
+    min-height: 2px;
+    border-radius: inherit;
+    background: var(--primary);
+    transition: height 300ms ease;
+  }
+
+  &__bar-label {
+    margin-top: 0.3rem;
+    color: var(--muted-foreground);
+    font-size: 0.68rem;
+  }
+
+  &__skeleton-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__skeleton {
+    display: block;
+    border-radius: calc(var(--radius) - 4px);
+    background: var(--muted);
+    animation: dashboard-card-skeleton-pulse 1.4s ease-in-out infinite;
+
+    &--total {
+      width: 5rem;
+      height: 1.9rem;
+    }
+
+    &--bars {
+      width: 100%;
+      height: 4.5rem;
+    }
+  }
+}
+
+/* ------------------------------------------------------------
+   Card D — MilestonePreviewCard: a light vertical list, not the
+   Progress page's accordion — icon + label + thin bar + current/target
+   per row, matching MilestonesSection.tsx's own compact
+   MilestoneSummaryStat sizing rather than the full MilestoneAccordionRow.
+   ------------------------------------------------------------ */
+.milestone-preview-card {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  &__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: calc(var(--radius) - 4px);
+    background: color-mix(in srgb, currentColor 14%, transparent);
+  }
+
+  &__body {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  &__label {
+    margin: 0 0 0.3rem;
+    color: var(--foreground);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  &__bar-track {
+    height: 0.3rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--muted-foreground) 10%, transparent);
+    overflow: hidden;
+  }
+
+  &__bar-fill {
+    height: 100%;
+    border-radius: inherit;
+    transition: width 400ms ease;
+  }
+
+  &__ratio {
+    flex-shrink: 0;
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  &__row--skeleton {
+    .milestone-preview-card__skeleton-icon {
+      display: block;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: calc(var(--radius) - 4px);
+      background: var(--muted);
+      animation: dashboard-card-skeleton-pulse 1.4s ease-in-out infinite;
+    }
+
+    .milestone-preview-card__skeleton-line {
+      display: block;
+      width: 40%;
+      height: 0.7rem;
+      margin-bottom: 0.4rem;
+      border-radius: 999px;
+      background: var(--muted);
+      animation: dashboard-card-skeleton-pulse 1.4s ease-in-out infinite;
+    }
+
+    .milestone-preview-card__skeleton-bar {
+      display: block;
+      width: 100%;
+      height: 0.3rem;
+      border-radius: 999px;
+      background: var(--muted);
+      animation: dashboard-card-skeleton-pulse 1.4s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes dashboard-card-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vocabulary-overview-card__skeleton,
+  .study-activity-card__skeleton,
+  .words-learned-card__skeleton,
+  .milestone-preview-card__skeleton-icon,
+  .milestone-preview-card__skeleton-line,
+  .milestone-preview-card__skeleton-bar {
+    animation: none;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .vocabulary-overview-card__columns {
+    gap: 0.75rem;
+  }
+
+  .study-activity-card__legend {
+    gap: 0.6rem;
+  }
+}

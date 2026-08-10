@@ -80,6 +80,39 @@
         "reviewWords": {
           "message": "Mantieni fresco il tuo vocabolario con una sessione di ripasso."
         }
+      },
+      "supportingCards": {
+        "loadError": "Impossibile caricare questa sezione. Riprova.",
+        "retryButton": "Riprova",
+        "vocabularyOverview": {
+          "title": "Panoramica del vocabolario",
+          "viewVocabulary": "Visualizza vocabolario"
+        },
+        "studyActivity": {
+          "title": "Attività di apprendimento",
+          "newWordsLabel": "Nuove parole",
+          "viewAllActivity": "Visualizza tutte le attività",
+          "range": {
+            "7d": "7 giorni",
+            "30d": "30 giorni",
+            "90d": "90 giorni",
+            "all": "Sempre"
+          },
+          "tooltip": {
+            "dateLabel": "Data",
+            "periodLabel": "Periodo"
+          }
+        },
+        "wordsLearned": {
+          "title": "Parole imparate",
+          "last7Days": "Ultimi 7 giorni",
+          "comparisonSuffix": "rispetto ai 7 giorni precedenti",
+          "emptyStateMessage": "Inizia una sessione di Studia parole nuove per costruire i tuoi progressi settimanali."
+        },
+        "milestonePreview": {
+          "title": "Anteprima dei traguardi",
+          "viewProgress": "Visualizza progressi"
+        }
       }
     },
     "sidebar": {

@@ -101,8 +101,9 @@ test("english_interface.json defines a non-empty userProfile.dashboardPage", () 
 
 const englishKeys = flattenKeys(englishPage ?? {});
 
-test("userProfile.dashboardPage has exactly the Phase 1 + Phase 2 keys, no more, no less", () => {
-  assert.deepEqual(englishKeys, [
+test("userProfile.dashboardPage has exactly the Phase 1 + Phase 2 keys, no more, no less (Phase 3's supportingCards.* has its own dedicated contract in test-dashboard-supporting-cards.mjs, excluded here)", () => {
+  const keysExcludingSupportingCards = englishKeys.filter((key) => !key.startsWith("supportingCards."));
+  assert.deepEqual(keysExcludingSupportingCards, [
     "ariaLabel",
     "greeting.afternoon",
     "greeting.evening",

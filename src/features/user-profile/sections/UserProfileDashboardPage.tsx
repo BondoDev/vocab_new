@@ -151,8 +151,10 @@ export function UserProfileDashboardPage({
                 todayISOStatus={todayISOStatus}
                 wordProgressRows={wordProgressRows}
                 wordProgressStatus={wordProgressStatus}
+                onRetryWordProgress={retryWordProgress}
                 onStartNewWordStudy={onStartNewWordStudy}
                 onStartReviewWords={onStartReviewWords}
+                onNavigateToSection={setActiveSection}
               />
             ) : null}
           </section>

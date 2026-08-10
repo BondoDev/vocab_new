@@ -552,6 +552,39 @@
         "reviewWords": {
           "message": "Закрепите словарный запас с помощью повторения."
         }
+      },
+      "supportingCards": {
+        "loadError": "Не удалось загрузить этот раздел. Попробуйте снова.",
+        "retryButton": "Повторить",
+        "vocabularyOverview": {
+          "title": "Обзор словарного запаса",
+          "viewVocabulary": "Открыть словарь"
+        },
+        "studyActivity": {
+          "title": "Учебная активность",
+          "newWordsLabel": "Новые слова",
+          "viewAllActivity": "Показать всю активность",
+          "range": {
+            "7d": "7 дней",
+            "30d": "30 дней",
+            "90d": "90 дней",
+            "all": "Всё время"
+          },
+          "tooltip": {
+            "dateLabel": "Дата",
+            "periodLabel": "Период"
+          }
+        },
+        "wordsLearned": {
+          "title": "Выученные слова",
+          "last7Days": "Последние 7 дней",
+          "comparisonSuffix": "по сравнению с предыдущими 7 днями",
+          "emptyStateMessage": "Начните сессию «Изучать новые слова», чтобы улучшить свой недельный прогресс."
+        },
+        "milestonePreview": {
+          "title": "Предпросмотр этапов",
+          "viewProgress": "Посмотреть прогресс"
+        }
       }
     },
     "sidebar": {

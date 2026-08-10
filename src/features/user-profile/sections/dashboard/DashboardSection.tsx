@@ -4,25 +4,39 @@ import { interpolateTemplate } from "../../../../lib/interpolateTemplate";
 import type { UserProfile } from "../../../../lib/userProfile";
 import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { UserProfileSectionId } from "../../components/UserProfileSidebar";
 import { getDashboardGreetingPeriod, type DashboardGreetingPeriod } from "./dashboardGreeting";
 import { DashboardHeroCard } from "./DashboardHeroCard";
+import { VocabularyOverviewCard } from "./VocabularyOverviewCard";
+import { StudyActivityCard } from "./StudyActivityCard";
+import { WordsLearnedCard } from "./WordsLearnedCard";
+import { MilestonePreviewCard } from "./MilestonePreviewCard";
+import { useDashboardSupportingData } from "./useDashboardSupportingData";
 import "./dashboard-section.scss";
 
 interface DashboardSectionProps {
   nickname?: string;
-  // Dashboard Phase 2's hero card reads from the same single shared profile
-  // load and useProfileSharedProgressData values already threaded through
-  // UserProfileDashboardPage to Learning/Vocabulary/Progress — see
-  // DashboardHeroCard.tsx's own props for what each is used for. None of
-  // these trigger a second fetch of their own.
+  // Dashboard Phase 2/3's hero + supporting cards all read from the same
+  // single shared profile load and useProfileSharedProgressData values
+  // already threaded through UserProfileDashboardPage to Learning/
+  // Vocabulary/Progress — see each card's own props for what each value is
+  // used for. None of these trigger a second fetch of their own; the one
+  // genuinely new Phase 3 fetch (useDashboardSupportingData, below) is
+  // still owned by this component alone, not duplicated per card.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
   todayISO: string | null;
   todayISOStatus: ProfileSharedDataStatus;
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
+  onRetryWordProgress?: () => void;
   onStartNewWordStudy?: () => void;
   onStartReviewWords?: () => void;
+  // Lets Vocabulary Overview's "View Vocabulary" and Milestone Preview's
+  // "View Progress" switch the active profile section in place — the same
+  // mechanism UserProfileSidebar's own nav buttons already use
+  // (UserProfileDashboardPage's setActiveSection), not a new route.
+  onNavigateToSection?: (section: UserProfileSectionId) => void;
 }
 
 const GREETING_KEY_BY_PERIOD: Record<DashboardGreetingPeriod, string> = {
@@ -32,10 +46,13 @@ const GREETING_KEY_BY_PERIOD: Record<DashboardGreetingPeriod, string> = {
 };
 
 // Dashboard Phase 1 added the page header + personalized greeting. Phase 2
-// adds the first content section directly below it: the combined Today /
-// Rocket / Continue Learning hero card (DashboardHeroCard.tsx). Charts, a
-// milestones preview, recent activity, and a weekly words card are later
-// phases — see this section's own directory for where they'll be added.
+// added the rocket hero. Phase 3 (this change) adds the last piece: four
+// compact supporting cards in a 2x2 grid — Vocabulary Overview, Study
+// Activity, Words Learned, and Milestone Preview — completing the
+// Dashboard. None of these four reproduce their full-page counterparts
+// (no favorites/CEFR table on Vocabulary Overview, no milestone
+// accordion/history on Milestone Preview, no daily-goal editor here at
+// all) — see each card component's own header for its exact scope.
 export function DashboardSection({
   nickname,
   userProfile,
@@ -44,8 +61,10 @@ export function DashboardSection({
   todayISOStatus,
   wordProgressRows,
   wordProgressStatus,
+  onRetryWordProgress,
   onStartNewWordStudy,
   onStartReviewWords,
+  onNavigateToSection,
 }: DashboardSectionProps) {
   const { t } = useLanguage();
   const trimmedNickname = nickname?.trim() ?? "";
@@ -61,6 +80,17 @@ export function DashboardSection({
     const period = getDashboardGreetingPeriod(new Date().getHours());
     return interpolateTemplate(t(GREETING_KEY_BY_PERIOD[period]), { name: trimmedNickname });
   }, [t, trimmedNickname]);
+
+  // The one Phase 3 fetch (an unbounded, language-scoped user_daily_stats
+  // read) — shared by Study Activity, Words Learned, and Milestone
+  // Preview below. See useDashboardSupportingData.ts's own header for the
+  // full "why one read, why unbounded" reasoning.
+  const { status: dailyStatsStatus, dailyStats, retry: retryDailyStats } = useDashboardSupportingData({
+    isProfileLoaded,
+    practiceLanguage: userProfile.practiceLanguage,
+    todayISO,
+    todayISOStatus,
+  });
 
   return (
     <>
@@ -79,6 +109,38 @@ export function DashboardSection({
         onStartNewWordStudy={onStartNewWordStudy}
         onStartReviewWords={onStartReviewWords}
       />
+
+      <div className="dashboard-supporting-grid">
+        <VocabularyOverviewCard
+          wordProgressRows={wordProgressRows}
+          wordProgressStatus={wordProgressStatus}
+          onRetryWordProgress={onRetryWordProgress}
+          onNavigateToSection={onNavigateToSection}
+        />
+        <StudyActivityCard
+          status={dailyStatsStatus}
+          dailyStats={dailyStats}
+          todayISO={todayISO}
+          onRetry={retryDailyStats}
+        />
+        <WordsLearnedCard
+          status={dailyStatsStatus}
+          dailyStats={dailyStats}
+          todayISO={todayISO}
+          onRetry={retryDailyStats}
+          onStartNewWordStudy={onStartNewWordStudy}
+        />
+        <MilestonePreviewCard
+          wordProgressRows={wordProgressRows}
+          wordProgressStatus={wordProgressStatus}
+          dailyStats={dailyStats}
+          dailyStatsStatus={dailyStatsStatus}
+          todayISO={todayISO}
+          onRetryWordProgress={onRetryWordProgress}
+          onRetryDailyStats={retryDailyStats}
+          onNavigateToSection={onNavigateToSection}
+        />
+      </div>
     </>
   );
 }

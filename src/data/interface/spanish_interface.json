@@ -80,6 +80,39 @@
         "reviewWords": {
           "message": "Mantén tu vocabulario fresco con una sesión de repaso."
         }
+      },
+      "supportingCards": {
+        "loadError": "No pudimos cargar esta sección. Inténtalo de nuevo.",
+        "retryButton": "Intentar de nuevo",
+        "vocabularyOverview": {
+          "title": "Resumen de vocabulario",
+          "viewVocabulary": "Ver vocabulario"
+        },
+        "studyActivity": {
+          "title": "Actividad de aprendizaje",
+          "newWordsLabel": "Palabras nuevas",
+          "viewAllActivity": "Ver toda la actividad",
+          "range": {
+            "7d": "7 días",
+            "30d": "30 días",
+            "90d": "90 días",
+            "all": "Todo el tiempo"
+          },
+          "tooltip": {
+            "dateLabel": "Fecha",
+            "periodLabel": "Período"
+          }
+        },
+        "wordsLearned": {
+          "title": "Palabras aprendidas",
+          "last7Days": "Últimos 7 días",
+          "comparisonSuffix": "frente a los 7 días anteriores",
+          "emptyStateMessage": "Comienza una sesión de Estudiar palabras nuevas para aumentar tu progreso semanal."
+        },
+        "milestonePreview": {
+          "title": "Vista previa de hitos",
+          "viewProgress": "Ver progreso"
+        }
       }
     },
     "sidebar": {

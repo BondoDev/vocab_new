@@ -80,6 +80,39 @@
         "reviewWords": {
           "message": "Keep your vocabulary fresh with a review session."
         }
+      },
+      "supportingCards": {
+        "loadError": "We couldn't load this section. Please try again.",
+        "retryButton": "Try again",
+        "vocabularyOverview": {
+          "title": "Vocabulary Overview",
+          "viewVocabulary": "View Vocabulary"
+        },
+        "studyActivity": {
+          "title": "Study Activity",
+          "newWordsLabel": "New Words",
+          "viewAllActivity": "View all activity",
+          "range": {
+            "7d": "7 days",
+            "30d": "30 days",
+            "90d": "90 days",
+            "all": "All time"
+          },
+          "tooltip": {
+            "dateLabel": "Date",
+            "periodLabel": "Period"
+          }
+        },
+        "wordsLearned": {
+          "title": "Words Learned",
+          "last7Days": "Last 7 Days",
+          "comparisonSuffix": "vs previous 7 days",
+          "emptyStateMessage": "Start a Study New Words session to build your weekly progress."
+        },
+        "milestonePreview": {
+          "title": "Milestone Preview",
+          "viewProgress": "View Progress"
+        }
       }
     },
     "sidebar": {

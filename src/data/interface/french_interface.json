@@ -80,6 +80,39 @@
         "reviewWords": {
           "message": "Entretenez votre vocabulaire avec une session de révision."
         }
+      },
+      "supportingCards": {
+        "loadError": "Impossible de charger cette section. Veuillez réessayer.",
+        "retryButton": "Réessayer",
+        "vocabularyOverview": {
+          "title": "Aperçu du vocabulaire",
+          "viewVocabulary": "Voir le vocabulaire"
+        },
+        "studyActivity": {
+          "title": "Activité d’apprentissage",
+          "newWordsLabel": "Nouveaux mots",
+          "viewAllActivity": "Voir toute l’activité",
+          "range": {
+            "7d": "7 jours",
+            "30d": "30 jours",
+            "90d": "90 jours",
+            "all": "Depuis le début"
+          },
+          "tooltip": {
+            "dateLabel": "Date",
+            "periodLabel": "Période"
+          }
+        },
+        "wordsLearned": {
+          "title": "Mots appris",
+          "last7Days": "7 derniers jours",
+          "comparisonSuffix": "par rapport aux 7 jours précédents",
+          "emptyStateMessage": "Commencez une session Étudier de nouveaux mots pour construire votre progression hebdomadaire."
+        },
+        "milestonePreview": {
+          "title": "Aperçu des étapes",
+          "viewProgress": "Voir la progression"
+        }
       }
     },
     "sidebar": {
