@@ -34,12 +34,12 @@ const SIDEBAR_NAV_GROUPS: SidebarNavGroup[] = [
     labelKey: "userProfile.sidebar.groups.main",
     items: [
       { id: "dashboard", labelKey: "userProfile.sidebar.items.dashboard", icon: Home },
-      { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target },
     ],
   },
   {
     labelKey: "userProfile.sidebar.groups.learning",
     items: [
+      { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target },
       { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText },
       { id: "my-lists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus },
     ],

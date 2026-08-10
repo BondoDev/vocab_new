@@ -14,7 +14,7 @@ import type { VocabularyGrowthDayCounts } from "../../../../data/learning/vocabu
 const VIEW_WIDTH = 720;
 const VIEW_HEIGHT = 260;
 const PADDING_LEFT = 44;
-const PADDING_RIGHT = 12;
+const PADDING_RIGHT = 32;
 const PADDING_TOP = 14;
 const PADDING_BOTTOM = 28;
 const PLOT_WIDTH = VIEW_WIDTH - PADDING_LEFT - PADDING_RIGHT;

@@ -74,12 +74,12 @@ const ACCOUNT_NAV_GROUPS = [
     labelKey: "userProfile.sidebar.groups.main",
     items: [
       { id: "dashboard", labelKey: "userProfile.sidebar.items.dashboard", icon: UserRound, section: "dashboard" as const },
-      { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target, section: "learning" as const },
     ],
   },
   {
     labelKey: "userProfile.sidebar.groups.learning",
     items: [
+      { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target, section: "learning" as const },
       { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText, section: "vocabulary" as const },
       { id: "my-lists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus, disabled: true },
     ],

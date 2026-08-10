@@ -234,28 +234,24 @@
   font-weight: 600;
 }
 
-/* Horizontally scrollable rather than shrinking indefinitely: the SVG
-   holds a real pixel floor (min-width below) so axis/date labels never
-   become unreadable on narrow screens — the wrap scrolls internally
-   instead of overflowing the page. On any container wider than that
-   floor (desktop/tablet/most phones in landscape) the SVG simply fills
-   100% of the available width and no scrollbar ever appears. */
+/* The SVG scales to the card width on phones so the full date range stays
+   visible inside the viewport; the chart geometry reserves right-side
+   padding for the final x-axis label. */
 .vocabulary-growth-chart__plot-wrap {
   position: relative;
-  overflow-x: auto;
+  overflow-x: hidden;
   // overflow-y stays hidden — it isn't what clips the tooltip. The tooltip
   // itself is a normal child of this box, and VocabularyGrowthChart.tsx
   // clamps its computed top/left to stay within [0, clientHeight] /
   // [scrollLeft, scrollLeft + clientWidth] before rendering it, so it
   // never needs to escape this box's bounds in the first place.
   overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
 }
 
 .vocabulary-growth-chart__svg {
   display: block;
   width: 100%;
-  min-width: 480px;
+  max-width: 100%;
   height: auto;
   touch-action: pan-y;
 }
