@@ -14,6 +14,7 @@ import { Header } from "./components/layout/Header";
 import { ExplorePage } from "./pages/explore/ExplorePage";
 import { AccountOnboardingDialog } from "./components/dialogs/AccountOnboardingDialog";
 import { AccountLanguageConfirmDialog } from "./components/dialogs/AccountLanguageConfirmDialog";
+import { PasswordRecoveryDialog } from "./components/dialogs/PasswordRecoveryDialog";
 import { LevelTestLanguageModal } from "./pages/level-test/LevelTestLanguageModal";
 import { HomePage } from "./pages/home/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -44,7 +45,6 @@ import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
 import { findSeoCefrPreviewItem } from "./pages/vocabulary/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPages/wordPageData";
-import { handleSupabaseAuthRedirect } from "../lib/supabaseAuth";
 import type { UserProfile } from "../lib/userProfile";
 import {
   TARGET_LANGUAGE_TO_UI_CODE,
@@ -64,6 +64,7 @@ import {
 } from "./utils/pageRouting";
 import { resolveVocabularyLevelRenderDecision } from "./utils/vocabularyLevelRenderDecision";
 import { useAuthSession } from "./hooks/useAuthSession";
+import { useSupabaseAuthRedirect } from "./hooks/useSupabaseAuthRedirect";
 import { useAccountOnboarding } from "./hooks/useAccountOnboarding";
 import { useStoredAppPreferences } from "./hooks/useStoredAppPreferences";
 import { useUserProfileLoad } from "./hooks/useUserProfileLoad";
@@ -231,6 +232,16 @@ function AppContent({
     supportedLanguageCodes,
   });
   const { authSession, authUserId, handleAuthSessionChange } = useAuthSession();
+  // Sole owner of "did this page load just consume a Supabase auth
+  // redirect" - see useSupabaseAuthRedirect.ts for why this replaces both
+  // Header's old internal redirect effect and this component's previous
+  // practice/exam-only one.
+  const {
+    isPasswordRecoveryActive,
+    redirectError: authRedirectError,
+    clearRedirectError: clearAuthRedirectError,
+    exitPasswordRecovery,
+  } = useSupabaseAuthRedirect({ onSessionEstablished: handleAuthSessionChange });
   let loadedUserProfile!: UserProfile;
   let setLoadedUserProfile!: Dispatch<SetStateAction<UserProfile>>;
   const {
@@ -332,28 +343,6 @@ function AppContent({
         return buildRouteMetadata(location.pathname, siteOrigin);
     }
   }, [location.pathname, resolvedPage, siteOrigin]);
-
-  useEffect(() => {
-    if (resolvedPage !== "practice" && resolvedPage !== "exam") {
-      return;
-    }
-
-    let cancelled = false;
-
-    void handleSupabaseAuthRedirect()
-      .then((result) => {
-        if (cancelled || !result.session) {
-          return;
-        }
-
-        handleAuthSessionChange(result.session);
-      })
-      .catch(() => {});
-
-    return () => {
-      cancelled = true;
-    };
-  }, [handleAuthSessionChange, resolvedPage]);
 
   const handleStartPracticing = () => {
     if (isContinueDisabled) {
@@ -524,7 +513,24 @@ function AppContent({
     accountNickname: userProfile.nickname,
     onAuthSessionChange: handleAuthSessionChange,
     onSignedOut: () => navigate(ROUTES.exerciseSelection),
+    authRedirectError,
+    onAuthRedirectErrorHandled: clearAuthRedirectError,
   };
+
+  // Rendered on every route (appended alongside accountOnboardingDialog
+  // below) since password recovery must complete regardless of which page
+  // the redirect happened to land on - including practice/exam, where
+  // Header (and therefore Header's own dialogs) isn't mounted at all.
+  const passwordRecoveryDialog = (
+    <PasswordRecoveryDialog
+      open={isPasswordRecoveryActive}
+      session={authSession}
+      onSuccess={() => {
+        exitPasswordRecovery();
+        navigate(ROUTES.profile);
+      }}
+    />
+  );
 
   const handleStartExam = () => {
     requireLanguagesBeforeContinue(() => navigate(ROUTES.exam));
@@ -569,9 +575,15 @@ function AppContent({
     setSwapRotation((prev) => prev + 180);
   };
 
+  // Recovery is the higher-priority modal state: the `open` prop is gated
+  // by !isPasswordRecoveryActive so onboarding can never render open at the
+  // same time as PasswordRecoveryDialog, but isAccountOnboardingOpen itself
+  // (and the profile load feeding it) is untouched - if the profile is
+  // still incomplete once recovery exits, this re-evaluates to open on its
+  // own, no extra wiring needed.
   const accountOnboardingDialog = authUserId ? (
     <AccountOnboardingDialog
-      open={isAccountOnboardingOpen}
+      open={isAccountOnboardingOpen && !isPasswordRecoveryActive}
       onOpenChange={setIsAccountOnboardingOpen}
       profile={userProfile}
       languages={languages}
@@ -600,6 +612,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </>
     );
   }
@@ -626,6 +639,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -654,6 +668,7 @@ function AppContent({
           </Suspense>
         </div>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -671,6 +686,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </>
     );
   }
@@ -684,6 +700,7 @@ function AppContent({
           <About onBack={() => navigate(ROUTES.language)} />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -707,6 +724,7 @@ function AppContent({
           }
         />
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -727,6 +745,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -747,6 +766,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -769,6 +789,7 @@ function AppContent({
           examPath={ROUTES.exam}
         />
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -782,6 +803,7 @@ function AppContent({
           <Help onBack={() => navigate(ROUTES.language)} />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -793,6 +815,7 @@ function AppContent({
           <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid level test page." />
           {accountOnboardingDialog}
+          {passwordRecoveryDialog}
         </div>
       );
     }
@@ -829,6 +852,7 @@ function AppContent({
           }}
         />
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -840,6 +864,7 @@ function AppContent({
           <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid verbs page." />
           {accountOnboardingDialog}
+          {passwordRecoveryDialog}
         </div>
       );
     }
@@ -855,6 +880,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -866,6 +892,7 @@ function AppContent({
           <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid past-verb-forms page." />
           {accountOnboardingDialog}
+          {passwordRecoveryDialog}
         </div>
       );
     }
@@ -881,6 +908,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -893,6 +921,7 @@ function AppContent({
             <NotFoundPage message="Invalid word page." />
           </WordPageLayout>
           {accountOnboardingDialog}
+          {passwordRecoveryDialog}
         </>
       );
     }
@@ -913,6 +942,7 @@ function AppContent({
           </Suspense>
         </WordPageLayout>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </>
     );
   }
@@ -936,6 +966,7 @@ function AppContent({
           <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message={vocabularyLevelRenderDecision.message} />
           {accountOnboardingDialog}
+          {passwordRecoveryDialog}
         </div>
       );
     }
@@ -952,6 +983,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -963,6 +995,7 @@ function AppContent({
           <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid SEO page index." />
           {accountOnboardingDialog}
+          {passwordRecoveryDialog}
         </div>
       );
     }
@@ -974,6 +1007,7 @@ function AppContent({
           <SeoHubPage uiLang={seoHubRoute} />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -985,6 +1019,7 @@ function AppContent({
           <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid word SEO page index." />
           {accountOnboardingDialog}
+          {passwordRecoveryDialog}
         </div>
       );
     }
@@ -999,6 +1034,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -1012,6 +1048,7 @@ function AppContent({
           <Header {...sharedHeaderProps} activePage="notFound" />
           <NotFoundPage message="Invalid preview page." />
           {accountOnboardingDialog}
+          {passwordRecoveryDialog}
         </div>
       );
     }
@@ -1030,6 +1067,7 @@ function AppContent({
           />
         </Suspense>
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -1041,6 +1079,7 @@ function AppContent({
         <Header {...sharedHeaderProps} activePage="notFound" />
         <NotFoundPage />
         {accountOnboardingDialog}
+        {passwordRecoveryDialog}
       </div>
     );
   }
@@ -1064,6 +1103,7 @@ function AppContent({
       />
 
       {accountOnboardingDialog}
+      {passwordRecoveryDialog}
       {authUserId ? (
         <AccountLanguageConfirmDialog
           open={accountLanguageConfirm.isOpen}
