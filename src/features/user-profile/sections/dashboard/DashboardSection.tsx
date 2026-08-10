@@ -12,6 +12,7 @@ import { StudyActivityCard } from "./StudyActivityCard";
 import { WordsLearnedCard } from "./WordsLearnedCard";
 import { MilestonePreviewCard } from "./MilestonePreviewCard";
 import { useDashboardSupportingData } from "./useDashboardSupportingData";
+import { useDashboardVocabularyGrowthData } from "./useDashboardVocabularyGrowthData";
 import "./dashboard-section.scss";
 
 interface DashboardSectionProps {
@@ -91,6 +92,18 @@ export function DashboardSection({
     todayISO,
     todayISOStatus,
   });
+  const {
+    status: vocabularyGrowthStatus,
+    history: vocabularyGrowthHistory,
+    retry: retryVocabularyGrowth,
+  } = useDashboardVocabularyGrowthData({
+    isProfileLoaded,
+    practiceLanguage: userProfile.practiceLanguage,
+    todayISO,
+    todayISOStatus,
+    wordProgressRows,
+    wordProgressStatus,
+  });
 
   return (
     <>
@@ -106,8 +119,7 @@ export function DashboardSection({
         todayISOStatus={todayISOStatus}
         wordProgressRows={wordProgressRows}
         wordProgressStatus={wordProgressStatus}
-        onStartNewWordStudy={onStartNewWordStudy}
-        onStartReviewWords={onStartReviewWords}
+        onNavigateToSection={onNavigateToSection}
       />
 
       <div className="dashboard-supporting-grid">
@@ -126,8 +138,13 @@ export function DashboardSection({
         <WordsLearnedCard
           status={dailyStatsStatus}
           dailyStats={dailyStats}
+          vocabularyGrowthStatus={vocabularyGrowthStatus}
+          vocabularyGrowthHistory={vocabularyGrowthHistory}
           todayISO={todayISO}
-          onRetry={retryDailyStats}
+          onRetry={() => {
+            retryDailyStats();
+            retryVocabularyGrowth();
+          }}
           onStartNewWordStudy={onStartNewWordStudy}
         />
         <MilestonePreviewCard

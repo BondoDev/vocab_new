@@ -104,10 +104,12 @@
           }
         },
         "wordsLearned": {
-          "title": "Gelernte Wörter",
+          "title": "Wortschatzfortschritt",
           "last7Days": "Letzte 7 Tage",
-          "comparisonSuffix": "im Vergleich zu den vorherigen 7 Tagen",
-          "emptyStateMessage": "Starte eine Sitzung von Neue Wörter lernen, um deinen Wochenfortschritt aufzubauen."
+          "emptyStateMessage": "Starte eine Sitzung von Neue Wörter lernen, um deinen Wochenfortschritt aufzubauen.",
+          "series": {
+            "wordsLearned": "Gelernte Wörter"
+          }
         },
         "milestonePreview": {
           "title": "Meilenstein-Vorschau",

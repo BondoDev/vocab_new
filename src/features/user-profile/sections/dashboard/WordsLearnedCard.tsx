@@ -1,6 +1,8 @@
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { computeWordsLearnedSummary } from "../../../../data/learning/wordsLearnedSummary";
+import type { VocabularyGrowthDayCounts } from "../../../../data/learning/vocabularyGrowth";
 import type { DashboardSupportingDataStatus } from "./useDashboardSupportingData";
+import type { DashboardVocabularyGrowthStatus } from "./useDashboardVocabularyGrowthData";
 import type { MilestoneDailyStatRow } from "../../../../lib/newWordProgress";
 
 const WEEKDAY_SHORT_KEYS = [
@@ -28,23 +30,35 @@ function weekdayShortKeyFor(dateISO: string): (typeof WEEKDAY_SHORT_KEYS)[number
 interface WordsLearnedCardProps {
   status: DashboardSupportingDataStatus;
   dailyStats: MilestoneDailyStatRow[];
+  vocabularyGrowthStatus: DashboardVocabularyGrowthStatus;
+  vocabularyGrowthHistory: VocabularyGrowthDayCounts[];
   todayISO: string | null;
   onRetry?: () => void;
   onStartNewWordStudy?: () => void;
 }
 
-// Dashboard Phase 3 — Card C: vocabulary acquisition only (never reviews),
-// derived from the same dailyStats useDashboardSupportingData already
-// loaded for Study Activity — no second fetch. Deliberately a different
-// visual shape from Study Activity (big total + small comparison + 7
-// vertical bars) to avoid the two cards reading as duplicates of each
-// other.
-export function WordsLearnedCard({ status, dailyStats, todayISO, onRetry, onStartNewWordStudy }: WordsLearnedCardProps) {
+// Dashboard Phase 3 — Card C: vocabulary progress over the last seven
+// days. The learned-words series comes from dailyStats; Known/Mastered
+// reuse the same vocabulary-growth reconstruction model as the Progress
+// page, so the three grouped bars do not invent a second state model.
+export function WordsLearnedCard({
+  status,
+  dailyStats,
+  vocabularyGrowthStatus,
+  vocabularyGrowthHistory,
+  todayISO,
+  onRetry,
+  onStartNewWordStudy,
+}: WordsLearnedCardProps) {
   const { t } = useLanguage();
 
-  const isLoading = status === "loading" || status === "blocked";
-  const isErrored = status === "error";
-  const isReady = status === "ready";
+  const isLoading =
+    status === "loading" ||
+    status === "blocked" ||
+    vocabularyGrowthStatus === "loading" ||
+    vocabularyGrowthStatus === "blocked";
+  const isErrored = status === "error" || vocabularyGrowthStatus === "error";
+  const isReady = status === "ready" && vocabularyGrowthStatus === "ready";
   // See StudyActivityCard's identical fallback: a signed-out visitor (or
   // no chosen target language yet) reaches "ready" with an always-empty
   // dailyStats array but a null todayISO — falling back to the device's
@@ -58,12 +72,22 @@ export function WordsLearnedCard({ status, dailyStats, todayISO, onRetry, onStar
         effectiveTodayISO,
       )
     : null;
+  const growthByDate = new Map(vocabularyGrowthHistory.map((day) => [day.dateISO, day]));
+  const chartDays =
+    summary?.days.map((day) => {
+      const growthDay = growthByDate.get(day.dateISO);
+      return {
+        ...day,
+        known: growthDay?.known ?? 0,
+        mastered: growthDay?.mastered ?? 0,
+      };
+    }) ?? [];
 
   const title = t("userProfile.dashboardPage.supportingCards.wordsLearned.title");
   const wordsUnit = t("userProfile.learningSection.todayProgress.wordsUnit");
-  const maxCount = summary ? Math.max(1, ...summary.days.map((day) => day.count)) : 1;
+  const maxCount = Math.max(1, ...chartDays.flatMap((day) => [day.count, day.known, day.mastered]));
 
-  const isEmpty = summary !== null && summary.total === 0;
+  const isEmpty = summary !== null && summary.total === 0 && chartDays.every((day) => day.known === 0 && day.mastered === 0);
 
   return (
     <section className="dashboard-card words-learned-card" aria-label={title}>
@@ -85,33 +109,21 @@ export function WordsLearnedCard({ status, dailyStats, todayISO, onRetry, onStar
         </div>
       ) : isLoading || summary === null ? (
         <div className="words-learned-card__skeleton-block" aria-hidden="true">
-          <span className="words-learned-card__skeleton words-learned-card__skeleton--total" />
+          <span className="words-learned-card__skeleton words-learned-card__skeleton--legend" />
           <span className="words-learned-card__skeleton words-learned-card__skeleton--bars" />
         </div>
       ) : (
         <>
-          <div className="words-learned-card__totals">
-            <p className="words-learned-card__total">
-              {summary.total} <span className="words-learned-card__total-unit">{wordsUnit}</span>
-            </p>
-            {/* Absolute difference only (never a percentage) — see the
-                Phase brief's "do not show percentage comparison unless the
-                zero-baseline case is handled correctly." Always shown: the
-                previous-7-day sum comes from the same already-loaded
-                dailyStats array, so it's real data even when it's zero,
-                never an omitted/faked value. */}
-            <p
-              className={`words-learned-card__comparison ${
-                summary.difference > 0
-                  ? "words-learned-card__comparison--up"
-                  : summary.difference < 0
-                    ? "words-learned-card__comparison--down"
-                    : ""
-              }`}
-            >
-              {summary.difference > 0 ? "+" : ""}
-              {summary.difference} {t("userProfile.dashboardPage.supportingCards.wordsLearned.comparisonSuffix")}
-            </p>
+          <div className="words-learned-card__legend" aria-hidden="true">
+            <span className="words-learned-card__legend-item words-learned-card__legend-item--learned">
+              {t("userProfile.dashboardPage.supportingCards.wordsLearned.series.wordsLearned")}
+            </span>
+            <span className="words-learned-card__legend-item words-learned-card__legend-item--known">
+              {t("userProfile.vocabularySection.summaryCards.known.title")}
+            </span>
+            <span className="words-learned-card__legend-item words-learned-card__legend-item--mastered">
+              {t("userProfile.vocabularySection.summaryCards.mastered.title")}
+            </span>
           </div>
 
           {isEmpty ? (
@@ -124,16 +136,52 @@ export function WordsLearnedCard({ status, dailyStats, todayISO, onRetry, onStar
             className="words-learned-card__bars"
             role="img"
             aria-label={summary.days
-              .map((day) => `${t(`userProfile.learningSection.dailyStreak.weekdays.${weekdayShortKeyFor(day.dateISO)}`)}: ${day.count}`)
+              .map((day) => {
+                const chartDay = chartDays.find((candidate) => candidate.dateISO === day.dateISO);
+                return [
+                  t(`userProfile.learningSection.dailyStreak.weekdays.${weekdayShortKeyFor(day.dateISO)}`),
+                  `${t("userProfile.dashboardPage.supportingCards.wordsLearned.series.wordsLearned")}: ${day.count}`,
+                  `${t("userProfile.vocabularySection.summaryCards.known.title")}: ${chartDay?.known ?? 0}`,
+                  `${t("userProfile.vocabularySection.summaryCards.mastered.title")}: ${chartDay?.mastered ?? 0}`,
+                ].join(" ");
+              })
               .join(", ")}
           >
-            {summary.days.map((day) => (
+            {chartDays.map((day) => (
               <div key={day.dateISO} className="words-learned-card__bar-col">
-                <div className="words-learned-card__bar-track">
-                  <div
-                    className="words-learned-card__bar-fill"
-                    style={{ height: `${(day.count / maxCount) * 100}%` }}
-                  />
+                <div className="words-learned-card__bar-group" tabIndex={0}>
+                  <div className="words-learned-card__bar-track" title={`${day.count} ${wordsUnit}`}>
+                    <div
+                      className="words-learned-card__bar-fill words-learned-card__bar-fill--learned"
+                      style={{ height: `${(day.count / maxCount) * 100}%` }}
+                    />
+                  </div>
+                  <div className="words-learned-card__bar-track" title={`${day.known} ${t("userProfile.vocabularySection.summaryCards.known.title")}`}>
+                    <div
+                      className="words-learned-card__bar-fill words-learned-card__bar-fill--known"
+                      style={{ height: `${(day.known / maxCount) * 100}%` }}
+                    />
+                  </div>
+                  <div className="words-learned-card__bar-track" title={`${day.mastered} ${t("userProfile.vocabularySection.summaryCards.mastered.title")}`}>
+                    <div
+                      className="words-learned-card__bar-fill words-learned-card__bar-fill--mastered"
+                      style={{ height: `${(day.mastered / maxCount) * 100}%` }}
+                    />
+                  </div>
+                  <div className="words-learned-card__tooltip" role="tooltip">
+                    <p className="words-learned-card__tooltip-period">
+                      {t(`userProfile.learningSection.dailyStreak.weekdays.${weekdayShortKeyFor(day.dateISO)}`)}
+                    </p>
+                    <p className="words-learned-card__tooltip-row">
+                      {t("userProfile.dashboardPage.supportingCards.wordsLearned.series.wordsLearned")}: {day.count}
+                    </p>
+                    <p className="words-learned-card__tooltip-row">
+                      {t("userProfile.vocabularySection.summaryCards.known.title")}: {day.known}
+                    </p>
+                    <p className="words-learned-card__tooltip-row">
+                      {t("userProfile.vocabularySection.summaryCards.mastered.title")}: {day.mastered}
+                    </p>
+                  </div>
                 </div>
                 <span className="words-learned-card__bar-label" aria-hidden="true">
                   {t(`userProfile.learningSection.dailyStreak.weekdays.${weekdayShortKeyFor(day.dateISO)}`)}

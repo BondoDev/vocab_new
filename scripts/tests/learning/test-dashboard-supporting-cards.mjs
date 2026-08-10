@@ -114,9 +114,9 @@ const EXPECTED = {
     viewVocabulary: "View Vocabulary",
     studyActivityTitle: "Study Activity",
     viewAllActivity: "View all activity",
-    wordsLearnedTitle: "Words Learned",
+    wordsLearnedTitle: "Vocabulary Progress",
+    wordsLearnedSeries: "Words learned",
     last7Days: "Last 7 Days",
-    comparisonSuffix: "vs previous 7 days",
     milestonePreviewTitle: "Milestone Preview",
     viewProgress: "View Progress",
   },
@@ -125,9 +125,9 @@ const EXPECTED = {
     viewVocabulary: "Vokabeln anzeigen",
     studyActivityTitle: "Lernaktivität",
     viewAllActivity: "Alle Aktivitäten anzeigen",
-    wordsLearnedTitle: "Gelernte Wörter",
+    wordsLearnedTitle: "Wortschatzfortschritt",
+    wordsLearnedSeries: "Gelernte Wörter",
     last7Days: "Letzte 7 Tage",
-    comparisonSuffix: "im Vergleich zu den vorherigen 7 Tagen",
     milestonePreviewTitle: "Meilenstein-Vorschau",
     viewProgress: "Fortschritt anzeigen",
   },
@@ -136,9 +136,9 @@ const EXPECTED = {
     viewVocabulary: "Ver vocabulario",
     studyActivityTitle: "Actividad de aprendizaje",
     viewAllActivity: "Ver toda la actividad",
-    wordsLearnedTitle: "Palabras aprendidas",
+    wordsLearnedTitle: "Progreso de vocabulario",
+    wordsLearnedSeries: "Palabras aprendidas",
     last7Days: "Últimos 7 días",
-    comparisonSuffix: "frente a los 7 días anteriores",
     milestonePreviewTitle: "Vista previa de hitos",
     viewProgress: "Ver progreso",
   },
@@ -147,9 +147,9 @@ const EXPECTED = {
     viewVocabulary: "Voir le vocabulaire",
     studyActivityTitle: "Activité d’apprentissage",
     viewAllActivity: "Voir toute l’activité",
-    wordsLearnedTitle: "Mots appris",
+    wordsLearnedTitle: "Progression du vocabulaire",
+    wordsLearnedSeries: "Mots appris",
     last7Days: "7 derniers jours",
-    comparisonSuffix: "par rapport aux 7 jours précédents",
     milestonePreviewTitle: "Aperçu des étapes",
     viewProgress: "Voir la progression",
   },
@@ -158,9 +158,9 @@ const EXPECTED = {
     viewVocabulary: "Visualizza vocabolario",
     studyActivityTitle: "Attività di apprendimento",
     viewAllActivity: "Visualizza tutte le attività",
-    wordsLearnedTitle: "Parole imparate",
+    wordsLearnedTitle: "Progresso del vocabolario",
+    wordsLearnedSeries: "Parole imparate",
     last7Days: "Ultimi 7 giorni",
-    comparisonSuffix: "rispetto ai 7 giorni precedenti",
     milestonePreviewTitle: "Anteprima dei traguardi",
     viewProgress: "Visualizza progressi",
   },
@@ -169,9 +169,9 @@ const EXPECTED = {
     viewVocabulary: "Ver vocabulário",
     studyActivityTitle: "Atividade de aprendizagem",
     viewAllActivity: "Ver toda a atividade",
-    wordsLearnedTitle: "Palavras aprendidas",
+    wordsLearnedTitle: "Progresso do vocabulário",
+    wordsLearnedSeries: "Palavras aprendidas",
     last7Days: "Últimos 7 dias",
-    comparisonSuffix: "em comparação com os 7 dias anteriores",
     milestonePreviewTitle: "Pré-visualização de marcos",
     viewProgress: "Ver progresso",
   },
@@ -180,9 +180,9 @@ const EXPECTED = {
     viewVocabulary: "Открыть словарь",
     studyActivityTitle: "Учебная активность",
     viewAllActivity: "Показать всю активность",
-    wordsLearnedTitle: "Выученные слова",
+    wordsLearnedTitle: "Прогресс словаря",
+    wordsLearnedSeries: "Выученные слова",
     last7Days: "Последние 7 дней",
-    comparisonSuffix: "по сравнению с предыдущими 7 днями",
     milestonePreviewTitle: "Предпросмотр этапов",
     viewProgress: "Посмотреть прогресс",
   },
@@ -198,7 +198,7 @@ for (const fileName of LOCALE_FILES) {
     assert.equal(cards.studyActivity.viewAllActivity, expected.viewAllActivity);
     assert.equal(cards.wordsLearned.title, expected.wordsLearnedTitle);
     assert.equal(cards.wordsLearned.last7Days, expected.last7Days);
-    assert.equal(cards.wordsLearned.comparisonSuffix, expected.comparisonSuffix);
+    assert.equal(cards.wordsLearned.series.wordsLearned, expected.wordsLearnedSeries);
     assert.equal(cards.milestonePreview.title, expected.milestonePreviewTitle);
     assert.equal(cards.milestonePreview.viewProgress, expected.viewProgress);
   });
@@ -272,6 +272,10 @@ const dashboardPageShell = fs.readFileSync(
 const milestonePreviewCard = fs.readFileSync(path.join(DASHBOARD_DIR, "MilestonePreviewCard.tsx"), "utf8");
 const studyActivityCard = fs.readFileSync(path.join(DASHBOARD_DIR, "StudyActivityCard.tsx"), "utf8");
 const useDashboardSupportingData = fs.readFileSync(path.join(DASHBOARD_DIR, "useDashboardSupportingData.ts"), "utf8");
+const useDashboardVocabularyGrowthData = fs.readFileSync(
+  path.join(DASHBOARD_DIR, "useDashboardVocabularyGrowthData.ts"),
+  "utf8",
+);
 const wordsLearnedCard = fs.readFileSync(path.join(DASHBOARD_DIR, "WordsLearnedCard.tsx"), "utf8");
 
 test("22. No new route is introduced — DashboardSection accepts onNavigateToSection rather than a URL/route prop", () => {
@@ -313,6 +317,13 @@ test("20. useDashboardSupportingData only reads (no insert/update/RPC-write call
   assert.match(useDashboardSupportingData, /readMilestoneDailyStats/);
 });
 
+test("20a. useDashboardVocabularyGrowthData only reads vocabulary growth history", () => {
+  assert.doesNotMatch(useDashboardVocabularyGrowthData, /supabase.*(insert|update|upsert)/i);
+  assert.doesNotMatch(useDashboardVocabularyGrowthData, /method:\s*["'](PATCH|PUT|DELETE)["']/);
+  assert.match(useDashboardVocabularyGrowthData, /readVocabularyGrowthEvents/);
+  assert.match(useDashboardVocabularyGrowthData, /computeVocabularyGrowthHistory/);
+});
+
 test("20b. None of the four supporting cards call a write/mutation function", () => {
   for (const [name, source] of [
     ["VocabularyOverviewCard", vocabularyOverviewCard],
@@ -331,6 +342,7 @@ test("20b. None of the four supporting cards call a write/mutation function", ()
 test("Only one useDashboardSupportingData call exists (DashboardSection), never duplicated per card", () => {
   const occurrences = (dashboardSection.match(/useDashboardSupportingData\(/g) || []).length;
   assert.equal(occurrences, 1);
+  assert.match(dashboardSection, /useDashboardVocabularyGrowthData\(/);
   for (const [name, source] of [
     ["StudyActivityCard", studyActivityCard],
     ["WordsLearnedCard", wordsLearnedCard],

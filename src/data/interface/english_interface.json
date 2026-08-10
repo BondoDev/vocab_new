@@ -104,10 +104,12 @@
           }
         },
         "wordsLearned": {
-          "title": "Words Learned",
+          "title": "Vocabulary Progress",
           "last7Days": "Last 7 Days",
-          "comparisonSuffix": "vs previous 7 days",
-          "emptyStateMessage": "Start a Study New Words session to build your weekly progress."
+          "emptyStateMessage": "Start a Study New Words session to build your weekly progress.",
+          "series": {
+            "wordsLearned": "Words learned"
+          }
         },
         "milestonePreview": {
           "title": "Milestone Preview",

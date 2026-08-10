@@ -104,10 +104,12 @@
           }
         },
         "wordsLearned": {
-          "title": "Mots appris",
+          "title": "Progression du vocabulaire",
           "last7Days": "7 derniers jours",
-          "comparisonSuffix": "par rapport aux 7 jours précédents",
-          "emptyStateMessage": "Commencez une session Étudier de nouveaux mots pour construire votre progression hebdomadaire."
+          "emptyStateMessage": "Commencez une session Étudier de nouveaux mots pour construire votre progression hebdomadaire.",
+          "series": {
+            "wordsLearned": "Mots appris"
+          }
         },
         "milestonePreview": {
           "title": "Aperçu des étapes",

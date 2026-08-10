@@ -4,6 +4,7 @@ import { interpolateTemplate } from "../../../../lib/interpolateTemplate";
 import type { UserProfile } from "../../../../lib/userProfile";
 import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { UserProfileSectionId } from "../../components/UserProfileSidebar";
 import { computeTodayProgressDisplay } from "../../../../data/learning/todayProgressDisplay";
 import { computeDailyStreakSummary, type DailyStreakSummary } from "../../../../data/learning/dailyStreak";
 import { useDashboardHeroData } from "./useDashboardHeroData";
@@ -47,8 +48,7 @@ interface DashboardHeroCardProps {
   todayISOStatus: ProfileSharedDataStatus;
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
-  onStartNewWordStudy?: () => void;
-  onStartReviewWords?: () => void;
+  onNavigateToSection?: (section: UserProfileSectionId) => void;
 }
 
 // Dashboard Phase 2's first hero section: one unified card combining
@@ -64,8 +64,7 @@ export function DashboardHeroCard({
   todayISOStatus,
   wordProgressRows,
   wordProgressStatus,
-  onStartNewWordStudy,
-  onStartReviewWords,
+  onNavigateToSection,
 }: DashboardHeroCardProps) {
   const { t } = useLanguage();
   const heroData = useDashboardHeroData({
@@ -116,7 +115,7 @@ export function DashboardHeroCard({
         ? t("userProfile.dashboardPage.hero.reviewWords.message")
         : null;
 
-  const handleCtaClick = cta.kind === "reviewWords" ? onStartReviewWords : onStartNewWordStudy;
+  const handleCtaClick = () => onNavigateToSection?.("learning");
 
   const wordsUnit = t("userProfile.learningSection.todayProgress.wordsUnit");
   const wordsLearnedLabel = t("userProfile.dashboardPage.hero.stats.wordsLearnedLabel");

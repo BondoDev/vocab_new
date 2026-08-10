@@ -428,16 +428,15 @@ test("5. Review CTA never renders a review-word quantity/count", () => {
   assert.ok(reviewMessageLine, "expected a hero.reviewWords.message reference in DashboardHeroCard");
 });
 
-test("6. Continue Learning (and Start Learning) route through onStartNewWordStudy — the Study New Words flow", () => {
-  assert.match(
-    dashboardHeroCard,
-    /const handleCtaClick = cta\.kind === "reviewWords" \? onStartReviewWords : onStartNewWordStudy;/,
-  );
+test("6. Hero CTA opens the Learning page rather than starting a study/review route directly", () => {
+  assert.match(dashboardHeroCard, /const handleCtaClick = \(\) => onNavigateToSection\?\.\("learning"\);/);
+  assert.doesNotMatch(dashboardHeroCard, /onStartNewWordStudy/);
+  assert.doesNotMatch(dashboardHeroCard, /onStartReviewWords/);
 });
 
-test("7. Review Words routes through onStartReviewWords — the structured Review flow, never Custom Practice/Exercises", () => {
+test("7. Review Words CTA never starts Review, Custom Practice, or Exercises directly", () => {
   assert.doesNotMatch(dashboardHeroCard, /exerciseSelection|source=custom-practice|onStartCustomPractice/);
-  assert.match(dashboardHeroCard, /onStartReviewWords/);
+  assert.doesNotMatch(dashboardHeroCard, /onStartReviewWords/);
 });
 
 console.log("\n=== No new Supabase write introduced (Phase 2 is read-only) ===\n");

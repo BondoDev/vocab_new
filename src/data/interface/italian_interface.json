@@ -104,10 +104,12 @@
           }
         },
         "wordsLearned": {
-          "title": "Parole imparate",
+          "title": "Progresso del vocabolario",
           "last7Days": "Ultimi 7 giorni",
-          "comparisonSuffix": "rispetto ai 7 giorni precedenti",
-          "emptyStateMessage": "Inizia una sessione di Studia parole nuove per costruire i tuoi progressi settimanali."
+          "emptyStateMessage": "Inizia una sessione di Studia parole nuove per costruire i tuoi progressi settimanali.",
+          "series": {
+            "wordsLearned": "Parole imparate"
+          }
         },
         "milestonePreview": {
           "title": "Anteprima dei traguardi",
