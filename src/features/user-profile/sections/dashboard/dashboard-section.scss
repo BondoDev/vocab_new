@@ -665,17 +665,49 @@
   }
 }
 
+@media (max-width: 1117.98px) {
+  .dashboard-card__title {
+    font-size: 0.88rem;
+  }
+
+  .dashboard-card__eyebrow,
+  .dashboard-card__link-button {
+    font-size: 0.68rem;
+  }
+
+  .vocabulary-overview-card .dashboard-card__header .dashboard-card__action {
+    gap: 0.25rem;
+    padding: 0.34rem 0.6rem;
+    font-size: 0.7rem;
+  }
+
+  .vocabulary-overview-card__label {
+    font-size: 0.68rem;
+  }
+}
+
 /* ------------------------------------------------------------
    Card A — VocabularyOverviewCard: three compact columns, not a donut
    chart (see the Phase brief's explicit "Do NOT use a big donut chart").
    ------------------------------------------------------------ */
 .vocabulary-overview-card {
+  .dashboard-card__header .dashboard-card__action {
+    align-self: center;
+    margin-top: 0;
+  }
+
   &__columns {
     display: flex;
+    flex: 1 1 auto;
+    align-items: center;
     gap: 1.25rem;
   }
 
   &__column {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 0.55rem;
     flex: 1 1 0;
     min-width: 0;
   }
@@ -684,10 +716,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.6rem;
-    height: 1.6rem;
-    margin-bottom: 0.4rem;
+    width: 2rem;
+    height: 2rem;
+    grid-row: 1 / span 2;
+    margin-bottom: 0;
     border-radius: calc(var(--radius) - 4px);
+
+    svg {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
   }
 
   &__column--purple &__icon {

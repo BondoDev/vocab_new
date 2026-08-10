@@ -72,6 +72,16 @@ export function VocabularyOverviewCard({
     <section className="dashboard-card vocabulary-overview-card" aria-label={title}>
       <header className="dashboard-card__header">
         <h2 className="dashboard-card__title">{title}</h2>
+        {!isErrored ? (
+          <button
+            type="button"
+            className="dashboard-card__action"
+            onClick={() => onNavigateToSection?.("vocabulary")}
+          >
+            {t("userProfile.dashboardPage.supportingCards.vocabularyOverview.viewVocabulary")}
+            <ArrowRight size={14} aria-hidden="true" />
+          </button>
+        ) : null}
       </header>
 
       {isErrored ? (
@@ -118,15 +128,6 @@ export function VocabularyOverviewCard({
           <p className="sr-only">
             {CATEGORY_CONFIGS.map((category) => `${t(category.titleKey)}: ${counts[category.id]}`).join(", ")}
           </p>
-
-          <button
-            type="button"
-            className="dashboard-card__action"
-            onClick={() => onNavigateToSection?.("vocabulary")}
-          >
-            {t("userProfile.dashboardPage.supportingCards.vocabularyOverview.viewVocabulary")}
-            <ArrowRight size={14} aria-hidden="true" />
-          </button>
         </>
       )}
     </section>
