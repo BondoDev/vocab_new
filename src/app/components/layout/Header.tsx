@@ -49,6 +49,11 @@ import {
   signUpWithPassword,
   type StoredSupabaseSession,
 } from "../../../lib/supabaseAuth";
+import {
+  classifySupabaseError,
+  describeSupabaseError,
+  resolveSupabaseErrorMessageKey,
+} from "../../../lib/supabaseError";
 import "./styles/header.scss";
 
 const NAV_HREFS = {
@@ -245,6 +250,29 @@ function GoogleMark() {
   );
 }
 
+// D-4/E-2: resolves a caught auth error to a safe, user-facing message
+// instead of ever rendering error.message directly. Reuses the shared
+// classifier (src/lib/supabaseError.ts) already used by
+// useAccountOnboarding.ts/useAccountLanguageConfirm.ts rather than a
+// parallel error system: the four universal categories (unauthenticated/
+// forbidden/missing_rpc/network) resolve to the existing shared
+// "supabaseErrors.*" copy, everything else (GoTrue's auth-specific
+// failures - bad credentials, signup rejected, etc. - mostly arrive as
+// HTTP 400/422 and classify as "validation") falls back to the caller's
+// own operationFallbackKey below. Always also logs safe, redacted
+// diagnostics via describeSupabaseError - never the raw error - so the
+// underlying cause is still visible in development.
+function resolveAuthErrorMessage(
+  operation: string,
+  error: unknown,
+  operationFallbackKey: string,
+  t: (key: string) => string,
+): string {
+  const category = classifySupabaseError(error);
+  console.warn(`Header: ${operation} failed.`, describeSupabaseError(operation, error));
+  return t(resolveSupabaseErrorMessageKey(category, operationFallbackKey));
+}
+
 interface HeaderProps {
   onAbout?: () => void;
   onHelp?: () => void;
@@ -367,9 +395,29 @@ export function Header({
     setIsAuthSubmitting(false);
   };
 
+  // D-3: the one reset contract every Login <-> Sign Up transition goes
+  // through - whether opening the dialog fresh into a mode or switching
+  // mode while it's already open (the dialog footer's "Sign up"/"Log in"
+  // buttons). Always clears the password and confirm-password fields (a
+  // password typed for one mode must never leak into the other) and any
+  // stale error/info message, so a signup failure can't linger and be
+  // mistaken for a login failure or vice versa. The email field is
+  // deliberately left untouched: keeping what the user already typed while
+  // they switch modes is normal, low-risk UX, not "stale" state to clear -
+  // callers that do want a fully fresh form (e.g. opening the dialog from
+  // outside) clear it themselves alongside this call.
+  const switchAuthMode = (mode: "login" | "signup") => {
+    setAuthMode(mode);
+    setAuthPassword("");
+    setAuthConfirmPassword("");
+    setAuthError(null);
+    setAuthInfo(null);
+    setIsAuthSubmitting(false);
+  };
+
   const openLoginDialog = () => {
-    setAuthMode("login");
-    resetAuthForm();
+    switchAuthMode("login");
+    setAuthEmail("");
     setIsMenuOpen(false);
     setIsMobileAccountMenuOpen(false);
     setIsDesktopMoreOpen(false);
@@ -377,9 +425,7 @@ export function Header({
   };
 
   const openSignupDialog = () => {
-    setAuthMode("signup");
-    setAuthError(null);
-    setAuthInfo(null);
+    switchAuthMode("signup");
     setIsAuthDialogOpen(true);
   };
 
@@ -398,7 +444,20 @@ export function Header({
       resetAuthForm();
       await signOutSupabase(currentSession);
     } catch (error) {
-      setAuthError(error instanceof Error ? error.message : "Sign out failed.");
+      // D-7: local sign-out (session clear, dialog close, menu close) has
+      // already happened synchronously above regardless of what happens
+      // here - signOutSupabase's /auth/v1/logout call failing at this
+      // point is best-effort server-side cleanup only (e.g. a network
+      // blip), not something the now-signed-out-locally user needs to act
+      // on. Writing into authError here used to be silently lost (the
+      // dialog was already closed by the time this ran) and reopening it
+      // just to show a logout network error would be confusing, so this
+      // logs safe, redacted diagnostics instead - never the raw error, and
+      // never any token/session data (see supabaseError.ts's own header).
+      console.warn(
+        "Header: signOutSupabase failed (local sign-out already completed).",
+        describeSupabaseError("sign out", error),
+      );
     } finally {
       onSignedOut?.();
     }
@@ -419,16 +478,21 @@ export function Header({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [controlledAuthSession]);
 
-  // Surfaces a redirect-time failure (e.g. a denied Google OAuth consent)
-  // caught by AppContent's single redirect handler. onAuthRedirectErrorHandled
-  // clears it upstream so this can't re-fire for the same failure.
+  // Surfaces a redirect-time failure (e.g. a denied Google OAuth consent,
+  // or D-5's error/error_code-without-description fallback) caught by
+  // AppContent's single redirect handler. Routes through switchAuthMode
+  // like every other mode transition (D-3), then sets the actual error
+  // message right after - that ordering matters: switchAuthMode's own
+  // setAuthError(null) must run first, or it would immediately clear the
+  // message this effect exists to show. onAuthRedirectErrorHandled clears
+  // the prop upstream so this can't re-fire for the same failure.
   useEffect(() => {
     if (!authRedirectError) {
       return;
     }
 
+    switchAuthMode("login");
     setAuthError(authRedirectError);
-    setAuthMode("login");
     setIsAuthDialogOpen(true);
     onAuthRedirectErrorHandled?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -527,6 +591,13 @@ export function Header({
   }, [isMenuOpen]);
 
   const handleGoogleAuth = async () => {
+    // D-8: reentrancy guard alongside the button's own `disabled` - closes
+    // the gap between a double-click/double-invoke and React re-rendering
+    // the disabled state.
+    if (isAuthSubmitting) {
+      return;
+    }
+
     try {
       setAuthError(null);
       setAuthInfo(null);
@@ -534,15 +605,24 @@ export function Header({
       const redirectTo = `${window.location.origin}${window.location.pathname}${window.location.search}`;
       await signInWithGoogleOAuth(redirectTo);
     } catch (error) {
-      setAuthError(
-        error instanceof Error ? error.message : "Google sign-in failed.",
-      );
+      // D-4/E-2: never error.message - Google-initiation failures are
+      // almost always local/config issues (missing Supabase env, a
+      // crypto/localStorage failure) rather than anything GoTrue returned,
+      // but route through the same shared classifier/safe-message helper
+      // as every other auth failure below for one consistent behavior.
+      setAuthError(resolveAuthErrorMessage("Google sign-in", error, "auth.googleError", t));
       setIsAuthSubmitting(false);
     }
   };
 
   const handlePasswordAuthSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // D-8: reentrancy guard.
+    if (isAuthSubmitting) {
+      return;
+    }
+
     setAuthError(null);
     setAuthInfo(null);
 
@@ -588,20 +668,36 @@ export function Header({
         return;
       }
 
-      setAuthMode("login");
-      setAuthPassword("");
-      setAuthConfirmPassword("");
+      // GoTrue itself returns this same "no session yet" shape both for a
+      // genuinely new signup pending email confirmation and (its own
+      // built-in anti-enumeration behavior) for an already-registered
+      // email - so this one message is already correct and safe for both
+      // cases without this app needing to tell them apart.
+      switchAuthMode("login");
       setAuthInfo("Account created. Check your email to confirm your sign up.");
     } catch (error) {
-      setAuthError(
-        error instanceof Error ? error.message : "Authentication failed.",
-      );
+      // D-4/E-2: never error.message. Login failures classify as "safe to
+      // be specific" (GoTrue's own invalid-credentials error already never
+      // reveals whether the email exists at all, only that the email+
+      // password pair was wrong). Signup failures use a deliberately
+      // neutral fallback instead - GoTrue's "already registered" rejection
+      // (when it does surface one instead of the 200 no-op above) must
+      // never be distinguishable from a weak-password or malformed-email
+      // rejection, or this app would itself become the enumeration leak
+      // GoTrue's own signup behavior is designed to avoid.
+      const fallbackKey = authMode === "login" ? "auth.loginError" : "auth.signupError";
+      setAuthError(resolveAuthErrorMessage(authMode === "login" ? "login" : "signup", error, fallbackKey, t));
     } finally {
       setIsAuthSubmitting(false);
     }
   };
 
   const handleForgotPassword = async () => {
+    // D-8: reentrancy guard.
+    if (isAuthSubmitting) {
+      return;
+    }
+
     setAuthError(null);
     setAuthInfo(null);
 
@@ -616,9 +712,13 @@ export function Header({
       await sendPasswordRecoveryEmail(authEmail.trim(), redirectTo);
       setAuthInfo("Password reset email sent. Check your inbox.");
     } catch (error) {
-      setAuthError(
-        error instanceof Error ? error.message : "Password reset failed.",
-      );
+      // D-4: never error.message. sendPasswordRecoveryEmail's own success
+      // path already never reveals whether the email exists (GoTrue itself
+      // returns 200 either way) - this catch only ever fires for something
+      // else (network failure, rate limiting, ...), so no enumeration
+      // concern here, just the same safe-message treatment as every other
+      // auth failure.
+      setAuthError(resolveAuthErrorMessage("forgot password", error, "auth.forgotPasswordError", t));
     } finally {
       setIsAuthSubmitting(false);
     }
@@ -1084,13 +1184,20 @@ export function Header({
                 </div>
 
                 {authError ? (
-                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  <div
+                    role="alert"
+                    className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                  >
                     {authError}
                   </div>
                 ) : null}
 
                 {authInfo ? (
-                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                  <div
+                    role="status"
+                    aria-live="polite"
+                    className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+                  >
                     {authInfo}
                   </div>
                 ) : null}
@@ -1206,7 +1313,7 @@ export function Header({
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => setAuthMode("login")}
+                    onClick={() => switchAuthMode("login")}
                     className="h-11 w-full rounded-xl border-[#d9cffd] bg-[#faf7ff] font-semibold text-[#49368f] hover:bg-[#f3ecff]"
                   >
                     {loginLabel}

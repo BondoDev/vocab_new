@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 
 import { LanguageSelector } from "../LanguageSelector";
 import { Button } from "../ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
@@ -121,15 +127,22 @@ export function AccountOnboardingDialog({
                 <DialogTitle className="text-[1.9rem] font-semibold leading-tight tracking-tight text-[#261943]">
                   Finish your profile
                 </DialogTitle>
-                <p className="max-w-[24rem] text-sm leading-6 text-[#6f6290]">
+                {/* F-3: this already-visible blurb doubles as the dialog's
+                    accessible description (wires up aria-describedby) - no
+                    visual change, just the proper Radix element instead of
+                    a plain <p>. */}
+                <DialogDescription className="max-w-[24rem] text-sm leading-6 text-[#6f6290]">
                   You can update these details anytime.
-                </p>
+                </DialogDescription>
               </div>
             </DialogHeader>
 
             <div className="mt-8 space-y-5">
               {error ? (
-                <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                <div
+                  role="alert"
+                  className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                >
                   {error}
                 </div>
               ) : null}

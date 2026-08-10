@@ -35,8 +35,12 @@ function test(name, fn) {
   }
 }
 
+// Normalizes CRLF to LF: this repo's working tree checks some source files
+// out with CRLF line endings, which silently breaks a `\n\n`-style
+// (blank-line) regex anchor - a CRLF blank line is actually `\r\n\r\n`, with
+// a stray \r sitting between the two LFs the pattern expects adjacent.
 function read(relPath) {
-  return fs.readFileSync(path.join(ROOT_DIR, relPath), "utf8");
+  return fs.readFileSync(path.join(ROOT_DIR, relPath), "utf8").replace(/\r\n/g, "\n");
 }
 
 console.log("\n=== Password recovery completion guards ===\n");
@@ -108,12 +112,20 @@ test("5. The recovery (hash-token) branch calls clearAuthParamsFromUrl() before 
 });
 
 test("6. Invalid/expired recovery links (GoTrue's error_description redirect) are handled safely: cleaned up and returned as a typed error, never thrown", () => {
+  // D-5 (a later, separate task) widened this branch's condition to also
+  // catch error/error_code without a description - see
+  // test-auth-dialog-hardening.mjs for that behavior specifically. This
+  // test only re-confirms the property that still matters for D-1/D-2:
+  // a recovery-flavored error_description redirect is still cleaned up
+  // and returned as a safe, typed, never-thrown error.
   const branchMatch = supabaseAuth.match(
-    /if \(errorDescription\) \{([\s\S]*?recovery: false \};)/,
+    /if \(errorDescription \|\| oauthError \|\| oauthErrorCode\) \{([\s\S]*?)\n  \}\n\n  if \(authCode\)/,
   );
   assert.ok(branchMatch, "error-description branch must be found");
-  assert.match(branchMatch[1], /clearAuthParamsFromUrl\(\);/);
-  assert.match(branchMatch[1], /error: decodeURIComponent\(errorDescription\), recovery: false/);
+  const body = branchMatch[1];
+  assert.match(body, /clearAuthParamsFromUrl\(\);/);
+  assert.match(body, /error: errorDescription\s*\?\s*decodeURIComponent\(errorDescription\)/);
+  assert.match(body, /recovery: false,/);
 });
 
 console.log("\n--- src/lib/supabaseAuth.ts: PKCE/OAuth path is unchanged ---\n");

@@ -494,6 +494,15 @@ export async function handleSupabaseAuthRedirect(): Promise<SupabaseAuthRedirect
   const url = new URL(window.location.href);
   const hashParams = new URLSearchParams(url.hash.replace(/^#/, ""));
   const errorDescription = url.searchParams.get("error_description");
+  // D-5: some OAuth/auth failures redirect with `error` and/or `error_code`
+  // but no `error_description` (e.g. a provider-side error GoTrue couldn't
+  // attach a description to). Before this, that shape fell through every
+  // branch below to the silent no-op fallback at the bottom of this
+  // function - the failure was swallowed and `error`/`error_code` were left
+  // sitting in the URL instead of being cleaned up like every other
+  // consumed auth redirect.
+  const oauthError = url.searchParams.get("error");
+  const oauthErrorCode = url.searchParams.get("error_code");
   const authCode = url.searchParams.get("code");
   const hashAccessToken = hashParams.get("access_token");
   const hashRefreshToken = hashParams.get("refresh_token");
@@ -518,9 +527,22 @@ export async function handleSupabaseAuthRedirect(): Promise<SupabaseAuthRedirect
     return { changed: true, session: hydratedSession, error: null, recovery: isRecovery };
   }
 
-  if (errorDescription) {
+  if (errorDescription || oauthError || oauthErrorCode) {
     clearAuthParamsFromUrl();
-    return { changed: false, session: null, error: decodeURIComponent(errorDescription), recovery: false };
+    // A real error_description (GoTrue's own user-facing text for this
+    // failure, e.g. "Email link is invalid or has expired") is preserved
+    // exactly as before. Without one, a generic, safe message is returned
+    // instead of silently dropping the failure - never anything derived
+    // from the raw `error`/`error_code` values themselves, which are
+    // provider-internal identifiers, not user-facing text.
+    return {
+      changed: false,
+      session: null,
+      error: errorDescription
+        ? decodeURIComponent(errorDescription)
+        : "Authentication failed. Please try again.",
+      recovery: false,
+    };
   }
 
   if (authCode) {

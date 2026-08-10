@@ -48,6 +48,12 @@
   "accountOnboarding": {
     "saveError": "Nao foi possivel salvar seu perfil. Tente novamente."
   },
+  "auth": {
+    "loginError": "E-mail ou senha incorretos. Tente novamente.",
+    "signupError": "Nao foi possivel criar sua conta com esses dados. Verifique suas informacoes e tente novamente.",
+    "forgotPasswordError": "Nao foi possivel enviar o e-mail de redefinicao de senha. Tente novamente.",
+    "googleError": "Nao foi possivel iniciar o login com o Google. Tente novamente."
+  },
   "userProfile": {
     "developmentNotice": {
       "ariaLabel": "Status do painel de perfil",

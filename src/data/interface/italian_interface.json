@@ -48,6 +48,12 @@
   "accountOnboarding": {
     "saveError": "Non siamo riusciti a salvare il tuo profilo. Riprova."
   },
+  "auth": {
+    "loginError": "Email o password non corretti. Riprova.",
+    "signupError": "Non siamo riusciti a creare il tuo account con questi dati. Controlla le tue informazioni e riprova.",
+    "forgotPasswordError": "Non siamo riusciti a inviare l'email per reimpostare la password. Riprova.",
+    "googleError": "Non siamo riusciti ad avviare l'accesso con Google. Riprova."
+  },
   "userProfile": {
     "developmentNotice": {
       "ariaLabel": "Stato della dashboard del profilo",
