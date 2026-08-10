@@ -56,11 +56,15 @@
     "signupCheckEmail": "Revisa tu correo electronico para continuar. Si ya tienes una cuenta, inicia sesion o continua con Google."
   },
   "userProfile": {
-    "developmentNotice": {
-      "ariaLabel": "Estado del panel de perfil",
-      "status": "En desarrollo",
-      "title": "Tu perfil esta tomando forma",
-      "description": "Estamos preparando este espacio para tu historial de aprendizaje, configuracion guardada e informacion de progreso. Estara listo pronto."
+    "dashboardPage": {
+      "ariaLabel": "Sección del panel",
+      "title": "Panel",
+      "greeting": {
+        "morning": "Buenos días, {name}. ¿Listo para seguir aprendiendo?",
+        "afternoon": "Buenas tardes, {name}. ¿Listo para seguir aprendiendo?",
+        "evening": "Buenas noches, {name}. ¿Listo para seguir aprendiendo?",
+        "fallback": "¿Listo para seguir aprendiendo?"
+      }
     },
     "sidebar": {
       "aria": {

@@ -56,11 +56,15 @@
     "signupCheckEmail": "Controlla la tua email per continuare. Se hai gia un account, accedi o continua con Google."
   },
   "userProfile": {
-    "developmentNotice": {
-      "ariaLabel": "Stato della dashboard del profilo",
-      "status": "In sviluppo",
-      "title": "Il tuo profilo sta prendendo forma",
-      "description": "Stiamo preparando questo spazio per la tua cronologia di apprendimento, le impostazioni salvate e le informazioni sui progressi. Sara pronto presto."
+    "dashboardPage": {
+      "ariaLabel": "Sezione dashboard",
+      "title": "Dashboard",
+      "greeting": {
+        "morning": "Buongiorno, {name}. Pronto a continuare a imparare?",
+        "afternoon": "Buon pomeriggio, {name}. Pronto a continuare a imparare?",
+        "evening": "Buonasera, {name}. Pronto a continuare a imparare?",
+        "fallback": "Pronto a continuare a imparare?"
+      }
     },
     "sidebar": {
       "aria": {
