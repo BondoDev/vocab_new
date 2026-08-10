@@ -56,11 +56,31 @@
     "signupCheckEmail": "Verifiez votre e-mail pour continuer. Si vous avez deja un compte, connectez-vous ou continuez avec Google."
   },
   "userProfile": {
-    "developmentNotice": {
-      "ariaLabel": "Etat du tableau de bord du profil",
-      "status": "En developpement",
-      "title": "Votre profil prend forme",
-      "description": "Nous preparons cet espace pour votre historique d'apprentissage, vos reglages enregistres et vos informations de progression. Il sera bientot pret."
+    "dashboardPage": {
+      "ariaLabel": "Section tableau de bord",
+      "title": "Tableau de bord",
+      "greeting": {
+        "morning": "Bonjour, {name}. Prêt à continuer d’apprendre ?",
+        "afternoon": "Bon après-midi, {name}. Prêt à continuer d’apprendre ?",
+        "evening": "Bonsoir, {name}. Prêt à continuer d’apprendre ?",
+        "fallback": "Prêt à continuer d’apprendre ?"
+      },
+      "hero": {
+        "ariaLabel": "Aperçu du jour",
+        "todayLabel": "Aujourd’hui",
+        "stats": {
+          "wordsLearnedLabel": "mots appris",
+          "dayStreakLabel": "jours consécutifs",
+          "goalLabel": "Objectif"
+        },
+        "continueLearning": {
+          "title": "Continuer l’apprentissage",
+          "message": "Il vous reste {count} mots à apprendre aujourd’hui."
+        },
+        "reviewWords": {
+          "message": "Entretenez votre vocabulaire avec une session de révision."
+        }
+      }
     },
     "sidebar": {
       "aria": {

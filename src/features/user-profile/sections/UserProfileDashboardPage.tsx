@@ -34,7 +34,7 @@ interface UserProfileDashboardPageProps {
 }
 
 const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
-  dashboard: "userProfile.developmentNotice.ariaLabel",
+  dashboard: "userProfile.dashboardPage.ariaLabel",
   learning: "userProfile.learningSection.ariaLabel",
   vocabulary: "userProfile.vocabularySection.ariaLabel",
   progress: "userProfile.progressSection.ariaLabel",
@@ -142,7 +142,19 @@ export function UserProfileDashboardPage({
                 onStartNewWordStudy={onStartNewWordStudy}
               />
             ) : null}
-            {activeSection === "dashboard" ? <DashboardSection /> : null}
+            {activeSection === "dashboard" ? (
+              <DashboardSection
+                nickname={nickname}
+                userProfile={userProfile}
+                isProfileLoaded={isProfileLoaded}
+                todayISO={todayISO}
+                todayISOStatus={todayISOStatus}
+                wordProgressRows={wordProgressRows}
+                wordProgressStatus={wordProgressStatus}
+                onStartNewWordStudy={onStartNewWordStudy}
+                onStartReviewWords={onStartReviewWords}
+              />
+            ) : null}
           </section>
         </div>
       </section>

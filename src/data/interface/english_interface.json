@@ -56,11 +56,31 @@
     "signupCheckEmail": "Check your email to continue. If you already have an account, log in or continue with Google."
   },
   "userProfile": {
-    "developmentNotice": {
-      "ariaLabel": "Profile dashboard status",
-      "status": "In development",
-      "title": "Your profile is taking shape",
-      "description": "We are building this space for your learning history, saved settings, and progress insights. It will be ready soon."
+    "dashboardPage": {
+      "ariaLabel": "Dashboard section",
+      "title": "Dashboard",
+      "greeting": {
+        "morning": "Good morning, {name}. Ready to keep learning?",
+        "afternoon": "Good afternoon, {name}. Ready to keep learning?",
+        "evening": "Good evening, {name}. Ready to keep learning?",
+        "fallback": "Ready to keep learning?"
+      },
+      "hero": {
+        "ariaLabel": "Today overview",
+        "todayLabel": "Today",
+        "stats": {
+          "wordsLearnedLabel": "words learned",
+          "dayStreakLabel": "day streak",
+          "goalLabel": "Goal"
+        },
+        "continueLearning": {
+          "title": "Continue Learning",
+          "message": "You have {count} words left for today."
+        },
+        "reviewWords": {
+          "message": "Keep your vocabulary fresh with a review session."
+        }
+      }
     },
     "sidebar": {
       "aria": {

@@ -56,11 +56,31 @@
     "signupCheckEmail": "Bitte überprüfe deine E-Mails, um fortzufahren. Falls du bereits ein Konto hast, melde dich an oder fahre mit Google fort."
   },
   "userProfile": {
-    "developmentNotice": {
-      "ariaLabel": "Status des Profil-Dashboards",
-      "status": "In Entwicklung",
-      "title": "Dein Profil nimmt Gestalt an",
-      "description": "Wir bereiten diesen Bereich fuer deinen Lernverlauf, gespeicherte Einstellungen und Fortschrittsuebersichten vor. Er ist bald bereit."
+    "dashboardPage": {
+      "ariaLabel": "Übersichtsbereich",
+      "title": "Übersicht",
+      "greeting": {
+        "morning": "Guten Morgen, {name}. Bereit, weiterzulernen?",
+        "afternoon": "Guten Tag, {name}. Bereit, weiterzulernen?",
+        "evening": "Guten Abend, {name}. Bereit, weiterzulernen?",
+        "fallback": "Bereit, weiterzulernen?"
+      },
+      "hero": {
+        "ariaLabel": "Heutige Übersicht",
+        "todayLabel": "Heute",
+        "stats": {
+          "wordsLearnedLabel": "gelernte Wörter",
+          "dayStreakLabel": "Tage-Serie",
+          "goalLabel": "Ziel"
+        },
+        "continueLearning": {
+          "title": "Weiterlernen",
+          "message": "Du hast heute noch {count} Wörter übrig."
+        },
+        "reviewWords": {
+          "message": "Halte deinen Wortschatz mit einer Wiederholungseinheit frisch."
+        }
+      }
     },
     "sidebar": {
       "aria": {
