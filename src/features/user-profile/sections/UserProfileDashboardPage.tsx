@@ -142,7 +142,19 @@ export function UserProfileDashboardPage({
                 onStartNewWordStudy={onStartNewWordStudy}
               />
             ) : null}
-            {activeSection === "dashboard" ? <DashboardSection nickname={nickname} /> : null}
+            {activeSection === "dashboard" ? (
+              <DashboardSection
+                nickname={nickname}
+                userProfile={userProfile}
+                isProfileLoaded={isProfileLoaded}
+                todayISO={todayISO}
+                todayISOStatus={todayISOStatus}
+                wordProgressRows={wordProgressRows}
+                wordProgressStatus={wordProgressStatus}
+                onStartNewWordStudy={onStartNewWordStudy}
+                onStartReviewWords={onStartReviewWords}
+              />
+            ) : null}
           </section>
         </div>
       </section>

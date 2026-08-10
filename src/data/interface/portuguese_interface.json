@@ -64,6 +64,22 @@
         "afternoon": "Boa tarde, {name}. Pronto para continuar a aprender?",
         "evening": "Boa noite, {name}. Pronto para continuar a aprender?",
         "fallback": "Pronto para continuar a aprender?"
+      },
+      "hero": {
+        "ariaLabel": "Resumo de hoje",
+        "todayLabel": "Hoje",
+        "stats": {
+          "wordsLearnedLabel": "palavras aprendidas",
+          "dayStreakLabel": "dias seguidos",
+          "goalLabel": "Meta"
+        },
+        "continueLearning": {
+          "title": "Continuar a aprender",
+          "message": "Ainda faltam {count} palavras para hoje."
+        },
+        "reviewWords": {
+          "message": "Mantenha o seu vocabulário ativo com uma sessão de revisão."
+        }
       }
     },
     "sidebar": {

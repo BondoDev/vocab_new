@@ -64,6 +64,22 @@
         "afternoon": "Good afternoon, {name}. Ready to keep learning?",
         "evening": "Good evening, {name}. Ready to keep learning?",
         "fallback": "Ready to keep learning?"
+      },
+      "hero": {
+        "ariaLabel": "Today overview",
+        "todayLabel": "Today",
+        "stats": {
+          "wordsLearnedLabel": "words learned",
+          "dayStreakLabel": "day streak",
+          "goalLabel": "Goal"
+        },
+        "continueLearning": {
+          "title": "Continue Learning",
+          "message": "You have {count} words left for today."
+        },
+        "reviewWords": {
+          "message": "Keep your vocabulary fresh with a review session."
+        }
       }
     },
     "sidebar": {

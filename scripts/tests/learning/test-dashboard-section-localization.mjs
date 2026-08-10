@@ -1,24 +1,28 @@
-// Focused localization + data-flow guard for Dashboard Phase 1 (page
-// header + personalized subheader greeting only — see
+// Focused localization + data-flow guard for Dashboard Phase 1 (page header
+// + personalized subheader greeting) and Phase 2 (the combined Today /
+// Rocket / Continue Learning hero card) — see
 // src/features/user-profile/sections/dashboard/DashboardSection.tsx's own
-// header for what's deliberately NOT implemented yet).
+// header for what's deliberately NOT implemented yet.
 //
 // Confirms every one of the 7 supported interface files stays valid JSON
 // and defines:
-//   - the exact same `userProfile.dashboardPage.*` key set as English;
-//   - verbatim (do-not-reword) title/greeting.*/fallback strings, matching
-//     the exact translations supplied for this task;
-//   - the {name} placeholder shape is present, unchanged, in every
-//     locale's morning/afternoon/evening template (so interpolation can't
-//     silently break in one language);
-//   - the old `userProfile.developmentNotice.*` placeholder namespace it
-//     replaced is fully gone (locks in the cleanup, not just an addition).
-// It also statically checks DashboardSection.tsx / UserProfileDashboardPage.tsx
-// source for the contract points from the Phase 1 brief that aren't
-// otherwise covered by test-dashboard-greeting-period.mjs's pure-function
-// tests: the nickname prop is threaded through (not re-fetched), a missing
-// nickname falls back to the dedicated fallback key, and no English
-// greeting text is hardcoded into the component.
+//   - the exact same `userProfile.dashboardPage.*` key set as English
+//     (title/greeting.* from Phase 1, hero.* from Phase 2);
+//   - verbatim (do-not-reword) strings, matching the exact translations
+//     supplied for this task;
+//   - the {name}/{count} placeholder shapes are present, unchanged, in
+//     every locale's templates (so interpolation can't silently break in
+//     one language);
+//   - the old `userProfile.developmentNotice.*` placeholder namespace
+//     Phase 1 replaced is fully gone (locks in the cleanup).
+// It also statically checks DashboardSection.tsx / DashboardHeroCard.tsx /
+// UserProfileDashboardPage.tsx source for the contract points from the
+// briefs that aren't otherwise covered by test-dashboard-greeting-
+// period.mjs's / test-dashboard-hero-cta.mjs's pure-function tests: prop
+// threading (never a second fetch), the nickname/no-vocabulary fallbacks,
+// the Continue Learning/Review Words routes, that no review-word quantity
+// is ever rendered, that the rocket asset exists on disk, and that no new
+// Supabase write was introduced anywhere in this phase.
 //
 // Plain `node` (no TypeScript needed for the source-regex checks either —
 // matching test-progress-section-localization.mjs's own precedent).
@@ -97,13 +101,21 @@ test("english_interface.json defines a non-empty userProfile.dashboardPage", () 
 
 const englishKeys = flattenKeys(englishPage ?? {});
 
-test("userProfile.dashboardPage has exactly ariaLabel/title/greeting.{morning,afternoon,evening,fallback}", () => {
+test("userProfile.dashboardPage has exactly the Phase 1 + Phase 2 keys, no more, no less", () => {
   assert.deepEqual(englishKeys, [
     "ariaLabel",
     "greeting.afternoon",
     "greeting.evening",
     "greeting.fallback",
     "greeting.morning",
+    "hero.ariaLabel",
+    "hero.continueLearning.message",
+    "hero.continueLearning.title",
+    "hero.reviewWords.message",
+    "hero.stats.dayStreakLabel",
+    "hero.stats.goalLabel",
+    "hero.stats.wordsLearnedLabel",
+    "hero.todayLabel",
     "title",
   ]);
 });
@@ -242,7 +254,7 @@ const dashboardPageShell = fs.readFileSync(
 
 test("13. DashboardSection accepts and uses an authenticated nickname prop (not its own fetch)", () => {
   assert.match(dashboardSection, /interface DashboardSectionProps\s*\{[^}]*nickname\??:\s*string/s);
-  assert.match(dashboardSection, /DashboardSection\(\{\s*nickname\s*\}/);
+  assert.match(dashboardSection, /export function DashboardSection\(\{[^)]*\bnickname\b[^)]*\}:/s);
 });
 
 test("14. Missing/empty nickname falls back to the dedicated fallback key, not an undefined/empty name", () => {
@@ -259,7 +271,205 @@ test("16. No redundant profile request: DashboardSection never calls the profile
 });
 
 test("16b. UserProfileDashboardPage threads its existing nickname prop into DashboardSection rather than loading a new one", () => {
-  assert.match(dashboardPageShell, /<DashboardSection\s+nickname=\{nickname\}\s*\/>/);
+  const dashboardSectionJsxMatch = dashboardPageShell.match(/<DashboardSection\s+([\s\S]*?)\/>/);
+  assert.ok(dashboardSectionJsxMatch, "UserProfileDashboardPage must render <DashboardSection ... />");
+  assert.match(dashboardSectionJsxMatch[1], /nickname=\{nickname\}/);
+});
+
+console.log("\n=== Dashboard hero (Phase 2) localization contract ===\n");
+
+// Verbatim, do-not-reword translations as supplied for the genuinely-new
+// Dashboard-specific hero copy (ariaLabel/todayLabel/stats labels/
+// continueLearning.title were authored for this task since no equivalent
+// existed; continueLearning.message and reviewWords.message are the exact
+// strings supplied in the brief). reviewWords.title/button and
+// startLearning's title/button are deliberately NOT duplicated here — the
+// component reuses userProfile.learningSection.modeCards.modes.* verbatim
+// instead (see the DashboardHeroCard source checks below).
+const EXPECTED_HERO = {
+  "english_interface.json": {
+    ariaLabel: "Today overview",
+    todayLabel: "Today",
+    wordsLearnedLabel: "words learned",
+    dayStreakLabel: "day streak",
+    goalLabel: "Goal",
+    continueLearningTitle: "Continue Learning",
+    continueLearningMessage: "You have {count} words left for today.",
+    reviewWordsMessage: "Keep your vocabulary fresh with a review session.",
+  },
+  "german_interface.json": {
+    ariaLabel: "Heutige Übersicht",
+    todayLabel: "Heute",
+    wordsLearnedLabel: "gelernte Wörter",
+    dayStreakLabel: "Tage-Serie",
+    goalLabel: "Ziel",
+    continueLearningTitle: "Weiterlernen",
+    continueLearningMessage: "Du hast heute noch {count} Wörter übrig.",
+    reviewWordsMessage: "Halte deinen Wortschatz mit einer Wiederholungseinheit frisch.",
+  },
+  "spanish_interface.json": {
+    ariaLabel: "Resumen de hoy",
+    todayLabel: "Hoy",
+    wordsLearnedLabel: "palabras aprendidas",
+    dayStreakLabel: "racha de días",
+    goalLabel: "Meta",
+    continueLearningTitle: "Continuar aprendiendo",
+    continueLearningMessage: "Te quedan {count} palabras para hoy.",
+    reviewWordsMessage: "Mantén tu vocabulario fresco con una sesión de repaso.",
+  },
+  "french_interface.json": {
+    ariaLabel: "Aperçu du jour",
+    todayLabel: "Aujourd’hui",
+    wordsLearnedLabel: "mots appris",
+    dayStreakLabel: "jours consécutifs",
+    goalLabel: "Objectif",
+    continueLearningTitle: "Continuer l’apprentissage",
+    continueLearningMessage: "Il vous reste {count} mots à apprendre aujourd’hui.",
+    reviewWordsMessage: "Entretenez votre vocabulaire avec une session de révision.",
+  },
+  "italian_interface.json": {
+    ariaLabel: "Riepilogo di oggi",
+    todayLabel: "Oggi",
+    wordsLearnedLabel: "parole apprese",
+    dayStreakLabel: "giorni consecutivi",
+    goalLabel: "Obiettivo",
+    continueLearningTitle: "Continua a imparare",
+    continueLearningMessage: "Ti restano {count} parole per oggi.",
+    reviewWordsMessage: "Mantieni fresco il tuo vocabolario con una sessione di ripasso.",
+  },
+  "portuguese_interface.json": {
+    ariaLabel: "Resumo de hoje",
+    todayLabel: "Hoje",
+    wordsLearnedLabel: "palavras aprendidas",
+    dayStreakLabel: "dias seguidos",
+    goalLabel: "Meta",
+    continueLearningTitle: "Continuar a aprender",
+    continueLearningMessage: "Ainda faltam {count} palavras para hoje.",
+    reviewWordsMessage: "Mantenha o seu vocabulário ativo com uma sessão de revisão.",
+  },
+  "russian_interface.json": {
+    ariaLabel: "Сводка за сегодня",
+    todayLabel: "Сегодня",
+    wordsLearnedLabel: "изученные слова",
+    dayStreakLabel: "дней подряд",
+    goalLabel: "Цель",
+    continueLearningTitle: "Продолжить обучение",
+    continueLearningMessage: "На сегодня осталось {count} слов.",
+    reviewWordsMessage: "Закрепите словарный запас с помощью повторения.",
+  },
+};
+
+for (const fileName of LOCALE_FILES) {
+  test(`${fileName} hero.* matches the exact supplied/authored translations`, () => {
+    const hero = parsed.get(fileName).userProfile.dashboardPage.hero;
+    const expected = EXPECTED_HERO[fileName];
+    assert.equal(hero.ariaLabel, expected.ariaLabel, `${fileName}: hero.ariaLabel was reworded`);
+    assert.equal(hero.todayLabel, expected.todayLabel, `${fileName}: hero.todayLabel was reworded`);
+    assert.equal(hero.stats.wordsLearnedLabel, expected.wordsLearnedLabel, `${fileName}: hero.stats.wordsLearnedLabel was reworded`);
+    assert.equal(hero.stats.dayStreakLabel, expected.dayStreakLabel, `${fileName}: hero.stats.dayStreakLabel was reworded`);
+    assert.equal(hero.stats.goalLabel, expected.goalLabel, `${fileName}: hero.stats.goalLabel was reworded`);
+    assert.equal(hero.continueLearning.title, expected.continueLearningTitle, `${fileName}: hero.continueLearning.title was reworded`);
+    assert.equal(
+      hero.continueLearning.message,
+      expected.continueLearningMessage,
+      `${fileName}: hero.continueLearning.message was reworded`,
+    );
+    assert.equal(hero.reviewWords.message, expected.reviewWordsMessage, `${fileName}: hero.reviewWords.message was reworded`);
+  });
+}
+
+console.log("\n=== {count} placeholder shape is consistent across all languages ===\n");
+
+for (const fileName of LOCALE_FILES) {
+  test(`${fileName} hero.continueLearning.message contains a literal {count} token`, () => {
+    const hero = parsed.get(fileName).userProfile.dashboardPage.hero;
+    assert.ok(hero.continueLearning.message.includes("{count}"), `${fileName}: hero.continueLearning.message is missing {count}`);
+  });
+
+  test(`${fileName} hero.reviewWords.message contains no review-word quantity/placeholder`, () => {
+    const hero = parsed.get(fileName).userProfile.dashboardPage.hero;
+    assert.ok(!/\{.*\}/.test(hero.reviewWords.message), `${fileName}: hero.reviewWords.message must not interpolate a count — no review quantity is ever shown`);
+    assert.ok(!/\d/.test(hero.reviewWords.message), `${fileName}: hero.reviewWords.message must not contain a literal number`);
+  });
+}
+
+test("English hero.stats.* and modeCards.* reused keys required by the hero are all present and non-empty (reuse contract)", () => {
+  const userProfile = parsed.get("english_interface.json").userProfile;
+  assert.equal(userProfile.learningSection.todayProgress.wordsUnit, "words");
+  assert.equal(userProfile.learningSection.modeCards.modes.reviewWords.title, "Review Words");
+  assert.equal(userProfile.learningSection.modeCards.modes.reviewWords.buttonLabel, "Start Review");
+  assert.equal(userProfile.learningSection.modeCards.modes.studyNewWords.buttonLabel, "Start Learning");
+});
+
+console.log("\n=== Rocket asset (Phase 2 hero) ===\n");
+
+const ROCKET_ASSET_RELATIVE_PATH = "public/images/user-profile/dashboard/dashboard-image.png";
+
+test("12. The rocket asset referenced by DashboardHeroCard exists on disk", () => {
+  const assetPath = path.join(ROOT_DIR, ROCKET_ASSET_RELATIVE_PATH);
+  assert.ok(fs.existsSync(assetPath), `expected an existing asset at ${ROCKET_ASSET_RELATIVE_PATH}`);
+});
+
+const dashboardHeroCard = fs.readFileSync(path.join(DASHBOARD_DIR, "DashboardHeroCard.tsx"), "utf8");
+const useDashboardHeroData = fs.readFileSync(path.join(DASHBOARD_DIR, "useDashboardHeroData.ts"), "utf8");
+
+test("12b. DashboardHeroCard references the exact existing asset path, not a generated/renamed one", () => {
+  assert.match(dashboardHeroCard, /\/images\/user-profile\/dashboard\/dashboard-image\.png/);
+});
+
+console.log("\n=== DashboardHeroCard CTA routing + no-review-quantity contract (static source checks) ===\n");
+
+test("5. Review CTA never renders a review-word quantity/count", () => {
+  assert.doesNotMatch(dashboardHeroCard, /\d+\s*words?\s*ready/i);
+  // The only {count}-interpolated message in the component is
+  // continueLearning's — reviewWords never receives a count value.
+  const reviewMessageLine = dashboardHeroCard.match(/reviewWords[\s\S]{0,80}?message/);
+  assert.ok(reviewMessageLine, "expected a hero.reviewWords.message reference in DashboardHeroCard");
+});
+
+test("6. Continue Learning (and Start Learning) route through onStartNewWordStudy — the Study New Words flow", () => {
+  assert.match(
+    dashboardHeroCard,
+    /const handleCtaClick = cta\.kind === "reviewWords" \? onStartReviewWords : onStartNewWordStudy;/,
+  );
+});
+
+test("7. Review Words routes through onStartReviewWords — the structured Review flow, never Custom Practice/Exercises", () => {
+  assert.doesNotMatch(dashboardHeroCard, /exerciseSelection|source=custom-practice|onStartCustomPractice/);
+  assert.match(dashboardHeroCard, /onStartReviewWords/);
+});
+
+console.log("\n=== No new Supabase write introduced (Phase 2 is read-only) ===\n");
+
+test("13b. useDashboardHeroData only reads (no insert/update/RPC-write call)", () => {
+  assert.doesNotMatch(useDashboardHeroData, /supabase.*(insert|update|upsert)/i);
+  assert.doesNotMatch(useDashboardHeroData, /\brpc\//i);
+  assert.doesNotMatch(useDashboardHeroData, /method:\s*["'](POST|PATCH|PUT|DELETE)["']/);
+  assert.match(useDashboardHeroData, /readTodayNewWordsCompleted/);
+  assert.match(useDashboardHeroData, /readDailyStreakStats/);
+});
+
+test("13c. DashboardHeroCard itself performs no writes and calls no daily-goal/word-progress mutation function", () => {
+  assert.doesNotMatch(dashboardHeroCard, /updateDailyGoal|completeNewWordStudy|completeWordReview|writeStoredUserProfile/);
+});
+
+console.log("\n=== Learning/Review pure engines remain unchanged (reused, not forked) ===\n");
+
+test("14. TodayProgressCard.tsx and DailyStreakCard.tsx still own the Learning page's own reads/rendering (untouched by this phase)", () => {
+  const todayProgressCard = fs.readFileSync(
+    path.join(DASHBOARD_DIR, "..", "learning", "TodayProgressCard.tsx"),
+    "utf8",
+  );
+  const dailyStreakCard = fs.readFileSync(path.join(DASHBOARD_DIR, "..", "learning", "DailyStreakCard.tsx"), "utf8");
+  assert.match(todayProgressCard, /export function TodayProgressCard/);
+  assert.match(todayProgressCard, /computeTodayProgressDisplay/);
+  assert.match(dailyStreakCard, /export function DailyStreakCard/);
+  assert.match(dailyStreakCard, /computeDailyStreakSummary/);
+});
+
+test("14b. DashboardHeroCard reuses the same pure engines (computeTodayProgressDisplay/computeDailyStreakSummary), not a re-implementation", () => {
+  assert.match(dashboardHeroCard, /import\s*\{\s*computeTodayProgressDisplay\s*\}\s*from\s*"\.\.\/\.\.\/\.\.\/\.\.\/data\/learning\/todayProgressDisplay"/);
+  assert.match(dashboardHeroCard, /computeDailyStreakSummary/);
 });
 
 console.log(`\n─────────────────────────────────────────`);

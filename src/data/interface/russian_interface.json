@@ -536,6 +536,22 @@
         "afternoon": "Добрый день, {name}. Готовы продолжить обучение?",
         "evening": "Добрый вечер, {name}. Готовы продолжить обучение?",
         "fallback": "Готовы продолжить обучение?"
+      },
+      "hero": {
+        "ariaLabel": "Сводка за сегодня",
+        "todayLabel": "Сегодня",
+        "stats": {
+          "wordsLearnedLabel": "изученные слова",
+          "dayStreakLabel": "дней подряд",
+          "goalLabel": "Цель"
+        },
+        "continueLearning": {
+          "title": "Продолжить обучение",
+          "message": "На сегодня осталось {count} слов."
+        },
+        "reviewWords": {
+          "message": "Закрепите словарный запас с помощью повторения."
+        }
       }
     },
     "sidebar": {

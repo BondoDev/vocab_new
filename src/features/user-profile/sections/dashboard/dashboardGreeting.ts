@@ -1,13 +1,22 @@
-// Dashboard Phase 1's pure greeting helpers — kept free of React and of the
-// project's t() lookup so the hour-range logic can be unit tested directly
-// (see scripts/tests/learning/test-dashboard-greeting-period.mjs) without
-// rendering a component or loading a locale file.
+// Dashboard Phase 1's pure greeting helper — kept free of React, the app's
+// t() lookup, and any other module import (like dailyStreak.ts/
+// todayProgressDisplay.ts) so it stays loadable directly via
+// `node --experimental-strip-types` for
+// scripts/tests/learning/test-dashboard-greeting-period.mjs without
+// rendering a component, loading a locale file, or requiring the raw Node
+// ESM loader to resolve a second relative import.
 //
 // Time-of-day is device-local only (Date#getHours()) for this first version
 // — there is no per-user timezone-aware "local time of day" concept yet.
 // user_profiles.timezone (see src/lib/userProfile.ts) exists and is already
 // used for the Learning/Progress sections' "today" boundary, but wiring the
 // dashboard greeting to it is left for a later phase per the Phase 1 brief.
+//
+// The {name} interpolation this greeting also needs lives in
+// src/lib/interpolateTemplate.ts (shared with the Dashboard hero card's
+// {count} messages, added in a later phase) — imported directly by
+// DashboardSection.tsx rather than re-exported from here, for the same
+// import-free reason.
 export type DashboardGreetingPeriod = "morning" | "afternoon" | "evening";
 
 // Morning   05:00–11:59
@@ -17,16 +26,4 @@ export function getDashboardGreetingPeriod(hour: number): DashboardGreetingPerio
   if (hour >= 5 && hour < 12) return "morning";
   if (hour >= 12 && hour < 18) return "afternoon";
   return "evening";
-}
-
-// Minimal {token} substitution for the one dynamic value the dashboard
-// greeting needs (the user's nickname). The project's t() function
-// (src/contexts/LanguageContext.tsx) does plain flat-key lookup only and
-// has no interpolation support of its own, so this stays a tiny standalone
-// helper rather than a change to LanguageContextType's signature. A token
-// with no matching value is left in place rather than silently dropped.
-export function interpolateTemplate(template: string, values: Record<string, string>): string {
-  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
-    Object.prototype.hasOwnProperty.call(values, key) ? values[key] : match,
-  );
 }

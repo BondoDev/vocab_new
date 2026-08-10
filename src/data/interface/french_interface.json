@@ -64,6 +64,22 @@
         "afternoon": "Bon après-midi, {name}. Prêt à continuer d’apprendre ?",
         "evening": "Bonsoir, {name}. Prêt à continuer d’apprendre ?",
         "fallback": "Prêt à continuer d’apprendre ?"
+      },
+      "hero": {
+        "ariaLabel": "Aperçu du jour",
+        "todayLabel": "Aujourd’hui",
+        "stats": {
+          "wordsLearnedLabel": "mots appris",
+          "dayStreakLabel": "jours consécutifs",
+          "goalLabel": "Objectif"
+        },
+        "continueLearning": {
+          "title": "Continuer l’apprentissage",
+          "message": "Il vous reste {count} mots à apprendre aujourd’hui."
+        },
+        "reviewWords": {
+          "message": "Entretenez votre vocabulaire avec une session de révision."
+        }
       }
     },
     "sidebar": {

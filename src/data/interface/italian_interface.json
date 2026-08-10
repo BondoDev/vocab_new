@@ -64,6 +64,22 @@
         "afternoon": "Buon pomeriggio, {name}. Pronto a continuare a imparare?",
         "evening": "Buonasera, {name}. Pronto a continuare a imparare?",
         "fallback": "Pronto a continuare a imparare?"
+      },
+      "hero": {
+        "ariaLabel": "Riepilogo di oggi",
+        "todayLabel": "Oggi",
+        "stats": {
+          "wordsLearnedLabel": "parole apprese",
+          "dayStreakLabel": "giorni consecutivi",
+          "goalLabel": "Obiettivo"
+        },
+        "continueLearning": {
+          "title": "Continua a imparare",
+          "message": "Ti restano {count} parole per oggi."
+        },
+        "reviewWords": {
+          "message": "Mantieni fresco il tuo vocabolario con una sessione di ripasso."
+        }
       }
     },
     "sidebar": {

@@ -1,16 +1,19 @@
-// Focused guard for the pure Dashboard-greeting helpers in
-// src/features/user-profile/sections/dashboard/dashboardGreeting.ts.
-// Import-free of React/the app's t() lookup so it loads directly via
-// Node's native TypeScript stripping. Pins the exact hour-boundary
-// behavior from the Dashboard Phase 1 brief (05:00/12:00/18:00 cutoffs,
-// evening wrapping past midnight) and the {name} interpolation contract.
+// Focused guard for the pure Dashboard-greeting helper in
+// src/features/user-profile/sections/dashboard/dashboardGreeting.ts, plus
+// the shared {token} interpolation helper (src/lib/interpolateTemplate.ts)
+// it uses for {name} — imported directly from its own canonical module
+// (not re-exported from dashboardGreeting.ts) so each pure module under
+// test stays import-free of its siblings, matching dailyStreak.ts/
+// todayProgressDisplay.ts's own precedent. Import-free of React/the app's
+// t() lookup so both load directly via Node's native TypeScript stripping.
+// Pins the exact hour-boundary behavior from the Dashboard Phase 1 brief
+// (05:00/12:00/18:00 cutoffs, evening wrapping past midnight) and the
+// {name} interpolation contract.
 //
 // Run: node --experimental-strip-types scripts/tests/learning/test-dashboard-greeting-period.mjs
 import assert from "node:assert/strict";
-import {
-  getDashboardGreetingPeriod,
-  interpolateTemplate,
-} from "../../../src/features/user-profile/sections/dashboard/dashboardGreeting.ts";
+import { getDashboardGreetingPeriod } from "../../../src/features/user-profile/sections/dashboard/dashboardGreeting.ts";
+import { interpolateTemplate } from "../../../src/lib/interpolateTemplate.ts";
 
 let passed = 0;
 let failed = 0;

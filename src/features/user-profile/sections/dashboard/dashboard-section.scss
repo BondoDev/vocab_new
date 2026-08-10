@@ -1,11 +1,15 @@
-/* Owned by DashboardSection.tsx. */
+/* Owned by DashboardSection.tsx (header) and DashboardHeroCard.tsx (hero
+   card below it) — one shared stylesheet for both, matching this feature's
+   own convention of one .scss per section folder rather than one file per
+   component (see learning-section.scss covering LearningSection's own
+   several components). Imported once, by DashboardSection.tsx. */
 
 .dashboard-section {
   // Phase 1: header + subheader only, centered to match the Progress page's
   // own page-level header (see progress-section.scss's
   // .progress-section__header). Kept compact — see dashboard-section__title/
   // __subtitle below — so it stays restrained and doesn't compete with the
-  // rocket hero card's (Phase 2) own visual weight once it's added.
+  // hero card's own visual weight below.
   &__header {
     margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
     text-align: center;
@@ -24,5 +28,415 @@
     color: var(--muted-foreground);
     font-size: 0.95rem;
     line-height: 1.5;
+  }
+}
+
+/* ============================================================
+   DashboardHeroCard.tsx — Phase 2's combined Today stats / rocket
+   artwork / next-action CTA hero. One unified card, deliberately not
+   three separate bordered cards — see the Phase brief's "no duplication
+   feel" requirement.
+
+   Visual refinement pass: a short, wide banner (~230–280px tall on
+   desktop, never a tall panel) rather than a large dark panel. The
+   surface is a horizontal light -> purple -> indigo gradient (mostly
+   white/lavender on the left, deepening only behind the rocket/CTA on the
+   right) so the card reads as part of FluentStellar's light UI, not an
+   isolated dark banner. The rocket artwork (public/images/user-profile/
+   dashboard/dashboard-image.png) is shown with object-fit: contain inside
+   its own flex region plus a soft radial mask that fades its own square
+   edges into the surrounding gradient — this is what removes the "pasted
+   rectangular image" look without cropping content or stretching the
+   asset (masking is a display-only technique; the source file itself is
+   untouched).
+   ============================================================ */
+
+.dashboard-hero {
+  position: relative;
+  display: flex;
+  // stretch (not center): the rocket <img> below is absolutely positioned
+  // (inset: 0) inside .dashboard-hero__art, so that box must actually have
+  // a real height to fill — stretch makes it match the row's own height
+  // instead of collapsing to zero. min-height below is what sets that
+  // height explicitly (a deliberate compact banner target), rather than
+  // letting the image's own aspect ratio dictate the card's height.
+  align-items: stretch;
+  gap: 1.25rem;
+  // Desktop target: ~230–280px tall — a short, wide banner, not a panel.
+  margin-top: clamp(1.25rem, 3vw, 2rem);
+  padding: 1.1rem 1.5rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, #6d5bd0 22%, var(--border));
+  border-radius: calc(var(--radius) + 6px);
+  background: linear-gradient(
+    92deg,
+    #ffffff 0%,
+    #f5f1fe 24%,
+    #e4d9fb 40%,
+    #b79cf2 58%,
+    #6a4fcf 76%,
+    #2f2170 94%,
+    #241a52 100%
+  );
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.05),
+    0 10px 24px -18px rgba(43, 31, 94, 0.4);
+
+  &__stats {
+    display: flex;
+    flex: 1 1 36%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  &__kicker {
+    margin: 0;
+    color: #6b5ca0;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &__stat-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  &__stat {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding-left: 1rem;
+    border-left: 1px solid color-mix(in srgb, #2f2755 12%, transparent);
+
+    &:first-child {
+      padding-left: 0;
+      border-left: none;
+    }
+  }
+
+  &__stat-icon {
+    display: flex;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: #7c5cf0;
+  }
+
+  &__stat-body {
+    min-width: 0;
+  }
+
+  &__stat-value {
+    margin: 0;
+    color: #2f2755;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.15;
+    white-space: nowrap;
+
+    &--goal {
+      font-size: 1.1rem;
+    }
+  }
+
+  &__stat-sep {
+    margin: 0 0.1rem;
+    color: #8b7fb8;
+    font-weight: 500;
+  }
+
+  &__stat-unit,
+  &__stat-label {
+    color: #756a9c;
+    font-size: 0.72rem;
+  }
+
+  &__stat-label {
+    margin: 0.05rem 0 0;
+    white-space: nowrap;
+  }
+
+  &__progress-track {
+    width: 100%;
+    max-width: 6rem;
+    height: 0.25rem;
+    margin-top: 0.3rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, #2f2755 10%, transparent);
+    overflow: hidden;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #7c5cf0, #b083f0);
+    transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &__art {
+    position: relative;
+    flex: 0 1 15.5rem;
+    align-self: stretch;
+    min-width: 0;
+    margin-block: -1.1rem;
+  }
+
+  &__rocket {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    // Soft elliptical fade on all four edges — the actual technique that
+    // removes the hard "pasted image" boundary, letting the card's own
+    // gradient show through at the edges. white/transparent (not
+    // black/transparent) so the fade reads correctly under both the
+    // legacy -webkit luminance mask mode and the standard alpha mode.
+    mask-image: radial-gradient(
+      ellipse 68% 72% at 50% 50%,
+      #fff 45%,
+      transparent 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 68% 72% at 50% 50%,
+      #fff 45%,
+      transparent 100%
+    );
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+  }
+
+  &__cta {
+    display: flex;
+    flex: 1 1 30%;
+    flex-direction: column;
+    align-items: center;
+    // Compact content, vertically centered within the now-short banner
+    // rather than pinned to the top of a tall column — see the "not
+    // vertically centered in a giant dark area" note: once the card
+    // itself is short, centering here reads as integrated, not adrift.
+    justify-content: center;
+    gap: 0.3rem;
+    min-width: 0;
+    text-align: center;
+  }
+
+  &__cta-title {
+    margin: 0;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  &__cta-message {
+    max-width: 15rem;
+    margin: 0;
+    color: rgba(230, 224, 255, 0.85);
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  &__cta-button {
+    margin-top: 0.3rem;
+    padding: 0.5rem 1.1rem;
+    border: none;
+    border-radius: calc(var(--radius) - 2px);
+    background: #fff;
+    color: #241a52;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      filter 150ms ease,
+      transform 150ms ease;
+
+    &:hover {
+      filter: brightness(0.95);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow:
+        0 0 0 2px #2f2170,
+        0 0 0 4px #b79cf2;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  /* Restrained loading placeholders — same footprint as the real content
+     they stand in for, so the hero never resizes once real data arrives.
+     The rocket artwork itself needs no skeleton: it's a static asset, safe
+     to show immediately regardless of data-loading state (see the Phase
+     brief's Loading section). Stat skeletons sit on the light left side;
+     the CTA skeleton sits on the dark right side — each gets its own
+     tone. */
+  &__skeleton {
+    display: inline-block;
+    border-radius: 999px;
+    animation: dashboard-hero-skeleton-pulse 1.4s ease-in-out infinite;
+
+    &--value {
+      width: 2.75rem;
+      height: 1rem;
+      background: color-mix(in srgb, #2f2755 14%, transparent);
+    }
+
+    &--title {
+      width: 8rem;
+      height: 1.1rem;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    &--message {
+      width: 10.5rem;
+      height: 0.8rem;
+      margin-top: 0.3rem;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    &--button {
+      width: 7rem;
+      height: 2.1rem;
+      margin-top: 0.45rem;
+      border-radius: calc(var(--radius) - 2px);
+      background: rgba(255, 255, 255, 0.22);
+    }
+  }
+}
+
+@keyframes dashboard-hero-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-hero__skeleton {
+    animation: none;
+  }
+}
+
+/* 700–1099px: stay a horizontal banner, but let the stat row wrap into
+   2 + 1 (or a fully wrapped compressed row) instead of forcing three
+   items to stay on one line — never taller than necessary, and the CTA
+   never overlaps the rocket/stats. */
+@media (max-width: 1099.98px) {
+  .dashboard-hero {
+    gap: 1rem;
+    // Large-tablet target: ~250–300px — slightly taller than desktop's
+    // floor to comfortably fit a wrapped 2+1 stat row without crowding.
+    min-height: 16.5rem;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .dashboard-hero__stats {
+    flex-basis: 38%;
+  }
+
+  .dashboard-hero__art {
+    flex-basis: 16.5rem;
+  }
+
+  .dashboard-hero__cta {
+    flex-basis: 30%;
+  }
+
+  .dashboard-hero__stat-row {
+    flex-wrap: wrap;
+    row-gap: 0.4rem;
+  }
+
+  .dashboard-hero__cta-message {
+    max-width: 12rem;
+  }
+}
+
+/* Below 700px: the same unified hero, stacked top-to-bottom (stats, then
+   rocket, then CTA) rather than split into three unrelated cards, and the
+   stats themselves stack too rather than forcing the desktop horizontal
+   row into a narrow column. */
+@media (max-width: 699.98px) {
+  .dashboard-hero {
+    flex-direction: column;
+    align-items: stretch;
+    // Mobile stacks naturally instead of holding to the desktop banner
+    // floor — height comes from the stacked content itself (see the
+    // Phase brief's "allow taller stacking only when necessary").
+    min-height: 0;
+    text-align: center;
+    padding: 1.35rem 1.25rem;
+    // The desktop background is a *horizontal* light -> indigo gradient
+    // because content also flows left (light stats) -> right (dark CTA).
+    // On mobile content stacks top -> bottom in that same stats -> rocket
+    // -> CTA order instead, so the gradient direction is rotated to match
+    // — otherwise the centered CTA text at the bottom would land on the
+    // gradient's light/medium horizontal band and become unreadable.
+    // Same color stops as the desktop gradient, just rotated 90°.
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f5f1fe 20%,
+      #e4d9fb 34%,
+      #b79cf2 50%,
+      #6a4fcf 68%,
+      #2f2170 86%,
+      #241a52 100%
+    );
+  }
+
+  .dashboard-hero__stats {
+    order: 1;
+    align-items: center;
+    text-align: center;
+  }
+
+  .dashboard-hero__stat-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .dashboard-hero__stat {
+    padding-left: 0;
+    border-left: none;
+    justify-content: center;
+  }
+
+  .dashboard-hero__progress-track {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .dashboard-hero__art {
+    order: 2;
+    flex-basis: auto;
+    align-self: center;
+    width: 8rem;
+    height: 8rem;
+    margin: 0.25rem 0;
+  }
+
+  .dashboard-hero__cta {
+    order: 3;
+    align-items: center;
+    text-align: center;
+  }
+
+  .dashboard-hero__cta-message {
+    max-width: 20rem;
   }
 }
