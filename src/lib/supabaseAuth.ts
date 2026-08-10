@@ -1,3 +1,5 @@
+import { createSingleFlight } from "./singleFlight";
+
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL?.trim() ?? "";
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim() ?? "";
 
@@ -200,7 +202,10 @@ export function getStoredSupabaseSession(): StoredSupabaseSession | null {
   }
 }
 
-export async function refreshSupabaseSession(
+// The actual GoTrue refresh request + response handling. Never call this
+// directly - always go through refreshSupabaseSession below, which is what
+// makes sure at most one of these is ever running at a time.
+async function performSupabaseSessionRefresh(
   session: StoredSupabaseSession,
 ): Promise<StoredSupabaseSession> {
   if (!session.refresh_token) {
@@ -253,6 +258,28 @@ export async function refreshSupabaseSession(
   const hydratedSession = await populateSessionUser(mergedSession);
   storeSession(hydratedSession);
   return hydratedSession ?? mergedSession;
+}
+
+// D-2: single-flight refresh. Supabase refresh tokens are rotated, so two
+// concurrent refreshes racing on the same still-stale refresh_token can
+// have the second one rejected by GoTrue - and a real rejection above
+// clears the stored session, which would turn a still-valid session into
+// an accidental app-wide logout. refreshSingleFlight holds the one Promise
+// for "the app's current refresh attempt, if any," so every concurrent
+// caller - regardless of which (possibly stale) session object it is
+// holding - joins that same Promise instead of issuing its own request.
+// See src/lib/singleFlight.ts for the join/settle-ordering guarantees.
+const refreshSingleFlight = createSingleFlight<StoredSupabaseSession>();
+
+export function refreshSupabaseSession(
+  session: StoredSupabaseSession,
+): Promise<StoredSupabaseSession> {
+  // The `session` argument is only used if this call is the one that
+  // starts a new attempt; a call that instead joins an already-running
+  // attempt (see singleFlight.ts) never even looks at its own `session` -
+  // the in-flight Promise represents the app's one current refresh
+  // operation, not a request keyed by which session object triggered it.
+  return refreshSingleFlight.run(() => performSupabaseSessionRefresh(session));
 }
 
 export async function ensureFreshSupabaseSession(
