@@ -9,9 +9,10 @@ import { computeDailyStreakSummary, type DailyStreakSummary } from "../../../../
 import { useDashboardHeroData } from "./useDashboardHeroData";
 import { resolveDashboardHeroCta, type DashboardHeroCtaKind } from "./dashboardHeroCta";
 
-// Owned by public/images/user-profile/dashboard/dashboard-image.png (already
-// in the repo — see that folder). Not generated or modified by this phase.
+// Owned by public/images/user-profile/dashboard/ (already in the repo — see
+// that folder). Not generated or modified by this phase.
 const ROCKET_IMAGE_SRC = "/images/user-profile/dashboard/dashboard-image.png";
+const ROCKET_MOBILE_IMAGE_SRC = "/images/user-profile/dashboard/dashboard-image-mobile.png";
 
 const EMPTY_STREAK_SUMMARY: DailyStreakSummary = { currentStreakDays: 0, bestStreakDays: 0, currentWeek: [] };
 
@@ -194,13 +195,16 @@ export function DashboardHeroCard({
             title/stats/CTA text around it, so this stays alt="" rather than
             a verbose description (see the Phase brief's Accessibility
             section). */}
-        <img
-          className="dashboard-hero__rocket"
-          src={ROCKET_IMAGE_SRC}
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
+        <picture>
+          <source srcSet={ROCKET_MOBILE_IMAGE_SRC} media="(max-width: 501.98px)" />
+          <img
+            className="dashboard-hero__rocket"
+            src={ROCKET_IMAGE_SRC}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </div>
 
       <div className="dashboard-hero__cta">

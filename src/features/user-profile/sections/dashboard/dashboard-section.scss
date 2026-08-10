@@ -211,6 +211,10 @@
     -webkit-mask-repeat: no-repeat;
   }
 
+  &__art picture {
+    display: contents;
+  }
+
   &__cta {
     display: flex;
     flex: 1 1 30%;
@@ -330,16 +334,25 @@
   }
 }
 
-/* 700–1099px: stay a horizontal banner, but let the stat row wrap into
-   2 + 1 (or a fully wrapped compressed row) instead of forcing three
-   items to stay on one line — never taller than necessary, and the CTA
-   never overlaps the rocket/stats. */
+@media (max-width: 1215.98px) {
+  .dashboard-hero__stat-row {
+    display: grid;
+    grid-template-columns: minmax(0, max-content) max-content;
+    column-gap: 1rem;
+    row-gap: 0.45rem;
+  }
+
+  .dashboard-hero__stat:first-child {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+}
+
+/* 700–1099px: stay a horizontal banner while preserving the compact
+   words-left / streak+goal-right stat grouping introduced below 1216px. */
 @media (max-width: 1099.98px) {
   .dashboard-hero {
     gap: 1rem;
-    // Large-tablet target: ~250–300px — slightly taller than desktop's
-    // floor to comfortably fit a wrapped 2+1 stat row without crowding.
-    min-height: 16.5rem;
     padding: 1.1rem 1.25rem;
   }
 
@@ -356,7 +369,6 @@
   }
 
   .dashboard-hero__stat-row {
-    flex-wrap: wrap;
     row-gap: 0.4rem;
   }
 
@@ -365,35 +377,24 @@
   }
 }
 
-/* Below 700px: the same unified hero, stacked top-to-bottom (stats, then
-   rocket, then CTA) rather than split into three unrelated cards, and the
-   stats themselves stack too rather than forcing the desktop horizontal
-   row into a narrow column. */
+/* Below 700px: keep the unified hero, but remove the tall single-column
+   feeling. The stats stay scannable in a compact row, the artwork gets a
+   controlled square slot, and the CTA sits close enough to read as part of
+   the same card. */
 @media (max-width: 699.98px) {
   .dashboard-hero {
     flex-direction: column;
     align-items: stretch;
-    // Mobile stacks naturally instead of holding to the desktop banner
-    // floor — height comes from the stacked content itself (see the
-    // Phase brief's "allow taller stacking only when necessary").
+    gap: 0.85rem;
     min-height: 0;
     text-align: center;
-    padding: 1.35rem 1.25rem;
-    // The desktop background is a *horizontal* light -> indigo gradient
-    // because content also flows left (light stats) -> right (dark CTA).
-    // On mobile content stacks top -> bottom in that same stats -> rocket
-    // -> CTA order instead, so the gradient direction is rotated to match
-    // — otherwise the centered CTA text at the bottom would land on the
-    // gradient's light/medium horizontal band and become unreadable.
-    // Same color stops as the desktop gradient, just rotated 90°.
+    padding: 1.15rem 1rem 1.25rem;
     background: linear-gradient(
       180deg,
       #ffffff 0%,
-      #f5f1fe 20%,
-      #e4d9fb 34%,
-      #b79cf2 50%,
-      #6a4fcf 68%,
-      #2f2170 86%,
+      #f6f2ff 28%,
+      #c7b0f8 56%,
+      #6547cc 76%,
       #241a52 100%
     );
   }
@@ -401,19 +402,35 @@
   .dashboard-hero__stats {
     order: 1;
     align-items: center;
+    gap: 0.55rem;
     text-align: center;
   }
 
   .dashboard-hero__stat-row {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    width: 100%;
+    max-width: 30rem;
+    gap: 0.5rem;
   }
 
   .dashboard-hero__stat {
+    flex-direction: column;
+    align-items: center;
     padding-left: 0;
     border-left: none;
     justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .dashboard-hero__stat:first-child {
+    grid-row: auto;
+    align-self: start;
+  }
+
+  .dashboard-hero__stat-icon {
+    margin-top: 0;
   }
 
   .dashboard-hero__progress-track {
@@ -425,18 +442,78 @@
     order: 2;
     flex-basis: auto;
     align-self: center;
-    width: 8rem;
-    height: 8rem;
-    margin: 0.25rem 0;
+    aspect-ratio: 3 / 2;
+    width: clamp(8.5rem, 42vw, 11rem);
+    height: auto;
+    margin: -0.15rem 0 -0.4rem;
   }
 
   .dashboard-hero__cta {
     order: 3;
     align-items: center;
+    gap: 0.35rem;
     text-align: center;
   }
 
   .dashboard-hero__cta-message {
     max-width: 20rem;
+  }
+}
+
+@media (max-width: 501.98px) {
+  .dashboard-hero {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: center;
+    align-items: center;
+    column-gap: clamp(0.75rem, 4vw, 1.25rem);
+    row-gap: 0.95rem;
+  }
+
+  .dashboard-hero__stats {
+    grid-column: 1;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .dashboard-hero__stat-row {
+    grid-template-columns: 1fr;
+    max-width: 10rem;
+    gap: 0.55rem;
+  }
+
+  .dashboard-hero__stat {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .dashboard-hero__stat:first-child {
+    align-self: start;
+  }
+
+  .dashboard-hero__progress-track {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .dashboard-hero__art {
+    grid-column: 2;
+    align-self: center;
+    justify-self: start;
+    aspect-ratio: 2 / 3;
+    width: clamp(8.75rem, 38vw, 10.5rem);
+    margin: 0;
+  }
+
+  .dashboard-hero__rocket {
+    transform: scale(1.28);
+    transform-origin: center;
+  }
+
+  .dashboard-hero__cta {
+    grid-column: 1 / -1;
+    justify-self: center;
   }
 }
