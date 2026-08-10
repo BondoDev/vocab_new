@@ -52,7 +52,8 @@
     "loginError": "E-mail ou mot de passe incorrect. Veuillez reessayer.",
     "signupError": "Nous n'avons pas pu creer votre compte avec ces informations. Verifiez vos informations et reessayez.",
     "forgotPasswordError": "Nous n'avons pas pu envoyer l'e-mail de reinitialisation du mot de passe. Veuillez reessayer.",
-    "googleError": "Impossible de demarrer la connexion avec Google. Veuillez reessayer."
+    "googleError": "Impossible de demarrer la connexion avec Google. Veuillez reessayer.",
+    "signupCheckEmail": "Verifiez votre e-mail pour continuer. Si vous avez deja un compte, connectez-vous ou continuez avec Google."
   },
   "userProfile": {
     "developmentNotice": {

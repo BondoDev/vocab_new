@@ -668,13 +668,18 @@ export function Header({
         return;
       }
 
-      // GoTrue itself returns this same "no session yet" shape both for a
+      // GoTrue returns this same "no session yet" shape both for a
       // genuinely new signup pending email confirmation and (its own
       // built-in anti-enumeration behavior) for an already-registered
-      // email - so this one message is already correct and safe for both
-      // cases without this app needing to tell them apart.
+      // email, including one that only ever signed in via Google - so this
+      // app cannot and must not tell those cases apart (no identities
+      // check, no special-casing). "Account created" would be an outright
+      // lie in the already-registered case, so the copy stays neutral
+      // about whether anything was actually created and instead points at
+      // both ways to get back into an existing account, right below in the
+      // same login-mode view this switches into.
       switchAuthMode("login");
-      setAuthInfo("Account created. Check your email to confirm your sign up.");
+      setAuthInfo(t("auth.signupCheckEmail"));
     } catch (error) {
       // D-4/E-2: never error.message. Login failures classify as "safe to
       // be specific" (GoTrue's own invalid-credentials error already never

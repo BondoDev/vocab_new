@@ -147,16 +147,62 @@ test("8. Signup failures use a dedicated neutral fallback key, distinct from log
   );
 });
 
-test("9. The signup-success-without-session branch shows one fixed message regardless of the response shape - no branching on identities/user fields that would reveal whether the account already existed", () => {
+test("9. The signup-success-without-session branch shows a neutral, translated 'check your email' message - never claims the account was created, and never branches on identities/user fields", () => {
   const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
   assert.ok(submitFnMatch, "handlePasswordAuthSubmit must be found");
   const body = stripLineComments(submitFnMatch[0]);
   assert.doesNotMatch(body, /identities/i, "must not inspect the signup response's identities field to decide what to show");
   assert.doesNotMatch(body, /already registered|already exists/i, "must not contain enumeration-revealing copy in live code (comments explaining the reasoning are fine)");
-  assert.match(body, /setAuthInfo\("Account created\. Check your email to confirm your sign up\."\);/);
+  assert.doesNotMatch(body, /Account created/i, "must never claim the account was created - it may already exist (including a Google-only account)");
+  assert.match(body, /setAuthInfo\(t\("auth\.signupCheckEmail"\)\);/);
 });
 
-test("10. The new auth.* locale keys exist, are non-empty, and the signup message itself stays neutral (no 'email'/'exists'/'registered' wording) - defined consistently across all 7 locales", () => {
+test("10. Session-returning signup follows the exact same authenticated-success path as login: sets the session, notifies the parent, closes the dialog, and resets the form", () => {
+  const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
+  const sessionBranchMatch = submitFnMatch[0].match(
+    /if \(result\.session\) \{([\s\S]*?)\n {6}\}/,
+  );
+  assert.ok(sessionBranchMatch, "the result.session branch must be found");
+  const body = sessionBranchMatch[1];
+  assert.match(body, /setAuthSession\(result\.session\);/);
+  assert.match(body, /onAuthSessionChange\?\.\(result\.session\);/);
+  assert.match(body, /setIsAuthDialogOpen\(false\);/);
+  assert.match(body, /resetAuthForm\(\);/);
+  assert.match(body, /return;/);
+});
+
+test("11. No-session signup never navigates and never closes the auth dialog - it only switches mode (still open) and shows the info message, exactly like every other switchAuthMode transition", () => {
+  const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
+  // Everything between the result.session branch's closing and the catch
+  // block is the no-session path.
+  const noSessionMatch = submitFnMatch[0].match(
+    /if \(result\.session\) \{[\s\S]*?\n {6}\}\n\n([\s\S]*?)\n {4}\} catch/,
+  );
+  assert.ok(noSessionMatch, "the no-session path must be found");
+  const body = stripLineComments(noSessionMatch[1]);
+  assert.doesNotMatch(body, /navigate\(/i, "must not navigate anywhere without a real session");
+  assert.doesNotMatch(body, /onProfile/i, "must not route to the profile/dashboard without a real session");
+  assert.doesNotMatch(body, /setIsAuthDialogOpen/, "must not open or close the dialog itself - switchAuthMode only changes mode, the dialog stays open");
+  assert.match(body, /switchAuthMode\("login"\);/);
+});
+
+test("12. No-session signup never establishes a session or notifies the parent - onboarding (driven solely by a real authUserId, see useUserProfileLoad.ts) cannot be triggered merely by attempting signup", () => {
+  const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
+  const noSessionMatch = submitFnMatch[0].match(
+    /if \(result\.session\) \{[\s\S]*?\n {6}\}\n\n([\s\S]*?)\n {4}\} catch/,
+  );
+  const body = noSessionMatch[1];
+  assert.doesNotMatch(body, /setAuthSession\(/, "must not set a session for a no-session signup result");
+  assert.doesNotMatch(body, /onAuthSessionChange/, "must not notify the parent of a session change - there is no session");
+  const useUserProfileLoad = read("src/app/hooks/useUserProfileLoad.ts");
+  assert.match(
+    useUserProfileLoad,
+    /\}, \[authUserId\]\);/,
+    "onboarding's own open-decision effect must still be keyed solely on authUserId, unaffected by this fix",
+  );
+});
+
+test("13. The new auth.* locale keys (including the neutral no-session copy) exist, are non-empty, and never reveal whether the submitted email already exists - defined consistently across all 7 locales", () => {
   const LOCALE_FILES = [
     "english_interface.json",
     "german_interface.json",
@@ -166,7 +212,7 @@ test("10. The new auth.* locale keys exist, are non-empty, and the signup messag
     "portuguese_interface.json",
     "russian_interface.json",
   ];
-  const REQUIRED_KEYS = ["loginError", "signupError", "forgotPasswordError", "googleError"].sort();
+  const REQUIRED_KEYS = ["loginError", "signupError", "forgotPasswordError", "googleError", "signupCheckEmail"].sort();
   for (const fileName of LOCALE_FILES) {
     const data = JSON.parse(read(`src/data/interface/${fileName}`));
     assert.ok(data.auth, `${fileName} is missing a top-level "auth" section`);
@@ -181,17 +227,27 @@ test("10. The new auth.* locale keys exist, are non-empty, and the signup messag
     /email|exist|registered/i,
     "the English signup-error copy must stay neutral about account existence",
   );
+  assert.doesNotMatch(
+    englishLocale.auth.signupCheckEmail,
+    /exist|registered|already have an email|found/i,
+    "the English no-session copy must never reveal whether the email already exists",
+  );
+  assert.doesNotMatch(
+    englishLocale.auth.signupCheckEmail,
+    /account created|created your account/i,
+    "the English no-session copy must never claim the account was created",
+  );
 });
 
 console.log("\n--- D-5: OAuth/auth redirect error fallback ---\n");
 
-test("11. handleSupabaseAuthRedirect's error branch now also triggers on bare `error`/`error_code` (no error_description required)", () => {
+test("14. handleSupabaseAuthRedirect's error branch now also triggers on bare `error`/`error_code` (no error_description required)", () => {
   assert.match(supabaseAuth, /const oauthError = url\.searchParams\.get\("error"\);/);
   assert.match(supabaseAuth, /const oauthErrorCode = url\.searchParams\.get\("error_code"\);/);
   assert.match(supabaseAuth, /if \(errorDescription \|\| oauthError \|\| oauthErrorCode\) \{/);
 });
 
-test("12. That branch still cleans up the URL and returns a safe fallback when no description is present, while preserving the richer description when one exists", () => {
+test("15. That branch still cleans up the URL and returns a safe fallback when no description is present, while preserving the richer description when one exists", () => {
   const branchMatch = supabaseAuth.match(
     /if \(errorDescription \|\| oauthError \|\| oauthErrorCode\) \{([\s\S]*?)\n  \}\n\n  if \(authCode\)/,
   );
@@ -202,7 +258,7 @@ test("12. That branch still cleans up the URL and returns a safe fallback when n
   assert.match(body, /recovery: false,/);
 });
 
-test("13. The safe fallback text is never derived from the raw error/error_code values themselves (no string interpolation of oauthError/oauthErrorCode into the returned message)", () => {
+test("16. The safe fallback text is never derived from the raw error/error_code values themselves (no string interpolation of oauthError/oauthErrorCode into the returned message)", () => {
   const branchMatch = supabaseAuth.match(
     /if \(errorDescription \|\| oauthError \|\| oauthErrorCode\) \{([\s\S]*?)\n  \}\n\n  if \(authCode\)/,
   );
@@ -210,14 +266,14 @@ test("13. The safe fallback text is never derived from the raw error/error_code 
   assert.doesNotMatch(branchMatch[1], /\$\{oauthErrorCode/, "must not interpolate the raw error_code param into the message");
 });
 
-test("14. OAuth success (implicit hash-token branch) and password recovery detection are untouched by the D-5 change", () => {
+test("17. OAuth success (implicit hash-token branch) and password recovery detection are untouched by the D-5 change", () => {
   assert.match(
     supabaseAuth,
     /if \(hashAccessToken && hashRefreshToken\) \{[\s\S]*?const isRecovery = hashParams\.get\("type"\) === "recovery";[\s\S]*?recovery: isRecovery \};/,
   );
 });
 
-test("15. PKCE/Google OAuth code-exchange behavior is untouched by the D-5 change", () => {
+test("18. PKCE/Google OAuth code-exchange behavior is untouched by the D-5 change", () => {
   assert.match(supabaseAuth, /async function exchangeCodeForSession\(code: string\) \{/);
   assert.match(supabaseAuth, /grant_type=pkce/);
   assert.match(supabaseAuth, /if \(!getStoredPkceVerifier\(\)\) \{/);
@@ -225,7 +281,7 @@ test("15. PKCE/Google OAuth code-exchange behavior is untouched by the D-5 chang
 
 console.log("\n--- F-1: live-region/alert semantics ---\n");
 
-test("16. Header.tsx's auth error is role=\"alert\" and its info/success message is a polite status live region", () => {
+test("19. Header.tsx's auth error is role=\"alert\" and its info/success message is a polite status live region", () => {
   assert.match(
     header,
     /\{authError \? \(\s*<div\s*\n\s*role="alert"\s*\n\s*className="rounded-xl border border-red-200 bg-red-50[^"]*"\s*\n\s*>\s*\{authError\}/,
@@ -236,35 +292,35 @@ test("16. Header.tsx's auth error is role=\"alert\" and its info/success message
   );
 });
 
-test("17. AccountOnboardingDialog's error message is role=\"alert\"", () => {
+test("20. AccountOnboardingDialog's error message is role=\"alert\"", () => {
   assert.match(
     onboardingDialog,
     /\{error \? \(\s*<div\s*\n\s*role="alert"\s*\n\s*className="rounded-2xl border border-red-200 bg-red-50[^"]*"\s*\n\s*>\s*\{error\}/,
   );
 });
 
-test("18. AccountLanguageConfirmDialog's error message is role=\"alert\"", () => {
+test("21. AccountLanguageConfirmDialog's error message is role=\"alert\"", () => {
   assert.match(
     languageConfirmDialog,
     /\{error \? \(\s*<div\s*\n\s*role="alert"\s*\n\s*className="rounded-md border border-red-200 bg-red-50[^"]*"\s*\n\s*>\s*\{error\}/,
   );
 });
 
-test("19. PasswordRecoveryDialog's D-1 accessibility (role=\"alert\" error, role=\"status\" success) is unchanged - no regression", () => {
+test("22. PasswordRecoveryDialog's D-1 accessibility (role=\"alert\" error, role=\"status\" success) is unchanged - no regression", () => {
   assert.match(recoveryDialog, /role="alert"/);
   assert.match(recoveryDialog, /role="status"\s*\n\s*aria-live="polite"/);
 });
 
 console.log("\n--- F-3: AccountOnboardingDialog description ---\n");
 
-test("20. AccountOnboardingDialog renders a DialogDescription (imported from the shared ui/dialog module, same Radix pattern used elsewhere)", () => {
+test("23. AccountOnboardingDialog renders a DialogDescription (imported from the shared ui/dialog module, same Radix pattern used elsewhere)", () => {
   assert.match(onboardingDialog, /import \{\s*Dialog,\s*DialogContent,\s*DialogDescription,\s*DialogHeader,\s*DialogTitle,\s*\} from "\.\.\/ui\/dialog";/);
   assert.match(onboardingDialog, /<DialogDescription[^>]*>/);
 });
 
 console.log("\n--- D-7: safe sign-out failure diagnostics ---\n");
 
-test("21. handleSignOut's catch block logs via describeSupabaseError and never calls setAuthError or reopens the dialog", () => {
+test("24. handleSignOut's catch block logs via describeSupabaseError and never calls setAuthError or reopens the dialog", () => {
   const fnMatch = header.match(/const handleSignOut = async \(\) => \{([\s\S]*?)\n  \};/);
   assert.ok(fnMatch, "handleSignOut must be found");
   const catchMatch = fnMatch[1].match(/\} catch \(error\) \{([\s\S]*?)\} finally/);
@@ -275,7 +331,7 @@ test("21. handleSignOut's catch block logs via describeSupabaseError and never c
   assert.doesNotMatch(catchBody, /setIsAuthDialogOpen\(true\)/, "must not reopen the auth dialog just to show a logout failure");
 });
 
-test("22. handleSignOut's local sign-out/session-clearing behavior (session clear, dialog/menu close, onSignedOut) is unchanged", () => {
+test("25. handleSignOut's local sign-out/session-clearing behavior (session clear, dialog/menu close, onSignedOut) is unchanged", () => {
   const fnMatch = header.match(/const handleSignOut = async \(\) => \{([\s\S]*?)\n  \};/);
   const body = fnMatch[1];
   assert.match(body, /setAuthSession\(null\);/);
@@ -287,7 +343,7 @@ test("22. handleSignOut's local sign-out/session-clearing behavior (session clea
 
 console.log("\n--- D-8: auth handler reentrancy guards ---\n");
 
-test("23. handleGoogleAuth, handlePasswordAuthSubmit, and handleForgotPassword each guard against re-entry with an isAuthSubmitting check before doing any work", () => {
+test("26. handleGoogleAuth, handlePasswordAuthSubmit, and handleForgotPassword each guard against re-entry with an isAuthSubmitting check before doing any work", () => {
   const guardPattern = /if \(isAuthSubmitting\) \{\s*return;\s*\}/;
 
   const googleFn = header.match(/const handleGoogleAuth = async \(\) => \{([\s\S]*?)\n  \};/)[1];
@@ -306,7 +362,7 @@ test("23. handleGoogleAuth, handlePasswordAuthSubmit, and handleForgotPassword e
   assert.match(forgotFn, guardPattern);
 });
 
-test("24. The disabled-button protection on the submit/Google/forgot-password controls is still present alongside the new reentrancy guards", () => {
+test("27. The disabled-button protection on the submit/Google/forgot-password controls is still present alongside the new reentrancy guards", () => {
   assert.match(header, /disabled=\{isAuthSubmitting\}/);
   const disabledCount = (header.match(/disabled=\{isAuthSubmitting\}/g) ?? []).length;
   assert.ok(disabledCount >= 4, "expected the Google button, email/password inputs, forgot-password link, and submit button to all still disable on isAuthSubmitting");
@@ -314,7 +370,7 @@ test("24. The disabled-button protection on the submit/Google/forgot-password co
 
 console.log("\n--- Scope: D-1 recovery and D-2 single-flight refresh are untouched ---\n");
 
-test("25. PasswordRecoveryDialog.tsx (D-1) is byte-identical to before this batch - not part of this task's diff", () => {
+test("28. PasswordRecoveryDialog.tsx (D-1) is byte-identical to before this batch - not part of this task's diff", () => {
   const gitDiffNameOnly = (() => {
     try {
       return execFileSync("git", ["diff", "--name-only", "HEAD"], { cwd: ROOT_DIR, encoding: "utf8" });
@@ -329,7 +385,7 @@ test("25. PasswordRecoveryDialog.tsx (D-1) is byte-identical to before this batc
   );
 });
 
-test("26. refreshSupabaseSession/refreshSingleFlight (D-2) are untouched - single-flight refresh behavior is unchanged", () => {
+test("29. refreshSupabaseSession/refreshSingleFlight (D-2) are untouched - single-flight refresh behavior is unchanged", () => {
   assert.match(supabaseAuth, /const refreshSingleFlight = createSingleFlight<StoredSupabaseSession>\(\);/);
   assert.match(
     supabaseAuth,

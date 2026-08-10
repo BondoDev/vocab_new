@@ -52,7 +52,8 @@
     "loginError": "Correo electronico o contrasena incorrectos. Intentalo de nuevo.",
     "signupError": "No pudimos crear tu cuenta con estos datos. Revisa tu informacion e intentalo de nuevo.",
     "forgotPasswordError": "No pudimos enviar el correo para restablecer la contrasena. Intentalo de nuevo.",
-    "googleError": "No pudimos iniciar el acceso con Google. Intentalo de nuevo."
+    "googleError": "No pudimos iniciar el acceso con Google. Intentalo de nuevo.",
+    "signupCheckEmail": "Revisa tu correo electronico para continuar. Si ya tienes una cuenta, inicia sesion o continua con Google."
   },
   "userProfile": {
     "developmentNotice": {
