@@ -210,25 +210,27 @@ export function ListDetailView({
             {metrics.total} {t("userProfile.myListsSection.wordsUnit")}
           </p>
         </div>
-        <div className="my-lists-detail__actions">
-          <Button type="button" onClick={onOpenAddWords} className="my-lists-detail__add-button">
-            <Plus aria-hidden="true" />
-            {t("userProfile.myListsSection.addWords")}
-          </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button type="button" className="my-lists-card__menu-trigger" aria-label={list.name}>
-                <MoreHorizontal size={16} strokeWidth={2} aria-hidden="true" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onSelect={onRename}>{t("userProfile.myListsSection.rename")}</DropdownMenuItem>
-              <DropdownMenuItem variant="destructive" onSelect={onDelete}>
-                {t("userProfile.myListsSection.delete")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {hasMembers ? (
+          <div className="my-lists-detail__actions">
+            <Button type="button" onClick={onOpenAddWords} className="my-lists-detail__add-button">
+              <Plus aria-hidden="true" />
+              {t("userProfile.myListsSection.addWords")}
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button type="button" className="my-lists-card__menu-trigger" aria-label={list.name}>
+                  <MoreHorizontal size={16} strokeWidth={2} aria-hidden="true" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onSelect={onRename}>{t("userProfile.myListsSection.rename")}</DropdownMenuItem>
+                <DropdownMenuItem variant="destructive" onSelect={onDelete}>
+                  {t("userProfile.myListsSection.delete")}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ) : null}
       </header>
 
       {isLoading ? (
