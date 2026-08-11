@@ -562,17 +562,28 @@
         },
         "studyActivity": {
           "title": "Учебная активность",
-          "newWordsLabel": "Новые слова",
           "viewAllActivity": "Показать всю активность",
+          "total": "Всего",
           "range": {
             "7d": "7 дней",
             "30d": "30 дней",
             "90d": "90 дней",
             "all": "Всё время"
           },
-          "tooltip": {
-            "dateLabel": "Дата",
-            "periodLabel": "Период"
+          "summaryPeriod": {
+            "7d": "Последние 7 дней",
+            "30d": "Последние 30 дней",
+            "90d": "Последние 90 дней",
+            "all": "За всё время"
+          },
+          "duration": {
+            "hoursMinutes": "{hours} ч {minutes} мин",
+            "hoursOnly": "{hours} ч",
+            "minutesOnly": "{minutes} мин"
+          },
+          "emptyState": {
+            "title": "Пока нет учебной активности",
+            "message": "Ваше учебное время появится здесь, как только вы начнёте заниматься."
           }
         },
         "wordsLearned": {

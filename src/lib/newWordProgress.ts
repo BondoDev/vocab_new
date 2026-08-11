@@ -22,6 +22,7 @@ import { addDaysISO } from "../data/learning/dailyStreak";
 import { isValidWordTimeSeconds } from "../data/learning/activeWordTimer";
 export { isValidWordTimeSeconds } from "../data/learning/activeWordTimer";
 import { notifyWordProgressChanged } from "./sharedProgressInvalidation";
+import { parseLearningModeTimeRow } from "./learningTimeStats";
 
 interface UserWordProgressRow {
   word_id: string;
@@ -844,12 +845,24 @@ export interface MilestoneDailyStatRow {
   dateISO: string;
   newWordsCompleted: number;
   reviewsCompleted: number;
+  // Study Activity Phase 1 — the three per-mode active-time columns
+  // (src/lib/learningTimeStats.ts's LearningModeTimeSeconds shape), added
+  // alongside the pre-existing quantity fields above so this one shared row
+  // keeps serving Words Learned/Milestone Preview (quantities) and Study
+  // Activity (time) from the single useDashboardSupportingData read, never
+  // a second fetch.
+  newWordStudyTimeSeconds: number;
+  reviewTimeSeconds: number;
+  customPracticeTimeSeconds: number;
 }
 
 interface UserDailyStatsMilestoneRawRow {
   stat_date?: unknown;
   new_words_completed?: unknown;
   reviews_completed?: unknown;
+  new_word_study_time_seconds?: unknown;
+  review_time_seconds?: unknown;
+  custom_practice_time_seconds?: unknown;
 }
 
 export async function readMilestoneDailyStats(
@@ -865,7 +878,7 @@ export async function readMilestoneDailyStats(
     session,
     `/rest/v1/user_daily_stats?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(
       targetLanguage,
-    )}&select=stat_date,new_words_completed,reviews_completed`,
+    )}&select=stat_date,new_words_completed,reviews_completed,new_word_study_time_seconds,review_time_seconds,custom_practice_time_seconds`,
   );
 
   const rows: MilestoneDailyStatRow[] = [];
@@ -876,10 +889,14 @@ export async function readMilestoneDailyStats(
 
     const rawNewWords = raw.new_words_completed;
     const rawReviews = raw.reviews_completed;
+    const timeSeconds = parseLearningModeTimeRow(raw);
     rows.push({
       dateISO: raw.stat_date,
       newWordsCompleted: typeof rawNewWords === "number" && Number.isFinite(rawNewWords) ? rawNewWords : 0,
       reviewsCompleted: typeof rawReviews === "number" && Number.isFinite(rawReviews) ? rawReviews : 0,
+      newWordStudyTimeSeconds: timeSeconds.newWordStudyTimeSeconds,
+      reviewTimeSeconds: timeSeconds.reviewTimeSeconds,
+      customPracticeTimeSeconds: timeSeconds.customPracticeTimeSeconds,
     });
   }
   return rows;

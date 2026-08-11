@@ -1,24 +1,28 @@
-// Pure read-side helper for the three per-mode active-time columns on
-// public.user_daily_stats (study_time_seconds, review_time_seconds,
-// custom_practice_time_seconds — see
-// supabase/migrations/20260805190000_add_learning_mode_time_tracking.sql).
-// total_time_seconds is NEVER stored in the database — every reader derives
-// it here, at read time, from the three stored columns. No React, no
-// Supabase — a plain data-shaping module, loadable directly via
+// Pure read-side helper for the four active-time columns on
+// public.user_daily_stats (new_word_study_time_seconds, review_time_seconds,
+// custom_practice_time_seconds, study_time_seconds — see
+// supabase/migrations/20260805190000_add_learning_mode_time_tracking.sql and
+// supabase/migrations/20260811120000_add_new_word_study_time_and_repurpose_total.sql).
+// No React, no Supabase — a plain data-shaping module, loadable directly via
 // `node --experimental-strip-types` for
 // scripts/tests/lib/test-learning-time-stats.mjs, matching every other pure
 // module in src/data/learning/.
 //
-// As of this module's introduction, no UI reads or displays learning time
-// anywhere in the app (audit-confirmed: study_time_seconds/
-// review_time_seconds/custom_practice_time_seconds are written by the
-// three completion RPCs but never selected by any frontend code). This
-// module exists to establish the data contract a future Statistics page
-// will consume — see docs/architecture.md's Learning Statistics section —
-// not to back any current screen.
+// STUDY ACTIVITY PHASE 1 NAMING NOTE — study_time_seconds is, as of
+// 20260811120000, the server-maintained per-day TOTAL across all three
+// modes (new_word_study_time_seconds + review_time_seconds +
+// custom_practice_time_seconds), never a mode on its own. This module still
+// derives totalTimeSeconds by summing the three mode fields rather than
+// trusting the raw study_time_seconds passthrough — the same "never trust a
+// stored total" precedent this module has always followed, now provably
+// correct by construction via the RPCs' own atomic invariant rather than
+// merely assumed.
+//
+// The Dashboard's Study Activity card (src/features/user-profile/sections/
+// dashboard/StudyActivityCard.tsx) is this module's first real UI consumer.
 
 export interface LearningModeTimeSeconds {
-  studyTimeSeconds: number;
+  newWordStudyTimeSeconds: number;
   reviewTimeSeconds: number;
   customPracticeTimeSeconds: number;
 }
@@ -27,14 +31,13 @@ export interface LearningModeTimeTotals extends LearningModeTimeSeconds {
   totalTimeSeconds: number;
 }
 
-// Raw shape a user_daily_stats row's three time columns take over the wire
-// (PostgREST/RPC responses — snake_case, possibly absent on a legacy row
-// written before review_time_seconds/custom_practice_time_seconds existed,
-// possibly null, possibly a non-finite/string value from a malformed
-// response). Every field is `unknown` on purpose — this module never trusts
-// the network shape.
+// Raw shape the three mode columns take over the wire (PostgREST/RPC
+// responses — snake_case, possibly absent on a row selected before this
+// column existed, possibly null, possibly a non-finite/string value from a
+// malformed response). Every field is `unknown` on purpose — this module
+// never trusts the network shape.
 export interface RawLearningModeTimeRow {
-  study_time_seconds?: unknown;
+  new_word_study_time_seconds?: unknown;
   review_time_seconds?: unknown;
   custom_practice_time_seconds?: unknown;
 }
@@ -50,31 +53,32 @@ function parseSafeNonNegativeSeconds(value: unknown): number {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : 0;
 }
 
-// Parses one user_daily_stats row's three raw time columns into a safe,
-// fully-defaulted shape. Never throws — a malformed/missing field always
-// resolves to 0 rather than propagating an error into a statistics display.
+// Parses one user_daily_stats row's three raw mode-time columns into a
+// safe, fully-defaulted shape. Never throws — a malformed/missing field
+// always resolves to 0 rather than propagating an error into a statistics
+// display.
 export function parseLearningModeTimeRow(row: RawLearningModeTimeRow | null | undefined): LearningModeTimeSeconds {
   return {
-    studyTimeSeconds: parseSafeNonNegativeSeconds(row?.study_time_seconds),
+    newWordStudyTimeSeconds: parseSafeNonNegativeSeconds(row?.new_word_study_time_seconds),
     reviewTimeSeconds: parseSafeNonNegativeSeconds(row?.review_time_seconds),
     customPracticeTimeSeconds: parseSafeNonNegativeSeconds(row?.custom_practice_time_seconds),
   };
 }
 
-// The one place total_time_seconds is ever computed. Accepts already-parsed
-// (safe, non-negative) values — callers reading raw network data should go
-// through parseLearningModeTimeRow first (or use
-// deriveLearningModeTimeTotals below, which does both in one call).
-// Never returns a negative total: every input is already guaranteed
-// non-negative by this module's own parsing, and the sum of non-negative
-// numbers is never negative.
+// The one place total_time_seconds is ever computed for display. Accepts
+// already-parsed (safe, non-negative) values — callers reading raw network
+// data should go through parseLearningModeTimeRow first (or use
+// deriveLearningModeTimeTotals below, which does both in one call). Never
+// returns a negative total: every input is already guaranteed non-negative
+// by this module's own parsing, and the sum of non-negative numbers is
+// never negative.
 export function computeTotalTimeSeconds(seconds: LearningModeTimeSeconds): number {
-  return seconds.studyTimeSeconds + seconds.reviewTimeSeconds + seconds.customPracticeTimeSeconds;
+  return seconds.newWordStudyTimeSeconds + seconds.reviewTimeSeconds + seconds.customPracticeTimeSeconds;
 }
 
 // Convenience wrapper: parse a raw row and attach its derived total in one
-// call. This is the shape a future Statistics page reads — see this
-// module's own header.
+// call. This is the shape the Dashboard's Study Activity card and its
+// aggregation engine (src/data/learning/studyActivity.ts) consume.
 export function deriveLearningModeTimeTotals(row: RawLearningModeTimeRow | null | undefined): LearningModeTimeTotals {
   const seconds = parseLearningModeTimeRow(row);
   return {

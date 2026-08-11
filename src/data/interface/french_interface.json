@@ -90,17 +90,28 @@
         },
         "studyActivity": {
           "title": "Activité d’apprentissage",
-          "newWordsLabel": "Nouveaux mots",
           "viewAllActivity": "Voir toute l’activité",
+          "total": "Total",
           "range": {
             "7d": "7 jours",
             "30d": "30 jours",
             "90d": "90 jours",
             "all": "Depuis le début"
           },
-          "tooltip": {
-            "dateLabel": "Date",
-            "periodLabel": "Période"
+          "summaryPeriod": {
+            "7d": "7 derniers jours",
+            "30d": "30 derniers jours",
+            "90d": "90 derniers jours",
+            "all": "Depuis le début"
+          },
+          "duration": {
+            "hoursMinutes": "{hours} h {minutes} min",
+            "hoursOnly": "{hours} h",
+            "minutesOnly": "{minutes} min"
+          },
+          "emptyState": {
+            "title": "Aucune activité d’apprentissage pour l’instant",
+            "message": "Votre temps d’apprentissage apparaîtra ici une fois que vous aurez commencé à étudier."
           }
         },
         "wordsLearned": {

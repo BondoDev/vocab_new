@@ -9,7 +9,11 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { MAX_WORD_TIME_SECONDS, createActiveWordTimer } from "../../../src/data/learning/activeWordTimer.ts";
+import {
+  DEFAULT_IDLE_THRESHOLD_MS,
+  MAX_WORD_TIME_SECONDS,
+  createActiveWordTimer,
+} from "../../../src/data/learning/activeWordTimer.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -231,11 +235,23 @@ test("14. getFrozenSeconds() is null before freeze() is ever called", () => {
 
 console.log(`\n=== activeWordTimer: ${MAX_WORD_TIME_SECONDS}-second cap ===\n`);
 
-test("15. Duration is capped at MAX_WORD_TIME_SECONDS even if far more time elapsed", () => {
+test("15. Duration is capped at MAX_WORD_TIME_SECONDS under continuous interaction (no single gap exceeds the idle threshold)", () => {
+  // Idle protection (added alongside this test) means a session can no
+  // longer bank many minutes of pure clock time with zero interaction —
+  // see the idle-detection section below. To still exercise the
+  // MAX_WORD_TIME_SECONDS cap on its own, this pings recordInteraction()
+  // every 30s (well under the 60s default idle threshold) across more than
+  // MAX_WORD_TIME_SECONDS of simulated continuous activity, so idle
+  // protection never triggers and MAX_WORD_TIME_SECONDS is the only thing
+  // that caps the result.
   const clock = createManualClock();
   const timer = createActiveWordTimer({ now: clock.now, documentRef: null });
   timer.start();
-  clock.advance((MAX_WORD_TIME_SECONDS + 500) * 1000);
+  const totalSimulatedSeconds = MAX_WORD_TIME_SECONDS + 500;
+  for (let elapsed = 0; elapsed < totalSimulatedSeconds; elapsed += 30) {
+    clock.advance(30_000);
+    timer.recordInteraction();
+  }
   assert.equal(timer.freeze(), MAX_WORD_TIME_SECONDS);
 });
 
@@ -295,24 +311,112 @@ test("21. dispose() is safe to call multiple times", () => {
   assert.doesNotThrow(() => timer.dispose());
 });
 
+console.log("\n=== activeWordTimer: idle detection ===\n");
+
+test("26. DEFAULT_IDLE_THRESHOLD_MS is exactly 60000 (60 seconds)", () => {
+  assert.equal(DEFAULT_IDLE_THRESHOLD_MS, 60_000);
+});
+
+test("27. A gap longer than idleThresholdMs with no interaction stops accumulation past the threshold", () => {
+  const clock = createManualClock();
+  const timer = createActiveWordTimer({ now: clock.now, documentRef: null, idleThresholdMs: 5000 });
+  timer.start(); // lastActivityAtMs = 0
+  clock.advance(3000); // still well inside the grace period
+  clock.advance(10_000); // now 13s since the last (and only) activity ping
+  // Credited only up to 5s (the idle threshold) past t=0 — the remaining
+  // ~8s of pure idle clock time is excluded.
+  assert.equal(timer.freeze(), 5);
+});
+
+test("28. recordInteraction() resumes accumulation, and the idle gap it closes is excluded", () => {
+  const clock = createManualClock();
+  const timer = createActiveWordTimer({ now: clock.now, documentRef: null, idleThresholdMs: 5000 });
+  timer.start(); // lastActivityAtMs = 0
+  clock.advance(1000); // t=1000 — real activity 0..1000
+  clock.advance(20_000); // t=21000 — a long idle gap with no interaction yet
+  timer.recordInteraction(); // credits only 0..5000 (5s grace from t=0), then reopens a fresh window at t=21000
+  clock.advance(2000); // t=23000 — real activity 21000..23000, well inside the grace period
+  // 5s (idle-capped first window) + 2s (post-interaction window) = 7s —
+  // strictly less than the 23s of real clock time that elapsed, proving
+  // the idle gap was excluded rather than silently banked.
+  assert.equal(timer.freeze(), 7);
+});
+
+test("29. Multiple separate idle gaps within one session are each excluded independently", () => {
+  const clock = createManualClock();
+  const timer = createActiveWordTimer({ now: clock.now, documentRef: null, idleThresholdMs: 5000 });
+  timer.start(); // lastActivityAtMs = 0
+  clock.advance(2000);
+  timer.recordInteraction(); // banks 2s (0..2000)
+  clock.advance(20_000); // first idle gap
+  timer.recordInteraction(); // banks 5s (idle-capped grace from the previous interaction)
+  clock.advance(1000);
+  timer.recordInteraction(); // banks 1s of real activity
+  clock.advance(30_000); // second idle gap
+  // 2s + 5s (first gap's grace) + 1s + 5s (second gap's grace) = 13s —
+  // both idle gaps (20s and 30s of real clock time) were capped
+  // independently at the 5s threshold, not just the most recent one.
+  assert.equal(timer.freeze(), 13);
+});
+
+test("30. recordInteraction() is a no-op once frozen — cannot perturb an already-locked duration", () => {
+  const clock = createManualClock();
+  const timer = createActiveWordTimer({ now: clock.now, documentRef: null, idleThresholdMs: 5000 });
+  timer.start();
+  clock.advance(1000);
+  const frozen = timer.freeze();
+  timer.recordInteraction();
+  clock.advance(1000);
+  assert.equal(timer.freeze(), frozen);
+});
+
+test("31. recordInteraction() is a no-op once disposed", () => {
+  const clock = createManualClock();
+  const timer = createActiveWordTimer({ now: clock.now, documentRef: null, idleThresholdMs: 5000 });
+  timer.start();
+  clock.advance(1000);
+  timer.dispose();
+  timer.recordInteraction();
+  clock.advance(1000);
+  assert.equal(timer.freeze(), 1);
+});
+
+test("32. Idle-protected accumulation is always an integer number of seconds", () => {
+  const clock = createManualClock();
+  const timer = createActiveWordTimer({ now: clock.now, documentRef: null, idleThresholdMs: 5000 });
+  timer.start();
+  clock.advance(5999); // just under the 6s mark
+  assert.equal(timer.freeze(), Math.floor(5999 / 1000));
+  assert.ok(Number.isInteger(timer.getFrozenSeconds()));
+});
+
+test("33. recordInteraction() called with zero elapsed time never produces a negative duration", () => {
+  const clock = createManualClock();
+  const timer = createActiveWordTimer({ now: clock.now, documentRef: null, idleThresholdMs: 5000 });
+  timer.start();
+  timer.recordInteraction();
+  timer.recordInteraction();
+  assert.equal(timer.freeze(), 0);
+});
+
 console.log("\n=== activeWordTimer: no interval-based ticking ===\n");
 
-test("22. The module source never calls setInterval (documentation may still mention the word)", () => {
+test("34. The module source never calls setInterval (documentation may still mention the word)", () => {
   const source = fs.readFileSync(path.join(ROOT_DIR, "src", "data", "learning", "activeWordTimer.ts"), "utf8");
   assert.doesNotMatch(source, /\bsetInterval\s*\(/);
 });
 
-test("23. The module source never calls localStorage/sessionStorage", () => {
+test("35. The module source never calls localStorage/sessionStorage", () => {
   const source = fs.readFileSync(path.join(ROOT_DIR, "src", "data", "learning", "activeWordTimer.ts"), "utf8");
   assert.doesNotMatch(source, /\b(localStorage|sessionStorage)\s*\./);
 });
 
-test("24. The module source never references mouse/keyboard event types", () => {
+test("36. The module source never references mouse/keyboard event types", () => {
   const source = fs.readFileSync(path.join(ROOT_DIR, "src", "data", "learning", "activeWordTimer.ts"), "utf8");
   assert.doesNotMatch(source, /mousemove|mousedown|keydown|keyup|keypress/i);
 });
 
-test("25. Default now() uses performance.now(), not Date.now()", () => {
+test("37. Default now() uses performance.now(), not Date.now()", () => {
   const source = fs.readFileSync(path.join(ROOT_DIR, "src", "data", "learning", "activeWordTimer.ts"), "utf8");
   assert.match(source, /performance\.now\(\)/);
 });

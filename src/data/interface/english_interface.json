@@ -90,17 +90,28 @@
         },
         "studyActivity": {
           "title": "Study Activity",
-          "newWordsLabel": "New Words",
           "viewAllActivity": "View all activity",
+          "total": "Total",
           "range": {
             "7d": "7 days",
             "30d": "30 days",
             "90d": "90 days",
             "all": "All time"
           },
-          "tooltip": {
-            "dateLabel": "Date",
-            "periodLabel": "Period"
+          "summaryPeriod": {
+            "7d": "Last 7 days",
+            "30d": "Last 30 days",
+            "90d": "Last 90 days",
+            "all": "All time"
+          },
+          "duration": {
+            "hoursMinutes": "{hours}h {minutes}m",
+            "hoursOnly": "{hours}h",
+            "minutesOnly": "{minutes}m"
+          },
+          "emptyState": {
+            "title": "No study activity yet",
+            "message": "Your learning time will appear here after you start studying."
           }
         },
         "wordsLearned": {

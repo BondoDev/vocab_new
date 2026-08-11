@@ -214,6 +214,47 @@ test("21. All 7 locales define the Study Activity range labels (7d/30d/90d/all)"
   }
 });
 
+console.log("\n=== Study Activity Phase 1: time-chart localization contract ===\n");
+
+test("26. newWordsLabel (the quantity-era series label) no longer exists in any locale", () => {
+  for (const fileName of LOCALE_FILES) {
+    const studyActivity = parsed.get(fileName).userProfile.dashboardPage.supportingCards.studyActivity;
+    assert.ok(!("newWordsLabel" in studyActivity), `${fileName}: newWordsLabel must be removed`);
+  }
+});
+
+test("27. All 7 locales define total, summaryPeriod.*, duration.*, and emptyState.* with non-empty strings", () => {
+  for (const fileName of LOCALE_FILES) {
+    const studyActivity = parsed.get(fileName).userProfile.dashboardPage.supportingCards.studyActivity;
+    assert.equal(typeof studyActivity.total, "string");
+    assert.ok(studyActivity.total.trim().length > 0, `${fileName}: studyActivity.total is empty`);
+
+    for (const key of ["7d", "30d", "90d", "all"]) {
+      assert.equal(typeof studyActivity.summaryPeriod[key], "string");
+      assert.ok(studyActivity.summaryPeriod[key].trim().length > 0, `${fileName}: studyActivity.summaryPeriod.${key} is empty`);
+    }
+
+    for (const key of ["hoursMinutes", "hoursOnly", "minutesOnly"]) {
+      const template = studyActivity.duration[key];
+      assert.equal(typeof template, "string");
+      assert.ok(template.trim().length > 0, `${fileName}: studyActivity.duration.${key} is empty`);
+    }
+    // hoursMinutes/hoursOnly must interpolate {hours}; minutesOnly/
+    // hoursMinutes must interpolate {minutes} — every locale's own template
+    // controls spacing/order, but the tokens themselves must be present so
+    // interpolateTemplate has something to substitute.
+    assert.match(studyActivity.duration.hoursMinutes, /\{hours\}/);
+    assert.match(studyActivity.duration.hoursMinutes, /\{minutes\}/);
+    assert.match(studyActivity.duration.hoursOnly, /\{hours\}/);
+    assert.match(studyActivity.duration.minutesOnly, /\{minutes\}/);
+
+    assert.equal(typeof studyActivity.emptyState.title, "string");
+    assert.ok(studyActivity.emptyState.title.trim().length > 0, `${fileName}: studyActivity.emptyState.title is empty`);
+    assert.equal(typeof studyActivity.emptyState.message, "string");
+    assert.ok(studyActivity.emptyState.message.trim().length > 0, `${fileName}: studyActivity.emptyState.message is empty`);
+  }
+});
+
 console.log("\n=== Reused (not duplicated) translation keys ===\n");
 
 test("Learning/Known/Mastered are reused from vocabularySection.summaryCards, not redeclared here", () => {
@@ -293,6 +334,25 @@ test("23. Vocabulary Overview's View Vocabulary button navigates to the vocabula
 
 test("24. Milestone Preview's View Progress button navigates to the progress section", () => {
   assert.match(milestonePreviewCard, /onNavigateToSection\?\.\("progress"\)/);
+});
+
+test("24b. Study Activity no longer charts New Words/Reviews quantities — it charts active time, and reuses (not redeclares) Study New Words/Review Words/Custom Practice labels", () => {
+  assert.doesNotMatch(
+    studyActivityCard,
+    /newWordsCompleted|reviewsCompleted|newWordsLabel/,
+    "StudyActivityCard must not reference the quantity-era fields/label anymore",
+  );
+  assert.match(studyActivityCard, /newWordStudyTimeSeconds/);
+  assert.match(studyActivityCard, /reviewTimeSeconds/);
+  assert.match(studyActivityCard, /customPracticeTimeSeconds/);
+  assert.match(studyActivityCard, /totalSeconds/);
+  assert.match(
+    studyActivityCard,
+    /"userProfile\.learningSection\.modeCards\.modes\.studyNewWords\.title"/,
+    "Study New Words label must be reused from modeCards, not redeclared under studyActivity",
+  );
+  assert.match(studyActivityCard, /"userProfile\.learningSection\.modeCards\.modes\.reviewWords\.title"/);
+  assert.match(studyActivityCard, /"userProfile\.learningSection\.modeCards\.modes\.customPractice\.title"/);
 });
 
 test("25. Expanding/collapsing Study Activity or switching its range never triggers a fetch — both are local UI state only", () => {

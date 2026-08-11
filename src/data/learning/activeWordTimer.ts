@@ -10,19 +10,36 @@
 //
 // Deliberately does NOT:
 //   * use setInterval/setTimeout to "tick" — time is computed on demand
-//     (start/pause/resume/freeze only touch two numbers: an accumulated
-//     millisecond total and an optional "accumulating since" timestamp);
+//     (start/pause/resume/freeze/recordInteraction only touch a handful of
+//     numbers: an accumulated millisecond total, an optional "accumulating
+//     since" timestamp, and the last-known-interaction timestamp used for
+//     idle detection below);
 //   * update any React state — callers own if/when they re-render;
 //   * write to localStorage or anywhere else — a caller decides what (if
 //     anything) to do with a frozen duration;
-//   * record mouse/keyboard activity — the only signal this timer reacts to
-//     is document.visibilityState, via an injectable document-like target so
-//     this stays usable outside a browser (tests, SSR).
+//   * listen for mouse/keyboard events itself — a caller reports activity
+//     explicitly via recordInteraction() from its own existing click/
+//     dispatch handlers (answer select, submit, skip, next). The only
+//     signal this timer listens for directly is document.visibilityState,
+//     via an injectable document-like target so this stays usable outside a
+//     browser (tests, SSR).
 //
 // One instance is meant to cover exactly one word's full exercise sequence:
 // start() when the word becomes visible, freeze() when the learner submits
 // its last exercise, reset() only after that duration is confirmed
 // persisted (see each mode's session component for where these calls live).
+//
+// IDLE PROTECTION — a session left open with the tab visible but with no
+// genuine interaction for idleThresholdMs (default 60s) must stop counting
+// from that point forward, resuming only once recordInteraction() is called
+// again. This is computed lazily, the same "on demand" way as everything
+// else here: every flush (pause/hidden/freeze/dispose, or the internal
+// close-and-reopen a recordInteraction() call performs) caps the window it
+// closes at min(now, lastActivityAtMs + idleThresholdMs) instead of raw
+// now(). recordInteraction() closing-and-reopening the window on every call
+// (rather than only capping lazily at the next unrelated flush) is what
+// correctly excludes *every* idle gap in a long session, not just the last
+// one before whatever eventually calls pause/freeze/dispose.
 
 // Single named constant both the frontend and the database independently
 // enforce (see supabase/migrations/20260805190000_add_learning_mode_time_
@@ -30,6 +47,13 @@
 // p_custom_practice_time_seconds validation, which mirrors this exact
 // value). Changing this number changes both sides — keep them in sync.
 export const MAX_WORD_TIME_SECONDS = 300;
+
+// Default idle threshold — no established convention already exists
+// elsewhere in this repository, so this uses the task's own suggested
+// "modest" default. Injectable per-instance (ActiveWordTimerDeps.
+// idleThresholdMs) so tests can use a much shorter window instead of
+// waiting on (or simulating) a full 60 real seconds.
+export const DEFAULT_IDLE_THRESHOLD_MS = 60_000;
 
 // Shared duration-validation guard every mode's persistence call (Study New
 // Words, Review Words, Custom Practice) runs before ever putting a duration
@@ -71,6 +95,9 @@ export interface ActiveWordTimerDeps {
   // Omitted (undefined) falls back to the global `document` when one exists,
   // or `null` when it doesn't (Node/SSR) — never throws either way.
   documentRef?: ActiveWordTimerDocumentLike | null;
+  // How long a session may go without a recordInteraction() call before
+  // further accumulation stops. Defaults to DEFAULT_IDLE_THRESHOLD_MS.
+  idleThresholdMs?: number;
 }
 
 export interface ActiveWordTimer {
@@ -85,6 +112,14 @@ export interface ActiveWordTimer {
   // Resumes accumulating after pause() (or after a visibility-driven
   // auto-pause). Idempotent, same guard as start().
   resume(): void;
+  // Reports a genuine user interaction (typing, clicking an exercise
+  // control, selecting an answer, moving to the next exercise). Refreshes
+  // the idle deadline; if a gap longer than idleThresholdMs had opened up
+  // since the previous interaction, the idle portion of that gap is
+  // excluded from the accumulated total — see this module's own header for
+  // the "close and reopen the window" mechanism. No-op once frozen/
+  // disposed, matching every other method's guard.
+  recordInteraction(): void;
   // Flushes any in-progress accumulation, floors the total to whole
   // seconds, clamps to [0, MAX_WORD_TIME_SECONDS], and locks that value —
   // every subsequent call (start/pause/resume/freeze) becomes inert except
@@ -110,6 +145,7 @@ function resolveDefaultDocument(): ActiveWordTimerDocumentLike | null {
 export function createActiveWordTimer(deps: ActiveWordTimerDeps = {}): ActiveWordTimer {
   const now = deps.now ?? (() => performance.now());
   const documentRef = deps.documentRef !== undefined ? deps.documentRef : resolveDefaultDocument();
+  const idleThresholdMs = deps.idleThresholdMs ?? DEFAULT_IDLE_THRESHOLD_MS;
 
   // accumulatedMs: total active milliseconds banked so far (flushed windows
   // only). accumulatingSinceMs: the timestamp the *current* window started,
@@ -117,10 +153,13 @@ export function createActiveWordTimer(deps: ActiveWordTimerDeps = {}): ActiveWor
   // not started, or frozen). intentRunning: whether the caller has asked
   // this timer to be running (via start()/resume()) — distinct from actually
   // accumulating, since a running-but-hidden timer has intentRunning = true
-  // and accumulatingSinceMs = null at the same time.
+  // and accumulatingSinceMs = null at the same time. lastActivityAtMs: the
+  // timestamp of the most recent start()/resume()/recordInteraction() call
+  // — null until the first one — used only to compute the idle cap below.
   let accumulatedMs = 0;
   let accumulatingSinceMs: number | null = null;
   let intentRunning = false;
+  let lastActivityAtMs: number | null = null;
   let frozenSeconds: number | null = null;
   let disposed = false;
 
@@ -134,9 +173,18 @@ export function createActiveWordTimer(deps: ActiveWordTimerDeps = {}): ActiveWor
     }
   }
 
+  // Closes the current window (if any), crediting it only up to
+  // min(now(), lastActivityAtMs + idleThresholdMs) — so a window that went
+  // idle and was never interacted with again before this flush stops
+  // counting the instant the idle threshold was crossed, not at whatever
+  // later moment actually triggered this flush (visibility change, pause,
+  // freeze, dispose, or a fresh recordInteraction() reopening the window).
   function flushAccumulating(): void {
     if (accumulatingSinceMs !== null) {
-      accumulatedMs += Math.max(0, now() - accumulatingSinceMs);
+      const nowMs = now();
+      const idleCapMs = lastActivityAtMs === null ? nowMs : lastActivityAtMs + idleThresholdMs;
+      const effectiveEndMs = Math.min(nowMs, idleCapMs);
+      accumulatedMs += Math.max(0, effectiveEndMs - accumulatingSinceMs);
       accumulatingSinceMs = null;
     }
   }
@@ -158,6 +206,7 @@ export function createActiveWordTimer(deps: ActiveWordTimerDeps = {}): ActiveWor
     start() {
       if (disposed || frozenSeconds !== null) return;
       intentRunning = true;
+      lastActivityAtMs = now();
       if (isVisible()) {
         beginAccumulatingIfNeeded();
       }
@@ -172,7 +221,21 @@ export function createActiveWordTimer(deps: ActiveWordTimerDeps = {}): ActiveWor
     resume() {
       if (disposed || frozenSeconds !== null) return;
       intentRunning = true;
+      lastActivityAtMs = now();
       if (isVisible()) {
+        beginAccumulatingIfNeeded();
+      }
+    },
+
+    recordInteraction() {
+      if (disposed || frozenSeconds !== null) return;
+      // Close the current window (capped at the *previous* activity's idle
+      // deadline, excluding any idle gap that just ended), then reopen a
+      // fresh one starting now — so a session with several separate idle
+      // gaps has each one excluded independently, not just the last one.
+      flushAccumulating();
+      lastActivityAtMs = now();
+      if (intentRunning && isVisible()) {
         beginAccumulatingIfNeeded();
       }
     },
@@ -201,6 +264,7 @@ export function createActiveWordTimer(deps: ActiveWordTimerDeps = {}): ActiveWor
       accumulatedMs = 0;
       accumulatingSinceMs = null;
       intentRunning = false;
+      lastActivityAtMs = null;
       frozenSeconds = null;
     },
 

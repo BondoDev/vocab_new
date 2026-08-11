@@ -265,7 +265,13 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
                 exerciseId={currentAssignment.typingExerciseId}
                 item={currentWordItem}
                 practiceLanguage={practiceLanguage}
-                onComplete={(outcome) => dispatch({ type: "WORD_OUTCOME_DETERMINED", outcome })}
+                onComplete={(outcome) => {
+                  // Submitting this word's review exercise is a genuine
+                  // interaction — refreshes the active-time idle deadline
+                  // (see activeWordTimer.ts's own header).
+                  wordTimerRef.current?.recordInteraction();
+                  dispatch({ type: "WORD_OUTCOME_DETERMINED", outcome });
+                }}
               />
             </ReviewExerciseErrorBoundary>
           )}
