@@ -261,15 +261,15 @@ function stripLineComments(source) {
     .join("\n");
 }
 
-test("14. Card/grid/data-layer files under my-lists never import vocabulary.json or a word-resolution helper (counts stay JSON-free); only ListDetailView.tsx (Phase 2A) and AddWordsDialog.tsx (Phase 2B, type-only — see that file's own import) may reference loadVocabularyProgress", () => {
-  const allowedExceptions = new Set(["ListDetailView.tsx", "AddWordsDialog.tsx"]);
+test("14. Card/grid/data-layer files under my-lists never import vocabulary.json or a word-resolution helper (counts stay JSON-free); only ListDetailView.tsx may reference the full-vocabulary resolver (superseded by the My Lists corrective phase: loadFullVocabularyForLanguagePair, not loadVocabularyProgress — see supabase/README.md's 'My Lists Corrective Phase' section)", () => {
+  const allowedExceptions = new Set(["ListDetailView.tsx"]);
   const offenders = [];
   for (const entry of fs.readdirSync(MY_LISTS_DIR)) {
     if (allowedExceptions.has(entry)) continue;
     const filePath = path.join(MY_LISTS_DIR, entry);
     if (!fs.statSync(filePath).isFile()) continue;
     const content = stripLineComments(fs.readFileSync(filePath, "utf8"));
-    if (/vocabulary\.json|loadVocabularyProgress|resolveWordCreatedDateISO/.test(content)) {
+    if (/vocabulary\.json|loadVocabularyProgress|loadFullVocabularyForLanguagePair|resolveWordCreatedDateISO/.test(content)) {
       offenders.push(entry);
     }
   }
@@ -277,8 +277,8 @@ test("14. Card/grid/data-layer files under my-lists never import vocabulary.json
 
   for (const allowedException of allowedExceptions) {
     const content = stripLineComments(fs.readFileSync(path.join(MY_LISTS_DIR, allowedException), "utf8"));
-    assert.doesNotMatch(content, /vocabulary\.json/, `${allowedException} must resolve via loadVocabularyProgress, never a direct JSON import`);
-    assert.match(content, /loadVocabularyProgress/, `${allowedException} is expected to reference loadVocabularyProgress`);
+    assert.doesNotMatch(content, /vocabulary\.json/, `${allowedException} must resolve via the shared resolver module, never a direct JSON import`);
+    assert.match(content, /loadFullVocabularyForLanguagePair/, `${allowedException} is expected to reference loadFullVocabularyForLanguagePair`);
   }
 });
 

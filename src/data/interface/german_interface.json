@@ -475,6 +475,7 @@
       "removeError": "Das Wort konnte nicht entfernt werden. Bitte versuche es erneut.",
       "searchWords": "Wörter durchsuchen",
       "statusAll": "Alle",
+      "notStudied": "Noch nicht gelernt",
       "viewWordDetails": "Wortdetails ansehen",
       "emptyState": {
         "title": "Noch keine Listen",

@@ -36,6 +36,19 @@ function indexByConceptId(entries: unknown[]): Map<string, RawVocabularyEntry> {
   return index;
 }
 
+// Enumerates every concept id a given language's vocabulary.json entries
+// could resolve (same usable-lemma/first-occurrence-wins rule
+// indexByConceptId applies internally), in source-file order. Exists for
+// callers that need "every concept this language's vocabulary.json knows
+// about" (e.g. My Lists' Add Words picker, which must offer the FULL
+// vocabulary set for a target language, not just concepts with existing
+// user_word_progress rows — see loadFullVocabulary.ts) without introducing
+// a second vocabulary-listing source: this reuses indexByConceptId's own
+// index, just returning its keys in insertion order instead of the values.
+export function listResolvableConceptIds(entries: unknown[]): string[] {
+  return [...indexByConceptId(entries).keys()];
+}
+
 // Same shape VocabularyPractice.tsx already reads from inflected.json: a
 // concept_id plus one or more "word_inflected..." keys whose naming varies
 // by language file (e.g. "word_inflected1" for English, "word_inflected-1"/

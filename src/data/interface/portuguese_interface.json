@@ -475,6 +475,7 @@
       "removeError": "Não foi possível remover esta palavra. Tente novamente.",
       "searchWords": "Pesquisar palavras",
       "statusAll": "Todas",
+      "notStudied": "Ainda não estudada",
       "viewWordDetails": "Ver detalhes da palavra",
       "emptyState": {
         "title": "Ainda não há listas",

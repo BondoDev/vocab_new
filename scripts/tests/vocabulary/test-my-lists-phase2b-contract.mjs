@@ -52,23 +52,23 @@ test("13. The detail view's Add Words button and empty-state Add Words button bo
 
 console.log("\n=== 14. Already-added words unavailable in the picker ===\n");
 
-test("14. AddWordsDialog excludes already-added words from availableRows before search/status filtering", () => {
-  const availableMatch = pickerSource.match(/const availableRows = useMemo\(\s*\(\) => allResolvedRows\.filter\(\(row\) => !alreadyAddedIds\.has\(row\.id\)\),/);
-  assert.ok(availableMatch, "availableRows must filter out alreadyAddedIds");
-  assert.match(pickerSource, /const visibleRows = useMemo\(\(\) => \{\s*const byStatus = filterVocabularyRowsByTab\(availableRows, statusFilter\);/);
+test("14. AddWordsDialog excludes already-added words from availableRows before search/status filtering (superseded identity: conceptId, since membership is word_id-based — see supabase/README.md's 'My Lists Corrective Phase' section)", () => {
+  const availableMatch = pickerSource.match(/const availableRows = useMemo\(\s*\(\) => allRows\.filter\(\(row\) => !alreadyAddedIds\.has\(row\.conceptId\)\),/);
+  assert.ok(availableMatch, "availableRows must filter out alreadyAddedIds by conceptId");
+  assert.match(pickerSource, /const visibleRows = useMemo\(\(\) => \{\s*const byStatus = filterListWordRowsByStatus\(availableRows, statusFilter\);/);
 });
 
 console.log("\n=== 15. Multi-select count correct ===\n");
 
 test("15. Selection is a Set, toggled per row, and the footer summary/button both derive from its size", () => {
   assert.match(pickerSource, /const \[selectedIds, setSelectedIds\] = useState<ReadonlySet<string>>\(new Set\(\)\)/);
-  assert.match(pickerSource, /const toggleSelected = \(rowId: string\) => \{/);
+  assert.match(pickerSource, /const toggleSelected = \(conceptId: string\) => \{/);
   assert.match(pickerSource, /const selectedCount = selectedIds\.size;/);
   assert.match(pickerSource, /selectedCount === 0\s*\n\s*\? t\("userProfile\.myListsSection\.picker\.addSelected"\)/);
 });
 
 test("Selected rows are visually marked and the checkbox reflects selection state", () => {
-  assert.match(pickerSource, /const isSelected = selectedIds\.has\(row\.id\);/);
+  assert.match(pickerSource, /const isSelected = selectedIds\.has\(row\.conceptId\);/);
   assert.match(pickerSource, /checked=\{isSelected\}/);
   assert.match(pickerSource, /is-selected/);
 });
@@ -76,9 +76,9 @@ test("Selected rows are visually marked and the checkbox reflects selection stat
 console.log("\n=== 16. Successful add updates list immediately ===\n");
 
 test("16. handleSubmitAddWords calls the RPC, refetches only this list's memberships, and replaces them in local state — no full reload", () => {
-  const fnMatch = sectionSource.match(/const handleSubmitAddWords = async \(wordProgressIds: string\[\]\) => \{([\s\S]*?)\n  \};/);
+  const fnMatch = sectionSource.match(/const handleSubmitAddWords = async \(wordIds: string\[\]\) => \{([\s\S]*?)\n  \};/);
   assert.ok(fnMatch, "handleSubmitAddWords must exist");
-  assert.match(fnMatch[1], /addWordsToVocabularyList\(session, listIdToUpdate, wordProgressIds\)/);
+  assert.match(fnMatch[1], /addWordsToVocabularyList\(session, listIdToUpdate, wordIds\)/);
   assert.match(fnMatch[1], /readUserVocabularyListMemberships\(session, \[listIdToUpdate\]\)/);
   assert.match(
     fnMatch[1],
@@ -90,7 +90,7 @@ test("16. handleSubmitAddWords calls the RPC, refetches only this list's members
 console.log("\n=== 17. Remove updates list immediately (optimistic) ===\n");
 
 test("17. handleRemoveWord removes the membership from local state before the RPC resolves (optimistic), and rolls back on failure", () => {
-  const fnMatch = sectionSource.match(/const handleRemoveWord = \(wordProgressId: string\) => \{([\s\S]*?)\n  \};/);
+  const fnMatch = sectionSource.match(/const handleRemoveWord = \(wordId: string\) => \{([\s\S]*?)\n  \};/);
   assert.ok(fnMatch, "handleRemoveWord must exist");
   const setStateIndex = fnMatch[1].indexOf("setState((prev) =>");
   const rpcCallIndex = fnMatch[1].indexOf("removeWordFromVocabularyList(");
@@ -103,23 +103,20 @@ test("A successful remove shows the 'Removed from list' toast; a failed remove s
   assert.match(sectionSource, /showToast\(t\("userProfile\.myListsSection\.removeError"\)\)/);
 });
 
-console.log("\n=== Counts stay real — reuse the existing pure metrics helper ===\n");
+console.log("\n=== Counts stay real — superseded by the My Lists corrective phase's word-count helper ===\n");
 
-test("Card/detail metrics are still computed via computeListCardMetricsByListId — no second category system introduced in Phase 2B", () => {
-  assert.match(sectionSource, /computeListCardMetricsByListId\(memberships, wordStateById\)/);
+test("Card/detail counts are computed via computeListWordCountsByListId (superseded: the Learning/Known/Mastered aggregate from Phase 2B no longer exists on cards at all — see test-my-lists-corrective-contract.mjs)", () => {
+  assert.match(sectionSource, /computeListWordCountsByListId\(memberships\)/);
   assert.doesNotMatch(sectionSource, /learning\+\+|known\+\+|mastered\+\+/);
 });
 
 console.log("\n=== 18-19. Search by word / translation ===\n");
 
-test("18-19. The detail view's search filters via filterVocabularyRowsBySearch, which matches both targetWord and translation", () => {
-  assert.match(detailSource, /import \{\s*filterVocabularyRowsByTab,\s*filterVocabularyRowsBySearch,/);
-  assert.match(detailSource, /filterVocabularyRowsBySearch\(byStatus, searchQuery\)/);
-  const vocabFilteringSource = fs.readFileSync(
-    path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "vocabulary", "vocabularyFiltering.ts"),
-    "utf8",
-  );
-  assert.match(vocabFilteringSource, /word\.includes\(normalizedQuery\) \|\| translation\.includes\(normalizedQuery\)/);
+test("18-19. The detail view's search filters via filterListWordRowsBySearch, which matches both targetWord and translation (superseded module: listWordFiltering.ts, since rows now carry an optional notStudied status — see supabase/README.md's 'My Lists Corrective Phase' section)", () => {
+  assert.match(detailSource, /import \{ filterListWordRowsByStatus, filterListWordRowsBySearch, type ListWordStatusFilterId \} from "\.\/listWordFiltering"/);
+  assert.match(detailSource, /filterListWordRowsBySearch\(byStatus, searchQuery\)/);
+  const listWordFilteringSource = fs.readFileSync(path.join(MY_LISTS_DIR, "listWordFiltering.ts"), "utf8");
+  assert.match(listWordFilteringSource, /word\.includes\(normalizedQuery\) \|\| translation\.includes\(normalizedQuery\)/);
 });
 
 test("The Add Words picker's search is client-side over already-loaded resolved rows — no Supabase request on keystroke", () => {
@@ -128,13 +125,13 @@ test("The Add Words picker's search is client-side over already-loaded resolved 
   assert.doesNotMatch(searchBlockMatch[1], /supabase|fetch\(|await /i);
 });
 
-console.log("\n=== 20-22. Learning/Known/Mastered filters ===\n");
+console.log("\n=== 20-22. Not studied/Learning/Known/Mastered filters ===\n");
 
-test("20-22. Both the picker and the detail view offer all/learning/known/mastered via the shared VocabularyTabId filter, filtered with filterVocabularyRowsByTab", () => {
-  assert.match(pickerSource, /const STATUS_FILTERS: Exclude<VocabularyTabId, "favorites">\[\] = \["all", "learning", "known", "mastered"\];/);
-  assert.match(detailSource, /const STATUS_FILTERS: Exclude<VocabularyTabId, "favorites">\[\] = \["all", "learning", "known", "mastered"\];/);
-  assert.match(pickerSource, /filterVocabularyRowsByTab\(availableRows, statusFilter\)/);
-  assert.match(detailSource, /filterVocabularyRowsByTab\(listRows, statusFilter\)/);
+test("20-22. Both the picker and the detail view offer all/notStudied/learning/known/mastered via ListWordStatusFilterId, filtered with filterListWordRowsByStatus (superseded: Phase 2B had no 'Not studied' filter at all — see test-my-lists-corrective-contract.mjs)", () => {
+  assert.match(pickerSource, /const STATUS_FILTERS: ListWordStatusFilterId\[\] = \["all", "notStudied", "learning", "known", "mastered"\];/);
+  assert.match(detailSource, /const STATUS_FILTERS: ListWordStatusFilterId\[\] = \["all", "notStudied", "learning", "known", "mastered"\];/);
+  assert.match(pickerSource, /filterListWordRowsByStatus\(availableRows, statusFilter\)/);
+  assert.match(detailSource, /filterListWordRowsByStatus\(listRows, statusFilter\)/);
 });
 
 console.log("\n=== 23. Zero-list-word empty state ===\n");
@@ -175,7 +172,7 @@ test("The Add Words dialog uses a responsive width (sm:max-w-2xl), not a fixed n
 console.log("\n=== Accessibility ===\n");
 
 test("Picker rows use a semantic <label>+checkbox pairing (native accessible name) rather than a bare clickable div", () => {
-  assert.match(pickerSource, /<label key=\{row\.id\} className=\{`my-lists-picker__row/);
+  assert.match(pickerSource, /<label key=\{row\.conceptId\} className=\{`my-lists-picker__row/);
   assert.match(pickerSource, /<input\s+type="checkbox"/);
 });
 
@@ -184,9 +181,9 @@ test("Row actions (View word details / Remove from list) use the shared keyboard
   assert.match(detailSource, /function RowActionsMenu/);
 });
 
-test("Status is never communicated by color alone — every status badge still renders its own text label", () => {
-  assert.match(detailSource, /\{statusLabel\(row\.category\)\}/);
-  assert.match(pickerSource, /\{t\(`userProfile\.vocabularySection\.table\.statuses\.\$\{row\.category\}`\)\}/);
+test("Status is never communicated by color alone — every status badge still renders its own text label (superseded field: row.status, now inclusive of notStudied — see listWordStatus.ts)", () => {
+  assert.match(detailSource, /\{statusLabel\(row\.status\)\}/);
+  assert.match(pickerSource, /\{statusLabel\(row\.status\)\}/);
 });
 
 console.log("\n=== Loading states ===\n");
@@ -209,13 +206,13 @@ console.log("\n=== Performance: batched add, no per-row/per-card network calls =
 
 test("Add Words always calls the batch RPC once for the whole selection, never once per selected word", () => {
   assert.doesNotMatch(pickerSource, /selectedIds\.forEach|for \(const .* of selectedIds\)/);
-  assert.match(sectionSource, /addWordsToVocabularyList\(session, listIdToUpdate, wordProgressIds\)/);
+  assert.match(sectionSource, /addWordsToVocabularyList\(session, listIdToUpdate, wordIds\)/);
 });
 
-test("vocabulary.json is resolved once per ListDetailView mount for the FULL word set (not once per row, not twice for member vs. picker subsets)", () => {
-  const effectMatch = detailSource.match(/useEffect\(\(\) => \{([\s\S]*?)\}, \[list\.targetLanguage, nativeLanguage, wordProgressRows\]\);/);
-  assert.ok(effectMatch, "the single resolution effect must exist, keyed only on language/native/progress rows — not on memberships");
-  assert.match(effectMatch[1], /loadVocabularyProgress\(\{\s*progressRows: wordProgressRows,/);
+test("vocabulary.json is resolved once per ListDetailView mount for the FULL vocabulary set — not filtered by progress rows, not once per row, not twice for member vs. picker subsets (superseded resolver: loadFullVocabularyForLanguagePair, keyed only on target/native language — see supabase/README.md's 'My Lists Corrective Phase' section)", () => {
+  const effectMatch = detailSource.match(/useEffect\(\(\) => \{([\s\S]*?)\}, \[list\.targetLanguage, nativeLanguage\]\);/);
+  assert.ok(effectMatch, "the single resolution effect must exist, keyed only on target/native language — not on memberships or progress rows");
+  assert.match(effectMatch[1], /loadFullVocabularyForLanguagePair\(\{\s*targetLanguage: list\.targetLanguage,/);
 });
 
 console.log("\n=== 26 covered by test-my-lists-phase2b-localization.mjs ===\n");

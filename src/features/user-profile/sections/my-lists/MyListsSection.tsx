@@ -29,7 +29,7 @@ import { AddWordsDialog } from "./AddWordsDialog";
 import { ListCard } from "./ListCard";
 import { ListDetailView } from "./ListDetailView";
 import { normalizeListNameForComparison } from "./listNameValidation";
-import { computeListCardMetricsByListId, getListCardMetrics } from "./listCardMetrics";
+import { computeListWordCountsByListId, getListWordCount } from "./listWordCounts";
 import { filterListsBySearchQuery, sortLists, type ListSortMode } from "./listSearchSort";
 import "./my-lists-section.scss";
 
@@ -165,16 +165,12 @@ export function MyListsSection({
   const lists = state.status === "result" ? state.lists : [];
   const memberships = state.status === "result" ? state.memberships : [];
 
-  const wordStateById = useMemo(() => {
-    const map = new Map<string, UserWordProgressFullRow["wordState"]>();
-    for (const row of wordProgressRows) map.set(row.id, row.wordState);
-    return map;
-  }, [wordProgressRows]);
-
-  const metricsByListId = useMemo(
-    () => computeListCardMetricsByListId(memberships, wordStateById),
-    [memberships, wordStateById],
-  );
+  // A card's word count comes directly from its membership rows — never
+  // from resolving learning progress or the vocabulary dataset (membership
+  // is concept-based and independent of progress; see this file's own
+  // handleSubmitAddWords/handleRemoveWord below and supabase/README.md's
+  // "My Lists Corrective Phase" section).
+  const wordCountsByListId = useMemo(() => computeListWordCountsByListId(memberships), [memberships]);
 
   const listId = resolveListIdFromSearch(location.search);
   const activeList = listId ? (lists.find((list) => list.id === listId) ?? null) : null;
@@ -349,7 +345,7 @@ export function MyListsSection({
   // guessing. Replaces only this list's own membership rows in local
   // state; every other list's memberships are left untouched. No full
   // page reload, no refetch of the list's own row set.
-  const handleSubmitAddWords = async (wordProgressIds: string[]) => {
+  const handleSubmitAddWords = async (wordIds: string[]) => {
     if (!activeList) return;
     const listIdToUpdate = activeList.id;
 
@@ -362,7 +358,7 @@ export function MyListsSection({
     setIsAddingWords(true);
     setAddWordsError(null);
     try {
-      await addWordsToVocabularyList(session, listIdToUpdate, wordProgressIds);
+      await addWordsToVocabularyList(session, listIdToUpdate, wordIds);
       const freshMemberships = await readUserVocabularyListMemberships(session, [listIdToUpdate]);
       setState((prev) =>
         prev.status === "result"
@@ -394,7 +390,7 @@ export function MyListsSection({
   // scary destructive confirmation" guidance (removing organization
   // membership only; user_word_progress is never touched, client-side or
   // server-side).
-  const handleRemoveWord = (wordProgressId: string) => {
+  const handleRemoveWord = (wordId: string) => {
     if (!activeList) return;
     const listIdToUpdate = activeList.id;
 
@@ -405,7 +401,7 @@ export function MyListsSection({
     }
 
     const removedMembership = memberships.find(
-      (membership) => membership.listId === listIdToUpdate && membership.wordProgressId === wordProgressId,
+      (membership) => membership.listId === listIdToUpdate && membership.wordId === wordId,
     );
     setState((prev) =>
       prev.status === "result"
@@ -413,13 +409,13 @@ export function MyListsSection({
             status: "result",
             lists: prev.lists,
             memberships: prev.memberships.filter(
-              (membership) => !(membership.listId === listIdToUpdate && membership.wordProgressId === wordProgressId),
+              (membership) => !(membership.listId === listIdToUpdate && membership.wordId === wordId),
             ),
           }
         : prev,
     );
 
-    void removeWordFromVocabularyList(session, listIdToUpdate, wordProgressId)
+    void removeWordFromVocabularyList(session, listIdToUpdate, wordId)
       .then(() => showToast(t("userProfile.myListsSection.removedFromList")))
       .catch((error) => {
         console.warn("MyListsSection: failed to remove word from list.", error);
@@ -449,7 +445,6 @@ export function MyListsSection({
       <>
         <ListDetailView
           list={activeList}
-          metrics={getListCardMetrics(metricsByListId, activeList.id)}
           memberships={listMemberships}
           wordProgressRows={wordProgressRows}
           nativeLanguage={userProfile.nativeLanguage}
@@ -557,7 +552,7 @@ export function MyListsSection({
               <ListCard
                 key={list.id}
                 list={list}
-                metrics={getListCardMetrics(metricsByListId, list.id)}
+                wordCount={getListWordCount(wordCountsByListId, list.id)}
                 onView={() => goToDetail(list.id)}
                 onRename={() => handleOpenRenameDialog(list)}
                 onDelete={() => handleOpenDeleteDialog(list)}

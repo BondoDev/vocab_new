@@ -947,6 +947,7 @@
       "removeError": "Не удалось удалить это слово. Попробуйте ещё раз.",
       "searchWords": "Поиск слов",
       "statusAll": "Все",
+      "notStudied": "Ещё не изучено",
       "viewWordDetails": "Посмотреть слово",
       "emptyState": {
         "title": "Списков пока нет",

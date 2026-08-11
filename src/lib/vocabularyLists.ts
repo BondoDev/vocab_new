@@ -1,15 +1,22 @@
 // Supabase access for "My Lists": reading a signed-in user's vocabulary-list
 // rows for the active target language, creating/renaming/deleting a list,
-// reading which user_word_progress rows belong to which lists, and (Phase
-// 2B) adding/removing that membership. This module is the only place that
+// reading which vocabulary concepts (word ids) belong to which lists, and
+// adding/removing that membership. This module is the only place that
 // knows about public.user_vocabulary_lists and
 // public.user_vocabulary_list_words — mirrors newWordProgress.ts's own
 // one-module-per-table(-family) convention.
 //
+// Membership is concept-based (word_id), not progress-based — see
+// supabase/README.md's "My Lists Corrective Phase" section. A list may
+// contain a word the caller has never studied; user_word_progress is
+// consulted only optionally, client-side, when the UI wants to show a
+// word's current learning status. This module itself never reads or
+// requires user_word_progress at all.
+//
 // This module never resolves word display data (target word/translation/
 // CEFR) — that stays owned by vocabulary.json, resolved client-side only
 // when a list's detail rows or the Add Words picker are actually rendered
-// (see loadVocabularyProgress.ts, reused as-is for that).
+// (see loadFullVocabulary.ts and loadVocabularyProgress.ts).
 // user_vocabulary_lists/user_vocabulary_list_words are organization-only;
 // canonical word state stays owned by user_word_progress (see every
 // migration's own header for the full rationale) — addWordsToVocabularyList
@@ -305,15 +312,25 @@ export async function deleteUserVocabularyList(session: StoredSupabaseSession, l
   }
 }
 
+// Membership identifies the vocabulary CONCEPT itself (wordId — the same
+// cross-language concept id user_word_progress.word_id already stores,
+// e.g. "A1-00193"), not a user_word_progress row. This is the corrective
+// My Lists phase's core change: a list must be able to contain any
+// vocabulary word from its target language, studied or not — see
+// supabase/README.md's "My Lists Corrective Phase" section for the full
+// rationale and migration strategy
+// (20260811170000_my_lists_corrective_word_id_membership.sql). Optional
+// progress (if any exists for wordId) is looked up separately, client-side,
+// by the UI layer — never required, never implied by this type.
 export interface UserVocabularyListMembership {
   listId: string;
-  wordProgressId: string;
+  wordId: string;
   createdAt: string;
 }
 
 interface UserVocabularyListMembershipRawRow {
   list_id?: unknown;
-  word_progress_id?: unknown;
+  word_id?: unknown;
   created_at?: unknown;
 }
 
@@ -335,30 +352,30 @@ export async function readUserVocabularyListMemberships(
 
   const rawRows = await supabaseListsRequest<UserVocabularyListMembershipRawRow[]>(
     session,
-    `/rest/v1/user_vocabulary_list_words?list_id=in.(${listIds.join(",")})&select=list_id,word_progress_id,created_at`,
+    `/rest/v1/user_vocabulary_list_words?list_id=in.(${listIds.join(",")})&select=list_id,word_id,created_at`,
   );
 
   const rows: UserVocabularyListMembership[] = [];
   for (const raw of rawRows) {
     if (
       typeof raw.list_id !== "string" ||
-      typeof raw.word_progress_id !== "string" ||
+      typeof raw.word_id !== "string" ||
       typeof raw.created_at !== "string"
     ) {
       continue;
     }
-    rows.push({ listId: raw.list_id, wordProgressId: raw.word_progress_id, createdAt: raw.created_at });
+    rows.push({ listId: raw.list_id, wordId: raw.word_id, createdAt: raw.created_at });
   }
   return rows;
 }
 
 export interface AddWordsToListResultRow {
-  wordProgressId: string;
+  wordId: string;
   alreadyAdded: boolean;
 }
 
 interface AddWordsToListRawRow {
-  word_progress_id?: unknown;
+  word_id?: unknown;
   already_added?: unknown;
 }
 
@@ -366,20 +383,21 @@ interface AddWordsToListRawRow {
 // RPC — the table's only write path for INSERTs (authenticated holds no
 // direct INSERT grant on user_vocabulary_list_words). Always a batch call,
 // even for a single selected word — see the migration's own header for why
-// no separate singular-signature RPC exists. The RPC itself re-validates
-// list ownership, per-word ownership, and target-language match
-// server-side (never trust the client alone for the cross-language rule);
+// no separate singular-signature RPC exists. wordIds are vocabulary concept
+// ids (the same ids the app's vocabulary resolver produces), never
+// user_word_progress ids — a word needs no progress row to be addable. The
+// RPC itself re-validates list ownership and word-id shape server-side;
 // this function only guards against calling with an empty selection.
 export async function addWordsToVocabularyList(
   session: StoredSupabaseSession,
   listId: string,
-  wordProgressIds: readonly string[],
+  wordIds: readonly string[],
 ): Promise<AddWordsToListResultRow[]> {
   const userId = session.user?.id;
   if (!userId || !listId) {
     throw new VocabularyListError("Missing authenticated session or list.", "unauthenticated");
   }
-  if (wordProgressIds.length === 0) {
+  if (wordIds.length === 0) {
     throw new VocabularyListError("Select at least one word to add.", "validation");
   }
 
@@ -390,7 +408,7 @@ export async function addWordsToVocabularyList(
       "/rest/v1/rpc/add_words_to_vocabulary_list",
       {
         p_list_id: listId,
-        p_word_progress_ids: wordProgressIds,
+        p_word_ids: wordIds,
       },
     );
   } catch (error) {
@@ -400,20 +418,19 @@ export async function addWordsToVocabularyList(
     if (category === "unauthenticated") {
       throw new VocabularyListError("Your session has expired. Please sign in again.", category);
     }
-    // Never surface the raw Supabase/PostgreSQL message — a cross-
-    // language/foreign-row rejection (category "validation", from the
-    // RPC's own 22023) and a not-owned list (category "forbidden", 42501)
-    // both get this same safe fallback; MyListsSection picks a sharper
-    // message for the four universal categories via
-    // resolveSupabaseErrorMessageKey instead.
+    // Never surface the raw Supabase/PostgreSQL message — a malformed-id
+    // rejection (category "validation", from the RPC's own 22023) and a
+    // not-owned list (category "forbidden", 42501) both get this same safe
+    // fallback; MyListsSection picks a sharper message for the four
+    // universal categories via resolveSupabaseErrorMessageKey instead.
     throw new VocabularyListError("We couldn't add those words to your list. Please try again.", category);
   }
 
   const rawArray = Array.isArray(rows) ? rows : [rows];
   const results: AddWordsToListResultRow[] = [];
   for (const raw of rawArray) {
-    if (typeof raw.word_progress_id !== "string") continue;
-    results.push({ wordProgressId: raw.word_progress_id, alreadyAdded: Boolean(raw.already_added) });
+    if (typeof raw.word_id !== "string") continue;
+    results.push({ wordId: raw.word_id, alreadyAdded: Boolean(raw.already_added) });
   }
   return results;
 }
@@ -422,21 +439,23 @@ export async function addWordsToVocabularyList(
 // remove_word_from_vocabulary_list RPC — never a direct DELETE (same
 // grant-layer restriction as above). Idempotent server-side: calling this
 // again for a word already removed (a stale click, another tab) succeeds
-// silently rather than erroring, matching the RPC's own contract.
+// silently rather than erroring, matching the RPC's own contract. Never
+// touches user_word_progress — removing a word from a list never affects
+// its learning progress, if any exists.
 export async function removeWordFromVocabularyList(
   session: StoredSupabaseSession,
   listId: string,
-  wordProgressId: string,
+  wordId: string,
 ): Promise<void> {
   const userId = session.user?.id;
-  if (!userId || !listId || !wordProgressId) {
+  if (!userId || !listId || !wordId) {
     throw new VocabularyListError("Missing authenticated session, list, or word.", "unauthenticated");
   }
 
   try {
     await supabaseListsMutationRequest<unknown>(session, "/rest/v1/rpc/remove_word_from_vocabulary_list", {
       p_list_id: listId,
-      p_word_progress_id: wordProgressId,
+      p_word_id: wordId,
     });
   } catch (error) {
     const category = classifySupabaseError(error);

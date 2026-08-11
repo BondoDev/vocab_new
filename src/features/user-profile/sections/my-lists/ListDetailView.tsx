@@ -12,68 +12,73 @@ import { buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
 import { getUiVocabularyLanguage } from "../../../../data/seo/shared/slugs";
 import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import type { UserVocabularyList, UserVocabularyListMembership } from "../../../../lib/vocabularyLists";
-import { loadVocabularyProgress, type ResolvedVocabularyRow } from "../vocabulary/loadVocabularyProgress";
-import {
-  filterVocabularyRowsByTab,
-  filterVocabularyRowsBySearch,
-  type VocabularyTabId,
-} from "../vocabulary/vocabularyFiltering";
-import type { ListCardMetrics } from "./listCardMetrics";
+import { loadFullVocabularyForLanguagePair, type FullVocabularyConceptRow } from "../vocabulary/loadFullVocabulary";
+import { resolveListWordStatus, type ListWordStatus } from "./listWordStatus";
+import { filterListWordRowsByStatus, filterListWordRowsBySearch, type ListWordStatusFilterId } from "./listWordFiltering";
+import { getPageWindow } from "./listPagination";
 import { AddWordsDialog } from "./AddWordsDialog";
 
 const PAGE_SIZE = 10;
 type DetailSortMode = "recentlyAdded" | "nameAsc";
-const STATUS_FILTERS: Exclude<VocabularyTabId, "favorites">[] = ["all", "learning", "known", "mastered"];
+const STATUS_FILTERS: ListWordStatusFilterId[] = ["all", "notStudied", "learning", "known", "mastered"];
 
-interface ListDetailRow extends ResolvedVocabularyRow {
+// The full resolved vocabulary set for the list's own target language,
+// decorated with each concept's OPTIONAL current status — "notStudied" for
+// a concept with no user_word_progress row, same as any other status. Never
+// requires progress to exist; see listWordStatus.ts's own header.
+export interface ListWordRow extends FullVocabularyConceptRow {
+  status: ListWordStatus;
+}
+
+interface ListDetailRow extends ListWordRow {
   addedAt: string;
 }
 
 interface ListDetailViewProps {
   list: UserVocabularyList;
-  metrics: ListCardMetrics;
   // This list's own membership rows (already filtered by the caller) —
-  // used for the "Added" date and to exclude already-added words from the
-  // Add Words picker.
+  // used for the "Added" date, the real word count, and to exclude
+  // already-added words from the Add Words picker.
   memberships: UserVocabularyListMembership[];
-  // The full shared set (every studied word for the active target
-  // language, not just this list's members) — resolved once, below, into
-  // both this view's own row list (filtered to membership) and the Add
-  // Words picker's available-words list (filtered to NOT-membership), so
-  // vocabulary.json is never resolved twice for two different subsets.
+  // The active target language's full user_word_progress set — consulted
+  // ONLY to decorate resolved vocabulary rows with an optional status
+  // (notStudied/learning/known/mastered). Never required for a list word to
+  // render, and never written to by anything in this view.
   wordProgressRows: UserWordProgressFullRow[];
   nativeLanguage: UILanguage | "";
   onBack: () => void;
   onRename: () => void;
   onDelete: () => void;
-  onRemoveWord: (wordProgressId: string) => void;
+  onRemoveWord: (wordId: string) => void;
   // Add Words dialog state/actions — owned by MyListsSection (it makes the
   // actual RPC call and updates the shared membership state that also
-  // drives the list card's counts), rendered here because the dialog needs
-  // this view's own resolved-word data (see the resolution effect below).
+  // drives the list card's count), rendered here because the dialog needs
+  // this view's own resolved-vocabulary data (see the resolution effect
+  // below).
   isAddWordsDialogOpen: boolean;
   isAddingWords: boolean;
   addWordsError: string | null;
   onOpenAddWords: () => void;
   onCloseAddWords: () => void;
-  onSubmitAddWords: (wordProgressIds: string[]) => void;
+  onSubmitAddWords: (wordIds: string[]) => void;
 }
 
-type ResolveState = { status: "loading" } | { status: "error" } | { status: "ready"; rows: ResolvedVocabularyRow[] };
+type ResolveState = { status: "loading" } | { status: "error" } | { status: "ready"; rows: FullVocabularyConceptRow[] };
 
 // The list-detail shell: back link, name, count, Add Words + rename/delete
 // actions, search/status filter, and either a real empty state or a
 // finished word table/mobile-card list (reusing the Vocabulary page's own
-// design language and pure filtering helpers, never a second
-// implementation of either). Word display data (target word/translation/
-// CEFR) is resolved once here via loadVocabularyProgress, for the FULL
-// active-language word set (not just this list's members) — the resolved
+// design language, never a second implementation of either). Word display
+// data (target word/translation/CEFR) is resolved once here via
+// loadFullVocabularyForLanguagePair, for the list's own target language's
+// FULL vocabulary set (not filtered by studied/unstudied) — the resolved
 // superset is filtered locally, both for this view's own rows (membership
 // subset) and for AddWordsDialog's available-words list (non-membership
-// subset) — see this file's own useResolvedAllRows effect.
+// subset) — see this file's own useEffect below. A word's optional status
+// is layered on top from wordProgressRows purely for display; it is never
+// what determines whether a word can appear here or in the picker.
 export function ListDetailView({
   list,
-  metrics,
   memberships,
   wordProgressRows,
   nativeLanguage,
@@ -91,7 +96,7 @@ export function ListDetailView({
   const { t, uiLanguage } = useLanguage();
   const [resolveState, setResolveState] = useState<ResolveState>({ status: "loading" });
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<VocabularyTabId>("all");
+  const [statusFilter, setStatusFilter] = useState<ListWordStatusFilterId>("all");
   const [sortMode, setSortMode] = useState<DetailSortMode>("recentlyAdded");
   const [page, setPage] = useState(1);
 
@@ -106,17 +111,17 @@ export function ListDetailView({
 
     void (async () => {
       try {
-        // The full active-language progress set, not memberProgressRows —
-        // this is what makes the same resolved data reusable for the Add
-        // Words picker (every studied word) as well as this view's own
-        // table (the membership subset, derived below).
-        const result = await loadVocabularyProgress({
-          progressRows: wordProgressRows,
+        // The list's own target_language is always what's resolved here —
+        // never assumed to equal whichever language happens to be active
+        // elsewhere in the app (they coincide for every list visible today
+        // only because lists are themselves loaded scoped to the active
+        // language — see MyListsSection — not because this view assumes it).
+        const rows = await loadFullVocabularyForLanguagePair({
           targetLanguage: list.targetLanguage,
           nativeLanguage,
         });
         if (cancelled) return;
-        setResolveState({ status: "ready", rows: result.rows });
+        setResolveState({ status: "ready", rows });
       } catch (error) {
         if (cancelled) return;
         console.warn("ListDetailView: failed to resolve vocabulary data.", error);
@@ -127,34 +132,45 @@ export function ListDetailView({
     return () => {
       cancelled = true;
     };
-    // Deliberately not keyed on `memberships` — adding/removing a word
-    // never changes the resolved display data for the words that were
-    // already resolved, only which subset of them counts as "in this
-    // list". Re-resolving here on every membership change would re-import
-    // vocabulary.json (cached by the module loader, but still wasted
-    // resolver-rebuild work) for no visible benefit.
-  }, [list.targetLanguage, nativeLanguage, wordProgressRows]);
+    // Deliberately not keyed on `memberships` or `wordProgressRows` —
+    // neither changes which concepts exist for this language pair, only
+    // which of them are members or what their status is; both are layered
+    // on top of this resolution, below, without re-importing
+    // vocabulary.json.
+  }, [list.targetLanguage, nativeLanguage]);
 
-  const addedAtByProgressId = useMemo(
-    () => new Map(memberships.map((membership) => [membership.wordProgressId, membership.createdAt])),
+  const wordStateByConceptId = useMemo(() => {
+    const map = new Map<string, UserWordProgressFullRow["wordState"]>();
+    for (const row of wordProgressRows) map.set(row.wordId, row.wordState);
+    return map;
+  }, [wordProgressRows]);
+
+  const allRows: ListWordRow[] = useMemo(() => {
+    if (resolveState.status !== "ready") return [];
+    return resolveState.rows.map((row) => ({
+      ...row,
+      status: resolveListWordStatus(wordStateByConceptId.get(row.conceptId)),
+    }));
+  }, [resolveState, wordStateByConceptId]);
+
+  const addedAtByConceptId = useMemo(
+    () => new Map(memberships.map((membership) => [membership.wordId, membership.createdAt])),
     [memberships],
   );
-  const membershipIds = useMemo(() => new Set(memberships.map((m) => m.wordProgressId)), [memberships]);
-
-  const allResolvedRows = resolveState.status === "ready" ? resolveState.rows : [];
+  const membershipIds = useMemo(() => new Set(memberships.map((m) => m.wordId)), [memberships]);
 
   const listRows: ListDetailRow[] = useMemo(() => {
     const rows: ListDetailRow[] = [];
-    for (const row of allResolvedRows) {
-      const addedAt = addedAtByProgressId.get(row.id);
+    for (const row of allRows) {
+      const addedAt = addedAtByConceptId.get(row.conceptId);
       if (addedAt) rows.push({ ...row, addedAt });
     }
     return rows;
-  }, [allResolvedRows, addedAtByProgressId]);
+  }, [allRows, addedAtByConceptId]);
 
   const filteredRows = useMemo(() => {
-    const byStatus = filterVocabularyRowsByTab(listRows, statusFilter);
-    const bySearch = filterVocabularyRowsBySearch(byStatus, searchQuery);
+    const byStatus = filterListWordRowsByStatus(listRows, statusFilter);
+    const bySearch = filterListWordRowsBySearch(byStatus, searchQuery);
     const sorted = [...bySearch];
     if (sortMode === "nameAsc") {
       sorted.sort((a, b) => a.targetWord.localeCompare(b.targetWord));
@@ -182,10 +198,14 @@ export function ListDetailView({
   const isError = resolveState.status === "error";
   const hasMembers = memberships.length > 0;
 
-  const statusLabel = (category: ResolvedVocabularyRow["category"]) =>
-    t(`userProfile.vocabularySection.table.statuses.${category}`);
+  const statusLabel = (status: ListWordStatus) =>
+    status === "notStudied"
+      ? t("userProfile.myListsSection.notStudied")
+      : t(`userProfile.vocabularySection.table.statuses.${status}`);
+  const filterLabel = (id: ListWordStatusFilterId) =>
+    id === "all" ? t("userProfile.myListsSection.statusAll") : statusLabel(id);
 
-  const wordDetailPath = (row: ResolvedVocabularyRow) =>
+  const wordDetailPath = (row: ListWordRow) =>
     buildWordPath(
       uiLanguage,
       // list.targetLanguage is plain `string` on UserVocabularyList
@@ -207,7 +227,7 @@ export function ListDetailView({
         <div className="my-lists-detail__heading">
           <h1 className="my-lists-detail__title">{list.name}</h1>
           <p className="my-lists-detail__subtitle">
-            {metrics.total} {t("userProfile.myListsSection.wordsUnit")}
+            {memberships.length} {t("userProfile.myListsSection.wordsUnit")}
           </p>
         </div>
         {hasMembers ? (
@@ -288,7 +308,7 @@ export function ListDetailView({
                 aria-pressed={statusFilter === id}
                 onClick={() => setStatusFilter(id)}
               >
-                {id === "all" ? t("userProfile.myListsSection.statusAll") : statusLabel(id)}
+                {filterLabel(id)}
               </button>
             ))}
           </div>
@@ -315,13 +335,13 @@ export function ListDetailView({
                   </thead>
                   <tbody>
                     {pagedRows.map((row) => (
-                      <tr key={row.id}>
+                      <tr key={row.conceptId}>
                         <td className="my-lists-detail-table__word">{row.targetWord}</td>
                         <td className="my-lists-detail-table__translation">{row.translation}</td>
                         <td>{row.level ? <span className="my-lists-level-badge">{row.level}</span> : null}</td>
                         <td>
-                          <span className={`my-lists-status-badge my-lists-status-badge--${row.category}`}>
-                            {statusLabel(row.category)}
+                          <span className={`my-lists-status-badge my-lists-status-badge--${row.status}`}>
+                            {statusLabel(row.status)}
                           </span>
                         </td>
                         <td className="my-lists-detail-table__meta">
@@ -331,7 +351,7 @@ export function ListDetailView({
                           <RowActionsMenu
                             row={row}
                             wordDetailPath={wordDetailPath(row)}
-                            onRemove={() => onRemoveWord(row.id)}
+                            onRemove={() => onRemoveWord(row.conceptId)}
                           />
                         </td>
                       </tr>
@@ -342,20 +362,20 @@ export function ListDetailView({
 
               <ul className="my-lists-mobile-list">
                 {pagedRows.map((row) => (
-                  <li key={row.id} className="my-lists-mobile-card">
+                  <li key={row.conceptId} className="my-lists-mobile-card">
                     <div className="my-lists-mobile-card__top">
                       <span className="my-lists-detail-table__word">{row.targetWord}</span>
                       <RowActionsMenu
                         row={row}
                         wordDetailPath={wordDetailPath(row)}
-                        onRemove={() => onRemoveWord(row.id)}
+                        onRemove={() => onRemoveWord(row.conceptId)}
                       />
                     </div>
                     <p className="my-lists-mobile-card__translation">{row.translation}</p>
                     <div className="my-lists-mobile-card__meta-row">
                       {row.level ? <span className="my-lists-level-badge">{row.level}</span> : null}
-                      <span className={`my-lists-status-badge my-lists-status-badge--${row.category}`}>
-                        {statusLabel(row.category)}
+                      <span className={`my-lists-status-badge my-lists-status-badge--${row.status}`}>
+                        {statusLabel(row.status)}
                       </span>
                       <span className="my-lists-mobile-card__meta-text">
                         {new Date(row.addedAt).toLocaleDateString(uiLanguage)}
@@ -415,7 +435,7 @@ export function ListDetailView({
         isSubmitting={isAddingWords}
         error={addWordsError}
         resolveStatus={resolveState.status}
-        allResolvedRows={allResolvedRows}
+        allRows={allRows}
         alreadyAddedIds={membershipIds}
         onOpenChange={(open) => {
           if (!open) onCloseAddWords();
@@ -431,7 +451,7 @@ function RowActionsMenu({
   wordDetailPath,
   onRemove,
 }: {
-  row: ResolvedVocabularyRow;
+  row: ListWordRow;
   wordDetailPath: string;
   onRemove: () => void;
 }) {
@@ -458,22 +478,4 @@ function RowActionsMenu({
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-// Same simple, always-in-range 3-button windowing VocabularyTable.tsx uses
-// for the Vocabulary page's own pagination — duplicated rather than
-// imported/shared since it's a small, private, unexported helper there too
-// (see that file's own precedent for why a third small copy is simpler
-// than introducing a new shared pagination module for it).
-function getPageWindow(page: number, totalPages: number, windowSize = 3): number[] {
-  if (totalPages <= windowSize) {
-    return Array.from({ length: totalPages }, (_, index) => index + 1);
-  }
-  let start = Math.max(1, page - Math.floor(windowSize / 2));
-  let end = start + windowSize - 1;
-  if (end > totalPages) {
-    end = totalPages;
-    start = end - windowSize + 1;
-  }
-  return Array.from({ length: end - start + 1 }, (_, index) => start + index);
 }

@@ -7,11 +7,17 @@ import {
   DropdownMenuTrigger,
 } from "../../../../app/components/ui/dropdown-menu";
 import type { UserVocabularyList } from "../../../../lib/vocabularyLists";
-import type { ListCardMetrics } from "./listCardMetrics";
 
 interface ListCardProps {
   list: UserVocabularyList;
-  metrics: ListCardMetrics;
+  // A real membership count, computed directly from membership rows (see
+  // listWordCounts.ts) — never a Learning/Known/Mastered aggregate. The
+  // corrective My Lists phase removed that aggregate from cards entirely:
+  // membership is concept-based and independent of user_word_progress, so
+  // a list may be mostly (or entirely) unstudied, making a status
+  // breakdown misleading rather than informative. See supabase/README.md's
+  // "My Lists Corrective Phase" section.
+  wordCount: number;
   onView: () => void;
   onRename: () => void;
   onDelete: () => void;
@@ -23,11 +29,10 @@ interface ListCardProps {
 // button), and nesting a button inside a button is invalid HTML/a11y (see
 // the Phase 2A brief's own "do not make nested buttons inside a clickable
 // card invalid" requirement). Study List is intentionally omitted from the
-// overflow menu — it doesn't exist yet (Phase 2B+), and the brief prefers
-// omitting it cleanly over reserving a disabled placeholder.
-export function ListCard({ list, metrics, onView, onRename, onDelete }: ListCardProps) {
+// overflow menu — it doesn't exist yet (a future phase), and the brief
+// prefers omitting it cleanly over reserving a disabled placeholder.
+export function ListCard({ list, wordCount, onView, onRename, onDelete }: ListCardProps) {
   const { t } = useLanguage();
-  const hasWords = metrics.total > 0;
 
   return (
     <article className="my-lists-card">
@@ -54,43 +59,8 @@ export function ListCard({ list, metrics, onView, onRename, onDelete }: ListCard
       </div>
 
       <p className="my-lists-card__count">
-        {metrics.total} {t("userProfile.myListsSection.wordsUnit")}
+        {wordCount} {t("userProfile.myListsSection.wordsUnit")}
       </p>
-
-      {hasWords ? (
-        <div className="my-lists-card__bar" role="presentation">
-          {metrics.learning > 0 ? (
-            <span
-              className="my-lists-card__bar-segment my-lists-card__bar-segment--learning"
-              style={{ flexGrow: metrics.learning }}
-            />
-          ) : null}
-          {metrics.known > 0 ? (
-            <span
-              className="my-lists-card__bar-segment my-lists-card__bar-segment--known"
-              style={{ flexGrow: metrics.known }}
-            />
-          ) : null}
-          {metrics.mastered > 0 ? (
-            <span
-              className="my-lists-card__bar-segment my-lists-card__bar-segment--mastered"
-              style={{ flexGrow: metrics.mastered }}
-            />
-          ) : null}
-        </div>
-      ) : null}
-
-      <div className="my-lists-card__stats">
-        <span className="my-lists-card__stat my-lists-card__stat--learning">
-          {metrics.learning} {t("userProfile.vocabularySection.table.statuses.learning")}
-        </span>
-        <span className="my-lists-card__stat my-lists-card__stat--known">
-          {metrics.known} {t("userProfile.vocabularySection.table.statuses.known")}
-        </span>
-        <span className="my-lists-card__stat my-lists-card__stat--mastered">
-          {metrics.mastered} {t("userProfile.vocabularySection.table.statuses.mastered")}
-        </span>
-      </div>
 
       <button type="button" className="my-lists-card__view-button" onClick={onView}>
         {t("userProfile.myListsSection.card.viewList")}

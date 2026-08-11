@@ -1873,6 +1873,12 @@ removes a caller-owned row and never references `user_word_progress` at
 all, so a list rename or delete never touches vocabulary/learning
 progress.
 
+**Superseded — see "My Lists Corrective Phase — word_id-based membership"
+below for the current schema.** The shape described in this subsection
+(`word_progress_id`, unique `(list_id, word_progress_id)`) was replaced by
+that later migration; it is kept here only as the historical record of how
+the table was first built.
+
 **`public.user_vocabulary_list_words`** — the word-membership foundation:
 `id`, `list_id` (FK -> `user_vocabulary_lists.id`, `ON DELETE CASCADE`),
 `word_progress_id` (FK -> `user_word_progress.id`, `ON DELETE CASCADE`),
@@ -1944,6 +1950,15 @@ membership row is touched.
 
 Migration: `20260811160000_my_lists_phase2b_membership_write_rpcs.sql`.
 
+**Superseded — see "My Lists Corrective Phase — word_id-based membership"
+below.** Both RPC signatures described in this subsection
+(`add_words_to_vocabulary_list(uuid, uuid[])`,
+`remove_word_from_vocabulary_list(uuid, uuid)`) were dropped and replaced by
+that later migration, along with this phase's "only an already-studied word
+can join a list" restriction, which turned out not to be the intended
+product. Kept here only as the historical record of how the write RPCs were
+first built.
+
 Adds the two write paths `public.user_vocabulary_list_words` has lacked
 since Phase 2A created it: adding and removing membership rows. The table
 itself, its columns/index/RLS policy/grants are all untouched — this
@@ -1999,6 +2014,219 @@ regardless of what the client sends.
 own table grants are untouched: `authenticated` still holds `SELECT` only,
 no direct `INSERT`/`DELETE` grant — these two RPCs are now the table's only
 write path.
+
+## My Lists Corrective Phase — word_id-based membership (2026-08-11)
+
+Migration: `20260811170000_my_lists_corrective_word_id_membership.sql`.
+
+**Core problem this phase fixes.** Phase 2B's membership shape
+(`word_progress_id` referencing `user_word_progress.id`) meant a word could
+only join a list if the caller already had learning progress for it — Add
+Words only ever showed already-studied words, and list cards showed
+Learning/Known/Mastered aggregate counts. That is not the intended product:
+a list is a neutral vocabulary collection, not an SRS-state container. A
+user must be able to add **any** vocabulary word from the active target
+language to a list, studied or not — list membership must be completely
+independent of `user_word_progress`.
+
+**New membership identity: `word_id`, not `word_progress_id`.**
+`public.user_vocabulary_list_words` now stores `word_id text not null` —
+the same cross-language concept id `user_word_progress.word_id` already
+stores (e.g. `"A1-00193"`; confirmed by reading
+`src/data/vocabulary/*/vocabulary.json` — `concept_id` is the shared key
+every language's vocabulary file indexes by, and it is this exact string
+`user_word_progress.word_id` persists). No second id system was invented.
+`word_id` is deliberately **not** a foreign key to `user_word_progress` —
+membership must be able to exist with zero progress for that concept, and
+vocabulary itself has no database table for it to reference at all
+(vocabulary lives in this repository's `vocabulary.json` files, not
+Supabase — see "Word validation stays application-owned" below). A
+membership row still never duplicates `word_state`, translation,
+definition, CEFR level, or `target_language` — those stay owned by
+`user_word_progress` (state, when it exists) or `vocabulary.json` (display
+data, resolved client-side).
+
+**Migration strategy — every existing membership row is preserved.** This
+table went live during Phase 2B testing, so the migration is forward-only
+and converts existing rows in place rather than dropping/recreating
+anything:
+
+1. Add `word_id text`, nullable at first.
+2. Backfill every existing row via its own
+   `word_progress_id -> user_word_progress.id -> user_word_progress.word_id`.
+3. Verify every row now has a non-blank `word_id` — a guarded `DO` block
+   that counts unresolved rows and, if any exist, **aborts the whole
+   migration** with a named exception listing the exact affected row ids.
+   It never silently drops a membership row to make the later constraint
+   fit.
+4. Only once step 3 passes does `word_id` become `NOT NULL`.
+5. The old `(list_id, word_progress_id)` unique constraint is dropped.
+6. The old `word_progress_id -> user_word_progress` foreign key (and its
+   now-purposeless supporting index) is dropped.
+7. `word_progress_id` itself is dropped.
+8. The new authoritative uniqueness constraint,
+   `user_vocabulary_list_words_list_word_id_key` on `(list_id, word_id)`,
+   is added (guarded by an existence check for safe re-runs).
+9. `list_id -> user_vocabulary_lists(id) ON DELETE CASCADE` — untouched
+   throughout; a list delete still cascades its memberships exactly as
+   before.
+
+None of `20260811130000...sql`, `20260811140000...sql`,
+`20260811150000...sql`, or `20260811160000...sql` is edited — every
+statement is new, forward-only DDL/RPC-replacement layered on top.
+
+**RPCs replaced, not versioned alongside a compatibility window.**
+`add_words_to_vocabulary_list(uuid, uuid[])` and
+`remove_word_from_vocabulary_list(uuid, uuid)` both read/wrote the
+now-removed `word_progress_id` column, so `CREATE OR REPLACE` could not
+simply retarget them — a different parameter list creates a new overload,
+it does not replace the old one. Unlike the duration-aware learning-RPC
+rollout (Corrective Migrations 5/6 above), this feature has not been
+committed or deployed at any point before this migration (an explicit
+constraint carried through every phase of My Lists so far), so there is no
+live frontend build calling the old signatures to stage a rollout window
+for — the old overloads are simply dropped (`DROP FUNCTION IF EXISTS`) in
+the same migration that creates their replacements:
+
+- `add_words_to_vocabulary_list(p_list_id uuid, p_word_ids text[])` —
+  same `SECURITY DEFINER`/empty-`search_path`/`auth.uid()`-derived-caller/
+  no-`p_user_id` shape as its Phase 2B predecessor. Validates list
+  ownership first (`42501`), rejects a null/empty array, rejects any
+  null/blank entry (`22023`, whole call aborts — no partial writes),
+  rejects an entry longer than 64 characters as a defense-in-depth sanity
+  cap (real concept ids look like `"A1-00193"`; the exact vocabulary id
+  format itself is not, and cannot be, validated at the database layer —
+  see "Word validation stays application-owned" below). De-duplicates the
+  input, captures already-member ids before the `INSERT`, and uses
+  `ON CONFLICT (list_id, word_id) DO NOTHING` so duplicate membership is
+  never an error — the `RETURNS TABLE` reports `(word_id, already_added)`
+  per requested id either way, exactly like the Phase 2B version did for
+  `word_progress_id`. Cross-language enforcement against
+  `user_word_progress.target_language` is gone because there is no longer
+  a `user_word_progress` row to cross-check against — the app layer
+  sources word ids from the list's own `target_language`'s
+  `vocabulary.json` in the first place (see "Picker architecture" below),
+  and the database has no vocabulary table of its own to validate that
+  against either way.
+- `remove_word_from_vocabulary_list(p_list_id uuid, p_word_id text)` —
+  same ownership-checked, idempotent shape as its predecessor, scoped by
+  `(list_id, word_id)` instead of `(list_id, word_progress_id)`.
+
+Neither RPC has ever touched, or now touches, `user_word_progress` or
+`user_daily_stats` — adding/removing a list membership still only ever
+affects `user_vocabulary_list_words`. Grants: both RPCs — `EXECUTE` revoked
+from `public`/`anon`, granted to `postgres`/`authenticated`/`service_role`
+only, matching every other narrow write RPC in this schema.
+`user_vocabulary_list_words`'s own table grants are untouched:
+`authenticated` still holds `SELECT` only, no direct `INSERT`/`DELETE`
+grant — these two RPCs remain the table's only write path.
+
+**Word validation stays application-owned.** Vocabulary lives in this
+repository's `vocabulary.json` files, not a Supabase table, so the database
+genuinely cannot verify a `word_id` refers to a real concept — no
+vocabulary table was added to make that possible (that would duplicate a
+second copy of vocabulary data the repository already owns as static
+files). The RPC validates everything it can actually know (non-null array,
+no blank/oversized entries, list ownership); the client sources every
+`word_id` it ever sends from the existing vocabulary concept resolver
+(`buildVocabularyConceptResolver` in
+`src/data/vocabulary/resolveVocabularyWordData.ts`), which already refuses
+to resolve a concept id absent from either language's `vocabulary.json`.
+
+**Picker architecture — full vocabulary, not just studied words.** The Add
+Words picker (`AddWordsDialog.tsx`) now resolves every concept in the
+list's own `target_language`'s `vocabulary.json` that also has a matching
+native-language entry (the same "both sides must exist" rule
+`buildVocabularyConceptResolver` already enforced), not just concepts with
+a `user_word_progress` row — reusing the existing resolver/dynamic-import
+architecture (`loadFullVocabularyForLanguagePair` in
+`src/features/user-profile/sections/vocabulary/loadFullVocabulary.ts`), no
+second vocabulary source. `user_word_progress` rows for the active target
+language are cross-referenced afterward, client-side, purely to *decorate*
+each row with an optional status (`notStudied`/`learning`/`known`/
+`mastered`) — never to gate which words are selectable, and never written
+to or created as a side effect of adding a word to a list.
+
+**List cards show a real word count, nothing invented.** With progress no
+longer required for membership, Learning/Known/Mastered aggregate counts on
+a list card are no longer meaningful (a mostly-unstudied list would show
+misleading near-all-zero segments) — cards now show only the list name and
+its total membership count (`memberships.filter((m) => m.listId ===
+id).length`, computed directly from membership rows, no aggregate
+category math). The three-segment progress bar and stat row are removed
+from `ListCard.tsx` entirely.
+
+**Language isolation is unchanged in practice.** Lists (and therefore the
+picker) already only ever load for the caller's active `target_language`
+(`readUserVocabularyLists(session, targetLanguage)`,
+`targetLanguage = userProfile.practiceLanguage`) — a list's own
+`target_language` is what the picker resolves vocabulary for, not
+whichever language happens to be active elsewhere in the app, so a German
+list can never be shown Spanish concepts even though today the two always
+coincide for a currently-visible list.
+
+**Practice List remains unimplemented.** This migration and its frontend
+counterpart only correct the membership model; no Practice List UI, route,
+RPC, or exercise-launch behavior exists yet. This correction exists
+specifically so a future Practice List can do
+`list membership -> resolve vocabulary -> existing Custom Practice
+exercises` without ever requiring `user_word_progress` — seeing the
+membership rows for a list already resolves independently of progress
+today, that future phase only needs to launch Custom Practice against the
+resolved word set.
+
+## My Lists corrective-phase fix — word_id RPC column-reference ambiguity (2026-08-11)
+
+Migration: `20260811180000_fix_my_lists_word_id_rpc_ambiguity.sql`.
+
+Live bug, same root-cause class as the earlier "My Lists corrective fix —
+RPC column-reference ambiguity" section above (that one fixed
+`create_user_vocabulary_list`/`rename_user_vocabulary_list` for
+`user_id`): `add_words_to_vocabulary_list` (the word_id-based RPC added by
+the corrective phase migration) failed with `42702 column reference
+"word_id" is ambiguous`. Root cause: it declares `RETURNS TABLE (word_id
+text, already_added boolean)`, giving PL/pgSQL a same-named `word_id`
+output variable in scope for the whole function body.
+
+Audited every occurrence of the bare token `word_id` in the prior body: the
+`array_agg(uvlw.word_id)`/`uvlw.word_id = any(...)` lookup was already
+fully `uvlw.`-qualified (not the bug); the `RETURN QUERY` final select used
+the alias `requested_id`, never bare `word_id` (also not the bug); the only
+two genuinely bare occurrences were the `INSERT ... (list_id, word_id)`
+target column list and the `ON CONFLICT (list_id, word_id)` arbiter column
+list — per Postgres's own grammar, an INSERT column list and an arbiter
+column list are both parsed as plain column-name lists, never as
+`ColumnRef` expression nodes, so PL/pgSQL's variable-substitution hook is
+never invoked for either (matching the earlier ambiguity fix's own finding
+about INSERT column lists/UPDATE SET targets). The INSERT column list stays
+as bare column names (SQL syntax provides no way to alias-qualify it), with
+a comment explaining why that's safe; the `ON CONFLICT` arbiter is
+rewritten to `ON CONFLICT ON CONSTRAINT
+user_vocabulary_list_words_list_word_id_key DO NOTHING` instead — naming
+the constraint directly removes every column-name token from that clause,
+strictly safer regardless of the arbiter-list theory above and directly
+addressing the exact pattern that was suspected.
+
+Beyond the minimal fix, every other derived relation in the function was
+also renamed away from anything resembling `word_id` (`unnest(p_word_ids)
+as candidate(requested_word_id)`, referenced everywhere as
+`candidate.requested_word_id`) so no future edit to this function can
+reintroduce this exact collision by accident — per this fix's own "do not
+fix only the exact line that currently throws" scope.
+
+`remove_word_from_vocabulary_list` was audited and found already safe: it
+declares `returns void`, not `RETURNS TABLE`, so it creates no PL/pgSQL
+output variables at all (the same reasoning the earlier ambiguity fix
+already applied to `delete_user_vocabulary_list`), and every column
+reference in its body was already alias-qualified. Left byte-for-byte
+untouched — not even a no-op `CREATE OR REPLACE`.
+
+`CREATE OR REPLACE FUNCTION` with `add_words_to_vocabulary_list`'s exact
+existing signature (`uuid, text[]`) — grants are preserved automatically,
+no public API change (PostgREST callers, including
+`addWordsToVocabularyList` in `src/lib/vocabularyLists.ts`, need no
+change). No table, index, RLS policy, or membership row is touched;
+`20260811170000_my_lists_corrective_word_id_membership.sql` is not edited.
 
 ## Live Supabase E2E tests (2026-08-08)
 

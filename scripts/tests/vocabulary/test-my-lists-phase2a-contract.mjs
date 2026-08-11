@@ -92,23 +92,20 @@ test("24. ListDetailView shows the dedicated 'no words yet' message when the lis
   assert.doesNotMatch(emptyBranchMatch[1], /<table/);
 });
 
-test("ListDetailView reuses loadVocabularyProgress rather than reimplementing word resolution", () => {
-  assert.match(detailSource, /import \{ loadVocabularyProgress, type ResolvedVocabularyRow \} from "\.\.\/vocabulary\/loadVocabularyProgress"/);
+test("ListDetailView reuses loadFullVocabularyForLanguagePair rather than reimplementing word resolution (superseded by the My Lists corrective phase — see test-my-lists-corrective-contract.mjs for the current resolver contract)", () => {
+  assert.match(detailSource, /import \{ loadFullVocabularyForLanguagePair, type FullVocabularyConceptRow \} from "\.\.\/vocabulary\/loadFullVocabulary"/);
 });
 
 console.log("\n=== Real word counts on cards (10-13 UI wiring) ===\n");
 
-test("MyListsSection computes real per-list metrics from membership + shared word-progress rows, never a fake count", () => {
-  assert.match(sectionSource, /computeListCardMetricsByListId\(memberships, wordStateById\)/);
-  assert.doesNotMatch(sectionSource, /metrics: \{ total: \d/); // no hardcoded non-zero literal metrics object
+test("MyListsSection computes a real per-list word count directly from membership rows, never a fake count (superseded: no Learning/Known/Mastered aggregate exists anymore — see test-my-lists-corrective-contract.mjs)", () => {
+  assert.match(sectionSource, /computeListWordCountsByListId\(memberships\)/);
+  assert.doesNotMatch(sectionSource, /wordCount: \d/); // no hardcoded non-zero literal count
 });
 
-test("ListCard renders total/learning/known/mastered from its metrics prop, not local invented state", () => {
-  assert.match(cardSource, /interface ListCardProps \{[\s\S]*?metrics: ListCardMetrics;/);
-  assert.match(cardSource, /metrics\.total/);
-  assert.match(cardSource, /metrics\.learning/);
-  assert.match(cardSource, /metrics\.known/);
-  assert.match(cardSource, /metrics\.mastered/);
+test("ListCard renders a real total word count from its wordCount prop, not local invented state (superseded: cards no longer show learning/known/mastered aggregates — see test-my-lists-corrective-contract.mjs)", () => {
+  assert.match(cardSource, /interface ListCardProps \{[\s\S]*?wordCount: number;/);
+  assert.match(cardSource, /\{wordCount\}/);
 });
 
 console.log("\n=== Card overflow menu: Rename/Delete only, Study List omitted ===\n");

@@ -475,6 +475,7 @@
       "removeError": "Impossible de retirer ce mot. Veuillez réessayer.",
       "searchWords": "Rechercher des mots",
       "statusAll": "Tous",
+      "notStudied": "Pas encore étudié",
       "viewWordDetails": "Voir les détails du mot",
       "emptyState": {
         "title": "Aucune liste pour le moment",

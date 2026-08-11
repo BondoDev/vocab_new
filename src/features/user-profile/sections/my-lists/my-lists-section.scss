@@ -331,52 +331,13 @@
   font-size: 0.85rem;
 }
 
-.my-lists-card__bar {
-  display: flex;
-  overflow: hidden;
-  height: 0.35rem;
-  border-radius: 999px;
-  background: var(--muted);
-}
-
-.my-lists-card__bar-segment {
-  min-width: 2px;
-}
-
-.my-lists-card__bar-segment--learning {
-  background: var(--primary);
-}
-
-.my-lists-card__bar-segment--known {
-  background: #22c55e;
-}
-
-.my-lists-card__bar-segment--mastered {
-  background: #f59e0b;
-}
-
-.my-lists-card__stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 0.85rem;
-}
-
-.my-lists-card__stat {
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.my-lists-card__stat--learning {
-  color: var(--primary);
-}
-
-.my-lists-card__stat--known {
-  color: color-mix(in srgb, #22c55e 55%, var(--foreground));
-}
-
-.my-lists-card__stat--mastered {
-  color: color-mix(in srgb, #f59e0b 45%, var(--foreground));
-}
+/* The three-segment Learning/Known/Mastered progress bar and stat row that
+   used to live here were removed in the My Lists corrective phase: card
+   membership is concept-based and independent of user_word_progress, so a
+   list may be mostly (or entirely) unstudied — a status breakdown would be
+   misleading rather than informative. Cards now show only a real total
+   word count (.my-lists-card__count, above). See supabase/README.md's "My
+   Lists Corrective Phase" section. */
 
 .my-lists-card__view-button {
   margin-top: 0.35rem;
@@ -570,6 +531,16 @@
 .my-lists-status-badge--mastered {
   background: color-mix(in srgb, #f59e0b 18%, transparent);
   color: color-mix(in srgb, #f59e0b 45%, var(--foreground));
+}
+
+/* Neutral treatment for a word with no user_word_progress row yet — never
+   styled to look like a warning/error (this is the common, expected case
+   for a freshly-added list word, not a problem), and visually distinct
+   from every real progress status so "not studied" never reads as a
+   fourth degree of progress. */
+.my-lists-status-badge--notStudied {
+  background: var(--muted);
+  color: var(--muted-foreground);
 }
 
 /* ============================================================
