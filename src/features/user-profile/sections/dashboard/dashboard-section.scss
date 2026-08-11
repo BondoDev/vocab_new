@@ -840,24 +840,6 @@
     }
   }
 
-  &__summary {
-    margin-bottom: 0.65rem;
-  }
-
-  &__summary-value {
-    margin: 0;
-    color: var(--foreground);
-    font-size: 1.4rem;
-    font-weight: 700;
-    line-height: 1.1;
-  }
-
-  &__summary-label {
-    margin: 0.15rem 0 0;
-    color: var(--muted-foreground);
-    font-size: 0.75rem;
-  }
-
   &__legend {
     display: flex;
     flex-wrap: wrap;
@@ -869,6 +851,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
+    min-width: 0;
     color: var(--muted-foreground);
     font-size: 0.72rem;
     font-weight: 600;
@@ -890,6 +873,18 @@
 
   &__legend-item--practice &__legend-dot {
     background: var(--study-activity-practice);
+  }
+
+  &__legend-label {
+    min-width: 0;
+  }
+
+  &__legend-value {
+    color: var(--foreground);
+    font-size: 0.74rem;
+    font-weight: 750;
+    line-height: 1;
+    white-space: nowrap;
   }
 
   &__empty {
@@ -922,11 +917,6 @@
     border-radius: calc(var(--radius) - 4px);
     background: var(--muted);
     animation: dashboard-card-skeleton-pulse 1.4s ease-in-out infinite;
-
-    &--summary {
-      width: 6rem;
-      height: 1.6rem;
-    }
 
     &--legend {
       width: min(100%, 16rem);

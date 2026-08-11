@@ -20,18 +20,6 @@ const RANGE_LABEL_KEYS: Record<StudyActivityRange, string> = {
   all: "userProfile.dashboardPage.supportingCards.studyActivity.range.all",
 };
 
-// The header's total-time summary ("3h 42m" / period label) uses its own
-// explicit per-range phrasing ("Last 7 days" / ... / "All time") rather than
-// composing "Last" + range.* — some locales don't put a "last N" qualifier
-// in the same word order, so each range gets its own fully-translator-owned
-// string, same precedent as range.* itself.
-const SUMMARY_PERIOD_LABEL_KEYS: Record<StudyActivityRange, string> = {
-  "7d": "userProfile.dashboardPage.supportingCards.studyActivity.summaryPeriod.7d",
-  "30d": "userProfile.dashboardPage.supportingCards.studyActivity.summaryPeriod.30d",
-  "90d": "userProfile.dashboardPage.supportingCards.studyActivity.summaryPeriod.90d",
-  all: "userProfile.dashboardPage.supportingCards.studyActivity.summaryPeriod.all",
-};
-
 // Minimal UILanguage -> BCP 47 locale mapping for Intl.DateTimeFormat —
 // this project has no such mapping already exported (the UI language code
 // itself is not a valid BCP 47 tag for pt/en), so it stays local to this
@@ -130,6 +118,17 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
     () => (isReady ? computeStudyActivityBuckets(activityStats, effectiveTodayISO, effectiveRange) : []),
     [isReady, activityStats, effectiveTodayISO, effectiveRange],
   );
+  const lastWeekActivityTotals = useMemo(() => {
+    const lastWeekBuckets = isReady ? computeStudyActivityBuckets(activityStats, effectiveTodayISO, "7d") : [];
+    return lastWeekBuckets.reduce(
+      (totals, bucket) => ({
+        newWordStudyTimeSeconds: totals.newWordStudyTimeSeconds + bucket.newWordStudyTimeSeconds,
+        reviewTimeSeconds: totals.reviewTimeSeconds + bucket.reviewTimeSeconds,
+        customPracticeTimeSeconds: totals.customPracticeTimeSeconds + bucket.customPracticeTimeSeconds,
+      }),
+      { newWordStudyTimeSeconds: 0, reviewTimeSeconds: 0, customPracticeTimeSeconds: 0 },
+    );
+  }, [isReady, activityStats, effectiveTodayISO]);
 
   const maxTotalSeconds = Math.max(1, ...buckets.map((bucket) => bucket.totalSeconds));
   const periodTotalSeconds = buckets.reduce((sum, bucket) => sum + bucket.totalSeconds, 0);
@@ -140,7 +139,6 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
   const reviewWordsLabel = t("userProfile.learningSection.modeCards.modes.reviewWords.title");
   const customPracticeLabel = t("userProfile.learningSection.modeCards.modes.customPractice.title");
   const totalLabel = t("userProfile.dashboardPage.supportingCards.studyActivity.total");
-  const summaryPeriodLabel = t(SUMMARY_PERIOD_LABEL_KEYS[effectiveRange]);
 
   // Duration formatting: computeDurationParts (pure, unit-tested on its
   // own) supplies {hours, minutes}; the actual string comes from one of
@@ -222,29 +220,32 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
 
           {isLoading || !isReady ? (
             <div className="study-activity-card__skeleton-block" aria-hidden="true">
-              <span className="study-activity-card__skeleton study-activity-card__skeleton--summary" />
               <span className="study-activity-card__skeleton study-activity-card__skeleton--legend" />
               <span className="study-activity-card__skeleton study-activity-card__skeleton--chart" />
             </div>
           ) : (
             <>
-              <div className="study-activity-card__summary">
-                <p className="study-activity-card__summary-value">{formatDuration(periodTotalSeconds)}</p>
-                <p className="study-activity-card__summary-label">{summaryPeriodLabel}</p>
-              </div>
-
               <div className="study-activity-card__legend">
                 <span className="study-activity-card__legend-item study-activity-card__legend-item--new">
                   <span className="study-activity-card__legend-dot" aria-hidden="true" />
-                  {studyNewWordsLabel}
+                  <span className="study-activity-card__legend-label">{studyNewWordsLabel}</span>
+                  <span className="study-activity-card__legend-value">
+                    {formatDuration(lastWeekActivityTotals.newWordStudyTimeSeconds)}
+                  </span>
                 </span>
                 <span className="study-activity-card__legend-item study-activity-card__legend-item--review">
                   <span className="study-activity-card__legend-dot" aria-hidden="true" />
-                  {reviewWordsLabel}
+                  <span className="study-activity-card__legend-label">{reviewWordsLabel}</span>
+                  <span className="study-activity-card__legend-value">
+                    {formatDuration(lastWeekActivityTotals.reviewTimeSeconds)}
+                  </span>
                 </span>
                 <span className="study-activity-card__legend-item study-activity-card__legend-item--practice">
                   <span className="study-activity-card__legend-dot" aria-hidden="true" />
-                  {customPracticeLabel}
+                  <span className="study-activity-card__legend-label">{customPracticeLabel}</span>
+                  <span className="study-activity-card__legend-value">
+                    {formatDuration(lastWeekActivityTotals.customPracticeTimeSeconds)}
+                  </span>
                 </span>
               </div>
 
