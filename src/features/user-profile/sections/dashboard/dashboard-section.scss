@@ -1165,6 +1165,13 @@
    MilestoneSummaryStat sizing rather than the full MilestoneAccordionRow.
    ------------------------------------------------------------ */
 .milestone-preview-card {
+  .dashboard-card__header .dashboard-card__action {
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: 0;
+    white-space: nowrap;
+  }
+
   &__list {
     display: flex;
     flex-direction: column;
@@ -1214,11 +1221,12 @@
   }
 
   &__ratio {
-    flex-shrink: 0;
+    flex: 0 0 4.25rem;
     margin: 0;
     color: var(--muted-foreground);
     font-size: 0.78rem;
     font-weight: 600;
+    text-align: right;
     white-space: nowrap;
   }
 

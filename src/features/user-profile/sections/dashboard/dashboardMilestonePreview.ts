@@ -1,19 +1,15 @@
-// Pure selection/reshaping for the Dashboard's Milestone Preview card —
-// picks up to 3 tracks out of the milestone engine's already-evaluated
-// results (src/data/learning/milestones.ts's evaluateAllMilestoneTracks)
-// and reshapes each into the compact fields the preview row needs. No
-// milestone math happens here: every number below is read straight off
-// the MilestoneTrackResult the shared engine already computed — this
-// module exists only so "which 3 tracks, in which order" is one pure,
-// testable decision instead of being inlined into JSX.
+// Pure selection/reshaping for the Dashboard's Milestone Preview card.
+// Mirrors the Progress page's four visible milestone tracks and reshapes
+// each into the compact fields the preview row needs. No milestone math
+// happens here: every number below is read straight off the
+// MilestoneTrackResult the shared engine already computed.
 import type { MilestoneResults, MilestoneTrackId } from "../../../../data/learning/milestones";
 
-// Vocabulary / Known / Consistency, per the current Progress milestone set.
-// tracks — Mastery is deliberately omitted to keep the compact preview to
-// 3 rows ("Do not show all four unless layout remains clean").
+// Same visible order as the Progress page's milestone row list.
 export const DASHBOARD_MILESTONE_PREVIEW_TRACKS: readonly MilestoneTrackId[] = [
   "vocabulary",
   "known",
+  "mastery",
   "consistency",
 ];
 

@@ -1,9 +1,9 @@
-import { ArrowRight, BadgeCheck, CalendarCheck, Library, type LucideIcon } from "lucide-react";
+import { ArrowRight, Award, BadgeCheck, CalendarCheck, Library, type LucideIcon } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { computeVocabularyCounts } from "../../../../data/learning/vocabularyCategory";
 import { computeMilestoneStreak } from "../../../../data/learning/milestoneStreak";
 import { evaluateAllMilestoneTracks, type MilestoneTrackId } from "../../../../data/learning/milestones";
-import { selectDashboardMilestonePreview } from "./dashboardMilestonePreview";
+import { DASHBOARD_MILESTONE_PREVIEW_TRACKS, selectDashboardMilestonePreview } from "./dashboardMilestonePreview";
 import type { UserWordProgressFullRow, MilestoneDailyStatRow } from "../../../../lib/newWordProgress";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
 import type { DashboardSupportingDataStatus } from "./useDashboardSupportingData";
@@ -14,7 +14,7 @@ import type { UserProfileSectionId } from "../../components/UserProfileSidebar";
 // reads as the same system, not a reimplementation.
 const TRACK_UI: Record<MilestoneTrackId, { icon: LucideIcon; colorVar: string; titleKey: string }> = {
   vocabulary: { icon: Library, colorVar: "var(--primary)", titleKey: "userProfile.progressSection.tracks.vocabulary" },
-  mastery: { icon: Library, colorVar: "var(--primary)", titleKey: "userProfile.progressSection.tracks.mastery" },
+  mastery: { icon: Award, colorVar: "#f59e0b", titleKey: "userProfile.progressSection.tracks.mastery" },
   known: { icon: BadgeCheck, colorVar: "var(--chart-2)", titleKey: "userProfile.progressSection.tracks.known" },
   consistency: { icon: CalendarCheck, colorVar: "#22c55e", titleKey: "userProfile.progressSection.tracks.consistency" },
 };
@@ -34,8 +34,8 @@ interface MilestonePreviewCardProps {
 // reusing the exact same pure engine the Progress page's Milestones
 // section uses (evaluateAllMilestoneTracks) — never a second milestone
 // calculation. No accordion, no milestone path, no completed-milestone
-// history: only the next active milestone from up to 3 tracks (see
-// dashboardMilestonePreview.ts for which/why).
+// history: only the next active milestone for each Progress page track
+// (see dashboardMilestonePreview.ts for order/reshaping).
 export function MilestonePreviewCard({
   wordProgressRows,
   wordProgressStatus,
@@ -84,6 +84,16 @@ export function MilestonePreviewCard({
     <section className="dashboard-card milestone-preview-card" aria-label={title}>
       <header className="dashboard-card__header">
         <h2 className="dashboard-card__title">{title}</h2>
+        {!isErrored ? (
+          <button
+            type="button"
+            className="dashboard-card__action"
+            onClick={() => onNavigateToSection?.("progress")}
+          >
+            {t("userProfile.dashboardPage.supportingCards.milestonePreview.viewProgress")}
+            <ArrowRight size={14} aria-hidden="true" />
+          </button>
+        ) : null}
       </header>
 
       {isErrored ? (
@@ -99,7 +109,7 @@ export function MilestonePreviewCard({
         <>
           <div className="milestone-preview-card__list">
             {isLoading || rows.length === 0
-              ? [0, 1, 2].map((index) => (
+              ? DASHBOARD_MILESTONE_PREVIEW_TRACKS.map((_, index) => (
                   <div key={index} className="milestone-preview-card__row milestone-preview-card__row--skeleton" aria-hidden="true">
                     <span className="milestone-preview-card__skeleton-icon" />
                     <div className="milestone-preview-card__body">
@@ -145,14 +155,6 @@ export function MilestonePreviewCard({
                 })}
           </div>
 
-          <button
-            type="button"
-            className="dashboard-card__action"
-            onClick={() => onNavigateToSection?.("progress")}
-          >
-            {t("userProfile.dashboardPage.supportingCards.milestonePreview.viewProgress")}
-            <ArrowRight size={14} aria-hidden="true" />
-          </button>
         </>
       )}
     </section>
