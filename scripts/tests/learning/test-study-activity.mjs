@@ -80,12 +80,12 @@ test("4. total = sum of the three modes for every bucket", () => {
 
 console.log("\n=== 30-day range: daily buckets ===\n");
 
-test("5. 30d yields exactly 30 daily buckets ending today", () => {
-  const buckets = computeStudyActivityBuckets([], TODAY, "30d");
-  assert.equal(buckets.length, 30);
+test("5. 30d starts at the first active study-time date when history is shorter than 30 days", () => {
+  const buckets = computeStudyActivityBuckets([stat("2026-08-08", 120, 0, 0)], TODAY, "30d");
+  assert.equal(buckets.length, 3);
   assert.ok(buckets.every((b) => b.kind === "day"));
-  assert.equal(buckets[29].startDateISO, TODAY);
-  assert.equal(buckets[0].startDateISO, "2026-07-12");
+  assert.equal(buckets[0].startDateISO, "2026-08-08");
+  assert.equal(buckets[2].startDateISO, TODAY);
 });
 
 test("6. 30d with no history at all is all genuine zero buckets (not omitted)", () => {
@@ -94,20 +94,24 @@ test("6. 30d with no history at all is all genuine zero buckets (not omitted)", 
   assert.equal(buckets.length, 30);
 });
 
-console.log("\n=== 90-day range: weekly aggregation ===\n");
+console.log("\n=== 90-day range: daily-or-weekly aggregation ===\n");
 
-test("7. 90d yields weekly buckets covering exactly 90 days, most recent ending today", () => {
-  const buckets = computeStudyActivityBuckets([], TODAY, "90d");
-  assert.ok(buckets.every((b) => b.kind === "week"));
+test("7. 90d uses daily buckets from first activity when the visible history is short", () => {
+  const buckets = computeStudyActivityBuckets([stat("2026-08-01", 60, 0, 0)], TODAY, "90d");
+  assert.ok(buckets.every((b) => b.kind === "day"));
   assert.equal(buckets[buckets.length - 1].endDateISO, TODAY);
-  assert.equal(buckets[0].startDateISO, "2026-05-13"); // 90 days back, oldest 6-day chunk starts here
-  // 90 = 12*7 + 6, so 13 buckets total, the oldest covering 6 days.
-  assert.equal(buckets.length, 13);
+  assert.equal(buckets[0].startDateISO, "2026-08-01");
+  assert.equal(buckets.length, 10);
 });
 
 test("8. Weekly buckets correctly sum every mode across every day within their own span", () => {
   const buckets = computeStudyActivityBuckets(
-    [stat("2026-08-04", 180, 60, 0), stat("2026-08-06", 120, 240, 30), stat("2026-08-10", 60, 0, 15)],
+    [
+      stat("2026-07-01", 1, 0, 0),
+      stat("2026-08-04", 180, 60, 0),
+      stat("2026-08-06", 120, 240, 30),
+      stat("2026-08-10", 60, 0, 15),
+    ],
     TODAY,
     "90d",
   );
@@ -148,9 +152,27 @@ test("10. All-time with zero history returns a single current-month zero bucket,
   assert.equal(buckets[0].totalSeconds, 0);
 });
 
+test("11. All-time ignores earlier zero-only stat rows and starts at first tracked activity date", () => {
+  const buckets = computeStudyActivityBuckets(
+    [stat("2026-06-01", 0, 0, 0), stat("2026-07-15", 120, 0, 0), stat("2026-08-10", 60, 0, 0)],
+    TODAY,
+    "all",
+  );
+  assert.ok(buckets.every((b) => b.kind === "day"));
+  assert.equal(buckets[0].startDateISO, "2026-07-15");
+});
+
+test("12. All-time uses daily buckets when first activity is in the last 30 days", () => {
+  const buckets = computeStudyActivityBuckets([stat("2026-08-05", 720, 240, 60)], TODAY, "all");
+  assert.ok(buckets.every((b) => b.kind === "day"));
+  assert.equal(buckets[0].startDateISO, "2026-08-05");
+  assert.equal(buckets[buckets.length - 1].endDateISO, TODAY);
+  assert.ok(buckets.length > 1);
+});
+
 console.log("\n=== Legacy data is never falsely assigned to a mode ===\n");
 
-test("11. A row with only newWordStudyTimeSeconds populated never leaks into review/practice totals", () => {
+test("13. A row with only newWordStudyTimeSeconds populated never leaks into review/practice totals", () => {
   const buckets = computeStudyActivityBuckets([stat("2026-08-10", 900, 0, 0)], TODAY, "7d");
   const today = buckets[6];
   assert.equal(today.newWordStudyTimeSeconds, 900);
@@ -167,7 +189,7 @@ test("11. A row with only newWordStudyTimeSeconds populated never leaks into rev
 
 console.log("\n=== Language isolation (documentation-level) ===\n");
 
-test("12. This module only ever sees the rows the caller already scoped to one language", () => {
+test("14. This module only ever sees the rows the caller already scoped to one language", () => {
   // studyActivity.ts takes no targetLanguage parameter at all — language
   // scoping happens once, server-side, in readMilestoneDailyStats's own
   // target_language filter (src/lib/newWordProgress.ts). Asserting the

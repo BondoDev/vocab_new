@@ -129,12 +129,6 @@ export function DashboardSection({
           onRetryWordProgress={onRetryWordProgress}
           onNavigateToSection={onNavigateToSection}
         />
-        <StudyActivityCard
-          status={dailyStatsStatus}
-          dailyStats={dailyStats}
-          todayISO={todayISO}
-          onRetry={retryDailyStats}
-        />
         <WordsLearnedCard
           status={dailyStatsStatus}
           dailyStats={dailyStats}
@@ -146,6 +140,12 @@ export function DashboardSection({
             retryVocabularyGrowth();
           }}
           onStartNewWordStudy={onStartNewWordStudy}
+        />
+        <StudyActivityCard
+          status={dailyStatsStatus}
+          dailyStats={dailyStats}
+          todayISO={todayISO}
+          onRetry={retryDailyStats}
         />
         <MilestonePreviewCard
           wordProgressRows={wordProgressRows}

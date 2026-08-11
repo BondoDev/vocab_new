@@ -85,9 +85,9 @@ function formatBucketPeriodLabel(bucket: StudyActivityBucket, locale: string): s
 // weekday letter would be ambiguous once it repeats 4+ times), a short
 // start-date for weekly buckets (90d), and a short month name for monthly
 // buckets (All time).
-function formatAxisLabel(bucket: StudyActivityBucket, locale: string, isExpanded: boolean): string {
+function formatAxisLabel(bucket: StudyActivityBucket, locale: string, useDateLabel: boolean): string {
   if (bucket.kind === "day") {
-    return isExpanded
+    return useDateLabel
       ? formatShortDate(bucket.startDateISO, locale)
       : new Intl.DateTimeFormat(locale, { weekday: "narrow" }).format(parseDateOnlyUTC(bucket.startDateISO));
   }
@@ -138,8 +138,7 @@ interface StudyActivityCardProps {
 // series — a zero value genuinely had zero tracked activity.
 export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: StudyActivityCardProps) {
   const { t, uiLanguage } = useLanguage();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [range, setRange] = useState<StudyActivityRange>("30d");
+  const [range, setRange] = useState<StudyActivityRange>("7d");
   // The one shared tooltip's currently-active day/bucket index — null when
   // nothing is hovered/focused/tapped. Driven by React state (not CSS
   // :hover/:focus) so desktop hover, keyboard focus, and mobile tap all go
@@ -163,7 +162,6 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
   // that case regardless of which date buckets are built around.
   const effectiveTodayISO = todayISO ?? new Date().toISOString().slice(0, 10);
 
-  const effectiveRange: StudyActivityRange = isExpanded ? range : "7d";
   const locale = INTL_LOCALES[uiLanguage] ?? "en-US";
 
   const activityStats: StudyActivityDailyStat[] = useMemo(
@@ -178,8 +176,8 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
   );
 
   const buckets = useMemo(
-    () => (isReady ? computeStudyActivityBuckets(activityStats, effectiveTodayISO, effectiveRange) : []),
-    [isReady, activityStats, effectiveTodayISO, effectiveRange],
+    () => (isReady ? computeStudyActivityBuckets(activityStats, effectiveTodayISO, range) : []),
+    [isReady, activityStats, effectiveTodayISO, range],
   );
 
   // A tooltip left open from a previous range/day selection would otherwise
@@ -188,7 +186,7 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
   // UI-state correctness fix, not a data/business-logic change.
   useEffect(() => {
     setActiveIndex(null);
-  }, [effectiveRange]);
+  }, [range]);
 
   // Per-mode totals for the *currently displayed* period — feeds both the
   // compact legend values and (summed) the header's total-time summary.
@@ -228,7 +226,7 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
   const reviewWordsLabel = t("userProfile.learningSection.modeCards.modes.reviewWords.title");
   const customPracticeLabel = t("userProfile.learningSection.modeCards.modes.customPractice.title");
   const totalLabel = t("userProfile.dashboardPage.supportingCards.studyActivity.total");
-  const summaryPeriodLabel = t(SUMMARY_PERIOD_LABEL_KEYS[effectiveRange]);
+  const summaryPeriodLabel = t(SUMMARY_PERIOD_LABEL_KEYS[range]);
 
   // Duration formatting: computeDurationParts (pure, unit-tested on its
   // own) supplies {hours, minutes}; the actual string comes from one of
@@ -309,20 +307,10 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
   return (
     <section className="dashboard-card study-activity-card" aria-label={title}>
       <header className="dashboard-card__header">
-        <div className="study-activity-card__heading">
-          <h2 className="dashboard-card__title">{title}</h2>
-          {!isLoading && isReady && !isErrored ? (
-            <p className="study-activity-card__summary-line">{summaryLine}</p>
-          ) : null}
-        </div>
-        <button
-          type="button"
-          className="dashboard-card__link-button"
-          aria-expanded={isExpanded}
-          onClick={() => setIsExpanded((prev) => !prev)}
-        >
-          {t("userProfile.dashboardPage.supportingCards.studyActivity.viewAllActivity")}
-        </button>
+        <h2 className="dashboard-card__title">{title}</h2>
+        {!isLoading && isReady && !isErrored ? (
+          <p className="study-activity-card__summary-line">{summaryLine}</p>
+        ) : null}
       </header>
 
       {isErrored ? (
@@ -336,23 +324,21 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
         </div>
       ) : (
         <>
-          {isExpanded ? (
-            <div className="study-activity-card__ranges" role="group" aria-label={title}>
-              {EXPANDED_RANGES.map((rangeOption) => (
-                <button
-                  key={rangeOption}
-                  type="button"
-                  className={`study-activity-card__range-button ${
-                    range === rangeOption ? "study-activity-card__range-button--active" : ""
-                  }`}
-                  aria-pressed={range === rangeOption}
-                  onClick={() => setRange(rangeOption)}
-                >
-                  {t(RANGE_LABEL_KEYS[rangeOption])}
-                </button>
-              ))}
-            </div>
-          ) : null}
+          <div className="study-activity-card__ranges" role="group" aria-label={title}>
+            {EXPANDED_RANGES.map((rangeOption) => (
+              <button
+                key={rangeOption}
+                type="button"
+                className={`study-activity-card__range-button ${
+                  range === rangeOption ? "study-activity-card__range-button--active" : ""
+                }`}
+                aria-pressed={range === rangeOption}
+                onClick={() => setRange(rangeOption)}
+              >
+                {t(RANGE_LABEL_KEYS[rangeOption])}
+              </button>
+            ))}
+          </div>
 
           {isLoading || !isReady ? (
             <div className="study-activity-card__skeleton-block" aria-hidden="true">
@@ -361,30 +347,6 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
             </div>
           ) : (
             <>
-              <div className="study-activity-card__legend">
-                <span className="study-activity-card__legend-item study-activity-card__legend-item--new">
-                  <span className="study-activity-card__legend-dot" aria-hidden="true" />
-                  <span className="study-activity-card__legend-label">{studyNewWordsLabel}</span>
-                  <span className="study-activity-card__legend-value">
-                    {formatDuration(periodTotals.newWordStudyTimeSeconds)}
-                  </span>
-                </span>
-                <span className="study-activity-card__legend-item study-activity-card__legend-item--review">
-                  <span className="study-activity-card__legend-dot" aria-hidden="true" />
-                  <span className="study-activity-card__legend-label">{reviewWordsLabel}</span>
-                  <span className="study-activity-card__legend-value">
-                    {formatDuration(periodTotals.reviewTimeSeconds)}
-                  </span>
-                </span>
-                <span className="study-activity-card__legend-item study-activity-card__legend-item--practice">
-                  <span className="study-activity-card__legend-dot" aria-hidden="true" />
-                  <span className="study-activity-card__legend-label">{customPracticeLabel}</span>
-                  <span className="study-activity-card__legend-value">
-                    {formatDuration(periodTotals.customPracticeTimeSeconds)}
-                  </span>
-                </span>
-              </div>
-
               {isEmpty ? (
                 <div className="study-activity-card__empty">
                   <p className="study-activity-card__empty-title">
@@ -587,13 +549,36 @@ export function StudyActivityCard({ status, dailyStats, todayISO, onRetry }: Stu
                           className="study-activity-card__x-label"
                           style={{ left: `${xPercent(index)}%` }}
                         >
-                          {formatAxisLabel(bucket, locale, isExpanded)}
+                          {formatAxisLabel(bucket, locale, range !== "7d")}
                         </span>
                       ) : null,
                     )}
                   </div>
                 </div>
               )}
+              <div className="study-activity-card__legend">
+                <span className="study-activity-card__legend-item study-activity-card__legend-item--new">
+                  <span className="study-activity-card__legend-dot" aria-hidden="true" />
+                  <span className="study-activity-card__legend-label">{studyNewWordsLabel}</span>
+                  <span className="study-activity-card__legend-value">
+                    {formatDuration(periodTotals.newWordStudyTimeSeconds)}
+                  </span>
+                </span>
+                <span className="study-activity-card__legend-item study-activity-card__legend-item--review">
+                  <span className="study-activity-card__legend-dot" aria-hidden="true" />
+                  <span className="study-activity-card__legend-label">{reviewWordsLabel}</span>
+                  <span className="study-activity-card__legend-value">
+                    {formatDuration(periodTotals.reviewTimeSeconds)}
+                  </span>
+                </span>
+                <span className="study-activity-card__legend-item study-activity-card__legend-item--practice">
+                  <span className="study-activity-card__legend-dot" aria-hidden="true" />
+                  <span className="study-activity-card__legend-label">{customPracticeLabel}</span>
+                  <span className="study-activity-card__legend-value">
+                    {formatDuration(periodTotals.customPracticeTimeSeconds)}
+                  </span>
+                </span>
+              </div>
               <p className="sr-only">{accessibleRangeSummary}</p>
             </>
           )}

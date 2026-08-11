@@ -55,7 +55,7 @@ export interface StudyActivityChartScale {
   tickSecondsList: number[];
 }
 
-const CHART_SCALE_INTERVAL_COUNT = 3;
+const CHART_SCALE_INTERVAL_COUNTS = [2, 3, 4] as const;
 const NICE_FRACTIONS = [1, 2, 5, 10];
 
 function pickNiceFraction(rough: number): number {
@@ -78,16 +78,30 @@ export function computeStudyActivityChartScale(maxTotalSecondsInput: number): St
     Number.isFinite(maxTotalSecondsInput) && maxTotalSecondsInput > 0 ? maxTotalSecondsInput : 0;
   const maxMinutes = safeMaxSeconds > 0 ? safeMaxSeconds / 60 : 10;
 
-  const roughStepMinutes = maxMinutes / CHART_SCALE_INTERVAL_COUNT;
-  const magnitude = Math.pow(10, Math.floor(Math.log10(roughStepMinutes)));
-  const stepMinutes = pickNiceFraction(roughStepMinutes / magnitude) * magnitude;
-  const stepSeconds = Math.round(stepMinutes * 60);
+  const candidates = CHART_SCALE_INTERVAL_COUNTS.map((intervalCount) => {
+    const roughStepMinutes = maxMinutes / intervalCount;
+    const magnitude = Math.pow(10, Math.floor(Math.log10(roughStepMinutes)));
+    const stepMinutes = Math.max(1, pickNiceFraction(roughStepMinutes / magnitude) * magnitude);
+    const stepSeconds = Math.round(stepMinutes * 60);
+    return {
+      intervalCount,
+      stepSeconds,
+      maxSeconds: stepSeconds * intervalCount,
+    };
+  }).filter((candidate) => candidate.maxSeconds >= safeMaxSeconds);
 
-  const tickSecondsList = Array.from({ length: CHART_SCALE_INTERVAL_COUNT + 1 }, (_, index) => index * stepSeconds);
+  const best = candidates.reduce((currentBest, candidate) => {
+    if (candidate.maxSeconds !== currentBest.maxSeconds) {
+      return candidate.maxSeconds < currentBest.maxSeconds ? candidate : currentBest;
+    }
+    return candidate.intervalCount > currentBest.intervalCount ? candidate : currentBest;
+  });
+
+  const tickSecondsList = Array.from({ length: best.intervalCount + 1 }, (_, index) => index * best.stepSeconds);
 
   return {
-    maxSeconds: tickSecondsList[tickSecondsList.length - 1],
-    stepSeconds,
+    maxSeconds: best.maxSeconds,
+    stepSeconds: best.stepSeconds,
     tickSecondsList,
   };
 }
