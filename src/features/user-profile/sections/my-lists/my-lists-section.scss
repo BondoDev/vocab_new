@@ -238,18 +238,81 @@
   }
 }
 
-.my-lists-toolbar__sort-select {
-  padding: 0.55rem 2rem 0.55rem 0.75rem;
+.my-lists-toolbar__sort {
+  flex-shrink: 0;
+}
+
+.my-lists-toolbar__sort-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  min-width: 11rem;
+  max-width: 100%;
+  padding: 0.55rem 0.68rem 0.55rem 0.75rem;
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) - 2px);
   background: var(--input-background, var(--background));
   color: var(--foreground);
   font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    box-shadow 150ms ease;
+
+  &:hover,
+  &[data-state="open"] {
+    border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+    background: color-mix(in srgb, var(--primary) 6%, var(--input-background, var(--background)));
+  }
 
   &:focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 1px;
+  }
+}
+
+.my-lists-toolbar__sort-trigger-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.my-lists-toolbar__sort-trigger-icon {
+  flex-shrink: 0;
+  margin-right: 0.08rem;
+  color: var(--muted-foreground);
+  transition: transform 150ms ease;
+}
+
+.my-lists-toolbar__sort-trigger[data-state="open"] .my-lists-toolbar__sort-trigger-icon {
+  transform: rotate(180deg);
+}
+
+.my-lists-toolbar__sort-menu {
+  width: var(--radix-dropdown-menu-trigger-width);
+  min-width: 11rem;
+  padding: 0.3rem;
+  border-color: color-mix(in srgb, var(--primary) 18%, var(--border));
+  border-radius: calc(var(--radius) - 2px);
+  box-shadow:
+    0 12px 26px rgba(15, 23, 42, 0.12),
+    0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.my-lists-toolbar__sort-option {
+  min-height: 2.2rem;
+  border-radius: calc(var(--radius) - 4px);
+  color: var(--foreground);
+  font-size: 0.875rem;
+
+  &[data-state="checked"] {
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: var(--primary);
+    font-weight: 650;
   }
 }
 
@@ -303,26 +366,6 @@
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.my-lists-card__menu-trigger {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border: none;
-  border-radius: calc(var(--radius) - 4px);
-  background: transparent;
-  color: var(--muted-foreground);
-  cursor: pointer;
-
-  &:hover,
-  &[data-state="open"] {
-    background: var(--accent);
-    color: var(--accent-foreground);
-  }
 }
 
 .my-lists-card__count {
@@ -468,6 +511,12 @@
 .my-lists-detail-table__word {
   color: var(--foreground);
   font-weight: 600;
+  // min-width: 0 only matters inside a flex row (the mobile card's __top —
+  // see below); overflow-wrap guards a long compound word in either
+  // context. Both are no-ops for the desktop <td>'s normal box, so this is
+  // safe to share rather than forking a second word class per breakpoint.
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .my-lists-detail-table__translation,
@@ -477,6 +526,26 @@
 
 .my-lists-detail-table__actions-head {
   text-align: right;
+}
+
+.my-lists-detail-table__menu-trigger {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  border-radius: calc(var(--radius) - 4px);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+
+  &:hover,
+  &[data-state="open"] {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
 }
 
 .my-lists-detail-table__view-link {
@@ -506,6 +575,21 @@
   color: color-mix(in srgb, var(--chart-2) 55%, var(--foreground));
   font-size: 0.75rem;
   font-weight: 700;
+}
+
+.my-lists-grammar-badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 10rem;
+  padding: 0.18rem 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 72%, transparent);
+  color: var(--accent-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .my-lists-status-badge {
@@ -557,10 +641,6 @@
    phase's own "Practice List / Add Words / ⋯" preferred header order. */
 .my-lists-detail__practice-button {
   flex-shrink: 0;
-}
-
-.my-lists-detail__status-filters {
-  margin-top: 0.9rem;
 }
 
 .my-lists-picker__status-filters {
@@ -668,20 +748,31 @@
 }
 
 .my-lists-mobile-card {
-  padding: 0.65rem 0.75rem;
+  padding: 0.875rem 1rem;
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) - 2px);
   background: var(--card);
 
   &__top {
     display: flex;
-    align-items: center;
+    // flex-start (not center) so the menu trigger stays pinned to the
+    // word's first line rather than re-centering against the block if a
+    // long word wraps to two lines.
+    align-items: flex-start;
     justify-content: space-between;
     gap: 0.5rem;
+
+    // The word is the only flexible sibling of the (flex-shrink: 0) menu
+    // trigger — flex: 1 lets it claim the remaining width, min-width: 0
+    // lets it actually shrink/wrap instead of forcing the row (and the
+    // trigger) wider than the card.
+    > .my-lists-detail-table__word {
+      flex: 1 1 auto;
+    }
   }
 
   &__translation {
-    margin: 0.2rem 0 0;
+    margin: 0.3rem 0 0;
     color: var(--foreground);
     font-size: 0.82rem;
     line-height: 1.35;
@@ -690,13 +781,19 @@
 
   &__meta-row {
     display: flex;
+    // Wrap stays only as a last-resort escape hatch for an exceptionally
+    // narrow viewport or unusually long badge text — margin-left: auto
+    // below already keeps everything on one line at ordinary phone widths
+    // (320-430px) without it.
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.35rem;
-    margin-top: 0.35rem;
+    gap: 0.4rem;
+    margin-top: 0.7rem;
   }
 
   &__meta-text {
+    margin-left: auto;
+    flex-shrink: 0;
     color: var(--muted-foreground);
     font-size: 0.72rem;
     white-space: nowrap;

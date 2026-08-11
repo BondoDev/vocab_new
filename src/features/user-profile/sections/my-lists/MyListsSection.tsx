@@ -29,6 +29,7 @@ import { DeleteListDialog } from "./DeleteListDialog";
 import { AddWordsDialog } from "./AddWordsDialog";
 import { ListCard } from "./ListCard";
 import { ListDetailView } from "./ListDetailView";
+import { SortDropdown, type SortDropdownOption } from "./SortDropdown";
 import { normalizeListNameForComparison } from "./listNameValidation";
 import { computeListWordCountsByListId, getListWordCount } from "./listWordCounts";
 import { filterListsBySearchQuery, sortLists, type ListSortMode } from "./listSearchSort";
@@ -490,6 +491,14 @@ export function MyListsSection({
     () => sortLists(filterListsBySearchQuery(lists, searchQuery), sortMode),
     [lists, searchQuery, sortMode],
   );
+  const sortOptions = useMemo<SortDropdownOption<ListSortMode>[]>(
+    () => [
+      { value: "recentlyUpdated", label: t("userProfile.myListsSection.sort.recentlyUpdated") },
+      { value: "nameAsc", label: t("userProfile.myListsSection.sort.nameAsc") },
+      { value: "nameDesc", label: t("userProfile.myListsSection.sort.nameDesc") },
+    ],
+    [t],
+  );
 
   if (!isLoading && !isError && activeList) {
     const listMemberships = memberships.filter((membership) => membership.listId === activeList.id);
@@ -501,8 +510,6 @@ export function MyListsSection({
           wordProgressRows={wordProgressRows}
           nativeLanguage={userProfile.nativeLanguage}
           onBack={goToGrid}
-          onRename={() => handleOpenRenameDialog(activeList)}
-          onDelete={() => handleOpenDeleteDialog(activeList)}
           onRemoveWord={handleRemoveWord}
           onOpenPracticeList={handleOpenPracticeListDialog}
           isPracticeListDialogOpen={isPracticeListDialogOpen}
@@ -589,18 +596,14 @@ export function MyListsSection({
                 className="my-lists-toolbar__search-input"
               />
             </div>
-            <label className="my-lists-toolbar__sort">
-              <span className="sr-only">{t("userProfile.myListsSection.sort.ariaLabel")}</span>
-              <select
+            <div className="my-lists-toolbar__sort">
+              <SortDropdown<ListSortMode>
                 value={sortMode}
-                onChange={(event) => setSortMode(event.target.value as ListSortMode)}
-                className="my-lists-toolbar__sort-select"
-              >
-                <option value="recentlyUpdated">{t("userProfile.myListsSection.sort.recentlyUpdated")}</option>
-                <option value="nameAsc">{t("userProfile.myListsSection.sort.nameAsc")}</option>
-                <option value="nameDesc">{t("userProfile.myListsSection.sort.nameDesc")}</option>
-              </select>
-            </label>
+                options={sortOptions}
+                ariaLabel={t("userProfile.myListsSection.sort.ariaLabel")}
+                onChange={setSortMode}
+              />
+            </div>
           </div>
 
           <div className="my-lists-card-grid">
@@ -610,13 +613,6 @@ export function MyListsSection({
                 list={list}
                 wordCount={getListWordCount(wordCountsByListId, list.id)}
                 onView={() => goToDetail(list.id)}
-                onRename={() => handleOpenRenameDialog(list)}
-                onDelete={() => handleOpenDeleteDialog(list)}
-                onPracticeList={
-                  onStartPracticeList && getListWordCount(wordCountsByListId, list.id) > 0
-                    ? () => goToDetail(list.id)
-                    : undefined
-                }
               />
             ))}
           </div>

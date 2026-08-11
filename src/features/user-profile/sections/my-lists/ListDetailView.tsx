@@ -14,15 +14,15 @@ import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import type { UserVocabularyList, UserVocabularyListMembership } from "../../../../lib/vocabularyLists";
 import { loadFullVocabularyForLanguagePair, type FullVocabularyConceptRow } from "../vocabulary/loadFullVocabulary";
 import { resolveListWordStatus, type ListWordStatus } from "./listWordStatus";
-import { filterListWordRowsByStatus, filterListWordRowsBySearch, type ListWordStatusFilterId } from "./listWordFiltering";
+import { filterListWordRowsBySearch } from "./listWordFiltering";
 import { getPageWindow } from "./listPagination";
 import { AddWordsDialog } from "./AddWordsDialog";
 import { PracticeListSetupDialog } from "./PracticeListSetupDialog";
+import { SortDropdown, type SortDropdownOption } from "./SortDropdown";
 import type { ExerciseId } from "../../../../exercises/exerciseIds";
 
 const PAGE_SIZE = 10;
 type DetailSortMode = "recentlyAdded" | "nameAsc";
-const STATUS_FILTERS: ListWordStatusFilterId[] = ["all", "notStudied", "learning", "known", "mastered"];
 
 // The full resolved vocabulary set for the list's own target language,
 // decorated with each concept's OPTIONAL current status — "notStudied" for
@@ -49,8 +49,6 @@ interface ListDetailViewProps {
   wordProgressRows: UserWordProgressFullRow[];
   nativeLanguage: UILanguage | "";
   onBack: () => void;
-  onRename: () => void;
-  onDelete: () => void;
   onRemoveWord: (wordId: string) => void;
   // Opens the Practice List setup dialog (My Lists Phase 3) — owned by
   // MyListsSection, same reason as the Add Words wiring below. Only ever
@@ -94,8 +92,6 @@ export function ListDetailView({
   wordProgressRows,
   nativeLanguage,
   onBack,
-  onRename,
-  onDelete,
   onRemoveWord,
   onOpenPracticeList,
   isPracticeListDialogOpen,
@@ -111,7 +107,6 @@ export function ListDetailView({
   const { t, uiLanguage } = useLanguage();
   const [resolveState, setResolveState] = useState<ResolveState>({ status: "loading" });
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<ListWordStatusFilterId>("all");
   const [sortMode, setSortMode] = useState<DetailSortMode>("recentlyAdded");
   const [page, setPage] = useState(1);
 
@@ -184,8 +179,7 @@ export function ListDetailView({
   }, [allRows, addedAtByConceptId]);
 
   const filteredRows = useMemo(() => {
-    const byStatus = filterListWordRowsByStatus(listRows, statusFilter);
-    const bySearch = filterListWordRowsBySearch(byStatus, searchQuery);
+    const bySearch = filterListWordRowsBySearch(listRows, searchQuery);
     const sorted = [...bySearch];
     if (sortMode === "nameAsc") {
       sorted.sort((a, b) => a.targetWord.localeCompare(b.targetWord));
@@ -193,14 +187,21 @@ export function ListDetailView({
       sorted.sort((a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime());
     }
     return sorted;
-  }, [listRows, statusFilter, searchQuery, sortMode]);
+  }, [listRows, searchQuery, sortMode]);
+  const sortOptions = useMemo<SortDropdownOption<DetailSortMode>[]>(
+    () => [
+      { value: "recentlyAdded", label: t("userProfile.myListsSection.detail.sortRecentlyAdded") },
+      { value: "nameAsc", label: t("userProfile.myListsSection.detail.sortNameAsc") },
+    ],
+    [t],
+  );
 
   // Resets to page 1 whenever the visible set could change shape (a new
   // search/filter/sort) — but not on every render, so removing one word
   // from the current page doesn't silently bounce the user back to page 1.
   useEffect(() => {
     setPage(1);
-  }, [searchQuery, statusFilter, sortMode]);
+  }, [searchQuery, sortMode]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
   const clampedPage = Math.min(page, totalPages);
@@ -213,23 +214,20 @@ export function ListDetailView({
   const isError = resolveState.status === "error";
   const hasMembers = memberships.length > 0;
 
-  const statusLabel = (status: ListWordStatus) =>
-    status === "notStudied"
-      ? t("userProfile.myListsSection.notStudied")
-      : t(`userProfile.vocabularySection.table.statuses.${status}`);
-  const filterLabel = (id: ListWordStatusFilterId) =>
-    id === "all" ? t("userProfile.myListsSection.statusAll") : statusLabel(id);
+  const grammarTypeLabel = (grammarType: string | undefined) => {
+    if (!grammarType) return "-";
+    const translated = t(`wordTypes.${grammarType}`);
+    return translated === `wordTypes.${grammarType}` ? grammarType : translated;
+  };
 
   const wordDetailPath = (row: ListWordRow) =>
     buildWordPath(
       uiLanguage,
-      // list.targetLanguage is plain `string` on UserVocabularyList
-      // (mirrors the DB column) but is always one of the 7 UI language
-      // codes — enforced server-side by the schema's own CHECK constraint.
       getUiVocabularyLanguage(list.targetLanguage as UILanguage),
       row.targetWord,
       row.conceptId,
     );
+
 
   return (
     <>
@@ -264,19 +262,6 @@ export function ListDetailView({
               <Plus aria-hidden="true" />
               {t("userProfile.myListsSection.addWords")}
             </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button type="button" className="my-lists-card__menu-trigger" aria-label={list.name}>
-                  <MoreHorizontal size={16} strokeWidth={2} aria-hidden="true" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onSelect={onRename}>{t("userProfile.myListsSection.rename")}</DropdownMenuItem>
-                <DropdownMenuItem variant="destructive" onSelect={onDelete}>
-                  {t("userProfile.myListsSection.delete")}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
         ) : null}
       </header>
@@ -314,31 +299,14 @@ export function ListDetailView({
                 className="my-lists-toolbar__search-input"
               />
             </div>
-            <label className="my-lists-toolbar__sort">
-              <span className="sr-only">{t("userProfile.myListsSection.sort.ariaLabel")}</span>
-              <select
+            <div className="my-lists-toolbar__sort">
+              <SortDropdown<DetailSortMode>
                 value={sortMode}
-                onChange={(event) => setSortMode(event.target.value as DetailSortMode)}
-                className="my-lists-toolbar__sort-select"
-              >
-                <option value="recentlyAdded">{t("userProfile.myListsSection.detail.sortRecentlyAdded")}</option>
-                <option value="nameAsc">{t("userProfile.myListsSection.detail.sortNameAsc")}</option>
-              </select>
-            </label>
-          </div>
-
-          <div className="my-lists-picker__status-filters my-lists-detail__status-filters" role="group">
-            {STATUS_FILTERS.map((id) => (
-              <button
-                key={id}
-                type="button"
-                className={`my-lists-picker__status-filter ${statusFilter === id ? "is-active" : ""}`}
-                aria-pressed={statusFilter === id}
-                onClick={() => setStatusFilter(id)}
-              >
-                {filterLabel(id)}
-              </button>
-            ))}
+                options={sortOptions}
+                ariaLabel={t("userProfile.myListsSection.sort.ariaLabel")}
+                onChange={setSortMode}
+              />
+            </div>
           </div>
 
           {filteredRows.length === 0 ? (
@@ -353,8 +321,8 @@ export function ListDetailView({
                     <tr>
                       <th scope="col">{t("userProfile.vocabularySection.table.columns.word")}</th>
                       <th scope="col">{t("userProfile.vocabularySection.table.columns.translation")}</th>
+                      <th scope="col">{t("userProfile.vocabularySection.filters.partOfSpeech")}</th>
                       <th scope="col">{t("userProfile.vocabularySection.table.columns.level")}</th>
-                      <th scope="col">{t("userProfile.vocabularySection.table.columns.status")}</th>
                       <th scope="col">{t("userProfile.myListsSection.detail.addedColumn")}</th>
                       <th scope="col" className="my-lists-detail-table__actions-head">
                         {t("userProfile.vocabularySection.table.columns.actions")}
@@ -366,12 +334,10 @@ export function ListDetailView({
                       <tr key={row.conceptId}>
                         <td className="my-lists-detail-table__word">{row.targetWord}</td>
                         <td className="my-lists-detail-table__translation">{row.translation}</td>
-                        <td>{row.level ? <span className="my-lists-level-badge">{row.level}</span> : null}</td>
                         <td>
-                          <span className={`my-lists-status-badge my-lists-status-badge--${row.status}`}>
-                            {statusLabel(row.status)}
-                          </span>
+                          <span className="my-lists-grammar-badge">{grammarTypeLabel(row.grammarType)}</span>
                         </td>
+                        <td>{row.level ? <span className="my-lists-level-badge">{row.level}</span> : null}</td>
                         <td className="my-lists-detail-table__meta">
                           {new Date(row.addedAt).toLocaleDateString(uiLanguage)}
                         </td>
@@ -402,9 +368,7 @@ export function ListDetailView({
                     <p className="my-lists-mobile-card__translation">{row.translation}</p>
                     <div className="my-lists-mobile-card__meta-row">
                       {row.level ? <span className="my-lists-level-badge">{row.level}</span> : null}
-                      <span className={`my-lists-status-badge my-lists-status-badge--${row.status}`}>
-                        {statusLabel(row.status)}
-                      </span>
+                      <span className="my-lists-grammar-badge">{grammarTypeLabel(row.grammarType)}</span>
                       <span className="my-lists-mobile-card__meta-text">
                         {new Date(row.addedAt).toLocaleDateString(uiLanguage)}
                       </span>
@@ -500,8 +464,8 @@ function RowActionsMenu({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="my-lists-card__menu-trigger"
-          aria-label={`${t("userProfile.vocabularySection.table.moreActionsAriaLabel")} — ${row.targetWord}`}
+          className="my-lists-detail-table__menu-trigger"
+          aria-label={`${t("userProfile.vocabularySection.table.moreActionsAriaLabel")} - ${row.targetWord}`}
         >
           <MoreHorizontal size={15} strokeWidth={2} aria-hidden="true" />
         </button>
@@ -517,3 +481,4 @@ function RowActionsMenu({
     </DropdownMenu>
   );
 }
+
