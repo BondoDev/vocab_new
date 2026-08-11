@@ -261,11 +261,11 @@ function stripLineComments(source) {
     .join("\n");
 }
 
-test("14. Card/grid/data-layer files under my-lists never import vocabulary.json or a word-resolution helper (counts stay JSON-free); only ListDetailView.tsx may reuse loadVocabularyProgress — and only it, deliberately, for its own detail rows (Phase 2A, not Phase 1)", () => {
-  const allowedException = "ListDetailView.tsx";
+test("14. Card/grid/data-layer files under my-lists never import vocabulary.json or a word-resolution helper (counts stay JSON-free); only ListDetailView.tsx (Phase 2A) and AddWordsDialog.tsx (Phase 2B, type-only — see that file's own import) may reference loadVocabularyProgress", () => {
+  const allowedExceptions = new Set(["ListDetailView.tsx", "AddWordsDialog.tsx"]);
   const offenders = [];
   for (const entry of fs.readdirSync(MY_LISTS_DIR)) {
-    if (entry === allowedException) continue;
+    if (allowedExceptions.has(entry)) continue;
     const filePath = path.join(MY_LISTS_DIR, entry);
     if (!fs.statSync(filePath).isFile()) continue;
     const content = stripLineComments(fs.readFileSync(filePath, "utf8"));
@@ -275,11 +275,11 @@ test("14. Card/grid/data-layer files under my-lists never import vocabulary.json
   }
   assert.deepEqual(offenders, [], `unexpected vocabulary-data reference(s): ${offenders.join(", ")}`);
 
-  const detailViewContent = stripLineComments(
-    fs.readFileSync(path.join(MY_LISTS_DIR, allowedException), "utf8"),
-  );
-  assert.doesNotMatch(detailViewContent, /vocabulary\.json/, "even the detail view must resolve via loadVocabularyProgress, never a direct JSON import");
-  assert.match(detailViewContent, /loadVocabularyProgress/, "the detail view is expected to reuse loadVocabularyProgress");
+  for (const allowedException of allowedExceptions) {
+    const content = stripLineComments(fs.readFileSync(path.join(MY_LISTS_DIR, allowedException), "utf8"));
+    assert.doesNotMatch(content, /vocabulary\.json/, `${allowedException} must resolve via loadVocabularyProgress, never a direct JSON import`);
+    assert.match(content, /loadVocabularyProgress/, `${allowedException} is expected to reference loadVocabularyProgress`);
+  }
 });
 
 test("14b. src/lib/vocabularyLists.ts never imports vocabulary.json or queries user_word_progress", () => {

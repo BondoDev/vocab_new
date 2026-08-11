@@ -940,6 +940,14 @@
       "wordsUnit": "слов",
       "rename": "Переименовать",
       "delete": "Удалить",
+      "addWords": "Добавить слова",
+      "addWordsError": "Не удалось добавить эти слова в список. Попробуйте ещё раз.",
+      "removeFromList": "Удалить из списка",
+      "removedFromList": "Удалено из списка",
+      "removeError": "Не удалось удалить это слово. Попробуйте ещё раз.",
+      "searchWords": "Поиск слов",
+      "statusAll": "Все",
+      "viewWordDetails": "Посмотреть слово",
       "emptyState": {
         "title": "Списков пока нет",
         "description": "Создайте первый список, чтобы объединить слова, которые хотите учить вместе."
@@ -965,7 +973,19 @@
       "detail": {
         "backToMyLists": "Назад к Моим спискам",
         "emptyState": "В этом списке пока нет слов.",
-        "addedColumn": "Добавлено"
+        "emptyStateDescription": "Добавьте слова из своего словаря, чтобы начать формировать этот список.",
+        "noMatch": "Нет совпадающих слов",
+        "addedColumn": "Добавлено",
+        "sortRecentlyAdded": "Недавно добавленные",
+        "sortNameAsc": "Слово А-Я"
+      },
+      "picker": {
+        "alreadyAdded": "Уже добавлено",
+        "wordSelected": "{count} слово выбрано",
+        "wordsSelected": "{count} слов выбрано",
+        "addSelected": "Добавить выбранное",
+        "addWord": "Добавить {count} слово",
+        "addWords": "Добавить {count} слов"
       },
       "search": {
         "placeholder": "Поиск по спискам",

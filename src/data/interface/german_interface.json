@@ -468,6 +468,14 @@
       "wordsUnit": "Wörter",
       "rename": "Umbenennen",
       "delete": "Löschen",
+      "addWords": "Wörter hinzufügen",
+      "addWordsError": "Die Wörter konnten nicht zur Liste hinzugefügt werden. Bitte versuche es erneut.",
+      "removeFromList": "Aus der Liste entfernen",
+      "removedFromList": "Aus der Liste entfernt",
+      "removeError": "Das Wort konnte nicht entfernt werden. Bitte versuche es erneut.",
+      "searchWords": "Wörter durchsuchen",
+      "statusAll": "Alle",
+      "viewWordDetails": "Wortdetails ansehen",
       "emptyState": {
         "title": "Noch keine Listen",
         "description": "Erstelle deine erste Liste, um Wörter zu organisieren, die du zusammen lernen möchtest."
@@ -493,7 +501,19 @@
       "detail": {
         "backToMyLists": "Zurück zu Meine Listen",
         "emptyState": "Noch keine Wörter in dieser Liste.",
-        "addedColumn": "Hinzugefügt"
+        "emptyStateDescription": "Füge Wörter aus deinem Wortschatz hinzu, um diese Liste aufzubauen.",
+        "noMatch": "Keine passenden Wörter",
+        "addedColumn": "Hinzugefügt",
+        "sortRecentlyAdded": "Zuletzt hinzugefügt",
+        "sortNameAsc": "Wort A–Z"
+      },
+      "picker": {
+        "alreadyAdded": "Bereits hinzugefügt",
+        "wordSelected": "{count} Wort ausgewählt",
+        "wordsSelected": "{count} Wörter ausgewählt",
+        "addSelected": "Auswahl hinzufügen",
+        "addWord": "{count} Wort hinzufügen",
+        "addWords": "{count} Wörter hinzufügen"
       },
       "search": {
         "placeholder": "Listen durchsuchen",

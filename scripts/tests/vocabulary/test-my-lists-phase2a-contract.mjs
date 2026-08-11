@@ -84,10 +84,10 @@ test("Search/sort operate on already-loaded lists only — no new Supabase call 
 
 console.log("\n=== 24. List detail empty state ===\n");
 
-test("24. ListDetailView shows the dedicated 'no words yet' message when there are no resolved rows — never a fake table", () => {
-  assert.match(detailSource, /resolveState\.rows\.length === 0 \? \(/);
+test("24. ListDetailView shows the dedicated 'no words yet' message when the list has zero members — never a fake table (Phase 2B condition update: !hasMembers, since resolveState now holds the full active-language word set, not just this list's members — see test-my-lists-phase2b-contract.mjs's own dedicated check for the current behavior)", () => {
+  assert.match(detailSource, /!hasMembers \? \(/);
   assert.match(detailSource, /t\("userProfile\.myListsSection\.detail\.emptyState"\)/);
-  const emptyBranchMatch = detailSource.match(/resolveState\.rows\.length === 0 \? \(([\s\S]*?)\) : \(/);
+  const emptyBranchMatch = detailSource.match(/!hasMembers \? \(([\s\S]*?)\) : \(/);
   assert.ok(emptyBranchMatch, "the detail empty-state branch must exist");
   assert.doesNotMatch(emptyBranchMatch[1], /<table/);
 });
@@ -198,14 +198,13 @@ test("List detail is addressed via a listId query param on the same myLists sect
   assert.match(sectionSource, /search: `\?section=myLists&listId=\$\{id\}`/);
 });
 
-console.log("\n=== Add Words / Study List still not implemented ===\n");
+console.log("\n=== Study List still not implemented (Add Words shipped in Phase 2B — see that phase's own contract test) ===\n");
 
-test("No Add Words UI, membership-write call, or Study List behavior exists anywhere in the my-lists section", () => {
+test("No Study List behavior exists anywhere in the my-lists section", () => {
   for (const entry of fs.readdirSync(MY_LISTS_DIR)) {
     const filePath = path.join(MY_LISTS_DIR, entry);
     if (!fs.statSync(filePath).isFile()) continue;
     const content = fs.readFileSync(filePath, "utf8");
-    assert.doesNotMatch(content, /addWord|add-word|AddWord/i, `${entry} must not implement Add Words yet`);
     assert.doesNotMatch(content, /studyList|study-list|StudyList/i, `${entry} must not implement Study List yet`);
   }
 });

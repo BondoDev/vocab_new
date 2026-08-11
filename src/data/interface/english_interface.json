@@ -468,6 +468,14 @@
       "wordsUnit": "words",
       "rename": "Rename",
       "delete": "Delete",
+      "addWords": "Add Words",
+      "addWordsError": "We couldn't add those words to your list. Please try again.",
+      "removeFromList": "Remove from list",
+      "removedFromList": "Removed from list",
+      "removeError": "We couldn't remove this word. Please try again.",
+      "searchWords": "Search words",
+      "statusAll": "All",
+      "viewWordDetails": "View word details",
       "emptyState": {
         "title": "No lists yet",
         "description": "Create your first list to organize words you want to learn together."
@@ -493,7 +501,19 @@
       "detail": {
         "backToMyLists": "Back to My Lists",
         "emptyState": "No words in this list yet.",
-        "addedColumn": "Added"
+        "emptyStateDescription": "Add words from your vocabulary to start building this list.",
+        "noMatch": "No matching words",
+        "addedColumn": "Added",
+        "sortRecentlyAdded": "Recently added",
+        "sortNameAsc": "Word A–Z"
+      },
+      "picker": {
+        "alreadyAdded": "Already added",
+        "wordSelected": "{count} word selected",
+        "wordsSelected": "{count} words selected",
+        "addSelected": "Add selected",
+        "addWord": "Add {count} Word",
+        "addWords": "Add {count} Words"
       },
       "search": {
         "placeholder": "Search lists",

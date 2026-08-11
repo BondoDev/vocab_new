@@ -571,3 +571,308 @@
   background: color-mix(in srgb, #f59e0b 18%, transparent);
   color: color-mix(in srgb, #f59e0b 45%, var(--foreground));
 }
+
+/* ============================================================
+   Phase 2B — detail-view header additions (Add Words button) and the
+   status-filter row shared by the detail view and the Add Words picker.
+   ============================================================ */
+
+.my-lists-detail__add-button {
+  flex-shrink: 0;
+}
+
+.my-lists-detail__status-filters {
+  margin-top: 0.9rem;
+}
+
+.my-lists-picker__status-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.my-lists-picker__status-filter {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease,
+    background-color 150ms ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+    color: var(--foreground);
+  }
+
+  &.is-active {
+    border-color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: var(--primary);
+  }
+}
+
+/* ============================================================
+   Phase 2B — detail-view pagination (mirrors .vocabulary-pagination's
+   visual language).
+   ============================================================ */
+
+.my-lists-detail-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.my-lists-detail-pagination__nav,
+.my-lists-detail-pagination__page {
+  display: inline-flex;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+    color: var(--foreground);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.my-lists-detail-pagination__page.is-active {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.my-lists-detail-pagination__ellipsis {
+  padding: 0 0.2rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   Phase 2B — mobile word cards for the list-detail view (mirrors
+   .vocabulary-mobile-list/.vocabulary-mobile-card; hidden on desktop via
+   the same breakpoint the table container itself switches on).
+   ============================================================ */
+
+.my-lists-mobile-list {
+  display: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  flex-direction: column;
+  gap: 0.45rem;
+  list-style: none;
+}
+
+.my-lists-mobile-card {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--card);
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__translation {
+    margin: 0.2rem 0 0;
+    color: var(--foreground);
+    font-size: 0.82rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  &__meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.35rem;
+  }
+
+  &__meta-text {
+    color: var(--muted-foreground);
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 719.98px) {
+  .my-lists-detail-table-container {
+    display: none;
+  }
+
+  .my-lists-mobile-list {
+    display: flex;
+  }
+}
+
+/* ============================================================
+   Phase 2B — Add Words dialog / picker.
+   ============================================================ */
+
+.my-lists-add-words-dialog {
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+}
+
+.my-lists-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 0;
+}
+
+.my-lists-picker__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.my-lists-picker__search {
+  margin-top: 0;
+}
+
+.my-lists-picker__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow-y: auto;
+  max-height: min(24rem, 50vh);
+  padding-right: 0.25rem;
+}
+
+.my-lists-picker__row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1.2fr) minmax(0, 1.4fr) auto auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--card);
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+  }
+
+  &.is-selected {
+    border-color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 6%, transparent);
+  }
+}
+
+@media (max-width: 639.98px) {
+  .my-lists-picker__row {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "checkbox word"
+      "checkbox translation"
+      "checkbox meta";
+    row-gap: 0.15rem;
+  }
+}
+
+.my-lists-picker__checkbox {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.my-lists-picker__row-word {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--foreground);
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.my-lists-picker__row-translation {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.my-lists-picker__already-added-list {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.my-lists-picker__already-added-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  opacity: 0.7;
+}
+
+.my-lists-picker__already-added-badge {
+  flex-shrink: 0;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.my-lists-picker__footer {
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.75rem;
+}
+
+.my-lists-picker__selected-summary {
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.my-lists-picker__footer-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}

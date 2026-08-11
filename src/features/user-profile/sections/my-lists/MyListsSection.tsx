@@ -4,13 +4,16 @@ import { ListPlus, Plus, Search } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { Button } from "../../../../app/components/ui/button";
+import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
 import {
+  addWordsToVocabularyList,
   createUserVocabularyList,
   deleteUserVocabularyList,
   readUserVocabularyListMemberships,
   readUserVocabularyLists,
+  removeWordFromVocabularyList,
   renameUserVocabularyList,
   VocabularyListError,
   type UserVocabularyList,
@@ -22,6 +25,7 @@ import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
 import { CreateListDialog } from "./CreateListDialog";
 import { RenameListDialog } from "./RenameListDialog";
 import { DeleteListDialog } from "./DeleteListDialog";
+import { AddWordsDialog } from "./AddWordsDialog";
 import { ListCard } from "./ListCard";
 import { ListDetailView } from "./ListDetailView";
 import { normalizeListNameForComparison } from "./listNameValidation";
@@ -104,6 +108,11 @@ export function MyListsSection({
   const [deleteTarget, setDeleteTarget] = useState<UserVocabularyList | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  const [isAddWordsDialogOpen, setIsAddWordsDialogOpen] = useState(false);
+  const [isAddingWords, setIsAddingWords] = useState(false);
+  const [addWordsError, setAddWordsError] = useState<string | null>(null);
+  const { message: toastMessage, show: showToast } = useAutoDismissMessage();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [sortMode, setSortMode] = useState<ListSortMode>("recentlyUpdated");
@@ -322,6 +331,109 @@ export function MyListsSection({
     }
   };
 
+  // ---- add words ----
+  const handleOpenAddWordsDialog = () => {
+    setAddWordsError(null);
+    setIsAddWordsDialogOpen(true);
+  };
+
+  const handleCloseAddWordsDialog = () => {
+    if (!isAddingWords) setIsAddWordsDialogOpen(false);
+  };
+
+  // On success, re-fetches only this list's own memberships (one small
+  // request) rather than trusting a client-synthesized created_at for the
+  // newly-added rows — the RPC's own RETURNS TABLE deliberately doesn't
+  // include created_at (see the migration's own header), so this is the
+  // simplest way to get the authoritative "Added" timestamps without
+  // guessing. Replaces only this list's own membership rows in local
+  // state; every other list's memberships are left untouched. No full
+  // page reload, no refetch of the list's own row set.
+  const handleSubmitAddWords = async (wordProgressIds: string[]) => {
+    if (!activeList) return;
+    const listIdToUpdate = activeList.id;
+
+    const session = getStoredSupabaseSession();
+    if (!session) {
+      setAddWordsError(t("supabaseErrors.sessionExpired"));
+      return;
+    }
+
+    setIsAddingWords(true);
+    setAddWordsError(null);
+    try {
+      await addWordsToVocabularyList(session, listIdToUpdate, wordProgressIds);
+      const freshMemberships = await readUserVocabularyListMemberships(session, [listIdToUpdate]);
+      setState((prev) =>
+        prev.status === "result"
+          ? {
+              status: "result",
+              lists: prev.lists,
+              memberships: [
+                ...prev.memberships.filter((membership) => membership.listId !== listIdToUpdate),
+                ...freshMemberships,
+              ],
+            }
+          : prev,
+      );
+      setIsAddWordsDialogOpen(false);
+    } catch (error) {
+      console.warn("MyListsSection: failed to add words to list.", error);
+      setAddWordsError(resolveListMutationErrorMessage(t, error, "userProfile.myListsSection.addWordsError"));
+    } finally {
+      setIsAddingWords(false);
+    }
+  };
+
+  // ---- remove word ----
+  // Optimistic, matching VocabularySection's own favorite-toggle precedent:
+  // the row disappears immediately (removing membership from local state
+  // first), the RPC call happens in the background, and a failure rolls
+  // the membership back and surfaces a toast — never a blocking
+  // confirmation dialog, per the Phase 2B brief's own "should NOT need a
+  // scary destructive confirmation" guidance (removing organization
+  // membership only; user_word_progress is never touched, client-side or
+  // server-side).
+  const handleRemoveWord = (wordProgressId: string) => {
+    if (!activeList) return;
+    const listIdToUpdate = activeList.id;
+
+    const session = getStoredSupabaseSession();
+    if (!session) {
+      showToast(t("supabaseErrors.sessionExpired"));
+      return;
+    }
+
+    const removedMembership = memberships.find(
+      (membership) => membership.listId === listIdToUpdate && membership.wordProgressId === wordProgressId,
+    );
+    setState((prev) =>
+      prev.status === "result"
+        ? {
+            status: "result",
+            lists: prev.lists,
+            memberships: prev.memberships.filter(
+              (membership) => !(membership.listId === listIdToUpdate && membership.wordProgressId === wordProgressId),
+            ),
+          }
+        : prev,
+    );
+
+    void removeWordFromVocabularyList(session, listIdToUpdate, wordProgressId)
+      .then(() => showToast(t("userProfile.myListsSection.removedFromList")))
+      .catch((error) => {
+        console.warn("MyListsSection: failed to remove word from list.", error);
+        if (removedMembership) {
+          setState((prev) =>
+            prev.status === "result"
+              ? { status: "result", lists: prev.lists, memberships: [...prev.memberships, removedMembership] }
+              : prev,
+          );
+        }
+        showToast(t("userProfile.myListsSection.removeError"));
+      });
+  };
+
   const isLoading = state.status === "loading" || wordProgressStatus === "loading";
   const isError = state.status === "error" || wordProgressStatus === "error";
   const hasLists = lists.length > 0;
@@ -344,6 +456,13 @@ export function MyListsSection({
           onBack={goToGrid}
           onRename={() => handleOpenRenameDialog(activeList)}
           onDelete={() => handleOpenDeleteDialog(activeList)}
+          onRemoveWord={handleRemoveWord}
+          isAddWordsDialogOpen={isAddWordsDialogOpen}
+          isAddingWords={isAddingWords}
+          addWordsError={addWordsError}
+          onOpenAddWords={handleOpenAddWordsDialog}
+          onCloseAddWords={handleCloseAddWordsDialog}
+          onSubmitAddWords={handleSubmitAddWords}
         />
 
         <RenameListDialog
@@ -360,6 +479,7 @@ export function MyListsSection({
           onOpenChange={(open) => !open && setDeleteTarget(null)}
           onConfirm={handleConfirmDelete}
         />
+        <Toast message={toastMessage} />
       </>
     );
   }

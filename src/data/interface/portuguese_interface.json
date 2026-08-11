@@ -468,6 +468,14 @@
       "wordsUnit": "palavras",
       "rename": "Renomear",
       "delete": "Eliminar",
+      "addWords": "Adicionar palavras",
+      "addWordsError": "Não foi possível adicionar essas palavras à sua lista. Tente novamente.",
+      "removeFromList": "Remover da lista",
+      "removedFromList": "Removida da lista",
+      "removeError": "Não foi possível remover esta palavra. Tente novamente.",
+      "searchWords": "Pesquisar palavras",
+      "statusAll": "Todas",
+      "viewWordDetails": "Ver detalhes da palavra",
       "emptyState": {
         "title": "Ainda não há listas",
         "description": "Crie a sua primeira lista para organizar palavras que pretende aprender em conjunto."
@@ -493,7 +501,19 @@
       "detail": {
         "backToMyLists": "Voltar a As minhas listas",
         "emptyState": "Ainda não há palavras nesta lista.",
-        "addedColumn": "Adicionada"
+        "emptyStateDescription": "Adicione palavras do seu vocabulário para começar a criar esta lista.",
+        "noMatch": "Nenhuma palavra correspondente",
+        "addedColumn": "Adicionada",
+        "sortRecentlyAdded": "Adicionadas recentemente",
+        "sortNameAsc": "Palavra A-Z"
+      },
+      "picker": {
+        "alreadyAdded": "Já adicionada",
+        "wordSelected": "{count} palavra selecionada",
+        "wordsSelected": "{count} palavras selecionadas",
+        "addSelected": "Adicionar selecionadas",
+        "addWord": "Adicionar {count} palavra",
+        "addWords": "Adicionar {count} palavras"
       },
       "search": {
         "placeholder": "Pesquisar listas",

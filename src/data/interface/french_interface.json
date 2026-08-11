@@ -468,6 +468,14 @@
       "wordsUnit": "mots",
       "rename": "Renommer",
       "delete": "Supprimer",
+      "addWords": "Ajouter des mots",
+      "addWordsError": "Impossible d'ajouter ces mots à votre liste. Veuillez réessayer.",
+      "removeFromList": "Retirer de la liste",
+      "removedFromList": "Retiré de la liste",
+      "removeError": "Impossible de retirer ce mot. Veuillez réessayer.",
+      "searchWords": "Rechercher des mots",
+      "statusAll": "Tous",
+      "viewWordDetails": "Voir les détails du mot",
       "emptyState": {
         "title": "Aucune liste pour le moment",
         "description": "Créez votre première liste pour organiser les mots que vous souhaitez apprendre ensemble."
@@ -493,7 +501,19 @@
       "detail": {
         "backToMyLists": "Retour à Mes listes",
         "emptyState": "Aucun mot dans cette liste pour le moment.",
-        "addedColumn": "Ajouté"
+        "emptyStateDescription": "Ajoutez des mots de votre vocabulaire pour commencer à créer cette liste.",
+        "noMatch": "Aucun mot correspondant",
+        "addedColumn": "Ajouté",
+        "sortRecentlyAdded": "Ajoutés récemment",
+        "sortNameAsc": "Mot A-Z"
+      },
+      "picker": {
+        "alreadyAdded": "Déjà ajouté",
+        "wordSelected": "{count} mot sélectionné",
+        "wordsSelected": "{count} mots sélectionnés",
+        "addSelected": "Ajouter la sélection",
+        "addWord": "Ajouter {count} mot",
+        "addWords": "Ajouter {count} mots"
       },
       "search": {
         "placeholder": "Rechercher des listes",

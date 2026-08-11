@@ -1,19 +1,21 @@
 // Supabase access for "My Lists": reading a signed-in user's vocabulary-list
 // rows for the active target language, creating/renaming/deleting a list,
-// and (Phase 2A) reading which user_word_progress rows belong to which
-// lists. This module is the only place that knows about
-// public.user_vocabulary_lists and public.user_vocabulary_list_words —
-// mirrors newWordProgress.ts's own one-module-per-table(-family) convention.
+// reading which user_word_progress rows belong to which lists, and (Phase
+// 2B) adding/removing that membership. This module is the only place that
+// knows about public.user_vocabulary_lists and
+// public.user_vocabulary_list_words — mirrors newWordProgress.ts's own
+// one-module-per-table(-family) convention.
 //
-// No membership-WRITE path exists yet (Add/Remove Words is Phase 2B), and
-// this module never resolves word display data (target word/translation/
+// This module never resolves word display data (target word/translation/
 // CEFR) — that stays owned by vocabulary.json, resolved client-side only
-// when a list's detail rows are actually rendered (see
-// loadVocabularyProgress.ts, reused as-is for that). user_vocabulary_lists/
-// user_vocabulary_list_words are organization-only; canonical word state
-// stays owned by user_word_progress (see both migrations' own headers for
-// the full rationale). Do not add vocabulary.json imports or word
-// resolution here.
+// when a list's detail rows or the Add Words picker are actually rendered
+// (see loadVocabularyProgress.ts, reused as-is for that).
+// user_vocabulary_lists/user_vocabulary_list_words are organization-only;
+// canonical word state stays owned by user_word_progress (see every
+// migration's own header for the full rationale) — addWordsToVocabularyList
+// and removeWordFromVocabularyList below only ever touch
+// user_vocabulary_list_words, never user_word_progress or user_daily_stats.
+// Do not add vocabulary.json imports or word resolution here.
 import {
   ensureFreshSupabaseSession,
   getAuthHeaders,
@@ -348,4 +350,101 @@ export async function readUserVocabularyListMemberships(
     rows.push({ listId: raw.list_id, wordProgressId: raw.word_progress_id, createdAt: raw.created_at });
   }
   return rows;
+}
+
+export interface AddWordsToListResultRow {
+  wordProgressId: string;
+  alreadyAdded: boolean;
+}
+
+interface AddWordsToListRawRow {
+  word_progress_id?: unknown;
+  already_added?: unknown;
+}
+
+// Adds one or more words to a list via the add_words_to_vocabulary_list
+// RPC — the table's only write path for INSERTs (authenticated holds no
+// direct INSERT grant on user_vocabulary_list_words). Always a batch call,
+// even for a single selected word — see the migration's own header for why
+// no separate singular-signature RPC exists. The RPC itself re-validates
+// list ownership, per-word ownership, and target-language match
+// server-side (never trust the client alone for the cross-language rule);
+// this function only guards against calling with an empty selection.
+export async function addWordsToVocabularyList(
+  session: StoredSupabaseSession,
+  listId: string,
+  wordProgressIds: readonly string[],
+): Promise<AddWordsToListResultRow[]> {
+  const userId = session.user?.id;
+  if (!userId || !listId) {
+    throw new VocabularyListError("Missing authenticated session or list.", "unauthenticated");
+  }
+  if (wordProgressIds.length === 0) {
+    throw new VocabularyListError("Select at least one word to add.", "validation");
+  }
+
+  let rows: AddWordsToListRawRow[] | AddWordsToListRawRow;
+  try {
+    rows = await supabaseListsMutationRequest<AddWordsToListRawRow[] | AddWordsToListRawRow>(
+      session,
+      "/rest/v1/rpc/add_words_to_vocabulary_list",
+      {
+        p_list_id: listId,
+        p_word_progress_ids: wordProgressIds,
+      },
+    );
+  } catch (error) {
+    const category = classifySupabaseError(error);
+    console.warn("vocabularyLists: addWordsToVocabularyList failed.", describeSupabaseError("addWordsToVocabularyList", error));
+
+    if (category === "unauthenticated") {
+      throw new VocabularyListError("Your session has expired. Please sign in again.", category);
+    }
+    // Never surface the raw Supabase/PostgreSQL message — a cross-
+    // language/foreign-row rejection (category "validation", from the
+    // RPC's own 22023) and a not-owned list (category "forbidden", 42501)
+    // both get this same safe fallback; MyListsSection picks a sharper
+    // message for the four universal categories via
+    // resolveSupabaseErrorMessageKey instead.
+    throw new VocabularyListError("We couldn't add those words to your list. Please try again.", category);
+  }
+
+  const rawArray = Array.isArray(rows) ? rows : [rows];
+  const results: AddWordsToListResultRow[] = [];
+  for (const raw of rawArray) {
+    if (typeof raw.word_progress_id !== "string") continue;
+    results.push({ wordProgressId: raw.word_progress_id, alreadyAdded: Boolean(raw.already_added) });
+  }
+  return results;
+}
+
+// Removes exactly one word from a list via the
+// remove_word_from_vocabulary_list RPC — never a direct DELETE (same
+// grant-layer restriction as above). Idempotent server-side: calling this
+// again for a word already removed (a stale click, another tab) succeeds
+// silently rather than erroring, matching the RPC's own contract.
+export async function removeWordFromVocabularyList(
+  session: StoredSupabaseSession,
+  listId: string,
+  wordProgressId: string,
+): Promise<void> {
+  const userId = session.user?.id;
+  if (!userId || !listId || !wordProgressId) {
+    throw new VocabularyListError("Missing authenticated session, list, or word.", "unauthenticated");
+  }
+
+  try {
+    await supabaseListsMutationRequest<unknown>(session, "/rest/v1/rpc/remove_word_from_vocabulary_list", {
+      p_list_id: listId,
+      p_word_progress_id: wordProgressId,
+    });
+  } catch (error) {
+    const category = classifySupabaseError(error);
+    console.warn("vocabularyLists: removeWordFromVocabularyList failed.", describeSupabaseError("removeWordFromVocabularyList", error));
+
+    if (category === "unauthenticated") {
+      throw new VocabularyListError("Your session has expired. Please sign in again.", category);
+    }
+    throw new VocabularyListError("We couldn't remove this word. Please try again.", category);
+  }
 }

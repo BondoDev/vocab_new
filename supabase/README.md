@@ -1940,6 +1940,66 @@ function rather than naming the one place that needed it.
 automatically, no public API change. No table, index, RLS policy, or
 membership row is touched.
 
+## My Lists Phase 2B — membership write RPCs (Add/Remove Words) (2026-08-11)
+
+Migration: `20260811160000_my_lists_phase2b_membership_write_rpcs.sql`.
+
+Adds the two write paths `public.user_vocabulary_list_words` has lacked
+since Phase 2A created it: adding and removing membership rows. The table
+itself, its columns/index/RLS policy/grants are all untouched — this
+migration only adds RPCs; `20260811140000...sql` and `20260811150000...sql`
+are not modified.
+
+**Batch-only add, no separate single-word RPC.** Only
+`add_words_to_vocabulary_list(p_list_id uuid, p_word_progress_ids uuid[])`
+exists. The frontend's Add Words picker always operates on an array of
+selected `word_progress` ids (even one selection is a one-element array),
+so a second, singular-signature RPC would duplicate the exact same
+ownership/language-validation/idempotency logic for no caller that
+actually needs it — matching the brief's own explicit allowance ("If batch
+RPC is implemented, individual add RPC is not mandatory unless useful
+elsewhere").
+
+`add_words_to_vocabulary_list`:
+- `SECURITY DEFINER`, empty `search_path`, caller derived exclusively from
+  `auth.uid()` (no `p_user_id`).
+- Validates list ownership first (`42501` if not found/not owned).
+- De-duplicates the input array, then validates **every** requested
+  `word_progress_id` in one set-based check: must exist, be owned by the
+  caller, and match the list's own `target_language`. If even one id fails
+  any of those three checks, the whole call aborts (`22023`) with **no
+  partial writes** — validation completes before the `INSERT` ever runs,
+  and the function body is one implicit transaction regardless.
+- Duplicate membership is never an error: the set of already-member ids is
+  captured *before* the `INSERT`, which itself uses
+  `ON CONFLICT (list_id, word_progress_id) DO NOTHING` (the table's
+  existing unique constraint); the `RETURNS TABLE` reports one
+  `(word_progress_id, already_added)` row per requested id either way.
+
+`remove_word_from_vocabulary_list(p_list_id uuid, p_word_progress_id uuid)`:
+- Same `SECURITY DEFINER`/`auth.uid()` shape. Validates list ownership
+  explicitly first (`42501` if not owned) so an authorization problem is
+  never silently swallowed; the `DELETE` itself is idempotent — removing
+  an already-absent membership affects zero rows and is not an error.
+
+**Neither RPC ever touches `user_word_progress` or `user_daily_stats`** —
+`word_state`, `is_favorite`, `last_practiced_at`, `next_review_at`,
+`correct_streak`, and every daily-stat column are completely unaffected by
+adding or removing a list membership; a membership row only ever means
+"this progress row belongs to this list."
+
+**Cross-language enforcement is server-side**, not merely client-side: the
+add RPC's set-based validation compares `user_word_progress.target_language`
+against the list's own `target_language` for every requested row inside
+the RPC itself — a German list can only ever gain German progress rows,
+regardless of what the client sends.
+
+**Grants**: both RPCs — `EXECUTE` revoked from `public`/`anon`, granted to
+`postgres`/`authenticated`/`service_role` only. `user_vocabulary_list_words`'
+own table grants are untouched: `authenticated` still holds `SELECT` only,
+no direct `INSERT`/`DELETE` grant — these two RPCs are now the table's only
+write path.
+
 ## Live Supabase E2E tests (2026-08-08)
 
 `scripts/tests/live/` is a real, opt-in end-to-end suite that exercises a
