@@ -453,6 +453,26 @@
         "ninetyDays": "90 dias",
         "allTime": "Todo o período"
       }
+    },
+    "myListsSection": {
+      "ariaLabel": "Secção As minhas listas",
+      "title": "As minhas listas",
+      "subtitle": "Crie e organize coleções de vocabulário com as palavras que pretende aprender.",
+      "loadError": "Não foi possível carregar as suas listas.",
+      "retryButton": "Tentar novamente",
+      "createButton": "Criar lista",
+      "createError": "Não foi possível criar a lista. Tente novamente.",
+      "emptyState": {
+        "title": "Ainda não há listas",
+        "description": "Crie a sua primeira lista para organizar palavras que pretende aprender em conjunto."
+      },
+      "modal": {
+        "title": "Criar lista",
+        "fieldLabel": "Nome da lista",
+        "placeholder": "Alemão para viagens",
+        "cancel": "Cancelar",
+        "submit": "Criar lista"
+      }
     }
   },
   "aboutPage": {

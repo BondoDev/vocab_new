@@ -453,6 +453,26 @@
         "ninetyDays": "90 days",
         "allTime": "All time"
       }
+    },
+    "myListsSection": {
+      "ariaLabel": "My Lists section",
+      "title": "My Lists",
+      "subtitle": "Create and organize vocabulary collections for the words you want to learn.",
+      "loadError": "We couldn't load your lists.",
+      "retryButton": "Try again",
+      "createButton": "Create List",
+      "createError": "We couldn't create your list. Please try again.",
+      "emptyState": {
+        "title": "No lists yet",
+        "description": "Create your first list to organize words you want to learn together."
+      },
+      "modal": {
+        "title": "Create List",
+        "fieldLabel": "List name",
+        "placeholder": "Travel German",
+        "cancel": "Cancel",
+        "submit": "Create List"
+      }
     }
   },
   "aboutPage": {

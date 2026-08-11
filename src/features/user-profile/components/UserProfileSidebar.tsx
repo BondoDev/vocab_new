@@ -35,10 +35,16 @@ type SidebarNavGroup = {
   }>;
 };
 
-export type UserProfileSectionId = "dashboard" | "learning" | "vocabulary" | "progress";
+export type UserProfileSectionId = "dashboard" | "learning" | "vocabulary" | "myLists" | "progress";
 
 function isUserProfileSectionId(value: string): value is UserProfileSectionId {
-  return value === "dashboard" || value === "learning" || value === "vocabulary" || value === "progress";
+  return (
+    value === "dashboard" ||
+    value === "learning" ||
+    value === "vocabulary" ||
+    value === "myLists" ||
+    value === "progress"
+  );
 }
 
 const SIDEBAR_NAV_GROUPS: SidebarNavGroup[] = [
@@ -53,7 +59,7 @@ const SIDEBAR_NAV_GROUPS: SidebarNavGroup[] = [
     items: [
       { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target },
       { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText },
-      { id: "my-lists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus },
+      { id: "myLists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus },
       { id: "guidance", labelKey: "userProfile.sidebar.items.guidance", icon: Compass },
     ],
   },

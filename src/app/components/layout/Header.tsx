@@ -68,7 +68,7 @@ const NAV_HREFS = {
   profile: "/profile",
 } as const;
 
-type AccountProfileSection = "dashboard" | "learning" | "vocabulary" | "progress";
+type AccountProfileSection = "dashboard" | "learning" | "vocabulary" | "myLists" | "progress";
 
 const ACCOUNT_NAV_GROUPS = [
   {
@@ -82,7 +82,7 @@ const ACCOUNT_NAV_GROUPS = [
     items: [
       { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target, section: "learning" as const },
       { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText, section: "vocabulary" as const },
-      { id: "my-lists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus, disabled: true },
+      { id: "myLists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus, section: "myLists" as const },
       { id: "guidance", labelKey: "userProfile.sidebar.items.guidance", icon: Compass, disabled: true },
     ],
   },

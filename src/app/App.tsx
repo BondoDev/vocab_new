@@ -531,7 +531,7 @@ function AppContent({
     onFilters: () => handleRequireLanguages("levelCategory"),
     onExercises: () => handleRequireLanguages("exerciseSelection"),
     onExplore: () => navigate(ROUTES.explore),
-    onProfile: (section?: "dashboard" | "learning" | "vocabulary" | "progress") => {
+    onProfile: (section?: "dashboard" | "learning" | "vocabulary" | "myLists" | "progress") => {
       navigate(section ? `${ROUTES.profile}?section=${section}` : ROUTES.profile);
     },
     authSession,

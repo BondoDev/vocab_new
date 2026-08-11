@@ -1740,6 +1740,78 @@ idempotent DDL — like every migration in this repository, it is written to
 run exactly once via the standard Supabase migration runner, not to be
 manually re-executed against an already-migrated database.
 
+## My Lists Phase 1 — user_vocabulary_lists table + narrow create RPC (2026-08-11)
+
+Migration: `20260811130000_add_user_vocabulary_lists.sql`.
+
+"My Lists" lets a signed-in user create their own named vocabulary
+collections (e.g. "Travel German", "Difficult Words") to organize words they
+want to learn together. A list is organization only — it is explicitly not a
+second learning-state system; words continue using the canonical
+`user_word_progress` state. Word membership (which concepts belong to which
+list) is out of scope for this phase and will be a separate table later,
+referencing `user_vocabulary_lists.id`.
+
+New table `public.user_vocabulary_lists` (`id`, `user_id`, `target_language`,
+`name`, `created_at`, `updated_at`). Lists are scoped by `target_language`
+(the same seven-code allow-list `native_language`/`learning_language`
+already validate against) — a list created while German is active belongs to
+German and must never surface once the active language changes to Spanish.
+No cross-language merge exists.
+
+**Reconciled with an already-existing live table.** `user_vocabulary_lists`
+was created manually against the live project before this migration
+existed — same columns, plus two existing name `CHECK` constraints
+(`user_vocabulary_lists_name_length`, `user_vocabulary_lists_name_not_blank`,
+preserved verbatim rather than duplicated under a different name), no
+`target_language` constraint yet, and four broad owner-scoped RLS policies
+(read/create/update/delete — i.e. direct `INSERT`/`UPDATE`/`DELETE` were
+allowed at the time). Every statement in this migration is written to
+converge both that live shape and a fresh database (table not created yet)
+onto the identical final state below, without ever dropping/recreating the
+table or touching an existing row: `CREATE TABLE IF NOT EXISTS` is a full
+no-op against the live table; the `target_language` constraint is added via
+a guarded `DO` block (checked via `pg_constraint`, with a fail-fast
+precondition if any existing row already holds an unsupported value — same
+confirm-before-constrain idiom as
+`20260806200000_restrict_user_profiles_writes_and_add_narrow_rpcs.sql`)
+rather than inline in `CREATE TABLE`; the four legacy live policy names are
+individually `DROP POLICY IF EXISTS`'d before the single new policy is
+created; grants are revoked-then-re-granted explicitly rather than assumed.
+Against the live database, this migration performs the exact corrective
+tightening (broad policies → RLS-SELECT-only + RPC-only writes) that
+`user_word_progress`/`user_daily_stats`/`user_profiles` each needed a
+separate later migration for — done here in the same migration that adds
+the table, since the table itself is brand new to this codebase's migration
+history.
+
+Final state, either path:
+
+- RLS enabled with exactly one policy: ownership-scoped `FOR SELECT`
+  (`auth.uid() = user_id`), to `authenticated` only.
+- `authenticated` is granted `SELECT` and nothing else; `anon` receives no
+  direct privilege at all; `postgres`/`service_role` keep full access.
+- The only write path is `public.create_user_vocabulary_list(p_target_language
+  text, p_name text)` — `SECURITY DEFINER`, empty `search_path`, every
+  referenced object schema-qualified, caller derived exclusively from
+  `auth.uid()` (no `p_user_id` parameter exists), mirroring
+  `complete_user_profile_onboarding`'s exact shape. `EXECUTE`:
+  `postgres`/`authenticated`/`service_role` only, `public`/`anon` explicitly
+  revoked.
+- List-name validation (non-empty after trim, 80-character max) is enforced
+  twice: once in the RPC (a clean, named exception before any `INSERT` is
+  attempted) and once as the table's own `CHECK` constraints, so no future
+  write path can bypass it. Neither layer silently rewrites or truncates the
+  name — the RPC rejects, it never clamps.
+- No uniqueness constraint on `name` — the product spec explicitly does not
+  require unique list names.
+
+Not built in this migration/phase: any word-membership table, any
+update/delete/rename RPC for a list. Untouched by this migration: every
+other table, RPC, policy, and grant in this schema, and every existing row
+in `user_vocabulary_lists` (no `INSERT`/`UPDATE`/`DELETE` against the table
+is ever issued by the migration itself).
+
 ## Live Supabase E2E tests (2026-08-08)
 
 `scripts/tests/live/` is a real, opt-in end-to-end suite that exercises a

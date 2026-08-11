@@ -1,0 +1,193 @@
+/* ============================================================
+   MyListsSection.tsx — page header (title/subtitle + the header-only
+   Create List button shown once at least one list exists), the empty
+   state, loading skeleton, error message block, and the minimal
+   non-empty list rows.
+
+   Header layout deliberately differs from VocabularySection/
+   ProgressSection's centered header (see their own __header rules): this
+   section's header can carry a right-aligned action button that theirs
+   don't, so the heading text stays left-aligned rather than centered.
+   Title/subtitle typography (size, color, spacing) still matches those
+   sections exactly for visual consistency.
+   ============================================================ */
+
+.my-lists-section__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.my-lists-section__heading {
+  min-width: 0;
+}
+
+.my-lists-section__title {
+  margin: 0;
+  color: #2f2755;
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
+.my-lists-section__subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.my-lists-section__create-button {
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+/* ============================================================
+   Empty state — one centered block, naturally below the header with
+   generous but not excessive spacing (never vertically centered against
+   the whole viewport, never wrapped in a bordered card).
+   ============================================================ */
+
+.my-lists-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 26rem;
+  margin: 3rem auto 0;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.my-lists-empty-state__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 0.25rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+}
+
+.my-lists-empty-state__title {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.my-lists-empty-state__description {
+  margin: 0;
+  max-width: 24rem;
+  color: var(--muted-foreground);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.my-lists-empty-state__button {
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   Loading skeleton — a lightweight page-level placeholder so "No lists
+   yet" never flashes before the real query resolves.
+   ============================================================ */
+
+.my-lists-loading-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+}
+
+.my-lists-loading-row {
+  height: 3.5rem;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--muted);
+  animation: my-lists-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes my-lists-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* ============================================================
+   Error message block — restrained, with Retry. Mirrors
+   .vocabulary-message-block/.vocabulary-retry-button's shape.
+   ============================================================ */
+
+.my-lists-message-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  padding: 2.5rem 1rem;
+  text-align: center;
+
+  &__text {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 0.92rem;
+  }
+}
+
+.my-lists-retry-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 150ms ease;
+
+  &:hover {
+    filter: brightness(0.94);
+  }
+}
+
+/* ============================================================
+   Non-empty state — deliberately minimal rows (name only; a word count is
+   added once a membership table exists in a later phase). Not the final
+   list-card design.
+   ============================================================ */
+
+.my-lists-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.my-lists-grid__item {
+  display: flex;
+  align-items: center;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.my-lists-grid__name {
+  color: var(--foreground);
+  font-size: 0.95rem;
+  font-weight: 600;
+}

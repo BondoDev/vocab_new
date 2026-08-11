@@ -453,6 +453,26 @@
         "ninetyDays": "90 giorni",
         "allTime": "Da sempre"
       }
+    },
+    "myListsSection": {
+      "ariaLabel": "Sezione Le mie liste",
+      "title": "Le mie liste",
+      "subtitle": "Crea e organizza raccolte di vocaboli con le parole che vuoi imparare.",
+      "loadError": "Non è stato possibile caricare le tue liste.",
+      "retryButton": "Riprova",
+      "createButton": "Crea lista",
+      "createError": "Non è stato possibile creare la lista. Riprova.",
+      "emptyState": {
+        "title": "Nessuna lista ancora",
+        "description": "Crea la tua prima lista per organizzare le parole che vuoi imparare insieme."
+      },
+      "modal": {
+        "title": "Crea lista",
+        "fieldLabel": "Nome della lista",
+        "placeholder": "Tedesco per viaggiare",
+        "cancel": "Annulla",
+        "submit": "Crea lista"
+      }
     }
   },
   "aboutPage": {

@@ -10,6 +10,7 @@ import {
 import { DashboardSection } from "./dashboard/DashboardSection";
 import { LearningSection } from "./learning/LearningSection";
 import { VocabularySection } from "./vocabulary/VocabularySection";
+import { MyListsSection } from "./my-lists/MyListsSection";
 import { ProgressSection } from "./progress/ProgressSection";
 import { useProfileSharedProgressData } from "./useProfileSharedProgressData";
 
@@ -38,12 +39,17 @@ const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
   dashboard: "userProfile.dashboardPage.ariaLabel",
   learning: "userProfile.learningSection.ariaLabel",
   vocabulary: "userProfile.vocabularySection.ariaLabel",
+  myLists: "userProfile.myListsSection.ariaLabel",
   progress: "userProfile.progressSection.ariaLabel",
 };
 
 function resolveProfileSection(search: string): UserProfileSectionId {
   const section = new URLSearchParams(search).get("section");
-  return section === "learning" || section === "vocabulary" || section === "progress" || section === "dashboard"
+  return section === "learning" ||
+    section === "vocabulary" ||
+    section === "myLists" ||
+    section === "progress" ||
+    section === "dashboard"
     ? section
     : "dashboard";
 }
@@ -131,6 +137,9 @@ export function UserProfileDashboardPage({
                 onRetryWordProgress={retryWordProgress}
                 onStartNewWordStudy={onStartNewWordStudy}
               />
+            ) : null}
+            {activeSection === "myLists" ? (
+              <MyListsSection userProfile={userProfile} isProfileLoaded={isProfileLoaded} />
             ) : null}
             {activeSection === "progress" ? (
               <ProgressSection

@@ -453,6 +453,26 @@
         "ninetyDays": "90 Tage",
         "allTime": "Gesamter Zeitraum"
       }
+    },
+    "myListsSection": {
+      "ariaLabel": "Bereich Meine Listen",
+      "title": "Meine Listen",
+      "subtitle": "Erstelle und organisiere Vokabellisten mit den Wörtern, die du lernen möchtest.",
+      "loadError": "Deine Listen konnten nicht geladen werden.",
+      "retryButton": "Erneut versuchen",
+      "createButton": "Liste erstellen",
+      "createError": "Die Liste konnte nicht erstellt werden. Bitte versuche es erneut.",
+      "emptyState": {
+        "title": "Noch keine Listen",
+        "description": "Erstelle deine erste Liste, um Wörter zu organisieren, die du zusammen lernen möchtest."
+      },
+      "modal": {
+        "title": "Liste erstellen",
+        "fieldLabel": "Listenname",
+        "placeholder": "Deutsch für Reisen",
+        "cancel": "Abbrechen",
+        "submit": "Liste erstellen"
+      }
     }
   },
   "aboutPage": {
