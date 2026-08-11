@@ -53,13 +53,12 @@ export async function loadMilestoneMetrics({
   // all (the Vocabulary track never derives from them).
   const counts = computeVocabularyCounts(progressRows);
 
-  const totalReviews = dailyStats.reduce((sum, row) => sum + row.reviewsCompleted, 0);
   const currentStreakDays = computeMilestoneStreak(dailyStats, todayISO);
 
   return evaluateAllMilestoneTracks({
     learnedWords: counts.total,
     masteredWords: counts.mastered,
-    totalReviews,
+    knownWords: counts.known,
     currentStreakDays,
   });
 }

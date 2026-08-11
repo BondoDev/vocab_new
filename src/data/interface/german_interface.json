@@ -361,8 +361,9 @@
       "tracks": {
         "vocabulary": "Wortschatz",
         "mastery": "Beherrschung",
-        "reviews": "Wiederholungen",
-        "consistency": "Beständigkeit"
+        "consistency": "Beständigkeit",
+        "known": "Bekannt",
+        "reviews": "Wiederholungen"
       },
       "nextMilestoneLabel": "Nächstes Ziel:",
       "completedLabel": "Abgeschlossen",
@@ -377,7 +378,6 @@
         "days": "Tage"
       },
       "milestones": {
-        "learned-1": "Erstes gelerntes Wort",
         "learned-10": "10 gelernte Wörter",
         "learned-25": "25 gelernte Wörter",
         "learned-50": "50 gelernte Wörter",
@@ -396,19 +396,32 @@
         "mastered-250": "250 gemeisterte Wörter",
         "mastered-500": "500 gemeisterte Wörter",
         "mastered-1000": "1.000 gemeisterte Wörter",
-        "reviews-1": "Erste Wiederholung",
-        "reviews-100": "100 Wiederholungen",
-        "reviews-500": "500 Wiederholungen",
-        "reviews-1000": "1.000 Wiederholungen",
-        "reviews-5000": "5.000 Wiederholungen",
-        "reviews-10000": "10.000 Wiederholungen",
         "streak-3": "3-Tage-Streak",
         "streak-7": "7-Tage-Streak",
         "streak-14": "14-Tage-Streak",
         "streak-30": "30-Tage-Streak",
         "streak-50": "50-Tage-Streak",
         "streak-100": "100-Tage-Streak",
-        "streak-365": "365-Tage-Streak"
+        "streak-365": "365-Tage-Streak",
+        "known-1": "Erstes bekanntes Wort",
+        "known-10": "10 bekannte W?rter",
+        "known-25": "25 bekannte W?rter",
+        "known-50": "50 bekannte W?rter",
+        "known-100": "100 bekannte W?rter",
+        "known-250": "250 bekannte W?rter",
+        "known-500": "500 bekannte W?rter",
+        "known-1000": "1.000 bekannte W?rter",
+        "known-2500": "2.500 bekannte W?rter",
+        "known-5000": "5.000 bekannte W?rter",
+        "known-10000": "10.000 bekannte W?rter",
+        "learned-7500": "7.500 gelernte W?rter",
+        "mastered-2500": "2.500 gemeisterte W?rter",
+        "mastered-5000": "5.000 gemeisterte W?rter",
+        "mastered-10000": "10.000 gemeisterte W?rter",
+        "streak-1": "1-Tage-Streak",
+        "streak-5": "5-Tage-Streak",
+        "streak-150": "150-Tage-Streak",
+        "streak-200": "200-Tage-Streak"
       }
     },
     "vocabularyGrowthSection": {

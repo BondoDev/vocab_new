@@ -21,12 +21,16 @@
 // nothing here decides whether to show a popup (there isn't one yet — see
 // this feature's README/task brief for the Phase 2 recommendation).
 
-export type MilestoneTrackId = "vocabulary" | "mastery" | "reviews" | "consistency";
+export type MilestoneTrackId =
+  | "vocabulary"
+  | "mastery"
+  | "known"
+  | "consistency";
 
 export const MILESTONE_TRACK_IDS: readonly MilestoneTrackId[] = [
   "vocabulary",
   "mastery",
-  "reviews",
+  "known",
   "consistency",
 ];
 
@@ -45,7 +49,6 @@ export interface MilestoneDefinition {
 // as one learned word — see loadMilestoneMetrics.ts / vocabularyCategory.ts
 // for where learnedWords is actually computed (VocabularyCounts.total).
 const VOCABULARY_MILESTONES: readonly MilestoneDefinition[] = [
-  { id: "learned-1", track: "vocabulary", target: 1 },
   { id: "learned-10", track: "vocabulary", target: 10 },
   { id: "learned-25", track: "vocabulary", target: 25 },
   { id: "learned-50", track: "vocabulary", target: 50 },
@@ -55,7 +58,25 @@ const VOCABULARY_MILESTONES: readonly MilestoneDefinition[] = [
   { id: "learned-1000", track: "vocabulary", target: 1000 },
   { id: "learned-2500", track: "vocabulary", target: 2500 },
   { id: "learned-5000", track: "vocabulary", target: 5000 },
+  { id: "learned-7500", track: "vocabulary", target: 7500 },
   { id: "learned-10000", track: "vocabulary", target: 10000 },
+];
+
+// Known: user_word_progress rows mapped to the "known" vocabulary category.
+// That currently means backend word_state "familiar" or "strong"; see
+// vocabularyCategory.ts's single category mapping.
+const KNOWN_MILESTONES: readonly MilestoneDefinition[] = [
+  { id: "known-1", track: "known", target: 1 },
+  { id: "known-10", track: "known", target: 10 },
+  { id: "known-25", track: "known", target: 25 },
+  { id: "known-50", track: "known", target: 50 },
+  { id: "known-100", track: "known", target: 100 },
+  { id: "known-250", track: "known", target: 250 },
+  { id: "known-500", track: "known", target: 500 },
+  { id: "known-1000", track: "known", target: 1000 },
+  { id: "known-2500", track: "known", target: 2500 },
+  { id: "known-5000", track: "known", target: 5000 },
+  { id: "known-10000", track: "known", target: 10000 },
 ];
 
 // Mastery: only user_word_progress rows with word_state = "mastered".
@@ -68,19 +89,9 @@ const MASTERY_MILESTONES: readonly MilestoneDefinition[] = [
   { id: "mastered-250", track: "mastery", target: 250 },
   { id: "mastered-500", track: "mastery", target: 500 },
   { id: "mastered-1000", track: "mastery", target: 1000 },
-];
-
-// Reviews: the sum of user_daily_stats.reviews_completed — the same total
-// the existing review-persistence system already maintains (one increment
-// per individually reviewed word). Never Study New Words, group
-// reinforcement, or Custom Practice.
-const REVIEW_MILESTONES: readonly MilestoneDefinition[] = [
-  { id: "reviews-1", track: "reviews", target: 1 },
-  { id: "reviews-100", track: "reviews", target: 100 },
-  { id: "reviews-500", track: "reviews", target: 500 },
-  { id: "reviews-1000", track: "reviews", target: 1000 },
-  { id: "reviews-5000", track: "reviews", target: 5000 },
-  { id: "reviews-10000", track: "reviews", target: 10000 },
+  { id: "mastered-2500", track: "mastery", target: 2500 },
+  { id: "mastered-5000", track: "mastery", target: 5000 },
+  { id: "mastered-10000", track: "mastery", target: 10000 },
 ];
 
 // Consistency: consecutive-day count from milestoneStreak.ts's
@@ -88,19 +99,25 @@ const REVIEW_MILESTONES: readonly MilestoneDefinition[] = [
 // reviews_completed > 0 — deliberately not the Daily Streak card's
 // goal-based definition; see that module's own header).
 const CONSISTENCY_MILESTONES: readonly MilestoneDefinition[] = [
+  { id: "streak-1", track: "consistency", target: 1 },
   { id: "streak-3", track: "consistency", target: 3 },
+  { id: "streak-5", track: "consistency", target: 5 },
   { id: "streak-7", track: "consistency", target: 7 },
   { id: "streak-14", track: "consistency", target: 14 },
   { id: "streak-30", track: "consistency", target: 30 },
   { id: "streak-50", track: "consistency", target: 50 },
   { id: "streak-100", track: "consistency", target: 100 },
+  { id: "streak-150", track: "consistency", target: 150 },
+  { id: "streak-200", track: "consistency", target: 200 },
   { id: "streak-365", track: "consistency", target: 365 },
 ];
 
-export const MILESTONES_BY_TRACK: Readonly<Record<MilestoneTrackId, readonly MilestoneDefinition[]>> = {
+export const MILESTONES_BY_TRACK: Readonly<
+  Record<MilestoneTrackId, readonly MilestoneDefinition[]>
+> = {
   vocabulary: VOCABULARY_MILESTONES,
   mastery: MASTERY_MILESTONES,
-  reviews: REVIEW_MILESTONES,
+  known: KNOWN_MILESTONES,
   consistency: CONSISTENCY_MILESTONES,
 };
 
@@ -138,9 +155,13 @@ export interface MilestoneTrackResult {
 // Pure per-track evaluation. Milestone arrays above are already ascending
 // by target, so a single linear scan finds both the completed set and the
 // next active target without sorting.
-export function evaluateMilestoneTrack(track: MilestoneTrackId, currentValue: number): MilestoneTrackResult {
+export function evaluateMilestoneTrack(
+  track: MilestoneTrackId,
+  currentValue: number,
+): MilestoneTrackResult {
   const milestones = MILESTONES_BY_TRACK[track];
-  const safeCurrentValue = Number.isFinite(currentValue) && currentValue > 0 ? currentValue : 0;
+  const safeCurrentValue =
+    Number.isFinite(currentValue) && currentValue > 0 ? currentValue : 0;
 
   const completedMilestoneIds: string[] = [];
   let previousMilestone: MilestoneDefinition | null = null;
@@ -159,8 +180,13 @@ export function evaluateMilestoneTrack(track: MilestoneTrackId, currentValue: nu
   // previousMilestone is guaranteed non-null whenever isTrackComplete is
   // true (every milestone array is non-empty), so this fallback only ever
   // matters for the impossible case of an empty track definition.
-  const target = nextMilestone?.target ?? previousMilestone?.target ?? milestones[0]?.target ?? 0;
-  const progress = target > 0 ? Math.min(1, Math.max(0, safeCurrentValue / target)) : 0;
+  const target =
+    nextMilestone?.target ??
+    previousMilestone?.target ??
+    milestones[0]?.target ??
+    0;
+  const progress =
+    target > 0 ? Math.min(1, Math.max(0, safeCurrentValue / target)) : 0;
 
   return {
     track,
@@ -181,13 +207,15 @@ export interface MilestoneMetrics {
   learnedWords: number;
   // user_word_progress rows with word_state = "mastered" — VocabularyCounts.mastered.
   masteredWords: number;
-  // Sum of user_daily_stats.reviews_completed for the active user/target language.
-  totalReviews: number;
+  // user_word_progress rows in the "known" vocabulary category.
+  knownWords: number;
   // milestoneStreak.ts's computeMilestoneStreak result for the active user/target language.
   currentStreakDays: number;
 }
 
-export type MilestoneResults = Readonly<Record<MilestoneTrackId, MilestoneTrackResult>>;
+export type MilestoneResults = Readonly<
+  Record<MilestoneTrackId, MilestoneTrackResult>
+>;
 
 // Evaluates all four tracks from one metrics snapshot. Tracks stay fully
 // independent — reaching a milestone in one never affects another, and
@@ -195,11 +223,16 @@ export type MilestoneResults = Readonly<Record<MilestoneTrackId, MilestoneTrackR
 // same metrics snapshot) is not combined into a single synthetic result;
 // each entry in the returned record is exactly evaluateMilestoneTrack's own
 // output for that track.
-export function evaluateAllMilestoneTracks(metrics: MilestoneMetrics): MilestoneResults {
+export function evaluateAllMilestoneTracks(
+  metrics: MilestoneMetrics,
+): MilestoneResults {
   return {
     vocabulary: evaluateMilestoneTrack("vocabulary", metrics.learnedWords),
     mastery: evaluateMilestoneTrack("mastery", metrics.masteredWords),
-    reviews: evaluateMilestoneTrack("reviews", metrics.totalReviews),
-    consistency: evaluateMilestoneTrack("consistency", metrics.currentStreakDays),
+    known: evaluateMilestoneTrack("known", metrics.knownWords),
+    consistency: evaluateMilestoneTrack(
+      "consistency",
+      metrics.currentStreakDays,
+    ),
   };
 }

@@ -32,7 +32,7 @@ test("17. Reuses the milestone engine's own evaluateAllMilestoneTracks results v
   const results = evaluateAllMilestoneTracks({
     learnedWords: 326,
     masteredWords: 40,
-    totalReviews: 60,
+    knownWords: 60,
     currentStreakDays: 1,
   });
   const rows = selectDashboardMilestonePreview(results);
@@ -47,17 +47,17 @@ test("18. Only the next active milestones are shown — exactly 3 rows, never al
   const results = evaluateAllMilestoneTracks({
     learnedWords: 10,
     masteredWords: 1,
-    totalReviews: 5,
+    knownWords: 5,
     currentStreakDays: 1,
   });
   const rows = selectDashboardMilestonePreview(results);
   assert.equal(rows.length, 3);
   assert.deepEqual(
     rows.map((r) => r.track),
-    ["vocabulary", "reviews", "consistency"],
+    ["vocabulary", "known", "consistency"],
   );
   assert.ok(!rows.some((r) => r.track === "mastery"), "Mastery is deliberately omitted from the compact preview");
-  assert.deepEqual([...DASHBOARD_MILESTONE_PREVIEW_TRACKS], ["vocabulary", "reviews", "consistency"]);
+  assert.deepEqual([...DASHBOARD_MILESTONE_PREVIEW_TRACKS], ["vocabulary", "known", "consistency"]);
 });
 
 test("19. No duplicate milestone calculation — selection is a pure reshape, never touches MILESTONES_BY_TRACK itself", () => {
@@ -68,7 +68,7 @@ test("19. No duplicate milestone calculation — selection is a pure reshape, ne
   const results = evaluateAllMilestoneTracks({
     learnedWords: 500,
     masteredWords: 50,
-    totalReviews: 800,
+    knownWords: 800,
     currentStreakDays: 12,
   });
   assert.deepEqual(selectDashboardMilestonePreview(results), selectDashboardMilestonePreview(results));

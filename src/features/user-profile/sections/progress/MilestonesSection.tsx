@@ -24,13 +24,13 @@ import "./progress-section.scss";
 const ZERO_RESULTS: MilestoneResults = evaluateAllMilestoneTracks({
   learnedWords: 0,
   masteredWords: 0,
-  totalReviews: 0,
+  knownWords: 0,
   currentStreakDays: 0,
 });
 
 const MILESTONE_ROW_TRACK_IDS: readonly MilestoneTrackId[] = [
   "vocabulary",
-  "reviews",
+  "known",
   "mastery",
   "consistency",
 ];

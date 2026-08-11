@@ -361,8 +361,9 @@
       "tracks": {
         "vocabulary": "Vocabolario",
         "mastery": "Padronanza",
-        "reviews": "Ripassi",
-        "consistency": "Costanza"
+        "consistency": "Costanza",
+        "known": "Conosciute",
+        "reviews": "Ripassi"
       },
       "nextMilestoneLabel": "Prossimo:",
       "completedLabel": "Completato",
@@ -377,7 +378,6 @@
         "days": "giorni"
       },
       "milestones": {
-        "learned-1": "Prima parola imparata",
         "learned-10": "10 parole imparate",
         "learned-25": "25 parole imparate",
         "learned-50": "50 parole imparate",
@@ -396,19 +396,32 @@
         "mastered-250": "250 parole padroneggiate",
         "mastered-500": "500 parole padroneggiate",
         "mastered-1000": "1.000 parole padroneggiate",
-        "reviews-1": "Primo ripasso",
-        "reviews-100": "100 ripassi",
-        "reviews-500": "500 ripassi",
-        "reviews-1000": "1.000 ripassi",
-        "reviews-5000": "5.000 ripassi",
-        "reviews-10000": "10.000 ripassi",
         "streak-3": "Serie di 3 giorni",
         "streak-7": "Serie di 7 giorni",
         "streak-14": "Serie di 14 giorni",
         "streak-30": "Serie di 30 giorni",
         "streak-50": "Serie di 50 giorni",
         "streak-100": "Serie di 100 giorni",
-        "streak-365": "Serie di 365 giorni"
+        "streak-365": "Serie di 365 giorni",
+        "known-1": "Prima parola conosciuta",
+        "known-10": "10 parole conosciute",
+        "known-25": "25 parole conosciute",
+        "known-50": "50 parole conosciute",
+        "known-100": "100 parole conosciute",
+        "known-250": "250 parole conosciute",
+        "known-500": "500 parole conosciute",
+        "known-1000": "1000 parole conosciute",
+        "known-2500": "2500 parole conosciute",
+        "known-5000": "5000 parole conosciute",
+        "known-10000": "10.000 parole conosciute",
+        "learned-7500": "7500 parole imparate",
+        "mastered-2500": "2500 parole padroneggiate",
+        "mastered-5000": "5000 parole padroneggiate",
+        "mastered-10000": "10.000 parole padroneggiate",
+        "streak-1": "Serie di 1 giorni",
+        "streak-5": "Serie di 5 giorni",
+        "streak-150": "Serie di 150 giorni",
+        "streak-200": "Serie di 200 giorni"
       }
     },
     "vocabularyGrowthSection": {

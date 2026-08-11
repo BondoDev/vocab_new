@@ -227,10 +227,10 @@ test("Learning/Known/Mastered are reused from vocabularySection.summaryCards, no
   }
 });
 
-test("Reviews/Vocabulary/Consistency track labels are reused from progressSection.tracks, not redeclared here", () => {
+test("Reviews/Known/Vocabulary/Consistency track labels are reused from progressSection.tracks, not redeclared here", () => {
   for (const fileName of LOCALE_FILES) {
     const tracks = parsed.get(fileName).userProfile.progressSection.tracks;
-    for (const track of ["vocabulary", "reviews", "consistency"]) {
+    for (const track of ["vocabulary", "known", "reviews", "consistency"]) {
       assert.equal(typeof tracks[track], "string");
       assert.ok(tracks[track].trim().length > 0);
     }

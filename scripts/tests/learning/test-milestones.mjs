@@ -67,19 +67,19 @@ test("Milestone ids are unique across every track (never reused between tracks)"
 
 console.log("\n=== evaluateMilestoneTrack — Vocabulary ===\n");
 
-test("0 learned words -> next target 1", () => {
+test("0 learned words -> next target 10", () => {
   const result = evaluateMilestoneTrack("vocabulary", 0);
-  assert.equal(result.nextMilestone.id, "learned-1");
-  assert.equal(result.target, 1);
+  assert.equal(result.nextMilestone.id, "learned-10");
+  assert.equal(result.target, 10);
   assert.equal(result.progress, 0);
   assert.equal(result.previousMilestone, null);
   assert.equal(result.isTrackComplete, false);
 });
 
-test("1 learned word -> next target 10", () => {
+test("1 learned word -> still targets 10", () => {
   const result = evaluateMilestoneTrack("vocabulary", 1);
   assert.equal(result.nextMilestone.id, "learned-10");
-  assert.equal(result.previousMilestone.id, "learned-1");
+  assert.equal(result.previousMilestone, null);
 });
 
 test("84 learned words -> next target 100", () => {
@@ -130,40 +130,40 @@ test("50 mastered words (exact boundary) -> next target 100", () => {
   assert.equal(evaluateMilestoneTrack("mastery", 50).nextMilestone.target, 100);
 });
 
-console.log("\n=== evaluateMilestoneTrack — Reviews ===\n");
+console.log("\n=== evaluateMilestoneTrack - Known ===\n");
 
-test("0 reviews -> next target 1", () => {
-  assert.equal(evaluateMilestoneTrack("reviews", 0).nextMilestone.target, 1);
+test("0 known words -> next target 1", () => {
+  assert.equal(evaluateMilestoneTrack("known", 0).nextMilestone.target, 1);
 });
 
-test("1 review -> next target 100", () => {
-  assert.equal(evaluateMilestoneTrack("reviews", 1).nextMilestone.target, 100);
+test("1 known word -> next target 10", () => {
+  assert.equal(evaluateMilestoneTrack("known", 1).nextMilestone.target, 10);
 });
 
-test("326 reviews -> next target 500", () => {
-  assert.equal(evaluateMilestoneTrack("reviews", 326).nextMilestone.target, 500);
+test("326 known words -> next target 500", () => {
+  assert.equal(evaluateMilestoneTrack("known", 326).nextMilestone.target, 500);
 });
 
-test("10,000 reviews -> track complete", () => {
-  const result = evaluateMilestoneTrack("reviews", 10000);
+test("10,000 known words -> track complete", () => {
+  const result = evaluateMilestoneTrack("known", 10000);
   assert.equal(result.isTrackComplete, true);
   assert.equal(result.nextMilestone, null);
 });
 
-console.log("\n=== evaluateMilestoneTrack — Consistency (streak) ===\n");
+console.log("\n=== evaluateMilestoneTrack - Consistency (streak) ===\n");
 
-test("0-day streak -> next target 3", () => {
-  assert.equal(evaluateMilestoneTrack("consistency", 0).nextMilestone.target, 3);
+test("0-day streak -> next target 1", () => {
+  assert.equal(evaluateMilestoneTrack("consistency", 0).nextMilestone.target, 1);
 });
 
-test("3-day streak (exact boundary) -> next target 7", () => {
-  assert.equal(evaluateMilestoneTrack("consistency", 3).nextMilestone.target, 7);
+test("3-day streak (exact boundary) -> next target 5", () => {
+  assert.equal(evaluateMilestoneTrack("consistency", 3).nextMilestone.target, 5);
 });
 
 test("6-day streak -> next target still 7 (not yet reached)", () => {
   const result = evaluateMilestoneTrack("consistency", 6);
   assert.equal(result.nextMilestone.target, 7);
-  assert.equal(result.previousMilestone.id, "streak-3");
+  assert.equal(result.previousMilestone.id, "streak-5");
 });
 
 test("7-day streak -> next target 14", () => {
@@ -193,15 +193,15 @@ test("A negative or non-finite current value is treated as 0, never crashes", ()
 });
 
 test("A fully completed track still reports currentValue >= target and progress 1", () => {
-  const result = evaluateMilestoneTrack("mastery", 1500);
+  const result = evaluateMilestoneTrack("mastery", 10500);
   assert.equal(result.isTrackComplete, true);
   assert.equal(result.progress, 1);
-  assert.equal(result.target, 1000);
+  assert.equal(result.target, 10000);
 });
 
 test("completedMilestoneIds only ever contains milestones actually reached, in ascending order", () => {
   const result = evaluateMilestoneTrack("vocabulary", 60);
-  assert.deepEqual(result.completedMilestoneIds, ["learned-1", "learned-10", "learned-25", "learned-50"]);
+  assert.deepEqual(result.completedMilestoneIds, ["learned-10", "learned-25", "learned-50"]);
 });
 
 console.log("\n=== evaluateAllMilestoneTracks — independence across tracks ===\n");
@@ -210,22 +210,22 @@ test("Each track is evaluated purely from its own metric, independent of the oth
   const results = evaluateAllMilestoneTracks({
     learnedWords: 100,
     masteredWords: 50,
-    totalReviews: 0,
+    knownWords: 0,
     currentStreakDays: 0,
   });
 
   assert.equal(results.vocabulary.isTrackComplete, false);
   assert.equal(results.vocabulary.previousMilestone.id, "learned-100");
   assert.equal(results.mastery.previousMilestone.id, "mastered-50");
-  // Reviews/Consistency reaching zero milestones does not affect the
+  // Known/Consistency reaching zero milestones does not affect the
   // Vocabulary/Mastery results that did reach one — no combined/synthetic
   // milestone is ever produced.
-  assert.equal(results.reviews.previousMilestone, null);
+  assert.equal(results.known.previousMilestone, null);
   assert.equal(results.consistency.previousMilestone, null);
 });
 
 test("evaluateAllMilestoneTracks returns exactly the four track ids", () => {
-  const results = evaluateAllMilestoneTracks({ learnedWords: 0, masteredWords: 0, totalReviews: 0, currentStreakDays: 0 });
+  const results = evaluateAllMilestoneTracks({ learnedWords: 0, masteredWords: 0, knownWords: 0, currentStreakDays: 0 });
   assert.deepEqual(Object.keys(results).sort(), [...MILESTONE_TRACK_IDS].sort());
 });
 

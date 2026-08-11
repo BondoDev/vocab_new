@@ -361,8 +361,9 @@
       "tracks": {
         "vocabulary": "Vocabulario",
         "mastery": "Dominio",
-        "reviews": "Repasos",
-        "consistency": "Constancia"
+        "consistency": "Constancia",
+        "known": "Conocidas",
+        "reviews": "Repasos"
       },
       "nextMilestoneLabel": "Siguiente:",
       "completedLabel": "Completado",
@@ -377,7 +378,6 @@
         "days": "días"
       },
       "milestones": {
-        "learned-1": "Primera palabra aprendida",
         "learned-10": "10 palabras aprendidas",
         "learned-25": "25 palabras aprendidas",
         "learned-50": "50 palabras aprendidas",
@@ -396,19 +396,32 @@
         "mastered-250": "250 palabras dominadas",
         "mastered-500": "500 palabras dominadas",
         "mastered-1000": "1.000 palabras dominadas",
-        "reviews-1": "Primer repaso",
-        "reviews-100": "100 repasos",
-        "reviews-500": "500 repasos",
-        "reviews-1000": "1.000 repasos",
-        "reviews-5000": "5.000 repasos",
-        "reviews-10000": "10.000 repasos",
         "streak-3": "Racha de 3 días",
         "streak-7": "Racha de 7 días",
         "streak-14": "Racha de 14 días",
         "streak-30": "Racha de 30 días",
         "streak-50": "Racha de 50 días",
         "streak-100": "Racha de 100 días",
-        "streak-365": "Racha de 365 días"
+        "streak-365": "Racha de 365 días",
+        "known-1": "Primera palabra conocida",
+        "known-10": "10 palabras conocidas",
+        "known-25": "25 palabras conocidas",
+        "known-50": "50 palabras conocidas",
+        "known-100": "100 palabras conocidas",
+        "known-250": "250 palabras conocidas",
+        "known-500": "500 palabras conocidas",
+        "known-1000": "1000 palabras conocidas",
+        "known-2500": "2500 palabras conocidas",
+        "known-5000": "5000 palabras conocidas",
+        "known-10000": "10.000 palabras conocidas",
+        "learned-7500": "7500 palabras aprendidas",
+        "mastered-2500": "2500 palabras dominadas",
+        "mastered-5000": "5000 palabras dominadas",
+        "mastered-10000": "10.000 palabras dominadas",
+        "streak-1": "Racha de 1 d?as",
+        "streak-5": "Racha de 5 d?as",
+        "streak-150": "Racha de 150 d?as",
+        "streak-200": "Racha de 200 d?as"
       }
     },
     "vocabularyGrowthSection": {

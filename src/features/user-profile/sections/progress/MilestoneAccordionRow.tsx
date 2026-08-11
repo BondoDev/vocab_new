@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { Award, CalendarCheck, ChevronDown, Library, Repeat, type LucideIcon } from "lucide-react";
+import { Award, BadgeCheck, CalendarCheck, ChevronDown, Library, type LucideIcon } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import type { MilestoneTrackId, MilestoneTrackResult } from "../../../../data/learning/milestones";
 import { MilestonePath } from "./MilestonePath";
@@ -15,7 +15,7 @@ export interface MilestoneTrackConfig {
   titleKey: string;
   unitSingularKey: string;
   unitPluralKey: string;
-  variant: "vocabulary" | "mastery" | "reviews" | "consistency";
+  variant: "vocabulary" | "mastery" | "known" | "consistency";
 }
 
 export const TRACK_CONFIGS: Record<MilestoneTrackId, MilestoneTrackConfig> = {
@@ -33,12 +33,12 @@ export const TRACK_CONFIGS: Record<MilestoneTrackId, MilestoneTrackConfig> = {
     unitPluralKey: "userProfile.progressSection.units.words",
     variant: "mastery",
   },
-  reviews: {
-    icon: Repeat,
-    titleKey: "userProfile.progressSection.tracks.reviews",
-    unitSingularKey: "userProfile.progressSection.units.review",
-    unitPluralKey: "userProfile.progressSection.units.reviews",
-    variant: "reviews",
+  known: {
+    icon: BadgeCheck,
+    titleKey: "userProfile.progressSection.tracks.known",
+    unitSingularKey: "userProfile.progressSection.units.word",
+    unitPluralKey: "userProfile.progressSection.units.words",
+    variant: "known",
   },
   consistency: {
     icon: CalendarCheck,

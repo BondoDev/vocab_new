@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarCheck, Library, Repeat, type LucideIcon } from "lucide-react";
+import { ArrowRight, BadgeCheck, CalendarCheck, Library, type LucideIcon } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { computeVocabularyCounts } from "../../../../data/learning/vocabularyCategory";
 import { computeMilestoneStreak } from "../../../../data/learning/milestoneStreak";
@@ -15,7 +15,7 @@ import type { UserProfileSectionId } from "../../components/UserProfileSidebar";
 const TRACK_UI: Record<MilestoneTrackId, { icon: LucideIcon; colorVar: string; titleKey: string }> = {
   vocabulary: { icon: Library, colorVar: "var(--primary)", titleKey: "userProfile.progressSection.tracks.vocabulary" },
   mastery: { icon: Library, colorVar: "var(--primary)", titleKey: "userProfile.progressSection.tracks.mastery" },
-  reviews: { icon: Repeat, colorVar: "var(--chart-2)", titleKey: "userProfile.progressSection.tracks.reviews" },
+  known: { icon: BadgeCheck, colorVar: "var(--chart-2)", titleKey: "userProfile.progressSection.tracks.known" },
   consistency: { icon: CalendarCheck, colorVar: "#22c55e", titleKey: "userProfile.progressSection.tracks.consistency" },
 };
 
@@ -66,7 +66,7 @@ export function MilestonePreviewCard({
           evaluateAllMilestoneTracks({
             learnedWords: counts.total,
             masteredWords: counts.mastered,
-            totalReviews: dailyStats.reduce((sum, row) => sum + row.reviewsCompleted, 0),
+            knownWords: counts.known,
             currentStreakDays: computeMilestoneStreak(dailyStats, effectiveTodayISO),
           }),
         );

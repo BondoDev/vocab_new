@@ -8,12 +8,12 @@
 // testable decision instead of being inlined into JSX.
 import type { MilestoneResults, MilestoneTrackId } from "../../../../data/learning/milestones";
 
-// Vocabulary / Reviews / Consistency, per the Phase brief's recommended
+// Vocabulary / Known / Consistency, per the current Progress milestone set.
 // tracks — Mastery is deliberately omitted to keep the compact preview to
 // 3 rows ("Do not show all four unless layout remains clean").
 export const DASHBOARD_MILESTONE_PREVIEW_TRACKS: readonly MilestoneTrackId[] = [
   "vocabulary",
-  "reviews",
+  "known",
   "consistency",
 ];
 
