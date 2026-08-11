@@ -1906,6 +1906,40 @@ table/RPC/policy/grant in this schema, and every existing
 ever issued by this migration itself, beyond the guarded read-only
 duplicate check).
 
+## My Lists corrective fix — RPC column-reference ambiguity (2026-08-11)
+
+Migration: `20260811150000_fix_my_lists_rpc_column_ambiguity.sql`.
+
+Live bug: `rename_user_vocabulary_list` (and, on inspection,
+`create_user_vocabulary_list`) failed with `42702 column reference "user_id"
+is ambiguous`. Root cause: both functions declare `RETURNS TABLE (id,
+user_id, target_language, name, created_at, updated_at)`, which gives
+PL/pgSQL same-named output variables in scope for the whole function body.
+Each function's proactive duplicate-name check —
+`if exists (select 1 from public.user_vocabulary_lists where user_id = ...
+and target_language = ... and lower(btrim(name)) = ...)` (plus `and id <>
+p_list_id` in rename's) — referenced those columns bare, inside a genuine
+value-expression context, so Postgres couldn't tell the output variable
+from the table column. Every other statement in both functions (the
+ownership lookup, the `INSERT`/`UPDATE` target lists — neither of which is
+an expression PL/pgSQL substitutes into — and every `RETURNING` clause) was
+already `uvl.`-qualified and untouched.
+
+`delete_user_vocabulary_list` was inspected for the same pattern and does
+**not** have it: it declares `returns void`, not `RETURNS TABLE`, so it has
+no `id`/`user_id`/etc. output variables in scope — its own `where id =
+p_list_id and user_id = v_user_id` is unambiguous. Left untouched.
+
+Fix: both ambiguous subqueries now alias the table (`as uvl`) and qualify
+every column reference — not the `#variable_conflict use_column` pragma,
+which would blanket-prefer columns over variables everywhere in the
+function rather than naming the one place that needed it.
+`CREATE OR REPLACE FUNCTION` with each function's exact existing signature
+(`create_user_vocabulary_list(text, text)`,
+`rename_user_vocabulary_list(uuid, text)`) — grants are preserved
+automatically, no public API change. No table, index, RLS policy, or
+membership row is touched.
+
 ## Live Supabase E2E tests (2026-08-08)
 
 `scripts/tests/live/` is a real, opt-in end-to-end suite that exercises a
