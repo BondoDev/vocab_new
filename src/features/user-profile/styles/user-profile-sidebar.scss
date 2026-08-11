@@ -148,7 +148,7 @@
 .user-profile-sidebar__group-items {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.18rem;
 }
 
 .user-profile-sidebar__nav-item {
@@ -157,8 +157,8 @@
   align-items: center;
   gap: 0.78rem;
   width: 100%;
-  min-height: 2.85rem;
-  padding: 0.72rem 0.9rem 0.72rem 1rem;
+  min-height: 2.65rem;
+  padding: 0.62rem 0.9rem 0.62rem 1rem;
   border-radius: 1rem;
   color: #56477b;
   text-align: left;
@@ -208,6 +208,21 @@
     0 8px 18px rgba(82, 66, 138, 0.08);
 }
 
+.user-profile-sidebar__nav-item--danger {
+  color: #b42318;
+}
+
+.user-profile-sidebar__nav-item--danger:hover,
+.user-profile-sidebar__nav-item--danger:focus-visible {
+  color: #b42318;
+  background: #fff1f2;
+  box-shadow: inset 0 0 0 1px rgba(180, 35, 24, 0.08);
+}
+
+.user-profile-sidebar__nav-item--danger::before {
+  background: rgba(180, 35, 24, 0.72);
+}
+
 .user-profile-sidebar__nav-item:hover::before,
 .user-profile-sidebar__nav-item:focus-visible::before,
 .user-profile-sidebar__nav-item.is-active::before {
@@ -225,6 +240,19 @@
 .user-profile-sidebar__nav-label {
   font-size: 0.94rem;
   font-weight: 600;
+}
+
+.user-profile-sidebar__sign-out-dialog {
+  border-radius: 1rem;
+}
+
+.user-profile-sidebar__sign-out-confirm-button {
+  background-color: #b42318;
+  color: #fff;
+
+  &:hover {
+    background-color: #912018;
+  }
 }
 
 .user-profile-sidebar__drawer {

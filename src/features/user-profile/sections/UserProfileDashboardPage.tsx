@@ -25,6 +25,7 @@ interface UserProfileDashboardPageProps {
   onStartCustomPractice?: () => void;
   onStartNewWordStudy?: () => void;
   onStartReviewWords?: () => void;
+  onSignOut?: () => void | Promise<void>;
   // Lets the Learning section's DailyGoalSelector (which owns its own
   // save round-trip to Supabase) push a successfully saved goal back up
   // into App.tsx's userProfile state — without this, other places reading
@@ -56,6 +57,7 @@ export function UserProfileDashboardPage({
   onStartCustomPractice,
   onStartNewWordStudy,
   onStartReviewWords,
+  onSignOut,
   onDailyGoalChange,
 }: UserProfileDashboardPageProps) {
   const { t } = useLanguage();
@@ -99,6 +101,7 @@ export function UserProfileDashboardPage({
             languageLevel={languageLevel}
             activeSection={activeSection}
             onSectionChange={setActiveSection}
+            onSignOut={onSignOut}
           />
 
           <section

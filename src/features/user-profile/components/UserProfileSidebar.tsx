@@ -2,8 +2,10 @@ import { useState } from "react";
 import {
   BookOpenText,
   ChartSpline,
+  Compass,
   Home,
   ListPlus,
+  LogOut,
   Settings,
   Target,
   UserRound,
@@ -12,6 +14,16 @@ import {
 import "../styles/user-profile-sidebar.scss";
 import type { LanguageLevelCode } from "../../../lib/userProfile";
 import { useLanguage, type UILanguage } from "../../../contexts/LanguageContext";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "../../../app/components/ui/alert-dialog";
 
 type SidebarNavGroup = {
   labelKey: string;
@@ -42,6 +54,7 @@ const SIDEBAR_NAV_GROUPS: SidebarNavGroup[] = [
       { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target },
       { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText },
       { id: "my-lists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus },
+      { id: "guidance", labelKey: "userProfile.sidebar.items.guidance", icon: Compass },
     ],
   },
   {
@@ -60,6 +73,7 @@ interface SidebarInnerProps {
   languageLevel?: LanguageLevelCode | "";
   activeSection: UserProfileSectionId;
   onSectionChange: (sectionId: UserProfileSectionId) => void;
+  onSignOutClick?: () => void;
 }
 
 function SidebarInner({
@@ -68,6 +82,7 @@ function SidebarInner({
   languageLevel,
   activeSection,
   onSectionChange,
+  onSignOutClick,
 }: SidebarInnerProps) {
   const { t } = useLanguage();
   const displayName = nickname?.trim() || "Account";
@@ -118,6 +133,18 @@ function SidebarInner({
                   </button>
                 );
               })}
+              {group.labelKey === "userProfile.sidebar.groups.system" && onSignOutClick ? (
+                <button
+                  type="button"
+                  className="user-profile-sidebar__nav-item user-profile-sidebar__nav-item--danger"
+                  onClick={onSignOutClick}
+                >
+                  <span className="user-profile-sidebar__nav-icon" aria-hidden="true">
+                    <LogOut size={16} strokeWidth={1.9} />
+                  </span>
+                  <span className="user-profile-sidebar__nav-label">{t("userProfile.sidebar.actions.signOut")}</span>
+                </button>
+              ) : null}
             </div>
           </section>
         ))}
@@ -132,6 +159,7 @@ interface UserProfileSidebarProps {
   languageLevel?: LanguageLevelCode | "";
   activeSection: UserProfileSectionId;
   onSectionChange: (sectionId: UserProfileSectionId) => void;
+  onSignOut?: () => void | Promise<void>;
 }
 
 export function UserProfileSidebar({
@@ -140,9 +168,21 @@ export function UserProfileSidebar({
   languageLevel,
   activeSection,
   onSectionChange,
+  onSignOut,
 }: UserProfileSidebarProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isSignOutConfirmOpen, setIsSignOutConfirmOpen] = useState(false);
   const { t } = useLanguage();
+
+  const openSignOutConfirm = () => {
+    setIsDrawerOpen(false);
+    setIsSignOutConfirmOpen(true);
+  };
+
+  const handleConfirmSignOut = () => {
+    setIsSignOutConfirmOpen(false);
+    void onSignOut?.();
+  };
 
   return (
     <>
@@ -164,6 +204,7 @@ export function UserProfileSidebar({
           languageLevel={languageLevel}
           activeSection={activeSection}
           onSectionChange={onSectionChange}
+          onSignOutClick={openSignOutConfirm}
         />
       </aside>
 
@@ -196,10 +237,29 @@ export function UserProfileSidebar({
                 onSectionChange(sectionId);
                 setIsDrawerOpen(false);
               }}
+              onSignOutClick={openSignOutConfirm}
             />
           </div>
         </div>
       ) : null}
+
+      <AlertDialog open={isSignOutConfirmOpen} onOpenChange={setIsSignOutConfirmOpen}>
+        <AlertDialogContent className="user-profile-sidebar__sign-out-dialog">
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("userProfile.sidebar.signOutConfirm.title")}</AlertDialogTitle>
+            <AlertDialogDescription>{t("userProfile.sidebar.signOutConfirm.description")}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("userProfile.sidebar.signOutConfirm.cancel")}</AlertDialogCancel>
+            <AlertDialogAction
+              className="user-profile-sidebar__sign-out-confirm-button"
+              onClick={handleConfirmSignOut}
+            >
+              {t("userProfile.sidebar.signOutConfirm.confirm")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

@@ -46,6 +46,8 @@ import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
 import { findSeoCefrPreviewItem } from "./pages/vocabulary/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPages/wordPageData";
 import type { UserProfile } from "../lib/userProfile";
+import { signOutSupabase } from "../lib/supabaseAuth";
+import { describeSupabaseError } from "../lib/supabaseError";
 import {
   TARGET_LANGUAGE_TO_UI_CODE,
   buildPracticeRoute,
@@ -477,6 +479,22 @@ function AppContent({
   // ordinary configurable Exercises page and never Custom Practice's route.
   const handleStartReviewWords = () => handleRequireLanguages("reviewWords");
 
+  const handleProfileSignOut = async () => {
+    const currentSession = authSession;
+
+    try {
+      handleAuthSessionChange(null);
+      await signOutSupabase(currentSession);
+    } catch (error) {
+      console.warn(
+        "App: signOutSupabase failed (local sign-out already completed).",
+        describeSupabaseError("sign out", error),
+      );
+    } finally {
+      navigate(ROUTES.exerciseSelection);
+    }
+  };
+
   const handleContinueToPractice = () => {
     if (isContinueDisabled) {
       popupRef.current?.show({ delayMs: 0 });
@@ -719,6 +737,7 @@ function AppContent({
           onStartCustomPractice={handleStartCustomPractice}
           onStartNewWordStudy={handleStartNewWordStudy}
           onStartReviewWords={handleStartReviewWords}
+          onSignOut={authSession ? handleProfileSignOut : undefined}
           onDailyGoalChange={(dailyGoal) =>
             setUserProfile((previous) => ({ ...previous, dailyGoal }))
           }

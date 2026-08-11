@@ -135,11 +135,18 @@
         "learning": "Learning",
         "vocabulary": "Vocabulary",
         "myLists": "My Lists",
+        "guidance": "Guidance",
         "progress": "Progress",
         "settings": "Settings"
       },
       "actions": {
         "signOut": "Sign out"
+      },
+      "signOutConfirm": {
+        "title": "Sign out?",
+        "description": "You will need to sign in again to access your account and saved progress.",
+        "cancel": "Stay signed in",
+        "confirm": "Sign out"
       }
     },
     "learningSection": {

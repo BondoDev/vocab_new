@@ -135,11 +135,18 @@
         "learning": "Apprentissage",
         "vocabulary": "Vocabulaire",
         "myLists": "Mes listes",
+        "guidance": "Conseils",
         "progress": "Progression",
         "settings": "Parametres"
       },
       "actions": {
         "signOut": "Se deconnecter"
+      },
+      "signOutConfirm": {
+        "title": "Se déconnecter ?",
+        "description": "Vous devrez vous reconnecter pour accéder à votre compte et à votre progression enregistrée.",
+        "cancel": "Rester connecté",
+        "confirm": "Se déconnecter"
       }
     },
     "learningSection": {

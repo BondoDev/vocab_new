@@ -135,11 +135,18 @@
         "learning": "Aprendizaje",
         "vocabulary": "Vocabulario",
         "myLists": "Mis listas",
+        "guidance": "Orientación",
         "progress": "Progreso",
         "settings": "Ajustes"
       },
       "actions": {
         "signOut": "Cerrar sesion"
+      },
+      "signOutConfirm": {
+        "title": "¿Cerrar sesión?",
+        "description": "Tendrás que iniciar sesión de nuevo para acceder a tu cuenta y al progreso guardado.",
+        "cancel": "Seguir conectado",
+        "confirm": "Cerrar sesión"
       }
     },
     "learningSection": {

@@ -135,11 +135,18 @@
         "learning": "Aprendizagem",
         "vocabulary": "Vocabulario",
         "myLists": "Minhas listas",
+        "guidance": "Orientação",
         "progress": "Progresso",
         "settings": "Configuracoes"
       },
       "actions": {
         "signOut": "Sair"
+      },
+      "signOutConfirm": {
+        "title": "Sair?",
+        "description": "Você precisará entrar novamente para acessar sua conta e seu progresso salvo.",
+        "cancel": "Continuar conectado",
+        "confirm": "Sair"
       }
     },
     "learningSection": {

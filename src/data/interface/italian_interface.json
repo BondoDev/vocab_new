@@ -135,11 +135,18 @@
         "learning": "Apprendimento",
         "vocabulary": "Vocabolario",
         "myLists": "Le mie liste",
+        "guidance": "Guida",
         "progress": "Progressi",
         "settings": "Impostazioni"
       },
       "actions": {
         "signOut": "Esci"
+      },
+      "signOutConfirm": {
+        "title": "Uscire?",
+        "description": "Dovrai accedere di nuovo per usare il tuo account e i progressi salvati.",
+        "cancel": "Resta connesso",
+        "confirm": "Esci"
       }
     },
     "learningSection": {

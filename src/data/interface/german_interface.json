@@ -135,11 +135,18 @@
         "learning": "Lernen",
         "vocabulary": "Wortschatz",
         "myLists": "Meine Listen",
+        "guidance": "Anleitung",
         "progress": "Fortschritt",
         "settings": "Einstellungen"
       },
       "actions": {
         "signOut": "Abmelden"
+      },
+      "signOutConfirm": {
+        "title": "Abmelden?",
+        "description": "Du musst dich erneut anmelden, um auf dein Konto und deinen gespeicherten Fortschritt zuzugreifen.",
+        "cancel": "Angemeldet bleiben",
+        "confirm": "Abmelden"
       }
     },
     "learningSection": {

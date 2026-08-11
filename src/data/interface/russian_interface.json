@@ -607,11 +607,18 @@
         "learning": "Обучение",
         "vocabulary": "Словарь",
         "myLists": "Мои списки",
+        "guidance": "Рекомендации",
         "progress": "Прогресс",
         "settings": "Настройки"
       },
       "actions": {
         "signOut": "Выйти"
+      },
+      "signOutConfirm": {
+        "title": "Выйти?",
+        "description": "Чтобы снова получить доступ к аккаунту и сохраненному прогрессу, потребуется войти заново.",
+        "cancel": "Остаться в аккаунте",
+        "confirm": "Выйти"
       }
     },
     "learningSection": {
