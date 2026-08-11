@@ -21,6 +21,13 @@ interface ListCardProps {
   onView: () => void;
   onRename: () => void;
   onDelete: () => void;
+  // Optional smaller Practice List entry point (My Lists Phase 3) — the
+  // detail header's own button is the primary entry point; this is the
+  // card-level convenience path, tucked into the overflow menu so the
+  // compact card never grows a third top-level button. Omitted from the
+  // menu entirely for a zero-word list (see MyListsSection, which never
+  // passes this for such a list) rather than shown disabled.
+  onPracticeList?: () => void;
 }
 
 // One list card. Deliberately not a single clickable <button>/<div
@@ -28,10 +35,8 @@ interface ListCardProps {
 // interactive controls (the overflow-menu trigger and the View List
 // button), and nesting a button inside a button is invalid HTML/a11y (see
 // the Phase 2A brief's own "do not make nested buttons inside a clickable
-// card invalid" requirement). Study List is intentionally omitted from the
-// overflow menu — it doesn't exist yet (a future phase), and the brief
-// prefers omitting it cleanly over reserving a disabled placeholder.
-export function ListCard({ list, wordCount, onView, onRename, onDelete }: ListCardProps) {
+// card invalid" requirement).
+export function ListCard({ list, wordCount, onView, onRename, onDelete, onPracticeList }: ListCardProps) {
   const { t } = useLanguage();
 
   return (
@@ -50,6 +55,11 @@ export function ListCard({ list, wordCount, onView, onRename, onDelete }: ListCa
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            {onPracticeList ? (
+              <DropdownMenuItem onSelect={onPracticeList}>
+                {t("userProfile.myListsSection.practiceList")}
+              </DropdownMenuItem>
+            ) : null}
             <DropdownMenuItem onSelect={onRename}>{t("userProfile.myListsSection.rename")}</DropdownMenuItem>
             <DropdownMenuItem variant="destructive" onSelect={onDelete}>
               {t("userProfile.myListsSection.delete")}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, ChevronLeft, ChevronRight, MoreHorizontal, Plus } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, MoreHorizontal, Play, Plus } from "lucide-react";
 import { useLanguage, type UILanguage } from "../../../../contexts/LanguageContext";
 import { Button } from "../../../../app/components/ui/button";
 import {
@@ -17,6 +17,8 @@ import { resolveListWordStatus, type ListWordStatus } from "./listWordStatus";
 import { filterListWordRowsByStatus, filterListWordRowsBySearch, type ListWordStatusFilterId } from "./listWordFiltering";
 import { getPageWindow } from "./listPagination";
 import { AddWordsDialog } from "./AddWordsDialog";
+import { PracticeListSetupDialog } from "./PracticeListSetupDialog";
+import type { ExerciseId } from "../../../../exercises/exerciseIds";
 
 const PAGE_SIZE = 10;
 type DetailSortMode = "recentlyAdded" | "nameAsc";
@@ -50,6 +52,15 @@ interface ListDetailViewProps {
   onRename: () => void;
   onDelete: () => void;
   onRemoveWord: (wordId: string) => void;
+  // Opens the Practice List setup dialog (My Lists Phase 3) — owned by
+  // MyListsSection, same reason as the Add Words wiring below. Only ever
+  // called from the primary-action button below, which itself only
+  // renders inside the `hasMembers` branch — a zero-word list never shows
+  // it, so this callback never needs its own additional empty-list guard.
+  onOpenPracticeList: () => void;
+  isPracticeListDialogOpen: boolean;
+  onClosePracticeList: () => void;
+  onStartPracticeList: (config: { conceptIds: string[]; exercises: ExerciseId[] }) => void;
   // Add Words dialog state/actions — owned by MyListsSection (it makes the
   // actual RPC call and updates the shared membership state that also
   // drives the list card's count), rendered here because the dialog needs
@@ -86,6 +97,10 @@ export function ListDetailView({
   onRename,
   onDelete,
   onRemoveWord,
+  onOpenPracticeList,
+  isPracticeListDialogOpen,
+  onClosePracticeList,
+  onStartPracticeList,
   isAddWordsDialogOpen,
   isAddingWords,
   addWordsError,
@@ -232,7 +247,20 @@ export function ListDetailView({
         </div>
         {hasMembers ? (
           <div className="my-lists-detail__actions">
-            <Button type="button" onClick={onOpenAddWords} className="my-lists-detail__add-button">
+            <Button
+              type="button"
+              onClick={onOpenPracticeList}
+              className="my-lists-detail__practice-button"
+            >
+              <Play aria-hidden="true" />
+              {t("userProfile.myListsSection.practiceList")}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onOpenAddWords}
+              className="my-lists-detail__add-button"
+            >
               <Plus aria-hidden="true" />
               {t("userProfile.myListsSection.addWords")}
             </Button>
@@ -441,6 +469,16 @@ export function ListDetailView({
           if (!open) onCloseAddWords();
         }}
         onSubmit={onSubmitAddWords}
+      />
+
+      <PracticeListSetupDialog
+        open={isPracticeListDialogOpen}
+        list={list}
+        memberships={memberships}
+        onOpenChange={(open) => {
+          if (!open) onClosePracticeList();
+        }}
+        onStart={onStartPracticeList}
       />
     </>
   );

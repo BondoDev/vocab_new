@@ -470,6 +470,7 @@
       "delete": "Löschen",
       "addWords": "Wörter hinzufügen",
       "addWordsError": "Die Wörter konnten nicht zur Liste hinzugefügt werden. Bitte versuche es erneut.",
+      "practiceList": "Liste üben",
       "removeFromList": "Aus der Liste entfernen",
       "removedFromList": "Aus der Liste entfernt",
       "removeError": "Das Wort konnte nicht entfernt werden. Bitte versuche es erneut.",
@@ -515,6 +516,20 @@
         "addSelected": "Auswahl hinzufügen",
         "addWord": "{count} Wort hinzufügen",
         "addWords": "{count} Wörter hinzufügen"
+      },
+      "practiceSetup": {
+        "title": "„{name}“ üben",
+        "description": "Wähle aus, wie du diese Liste üben möchtest.",
+        "numberOfWords": "Anzahl der Wörter",
+        "wordOrder": "Wortreihenfolge",
+        "random": "Zufällig",
+        "listOrder": "Listenreihenfolge",
+        "exercises": "Übungen",
+        "allCount": "Alle {count}",
+        "exerciseType": "{count} Übungsart",
+        "exerciseTypes": "{count} Übungsarten",
+        "startPractice": "Übung starten",
+        "noWords": "Diese Liste enthält keine Wörter zum Üben."
       },
       "search": {
         "placeholder": "Listen durchsuchen",

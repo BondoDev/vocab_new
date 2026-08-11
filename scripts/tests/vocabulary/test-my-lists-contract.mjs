@@ -195,7 +195,11 @@ test("The existing sidebar nav entry ('my-lists' id) is reused, not duplicated â
 });
 
 test("UserProfileDashboardPage renders MyListsSection for the myLists section id, threading the same shared profile props as its siblings", () => {
-  assert.match(dashboardPageSource, /import \{ MyListsSection \} from "\.\/my-lists\/MyListsSection";/);
+  // Superseded import shape: My Lists Phase 3 (Practice List) added a
+  // type-only PracticeListStartConfig import alongside the component
+  // import â€” still the same single import statement/module, not a second
+  // source of MyListsSection.
+  assert.match(dashboardPageSource, /import \{ MyListsSection, type PracticeListStartConfig \} from "\.\/my-lists\/MyListsSection";/);
   const jsxMatch = dashboardPageSource.match(/\{activeSection === "myLists" \? \(\s*<MyListsSection\s+([\s\S]*?)\/>/);
   assert.ok(jsxMatch, "UserProfileDashboardPage must render <MyListsSection ... /> when activeSection is myLists");
   assert.match(jsxMatch[1], /userProfile=\{userProfile\}/);

@@ -942,6 +942,7 @@
       "delete": "Удалить",
       "addWords": "Добавить слова",
       "addWordsError": "Не удалось добавить эти слова в список. Попробуйте ещё раз.",
+      "practiceList": "Практиковать список",
       "removeFromList": "Удалить из списка",
       "removedFromList": "Удалено из списка",
       "removeError": "Не удалось удалить это слово. Попробуйте ещё раз.",
@@ -987,6 +988,20 @@
         "addSelected": "Добавить выбранное",
         "addWord": "Добавить {count} слово",
         "addWords": "Добавить {count} слов"
+      },
+      "practiceSetup": {
+        "title": "Практиковать «{name}»",
+        "description": "Выберите, как вы хотите практиковать этот список.",
+        "numberOfWords": "Количество слов",
+        "wordOrder": "Порядок слов",
+        "random": "Случайный",
+        "listOrder": "Порядок списка",
+        "exercises": "Упражнения",
+        "allCount": "Все {count}",
+        "exerciseType": "{count} тип упражнения",
+        "exerciseTypes": "{count} типов упражнений",
+        "startPractice": "Начать практику",
+        "noWords": "В этом списке нет слов для практики."
       },
       "search": {
         "placeholder": "Поиск по спискам",

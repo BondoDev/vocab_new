@@ -76,6 +76,8 @@ import { usePracticeRouteLanguageSync } from "./hooks/usePracticeRouteLanguageSy
 import { useStoredLanguageAutoRedirect } from "./hooks/useStoredLanguageAutoRedirect";
 import { useExploreItems } from "./pages/explore/useExploreItems";
 import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
+import { usePracticeListSession } from "./hooks/usePracticeListSession";
+import type { PracticeListStartConfig } from "../features/user-profile/sections/my-lists/MyListsSection";
 
 const LevelCategorySelection = lazy(() =>
   import("../features/learning-setup/LevelCategorySelection").then((module) => ({
@@ -323,6 +325,33 @@ function AppContent({
     () => new URLSearchParams(location.search).get("source") === "custom-practice",
     [location.search],
   );
+  // Practice List (My Lists Phase 3) — same "read straight from the URL"
+  // precedent as isCustomPracticeSource above, so it also survives a
+  // refresh. listId is the only list-identifying data in the URL itself
+  // (small, safe to expose); the actual word selection lives in
+  // practiceListSession below, restored from localStorage — see
+  // usePracticeListSession's own header for why a full concept-id array is
+  // never put in the URL.
+  const isVocabularyListSource = useMemo(
+    () => new URLSearchParams(location.search).get("source") === "vocabulary-list",
+    [location.search],
+  );
+  const vocabularyListIdParam = useMemo(
+    () => new URLSearchParams(location.search).get("listId"),
+    [location.search],
+  );
+  const { practiceListSession, setPracticeListSession } = usePracticeListSession();
+  // Only trusted when the URL's own listId matches the restored session's
+  // listId — guards against a stale/foreign session (e.g. a browser
+  // back/forward to a different list's practice URL) ever restricting
+  // practice to the wrong list's words.
+  const activePracticeListSession =
+    isVocabularyListSource &&
+    practiceListSession &&
+    vocabularyListIdParam &&
+    practiceListSession.listId === vocabularyListIdParam
+      ? practiceListSession
+      : null;
   const [openExploreLanguage, setOpenExploreLanguage] =
     useState<UILanguage | null>(null);
   const [isLevelTestLanguageModalOpen, setIsLevelTestLanguageModalOpen] =
@@ -478,6 +507,36 @@ function AppContent({
     );
   };
 
+  // Practice List (My Lists Phase 3): My Lists has already resolved the
+  // exact ordered word set and chosen exercises (see
+  // PracticeListSetupDialog/practiceListSelection.ts) — this handler only
+  // wires that resolved config into the SAME state/route the ordinary
+  // Custom Practice flow already uses (selectedExercises,
+  // buildPracticeRoute), skipping the language/filters/exercise-selection
+  // steps entirely (My Lists' own setup dialog already covered exercise
+  // selection). No new practice engine, no new route: VocabularyPractice
+  // renders exactly as it does for Custom Practice, restricted to this
+  // config's conceptIds via its own restrictToConceptIds prop (see the
+  // "practice" render branch below) — same completeCustomPracticeWord
+  // persistence path, so this carries zero SRS effect by the same
+  // construction Custom Practice already has.
+  const handleStartPracticeList = (config: PracticeListStartConfig) => {
+    if (config.conceptIds.length === 0) return;
+    setPracticeLanguage(config.targetLanguage);
+    setSelectedExercises(config.exercises);
+    setPracticeListSession({
+      listId: config.listId,
+      listName: config.listName,
+      conceptIds: config.conceptIds,
+    });
+    const practiceRoute = buildPracticeRoute(
+      yourLanguage as UILanguage,
+      config.targetLanguage as UILanguage,
+      ROUTES,
+    );
+    navigate(`${practiceRoute}?source=vocabulary-list&listId=${encodeURIComponent(config.listId)}`);
+  };
+
   // Study New Words needs no query-param tagging (unlike Custom Practice) —
   // it has its own dedicated route, so plain handleRequireLanguages is enough.
   const handleStartNewWordStudy = () => handleRequireLanguages("newWordStudy");
@@ -622,6 +681,20 @@ function AppContent({
   ) : null;
 
   if (resolvedPage === "practice") {
+    // A Practice List entry bypasses the ordinary language/filters/
+    // exercise-selection path entirely (My Lists' own setup dialog already
+    // covered exercise selection) — Back/Finish return to that list's own
+    // detail view instead of the plain Exercises/filters pages, and the
+    // practice-list session is cleared so a later, unrelated visit to the
+    // ordinary Exercises page never stays restricted to this list's words.
+    const practiceListBackDestination = activePracticeListSession
+      ? `${ROUTES.profile}?section=myLists&listId=${activePracticeListSession.listId}`
+      : null;
+    const leavePracticeList = () => {
+      if (activePracticeListSession) setPracticeListSession(null);
+      navigate(practiceListBackDestination ?? ROUTES.exerciseSelection);
+    };
+
     return (
       <>
         {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
@@ -634,8 +707,11 @@ function AppContent({
             selectedCategories={selectedCategories}
             selectedWordTypes={selectedWordTypes}
             selectedExercises={selectedExercises}
-            onBack={() => navigate(ROUTES.exerciseSelection)}
-            onGoFilters={() => navigate(ROUTES.levelCategory)}
+            restrictToConceptIds={activePracticeListSession?.conceptIds ?? null}
+            onBack={activePracticeListSession ? leavePracticeList : () => navigate(ROUTES.exerciseSelection)}
+            onGoFilters={
+              activePracticeListSession ? leavePracticeList : () => navigate(ROUTES.levelCategory)
+            }
           />
         </Suspense>
         {accountOnboardingDialog}
@@ -746,6 +822,7 @@ function AppContent({
           onStartCustomPractice={handleStartCustomPractice}
           onStartNewWordStudy={handleStartNewWordStudy}
           onStartReviewWords={handleStartReviewWords}
+          onStartPracticeList={handleStartPracticeList}
           onSignOut={authSession ? handleProfileSignOut : undefined}
           onDailyGoalChange={(dailyGoal) =>
             setUserProfile((previous) => ({ ...previous, dailyGoal }))

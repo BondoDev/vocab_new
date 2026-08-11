@@ -21,6 +21,7 @@ import {
 } from "../../../../lib/vocabularyLists";
 import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import type { UserProfile } from "../../../../lib/userProfile";
+import type { ExerciseId } from "../../../../exercises/exerciseIds";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
 import { CreateListDialog } from "./CreateListDialog";
 import { RenameListDialog } from "./RenameListDialog";
@@ -38,6 +39,21 @@ type LoadState =
   | { status: "error" }
   | { status: "result"; lists: UserVocabularyList[]; memberships: UserVocabularyListMembership[] };
 
+// The fully-resolved Practice List launch config (My Lists Phase 3):
+// conceptIds/exercises are already final (quantity+order already applied —
+// see PracticeListSetupDialog/practiceListSelection.ts) by the time this
+// reaches App.tsx, which only needs to set up the existing Custom Practice
+// session state and navigate. listName is carried only for display (the
+// setup dialog's own title, and — via App.tsx's usePracticeListSession —
+// this same session's "Back" destination); it is never sent anywhere.
+export interface PracticeListStartConfig {
+  listId: string;
+  listName: string;
+  targetLanguage: string;
+  conceptIds: string[];
+  exercises: ExerciseId[];
+}
+
 interface MyListsSectionProps {
   // App.tsx's single shared profile load, matching every sibling section's
   // own precedent — practiceLanguage is the active target language lists
@@ -52,6 +68,12 @@ interface MyListsSectionProps {
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
   onRetryWordProgress: () => void;
+  // Owned by App.tsx (My Lists Phase 3) — sets up the existing Custom
+  // Practice session state (selectedExercises, the practice-list session
+  // snapshot) and navigates into the existing practice route. This
+  // section never navigates into practice itself and never touches
+  // App.tsx-level state directly.
+  onStartPracticeList?: (config: PracticeListStartConfig) => void;
 }
 
 function resolveListIdFromSearch(search: string): string | null {
@@ -87,6 +109,7 @@ export function MyListsSection({
   wordProgressRows,
   wordProgressStatus,
   onRetryWordProgress,
+  onStartPracticeList,
 }: MyListsSectionProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
@@ -112,6 +135,9 @@ export function MyListsSection({
   const [isAddWordsDialogOpen, setIsAddWordsDialogOpen] = useState(false);
   const [isAddingWords, setIsAddingWords] = useState(false);
   const [addWordsError, setAddWordsError] = useState<string | null>(null);
+
+  const [isPracticeListDialogOpen, setIsPracticeListDialogOpen] = useState(false);
+
   const { message: toastMessage, show: showToast } = useAutoDismissMessage();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -381,6 +407,32 @@ export function MyListsSection({
     }
   };
 
+  // ---- practice list (My Lists Phase 3) ----
+  const handleOpenPracticeListDialog = () => {
+    setIsPracticeListDialogOpen(true);
+  };
+
+  const handleClosePracticeListDialog = () => {
+    setIsPracticeListDialogOpen(false);
+  };
+
+  // The setup dialog has already resolved conceptIds/exercises (quantity +
+  // order already applied — see PracticeListSetupDialog) by the time this
+  // fires. This function only attaches the list's own identity/language and
+  // hands off to App.tsx, which owns navigation into the existing Custom
+  // Practice route — this section itself never navigates into practice.
+  const handleStartPracticeListSetup = (config: { conceptIds: string[]; exercises: ExerciseId[] }) => {
+    if (!activeList || config.conceptIds.length === 0) return;
+    setIsPracticeListDialogOpen(false);
+    onStartPracticeList?.({
+      listId: activeList.id,
+      listName: activeList.name,
+      targetLanguage: activeList.targetLanguage,
+      conceptIds: config.conceptIds,
+      exercises: config.exercises,
+    });
+  };
+
   // ---- remove word ----
   // Optimistic, matching VocabularySection's own favorite-toggle precedent:
   // the row disappears immediately (removing membership from local state
@@ -452,6 +504,10 @@ export function MyListsSection({
           onRename={() => handleOpenRenameDialog(activeList)}
           onDelete={() => handleOpenDeleteDialog(activeList)}
           onRemoveWord={handleRemoveWord}
+          onOpenPracticeList={handleOpenPracticeListDialog}
+          isPracticeListDialogOpen={isPracticeListDialogOpen}
+          onClosePracticeList={handleClosePracticeListDialog}
+          onStartPracticeList={handleStartPracticeListSetup}
           isAddWordsDialogOpen={isAddWordsDialogOpen}
           isAddingWords={isAddingWords}
           addWordsError={addWordsError}
@@ -556,6 +612,11 @@ export function MyListsSection({
                 onView={() => goToDetail(list.id)}
                 onRename={() => handleOpenRenameDialog(list)}
                 onDelete={() => handleOpenDeleteDialog(list)}
+                onPracticeList={
+                  onStartPracticeList && getListWordCount(wordCountsByListId, list.id) > 0
+                    ? () => goToDetail(list.id)
+                    : undefined
+                }
               />
             ))}
           </div>

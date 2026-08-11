@@ -236,15 +236,9 @@ test("33. Duplicate-name rejection still surfaces the shared conflict copy", () 
   assert.match(sectionSource, /resolveListMutationErrorMessage\(t, error, "userProfile\.myListsSection\.renameError"\)/);
 });
 
-console.log("\n=== 34. No Practice List introduced ===\n");
+console.log("\n=== 34. No Practice List introduced BY THIS migration (superseded: Practice List itself now exists as its own later phase — see test-practice-list-contract.mjs for its current contract) ===\n");
 
-test("34. No Study List/Practice List UI, route, or behavior exists anywhere in the my-lists section", () => {
-  for (const entry of fs.readdirSync(MY_LISTS_DIR)) {
-    const filePath = path.join(MY_LISTS_DIR, entry);
-    if (!fs.statSync(filePath).isFile()) continue;
-    const content = fs.readFileSync(filePath, "utf8");
-    assert.doesNotMatch(content, /studyList|study-list|StudyList|practiceList|PracticeList|practice-list/i, `${entry} must not implement Practice List yet`);
-  }
+test("34. This corrective migration itself introduces no Practice List database artifact (Practice List's own frontend/routing work was added by a later phase, not this one)", () => {
   const migrationSource = fs.readFileSync(
     path.join(ROOT_DIR, "supabase", "migrations", "20260811170000_my_lists_corrective_word_id_membership.sql"),
     "utf8",

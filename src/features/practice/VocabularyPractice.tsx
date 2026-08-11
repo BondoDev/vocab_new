@@ -44,6 +44,18 @@ interface VocabularyPracticeProps {
   selectedExercises: string[];
   onBack: () => void;
   onGoFilters: () => void;
+  // Practice List (My Lists Phase 3): when provided (non-empty), this exact
+  // ordered set of concept ids is practiced instead of the level/category/
+  // word-type-filtered vocabulary set below — selectedLevels/
+  // selectedCategories/selectedWordTypes are ignored entirely in that case.
+  // The order is trusted verbatim (never reshuffled here): My Lists'
+  // setup dialog already resolved "Random" vs "List order" into this exact
+  // sequence (see selectListPracticeWords in
+  // src/features/user-profile/sections/my-lists/practiceListSelection.ts)
+  // before this component ever mounts. This is still the same Custom
+  // Practice engine/persistence path (completeCustomPracticeWord below) —
+  // only which words are eligible changes; no SRS effect is introduced.
+  restrictToConceptIds?: string[] | null;
 }
 
 const VOCABULARY_IMPORTERS: Record<string, () => Promise<any>> = {
@@ -91,6 +103,7 @@ export function VocabularyPractice({
   selectedExercises,
   onBack,
   onGoFilters,
+  restrictToConceptIds,
 }: VocabularyPracticeProps) {
   const { t } = useLanguage();
   const [words, setWords] = useState<any[]>([]);
@@ -325,29 +338,48 @@ export function VocabularyPractice({
           });
         }
 
-        // Filter by levels if selected (multiple levels)
-        if (selectedLevels.length > 0) {
-          loadedWords = loadedWords.filter((word: any) =>
-            selectedLevels.includes(word.level),
+        const hasConceptIdRestriction = Boolean(restrictToConceptIds && restrictToConceptIds.length > 0);
+
+        if (hasConceptIdRestriction) {
+          // Practice List: restrict to exactly this ordered concept-id set —
+          // level/category/word-type filters do not apply (My Lists' setup
+          // dialog exposes none of them; a list may legitimately span
+          // multiple levels/categories/types). Reorder to match the caller's
+          // exact sequence (Array.filter preserves vocabulary.json's own
+          // order, not the caller's), so "List order" and an already-
+          // shuffled "Random" selection both survive verbatim.
+          const wordByConceptId = new Map(
+            loadedWords.map((word: any) => [String(word.concept_id), word]),
           );
+          loadedWords = restrictToConceptIds!
+            .map((conceptId) => wordByConceptId.get(conceptId))
+            .filter((word: any): word is any => Boolean(word));
+        } else {
+          // Filter by levels if selected (multiple levels)
+          if (selectedLevels.length > 0) {
+            loadedWords = loadedWords.filter((word: any) =>
+              selectedLevels.includes(word.level),
+            );
+          }
+
+          // Filter by categories if selected
+          if (selectedCategories.length > 0) {
+            loadedWords = loadedWords.filter((word: any) =>
+              selectedCategories.includes(word.category),
+            );
+          }
+
+          // Filter by word types if selected
+          if (selectedWordTypes.length > 0) {
+            loadedWords = loadedWords.filter((word: any) =>
+              selectedWordTypes.includes(word.type),
+            );
+          }
         }
 
-        // Filter by categories if selected
-        if (selectedCategories.length > 0) {
-          loadedWords = loadedWords.filter((word: any) =>
-            selectedCategories.includes(word.category),
-          );
-        }
-
-        // Filter by word types if selected
-        if (selectedWordTypes.length > 0) {
-          loadedWords = loadedWords.filter((word: any) =>
-            selectedWordTypes.includes(word.type),
-          );
-        }
-
-        // Shuffle the words to randomize order
-        const shuffledWords = shuffleArray(loadedWords);
+        // Shuffle the words to randomize order — skipped for a concept-id
+        // restriction, whose order is already final (see above).
+        const shuffledWords = hasConceptIdRestriction ? loadedWords : shuffleArray(loadedWords);
         forcedTypingRepeatQueueRef.current = [];
         resumeIndexAfterForcedRepeatRef.current = null;
         setCycleWords([]);
@@ -394,6 +426,7 @@ export function VocabularyPractice({
     selectedLevels,
     selectedCategories,
     selectedWordTypes,
+    restrictToConceptIds,
     selectRandomExercise,
     selectTypingExerciseForWord,
     isCycleModeEnabled,
@@ -1274,7 +1307,16 @@ export function VocabularyPractice({
                       onClick={onGoFilters}
                       className="px-4 py-2.5 rounded-lg font-medium transition-all bg-muted text-muted-foreground hover:bg-muted/80"
                     >
-                      {t("header.filters")}
+                      {/* Practice List (My Lists Phase 3): this button
+                          leaves to that list's own detail view, not a
+                          filters step that doesn't exist in this context —
+                          reuses the existing "Back to My Lists" copy rather
+                          than the ordinary flow's "Filters" label, which
+                          would otherwise describe a page this button
+                          doesn't actually go to. */}
+                      {restrictToConceptIds && restrictToConceptIds.length > 0
+                        ? t("userProfile.myListsSection.detail.backToMyLists")
+                        : t("header.filters")}
                     </button>
 
                     {/* For pairing exercises, allow Skip until completed */}

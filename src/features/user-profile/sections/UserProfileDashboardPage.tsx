@@ -10,7 +10,7 @@ import {
 import { DashboardSection } from "./dashboard/DashboardSection";
 import { LearningSection } from "./learning/LearningSection";
 import { VocabularySection } from "./vocabulary/VocabularySection";
-import { MyListsSection } from "./my-lists/MyListsSection";
+import { MyListsSection, type PracticeListStartConfig } from "./my-lists/MyListsSection";
 import { ProgressSection } from "./progress/ProgressSection";
 import { useProfileSharedProgressData } from "./useProfileSharedProgressData";
 
@@ -26,6 +26,8 @@ interface UserProfileDashboardPageProps {
   onStartCustomPractice?: () => void;
   onStartNewWordStudy?: () => void;
   onStartReviewWords?: () => void;
+  // My Lists Phase 3 — see MyListsSection's own prop for the full contract.
+  onStartPracticeList?: (config: PracticeListStartConfig) => void;
   onSignOut?: () => void | Promise<void>;
   // Lets the Learning section's DailyGoalSelector (which owns its own
   // save round-trip to Supabase) push a successfully saved goal back up
@@ -63,6 +65,7 @@ export function UserProfileDashboardPage({
   onStartCustomPractice,
   onStartNewWordStudy,
   onStartReviewWords,
+  onStartPracticeList,
   onSignOut,
   onDailyGoalChange,
 }: UserProfileDashboardPageProps) {
@@ -145,6 +148,7 @@ export function UserProfileDashboardPage({
                 wordProgressRows={wordProgressRows}
                 wordProgressStatus={wordProgressStatus}
                 onRetryWordProgress={retryWordProgress}
+                onStartPracticeList={onStartPracticeList}
               />
             ) : null}
             {activeSection === "progress" ? (

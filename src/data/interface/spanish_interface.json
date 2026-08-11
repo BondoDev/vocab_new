@@ -470,6 +470,7 @@
       "delete": "Eliminar",
       "addWords": "Añadir palabras",
       "addWordsError": "No se pudieron añadir esas palabras a tu lista. Inténtalo de nuevo.",
+      "practiceList": "Practicar lista",
       "removeFromList": "Quitar de la lista",
       "removedFromList": "Eliminado de la lista",
       "removeError": "No se pudo quitar esta palabra. Inténtalo de nuevo.",
@@ -515,6 +516,20 @@
         "addSelected": "Añadir selección",
         "addWord": "Añadir {count} palabra",
         "addWords": "Añadir {count} palabras"
+      },
+      "practiceSetup": {
+        "title": "Practicar \"{name}\"",
+        "description": "Elige cómo quieres practicar esta lista.",
+        "numberOfWords": "Número de palabras",
+        "wordOrder": "Orden de las palabras",
+        "random": "Aleatorio",
+        "listOrder": "Orden de la lista",
+        "exercises": "Ejercicios",
+        "allCount": "Todas {count}",
+        "exerciseType": "{count} tipo de ejercicio",
+        "exerciseTypes": "{count} tipos de ejercicios",
+        "startPractice": "Empezar práctica",
+        "noWords": "Esta lista no contiene palabras para practicar."
       },
       "search": {
         "placeholder": "Buscar listas",
