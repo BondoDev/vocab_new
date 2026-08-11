@@ -139,7 +139,13 @@ export function UserProfileDashboardPage({
               />
             ) : null}
             {activeSection === "myLists" ? (
-              <MyListsSection userProfile={userProfile} isProfileLoaded={isProfileLoaded} />
+              <MyListsSection
+                userProfile={userProfile}
+                isProfileLoaded={isProfileLoaded}
+                wordProgressRows={wordProgressRows}
+                wordProgressStatus={wordProgressStatus}
+                onRetryWordProgress={retryWordProgress}
+              />
             ) : null}
             {activeSection === "progress" ? (
               <ProgressSection

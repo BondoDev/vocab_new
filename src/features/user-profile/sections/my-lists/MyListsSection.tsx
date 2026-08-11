@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { ListPlus, Plus } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
+import { ListPlus, Plus, Search } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { Button } from "../../../../app/components/ui/button";
@@ -7,46 +8,109 @@ import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
 import {
   createUserVocabularyList,
+  deleteUserVocabularyList,
+  readUserVocabularyListMemberships,
   readUserVocabularyLists,
-  VocabularyListCreateError,
+  renameUserVocabularyList,
+  VocabularyListError,
   type UserVocabularyList,
+  type UserVocabularyListMembership,
 } from "../../../../lib/vocabularyLists";
+import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import type { UserProfile } from "../../../../lib/userProfile";
+import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
 import { CreateListDialog } from "./CreateListDialog";
+import { RenameListDialog } from "./RenameListDialog";
+import { DeleteListDialog } from "./DeleteListDialog";
+import { ListCard } from "./ListCard";
+import { ListDetailView } from "./ListDetailView";
+import { normalizeListNameForComparison } from "./listNameValidation";
+import { computeListCardMetricsByListId, getListCardMetrics } from "./listCardMetrics";
+import { filterListsBySearchQuery, sortLists, type ListSortMode } from "./listSearchSort";
 import "./my-lists-section.scss";
 
-type LoadState = { status: "loading" } | { status: "error" } | { status: "result"; lists: UserVocabularyList[] };
+type LoadState =
+  | { status: "loading" }
+  | { status: "error" }
+  | { status: "result"; lists: UserVocabularyList[]; memberships: UserVocabularyListMembership[] };
 
 interface MyListsSectionProps {
-  // App.tsx's single shared profile load (useUserProfileLoad), matching
-  // every sibling section's own precedent — practiceLanguage below is the
-  // active target language lists are scoped to (see the migration's own
-  // header for why a list belongs to exactly one target language).
+  // App.tsx's single shared profile load, matching every sibling section's
+  // own precedent — practiceLanguage is the active target language lists
+  // are scoped to (see the migration's own header). wordProgressRows/
+  // wordProgressStatus are UserProfileDashboardPage's shared
+  // useProfileSharedProgressData rows (Phase 2A's own addition to this
+  // section's props) — card/detail counts are computed from these
+  // already-loaded rows locally; this section never issues a second
+  // user_word_progress query of its own.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
+  wordProgressRows: UserWordProgressFullRow[];
+  wordProgressStatus: ProfileSharedDataStatus;
+  onRetryWordProgress: () => void;
 }
 
-// My Lists Phase 1: page header, empty state, Create List, and the create
-// dialog. Deliberately does NOT fetch vocabulary.json, resolve words, or
-// touch user_word_progress — a list is organization only (see
-// src/lib/vocabularyLists.ts's own header). List detail pages, adding
-// words to a list, and Study List are explicitly out of scope for this
-// phase; the non-empty branch below renders only name (plus a future word
-// count once a membership table exists), never a full list-detail layout.
-export function MyListsSection({ userProfile, isProfileLoaded }: MyListsSectionProps) {
+function resolveListIdFromSearch(search: string): string | null {
+  return new URLSearchParams(search).get("listId");
+}
+
+function resolveListMutationErrorMessage(
+  t: (key: string) => string,
+  error: unknown,
+  fallbackKey: string,
+): string {
+  const category = error instanceof VocabularyListError ? error.category : "unknown";
+  // A duplicate-name rejection (category "conflict" — see
+  // src/lib/supabaseError.ts's 23505 classification) always shows this
+  // specific copy, regardless of which operation (create/rename) hit it —
+  // never the generic create/rename-failed fallback.
+  if (category === "conflict") {
+    return t("userProfile.myListsSection.duplicateNameError");
+  }
+  return t(resolveSupabaseErrorMessageKey(category, fallbackKey));
+}
+
+// My Lists Phase 2A: real list cards (name, word count, Learning/Known/
+// Mastered counts), search/sort, rename/delete, and a list-detail shell —
+// on top of Phase 1's create flow and empty state (kept byte-for-byte
+// behaviorally: zero lists still shows the same centered empty state, no
+// search/sort/grid). Add Words and Study List remain explicitly out of
+// scope — see ListDetailView's own header for why its word table only
+// reads already-existing membership, never writes it.
+export function MyListsSection({
+  userProfile,
+  isProfileLoaded,
+  wordProgressRows,
+  wordProgressStatus,
+  onRetryWordProgress,
+}: MyListsSectionProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
+  const location = useLocation();
+  const navigate = useNavigate();
   const targetLanguage = userProfile.practiceLanguage;
 
   const [state, setState] = useState<LoadState>({ status: "loading" });
   const [retryToken, setRetryToken] = useState(0);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
+
+  const [renameTarget, setRenameTarget] = useState<UserVocabularyList | null>(null);
+  const [isRenaming, setIsRenaming] = useState(false);
+  const [renameError, setRenameError] = useState<string | null>(null);
+
+  const [deleteTarget, setDeleteTarget] = useState<UserVocabularyList | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortMode, setSortMode] = useState<ListSortMode>("recentlyUpdated");
 
   useEffect(() => {
     if (!authUserId) {
-      setState({ status: "result", lists: [] });
+      setState({ status: "result", lists: [], memberships: [] });
       return;
     }
 
@@ -62,13 +126,21 @@ export function MyListsSection({ userProfile, isProfileLoaded }: MyListsSectionP
       try {
         const session = getStoredSupabaseSession();
         if (!session) {
-          if (!cancelled) setState({ status: "result", lists: [] });
+          if (!cancelled) setState({ status: "result", lists: [], memberships: [] });
           return;
         }
 
         const lists = await readUserVocabularyLists(session, targetLanguage);
         if (cancelled) return;
-        setState({ status: "result", lists });
+        // Batched — one request for every loaded list's memberships, never
+        // one request per card (see the Phase 2A brief's own "avoid one
+        // query per card" requirement).
+        const memberships = await readUserVocabularyListMemberships(
+          session,
+          lists.map((list) => list.id),
+        );
+        if (cancelled) return;
+        setState({ status: "result", lists, memberships });
       } catch (error) {
         if (cancelled) return;
         console.warn("MyListsSection: failed to load vocabulary lists.", describeSupabaseError("readUserVocabularyLists", error));
@@ -81,18 +153,60 @@ export function MyListsSection({ userProfile, isProfileLoaded }: MyListsSectionP
     };
   }, [authUserId, isProfileLoaded, targetLanguage, retryToken]);
 
-  const handleRetry = () => setRetryToken((token) => token + 1);
+  const lists = state.status === "result" ? state.lists : [];
+  const memberships = state.status === "result" ? state.memberships : [];
 
-  const handleOpenDialog = () => {
-    setCreateError(null);
-    setIsDialogOpen(true);
+  const wordStateById = useMemo(() => {
+    const map = new Map<string, UserWordProgressFullRow["wordState"]>();
+    for (const row of wordProgressRows) map.set(row.id, row.wordState);
+    return map;
+  }, [wordProgressRows]);
+
+  const metricsByListId = useMemo(
+    () => computeListCardMetricsByListId(memberships, wordStateById),
+    [memberships, wordStateById],
+  );
+
+  const listId = resolveListIdFromSearch(location.search);
+  const activeList = listId ? (lists.find((list) => list.id === listId) ?? null) : null;
+
+  const goToGrid = () => navigate({ pathname: location.pathname, search: "?section=myLists" });
+  const goToDetail = (id: string) => navigate({ pathname: location.pathname, search: `?section=myLists&listId=${id}` });
+
+  // A stale/foreign listId (deleted elsewhere, bad deep link) once lists
+  // have actually finished loading — bounce back to the grid rather than
+  // rendering a detail view for a list that doesn't exist.
+  useEffect(() => {
+    if (state.status === "result" && listId && !activeList) {
+      goToGrid();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.status, listId, activeList]);
+
+  const handleRetry = () => {
+    onRetryWordProgress();
+    setRetryToken((token) => token + 1);
   };
 
-  // On success, prepends the new list to the already-loaded set and closes
-  // the dialog — no refetch, no reload, so the page transitions out of the
-  // empty state immediately (see the Phase 1 brief's own requirement).
+  // ---- create ----
+  const handleOpenCreateDialog = () => {
+    setCreateError(null);
+    setIsCreateDialogOpen(true);
+  };
+
+  // Optional fast client-side duplicate check against already-loaded
+  // lists (same normalization the database uses) before ever calling the
+  // RPC — database uniqueness (the migration's unique index +
+  // create_user_vocabulary_list's own proactive check) remains
+  // authoritative; this only skips a round trip for the common case.
   const handleCreate = async (name: string) => {
     if (!targetLanguage) return;
+
+    const normalized = normalizeListNameForComparison(name);
+    if (lists.some((list) => normalizeListNameForComparison(list.name) === normalized)) {
+      setCreateError(t("userProfile.myListsSection.duplicateNameError"));
+      return;
+    }
 
     const session = getStoredSupabaseSession();
     if (!session) {
@@ -100,28 +214,155 @@ export function MyListsSection({ userProfile, isProfileLoaded }: MyListsSectionP
       return;
     }
 
-    setIsSubmitting(true);
+    setIsCreating(true);
     setCreateError(null);
     try {
       const created = await createUserVocabularyList(session, targetLanguage, name);
-      setState((prev) => ({
-        status: "result",
-        lists: [created, ...(prev.status === "result" ? prev.lists : [])],
-      }));
-      setIsDialogOpen(false);
+      setState((prev) =>
+        prev.status === "result"
+          ? { status: "result", lists: [created, ...prev.lists], memberships: prev.memberships }
+          : prev,
+      );
+      setIsCreateDialogOpen(false);
     } catch (error) {
       console.warn("MyListsSection: failed to create list.", error);
-      const category = error instanceof VocabularyListCreateError ? error.category : "unknown";
-      setCreateError(t(resolveSupabaseErrorMessageKey(category, "userProfile.myListsSection.createError")));
+      setCreateError(resolveListMutationErrorMessage(t, error, "userProfile.myListsSection.createError"));
     } finally {
-      setIsSubmitting(false);
+      setIsCreating(false);
     }
   };
 
-  const isLoading = state.status === "loading";
-  const isError = state.status === "error";
-  const lists = state.status === "result" ? state.lists : [];
+  // ---- rename ----
+  const handleOpenRenameDialog = (list: UserVocabularyList) => {
+    setRenameError(null);
+    setRenameTarget(list);
+  };
+
+  const handleRename = async (name: string) => {
+    if (!renameTarget) return;
+
+    const normalized = normalizeListNameForComparison(name);
+    const collides = lists.some(
+      (list) => list.id !== renameTarget.id && normalizeListNameForComparison(list.name) === normalized,
+    );
+    if (collides) {
+      setRenameError(t("userProfile.myListsSection.duplicateNameError"));
+      return;
+    }
+
+    const session = getStoredSupabaseSession();
+    if (!session) {
+      setRenameError(t("supabaseErrors.sessionExpired"));
+      return;
+    }
+
+    setIsRenaming(true);
+    setRenameError(null);
+    try {
+      const renamed = await renameUserVocabularyList(session, renameTarget.id, name);
+      setState((prev) =>
+        prev.status === "result"
+          ? {
+              status: "result",
+              lists: prev.lists.map((list) => (list.id === renamed.id ? renamed : list)),
+              memberships: prev.memberships,
+            }
+          : prev,
+      );
+      setRenameTarget(null);
+    } catch (error) {
+      console.warn("MyListsSection: failed to rename list.", error);
+      setRenameError(resolveListMutationErrorMessage(t, error, "userProfile.myListsSection.renameError"));
+    } finally {
+      setIsRenaming(false);
+    }
+  };
+
+  // ---- delete ----
+  const handleOpenDeleteDialog = (list: UserVocabularyList) => {
+    setDeleteError(null);
+    setDeleteTarget(list);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    const deletedId = deleteTarget.id;
+
+    const session = getStoredSupabaseSession();
+    if (!session) {
+      setDeleteError(t("supabaseErrors.sessionExpired"));
+      return;
+    }
+
+    setIsDeleting(true);
+    setDeleteError(null);
+    try {
+      await deleteUserVocabularyList(session, deletedId);
+      setState((prev) =>
+        prev.status === "result"
+          ? {
+              status: "result",
+              lists: prev.lists.filter((list) => list.id !== deletedId),
+              memberships: prev.memberships.filter((membership) => membership.listId !== deletedId),
+            }
+          : prev,
+      );
+      setDeleteTarget(null);
+      // The deleted list's own detail view can't render anything once it's
+      // gone from state — navigate back to the grid rather than leaving the
+      // user on a now-empty detail shell.
+      if (listId === deletedId) {
+        goToGrid();
+      }
+    } catch (error) {
+      console.warn("MyListsSection: failed to delete list.", error);
+      setDeleteError(resolveListMutationErrorMessage(t, error, "userProfile.myListsSection.deleteError"));
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const isLoading = state.status === "loading" || wordProgressStatus === "loading";
+  const isError = state.status === "error" || wordProgressStatus === "error";
   const hasLists = lists.length > 0;
+
+  const visibleLists = useMemo(
+    () => sortLists(filterListsBySearchQuery(lists, searchQuery), sortMode),
+    [lists, searchQuery, sortMode],
+  );
+
+  if (!isLoading && !isError && activeList) {
+    const listMemberships = memberships.filter((membership) => membership.listId === activeList.id);
+    return (
+      <>
+        <ListDetailView
+          list={activeList}
+          metrics={getListCardMetrics(metricsByListId, activeList.id)}
+          memberships={listMemberships}
+          wordProgressRows={wordProgressRows}
+          nativeLanguage={userProfile.nativeLanguage}
+          onBack={goToGrid}
+          onRename={() => handleOpenRenameDialog(activeList)}
+          onDelete={() => handleOpenDeleteDialog(activeList)}
+        />
+
+        <RenameListDialog
+          list={renameTarget}
+          isSubmitting={isRenaming}
+          error={renameError}
+          onOpenChange={(open) => !open && setRenameTarget(null)}
+          onSubmit={handleRename}
+        />
+        <DeleteListDialog
+          list={deleteTarget}
+          isDeleting={isDeleting}
+          error={deleteError}
+          onOpenChange={(open) => !open && setDeleteTarget(null)}
+          onConfirm={handleConfirmDelete}
+        />
+      </>
+    );
+  }
 
   return (
     <>
@@ -135,7 +376,7 @@ export function MyListsSection({ userProfile, isProfileLoaded }: MyListsSectionP
             the empty state below is the only entry point, matching the
             "do not show empty grid cards / duplicate controls" requirement. */}
         {!isLoading && !isError && hasLists ? (
-          <Button type="button" onClick={handleOpenDialog} className="my-lists-section__create-button">
+          <Button type="button" onClick={handleOpenCreateDialog} className="my-lists-section__create-button">
             <Plus aria-hidden="true" />
             {t("userProfile.myListsSection.createButton")}
           </Button>
@@ -158,30 +399,74 @@ export function MyListsSection({ userProfile, isProfileLoaded }: MyListsSectionP
           </div>
           <h2 className="my-lists-empty-state__title">{t("userProfile.myListsSection.emptyState.title")}</h2>
           <p className="my-lists-empty-state__description">{t("userProfile.myListsSection.emptyState.description")}</p>
-          <Button type="button" onClick={handleOpenDialog} className="my-lists-empty-state__button">
+          <Button type="button" onClick={handleOpenCreateDialog} className="my-lists-empty-state__button">
             <Plus aria-hidden="true" />
             {t("userProfile.myListsSection.createButton")}
           </Button>
         </div>
       ) : (
-        // Future-ready, deliberately minimal: name only today. A word count
-        // is added once a membership table exists (Phase 2) — no fake
-        // placeholder count is rendered in the meantime.
-        <ul className="my-lists-grid">
-          {lists.map((list) => (
-            <li key={list.id} className="my-lists-grid__item">
-              <span className="my-lists-grid__name">{list.name}</span>
-            </li>
-          ))}
-        </ul>
+        <>
+          <div className="my-lists-toolbar">
+            <div className="my-lists-toolbar__search">
+              <Search size={15} strokeWidth={2} aria-hidden="true" className="my-lists-toolbar__search-icon" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder={t("userProfile.myListsSection.search.placeholder")}
+                aria-label={t("userProfile.myListsSection.search.ariaLabel")}
+                className="my-lists-toolbar__search-input"
+              />
+            </div>
+            <label className="my-lists-toolbar__sort">
+              <span className="sr-only">{t("userProfile.myListsSection.sort.ariaLabel")}</span>
+              <select
+                value={sortMode}
+                onChange={(event) => setSortMode(event.target.value as ListSortMode)}
+                className="my-lists-toolbar__sort-select"
+              >
+                <option value="recentlyUpdated">{t("userProfile.myListsSection.sort.recentlyUpdated")}</option>
+                <option value="nameAsc">{t("userProfile.myListsSection.sort.nameAsc")}</option>
+                <option value="nameDesc">{t("userProfile.myListsSection.sort.nameDesc")}</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="my-lists-card-grid">
+            {visibleLists.map((list) => (
+              <ListCard
+                key={list.id}
+                list={list}
+                metrics={getListCardMetrics(metricsByListId, list.id)}
+                onView={() => goToDetail(list.id)}
+                onRename={() => handleOpenRenameDialog(list)}
+                onDelete={() => handleOpenDeleteDialog(list)}
+              />
+            ))}
+          </div>
+        </>
       )}
 
       <CreateListDialog
-        open={isDialogOpen}
-        isSubmitting={isSubmitting}
+        open={isCreateDialogOpen}
+        isSubmitting={isCreating}
         error={createError}
-        onOpenChange={setIsDialogOpen}
+        onOpenChange={setIsCreateDialogOpen}
         onSubmit={handleCreate}
+      />
+      <RenameListDialog
+        list={renameTarget}
+        isSubmitting={isRenaming}
+        error={renameError}
+        onOpenChange={(open) => !open && setRenameTarget(null)}
+        onSubmit={handleRename}
+      />
+      <DeleteListDialog
+        list={deleteTarget}
+        isDeleting={isDeleting}
+        error={deleteError}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+        onConfirm={handleConfirmDelete}
       />
     </>
   );

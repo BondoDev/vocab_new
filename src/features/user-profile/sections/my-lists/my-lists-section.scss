@@ -191,3 +191,383 @@
   font-size: 0.95rem;
   font-weight: 600;
 }
+
+/* ============================================================
+   Phase 2A — search/sort toolbar, shown only once at least one list
+   exists (never in the zero-list empty state).
+   ============================================================ */
+
+.my-lists-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.my-lists-toolbar__search {
+  position: relative;
+  flex: 1 1 16rem;
+  min-width: 12rem;
+}
+
+.my-lists-toolbar__search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.my-lists-toolbar__search-input {
+  width: 100%;
+  padding: 0.55rem 0.75rem 0.55rem 2.1rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--input-background, var(--background));
+  color: var(--foreground);
+  font-size: 0.875rem;
+
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 1px;
+  }
+}
+
+.my-lists-toolbar__sort-select {
+  padding: 0.55rem 2rem 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--input-background, var(--background));
+  color: var(--foreground);
+  font-size: 0.875rem;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 1px;
+  }
+}
+
+/* ============================================================
+   Phase 2A — final list cards, replacing the Phase 1 primitive rows.
+   ============================================================ */
+
+.my-lists-card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .my-lists-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .my-lists-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.my-lists-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.my-lists-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.my-lists-card__name {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--foreground);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.my-lists-card__menu-trigger {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  border-radius: calc(var(--radius) - 4px);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+
+  &:hover,
+  &[data-state="open"] {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+}
+
+.my-lists-card__count {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+}
+
+.my-lists-card__bar {
+  display: flex;
+  overflow: hidden;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--muted);
+}
+
+.my-lists-card__bar-segment {
+  min-width: 2px;
+}
+
+.my-lists-card__bar-segment--learning {
+  background: var(--primary);
+}
+
+.my-lists-card__bar-segment--known {
+  background: #22c55e;
+}
+
+.my-lists-card__bar-segment--mastered {
+  background: #f59e0b;
+}
+
+.my-lists-card__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+}
+
+.my-lists-card__stat {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.my-lists-card__stat--learning {
+  color: var(--primary);
+}
+
+.my-lists-card__stat--known {
+  color: color-mix(in srgb, #22c55e 55%, var(--foreground));
+}
+
+.my-lists-card__stat--mastered {
+  color: color-mix(in srgb, #f59e0b 45%, var(--foreground));
+}
+
+.my-lists-card__view-button {
+  margin-top: 0.35rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+
+  &:hover {
+    border-color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+}
+
+/* ============================================================
+   Phase 2A — list detail view.
+   ============================================================ */
+
+.my-lists-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--foreground);
+  }
+}
+
+.my-lists-detail__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.9rem;
+}
+
+.my-lists-detail__title {
+  margin: 0;
+  color: #2f2755;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  line-height: 1.15;
+}
+
+.my-lists-detail__subtitle {
+  margin: 0.3rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.my-lists-detail__actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.5rem;
+}
+
+.my-lists-detail__action {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+}
+
+.my-lists-detail__action--danger {
+  color: var(--destructive);
+
+  &:hover {
+    border-color: var(--destructive);
+    background: color-mix(in srgb, var(--destructive) 8%, transparent);
+  }
+}
+
+.my-lists-detail-table-container {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 2px);
+}
+
+.my-lists-detail-table {
+  width: 100%;
+  min-width: 40rem;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+  }
+
+  th {
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.my-lists-detail-table__word {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.my-lists-detail-table__translation,
+.my-lists-detail-table__meta {
+  color: var(--muted-foreground);
+}
+
+.my-lists-detail-table__actions-head {
+  text-align: right;
+}
+
+.my-lists-detail-table__view-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: calc(var(--radius) - 4px);
+  color: var(--muted-foreground);
+
+  &:hover {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+}
+
+/* Mirrors .vocabulary-level-badge / .vocabulary-status-badge's exact
+   visual language (see vocabulary-section.scss) without importing across
+   section boundaries — each profile section owns its own styles. */
+.my-lists-level-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: calc(var(--radius) - 4px);
+  background: color-mix(in srgb, var(--chart-2) 16%, transparent);
+  color: color-mix(in srgb, var(--chart-2) 55%, var(--foreground));
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.my-lists-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.my-lists-status-badge--learning {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary);
+}
+
+.my-lists-status-badge--known {
+  background: color-mix(in srgb, #22c55e 16%, transparent);
+  color: color-mix(in srgb, #22c55e 50%, var(--foreground));
+}
+
+.my-lists-status-badge--mastered {
+  background: color-mix(in srgb, #f59e0b 18%, transparent);
+  color: color-mix(in srgb, #f59e0b 45%, var(--foreground));
+}

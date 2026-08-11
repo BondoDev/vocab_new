@@ -462,6 +462,12 @@
       "retryButton": "Réessayer",
       "createButton": "Créer une liste",
       "createError": "Impossible de créer la liste. Veuillez réessayer.",
+      "renameError": "Impossible de renommer la liste. Veuillez réessayer.",
+      "deleteError": "Impossible de supprimer la liste. Veuillez réessayer.",
+      "duplicateNameError": "Une liste portant ce nom existe déjà.",
+      "wordsUnit": "mots",
+      "rename": "Renommer",
+      "delete": "Supprimer",
       "emptyState": {
         "title": "Aucune liste pour le moment",
         "description": "Créez votre première liste pour organiser les mots que vous souhaitez apprendre ensemble."
@@ -472,6 +478,32 @@
         "placeholder": "Allemand pour voyager",
         "cancel": "Annuler",
         "submit": "Créer la liste"
+      },
+      "card": {
+        "viewList": "Voir la liste"
+      },
+      "renameModal": {
+        "title": "Renommer la liste",
+        "submit": "Enregistrer"
+      },
+      "deleteDialog": {
+        "title": "Supprimer la liste ?",
+        "description": "La suppression de cette liste supprimera la liste et les mots qui lui sont associés. Votre progression de vocabulaire ne sera pas affectée."
+      },
+      "detail": {
+        "backToMyLists": "Retour à Mes listes",
+        "emptyState": "Aucun mot dans cette liste pour le moment.",
+        "addedColumn": "Ajouté"
+      },
+      "search": {
+        "placeholder": "Rechercher des listes",
+        "ariaLabel": "Rechercher des listes"
+      },
+      "sort": {
+        "ariaLabel": "Trier",
+        "recentlyUpdated": "Mis à jour récemment",
+        "nameAsc": "Nom A-Z",
+        "nameDesc": "Nom Z-A"
       }
     }
   },

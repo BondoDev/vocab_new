@@ -462,6 +462,12 @@
       "retryButton": "Try again",
       "createButton": "Create List",
       "createError": "We couldn't create your list. Please try again.",
+      "renameError": "We couldn't rename your list. Please try again.",
+      "deleteError": "We couldn't delete your list. Please try again.",
+      "duplicateNameError": "A list with this name already exists.",
+      "wordsUnit": "words",
+      "rename": "Rename",
+      "delete": "Delete",
       "emptyState": {
         "title": "No lists yet",
         "description": "Create your first list to organize words you want to learn together."
@@ -472,6 +478,32 @@
         "placeholder": "Travel German",
         "cancel": "Cancel",
         "submit": "Create List"
+      },
+      "card": {
+        "viewList": "View List"
+      },
+      "renameModal": {
+        "title": "Rename List",
+        "submit": "Save"
+      },
+      "deleteDialog": {
+        "title": "Delete list?",
+        "description": "Deleting this list will remove the list and its word memberships. Your vocabulary progress will not be affected."
+      },
+      "detail": {
+        "backToMyLists": "Back to My Lists",
+        "emptyState": "No words in this list yet.",
+        "addedColumn": "Added"
+      },
+      "search": {
+        "placeholder": "Search lists",
+        "ariaLabel": "Search lists"
+      },
+      "sort": {
+        "ariaLabel": "Sort",
+        "recentlyUpdated": "Recently updated",
+        "nameAsc": "Name A–Z",
+        "nameDesc": "Name Z–A"
       }
     }
   },

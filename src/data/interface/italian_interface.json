@@ -462,6 +462,12 @@
       "retryButton": "Riprova",
       "createButton": "Crea lista",
       "createError": "Non è stato possibile creare la lista. Riprova.",
+      "renameError": "Non è stato possibile rinominare la lista. Riprova.",
+      "deleteError": "Non è stato possibile eliminare la lista. Riprova.",
+      "duplicateNameError": "Esiste già una lista con questo nome.",
+      "wordsUnit": "parole",
+      "rename": "Rinomina",
+      "delete": "Elimina",
       "emptyState": {
         "title": "Nessuna lista ancora",
         "description": "Crea la tua prima lista per organizzare le parole che vuoi imparare insieme."
@@ -472,6 +478,32 @@
         "placeholder": "Tedesco per viaggiare",
         "cancel": "Annulla",
         "submit": "Crea lista"
+      },
+      "card": {
+        "viewList": "Vedi lista"
+      },
+      "renameModal": {
+        "title": "Rinomina lista",
+        "submit": "Salva"
+      },
+      "deleteDialog": {
+        "title": "Eliminare la lista?",
+        "description": "L'eliminazione di questa lista rimuoverà la lista e le parole associate. I tuoi progressi nel vocabolario non saranno interessati."
+      },
+      "detail": {
+        "backToMyLists": "Torna a Le mie liste",
+        "emptyState": "Nessuna parola in questa lista per ora.",
+        "addedColumn": "Aggiunta"
+      },
+      "search": {
+        "placeholder": "Cerca liste",
+        "ariaLabel": "Cerca liste"
+      },
+      "sort": {
+        "ariaLabel": "Ordina",
+        "recentlyUpdated": "Aggiornati di recente",
+        "nameAsc": "Nome A-Z",
+        "nameDesc": "Nome Z-A"
       }
     }
   },

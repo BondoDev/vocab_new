@@ -462,6 +462,12 @@
       "retryButton": "Tentar novamente",
       "createButton": "Criar lista",
       "createError": "Não foi possível criar a lista. Tente novamente.",
+      "renameError": "Não foi possível mudar o nome da lista. Tente novamente.",
+      "deleteError": "Não foi possível eliminar a lista. Tente novamente.",
+      "duplicateNameError": "Já existe uma lista com este nome.",
+      "wordsUnit": "palavras",
+      "rename": "Renomear",
+      "delete": "Eliminar",
       "emptyState": {
         "title": "Ainda não há listas",
         "description": "Crie a sua primeira lista para organizar palavras que pretende aprender em conjunto."
@@ -472,6 +478,32 @@
         "placeholder": "Alemão para viagens",
         "cancel": "Cancelar",
         "submit": "Criar lista"
+      },
+      "card": {
+        "viewList": "Ver lista"
+      },
+      "renameModal": {
+        "title": "Renomear lista",
+        "submit": "Guardar"
+      },
+      "deleteDialog": {
+        "title": "Eliminar lista?",
+        "description": "Ao eliminar esta lista, a lista e as suas palavras associadas serão removidas. O seu progresso de vocabulário não será afetado."
+      },
+      "detail": {
+        "backToMyLists": "Voltar a As minhas listas",
+        "emptyState": "Ainda não há palavras nesta lista.",
+        "addedColumn": "Adicionada"
+      },
+      "search": {
+        "placeholder": "Pesquisar listas",
+        "ariaLabel": "Pesquisar listas"
+      },
+      "sort": {
+        "ariaLabel": "Ordenar",
+        "recentlyUpdated": "Atualizado recentemente",
+        "nameAsc": "Nome A-Z",
+        "nameDesc": "Nome Z-A"
       }
     }
   },

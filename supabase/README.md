@@ -1812,6 +1812,100 @@ other table, RPC, policy, and grant in this schema, and every existing row
 in `user_vocabulary_lists` (no `INSERT`/`UPDATE`/`DELETE` against the table
 is ever issued by the migration itself).
 
+## My Lists Phase 2A — duplicate-name protection, rename/delete RPCs, word-membership table (2026-08-11)
+
+Migration: `20260811140000_my_lists_phase2a_duplicate_protection_and_membership.sql`.
+
+**New product rule.** A user may not create two lists with the same name
+for the same `target_language`. Duplicate detection is case- and
+whitespace-insensitive (`"Travel"` / `"travel"` / `" TRAVEL "` /
+`"Travel   "` all collide); the same name is still allowed across
+*different* target languages (German "Travel" and Spanish "Travel" can both
+exist). Enforced with a unique expression index —
+`user_vocabulary_lists_user_language_normalized_name_key` on
+`(user_id, target_language, lower(btrim(name)))` — the authoritative,
+race-safe defense. `create_user_vocabulary_list` and the new
+`rename_user_vocabulary_list` each also run a proactive `EXISTS` check
+first, raising `23505` with this schema's own message so the common
+non-racing case never needs to parse the index's raw constraint text;
+`src/lib/supabaseError.ts` already classifies `23505` as `"conflict"`
+globally, so no new error category was needed on the frontend.
+
+**Existing duplicates are never auto-resolved.** The unique index is added
+inside a guarded `DO` block that counts colliding
+`(user_id, target_language, normalized name)` groups first; if any exist,
+the whole migration aborts with a named exception (not merely that one
+statement — Supabase's migration runner applies each migration file in a
+transaction, so nothing else in this file applies either until the
+duplicates are resolved). Detect them with:
+
+```sql
+select
+  user_id,
+  target_language,
+  lower(btrim(name)) as normalized_name,
+  count(*) as duplicate_count,
+  array_agg(id order by created_at) as list_ids,
+  array_agg(name order by created_at) as names
+from public.user_vocabulary_lists
+group by user_id, target_language, lower(btrim(name))
+having count(*) > 1
+order by duplicate_count desc;
+```
+
+Resolve every returned group by renaming or deleting the extra rows
+(`update`/`delete ... where id = any(...)`, keeping whichever row you want
+to keep) before applying this migration.
+
+**`rename_user_vocabulary_list(p_list_id uuid, p_name text)` /
+`delete_user_vocabulary_list(p_list_id uuid)`** mirror
+`create_user_vocabulary_list`'s exact shape: `SECURITY DEFINER`, empty
+`search_path`, every referenced object schema-qualified, caller derived
+exclusively from `auth.uid()` (no `p_user_id` parameter on either).
+`EXECUTE`: `postgres`/`authenticated`/`service_role` only, `public`/`anon`
+revoked. Rename re-validates ownership (a missing/foreign list simply
+matches zero rows, same pattern as `set_word_progress_favorite`), looks up
+the list's own `target_language` server-side (never a client parameter),
+trims/rejects-blank/caps the name at 80 characters, enforces the same
+duplicate rule (excluding the list's own row), and sets
+`updated_at = now()` explicitly — no generic trigger. Delete only ever
+removes a caller-owned row and never references `user_word_progress` at
+all, so a list rename or delete never touches vocabulary/learning
+progress.
+
+**`public.user_vocabulary_list_words`** — the word-membership foundation:
+`id`, `list_id` (FK -> `user_vocabulary_lists.id`, `ON DELETE CASCADE`),
+`word_progress_id` (FK -> `user_word_progress.id`, `ON DELETE CASCADE`),
+`created_at`; unique `(list_id, word_progress_id)`. It says only "this
+progress row belongs to this list" — it never duplicates `word_state`,
+`target_language`, translation, CEFR level, or word text; all of that
+stays owned by `user_word_progress` (state) or `vocabulary.json` (display
+data, resolved client-side only when a list's detail rows are actually
+rendered, reusing `loadVocabularyProgress.ts` as-is). `target_language` is
+deliberately not denormalized onto this table — a row's language is always
+resolved by joining through `word_progress_id`. An index on
+`word_progress_id` (in addition to the unique constraint's own index,
+which already serves `list_id`-only lookups) exists specifically so a
+future `user_word_progress` deletion cascades without a sequential scan.
+
+RLS: enabled, one `SELECT` policy scoped via an `EXISTS` join against the
+caller's own `user_vocabulary_lists` rows — there is no `user_id` column on
+this table itself; ownership is always derived through the list it belongs
+to. `authenticated` holds `SELECT` only; `anon` holds nothing. **No
+membership-write RPC exists yet** — Phase 2A leaves membership writes
+unavailable; Phase 2B's Add/Remove Words RPC will be the only write path
+when it ships, matching every other table in this schema. Language safety
+for that future write path (a German list must never accept a Spanish
+`user_word_progress` row) is a requirement on that RPC's own design, not
+something this phase's schema or read layer needs to (or does) assume.
+
+Not built in this migration/phase: any membership-write RPC, any
+word-detail/CEFR/translation resolution server-side. Untouched: every other
+table/RPC/policy/grant in this schema, and every existing
+`user_vocabulary_lists` row (no `INSERT`/`UPDATE`/`DELETE` against it is
+ever issued by this migration itself, beyond the guarded read-only
+duplicate check).
+
 ## Live Supabase E2E tests (2026-08-08)
 
 `scripts/tests/live/` is a real, opt-in end-to-end suite that exercises a

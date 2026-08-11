@@ -462,6 +462,12 @@
       "retryButton": "Erneut versuchen",
       "createButton": "Liste erstellen",
       "createError": "Die Liste konnte nicht erstellt werden. Bitte versuche es erneut.",
+      "renameError": "Die Liste konnte nicht umbenannt werden. Bitte versuche es erneut.",
+      "deleteError": "Die Liste konnte nicht gelöscht werden. Bitte versuche es erneut.",
+      "duplicateNameError": "Es gibt bereits eine Liste mit diesem Namen.",
+      "wordsUnit": "Wörter",
+      "rename": "Umbenennen",
+      "delete": "Löschen",
       "emptyState": {
         "title": "Noch keine Listen",
         "description": "Erstelle deine erste Liste, um Wörter zu organisieren, die du zusammen lernen möchtest."
@@ -472,6 +478,32 @@
         "placeholder": "Deutsch für Reisen",
         "cancel": "Abbrechen",
         "submit": "Liste erstellen"
+      },
+      "card": {
+        "viewList": "Liste ansehen"
+      },
+      "renameModal": {
+        "title": "Liste umbenennen",
+        "submit": "Speichern"
+      },
+      "deleteDialog": {
+        "title": "Liste löschen?",
+        "description": "Beim Löschen dieser Liste werden die Liste und ihre Wortzuordnungen entfernt. Dein Lernfortschritt bleibt davon unberührt."
+      },
+      "detail": {
+        "backToMyLists": "Zurück zu Meine Listen",
+        "emptyState": "Noch keine Wörter in dieser Liste.",
+        "addedColumn": "Hinzugefügt"
+      },
+      "search": {
+        "placeholder": "Listen durchsuchen",
+        "ariaLabel": "Listen durchsuchen"
+      },
+      "sort": {
+        "ariaLabel": "Sortieren",
+        "recentlyUpdated": "Zuletzt aktualisiert",
+        "nameAsc": "Name A–Z",
+        "nameDesc": "Name Z–A"
       }
     }
   },

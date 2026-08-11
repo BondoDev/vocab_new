@@ -30,3 +30,14 @@ export function validateListName(rawName: string): ListNameValidationResult {
 
   return { ok: true, name: trimmed };
 }
+
+// Phase 2A — the same case-/whitespace-insensitive normalization the
+// database's unique index and the create/rename RPCs both use
+// (lower(btrim(name))), mirrored here only for the frontend's optional
+// fast-feedback duplicate check against already-loaded lists (see
+// MyListsSection). Database uniqueness remains authoritative regardless —
+// this never replaces the server-side check, it only lets the common
+// non-racing case show the duplicate-name error without a round trip.
+export function normalizeListNameForComparison(name: string): string {
+  return name.trim().toLowerCase();
+}

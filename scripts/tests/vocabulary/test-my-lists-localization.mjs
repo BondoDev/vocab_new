@@ -74,8 +74,8 @@ test("english_interface.json defines a non-empty userProfile.myListsSection", ()
 
 const englishKeys = flattenKeys(englishSection ?? {});
 
-test("13. userProfile.myListsSection has exactly the Phase 1 keys, no more, no less", () => {
-  assert.deepEqual(englishKeys, [
+test("13. userProfile.myListsSection still contains every Phase 1 key (Phase 2A only adds keys, never removes/renames one — see test-my-lists-phase2a-localization.mjs for the full current key-set contract)", () => {
+  const phase1Keys = [
     "ariaLabel",
     "createButton",
     "createError",
@@ -90,7 +90,10 @@ test("13. userProfile.myListsSection has exactly the Phase 1 keys, no more, no l
     "retryButton",
     "subtitle",
     "title",
-  ]);
+  ];
+  for (const key of phase1Keys) {
+    assert.ok(englishKeys.includes(key), `Phase 1 key myListsSection.${key} must still exist`);
+  }
 });
 
 for (const fileName of LOCALE_FILES) {
@@ -258,9 +261,11 @@ function stripLineComments(source) {
     .join("\n");
 }
 
-test("14. No file under the my-lists section imports vocabulary.json or a word-resolution helper", () => {
+test("14. Card/grid/data-layer files under my-lists never import vocabulary.json or a word-resolution helper (counts stay JSON-free); only ListDetailView.tsx may reuse loadVocabularyProgress — and only it, deliberately, for its own detail rows (Phase 2A, not Phase 1)", () => {
+  const allowedException = "ListDetailView.tsx";
   const offenders = [];
   for (const entry of fs.readdirSync(MY_LISTS_DIR)) {
+    if (entry === allowedException) continue;
     const filePath = path.join(MY_LISTS_DIR, entry);
     if (!fs.statSync(filePath).isFile()) continue;
     const content = stripLineComments(fs.readFileSync(filePath, "utf8"));
@@ -269,6 +274,12 @@ test("14. No file under the my-lists section imports vocabulary.json or a word-r
     }
   }
   assert.deepEqual(offenders, [], `unexpected vocabulary-data reference(s): ${offenders.join(", ")}`);
+
+  const detailViewContent = stripLineComments(
+    fs.readFileSync(path.join(MY_LISTS_DIR, allowedException), "utf8"),
+  );
+  assert.doesNotMatch(detailViewContent, /vocabulary\.json/, "even the detail view must resolve via loadVocabularyProgress, never a direct JSON import");
+  assert.match(detailViewContent, /loadVocabularyProgress/, "the detail view is expected to reuse loadVocabularyProgress");
 });
 
 test("14b. src/lib/vocabularyLists.ts never imports vocabulary.json or queries user_word_progress", () => {

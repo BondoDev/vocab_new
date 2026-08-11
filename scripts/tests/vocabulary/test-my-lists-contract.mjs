@@ -48,8 +48,10 @@ test("1. Zero lists renders the empty-state block (icon + title + description + 
   assert.match(sectionSource, /t\("userProfile\.myListsSection\.emptyState\.description"\)/);
 });
 
-test("2. No search, sort, or filter control exists anywhere in the section", () => {
-  assert.doesNotMatch(sectionSource, /search|sort|filter/i);
+test("2. No search, sort, or filter control exists in the zero-list empty state (Phase 2A adds search/sort, but only once at least one list exists — see test-my-lists-phase2a-contract.mjs's own dedicated check)", () => {
+  const emptyBranchMatch = sectionSource.match(/!hasLists \? \(([\s\S]*?)\) : \(/);
+  assert.ok(emptyBranchMatch, "the empty-state JSX branch must exist");
+  assert.doesNotMatch(emptyBranchMatch[1], /search|sort|filter/i);
 });
 
 test("2b. The empty branch never renders a fake placeholder list row", () => {
@@ -60,11 +62,11 @@ test("2b. The empty branch never renders a fake placeholder list row", () => {
 
 console.log("\n=== 3. Create List opens the modal ===\n");
 
-test("3. The header and empty-state Create List buttons both open the dialog via the same handler", () => {
-  assert.match(sectionSource, /const handleOpenDialog = \(\) => \{/);
-  assert.match(sectionSource, /onClick=\{handleOpenDialog\}[\s\S]*?my-lists-section__create-button/);
-  assert.match(sectionSource, /onClick=\{handleOpenDialog\}[\s\S]*?my-lists-empty-state__button/);
-  assert.match(sectionSource, /<CreateListDialog\s+open=\{isDialogOpen\}/);
+test("3. The header and empty-state Create List buttons both open the dialog via the same handler (renamed handleOpenCreateDialog in Phase 2A to disambiguate from rename/delete)", () => {
+  assert.match(sectionSource, /const handleOpenCreateDialog = \(\) => \{/);
+  assert.match(sectionSource, /onClick=\{handleOpenCreateDialog\}[\s\S]*?my-lists-section__create-button/);
+  assert.match(sectionSource, /onClick=\{handleOpenCreateDialog\}[\s\S]*?my-lists-empty-state__button/);
+  assert.match(sectionSource, /<CreateListDialog\s+open=\{isCreateDialogOpen\}/);
 });
 
 console.log("\n=== 4-6. Name validation (empty/whitespace rejected, trimmed) ===\n");
@@ -114,13 +116,13 @@ test("9b. createUserVocabularyList calls the RPC (never a direct table POST), an
 
 console.log("\n=== 10. New list appears without a full page reload ===\n");
 
-test("10. A successful create prepends the returned row into local state and closes the dialog — no refetch, no location.reload", () => {
+test("10. A successful create prepends the returned row into local state (alongside the already-loaded memberships, untouched) and closes the dialog — no refetch, no location.reload", () => {
   const fnMatch = sectionSource.match(/const handleCreate = async \(name: string\) => \{([\s\S]*?)\n  \};/);
   assert.match(
     fnMatch[1],
-    /setState\(\(prev\) => \(\{\s*status: "result",\s*lists: \[created, \.\.\.\(prev\.status === "result" \? prev\.lists : \[\]\)\],\s*\}\)\);/,
+    /setState\(\(prev\) =>\s*prev\.status === "result"\s*\?\s*\{ status: "result", lists: \[created, \.\.\.prev\.lists\], memberships: prev\.memberships \}\s*:\s*prev,\s*\);/,
   );
-  assert.match(fnMatch[1], /setIsDialogOpen\(false\);/);
+  assert.match(fnMatch[1], /setIsCreateDialogOpen\(false\);/);
   assert.doesNotMatch(sectionSource, /location\.reload|window\.location/);
 });
 
@@ -133,14 +135,19 @@ test("11. A load failure shows the restrained error state with Retry, not a raw 
   assert.match(sectionSource, /catch \(error\) \{\s*if \(cancelled\) return;\s*console\.warn\([\s\S]*?setState\(\{ status: "error" \}\);/);
 });
 
-test("12. A create failure surfaces the safe, localized createError copy (or a sharper safe category message) — never the raw error", () => {
+test("12. A create failure surfaces the safe, localized createError copy (or a sharper safe category message, including the Phase 2A duplicate-name case) — never the raw error", () => {
   assert.match(
     dialogSource,
     /role="alert" className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"/,
   );
+  // Phase 2A wraps the same resolveSupabaseErrorMessageKey call inside a
+  // shared resolveListMutationErrorMessage helper (also used by rename),
+  // which additionally maps category "conflict" to the duplicate-name
+  // copy — see test-my-lists-phase2a-contract.mjs for that specific check.
+  assert.match(sectionSource, /resolveSupabaseErrorMessageKey\(category, fallbackKey\)/);
   assert.match(
     sectionSource,
-    /resolveSupabaseErrorMessageKey\(category, "userProfile\.myListsSection\.createError"\)/,
+    /setCreateError\(resolveListMutationErrorMessage\(t, error, "userProfile\.myListsSection\.createError"\)\)/,
   );
   assert.doesNotMatch(sectionSource, /setCreateError\(error\.message\)/);
 });
