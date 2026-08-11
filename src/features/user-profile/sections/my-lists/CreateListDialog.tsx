@@ -1,7 +1,14 @@
 import { useEffect, useId, useState } from "react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { Button } from "../../../../app/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../../../../app/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../../../../app/components/ui/dialog";
 import { Input } from "../../../../app/components/ui/input";
 import { Label } from "../../../../app/components/ui/label";
 import { LIST_NAME_MAX_LENGTH, validateListName } from "./listNameValidation";
@@ -56,6 +63,9 @@ export function CreateListDialog({ open, isSubmitting, error, onOpenChange, onSu
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("userProfile.myListsSection.modal.title")}</DialogTitle>
+          <DialogDescription className="sr-only">
+            {t("userProfile.myListsSection.subtitle")}
+          </DialogDescription>
         </DialogHeader>
 
         <form
