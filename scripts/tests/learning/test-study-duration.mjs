@@ -5,7 +5,11 @@
 //
 // Run: node --experimental-strip-types scripts/tests/learning/test-study-duration.mjs
 import assert from "node:assert/strict";
-import { computeDurationParts } from "../../../src/data/learning/studyDuration.ts";
+import {
+  computeDurationParts,
+  computeStudyActivityChartScale,
+  computeVisibleLabelIndices,
+} from "../../../src/data/learning/studyDuration.ts";
 
 let passed = 0;
 let failed = 0;
@@ -80,6 +84,106 @@ test("13. Every returned part is an integer", () => {
   const parts = computeDurationParts(13321.9);
   assert.ok(Number.isInteger(parts.hours));
   assert.ok(Number.isInteger(parts.minutes));
+});
+
+console.log("\n=== computeStudyActivityChartScale: adaptive Y-axis (Study Activity redesign) ===\n");
+
+test("14. 16 minutes of activity produces the brief's own worked example: 0/10/20/30m", () => {
+  const scale = computeStudyActivityChartScale(16 * 60);
+  assert.deepEqual(scale.tickSecondsList, [0, 600, 1200, 1800]);
+  assert.equal(scale.stepSeconds, 600);
+  assert.equal(scale.maxSeconds, 1800);
+});
+
+test("15. Always exactly 4 gridlines (baseline + 3 ticks), ascending, starting at 0", () => {
+  for (const seconds of [0, 30, 600, 5400, 90000]) {
+    const scale = computeStudyActivityChartScale(seconds);
+    assert.equal(scale.tickSecondsList.length, 4);
+    assert.equal(scale.tickSecondsList[0], 0);
+    for (let i = 1; i < scale.tickSecondsList.length; i += 1) {
+      assert.ok(scale.tickSecondsList[i] > scale.tickSecondsList[i - 1]);
+    }
+  }
+});
+
+test("16. The scale's top tick always covers (is >=) the real max — the tallest bar never overflows the chart", () => {
+  for (const seconds of [1, 59, 61, 1799, 1800, 1801, 7199, 100000]) {
+    const scale = computeStudyActivityChartScale(seconds);
+    assert.ok(scale.maxSeconds >= seconds, `scale max ${scale.maxSeconds} must cover real max ${seconds}`);
+  }
+});
+
+test("17. A small real max (2 minutes) is not force-scaled up to a large fixed ceiling", () => {
+  const scale = computeStudyActivityChartScale(120);
+  // Adapts down to a 1-minute step (0/1/2/3m), not stuck at some large
+  // hardcoded scale like 30 minutes.
+  assert.equal(scale.stepSeconds, 60);
+  assert.equal(scale.maxSeconds, 180);
+});
+
+test("18. Zero activity (nothing tracked in the current view) still produces a legible non-degenerate axis", () => {
+  const scale = computeStudyActivityChartScale(0);
+  assert.ok(scale.stepSeconds > 0);
+  assert.equal(scale.tickSecondsList.length, 4);
+});
+
+test("19. Negative/NaN/Infinity input is treated the same safe way as zero — never throws, never a negative/NaN scale", () => {
+  for (const input of [-100, Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+    const scale = computeStudyActivityChartScale(input);
+    assert.ok(Number.isFinite(scale.stepSeconds) && scale.stepSeconds > 0);
+    assert.ok(scale.tickSecondsList.every((tick) => Number.isFinite(tick) && tick >= 0));
+  }
+});
+
+test("20. The top tick is always exactly 3x the step (3 equal intervals)", () => {
+  for (const seconds of [16 * 60, 500, 999999]) {
+    const scale = computeStudyActivityChartScale(seconds);
+    assert.equal(scale.maxSeconds, scale.stepSeconds * 3);
+  }
+});
+
+test("21. Step sizes are whole seconds (never fractional)", () => {
+  for (const seconds of [1, 47, 12345, 987654]) {
+    const scale = computeStudyActivityChartScale(seconds);
+    assert.ok(Number.isInteger(scale.stepSeconds));
+  }
+});
+
+console.log("\n=== computeVisibleLabelIndices: X-axis label thinning (line-chart redesign) ===\n");
+
+test("22. count <= maxLabels shows every index (the default 7-day view keeps all 7 weekday labels)", () => {
+  const indices = computeVisibleLabelIndices(7, 7);
+  assert.deepEqual([...indices].sort((a, b) => a - b), [0, 1, 2, 3, 4, 5, 6]);
+});
+
+test("23. A 30-day range is thinned down to at most maxLabels, never every date", () => {
+  const indices = computeVisibleLabelIndices(30, 7);
+  assert.ok(indices.size <= 7);
+  assert.ok(indices.size < 30);
+});
+
+test("24. The thinned set always includes the first and last index (axis stays anchored)", () => {
+  const indices = computeVisibleLabelIndices(30, 7);
+  assert.ok(indices.has(0));
+  assert.ok(indices.has(29));
+});
+
+test("25. Every data point is still implied to exist regardless of label thinning — this function only returns label visibility, never a filtered point list", () => {
+  // Contract check: the returned indices are always a subset of [0, count).
+  const count = 30;
+  const indices = computeVisibleLabelIndices(count, 7);
+  for (const index of indices) {
+    assert.ok(index >= 0 && index < count);
+  }
+});
+
+test("26. count of 0 returns an empty set without throwing", () => {
+  assert.equal(computeVisibleLabelIndices(0, 7).size, 0);
+});
+
+test("27. maxLabels of 1 returns just one index", () => {
+  const indices = computeVisibleLabelIndices(30, 1);
+  assert.equal(indices.size, 1);
 });
 
 console.log(`\n─────────────────────────────────────────`);
