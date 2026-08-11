@@ -460,18 +460,30 @@ SEO/Worker-specific guards (`test:seo-output`,
 ## Learning statistics
 
 Study New Words, Review Words, and Custom Practice each track their own
-active-time column on `user_daily_stats` (`study_time_seconds`,
+active-time column on `user_daily_stats` (`new_word_study_time_seconds`,
 `review_time_seconds`, `custom_practice_time_seconds`) via a shared timer
-utility (`src/data/learning/activeWordTimer.ts`); a derived
-`totalTimeSeconds` is computed at read time only
-(`src/lib/learningTimeStats.ts`) and never stored. The temporary
-duration-aware/legacy RPC signatures introduced during the staged rollout
-have since been dropped (see `test:drop-legacy-learning-rpc-signatures-migration-contract`)
+utility (`src/data/learning/activeWordTimer.ts`, which also debounces idle
+time via `recordInteraction()`/`idleThresholdMs`). `study_time_seconds`
+itself is the server-maintained per-day **total** across all three modes
+(Study Activity Phase 1, `supabase/migrations/
+20260811120000_add_new_word_study_time_and_repurpose_total.sql`) — every
+completion RPC increments its own mode column and this total atomically, in
+the same upsert, so no client ever computes or sends a total. The read side
+(`src/lib/learningTimeStats.ts`) still re-derives `totalTimeSeconds` from
+the three mode columns rather than trusting `study_time_seconds` as a
+passthrough, for the same "never trust a stored total" reason the module
+has always followed. The Dashboard's "Study Activity" card
+(`src/features/user-profile/sections/dashboard/StudyActivityCard.tsx`) is
+this data's first UI consumer — a stacked per-day time chart, not the
+quantity chart it replaced. The temporary duration-aware/legacy RPC
+signatures introduced during the original staged rollout have since been
+dropped (see `test:drop-legacy-learning-rpc-signatures-migration-contract`)
 — there is no follow-up cleanup migration still pending. Full design
 (word-level timing, the 300-second cap, per-mode idempotency) is documented
 in
 [`src/features/user-profile/sections/learning/README.md`](../src/features/user-profile/sections/learning/README.md)
-and `supabase/README.md`'s Corrective Migration 5 section — not duplicated
+and `supabase/README.md`'s Corrective Migration 5 / Study Activity Phase 1
+sections — not duplicated
 here.
 
 ## Operations

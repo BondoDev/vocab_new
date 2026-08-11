@@ -90,17 +90,28 @@
         },
         "studyActivity": {
           "title": "Lernaktivität",
-          "newWordsLabel": "Neue Wörter",
           "viewAllActivity": "Alle Aktivitäten anzeigen",
+          "total": "Gesamt",
           "range": {
             "7d": "7 Tage",
             "30d": "30 Tage",
             "90d": "90 Tage",
             "all": "Gesamt"
           },
-          "tooltip": {
-            "dateLabel": "Datum",
-            "periodLabel": "Zeitraum"
+          "summaryPeriod": {
+            "7d": "Letzte 7 Tage",
+            "30d": "Letzte 30 Tage",
+            "90d": "Letzte 90 Tage",
+            "all": "Gesamte Zeit"
+          },
+          "duration": {
+            "hoursMinutes": "{hours} Std {minutes} Min",
+            "hoursOnly": "{hours} Std",
+            "minutesOnly": "{minutes} Min"
+          },
+          "emptyState": {
+            "title": "Noch keine Lernaktivität",
+            "message": "Deine Lernzeit wird hier angezeigt, sobald du mit dem Lernen beginnst."
           }
         },
         "wordsLearned": {

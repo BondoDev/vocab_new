@@ -307,7 +307,13 @@ export function NewWordStudySession({
               item={currentItem}
               practiceLanguage={practiceLanguage}
               yourLanguage={yourLanguage}
-              onContinue={() => dispatch({ type: "START_EXERCISES" })}
+              onContinue={() => {
+                // Genuine user interaction (Continue click) — refreshes the
+                // active-time idle deadline (see activeWordTimer.ts's own
+                // header) before the word's exercises begin.
+                wordTimerRef.current?.recordInteraction();
+                dispatch({ type: "START_EXERCISES" });
+              }}
             />
           )}
 
@@ -318,6 +324,10 @@ export function NewWordStudySession({
               item={currentItem}
               practiceLanguage={practiceLanguage}
               onComplete={(outcome) => {
+                // Every exercise-step completion (typing/half-word/broken-
+                // word submit) is a genuine interaction — see
+                // recordInteraction()'s own contract.
+                wordTimerRef.current?.recordInteraction();
                 // Completing full_typing doesn't finish the word here — it
                 // hands off to the saving_word persistence boundary (see the
                 // effect above). The "word learned" toast fires from that

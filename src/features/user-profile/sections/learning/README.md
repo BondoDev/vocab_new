@@ -8,9 +8,13 @@ Although they all use the same exercise components, they affect the user's learn
 
 | Learning mode | Purpose | Updates learning progress | Tracks active time |
 |--------------|---------|---------------------------|---------------------|
-| Study New Words | Learn new vocabulary | ✅ Yes | ✅ `study_time_seconds` |
+| Study New Words | Learn new vocabulary | ✅ Yes | ✅ `new_word_study_time_seconds` |
 | Review Words | Reinforce previously learned vocabulary | ✅ Yes | ✅ `review_time_seconds` |
 | Custom Practice | Free practice without affecting progress | ❌ No | ✅ `custom_practice_time_seconds` only — see "Active-Time Tracking" below |
+
+Each mode's duration is also added to `study_time_seconds`, the server-
+maintained per-day **total** across all three modes (Study Activity
+Phase 1) — see "Three independent columns, plus a maintained total" below.
 
 ---
 
@@ -70,7 +74,7 @@ Initial values:
 The same operation also updates:
 
 `user_daily_stats.new_words_completed`
-`user_daily_stats.study_time_seconds` (the word's active exercise time — see "Active-Time Tracking" below)
+`user_daily_stats.new_word_study_time_seconds` and `user_daily_stats.study_time_seconds` (the word's active exercise time, both its own mode column and the per-day total — see "Active-Time Tracking" below)
 
 using an atomic database transaction.
 
@@ -411,21 +415,31 @@ group exercises (Connect Words, Listening) are not timed in this phase. See
 
 # Active-Time Tracking (Learning Statistics Phase 1)
 
-## Three independent columns
+## Three independent columns, plus a maintained total
 
-`user_daily_stats` gained two columns alongside the existing
-`study_time_seconds`:
+`user_daily_stats` has three mode-specific columns:
 
 | Column | Meaning |
 |---|---|
-| `study_time_seconds` | Active time from Study New Words only |
+| `new_word_study_time_seconds` | Active time from Study New Words only |
 | `review_time_seconds` | Active time from Review Words only |
 | `custom_practice_time_seconds` | Active time from Custom Practice only |
 
-`total_time_seconds` is **never stored**. It is derived at read time as
-`study_time_seconds + review_time_seconds + custom_practice_time_seconds`
-(`src/lib/learningTimeStats.ts`). As of this phase, no UI displays any of
-these — the data contract exists for a future Statistics page.
+**Study Activity Phase 1** (`supabase/migrations/
+20260811120000_add_new_word_study_time_and_repurpose_total.sql`) added
+`new_word_study_time_seconds` and repurposed the pre-existing
+`study_time_seconds` column into the per-day **total** across all three
+modes — every completion RPC increments its own mode column and this total
+atomically, in the same upsert, so it is never client-computed. The read
+side (`src/lib/learningTimeStats.ts`) still independently re-derives
+`totalTimeSeconds` from the three mode columns rather than trusting
+`study_time_seconds` as a passthrough — the same "never trust a stored
+total" precedent this module followed even before the total was reliably
+maintained server-side. The Dashboard's "Study Activity" card
+(`src/features/user-profile/sections/dashboard/StudyActivityCard.tsx`) is
+the first UI to display any of this — a stacked per-day/week/month time
+chart, not the earlier data contract's originally-envisioned future
+Statistics page.
 
 ## Word-level timing, not per-exercise
 
@@ -437,7 +451,7 @@ own duration; its group/reinforcement exercise is never timed. A Custom
 Practice single-word exercise contributes its own duration; four-word group
 exercises are not timed in this phase.
 
-## Visible-tab-only, capped, whole-second
+## Visible-tab-only, idle-protected, capped, whole-second
 
 The shared timer (`src/data/learning/activeWordTimer.ts`) starts once a word
 is fully visible, pauses immediately if the tab is hidden
@@ -446,7 +460,20 @@ instant the word's exercise sequence finishes. Duration is
 `floor(activeMilliseconds / 1000)`, capped at `MAX_WORD_TIME_SECONDS` (300)
 — one named constant the frontend and every one of the three RPCs
 independently enforce. No `setInterval`, no live-updating display, no
-localStorage, no mouse/keyboard activity tracking in this phase.
+localStorage.
+
+**Idle protection (Study Activity Phase 1)**: each session component calls
+`recordInteraction()` at its own genuine user-interaction chokepoints
+(NewWordStudySession's word-intro Continue and per-exercise submit,
+ReviewSession's exercise submit, VocabularyPractice's Next/Enter). If more
+than `idleThresholdMs` (default 60s, `DEFAULT_IDLE_THRESHOLD_MS`) elapses
+between two interactions with the tab still visible, the idle portion of
+that gap is excluded from the accumulated duration — computed lazily (no
+`setInterval`) by capping each closed window at
+`min(now, lastActivityAtMs + idleThresholdMs)`. This module still listens
+for no mouse/keyboard events of its own — `recordInteraction()` is an
+explicit call from each mode's own existing action handlers, not a global
+listener.
 
 ## Idempotency — why a retry never double-counts
 

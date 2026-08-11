@@ -769,12 +769,17 @@
 }
 
 /* ------------------------------------------------------------
-   Card B — StudyActivityCard: grouped New Words / Reviews bars, a range
-   selector shown only once expanded, and a lightweight CSS-only hover/
-   focus tooltip per bar-group (no JS positioning — a deliberately simpler
-   mechanism than VocabularyGrowthChart's own boundary-aware tooltip,
-   appropriate for a compact dashboard card rather than a full analytics
-   chart).
+   Card B — StudyActivityCard: Study Activity Phase 1 reworked this from a
+   grouped New Words / Reviews quantity chart into a stacked ACTIVE STUDY
+   TIME chart (Study New Words / Review Words / Custom Practice per day), a
+   total-time summary line above it, a range selector shown only once
+   expanded, and a lightweight CSS-only tooltip per bar-group (no JS
+   positioning — a deliberately simpler mechanism than VocabularyGrowthChart's
+   own boundary-aware tooltip, appropriate for a compact dashboard card
+   rather than a full analytics chart). The tooltip triggers on plain
+   `:focus` (not `:focus-visible`) specifically so a tap on mobile — which
+   focuses but does not always satisfy the focus-visible heuristic — still
+   reveals it.
    ------------------------------------------------------------ */
 @media (max-width: 1117.98px) {
   .vocabulary-overview-card__column {
@@ -789,6 +794,15 @@
 }
 
 .study-activity-card {
+  // Study New Words / Review Words / Custom Practice — reuses
+  // FluentStellar's existing semantic tokens (--primary purple, --chart-2
+  // blue) plus the same literal green already used for "Known"/mastered-
+  // adjacent state elsewhere in this stylesheet, rather than inventing a
+  // new ad hoc color for the one series with no existing token.
+  --study-activity-new: var(--primary);
+  --study-activity-review: var(--chart-2);
+  --study-activity-practice: #22c55e;
+
   &__ranges {
     display: flex;
     flex-wrap: wrap;
@@ -826,9 +840,28 @@
     }
   }
 
+  &__summary {
+    margin-bottom: 0.65rem;
+  }
+
+  &__summary-value {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  &__summary-label {
+    margin: 0.15rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+  }
+
   &__legend {
     display: flex;
-    gap: 0.9rem;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.9rem;
     margin-bottom: 0.6rem;
   }
 
@@ -848,20 +881,63 @@
   }
 
   &__legend-item--new &__legend-dot {
-    background: var(--primary);
+    background: var(--study-activity-new);
   }
 
-  &__legend-item--reviews &__legend-dot {
-    background: var(--chart-2);
+  &__legend-item--review &__legend-dot {
+    background: var(--study-activity-review);
+  }
+
+  &__legend-item--practice &__legend-dot {
+    background: var(--study-activity-practice);
+  }
+
+  &__empty {
+    padding: 0.6rem 0 0.9rem;
+  }
+
+  &__empty-title {
+    margin: 0 0 0.25rem;
+    color: var(--foreground);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  &__empty-message {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  &__skeleton-block {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0.6rem;
   }
 
   &__skeleton {
     display: block;
-    width: 100%;
-    height: 6.5rem;
     border-radius: calc(var(--radius) - 4px);
     background: var(--muted);
     animation: dashboard-card-skeleton-pulse 1.4s ease-in-out infinite;
+
+    &--summary {
+      width: 6rem;
+      height: 1.6rem;
+    }
+
+    &--legend {
+      width: min(100%, 16rem);
+      height: 0.85rem;
+    }
+
+    &--chart {
+      width: 100%;
+      flex: 1 1 6.5rem;
+      min-height: 6.5rem;
+    }
   }
 
   &__chart {
@@ -892,7 +968,7 @@
     }
 
     &:hover,
-    &:focus-visible {
+    &:focus {
       .study-activity-card__tooltip {
         opacity: 1;
         visibility: visible;
@@ -901,20 +977,16 @@
     }
   }
 
-  &__bars {
+  // One stacked bar per bucket (not grouped side-by-side tracks): three
+  // segments in a single column-reverse flex track so the first DOM child
+  // (Custom Practice) anchors at the bottom, Study New Words stacks above
+  // it, and Review sits on top — matching the brief's own stacking order.
+  &__bar-track {
     display: flex;
-    align-items: flex-end;
-    gap: 0.15rem;
+    flex-direction: column-reverse;
     width: 100%;
     height: 100%;
-  }
-
-  &__bar-track {
-    flex: 1 1 0;
-    display: flex;
-    align-items: flex-end;
-    height: 100%;
-    min-width: 0.2rem;
+    min-width: 0.3rem;
     border-radius: 999px 999px 2px 2px;
     background: color-mix(in srgb, var(--muted-foreground) 8%, transparent);
     overflow: hidden;
@@ -922,16 +994,19 @@
 
   &__bar-fill {
     width: 100%;
-    min-height: 2px;
     border-radius: inherit;
     transition: height 300ms ease;
 
     &--new {
-      background: var(--primary);
+      background: var(--study-activity-new);
     }
 
-    &--reviews {
-      background: var(--chart-2);
+    &--review {
+      background: var(--study-activity-review);
+    }
+
+    &--practice {
+      background: var(--study-activity-practice);
     }
   }
 
@@ -946,15 +1021,16 @@
     bottom: 100%;
     left: 50%;
     z-index: 1;
+    width: max-content;
+    max-width: 13rem;
     transform: translate(-50%, 0);
     margin-bottom: 0.35rem;
-    padding: 0.45rem 0.6rem;
+    padding: 0.5rem 0.65rem;
     border-radius: calc(var(--radius) - 4px);
     background: var(--foreground);
     color: var(--background);
     font-size: 0.7rem;
     line-height: 1.4;
-    white-space: nowrap;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -964,12 +1040,24 @@
   }
 
   &__tooltip-period {
-    margin: 0 0 0.15rem;
+    margin: 0 0 0.3rem;
     font-weight: 700;
+    white-space: nowrap;
   }
 
   &__tooltip-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
     margin: 0;
+
+    &--total {
+      margin-top: 0.3rem;
+      padding-top: 0.3rem;
+      border-top: 1px solid color-mix(in srgb, var(--background) 25%, transparent);
+      font-weight: 700;
+    }
   }
 }
 

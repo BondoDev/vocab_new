@@ -696,6 +696,12 @@ export function VocabularyPractice({
 
   const handleNext = () => {
     if (isCardSwitching) return;
+    // Moving to the next exercise is a genuine interaction — refreshes the
+    // active-time idle deadline (see activeWordTimer.ts's own header).
+    // Fired here (once per Next action, whether by click or the Enter-key
+    // handler below) rather than inside runNextStep itself, since this is
+    // the single point every "advance" path already funnels through.
+    customPracticeTimerRef.current?.recordInteraction();
     setIsCardSwitching(true);
 
     if (cardSwitchTimeoutRef.current !== null) {

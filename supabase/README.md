@@ -1696,6 +1696,50 @@ client-side by `vocabularyGrowth.ts`'s own `resolveWordCreatedDateISO`
 (that table is already directly readable by its owner, so no RPC was
 needed for it).
 
+## Study Activity Phase 1 — new_word_study_time_seconds + study_time_seconds repurposed as total (2026-08-11)
+
+Migration: `20260811120000_add_new_word_study_time_and_repurpose_total.sql`.
+
+The Dashboard's "Study Activity" card was reworked from a quantity chart
+(new words + reviews) into a time chart (active minutes/hours per learning
+mode, stacked by day). That surfaced a naming problem corrective migration 5
+left behind: `user_daily_stats.study_time_seconds` reads like a total, but
+has — since the baseline migration — only ever been written by
+`complete_new_word_study`, i.e. it has only ever meant "Study New Words
+active time," never a genuine per-day total. `review_time_seconds`/
+`custom_practice_time_seconds` were always correctly mode-specific.
+
+This migration:
+
+- Adds `new_word_study_time_seconds integer not null default 0` (CHECK
+  `>= 0`, same guarded-named-constraint idiom as corrective migration 5) —
+  the mode-specific column `study_time_seconds` should have been from the
+  start.
+- One-time backfills every existing row:
+  `new_word_study_time_seconds := study_time_seconds` (the old value, i.e.
+  exactly what it already meant), then
+  `study_time_seconds := study_time_seconds + review_time_seconds +
+  custom_practice_time_seconds` (turning it into the true total). This is a
+  **truthful reclassification, not a fabrication** — every row already has
+  full per-mode fidelity, because mode-tracking has been the only write path
+  since corrective migration 5 shipped. No "Uncategorized" bucket exists
+  anywhere in this schema or the Dashboard UI as a result.
+- Redefines `complete_new_word_study`, `complete_word_review`, and
+  `complete_custom_practice_word` with **identical signatures** to their
+  current (`20260806190000`) versions — grants are preserved automatically
+  by `CREATE OR REPLACE`, and no frontend call site changes at all. Each now
+  increments its own mode column **and** `study_time_seconds` (the total)
+  atomically, in the same upsert, so the invariant
+  `study_time_seconds = new_word_study_time_seconds + review_time_seconds +
+  custom_practice_time_seconds` holds for every row written from this point
+  forward, entirely server-side.
+
+The backfill `UPDATE` is a one-time data migration (guarded with `where
+new_word_study_time_seconds = 0` as a best-effort re-run safety net), not
+idempotent DDL — like every migration in this repository, it is written to
+run exactly once via the standard Supabase migration runner, not to be
+manually re-executed against an already-migrated database.
+
 ## Live Supabase E2E tests (2026-08-08)
 
 `scripts/tests/live/` is a real, opt-in end-to-end suite that exercises a
