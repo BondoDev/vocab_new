@@ -155,7 +155,6 @@ export function UserProfileDashboardPage({
                 wordProgressRows={wordProgressRows}
                 wordProgressStatus={wordProgressStatus}
                 onRetryWordProgress={retryWordProgress}
-                onStartNewWordStudy={onStartNewWordStudy}
                 onStartReviewWords={onStartReviewWords}
                 onNavigateToSection={setActiveSection}
               />

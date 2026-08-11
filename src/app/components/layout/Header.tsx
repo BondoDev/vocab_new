@@ -22,7 +22,8 @@ import {
   X,
 } from "lucide-react";
 import { UILanguageSwitcher } from "./UILanguageSwitcher";
-import { useLanguage } from "../../../contexts/LanguageContext";
+import { useLanguage, type UILanguage } from "../../../contexts/LanguageContext";
+import type { LanguageLevelCode } from "../../../lib/userProfile";
 import {
   Dialog,
   DialogContent,
@@ -67,7 +68,7 @@ const NAV_HREFS = {
   profile: "/profile",
 } as const;
 
-type AccountProfileSection = "dashboard" | "learning" | "vocabulary";
+type AccountProfileSection = "dashboard" | "learning" | "vocabulary" | "progress";
 
 const ACCOUNT_NAV_GROUPS = [
   {
@@ -82,11 +83,12 @@ const ACCOUNT_NAV_GROUPS = [
       { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target, section: "learning" as const },
       { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText, section: "vocabulary" as const },
       { id: "my-lists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus, disabled: true },
+      { id: "guidance", labelKey: "userProfile.sidebar.items.guidance", icon: Compass, disabled: true },
     ],
   },
   {
     labelKey: "userProfile.sidebar.groups.insights",
-    items: [{ id: "progress", labelKey: "userProfile.sidebar.items.progress", icon: ChartSpline, disabled: true }],
+    items: [{ id: "progress", labelKey: "userProfile.sidebar.items.progress", icon: ChartSpline, section: "progress" as const }],
   },
   {
     labelKey: "userProfile.sidebar.groups.system",
@@ -295,6 +297,8 @@ interface HeaderProps {
     | "notFound";
   authSession?: StoredSupabaseSession | null;
   accountNickname?: string;
+  accountPracticeLanguage?: UILanguage | "";
+  accountLanguageLevel?: LanguageLevelCode | "";
   onAuthSessionChange?: (session: StoredSupabaseSession | null) => void;
   onSignedOut?: () => void;
   // Surfaces a redirect-time auth failure (e.g. a denied Google OAuth
@@ -317,6 +321,8 @@ export function Header({
   activePage,
   authSession: controlledAuthSession,
   accountNickname,
+  accountPracticeLanguage,
+  accountLanguageLevel,
   onAuthSessionChange,
   onSignedOut,
   authRedirectError,
@@ -367,6 +373,8 @@ export function Header({
     authMode === "login" ? "Continue with Google" : "Sign up with Google";
   const accountDisplayName = accountNickname?.trim() || "Account";
   const nicknameInitial = accountNickname?.trim().charAt(0).toUpperCase() ?? "";
+  const accountLanguageLabel = accountPracticeLanguage ? t(`languageNames.${accountPracticeLanguage}`) : "";
+  const accountMeta = [accountLanguageLabel, accountLanguageLevel].filter(Boolean).join(" • ");
   const authButtonLabel = authSession
     ? nicknameInitial || "Account"
     : loginLabel;
@@ -954,8 +962,15 @@ export function Header({
                     sideOffset={8}
                     className="w-56 rounded-2xl border border-white/15 bg-[#fffdfd] p-2 text-[#261943] shadow-[0_18px_42px_rgba(18,12,38,0.2)]"
                   >
-                    <DropdownMenuLabel className="px-3 py-2 text-center text-xs font-semibold uppercase tracking-[0.18em] text-[#7c6ca6]">
-                      {accountDisplayName}
+                    <DropdownMenuLabel className="px-3 py-2 text-center">
+                      <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-[#7c6ca6]">
+                        {accountDisplayName}
+                      </span>
+                      {accountMeta ? (
+                        <span className="mt-1 block text-[0.72rem] font-semibold normal-case tracking-normal text-[#8b7fb0]">
+                          {accountMeta}
+                        </span>
+                      ) : null}
                     </DropdownMenuLabel>
                     {ACCOUNT_NAV_GROUPS.map((group) => (
                       <div key={group.labelKey}>
@@ -1106,6 +1121,15 @@ export function Header({
                   />
                   Account
                 </button>
+                <section className="header-mobile-account-menu__summary" aria-label={accountDisplayName}>
+                  <span className="header-mobile-account-menu__avatar" aria-hidden="true">
+                    {nicknameInitial || "A"}
+                  </span>
+                  <span className="header-mobile-account-menu__identity">
+                    <span className="header-mobile-account-menu__name">{accountDisplayName}</span>
+                    {accountMeta ? <span className="header-mobile-account-menu__meta">{accountMeta}</span> : null}
+                  </span>
+                </section>
 
                 <div className="header-mobile-account-menu__list">
                   {ACCOUNT_NAV_GROUPS.map((group) => (

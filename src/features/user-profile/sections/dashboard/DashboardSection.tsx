@@ -31,7 +31,6 @@ interface DashboardSectionProps {
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
   onRetryWordProgress?: () => void;
-  onStartNewWordStudy?: () => void;
   onStartReviewWords?: () => void;
   // Lets Vocabulary Overview's "View Vocabulary" and Milestone Preview's
   // "View Progress" switch the active profile section in place — the same
@@ -63,7 +62,6 @@ export function DashboardSection({
   wordProgressRows,
   wordProgressStatus,
   onRetryWordProgress,
-  onStartNewWordStudy,
   onStartReviewWords,
   onNavigateToSection,
 }: DashboardSectionProps) {
@@ -139,7 +137,6 @@ export function DashboardSection({
             retryDailyStats();
             retryVocabularyGrowth();
           }}
-          onStartNewWordStudy={onStartNewWordStudy}
         />
         <StudyActivityCard
           status={dailyStatsStatus}

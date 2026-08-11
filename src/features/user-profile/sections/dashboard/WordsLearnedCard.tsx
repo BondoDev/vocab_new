@@ -34,7 +34,6 @@ interface WordsLearnedCardProps {
   vocabularyGrowthHistory: VocabularyGrowthDayCounts[];
   todayISO: string | null;
   onRetry?: () => void;
-  onStartNewWordStudy?: () => void;
 }
 
 // Dashboard Phase 3 — Card C: vocabulary progress over the last seven
@@ -48,7 +47,6 @@ export function WordsLearnedCard({
   vocabularyGrowthHistory,
   todayISO,
   onRetry,
-  onStartNewWordStudy,
 }: WordsLearnedCardProps) {
   const { t } = useLanguage();
 
@@ -189,12 +187,6 @@ export function WordsLearnedCard({
               </div>
             ))}
           </div>
-
-          {isEmpty ? (
-            <button type="button" className="dashboard-card__action" onClick={onStartNewWordStudy}>
-              {t("userProfile.learningSection.modeCards.modes.studyNewWords.buttonLabel")}
-            </button>
-          ) : null}
         </>
       )}
     </section>

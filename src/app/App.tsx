@@ -524,11 +524,13 @@ function AppContent({
     onFilters: () => handleRequireLanguages("levelCategory"),
     onExercises: () => handleRequireLanguages("exerciseSelection"),
     onExplore: () => navigate(ROUTES.explore),
-    onProfile: (section?: "dashboard" | "learning" | "vocabulary") => {
+    onProfile: (section?: "dashboard" | "learning" | "vocabulary" | "progress") => {
       navigate(section ? `${ROUTES.profile}?section=${section}` : ROUTES.profile);
     },
     authSession,
     accountNickname: userProfile.nickname,
+    accountPracticeLanguage: userProfile.practiceLanguage,
+    accountLanguageLevel: userProfile.languageLevel,
     onAuthSessionChange: handleAuthSessionChange,
     onSignedOut: () => navigate(ROUTES.exerciseSelection),
     authRedirectError,
