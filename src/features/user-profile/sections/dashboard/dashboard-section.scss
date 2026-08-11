@@ -770,16 +770,13 @@
 
 /* ------------------------------------------------------------
    Card B — StudyActivityCard: Study Activity Phase 1 reworked this from a
-   grouped New Words / Reviews quantity chart into a stacked ACTIVE STUDY
-   TIME chart (Study New Words / Review Words / Custom Practice per day), a
-   total-time summary line above it, a range selector shown only once
-   expanded, and a lightweight CSS-only tooltip per bar-group (no JS
-   positioning — a deliberately simpler mechanism than VocabularyGrowthChart's
-   own boundary-aware tooltip, appropriate for a compact dashboard card
-   rather than a full analytics chart). The tooltip triggers on plain
-   `:focus` (not `:focus-visible`) specifically so a tap on mobile — which
-   focuses but does not always satisfy the focus-visible heuristic — still
-   reveals it.
+   grouped New Words / Reviews quantity chart into a THREE-SERIES LINE
+   CHART of active study time (Study New Words / Review Words / Custom
+   Practice per day), a total-time summary line above it, a range selector
+   shown only once expanded, and one shared tooltip per day (covering all
+   three series at once) driven by React state rather than CSS :hover —
+   see StudyActivityCard.tsx — so desktop hover, keyboard focus, and
+   mobile tap all show it identically.
    ------------------------------------------------------------ */
 @media (max-width: 1117.98px) {
   .vocabulary-overview-card__column {
@@ -802,6 +799,24 @@
   --study-activity-new: var(--primary);
   --study-activity-review: var(--chart-2);
   --study-activity-practice: #22c55e;
+
+  // Title + compact "{total} · {period}" summary line, stacked, sitting as
+  // one flex child of the shared .dashboard-card__header (View all
+  // activity is the other) — deliberately small, never a large standalone
+  // block.
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  &__summary-line {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
 
   &__ranges {
     display: flex;
@@ -840,19 +855,23 @@
     }
   }
 
+  // Compact legend — label is the primary (foreground) text, the per-mode
+  // total is deliberately secondary (smaller, muted, right after the
+  // label) rather than competing with it for attention.
   &__legend {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.45rem 0.9rem;
-    margin-bottom: 0.6rem;
+    align-items: baseline;
+    gap: 0.4rem 0.9rem;
+    margin-bottom: 0.4rem;
   }
 
   &__legend-item {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.32rem;
     min-width: 0;
-    color: var(--muted-foreground);
+    color: var(--foreground);
     font-size: 0.72rem;
     font-weight: 600;
   }
@@ -860,6 +879,7 @@
   &__legend-dot {
     width: 0.5rem;
     height: 0.5rem;
+    flex-shrink: 0;
     border-radius: 999px;
   }
 
@@ -880,9 +900,10 @@
   }
 
   &__legend-value {
-    color: var(--foreground);
-    font-size: 0.74rem;
-    font-weight: 750;
+    margin-left: 0.15rem;
+    color: var(--muted-foreground);
+    font-size: 0.68rem;
+    font-weight: 600;
     line-height: 1;
     white-space: nowrap;
   }
@@ -930,62 +951,161 @@
     }
   }
 
-  &__chart {
-    display: flex;
-    align-items: flex-end;
-    gap: 0.35rem;
-    height: 6.5rem;
-
-    &--expanded {
-      gap: 0.2rem;
-    }
+  // ------------------------------------------------------------
+  // Chart redesign — a compact THREE-SERIES LINE CHART: one smooth
+  // monotone-cubic curve + a very subtle gradient area fill + small dots
+  // per day per mode, plotted against the same adaptive Y-axis
+  // (computeStudyActivityChartScale) the earlier bar version used. A 2-row
+  // x 2-column grid: row 1 is [axis-label gutter, plot] (a fixed height —
+  // gridlines, the SVG curves/fills, the dots, the active-day guide, and
+  // the interactive hit-area columns all share this exact box, which is
+  // what keeps every one of them measured against the identical
+  // baseline); row 2 is [empty, x-axis labels], aligned under the very
+  // same plot column so a label always sits directly under its own point.
+  // ------------------------------------------------------------
+  &__chart-area {
+    display: grid;
+    grid-template-columns: 1.9rem 1fr;
+    grid-template-rows: 6.5rem auto;
+    column-gap: 0.4rem;
+    row-gap: 0.3rem;
   }
 
-  &__bar-group {
+  &__grid {
     position: relative;
-    display: flex;
-    flex: 1 1 0;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    height: 100%;
-    min-width: 0;
-    border-radius: calc(var(--radius) - 6px);
-
-    &:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--ring);
-    }
-
-    &:hover,
-    &:focus {
-      .study-activity-card__tooltip {
-        opacity: 1;
-        visibility: visible;
-        transform: translate(-50%, -0.25rem);
-      }
-    }
+    grid-column: 1 / -1;
+    grid-row: 1;
   }
 
-  // One stacked bar per bucket (not grouped side-by-side tracks): three
-  // segments in a single column-reverse flex track so the first DOM child
-  // (Custom Practice) anchors at the bottom, Study New Words stacks above
-  // it, and Review sits on top — matching the brief's own stacking order.
-  &__bar-track {
-    display: flex;
-    flex-direction: column-reverse;
-    width: 100%;
-    height: 100%;
-    min-width: 0.3rem;
-    border-radius: 999px 999px 2px 2px;
+  // Deliberately very light — supports reading values without competing
+  // with the three series lines for attention.
+  &__grid-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
     background: color-mix(in srgb, var(--muted-foreground) 8%, transparent);
-    overflow: hidden;
   }
 
-  &__bar-fill {
+  &__grid-label {
+    position: absolute;
+    left: 0;
+    bottom: -0.55em;
+    width: 1.7rem;
+    padding-right: 0.35rem;
+    color: var(--muted-foreground);
+    font-size: 0.62rem;
+    line-height: 1;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  &__plot {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  // The only SVG in this chart — three smooth monotone-cubic curves (see
+  // svgLineChart.ts — each passes through every real data point exactly
+  // and never overshoots past them) plus their gradient area fills,
+  // stretched to fill the plot box via viewBox + preserveAspectRatio=
+  // "none". vector-effect: non-scaling-stroke keeps the stroke a crisp,
+  // constant width even though that stretch is non-uniform.
+  &__lines {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    border-radius: inherit;
-    transition: height 300ms ease;
+    height: 100%;
+    overflow: visible;
+  }
+
+  // Very subtle depth under each curve — a top-to-baseline gradient fading
+  // to fully transparent, never turning this into a solid area chart. Its
+  // fill/stroke come from inline SVG attributes in StudyActivityCard.tsx
+  // (fill="url(#...)", stroke="none"); no entrance animation here (see
+  // &__line's own comment for why) — it renders at its final opacity
+  // immediately.
+  &__gradient-stop {
+    &--new {
+      stop-color: var(--study-activity-new);
+    }
+
+    &--review {
+      stop-color: var(--study-activity-review);
+    }
+
+    &--practice {
+      stop-color: var(--study-activity-practice);
+    }
+  }
+
+  // Deliberately no draw-in/fade-in entrance animation: a `stroke-dasharray
+  // / stroke-dashoffset` "draw" animation (this card's first attempt at
+  // one) can be interrupted mid-transition by a backgrounded tab, a
+  // React re-render, or a dev-mode double-mount — any of which freezes the
+  // line permanently partway through, i.e. visibly "transparent" exactly
+  // where it should be solid. Data must always render fully opaque and
+  // complete; restrained motion is not worth that risk here.
+  &__line {
+    fill: none;
+    stroke-width: 2.75px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+
+    &--new {
+      stroke: var(--study-activity-new);
+    }
+
+    &--review {
+      stroke: var(--study-activity-review);
+    }
+
+    &--practice {
+      stroke: var(--study-activity-practice);
+    }
+  }
+
+  // A single subtle dashed guide through whichever day is currently
+  // active — never one per day, only the hovered/focused/tapped one.
+  &__active-guide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-left: 1px dashed color-mix(in srgb, var(--muted-foreground) 40%, transparent);
+    pointer-events: none;
+  }
+
+  // Data points are plain HTML circles, not SVG — a fixed-size
+  // border-radius: 50% box always stays a perfectly round circle
+  // regardless of its percentage-based left/bottom position, sidestepping
+  // the ellipse distortion an SVG <circle> would suffer under the lines
+  // layer's non-uniform stretch above. Small and unobtrusive by default;
+  // the card-colored ring keeps two same-position points (e.g. two modes
+  // both at 0m the same day) visually separable as distinct circles
+  // rather than one solid blob — deliberately never repositioned to
+  // "unstack" them; the shared tooltip is what exposes every value
+  // precisely.
+  &__points {
+    position: absolute;
+    inset: 0;
+  }
+
+  &__point {
+    position: absolute;
+    width: 3.5px;
+    height: 3.5px;
+    border: 1px solid var(--card);
+    border-radius: 999px;
+    transform: translate(-50%, 50%);
+    transition:
+      width 150ms ease,
+      height 150ms ease,
+      background-color 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+    pointer-events: none;
 
     &--new {
       background: var(--study-activity-new);
@@ -998,22 +1118,90 @@
     &--practice {
       background: var(--study-activity-practice);
     }
+
+    // Active: a clear white-cored, series-bordered marker with a soft
+    // color-matched halo — big enough to read as "this is the date being
+    // inspected" without turning into a decorative blob. The per-series
+    // border/halo color combinations live just below (not nested here) —
+    // Sass only allows one `&` per compound selector segment, and these
+    // need two (--new plus --active) on the same element.
+    &--active {
+      width: 7px;
+      height: 7px;
+      background: var(--card);
+      border-width: 2px;
+    }
   }
 
-  &__bar-label {
-    margin-top: 0.3rem;
+  // One shared hover/focus/tap target per day (not per series/point) —
+  // an invisible full-height button per column, evenly divided exactly
+  // like the SVG's own per-point x spacing, so a column's center always
+  // lines up with its own three points above.
+  &__columns {
+    position: absolute;
+    inset: 0;
+    display: flex;
+  }
+
+  &__column {
+    position: relative;
+    flex: 1 1 0;
+    height: 100%;
+    min-width: 0;
+  }
+
+  &__hit-area {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: calc(var(--radius) - 8px);
+    background: none;
+    padding: 0;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--ring);
+    }
+  }
+
+  // Relative (not flex) — each visible label is positioned absolutely at
+  // its own point's exact x% (see StudyActivityCard.tsx), so a real date
+  // string stays fully legible instead of being confined to (and clipped
+  // by) one narrow per-bucket column, which matters once a 30-day view
+  // packs 30 data columns into the same width a 7-day view divides into
+  // only 7.
+  &__x-labels {
+    position: relative;
+    grid-column: 2;
+    grid-row: 2;
+    height: 1rem;
+  }
+
+  &__x-label {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
     color: var(--muted-foreground);
-    font-size: 0.65rem;
+    font-size: 0.62rem;
+    line-height: 1;
+    white-space: nowrap;
   }
 
+  // Rendered only while its day/bucket is the active one (React state,
+  // not CSS :hover — see StudyActivityCard.tsx) so desktop hover,
+  // keyboard focus, and mobile tap all show it identically. A short
+  // entrance animation (not a hover-driven transition, since the element
+  // doesn't exist before this) is the only motion.
   &__tooltip {
     position: absolute;
     bottom: 100%;
     left: 50%;
-    z-index: 1;
+    z-index: 2;
     width: max-content;
     max-width: 13rem;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -0.25rem);
     margin-bottom: 0.35rem;
     padding: 0.5rem 0.65rem;
     border-radius: calc(var(--radius) - 4px);
@@ -1021,12 +1209,8 @@
     color: var(--background);
     font-size: 0.7rem;
     line-height: 1.4;
-    opacity: 0;
-    visibility: hidden;
     pointer-events: none;
-    transition:
-      opacity 120ms ease,
-      transform 120ms ease;
+    animation: study-activity-tooltip-in 120ms ease;
   }
 
   &__tooltip-period {
@@ -1048,6 +1232,42 @@
       border-top: 1px solid color-mix(in srgb, var(--background) 25%, transparent);
       font-weight: 700;
     }
+  }
+}
+
+// Per-series active-point border/halo — plain compound-class selectors
+// (not nested `&` inside .study-activity-card, since Sass only allows one
+// `&` per compound selector segment and these each need two: the series
+// modifier plus --active).
+.study-activity-card__point--new.study-activity-card__point--active {
+  border-color: var(--study-activity-new);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--study-activity-new) 18%, transparent);
+}
+
+.study-activity-card__point--review.study-activity-card__point--active {
+  border-color: var(--study-activity-review);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--study-activity-review) 18%, transparent);
+}
+
+.study-activity-card__point--practice.study-activity-card__point--active {
+  border-color: var(--study-activity-practice);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--study-activity-practice) 18%, transparent);
+}
+
+@keyframes study-activity-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -0.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .study-activity-card__tooltip {
+    animation: none;
   }
 }
 
@@ -1367,5 +1587,32 @@
 
   .study-activity-card__legend {
     gap: 0.6rem;
+  }
+
+  // All 7 (or more) days always stay on-screen on mobile — never scroll —
+  // so the axis-label gutter shrinks first to give the plot itself a bit
+  // more width, and the X-axis label text/points shrink slightly too.
+  .study-activity-card__chart-area {
+    grid-template-columns: 1.4rem 1fr;
+    column-gap: 0.25rem;
+  }
+
+  .study-activity-card__grid-label {
+    width: 1.2rem;
+    font-size: 0.56rem;
+  }
+
+  .study-activity-card__x-label {
+    font-size: 0.56rem;
+  }
+
+  .study-activity-card__point {
+    width: 5px;
+    height: 5px;
+
+    &--active {
+      width: 7px;
+      height: 7px;
+    }
   }
 }
