@@ -275,7 +275,7 @@ export function VocabularySection({
           </VocabularyMessageBlock>
         ) : tabFilteredRows.length === 0 ? (
           <VocabularyMessageBlock message={t(`userProfile.vocabularySection.emptyStates.noTabWords.${activeTab}`)} />
-        ) : (
+        ) : !targetLanguage ? null : (
           <VocabularyTable
             rows={pagedRows}
             totalFilteredCount={tabFilteredRows.length}
@@ -286,6 +286,7 @@ export function VocabularySection({
             onPageSizeChange={setPageSize}
             togglingIds={togglingIds}
             onToggleFavorite={handleToggleFavorite}
+            targetLanguage={targetLanguage}
           />
         )}
       </div>

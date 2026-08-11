@@ -233,6 +233,7 @@ function AppContent({
     hasInitialCanonicalPracticeRoute: initialPracticeRouteRef.current !== null,
     supportedLanguageCodes,
   });
+  const navigate = useNavigate();
   const { authSession, authUserId, handleAuthSessionChange } = useAuthSession();
   // Sole owner of "did this page load just consume a Supabase auth
   // redirect" - see useSupabaseAuthRedirect.ts for why this replaces both
@@ -243,7 +244,14 @@ function AppContent({
     redirectError: authRedirectError,
     clearRedirectError: clearAuthRedirectError,
     exitPasswordRecovery,
-  } = useSupabaseAuthRedirect({ onSessionEstablished: handleAuthSessionChange });
+  } = useSupabaseAuthRedirect({
+    onSessionEstablished: (session, context) => {
+      handleAuthSessionChange(session);
+      if (!context.recovery) {
+        navigate(`${ROUTES.profile}?section=dashboard`, { replace: true });
+      }
+    },
+  });
   let loadedUserProfile!: UserProfile;
   let setLoadedUserProfile!: Dispatch<SetStateAction<UserProfile>>;
   const {
@@ -275,7 +283,6 @@ function AppContent({
   });
   loadedUserProfile = userProfile;
   setLoadedUserProfile = setUserProfile;
-  const navigate = useNavigate();
   const levelTestSeoRoute = useMemo(
     () => parseLevelTestSeoRoute(location.pathname),
     [location.pathname],
@@ -514,8 +521,8 @@ function AppContent({
     );
   };
 
-  // Authentication preserves the current route; users open their profile
-  // explicitly from the account menu (see sharedHeaderProps.onProfile below).
+  // Successful authentication lands on the account dashboard; users can still
+  // switch profile sections from the account menu below.
   const sharedHeaderProps = {
     onAbout: () => navigate(ROUTES.about),
     onHelp: () => navigate(ROUTES.help),

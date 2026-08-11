@@ -209,7 +209,7 @@ test("13. Header.tsx no longer imports or calls handleSupabaseAuthRedirect - App
 });
 
 test("14. AppContent calls useSupabaseAuthRedirect unconditionally (every route, not just practice/exam)", () => {
-  assert.match(appTsx, /const \{[\s\S]*?\} = useSupabaseAuthRedirect\(\{ onSessionEstablished: handleAuthSessionChange \}\);/);
+  assert.match(appTsx, /const \{[\s\S]*?\} = useSupabaseAuthRedirect\(\{[\s\S]*?onSessionEstablished:[\s\S]*?handleAuthSessionChange\(session\);[\s\S]*?\}\);/);
   assert.doesNotMatch(
     appTsx,
     /resolvedPage !== "practice" && resolvedPage !== "exam"/,

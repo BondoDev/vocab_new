@@ -1,14 +1,15 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, MoreHorizontal, Star, Volume2 } from "lucide-react";
-import { useLanguage } from "../../../../contexts/LanguageContext";
+import { useLanguage, type UILanguage } from "../../../../contexts/LanguageContext";
+import { buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
+import { getUiVocabularyLanguage } from "../../../../data/seo/shared/slugs";
 import type { ResolvedVocabularyRow } from "./loadVocabularyProgress";
 import { computeLastPracticedDisplay } from "./lastPracticedDisplay";
 
 const MENU_ACTION_KEYS = [
   "userProfile.vocabularySection.table.menu.viewDetails",
   "userProfile.vocabularySection.table.menu.addToList",
-  "userProfile.vocabularySection.table.menu.practiceWord",
 ];
 
 interface VocabularyTableProps {
@@ -23,6 +24,7 @@ interface VocabularyTableProps {
   onPageSizeChange: (size: number) => void;
   togglingIds: ReadonlySet<string>;
   onToggleFavorite: (row: ResolvedVocabularyRow) => void;
+  targetLanguage: UILanguage;
 }
 
 // Builds a stable, always-in-range window of up to 3 page buttons centered
@@ -53,6 +55,7 @@ export function VocabularyTable({
   onPageSizeChange,
   togglingIds,
   onToggleFavorite,
+  targetLanguage,
 }: VocabularyTableProps) {
   const { t } = useLanguage();
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
@@ -135,6 +138,7 @@ export function VocabularyTable({
                     row={row}
                     isToggling={togglingIds.has(row.id)}
                     onToggleFavorite={() => onToggleFavorite(row)}
+                    targetLanguage={targetLanguage}
                     isMenuOpen={openMenuId === row.id}
                     onToggleMenu={() =>
                       setOpenMenuId((current) => (current === row.id ? null : row.id))
@@ -169,6 +173,7 @@ export function VocabularyTable({
                 row={row}
                 isToggling={togglingIds.has(row.id)}
                 onToggleFavorite={() => onToggleFavorite(row)}
+                targetLanguage={targetLanguage}
                 isMenuOpen={openMenuId === `${row.id}-mobile`}
                 onToggleMenu={() =>
                   setOpenMenuId((current) =>
@@ -264,13 +269,22 @@ interface RowActionsProps {
   row: ResolvedVocabularyRow;
   isToggling: boolean;
   onToggleFavorite: () => void;
+  targetLanguage: UILanguage;
   isMenuOpen: boolean;
   onToggleMenu: () => void;
   onCloseMenu: () => void;
 }
 
-function RowActions({ row, isToggling, onToggleFavorite, isMenuOpen, onToggleMenu, onCloseMenu }: RowActionsProps) {
-  const { t } = useLanguage();
+function RowActions({
+  row,
+  isToggling,
+  onToggleFavorite,
+  targetLanguage,
+  isMenuOpen,
+  onToggleMenu,
+  onCloseMenu,
+}: RowActionsProps) {
+  const { t, uiLanguage } = useLanguage();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [menuStyle, setMenuStyle] = useState<CSSProperties>({
@@ -335,6 +349,18 @@ function RowActions({ row, isToggling, onToggleFavorite, isMenuOpen, onToggleMen
     : `${t("userProfile.vocabularySection.table.addFavoriteAriaLabelPrefix")} "${row.targetWord}" ${t(
         "userProfile.vocabularySection.table.addFavoriteAriaLabelSuffix",
       )}`;
+  const handleMenuAction = (key: string) => {
+    onCloseMenu();
+    if (key === "userProfile.vocabularySection.table.menu.viewDetails") {
+      const wordPath = buildWordPath(
+        uiLanguage,
+        getUiVocabularyLanguage(targetLanguage),
+        row.targetWord,
+        row.conceptId,
+      );
+      window.open(wordPath, "_blank", "noopener,noreferrer");
+    }
+  };
 
   return (
     <div className="vocabulary-row-actions">
@@ -376,7 +402,7 @@ function RowActions({ row, isToggling, onToggleFavorite, isMenuOpen, onToggleMen
                   type="button"
                   role="menuitem"
                   className="vocabulary-more-menu__item"
-                  onClick={onCloseMenu}
+                  onClick={() => handleMenuAction(key)}
                 >
                   {t(key)}
                 </button>

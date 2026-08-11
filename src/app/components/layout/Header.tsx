@@ -660,6 +660,7 @@ export function Header({
         onAuthSessionChange?.(session);
         setIsAuthDialogOpen(false);
         resetAuthForm();
+        goToProfile("dashboard");
         return;
       }
 
@@ -673,6 +674,7 @@ export function Header({
         onAuthSessionChange?.(result.session);
         setIsAuthDialogOpen(false);
         resetAuthForm();
+        goToProfile("dashboard");
         return;
       }
 

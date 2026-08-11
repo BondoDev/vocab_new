@@ -25,7 +25,10 @@ import {
 export function useSupabaseAuthRedirect({
   onSessionEstablished,
 }: {
-  onSessionEstablished: (session: StoredSupabaseSession) => void;
+  onSessionEstablished: (
+    session: StoredSupabaseSession,
+    context: { recovery: boolean },
+  ) => void;
 }) {
   const [isPasswordRecoveryActive, setIsPasswordRecoveryActive] = useState(false);
   const [redirectError, setRedirectError] = useState<string | null>(null);
@@ -38,7 +41,7 @@ export function useSupabaseAuthRedirect({
         if (cancelled) return;
 
         if (result.session) {
-          onSessionEstablished(result.session);
+          onSessionEstablished(result.session, { recovery: Boolean(result.recovery) });
           if (result.recovery) {
             setIsPasswordRecoveryActive(true);
           }
