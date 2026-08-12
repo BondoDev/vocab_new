@@ -22,6 +22,10 @@
 
 .my-lists-section__heading {
   min-width: 0;
+
+  @media (max-width: 685px) {
+    margin: auto;
+  }
 }
 
 .my-lists-section__title {
@@ -29,6 +33,10 @@
   color: #2f2755;
   font-size: clamp(1.6rem, 2.4vw, 2rem);
   line-height: 1.15;
+
+  @media (max-width: 685px) {
+    text-align: center;
+  }
 }
 
 .my-lists-section__subtitle {
@@ -265,7 +273,11 @@
   &:hover,
   &[data-state="open"] {
     border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
-    background: color-mix(in srgb, var(--primary) 6%, var(--input-background, var(--background)));
+    background: color-mix(
+      in srgb,
+      var(--primary) 6%,
+      var(--input-background, var(--background))
+    );
   }
 
   &:focus-visible {
@@ -288,7 +300,8 @@
   transition: transform 150ms ease;
 }
 
-.my-lists-toolbar__sort-trigger[data-state="open"] .my-lists-toolbar__sort-trigger-icon {
+.my-lists-toolbar__sort-trigger[data-state="open"]
+  .my-lists-toolbar__sort-trigger-icon {
   transform: rotate(180deg);
 }
 
@@ -366,6 +379,26 @@
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.my-lists-card__menu-trigger {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  border-radius: calc(var(--radius) - 4px);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+
+  &:hover,
+  &[data-state="open"] {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
 }
 
 .my-lists-card__count {
@@ -857,7 +890,9 @@
   border-radius: calc(var(--radius) - 2px);
   background: var(--card);
   cursor: pointer;
-  transition: border-color 150ms ease, background-color 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
 
   &:hover {
     border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
@@ -1041,7 +1076,9 @@
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 150ms ease, background-color 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
 
   &:hover {
     border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
