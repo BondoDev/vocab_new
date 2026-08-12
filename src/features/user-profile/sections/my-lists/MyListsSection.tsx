@@ -613,6 +613,8 @@ export function MyListsSection({
                 list={list}
                 wordCount={getListWordCount(wordCountsByListId, list.id)}
                 onView={() => goToDetail(list.id)}
+                onRename={() => handleOpenRenameDialog(list)}
+                onDelete={() => handleOpenDeleteDialog(list)}
               />
             ))}
           </div>
