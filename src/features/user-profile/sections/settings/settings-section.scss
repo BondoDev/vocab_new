@@ -1,0 +1,298 @@
+/* ============================================================
+   SettingsSection.tsx — narrow/medium utility page, deliberately NOT a
+   four-card KPI dashboard. One page header (not inside a card) followed by
+   four stacked "surface" sections (Account / Languages / Time & Region /
+   Data & Account), each a single bordered card containing label-left /
+   control-right rows. Title/subtitle typography matches every other
+   section's own page header (VocabularySection/ProgressSection/
+   MyListsSection) for visual consistency.
+   ============================================================ */
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 840px;
+}
+
+.settings-section__header {
+  text-align: left;
+}
+
+.settings-section__title {
+  margin: 0;
+  color: #2f2755;
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
+.settings-section__subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ---- Surface (one card per settings group) ---- */
+
+.settings-surface {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 1.25rem 1.35rem;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 20px -14px rgba(15, 23, 42, 0.12);
+}
+
+.settings-surface__heading {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.settings-surface__helper {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.settings-surface__helper--muted {
+  font-size: 0.82rem;
+}
+
+.settings-surface__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+/* ---- Rows: label left, control/value right on desktop; stacked on mobile ---- */
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+
+  &:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+.settings-row__label {
+  flex-shrink: 0;
+  color: var(--foreground);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.settings-row__value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--muted-foreground);
+  font-size: 0.92rem;
+  text-align: right;
+}
+
+.settings-row__control {
+  width: 100%;
+  max-width: 15rem;
+}
+
+.settings-row__text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.settings-row__description {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.settings-inline-error {
+  border-radius: calc(var(--radius) - 4px);
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  padding: 0.55rem 0.75rem;
+  color: #b91c1c;
+  font-size: 0.85rem;
+}
+
+/* ---- Danger zone: restrained, not an all-red block ---- */
+
+.settings-surface--danger {
+  border-color: color-mix(in srgb, var(--destructive) 30%, var(--border));
+}
+
+.settings-surface--danger .settings-surface__heading {
+  color: var(--destructive);
+}
+
+.settings-surface--danger .settings-row {
+  align-items: flex-start;
+}
+
+.settings-danger-dialog {
+  max-width: 26rem;
+}
+
+.settings-danger-dialog__confirm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* ---- Loading skeleton (matches my-lists-loading-row's own shape) ---- */
+
+.settings-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.settings-skeleton__row {
+  height: 5.5rem;
+  border-radius: var(--radius);
+  background: var(--muted);
+  animation: settings-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes settings-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* ---- Timezone selector ---- */
+
+.settings-timezone-selector__trigger {
+  width: 100%;
+  max-width: 15rem;
+  justify-content: space-between;
+}
+
+.settings-timezone-selector__trigger-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-timezone-selector__trigger-icon {
+  opacity: 0.6;
+}
+
+.settings-timezone-selector__content {
+  display: flex;
+  width: 20rem;
+  max-width: calc(100vw - 2rem);
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.6rem;
+}
+
+.settings-timezone-selector__search {
+  width: 100%;
+}
+
+.settings-timezone-selector__list {
+  display: flex;
+  max-height: 16rem;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.settings-timezone-selector__empty {
+  margin: 0;
+  padding: 0.75rem 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.settings-timezone-selector__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-radius: calc(var(--radius) - 4px);
+  padding: 0.5rem 0.6rem;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--accent);
+  }
+}
+
+.settings-timezone-selector__option--selected {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.settings-timezone-selector__option-city {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-timezone-selector__option-region {
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+.settings-timezone-selector__option-meta {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+}
+
+/* ---- Mobile: rows stack, controls go full-width ---- */
+
+@media (max-width: 640px) {
+  .settings-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .settings-row__value {
+    text-align: left;
+  }
+
+  .settings-row__control,
+  .settings-timezone-selector__trigger {
+    max-width: none;
+  }
+
+  .settings-surface--danger .settings-row {
+    gap: 0.6rem;
+  }
+
+  .settings-surface--danger .settings-row > .settings-row__text + button,
+  .settings-surface--danger .settings-row > button {
+    width: 100%;
+  }
+}

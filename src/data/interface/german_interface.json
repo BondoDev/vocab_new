@@ -541,6 +541,71 @@
         "nameAsc": "Name A–Z",
         "nameDesc": "Name Z–A"
       }
+    },
+    "settingsSection": {
+      "ariaLabel": "Einstellungsbereich",
+      "title": "Einstellungen",
+      "subtitle": "Verwalte dein Konto und deine Lerneinstellungen.",
+      "loading": "Einstellungen werden geladen …",
+      "save": "Speichern",
+      "saving": "Wird gespeichert …",
+      "cancel": "Abbrechen",
+      "account": {
+        "title": "Konto",
+        "nickname": "Nickname",
+        "email": "E-Mail"
+      },
+      "languages": {
+        "title": "Sprachen",
+        "native": "Muttersprache",
+        "learning": "Lernsprache",
+        "currentLevel": "Aktuelles Niveau",
+        "changeNote": "Wenn du deine Lernsprache änderst, wechseln Vokabeln und Lerninhalte in FluentStellar. Dein bisheriger Fortschritt in anderen Sprachen bleibt erhalten.",
+        "savedToast": "Spracheinstellungen gespeichert.",
+        "saveError": "Deine Spracheinstellungen konnten nicht gespeichert werden. Bitte versuche es erneut."
+      },
+      "timeRegion": {
+        "title": "Zeit & Region",
+        "timezone": "Zeitzone",
+        "useCurrent": "Aktuelle Zeitzone verwenden",
+        "explanation": "Deine Zeitzone bestimmt, wann ein neuer Lerntag für Tagesziele, Serien und Statistiken beginnt.",
+        "selectorAriaLabel": "Zeitzone auswählen",
+        "selectorPlaceholder": "Zeitzone auswählen",
+        "searchPlaceholder": "Stadt, Zeitzone oder UTC-Versatz suchen",
+        "noResults": "Keine Zeitzonen gefunden",
+        "detectionError": "Wir konnten deine Zeitzone nicht automatisch erkennen. Bitte wähle eine aus der Liste.",
+        "savedToast": "Zeitzone aktualisiert.",
+        "saveError": "Deine Zeitzone konnte nicht aktualisiert werden. Bitte versuche es erneut."
+      },
+      "dataAccount": {
+        "title": "Daten & Konto",
+        "resetProgress": "Lernfortschritt zurücksetzen",
+        "resetRowLabel": "Fortschritt in {language} zurücksetzen",
+        "resetDescription": "Entfernt deinen Lernfortschritt für diese Sprache dauerhaft. Dein Konto und dein Fortschritt in anderen Sprachen bleiben unverändert.",
+        "deleteAccount": "Konto löschen",
+        "deleteDescription": "Löscht dein FluentStellar-Konto und die zugehörigen Kontodaten dauerhaft.",
+        "resetDialog": {
+          "title": "Fortschritt in {language} zurücksetzen?",
+          "description": "Dadurch werden dein Wortfortschritt, dein Wiederholungsverlauf, deine Serien und Tagesstatistiken für {language} sowie dein Verlauf im freien Üben für diese Sprache dauerhaft gelöscht. Dein Konto und dein Fortschritt in anderen Sprachen bleiben unverändert. Dies kann nicht rückgängig gemacht werden.",
+          "confirmLabel": "Gib {word} ein, um zu bestätigen",
+          "confirm": "Fortschritt zurücksetzen",
+          "successToast": "Fortschritt zurückgesetzt.",
+          "saveError": "Dein Fortschritt konnte nicht zurückgesetzt werden. Bitte versuche es erneut."
+        },
+        "deleteDialog": {
+          "title": "Dein Konto löschen?",
+          "description": "Dadurch werden dein FluentStellar-Konto und alle zugehörigen Kontodaten dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden.",
+          "confirmLabel": "Gib {word} ein, um zu bestätigen",
+          "confirm": "Konto löschen",
+          "saveError": "Dein Konto konnte nicht gelöscht werden. Bitte versuche es erneut.",
+          "passwordLabel": "Aktuelles Passwort",
+          "passwordHelper": "Gib dein Passwort erneut ein, um deine Identität zu bestätigen.",
+          "incorrectPassword": "Falsches Passwort.",
+          "identityError": "Deine Identität konnte nicht bestätigt werden.",
+          "reauthRequired": "Deine Anmeldung ist abgelaufen. Bitte bestätige deine Identität erneut.",
+          "verifyAndDeleteButton": "Bestätigen und löschen"
+        }
+      }
     }
   },
   "aboutPage": {

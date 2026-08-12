@@ -9,7 +9,9 @@ import {
 import { ClassifiedSupabaseError } from "./supabaseError";
 import {
   parseInitializeUserTimezoneRow,
+  parseUpdateUserTimezoneRow,
   type InitializeUserTimezoneResult,
+  type UpdateUserTimezoneResult,
 } from "./userProfileTimezone";
 import {
   parseUpdateDailyGoalRow,
@@ -23,6 +25,10 @@ import {
   parseUpdateUserProfileLanguagesRow,
   type UpdateUserProfileLanguagesResult,
 } from "./userProfileLanguages";
+import {
+  parseResetLearningLanguageProgressRow,
+  type ResetLearningLanguageProgressResult,
+} from "./learningProgressReset";
 // Profile-completeness normalization (normalizeUserProfile,
 // isUserProfileComplete, the per-field normalizers, and DEFAULT_DAILY_GOAL)
 // moved to accountProfileCompleteness.ts (test/profile-load-and-onboarding,
@@ -207,6 +213,19 @@ export function writeStoredUserProfile(userId: string, profile: Partial<UserProf
   return nextProfile;
 }
 
+// Settings' account-deletion success path (and nothing else today) — removes
+// this account's cached profile from localStorage so a stale nickname/
+// language pair can never be read back for a since-deleted account. Narrow
+// on purpose: unlike signOutSupabase (src/lib/supabaseAuth.ts), an ordinary
+// sign-out deliberately leaves this cache in place (so the same account's
+// profile still shows instantly on the next sign-in) - only account deletion
+// needs it gone for good.
+export function clearStoredUserProfile(userId: string): void {
+  if (canUseLocalStorage()) {
+    window.localStorage.removeItem(buildStorageKey(userId));
+  }
+}
+
 export async function readSupabaseUserProfile(
   session: StoredSupabaseSession,
 ): Promise<Partial<UserProfile> | null> {
@@ -259,6 +278,46 @@ export async function initializeUserTimezone(
   }
 
   return parseInitializeUserTimezoneRow(rows);
+}
+
+// Settings backend follow-up — explicit "change my timezone" write, distinct
+// from initializeUserTimezone above. Calls update_user_timezone (see
+// supabase/migrations/20260812120000_add_update_user_timezone_rpc.sql),
+// which unconditionally replaces the caller's stored timezone (including an
+// already-set one) — unlike initialize_user_timezone's null-only guard.
+// Settings' Save action (both "Use current timezone" and the searchable
+// selector) calls this function; useUserProfileLoad.ts's automatic
+// first-load initialization keeps calling initializeUserTimezone above,
+// unchanged — the two responsibilities are deliberately never conflated.
+export async function updateUserTimezone(
+  session: StoredSupabaseSession,
+  timezone: string,
+): Promise<UpdateUserTimezoneResult> {
+  const userId = session.user?.id;
+  if (!userId) {
+    throw new Error("Missing authenticated user.");
+  }
+
+  const rows = await supabaseProfileRequest<unknown[] | unknown>(
+    session,
+    "/rest/v1/rpc/update_user_timezone",
+    {
+      method: "POST",
+      body: JSON.stringify({ p_timezone: timezone }),
+    },
+  );
+
+  if (Array.isArray(rows)) {
+    if (rows.length !== 1) {
+      throw new ClassifiedSupabaseError(
+        "update_user_timezone returned an unexpected number of rows.",
+        "unexpected_response",
+      );
+    }
+    return parseUpdateUserTimezoneRow(rows[0]);
+  }
+
+  return parseUpdateUserTimezoneRow(rows);
 }
 
 // Streak Phase 1's narrow goal-update path — replaces DailyGoalSelector's
@@ -441,4 +500,49 @@ export async function updateUserProfileLanguages(
   }
 
   return fromUpdateUserProfileLanguagesResult(parseUpdateUserProfileLanguagesRow(rows));
+}
+
+// Settings' "Reset language progress" action. Calls
+// reset_learning_language_progress (see
+// supabase/migrations/20260808120000_add_learning_language_progress_reset_rpc.sql)
+// with only the target language — the caller identity comes exclusively from
+// auth.uid() inside the function itself, never a parameter here.
+//
+// ACTIVATED (Settings backend follow-up,
+// supabase/migrations/20260812130000_activate_learning_progress_reset_rpc.sql):
+// `authenticated` now holds EXECUTE on this function — see that migration's
+// own header for the full security re-audit performed before granting it.
+// The function's own definition (identity, validation, deletion scoping) is
+// unchanged from the original migration; only its reachability changed.
+export async function resetLearningLanguageProgress(
+  session: StoredSupabaseSession,
+  targetLanguage: UILanguage,
+): Promise<ResetLearningLanguageProgressResult> {
+  const userId = session.user?.id;
+  if (!userId) {
+    throw new Error("Missing authenticated user.");
+  }
+
+  const rows = await supabaseProfileRequest<unknown[] | unknown>(
+    session,
+    "/rest/v1/rpc/reset_learning_language_progress",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        p_target_language: targetLanguage,
+      }),
+    },
+  );
+
+  if (Array.isArray(rows)) {
+    if (rows.length !== 1) {
+      throw new ClassifiedSupabaseError(
+        "reset_learning_language_progress returned an unexpected number of rows.",
+        "unexpected_response",
+      );
+    }
+    return parseResetLearningLanguageProgressRow(rows[0]);
+  }
+
+  return parseResetLearningLanguageProgressRow(rows);
 }

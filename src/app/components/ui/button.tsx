@@ -34,25 +34,40 @@ const buttonVariants = cva(
   },
 );
 
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-  }) {
-  const Comp = asChild ? Slot : "button";
-
-  return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  );
+export interface ButtonProps
+  extends React.ComponentProps<"button">,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
 }
+
+// forwardRef — same reasoning as DialogTrigger/AlertDialogTrigger/DialogClose
+// in dialog.tsx/alert-dialog.tsx: when a caller renders `<PopoverTrigger
+// asChild><Button>...</Button></PopoverTrigger>` (or the same under Dialog/
+// DropdownMenu), Radix's Slot clones its own ref onto this component so it
+// can read the trigger's real DOM node (for click-outside detection and,
+// critically, for Popper-based content positioning/anchoring). A plain
+// function component silently can't receive that ref under React 18 (this
+// repo pins react@18.3.1 — no ref-as-a-normal-prop) — React drops it with a
+// dev warning, and any Radix primitive relying on the trigger's measured
+// rect (Popover/DropdownMenu content positioning) then has no anchor to
+// position against, which is what made TimezoneSelector.tsx's Popover
+// content open with no visible effect. Comp (Slot or "button") both accept
+// a ref identically, so this is a pure capability add — no existing
+// `<Button>` caller's behavior changes.
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+
+    return (
+      <Comp
+        ref={ref}
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+      />
+    );
+  },
+);
+Button.displayName = "Button";
 
 export { Button, buttonVariants };

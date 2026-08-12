@@ -541,6 +541,71 @@
         "nameAsc": "Nombre A-Z",
         "nameDesc": "Nombre Z-A"
       }
+    },
+    "settingsSection": {
+      "ariaLabel": "Sección de configuración",
+      "title": "Configuración",
+      "subtitle": "Gestiona tu cuenta y tus preferencias de aprendizaje.",
+      "loading": "Cargando configuración…",
+      "save": "Guardar",
+      "saving": "Guardando…",
+      "cancel": "Cancelar",
+      "account": {
+        "title": "Cuenta",
+        "nickname": "Apodo",
+        "email": "Correo electrónico"
+      },
+      "languages": {
+        "title": "Idiomas",
+        "native": "Idioma nativo",
+        "learning": "Idioma que aprendes",
+        "currentLevel": "Nivel actual",
+        "changeNote": "Cambiar tu idioma de aprendizaje cambia el vocabulario y el contenido que se muestra en FluentStellar. Tu progreso en otros idiomas se conserva.",
+        "savedToast": "Configuración de idiomas guardada.",
+        "saveError": "No se pudo actualizar tu configuración de idiomas. Inténtalo de nuevo."
+      },
+      "timeRegion": {
+        "title": "Hora y región",
+        "timezone": "Zona horaria",
+        "useCurrent": "Usar zona horaria actual",
+        "explanation": "Tu zona horaria determina cuándo comienza un nuevo día de aprendizaje para los objetivos diarios, las rachas y las estadísticas.",
+        "selectorAriaLabel": "Seleccionar zona horaria",
+        "selectorPlaceholder": "Selecciona una zona horaria",
+        "searchPlaceholder": "Busca ciudad, zona horaria o desfase horario",
+        "noResults": "No se encontraron zonas horarias",
+        "detectionError": "No pudimos detectar tu zona horaria automáticamente. Elige una de la lista.",
+        "savedToast": "Zona horaria actualizada.",
+        "saveError": "No se pudo actualizar tu zona horaria. Inténtalo de nuevo."
+      },
+      "dataAccount": {
+        "title": "Datos y cuenta",
+        "resetProgress": "Restablecer progreso de aprendizaje",
+        "resetRowLabel": "Restablecer progreso de {language}",
+        "resetDescription": "Elimina de forma permanente tu progreso de aprendizaje en este idioma. Tu cuenta y tu progreso en otros idiomas no se verán afectados.",
+        "deleteAccount": "Eliminar cuenta",
+        "deleteDescription": "Elimina de forma permanente tu cuenta de FluentStellar y los datos de cuenta asociados.",
+        "resetDialog": {
+          "title": "¿Restablecer progreso de {language}?",
+          "description": "Esto elimina de forma permanente tu progreso de palabras, tu historial de repasos, tus rachas y estadísticas diarias de {language}, además de tu historial de práctica personalizada en ese idioma. Tu cuenta y tu progreso en otros idiomas no se verán afectados. Esta acción no se puede deshacer.",
+          "confirmLabel": "Escribe {word} para confirmar",
+          "confirm": "Restablecer progreso",
+          "successToast": "Progreso restablecido.",
+          "saveError": "No se pudo restablecer tu progreso. Inténtalo de nuevo."
+        },
+        "deleteDialog": {
+          "title": "¿Eliminar tu cuenta?",
+          "description": "Esto elimina de forma permanente tu cuenta de FluentStellar y todos los datos de cuenta asociados. Esta acción no se puede deshacer.",
+          "confirmLabel": "Escribe {word} para confirmar",
+          "confirm": "Eliminar cuenta",
+          "saveError": "No se pudo eliminar tu cuenta. Inténtalo de nuevo.",
+          "passwordLabel": "Contraseña actual",
+          "passwordHelper": "Vuelve a introducir tu contraseña para confirmar tu identidad.",
+          "incorrectPassword": "Contraseña incorrecta.",
+          "identityError": "No se pudo verificar tu identidad.",
+          "reauthRequired": "Tu sesión ha caducado. Vuelve a verificar tu identidad.",
+          "verifyAndDeleteButton": "Verificar y eliminar"
+        }
+      }
     }
   },
   "aboutPage": {

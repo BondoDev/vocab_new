@@ -129,8 +129,16 @@ test("8b. RPC response parser rejects malformed rows instead of coercing values"
   assert.match(userProfileTimezoneSource, /!row \|\| typeof row !== "object" \|\| Array\.isArray\(row\)/);
   assert.match(userProfileTimezoneSource, /typeof rpcRow\.initialized !== "boolean"/);
   assert.match(userProfileTimezoneSource, /initialized must be a boolean/);
-  assert.match(userProfileTimezoneSource, /requireInitializeUserTimezoneString\(rpcRow\.timezone, "timezone"\)/);
-  assert.match(userProfileTimezoneSource, /requireInitializeUserTimezoneString\(rpcRow\.timezone_updated_at, "timezone_updated_at"\)/);
+  // requireInitializeUserTimezoneString was renamed to requireTimezoneRowString
+  // (Settings backend follow-up, 2026-08-12) when it became shared between
+  // this parser and update_user_timezone's own — same behavior, now
+  // parametrized by rpcName so each parser's error message still names the
+  // right RPC. See src/lib/userProfileTimezone.ts's own header comment.
+  assert.match(userProfileTimezoneSource, /requireTimezoneRowString\(rpcRow\.timezone, "timezone", "initialize_user_timezone"\)/);
+  assert.match(
+    userProfileTimezoneSource,
+    /requireTimezoneRowString\(rpcRow\.timezone_updated_at, "timezone_updated_at", "initialize_user_timezone"\)/,
+  );
   assert.match(userProfileTimezoneSource, /typeof value !== "string" \|\| !value\.trim\(\)/);
   assert.match(userProfileTimezoneSource, /ClassifiedSupabaseError\([\s\S]*"unexpected_response"/);
   assert.doesNotMatch(userProfileTimezoneSource, /normalizeTimezone|normalizeTimestamp/);

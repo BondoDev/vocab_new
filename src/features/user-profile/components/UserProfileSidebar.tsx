@@ -35,7 +35,13 @@ type SidebarNavGroup = {
   }>;
 };
 
-export type UserProfileSectionId = "dashboard" | "learning" | "vocabulary" | "myLists" | "progress";
+export type UserProfileSectionId =
+  | "dashboard"
+  | "learning"
+  | "vocabulary"
+  | "myLists"
+  | "progress"
+  | "settings";
 
 function isUserProfileSectionId(value: string): value is UserProfileSectionId {
   return (
@@ -43,7 +49,8 @@ function isUserProfileSectionId(value: string): value is UserProfileSectionId {
     value === "learning" ||
     value === "vocabulary" ||
     value === "myLists" ||
-    value === "progress"
+    value === "progress" ||
+    value === "settings"
   );
 }
 

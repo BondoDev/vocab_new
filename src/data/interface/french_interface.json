@@ -541,6 +541,71 @@
         "nameAsc": "Nom A-Z",
         "nameDesc": "Nom Z-A"
       }
+    },
+    "settingsSection": {
+      "ariaLabel": "Section paramètres",
+      "title": "Paramètres",
+      "subtitle": "Gérez votre compte et vos préférences d’apprentissage.",
+      "loading": "Chargement des paramètres…",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…",
+      "cancel": "Annuler",
+      "account": {
+        "title": "Compte",
+        "nickname": "Pseudo",
+        "email": "E-mail"
+      },
+      "languages": {
+        "title": "Langues",
+        "native": "Langue maternelle",
+        "learning": "Langue apprise",
+        "currentLevel": "Niveau actuel",
+        "changeNote": "Changer votre langue d’apprentissage modifie le vocabulaire et le contenu affichés dans FluentStellar. Votre progression dans les autres langues est conservée.",
+        "savedToast": "Paramètres linguistiques enregistrés.",
+        "saveError": "Impossible d’enregistrer vos paramètres linguistiques. Veuillez réessayer."
+      },
+      "timeRegion": {
+        "title": "Heure et région",
+        "timezone": "Fuseau horaire",
+        "useCurrent": "Utiliser le fuseau horaire actuel",
+        "explanation": "Votre fuseau horaire détermine le début d’une nouvelle journée d’apprentissage pour les objectifs quotidiens, les séries et les statistiques.",
+        "selectorAriaLabel": "Sélectionner un fuseau horaire",
+        "selectorPlaceholder": "Sélectionnez un fuseau horaire",
+        "searchPlaceholder": "Rechercher une ville, un fuseau horaire ou un décalage",
+        "noResults": "Aucun fuseau horaire trouvé",
+        "detectionError": "Nous n’avons pas pu détecter automatiquement votre fuseau horaire. Choisissez-en un dans la liste.",
+        "savedToast": "Fuseau horaire mis à jour.",
+        "saveError": "Impossible de mettre à jour votre fuseau horaire. Veuillez réessayer."
+      },
+      "dataAccount": {
+        "title": "Données et compte",
+        "resetProgress": "Réinitialiser la progression",
+        "resetRowLabel": "Réinitialiser la progression en {language}",
+        "resetDescription": "Supprime définitivement votre progression d’apprentissage pour cette langue. Votre compte et votre progression dans les autres langues restent inchangés.",
+        "deleteAccount": "Supprimer le compte",
+        "deleteDescription": "Supprime définitivement votre compte FluentStellar et les données de compte associées.",
+        "resetDialog": {
+          "title": "Réinitialiser la progression en {language} ?",
+          "description": "Cette action supprime définitivement votre progression sur les mots, votre historique de révisions, vos séries et statistiques quotidiennes pour {language}, ainsi que votre historique d’entraînement personnalisé pour cette langue. Votre compte et votre progression dans les autres langues restent inchangés. Cette action est irréversible.",
+          "confirmLabel": "Tapez {word} pour confirmer",
+          "confirm": "Réinitialiser la progression",
+          "successToast": "Progression réinitialisée.",
+          "saveError": "Impossible de réinitialiser votre progression. Veuillez réessayer."
+        },
+        "deleteDialog": {
+          "title": "Supprimer votre compte ?",
+          "description": "Cette action supprime définitivement votre compte FluentStellar et toutes les données de compte associées. Cette action est irréversible.",
+          "confirmLabel": "Tapez {word} pour confirmer",
+          "confirm": "Supprimer le compte",
+          "saveError": "Impossible de supprimer votre compte. Veuillez réessayer.",
+          "passwordLabel": "Mot de passe actuel",
+          "passwordHelper": "Saisissez à nouveau votre mot de passe pour confirmer votre identité.",
+          "incorrectPassword": "Mot de passe incorrect.",
+          "identityError": "Impossible de vérifier votre identité.",
+          "reauthRequired": "Votre authentification a expiré. Veuillez vérifier à nouveau votre identité.",
+          "verifyAndDeleteButton": "Vérifier et supprimer"
+        }
+      }
     }
   },
   "aboutPage": {

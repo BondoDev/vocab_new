@@ -45,8 +45,8 @@ import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
 import { findSeoCefrPreviewItem } from "./pages/vocabulary/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPages/wordPageData";
-import type { UserProfile } from "../lib/userProfile";
-import { signOutSupabase } from "../lib/supabaseAuth";
+import { clearStoredUserProfile, type UserProfile } from "../lib/userProfile";
+import { clearLocalSupabaseSession, signOutSupabase } from "../lib/supabaseAuth";
 import { describeSupabaseError } from "../lib/supabaseError";
 import {
   TARGET_LANGUAGE_TO_UI_CODE,
@@ -561,6 +561,81 @@ function AppContent({
     }
   };
 
+  // Settings Phase 1 — pushes a successfully saved native/learning language
+  // pair up from SettingsSection into both places the app keeps a copy: the
+  // shared userProfile object (read by every section inside /profile) and
+  // the top-level yourLanguage/practiceLanguage state (read by the learning
+  // entry points - NewWordStudyPreparation/ReviewWordsPreparation - outside
+  // this dashboard). Mirrors onDailyGoalChange's precedent for the same
+  // "keep the already-saved value in sync everywhere without a reload" need.
+  const handleProfileLanguagesChange = (change: {
+    nativeLanguage: UILanguage;
+    practiceLanguage: UILanguage;
+    updatedAt: string;
+  }) => {
+    setUserProfile((previous) => ({
+      ...previous,
+      nativeLanguage: change.nativeLanguage,
+      practiceLanguage: change.practiceLanguage,
+      updatedAt: change.updatedAt,
+    }));
+    setYourLanguage(change.nativeLanguage);
+    setPracticeLanguage(change.practiceLanguage);
+  };
+
+  const handleProfileTimezoneChange = (change: { timezone: string; timezoneUpdatedAt: string }) => {
+    setUserProfile((previous) => ({
+      ...previous,
+      timezone: change.timezone,
+      timezoneUpdatedAt: change.timezoneUpdatedAt,
+    }));
+  };
+
+  // Settings Phase 1 — called only after the delete-account Edge Function
+  // confirms { deleted: true }, i.e. the account no longer exists
+  // server-side by the time this runs. Deliberately does NOT call
+  // signOutSupabase (handleProfileSignOut's own path, for ordinary
+  // still-existing-account sign-out): that function's POST /auth/v1/logout
+  // would carry the now-orphaned access token, whose `sub` claim names a
+  // user auth.users no longer has — GoTrue correctly 403s that as "User
+  // from sub claim in JWT does not exist", a real rejection for a genuinely
+  // deleted user, not a bug to work around by retrying. Uses
+  // clearLocalSupabaseSession() instead — the local-only half of sign-out
+  // (storage clear + the same app-wide session-changed notification
+  // useAuthSession subscribes to), with no network call at all. Then clears
+  // the now-deleted account's cached profile from localStorage
+  // (clearStoredUserProfile) so no stale nickname/language pair could ever
+  // be read back for this id again, and navigates away from the
+  // now-inaccessible /profile route.
+  const handleAccountDeleted = () => {
+    const deletedUserId = authUserId;
+
+    // Flips authUserId/authSession to null immediately (in-memory React
+    // state) so the protected profile UI stops rendering right away,
+    // regardless of whether the localStorage clear below succeeds.
+    handleAuthSessionChange(null);
+
+    try {
+      clearLocalSupabaseSession();
+    } catch (error) {
+      // Account deletion itself already succeeded (this callback only runs
+      // after the Edge Function confirmed it) — a problem clearing local
+      // storage here is a local-cleanup issue, never grounds to report
+      // account deletion as failed, and never a reason to retry deletion
+      // or fall back to the network logout path this function exists to
+      // avoid.
+      console.warn(
+        "App: post-account-deletion local cleanup encountered an issue (account deletion itself already succeeded).",
+        describeSupabaseError("clearLocalSupabaseSession", error),
+      );
+    } finally {
+      if (deletedUserId) {
+        clearStoredUserProfile(deletedUserId);
+      }
+      navigate(ROUTES.exerciseSelection);
+    }
+  };
+
   const handleContinueToPractice = () => {
     if (isContinueDisabled) {
       popupRef.current?.show({ delayMs: 0 });
@@ -827,6 +902,9 @@ function AppContent({
           onDailyGoalChange={(dailyGoal) =>
             setUserProfile((previous) => ({ ...previous, dailyGoal }))
           }
+          onProfileLanguagesChange={handleProfileLanguagesChange}
+          onTimezoneChange={handleProfileTimezoneChange}
+          onAccountDeleted={handleAccountDeleted}
         />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}

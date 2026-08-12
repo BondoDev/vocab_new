@@ -50,7 +50,16 @@ console.log("\n=== timezone profile boundary architecture guard ===\n");
 const userProfileSource = read("src/lib/userProfile.ts");
 const migrationSource = read("supabase/migrations/20260806120000_add_user_timezone_foundation.sql");
 
-test("1. Runtime timezone writes go through initialize_user_timezone only", () => {
+// Originally "Runtime timezone writes go through initialize_user_timezone
+// only" — Settings backend follow-up (2026-08-12) deliberately adds a
+// second timezone-write RPC, update_user_timezone (see
+// supabase/migrations/20260812120000_add_update_user_timezone_rpc.sql), so
+// "only initialize_user_timezone" is no longer the right claim. Updated to
+// verify the real current boundary: every timezone-write detail still lives
+// only inside the same small set of already-audited files (never leaking
+// into an unrelated component), and BOTH narrow RPC callers exist in
+// userProfile.ts — never a third.
+test("1. Runtime timezone writes go through initialize_user_timezone or update_user_timezone only — never a third path", () => {
   const sourceFiles = readFilesRecursive("src", (file) => /\.(ts|tsx)$/.test(file));
   // src/lib/userProfileOnboarding.ts is a Profile Phase 1 addition: it
   // parses complete_user_profile_onboarding's RETURNS TABLE row, which
@@ -78,6 +87,12 @@ test("1. Runtime timezone writes go through initialize_user_timezone only", () =
   }
   assert.deepEqual(offenders, [], `unexpected timezone write/details outside the allowed files: ${offenders.join(", ")}`);
   assert.match(userProfileSource, /\/rest\/v1\/rpc\/initialize_user_timezone/);
+  assert.match(userProfileSource, /\/rest\/v1\/rpc\/update_user_timezone/);
+  // Exactly one caller function per RPC name — never a duplicate/third path.
+  for (const fnName of ["initializeUserTimezone", "updateUserTimezone"]) {
+    const matches = userProfileSource.match(new RegExp(`export async function ${fnName}\\(`, "g")) ?? [];
+    assert.equal(matches.length, 1, `${fnName} must be defined exactly once`);
+  }
 });
 
 test("1b. complete_user_profile_onboarding's response parser only ever reads timezone fields, never sends p_timezone", () => {
@@ -105,17 +120,58 @@ test("2. Neither narrow profile RPC can modify timezone (Profile Phase 1 removed
   assert.match(migrationSource, /prevent_direct_user_timezone_write/);
 });
 
-test("3. No Settings timezone UI is introduced in this phase", () => {
-  const sourceFiles = readFilesRecursive("src", (file) => /\.(ts|tsx)$/.test(file));
+// Originally "No Settings timezone UI is introduced in this phase" (Timezone
+// Phase 1/2's own trip-wire), then "Settings' timezone UI writes only
+// through initialize_user_timezone" (Settings Phase 1, before
+// update_user_timezone existed). This backend follow-up is exactly the
+// point those two prior premises anticipated superseding again: Settings
+// now has a genuine explicit-update RPC to call, and the real boundary that
+// matters is that the two responsibilities stay split — Settings' own
+// explicit Save action must call update_user_timezone, and the automatic
+// first-load initializer must keep calling initialize_user_timezone,
+// without either ever calling the other's RPC. Same "old guard evolves into
+// the next phase's real boundary" pattern
+// test-restrict-user-profiles-writes-migration-contract.mjs already uses
+// across its own Profile Phase 2/3 sections.
+test("3. Settings' explicit Save calls update_user_timezone; automatic first-load initialization still calls initialize_user_timezone — never conflated", () => {
+  const settingsFiles = readFilesRecursive(
+    "src/features/user-profile/sections/settings",
+    (file) => /\.(ts|tsx)$/.test(file),
+  );
   const offenders = [];
-  for (const file of sourceFiles) {
+  for (const file of settingsFiles) {
     const relative = path.relative(ROOT_DIR, file).replace(/\\/g, "/");
     const content = fs.readFileSync(file, "utf8");
-    if (/timezone/i.test(content) && /settings/i.test(content)) {
+    // Settings components call the updateUserTimezone/detectBrowserTimezone
+    // helpers rather than constructing their own request bodies — so a
+    // p_timezone/timezone_updated_at/direct rest/v1/user_profiles reference
+    // appearing here would mean a third, parallel write path was added
+    // instead of reusing a narrow RPC caller.
+    if (/p_timezone\b/.test(content) || /timezone_updated_at\s*:/.test(content) || /rest\/v1\/user_profiles/.test(content)) {
       offenders.push(relative);
     }
   }
-  assert.deepEqual(offenders, [], `unexpected timezone Settings UI reference(s): ${offenders.join(", ")}`);
+  assert.deepEqual(offenders, [], `unexpected direct timezone write construction: ${offenders.join(", ")}`);
+
+  const settingsSectionSource = read("src/features/user-profile/sections/settings/SettingsSection.tsx");
+  assert.match(settingsSectionSource, /updateUserTimezone\(/, "Settings' Save action must call updateUserTimezone");
+  assert.doesNotMatch(
+    settingsSectionSource,
+    /initializeUserTimezone/,
+    "Settings must never call initialize_user_timezone directly — that RPC's null-only guard would silently no-op most real Save attempts",
+  );
+
+  const profileLoadSource = read("src/app/hooks/useUserProfileLoad.ts");
+  assert.match(
+    profileLoadSource,
+    /initializeUserTimezone\(/,
+    "automatic first-load initialization must still call initializeUserTimezone",
+  );
+  assert.doesNotMatch(
+    profileLoadSource,
+    /updateUserTimezone/,
+    "automatic first-load initialization must never call the explicit-replacement RPC",
+  );
 });
 
 test("4. Authoritative learning paths use server-derived dates, not browser-local dates", () => {

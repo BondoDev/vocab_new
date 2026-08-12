@@ -38,10 +38,13 @@
 //     disposable user id/email that needs manual removal — it never fails
 //     silently.
 //   - Never touches the delete-account Edge Function or
-//     ACCOUNT_DELETION_ENABLED, and never grants EXECUTE on
-//     reset_learning_language_progress to authenticated — see
-//     scenarios/progressResetDisabled.mjs and disposableUser.mjs's own
-//     headers.
+//     ACCOUNT_DELETION_ENABLED — see disposableUser.mjs's own header.
+//     reset_learning_language_progress IS now reachable by `authenticated`
+//     (Settings backend follow-up,
+//     supabase/migrations/20260812130000_activate_learning_progress_reset_rpc.sql)
+//     — see scenarios/progressResetActivated.mjs, which exercises it
+//     end-to-end against both disposable users instead of merely proving it
+//     stays unreachable.
 
 import { loadLiveConfig, MissingLiveConfigError } from "./lib/liveConfig.mjs";
 import { LiveTestReporter } from "./lib/liveTestRunner.mjs";
@@ -61,7 +64,7 @@ import * as dailyGoalScenario from "./scenarios/dailyGoal.mjs";
 import * as timezoneScenario from "./scenarios/timezone.mjs";
 import * as learningDateScenario from "./scenarios/learningDate.mjs";
 import * as learningRpcsScenario from "./scenarios/learningRpcs.mjs";
-import * as progressResetDisabledScenario from "./scenarios/progressResetDisabled.mjs";
+import * as progressResetActivatedScenario from "./scenarios/progressResetActivated.mjs";
 
 // Order matters: onboarding must run before every scenario that depends on
 // a user_profiles row already existing (language update, daily goal,
@@ -79,7 +82,7 @@ const SCENARIOS = [
   timezoneScenario,
   learningDateScenario,
   learningRpcsScenario,
-  progressResetDisabledScenario,
+  progressResetActivatedScenario,
 ];
 
 async function main() {

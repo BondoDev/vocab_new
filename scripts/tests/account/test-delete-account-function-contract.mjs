@@ -31,6 +31,20 @@ const FUNCTION_PATH = path.join(
   "delete-account",
   "index.ts",
 );
+// The recent-authentication decision logic (decodeJwtPayload/
+// getMostRecentAuthTimestamp/hasRecentAuthentication/RECENT_AUTH_METHODS)
+// lives in its own module (recentAuth.ts), imported by index.ts via a
+// relative import — a pure, dependency-free file shared with this repo's
+// own Node test suite (test-recent-auth-token-refresh-bypass.mjs), so its
+// actual behavior (not just its presence) is exercised directly, not only
+// pattern-matched here.
+const RECENT_AUTH_PATH = path.join(
+  ROOT_DIR,
+  "supabase",
+  "functions",
+  "delete-account",
+  "recentAuth.ts",
+);
 const MIGRATIONS_DIR = path.join(ROOT_DIR, "supabase", "migrations");
 
 let passed = 0;
@@ -58,6 +72,9 @@ const fnCodeOnly = fnSource
   .split("\n")
   .filter((line) => !line.trim().startsWith("//"))
   .join("\n");
+
+assert.ok(fs.existsSync(RECENT_AUTH_PATH), "supabase/functions/delete-account/recentAuth.ts is missing");
+const recentAuthSource = fs.readFileSync(RECENT_AUTH_PATH, "utf8");
 
 test("1. The function exists as a Deno Edge Function (Deno.serve), not a Node/Express route", () => {
   assert.match(fnSource, /Deno\.serve\(/);
@@ -256,6 +273,326 @@ test("27. No trigger on user_profiles fires on DELETE (would risk blocking the c
   for (const match of triggerMatches) {
     assert.doesNotMatch(match[1], /delete/i);
   }
+});
+
+console.log("\n=== CORS / preflight contract (live CORS incident fix, 2026-08-13) ===\n");
+//
+// Root cause of the live failure this section guards: supabase/config.toml
+// declared `[functions.delete-account]` with `verify_jwt = true`. Supabase's
+// own gateway then required a valid bearer token on EVERY request routed to
+// this function — including the browser's automatic CORS preflight OPTIONS
+// request, which per the Fetch/CORS spec never carries an Authorization
+// header. The gateway rejected the preflight itself, before this function's
+// own already-correct `if (req.method === "OPTIONS")` branch ever ran. A
+// second, independent bug (Access-Control-Allow-Headers omitting `apikey`,
+// which src/lib/accountDeletion.ts always sends via getAuthHeaders()) would
+// have caused the exact same class of failure even after verify_jwt was
+// fixed. This section is a source-text guard, like every other section in
+// this file — there is no Deno runtime available to this repo's test suite
+// to actually issue the HTTP request end-to-end (confirmed: `deno` is not
+// on PATH in this environment).
+
+const CONFIG_TOML_PATH = path.join(ROOT_DIR, "supabase", "config.toml");
+const configTomlSource = fs.readFileSync(CONFIG_TOML_PATH, "utf8");
+
+test("28. supabase/config.toml sets verify_jwt = false for delete-account (platform gateway no longer blocks the CORS preflight)", () => {
+  const sectionMatch = configTomlSource.match(/\[functions\.delete-account\]\s*\n\s*verify_jwt = (\w+)/);
+  assert.ok(sectionMatch, "expected a [functions.delete-account] section with a verify_jwt setting");
+  assert.equal(sectionMatch[1], "false");
+});
+
+test("29. OPTIONS is handled before any authentication/authorization logic runs", () => {
+  const optionsIndex = fnCodeOnly.indexOf('req.method === "OPTIONS"');
+  const bearerCheckIndex = fnCodeOnly.indexOf("bearerMatch");
+  const getUserIndex = fnCodeOnly.indexOf("adminClient.auth.getUser");
+  const gateIndex = fnCodeOnly.indexOf('ACCOUNT_DELETION_ENABLED !== "true"');
+  assert.ok(optionsIndex > -1, "expected an OPTIONS branch");
+  assert.ok(optionsIndex < bearerCheckIndex);
+  assert.ok(optionsIndex < getUserIndex);
+  assert.ok(optionsIndex < gateIndex);
+});
+
+test("30. OPTIONS returns a 2xx status with no destructive work performed", () => {
+  const optionsBlockMatch = fnSource.match(/if \(req\.method === "OPTIONS"\) \{\s*return new Response\(([^;]*)\);\s*\}/s);
+  assert.ok(optionsBlockMatch, "expected the OPTIONS branch's Response(...) call");
+  assert.match(optionsBlockMatch[1], /status: 204/);
+  assert.doesNotMatch(optionsBlockMatch[1], /deleteUser|getUser/);
+});
+
+test("31. CORS_HEADERS includes Access-Control-Allow-Origin", () => {
+  assert.match(fnSource, /"Access-Control-Allow-Origin":\s*"\*"/);
+});
+
+test("32. CORS_HEADERS' Access-Control-Allow-Methods includes both POST and OPTIONS", () => {
+  const methodsMatch = fnSource.match(/"Access-Control-Allow-Methods":\s*"([^"]*)"/);
+  assert.ok(methodsMatch, "expected an Access-Control-Allow-Methods entry");
+  const methods = methodsMatch[1].split(",").map((m) => m.trim().toUpperCase());
+  assert.ok(methods.includes("POST"));
+  assert.ok(methods.includes("OPTIONS"));
+});
+
+test("33. CORS_HEADERS' Access-Control-Allow-Headers names exactly the headers the real frontend caller sends — authorization, content-type, apikey — no more, no fewer", () => {
+  const headersMatch = fnSource.match(/"Access-Control-Allow-Headers":\s*"([^"]*)"/);
+  assert.ok(headersMatch, "expected an Access-Control-Allow-Headers entry");
+  const allowed = headersMatch[1].split(",").map((h) => h.trim().toLowerCase());
+  assert.deepEqual(allowed.sort(), ["apikey", "authorization", "content-type"].sort());
+});
+
+test("34. Every jsonResponse(...) call — success, auth failure, feature-gate failure, and internal errors alike — is built from the shared helper that always spreads CORS_HEADERS", () => {
+  const jsonResponseFnMatch = fnSource.match(/function jsonResponse\([\s\S]*?\n\}/);
+  assert.ok(jsonResponseFnMatch, "expected a jsonResponse helper function");
+  assert.match(jsonResponseFnMatch[0], /\.\.\.CORS_HEADERS/);
+
+  // Every response in the function goes through this one helper (or the
+  // OPTIONS branch's own explicit CORS_HEADERS) — no response construction
+  // anywhere bypasses it with a bare `new Response(...)`.
+  const bareResponseCalls = [...fnCodeOnly.matchAll(/(?<!return\s)new Response\(/g)];
+  const allResponseCalls = [...fnCodeOnly.matchAll(/return new Response\(/g)];
+  // The only bare `new Response(` calls allowed are the ones already
+  // `return`ed (OPTIONS branch and the helper's own body) — assert every
+  // `new Response(` in the file is part of a `return` statement.
+  assert.equal(bareResponseCalls.length, 0, "found a new Response(...) call not immediately returned");
+  assert.ok(allResponseCalls.length >= 1);
+});
+
+test("35. Every distinct application response (200/401/403/405/500/502) is reachable only via jsonResponse or the OPTIONS branch — never a second ad-hoc CORS-header set", () => {
+  const corsHeaderBlocks = [...fnSource.matchAll(/CORS_HEADERS\s*=\s*\{/g)];
+  assert.equal(corsHeaderBlocks.length, 1, "CORS_HEADERS must be defined exactly once, reused everywhere");
+});
+
+test("36. Unsupported methods (non-OPTIONS, non-POST) return 405 through jsonResponse, so the response still carries CORS headers", () => {
+  const methodBlockMatch = fnSource.match(/if \(req\.method !== "POST"\) \{\s*return ([^;]*);\s*\}/s);
+  assert.ok(methodBlockMatch, "expected the non-POST branch");
+  assert.match(methodBlockMatch[1], /jsonResponse\(\{ error: "method_not_allowed" \}, 405\)/);
+});
+
+test("37. Account deletion still requires bearer authentication — verify_jwt=false does not remove the in-function check", () => {
+  assert.match(fnSource, /const authHeader = req\.headers\.get\("Authorization"\)/);
+  assert.match(fnSource, /bearerMatch/);
+  assert.match(fnSource, /return jsonResponse\(\{ error: "unauthenticated" \}, 401\)/);
+});
+
+test("38. Account identity is still derived exclusively from the verified token, never a client-supplied id (re-confirmed after the CORS fix)", () => {
+  assert.match(fnSource, /adminClient\.auth\.getUser\(callerToken\)/);
+  assert.doesNotMatch(fnCodeOnly, /\buser_id\b/);
+});
+
+test("39. ACCOUNT_DELETION_ENABLED is still read and enforced — the CORS fix does not touch the feature gate", () => {
+  assert.match(fnSource, /ACCOUNT_DELETION_ENABLED !== "true"/);
+  assert.match(fnSource, /account_deletion_disabled/);
+});
+
+test("40. No service-role credential exists anywhere in frontend code (src/), confirmed again after the CORS fix", () => {
+  const SRC_DIR = path.join(ROOT_DIR, "src");
+  const walk = (dir) => {
+    const offenders = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        offenders.push(...walk(fullPath));
+      } else if (/\.(ts|tsx)$/.test(entry.name)) {
+        const content = fs.readFileSync(fullPath, "utf8");
+        if (/SUPABASE_SERVICE_ROLE_KEY|service_role/i.test(content.replace(/\/\/.*$/gm, ""))) {
+          offenders.push(path.relative(ROOT_DIR, fullPath));
+        }
+      }
+    }
+    return offenders;
+  };
+  assert.deepEqual(walk(SRC_DIR), []);
+});
+
+test("41. src/lib/accountDeletion.ts never uses fetch's no-cors mode or any other CORS-bypassing option", () => {
+  const ACCOUNT_DELETION_TS_PATH = path.join(ROOT_DIR, "src", "lib", "accountDeletion.ts");
+  const source = fs.readFileSync(ACCOUNT_DELETION_TS_PATH, "utf8");
+  assert.doesNotMatch(source, /no-cors/);
+  assert.doesNotMatch(source, /mode:\s*["']opaque/);
+});
+
+console.log("\n=== Recent-authentication requirement (2026-08-13 reauthentication phase, corrected 2026-08-14) ===\n");
+//
+// Possessing a valid-but-old session must not be enough to permanently
+// delete an account — see supabase/README.md's "Reauthentication" section
+// for the full design, including the 2026-08-14 token-refresh-bypass
+// correction. This section guards the server-side half structurally
+// (index.ts wires recentAuth.ts's hasRecentAuthentication in correctly);
+// the actual decision-logic behavior (including proof that a silent
+// token_refresh cannot extend the deletion window) is exercised directly
+// against the real, shared algorithm by
+// scripts/tests/account/test-recent-auth-token-refresh-bypass.mjs. The
+// client-side half (password reauthentication before the call) is guarded
+// by scripts/tests/account/test-account-reauthentication.mjs.
+
+test("42. hasRecentAuthentication (recentAuth.ts) decodes and checks amr — never iat (iat also advances on a silent background token refresh, which never requires the user to re-enter credentials)", () => {
+  assert.match(recentAuthSource, /export function hasRecentAuthentication\(/);
+  assert.match(recentAuthSource, /getMostRecentAuthTimestamp/);
+  assert.match(recentAuthSource, /payload\.amr/);
+  const authFnMatch = recentAuthSource.match(/export function hasRecentAuthentication\([\s\S]*?\n\}/);
+  assert.ok(authFnMatch, "expected hasRecentAuthentication's body");
+  assert.doesNotMatch(authFnMatch[0], /\.iat\b/);
+  // index.ts must actually import and call the shared implementation,
+  // never redefine its own second copy. (Also imports
+  // isCurrentSessionGoogleAuthenticated from the same module — see the
+  // "Google-OAuth exemption" section further below.)
+  assert.match(
+    fnSource,
+    /import \{ hasRecentAuthentication, isCurrentSessionGoogleAuthenticated \} from "\.\/recentAuth\.ts";/,
+  );
+  assert.doesNotMatch(fnCodeOnly, /function hasRecentAuthentication/);
+});
+
+test("43. The recency window is a fixed constant in the shared module (5 minutes) — never read from the request, never redefined a second time in index.ts", () => {
+  assert.match(recentAuthSource, /export const RECENT_AUTH_WINDOW_SECONDS = 5 \* 60;/);
+  assert.doesNotMatch(fnCodeOnly, /req\.[a-zA-Z]+\([^)]*RECENT_AUTH_WINDOW/);
+  assert.doesNotMatch(fnCodeOnly, /const RECENT_AUTH_WINDOW_SECONDS/);
+});
+
+test("43b. Only password and oauth are accepted amr methods (explicit allow-list) — token_refresh and any other method are excluded by construction", () => {
+  assert.match(recentAuthSource, /export const RECENT_AUTH_METHODS = new Set\(\["password", "oauth"\]\);/);
+  assert.doesNotMatch(recentAuthSource, /RECENT_AUTH_METHODS = new Set\([^)]*token_refresh/);
+});
+
+test("43c. getMostRecentAuthTimestamp filters every amr entry by method against RECENT_AUTH_METHODS before considering its timestamp", () => {
+  const fnMatch = recentAuthSource.match(/export function getMostRecentAuthTimestamp\([\s\S]*?\n\}/);
+  assert.ok(fnMatch, "expected getMostRecentAuthTimestamp's body");
+  assert.match(fnMatch[0], /RECENT_AUTH_METHODS\.has\(method\)/);
+  // The continue/skip must happen before the timestamp is ever read for a
+  // non-qualifying entry — i.e. the method check precedes the timestamp
+  // check in the loop body.
+  const methodCheckIndex = fnMatch[0].indexOf("RECENT_AUTH_METHODS.has(method)");
+  const timestampReadIndex = fnMatch[0].indexOf("entry as { timestamp: number }");
+  assert.ok(methodCheckIndex > -1 && timestampReadIndex > -1);
+  assert.ok(methodCheckIndex < timestampReadIndex, "method must be validated before timestamp is read/used");
+});
+
+test("44. decodeJwtPayload reads the SAME callerToken already resolved via bearerMatch — never a second, arbitrary, header/body-supplied token", () => {
+  // Matches the call site specifically (`if (!isGoogleSession &&
+  // !hasRecentAuthentication(...`), never the function's own definition
+  // line, which also contains "hasRecentAuthentication(" followed by its
+  // parameter declaration.
+  const callSiteMatch = fnCodeOnly.match(/if \(!isGoogleSession && !hasRecentAuthentication\(([^)]*)\)\)/);
+  assert.ok(callSiteMatch, "expected the hasRecentAuthentication(...) call site inside the if-guard");
+  assert.equal(callSiteMatch[1].trim(), "callerToken");
+});
+
+test("45. No client-supplied timestamp or boolean of any kind can satisfy this check — the request body is never parsed anywhere in this file (re-confirms test 3 in this exact context)", () => {
+  assert.doesNotMatch(fnCodeOnly, /req\.json\(\)/);
+  assert.doesNotMatch(fnCodeOnly, /reauthenticated\s*[:=]\s*true/i);
+  assert.doesNotMatch(fnCodeOnly, /req\.headers\.get\("[Xx]-[Rr]eauth/);
+});
+
+test("46. The recent-auth check runs after identity resolution and the feature gate, and strictly before the destructive deleteUser call", () => {
+  const getUserIndex = fnCodeOnly.indexOf("adminClient.auth.getUser(callerToken)");
+  const gateIndex = fnCodeOnly.indexOf('ACCOUNT_DELETION_ENABLED !== "true"');
+  const reauthCheckIndex = fnCodeOnly.indexOf("hasRecentAuthentication(callerToken)");
+  const deleteCallIndex = fnCodeOnly.indexOf("adminClient.auth.admin.deleteUser(");
+  assert.ok(
+    [getUserIndex, gateIndex, reauthCheckIndex, deleteCallIndex].every((i) => i > -1),
+    "expected all four checkpoints to exist",
+  );
+  assert.ok(getUserIndex < gateIndex, "identity must resolve before the feature gate");
+  assert.ok(gateIndex < reauthCheckIndex, "the feature gate must run before the recent-auth check");
+  assert.ok(reauthCheckIndex < deleteCallIndex, "the recent-auth check must run before deleteUser is ever called");
+});
+
+test("47. A failing recent-auth check returns reauthentication_required with 403 and CORS headers, and never reaches deleteUser", () => {
+  // A fixed-size window after the guard condition, rather than lazy brace-
+  // matching: the response body itself contains a `}` (the object literal
+  // `{ error: "..." }`), which a naive /\{([\s\S]*?)\}/ match would
+  // mistake for the if-block's own closing brace and truncate on.
+  const guardIndex = fnSource.indexOf("if (!isGoogleSession && !hasRecentAuthentication(callerToken))");
+  assert.ok(guardIndex > -1, "expected the recent-auth guard");
+  const window = fnSource.slice(guardIndex, guardIndex + 300);
+  assert.match(window, /jsonResponse\(\{ error: "reauthentication_required" \}, 403\)/);
+  assert.doesNotMatch(window.slice(0, window.indexOf("reauthentication_required")), /deleteUser/);
+});
+
+test("48. decodeJwtPayload (recentAuth.ts) never re-parses/re-fetches the token from an untrusted source — it is a pure, local, non-network function", () => {
+  const decodeFnMatch = recentAuthSource.match(/export function decodeJwtPayload\([\s\S]*?\n\}/);
+  assert.ok(decodeFnMatch, "expected decodeJwtPayload's body");
+  assert.doesNotMatch(decodeFnMatch[0], /fetch\(|adminClient/);
+});
+
+test("49. A malformed/undecodable token payload is treated as 'not recently authenticated', never as an implicit pass", () => {
+  const decodeFnMatch = recentAuthSource.match(/export function decodeJwtPayload\([\s\S]*?\n\}/);
+  assert.match(decodeFnMatch[0], /catch \{\s*[\s\S]*?return null;/);
+  const hasRecentFnMatch = recentAuthSource.match(/export function hasRecentAuthentication\([\s\S]*?\n\}/);
+  assert.match(hasRecentFnMatch[0], /if \(!payload\) return false;/);
+});
+
+test("50. The feature gate and identity checks are unaffected by this phase — still enforced exactly as before (re-confirms tests 6, 13-19 in this exact file)", () => {
+  assert.match(fnSource, /ACCOUNT_DELETION_ENABLED !== "true"/);
+  assert.match(fnSource, /account_deletion_disabled/);
+  assert.match(fnSource, /return jsonResponse\(\{ error: "unauthenticated" \}, 401\)/);
+});
+
+console.log("\n=== Google-OAuth reauthentication exemption (product policy, 2026-08-14) ===\n");
+//
+// Password accounts still go through the unchanged recent-`password`-AMR
+// check above. Google OAuth accounts may delete using their current valid
+// authenticated session, without the 5-minute recency window — see
+// isCurrentSessionGoogleAuthenticated's own header (recentAuth.ts) for the
+// two server-trusted signals this requires; the actual decision-logic
+// behavior (not just its wiring) is exercised directly against the real,
+// shared algorithm by scripts/tests/account/test-google-reauth-exemption.mjs.
+// This section guards only the server-side WIRING: that index.ts derives
+// the Google-session determination exclusively from data it already
+// independently trusts, never from anything the request body supplies.
+
+test("51. isCurrentSessionGoogleAuthenticated is called with userResult.user (the trusted Admin API response) and the same already-resolved callerToken — never a request-supplied value", () => {
+  const callSiteMatch = fnCodeOnly.match(/const isGoogleSession = isCurrentSessionGoogleAuthenticated\(([^)]*)\);/);
+  assert.ok(callSiteMatch, "expected the isCurrentSessionGoogleAuthenticated(...) call site");
+  const args = callSiteMatch[1].split(",").map((a) => a.trim());
+  assert.deepEqual(args, ["userResult.user", "callerToken"]);
+});
+
+test("52. No client-suppliable provider/Google flag exists anywhere in executable code — no isGoogleUser/provider/oauthProvider parameter of any kind", () => {
+  assert.doesNotMatch(fnCodeOnly, /isGoogleUser/i);
+  assert.doesNotMatch(fnCodeOnly, /req\.[a-zA-Z]+\([^)]*[Pp]rovider/);
+  assert.doesNotMatch(fnCodeOnly, /headers\.get\("[Xx]-[Pp]rovider/);
+});
+
+test("53. isGoogleSession is computed after the feature gate and BEFORE the recent-auth guard, which is itself strictly before deleteUser — full ordering intact", () => {
+  const gateIndex = fnCodeOnly.indexOf('ACCOUNT_DELETION_ENABLED !== "true"');
+  const isGoogleSessionIndex = fnCodeOnly.indexOf("const isGoogleSession = isCurrentSessionGoogleAuthenticated(");
+  const reauthGuardIndex = fnCodeOnly.indexOf("if (!isGoogleSession && !hasRecentAuthentication(callerToken))");
+  const deleteCallIndex = fnCodeOnly.indexOf("adminClient.auth.admin.deleteUser(");
+  assert.ok(
+    [gateIndex, isGoogleSessionIndex, reauthGuardIndex, deleteCallIndex].every((i) => i > -1),
+    "expected all four checkpoints to exist",
+  );
+  assert.ok(gateIndex < isGoogleSessionIndex, "the feature gate must run before the Google-session determination");
+  assert.ok(isGoogleSessionIndex < reauthGuardIndex, "isGoogleSession must be computed before the recent-auth guard reads it");
+  assert.ok(reauthGuardIndex < deleteCallIndex, "the combined guard must run before deleteUser is ever called");
+});
+
+test("54. The recent-auth guard is skipped ONLY when isGoogleSession is true — a password account (isGoogleSession always false for them) is completely unaffected by this branch", () => {
+  assert.match(fnCodeOnly, /if \(!isGoogleSession && !hasRecentAuthentication\(callerToken\)\)/);
+  // Not an OR — a password account must never bypass the recent-auth check
+  // merely because some unrelated condition is true.
+  assert.doesNotMatch(fnCodeOnly, /if \(!isGoogleSession \|\| !hasRecentAuthentication/);
+});
+
+test("55. userResult.user (passed into isCurrentSessionGoogleAuthenticated) is the SAME object adminClient.auth.getUser(callerToken) returned for callerId — not a second, independently-sourced user lookup", () => {
+  const getUserIndex = fnCodeOnly.indexOf("adminClient.auth.getUser(callerToken)");
+  const callerIdIndex = fnCodeOnly.indexOf("const callerId = userResult.user.id;");
+  const isGoogleSessionIndex = fnCodeOnly.indexOf("const isGoogleSession = isCurrentSessionGoogleAuthenticated(userResult.user, callerToken)");
+  assert.ok(
+    [getUserIndex, callerIdIndex, isGoogleSessionIndex].every((i) => i > -1),
+    "expected getUser, callerId, and isGoogleSession to all reference the one resolved userResult",
+  );
+  assert.ok(getUserIndex < callerIdIndex && callerIdIndex < isGoogleSessionIndex);
+});
+
+test("56. CORS headers, verify_jwt=false, and the OPTIONS/method/misconfiguration branches are unaffected by the Google exemption (re-confirms tests 28-36 in this exact file)", () => {
+  const headersMatch = fnSource.match(/"Access-Control-Allow-Headers":\s*"([^"]*)"/);
+  assert.ok(headersMatch);
+  assert.deepEqual(
+    headersMatch[1].split(",").map((h) => h.trim().toLowerCase()).sort(),
+    ["apikey", "authorization", "content-type"].sort(),
+  );
+  const sectionMatch = configTomlSource.match(/\[functions\.delete-account\]\s*\n\s*verify_jwt = (\w+)/);
+  assert.equal(sectionMatch[1], "false");
 });
 
 console.log(`\n─────────────────────────────────────────`);

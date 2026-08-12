@@ -19,6 +19,16 @@ export interface StoredSupabaseSession {
   user?: {
     id?: string;
     email?: string;
+    // GoTrue's own per-user provider record — "email" for a password
+    // account, "google" for Google OAuth, etc. Present on the user object
+    // GoTrue returns from every sign-in/token/user endpoint; read by
+    // isPasswordAccount (src/lib/accountDeletion.ts) to decide whether the
+    // Delete Account flow can offer password-based reauthentication.
+    app_metadata?: {
+      provider?: string;
+      providers?: string[];
+      [key: string]: unknown;
+    } | null;
     [key: string]: unknown;
   } | null;
   [key: string]: unknown;
@@ -40,6 +50,7 @@ export interface SupabaseAuthUser {
   id: string;
   email?: string;
   user_metadata?: Record<string, unknown> | null;
+  app_metadata?: { provider?: string; providers?: string[]; [key: string]: unknown } | null;
   [key: string]: unknown;
 }
 
@@ -158,6 +169,15 @@ interface SupabaseErrorResponseBody {
   code?: string;
   details?: string;
   hint?: string;
+  // The delete-account Edge Function's own error shape (`{ error: "..." }`,
+  // e.g. "reauthentication_required"/"account_deletion_disabled") — none of
+  // GoTrue's (msg/error_description) or PostgREST's (message/code) fields
+  // apply to it, so without this it silently fell back to a generic
+  // "Authentication request failed." string and callers lost the
+  // machine-readable reason entirely. Used only as a last-resort fallback
+  // below (after every GoTrue/PostgREST-specific field), so this can never
+  // shadow a real GoTrue/PostgREST error's own message/code.
+  error?: string;
 }
 
 export async function supabaseRequest<TResponse>(
@@ -177,9 +197,17 @@ export async function supabaseRequest<TResponse>(
   if (!response.ok) {
     const errorBody = data as SupabaseErrorResponseBody;
     const message =
-      errorBody.msg || errorBody.error_description || errorBody.message || "Authentication request failed.";
+      errorBody.msg ||
+      errorBody.error_description ||
+      errorBody.message ||
+      errorBody.error ||
+      "Authentication request failed.";
     throw new SupabaseRequestError(message, response.status, {
-      code: errorBody.code ?? null,
+      // .code falls back to the Edge Function's own `error` string too, so
+      // a caller can check .code (its usual, message-text-independent way
+      // of classifying a SupabaseRequestError) for
+      // "reauthentication_required" etc. exactly like a real PostgREST code.
+      code: errorBody.code ?? errorBody.error ?? null,
       details: errorBody.details ?? null,
       hint: errorBody.hint ?? null,
     });
@@ -324,6 +352,70 @@ export async function signInWithPassword(email: string, password: string) {
   return session;
 }
 
+// Reauthentication-specific password verification — the same GoTrue
+// password grant signInWithPassword uses above, but deliberately does NOT
+// call storeSession() itself. A caller reauthenticating before a
+// destructive action (account deletion) must verify the RETURNED session's
+// user id matches the CURRENTLY authenticated account before the app ever
+// adopts it: if this function stored the session itself first, a caller
+// who enters a different account's valid email+password (by mistake or
+// otherwise) would briefly have that other account's session live in the
+// app before any mismatch check could run. See adoptSupabaseSession below
+// and src/lib/accountDeletion.ts's reauthenticateForAccountDeletion, which
+// performs that check before ever calling it.
+export async function reauthenticateWithPassword(
+  email: string,
+  password: string,
+): Promise<StoredSupabaseSession> {
+  const payload = await supabaseRequest<AuthResponse>(
+    "/auth/v1/token?grant_type=password",
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ email, password }),
+    },
+  );
+
+  const session = await populateSessionUser(normalizeSession(payload));
+  if (!session) {
+    throw new Error("reauthenticateWithPassword: no session returned.");
+  }
+  return session;
+}
+
+// Explicit, narrow public entry point for adopting an already-verified
+// session as the app's current one (persists it + notifies every
+// useAuthSession subscriber via the same event storeSession always fires).
+// Exported separately — rather than exporting storeSession directly — so
+// every call site reads as a deliberate "make this the app's session now"
+// decision, never an incidental side effect of an unrelated network call.
+export function adoptSupabaseSession(session: StoredSupabaseSession): void {
+  storeSession(session);
+}
+
+// The local-only half of signing out: clears the stored session + PKCE
+// verifier and notifies every subscriber (useAuthSession, via
+// subscribeToSupabaseSessionChanges) that the app is now signed out —
+// without ever contacting Supabase's own /auth/v1/logout endpoint.
+//
+// This is the ONLY correct sign-out mechanism once the account itself no
+// longer exists server-side (post account-deletion): the stored access
+// token's own `sub` claim names a user `auth.users` no longer has, so
+// calling /auth/v1/logout with it is not a real sign-out request GoTrue can
+// honor — it correctly rejects it with 403 "User from sub claim in JWT
+// does not exist", a real, expected rejection for a genuinely gone user,
+// never something to retry or treat as a cleanup failure. Exported
+// separately from signOutSupabase (below), which still performs the real
+// network logout for an ordinary, still-existing account — keeping the two
+// as distinct named functions means an accidental swap can never silently
+// skip real server-side session invalidation for a live account.
+export function clearLocalSupabaseSession(): void {
+  storeSession(null);
+  if (typeof window !== "undefined") {
+    window.localStorage.removeItem(STORAGE_KEYS.pkceVerifier);
+  }
+}
+
 export async function signOutSupabase(
   session?: StoredSupabaseSession | null,
 ): Promise<void> {
@@ -338,10 +430,7 @@ export async function signOutSupabase(
       });
     }
   } finally {
-    storeSession(null);
-    if (typeof window !== "undefined") {
-      window.localStorage.removeItem(STORAGE_KEYS.pkceVerifier);
-    }
+    clearLocalSupabaseSession();
   }
 }
 

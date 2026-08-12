@@ -388,15 +388,30 @@ deno_version = 2
 # Per-function config. Explicit here rather than left to the CLI/platform
 # default so JWT verification for this privileged function is a deliberate,
 # reviewable choice, not an implicit one — see supabase/README.md's "Account
-# Deletion" section. verify_jwt = true means Supabase's own gateway rejects
-# a request with a missing/invalid/expired bearer token before it ever
-# reaches the function; delete-account's own adminClient.auth.getUser(token)
-# check underneath is a second, independent verification (it also confirms
-# the user still exists, which platform-level JWT verification alone does
-# not), not a replacement for this. Do not set this to false without a
-# concrete architectural reason — none exists today.
+# Deletion" section.
+#
+# verify_jwt = false — CHANGED from true (CORS incident, 2026-08-13). The
+# concrete architectural reason the prior comment said didn't exist: with
+# verify_jwt = true, Supabase's own gateway requires a valid bearer token on
+# EVERY request routed to this function, including the browser's automatic
+# CORS preflight OPTIONS request — and a preflight request never carries an
+# Authorization header (browsers only send Origin/Access-Control-Request-*
+# on it, per the Fetch/CORS spec). The gateway therefore rejected the
+# preflight itself with a non-2xx, headerless response before this
+# function's own already-correct `if (req.method === "OPTIONS") return ...`
+# handler ever ran, which the browser reports as "Response to preflight
+# request doesn't pass access control check: It does not have HTTP ok
+# status" — exactly the live failure this change fixes. This does NOT make
+# the function callable without authentication: delete-account's own
+# adminClient.auth.getUser(token) check (see index.ts) is unconditional and
+# already independently sufficient — it validates the JWT itself AND
+# confirms the backing auth.users row still exists, which platform-level
+# verify_jwt alone never did anyway. Moving JWT verification fully into the
+# function body (rather than duplicating it at the gateway) is the pattern
+# Supabase's own documentation recommends for any function that must accept
+# a real preflighted, Authorization-header-bearing browser request.
 [functions.delete-account]
-verify_jwt = true
+verify_jwt = false
 
 [analytics]
 enabled = true

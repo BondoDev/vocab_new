@@ -49,20 +49,18 @@
 // whole cascade back — there is no multi-step manual deletion here that
 // could leave a partially-deleted account behind.
 //
-// Reauthentication — deliberately NOT enforced here yet. A Supabase JWT's
-// `amr` claim carries a timestamp per authentication factor, which could in
-// principle back a "was the caller recently authenticated" check, but nothing
-// in this repository decodes/validates JWT claims anywhere today, and a
-// session-age check alone is a weak proxy for actual reauthentication (a
-// long-lived, silently-refreshed session can look "old" at the token layer
-// while the user never re-proved their password, and vice versa). Building
-// that check now, with no UI that ever forces a fresh sign-in before calling
-// this function, would be exactly the kind of invented pseudo-reauth this
-// task was told not to add. This function is therefore authenticated-only
-// (any currently-valid session may call it) and intentionally not wired into
-// any frontend code path — seeing this comment in a future Settings task is
-// the reminder to revisit reauthentication before ever exposing a "Delete
-// account" button.
+// Reauthentication — ENFORCED (2026-08-13). See "Recent-authentication
+// requirement" further below for the full design: this function now reads
+// the `amr` (Authentication Methods Reference) claim off the caller's own
+// already-validated bearer token and rejects the request
+// (`reauthentication_required`, 403) unless a genuine authentication event
+// happened within the last few minutes. A merely valid-but-old session is
+// no longer sufficient on its own. The frontend (Settings' Delete Account
+// dialog, src/lib/accountDeletion.ts) re-establishes this for password
+// accounts by re-verifying the current password through Supabase Auth
+// immediately before calling this function; this function's own check
+// never trusts that the frontend actually did so — it independently
+// re-derives recency from the token itself every time.
 //
 // Idempotency — a retried call after a successful deletion re-sends the
 // same (now-stale) access token. `auth.getUser(token)` looks the user up by
@@ -82,9 +80,9 @@
 // 401, learning nothing about whether deletion is enabled) but BEFORE
 // `auth.admin.deleteUser` is ever called — see supabase/README.md's
 // "Account Deletion" section for the full deployment procedure this gate
-// exists to support. Flipping this to "true" is a deliberate future step,
-// gated on a real Settings UI and genuine reauthentication existing first —
-// not something this task does.
+// exists to support. Independent of, and checked before, the
+// recent-authentication requirement below — a disabled deployment never
+// leaks whether the caller's authentication was otherwise recent enough.
 
 // @ts-nocheck -- Deno Edge Function: resolved by Supabase's Deno runtime via
 // URL/npm specifiers, not this repo's Node/tsc toolchain (which does not
@@ -92,6 +90,7 @@
 // from `npx tsc --noEmit` the same way workers/word-ssr's own Wrangler
 // build is a separate toolchain from the main app's tsc run.
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { hasRecentAuthentication, isCurrentSessionGoogleAuthenticated } from "./recentAuth.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -102,9 +101,23 @@ const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 // operation.
 const ACCOUNT_DELETION_ENABLED = Deno.env.get("ACCOUNT_DELETION_ENABLED");
 
+// CORS incident, 2026-08-13: this list must name every header the real
+// frontend caller (deleteAccount in src/lib/accountDeletion.ts, via
+// getAuthHeaders() in src/lib/supabaseAuth.ts) actually sends —
+// `authorization` (the bearer token) and `content-type` were already
+// listed, but `apikey` (sent on every request through getAuthHeaders(),
+// required by Supabase's own gateway to route the request at all) was
+// missing. A missing entry here fails the browser's preflight check the
+// same way a missing Access-Control-Allow-Origin does — "header apikey is
+// not allowed by Access-Control-Allow-Headers" — even once verify_jwt
+// (supabase/config.toml) stops blocking the preflight itself. Kept to
+// exactly these three: this repo's frontend never uses the official
+// @supabase/supabase-js client (which would additionally send
+// x-client-info), so listing that header here would only be unnecessary
+// surface area.
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, content-type",
+  "Access-Control-Allow-Headers": "authorization, content-type, apikey",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
@@ -114,6 +127,47 @@ function jsonResponse(body: Record<string, unknown>, status: number): Response {
     headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
   });
 }
+
+// ============================================================================
+// Recent-authentication requirement (2026-08-13, corrected 2026-08-14)
+// ============================================================================
+//
+// Possessing a valid-but-old session must not be enough to permanently
+// delete an account. hasRecentAuthentication (./recentAuth.ts — a pure,
+// dependency-free module shared with this repo's own Node test suite, see
+// that file's own header) reads the `amr` (Authentication Methods
+// Reference) claim off the caller's own bearer token and reports false
+// unless a QUALIFYING authentication event (`password` or `oauth` —
+// FluentStellar's two supported sign-in flows; deliberately NOT
+// `token_refresh`, which Supabase's own JWT Claims Reference documents as
+// a real, distinct `amr` method written on every silent background token
+// refresh) happened within the last 5 minutes.
+//
+// CORRECTION (2026-08-14): an earlier version of this check took the
+// newest timestamp across EVERY `amr` entry, unfiltered by method, on the
+// mistaken assumption that GoTrue only ever appends an `amr` entry on a
+// genuine authentication event. That let a purely passive token refresh
+// silently and indefinitely extend the 5-minute deletion window, without
+// the user ever proving their identity again — defeating the entire point
+// of this check. recentAuth.ts's own header has the full incident record.
+//
+// Trust boundary: decodeJwtPayload (inside recentAuth.ts) reads the
+// token's payload WITHOUT independently re-verifying its signature — safe
+// only because this is always called after
+// adminClient.auth.getUser(callerToken) below has already round-tripped to
+// GoTrue and confirmed this exact token's signature, expiry, and backing
+// user are valid. hasRecentAuthentication never becomes the sole
+// authenticity check — getUser(callerToken) remains mandatory and runs
+// first.
+//
+// PRODUCT POLICY (2026-08-14): this recent-`password`-AMR check now applies
+// only to password accounts. Google OAuth accounts are exempted by
+// isCurrentSessionGoogleAuthenticated (recentAuth.ts) — a deliberate
+// product decision, not a security gap: their bearer token was already
+// independently verified above via getUser(callerToken), so "a valid
+// authenticated Google session" is sufficient on its own for this account
+// type. See that function's own header for the exact trusted signals this
+// determination requires.
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -161,6 +215,31 @@ Deno.serve(async (req: Request) => {
   // readable error code.
   if (ACCOUNT_DELETION_ENABLED !== "true") {
     return jsonResponse({ error: "account_deletion_disabled" }, 403);
+  }
+
+  // Product policy (2026-08-14): Google OAuth accounts may delete using
+  // their current valid authenticated session, without the 5-minute
+  // recent-authentication requirement below — see
+  // isCurrentSessionGoogleAuthenticated's own header (recentAuth.ts) for
+  // the exact two server-trusted signals this determination requires, both
+  // derived from data this function already independently verified
+  // (userResult.user came from GoTrue's own Admin API response, never from
+  // anything the client sent in this request). Password accounts are
+  // completely unaffected by this branch — isCurrentSessionGoogleAuthenticated
+  // returns false for them, and they fall through to the unchanged
+  // recent-`password`-AMR check exactly as before.
+  const isGoogleSession = isCurrentSessionGoogleAuthenticated(userResult.user, callerToken);
+
+  // Recent-authentication requirement — see this file's own section above
+  // for the full design. Checked last, immediately before the destructive
+  // call, and independently of whatever the frontend believes it already
+  // did: a password-account caller with an ordinary valid-but-stale
+  // session (correct identity, deletion enabled, but no sufficiently
+  // recent authentication event) is rejected here every time, with no way
+  // for a client-supplied value of any kind to satisfy this check. Skipped
+  // entirely for a confirmed Google session, per the product policy above.
+  if (!isGoogleSession && !hasRecentAuthentication(callerToken)) {
+    return jsonResponse({ error: "reauthentication_required" }, 403);
   }
 
   const { error: deleteError } = await adminClient.auth.admin.deleteUser(callerId);

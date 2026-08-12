@@ -191,7 +191,14 @@ const headerSource = fs.readFileSync(path.join(ROOT_DIR, "src", "app", "componen
 
 test("The existing sidebar nav entry ('my-lists' id) is reused, not duplicated — its id now matches the section id exactly", () => {
   assert.match(sidebarSource, /\{ id: "myLists", labelKey: "userProfile\.sidebar\.items\.myLists", icon: ListPlus \}/);
-  assert.match(sidebarSource, /"dashboard" \| "learning" \| "vocabulary" \| "myLists" \| "progress"/);
+  // Tolerant of the union type's own line-wrapping (Settings Phase 1
+  // reformatted it to one variant per line to fit "settings" in) — this
+  // still proves "myLists" sits among its original dashboard/learning/
+  // vocabulary/progress siblings, not that the type stays on one line.
+  assert.match(
+    sidebarSource,
+    /"dashboard"[\s\S]{0,10}"learning"[\s\S]{0,10}"vocabulary"[\s\S]{0,10}"myLists"[\s\S]{0,10}"progress"/,
+  );
 });
 
 test("UserProfileDashboardPage renders MyListsSection for the myLists section id, threading the same shared profile props as its siblings", () => {

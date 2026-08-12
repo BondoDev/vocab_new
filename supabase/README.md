@@ -361,6 +361,25 @@ This phase deliberately did **not** change
 and any historical `user_daily_stats` treatment were deferred to later
 phases.
 
+### Manual replacement (2026-08-12) — Settings backend follow-up
+
+The "future Settings flow with a separate contract" this phase deferred is
+`update_user_timezone(text)`
+(`supabase/migrations/20260812120000_add_update_user_timezone_rpc.sql`) —
+a second, separate `SECURITY DEFINER` RPC, not a change to
+`initialize_user_timezone` itself. `initialize_user_timezone` keeps its
+exact null-only semantics unchanged (still the automatic first-load
+initializer `useUserProfileLoad.ts` calls); `update_user_timezone`
+unconditionally overwrites `timezone`/`timezone_updated_at` for the
+authenticated caller's own row, reuses the same
+`pg_catalog.pg_timezone_names` validation and the same
+`prevent_direct_user_timezone_write` trigger-bypass flag, and is the RPC
+FluentStellar's Settings page now calls for both "Use current timezone" and
+the searchable timezone selector's explicit Save action. Neither RPC ever
+rewrites historical `user_daily_stats.stat_date` rows — a timezone change
+only affects how *future* learning days are computed
+(`get_current_learning_date`, Timezone Phase 2 below).
+
 ## Timezone Phase 2 - server-derived learning dates
 
 `migrations/20260806150000_add_server_derived_learning_dates.sql` stops
@@ -950,15 +969,30 @@ operation:
   bundle (every existing `VITE_SUPABASE_*` variable in this repo is the
   anon key only — confirmed above).
 
-**Platform-level JWT verification**: `supabase/config.toml` declares
-`[functions.delete-account]` with `verify_jwt = true` explicitly, rather
-than relying on the CLI/platform default. This means Supabase's own gateway
-rejects a request with a missing/invalid/expired bearer token before it
-ever reaches the function — a second, independent layer in front of the
-function's own `adminClient.auth.getUser(token)` check, not a replacement
-for it (only the in-function check also confirms the user still *exists*,
-which platform-level verification alone does not). No concrete
-architectural reason exists to disable it, so it stays on.
+**Platform-level JWT verification (CHANGED — CORS incident, 2026-08-13)**:
+`supabase/config.toml` declared `[functions.delete-account]` with
+`verify_jwt = true` explicitly, rather than relying on the CLI/platform
+default, on the reasoning that it added a second, independent layer in
+front of the function's own `adminClient.auth.getUser(token)` check. That
+was true, but it also meant Supabase's own gateway required a valid bearer
+token on *every* request routed to this function — including the browser's
+automatic CORS preflight `OPTIONS` request, which per the Fetch/CORS spec
+never carries an `Authorization` header. The gateway rejected the preflight
+itself, before this function's own already-correct
+`if (req.method === "OPTIONS") return ...` handler ever ran, which the
+browser reported as a failed preflight ("It does not have HTTP ok status")
+and the frontend saw as a generic network error — Settings' Delete Account
+action could never actually reach this function's own logic at all.
+
+`verify_jwt` is now `false` for this function. This does **not** make
+account deletion callable without authentication: the function's own
+`adminClient.auth.getUser(token)` check (below) is unconditional and was
+always independently sufficient on its own — it validates the JWT itself
+*and* confirms the backing `auth.users` row still exists, which
+platform-level `verify_jwt` alone never did anyway. This is the pattern
+Supabase's own documentation recommends for any function that must accept
+a real preflighted, `Authorization`-header-bearing browser request while
+also performing its own in-function authentication.
 
 **Identity**: the function derives the caller exclusively from their own
 bearer token (`adminClient.auth.getUser(token)`), which both validates the
@@ -1068,17 +1102,35 @@ verified, in order:
 4. `node scripts/tests/account/test-delete-account-function-contract.mjs`
    passing.
 
-Only then:
-
 ```bash
 supabase secrets set ACCOUNT_DELETION_ENABLED=true
 ```
 
 Do not set this during any task that hasn't independently verified all four
-items above. Until it is set, "deployed" and "enabled" are different
-states, and this repository's own tests only ever verify the code — never
+items above. This repository's own tests only ever verify the code — never
 the live secret's actual deployed value, which is Supabase-project
 configuration outside this repository's source control.
+
+**Actual live state, updated (2026-08-13):** `ACCOUNT_DELETION_ENABLED` was
+briefly set to `true` and account deletion manually verified working
+end-to-end — at that point **without** item 2 (genuine reauthentication)
+being implemented yet; every earlier Settings phase's own task scope had
+explicitly forbidden inventing a frontend-only reauthentication step with
+no corresponding backend enforcement, and no backend enforcement existed
+yet either. That gap was then closed in a dedicated reauthentication phase
+(see "Reauthentication" below) — the delete-account Edge Function now
+independently enforces a recent-authentication requirement server-side,
+and Settings' Delete Account dialog produces a fresh one for password
+accounts before calling it. While that phase was implemented and tested,
+`ACCOUNT_DELETION_ENABLED` was deliberately set back to `false` on the live
+project — re-enabling it (and re-verifying end-to-end with reauthentication
+in place) is a live-deployment step outside this repository, not something
+this repository's own code/tests can confirm. Item 1 is satisfied (the
+"Delete account" UI, typed-`DELETE`-confirmation `AlertDialog`) and item 4
+passes (see `test-delete-account-function-contract.mjs`'s own current
+results). Item 3 (live cascade re-verification) still cannot be
+independently re-confirmed from this environment (no database/CLI access
+here — see "Live cascade verification" below).
 
 ### Live cascade verification (must be run against the live project)
 
@@ -1143,40 +1195,103 @@ repository's migrations describe — **do not enable deletion** until the
 gap is closed (either by applying the missing migration or by reconciling
 this table with the actual live state) and this query is re-run clean.
 
-### Reauthentication — deliberately not enforced yet
+### Reauthentication — ENFORCED (2026-08-13, corrected 2026-08-14, Google exemption 2026-08-14)
 
-FluentStellar currently supports exactly two sign-in methods
-(`src/lib/supabaseAuth.ts`): email/password (`signInWithPassword`/
+FluentStellar supports exactly two sign-in methods (`src/lib/
+supabaseAuth.ts`): email/password (`signInWithPassword`/
 `signUpWithPassword`) and Google OAuth via PKCE (`signInWithGoogleOAuth`).
 No magic-link or other provider is wired into the frontend, regardless of
 what `supabase/config.toml`'s local-dev template enables/disables (that
 file is CLI scaffolding for local development, not a record of the live
 project's provider configuration).
 
-A Supabase-issued JWT does carry enough metadata in principle to back a
-"recently authenticated" check server-side (an `amr` claim with a
-timestamp per authentication factor). This function does not implement
-one: nothing in this repository decodes or validates JWT claims anywhere
-today, and a bare session-age check is a weak, easily-misleading proxy for
-actual reauthentication — a long-lived session kept alive by silent token
-refreshes can look "old" without the user ever re-proving their password,
-while a genuinely fresh sign-in and a bare page reload can look
-identical. Building a check like that now, with no UI that would ever force
-a fresh sign-in immediately before calling this function, would be the
-"weak pseudo-reauthentication mechanism" this task was explicitly told not
-to invent.
+This section previously listed three options "for a future Settings task,
+in increasing order of rigor" — the first (password re-entry, verified via
+a fresh sign-in, never a bare claims check) and third (a short-window
+`amr`-timestamp check, decoded and verified server-side) are now both
+built, together, as one complete design:
 
-Options for a future Settings task, in increasing order of rigor:
-password users could be prompted to re-enter their password immediately
-before the delete call (verified via a fresh `signInWithPassword`, not a
-claims check); Google OAuth users would need a provider-specific
-equivalent (re-consent / re-authorization), since there is no password to
-re-check; or the function could require a session whose `amr` timestamp is
-within a short window, decoded and verified server-side, as a
-weaker-but-still-real fallback. All three depend on frontend/provider work
-this task deliberately excludes. Until one exists, this function stays
-**authenticated-only** (any currently-valid session may call it) and is not
-wired into any frontend code path.
+- **Server-side enforcement** (`supabase/functions/delete-account/
+  recentAuth.ts`, imported by `index.ts`) reads the `amr` (Authentication
+  Methods Reference) claim off the caller's own bearer token — the same
+  claim this section always named as the correct mechanism — and rejects
+  the request (`403 { error: "reauthentication_required" }`) unless a
+  QUALIFYING authentication event happened within the last 5 minutes
+  (`RECENT_AUTH_WINDOW_SECONDS`). Deliberately `amr`, never `iat`: `iat`
+  unconditionally advances on every token refresh, exactly the "weak,
+  easily-misleading proxy" this section originally warned against.
+  **Correction (2026-08-14):** an earlier version of this check took the
+  newest timestamp across *every* `amr` entry, on the mistaken assumption
+  that `amr` "only updates on a genuine authentication event." Supabase's
+  own JWT Claims Reference documents `token_refresh` as a real, distinct
+  `amr` method — written on every silent background token refresh
+  (`ensureFreshSupabaseSession`), which never requires the user to
+  re-prove anything. Taking the newest timestamp unconditionally let a
+  purely passive refresh silently and indefinitely extend the 5-minute
+  deletion window. The fix: `RECENT_AUTH_METHODS` is an explicit
+  **allow-list** — `{"password", "oauth"}`, FluentStellar's own two
+  supported sign-in flows — and every other `amr` entry, `token_refresh`
+  included, is skipped when computing recency, however recent its own
+  timestamp is. This is enforced independently of the frontend — a direct
+  `POST /functions/v1/delete-account` call with an ordinary stale-but-valid
+  session (or one kept "alive" purely by silent refreshes) is rejected the
+  same way regardless of what UI (if any) made the request.
+- **Client-side production of a fresh `amr` entry, for password accounts**
+  (`src/lib/accountDeletion.ts`'s `reauthenticateForAccountDeletion`,
+  wired into Settings' Delete Account dialog): re-verifies the current
+  password through a fresh `signInWithPassword`-equivalent call
+  (`reauthenticateWithPassword`) immediately before the delete call. The
+  email verified is always the current session's own trusted address —
+  never user-editable — and the returned session is adopted only after
+  confirming its `user.id` matches the currently authenticated account, so
+  credentials for a different account can never authorize deleting this
+  one (see `reauthenticateWithPassword`'s own header for why it
+  deliberately does not call `signInWithPassword` directly, which would
+  adopt a session before that check could run).
+- **Google OAuth accounts — exempted from the 5-minute window (product
+  policy, 2026-08-14).** Building a provider-specific re-consent/redirect
+  flow remains the genuine blocker this section always anticipated
+  ("depend[s] on frontend/provider work this task deliberately excludes"),
+  so rather than build one, the product decision was to trust a Google
+  account's CURRENT, already-verified session outright: Settings' dialog
+  has no password field and no in-dialog reauthentication step for these
+  accounts (nor any reauthentication warning — see below), and the
+  Edge Function itself skips the `amr`-recency check entirely for them.
+  This is not "no check at all" — `adminClient.auth.getUser(callerToken)`
+  still independently validates the token's signature, expiry, and backing
+  user before this exemption is ever consulted, so a Google account
+  deleting itself is always acting on a token GoTrue itself just confirmed
+  is live, exactly as a password account's stale-but-otherwise-valid
+  session would be. `isCurrentSessionGoogleAuthenticated`
+  (`recentAuth.ts`) determines eligibility from two independent,
+  server-trusted signals that must BOTH agree, never from anything the
+  request body supplies:
+  1. `app_metadata.provider === "google"` on the `User` object
+     `adminClient.auth.getUser(callerToken)` already returned above in the
+     same request — GoTrue's own record of the account's provider, never
+     decoded from the client's own token.
+  2. That SAME token's own `amr` claim contains an actual `"oauth"` entry
+     — reflecting how *this specific session* was established, not merely
+     the account's historical/linked-provider list. This is the guard
+     against an account that has Google linked at some point but whose
+     current session was actually established by password: such a session
+     fails signal 2 and falls through to the ordinary password-recency
+     check (which it will also fail, having no qualifying `amr` entry of
+     its own, unless it also has a recent password sign-in). FluentStellar
+     never exposes a "link another provider" UI (password and Google are
+     two independent, non-linked sign-in flows — `src/lib/
+     supabaseAuth.ts`), so in practice signal 2 always agrees with signal
+     1; it is still checked, defensively, as the strongest available
+     current-session signal. Either signal missing, unexpected, or
+     ambiguous fails CLOSED into the stricter password-reauthentication
+     path — never fails open into skipping it.
+  Password accounts are completely unaffected by this branch:
+  `isCurrentSessionGoogleAuthenticated` returns `false` for them by
+  construction (`app_metadata.provider` is `"email"`, never `"google"`),
+  so they fall through to the unchanged recent-`password`-AMR check above.
+  See `scripts/tests/account/test-google-reauth-exemption.mjs` for tests
+  against the real algorithm, including the "Google-linked account,
+  password-established current session" scenario above.
 
 ### Session behavior after deletion
 
@@ -1188,34 +1303,59 @@ new access token for no longer exists). An already-issued, not-yet-expired
 access token remains signature-valid until its own `exp`, but is
 functionally inert — every RLS policy in this schema is `auth.uid() = ...`-
 scoped, and the data it could ever have matched no longer exists after the
-cascade, so there is nothing left for a stale token to read or write. A
-future Settings UI should still call `signOutSupabase()` immediately after
-a successful `{ deleted: true }` response — not because the token is
-exploitable, but to clear `localStorage` and in-memory app state
-proactively rather than leaving a dead session sitting around until natural
-expiry.
+cascade, so there is nothing left for a stale token to read or write.
 
-### Deliberately not built in this task
+### Built (Settings Phase 1 + follow-ups, 2026-08-12 — 2026-08-13)
 
-No Settings page, delete-account button, confirmation modal, password
-input, or success screen — see this section's own scope exclusions. No
-frontend client wrapper was added either: every existing narrow RPC caller
-in `src/lib/userProfile.ts` exists because something in the app already
-calls it, and this repo has an established pattern of removing exactly this
-kind of unused code once it's identified (`is_new_user`/`last_active_at`
-above) — adding an unused `deleteAccount()` wrapper now would immediately
-be exactly that kind of dead code. A future Settings task should add the
-client call (`POST /functions/v1/delete-account` with the caller's own
-bearer token, matching the pattern in `src/lib/supabaseAuth.ts`) alongside
-the UI that actually uses it, then call `signOutSupabase()` on success and
-redirect away from any authenticated route.
+Everything this section originally deferred now exists: the Settings page,
+the Delete Account button, the typed-`DELETE`-confirmation dialog, and the
+frontend client wrapper (`deleteAccount()` in `src/lib/accountDeletion.ts`,
+`POST /functions/v1/delete-account` with the caller's own bearer token,
+matching the pattern in `src/lib/supabaseAuth.ts`, exactly as anticipated).
 
-The function is now safe to commit, push, and deploy — deployment and
-enablement are deliberately two separate events, gated by
-`ACCOUNT_DELETION_ENABLED` above. Do not describe this feature as
-production-ready until every item in "Deployment procedure"'s Future
-Settings launch checklist exists and has been verified; a deployed function
-with deletion disabled is infrastructure in place, not a shipped feature.
+One deliberate correction to this section's own original suggestion: on a
+successful `{ deleted: true }` response, the Settings cleanup handler
+(`handleAccountDeleted` in `src/app/App.tsx`) does **NOT** call
+`signOutSupabase()`. By the time that callback runs the account no longer
+exists server-side, so `signOutSupabase()`'s own `POST /auth/v1/logout`
+call would carry an access token whose `sub` claim names a user
+`auth.users` no longer has — confirmed live, this makes GoTrue reject it
+with `403 "User from sub claim in JWT does not exist"`, a real rejection
+for a genuinely deleted account, not a bug to retry past. The fix
+(`clearLocalSupabaseSession()`, `src/lib/supabaseAuth.ts`) does only the
+local half of sign-out — clearing the stored session and PKCE verifier and
+firing the same app-wide session-changed notification — with no network
+call at all. Ordinary user-triggered Sign Out is unaffected and still calls
+`signOutSupabase()` as originally documented.
+
+Deployment and enablement remain two separate events: this function is
+deployed with `--no-verify-jwt` (see "CORS and `verify_jwt`" below) and
+`ACCOUNT_DELETION_ENABLED=true` is set on the live project — both
+confirmed via manual live testing (timezone change, reset progress, and
+account deletion all verified working end-to-end).
+
+### CORS and `verify_jwt` (2026-08-13)
+
+`supabase/config.toml`'s `[functions.delete-account]` originally set
+`verify_jwt = true` "with no concrete architectural reason to disable it."
+That reason surfaced live: with `verify_jwt = true`, Supabase's own gateway
+requires a valid bearer token on *every* request routed to this function,
+including the browser's automatic CORS preflight `OPTIONS` request — which
+never carries an `Authorization` header. The gateway rejected the preflight
+itself, before this function's own already-correct
+`if (req.method === "OPTIONS")` handler ever ran, which the browser
+reported as a failed preflight and the frontend saw as a generic network
+error. `verify_jwt` is now `false` for this function (deployed with
+`supabase functions deploy delete-account --no-verify-jwt`). This does
+**not** make deletion callable without authentication: the function's own
+`adminClient.auth.getUser(token)` check remains unconditional and was
+always independently sufficient — it validates the JWT itself and confirms
+the backing `auth.users` row still exists, which platform-level
+`verify_jwt` alone never did anyway. `CORS_HEADERS`'
+`Access-Control-Allow-Headers` was also corrected to include `apikey`
+(previously only `authorization, content-type`), matching every header the
+real frontend caller (`getAuthHeaders()`, `src/lib/supabaseAuth.ts`)
+actually sends.
 
 ## Learning Progress Reset — backend primitive (2026-08-08)
 
@@ -1634,6 +1774,26 @@ versioned migration (see "Future activation" above), not a step this task
 performs. Do not describe this feature as production-ready until a
 Settings UI with an explicit confirmation step exists, the client wiring
 calls this RPC, and the future activation migration has been applied.
+
+### Activation (2026-08-12) — Settings backend follow-up
+
+All four "Future activation" prerequisites above are now satisfied: the
+Settings Phase 1 UI (typed-`RESET`-confirmation dialog, targeting the
+caller's active learning language) and its client wiring already exist and
+already called this exact RPC (blocked only by the missing grant); this
+follow-up re-ran the full security audit above against the function's
+actual current source (identity, `search_path`, every `DELETE` predicate,
+no dynamic SQL, no `user_profiles`/`auth.users` reference) with no findings,
+and then applied exactly the versioned grant this section always
+anticipated, as its own migration:
+`supabase/migrations/20260812130000_activate_learning_progress_reset_rpc.sql`
+— see that file's own header for the audit re-confirmation. No change was
+made to `reset_learning_language_progress` itself; the original migration
+(`20260808120000_...sql`) is untouched. Cross-user and cross-language
+isolation are now also exercised live end-to-end by
+`scripts/tests/live/scenarios/progressResetActivated.mjs` (see "Live
+Supabase E2E tests" below), superseding the old `progressResetDisabled.mjs`
+scenario that only proved the RPC stayed unreachable.
 
 ## Vocabulary Growth — narrow read-only RPC (2026-08-08)
 
@@ -2306,21 +2466,27 @@ one, prefer it over production for this suite.
   `review_events`, or `custom_practice_events` for either user. If cleanup
   itself fails, the run exits non-zero and prints the disposable user's id
   and email for manual removal — it never fails silently.
-- Never touches the `delete-account` Edge Function, never reads or writes
-  `ACCOUNT_DELETION_ENABLED`, and never grants `authenticated` `EXECUTE` on
-  `reset_learning_language_progress` — cleanup uses the Admin API's
-  `deleteUser` directly (the same primitive `delete-account` uses
-  internally, just invoked here for test teardown), and the reset-RPC
-  scenario only ever calls it as an ordinary `authenticated` session to
-  confirm it is still rejected.
+- Never touches the `delete-account` Edge Function and never reads or writes
+  `ACCOUNT_DELETION_ENABLED` — cleanup uses the Admin API's `deleteUser`
+  directly (the same primitive `delete-account` uses internally, just
+  invoked here for test teardown).
+- `reset_learning_language_progress` IS now reachable by `authenticated`
+  (Settings backend follow-up, 2026-08-12 — see that section below) and is
+  exercised end-to-end by `scenarios/progressResetActivated.mjs`: seeds real
+  progress in two languages for one disposable user and in the reset
+  language for the other, resets one user's one language, then
+  privileged-verifies every other (user, language) combination in all four
+  owned tables is untouched, and that the resetting user's own
+  `user_profiles` row (including `learning_language`) is byte-for-byte
+  unchanged.
 
 ### Not covered here
 
-Account deletion and learning-progress reset are deliberately **not**
-exercised end-to-end by this suite (out of scope for the task that built
-it) beyond the two safety checks above (a real Auth-user deletion for
-cleanup, and confirming the reset RPC stays unreachable). Neither backend
-primitive's own live activation flow is tested.
+Account deletion is deliberately **not** exercised end-to-end by this suite
+(out of scope for the task that built it) beyond the one safety check above
+(a real Auth-user deletion for cleanup). Its own live activation flow
+(`ACCOUNT_DELETION_ENABLED=true` against a real deployed Edge Function) is
+not tested here.
 
 ## What happens next
 

@@ -1,0 +1,123 @@
+-- ============================================================================
+-- SETTINGS BACKEND FOLLOW-UP — activate reset_learning_language_progress
+-- ============================================================================
+--
+-- public.reset_learning_language_progress(text) was prepared, fully
+-- defined, and reviewed in 20260808120000_add_learning_language_progress_
+-- reset_rpc.sql, but deliberately left unreachable from the browser: that
+-- migration revokes EXECUTE from PUBLIC, anon, AND authenticated, granting
+-- it only to postgres/service_role, as its explicit "PRODUCTION DEPLOYMENT
+-- GATE." That same migration's own header names the exact four
+-- prerequisites for activation (see supabase/README.md's "Learning Progress
+-- Reset" -> "Future activation"):
+--   1. a real Settings "Reset progress" UI targeting the caller's studied
+--      language(s);
+--   2. an explicit destructive confirmation step before the call is ever
+--      made;
+--   3. client wiring that calls this RPC and handles its response;
+--   4. the migration-contract test passing.
+--
+-- All four are now satisfied: Settings Phase 1 built the typed-"RESET"-
+-- confirmation dialog (targeting the caller's current active learning
+-- language, src/features/user-profile/sections/settings/
+-- ResetProgressDialog.tsx) and the client caller
+-- (resetLearningLanguageProgress in src/lib/userProfile.ts) already calls
+-- this exact RPC by name and signature — it was simply rejected with a
+-- Postgres 42501 "permission denied" error until this migration.
+-- `node scripts/tests/learning/test-learning-progress-reset-migration-
+-- contract.mjs` continues to pass unchanged (it guards the original
+-- migration file, which this migration does not modify).
+--
+-- RE-AUDIT PERFORMED BEFORE THIS GRANT (repeated in full, against the
+-- function's actual current source — not assumed from any prior report)
+-- ------------------------------------------------------------------------
+-- Re-read supabase/migrations/20260808120000_..._reset_rpc.sql in full and
+-- independently re-verified every property below by inspecting the live
+-- file text (not by re-using an earlier summary):
+--
+--   * SECURITY DEFINER with `set search_path to ''` — every table
+--     reference in the body is fully schema-qualified
+--     (public.review_events/public.custom_practice_events/
+--     public.user_word_progress/public.user_daily_stats); no
+--     search_path-hijack surface.
+--   * The caller is derived exclusively from `v_user_id uuid :=
+--     auth.uid()`, checked non-null before anything else runs. The
+--     function's parameter list is `(p_target_language text)` only — no
+--     p_user_id/p_target_user_id anywhere in its signature or body.
+--     Structurally impossible to target another account's data, not
+--     merely validated-and-rejected.
+--   * p_target_language is validated against the exact seven-code
+--     allow-list (`'en','es','fr','pt','it','de','ru'`) shared with
+--     user_profiles.native_language/learning_language's own CHECK
+--     constraints (Profile Phase 1).
+--   * All four DELETEs are independently scoped by BOTH `user_id =
+--     v_user_id` AND `target_language = v_target_language` on each
+--     table's own direct columns — none relies on a JOIN/subquery through
+--     a parent table, and none is scoped by user_id alone (grep-confirmed:
+--     zero `delete ... where user_id = v_user_id;` statements without an
+--     accompanying `and target_language = ...` clause). In particular,
+--     review_events is deleted FIRST, by its own direct (user_id,
+--     target_language) columns — never via ownership inferred through
+--     user_word_progress — so this function's correctness never depends on
+--     review_events.word_progress_id's FK `ON DELETE` behavior, and
+--     language-scoping cannot be lost by a cascade firing before the
+--     language predicate is evaluated.
+--   * No dynamic SQL anywhere in the function body (no `execute`/`format`
+--     string-built statement) — every DELETE is a static, literal
+--     predicate.
+--   * No GRANT/ALTER/other privilege-escalating statement inside the
+--     function body — SECURITY DEFINER scope is used only to reach the
+--     four owned tables under their normal (non-RLS-restricted, since this
+--     runs as the function's owner) access, exactly like every sibling
+--     narrow RPC in this schema.
+--   * Return values (`word_progress_deleted`/`daily_stats_deleted`/
+--     `review_events_deleted`/`custom_practice_events_deleted`) are each
+--     populated via `get diagnostics ... = row_count` immediately after
+--     their own DELETE — they accurately reflect exactly what was deleted,
+--     never a fabricated/estimated count.
+--   * public.user_profiles and auth.users are referenced nowhere in the
+--     function's executable code (every match is inside a `--` comment) —
+--     confirmed by grep against the live file. account identity, native
+--     language, and the currently-active learning_language are
+--     structurally unreachable from this function.
+--
+-- No weakness was found. No change to
+-- reset_learning_language_progress's own definition was required or made
+-- — this migration contains only the grant.
+--
+-- WHAT THIS MIGRATION DOES — and nothing else
+-- ------------------------------------------------------------------------
+-- Grants EXECUTE on the existing, unmodified function to `authenticated`.
+-- Does NOT grant any direct table privilege (INSERT/UPDATE/DELETE) on
+-- review_events/custom_practice_events/user_word_progress/user_daily_stats/
+-- user_profiles to authenticated — those remain exactly as restrictive as
+-- Corrective Migration 1 and Profile Phase 1 left them. Does NOT touch
+-- anon/PUBLIC's privileges (still no EXECUTE). Does NOT modify the
+-- function's body, its RETURNS TABLE shape, or any other object.
+-- ============================================================================
+
+
+-- ----------------------------------------------------------------------------
+-- Activation grant — the one statement this migration exists for.
+-- ----------------------------------------------------------------------------
+grant execute on function public.reset_learning_language_progress(text) to authenticated;
+
+
+-- ============================================================================
+-- POST-MIGRATION STATE
+-- ============================================================================
+--   public.reset_learning_language_progress(text)
+--     - postgres, service_role, authenticated — EXECUTE.
+--     - anon, PUBLIC — still no EXECUTE (unchanged from 20260808120000...sql).
+--     - Function body, RETURNS TABLE shape, and every other property:
+--       byte-for-byte unchanged from 20260808120000_add_learning_language_
+--       progress_reset_rpc.sql. This migration adds no logic of its own.
+--
+-- Untouched by this migration: every table grant/policy in this schema
+-- (including user_profiles/review_events/custom_practice_events/
+-- user_word_progress/user_daily_stats); every other function; the original
+-- reset migration file itself (not edited — the grant it deliberately
+-- withheld is applied here instead, as that migration's own header always
+-- said the follow-up would be: "as its own small, separately reviewed,
+-- VERSIONED migration file").
+-- ============================================================================

@@ -541,6 +541,71 @@
         "nameAsc": "Nome A-Z",
         "nameDesc": "Nome Z-A"
       }
+    },
+    "settingsSection": {
+      "ariaLabel": "Sezione impostazioni",
+      "title": "Impostazioni",
+      "subtitle": "Gestisci il tuo account e le tue preferenze di apprendimento.",
+      "loading": "Caricamento delle impostazioni…",
+      "save": "Salva",
+      "saving": "Salvataggio…",
+      "cancel": "Annulla",
+      "account": {
+        "title": "Account",
+        "nickname": "Nickname",
+        "email": "Email"
+      },
+      "languages": {
+        "title": "Lingue",
+        "native": "Lingua madre",
+        "learning": "Lingua di apprendimento",
+        "currentLevel": "Livello attuale",
+        "changeNote": "Cambiando la tua lingua di apprendimento cambiano il vocabolario e i contenuti mostrati in FluentStellar. I tuoi progressi nelle altre lingue vengono conservati.",
+        "savedToast": "Impostazioni della lingua salvate.",
+        "saveError": "Non è stato possibile aggiornare le impostazioni della lingua. Riprova."
+      },
+      "timeRegion": {
+        "title": "Ora e regione",
+        "timezone": "Fuso orario",
+        "useCurrent": "Usa il fuso orario attuale",
+        "explanation": "Il tuo fuso orario determina quando inizia un nuovo giorno di apprendimento per obiettivi giornalieri, serie e statistiche.",
+        "selectorAriaLabel": "Seleziona fuso orario",
+        "selectorPlaceholder": "Seleziona un fuso orario",
+        "searchPlaceholder": "Cerca città, fuso orario o scarto UTC",
+        "noResults": "Nessun fuso orario trovato",
+        "detectionError": "Non siamo riusciti a rilevare automaticamente il tuo fuso orario. Scegline uno dall'elenco.",
+        "savedToast": "Fuso orario aggiornato.",
+        "saveError": "Non è stato possibile aggiornare il fuso orario. Riprova."
+      },
+      "dataAccount": {
+        "title": "Dati e account",
+        "resetProgress": "Reimposta i progressi di apprendimento",
+        "resetRowLabel": "Reimposta i progressi in {language}",
+        "resetDescription": "Rimuove definitivamente i tuoi progressi di apprendimento per questa lingua. Il tuo account e i progressi nelle altre lingue non verranno modificati.",
+        "deleteAccount": "Elimina account",
+        "deleteDescription": "Elimina definitivamente il tuo account FluentStellar e i dati account associati.",
+        "resetDialog": {
+          "title": "Reimpostare i progressi in {language}?",
+          "description": "Questa azione rimuove definitivamente i progressi sulle parole, la cronologia delle revisioni, le serie e le statistiche giornaliere per {language}, oltre alla cronologia di pratica personalizzata per questa lingua. Il tuo account e i progressi nelle altre lingue non verranno modificati. L'operazione non può essere annullata.",
+          "confirmLabel": "Digita {word} per confermare",
+          "confirm": "Reimposta progressi",
+          "successToast": "Progressi reimpostati.",
+          "saveError": "Non è stato possibile reimpostare i tuoi progressi. Riprova."
+        },
+        "deleteDialog": {
+          "title": "Eliminare il tuo account?",
+          "description": "Questa azione elimina definitivamente il tuo account FluentStellar e tutti i dati account associati. L'operazione non può essere annullata.",
+          "confirmLabel": "Digita {word} per confermare",
+          "confirm": "Elimina account",
+          "saveError": "Non è stato possibile eliminare il tuo account. Riprova.",
+          "passwordLabel": "Password attuale",
+          "passwordHelper": "Reinserisci la password per confermare la tua identità.",
+          "incorrectPassword": "Password errata.",
+          "identityError": "Impossibile verificare la tua identità.",
+          "reauthRequired": "La tua autenticazione è scaduta. Verifica di nuovo la tua identità.",
+          "verifyAndDeleteButton": "Verifica ed elimina"
+        }
+      }
     }
   },
   "aboutPage": {

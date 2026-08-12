@@ -12,6 +12,11 @@ import { LearningSection } from "./learning/LearningSection";
 import { VocabularySection } from "./vocabulary/VocabularySection";
 import { MyListsSection, type PracticeListStartConfig } from "./my-lists/MyListsSection";
 import { ProgressSection } from "./progress/ProgressSection";
+import {
+  SettingsSection,
+  type ProfileLanguagesChange,
+  type ProfileTimezoneChange,
+} from "./settings/SettingsSection";
 import { useProfileSharedProgressData } from "./useProfileSharedProgressData";
 
 interface UserProfileDashboardPageProps {
@@ -35,6 +40,12 @@ interface UserProfileDashboardPageProps {
   // userProfile.dailyGoal (e.g. NewWordStudyPreparation) keep showing the
   // value from the last full profile load until the page is reloaded.
   onDailyGoalChange?: (dailyGoal: number) => void;
+  // Settings Phase 1 — see SettingsSection's own prop comments for exactly
+  // what each callback does and why it's needed in addition to updating
+  // userProfile alone.
+  onProfileLanguagesChange?: (change: ProfileLanguagesChange) => void;
+  onTimezoneChange?: (change: ProfileTimezoneChange) => void;
+  onAccountDeleted?: () => void | Promise<void>;
 }
 
 const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
@@ -43,6 +54,7 @@ const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
   vocabulary: "userProfile.vocabularySection.ariaLabel",
   myLists: "userProfile.myListsSection.ariaLabel",
   progress: "userProfile.progressSection.ariaLabel",
+  settings: "userProfile.settingsSection.ariaLabel",
 };
 
 function resolveProfileSection(search: string): UserProfileSectionId {
@@ -51,6 +63,7 @@ function resolveProfileSection(search: string): UserProfileSectionId {
     section === "vocabulary" ||
     section === "myLists" ||
     section === "progress" ||
+    section === "settings" ||
     section === "dashboard"
     ? section
     : "dashboard";
@@ -68,6 +81,9 @@ export function UserProfileDashboardPage({
   onStartPracticeList,
   onSignOut,
   onDailyGoalChange,
+  onProfileLanguagesChange,
+  onTimezoneChange,
+  onAccountDeleted,
 }: UserProfileDashboardPageProps) {
   const { t } = useLanguage();
   const location = useLocation();
@@ -162,6 +178,15 @@ export function UserProfileDashboardPage({
                 wordProgressStatus={wordProgressStatus}
                 onRetryWordProgress={retryWordProgress}
                 onStartNewWordStudy={onStartNewWordStudy}
+              />
+            ) : null}
+            {activeSection === "settings" ? (
+              <SettingsSection
+                userProfile={userProfile}
+                isProfileLoaded={isProfileLoaded}
+                onProfileLanguagesChange={onProfileLanguagesChange}
+                onTimezoneChange={onTimezoneChange}
+                onAccountDeleted={onAccountDeleted}
               />
             ) : null}
             {activeSection === "dashboard" ? (

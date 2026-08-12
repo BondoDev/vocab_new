@@ -541,6 +541,71 @@
         "nameAsc": "Name A–Z",
         "nameDesc": "Name Z–A"
       }
+    },
+    "settingsSection": {
+      "ariaLabel": "Settings section",
+      "title": "Settings",
+      "subtitle": "Manage your account and learning preferences.",
+      "loading": "Loading settings…",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "account": {
+        "title": "Account",
+        "nickname": "Nickname",
+        "email": "Email"
+      },
+      "languages": {
+        "title": "Languages",
+        "native": "Native language",
+        "learning": "Learning language",
+        "currentLevel": "Current level",
+        "changeNote": "Changing your learning language switches the vocabulary and learning content shown in FluentStellar. Existing progress in other languages is preserved.",
+        "savedToast": "Language settings saved.",
+        "saveError": "We could not update your language settings. Please try again."
+      },
+      "timeRegion": {
+        "title": "Time & Region",
+        "timezone": "Time zone",
+        "useCurrent": "Use current timezone",
+        "explanation": "Your timezone determines when a new learning day begins for daily goals, streaks, and statistics.",
+        "selectorAriaLabel": "Select timezone",
+        "selectorPlaceholder": "Select a timezone",
+        "searchPlaceholder": "Search city, timezone, or offset",
+        "noResults": "No timezones found",
+        "detectionError": "We could not detect your timezone automatically. Please choose one from the list.",
+        "savedToast": "Timezone updated.",
+        "saveError": "We could not update your timezone. Please try again."
+      },
+      "dataAccount": {
+        "title": "Data & Account",
+        "resetProgress": "Reset language progress",
+        "resetRowLabel": "Reset {language} progress",
+        "resetDescription": "Permanently remove your learning progress for this language. Your account and progress in other languages will remain unchanged.",
+        "deleteAccount": "Delete account",
+        "deleteDescription": "Permanently delete your FluentStellar account and associated account data.",
+        "resetDialog": {
+          "title": "Reset {language} progress?",
+          "description": "This permanently removes your word progress, review history, streaks, and daily statistics for {language}, as well as your Custom Practice history for it. Your account and your progress in other languages will remain unchanged. This cannot be undone.",
+          "confirmLabel": "Type {word} to confirm",
+          "confirm": "Reset progress",
+          "successToast": "Progress reset.",
+          "saveError": "We could not reset your progress. Please try again."
+        },
+        "deleteDialog": {
+          "title": "Delete your account?",
+          "description": "This permanently deletes your FluentStellar account and all associated account data. This cannot be undone.",
+          "confirmLabel": "Type {word} to confirm",
+          "confirm": "Delete account",
+          "saveError": "We could not delete your account. Please try again.",
+          "passwordLabel": "Current password",
+          "passwordHelper": "Re-enter your password to confirm your identity.",
+          "incorrectPassword": "Incorrect password.",
+          "identityError": "Could not verify your identity.",
+          "reauthRequired": "Your authentication has expired. Please verify your identity again.",
+          "verifyAndDeleteButton": "Verify and delete"
+        }
+      }
     }
   },
   "aboutPage": {
