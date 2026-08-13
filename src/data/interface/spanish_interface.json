@@ -550,10 +550,27 @@
       "save": "Guardar",
       "saving": "Guardando…",
       "cancel": "Cancelar",
+      "edit": "Editar",
+      "change": "Cambiar",
       "account": {
         "title": "Cuenta",
         "nickname": "Apodo",
-        "email": "Correo electrónico"
+        "editNickname": "Editar apodo",
+        "nicknameSavedToast": "Apodo actualizado.",
+        "nicknameSaveError": "No se pudo actualizar el apodo. Inténtalo de nuevo.",
+        "nicknameRequired": "El apodo es obligatorio.",
+        "nicknameInvalid": "El apodo debe comenzar con una letra.",
+        "nicknameTooLong": "El apodo debe tener como máximo 40 caracteres.",
+        "email": "Correo electrónico",
+        "changeEmail": "Cambiar correo electrónico",
+        "emailUpdatedToast": "Correo electrónico actualizado.",
+        "emailChangePending": "Confirma el cambio desde tu correo electrónico actual y el nuevo.",
+        "emailChangePendingLabel": "Cambio pendiente:",
+        "emailChangeDuplicate": "Este correo electrónico ya está asociado a otra cuenta.",
+        "emailRequired": "El correo electrónico es obligatorio.",
+        "emailInvalid": "Introduce una dirección de correo electrónico válida.",
+        "emailSaveError": "No se pudo actualizar el correo electrónico. Inténtalo de nuevo.",
+        "emailUnavailableGoogle": "Los cambios de correo electrónico no están disponibles para cuentas vinculadas a Google."
       },
       "languages": {
         "title": "Idiomas",

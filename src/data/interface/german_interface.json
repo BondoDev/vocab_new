@@ -550,10 +550,27 @@
       "save": "Speichern",
       "saving": "Wird gespeichert …",
       "cancel": "Abbrechen",
+      "edit": "Bearbeiten",
+      "change": "Ändern",
       "account": {
         "title": "Konto",
         "nickname": "Nickname",
-        "email": "E-Mail"
+        "editNickname": "Nickname bearbeiten",
+        "nicknameSavedToast": "Nickname aktualisiert.",
+        "nicknameSaveError": "Der Nickname konnte nicht aktualisiert werden. Bitte versuche es erneut.",
+        "nicknameRequired": "Ein Nickname ist erforderlich.",
+        "nicknameInvalid": "Der Nickname muss mit einem Buchstaben beginnen.",
+        "nicknameTooLong": "Der Nickname darf höchstens 40 Zeichen lang sein.",
+        "email": "E-Mail",
+        "changeEmail": "E-Mail ändern",
+        "emailUpdatedToast": "E-Mail aktualisiert.",
+        "emailChangePending": "Bestätige die Änderung über deine aktuelle und neue E-Mail-Adresse.",
+        "emailChangePendingLabel": "Ausstehende Änderung:",
+        "emailChangeDuplicate": "Diese E-Mail-Adresse ist bereits einem anderen Konto zugeordnet.",
+        "emailRequired": "Eine E-Mail-Adresse ist erforderlich.",
+        "emailInvalid": "Gib eine gültige E-Mail-Adresse ein.",
+        "emailSaveError": "Die E-Mail-Adresse konnte nicht aktualisiert werden. Bitte versuche es erneut.",
+        "emailUnavailableGoogle": "E-Mail-Änderungen sind für mit Google verknüpfte Konten nicht verfügbar."
       },
       "languages": {
         "title": "Sprachen",

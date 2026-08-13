@@ -26,6 +26,10 @@ import {
   type UpdateUserProfileLanguagesResult,
 } from "./userProfileLanguages";
 import {
+  parseUpdateUserNicknameRow,
+  type UpdateUserNicknameResult,
+} from "./userProfileNickname";
+import {
   parseResetLearningLanguageProgressRow,
   type ResetLearningLanguageProgressResult,
 } from "./learningProgressReset";
@@ -47,6 +51,7 @@ import {
   normalizeUserProfile,
   buildStoredUserProfile,
   isUserProfileComplete,
+  startsWithLetter,
 } from "../app/utils/accountProfileCompleteness";
 
 export {
@@ -54,6 +59,7 @@ export {
   normalizeLanguage,
   normalizeUserProfile,
   isUserProfileComplete,
+  startsWithLetter,
 };
 
 const USER_PROFILE_KEY_PREFIX = "app.userProfile";
@@ -89,10 +95,6 @@ export const EMPTY_USER_PROFILE: UserProfile = {
   timezone: null,
   timezoneUpdatedAt: null,
 };
-
-export function startsWithLetter(value: string): boolean {
-  return /^\p{L}/u.test(value.trim());
-}
 
 function canUseLocalStorage(): boolean {
   return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
@@ -500,6 +502,49 @@ export async function updateUserProfileLanguages(
   }
 
   return fromUpdateUserProfileLanguagesResult(parseUpdateUserProfileLanguagesRow(rows));
+}
+
+// Settings' nickname-editing follow-up — narrow "change my nickname" write,
+// distinct from both completeUserProfileOnboarding (bundles nickname with
+// six unrelated onboarding fields) and updateUserProfileLanguages (a
+// different single-purpose RPC entirely). Calls update_user_nickname (see
+// supabase/migrations/20260813130000_add_update_user_nickname_rpc.sql),
+// which updates only nickname/updated_at for the caller's own row —
+// native_language/learning_language/current_level/user_age/birth_month/
+// birth_day/onboarding_completed/daily_goal/timezone/timezone_updated_at are
+// structurally unreachable through this path. Settings' inline Account-
+// section nickname edit row is the only caller.
+export async function updateUserNickname(
+  session: StoredSupabaseSession,
+  nickname: string,
+): Promise<UpdateUserNicknameResult> {
+  const userId = session.user?.id;
+  if (!userId) {
+    throw new Error("Missing authenticated user.");
+  }
+
+  const rows = await supabaseProfileRequest<unknown[] | unknown>(
+    session,
+    "/rest/v1/rpc/update_user_nickname",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        p_nickname: nickname,
+      }),
+    },
+  );
+
+  if (Array.isArray(rows)) {
+    if (rows.length !== 1) {
+      throw new ClassifiedSupabaseError(
+        "update_user_nickname returned an unexpected number of rows.",
+        "unexpected_response",
+      );
+    }
+    return parseUpdateUserNicknameRow(rows[0]);
+  }
+
+  return parseUpdateUserNicknameRow(rows);
 }
 
 // Settings' "Reset language progress" action. Calls
