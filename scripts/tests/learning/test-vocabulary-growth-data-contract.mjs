@@ -38,8 +38,16 @@ function test(name, fn) {
 // "insert" by name to document exactly their absence, which would
 // otherwise false-match a whole-file regex (same precedent as
 // test-learning-section-date-ownership.mjs).
+// CRLF-safe: \r\n is normalized to \n before splitting. Without that, a
+// CRLF line's trailing \r survives split("\n") and blocks /\/\/.*$/ from
+// ever reaching $ (`.` never matches \r, and $ without /m only matches the
+// true string end) — silently stripping nothing on this repo's Windows/
+// CRLF checkout and letting comment prose leak through as a false
+// positive (see test-vocabulary-growth.mjs's own guard for the exact bug
+// this pattern once had).
 function stripLineComments(source) {
   return source
+    .replace(/\r\n/g, "\n")
     .split("\n")
     .map((line) => line.replace(/\/\/.*$/, ""))
     .join("\n");

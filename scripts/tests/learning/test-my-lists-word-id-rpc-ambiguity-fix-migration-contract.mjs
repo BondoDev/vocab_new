@@ -64,7 +64,15 @@ test("6. 20260811170000...sql still contains its ORIGINAL (bare column-list) ON 
   assert.doesNotMatch(correctiveSource, /on conflict on constraint user_vocabulary_list_words_list_word_id_key/);
 });
 
-const fixSource = fs.readFileSync(FIX_MIGRATION_PATH, "utf8");
+// This migration is checked in with CRLF line endings. Normalize once at
+// the read site so stripSqlLineComments' per-line `--.*$` (whose `$`
+// without the `m` flag only matches true end-of-string, not "immediately
+// before a lone trailing \r") actually strips every comment line, and so
+// every `\n`-anchored regex/indexOf below can assume LF without needing
+// "\r?\n" sprinkled through each pattern. Normalizing only changes
+// line-ending bytes, never the SQL text itself, so it can't change what
+// these assertions prove.
+const fixSource = fs.readFileSync(FIX_MIGRATION_PATH, "utf8").replace(/\r\n/g, "\n");
 const sqlOnly = stripSqlLineComments(fixSource);
 
 console.log("\n=== 5. No table/schema/RLS/grant changes — CREATE OR REPLACE FUNCTION only ===\n");

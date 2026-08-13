@@ -178,7 +178,14 @@ test("MyListsSection.tsx and ListCard.tsx never import vocabulary.json — card 
 });
 
 test("vocabularyLists.ts still never imports vocabulary.json or queries user_word_progress directly", () => {
+  // \r\n -> \n first: without it, a CRLF line's trailing \r survives
+  // split("\n") and blocks /\/\/.*$/ from ever reaching $ (`.` never
+  // matches \r, and $ without /m only matches the true string end) — so
+  // nothing gets stripped, and this file's own header comment (which
+  // legitimately says "vocabulary.json" while explaining this module never
+  // touches it) leaks through as a false positive on this CRLF checkout.
   const withoutComments = libSource
+    .replace(/\r\n/g, "\n")
     .split("\n")
     .map((line) => line.replace(/\/\/.*$/, ""))
     .join("\n");
