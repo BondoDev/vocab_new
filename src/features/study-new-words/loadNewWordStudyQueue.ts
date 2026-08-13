@@ -3,6 +3,7 @@
 // data, and (3) the pure selection logic into one ready-to-render queue.
 // Read-only — this module performs no Supabase writes.
 import type { StoredSupabaseSession } from "../../lib/supabaseAuth";
+import type { LanguageLevelCode } from "../../lib/userProfile";
 import { readStudiedConceptIds, readTodayNewWordsCompleted } from "../../lib/newWordProgress";
 import { getCurrentLearningDate } from "../../lib/learningDate";
 import {
@@ -60,6 +61,13 @@ export interface LoadNewWordStudyQueueParams {
   targetLanguage: string;
   nativeLanguage: string;
   dailyGoal: number;
+  // The learner's user_profiles.current_level (already resolved/normalized
+  // by the caller — see src/lib/userProfile.ts's normalizeLanguageLevel).
+  // Determines the minimum CEFR level this default new-word queue selects
+  // from; missing/"" fails safe to no threshold inside
+  // filterEligibleArrangedEntries/selectNewWordStudyQueue (equivalent to
+  // A1 — see that module's resolveMinLevelRank).
+  currentLevel?: LanguageLevelCode | "" | null;
 }
 
 export async function loadNewWordStudyQueue({
@@ -67,6 +75,7 @@ export async function loadNewWordStudyQueue({
   targetLanguage,
   nativeLanguage,
   dailyGoal,
+  currentLevel,
 }: LoadNewWordStudyQueueParams): Promise<NewWordStudyQueueResult> {
   if (!VOCABULARY_IMPORTERS[targetLanguage] || !VOCABULARY_IMPORTERS[nativeLanguage]) {
     throw new Error(`loadNewWordStudyQueue: unsupported language pair "${targetLanguage}"/"${nativeLanguage}".`);
@@ -74,6 +83,10 @@ export async function loadNewWordStudyQueue({
 
   const statDateISO = await getCurrentLearningDate(session);
   const arrangedEntries = getArrangedEntries();
+  // "" (profile loaded but no valid level, which the DB's NOT NULL + CHECK
+  // constraint should already prevent post-onboarding) normalizes to null
+  // here so downstream code has one "no value" representation, not two.
+  const resolvedCurrentLevel = currentLevel ? currentLevel : null;
 
   const [studiedConceptIds, wordsCompletedToday] = await Promise.all([
     readStudiedConceptIds(session, targetLanguage),
@@ -81,7 +94,7 @@ export async function loadNewWordStudyQueue({
   ]);
 
   const remainingToday = computeRemainingDailyTarget(dailyGoal, wordsCompletedToday);
-  const eligibleEntries = filterEligibleArrangedEntries(arrangedEntries, studiedConceptIds);
+  const eligibleEntries = filterEligibleArrangedEntries(arrangedEntries, studiedConceptIds, resolvedCurrentLevel);
 
   // Skip the vocabulary.json import entirely when there is nothing to
   // resolve — either today's goal is already met or this language's
@@ -95,6 +108,7 @@ export async function loadNewWordStudyQueue({
       studiedConceptIds,
       dailyGoal,
       wordsCompletedToday,
+      currentLevel: resolvedCurrentLevel,
       resolveConcept: () => null,
     });
   }
@@ -120,6 +134,7 @@ export async function loadNewWordStudyQueue({
     studiedConceptIds,
     dailyGoal,
     wordsCompletedToday,
+    currentLevel: resolvedCurrentLevel,
     resolveConcept,
     onUnresolvedConcept: (entry) => {
       console.warn(

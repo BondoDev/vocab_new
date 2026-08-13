@@ -940,6 +940,7 @@ function AppContent({
             practiceLanguage={practiceLanguage}
             yourLanguage={yourLanguage}
             dailyGoal={userProfile.dailyGoal}
+            currentLevel={userProfile.languageLevel}
             onBack={() => navigate(`${ROUTES.profile}?section=learning`)}
           />
         </Suspense>

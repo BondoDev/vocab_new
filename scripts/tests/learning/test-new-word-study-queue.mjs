@@ -8,8 +8,11 @@
 // Run: node --experimental-strip-types scripts/tests/learning/test-new-word-study-queue.mjs
 import assert from "node:assert/strict";
 import {
+  CEFR_LEVEL_RANK,
   computeRemainingDailyTarget,
+  filterEligibleArrangedEntries,
   parseArrangedVocabulary,
+  resolveConceptLevelFromId,
   selectNewWordStudyQueue,
 } from "../../../src/data/learning/newWordStudyQueue.ts";
 
@@ -40,10 +43,38 @@ function makeResolver(unresolvableIds = new Set()) {
 }
 
 function makeArrangedEntries(count) {
-  return Array.from({ length: count }, (_, index) => ({
-    learningOrder: index + 1,
-    conceptId: `C-${String(index + 1).padStart(4, "0")}`,
-  }));
+  return Array.from({ length: count }, (_, index) => {
+    const conceptId = `C-${String(index + 1).padStart(4, "0")}`;
+    return { learningOrder: index + 1, conceptId, level: resolveConceptLevelFromId(conceptId) };
+  });
+}
+
+// Current-level (current_level task) fixtures below: a small hand-built
+// arranged sequence spanning all six CEFR levels, preserving the same
+// "existing arranged order" invariant selectNewWordStudyQueue must never
+// reorder — built via parseArrangedVocabulary (not hand-set `level` fields)
+// so these tests exercise the real conceptId-prefix resolution path, not a
+// second hand-maintained mapping.
+function makeCefrArrangedEntries() {
+  const { entries } = parseArrangedVocabulary([
+    { id: 1, concept_id: "A1-00001" },
+    { id: 2, concept_id: "A1-00002" },
+    { id: 3, concept_id: "A2-00001" },
+    { id: 4, concept_id: "A2-00002" },
+    { id: 5, concept_id: "B1-00001" },
+    { id: 6, concept_id: "B1-00002" },
+    { id: 7, concept_id: "B2-00001" },
+    { id: 8, concept_id: "B2-00002" },
+    { id: 9, concept_id: "C1-00001" },
+    { id: 10, concept_id: "C1-00002" },
+    { id: 11, concept_id: "C2-00001" },
+    { id: 12, concept_id: "C2-00002" },
+  ]);
+  return entries;
+}
+
+function makeCefrResolver() {
+  return (conceptId) => ({ targetWord: `word-${conceptId}`, translation: `translation-${conceptId}` });
 }
 
 console.log("\n=== parseArrangedVocabulary ===\n");
@@ -309,6 +340,201 @@ test("reports metadata: first/last selected learningOrder and daily-goal fields"
   assert.equal(result.remainingToday, 3);
   assert.equal(result.firstSelectedLearningOrder, 1);
   assert.equal(result.lastSelectedLearningOrder, 3);
+});
+
+console.log("\n=== resolveConceptLevelFromId / CEFR_LEVEL_RANK ===\n");
+
+test("resolves the CEFR prefix off a concept id", () => {
+  assert.equal(resolveConceptLevelFromId("A1-00497"), "A1");
+  assert.equal(resolveConceptLevelFromId("C2-00002"), "C2");
+});
+
+test("returns null for a concept id with no recognizable CEFR prefix", () => {
+  assert.equal(resolveConceptLevelFromId("C-0001"), null);
+  assert.equal(resolveConceptLevelFromId(""), null);
+});
+
+test("CEFR_LEVEL_RANK is ascending A1..C2, never compared alphabetically", () => {
+  assert.deepEqual(CEFR_LEVEL_RANK, { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 });
+});
+
+console.log("\n=== current-level CEFR threshold: filterEligibleArrangedEntries ===\n");
+
+test("1. A1 current level: every level remains eligible (no threshold)", () => {
+  const eligible = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), "A1");
+  assert.deepEqual(
+    eligible.map((e) => e.conceptId),
+    [
+      "A1-00001", "A1-00002", "A2-00001", "A2-00002", "B1-00001", "B1-00002",
+      "B2-00001", "B2-00002", "C1-00001", "C1-00002", "C2-00001", "C2-00002",
+    ],
+  );
+});
+
+test("2. A2 current level: A1 words never eligible", () => {
+  const eligible = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), "A2");
+  assert.ok(!eligible.some((e) => e.conceptId.startsWith("A1-")));
+  assert.ok(eligible.some((e) => e.conceptId.startsWith("A2-")));
+});
+
+test("3. B1 current level: A1/A2 words never eligible", () => {
+  const eligible = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), "B1");
+  assert.ok(!eligible.some((e) => e.conceptId.startsWith("A1-") || e.conceptId.startsWith("A2-")));
+  assert.ok(eligible.some((e) => e.conceptId.startsWith("B1-")));
+});
+
+test("4. B2 current level: A1/A2/B1 words never eligible", () => {
+  const eligible = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), "B2");
+  assert.deepEqual(
+    eligible.map((e) => e.conceptId),
+    ["B2-00001", "B2-00002", "C1-00001", "C1-00002", "C2-00001", "C2-00002"],
+  );
+});
+
+test("5. C1 current level: only C1/C2 words eligible", () => {
+  const eligible = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), "C1");
+  assert.deepEqual(
+    eligible.map((e) => e.conceptId),
+    ["C1-00001", "C1-00002", "C2-00001", "C2-00002"],
+  );
+});
+
+test("6. C2 current level: only C2 words eligible", () => {
+  const eligible = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), "C2");
+  assert.deepEqual(
+    eligible.map((e) => e.conceptId),
+    ["C2-00001", "C2-00002"],
+  );
+});
+
+test("7. the selected level itself is included, not just levels strictly above it", () => {
+  const eligible = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), "B2");
+  assert.ok(eligible.some((e) => e.conceptId === "B2-00001"));
+});
+
+test("9. relative arranged order of eligible words is preserved (not regrouped)", () => {
+  const eligible = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), "B1");
+  const learningOrders = eligible.map((e) => e.learningOrder);
+  const sorted = [...learningOrders].sort((a, b) => a - b);
+  assert.deepEqual(learningOrders, sorted);
+});
+
+test("10. already-studied words stay excluded even when their level is above the threshold", () => {
+  const studied = new Set(["B2-00001", "C1-00001"]);
+  const eligible = filterEligibleArrangedEntries(makeCefrArrangedEntries(), studied, "B2");
+  assert.deepEqual(
+    eligible.map((e) => e.conceptId),
+    ["B2-00002", "C1-00002", "C2-00001", "C2-00002"],
+  );
+});
+
+test("11. existing lower-level progress is not modified or inspected beyond membership", () => {
+  // A2/B1 concepts a learner already has real progress on are excluded via
+  // studiedConceptIds — the same pre-existing mechanism, untouched by this
+  // threshold — not by the CEFR filter. The input set itself is never
+  // mutated by filtering.
+  const studied = new Set(["A2-00001", "B1-00001"]);
+  const studiedSnapshot = new Set(studied);
+  filterEligibleArrangedEntries(makeCefrArrangedEntries(), studied, "B2");
+  assert.deepEqual(studied, studiedSnapshot);
+});
+
+test("14. lowering the threshold (B2 -> A2) makes unstudied A2/B1 words eligible again, without touching progress", () => {
+  const studied = new Set(["A1-00001"]); // pre-existing progress, untouched throughout
+  const arranged = makeCefrArrangedEntries();
+
+  const atB2 = filterEligibleArrangedEntries(arranged, studied, "B2");
+  assert.ok(!atB2.some((e) => e.conceptId.startsWith("A2-") || e.conceptId.startsWith("B1-")));
+
+  const atA2 = filterEligibleArrangedEntries(arranged, studied, "A2");
+  assert.ok(atA2.some((e) => e.conceptId === "A2-00001"));
+  assert.ok(atA2.some((e) => e.conceptId === "B1-00001"));
+  // The already-studied A1 concept remains excluded regardless of threshold,
+  // and studiedConceptIds itself is never rewritten by lowering the level.
+  assert.ok(!atA2.some((e) => e.conceptId === "A1-00001"));
+  assert.deepEqual(studied, new Set(["A1-00001"]));
+});
+
+test("missing/empty current level fails safe to no threshold (equivalent to A1)", () => {
+  const withUndefined = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set());
+  const withNull = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), null);
+  const withEmptyString = filterEligibleArrangedEntries(makeCefrArrangedEntries(), new Set(), "");
+  assert.equal(withUndefined.length, 12);
+  assert.equal(withNull.length, 12);
+  assert.equal(withEmptyString.length, 12);
+});
+
+console.log("\n=== current-level CEFR threshold: selectNewWordStudyQueue integration ===\n");
+
+test("8. higher levels remain eligible after the selected level itself is exhausted", () => {
+  // B2 current level, daily goal larger than B2's own 2 words — must
+  // naturally continue into C1 without stopping early.
+  const result = selectNewWordStudyQueue({
+    arrangedEntries: makeCefrArrangedEntries(),
+    studiedConceptIds: new Set(),
+    dailyGoal: 4,
+    wordsCompletedToday: 0,
+    currentLevel: "B2",
+    resolveConcept: makeCefrResolver(),
+  });
+  assert.deepEqual(
+    result.selectedQueue.map((item) => item.conceptId),
+    ["B2-00001", "B2-00002", "C1-00001", "C1-00002"],
+  );
+});
+
+test("12. no rows/queue entries are produced merely because words are below the threshold", () => {
+  // C2 current level: only the 2 C2 words are ever considered, even though
+  // the daily goal (15) and the arranged data (12 words) could otherwise
+  // supply more — the 10 below-threshold words are never selected, counted,
+  // or otherwise surfaced.
+  const result = selectNewWordStudyQueue({
+    arrangedEntries: makeCefrArrangedEntries(),
+    studiedConceptIds: new Set(),
+    dailyGoal: 15,
+    wordsCompletedToday: 0,
+    currentLevel: "C2",
+    resolveConcept: makeCefrResolver(),
+  });
+  assert.equal(result.selectedQueueLength, 2);
+  assert.deepEqual(
+    result.selectedQueue.map((item) => item.conceptId),
+    ["C2-00001", "C2-00002"],
+  );
+});
+
+test("13. daily quantity behavior is unchanged by the CEFR threshold (still caps at remainingToday)", () => {
+  const result = selectNewWordStudyQueue({
+    arrangedEntries: makeCefrArrangedEntries(),
+    studiedConceptIds: new Set(),
+    dailyGoal: 5,
+    wordsCompletedToday: 2,
+    currentLevel: "A1",
+    resolveConcept: makeCefrResolver(),
+  });
+  assert.equal(result.remainingToday, 3);
+  assert.equal(result.selectedQueueLength, 3);
+});
+
+test("existing progress example (spec item 13): A2/B1 progress untouched, B2 continues into C1", () => {
+  // User level = B2; progress already exists for one A2 word, one B1 word,
+  // and two B2 words (both of B2's own words in this fixture).
+  const studied = new Set(["A2-00001", "B1-00001", "B2-00001", "B2-00002"]);
+  const result = selectNewWordStudyQueue({
+    arrangedEntries: makeCefrArrangedEntries(),
+    studiedConceptIds: studied,
+    dailyGoal: 2,
+    wordsCompletedToday: 0,
+    currentLevel: "B2",
+    resolveConcept: makeCefrResolver(),
+  });
+  // Both B2 words are already studied, so the queue continues into C1 —
+  // never resurrecting the studied B2 words, never touching A2/B1 rows.
+  assert.deepEqual(
+    result.selectedQueue.map((item) => item.conceptId),
+    ["C1-00001", "C1-00002"],
+  );
+  assert.deepEqual(studied, new Set(["A2-00001", "B1-00001", "B2-00001", "B2-00002"]));
 });
 
 console.log(`\n─────────────────────────────────────────`);

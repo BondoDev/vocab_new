@@ -15,6 +15,7 @@ import { describeSupabaseError } from "../../lib/supabaseError";
 import { NewWordStudySession } from "./NewWordStudySession";
 import { GUIDED_EXERCISE_COUNT } from "./newWordStudySessionState";
 import type { NewWordStudyQueueResult } from "../../data/learning/newWordStudyQueue";
+import type { LanguageLevelCode } from "../../lib/userProfile";
 // Visual styling for this component (and its LoadingBlock/MessageBlock/
 // ResultBlock/InfoItem/SessionExplainItem helpers below) lives in
 // ./styles/study-new-words.scss — this file only assigns the semantic class
@@ -29,6 +30,14 @@ interface NewWordStudyPreparationProps {
   practiceLanguage: string;
   yourLanguage: string;
   dailyGoal: number;
+  // The learner's user_profiles.current_level — determines the minimum CEFR
+  // level this default new-word queue selects from (see
+  // loadNewWordStudyQueue.ts/newWordStudyQueue.ts). Not required for
+  // hasRequiredProfileContext below: onboarding sets current_level together
+  // with practiceLanguage/yourLanguage/dailyGoal in one atomic RPC (see
+  // complete_user_profile_onboarding), so those three being present already
+  // implies a valid current_level exists for this profile.
+  currentLevel: LanguageLevelCode | "";
   onBack: () => void;
 }
 
@@ -48,6 +57,7 @@ export function NewWordStudyPreparation({
   practiceLanguage,
   yourLanguage,
   dailyGoal,
+  currentLevel,
   onBack,
 }: NewWordStudyPreparationProps) {
   const { t } = useLanguage();
@@ -88,6 +98,7 @@ export function NewWordStudyPreparation({
       targetLanguage: practiceLanguage,
       nativeLanguage: yourLanguage,
       dailyGoal,
+      currentLevel,
     })
       .then((result) => {
         if (cancelled) return;
@@ -106,7 +117,16 @@ export function NewWordStudyPreparation({
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isProfileLoaded, hasRequiredProfileContext, authUserId, practiceLanguage, yourLanguage, dailyGoal, retryToken]);
+  }, [
+    isProfileLoaded,
+    hasRequiredProfileContext,
+    authUserId,
+    practiceLanguage,
+    yourLanguage,
+    dailyGoal,
+    currentLevel,
+    retryToken,
+  ]);
 
   const handleRetry = useCallback(() => setRetryToken((token) => token + 1), []);
 
