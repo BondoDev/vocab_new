@@ -65,7 +65,15 @@
     },
     "createAccount": "Criar conta",
     "maybeLater": "Talvez mais tarde",
-    "logIn": "Já tem uma conta? Entrar"
+    "logIn": "Já tem uma conta? Entrar",
+    "practiceComplete": {
+      "title": "Mantenha seu progresso de aprendizado",
+      "description": "Transforme sua prática em aprendizado de vocabulário a longo prazo."
+    },
+    "levelTestComplete": {
+      "title": "Transforme seu resultado em progresso",
+      "description": "Use seu nível de idioma como ponto de partida para um aprendizado estruturado."
+    }
   },
   "accountOnboarding": {
     "saveError": "Nao foi possivel salvar seu perfil. Tente novamente."

@@ -752,6 +752,26 @@ function AppContent({
     setRequestedHeaderAuthMode("login");
   };
 
+  // One shared instance, rendered on every page that can trigger it
+  // (Filters/levelCategory for language-setup, practice for
+  // practice-complete, exam for level-test-complete) - same modal, same
+  // styling, same Create Account/Log in/Maybe later behavior everywhere;
+  // only accountIntroPopup.context changes which localized title/intro
+  // AccountIntroDialog shows.
+  const accountIntroDialog = (
+    <AccountIntroDialog
+      open={accountIntroPopup.isOpen}
+      context={accountIntroPopup.context}
+      onOpenChange={(open) => {
+        if (!open) {
+          accountIntroPopup.close();
+        }
+      }}
+      onCreateAccount={handleAccountIntroCreateAccount}
+      onLogIn={handleAccountIntroLogIn}
+    />
+  );
+
   // Rendered on every route (appended alongside accountOnboardingDialog
   // below) since password recovery must complete regardless of which page
   // the redirect happened to land on - including practice/exam, where
@@ -861,10 +881,22 @@ function AppContent({
             onGoFilters={
               activePracticeListSession ? leavePracticeList : () => navigate(ROUTES.levelCategory)
             }
+            // Trigger 2 (practice-complete): fires exactly when
+            // VocabularyPractice's own sessionComplete flips true (words run
+            // out, or "Finish Test") - never on open/exercise-selection/a
+            // single answer/exit. Routed through the same shared
+            // accountIntroPopup policy as every other trigger, so it is a
+            // no-op unless this visitor is anonymous, this trigger has never
+            // fired before on this browser, and no account-intro popup has
+            // already shown this session.
+            onSessionComplete={() =>
+              accountIntroPopup.requestAccountIntro("practice-complete")
+            }
           />
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </>
     );
   }
@@ -921,16 +953,7 @@ function AppContent({
         </div>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
-        <AccountIntroDialog
-          open={accountIntroPopup.isOpen}
-          onOpenChange={(open) => {
-            if (!open) {
-              accountIntroPopup.close();
-            }
-          }}
-          onCreateAccount={handleAccountIntroCreateAccount}
-          onLogIn={handleAccountIntroLogIn}
-        />
+        {accountIntroDialog}
       </div>
     );
   }
@@ -945,10 +968,24 @@ function AppContent({
             yourLanguage={yourLanguage}
             onComplete={handleExamComplete}
             onCancel={() => navigate(ROUTES.levelCategory)}
+            // Trigger 3 (level-test-complete): fires exactly when
+            // VocabularyLevelExam's own examComplete flips true (all levels
+            // finished, or 3 wrong answers ends the current level) and the
+            // Result Screen is shown - never on open/an individual
+            // answer/abandoning via the exit dialog, and never before the
+            // result is available. Distinct from onComplete above (which
+            // only fires later, if/when the user clicks "Start practicing"
+            // and navigates away) so the popup can appear right on the
+            // result screen. Routed through the same shared accountIntroPopup
+            // policy as every other trigger.
+            onExamComplete={() =>
+              accountIntroPopup.requestAccountIntro("level-test-complete")
+            }
           />
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </>
     );
   }

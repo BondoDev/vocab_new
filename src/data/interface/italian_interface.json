@@ -65,7 +65,15 @@
     },
     "createAccount": "Crea account",
     "maybeLater": "Forse più tardi",
-    "logIn": "Hai già un account? Accedi"
+    "logIn": "Hai già un account? Accedi",
+    "practiceComplete": {
+      "title": "Mantieni i tuoi progressi di apprendimento",
+      "description": "Trasforma il tuo allenamento in un apprendimento duraturo del vocabolario."
+    },
+    "levelTestComplete": {
+      "title": "Trasforma il tuo risultato in progressi",
+      "description": "Usa il tuo livello linguistico come punto di partenza per un apprendimento strutturato."
+    }
   },
   "accountOnboarding": {
     "saveError": "Non siamo riusciti a salvare il tuo profilo. Riprova."

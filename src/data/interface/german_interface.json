@@ -65,7 +65,15 @@
     },
     "createAccount": "Konto erstellen",
     "maybeLater": "Vielleicht später",
-    "logIn": "Du hast bereits ein Konto? Anmelden"
+    "logIn": "Du hast bereits ein Konto? Anmelden",
+    "practiceComplete": {
+      "title": "Behalte deinen Lernfortschritt",
+      "description": "Verwandle dein Training in langfristiges Vokabellernen."
+    },
+    "levelTestComplete": {
+      "title": "Verwandle dein Ergebnis in Fortschritt",
+      "description": "Nutze dein Sprachniveau als Ausgangspunkt für strukturiertes Lernen."
+    }
   },
   "accountOnboarding": {
     "saveError": "Dein Profil konnte nicht gespeichert werden. Bitte versuche es erneut."

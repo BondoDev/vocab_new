@@ -65,7 +65,15 @@
     },
     "createAccount": "Créer un compte",
     "maybeLater": "Peut-être plus tard",
-    "logIn": "Vous avez déjà un compte ? Connectez-vous"
+    "logIn": "Vous avez déjà un compte ? Connectez-vous",
+    "practiceComplete": {
+      "title": "Conservez vos progrès d'apprentissage",
+      "description": "Transformez votre entraînement en apprentissage durable du vocabulaire."
+    },
+    "levelTestComplete": {
+      "title": "Transformez votre résultat en progrès",
+      "description": "Utilisez votre niveau de langue comme point de départ pour un apprentissage structuré."
+    }
   },
   "accountOnboarding": {
     "saveError": "Nous n'avons pas pu enregistrer votre profil. Veuillez reessayer."

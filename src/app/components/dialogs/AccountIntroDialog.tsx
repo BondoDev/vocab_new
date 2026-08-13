@@ -11,6 +11,7 @@
 import { BookOpen, BrainCircuit, ListChecks, TrendingUp, type LucideIcon } from "lucide-react";
 
 import { useLanguage } from "../../../contexts/LanguageContext";
+import type { AccountIntroContext } from "../../utils/accountIntroPolicy";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -22,10 +23,39 @@ import {
 
 interface AccountIntroDialogProps {
   open: boolean;
+  // Which trigger this popup is being shown for - determines only the
+  // localized title/intro below (via CONTEXT_COPY_KEYS); the benefit rows,
+  // buttons, auth behavior, dismissal behavior, styling, and dimensions stay
+  // identical across every context - one shared dialog, contextual copy
+  // only.
+  context: AccountIntroContext;
   onOpenChange: (open: boolean) => void;
   onCreateAccount: () => void;
   onLogIn: () => void;
 }
+
+// Maps each trigger context to its own title/intro translation keys.
+// createAccount/maybeLater/logIn and the three benefit rows are
+// deliberately NOT contextual - they're the same across all three triggers,
+// so they stay as single shared keys below instead of being duplicated per
+// context.
+const CONTEXT_COPY_KEYS: Record<
+  AccountIntroContext,
+  { titleKey: string; descriptionKey: string }
+> = {
+  "language-setup": {
+    titleKey: "accountIntroPopup.title",
+    descriptionKey: "accountIntroPopup.description",
+  },
+  "practice-complete": {
+    titleKey: "accountIntroPopup.practiceComplete.title",
+    descriptionKey: "accountIntroPopup.practiceComplete.description",
+  },
+  "level-test-complete": {
+    titleKey: "accountIntroPopup.levelTestComplete.title",
+    descriptionKey: "accountIntroPopup.levelTestComplete.description",
+  },
+};
 
 // Icons chosen to match already-established usage elsewhere in the project
 // (no new icon dependency): BookOpen already stands for vocabulary/learning
@@ -60,11 +90,13 @@ const BENEFITS: {
 
 export function AccountIntroDialog({
   open,
+  context,
   onOpenChange,
   onCreateAccount,
   onLogIn,
 }: AccountIntroDialogProps) {
   const { t } = useLanguage();
+  const { titleKey, descriptionKey } = CONTEXT_COPY_KEYS[context];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -82,10 +114,10 @@ export function AccountIntroDialog({
               <ListChecks className="h-7 w-7" />
             </span>
             <DialogTitle className="text-xl font-semibold leading-snug text-[#261943]">
-              {t("accountIntroPopup.title")}
+              {t(titleKey)}
             </DialogTitle>
             <DialogDescription className="text-sm leading-6 text-[#6f6290]">
-              {t("accountIntroPopup.description")}
+              {t(descriptionKey)}
             </DialogDescription>
           </DialogHeader>
         </div>

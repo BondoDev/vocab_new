@@ -44,6 +44,14 @@ interface VocabularyPracticeProps {
   selectedExercises: string[];
   onBack: () => void;
   onGoFilters: () => void;
+  // Fires exactly once per genuine session completion - at the same two
+  // call sites that set sessionComplete true (words run out, or "Finish
+  // Test"), never on open/exercise-selection/a single answer/exit/an error.
+  // Optional and side-effect-free from this component's perspective: the
+  // caller (App.tsx) decides what, if anything, happens (currently: offering
+  // the anonymous account-intro popup - see accountIntroPolicy.ts). This
+  // component owns no auth/anonymous-detection logic itself.
+  onSessionComplete?: () => void;
   // Practice List (My Lists Phase 3): when provided (non-empty), this exact
   // ordered set of concept ids is practiced instead of the level/category/
   // word-type-filtered vocabulary set below — selectedLevels/
@@ -104,6 +112,7 @@ export function VocabularyPractice({
   onBack,
   onGoFilters,
   restrictToConceptIds,
+  onSessionComplete,
 }: VocabularyPracticeProps) {
   const { t } = useLanguage();
   const [words, setWords] = useState<any[]>([]);
@@ -636,6 +645,7 @@ export function VocabularyPractice({
 
       if (!nextWord) {
         setSessionComplete(true);
+        onSessionComplete?.();
         return;
       }
 
@@ -795,6 +805,7 @@ export function VocabularyPractice({
 
   const handleFinishTest = () => {
     setSessionComplete(true);
+    onSessionComplete?.();
   };
 
   // Calculate statistics for the matrix table

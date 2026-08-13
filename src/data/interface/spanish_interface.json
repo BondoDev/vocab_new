@@ -65,7 +65,15 @@
     },
     "createAccount": "Crear cuenta",
     "maybeLater": "Quizás más tarde",
-    "logIn": "¿Ya tienes una cuenta? Inicia sesión"
+    "logIn": "¿Ya tienes una cuenta? Inicia sesión",
+    "practiceComplete": {
+      "title": "Conserva tu progreso de aprendizaje",
+      "description": "Convierte tu práctica en un aprendizaje de vocabulario a largo plazo."
+    },
+    "levelTestComplete": {
+      "title": "Convierte tu resultado en progreso",
+      "description": "Usa tu nivel de idioma como punto de partida para un aprendizaje estructurado."
+    }
   },
   "accountOnboarding": {
     "saveError": "No pudimos guardar tu perfil. Intentalo de nuevo."

@@ -19,6 +19,18 @@ interface VocabularyLevelExamProps {
   yourLanguage: string;
   onComplete: (level: string) => void;
   onCancel: () => void;
+  // Fires exactly once per genuine test completion - at the same two call
+  // sites that set examComplete true (all levels finished, or 3 wrong
+  // answers ends the current level), right as the Result Screen becomes
+  // visible. Never on open/an individual answer/abandoning via the exit
+  // dialog, and never before a result exists. Distinct from onComplete
+  // above, which only fires later if/when the user clicks "Start
+  // practicing" - this fires as soon as there is a result to see. Optional
+  // and side-effect-free from this component's perspective: the caller
+  // (App.tsx) decides what, if anything, happens (currently: offering the
+  // anonymous account-intro popup - see accountIntroPolicy.ts). This
+  // component owns no auth/anonymous-detection logic itself.
+  onExamComplete?: () => void;
 }
 
 interface Word {
@@ -64,6 +76,7 @@ export function VocabularyLevelExam({
   yourLanguage,
   onComplete,
   onCancel,
+  onExamComplete,
 }: VocabularyLevelExamProps) {
   const { t } = useLanguage();
   const getText = (key: string, fallback: string) => {
@@ -345,6 +358,7 @@ export function VocabularyLevelExam({
         // Completed all levels!
         setFinalLevel(LEVELS[currentLevel]);
         setExamComplete(true);
+        onExamComplete?.();
       }
     } else {
       // Move to next question in same level
@@ -357,6 +371,7 @@ export function VocabularyLevelExam({
     const completedLevel = currentLevel > 0 ? LEVELS[currentLevel - 1] : "A1";
     setFinalLevel(completedLevel);
     setExamComplete(true);
+    onExamComplete?.();
   };
 
   const handleStartPractice = () => {
