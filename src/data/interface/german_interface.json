@@ -636,35 +636,6 @@
           "verifyAndDeleteButton": "Bestätigen und löschen"
         }
       }
-    },
-    "guidancePage": {
-      "ariaLabel": "Anleitung für FluentStellar",
-      "title": "Anleitung",
-      "subtitle": "Erfahre, wie FluentStellar funktioniert und wie du das Beste aus deinem Vokabellernen herausholst.",
-      "gettingStarted": {
-        "heading": "Erste Schritte",
-        "intro": "FluentStellar hilft dir, deinen Wortschatz mit einem einfachen Lernzyklus aufzubauen. Lerne neue Wörter, wiederhole bereits gelernte Wörter und übe, wann immer du zusätzlich trainieren möchtest.",
-        "steps": {
-          "learnNewWords": {
-            "title": "Neue Wörter lernen",
-            "description": "Entdecke neue Vokabeln und arbeite auf dein Tagesziel hin."
-          },
-          "reviewWords": {
-            "title": "Wörter wiederholen",
-            "description": "Wiederhole bereits gelernte Wörter, um dein Gedächtnis zu stärken und sie langfristig im Gedächtnis zu behalten."
-          },
-          "practice": {
-            "title": "Üben",
-            "description": "Übe Vokabeln, wann immer du möchtest, ohne deinen normalen Lern- und Wiederholungsfortschritt zu beeinflussen."
-          }
-        },
-        "tour": {
-          "title": "Kurze Tour starten",
-          "description": "Entdecke FluentStellar Schritt für Schritt. Sieh dir an, wo du Wörter lernen und wiederholen, deinen Wortschatz und deine Listen verwalten, deinen Fortschritt verfolgen und deine Einstellungen anpassen kannst.",
-          "startButton": "Interaktive Tour starten",
-          "restartButton": "Interaktive Tour neu starten"
-        }
-      }
     }
   },
   "aboutPage": {

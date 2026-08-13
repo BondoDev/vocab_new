@@ -40,7 +40,6 @@ export type UserProfileSectionId =
   | "learning"
   | "vocabulary"
   | "myLists"
-  | "guidance"
   | "progress"
   | "settings";
 
@@ -50,7 +49,6 @@ function isUserProfileSectionId(value: string): value is UserProfileSectionId {
     value === "learning" ||
     value === "vocabulary" ||
     value === "myLists" ||
-    value === "guidance" ||
     value === "progress" ||
     value === "settings"
   );

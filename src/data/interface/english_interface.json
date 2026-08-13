@@ -636,35 +636,6 @@
           "verifyAndDeleteButton": "Verify and delete"
         }
       }
-    },
-    "guidancePage": {
-      "ariaLabel": "Guidance section",
-      "title": "Guidance",
-      "subtitle": "Learn how FluentStellar works and how to make the most of your vocabulary learning.",
-      "gettingStarted": {
-        "heading": "Getting Started",
-        "intro": "FluentStellar helps you build your vocabulary through a simple learning cycle. Learn new words, review what you've already studied, and practice whenever you want extra training.",
-        "steps": {
-          "learnNewWords": {
-            "title": "Learn New Words",
-            "description": "Discover new vocabulary and work toward your daily goal."
-          },
-          "reviewWords": {
-            "title": "Review Words",
-            "description": "Return to previously studied words to strengthen your memory and keep them familiar over time."
-          },
-          "practice": {
-            "title": "Practice",
-            "description": "Practice vocabulary whenever you want without affecting your normal learning and review progress."
-          }
-        },
-        "tour": {
-          "title": "Take a Quick Tour",
-          "description": "Explore FluentStellar step by step. See where to learn and review words, manage your vocabulary and lists, track your progress, and adjust your settings.",
-          "startButton": "Start Interactive Tour",
-          "restartButton": "Restart Interactive Tour"
-        }
-      }
     }
   },
   "aboutPage": {

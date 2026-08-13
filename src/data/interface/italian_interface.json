@@ -636,35 +636,6 @@
           "verifyAndDeleteButton": "Verifica ed elimina"
         }
       }
-    },
-    "guidancePage": {
-      "ariaLabel": "Guida di FluentStellar",
-      "title": "Guida",
-      "subtitle": "Scopri come funziona FluentStellar e come ottenere il massimo dal tuo apprendimento del vocabolario.",
-      "gettingStarted": {
-        "heading": "Primi passi",
-        "intro": "FluentStellar ti aiuta ad ampliare il tuo vocabolario attraverso un semplice ciclo di apprendimento. Impara nuove parole, ripassa quelle che hai già studiato e fai pratica ogni volta che vuoi allenarti di più.",
-        "steps": {
-          "learnNewWords": {
-            "title": "Impara nuove parole",
-            "description": "Scopri nuovi vocaboli e avvicinati al tuo obiettivo giornaliero."
-          },
-          "reviewWords": {
-            "title": "Ripassa le parole",
-            "description": "Ripassa le parole già studiate per rafforzare la memoria e mantenerle familiari nel tempo."
-          },
-          "practice": {
-            "title": "Fai pratica",
-            "description": "Esercitati con il vocabolario quando vuoi senza influire sui tuoi normali progressi di apprendimento e ripasso."
-          }
-        },
-        "tour": {
-          "title": "Fai un tour rapido",
-          "description": "Esplora FluentStellar passo dopo passo. Scopri dove imparare e ripassare le parole, gestire il tuo vocabolario e le tue liste, monitorare i tuoi progressi e modificare le impostazioni.",
-          "startButton": "Avvia il tour interattivo",
-          "restartButton": "Riavvia il tour interattivo"
-        }
-      }
     }
   },
   "aboutPage": {

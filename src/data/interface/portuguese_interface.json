@@ -636,35 +636,6 @@
           "verifyAndDeleteButton": "Verificar e eliminar"
         }
       }
-    },
-    "guidancePage": {
-      "ariaLabel": "Orientação do FluentStellar",
-      "title": "Orientação",
-      "subtitle": "Descubra como o FluentStellar funciona e como aproveitar ao máximo a sua aprendizagem de vocabulário.",
-      "gettingStarted": {
-        "heading": "Primeiros passos",
-        "intro": "O FluentStellar ajuda você a ampliar seu vocabulário por meio de um ciclo de aprendizagem simples. Aprenda novas palavras, revise o que já estudou e pratique sempre que quiser reforçar seu aprendizado.",
-        "steps": {
-          "learnNewWords": {
-            "title": "Aprender novas palavras",
-            "description": "Descubra novo vocabulário e avance em direção à sua meta diária."
-          },
-          "reviewWords": {
-            "title": "Revisar palavras",
-            "description": "Volte às palavras que já estudou para fortalecer sua memória e mantê-las familiares ao longo do tempo."
-          },
-          "practice": {
-            "title": "Praticar",
-            "description": "Pratique vocabulário quando quiser sem afetar seu progresso normal de aprendizagem e revisão."
-          }
-        },
-        "tour": {
-          "title": "Faça um tour rápido",
-          "description": "Explore o FluentStellar passo a passo. Veja onde aprender e revisar palavras, gerenciar seu vocabulário e suas listas, acompanhar seu progresso e ajustar suas configurações.",
-          "startButton": "Iniciar tour interativo",
-          "restartButton": "Reiniciar tour interativo"
-        }
-      }
     }
   },
   "aboutPage": {
