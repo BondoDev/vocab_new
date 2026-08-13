@@ -254,8 +254,17 @@ const LIB_FILE = path.join(ROOT_DIR, "src", "lib", "vocabularyLists.ts");
 // Strips `//` line comments before scanning so a file's own explanatory
 // prose (e.g. "Do not add vocabulary.json imports here") never trips these
 // checks — only a real import/reference in live code counts as an offense.
+// CRLF-safe: `\r\n` is normalized to `\n` first. Without that, a line kept
+// its trailing `\r` after split("\n"), and since `.` never matches `\r`
+// (a line terminator) and `$` (no /m flag) only matches the true end of
+// the string being replaced, `/\/\/.*$/` could never reach past that `\r`
+// — silently stripping nothing on this repo's Windows/CRLF checkout and
+// letting comment prose (e.g. vocabularyLists.ts's own header, which
+// legitimately says "vocabulary.json" while explaining this module never
+// touches it) leak through as a false positive.
 function stripLineComments(source) {
   return source
+    .replace(/\r\n/g, "\n")
     .split("\n")
     .map((line) => line.replace(/\/\/.*$/, ""))
     .join("\n");

@@ -52,7 +52,7 @@ function test(name, fn) {
   }
 }
 
-console.log("\n=== Study Activity Phase 1 migration: file/ordering guards ===\n");
+console.log("\n=== Study Activity Phase 1 migration: file/ordering/architecture guards ===\n");
 
 test("1. Every prior migration file still exists", () => {
   for (const name of PRIOR_MIGRATION_NAMES) {
@@ -67,11 +67,58 @@ test("2. The new migration file exists, named later than every prior migration",
   }
 });
 
-test("3. No file in supabase/migrations sorts after this one (it is the latest)", () => {
+test("3. No later migration undoes this migration's design: new_word_study_time_seconds keeps its column shape and non-negative guard, and any redefinition of the three RPCs still increments the same totals (later migrations are free to add unrelated schema — e.g. My Lists, Settings — this only guards this migration's own invariants)", () => {
   const allNames = fs.readdirSync(MIGRATIONS_DIR).filter((name) => name.endsWith(".sql"));
-  for (const name of allNames) {
-    if (name === MIGRATION_NAME) continue;
-    assert.ok(name < MIGRATION_NAME, `${name} unexpectedly sorts after ${MIGRATION_NAME}`);
+  const laterNames = allNames.filter((name) => name !== MIGRATION_NAME && name > MIGRATION_NAME);
+  assert.ok(
+    laterNames.length > 0,
+    "expected at least one later migration to exist (e.g. My Lists/Settings) — if this fails, this assertion itself may need updating rather than the fixture",
+  );
+
+  for (const name of laterNames) {
+    const source = fs.readFileSync(path.join(MIGRATIONS_DIR, name), "utf8");
+
+    assert.doesNotMatch(
+      source,
+      /alter table public\.user_daily_stats[\s\S]{0,200}drop column[\s\S]{0,80}new_word_study_time_seconds/i,
+      `${name} must not drop new_word_study_time_seconds`,
+    );
+    assert.doesNotMatch(
+      source,
+      /alter table public\.user_daily_stats[\s\S]{0,200}alter column new_word_study_time_seconds/i,
+      `${name} must not retype/reconstrain new_word_study_time_seconds outside this migration's own catalog-guarded DO block`,
+    );
+    assert.doesNotMatch(
+      source,
+      /drop constraint[\s\S]{0,40}user_daily_stats_new_word_study_time_seconds_non_negative/i,
+      `${name} must not drop the new_word_study_time_seconds non-negative constraint`,
+    );
+
+    // If a later migration redefines any of the three RPCs this migration
+    // extended, its body must still carry the same study-time accounting —
+    // a signature-preserving CREATE OR REPLACE that silently dropped the
+    // increment would reintroduce the pre-migration behavior.
+    if (/create or replace function public\.complete_new_word_study\(/i.test(source)) {
+      assert.match(
+        source,
+        /new_word_study_time_seconds =\s*\n?\s*public\.user_daily_stats\.new_word_study_time_seconds \+ p_study_time_seconds/,
+        `${name} redefines complete_new_word_study but drops its new_word_study_time_seconds increment`,
+      );
+    }
+    if (/create or replace function public\.complete_word_review\(/i.test(source)) {
+      assert.match(
+        source,
+        /study_time_seconds = public\.user_daily_stats\.study_time_seconds \+ p_review_time_seconds/,
+        `${name} redefines complete_word_review but drops its study_time_seconds increment`,
+      );
+    }
+    if (/create or replace function public\.complete_custom_practice_word\(/i.test(source)) {
+      assert.match(
+        source,
+        /study_time_seconds =\s*\n?\s*public\.user_daily_stats\.study_time_seconds \+ p_custom_practice_time_seconds/,
+        `${name} redefines complete_custom_practice_word but drops its study_time_seconds increment`,
+      );
+    }
   }
 });
 

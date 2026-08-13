@@ -214,9 +214,17 @@ const allMigrationsText = migrationFiles
   .map((name) => fs.readFileSync(path.join(MIGRATIONS_DIR, name), "utf8"))
   .join("\n");
 
-test("20. Every user-owned table found in the migrations is one of the five audited tables", () => {
+test("20. Every user-owned table found in the migrations is one of the seven audited tables", () => {
   const createdTables = [...allMigrationsText.matchAll(/create table if not exists public\.(\w+)/g)].map((m) => m[1]);
-  const expected = ["user_profiles", "user_word_progress", "user_daily_stats", "review_events", "custom_practice_events"];
+  const expected = [
+    "user_profiles",
+    "user_word_progress",
+    "user_daily_stats",
+    "review_events",
+    "custom_practice_events",
+    "user_vocabulary_lists",
+    "user_vocabulary_list_words",
+  ];
   assert.deepEqual(
     [...new Set(createdTables)].sort(),
     [...expected].sort(),
@@ -265,6 +273,39 @@ test("26. review_events.word_progress_id is ON DELETE CASCADE, not the original 
   // explicitly dropped by Corrective Migration 3 — confirms this isn't just
   // an additive second constraint sitting alongside the unsafe original.
   assert.match(allMigrationsText, /drop constraint review_events_word_progress_id_fkey;/);
+});
+
+test("26b. user_vocabulary_lists.user_id has a direct ON DELETE CASCADE foreign key to auth.users (My Lists)", () => {
+  assert.match(
+    allMigrationsText,
+    /create table if not exists public\.user_vocabulary_lists \(\s*id uuid primary key default gen_random_uuid\(\),\s*user_id uuid not null references auth\.users \(id\) on delete cascade/,
+  );
+});
+
+test("26c. user_vocabulary_list_words has no user_id column / no direct FK to auth.users — ownership is transitive through list_id", () => {
+  const tableMatch = allMigrationsText.match(
+    /create table if not exists public\.user_vocabulary_list_words \(([\s\S]*?)\n\);/,
+  );
+  assert.ok(tableMatch, "expected the user_vocabulary_list_words CREATE TABLE statement");
+  assert.doesNotMatch(
+    tableMatch[1],
+    /references auth\.users/,
+    "user_vocabulary_list_words must not gain a direct auth.users FK — its ownership is intentionally transitive through list_id",
+  );
+});
+
+test("26d. user_vocabulary_list_words.list_id has an ON DELETE CASCADE foreign key to user_vocabulary_lists, and is never dropped — so deleting a user's auth.users row cascades auth.users -> user_vocabulary_lists -> user_vocabulary_list_words with no orphaned rows", () => {
+  assert.match(
+    allMigrationsText,
+    /create table if not exists public\.user_vocabulary_list_words \(\s*id uuid primary key default gen_random_uuid\(\),\s*list_id uuid not null references public\.user_vocabulary_lists \(id\) on delete cascade/,
+  );
+  // The corrective word_id migration explicitly documents leaving this FK
+  // untouched while reshaping the rest of the table (word_progress_id ->
+  // word_id) — confirm no migration ever drops the list_id FK itself.
+  assert.doesNotMatch(
+    allMigrationsText,
+    /drop constraint[\s\S]{0,60}user_vocabulary_list_words_list_id_fkey/i,
+  );
 });
 
 test("27. No trigger on user_profiles fires on DELETE (would risk blocking the cascade)", () => {

@@ -46,7 +46,15 @@ const migrationSource = fs.readFileSync(
   "utf8",
 );
 
-const fnMatch = migrationSource.match(
+// This migration is checked in with CRLF line endings. Normalize once so
+// every regex below that isolates a slice by matching up to a literal
+// "\n" (e.g. the end of the parameter list, or the end of the RETURNS
+// TABLE column list) can assume LF without needing "\r?\n" sprinkled
+// through each pattern. Normalizing only changes line-ending bytes, never
+// the SQL text itself, so it can't change what these assertions prove.
+const normalizedMigrationSource = migrationSource.replace(/\r\n/g, "\n");
+
+const fnMatch = normalizedMigrationSource.match(
   /create or replace function public\.read_vocabulary_growth_events\(([\s\S]*?)\$function\$;/,
 );
 
@@ -62,13 +70,13 @@ test("2. Derives the caller exclusively from auth.uid()", () => {
 });
 
 test("3. Never accepts a p_user_id/p_target_user_id parameter", () => {
-  const signature = migrationSource.match(/create or replace function public\.read_vocabulary_growth_events\(([\s\S]*?)\)\nreturns/);
+  const signature = normalizedMigrationSource.match(/create or replace function public\.read_vocabulary_growth_events\(([\s\S]*?)\)\nreturns/);
   assert.ok(signature, "could not isolate the function's parameter list");
   assert.doesNotMatch(signature[1], /p_user_id|p_target_user_id/);
 });
 
 test("4. Returns only word_progress_id, previous_state, new_state, event_date — no other columns", () => {
-  const returnsMatch = migrationSource.match(/returns table\(([\s\S]*?)\)\nlanguage plpgsql/);
+  const returnsMatch = normalizedMigrationSource.match(/returns table\(([\s\S]*?)\)\nlanguage plpgsql/);
   assert.ok(returnsMatch, "could not isolate the RETURNS TABLE column list");
   const columns = returnsMatch[1]
     .split(",")
@@ -87,7 +95,8 @@ test("4c. p_target_language is required and validated against the seven-language
 });
 
 test("4d. p_since_date is optional and defaults to null (never forces a bound that would break 'All time')", () => {
-  const signature = migrationSource.match(/create or replace function public\.read_vocabulary_growth_events\(([\s\S]*?)\)\nreturns/);
+  const signature = normalizedMigrationSource.match(/create or replace function public\.read_vocabulary_growth_events\(([\s\S]*?)\)\nreturns/);
+  assert.ok(signature, "could not isolate the function's parameter list");
   assert.match(signature[1], /p_since_date date default null/);
 });
 
@@ -125,6 +134,72 @@ test("8. Does not alter review_events' own columns/constraints, and touches no o
   assert.doesNotMatch(migrationSource, /create table/i);
   assert.doesNotMatch(migrationSource, /alter table public\.user_word_progress/i);
   assert.doesNotMatch(migrationSource, /alter table public\.user_daily_stats/i);
+});
+
+console.log("\n=== signature extraction is CRLF/LF-agnostic (regression) ===\n");
+
+// Tests 3 and 4d isolate the function's parameter list by matching up to a
+// literal "\)\nreturns". This migration is checked in with CRLF line
+// endings, so that isolation only works against normalizedMigrationSource
+// (CRLF collapsed to LF above). These fixture-based checks pin that
+// behavior directly, independent of the real migration file, so a future
+// regression (e.g. someone reverting to matching against the raw,
+// non-normalized source) fails here with a clear message instead of
+// resurfacing as "could not isolate the function's parameter list".
+const SIGNATURE_RE = /create or replace function public\.read_vocabulary_growth_events\(([\s\S]*?)\)\nreturns/;
+function extractSignature(source) {
+  return source.replace(/\r\n/g, "\n").match(SIGNATURE_RE);
+}
+
+test("12. Signature extraction parses an LF-only function definition", () => {
+  const lfFixture = [
+    "create or replace function public.read_vocabulary_growth_events(",
+    "  p_target_language text,",
+    "  p_since_date date default null",
+    ")",
+    "returns table(",
+    "  word_progress_id uuid",
+    ")",
+    "language plpgsql",
+  ].join("\n");
+  const match = extractSignature(lfFixture);
+  assert.ok(match, "LF-only fixture should parse");
+  assert.match(match[1], /p_since_date date default null/);
+});
+
+test("13. Signature extraction parses a CRLF function definition", () => {
+  const crlfFixture = [
+    "create or replace function public.read_vocabulary_growth_events(",
+    "  p_target_language text,",
+    "  p_since_date date default null",
+    ")",
+    "returns table(",
+    "  word_progress_id uuid",
+    ")",
+    "language plpgsql",
+  ].join("\r\n");
+  const match = extractSignature(crlfFixture);
+  assert.ok(match, "CRLF fixture should parse");
+  assert.match(match[1], /p_since_date date default null/);
+});
+
+test("14. Signature extraction does not match malformed SQL with a missing/misplaced `returns`", () => {
+  const malformedFixture = [
+    "create or replace function public.read_vocabulary_growth_events(",
+    "  p_target_language text",
+    ")",
+    "-- no returns clause on the next line",
+    "language plpgsql",
+  ].join("\r\n");
+  const match = extractSignature(malformedFixture);
+  assert.equal(match, null, "malformed fixture (no `returns` immediately after the param list) must not match");
+});
+
+test("15. The real migration file (checked in with CRLF) parses via this same extraction", () => {
+  const match = extractSignature(migrationSource);
+  assert.ok(match, "the real migration's CRLF signature must parse");
+  assert.match(match[1], /p_target_language text/);
+  assert.match(match[1], /p_since_date date default null/);
 });
 
 console.log("\n=== review_events privileges remain restricted (unchanged by this migration) ===\n");

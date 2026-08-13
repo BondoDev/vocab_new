@@ -21,6 +21,25 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 
+// Strips `// ...` line-comment text from source, so a source-text guard can
+// check live code only. CRLF-safe: `\r\n` is normalized to `\n` before
+// splitting, so no line retains a trailing `\r`. That normalization matters
+// because `.` never matches `\r` (it's a line terminator per the regex
+// spec) and, without the `/m` flag, `$` only matches the true end of the
+// string being tested — so on an un-normalized CRLF line, `/\/\/.*$/` could
+// never reach `$` past the trailing `\r` and silently stripped nothing,
+// letting comment prose leak through as a false positive on this repo's
+// Windows/CRLF checkout. Line-comment-only source is assumed (matches this
+// module's own style, and every current caller) — a block-comment opener
+// would not be recognized by this helper.
+function stripLineComments(source) {
+  return source
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((line) => line.replace(/\/\/.*$/, ""))
+    .join("\n");
+}
+
 let passed = 0;
 let failed = 0;
 function test(name, fn) {
@@ -373,19 +392,46 @@ console.log("\n=== 20. No Supabase writes (source-text guard) ===\n");
 
 test("vocabularyGrowth.ts contains no Supabase import, fetch, or write verb — pure computation only", () => {
   const source = fs.readFileSync(path.join(ROOT_DIR, "src", "data", "learning", "vocabularyGrowth.ts"), "utf8");
-  // Strips `// ...` line-comment text (this file uses only line comments,
-  // never block comments) so the guard checks live code only — the file's
-  // own header comment discusses Supabase/RLS extensively by name to
-  // document the RPC this module is wired through, which would otherwise
-  // false-match a whole-file regex (same precedent as
+  // stripLineComments() removes `// ...` line-comment text (this file uses
+  // only line comments, never block comments) so the guard checks live code
+  // only — the file's own header comment discusses Supabase/RLS extensively
+  // by name to document the RPC this module is wired through, which would
+  // otherwise false-match a whole-file regex (same precedent as
   // test-learning-section-date-ownership.mjs's own comment-stripping).
-  const liveCode = source
-    .split("\n")
-    .map((line) => line.replace(/\/\/.*$/, ""))
-    .join("\n");
+  const liveCode = stripLineComments(source);
   assert.doesNotMatch(liveCode, /supabase/i);
   assert.doesNotMatch(liveCode, /fetch\(/);
   assert.doesNotMatch(liveCode, /"PATCH"|"POST"|"DELETE"/);
+});
+
+test("stripLineComments: a forbidden word inside an LF `//` comment is ignored", () => {
+  const liveCode = stripLineComments('// mentions Supabase in prose\nconst x = 1;\n');
+  assert.doesNotMatch(liveCode, /supabase/i);
+});
+
+test("stripLineComments: a forbidden word inside a CRLF `//` comment is ignored (the exact bug this guard fixes)", () => {
+  const liveCode = stripLineComments('// mentions Supabase in prose\r\nconst x = 1;\r\n');
+  assert.doesNotMatch(liveCode, /supabase/i);
+});
+
+test("stripLineComments: a forbidden word in executable code is still caught, LF source", () => {
+  const liveCode = stripLineComments('import { createClient } from "supabase-js";\n');
+  assert.match(liveCode, /supabase/i);
+});
+
+test("stripLineComments: a forbidden word in executable code is still caught, CRLF source", () => {
+  const liveCode = stripLineComments('import { createClient } from "supabase-js";\r\n');
+  assert.match(liveCode, /supabase/i);
+});
+
+test("stripLineComments: fetch( mentioned only inside a CRLF `//` comment is ignored", () => {
+  const liveCode = stripLineComments('// fetch(url) is mentioned only here in prose\r\nconst x = 1;\r\n');
+  assert.doesNotMatch(liveCode, /fetch\(/);
+});
+
+test("stripLineComments: a real fetch( call in executable code is still caught, CRLF source", () => {
+  const liveCode = stripLineComments('const noop = 1;\r\nfetch("/api");\r\n');
+  assert.match(liveCode, /fetch\(/);
 });
 
 console.log(`\n─────────────────────────────────────────`);
