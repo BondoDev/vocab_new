@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   BookOpenText,
   ChartSpline,
-  Compass,
   Home,
   ListPlus,
   LogOut,
@@ -67,7 +66,6 @@ const SIDEBAR_NAV_GROUPS: SidebarNavGroup[] = [
       { id: "learning", labelKey: "userProfile.sidebar.items.learning", icon: Target },
       { id: "vocabulary", labelKey: "userProfile.sidebar.items.vocabulary", icon: BookOpenText },
       { id: "myLists", labelKey: "userProfile.sidebar.items.myLists", icon: ListPlus },
-      { id: "guidance", labelKey: "userProfile.sidebar.items.guidance", icon: Compass },
     ],
   },
   {
