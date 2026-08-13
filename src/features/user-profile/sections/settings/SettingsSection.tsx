@@ -833,7 +833,7 @@ export function SettingsSection({
                 disabled={!authSession}
                 aria-label={t("userProfile.settingsSection.account.editNickname")}
               >
-                {t("userProfile.settingsSection.edit")}
+                {t("userProfile.settingsSection.change")}
               </Button>
             </div>
           )}

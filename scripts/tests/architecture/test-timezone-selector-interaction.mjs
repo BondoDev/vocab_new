@@ -1,18 +1,10 @@
-// Regression guard for the Settings timezone dropdown interaction bug:
-// clicking the trigger opened a Popover whose content mounted in the DOM
-// (interactive via search/selection) but rendered with no visible on-screen
-// position, because `<PopoverTrigger asChild><Button>...</Button></...>`
-// composed Radix's Trigger with a plain (non-forwardRef) function
-// component. Radix's Slot clones its own ref onto the child so its
-// internal Popper positioning logic can read the trigger's real DOM rect;
-// a function component can't receive that ref under React 18 (no
-// ref-as-prop), so the ref silently went nowhere and PopoverContent had no
-// anchor to position against. Confirmed live (both the broken and fixed
-// states) against a real headless-Chromium render of /profile?section=
-// settings during this task; see the task's own final report for the
-// screenshots/console output. This is a source-text guard, matching every
-// other architecture test in this repository — there is no component-
-// rendering test runner (RTL/vitest) in this project.
+// Regression guard for the Settings timezone popup interaction: the picker
+// must use the app's controlled Radix dialog composition, with a single
+// forwardRef-capable Button as the trigger, so opening the timezone list
+// produces a centered modal popup rather than an anchored dropdown or a
+// nested/raw button. This is a source-text guard, matching every other
+// architecture test in this repository — there is no component-rendering
+// test runner (RTL/vitest) in this project.
 //
 // Run: node scripts/tests/architecture/test-timezone-selector-interaction.mjs
 import assert from "node:assert/strict";
@@ -60,18 +52,19 @@ const timezoneSelectorSource = read("src/features/user-profile/sections/settings
 
 console.log("\n=== TimezoneSelector: composition and interaction wiring ===\n");
 
-test("3. The trigger is a single Button under PopoverTrigger asChild — never a raw nested <button> (which would itself be invalid HTML) or a second wrapper", () => {
-  const triggerBlock = timezoneSelectorSource.match(/<PopoverTrigger asChild>([\s\S]*?)<\/PopoverTrigger>/);
-  assert.ok(triggerBlock, "expected a <PopoverTrigger asChild> block");
+test("3. The trigger is a single Button under DialogTrigger asChild — never a raw nested <button> (which would itself be invalid HTML) or a second wrapper", () => {
+  const triggerBlock = timezoneSelectorSource.match(/<DialogTrigger asChild>([\s\S]*?)<\/DialogTrigger>/);
+  assert.ok(triggerBlock, "expected a <DialogTrigger asChild> block");
   assert.match(triggerBlock[1], /<Button\b/);
   // Only the one top-level Button element inside the trigger slot — not a
   // second <button ...> anywhere within it.
   assert.doesNotMatch(triggerBlock[1], /<button\b/);
 });
 
-test("4. Popover open state is explicitly controlled (open + onOpenChange), never left to Radix's own uncontrolled default", () => {
-  assert.match(timezoneSelectorSource, /<Popover\s*\n?\s*open=\{isOpen\}/);
+test("4. Dialog open state is explicitly controlled (open + onOpenChange), never left to Radix's own uncontrolled default", () => {
+  assert.match(timezoneSelectorSource, /<Dialog\s*\n?\s*open=\{isOpen\}/);
   assert.match(timezoneSelectorSource, /onOpenChange=\{/);
+  assert.match(timezoneSelectorSource, /<DialogContent className="settings-timezone-selector__content">/);
 });
 
 test("5. The option list is built from the shared buildTimezoneOptions/filterTimezoneOptions helpers — no second, divergent option source", () => {
@@ -79,14 +72,14 @@ test("5. The option list is built from the shared buildTimezoneOptions/filterTim
   assert.match(timezoneSelectorSource, /filterTimezoneOptions\(allOptions, query\)/);
 });
 
-test("6. Selecting an option calls onChange with the option id and closes the popover (setIsOpen(false))", () => {
+test("6. Selecting an option calls onChange with the option id and closes the popup (setIsOpen(false))", () => {
   const handleSelectMatch = timezoneSelectorSource.match(/const handleSelect = \(option: TimezoneOption\) => \{([\s\S]*?)\};/);
   assert.ok(handleSelectMatch, "expected a handleSelect function");
   assert.match(handleSelectMatch[1], /onChange\(option\.id\)/);
   assert.match(handleSelectMatch[1], /setIsOpen\(false\)/);
 });
 
-test("7. Closing the popover (any path) resets the search query, so reopening never shows stale filtered results", () => {
+test("7. Closing the popup (any path) resets the search query, so reopening never shows stale filtered results", () => {
   assert.match(timezoneSelectorSource, /if \(!nextOpen\) \{\s*setQuery\(""\);/);
 });
 

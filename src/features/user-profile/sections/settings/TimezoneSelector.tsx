@@ -2,8 +2,15 @@ import { useId, useMemo, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { Button } from "../../../../app/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../../../app/components/ui/dialog";
 import { Input } from "../../../../app/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "../../../../app/components/ui/popover";
 import { buildTimezoneOptions, filterTimezoneOptions, type TimezoneOption } from "../../../../app/utils/timezoneOptions";
 
 interface TimezoneSelectorProps {
@@ -12,14 +19,10 @@ interface TimezoneSelectorProps {
   disabled?: boolean;
 }
 
-// Searchable IANA timezone combobox for Settings' Time & Region section.
-// Built on the project's existing Popover primitive (Radix) rather than
-// LanguageSelector.tsx's own hand-rolled dropdown: Popover already provides
-// focus trapping, Escape-to-close, outside-click, and focus-return-to-
-// trigger for free, which this task's own accessibility requirements call
-// for explicitly. The full option list (buildTimezoneOptions) is computed
-// once per mount - it depends only on the runtime's own IANA database, never
-// on props/state, so there's nothing to invalidate.
+// Searchable IANA timezone picker for Settings' Time & Region section. The
+// popup is intentionally centered, not anchored to the trigger: the option
+// list is long enough that a modal surface gives the search field and results
+// stable room on both desktop and mobile.
 export function TimezoneSelector({ value, onChange, disabled }: TimezoneSelectorProps) {
   const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +40,7 @@ export function TimezoneSelector({ value, onChange, disabled }: TimezoneSelector
   };
 
   return (
-    <Popover
+    <Dialog
       open={isOpen}
       onOpenChange={(nextOpen) => {
         setIsOpen(nextOpen);
@@ -46,11 +49,11 @@ export function TimezoneSelector({ value, onChange, disabled }: TimezoneSelector
         }
       }}
     >
-      <PopoverTrigger asChild>
+      <DialogTrigger asChild>
         <Button
           type="button"
           variant="outline"
-          role="combobox"
+          aria-haspopup="dialog"
           aria-expanded={isOpen}
           aria-label={t("userProfile.settingsSection.timeRegion.selectorAriaLabel")}
           disabled={disabled}
@@ -63,8 +66,14 @@ export function TimezoneSelector({ value, onChange, disabled }: TimezoneSelector
           </span>
           <ChevronsUpDown className="settings-timezone-selector__trigger-icon" aria-hidden="true" size={16} />
         </Button>
-      </PopoverTrigger>
-      <PopoverContent className="settings-timezone-selector__content" align="start">
+      </DialogTrigger>
+      <DialogContent className="settings-timezone-selector__content">
+        <DialogHeader className="settings-timezone-selector__header">
+          <DialogTitle>{t("userProfile.settingsSection.timeRegion.timezone")}</DialogTitle>
+          <DialogDescription className="sr-only">
+            {t("userProfile.settingsSection.timeRegion.selectorAriaLabel")}
+          </DialogDescription>
+        </DialogHeader>
         <Input
           type="text"
           value={query}
@@ -112,7 +121,7 @@ export function TimezoneSelector({ value, onChange, disabled }: TimezoneSelector
             })
           )}
         </div>
-      </PopoverContent>
-    </Popover>
+      </DialogContent>
+    </Dialog>
   );
 }
