@@ -11,8 +11,8 @@
     "levelTest": "Prueba de nivel"
   },
   "home": {
-    "headline": "Practica vocabulario",
-    "subheadline": "Sin lecciones: solo practica.",
+    "headline": "Aprende vocabulario",
+    "subheadline": "Aprende, practica y recuerda.",
     "yourLanguage": "Tu idioma",
     "practiceLanguage": "Idioma de practica",
     "selectYourLanguage": "Selecciona tu idioma",
@@ -22,8 +22,8 @@
     "stat": {
       "words": "Palabras para practicar",
       "languages": "Idiomas disponibles",
-      "noSignup": "Sin registro",
-      "noSignupDesc": "Empieza al instante"
+      "noSignup": "Sigue tu progreso",
+      "noSignupDesc": "Con tu cuenta"
     }
   },
   "languageSelector": {

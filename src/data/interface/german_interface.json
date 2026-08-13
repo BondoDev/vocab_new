@@ -11,8 +11,8 @@
     "levelTest": "Niveautest"
   },
   "home": {
-    "headline": "Wortschatz üben",
-    "subheadline": "Keine Lektionen - nur Übung.",
+    "headline": "Wortschatz lernen",
+    "subheadline": "Lernen, üben und behalten.",
     "yourLanguage": "Deine Sprache",
     "practiceLanguage": "Übungssprache",
     "selectYourLanguage": "Deine Sprache auswählen",
@@ -22,8 +22,8 @@
     "stat": {
       "words": "Wörter zum Üben",
       "languages": "Verfügbare Sprachen",
-      "noSignup": "Keine Anmeldung",
-      "noSignupDesc": "Sofort starten"
+      "noSignup": "Fortschritt verfolgen",
+      "noSignupDesc": "Mit deinem Konto"
     }
   },
   "languageSelector": {

@@ -297,20 +297,20 @@ export function HomePage({
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.8 }}
           >
-            <span className="flex items-baseline gap-1">
+            <span className="flex flex-col items-center gap-1">
               <span className="font-semibold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
                 10k+
               </span>
               <span>words</span>
             </span>
-            <span className="flex items-baseline gap-1">
+            <span className="flex flex-col items-center gap-1">
               <span className="font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
                 7
               </span>
               <span>languages</span>
             </span>
             <span className="font-semibold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
-              No signup
+              {t("home.stat.noSignup")}
             </span>
           </motion.div>
         </motion.div>

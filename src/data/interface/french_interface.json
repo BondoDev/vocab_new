@@ -11,8 +11,8 @@
     "levelTest": "Test de niveau"
   },
   "home": {
-    "headline": "Pratiquer le vocabulaire",
-    "subheadline": "Sans lecons, juste la pratique.",
+    "headline": "Apprenez du vocabulaire",
+    "subheadline": "Apprenez, pratiquez et retenez.",
     "yourLanguage": "Votre langue",
     "practiceLanguage": "Langue a pratiquer",
     "selectYourLanguage": "Selectionnez votre langue",
@@ -22,8 +22,8 @@
     "stat": {
       "words": "Mots a pratiquer",
       "languages": "Langues disponibles",
-      "noSignup": "Sans inscription",
-      "noSignupDesc": "Commencez immediatement"
+      "noSignup": "Suivez vos progrès",
+      "noSignupDesc": "Avec votre compte"
     }
   },
   "languageSelector": {

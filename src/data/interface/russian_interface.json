@@ -11,8 +11,8 @@
     "exercises": "Упражнения"
   },
   "home": {
-    "headline": "Практика словарного запаса",
-    "subheadline": "Без уроков — только практика.",
+    "headline": "Учите новые слова",
+    "subheadline": "Учите, практикуйте и запоминайте.",
     "yourLanguage": "Ваш язык",
     "practiceLanguage": "Язык для практики",
     "changeNote": "Вы можете изменить это позже.",
@@ -20,8 +20,8 @@
     "stat": {
       "words": "Слова для практики",
       "languages": "Доступные языки",
-      "noSignup": "Без регистрации",
-      "noSignupDesc": "Начните сразу"
+      "noSignup": "Следите за прогрессом",
+      "noSignupDesc": "С вашим аккаунтом"
     },
     "selectYourLanguage": "Выберите ваш язык",
     "selectPracticeLanguage": "Выберите язык для практики"

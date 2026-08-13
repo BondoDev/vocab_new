@@ -11,8 +11,8 @@
     "levelTest": "Teste de nivel"
   },
   "home": {
-    "headline": "Praticar vocabulario",
-    "subheadline": "Sem licoes, so pratica.",
+    "headline": "Aprenda vocabulário",
+    "subheadline": "Aprenda, pratique e memorize.",
     "yourLanguage": "Seu idioma",
     "practiceLanguage": "Idioma para praticar",
     "selectYourLanguage": "Selecione seu idioma",
@@ -22,8 +22,8 @@
     "stat": {
       "words": "Palavras para praticar",
       "languages": "Idiomas disponiveis",
-      "noSignup": "Sem cadastro",
-      "noSignupDesc": "Comece agora"
+      "noSignup": "Acompanhe o progresso",
+      "noSignupDesc": "Com sua conta"
     }
   },
   "languageSelector": {

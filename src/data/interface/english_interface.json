@@ -11,8 +11,8 @@
     "levelTest": "Level Test"
   },
   "home": {
-    "headline": "Practice Vocabulary",
-    "subheadline": "No lessons - Just practice.",
+    "headline": "Learn Vocabulary",
+    "subheadline": "Learn, practice, and remember.",
     "yourLanguage": "Your language",
     "practiceLanguage": "Practice language",
     "selectYourLanguage": "Select your language",
@@ -22,8 +22,8 @@
     "stat": {
       "words": "Words to practice",
       "languages": "Languages available",
-      "noSignup": "No signup",
-      "noSignupDesc": "Start immediately"
+      "noSignup": "Track progress",
+      "noSignupDesc": "With your account"
     }
   },
   "languageSelector": {
