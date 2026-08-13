@@ -1067,7 +1067,8 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    border-left: 1px dashed color-mix(in srgb, var(--muted-foreground) 40%, transparent);
+    border-left: 1px dashed
+      color-mix(in srgb, var(--muted-foreground) 40%, transparent);
     pointer-events: none;
   }
 
@@ -1223,7 +1224,8 @@
     &--total {
       margin-top: 0.3rem;
       padding-top: 0.3rem;
-      border-top: 1px solid color-mix(in srgb, var(--background) 25%, transparent);
+      border-top: 1px solid
+        color-mix(in srgb, var(--background) 25%, transparent);
       font-weight: 700;
     }
   }
@@ -1235,17 +1237,20 @@
 // modifier plus --active).
 .study-activity-card__point--new.study-activity-card__point--active {
   border-color: var(--study-activity-new);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--study-activity-new) 18%, transparent);
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--study-activity-new) 18%, transparent);
 }
 
 .study-activity-card__point--review.study-activity-card__point--active {
   border-color: var(--study-activity-review);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--study-activity-review) 18%, transparent);
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--study-activity-review) 18%, transparent);
 }
 
 .study-activity-card__point--practice.study-activity-card__point--active {
   border-color: var(--study-activity-practice);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--study-activity-practice) 18%, transparent);
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--study-activity-practice) 18%, transparent);
 }
 
 @keyframes study-activity-tooltip-in {
@@ -1577,6 +1582,10 @@
 @media (max-width: 639.98px) {
   .vocabulary-overview-card__columns {
     gap: 0.75rem;
+  }
+
+  .vocabulary-overview-card__column {
+    align-items: center;
   }
 
   .study-activity-card__legend {
