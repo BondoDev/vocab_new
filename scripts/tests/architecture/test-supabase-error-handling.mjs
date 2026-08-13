@@ -81,7 +81,7 @@ test("1. src/lib/supabaseError.ts exists and exports the stable classification A
   assert.match(supabaseErrorLib, /export class ClassifiedSupabaseError extends Error/);
 });
 
-test('2. All eight required categories are present, exactly once each, in SupabaseErrorCategory', () => {
+test('2. All nine required categories are present, exactly once each, in SupabaseErrorCategory', () => {
   const match = supabaseErrorLib.match(/export type SupabaseErrorCategory\s*=([\s\S]*?);/);
   assert.ok(match, "SupabaseErrorCategory type must be found");
   const body = match[1];
@@ -93,6 +93,12 @@ test('2. All eight required categories are present, exactly once each, in Supaba
     "network",
     "validation",
     "unexpected_response",
+    // Added by the unconfirmed-email login fix (2026-08-13): GoTrue's own
+    // "email_not_confirmed" error_code for signInWithPassword, distinct from
+    // "validation" so Header.tsx can show its own message instead of the
+    // generic incorrect-credentials one. See src/lib/supabaseError.ts's
+    // EMAIL_NOT_CONFIRMED_CODE comment.
+    "email_not_confirmed",
     "unknown",
   ];
   for (const category of required) {
@@ -377,7 +383,7 @@ test("19. The existing JWT-refresh retry mechanism is untouched by this fix (sti
   assert.doesNotMatch(accountLanguageSave, /jwt expired/i);
 });
 
-test("20. SupabaseErrorCategory's 8 categories are unchanged by this fix (no new/renamed category introduced)", () => {
+test("20. SupabaseErrorCategory's original 8 categories are unchanged by the Phase 1 profile-write fix (no rename/removal) - a 9th, email_not_confirmed, was added afterward by the unconfirmed-email login fix and is asserted separately by test 2 above", () => {
   const match = supabaseErrorLib.match(/export type SupabaseErrorCategory\s*=([\s\S]*?);/);
   assert.ok(match, "SupabaseErrorCategory type must be found");
   const categories = [...match[1].matchAll(/"([a-z_]+)"/g)].map((m) => m[1]);
@@ -385,6 +391,7 @@ test("20. SupabaseErrorCategory's 8 categories are unchanged by this fix (no new
     categories.sort(),
     [
       "conflict",
+      "email_not_confirmed",
       "forbidden",
       "missing_rpc",
       "network",
@@ -393,7 +400,7 @@ test("20. SupabaseErrorCategory's 8 categories are unchanged by this fix (no new
       "unknown",
       "validation",
     ],
-    "this fix must not add, remove, or rename an error category",
+    "the Phase 1 fix's 8 categories must all still be present, unrenamed, plus exactly the one new email_not_confirmed category",
   );
 });
 

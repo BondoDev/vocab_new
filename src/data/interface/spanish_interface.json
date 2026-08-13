@@ -50,6 +50,7 @@
   },
   "auth": {
     "loginError": "Correo electronico o contrasena incorrectos. Intentalo de nuevo.",
+    "loginUnconfirmedEmail": "Por favor verifica tu correo electronico antes de iniciar sesion.",
     "signupError": "No pudimos crear tu cuenta con estos datos. Revisa tu informacion e intentalo de nuevo.",
     "forgotPasswordError": "No pudimos enviar el correo para restablecer la contrasena. Intentalo de nuevo.",
     "googleError": "No pudimos iniciar el acceso con Google. Intentalo de nuevo.",

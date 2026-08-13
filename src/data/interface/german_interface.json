@@ -50,6 +50,7 @@
   },
   "auth": {
     "loginError": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuche es erneut.",
+    "loginUnconfirmedEmail": "Bitte bestätige deine E-Mail-Adresse, bevor du dich anmeldest.",
     "signupError": "Wir konnten dein Konto mit diesen Angaben nicht erstellen. Bitte überprüfe deine Angaben und versuche es erneut.",
     "forgotPasswordError": "Wir konnten die E-Mail zum Zurücksetzen des Passworts nicht senden. Bitte versuche es erneut.",
     "googleError": "Die Anmeldung mit Google konnte nicht gestartet werden. Bitte versuche es erneut.",

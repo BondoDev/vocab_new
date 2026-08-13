@@ -50,6 +50,7 @@
   },
   "auth": {
     "loginError": "Incorrect email or password. Please try again.",
+    "loginUnconfirmedEmail": "Please verify your email before logging in.",
     "signupError": "We could not create your account with these details. Please check your information and try again.",
     "forgotPasswordError": "We could not send the password reset email. Please try again.",
     "googleError": "We could not start Google sign-in. Please try again.",

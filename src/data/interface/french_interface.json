@@ -50,6 +50,7 @@
   },
   "auth": {
     "loginError": "E-mail ou mot de passe incorrect. Veuillez reessayer.",
+    "loginUnconfirmedEmail": "Veuillez verifier votre e-mail avant de vous connecter.",
     "signupError": "Nous n'avons pas pu creer votre compte avec ces informations. Verifiez vos informations et reessayez.",
     "forgotPasswordError": "Nous n'avons pas pu envoyer l'e-mail de reinitialisation du mot de passe. Veuillez reessayer.",
     "googleError": "Impossible de demarrer la connexion avec Google. Veuillez reessayer.",

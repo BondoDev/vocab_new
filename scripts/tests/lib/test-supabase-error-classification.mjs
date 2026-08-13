@@ -140,6 +140,16 @@ test("8b. unknown: non-Error thrown values (string, undefined, plain object, nul
   assert.equal(classifySupabaseError(42), "unknown");
 });
 
+test("8c. email_not_confirmed: GoTrue's error_code for an unconfirmed-email password-grant rejection classifies as its own category, not validation", () => {
+  const error = supabaseError({ message: "Email not confirmed", code: "email_not_confirmed", status: 400 });
+  assert.equal(classifySupabaseError(error), "email_not_confirmed");
+});
+
+test("8d. email_not_confirmed never fires for a plain invalid-credentials rejection (same HTTP 400, different code) - it stays validation", () => {
+  const error = supabaseError({ message: "Invalid login credentials", code: "invalid_credentials", status: 400 });
+  assert.notEqual(classifySupabaseError(error), "email_not_confirmed");
+});
+
 console.log("\n=== describeSupabaseError: safe diagnostics ===\n");
 
 test("9a. diagnostics never include an access_token/refresh_token/session object even if present on the thrown error", () => {

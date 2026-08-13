@@ -212,7 +212,14 @@ test("13. The new auth.* locale keys (including the neutral no-session copy) exi
     "portuguese_interface.json",
     "russian_interface.json",
   ];
-  const REQUIRED_KEYS = ["loginError", "signupError", "forgotPasswordError", "googleError", "signupCheckEmail"].sort();
+  const REQUIRED_KEYS = [
+    "loginError",
+    "loginUnconfirmedEmail",
+    "signupError",
+    "forgotPasswordError",
+    "googleError",
+    "signupCheckEmail",
+  ].sort();
   for (const fileName of LOCALE_FILES) {
     const data = JSON.parse(read(`src/data/interface/${fileName}`));
     assert.ok(data.auth, `${fileName} is missing a top-level "auth" section`);
@@ -237,6 +244,37 @@ test("13. The new auth.* locale keys (including the neutral no-session copy) exi
     /account created|created your account/i,
     "the English no-session copy must never claim the account was created",
   );
+});
+
+console.log("\n--- Unconfirmed-email login: distinct message, no enumeration weakening ---\n");
+
+test("13b. The login catch branches on classifySupabaseError(error) === \"email_not_confirmed\", guarded to login mode only, before ever reaching resolveAuthErrorMessage's generic fallback", () => {
+  const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
+  const catchMatch = submitFnMatch[0].match(/\} catch \(error\) \{([\s\S]*?)\n {4}\} finally/);
+  assert.ok(catchMatch, "handlePasswordAuthSubmit's catch block must be found");
+  const body = catchMatch[1];
+  assert.match(
+    body,
+    /if \(authMode === "login" && classifySupabaseError\(error\) === "email_not_confirmed"\) \{/,
+    "must classify via the shared classifier, never by sniffing error.message text",
+  );
+  assert.match(body, /setAuthError\(t\("auth\.loginUnconfirmedEmail"\)\);/);
+  // The branch's own else must still fall through to the exact same
+  // resolveAuthErrorMessage call every other login/signup failure uses -
+  // this is an addition alongside the existing pipeline, not a parallel one.
+  assert.match(body, /\} else \{\s*setAuthError\(resolveAuthErrorMessage\(authMode === "login" \? "login" : "signup", error, fallbackKey, t\)\);\s*\}/);
+});
+
+test("13c. The unconfirmed-email branch is scoped to login mode only - signup never takes it, so it cannot become a second signup-enumeration surface", () => {
+  const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
+  const catchMatch = submitFnMatch[0].match(/\} catch \(error\) \{([\s\S]*?)\n {4}\} finally/);
+  assert.match(catchMatch[1], /authMode === "login" && classifySupabaseError\(error\)/);
+});
+
+test("13d. auth.loginUnconfirmedEmail is a distinct key from auth.loginError in every locale, and its English copy names email verification without reusing the generic incorrect-credentials wording", () => {
+  assert.notEqual(englishLocale.auth.loginError, englishLocale.auth.loginUnconfirmedEmail);
+  assert.match(englishLocale.auth.loginUnconfirmedEmail, /verify|confirm/i);
+  assert.doesNotMatch(englishLocale.auth.loginUnconfirmedEmail, /incorrect/i);
 });
 
 console.log("\n--- D-5: OAuth/auth redirect error fallback ---\n");

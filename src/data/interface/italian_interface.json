@@ -50,6 +50,7 @@
   },
   "auth": {
     "loginError": "Email o password non corretti. Riprova.",
+    "loginUnconfirmedEmail": "Verifica la tua email prima di accedere.",
     "signupError": "Non siamo riusciti a creare il tuo account con questi dati. Controlla le tue informazioni e riprova.",
     "forgotPasswordError": "Non siamo riusciti a inviare l'email per reimpostare la password. Riprova.",
     "googleError": "Non siamo riusciti ad avviare l'accesso con Google. Riprova.",

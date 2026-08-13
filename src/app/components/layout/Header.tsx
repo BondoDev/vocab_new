@@ -701,7 +701,22 @@ export function Header({
       // rejection, or this app would itself become the enumeration leak
       // GoTrue's own signup behavior is designed to avoid.
       const fallbackKey = authMode === "login" ? "auth.loginError" : "auth.signupError";
-      setAuthError(resolveAuthErrorMessage(authMode === "login" ? "login" : "signup", error, fallbackKey, t));
+
+      // Login-only: GoTrue's password grant checks the password BEFORE the
+      // email-confirmed check (see supabaseError.ts's classifyByCodeAndStatus
+      // comment), so this category only ever surfaces for a *correct*
+      // email+password pair whose account hasn't confirmed its email yet -
+      // a wrong password, confirmed or not, still classifies as ordinary
+      // "unknown"/validation and falls through to the same generic
+      // auth.loginError below. This never distinguishes a nonexistent email
+      // from a wrong password - only this one GoTrue-confirmed condition
+      // gets its own message.
+      if (authMode === "login" && classifySupabaseError(error) === "email_not_confirmed") {
+        console.warn("Header: login failed.", describeSupabaseError("login", error));
+        setAuthError(t("auth.loginUnconfirmedEmail"));
+      } else {
+        setAuthError(resolveAuthErrorMessage(authMode === "login" ? "login" : "signup", error, fallbackKey, t));
+      }
     } finally {
       setIsAuthSubmitting(false);
     }

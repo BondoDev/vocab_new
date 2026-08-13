@@ -28,6 +28,7 @@ export type SupabaseErrorCategory =
   | "network"
   | "validation"
   | "unexpected_response"
+  | "email_not_confirmed"
   | "unknown";
 
 // Structured shape a Supabase/PostgREST-carrying error may expose (see
@@ -108,11 +109,22 @@ const NETWORK_MESSAGE_PATTERN =
 // a conflict instead (checked first, before this prefix check runs).
 const VALIDATION_CODE_PREFIX = "23";
 
+// GoTrue's own stable error_code for the password grant (signInWithPassword)
+// rejecting an otherwise-correct email+password pair because the account's
+// email is unconfirmed (confirmed against GoTrue's own source: the password
+// is checked first — a wrong password, confirmed or not, still returns
+// "invalid_credentials" below, never this — so surfacing this category is
+// never an account-enumeration leak). Checked as its own code before the
+// generic HTTP-400-> "validation" status fallback so it isn't swallowed by
+// that broader rule.
+const EMAIL_NOT_CONFIRMED_CODE = "email_not_confirmed";
+
 function classifyByCodeAndStatus(
   status: number | null,
   code: string | null,
   message: string | null,
 ): SupabaseErrorCategory | null {
+  if (code === EMAIL_NOT_CONFIRMED_CODE) return "email_not_confirmed";
   if (code === "PGRST202") return "missing_rpc";
   if (code === "42501") return "forbidden";
   if (code === "23505") return "conflict";
