@@ -46,6 +46,27 @@
     "cancel": "Annulla",
     "saveError": "Non siamo riusciti a salvare le tue lingue nel tuo account. Riprova."
   },
+  "accountIntroPopup": {
+    "title": "Impara il vocabolario con un piano",
+    "description": "Trasforma la pratica in un apprendimento strutturato.",
+    "benefits": {
+      "studyWords": {
+        "title": "Impara nuove parole",
+        "description": "Segui un ordine di apprendimento strutturato"
+      },
+      "reviewSmart": {
+        "title": "Ripassa in modo intelligente",
+        "description": "Ritrova le parole al momento giusto"
+      },
+      "trackProgress": {
+        "title": "Monitora i progressi",
+        "description": "Guarda tutto ciò che hai imparato"
+      }
+    },
+    "createAccount": "Crea account",
+    "maybeLater": "Forse più tardi",
+    "logIn": "Hai già un account? Accedi"
+  },
   "accountOnboarding": {
     "saveError": "Non siamo riusciti a salvare il tuo profilo. Riprova."
   },

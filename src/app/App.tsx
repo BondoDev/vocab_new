@@ -14,6 +14,7 @@ import { Header } from "./components/layout/Header";
 import { ExplorePage } from "./pages/explore/ExplorePage";
 import { AccountOnboardingDialog } from "./components/dialogs/AccountOnboardingDialog";
 import { AccountLanguageConfirmDialog } from "./components/dialogs/AccountLanguageConfirmDialog";
+import { AccountIntroDialog } from "./components/dialogs/AccountIntroDialog";
 import { PasswordRecoveryDialog } from "./components/dialogs/PasswordRecoveryDialog";
 import { LevelTestLanguageModal } from "./pages/level-test/LevelTestLanguageModal";
 import { HomePage } from "./pages/home/HomePage";
@@ -76,7 +77,9 @@ import { usePracticeRouteLanguageSync } from "./hooks/usePracticeRouteLanguageSy
 import { useStoredLanguageAutoRedirect } from "./hooks/useStoredLanguageAutoRedirect";
 import { useExploreItems } from "./pages/explore/useExploreItems";
 import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
+import { useAccountIntroPopup } from "./hooks/useAccountIntroPopup";
 import { usePracticeListSession } from "./hooks/usePracticeListSession";
+import { shouldSignalAccountIntro } from "./utils/accountIntroPolicy";
 import type { PracticeListStartConfig } from "../features/user-profile/sections/my-lists/MyListsSection";
 
 const LevelCategorySelection = lazy(() =>
@@ -226,6 +229,7 @@ function AppContent({
     setSelectedExercises,
     isContinueDisabled,
     shouldAutoRedirectFromStoredLanguagesRef,
+    hadCompleteStoredLanguagePairAtLoadRef,
     resetFiltersForLevel,
   } = useStoredAppPreferences({
     storageKeys: STORAGE_KEYS,
@@ -236,7 +240,8 @@ function AppContent({
     supportedLanguageCodes,
   });
   const navigate = useNavigate();
-  const { authSession, authUserId, handleAuthSessionChange } = useAuthSession();
+  const { authSession, authUserId, isAuthResolved, handleAuthSessionChange } =
+    useAuthSession();
   // Sole owner of "did this page load just consume a Supabase auth
   // redirect" - see useSupabaseAuthRedirect.ts for why this replaces both
   // Header's old internal redirect effect and this component's previous
@@ -458,6 +463,21 @@ function AppContent({
     isContinueDisabled,
   });
 
+  const accountIntroPopup = useAccountIntroPopup({
+    resolvedPage,
+    location,
+    navigate,
+    authUserId,
+    isAuthResolved,
+  });
+  // Requests Header's existing login/signup dialog open (see
+  // requestedAuthMode's doc comment in Header.tsx) - set by the account-intro
+  // popup's Create account / Log in actions below, cleared once Header has
+  // consumed it.
+  const [requestedHeaderAuthMode, setRequestedHeaderAuthMode] = useState<
+    "login" | "signup" | null
+  >(null);
+
   const accountLanguageConfirm = useAccountLanguageConfirm({
     authSession,
     authUserId,
@@ -466,7 +486,24 @@ function AppContent({
     setUserProfile,
     yourLanguage,
     practiceLanguage,
-    proceed: () => navigate(ROUTES.levelCategory),
+    // Attaches the one-time showAccountIntro signal to this navigation when
+    // (and only when) this Continue is a brand-new anonymous visitor's
+    // first-ever completed language setup - see accountIntroPolicy.ts and
+    // hadCompleteStoredLanguagePairAtLoadRef's own doc comment
+    // (useStoredAppPreferences.ts) for why that ref, captured before any
+    // save, is the only valid source for "first-time" here. Consumed once by
+    // useAccountIntroPopup on the Filters page.
+    proceed: () => {
+      const showAccountIntro = shouldSignalAccountIntro({
+        isAuthenticated: Boolean(authUserId),
+        hadCompleteStoredLanguagePairBeforeSetup:
+          hadCompleteStoredLanguagePairAtLoadRef.current,
+      });
+      navigate(
+        ROUTES.levelCategory,
+        showAccountIntro ? { state: { showAccountIntro: true } } : undefined,
+      );
+    },
   });
 
   const handleContinueToExerciseSelection = () => {
@@ -701,6 +738,18 @@ function AppContent({
     onSignedOut: () => navigate(ROUTES.exerciseSelection),
     authRedirectError,
     onAuthRedirectErrorHandled: clearAuthRedirectError,
+    requestedAuthMode: requestedHeaderAuthMode,
+    onAuthActionRequestHandled: () => setRequestedHeaderAuthMode(null),
+  };
+
+  const handleAccountIntroCreateAccount = () => {
+    accountIntroPopup.close();
+    setRequestedHeaderAuthMode("signup");
+  };
+
+  const handleAccountIntroLogIn = () => {
+    accountIntroPopup.close();
+    setRequestedHeaderAuthMode("login");
   };
 
   // Rendered on every route (appended alongside accountOnboardingDialog
@@ -872,6 +921,16 @@ function AppContent({
         </div>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        <AccountIntroDialog
+          open={accountIntroPopup.isOpen}
+          onOpenChange={(open) => {
+            if (!open) {
+              accountIntroPopup.close();
+            }
+          }}
+          onCreateAccount={handleAccountIntroCreateAccount}
+          onLogIn={handleAccountIntroLogIn}
+        />
       </div>
     );
   }

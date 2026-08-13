@@ -306,6 +306,14 @@ interface HeaderProps {
   // is how the error still reaches the login dialog exactly as before.
   authRedirectError?: string | null;
   onAuthRedirectErrorHandled?: () => void;
+  // Lets a caller outside Header (the anonymous account-intro popup on the
+  // Filters page - see useAccountIntroPopup.ts/AccountIntroDialog.tsx) open
+  // this same login/signup dialog, reusing openLoginDialog/openSignupDialog
+  // below instead of a second auth UI. Mirrors the authRedirectError /
+  // onAuthRedirectErrorHandled prop pair's own "external trigger, consumed
+  // once" shape.
+  requestedAuthMode?: "login" | "signup" | null;
+  onAuthActionRequestHandled?: () => void;
 }
 
 export function Header({
@@ -326,6 +334,8 @@ export function Header({
   onSignedOut,
   authRedirectError,
   onAuthRedirectErrorHandled,
+  requestedAuthMode,
+  onAuthActionRequestHandled,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktopMoreOpen, setIsDesktopMoreOpen] = useState(false);
@@ -500,6 +510,24 @@ export function Header({
     onAuthRedirectErrorHandled?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authRedirectError]);
+
+  // External open request (see requestedAuthMode's doc comment above) -
+  // reuses openLoginDialog/openSignupDialog exactly as Header's own nav
+  // buttons do, so this is not a second auth-opening mechanism. Consumed via
+  // onAuthActionRequestHandled the same way authRedirectError is above, so
+  // it never re-fires for the same request.
+  useEffect(() => {
+    if (!requestedAuthMode) {
+      return;
+    }
+    if (requestedAuthMode === "signup") {
+      openSignupDialog();
+    } else {
+      openLoginDialog();
+    }
+    onAuthActionRequestHandled?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestedAuthMode]);
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof document === "undefined") {

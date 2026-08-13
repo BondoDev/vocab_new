@@ -25,6 +25,7 @@ import { useEffect, useRef, useState } from "react";
 import { canUseLocalStorage, readStoredString, readStoredStringArray } from "../utils/storage";
 import { VALID_LEVEL_CODES } from "../utils/pageRouting";
 import { shouldRestoreStoredLanguagePreference } from "../utils/storedLanguagePreferencePolicy";
+import { hasCompleteLanguagePair } from "../utils/languageProfileSyncPolicy";
 import { EXERCISE_IDS } from "../../exercises/exerciseIds";
 
 export interface AppPreferencesStorageKeys {
@@ -72,6 +73,16 @@ export interface UseStoredAppPreferencesResult {
   // Set by the storage-loading effect below; read by App.tsx's stored-
   // language auto-redirect effect. See the effect-order note above.
   shouldAutoRedirectFromStoredLanguagesRef: React.MutableRefObject<boolean>;
+  // Whether a *complete* native+learning language pair already existed in
+  // localStorage before this load - captured once, from the raw read below,
+  // before anything in this hook has a chance to write to it. This is the
+  // canonical "was this visitor's language setup already done" signal for
+  // the anonymous account-intro popup (see accountIntroPolicy.ts):
+  // determining it from live yourLanguage/practiceLanguage state after
+  // Continue would always read "complete" (this hook's own persist effects
+  // below have already written it by then), so it must come from this
+  // one-time raw read instead.
+  hadCompleteStoredLanguagePairAtLoadRef: React.MutableRefObject<boolean>;
   // The state-reset portion of the former handleStartVocabularyPractice:
   // resets the filter/exercise selections for a freshly chosen level. Popup
   // queuing and navigation remain in App.tsx's handleStartVocabularyPractice.
@@ -100,6 +111,7 @@ export function useStoredAppPreferences({
   const isContinueDisabled = !yourLanguage || !practiceLanguage;
 
   const shouldAutoRedirectFromStoredLanguagesRef = useRef(false);
+  const hadCompleteStoredLanguagePairAtLoadRef = useRef(false);
 
   // Single coordinated load: reads every persisted preference once on
   // mount and applies whichever ones validate, exactly as before the
@@ -131,6 +143,14 @@ export function useStoredAppPreferences({
       storageKeys.selectedExercises,
       (value) => allowedExercises.has(value),
     );
+
+    // Raw pre-save read, independent of the canonical-route gating below -
+    // this must reflect whatever was actually in localStorage before this
+    // load, not whatever ends up applied to live state.
+    hadCompleteStoredLanguagePairAtLoadRef.current = hasCompleteLanguagePair({
+      nativeLanguage: persistedYourLanguage ?? "",
+      practiceLanguage: persistedPracticeLanguage ?? "",
+    });
 
     const restoreStoredLanguage = shouldRestoreStoredLanguagePreference(
       hasInitialCanonicalPracticeRoute,
@@ -260,6 +280,7 @@ export function useStoredAppPreferences({
     setSelectedExercises,
     isContinueDisabled,
     shouldAutoRedirectFromStoredLanguagesRef,
+    hadCompleteStoredLanguagePairAtLoadRef,
     resetFiltersForLevel,
   };
 }

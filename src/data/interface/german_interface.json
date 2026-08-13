@@ -46,6 +46,27 @@
     "cancel": "Abbrechen",
     "saveError": "Deine Sprachen konnten nicht in deinem Konto gespeichert werden. Bitte versuche es erneut."
   },
+  "accountIntroPopup": {
+    "title": "Lerne Wortschatz mit einem Plan",
+    "description": "Verwandle Übung in strukturiertes Lernen.",
+    "benefits": {
+      "studyWords": {
+        "title": "Neue Wörter lernen",
+        "description": "Folge einer sinnvollen Lernreihenfolge"
+      },
+      "reviewSmart": {
+        "title": "Intelligent wiederholen",
+        "description": "Wiederhole Wörter zum richtigen Zeitpunkt"
+      },
+      "trackProgress": {
+        "title": "Fortschritt verfolgen",
+        "description": "Sieh, was du bereits gelernt hast"
+      }
+    },
+    "createAccount": "Konto erstellen",
+    "maybeLater": "Vielleicht später",
+    "logIn": "Du hast bereits ein Konto? Anmelden"
+  },
   "accountOnboarding": {
     "saveError": "Dein Profil konnte nicht gespeichert werden. Bitte versuche es erneut."
   },

@@ -46,6 +46,27 @@
     "cancel": "Cancel",
     "saveError": "We could not save your languages to your account. Please try again."
   },
+  "accountIntroPopup": {
+    "title": "Learn vocabulary with a plan",
+    "description": "Turn practice into structured learning.",
+    "benefits": {
+      "studyWords": {
+        "title": "Study new words",
+        "description": "Follow a structured learning order"
+      },
+      "reviewSmart": {
+        "title": "Review intelligently",
+        "description": "Return to words at the right time"
+      },
+      "trackProgress": {
+        "title": "Track progress",
+        "description": "See what you've learned over time"
+      }
+    },
+    "createAccount": "Create account",
+    "maybeLater": "Maybe later",
+    "logIn": "Already have an account? Log in"
+  },
   "accountOnboarding": {
     "saveError": "We could not save your profile. Please try again."
   },

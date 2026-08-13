@@ -46,6 +46,27 @@
     "cancel": "Cancelar",
     "saveError": "No pudimos guardar tus idiomas en tu cuenta. Intentalo de nuevo."
   },
+  "accountIntroPopup": {
+    "title": "Aprende vocabulario con un plan",
+    "description": "Convierte la práctica en aprendizaje estructurado.",
+    "benefits": {
+      "studyWords": {
+        "title": "Aprende palabras nuevas",
+        "description": "Sigue un orden de aprendizaje estructurado"
+      },
+      "reviewSmart": {
+        "title": "Repasa de forma inteligente",
+        "description": "Vuelve a las palabras en el momento justo"
+      },
+      "trackProgress": {
+        "title": "Sigue tu progreso",
+        "description": "Mira todo lo que has aprendido"
+      }
+    },
+    "createAccount": "Crear cuenta",
+    "maybeLater": "Quizás más tarde",
+    "logIn": "¿Ya tienes una cuenta? Inicia sesión"
+  },
   "accountOnboarding": {
     "saveError": "No pudimos guardar tu perfil. Intentalo de nuevo."
   },

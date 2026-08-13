@@ -46,6 +46,27 @@
     "cancel": "Annuler",
     "saveError": "Nous n'avons pas pu enregistrer vos langues dans votre compte. Veuillez reessayer."
   },
+  "accountIntroPopup": {
+    "title": "Apprenez du vocabulaire avec un plan",
+    "description": "Transformez la pratique en apprentissage structuré.",
+    "benefits": {
+      "studyWords": {
+        "title": "Apprenez de nouveaux mots",
+        "description": "Suivez un ordre d'apprentissage structuré"
+      },
+      "reviewSmart": {
+        "title": "Révisez intelligemment",
+        "description": "Retrouvez les mots au bon moment"
+      },
+      "trackProgress": {
+        "title": "Suivez votre progression",
+        "description": "Visualisez tout ce que vous avez appris"
+      }
+    },
+    "createAccount": "Créer un compte",
+    "maybeLater": "Peut-être plus tard",
+    "logIn": "Vous avez déjà un compte ? Connectez-vous"
+  },
   "accountOnboarding": {
     "saveError": "Nous n'avons pas pu enregistrer votre profil. Veuillez reessayer."
   },
