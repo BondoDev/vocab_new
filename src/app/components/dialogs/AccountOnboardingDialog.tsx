@@ -20,6 +20,13 @@ import {
   SelectValue,
 } from "../ui/select";
 import type { UserProfile } from "../../../lib/userProfile";
+import {
+  clampOnboardingAge,
+  DEFAULT_ONBOARDING_AGE,
+  ONBOARDING_MAX_AGE,
+  ONBOARDING_MIN_AGE,
+  resolveOnboardingAgeDefault,
+} from "../../utils/accountOnboardingAge";
 
 const LANGUAGE_LEVEL_OPTIONS = [
   { value: "A1", label: "Beginner", detail: "A1" },
@@ -75,10 +82,6 @@ type AccountOnboardingDialogProps = {
   onSubmit: () => void | Promise<void>;
 };
 
-function clampAge(value: number) {
-  return Math.min(100, Math.max(10, Math.round(value)));
-}
-
 export function AccountOnboardingDialog({
   open,
   profile,
@@ -95,17 +98,36 @@ export function AccountOnboardingDialog({
   );
   const isLanguageLevelDisabled = !profile.practiceLanguage;
   const [ageInputValue, setAgeInputValue] = useState(() =>
-    String(profile.age ?? 18),
+    String(resolveOnboardingAgeDefault(profile.age)),
   );
-  const displayedAgeValue = Number(ageInputValue) || profile.age || 18;
+  const displayedAgeValue =
+    Number(ageInputValue) || resolveOnboardingAgeDefault(profile.age);
   const handleAgeChange = (nextValue: number | null) => {
     onProfileChange({
-      age: nextValue === null ? null : clampAge(nextValue),
+      age: nextValue === null ? null : clampOnboardingAge(nextValue),
     });
   };
 
+  // Root cause of the "must touch age then set it back to 18" bug:
+  // resolveOnboardingAgeDefault's 18 was only ever ageInputValue's own
+  // visual default above - the authoritative profile.age this form
+  // actually submits (validated by prepareAccountOnboardingSubmit) stayed
+  // null until onChange fired, so a brand-new user who left the control
+  // untouched (every other field filled in) failed "Please set your age"
+  // despite the field visibly showing 18. This pushes that same default
+  // into the authoritative state the moment the dialog opens with no age
+  // recorded yet, so the two never disagree. Keyed on `open` alone (not on
+  // profile.age) so it fires once per open, never refiring to overwrite a
+  // value the user has since deliberately cleared mid-session.
   useEffect(() => {
-    setAgeInputValue(String(profile.age ?? 18));
+    if (open && profile.age === null) {
+      handleAgeChange(resolveOnboardingAgeDefault(profile.age));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  useEffect(() => {
+    setAgeInputValue(String(resolveOnboardingAgeDefault(profile.age)));
   }, [profile.age]);
 
   return (
@@ -254,8 +276,8 @@ export function AccountOnboardingDialog({
                     <Input
                       id="account-onboarding-age"
                       type="number"
-                      min={10}
-                      max={100}
+                      min={ONBOARDING_MIN_AGE}
+                      max={ONBOARDING_MAX_AGE}
                       inputMode="numeric"
                       value={ageInputValue}
                       onChange={(event) => {
@@ -269,25 +291,25 @@ export function AccountOnboardingDialog({
                         const parsedValue = Number(nextValue);
                         if (
                           Number.isFinite(parsedValue) &&
-                          parsedValue >= 10 &&
-                          parsedValue <= 100
+                          parsedValue >= ONBOARDING_MIN_AGE &&
+                          parsedValue <= ONBOARDING_MAX_AGE
                         ) {
                           handleAgeChange(parsedValue);
                         }
                       }}
                       onBlur={() => {
                         if (!ageInputValue) {
-                          setAgeInputValue("18");
+                          setAgeInputValue(String(DEFAULT_ONBOARDING_AGE));
                           return;
                         }
 
                         const parsedValue = Number(ageInputValue);
                         if (!Number.isFinite(parsedValue)) {
-                          setAgeInputValue(String(profile.age ?? 18));
+                          setAgeInputValue(String(resolveOnboardingAgeDefault(profile.age)));
                           return;
                         }
 
-                        const clampedValue = clampAge(parsedValue);
+                        const clampedValue = clampOnboardingAge(parsedValue);
                         setAgeInputValue(String(clampedValue));
                         handleAgeChange(clampedValue);
                       }}
@@ -298,7 +320,7 @@ export function AccountOnboardingDialog({
                         type="button"
                         onClick={() => {
                           const nextValue = displayedAgeValue + 1;
-                          setAgeInputValue(String(clampAge(nextValue)));
+                          setAgeInputValue(String(clampOnboardingAge(nextValue)));
                           handleAgeChange(nextValue);
                         }}
                         className="inline-flex h-4 w-4 items-center justify-center rounded text-[#6f6290]"
@@ -310,7 +332,7 @@ export function AccountOnboardingDialog({
                         type="button"
                         onClick={() => {
                           const nextValue = displayedAgeValue - 1;
-                          setAgeInputValue(String(clampAge(nextValue)));
+                          setAgeInputValue(String(clampOnboardingAge(nextValue)));
                           handleAgeChange(nextValue);
                         }}
                         className="inline-flex h-4 w-4 items-center justify-center rounded text-[#6f6290]"
