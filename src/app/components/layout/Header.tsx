@@ -68,7 +68,7 @@ const NAV_HREFS = {
   profile: "/profile",
 } as const;
 
-type AccountProfileSection = "dashboard" | "learning" | "vocabulary" | "myLists" | "progress";
+type AccountProfileSection = "dashboard" | "learning" | "vocabulary" | "myLists" | "progress" | "settings";
 
 const ACCOUNT_NAV_GROUPS = [
   {
@@ -91,7 +91,7 @@ const ACCOUNT_NAV_GROUPS = [
   },
   {
     labelKey: "userProfile.sidebar.groups.system",
-    items: [{ id: "settings", labelKey: "userProfile.sidebar.items.settings", icon: Settings, disabled: true }],
+    items: [{ id: "settings", labelKey: "userProfile.sidebar.items.settings", icon: Settings, section: "settings" as const }],
   },
 ] as const;
 
@@ -999,7 +999,6 @@ export function Header({
                           return (
                             <DropdownMenuItem
                               key={item.id}
-                              disabled={Boolean(item.disabled)}
                               onSelect={() => handleAccountNavItemSelect(item.section)}
                               className="rounded-xl px-3 py-2.5 text-sm text-[#261943] hover:bg-[#f6f0ff] hover:text-[#261943] focus:bg-[#f6f0ff] focus:text-[#261943] [&_svg]:absolute [&_svg]:left-3"
                             >
@@ -1153,17 +1152,13 @@ export function Header({
                       <div className="header-mobile-account-group__label">{t(group.labelKey)}</div>
                       {group.items.map((item) => {
                         const Icon = item.icon;
-                        const itemAction = item.section
-                          ? () => goToProfile(item.section)
-                          : undefined;
 
                         return (
                           <button
                             key={item.id}
                             type="button"
                             className="header-mobile-account-item"
-                            aria-disabled={item.disabled ? "true" : undefined}
-                            onClick={itemAction}
+                            onClick={() => goToProfile(item.section)}
                           >
                             <span className="header-mobile-account-item__icon" aria-hidden="true">
                               <Icon size={17} strokeWidth={1.8} />
