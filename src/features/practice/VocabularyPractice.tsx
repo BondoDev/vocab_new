@@ -749,6 +749,19 @@ export function VocabularyPractice({
     }, 180);
   };
 
+  const handleSwitchListeningToConnectWords = () => {
+    if (currentExerciseType !== "listening" || isCardSwitching) return;
+    setShowSentence(false);
+    setShowDefinition(false);
+    setExerciseStatus({
+      isCorrect: false,
+      hasTypedAnswer: false,
+      usedShowWord: false,
+      usedHintForBrokenWord: false,
+    });
+    setCurrentExerciseType("connectWords");
+  };
+
   const isNextActionAvailable =
     isFourWordExercise(currentExerciseType) ||
     currentExerciseType === "brokenWord"
@@ -1106,6 +1119,16 @@ export function VocabularyPractice({
                   >
                     {getExerciseInstruction()}
                   </p>
+                  {currentExerciseType === "listening" && (
+                    <button
+                      type="button"
+                      onClick={handleSwitchListeningToConnectWords}
+                      disabled={isCardSwitching}
+                      className="exercise-switch-listening-button"
+                    >
+                      {t("practice.switchToConnectWords")}
+                    </button>
+                  )}
                   {!isFourWordExercise(currentExerciseType) && (
                     <div className="w-[95%] mx-auto pt-2 md:pt-3">
                       <div className="exercise-meta-row flex items-center justify-between">

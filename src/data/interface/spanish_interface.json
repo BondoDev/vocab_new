@@ -1016,6 +1016,7 @@
     "hint": "Pista",
     "nextAction": "Siguiente",
     "skipAction": "Saltar",
+    "switchToConnectWords": "Cambiar a Conectar palabras",
     "seeDefinition": "Ver definicion",
     "seeInSentence": "Ver en una frase",
     "listenToSentence": "Escuchar la frase",

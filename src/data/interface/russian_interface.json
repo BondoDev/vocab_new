@@ -272,6 +272,7 @@
     "hint": "Подсказка",
     "nextAction": "Далее",
     "skipAction": "Пропустить",
+    "switchToConnectWords": "Переключиться на соединение слов",
     "seeDefinition": "Показать определение",
     "seeInSentence": "Показать в предложении",
     "listenToSentence": "Прослушать предложение",

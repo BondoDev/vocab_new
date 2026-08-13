@@ -12,6 +12,7 @@ interface RawVocabularyEntry {
   definiton?: unknown;
   definition?: unknown;
   type?: unknown;
+  category?: unknown;
   level?: unknown;
   sentence?: unknown;
 }
@@ -129,6 +130,7 @@ export function buildVocabularyConceptResolver(
       translation: nativeEntry.word_lemma as string,
       definition,
       grammarType: typeof targetEntry.type === "string" ? targetEntry.type : undefined,
+      category: typeof targetEntry.category === "string" ? targetEntry.category : undefined,
       level: typeof targetEntry.level === "string" ? targetEntry.level : undefined,
       exampleSentence,
       exampleSentenceTranslation,

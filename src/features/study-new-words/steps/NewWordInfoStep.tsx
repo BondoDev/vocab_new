@@ -145,9 +145,6 @@ export function NewWordInfoStep({ item, practiceLanguage, yourLanguage, onContin
                     className="new-word-info-example-text"
                     dangerouslySetInnerHTML={{ __html: highlightedExampleSentence }}
                   />
-                  {item.exampleSentenceTranslation && (
-                    <p className="new-word-info-example-translation">{item.exampleSentenceTranslation}</p>
-                  )}
                 </div>
                 <button
                   type="button"

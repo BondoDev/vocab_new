@@ -3,6 +3,45 @@
   width: 100%;
 }
 
+.exercise-switch-listening-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  width: fit-content;
+  margin: 0.65rem auto 0;
+  border: 1px solid color-mix(in srgb, var(--border) 80%, var(--primary));
+  border-radius: 0.5rem;
+  background: #ffffff;
+  padding: 0.5rem 0.9rem;
+  color: color-mix(in srgb, var(--foreground) 78%, var(--primary));
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 36%, var(--border));
+    background: color-mix(in srgb, var(--primary) 6%, #ffffff);
+    color: var(--primary);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--background),
+      0 0 0 4px color-mix(in srgb, var(--primary) 40%, transparent);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
 .exercise-listening-grid {
   width: 100% !important;
   max-width: none !important;

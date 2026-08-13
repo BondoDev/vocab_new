@@ -1021,6 +1021,7 @@
     "hint": "Hint",
     "nextAction": "Next",
     "skipAction": "Skip",
+    "switchToConnectWords": "Switch to Connect words",
     "seeDefinition": "See definition",
     "seeInSentence": "See in sentence",
     "listenToSentence": "Listen to sentence",

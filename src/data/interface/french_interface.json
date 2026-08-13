@@ -1021,6 +1021,7 @@
     "hint": "Indice",
     "nextAction": "Suivant",
     "skipAction": "Passer",
+    "switchToConnectWords": "Passer a Associer des mots",
     "seeDefinition": "Voir la definition",
     "seeInSentence": "Voir dans une phrase",
     "listenToSentence": "Ecouter la phrase",

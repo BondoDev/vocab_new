@@ -1016,6 +1016,7 @@
     "hint": "Dica",
     "nextAction": "Proximo",
     "skipAction": "Pular",
+    "switchToConnectWords": "Mudar para Conectar palavras",
     "seeDefinition": "Ver definicao",
     "seeInSentence": "Ver na frase",
     "listenToSentence": "Ouvir frase",

@@ -128,6 +128,7 @@ export interface ResolvedConceptWordData {
   translation: string;
   definition?: string;
   grammarType?: string;
+  category?: string;
   level?: string;
   // Only populated when the target-language vocabulary.json entry already
   // has one — Phase 2's word-info step must never fabricate an example.
