@@ -11,6 +11,7 @@ import { DashboardSection } from "./dashboard/DashboardSection";
 import { LearningSection } from "./learning/LearningSection";
 import { VocabularySection } from "./vocabulary/VocabularySection";
 import { MyListsSection, type PracticeListStartConfig } from "./my-lists/MyListsSection";
+import { GuidanceSection } from "./guidance/GuidanceSection";
 import { ProgressSection } from "./progress/ProgressSection";
 import {
   SettingsSection,
@@ -55,6 +56,7 @@ const SECTION_ARIA_LABEL_KEYS: Record<UserProfileSectionId, string> = {
   learning: "userProfile.learningSection.ariaLabel",
   vocabulary: "userProfile.vocabularySection.ariaLabel",
   myLists: "userProfile.myListsSection.ariaLabel",
+  guidance: "userProfile.guidancePage.ariaLabel",
   progress: "userProfile.progressSection.ariaLabel",
   settings: "userProfile.settingsSection.ariaLabel",
 };
@@ -64,6 +66,7 @@ function resolveProfileSection(search: string): UserProfileSectionId {
   return section === "learning" ||
     section === "vocabulary" ||
     section === "myLists" ||
+    section === "guidance" ||
     section === "progress" ||
     section === "settings" ||
     section === "dashboard"
@@ -169,6 +172,14 @@ export function UserProfileDashboardPage({
                 onRetryWordProgress={retryWordProgress}
                 onStartPracticeList={onStartPracticeList}
               />
+            ) : null}
+            {activeSection === "guidance" ? (
+              // Interactive Tour engine not implemented yet (Guidance
+              // Section 1 scope) — no onStartInteractiveTour is threaded
+              // through from App.tsx yet, so GuidanceSection's button
+              // renders as real, inert UI until a future phase wires the
+              // real tour engine in through this same prop.
+              <GuidanceSection />
             ) : null}
             {activeSection === "progress" ? (
               <ProgressSection

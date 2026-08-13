@@ -195,9 +195,12 @@ test("The existing sidebar nav entry ('my-lists' id) is reused, not duplicated â
   // reformatted it to one variant per line to fit "settings" in) â€” this
   // still proves "myLists" sits among its original dashboard/learning/
   // vocabulary/progress siblings, not that the type stays on one line.
+  // The myLists->progress gap is widened (not {0,10}) to tolerate the
+  // Guidance Section 1 task's own new "guidance" sibling, legitimately
+  // inserted between them (see UserProfileSidebar.tsx's own ordering).
   assert.match(
     sidebarSource,
-    /"dashboard"[\s\S]{0,10}"learning"[\s\S]{0,10}"vocabulary"[\s\S]{0,10}"myLists"[\s\S]{0,10}"progress"/,
+    /"dashboard"[\s\S]{0,10}"learning"[\s\S]{0,10}"vocabulary"[\s\S]{0,10}"myLists"[\s\S]{0,30}"progress"/,
   );
 });
 
