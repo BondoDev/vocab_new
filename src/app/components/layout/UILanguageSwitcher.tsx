@@ -195,36 +195,65 @@ export function UILanguageSwitcher({
     setIsOpen(!isOpen);
   };
 
+  // The mobile drawer's language row (variant="centered-modal") gets its own
+  // light, drawer-integrated presentation - a readable language name instead
+  // of a bare two-letter code, and a light popup that matches the rest of
+  // the (now light) mobile menu - while the desktop header trigger (variant
+  // "default") keeps its original dark-on-purple pill and popup untouched.
+  // Same component, same state/logic/positioning, purely a styling branch.
+  const isDrawer = variant === "centered-modal";
+
   return (
     <>
       <button
         ref={buttonRef}
         onMouseDown={handleToggle}
-        className="ui-language-switcher-trigger group flex items-center gap-2 px-3 py-2 rounded-full border border-white/20 bg-white/10 text-white/90 shadow-[0_10px_24px_rgba(10,4,30,0.25)] backdrop-blur-sm transition hover:bg-white/15 hover:text-white"
+        className={
+          isDrawer
+            ? "ui-language-switcher-trigger ui-language-switcher-trigger--drawer group flex w-full items-center justify-between gap-3 transition"
+            : "ui-language-switcher-trigger group flex items-center gap-2 px-3 py-2 rounded-full border border-white/20 bg-white/10 text-white/90 shadow-[0_10px_24px_rgba(10,4,30,0.25)] backdrop-blur-sm transition hover:bg-white/15 hover:text-white"
+        }
         aria-label="Change interface language"
         type="button"
       >
-        <Globe className="w-4 h-4 text-white/80" />
-        <span suppressHydrationWarning className="ui-lang-code-mobile text-[11px] font-semibold tracking-[0.2em] text-white/90 md:hidden">
-          {currentLanguage.code.toUpperCase()}
-        </span>
-        <span suppressHydrationWarning className="ui-lang-name hidden md:inline text-sm font-semibold text-white/90">
-          {currentLanguage.name}
-        </span>
-        <span suppressHydrationWarning className="ui-lang-code-tablet hidden text-sm font-semibold tracking-[0.12em] text-white/90">
-          {currentLanguage.code.toUpperCase()}
-        </span>
-        <ChevronDown
-          className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
-        />
+        {isDrawer ? (
+          <>
+            <span className="flex min-w-0 items-center gap-3">
+              <Globe className="ui-language-switcher-trigger__icon w-[1.15rem] h-[1.15rem] shrink-0" aria-hidden="true" />
+              <span suppressHydrationWarning className="ui-lang-name truncate text-[0.92rem] font-semibold normal-case tracking-normal">
+                {currentLanguage.name}
+              </span>
+            </span>
+            <ChevronDown
+              aria-hidden="true"
+              className={`ui-language-switcher-trigger__chevron w-4 h-4 shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+            />
+          </>
+        ) : (
+          <>
+            <Globe className="w-4 h-4 text-white/80" />
+            <span suppressHydrationWarning className="ui-lang-code-mobile text-[11px] font-semibold tracking-[0.2em] text-white/90 md:hidden">
+              {currentLanguage.code.toUpperCase()}
+            </span>
+            <span suppressHydrationWarning className="ui-lang-name hidden md:inline text-sm font-semibold text-white/90">
+              {currentLanguage.name}
+            </span>
+            <span suppressHydrationWarning className="ui-lang-code-tablet hidden text-sm font-semibold tracking-[0.12em] text-white/90">
+              {currentLanguage.code.toUpperCase()}
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
+            />
+          </>
+        )}
       </button>
 
       {isOpen &&
         createPortal(
           <>
-            {variant === "centered-modal" && (
+            {isDrawer && (
               <div
-                className="fixed inset-0 bg-black/40 backdrop-blur-[2px]"
+                className="fixed inset-0 bg-[rgba(22,14,40,0.46)] backdrop-blur-[2px]"
                 style={{ zIndex: 99998 }}
                 onMouseDown={() => {
                   setIsOpen(false);
@@ -233,9 +262,13 @@ export function UILanguageSwitcher({
             )}
             <div
               ref={dropdownRef}
-              className={`ui-language-dropdown fixed rounded-2xl border border-white/15 bg-[#1b0f33]/95 p-1 shadow-[0_18px_40px_rgba(12,6,32,0.45)] backdrop-blur-md ${variant === "centered-modal" ? "w-[min(22rem,calc(100vw-2rem))]" : "w-52"}`}
+              className={
+                isDrawer
+                  ? "ui-language-dropdown ui-language-dropdown--drawer fixed rounded-2xl p-1.5 w-[min(22rem,calc(100vw-2rem))]"
+                  : "ui-language-dropdown fixed rounded-2xl border border-white/15 bg-[#1b0f33]/95 p-1 shadow-[0_18px_40px_rgba(12,6,32,0.45)] backdrop-blur-md w-52"
+              }
               style={
-                variant === "centered-modal"
+                isDrawer
                   ? {
                       top: "50%",
                       left: "50%",
@@ -263,16 +296,26 @@ export function UILanguageSwitcher({
                         handleSelect(lang.code);
                       }}
                       disabled={!lang.enabled}
-                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
-                        isSelected
-                          ? "bg-white/15 text-white"
-                          : lang.enabled
-                            ? "text-white/70 hover:bg-white/10 hover:text-white"
-                            : "text-white/40 cursor-not-allowed"
-                      }`}
+                      className={
+                        isDrawer
+                          ? `ui-language-option w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors ${
+                              isSelected ? "is-selected" : ""
+                            } ${!lang.enabled ? "is-disabled" : ""}`
+                          : `w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
+                              isSelected
+                                ? "bg-white/15 text-white"
+                                : lang.enabled
+                                  ? "text-white/70 hover:bg-white/10 hover:text-white"
+                                  : "text-white/40 cursor-not-allowed"
+                            }`
+                      }
                     >
                       <span
-                        className={`fi fi-${lang.flagCode} rounded-[2px] shadow-sm border border-white/15`}
+                        className={
+                          isDrawer
+                            ? `fi fi-${lang.flagCode} ui-language-option__flag rounded-[2px]`
+                            : `fi fi-${lang.flagCode} rounded-[2px] shadow-sm border border-white/15`
+                        }
                         aria-hidden="true"
                         style={{ width: "18px", height: "14px" }}
                       />
@@ -280,12 +323,24 @@ export function UILanguageSwitcher({
                         {lang.name}
                       </span>
                       {!lang.enabled && (
-                        <span className="ml-auto text-[10px] uppercase tracking-[0.12em] text-white/40">
+                        <span
+                          className={
+                            isDrawer
+                              ? "ui-language-option__soon ml-auto text-[10px] uppercase tracking-[0.12em]"
+                              : "ml-auto text-[10px] uppercase tracking-[0.12em] text-white/40"
+                          }
+                        >
                           Soon
                         </span>
                       )}
                       {isSelected && (
-                        <span className="ui-language-option-active ml-auto text-[10px] uppercase tracking-[0.2em] text-white/60">
+                        <span
+                          className={
+                            isDrawer
+                              ? "ui-language-option-active ml-auto text-[10px] uppercase tracking-[0.18em]"
+                              : "ui-language-option-active ml-auto text-[10px] uppercase tracking-[0.2em] text-white/60"
+                          }
+                        >
                           Active
                         </span>
                       )}

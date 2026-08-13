@@ -328,7 +328,6 @@ export function Header({
   onAuthRedirectErrorHandled,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobileAccountMenuOpen, setIsMobileAccountMenuOpen] = useState(false);
   const [isDesktopMoreOpen, setIsDesktopMoreOpen] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
@@ -379,7 +378,6 @@ export function Header({
     : loginLabel;
   const goToProfile = (section?: AccountProfileSection) => {
     setIsMenuOpen(false);
-    setIsMobileAccountMenuOpen(false);
     setIsDesktopMoreOpen(false);
     setIsAuthDialogOpen(false);
     onProfile?.(section);
@@ -426,7 +424,6 @@ export function Header({
     switchAuthMode("login");
     setAuthEmail("");
     setIsMenuOpen(false);
-    setIsMobileAccountMenuOpen(false);
     setIsDesktopMoreOpen(false);
     setIsAuthDialogOpen(true);
   };
@@ -446,7 +443,6 @@ export function Header({
       onAuthSessionChange?.(null);
       setIsAuthDialogOpen(false);
       setIsMenuOpen(false);
-      setIsMobileAccountMenuOpen(false);
       setIsDesktopMoreOpen(false);
       resetAuthForm();
       await signOutSupabase(currentSession);
@@ -572,8 +568,6 @@ export function Header({
     if (isMenuOpen) {
       setIsHeaderHidden(false);
       setIsDesktopMoreOpen(false);
-    } else {
-      setIsMobileAccountMenuOpen(false);
     }
   }, [isMenuOpen]);
 
@@ -1085,7 +1079,7 @@ export function Header({
               authSession ? (
                 <button
                   type="button"
-                  onClick={() => setIsMobileAccountMenuOpen(true)}
+                  onClick={() => goToProfile("dashboard")}
                   className="header-mobile-nav-item header-mobile-nav-item--account text-left"
                 >
                   <span className="header-mobile-nav-item__accent" aria-hidden="true" />
@@ -1116,73 +1110,9 @@ export function Header({
             ) : null}
           </div>
           <div className="header-mobile-lang-wrap">
-            <div suppressHydrationWarning className="header-mobile-lang-label">{t("header.languages")}</div>
+            <div suppressHydrationWarning className="header-mobile-lang-label">{t("header.interfaceLanguage")}</div>
             <UILanguageSwitcher variant="centered-modal" />
           </div>
-
-          {authSession && isMobileAccountMenuOpen ? (
-            <div className="header-mobile-account-menu" onClick={(event) => event.stopPropagation()}>
-              <div className="header-mobile-account-menu__panel">
-                <button
-                  type="button"
-                  className="header-mobile-account-menu__back"
-                  onClick={() => setIsMobileAccountMenuOpen(false)}
-                >
-                  <ChevronRight
-                    size={16}
-                    strokeWidth={1.8}
-                    aria-hidden="true"
-                    className="rotate-180"
-                  />
-                  Account
-                </button>
-                <section className="header-mobile-account-menu__summary" aria-label={accountDisplayName}>
-                  <span className="header-mobile-account-menu__avatar" aria-hidden="true">
-                    {nicknameInitial || "A"}
-                  </span>
-                  <span className="header-mobile-account-menu__identity">
-                    <span className="header-mobile-account-menu__name">{accountDisplayName}</span>
-                    {accountMeta ? <span className="header-mobile-account-menu__meta">{accountMeta}</span> : null}
-                  </span>
-                </section>
-
-                <div className="header-mobile-account-menu__list">
-                  {ACCOUNT_NAV_GROUPS.map((group) => (
-                    <div key={group.labelKey} className="header-mobile-account-group">
-                      <div className="header-mobile-account-group__label">{t(group.labelKey)}</div>
-                      {group.items.map((item) => {
-                        const Icon = item.icon;
-
-                        return (
-                          <button
-                            key={item.id}
-                            type="button"
-                            className="header-mobile-account-item"
-                            onClick={() => goToProfile(item.section)}
-                          >
-                            <span className="header-mobile-account-item__icon" aria-hidden="true">
-                              <Icon size={17} strokeWidth={1.8} />
-                            </span>
-                            <span className="header-mobile-account-item__label">{t(item.labelKey)}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={() => void handleSignOut()}
-                    className="header-mobile-account-item header-mobile-account-item--danger"
-                  >
-                    <span className="header-mobile-account-item__icon" aria-hidden="true">
-                      <LogOut size={17} strokeWidth={1.8} />
-                    </span>
-                    <span className="header-mobile-account-item__label">{t("userProfile.sidebar.actions.signOut")}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : null}
         </div>
       </div>
 

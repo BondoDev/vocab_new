@@ -2,6 +2,7 @@
   "header": {
     "about": "О нас",
     "languages": "Языки",
+    "interfaceLanguage": "Язык интерфейса",
     "explore": "Обзор",
     "more": "Ещё",
     "help": "Помощь",

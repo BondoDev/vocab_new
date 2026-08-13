@@ -2,6 +2,7 @@
   "header": {
     "about": "About",
     "languages": "Languages",
+    "interfaceLanguage": "Interface Language",
     "filters": "Filters",
     "exercises": "Exercises",
     "explore": "Explore",
