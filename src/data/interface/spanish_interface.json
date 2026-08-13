@@ -590,7 +590,7 @@
         "native": "Idioma nativo",
         "learning": "Idioma que aprendes",
         "currentLevel": "Nivel actual",
-        "changeNote": "Cambiar tu idioma de aprendizaje cambia el vocabulario y el contenido que se muestra en FluentStellar. Tu progreso en otros idiomas se conserva.",
+        "changeNote": "Cambiar tu idioma de aprendizaje cambia el vocabulario y el contenido que se muestra en FluentStellar. Cambiar tu nivel determina donde empieza el estudio de palabras nuevas. Tu progreso existente se conserva.",
         "savedToast": "Configuración de idiomas guardada.",
         "saveError": "No se pudo actualizar tu configuración de idiomas. Inténtalo de nuevo."
       },

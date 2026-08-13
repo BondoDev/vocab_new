@@ -590,7 +590,7 @@
         "native": "Muttersprache",
         "learning": "Lernsprache",
         "currentLevel": "Aktuelles Niveau",
-        "changeNote": "Wenn du deine Lernsprache änderst, wechseln Vokabeln und Lerninhalte in FluentStellar. Dein bisheriger Fortschritt in anderen Sprachen bleibt erhalten.",
+        "changeNote": "Wenn du deine Lernsprache änderst, wechseln Vokabeln und Lerninhalte in FluentStellar. Dein Niveau bestimmt, wo das Lernen neuer Wörter beginnt. Dein bisheriger Fortschritt bleibt erhalten.",
         "savedToast": "Spracheinstellungen gespeichert.",
         "saveError": "Deine Spracheinstellungen konnten nicht gespeichert werden. Bitte versuche es erneut."
       },

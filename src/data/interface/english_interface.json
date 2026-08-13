@@ -590,7 +590,7 @@
         "native": "Native language",
         "learning": "Learning language",
         "currentLevel": "Current level",
-        "changeNote": "Changing your learning language switches the vocabulary and learning content shown in FluentStellar. Existing progress in other languages is preserved.",
+        "changeNote": "Changing your learning language switches the vocabulary and learning content shown in FluentStellar. Changing your level determines where new-word study begins. Existing progress is preserved.",
         "savedToast": "Language settings saved.",
         "saveError": "We could not update your language settings. Please try again."
       },

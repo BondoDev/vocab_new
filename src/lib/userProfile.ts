@@ -26,6 +26,10 @@ import {
   type UpdateUserProfileLanguagesResult,
 } from "./userProfileLanguages";
 import {
+  parseUpdateUserProfileLearningPreferencesRow,
+  type UpdateUserProfileLearningPreferencesResult,
+} from "./userProfileLearningPreferences";
+import {
   parseUpdateUserNicknameRow,
   type UpdateUserNicknameResult,
 } from "./userProfileNickname";
@@ -502,6 +506,69 @@ export async function updateUserProfileLanguages(
   }
 
   return fromUpdateUserProfileLanguagesResult(parseUpdateUserProfileLanguagesRow(rows));
+}
+
+// Settings' Current Level editing follow-up — the Languages card's actual
+// Save path as of this change. Distinct RPC from updateUserProfileLanguages
+// above (kept intact, untouched, for any other caller — see
+// update_user_profile_learning_preferences's own migration header for why a
+// new function was added instead of widening the existing one): this one
+// atomically writes native_language + learning_language + current_level in
+// a single update_user_profile_learning_preferences call, so a mid-save
+// failure can never leave only some of the three fields persisted. Sends
+// exactly these three fields; the RPC rejects a caller with no existing
+// profile row rather than implicitly creating an incomplete one, same as
+// updateUserProfileLanguages.
+function fromUpdateUserProfileLearningPreferencesResult(
+  result: UpdateUserProfileLearningPreferencesResult,
+): Partial<UserProfile> {
+  return {
+    nativeLanguage: result.nativeLanguage,
+    practiceLanguage: result.learningLanguage,
+    languageLevel: result.currentLevel,
+    updatedAt: result.updatedAt,
+  };
+}
+
+export interface UpdateUserProfileLearningPreferencesInput {
+  nativeLanguage: UILanguage;
+  practiceLanguage: UILanguage;
+  languageLevel: LanguageLevelCode;
+}
+
+export async function updateUserProfileLearningPreferences(
+  session: StoredSupabaseSession,
+  input: UpdateUserProfileLearningPreferencesInput,
+): Promise<Partial<UserProfile>> {
+  const userId = session.user?.id;
+  if (!userId) {
+    throw new Error("Missing authenticated user.");
+  }
+
+  const rows = await supabaseProfileRequest<unknown[] | unknown>(
+    session,
+    "/rest/v1/rpc/update_user_profile_learning_preferences",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        p_native_language: input.nativeLanguage,
+        p_learning_language: input.practiceLanguage,
+        p_current_level: input.languageLevel,
+      }),
+    },
+  );
+
+  if (Array.isArray(rows)) {
+    if (rows.length !== 1) {
+      throw new ClassifiedSupabaseError(
+        "update_user_profile_learning_preferences returned an unexpected number of rows.",
+        "unexpected_response",
+      );
+    }
+    return fromUpdateUserProfileLearningPreferencesResult(parseUpdateUserProfileLearningPreferencesRow(rows[0]));
+  }
+
+  return fromUpdateUserProfileLearningPreferencesResult(parseUpdateUserProfileLearningPreferencesRow(rows));
 }
 
 // Settings' nickname-editing follow-up — narrow "change my nickname" write,

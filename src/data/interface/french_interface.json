@@ -590,7 +590,7 @@
         "native": "Langue maternelle",
         "learning": "Langue apprise",
         "currentLevel": "Niveau actuel",
-        "changeNote": "Changer votre langue d’apprentissage modifie le vocabulaire et le contenu affichés dans FluentStellar. Votre progression dans les autres langues est conservée.",
+        "changeNote": "Changer votre langue d’apprentissage modifie le vocabulaire et le contenu affichés dans FluentStellar. Changer votre niveau détermine où débute l’étude de nouveaux mots. Votre progression existante est conservée.",
         "savedToast": "Paramètres linguistiques enregistrés.",
         "saveError": "Impossible d’enregistrer vos paramètres linguistiques. Veuillez réessayer."
       },

@@ -27,13 +27,14 @@ import {
 import { updateAccountEmail } from "../../../../lib/accountEmailChange";
 import { updateSupabaseAuthUserPassword } from "../../../../lib/supabaseAuth";
 import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
-import { SUPPORTED_LANGUAGE_CODES } from "../../../../lib/userProfileOnboarding";
+import { SUPPORTED_LANGUAGE_CODES, SUPPORTED_LEVEL_CODES } from "../../../../lib/userProfileOnboarding";
 import {
   resetLearningLanguageProgress,
   updateUserNickname,
-  updateUserProfileLanguages,
+  updateUserProfileLearningPreferences,
   updateUserTimezone,
   writeStoredUserProfile,
+  type LanguageLevelCode,
   type UserProfile,
 } from "../../../../lib/userProfile";
 import { notifyWordProgressChanged } from "../../../../lib/sharedProgressInvalidation";
@@ -50,6 +51,12 @@ export interface ProfileNicknameChange {
 export interface ProfileLanguagesChange {
   nativeLanguage: UILanguage;
   practiceLanguage: UILanguage;
+  // Settings Current Level editing follow-up — the Languages card's single
+  // Save now also persists current_level atomically alongside the language
+  // pair (see update_user_profile_learning_preferences), so this change
+  // payload carries all three so App.tsx's shared userProfile state stays
+  // in sync in one update, never a second separate "level changed" event.
+  languageLevel: LanguageLevelCode;
   updatedAt: string;
 }
 
@@ -84,8 +91,6 @@ interface SettingsSectionProps {
   // already uses, plus clearing the cached profile and navigating away.
   onAccountDeleted?: () => void | Promise<void>;
 }
-
-const SUPPORTED_LEVEL_CODES = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
 
 // Maps each ReauthenticationError reason (accountDeletion.ts) to its own
 // sanitized, localized message — deliberately distinct from a "delete
@@ -464,6 +469,11 @@ export function SettingsSection({
   // ---- Languages -----------------------------------------------------
   const [nativeDraft, setNativeDraft] = useState<UILanguage | "">(userProfile.nativeLanguage);
   const [practiceDraft, setPracticeDraft] = useState<UILanguage | "">(userProfile.practiceLanguage);
+  // Current Level editing follow-up — a third draft alongside the two
+  // language drafts, all saved together through one atomic RPC (see
+  // handleSaveLanguages below). Local draft only; confirmed state always
+  // comes from userProfile.languageLevel, same as native/practiceDraft.
+  const [levelDraft, setLevelDraft] = useState<LanguageLevelCode | "">(userProfile.languageLevel);
   const [isSavingLanguages, setIsSavingLanguages] = useState(false);
   const [languagesError, setLanguagesError] = useState<string | null>(null);
   const { message: languagesToast, show: showLanguagesToast } = useAutoDismissMessage();
@@ -471,50 +481,62 @@ export function SettingsSection({
   useEffect(() => {
     setNativeDraft(userProfile.nativeLanguage);
     setPracticeDraft(userProfile.practiceLanguage);
-  }, [userProfile.nativeLanguage, userProfile.practiceLanguage]);
+    setLevelDraft(userProfile.languageLevel);
+  }, [userProfile.nativeLanguage, userProfile.practiceLanguage, userProfile.languageLevel]);
 
   const isLanguagesUnchanged =
-    nativeDraft === userProfile.nativeLanguage && practiceDraft === userProfile.practiceLanguage;
+    nativeDraft === userProfile.nativeLanguage &&
+    practiceDraft === userProfile.practiceLanguage &&
+    levelDraft === userProfile.languageLevel;
   const canSaveLanguages =
-    isProfileLoaded && Boolean(authSession) && Boolean(nativeDraft) && Boolean(practiceDraft) &&
+    isProfileLoaded && Boolean(authSession) && Boolean(nativeDraft) && Boolean(practiceDraft) && Boolean(levelDraft) &&
     !isLanguagesUnchanged && !isSavingLanguages;
 
   const handleSaveLanguages = () => {
-    if (!canSaveLanguages || !authSession || !authUserId || !nativeDraft || !practiceDraft) {
+    if (!canSaveLanguages || !authSession || !authUserId || !nativeDraft || !practiceDraft || !levelDraft) {
       return;
     }
 
     setIsSavingLanguages(true);
     setLanguagesError(null);
 
-    // Narrow write: only the two language fields are sent — see
-    // update_user_profile_languages's own migration for the exact columns
-    // it can and cannot touch.
-    void updateUserProfileLanguages(authSession, { nativeLanguage: nativeDraft, practiceLanguage: practiceDraft })
+    // Narrow atomic write: native language + learning language + current
+    // level are sent together in one call — see
+    // update_user_profile_learning_preferences's own migration for the
+    // exact columns it can and cannot touch, and for why this is one RPC
+    // rather than two sequential ones (no partial-save outcome possible).
+    void updateUserProfileLearningPreferences(authSession, {
+      nativeLanguage: nativeDraft,
+      practiceLanguage: practiceDraft,
+      languageLevel: levelDraft,
+    })
       .then((result) => {
         const nextProfile = writeStoredUserProfile(authUserId, {
           ...userProfile,
           nativeLanguage: result.nativeLanguage,
           practiceLanguage: result.practiceLanguage,
+          languageLevel: result.languageLevel,
           updatedAt: result.updatedAt,
         });
         onProfileLanguagesChange?.({
           nativeLanguage: (result.nativeLanguage ?? nextProfile.nativeLanguage) as UILanguage,
           practiceLanguage: (result.practiceLanguage ?? nextProfile.practiceLanguage) as UILanguage,
+          languageLevel: (result.languageLevel || nextProfile.languageLevel) as LanguageLevelCode,
           updatedAt: nextProfile.updatedAt ?? result.updatedAt ?? "",
         });
         showLanguagesToast(t("userProfile.settingsSection.languages.savedToast"));
       })
       .catch((error) => {
-        const diagnostics = describeSupabaseError("updateUserProfileLanguages", error);
+        const diagnostics = describeSupabaseError("updateUserProfileLearningPreferences", error);
         console.warn("SettingsSection: failed to save language settings.", diagnostics);
         setLanguagesError(
           t(resolveSupabaseErrorMessageKey(diagnostics.category, "userProfile.settingsSection.languages.saveError")),
         );
-        // Never leave a failed change looking saved — revert the drafts back
-        // to the last confirmed profile values.
+        // Never leave a failed change looking saved — revert all three
+        // drafts back to the last confirmed profile values.
         setNativeDraft(userProfile.nativeLanguage);
         setPracticeDraft(userProfile.practiceLanguage);
+        setLevelDraft(userProfile.languageLevel);
       })
       .finally(() => {
         setIsSavingLanguages(false);
@@ -1093,12 +1115,25 @@ export function SettingsSection({
         </div>
 
         <div className="settings-row">
-          <span className="settings-row__label">{t("userProfile.settingsSection.languages.currentLevel")}</span>
-          <span className="settings-row__value">
-            {userProfile.languageLevel && (SUPPORTED_LEVEL_CODES as readonly string[]).includes(userProfile.languageLevel)
-              ? `${userProfile.languageLevel} · ${t(`levels.${userProfile.languageLevel}.name`)}`
-              : "—"}
+          <span className="settings-row__label" id="settings-current-level-label">
+            {t("userProfile.settingsSection.languages.currentLevel")}
           </span>
+          <Select
+            value={levelDraft || undefined}
+            onValueChange={(value) => setLevelDraft(value as LanguageLevelCode)}
+            disabled={isSavingLanguages || !authSession}
+          >
+            <SelectTrigger aria-labelledby="settings-current-level-label" className="settings-row__control">
+              <SelectValue placeholder={t("userProfile.settingsSection.languages.currentLevel")} />
+            </SelectTrigger>
+            <SelectContent>
+              {SUPPORTED_LEVEL_CODES.map((code) => (
+                <SelectItem key={code} value={code}>
+                  {`${code} · ${t(`levels.${code}.name`)}`}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <p className="settings-surface__helper">{t("userProfile.settingsSection.languages.changeNote")}</p>

@@ -45,7 +45,7 @@ import { DEFAULT_SITE_ORIGIN } from "../seo/site";
 import { buildRouteMetadata } from "../seo/routeMetadataPolicy";
 import { findSeoCefrPreviewItem } from "./pages/vocabulary/devSeoCefrPreviewData";
 import type { ResolvedWordPageData } from "../data/seo/wordPages/wordPageData";
-import { clearStoredUserProfile, type UserProfile } from "../lib/userProfile";
+import { clearStoredUserProfile, type LanguageLevelCode, type UserProfile } from "../lib/userProfile";
 import { clearLocalSupabaseSession, signOutSupabase } from "../lib/supabaseAuth";
 import { describeSupabaseError } from "../lib/supabaseError";
 import {
@@ -583,15 +583,25 @@ function AppContent({
   // entry points - NewWordStudyPreparation/ReviewWordsPreparation - outside
   // this dashboard). Mirrors onDailyGoalChange's precedent for the same
   // "keep the already-saved value in sync everywhere without a reload" need.
+  //
+  // Current Level editing follow-up: also carries languageLevel now that the
+  // Languages card's single Save persists it atomically alongside the
+  // language pair. Only userProfile.languageLevel needs updating here (no
+  // second top-level "currentLevel" state exists) — NewWordStudyPreparation
+  // already reads currentLevel={userProfile.languageLevel} directly, so the
+  // very next Study New Words preparation automatically uses the new
+  // threshold with no further wiring.
   const handleProfileLanguagesChange = (change: {
     nativeLanguage: UILanguage;
     practiceLanguage: UILanguage;
+    languageLevel: LanguageLevelCode;
     updatedAt: string;
   }) => {
     setUserProfile((previous) => ({
       ...previous,
       nativeLanguage: change.nativeLanguage,
       practiceLanguage: change.practiceLanguage,
+      languageLevel: change.languageLevel,
       updatedAt: change.updatedAt,
     }));
     setYourLanguage(change.nativeLanguage);

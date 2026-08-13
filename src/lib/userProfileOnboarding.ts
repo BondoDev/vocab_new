@@ -47,12 +47,31 @@ export function requireLanguageCode(
 
 // The only supported CEFR level codes — mirrors src/lib/userProfile.ts's
 // normalizeLanguageLevel allow-list and the database's new
-// user_profiles_current_level_allowed_values_check constraint.
-const SUPPORTED_LEVEL_CODES = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
+// user_profiles_current_level_allowed_values_check constraint. Exported (Settings
+// Current Level editing follow-up) so SettingsSection.tsx's level <Select>
+// and userProfileLearningPreferences.ts's response parser both reuse this
+// one array/type instead of each keeping an independent copy — the same
+// "no third independent copy" precedent SUPPORTED_LANGUAGE_CODES above
+// already sets for language codes.
+export const SUPPORTED_LEVEL_CODES = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
 export type SupportedLevelCode = (typeof SUPPORTED_LEVEL_CODES)[number];
 
-function isSupportedLevelCode(value: unknown): value is SupportedLevelCode {
+export function isSupportedLevelCode(value: unknown): value is SupportedLevelCode {
   return typeof value === "string" && (SUPPORTED_LEVEL_CODES as readonly string[]).includes(value);
+}
+
+// Exported alongside isSupportedLevelCode for the same reason
+// requireLanguageCode above is exported: userProfileLearningPreferences.ts's
+// response parser needs the identical throw-shaped validator, not a
+// hand-rolled duplicate.
+export function requireLevelCode(value: unknown, fieldName: string, rpcName: string): SupportedLevelCode {
+  if (!isSupportedLevelCode(value)) {
+    throw new ClassifiedSupabaseError(
+      `${rpcName} returned a malformed row: ${fieldName} must be one of ${SUPPORTED_LEVEL_CODES.join(", ")}.`,
+      "unexpected_response",
+    );
+  }
+  return value;
 }
 
 interface CompleteUserProfileOnboardingRpcRow {
@@ -110,16 +129,6 @@ function optionalNonEmptyString(value: unknown, fieldName: string): string | nul
   return value;
 }
 
-function requireLevelCode(value: unknown): SupportedLevelCode {
-  if (!isSupportedLevelCode(value)) {
-    throw new ClassifiedSupabaseError(
-      `${RPC_NAME} returned a malformed row: current_level must be one of ${SUPPORTED_LEVEL_CODES.join(", ")}.`,
-      "unexpected_response",
-    );
-  }
-  return value;
-}
-
 function requireIntegerInRange(value: unknown, fieldName: string, min: number, max: number): number {
   if (
     typeof value !== "number" ||
@@ -166,7 +175,7 @@ export function parseCompleteUserProfileOnboardingRow(row: unknown): CompleteUse
     nickname: requireNonEmptyString(rpcRow.nickname, "nickname"),
     nativeLanguage: requireLanguageCode(rpcRow.native_language, "native_language", RPC_NAME),
     learningLanguage: requireLanguageCode(rpcRow.learning_language, "learning_language", RPC_NAME),
-    currentLevel: requireLevelCode(rpcRow.current_level),
+    currentLevel: requireLevelCode(rpcRow.current_level, "current_level", RPC_NAME),
     userAge: requireIntegerInRange(rpcRow.user_age, "user_age", 10, 100),
     birthMonth: requireIntegerInRange(rpcRow.birth_month, "birth_month", 1, 12),
     birthDay: requireIntegerInRange(rpcRow.birth_day, "birth_day", 1, 31),
