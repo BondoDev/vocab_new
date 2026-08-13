@@ -187,6 +187,48 @@
   line-height: 1.5;
 }
 
+/* ---- Account: inline password change row ---- */
+/* Display mode matches nickname/email's own label-left/value-right shape.
+   Edit mode is deliberately its own layout, not a squeezed-in horizontal
+   row: three labeled password fields need real width, so
+   --editing switches the row itself to a stacked, full-width layout. */
+
+.settings-password-row--editing {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+}
+
+.settings-password-display {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.settings-password-edit {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.settings-password-edit__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.settings-password-edit__input {
+  max-width: 20rem;
+}
+
+.settings-password-edit__actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.4rem;
+}
+
 .settings-inline-error {
   border-radius: calc(var(--radius) - 4px);
   border: 1px solid #fecaca;
@@ -374,6 +416,21 @@
   .settings-email-edit__input {
     max-width: none;
     width: 100%;
+  }
+
+  .settings-password-display {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .settings-password-edit__input {
+    max-width: none;
+    width: 100%;
+  }
+
+  .settings-password-edit__actions > button {
+    flex: 1;
   }
 
   .settings-surface--danger .settings-row {

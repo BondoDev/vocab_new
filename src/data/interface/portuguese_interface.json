@@ -571,7 +571,19 @@
         "emailRequired": "O email é obrigatório.",
         "emailInvalid": "Introduza um endereço de email válido.",
         "emailSaveError": "Não foi possível atualizar o email. Tente novamente.",
-        "emailUnavailableGoogle": "As alterações de email não estão disponíveis para contas associadas à Google."
+        "emailUnavailableGoogle": "As alterações de email não estão disponíveis para contas associadas à Google.",
+        "password": "Palavra-passe",
+        "changePassword": "Alterar palavra-passe",
+        "currentPassword": "Palavra-passe atual",
+        "newPassword": "Nova palavra-passe",
+        "confirmNewPassword": "Confirmar nova palavra-passe",
+        "passwordChangedToast": "Palavra-passe alterada.",
+        "passwordCurrentIncorrect": "A palavra-passe atual está incorreta.",
+        "passwordIdentityError": "Não foi possível verificar a sua identidade.",
+        "passwordMismatch": "As palavras-passe não coincidem.",
+        "passwordSaveError": "Não foi possível alterar a palavra-passe. Tente novamente.",
+        "passwordTooShort": "A palavra-passe deve ter pelo menos 6 caracteres.",
+        "passwordManagedByGoogle": "Iniciou sessão com a Google, pelo que não existe nenhuma palavra-passe FluentStellar para alterar."
       },
       "languages": {
         "title": "Idiomas",

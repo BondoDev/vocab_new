@@ -571,7 +571,19 @@
         "emailRequired": "Eine E-Mail-Adresse ist erforderlich.",
         "emailInvalid": "Gib eine gültige E-Mail-Adresse ein.",
         "emailSaveError": "Die E-Mail-Adresse konnte nicht aktualisiert werden. Bitte versuche es erneut.",
-        "emailUnavailableGoogle": "E-Mail-Änderungen sind für mit Google verknüpfte Konten nicht verfügbar."
+        "emailUnavailableGoogle": "E-Mail-Änderungen sind für mit Google verknüpfte Konten nicht verfügbar.",
+        "password": "Passwort",
+        "changePassword": "Passwort ändern",
+        "currentPassword": "Aktuelles Passwort",
+        "newPassword": "Neues Passwort",
+        "confirmNewPassword": "Neues Passwort bestätigen",
+        "passwordChangedToast": "Passwort geändert.",
+        "passwordCurrentIncorrect": "Das aktuelle Passwort ist falsch.",
+        "passwordIdentityError": "Deine Identität konnte nicht bestätigt werden.",
+        "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+        "passwordSaveError": "Das Passwort konnte nicht geändert werden. Bitte versuche es erneut.",
+        "passwordTooShort": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+        "passwordManagedByGoogle": "Du hast dich mit Google angemeldet, daher gibt es kein FluentStellar-Passwort zu ändern."
       },
       "languages": {
         "title": "Sprachen",

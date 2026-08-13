@@ -571,7 +571,19 @@
         "emailRequired": "Email is required.",
         "emailInvalid": "Enter a valid email address.",
         "emailSaveError": "Could not update email. Please try again.",
-        "emailUnavailableGoogle": "Email changes aren't available for Google-linked accounts."
+        "emailUnavailableGoogle": "Email changes aren't available for Google-linked accounts.",
+        "password": "Password",
+        "changePassword": "Change password",
+        "currentPassword": "Current password",
+        "newPassword": "New password",
+        "confirmNewPassword": "Confirm new password",
+        "passwordChangedToast": "Password changed.",
+        "passwordCurrentIncorrect": "Current password is incorrect.",
+        "passwordIdentityError": "Could not verify your identity.",
+        "passwordMismatch": "Passwords do not match.",
+        "passwordSaveError": "Could not change password. Please try again.",
+        "passwordTooShort": "Password must be at least 6 characters.",
+        "passwordManagedByGoogle": "You signed in with Google, so there is no FluentStellar password to change."
       },
       "languages": {
         "title": "Languages",

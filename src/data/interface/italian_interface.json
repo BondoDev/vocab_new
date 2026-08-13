@@ -571,7 +571,19 @@
         "emailRequired": "L'email è obbligatoria.",
         "emailInvalid": "Inserisci un indirizzo email valido.",
         "emailSaveError": "Impossibile aggiornare l'email. Riprova.",
-        "emailUnavailableGoogle": "La modifica dell'email non è disponibile per gli account collegati a Google."
+        "emailUnavailableGoogle": "La modifica dell'email non è disponibile per gli account collegati a Google.",
+        "password": "Password",
+        "changePassword": "Cambia password",
+        "currentPassword": "Password attuale",
+        "newPassword": "Nuova password",
+        "confirmNewPassword": "Conferma nuova password",
+        "passwordChangedToast": "Password cambiata.",
+        "passwordCurrentIncorrect": "La password attuale non è corretta.",
+        "passwordIdentityError": "Impossibile verificare la tua identità.",
+        "passwordMismatch": "Le password non coincidono.",
+        "passwordSaveError": "Impossibile cambiare la password. Riprova.",
+        "passwordTooShort": "La password deve contenere almeno 6 caratteri.",
+        "passwordManagedByGoogle": "Hai effettuato l'accesso con Google, quindi non c'è nessuna password FluentStellar da cambiare."
       },
       "languages": {
         "title": "Lingue",

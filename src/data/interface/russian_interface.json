@@ -1043,7 +1043,19 @@
         "emailRequired": "Email обязателен.",
         "emailInvalid": "Введите корректный email.",
         "emailSaveError": "Не удалось обновить email. Попробуйте ещё раз.",
-        "emailUnavailableGoogle": "Изменение email недоступно для аккаунтов, связанных с Google."
+        "emailUnavailableGoogle": "Изменение email недоступно для аккаунтов, связанных с Google.",
+        "password": "Пароль",
+        "changePassword": "Изменить пароль",
+        "currentPassword": "Текущий пароль",
+        "newPassword": "Новый пароль",
+        "confirmNewPassword": "Подтвердите новый пароль",
+        "passwordChangedToast": "Пароль изменён.",
+        "passwordCurrentIncorrect": "Неверный текущий пароль.",
+        "passwordIdentityError": "Не удалось подтвердить вашу личность.",
+        "passwordMismatch": "Пароли не совпадают.",
+        "passwordSaveError": "Не удалось изменить пароль. Попробуйте ещё раз.",
+        "passwordTooShort": "Пароль должен содержать не менее 6 символов.",
+        "passwordManagedByGoogle": "Вы вошли через Google, поэтому пароля FluentStellar для изменения нет."
       },
       "languages": {
         "title": "Языки",

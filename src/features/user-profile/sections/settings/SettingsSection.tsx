@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
 import { Button } from "../../../../app/components/ui/button";
 import { Input } from "../../../../app/components/ui/input";
+import { Label } from "../../../../app/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -13,6 +14,7 @@ import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { detectBrowserTimezone } from "../../../../app/utils/browserTimezone";
 import { getPendingEmailFromUser, isDuplicateEmailError, normalizeEmailInput } from "../../../../app/utils/settingsEmail";
 import { normalizeNicknameInput } from "../../../../app/utils/settingsNickname";
+import { normalizeNewPasswordInput } from "../../../../app/utils/settingsPassword";
 import { formatTimezoneOffset, getTimezoneCityLabel } from "../../../../app/utils/timezoneOptions";
 import { useLanguage, type UILanguage } from "../../../../contexts/LanguageContext";
 import {
@@ -23,6 +25,7 @@ import {
   type ReauthenticationErrorReason,
 } from "../../../../lib/accountDeletion";
 import { updateAccountEmail } from "../../../../lib/accountEmailChange";
+import { updateSupabaseAuthUserPassword } from "../../../../lib/supabaseAuth";
 import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
 import { SUPPORTED_LANGUAGE_CODES } from "../../../../lib/userProfileOnboarding";
 import {
@@ -96,6 +99,23 @@ const REAUTHENTICATION_ERROR_MESSAGE_KEYS: Record<ReauthenticationErrorReason, s
   identity_mismatch: "userProfile.settingsSection.dataAccount.deleteDialog.identityError",
   network: "userProfile.settingsSection.dataAccount.deleteDialog.identityError",
   backend_rejected: "userProfile.settingsSection.dataAccount.deleteDialog.reauthRequired",
+};
+
+// Same reason set, its own password-change-specific wording — reuses
+// reauthenticateForAccountDeletion (accountDeletion.ts) itself rather than a
+// second reauthentication implementation, but "Incorrect password." (the
+// delete dialog's own copy) reads oddly for a "verify your current
+// password before changing it" flow, so this flow gets its own strings for
+// the same three reasons that function can actually throw.
+// "backend_rejected" is never thrown by reauthenticateForAccountDeletion
+// itself (only deleteAccount's own wrapping re-throws that reason) — kept
+// here only so this remains a total, type-checked map over every
+// ReauthenticationErrorReason.
+const PASSWORD_REAUTHENTICATION_ERROR_MESSAGE_KEYS: Record<ReauthenticationErrorReason, string> = {
+  invalid_credentials: "userProfile.settingsSection.account.passwordCurrentIncorrect",
+  identity_mismatch: "userProfile.settingsSection.account.passwordIdentityError",
+  network: "userProfile.settingsSection.account.passwordIdentityError",
+  backend_rejected: "userProfile.settingsSection.account.passwordSaveError",
 };
 
 export function SettingsSection({
@@ -314,6 +334,131 @@ export function SettingsSection({
       .finally(() => {
         setIsSavingEmail(false);
       });
+  };
+
+  // ---- Account: Password (inline edit, password accounts only) --------
+  // Google-linked accounts have no FluentStellar password to change at
+  // all — reuses isPasswordAccount (accountDeletion.ts), the same provider
+  // check canChangeEmail above already uses, instead of a second, parallel
+  // provider check.
+  const canChangePassword = isPasswordAccount(authSession);
+  const [isEditingPassword, setIsEditingPassword] = useState(false);
+  const [currentPasswordDraft, setCurrentPasswordDraft] = useState("");
+  const [newPasswordDraft, setNewPasswordDraft] = useState("");
+  const [confirmPasswordDraft, setConfirmPasswordDraft] = useState("");
+  const [isSavingPassword, setIsSavingPassword] = useState(false);
+  const [passwordSaveError, setPasswordSaveError] = useState<string | null>(null);
+  const { message: passwordToast, show: showPasswordToast } = useAutoDismissMessage();
+  const currentPasswordInputRef = useRef<HTMLInputElement>(null);
+  const passwordChangeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (isEditingPassword) {
+      currentPasswordInputRef.current?.focus();
+    }
+  }, [isEditingPassword]);
+
+  const newPasswordValidation = normalizeNewPasswordInput(newPasswordDraft);
+  const isPasswordConfirmMismatch = confirmPasswordDraft.length > 0 && confirmPasswordDraft !== newPasswordDraft;
+  const canSavePassword =
+    isEditingPassword && canChangePassword && currentPasswordDraft.length > 0 && newPasswordValidation.ok &&
+    confirmPasswordDraft === newPasswordDraft && !isSavingPassword;
+  // Explicit `=== false` — same narrowing precedent as nicknameValidation/
+  // emailValidation above (accountOnboarding.ts's prepareAccountOnboardingSubmit).
+  // normalizeNewPasswordInput's "empty" reason can never fire once
+  // newPasswordDraft.length > 0 (unlike email/nickname, nothing is trimmed
+  // here), so this guard only ever surfaces "tooShort".
+  let passwordValidationErrorKey: string | null = null;
+  if (newPasswordValidation.ok === false && newPasswordDraft.length > 0) {
+    passwordValidationErrorKey = "userProfile.settingsSection.account.passwordTooShort";
+  } else if (isPasswordConfirmMismatch) {
+    passwordValidationErrorKey = "userProfile.settingsSection.account.passwordMismatch";
+  }
+
+  const handleStartEditPassword = () => {
+    setCurrentPasswordDraft("");
+    setNewPasswordDraft("");
+    setConfirmPasswordDraft("");
+    setPasswordSaveError(null);
+    setIsEditingPassword(true);
+  };
+
+  const handleCancelEditPassword = () => {
+    setIsEditingPassword(false);
+    setCurrentPasswordDraft("");
+    setNewPasswordDraft("");
+    setConfirmPasswordDraft("");
+    setPasswordSaveError(null);
+    passwordChangeButtonRef.current?.focus();
+  };
+
+  const handleSavePassword = () => {
+    if (!canSavePassword || !authSession || !newPasswordValidation.ok || isSavingPassword) {
+      return;
+    }
+
+    setIsSavingPassword(true);
+    setPasswordSaveError(null);
+
+    void (async () => {
+      try {
+        // Reauthentication — the exact same genuine, server-verified
+        // current-password check account deletion uses
+        // (reauthenticateForAccountDeletion, accountDeletion.ts), never a
+        // second reauthentication implementation and never a client-side
+        // password comparison. Only once the CURRENT password is verified
+        // through Supabase Auth does the resulting fresh session drive the
+        // actual password update below — see that function's own header
+        // for the cross-account identity-mismatch guard this gets for
+        // free, and this component's own onOpenChange precedent
+        // (DeleteAccountDialog wiring, below) for why adopting that fresh
+        // session is the correct, existing session-adoption architecture
+        // to preserve rather than bypass.
+        const freshSession = await reauthenticateForAccountDeletion(authSession, currentPasswordDraft);
+
+        // The existing Supabase Auth password-update helper
+        // (supabaseAuth.ts) — never a direct auth.users write, never the
+        // Admin API. Driven by the freshly-reauthenticated session, not
+        // the possibly-stale authSession prop.
+        await updateSupabaseAuthUserPassword(freshSession, newPasswordValidation.value);
+
+        setIsEditingPassword(false);
+        setCurrentPasswordDraft("");
+        setNewPasswordDraft("");
+        setConfirmPasswordDraft("");
+        showPasswordToast(t("userProfile.settingsSection.account.passwordChangedToast"));
+        passwordChangeButtonRef.current?.focus();
+      } catch (error) {
+        if (error instanceof ReauthenticationError) {
+          console.warn("SettingsSection: reauthentication before password change failed.", {
+            reason: error.reason,
+          });
+          setPasswordSaveError(t(PASSWORD_REAUTHENTICATION_ERROR_MESSAGE_KEYS[error.reason]));
+          return;
+        }
+
+        const diagnostics = describeSupabaseError("updateSupabaseAuthUserPassword", error);
+        console.warn("SettingsSection: failed to change password.", diagnostics);
+        setPasswordSaveError(
+          t(
+            resolveSupabaseErrorMessageKey(
+              diagnostics.category,
+              "userProfile.settingsSection.account.passwordSaveError",
+            ),
+          ),
+        );
+        // Never leave a failed change looking applied — edit mode stays
+        // open, and the new/confirm drafts are left exactly as typed so the
+        // user can correct just the current password and retry without
+        // re-entering everything.
+      } finally {
+        setIsSavingPassword(false);
+        // Never keep a typed current password around after any attempt,
+        // successful or not — mirrors handleConfirmDelete's own
+        // setDeletePassword("") guarantee below.
+        setCurrentPasswordDraft("");
+      }
+    })();
   };
 
   // ---- Languages -----------------------------------------------------
@@ -762,6 +907,139 @@ export function SettingsSection({
         ) : null}
 
         <Toast message={emailToast} />
+
+        <div className={`settings-row settings-password-row${isEditingPassword ? " settings-password-row--editing" : ""}`}>
+          <span className="settings-row__label" id="settings-password-label">
+            {t("userProfile.settingsSection.account.password")}
+          </span>
+          {isEditingPassword ? (
+            <div className="settings-password-edit">
+              <div className="settings-password-edit__field">
+                <Label htmlFor="settings-current-password-input">
+                  {t("userProfile.settingsSection.account.currentPassword")}
+                </Label>
+                <Input
+                  id="settings-current-password-input"
+                  ref={currentPasswordInputRef}
+                  type="password"
+                  autoComplete="current-password"
+                  className="settings-password-edit__input"
+                  value={currentPasswordDraft}
+                  onChange={(event) => setCurrentPasswordDraft(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      handleSavePassword();
+                    } else if (event.key === "Escape") {
+                      event.preventDefault();
+                      handleCancelEditPassword();
+                    }
+                  }}
+                  disabled={isSavingPassword}
+                  aria-invalid={passwordSaveError ? true : undefined}
+                  aria-describedby={passwordSaveError ? "settings-password-error" : undefined}
+                />
+              </div>
+              <div className="settings-password-edit__field">
+                <Label htmlFor="settings-new-password-input">
+                  {t("userProfile.settingsSection.account.newPassword")}
+                </Label>
+                <Input
+                  id="settings-new-password-input"
+                  type="password"
+                  autoComplete="new-password"
+                  className="settings-password-edit__input"
+                  value={newPasswordDraft}
+                  onChange={(event) => setNewPasswordDraft(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      handleSavePassword();
+                    } else if (event.key === "Escape") {
+                      event.preventDefault();
+                      handleCancelEditPassword();
+                    }
+                  }}
+                  disabled={isSavingPassword}
+                  aria-invalid={passwordValidationErrorKey ? true : undefined}
+                  aria-describedby={passwordValidationErrorKey || passwordSaveError ? "settings-password-error" : undefined}
+                />
+              </div>
+              <div className="settings-password-edit__field">
+                <Label htmlFor="settings-confirm-password-input">
+                  {t("userProfile.settingsSection.account.confirmNewPassword")}
+                </Label>
+                <Input
+                  id="settings-confirm-password-input"
+                  type="password"
+                  autoComplete="new-password"
+                  className="settings-password-edit__input"
+                  value={confirmPasswordDraft}
+                  onChange={(event) => setConfirmPasswordDraft(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      handleSavePassword();
+                    } else if (event.key === "Escape") {
+                      event.preventDefault();
+                      handleCancelEditPassword();
+                    }
+                  }}
+                  disabled={isSavingPassword}
+                  aria-invalid={passwordValidationErrorKey ? true : undefined}
+                  aria-describedby={passwordValidationErrorKey || passwordSaveError ? "settings-password-error" : undefined}
+                />
+              </div>
+              <div className="settings-password-edit__actions">
+                <Button type="button" size="sm" onClick={handleSavePassword} disabled={!canSavePassword}>
+                  {isSavingPassword ? t("userProfile.settingsSection.saving") : t("userProfile.settingsSection.save")}
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={handleCancelEditPassword}
+                  disabled={isSavingPassword}
+                >
+                  {t("userProfile.settingsSection.cancel")}
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="settings-password-display">
+              <span className="settings-row__value" aria-hidden="true">
+                ••••••••
+              </span>
+              {canChangePassword ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  ref={passwordChangeButtonRef}
+                  onClick={handleStartEditPassword}
+                  disabled={!authSession}
+                  aria-label={t("userProfile.settingsSection.account.changePassword")}
+                >
+                  {t("userProfile.settingsSection.change")}
+                </Button>
+              ) : null}
+            </div>
+          )}
+        </div>
+
+        {!canChangePassword ? (
+          <p className="settings-surface__helper settings-surface__helper--muted">
+            {t("userProfile.settingsSection.account.passwordManagedByGoogle")}
+          </p>
+        ) : null}
+
+        {passwordValidationErrorKey || passwordSaveError ? (
+          <div role="alert" id="settings-password-error" className="settings-inline-error">
+            {passwordSaveError ?? t(passwordValidationErrorKey as string)}
+          </div>
+        ) : null}
+
+        <Toast message={passwordToast} />
       </section>
 
       {/* ---- Languages ---- */}
