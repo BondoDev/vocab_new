@@ -1022,10 +1022,27 @@
       "save": "Сохранить",
       "saving": "Сохранение…",
       "cancel": "Отмена",
+      "edit": "Изменить",
+      "change": "Изменить",
       "account": {
         "title": "Аккаунт",
         "nickname": "Никнейм",
-        "email": "Email"
+        "editNickname": "Изменить никнейм",
+        "nicknameSavedToast": "Никнейм обновлён.",
+        "nicknameSaveError": "Не удалось обновить никнейм. Попробуйте ещё раз.",
+        "nicknameRequired": "Никнейм обязателен.",
+        "nicknameInvalid": "Никнейм должен начинаться с буквы.",
+        "nicknameTooLong": "Никнейм должен содержать не более 40 символов.",
+        "email": "Email",
+        "changeEmail": "Изменить email",
+        "emailUpdatedToast": "Email обновлён.",
+        "emailChangePending": "Подтвердите изменение через текущий и новый email.",
+        "emailChangePendingLabel": "Ожидает подтверждения:",
+        "emailChangeDuplicate": "Этот email уже связан с другим аккаунтом.",
+        "emailRequired": "Email обязателен.",
+        "emailInvalid": "Введите корректный email.",
+        "emailSaveError": "Не удалось обновить email. Попробуйте ещё раз.",
+        "emailUnavailableGoogle": "Изменение email недоступно для аккаунтов, связанных с Google."
       },
       "languages": {
         "title": "Языки",

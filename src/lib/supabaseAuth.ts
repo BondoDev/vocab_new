@@ -167,6 +167,15 @@ interface SupabaseErrorResponseBody {
   error_description?: string;
   message?: string;
   code?: string;
+  // GoTrue's stable, machine-readable error identifier (e.g. "email_exists",
+  // "same_password") — present on GoTrue's own /auth/v1/* error responses
+  // (Auth API error-codes reference) alongside the numeric HTTP-status-
+  // duplicating `code` field above. Read in preference to `code` below
+  // (email-change follow-up, 2026-08-13) because it's the one stable string
+  // identifier email-change duplicate detection (src/lib/
+  // accountEmailChange.ts's isDuplicateEmailError) can match against instead
+  // of fragile message-text sniffing.
+  error_code?: string;
   details?: string;
   hint?: string;
   // The delete-account Edge Function's own error shape (`{ error: "..." }`,
@@ -203,11 +212,14 @@ export async function supabaseRequest<TResponse>(
       errorBody.error ||
       "Authentication request failed.";
     throw new SupabaseRequestError(message, response.status, {
-      // .code falls back to the Edge Function's own `error` string too, so
+      // GoTrue's own error_code (e.g. "email_exists") takes priority when
+      // present — it's the one stable string identifier, unlike its numeric
+      // HTTP-status-duplicating `code` field. .code then falls back to the
+      // PostgREST `code`, then to the Edge Function's own `error` string, so
       // a caller can check .code (its usual, message-text-independent way
-      // of classifying a SupabaseRequestError) for
-      // "reauthentication_required" etc. exactly like a real PostgREST code.
-      code: errorBody.code ?? errorBody.error ?? null,
+      // of classifying a SupabaseRequestError) for "email_exists",
+      // "reauthentication_required", etc. exactly like a real PostgREST code.
+      code: errorBody.error_code ?? errorBody.code ?? errorBody.error ?? null,
       details: errorBody.details ?? null,
       hint: errorBody.hint ?? null,
     });
@@ -697,6 +709,38 @@ export async function updateSupabaseAuthUserPassword(
     },
     body: JSON.stringify({
       password,
+    }),
+  });
+}
+
+// Settings email-change follow-up — the exact same GoTrue "Update user"
+// endpoint updateSupabaseAuthUserPassword/updateSupabaseAuthUserMetadata
+// already use (PUT /auth/v1/user, Bearer access token), just with an
+// `email` body instead of `password`/`data`. Deliberately takes a session,
+// never a user ID — same reasoning as its two siblings above: GoTrue
+// authenticates this request purely off the bearer token, so there is no
+// request shape for "change this other user's email" here at all.
+//
+// This project's supabase/config.toml has
+// `[auth.email] double_confirm_changes = true`, so a successful call here
+// does NOT immediately change the caller's confirmed email — GoTrue instead
+// sends confirmation links to both the current and the new address and
+// returns the caller's user object with a `new_email` field holding the
+// still-pending new address (email stays the old, confirmed one) until both
+// links are followed. See src/lib/accountEmailChange.ts, the one caller of
+// this function, for how that pending state is surfaced to Settings.
+export async function updateSupabaseAuthUserEmail(
+  session: StoredSupabaseSession,
+  email: string,
+): Promise<SupabaseAuthUser> {
+  return supabaseRequest<SupabaseAuthUser>("/auth/v1/user", {
+    method: "PUT",
+    headers: {
+      ...getAuthHeaders(),
+      Authorization: `Bearer ${session.access_token}`,
+    },
+    body: JSON.stringify({
+      email,
     }),
   });
 }

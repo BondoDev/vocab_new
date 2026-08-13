@@ -561,6 +561,21 @@ function AppContent({
     }
   };
 
+  // Nickname editing follow-up — mirrors handleProfileLanguagesChange/
+  // handleProfileTimezoneChange's own precedent: pushes a successfully
+  // saved nickname up into the shared userProfile object so every other
+  // currently-mounted piece of UI reading userProfile.nickname (the
+  // nickname prop passed to UserProfileDashboardPage below, which in turn
+  // feeds UserProfileSidebar/DashboardSection) picks it up immediately,
+  // with no reload and no second nickname state source.
+  const handleProfileNicknameChange = (change: { nickname: string; updatedAt: string }) => {
+    setUserProfile((previous) => ({
+      ...previous,
+      nickname: change.nickname,
+      updatedAt: change.updatedAt,
+    }));
+  };
+
   // Settings Phase 1 — pushes a successfully saved native/learning language
   // pair up from SettingsSection into both places the app keeps a copy: the
   // shared userProfile object (read by every section inside /profile) and
@@ -902,6 +917,7 @@ function AppContent({
           onDailyGoalChange={(dailyGoal) =>
             setUserProfile((previous) => ({ ...previous, dailyGoal }))
           }
+          onNicknameChange={handleProfileNicknameChange}
           onProfileLanguagesChange={handleProfileLanguagesChange}
           onTimezoneChange={handleProfileTimezoneChange}
           onAccountDeleted={handleAccountDeleted}

@@ -550,10 +550,27 @@
       "save": "Save",
       "saving": "Saving…",
       "cancel": "Cancel",
+      "edit": "Edit",
+      "change": "Change",
       "account": {
         "title": "Account",
         "nickname": "Nickname",
-        "email": "Email"
+        "editNickname": "Edit nickname",
+        "nicknameSavedToast": "Nickname updated.",
+        "nicknameSaveError": "Could not update nickname. Please try again.",
+        "nicknameRequired": "Nickname is required.",
+        "nicknameInvalid": "Nickname must start with a letter.",
+        "nicknameTooLong": "Nickname must be 40 characters or fewer.",
+        "email": "Email",
+        "changeEmail": "Change email",
+        "emailUpdatedToast": "Email updated.",
+        "emailChangePending": "Check your current and new email to confirm this change.",
+        "emailChangePendingLabel": "Pending change:",
+        "emailChangeDuplicate": "This email address is already associated with another account.",
+        "emailRequired": "Email is required.",
+        "emailInvalid": "Enter a valid email address.",
+        "emailSaveError": "Could not update email. Please try again.",
+        "emailUnavailableGoogle": "Email changes aren't available for Google-linked accounts."
       },
       "languages": {
         "title": "Languages",

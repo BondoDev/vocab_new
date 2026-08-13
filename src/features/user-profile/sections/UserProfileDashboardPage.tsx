@@ -14,6 +14,7 @@ import { MyListsSection, type PracticeListStartConfig } from "./my-lists/MyLists
 import { ProgressSection } from "./progress/ProgressSection";
 import {
   SettingsSection,
+  type ProfileNicknameChange,
   type ProfileLanguagesChange,
   type ProfileTimezoneChange,
 } from "./settings/SettingsSection";
@@ -43,6 +44,7 @@ interface UserProfileDashboardPageProps {
   // Settings Phase 1 — see SettingsSection's own prop comments for exactly
   // what each callback does and why it's needed in addition to updating
   // userProfile alone.
+  onNicknameChange?: (change: ProfileNicknameChange) => void;
   onProfileLanguagesChange?: (change: ProfileLanguagesChange) => void;
   onTimezoneChange?: (change: ProfileTimezoneChange) => void;
   onAccountDeleted?: () => void | Promise<void>;
@@ -81,6 +83,7 @@ export function UserProfileDashboardPage({
   onStartPracticeList,
   onSignOut,
   onDailyGoalChange,
+  onNicknameChange,
   onProfileLanguagesChange,
   onTimezoneChange,
   onAccountDeleted,
@@ -184,6 +187,7 @@ export function UserProfileDashboardPage({
               <SettingsSection
                 userProfile={userProfile}
                 isProfileLoaded={isProfileLoaded}
+                onNicknameChange={onNicknameChange}
                 onProfileLanguagesChange={onProfileLanguagesChange}
                 onTimezoneChange={onTimezoneChange}
                 onAccountDeleted={onAccountDeleted}

@@ -25,6 +25,18 @@ import type { LanguageLevelCode, UserProfile } from "../../lib/userProfile";
 
 export const DEFAULT_DAILY_GOAL = 15;
 
+// Moved here from src/lib/userProfile.ts (Settings nickname-editing
+// follow-up, 2026-08-13) for the same reason DEFAULT_DAILY_GOAL/
+// normalizeLanguage/etc. already live here: settingsNickname.ts needs to
+// import it directly via Node's native TypeScript stripping (scripts/tests/
+// account/test-settings-nickname.mjs), which userProfile.ts's own
+// extensionless import chain does not support. userProfile.ts re-exports
+// this unchanged, so accountOnboarding.ts's existing `import {
+// startsWithLetter } from "../../lib/userProfile"` is unaffected.
+export function startsWithLetter(value: string): boolean {
+  return /^\p{L}/u.test(value.trim());
+}
+
 export function normalizeLanguage(value: unknown): UILanguage | "" {
   if (
     value === "en" ||

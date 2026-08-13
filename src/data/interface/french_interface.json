@@ -550,10 +550,27 @@
       "save": "Enregistrer",
       "saving": "Enregistrement…",
       "cancel": "Annuler",
+      "edit": "Modifier",
+      "change": "Modifier",
       "account": {
         "title": "Compte",
         "nickname": "Pseudo",
-        "email": "E-mail"
+        "editNickname": "Modifier le pseudo",
+        "nicknameSavedToast": "Pseudo mis à jour.",
+        "nicknameSaveError": "Impossible de mettre à jour le pseudo. Veuillez réessayer.",
+        "nicknameRequired": "Le pseudo est requis.",
+        "nicknameInvalid": "Le pseudo doit commencer par une lettre.",
+        "nicknameTooLong": "Le pseudo doit comporter au maximum 40 caractères.",
+        "email": "E-mail",
+        "changeEmail": "Modifier l'e-mail",
+        "emailUpdatedToast": "E-mail mis à jour.",
+        "emailChangePending": "Confirmez ce changement depuis votre e-mail actuel et le nouveau.",
+        "emailChangePendingLabel": "Changement en attente :",
+        "emailChangeDuplicate": "Cette adresse e-mail est déjà associée à un autre compte.",
+        "emailRequired": "L'e-mail est requis.",
+        "emailInvalid": "Saisissez une adresse e-mail valide.",
+        "emailSaveError": "Impossible de mettre à jour l'e-mail. Veuillez réessayer.",
+        "emailUnavailableGoogle": "Le changement d'e-mail n'est pas disponible pour les comptes liés à Google."
       },
       "languages": {
         "title": "Langues",

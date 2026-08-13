@@ -550,10 +550,27 @@
       "save": "Guardar",
       "saving": "A guardar…",
       "cancel": "Cancelar",
+      "edit": "Editar",
+      "change": "Alterar",
       "account": {
         "title": "Conta",
         "nickname": "Alcunha",
-        "email": "Email"
+        "editNickname": "Editar alcunha",
+        "nicknameSavedToast": "Alcunha atualizada.",
+        "nicknameSaveError": "Não foi possível atualizar a alcunha. Tente novamente.",
+        "nicknameRequired": "A alcunha é obrigatória.",
+        "nicknameInvalid": "A alcunha deve começar com uma letra.",
+        "nicknameTooLong": "A alcunha deve ter no máximo 40 caracteres.",
+        "email": "Email",
+        "changeEmail": "Alterar email",
+        "emailUpdatedToast": "Email atualizado.",
+        "emailChangePending": "Confirme esta alteração a partir do seu email atual e do novo.",
+        "emailChangePendingLabel": "Alteração pendente:",
+        "emailChangeDuplicate": "Este endereço de email já está associado a outra conta.",
+        "emailRequired": "O email é obrigatório.",
+        "emailInvalid": "Introduza um endereço de email válido.",
+        "emailSaveError": "Não foi possível atualizar o email. Tente novamente.",
+        "emailUnavailableGoogle": "As alterações de email não estão disponíveis para contas associadas à Google."
       },
       "languages": {
         "title": "Idiomas",
