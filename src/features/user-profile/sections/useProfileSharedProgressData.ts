@@ -92,9 +92,43 @@ export function useProfileSharedProgressData({
   // changed).
   const loadedDateKeyRef = useRef<string | null>(null);
 
+  // Fetch-audit Phase 2A: the authUserId a getCurrentLearningDate() request
+  // is *currently in flight* for — distinct from loadedDateKeyRef above.
+  // Live-network verification found a genuine duplicate-request race: this
+  // effect has no lazy "already requested" gate at all (unlike
+  // useProfileSharedDailyStats.ts's request()-gated design) — it fires the
+  // fetch unconditionally every time it runs. On a fresh authenticated load
+  // it was observed (live network capture) to run for the same authUserId
+  // three times in quick succession — useUserProfileLoad's own effect
+  // briefly reports isProfileLoaded as true (its "signed-out visitor,
+  // trivially known" branch, from the render where authUserId is still
+  // null) one render before authUserId resolves, then flips isProfileLoaded
+  // back to false once it starts genuinely loading that user's profile,
+  // then true again once the load finishes — so this effect legitimately
+  // re-runs multiple times for the *same* authUserId before settling,
+  // twice reaching the fetch branch and firing two real
+  // get_current_learning_date requests. This ref makes "a request for this
+  // authUserId is already running" independently checkable, synchronously,
+  // regardless of which dependency triggered the re-run, and — critically
+  // — is also what a
+  // settling attempt checks before applying its own result, *instead of*
+  // the usual per-effect-invocation `cancelled` closure: the intermediate
+  // isProfileLoaded-false render in the sequence above still runs this
+  // effect's cleanup for the in-flight attempt (React calls the previous
+  // invocation's cleanup on every re-run, not only on unmount), which would
+  // incorrectly mark a perfectly-valid in-flight request as stale and
+  // discard its result — even though get_current_learning_date takes no
+  // client-supplied timezone parameter at all (see
+  // src/lib/learningDate.ts), so that request was never actually invalid.
+  // Gating on this ref instead of a `cancelled` closure means the one
+  // request that does start always gets to apply its result once it
+  // resolves, and is only superseded by a genuine authUserId change.
+  const inFlightDateKeyRef = useRef<string | null>(null);
+
   useEffect(() => {
     if (!authUserId) {
       loadedDateKeyRef.current = null;
+      inFlightDateKeyRef.current = null;
       setDateState({ status: "unavailable", todayISO: null });
       return;
     }
@@ -104,7 +138,12 @@ export function useProfileSharedProgressData({
       // duration of a new user's profile load (including across an
       // account switch), so this branch is also what correctly hard-resets
       // a previous account's cached date instead of ever showing it for a
-      // different signed-in user.
+      // different signed-in user. Deliberately does NOT touch
+      // inFlightDateKeyRef: a request already in flight for this same
+      // authUserId (started on an earlier render — see that ref's own
+      // header) remains the one and only attempt whose result should be
+      // applied once isProfileLoaded genuinely settles back to true; only
+      // a real authUserId change (above) invalidates it.
       loadedDateKeyRef.current = null;
       setDateState(LOADING_DATE_STATE);
       return;
@@ -112,15 +151,25 @@ export function useProfileSharedProgressData({
 
     const requestKey = authUserId;
     const isSameContext = loadedDateKeyRef.current === requestKey;
-    let cancelled = false;
 
+    if (inFlightDateKeyRef.current === requestKey) {
+      // Already fetching this exact user — join the existing attempt
+      // rather than starting a second one. That attempt's own resolution
+      // (below) applies its result as long as inFlightDateKeyRef still
+      // names it as current, regardless of which particular effect
+      // invocation originally started it.
+      return;
+    }
+
+    inFlightDateKeyRef.current = requestKey;
     setDateState((prev) => (isSameContext && prev.status === "ready" ? prev : LOADING_DATE_STATE));
 
     void (async () => {
       try {
         const session = getStoredSupabaseSession();
         if (!session) {
-          if (!cancelled) {
+          if (inFlightDateKeyRef.current === requestKey) {
+            inFlightDateKeyRef.current = null;
             loadedDateKeyRef.current = null;
             setDateState({ status: "unavailable", todayISO: null });
           }
@@ -128,11 +177,18 @@ export function useProfileSharedProgressData({
         }
 
         const todayISO = await getCurrentLearningDate(session);
-        if (cancelled) return;
+        // Applied only if this attempt still owns requestKey's in-flight
+        // slot — false only once a genuine authUserId change has since
+        // claimed it (the guard above already prevents a second concurrent
+        // attempt for the same key, so this can never be "superseded by a
+        // newer attempt for the same user").
+        if (inFlightDateKeyRef.current !== requestKey) return;
+        inFlightDateKeyRef.current = null;
         loadedDateKeyRef.current = requestKey;
         setDateState({ status: "ready", todayISO });
       } catch (error) {
-        if (cancelled) return;
+        if (inFlightDateKeyRef.current !== requestKey) return;
+        inFlightDateKeyRef.current = null;
         console.warn(
           "useProfileSharedProgressData: failed to load the current learning date.",
           describeSupabaseError("getCurrentLearningDate", error),
@@ -144,10 +200,6 @@ export function useProfileSharedProgressData({
         setDateState((prev) => (isSameContext && prev.status === "ready" ? prev : { status: "error", todayISO: null }));
       }
     })();
-
-    return () => {
-      cancelled = true;
-    };
   }, [authUserId, isProfileLoaded, timezone, dateRetryToken]);
 
   const [progressState, setProgressState] = useState<WordProgressState>(LOADING_PROGRESS_STATE);
