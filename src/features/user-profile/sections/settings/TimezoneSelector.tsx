@@ -84,7 +84,18 @@ export function TimezoneSelector({ value, onChange, disabled }: TimezoneSelector
           autoFocus
           className="settings-timezone-selector__search"
         />
-        <div id={listboxId} role="listbox" aria-label={t("userProfile.settingsSection.timeRegion.selectorAriaLabel")} className="settings-timezone-selector__list">
+        {/* ACCOUNT-004: options are plain, natively keyboard-operable <button>
+            elements (Tab/Enter/Space), not a custom listbox widget — none of
+            the roving-focus/arrow-key/active-descendant machinery a real
+            listbox needs is implemented. The prior listbox/option ARIA roles
+            announced an interaction model that didn't match this behavior;
+            the "group" role below is a plain, native-ish grouping with no
+            implied interaction contract. Selected state moved from the
+            prior option-role-only "selected" attribute to
+            aria-current="true" (a global attribute, valid on any element,
+            and the ARIA-recommended way to mark the current item in a set
+            of otherwise-equivalent choices). */}
+        <div id={listboxId} role="group" aria-label={t("userProfile.settingsSection.timeRegion.selectorAriaLabel")} className="settings-timezone-selector__list">
           {visibleOptions.length === 0 ? (
             <p className="settings-timezone-selector__empty">
               {t("userProfile.settingsSection.timeRegion.noResults")}
@@ -96,8 +107,7 @@ export function TimezoneSelector({ value, onChange, disabled }: TimezoneSelector
                 <button
                   key={option.id}
                   type="button"
-                  role="option"
-                  aria-selected={isSelected}
+                  aria-current={isSelected ? "true" : undefined}
                   onClick={() => handleSelect(option)}
                   className={`settings-timezone-selector__option ${
                     isSelected ? "settings-timezone-selector__option--selected" : ""

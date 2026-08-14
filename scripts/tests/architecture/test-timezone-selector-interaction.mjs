@@ -89,6 +89,34 @@ test("8. TimezoneSelector never calls the backend directly — it only calls onC
   assert.doesNotMatch(timezoneSelectorSource, /fetch\(/);
 });
 
+console.log("\n=== ACCOUNT-004: ARIA semantics match the real (native-button) interaction model ===\n");
+
+test("11. The options container no longer claims listbox semantics it doesn't implement (no roving tabIndex/arrow-key nav/aria-activedescendant exists anywhere in this file)", () => {
+  assert.doesNotMatch(timezoneSelectorSource, /role="listbox"/);
+  assert.doesNotMatch(timezoneSelectorSource, /aria-activedescendant/);
+  assert.doesNotMatch(timezoneSelectorSource, /tabIndex/);
+});
+
+test("12. Individual options are plain buttons — no role=\"option\"/aria-selected left over, and no keydown handler simulating arrow-key navigation", () => {
+  assert.doesNotMatch(timezoneSelectorSource, /role="option"/);
+  assert.doesNotMatch(timezoneSelectorSource, /aria-selected/);
+  assert.doesNotMatch(timezoneSelectorSource, /onKeyDown/);
+});
+
+test("13. Each option is still a real, natively keyboard-operable <button type=\"button\"> (Tab/Enter/Space keep working with zero extra wiring)", () => {
+  const optionButtonMatch = timezoneSelectorSource.match(/<button\s*\n\s*key=\{option\.id\}\s*\n\s*type="button"/);
+  assert.ok(optionButtonMatch, "expected the option to still render as a native <button type=\"button\">");
+});
+
+test("14. The currently selected timezone is still accessibly identifiable: aria-current=\"true\" is applied only for the matching option, a global attribute valid on a plain button (unlike aria-selected, which requires role=\"option\")", () => {
+  assert.match(timezoneSelectorSource, /aria-current=\{isSelected \? "true" : undefined\}/);
+});
+
+test("15. Selection behavior is unchanged by the ARIA cleanup: onClick still calls handleSelect(option) directly on the button", () => {
+  const optionBlockMatch = timezoneSelectorSource.match(/aria-current=\{isSelected \? "true" : undefined\}\s*\n\s*onClick=\{\(\) => handleSelect\(option\)\}/);
+  assert.ok(optionBlockMatch, "expected onClick={() => handleSelect(option)} immediately after the aria-current prop");
+});
+
 console.log("\n=== SettingsSection: Save still persists through update_user_timezone only ===\n");
 
 const settingsSectionSource = read("src/features/user-profile/sections/settings/SettingsSection.tsx");
