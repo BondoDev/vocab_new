@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
-import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import type { UserProfile } from "../../../../lib/userProfile";
-import { readTodayNewWordsCompleted } from "../../../../lib/newWordProgress";
-import { describeSupabaseError } from "../../../../lib/supabaseError";
+import type { MilestoneDailyStatRow } from "../../../../lib/newWordProgress";
 import { computeTodayProgressDisplay } from "../../../../data/learning/todayProgressDisplay";
+import { findTodayNewWordsCompleted } from "../../../../data/learning/dailyStreak";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 
 const RING_RADIUS = 32;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
@@ -20,13 +20,23 @@ const MIN_VISIBLE_ARC_RATIO = 0.03;
 // through LearningSection) rather than a copy fetched by this component;
 // todayISO/todayISOStatus come from LearningSection's own single
 // getCurrentLearningDate() call (see that file's header) — this component
-// no longer calls getCurrentLearningDate itself. Only today's new-word
-// count (readTodayNewWordsCompleted) is this component's own request.
+// no longer calls getCurrentLearningDate itself.
+//
+// Fetch-audit Phase 1: today's new-word count is no longer this
+// component's own request either — it's a pure lookup
+// (findTodayNewWordsCompleted) over the shared, unbounded user_daily_stats
+// rows LearningSection requests once (dailyStatsRows below; see
+// useProfileSharedDailyStats.ts). A same-context dailyStatsStatus ===
+// "error" is treated exactly like the pre-Phase-1 fetch failure this card
+// always silently absorbed into "0 completed" (its old catch block never
+// surfaced a distinct error state for its own read) — only a
+// todayISOStatus "error" gets the distinct "blocked" treatment below,
+// unchanged from before.
 //
 // "blocked" (distinct from "loading") is what this card enters when
 // todayISOStatus is "error": LearningSection's shared date request failed
 // and already shows the one parent-level error/retry banner, so this card
-// must neither perform its own read against a date it doesn't have, nor
+// must neither present data judged against a date it doesn't have, nor
 // present a successful "0 completed" as though it were real data — a
 // failed date fetch is not equivalent to zero progress. Rendering-wise
 // "blocked" is treated the same as "loading" (see isLoading below): a
@@ -44,17 +54,21 @@ interface TodayProgressCardProps {
   // through:
   //   "loading"     — the shared date request (or the profile load it
   //                    waits on) is still in flight; this card mirrors it.
-  //   "ready"       — todayISO is populated; this card performs its own
-  //                    statistics read once practiceLanguage is also known.
+  //   "ready"       — todayISO is populated; this card derives its own
+  //                    statistics once practiceLanguage is also known.
   //   "unavailable" — legitimately no session (signed out, or auth/profile
   //                    not ready) — the existing safe "0 completed"
   //                    fallback applies, same as before this contract
   //                    changed.
   //   "error"       — the shared date request genuinely failed. This card
-  //                    must not run its own read and must not present a
-  //                    "0 completed" result as if it were successfully
-  //                    loaded data — see "blocked" above.
+  //                    must not present a "0 completed" result as if it
+  //                    were successfully loaded data — see "blocked" above.
   todayISOStatus: "loading" | "ready" | "unavailable" | "error";
+  // The shared daily-stats resource (see useProfileSharedDailyStats.ts) —
+  // requested once by LearningSection, read here rather than fetched by
+  // this card itself.
+  dailyStatsStatus: SharedLazyResourceStatus;
+  dailyStatsRows: MilestoneDailyStatRow[];
 }
 
 // Below ~1184px the card switches from the circular ring to a horizontal
@@ -68,36 +82,34 @@ export function TodayProgressCard({
   isProfileLoaded,
   todayISO,
   todayISOStatus,
+  dailyStatsStatus,
+  dailyStatsRows,
 }: TodayProgressCardProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
-  const [state, setState] = useState<LoadState>({ status: "loading" });
 
-  useEffect(() => {
+  const state = useMemo<LoadState>(() => {
     if (!authUserId) {
       // Signed-out visitor: trivially "0 of the default goal" — there is no
       // account to read progress from, and this must never crash the page.
-      setState({ status: "ready", completed: 0 });
-      return;
+      return { status: "ready", completed: 0 };
     }
 
     if (!isProfileLoaded || todayISOStatus === "loading") {
       // The shared profile load (App.tsx) or LearningSection's shared
-      // date load is still in flight — wait for both rather than fetching
+      // date load is still in flight — wait for both rather than deriving
       // with a not-yet-known target language or date.
-      setState({ status: "loading" });
-      return;
+      return { status: "loading" };
     }
 
     if (todayISOStatus === "error") {
       // LearningSection's shared date request genuinely failed — it
       // already shows the one parent-level error/retry banner. This card
-      // must not attempt its own read (there is no date to read with), and
+      // must not present data judged against a date it doesn't have, and
       // must not present a "0 completed" result as though it were
       // successfully loaded data: a failed date fetch is not the same as
       // zero progress. See "blocked" in LoadState above.
-      setState({ status: "blocked" });
-      return;
+      return { status: "blocked" };
     }
 
     if (!practiceLanguage || !todayISO) {
@@ -105,38 +117,20 @@ export function TodayProgressCard({
       // todayISOStatus is "unavailable" (signed out / no session — a
       // legitimate, expected state, not a failure) — same "safe fallback,
       // not a crash" contract as a signed-out visitor.
-      setState({ status: "ready", completed: 0 });
-      return;
+      return { status: "ready", completed: 0 };
     }
 
-    let cancelled = false;
-    setState({ status: "loading" });
+    if (dailyStatsStatus === "idle" || dailyStatsStatus === "loading") {
+      return { status: "loading" };
+    }
 
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        if (!session) {
-          if (!cancelled) setState({ status: "ready", completed: 0 });
-          return;
-        }
-
-        const completed = await readTodayNewWordsCompleted(session, practiceLanguage, todayISO);
-        if (cancelled) return;
-        setState({ status: "ready", completed });
-      } catch (error) {
-        if (cancelled) return;
-        console.warn(
-          "TodayProgressCard: failed to load today's progress.",
-          describeSupabaseError("readTodayNewWordsCompleted", error),
-        );
-        setState({ status: "ready", completed: 0 });
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [authUserId, isProfileLoaded, practiceLanguage, todayISO, todayISOStatus]);
+    // A same-context dailyStatsStatus "error" falls through to the "ready,
+    // 0 completed" branch below, matching this card's own pre-Phase-1
+    // fetch-failure behavior (its old catch block never surfaced a
+    // distinct error state for its own read — only a shared todayISO
+    // failure gets "blocked").
+    return { status: "ready", completed: findTodayNewWordsCompleted(dailyStatsRows, todayISO) };
+  }, [authUserId, isProfileLoaded, practiceLanguage, todayISO, todayISOStatus, dailyStatsStatus, dailyStatsRows]);
 
   // Covers both a genuine in-flight fetch ("loading") and a parent-level
   // date error this card can't act on ("blocked") — both render the same

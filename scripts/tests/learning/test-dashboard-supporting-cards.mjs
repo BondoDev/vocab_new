@@ -374,13 +374,11 @@ test("20. useDashboardSupportingData only reads (no insert/update/RPC-write call
   assert.doesNotMatch(useDashboardSupportingData, /supabase.*(insert|update|upsert)/i);
   assert.doesNotMatch(useDashboardSupportingData, /\brpc\//i);
   assert.doesNotMatch(useDashboardSupportingData, /method:\s*["'](POST|PATCH|PUT|DELETE)["']/);
-  assert.match(useDashboardSupportingData, /readMilestoneDailyStats/);
 });
 
 test("20a. useDashboardVocabularyGrowthData only reads vocabulary growth history", () => {
   assert.doesNotMatch(useDashboardVocabularyGrowthData, /supabase.*(insert|update|upsert)/i);
   assert.doesNotMatch(useDashboardVocabularyGrowthData, /method:\s*["'](PATCH|PUT|DELETE)["']/);
-  assert.match(useDashboardVocabularyGrowthData, /readVocabularyGrowthEvents/);
   assert.match(useDashboardVocabularyGrowthData, /computeVocabularyGrowthHistory/);
 });
 
@@ -399,10 +397,40 @@ test("20b. None of the four supporting cards call a write/mutation function", ()
   }
 });
 
-test("Only one useDashboardSupportingData call exists (DashboardSection), never duplicated per card", () => {
-  const occurrences = (dashboardSection.match(/useDashboardSupportingData\(/g) || []).length;
-  assert.equal(occurrences, 1);
-  assert.match(dashboardSection, /useDashboardVocabularyGrowthData\(/);
+// Fetch-audit Phase 1: useDashboardSupportingData/useDashboardVocabularyGrowthData
+// no longer own a fetch at all (readMilestoneDailyStats/
+// readVocabularyGrowthEvents moved to the shared, lazily-loaded
+// useProfileSharedDailyStats.ts, requested once by DashboardSection's own
+// mount effect and reused as-is by Progress's MilestonesSection/
+// VocabularyGrowthSection — see the fetch audit's FETCH-001/FETCH-002).
+// Both hooks are now pure useMemo derivations over dailyStatsRows/
+// vocabularyGrowthEvents props instead.
+test("20c. useDashboardSupportingData/useDashboardVocabularyGrowthData no longer call readMilestoneDailyStats/readVocabularyGrowthEvents directly — both derive from shared props instead", () => {
+  assert.doesNotMatch(
+    useDashboardSupportingData,
+    /readMilestoneDailyStats\(/,
+    "useDashboardSupportingData must no longer call readMilestoneDailyStats itself — it derives from the dailyStatsRows prop",
+  );
+  assert.match(useDashboardSupportingData, /dailyStatsRows: MilestoneDailyStatRow\[\];/);
+  assert.match(useDashboardSupportingData, /dailyStatsStatus: SharedLazyResourceStatus;/);
+  assert.doesNotMatch(
+    useDashboardVocabularyGrowthData,
+    /readVocabularyGrowthEvents\(/,
+    "useDashboardVocabularyGrowthData must no longer call readVocabularyGrowthEvents itself — it derives from the vocabularyGrowthEvents prop",
+  );
+  assert.match(useDashboardVocabularyGrowthData, /vocabularyGrowthEvents: VocabularyGrowthEventRow\[\];/);
+});
+
+test("DashboardSection requests the shared daily-stats/vocabulary-growth resources exactly once per mount, and no card fetches its own copy", () => {
+  assert.match(
+    dashboardSection,
+    /useEffect\(\(\) => \{\s*onRequestDailyStats\(\);\s*onRequestVocabularyGrowthEvents\(\);\s*\}, \[onRequestDailyStats, onRequestVocabularyGrowthEvents\]\);/,
+    "DashboardSection must request both shared resources exactly once, in its own mount effect",
+  );
+  const supportingDataOccurrences = (dashboardSection.match(/useDashboardSupportingData\(/g) || []).length;
+  assert.equal(supportingDataOccurrences, 1);
+  const growthDataOccurrences = (dashboardSection.match(/useDashboardVocabularyGrowthData\(/g) || []).length;
+  assert.equal(growthDataOccurrences, 1);
   for (const [name, source] of [
     ["StudyActivityCard", studyActivityCard],
     ["WordsLearnedCard", wordsLearnedCard],

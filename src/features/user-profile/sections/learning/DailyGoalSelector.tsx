@@ -10,6 +10,7 @@ import {
   type UserProfile,
 } from "../../../../lib/userProfile";
 import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
+import { notifyDailyStatsChanged } from "../../../../lib/sharedProgressInvalidation";
 import { useIsCompactLearningSummary } from "./useIsCompactLearningSummary";
 
 interface DailyGoalOption {
@@ -127,6 +128,15 @@ export function DailyGoalSelector({ userProfile, isProfileLoaded, onDailyGoalCha
           dailyGoal: result.dailyGoal,
         });
         onDailyGoalChange?.(nextProfile.dailyGoal);
+        // update_daily_goal also upsert-syncs today's (only today's)
+        // user_daily_stats.daily_goal snapshot in the same transaction (see
+        // updateDailyGoal's own header in src/lib/userProfile.ts) — the
+        // shared daily-stats resource (useProfileSharedDailyStats.ts) may
+        // now be stale. This is what makes DailyStreakCard's displayed
+        // classification of *today* pick up the new stored goal without a
+        // page reload; a failed save never reaches this branch, so it can
+        // never fire a false refresh.
+        notifyDailyStatsChanged();
         showConfirmation(t("userProfile.learningSection.dailyGoal.savedToast"));
       })
       .catch((error) => {

@@ -21,7 +21,11 @@ import type { WordState } from "../data/learning/wordReviewSchedule";
 import { addDaysISO } from "../data/learning/dailyStreak";
 import { isValidWordTimeSeconds } from "../data/learning/activeWordTimer";
 export { isValidWordTimeSeconds } from "../data/learning/activeWordTimer";
-import { notifyWordProgressChanged } from "./sharedProgressInvalidation";
+import {
+  notifyWordProgressChanged,
+  notifyDailyStatsChanged,
+  notifyVocabularyGrowthChanged,
+} from "./sharedProgressInvalidation";
 import { parseLearningModeTimeRow } from "./learningTimeStats";
 
 interface UserWordProgressRow {
@@ -313,6 +317,15 @@ export async function completeNewWordStudy(
   // the profile dashboard's shared active-language rows (see
   // sharedProgressInvalidation.ts's own header) may now be stale.
   notifyWordProgressChanged();
+  // Also upsert-incremented today's user_daily_stats.new_words_completed
+  // (see complete_new_word_study's own transaction) — the shared daily-stats
+  // resource (useProfileSharedDailyStats.ts) may now be stale. This write
+  // never touches review_events, so the vocabulary-growth events resource
+  // is deliberately left alone here (see notifyVocabularyGrowthChanged's
+  // own header for why a new-word study isn't a "growth event" — the growth
+  // chart picks up a newly-studied word from the already-invalidated
+  // word-progress rows instead).
+  notifyDailyStatsChanged();
   return result;
 }
 
@@ -746,6 +759,14 @@ export async function completeWordReview(params: CompleteWordReviewParams): Prom
   // user_word_progress row's word_state — see sharedProgressInvalidation.ts's
   // own header for what subscribing to this signal does and doesn't affect.
   notifyWordProgressChanged();
+  // Also upsert-incremented today's user_daily_stats.reviews_completed AND
+  // recorded a new review_events row (see complete_word_review's own
+  // transaction) — both the shared daily-stats resource and the shared
+  // vocabulary-growth-events resource (useProfileSharedDailyStats.ts) may
+  // now be stale, unlike completeNewWordStudy above, which never touches
+  // review_events.
+  notifyDailyStatsChanged();
+  notifyVocabularyGrowthChanged();
   return parsedResult;
 }
 
@@ -754,6 +775,15 @@ export async function completeWordReview(params: CompleteWordReviewParams): Prom
 // computed from (see src/data/learning/dailyStreak.ts for the actual
 // current/best-streak and current-week math; this function only fetches
 // the raw rows).
+//
+// Fetch-audit Phase 1: DailyStreakCard no longer calls this function — it
+// now derives from the shared, unbounded MilestoneDailyStatRow[] array
+// useProfileSharedDailyStats.ts owns (readMilestoneDailyStats, widened to
+// include daily_goal, is that array's single source). This function is kept
+// as-is (not deleted) purely for its own existing contract test coverage
+// (scripts/tests/learning/test-daily-streak-data-contract.mjs) and as a
+// documented, still-correct 400-day-bounded alternative — nothing in the
+// app calls it anymore.
 // ---------------------------------------------------------------------
 
 // Bounds the lookback window instead of an unbounded historical query —
@@ -839,6 +869,24 @@ export async function readDailyStreakStats(
 // computation (src/data/learning/milestoneStreak.ts) via the same rows —
 // one request serves both tracks, per the "load once, evaluate all tracks
 // locally" requirement.
+//
+// Fetch-audit Phase 1 (the profile-section data-fetch optimization's own
+// Phase 1) widened this to also select daily_goal, the one column
+// readDailyStreakStats had that this row shape was missing — that closed
+// the last gap keeping this from being a single canonical user_daily_stats
+// reader. useProfileSharedDailyStats.ts
+// (src/features/user-profile/sections/useProfileSharedDailyStats.ts) is now
+// the app's single shared owner of this read: Dashboard's hero/supporting
+// cards, Learning's TodayProgressCard/DailyStreakCard, and Progress's
+// MilestonesSection all derive locally from the one shared MilestoneDailyStatRow[]
+// array instead of each calling this function (or readDailyStreakStats/
+// readTodayNewWordsCompleted) on their own mount. readDailyStreakStats
+// itself is kept (see its own header) purely for its existing test
+// coverage/API completeness — no UI call site remains after this phase.
+// readTodayNewWordsCompleted keeps its one remaining caller,
+// loadNewWordStudyQueue.ts (Study New Words), untouched — optimizing that
+// separate learning-date/today-count read is explicitly out of scope for
+// this phase.
 // ---------------------------------------------------------------------
 
 export interface MilestoneDailyStatRow {
@@ -854,6 +902,13 @@ export interface MilestoneDailyStatRow {
   newWordStudyTimeSeconds: number;
   reviewTimeSeconds: number;
   customPracticeTimeSeconds: number;
+  // Fetch-audit Phase 1 — this row's own frozen daily-goal snapshot (see
+  // readDailyStreakStats's own dailyGoal field for the exact semantics:
+  // null for a legacy row predating the Streak Phase 1 snapshot, a stored snapshot otherwise,
+  // never the live/mutable current profile goal). Present so this one row
+  // shape can also satisfy DailyStreakCard's computeDailyStreakSummary
+  // input, which readDailyStreakStats previously supplied alone.
+  dailyGoal: number | null;
 }
 
 interface UserDailyStatsMilestoneRawRow {
@@ -863,6 +918,7 @@ interface UserDailyStatsMilestoneRawRow {
   new_word_study_time_seconds?: unknown;
   review_time_seconds?: unknown;
   custom_practice_time_seconds?: unknown;
+  daily_goal?: unknown;
 }
 
 export async function readMilestoneDailyStats(
@@ -878,7 +934,7 @@ export async function readMilestoneDailyStats(
     session,
     `/rest/v1/user_daily_stats?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(
       targetLanguage,
-    )}&select=stat_date,new_words_completed,reviews_completed,new_word_study_time_seconds,review_time_seconds,custom_practice_time_seconds`,
+    )}&select=stat_date,new_words_completed,reviews_completed,new_word_study_time_seconds,review_time_seconds,custom_practice_time_seconds,daily_goal`,
   );
 
   const rows: MilestoneDailyStatRow[] = [];
@@ -890,6 +946,21 @@ export async function readMilestoneDailyStats(
     const rawNewWords = raw.new_words_completed;
     const rawReviews = raw.reviews_completed;
     const timeSeconds = parseLearningModeTimeRow(raw);
+
+    // Same malformed-value rule as readDailyStreakStats: a null/undefined
+    // daily_goal is a legitimate legacy row (dailyGoal: null); a present
+    // but non-numeric value is a genuine data anomaly, so the whole row is
+    // skipped rather than silently coerced.
+    const rawGoal = raw.daily_goal;
+    let dailyGoal: number | null;
+    if (rawGoal === null || rawGoal === undefined) {
+      dailyGoal = null;
+    } else if (typeof rawGoal === "number" && Number.isFinite(rawGoal)) {
+      dailyGoal = rawGoal;
+    } else {
+      continue;
+    }
+
     rows.push({
       dateISO: raw.stat_date,
       newWordsCompleted: typeof rawNewWords === "number" && Number.isFinite(rawNewWords) ? rawNewWords : 0,
@@ -897,6 +968,7 @@ export async function readMilestoneDailyStats(
       newWordStudyTimeSeconds: timeSeconds.newWordStudyTimeSeconds,
       reviewTimeSeconds: timeSeconds.reviewTimeSeconds,
       customPracticeTimeSeconds: timeSeconds.customPracticeTimeSeconds,
+      dailyGoal,
     });
   }
   return rows;

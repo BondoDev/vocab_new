@@ -9,6 +9,15 @@
 // test-daily-streak-data-contract.mjs/test-milestones-data-contract.mjs,
 // which this guard mirrors).
 //
+// Fetch-audit Phase 1 (the profile-section data-fetch optimization's own
+// Phase 1) moved loadVocabularyGrowthHistory.ts from calling
+// readVocabularyGrowthEvents directly to accepting the already-loaded event
+// rows as a parameter (see the audit's FETCH-002): VocabularyGrowthSection
+// now requests the shared, lazily-loaded array from
+// useProfileSharedDailyStats.ts instead of fetching its own copy on every
+// Progress-page mount — the same array Dashboard's Words Learned card
+// consumes when the user switches there.
+//
 // Run: node --experimental-strip-types scripts/tests/learning/test-vocabulary-growth-data-contract.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -35,9 +44,9 @@ function test(name, fn) {
 
 // Strips `// ...` line comments so guards below check live code only —
 // several of these files' own header comments discuss "Supabase"/"write"/
-// "insert" by name to document exactly their absence, which would
-// otherwise false-match a whole-file regex (same precedent as
-// test-learning-section-date-ownership.mjs).
+// "insert"/"readVocabularyGrowthEvents" by name to document exactly their
+// absence, which would otherwise false-match a whole-file regex (same
+// precedent as test-learning-section-date-ownership.mjs).
 // CRLF-safe: \r\n is normalized to \n before splitting. Without that, a
 // CRLF line's trailing \r survives split("\n") and blocks /\/\/.*$/ from
 // ever reaching $ (`.` never matches \r, and $ without /m only matches the
@@ -111,14 +120,23 @@ const loaderPath = path.join(
 const loaderSource = fs.readFileSync(loaderPath, "utf8");
 const loaderLiveCode = stripLineComments(loaderSource);
 
-test("8. Accepts already-loaded progressRows (Phase 1's shared word-progress source) and reuses readVocabularyGrowthEvents — no duplicate data-loading infrastructure", () => {
+test("8. Accepts already-loaded progressRows AND eventRows (Fetch-audit Phase 1's shared sources) — no data-loading infrastructure of its own remains", () => {
   // Phase 1 of the profile-section data optimization: progressRows are
   // fetched once by UserProfileDashboardPage's shared
-  // useProfileSharedProgressData and passed in here — this orchestrator no
-  // longer calls readUserWordProgress itself.
+  // useProfileSharedProgressData. Fetch-audit Phase 1 extended the same
+  // pattern to eventRows (useProfileSharedDailyStats) — this orchestrator
+  // calls neither readUserWordProgress nor readVocabularyGrowthEvents
+  // itself; both are plain parameters now.
   assert.doesNotMatch(loaderLiveCode, /readUserWordProgress\(/);
+  assert.doesNotMatch(loaderLiveCode, /readVocabularyGrowthEvents\(/);
   assert.match(loaderLiveCode, /progressRows: UserWordProgressFullRow\[\];/);
-  assert.match(loaderLiveCode, /readVocabularyGrowthEvents/);
+  assert.match(loaderLiveCode, /eventRows: VocabularyGrowthEventRow\[\];/);
+});
+
+test("8b. loadVocabularyGrowthHistory is a plain synchronous function — no session parameter, no async, no network of its own", () => {
+  assert.doesNotMatch(loaderLiveCode, /\basync function loadVocabularyGrowthHistory\b/);
+  assert.doesNotMatch(loaderLiveCode, /session:\s*StoredSupabaseSession/);
+  assert.match(loaderLiveCode, /export function loadVocabularyGrowthHistory\(/);
 });
 
 test("9. Reuses the pure reconstruction engine — computeVocabularyGrowthHistory, applyCurrentDayOverride, resolveWordCreatedDateISO — never reimplements it", () => {
@@ -149,6 +167,23 @@ test("12. No Supabase write verb anywhere in the loader — read-only orchestrat
 
 test("13. filterVocabularyGrowthByRange is re-exported for local, non-refetching range switching", () => {
   assert.match(loaderSource, /export \{ filterVocabularyGrowthByRange \}/);
+});
+
+console.log("\n=== VocabularyGrowthSection.tsx: requests the shared resource, no fetch effect of its own ===\n");
+
+const sectionSource = fs.readFileSync(
+  path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "progress", "VocabularyGrowthSection.tsx"),
+  "utf8",
+);
+const sectionLiveCode = stripLineComments(sectionSource);
+
+test("14. VocabularyGrowthSection requests the shared vocabulary-growth-events resource once per mount and never fetches its own copy", () => {
+  assert.match(
+    sectionLiveCode,
+    /useEffect\(\(\) => \{\s*onRequestVocabularyGrowthEvents\(\);\s*\}, \[onRequestVocabularyGrowthEvents\]\);/,
+    "VocabularyGrowthSection must request the shared resource exactly once, in its own mount effect",
+  );
+  assert.doesNotMatch(sectionLiveCode, /getStoredSupabaseSession|supabaseRequest/, "VocabularyGrowthSection must not read a Supabase session itself");
 });
 
 console.log(`\n─────────────────────────────────────────`);

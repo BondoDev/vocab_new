@@ -157,11 +157,15 @@ test("5. completeNewWordStudy and completeWordReview both notify the shared inva
   assert.ok(wordReviewFnMatch, "completeWordReview must exist");
   assert.match(newWordStudyFnMatch[1], /notifyWordProgressChanged\(\)/, "completeNewWordStudy must call notifyWordProgressChanged()");
   assert.match(wordReviewFnMatch[1], /notifyWordProgressChanged\(\)/, "completeWordReview must call notifyWordProgressChanged()");
-  assert.match(
-    newWordProgress,
-    /import\s*\{\s*notifyWordProgressChanged\s*\}\s*from\s*"\.\/sharedProgressInvalidation"/,
-    "newWordProgress.ts must import notifyWordProgressChanged from ./sharedProgressInvalidation",
-  );
+  // Fetch-audit Phase 1 widened this to a multi-name import (also pulling
+  // in notifyDailyStatsChanged/notifyVocabularyGrowthChanged — see
+  // test-daily-stats-invalidation-contract.mjs for that phase's own
+  // guards) — this only proves notifyWordProgressChanged is still one of
+  // the names imported from ./sharedProgressInvalidation, not that it's
+  // the sole one.
+  const importBlockMatch = newWordProgress.match(/import\s*\{([^}]*)\}\s*from\s*"\.\/sharedProgressInvalidation"/);
+  assert.ok(importBlockMatch, "newWordProgress.ts must import from ./sharedProgressInvalidation");
+  assert.match(importBlockMatch[1], /\bnotifyWordProgressChanged\b/, "newWordProgress.ts must import notifyWordProgressChanged from ./sharedProgressInvalidation");
 });
 
 test("6. useProfileSharedProgressData subscribes to the shared invalidation store", () => {

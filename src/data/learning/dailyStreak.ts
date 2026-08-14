@@ -83,6 +83,24 @@ export function addDaysISO(dateISO: string, days: number): string {
   return formatDateOnlyUTC(date);
 }
 
+// Fetch-audit Phase 1: today's new-word count used to be its own dedicated
+// read (readTodayNewWordsCompleted, src/lib/newWordProgress.ts) — Dashboard
+// and Learning now derive it locally from the same shared, unbounded
+// user_daily_stats rows the streak/milestone computations already use
+// (useProfileSharedDailyStats.ts), rather than issuing a second, narrower
+// request for a value that row set already contains. Structurally typed
+// (not tied to DailyStreakDayStat or MilestoneDailyStatRow specifically) so
+// either row shape satisfies it without a conversion step. A missing row
+// for todayISO is 0 completed, not an error — matching
+// readTodayNewWordsCompleted's own "no row yet today" contract.
+export function findTodayNewWordsCompleted(
+  stats: readonly { dateISO: string; newWordsCompleted: number }[],
+  todayISO: string,
+): number {
+  const todayStat = stats.find((stat) => stat.dateISO === todayISO);
+  return todayStat?.newWordsCompleted ?? 0;
+}
+
 // Date.getUTCDay() is 0=Sunday..6=Saturday; WEEK_DAYS is Monday-first, so
 // Sunday needs a -6 offset instead of the usual 1-dayOfWeek.
 function mondayOfWeek(dateISO: string): string {

@@ -372,18 +372,19 @@ test("36. Changing today's stored goal across a refetch never alters any histori
 
 console.log("\n=== streak refresh after a successful goal-change (data-flow model) ===\n");
 
-// DailyStreakCard.tsx doesn't refetch user_daily_stats itself when it
-// re-renders — it only recomputes computeDailyStreakSummary from whatever
-// `stats` it already has (see that component's own comments). The actual
-// refetch is driven by LearningSection's streakRefreshToken bumping after a
-// successful update_daily_goal save (see test-daily-goal-narrow-write-
-// boundary.mjs's source-text guards for that wiring). What matters *here*,
-// at the pure-function level this suite can actually exercise, is that
-// feeding computeDailyStreakSummary the "before" vs. "after" stats arrays a
-// real refetch would produce behaves exactly as required: only today's
-// completion may change, and only because today's own row now carries a
-// different stored goal — never because any goal value was threaded into
-// the computation directly.
+// DailyStreakCard.tsx never fetches user_daily_stats itself at all — it
+// only recomputes computeDailyStreakSummary from whatever shared
+// dailyStatsRows it's handed (see that component's own comments). The
+// actual refresh is driven by the shared daily-stats resource
+// (useProfileSharedDailyStats.ts) refetching after DailyGoalSelector.tsx
+// fires notifyDailyStatsChanged() on a successful update_daily_goal save
+// (see test-daily-goal-narrow-write-boundary.mjs's source-text guards for
+// that wiring). What matters *here*, at the pure-function level this suite
+// can actually exercise, is that feeding computeDailyStreakSummary the
+// "before" vs. "after" stats arrays a real refresh would produce behaves
+// exactly as required: only today's completion may change, and only
+// because today's own row now carries a different stored goal — never
+// because any goal value was threaded into the computation directly.
 test("37. Before a refresh: today's cached row (goal 15, 15 completed) reads completed, historical days intact", () => {
   const beforeRefresh = [
     stat(TODAY, 15, 15), // today, as originally fetched: stored goal 15

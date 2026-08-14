@@ -1,16 +1,15 @@
-import { useEffect, useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
-import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import type { UserProfile } from "../../../../lib/userProfile";
-import { readDailyStreakStats, type DailyStreakStatRow } from "../../../../lib/newWordProgress";
-import { describeSupabaseError } from "../../../../lib/supabaseError";
+import type { MilestoneDailyStatRow } from "../../../../lib/newWordProgress";
 import {
   computeDailyStreakSummary,
   type DailyStreakDayStatus,
   type DailyStreakSummary,
 } from "../../../../data/learning/dailyStreak";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 import { useIsCompactLearningSummary } from "./useIsCompactLearningSummary";
 
 const WEEK_DAYS = [
@@ -55,14 +54,14 @@ const DAY_STATUS_MARKER_CLASSES: Record<DailyStreakDayStatus, string> = {
 // "blocked" (distinct from "loading") is what this card enters when
 // todayISOStatus is "error": LearningSection's shared date request failed
 // and already shows the one parent-level error/retry banner, so this card
-// must neither perform its own read against a date it doesn't have, nor
+// must neither present data judged against a date it doesn't have, nor
 // present a successful "empty stats" summary as though it were real data —
 // a failed date fetch is not equivalent to "no streak history". Rendering-
 // wise "blocked" is treated the same as "loading" (see isLoading below): a
 // neutral skeleton placeholder, never the numeric streak/week display.
 type LoadState =
   | { status: "loading" }
-  | { status: "ready"; stats: DailyStreakStatRow[] }
+  | { status: "ready"; stats: MilestoneDailyStatRow[] }
   | { status: "blocked" };
 
 interface DailyStreakCardProps {
@@ -77,35 +76,35 @@ interface DailyStreakCardProps {
   // through:
   //   "loading"     — the shared date request (or the profile load it
   //                    waits on) is still in flight; this card mirrors it.
-  //   "ready"       — todayISO is populated; this card performs its own
-  //                    stats read once practiceLanguage is also known.
+  //   "ready"       — todayISO is populated; this card derives its own
+  //                    stats once practiceLanguage is also known.
   //   "unavailable" — legitimately no session (signed out, or auth/profile
   //                    not ready) — the existing safe "empty stats"
   //                    fallback applies, same as before this contract
   //                    changed.
   //   "error"       — the shared date request genuinely failed. This card
-  //                    must not run its own read and must not present an
-  //                    "empty stats" summary as if it were successfully
-  //                    loaded data — see "blocked" above.
+  //                    must not present an "empty stats" summary as if it
+  //                    were successfully loaded data — see "blocked" above.
   todayISOStatus: "loading" | "ready" | "unavailable" | "error";
-  // Opaque counter from LearningSection, bumped once per *successful*
-  // update_daily_goal save (see LearningSection.tsx's handleDailyGoalChange
-  // and DailyGoalSelector's onDailyGoalChange — never bumped on a failed
-  // save). This card never reads the number's value, only that it changed
-  // — it exists solely to re-trigger the fetch effect below so today's row
-  // (whose stored daily_goal update_daily_goal just changed server-side)
-  // gets re-read instead of staying on a stale cached copy. See the effect
-  // below for why this is the only thing a goal change is allowed to
-  // affect here.
-  streakRefreshToken: number;
+  // Fetch-audit Phase 1: the shared daily-stats resource (see
+  // useProfileSharedDailyStats.ts) — requested once by LearningSection,
+  // read here rather than fetched by this card itself. Replaces the
+  // previous streakRefreshToken prop entirely: a successful daily-goal
+  // save now fires notifyDailyStatsChanged() (DailyGoalSelector.tsx),
+  // which refreshes this same shared resource in the background, so this
+  // card picks up today's newly-stored goal snapshot without any
+  // card-local refresh mechanism of its own.
+  dailyStatsStatus: SharedLazyResourceStatus;
+  dailyStatsRows: MilestoneDailyStatRow[];
 }
 
 // practiceLanguage comes from the Learning dashboard's single shared
 // profile load (see App.tsx's useUserProfileLoad, threaded down through
-// LearningSection) rather than a copy fetched by this component — only the
-// recent user_daily_stats history a streak is computed from
-// (readDailyStreakStats) is this component's own request; the summary
-// itself is a pure client computation (computeDailyStreakSummary).
+// LearningSection) rather than a copy fetched by this component; the
+// recent user_daily_stats history a streak is computed from is now the
+// shared dailyStatsRows (see useProfileSharedDailyStats.ts) — this
+// component fetches nothing itself. The summary is still a pure client
+// computation (computeDailyStreakSummary).
 //
 // No dailyGoal prop, deliberately: unlike TodayProgressCard (which needs
 // the live current goal to show progress *today*), this card must never
@@ -113,89 +112,63 @@ interface DailyStreakCardProps {
 // — see computeDailyStreakSummary's own header for why. Each row is judged
 // solely against its own stored daily_goal snapshot, or a fixed legacy
 // default for rows written before Streak Phase 1 had a snapshot to store.
-// streakRefreshToken (below) exists precisely so a goal change can still
-// prompt a *refetch* of the authoritative rows without ever handing this
-// card the goal value itself to compute with.
+// A successful goal change reaches this card only via the shared resource
+// refreshing (notifyDailyStatsChanged, fired by DailyGoalSelector.tsx) —
+// never by handing this card the goal value itself to compute with.
 export function DailyStreakCard({
   practiceLanguage,
   isProfileLoaded,
   todayISO,
   todayISOStatus,
-  streakRefreshToken,
+  dailyStatsStatus,
+  dailyStatsRows,
 }: DailyStreakCardProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
-  const [state, setState] = useState<LoadState>({ status: "loading" });
   const isCompact = useIsCompactLearningSummary();
   const [isExpanded, setIsExpanded] = useState(false);
   const panelId = useId();
 
-  useEffect(() => {
+  const state = useMemo<LoadState>(() => {
     if (!authUserId) {
-      setState({ status: "ready", stats: [] });
-      return;
+      return { status: "ready", stats: [] };
     }
 
     if (!isProfileLoaded || todayISOStatus === "loading") {
       // The shared profile load (App.tsx) or LearningSection's shared date
-      // load is still in flight — wait for both rather than fetching with
+      // load is still in flight — wait for both rather than deriving with
       // a not-yet-known target language or date.
-      setState({ status: "loading" });
-      return;
+      return { status: "loading" };
     }
 
     if (todayISOStatus === "error") {
       // LearningSection's shared date request genuinely failed — it
       // already shows the one parent-level error/retry banner. This card
-      // must not attempt its own read (there is no date to read with), and
+      // must not present data judged against a date it doesn't have, and
       // must not present an "empty stats" summary as though it were
       // successfully loaded data: a failed date fetch is not the same as
       // "no streak history". See "blocked" in LoadState above.
-      setState({ status: "blocked" });
-      return;
+      return { status: "blocked" };
     }
 
     if (!practiceLanguage || !todayISO) {
       // No target language yet, or todayISOStatus is "unavailable" (signed
       // out / no session — a legitimate, expected state, not a failure) —
       // same empty fallback either way.
-      setState({ status: "ready", stats: [] });
-      return;
+      return { status: "ready", stats: [] };
     }
 
-    let cancelled = false;
-    setState({ status: "loading" });
+    if (dailyStatsStatus === "idle" || dailyStatsStatus === "loading") {
+      return { status: "loading" };
+    }
 
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        if (!session) {
-          if (!cancelled) setState({ status: "ready", stats: [] });
-          return;
-        }
-
-        const stats = await readDailyStreakStats(session, practiceLanguage, todayISO);
-        if (cancelled) return;
-        setState({ status: "ready", stats });
-      } catch (error) {
-        if (cancelled) return;
-        console.warn("DailyStreakCard: failed to load streak data.", describeSupabaseError("readDailyStreakStats", error));
-        setState({ status: "ready", stats: [] });
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-    // streakRefreshToken only ever changes after a *successful*
-    // update_daily_goal save (see LearningSection.tsx) — its sole purpose
-    // as a dependency is forcing this effect to re-run and re-fetch
-    // today's now-updated stored goal, exactly like a practiceLanguage or
-    // auth change already does. A failed save never bumps it, so a failed
-    // save can never trigger a refetch here. It never triggers a new
-    // getCurrentLearningDate() call either — todayISO is owned entirely by
-    // LearningSection, not refetched by this effect.
-  }, [authUserId, isProfileLoaded, practiceLanguage, todayISO, todayISOStatus, streakRefreshToken]);
+    // A same-context dailyStatsStatus "error" falls through to "ready,
+    // empty stats" below, matching this card's own pre-Phase-1
+    // fetch-failure behavior (its old catch block never surfaced a
+    // distinct error state for its own read — only a shared todayISO
+    // failure gets "blocked").
+    return { status: "ready", stats: dailyStatsRows };
+  }, [authUserId, isProfileLoaded, practiceLanguage, todayISO, todayISOStatus, dailyStatsStatus, dailyStatsRows]);
 
   // Covers both a genuine in-flight fetch ("loading") and a parent-level
   // date error this card can't act on ("blocked") — both render the same
@@ -212,12 +185,13 @@ export function DailyStreakCard({
   // what the live profile goal is today.
   //
   // Today's own square does repaint promptly after a successful goal save:
-  // streakRefreshToken (see the fetch effect above) forces a refetch of
-  // `stats`, which picks up the updated stored snapshot update_daily_goal
-  // just wrote to today's row server-side. A failed save never bumps the
-  // token, so `stats` — and this summary — stay exactly as they were; there
-  // is no optimistic update anywhere in this path, only a genuine refetch
-  // of authoritative data.
+  // DailyGoalSelector.tsx fires notifyDailyStatsChanged() on success, which
+  // refreshes the shared dailyStatsRows in the background and picks up the
+  // updated stored snapshot update_daily_goal just wrote to today's row
+  // server-side. A failed save never fires that signal, so `stats` — and
+  // this summary — stay exactly as they were; there is no optimistic
+  // update anywhere in this path, only a genuine refresh of authoritative
+  // data.
   const summary = isLoading || !todayISO
     ? EMPTY_SUMMARY
     : computeDailyStreakSummary(stats, todayISO);

@@ -1,7 +1,8 @@
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import type { UserProfile } from "../../../../lib/userProfile";
-import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
+import type { MilestoneDailyStatRow, UserWordProgressFullRow, VocabularyGrowthEventRow } from "../../../../lib/newWordProgress";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 import { MilestonesSection } from "./MilestonesSection";
 import { VocabularyGrowthSection } from "./VocabularyGrowthSection";
 import "./progress-section.scss";
@@ -19,6 +20,19 @@ interface ProgressSectionProps {
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
   onRetryWordProgress: () => void;
+  // Fetch-audit Phase 1: the shared, lazily-loaded user_daily_stats/
+  // vocabulary-growth-events resources (see useProfileSharedDailyStats.ts)
+  // — forwarded straight through to MilestonesSection/VocabularyGrowthSection
+  // (no logic of its own here), the same shared resources Dashboard's
+  // supporting cards consume when the user switches there.
+  dailyStatsStatus: SharedLazyResourceStatus;
+  dailyStatsRows: MilestoneDailyStatRow[];
+  onRequestDailyStats: () => void;
+  onRetryDailyStats: () => void;
+  vocabularyGrowthStatus: SharedLazyResourceStatus;
+  vocabularyGrowthEvents: VocabularyGrowthEventRow[];
+  onRequestVocabularyGrowthEvents: () => void;
+  onRetryVocabularyGrowthEvents: () => void;
   onStartNewWordStudy?: () => void;
 }
 
@@ -43,6 +57,14 @@ export function ProgressSection({
   wordProgressRows,
   wordProgressStatus,
   onRetryWordProgress,
+  dailyStatsStatus,
+  dailyStatsRows,
+  onRequestDailyStats,
+  onRetryDailyStats,
+  vocabularyGrowthStatus,
+  vocabularyGrowthEvents,
+  onRequestVocabularyGrowthEvents,
+  onRetryVocabularyGrowthEvents,
   onStartNewWordStudy,
 }: ProgressSectionProps) {
   const { t } = useLanguage();
@@ -65,6 +87,10 @@ export function ProgressSection({
         wordProgressRows={wordProgressRows}
         wordProgressStatus={wordProgressStatus}
         onRetryWordProgress={onRetryWordProgress}
+        dailyStatsStatus={dailyStatsStatus}
+        dailyStatsRows={dailyStatsRows}
+        onRequestDailyStats={onRequestDailyStats}
+        onRetryDailyStats={onRetryDailyStats}
       />
       <VocabularyGrowthSection
         userProfile={userProfile}
@@ -75,6 +101,10 @@ export function ProgressSection({
         wordProgressRows={wordProgressRows}
         wordProgressStatus={wordProgressStatus}
         onRetryWordProgress={onRetryWordProgress}
+        vocabularyGrowthStatus={vocabularyGrowthStatus}
+        vocabularyGrowthEvents={vocabularyGrowthEvents}
+        onRequestVocabularyGrowthEvents={onRequestVocabularyGrowthEvents}
+        onRetryVocabularyGrowthEvents={onRetryVocabularyGrowthEvents}
         onStartNewWordStudy={onStartNewWordStudy}
       />
     </>

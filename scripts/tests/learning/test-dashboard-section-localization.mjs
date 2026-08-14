@@ -445,8 +445,25 @@ test("13b. useDashboardHeroData only reads (no insert/update/RPC-write call)", (
   assert.doesNotMatch(useDashboardHeroData, /supabase.*(insert|update|upsert)/i);
   assert.doesNotMatch(useDashboardHeroData, /\brpc\//i);
   assert.doesNotMatch(useDashboardHeroData, /method:\s*["'](POST|PATCH|PUT|DELETE)["']/);
-  assert.match(useDashboardHeroData, /readTodayNewWordsCompleted/);
-  assert.match(useDashboardHeroData, /readDailyStreakStats/);
+});
+
+// Fetch-audit Phase 1: useDashboardHeroData no longer owns a fetch at all —
+// readTodayNewWordsCompleted/readDailyStreakStats moved to the shared,
+// lazily-loaded useProfileSharedDailyStats.ts (requested once by
+// DashboardSection's own mount effect — see
+// test-dashboard-supporting-cards.mjs's own guard for that). This hook is
+// now a pure useMemo derivation over dailyStatsRows (findTodayNewWordsCompleted
+// for completedToday, the array itself for streakStats) instead.
+test("13b2. useDashboardHeroData no longer calls readTodayNewWordsCompleted/readDailyStreakStats directly — it derives from the shared dailyStatsRows prop", () => {
+  assert.doesNotMatch(
+    useDashboardHeroData,
+    /readTodayNewWordsCompleted\(|readDailyStreakStats\(/,
+    "useDashboardHeroData must no longer call either reader itself",
+  );
+  assert.match(useDashboardHeroData, /findTodayNewWordsCompleted\(dailyStatsRows, todayISO\)/);
+  assert.match(useDashboardHeroData, /streakStats:\s*dailyStatsRows/);
+  assert.match(useDashboardHeroData, /dailyStatsRows: MilestoneDailyStatRow\[\];/);
+  assert.match(useDashboardHeroData, /dailyStatsStatus: SharedLazyResourceStatus;/);
 });
 
 test("13c. DashboardHeroCard itself performs no writes and calls no daily-goal/word-progress mutation function", () => {

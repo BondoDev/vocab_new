@@ -19,6 +19,7 @@ import {
   type ProfileTimezoneChange,
 } from "./settings/SettingsSection";
 import { useProfileSharedProgressData } from "./useProfileSharedProgressData";
+import { useProfileSharedDailyStats } from "./useProfileSharedDailyStats";
 
 interface UserProfileDashboardPageProps {
   nickname?: string;
@@ -119,6 +120,30 @@ export function UserProfileDashboardPage({
     timezone: userProfile.timezone,
   });
 
+  // Fetch-audit Phase 1: the shared, lazily-loaded owner of user_daily_stats
+  // (dailyStats*) and vocabulary-growth review_events (vocabularyGrowth*) —
+  // see useProfileSharedDailyStats.ts's own header for the full contract.
+  // Unlike the shared hook above, this one fetches nothing merely because
+  // /profile mounted: Dashboard/Learning/Progress each call
+  // requestDailyStats()/requestVocabularyGrowthEvents() themselves, once
+  // per mount, only for whichever of the two resources they actually need —
+  // Vocabulary/My Lists/Settings never do, so switching to those never
+  // triggers either fetch.
+  const {
+    dailyStatsStatus,
+    dailyStatsRows,
+    requestDailyStats,
+    retryDailyStats,
+    vocabularyGrowthStatus,
+    vocabularyGrowthEvents,
+    requestVocabularyGrowthEvents,
+    retryVocabularyGrowthEvents,
+  } = useProfileSharedDailyStats({
+    authUserId,
+    isProfileLoaded,
+    targetLanguage: userProfile.practiceLanguage,
+  });
+
   return (
     <main className="user-profile-dashboard flex-1">
       <section className="user-profile-dashboard__shell">
@@ -144,6 +169,9 @@ export function UserProfileDashboardPage({
                 todayISO={todayISO}
                 todayISOStatus={todayISOStatus}
                 onRetryLearningDate={retryLearningDate}
+                dailyStatsStatus={dailyStatsStatus}
+                dailyStatsRows={dailyStatsRows}
+                onRequestDailyStats={requestDailyStats}
                 onStartCustomPractice={onStartCustomPractice}
                 onStartNewWordStudy={onStartNewWordStudy}
                 onStartReviewWords={onStartReviewWords}
@@ -180,6 +208,14 @@ export function UserProfileDashboardPage({
                 wordProgressRows={wordProgressRows}
                 wordProgressStatus={wordProgressStatus}
                 onRetryWordProgress={retryWordProgress}
+                dailyStatsStatus={dailyStatsStatus}
+                dailyStatsRows={dailyStatsRows}
+                onRequestDailyStats={requestDailyStats}
+                onRetryDailyStats={retryDailyStats}
+                vocabularyGrowthStatus={vocabularyGrowthStatus}
+                vocabularyGrowthEvents={vocabularyGrowthEvents}
+                onRequestVocabularyGrowthEvents={requestVocabularyGrowthEvents}
+                onRetryVocabularyGrowthEvents={retryVocabularyGrowthEvents}
                 onStartNewWordStudy={onStartNewWordStudy}
               />
             ) : null}
@@ -203,6 +239,14 @@ export function UserProfileDashboardPage({
                 wordProgressRows={wordProgressRows}
                 wordProgressStatus={wordProgressStatus}
                 onRetryWordProgress={retryWordProgress}
+                dailyStatsStatus={dailyStatsStatus}
+                dailyStatsRows={dailyStatsRows}
+                onRequestDailyStats={requestDailyStats}
+                onRetryDailyStats={retryDailyStats}
+                vocabularyGrowthStatus={vocabularyGrowthStatus}
+                vocabularyGrowthEvents={vocabularyGrowthEvents}
+                onRequestVocabularyGrowthEvents={requestVocabularyGrowthEvents}
+                onRetryVocabularyGrowthEvents={retryVocabularyGrowthEvents}
                 onStartReviewWords={onStartReviewWords}
                 onNavigateToSection={setActiveSection}
               />

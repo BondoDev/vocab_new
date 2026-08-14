@@ -1,12 +1,11 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { ChevronDown, Trophy } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
-import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { describeSupabaseError } from "../../../../lib/supabaseError";
 import type { UserProfile } from "../../../../lib/userProfile";
-import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
+import type { MilestoneDailyStatRow, UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 import {
   MILESTONE_TRACK_IDS,
   evaluateAllMilestoneTracks,
@@ -50,15 +49,22 @@ interface MilestonesSectionProps {
   // and fetched exactly once by UserProfileDashboardPage's
   // useProfileSharedProgressData (see that hook's own header) — this
   // section no longer calls getCurrentLearningDate or readUserWordProgress
-  // itself. Still owns its own readMilestoneDailyStats fetch (see
-  // loadMilestoneMetrics.ts) — user_daily_stats is not consolidated in
-  // Phase 1.
+  // itself.
   todayISO: string | null;
   todayISOStatus: ProfileSharedDataStatus;
   onRetryLearningDate: () => void;
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
   onRetryWordProgress: () => void;
+  // Fetch-audit Phase 1: the shared, lazily-loaded user_daily_stats
+  // resource (see useProfileSharedDailyStats.ts) — requested exactly once
+  // here (see the mount effect below), shared as-is with Dashboard's
+  // supporting cards when the user switches there instead of either
+  // fetching its own copy on mount (see the fetch audit's FETCH-001).
+  dailyStatsStatus: SharedLazyResourceStatus;
+  dailyStatsRows: MilestoneDailyStatRow[];
+  onRequestDailyStats: () => void;
+  onRetryDailyStats: () => void;
 }
 
 // Level 1 of the two-level accordion (Progress page -> Milestones section
@@ -86,11 +92,13 @@ export function MilestonesSection({
   wordProgressRows,
   wordProgressStatus,
   onRetryWordProgress,
+  dailyStatsStatus,
+  dailyStatsRows,
+  onRequestDailyStats,
+  onRetryDailyStats,
 }: MilestonesSectionProps) {
   const { t, uiLanguage } = useLanguage();
   const { authUserId } = useAuthSession();
-  const [state, setState] = useState<LoadState>({ status: "loading" });
-  const [retryToken, setRetryToken] = useState(0);
   // Level 1: is the whole Milestones section open. Collapsed by default.
   const [isSectionExpanded, setIsSectionExpanded] = useState(false);
   // Level 2: which single track (if any) is open inside it. Reset to null
@@ -102,55 +110,47 @@ export function MilestonesSection({
 
   const targetLanguage = userProfile.practiceLanguage;
 
+  // Fetch-audit Phase 1: requests the shared daily-stats resource once per
+  // mount (a no-op if Dashboard already requested it for the same context —
+  // see useProfileSharedDailyStats.ts).
   useEffect(() => {
+    onRequestDailyStats();
+  }, [onRequestDailyStats]);
+
+  // loadMilestoneMetrics is now a pure, synchronous computation over
+  // already-loaded rows (see that file's own header) — no fetch effect of
+  // this section's own remains; only the *inputs'* statuses (shared word
+  // progress, shared learning date, shared daily stats) determine
+  // loading/error/ready here.
+  const state = useMemo<LoadState>(() => {
     if (!authUserId) {
-      setState({ status: "ready", results: ZERO_RESULTS });
-      return;
+      return { status: "ready", results: ZERO_RESULTS };
     }
 
-    if (!isProfileLoaded || todayISOStatus === "loading" || wordProgressStatus === "loading") {
-      setState({ status: "loading" });
-      return;
+    if (
+      !isProfileLoaded ||
+      todayISOStatus === "loading" ||
+      wordProgressStatus === "loading" ||
+      dailyStatsStatus === "idle" ||
+      dailyStatsStatus === "loading"
+    ) {
+      return { status: "loading" };
     }
 
-    if (todayISOStatus === "error" || wordProgressStatus === "error") {
-      // One of the two shared sources genuinely failed — surface this
+    if (todayISOStatus === "error" || wordProgressStatus === "error" || dailyStatsStatus === "error") {
+      // One of the three shared sources genuinely failed — surface this
       // section's own error/retry UI rather than presenting a zero/empty
       // result as though it were successfully loaded data.
-      setState({ status: "error" });
-      return;
+      return { status: "error" };
     }
 
     if (!targetLanguage || !todayISO) {
-      setState({ status: "ready", results: ZERO_RESULTS });
-      return;
+      return { status: "ready", results: ZERO_RESULTS };
     }
 
-    let cancelled = false;
-    setState({ status: "loading" });
-
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        if (!session) {
-          if (!cancelled) setState({ status: "ready", results: ZERO_RESULTS });
-          return;
-        }
-
-        const results = await loadMilestoneMetrics({ session, progressRows: wordProgressRows, targetLanguage, todayISO });
-        if (cancelled) return;
-        setState({ status: "ready", results });
-      } catch (error) {
-        if (cancelled) return;
-        console.warn("MilestonesSection: failed to load milestone metrics.", describeSupabaseError("loadMilestoneMetrics", error));
-        setState({ status: "error" });
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, retryToken]);
+    const results = loadMilestoneMetrics({ progressRows: wordProgressRows, dailyStatsRows, todayISO });
+    return { status: "ready", results };
+  }, [authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, dailyStatsStatus, dailyStatsRows]);
 
   const isError = state.status === "error";
   const results = state.status === "ready" ? state.results : null;
@@ -166,17 +166,17 @@ export function MilestonesSection({
     });
   };
 
-  // A single Retry covers whichever of the three sources actually failed
-  // (the shared date, the shared word-progress rows, or this section's own
-  // readMilestoneDailyStats) — this section can't tell which one from the
+  // A single Retry covers whichever of the three shared sources actually
+  // failed (the shared date, the shared word-progress rows, or the shared
+  // daily-stats resource) — this section can't tell which one from the
   // collapsed "error" status alone, so it re-requests all three; retrying
   // an already-"ready" shared source is a harmless no-visible-change
-  // background refresh (see useProfileSharedProgressData.ts's
-  // preserve-on-refresh behavior).
+  // background refresh (see useProfileSharedProgressData.ts's/
+  // useProfileSharedDailyStats.ts's own preserve-on-refresh behavior).
   const handleRetry = () => {
     onRetryLearningDate();
     onRetryWordProgress();
-    setRetryToken((token) => token + 1);
+    onRetryDailyStats();
   };
 
   return (

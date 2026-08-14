@@ -2,8 +2,9 @@ import { Flame, NotebookPen, Target } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { interpolateTemplate } from "../../../../lib/interpolateTemplate";
 import type { UserProfile } from "../../../../lib/userProfile";
-import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
+import type { MilestoneDailyStatRow, UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 import type { UserProfileSectionId } from "../../components/UserProfileSidebar";
 import { computeTodayProgressDisplay } from "../../../../data/learning/todayProgressDisplay";
 import { computeDailyStreakSummary, type DailyStreakSummary } from "../../../../data/learning/dailyStreak";
@@ -48,6 +49,11 @@ interface DashboardHeroCardProps {
   todayISOStatus: ProfileSharedDataStatus;
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
+  // The shared daily-stats resource (see useProfileSharedDailyStats.ts) —
+  // requested once by DashboardSection, read here (via useDashboardHeroData)
+  // rather than fetched by this card itself.
+  dailyStatsStatus: SharedLazyResourceStatus;
+  dailyStatsRows: MilestoneDailyStatRow[];
   onNavigateToSection?: (section: UserProfileSectionId) => void;
 }
 
@@ -64,6 +70,8 @@ export function DashboardHeroCard({
   todayISOStatus,
   wordProgressRows,
   wordProgressStatus,
+  dailyStatsStatus,
+  dailyStatsRows,
   onNavigateToSection,
 }: DashboardHeroCardProps) {
   const { t } = useLanguage();
@@ -72,6 +80,8 @@ export function DashboardHeroCard({
     practiceLanguage: userProfile.practiceLanguage,
     todayISO,
     todayISOStatus,
+    dailyStatsStatus,
+    dailyStatsRows,
   });
 
   // "blocked" (shared todayISO failed) renders identically to "loading" —

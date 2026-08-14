@@ -1,9 +1,10 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { interpolateTemplate } from "../../../../lib/interpolateTemplate";
 import type { UserProfile } from "../../../../lib/userProfile";
-import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
+import type { MilestoneDailyStatRow, UserWordProgressFullRow, VocabularyGrowthEventRow } from "../../../../lib/newWordProgress";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 import type { UserProfileSectionId } from "../../components/UserProfileSidebar";
 import { getDashboardGreetingPeriod, type DashboardGreetingPeriod } from "./dashboardGreeting";
 import { DashboardHeroCard } from "./DashboardHeroCard";
@@ -21,9 +22,7 @@ interface DashboardSectionProps {
   // single shared profile load and useProfileSharedProgressData values
   // already threaded through UserProfileDashboardPage to Learning/
   // Vocabulary/Progress — see each card's own props for what each value is
-  // used for. None of these trigger a second fetch of their own; the one
-  // genuinely new Phase 3 fetch (useDashboardSupportingData, below) is
-  // still owned by this component alone, not duplicated per card.
+  // used for.
   userProfile: UserProfile;
   isProfileLoaded: boolean;
   todayISO: string | null;
@@ -31,6 +30,22 @@ interface DashboardSectionProps {
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
   onRetryWordProgress?: () => void;
+  // Fetch-audit Phase 1: the shared, lazily-loaded user_daily_stats/
+  // vocabulary-growth resources owned by UserProfileDashboardPage's
+  // useProfileSharedDailyStats — requested exactly once here (see the
+  // mount effect below), then reused as-is by every card that needs
+  // either, instead of each card (or even this component, previously)
+  // fetching its own copy. Progress's MilestonesSection/
+  // VocabularyGrowthSection consume the exact same two resources when the
+  // user switches there — see ProgressSection's own props.
+  dailyStatsStatus: SharedLazyResourceStatus;
+  dailyStatsRows: MilestoneDailyStatRow[];
+  onRequestDailyStats: () => void;
+  onRetryDailyStats: () => void;
+  vocabularyGrowthStatus: SharedLazyResourceStatus;
+  vocabularyGrowthEvents: VocabularyGrowthEventRow[];
+  onRequestVocabularyGrowthEvents: () => void;
+  onRetryVocabularyGrowthEvents: () => void;
   onStartReviewWords?: () => void;
   // Lets Vocabulary Overview's "View Vocabulary" and Milestone Preview's
   // "View Progress" switch the active profile section in place — the same
@@ -62,6 +77,14 @@ export function DashboardSection({
   wordProgressRows,
   wordProgressStatus,
   onRetryWordProgress,
+  dailyStatsStatus,
+  dailyStatsRows,
+  onRequestDailyStats,
+  onRetryDailyStats,
+  vocabularyGrowthStatus,
+  vocabularyGrowthEvents,
+  onRequestVocabularyGrowthEvents,
+  onRetryVocabularyGrowthEvents,
   onStartReviewWords,
   onNavigateToSection,
 }: DashboardSectionProps) {
@@ -80,27 +103,40 @@ export function DashboardSection({
     return interpolateTemplate(t(GREETING_KEY_BY_PERIOD[period]), { name: trimmedNickname });
   }, [t, trimmedNickname]);
 
-  // The one Phase 3 fetch (an unbounded, language-scoped user_daily_stats
-  // read) — shared by Study Activity, Words Learned, and Milestone
-  // Preview below. See useDashboardSupportingData.ts's own header for the
-  // full "why one read, why unbounded" reasoning.
-  const { status: dailyStatsStatus, dailyStats, retry: retryDailyStats } = useDashboardSupportingData({
+  // Fetch-audit Phase 1: this section is one of the (up to three) places
+  // that can ask the shared daily-stats/vocabulary-growth resources to
+  // load — see useProfileSharedDailyStats.ts's own header. Both request
+  // functions are no-ops if already loading/loaded for the current
+  // (authUserId, targetLanguage) context, so navigating away and back here
+  // never issues a second request; navigating here *after* Learning/
+  // Progress already requested one of these two resources reuses that
+  // same in-flight/loaded state instead of starting a new fetch.
+  useEffect(() => {
+    onRequestDailyStats();
+    onRequestVocabularyGrowthEvents();
+  }, [onRequestDailyStats, onRequestVocabularyGrowthEvents]);
+
+  // Study Activity, Words Learned, and Milestone Preview below all derive
+  // from the same shared dailyStatsRows — see useDashboardSupportingData.ts's
+  // own header for the full "why one shared array, why unbounded" reasoning
+  // (unchanged from Phase 3; only the array's origin — shared vs. a fetch
+  // of its own — changed in this phase).
+  const { status: dailyStatsCardStatus, dailyStats } = useDashboardSupportingData({
     isProfileLoaded,
     practiceLanguage: userProfile.practiceLanguage,
-    todayISO,
     todayISOStatus,
+    dailyStatsStatus,
+    dailyStatsRows,
   });
-  const {
-    status: vocabularyGrowthStatus,
-    history: vocabularyGrowthHistory,
-    retry: retryVocabularyGrowth,
-  } = useDashboardVocabularyGrowthData({
+  const { status: vocabularyGrowthCardStatus, history: vocabularyGrowthHistory } = useDashboardVocabularyGrowthData({
     isProfileLoaded,
     practiceLanguage: userProfile.practiceLanguage,
     todayISO,
     todayISOStatus,
     wordProgressRows,
     wordProgressStatus,
+    vocabularyGrowthStatus,
+    vocabularyGrowthEvents,
   });
 
   return (
@@ -117,6 +153,8 @@ export function DashboardSection({
         todayISOStatus={todayISOStatus}
         wordProgressRows={wordProgressRows}
         wordProgressStatus={wordProgressStatus}
+        dailyStatsStatus={dailyStatsStatus}
+        dailyStatsRows={dailyStatsRows}
         onNavigateToSection={onNavigateToSection}
       />
 
@@ -128,30 +166,30 @@ export function DashboardSection({
           onNavigateToSection={onNavigateToSection}
         />
         <WordsLearnedCard
-          status={dailyStatsStatus}
+          status={dailyStatsCardStatus}
           dailyStats={dailyStats}
-          vocabularyGrowthStatus={vocabularyGrowthStatus}
+          vocabularyGrowthStatus={vocabularyGrowthCardStatus}
           vocabularyGrowthHistory={vocabularyGrowthHistory}
           todayISO={todayISO}
           onRetry={() => {
-            retryDailyStats();
-            retryVocabularyGrowth();
+            onRetryDailyStats();
+            onRetryVocabularyGrowthEvents();
           }}
         />
         <StudyActivityCard
-          status={dailyStatsStatus}
+          status={dailyStatsCardStatus}
           dailyStats={dailyStats}
           todayISO={todayISO}
-          onRetry={retryDailyStats}
+          onRetry={onRetryDailyStats}
         />
         <MilestonePreviewCard
           wordProgressRows={wordProgressRows}
           wordProgressStatus={wordProgressStatus}
           dailyStats={dailyStats}
-          dailyStatsStatus={dailyStatsStatus}
+          dailyStatsStatus={dailyStatsCardStatus}
           todayISO={todayISO}
           onRetryWordProgress={onRetryWordProgress}
-          onRetryDailyStats={retryDailyStats}
+          onRetryDailyStats={onRetryDailyStats}
           onNavigateToSection={onNavigateToSection}
         />
       </div>

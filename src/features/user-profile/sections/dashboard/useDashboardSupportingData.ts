@@ -1,34 +1,29 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
-import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { readMilestoneDailyStats, type MilestoneDailyStatRow } from "../../../../lib/newWordProgress";
-import { describeSupabaseError } from "../../../../lib/supabaseError";
+import type { MilestoneDailyStatRow } from "../../../../lib/newWordProgress";
 import type { UserProfile } from "../../../../lib/userProfile";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 
-// The Dashboard's single shared read for its three data-driven supporting
-// cards (Study Activity, Words Learned, Milestone Preview): one unbounded,
-// language-scoped user_daily_stats read (readMilestoneDailyStats — the
-// same function loadMilestoneMetrics.ts already uses for the Progress
-// page's Milestones section), fetched exactly once here rather than once
-// per card. Each card then derives its own display from this same raw
-// array via its own pure engine (studyActivity.ts / wordsLearnedSummary.ts
-// / milestones.ts's evaluateAllMilestoneTracks) — no card re-fetches, and
-// no card's pure math duplicates another's.
+// The Dashboard's view over the shared daily-stats resource for its three
+// data-driven supporting cards (Study Activity, Words Learned, Milestone
+// Preview): one unbounded, language-scoped user_daily_stats array (see
+// useProfileSharedDailyStats.ts — readMilestoneDailyStats, widened to also
+// carry daily_goal), requested exactly once per (authUserId, targetLanguage)
+// context by DashboardSection's own mount effect and shared with Progress's
+// MilestonesSection when the user switches there — never fetched here.
+// Each card then derives its own display from this same raw array via its
+// own pure engine (studyActivity.ts / wordsLearnedSummary.ts /
+// milestones.ts's evaluateAllMilestoneTracks) — no card re-fetches, and no
+// card's pure math duplicates another's.
 //
-// Documented data-loading choice (see the Phase brief's "Date Range
-// Loading" section): readMilestoneDailyStats is already a *single*,
-// unbounded read (no date filter at all — see its own header in
-// newWordProgress.ts) rather than a bounded 7-day query. Reusing it as-is
-// means Study Activity's "View all activity" expansion (7d/30d/90d/all)
-// needs no additional network request when the user switches ranges —
-// the full history is already in memory, and every range is just a
-// different pure aggregation over the same array. This trades a slightly
-// larger initial payload for zero additional round-trips on expansion;
-// revisit with a bounded-then-lazy-load split only if real account
-// histories grow large enough to make the unbounded read noticeably slow
-// (no evidence of that yet — the Milestones page has shipped the same
-// unbounded read since Milestones Phase 1).
+// Fetch-audit Phase 1: prior to this phase, this hook owned its own fetch
+// effect (one call to readMilestoneDailyStats per Dashboard mount,
+// duplicating Progress's MilestonesSection reading the exact same table/
+// RPC on its own mount — see the fetch audit's FETCH-001). It is now a pure
+// mapping from the shared resource's status/rows to this card group's own
+// status contract; DashboardSection owns requesting/retrying the shared
+// resource and passes both straight through as props.
 //
 // The Dashboard's fourth supporting card (Vocabulary Overview) needs no
 // read of its own at all — it derives entirely from wordProgressRows,
@@ -38,91 +33,55 @@ export type DashboardSupportingDataStatus = "loading" | "ready" | "blocked" | "e
 export interface DashboardSupportingData {
   status: DashboardSupportingDataStatus;
   dailyStats: MilestoneDailyStatRow[];
-  retry: () => void;
 }
 
 interface UseDashboardSupportingDataParams {
   isProfileLoaded: boolean;
   practiceLanguage: UserProfile["practiceLanguage"];
-  todayISO: string | null;
   todayISOStatus: ProfileSharedDataStatus;
+  dailyStatsStatus: SharedLazyResourceStatus;
+  dailyStatsRows: MilestoneDailyStatRow[];
 }
-
-interface InternalState {
-  status: DashboardSupportingDataStatus;
-  dailyStats: MilestoneDailyStatRow[];
-}
-
-const LOADING_STATE: InternalState = { status: "loading", dailyStats: [] };
 
 export function useDashboardSupportingData({
   isProfileLoaded,
   practiceLanguage,
-  todayISO,
   todayISOStatus,
+  dailyStatsStatus,
+  dailyStatsRows,
 }: UseDashboardSupportingDataParams): DashboardSupportingData {
   const { authUserId } = useAuthSession();
-  const [state, setState] = useState<InternalState>(LOADING_STATE);
-  const [retryToken, setRetryToken] = useState(0);
 
-  useEffect(() => {
+  return useMemo<DashboardSupportingData>(() => {
     if (!authUserId) {
       // Signed-out visitor: trivially "no activity yet" — same safe,
-      // silent fallback as the hero's own data hook for the same case.
-      setState({ status: "ready", dailyStats: [] });
-      return;
+      // silent fallback as the hero's own view for the same case.
+      return { status: "ready", dailyStats: [] };
     }
 
     if (!isProfileLoaded || todayISOStatus === "loading") {
-      setState(LOADING_STATE);
-      return;
+      return { status: "loading", dailyStats: [] };
     }
 
     if (todayISOStatus === "error") {
       // The shared learning-date request failed — mirrors
-      // useDashboardHeroData's "blocked" handling: don't present an empty
-      // read as though it were successfully loaded data.
-      setState({ status: "blocked", dailyStats: [] });
-      return;
+      // useDashboardHeroData's "blocked" handling: don't present the shared
+      // rows as though todayISO-dependent context were also resolved.
+      return { status: "blocked", dailyStats: [] };
     }
 
     if (!practiceLanguage) {
-      setState({ status: "ready", dailyStats: [] });
-      return;
+      return { status: "ready", dailyStats: [] };
     }
 
-    let cancelled = false;
-    setState(LOADING_STATE);
+    if (dailyStatsStatus === "idle" || dailyStatsStatus === "loading") {
+      return { status: "loading", dailyStats: [] };
+    }
 
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        if (!session) {
-          if (!cancelled) setState({ status: "ready", dailyStats: [] });
-          return;
-        }
+    if (dailyStatsStatus === "error") {
+      return { status: "error", dailyStats: [] };
+    }
 
-        const dailyStats = await readMilestoneDailyStats(session, practiceLanguage);
-        if (cancelled) return;
-        setState({ status: "ready", dailyStats });
-      } catch (error) {
-        if (cancelled) return;
-        console.warn(
-          "useDashboardSupportingData: failed to load daily stats.",
-          describeSupabaseError("useDashboardSupportingData", error),
-        );
-        setState({ status: "error", dailyStats: [] });
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-    // practiceLanguage is a dependency so switching the active target
-    // language re-fetches that language's own rows — see the Phase
-    // brief's "Language Isolation" requirement; readMilestoneDailyStats
-    // itself is also scoped by target_language server-side.
-  }, [authUserId, isProfileLoaded, practiceLanguage, todayISO, todayISOStatus, retryToken]);
-
-  return { ...state, retry: () => setRetryToken((token) => token + 1) };
+    return { status: "ready", dailyStats: dailyStatsRows };
+  }, [authUserId, isProfileLoaded, practiceLanguage, todayISOStatus, dailyStatsStatus, dailyStatsRows]);
 }
