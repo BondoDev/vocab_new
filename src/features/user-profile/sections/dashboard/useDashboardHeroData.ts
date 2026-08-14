@@ -1,29 +1,29 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
-import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import {
-  readTodayNewWordsCompleted,
-  readDailyStreakStats,
-  type DailyStreakStatRow,
-} from "../../../../lib/newWordProgress";
-import { describeSupabaseError } from "../../../../lib/supabaseError";
+import { findTodayNewWordsCompleted } from "../../../../data/learning/dailyStreak";
+import type { DailyStreakStatRow, MilestoneDailyStatRow } from "../../../../lib/newWordProgress";
 import type { UserProfile } from "../../../../lib/userProfile";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 
-// Dashboard hero card's own read of today's new-word count and recent daily
-// stats — the same two reads the Learning page's TodayProgressCard and
-// DailyStreakCard already make (readTodayNewWordsCompleted/
-// readDailyStreakStats, both from src/lib/newWordProgress.ts), combined
-// into a single effect since the hero shows both in one unified card
-// rather than two separate ones. This is *not* a duplicate loader: the
-// Dashboard and Learning sections are mutually exclusive (only one is ever
-// mounted at a time — see UserProfileDashboardPage.tsx), so there is never
-// a second concurrent fetch for the same data, only the same read function
-// invoked from whichever section is actually visible. todayISO/
-// todayISOStatus/practiceLanguage still come from the shared
-// useProfileSharedProgressData/App.tsx profile load, exactly as they do for
-// the Learning page's cards — this hook never calls getCurrentLearningDate
-// itself.
+// Dashboard hero card's own view of today's new-word count and recent daily
+// stats — the same two figures the Learning page's TodayProgressCard and
+// DailyStreakCard show, combined into a single unified card rather than two
+// separate ones.
+//
+// Fetch-audit Phase 1: this is no longer a fetch effect. Both figures are
+// now pure derivations over the shared, unbounded user_daily_stats rows
+// UserProfileDashboardPage's useProfileSharedDailyStats owns (dailyStatsRows
+// below) — completedToday is that array's own row for todayISO
+// (findTodayNewWordsCompleted), and streakStats is the array itself (a
+// MilestoneDailyStatRow[] satisfies DailyStreakStatRow[] structurally: it
+// carries dateISO/newWordsCompleted/dailyGoal plus more). Dashboard and
+// Learning are still mutually exclusive (only one is ever mounted at a
+// time — see UserProfileDashboardPage.tsx), so there was never a second
+// *concurrent* fetch for the same data even before this phase; now there is
+// no second fetch *at all* on a Dashboard <-> Learning switch, since both
+// read the one shared array requested once per (authUserId,
+// targetLanguage) context.
 export type DashboardHeroDataStatus = "loading" | "ready" | "blocked" | "error";
 
 export interface DashboardHeroData {
@@ -37,6 +37,9 @@ interface UseDashboardHeroDataParams {
   practiceLanguage: UserProfile["practiceLanguage"];
   todayISO: string | null;
   todayISOStatus: ProfileSharedDataStatus;
+  // The shared daily-stats resource — see this file's own header.
+  dailyStatsStatus: SharedLazyResourceStatus;
+  dailyStatsRows: MilestoneDailyStatRow[];
 }
 
 const LOADING_STATE: DashboardHeroData = { status: "loading", completedToday: 0, streakStats: [] };
@@ -46,76 +49,54 @@ export function useDashboardHeroData({
   practiceLanguage,
   todayISO,
   todayISOStatus,
+  dailyStatsStatus,
+  dailyStatsRows,
 }: UseDashboardHeroDataParams): DashboardHeroData {
   const { authUserId } = useAuthSession();
-  const [state, setState] = useState<DashboardHeroData>(LOADING_STATE);
 
-  useEffect(() => {
+  return useMemo<DashboardHeroData>(() => {
     if (!authUserId) {
       // Signed-out visitor: trivially "nothing yet" — same safe, silent
       // fallback as TodayProgressCard/DailyStreakCard for the same case.
-      setState({ status: "ready", completedToday: 0, streakStats: [] });
-      return;
+      return { status: "ready", completedToday: 0, streakStats: [] };
     }
 
     if (!isProfileLoaded || todayISOStatus === "loading") {
-      setState(LOADING_STATE);
-      return;
+      return LOADING_STATE;
     }
 
     if (todayISOStatus === "error") {
       // The shared learning-date request failed — mirrors TodayProgressCard/
-      // DailyStreakCard's own "blocked" handling: this hook must not read
-      // with a date it doesn't have, and must not present an empty result
-      // as though it were successfully loaded data.
-      setState({ status: "blocked", completedToday: 0, streakStats: [] });
-      return;
+      // DailyStreakCard's own "blocked" handling: this hook must not present
+      // data judged against a date it doesn't have, and must not present an
+      // empty result as though it were successfully loaded data.
+      return { status: "blocked", completedToday: 0, streakStats: [] };
     }
 
     if (!practiceLanguage || !todayISO) {
       // No target language chosen yet, or todayISOStatus is "unavailable"
       // (signed out / no session) — same empty-but-safe fallback.
-      setState({ status: "ready", completedToday: 0, streakStats: [] });
-      return;
+      return { status: "ready", completedToday: 0, streakStats: [] };
     }
 
-    let cancelled = false;
-    setState(LOADING_STATE);
+    if (dailyStatsStatus === "idle" || dailyStatsStatus === "loading") {
+      return LOADING_STATE;
+    }
 
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        if (!session) {
-          if (!cancelled) setState({ status: "ready", completedToday: 0, streakStats: [] });
-          return;
-        }
+    if (dailyStatsStatus === "error") {
+      // Deliberately a distinct "error" status rather than the sibling
+      // cards' silent-fallback-to-zero precedent: the hero's right-side CTA
+      // makes a routing decision from this data (Continue Learning vs.
+      // Review Words), so a failed read must not be indistinguishable from
+      // a genuine "0 completed" — see resolveDashboardHeroCta's
+      // isTodayDataTrusted parameter, which this status feeds directly.
+      return { status: "error", completedToday: 0, streakStats: [] };
+    }
 
-        const [completedToday, streakStats] = await Promise.all([
-          readTodayNewWordsCompleted(session, practiceLanguage, todayISO),
-          readDailyStreakStats(session, practiceLanguage, todayISO),
-        ]);
-        if (cancelled) return;
-        setState({ status: "ready", completedToday, streakStats });
-      } catch (error) {
-        if (cancelled) return;
-        // Deliberately a distinct "error" status rather than the sibling
-        // cards' silent-fallback-to-zero precedent: the hero's right-side
-        // CTA makes a routing decision from this data (Continue Learning vs
-        // Review Words), so a failed read must not be indistinguishable
-        // from a genuine "0 completed" — see resolveDashboardHeroCta's
-        // isTodayDataTrusted parameter, which this status feeds directly.
-        console.warn(
-          "useDashboardHeroData: failed to load today's progress/streak stats.",
-          describeSupabaseError("useDashboardHeroData", error),
-        );
-        setState({ status: "error", completedToday: 0, streakStats: [] });
-      }
-    })();
-
-    return () => {
-      cancelled = true;
+    return {
+      status: "ready",
+      completedToday: findTodayNewWordsCompleted(dailyStatsRows, todayISO),
+      streakStats: dailyStatsRows,
     };
-  }, [authUserId, isProfileLoaded, practiceLanguage, todayISO, todayISOStatus]);
-
-  return state;
+  }, [authUserId, isProfileLoaded, practiceLanguage, todayISO, todayISOStatus, dailyStatsStatus, dailyStatsRows]);
 }

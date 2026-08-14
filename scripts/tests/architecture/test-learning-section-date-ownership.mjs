@@ -27,9 +27,24 @@
 // authoritative-looking "0 completed" / "no streak history" result that
 // was never actually loaded. todayISOStatus exists specifically so the
 // cards can tell the two apart: an "error" status blocks each card's own
-// statistics request entirely and renders a neutral placeholder (the same
-// one already used while loading) instead of a zero/empty "ready" result,
-// while "unavailable" keeps the original, legitimate zero/empty fallback.
+// statistics presentation entirely and renders a neutral placeholder (the
+// same one already used while loading) instead of a zero/empty "ready"
+// result, while "unavailable" keeps the original, legitimate zero/empty
+// fallback.
+//
+// Fetch-audit Phase 1 (the profile-section data-fetch optimization's own
+// Phase 1) changed *how* each card gets its own statistics: both used to
+// own a fetch effect calling readTodayNewWordsCompleted/readDailyStreakStats
+// directly; both are now a pure useMemo derivation over the shared,
+// unbounded user_daily_stats rows useProfileSharedDailyStats.ts owns
+// (dailyStatsRows/dailyStatsStatus props, requested once by LearningSection
+// — see that hook's own header). This guard's date-ownership assertions
+// (getCurrentLearningDate called exactly once, neither card calling it,
+// "blocked" vs "loading" vs "unavailable" semantics) are unchanged by that;
+// only the mechanism each card's own statistics are produced by changed
+// from an async fetch effect to a synchronous derivation, so the tests that
+// inspected the old fetch effect's body now inspect the new derivation's
+// useMemo body instead.
 //
 // Deliberately static/deterministic (Node stdlib only, no build, no
 // network) so it stays cheap to run in CI and can't rot into a flaky check.
@@ -84,14 +99,6 @@ function stripLineComments(source) {
     .join("\n");
 }
 
-// Isolates a card's one fetch effect (body + dependency array) — both
-// TodayProgressCard and DailyStreakCard declare exactly one useEffect.
-function extractFetchEffect(liveSource, label) {
-  const match = liveSource.match(/useEffect\(\(\) => \{([\s\S]*?)\}, \[([^\]]*)\]\);/);
-  assert.ok(match, `${label}'s fetch effect must exist`);
-  return { body: match[1], deps: match[2] };
-}
-
 console.log("\n=== Learning dashboard current-date ownership guards ===\n");
 
 const learningSection = read("LearningSection.tsx");
@@ -142,7 +149,7 @@ test('4. Both cards declare a typed todayISO/todayISOStatus prop pair distinguis
   ]) {
     assert.match(
       source,
-      new RegExp(`interface ${label}Props\\s*\\{[^}]*todayISO: string \\| null;[^}]*todayISOStatus: ${statusUnion.replace(/[|]/g, "\\$&")};[^}]*\\}`, "s"),
+      new RegExp(`interface ${label}Props\\s*\\{[^}]*todayISO: string \\| null;[^}]*todayISOStatus: ${statusUnion.replace(/[|]/g, "\\$&")};`, "s"),
       `${label}Props must declare todayISO: string | null and todayISOStatus: ${statusUnion}`,
     );
     // The old collapsed boolean contract must be fully gone, not just
@@ -166,51 +173,58 @@ test("5. LearningSection passes todayISO and todayISOStatus (not a collapsed boo
   assert.doesNotMatch(learningSectionLive, /isTodayISOLoading/, "LearningSection must no longer reference isTodayISOLoading anywhere");
 });
 
-test("6. Each card's own fetch effect gates on todayISO/todayISOStatus before performing its own read", () => {
-  for (const [label, source, liveSource] of [
-    ["TodayProgressCard", todayProgressCard, todayProgressCardLive],
-    ["DailyStreakCard", dailyStreakCard, dailyStreakCardLive],
-  ]) {
-    const { deps } = extractFetchEffect(liveSource, label);
-    assert.match(deps, /\btodayISO\b/, `${label}'s fetch effect must depend on todayISO`);
-    assert.match(deps, /\btodayISOStatus\b/, `${label}'s fetch effect must depend on todayISOStatus`);
-    assert.match(source, /!todayISO/, `${label} must guard its own read on todayISO being present`);
-  }
-});
+// Fetch-audit Phase 1: each card's own statistics are now produced by a
+// synchronous useMemo<LoadState> derivation (over the shared dailyStatsRows/
+// dailyStatsStatus), not an async fetch effect — this isolates that
+// derivation's body + dependency array the same way extractFetchEffect used
+// to isolate the old fetch effect.
+function extractDerivationMemo(liveSource, label) {
+  const match = liveSource.match(/useMemo<LoadState>\(\(\) => \{([\s\S]*?)\}, \[([^\]]*)\]\);/);
+  assert.ok(match, `${label}'s derivation useMemo must exist`);
+  return { body: match[1], deps: match[2] };
+}
 
-test('7. Date "loading" prevents both cards from performing their own statistics request', () => {
+test("6. Each card's own derivation depends on todayISO/todayISOStatus/dailyStatsStatus/dailyStatsRows", () => {
   for (const [label, liveSource] of [
     ["TodayProgressCard", todayProgressCardLive],
     ["DailyStreakCard", dailyStreakCardLive],
   ]) {
-    const { body } = extractFetchEffect(liveSource, label);
-    // The loading branch (which also covers isProfileLoaded) must appear,
-    // set the card's own state to "loading", and return before the async
-    // fetch IIFE lower in the same effect body.
+    const { deps } = extractDerivationMemo(liveSource, label);
+    assert.match(deps, /\btodayISO\b/, `${label}'s derivation must depend on todayISO`);
+    assert.match(deps, /\btodayISOStatus\b/, `${label}'s derivation must depend on todayISOStatus`);
+    assert.match(deps, /\bdailyStatsStatus\b/, `${label}'s derivation must depend on dailyStatsStatus`);
+    assert.match(deps, /\bdailyStatsRows\b/, `${label}'s derivation must depend on dailyStatsRows`);
+  }
+});
+
+test('7. Date "loading" prevents both cards from presenting their own daily-stats-derived value', () => {
+  for (const [label, liveSource] of [
+    ["TodayProgressCard", todayProgressCardLive],
+    ["DailyStreakCard", dailyStreakCardLive],
+  ]) {
+    const { body } = extractDerivationMemo(liveSource, label);
     const loadingBranch = body.match(
-      /if\s*\(!isProfileLoaded \|\| todayISOStatus === "loading"\)\s*\{([\s\S]*?return;)\s*\}/,
+      /if\s*\(!isProfileLoaded \|\| todayISOStatus === "loading"\)\s*\{([\s\S]*?return[\s\S]*?;)\s*\}/,
     );
     assert.ok(loadingBranch, `${label} must have an explicit todayISOStatus === "loading" guard`);
-    assert.match(loadingBranch[1], /setState\(\{ status: "loading" \}\)/, `${label}'s loading guard must set its own state to loading`);
-    assert.match(loadingBranch[1], /return;/, `${label}'s loading guard must return before reaching its own fetch`);
+    assert.match(loadingBranch[1], /status:\s*"loading"/, `${label}'s loading guard must resolve to a "loading" status`);
     const loadingGuardIndex = body.indexOf(loadingBranch[0]);
-    const fetchIndex = body.indexOf("void (async () => {");
-    assert.ok(fetchIndex > loadingGuardIndex, `${label}'s loading guard must appear before its own fetch IIFE`);
+    const dailyStatsGateIndex = body.indexOf('dailyStatsStatus === "idle"');
+    assert.ok(dailyStatsGateIndex > loadingGuardIndex, `${label}'s loading guard must appear before it reads dailyStatsStatus/dailyStatsRows`);
   }
 });
 
-test('8. Date "error" prevents both cards from performing their own statistics request', () => {
+test('8. Date "error" prevents both cards from presenting their own daily-stats-derived value', () => {
   for (const [label, liveSource] of [
     ["TodayProgressCard", todayProgressCardLive],
     ["DailyStreakCard", dailyStreakCardLive],
   ]) {
-    const { body } = extractFetchEffect(liveSource, label);
-    const errorBranch = body.match(/if\s*\(todayISOStatus === "error"\)\s*\{([\s\S]*?return;)\s*\}/);
+    const { body } = extractDerivationMemo(liveSource, label);
+    const errorBranch = body.match(/if\s*\(todayISOStatus === "error"\)\s*\{([\s\S]*?return[\s\S]*?;)\s*\}/);
     assert.ok(errorBranch, `${label} must have an explicit todayISOStatus === "error" guard, distinct from the "loading"/"unavailable" paths`);
-    assert.match(errorBranch[1], /return;/, `${label}'s error guard must return before reaching its own fetch`);
     const errorGuardIndex = body.indexOf(errorBranch[0]);
-    const fetchIndex = body.indexOf("void (async () => {");
-    assert.ok(fetchIndex > errorGuardIndex, `${label}'s error guard must appear before its own fetch IIFE — a date error must never trigger this card's statistics request`);
+    const dailyStatsGateIndex = body.indexOf('dailyStatsStatus === "idle"');
+    assert.ok(dailyStatsGateIndex > errorGuardIndex, `${label}'s error guard must appear before it reads dailyStatsStatus/dailyStatsRows — a date error must never surface this card's own daily-stats-derived value`);
   }
 });
 
@@ -219,21 +233,21 @@ test('9. Date "error" never resolves to a successful ready zero/empty presentati
     ["TodayProgressCard", todayProgressCardLive],
     ["DailyStreakCard", dailyStreakCardLive],
   ]) {
-    const { body } = extractFetchEffect(liveSource, label);
-    const errorBranch = body.match(/if\s*\(todayISOStatus === "error"\)\s*\{([\s\S]*?return;)\s*\}/);
+    const { body } = extractDerivationMemo(liveSource, label);
+    const errorBranch = body.match(/if\s*\(todayISOStatus === "error"\)\s*\{([\s\S]*?return[\s\S]*?;)\s*\}/);
     assert.ok(errorBranch, `${label} must have a todayISOStatus === "error" guard`);
-    // The error branch's own setState call must never be status: "ready" —
+    // The error branch's own return value must never be status: "ready" —
     // that would be exactly the false-positive-zero bug this guard exists
     // to catch (a failed date fetch presented as successfully-loaded data).
     assert.doesNotMatch(
       errorBranch[1],
-      /setState\(\{\s*status:\s*"ready"/,
-      `${label}'s todayISOStatus === "error" branch must not set a "ready" state — a date error is not equivalent to a successfully-loaded zero/empty result`,
+      /status:\s*"ready"/,
+      `${label}'s todayISOStatus === "error" branch must not resolve to a "ready" state — a date error is not equivalent to a successfully-loaded zero/empty result`,
     );
     assert.match(
       errorBranch[1],
-      /setState\(\{\s*status:\s*"blocked"\s*\}\)/,
-      `${label}'s todayISOStatus === "error" branch must set a distinct non-ready "blocked" state`,
+      /status:\s*"blocked"/,
+      `${label}'s todayISOStatus === "error" branch must resolve to a distinct non-ready "blocked" state`,
     );
   }
   // The card-level LoadState union itself must declare "blocked" as a
@@ -257,22 +271,24 @@ test("10. Only LearningSection renders the date error/retry UI — neither card 
   }
 });
 
-test('11. Date "ready" is the only status under which each card\'s own request runs, and each request appears exactly once', () => {
-  const todayReadCount = (todayProgressCardLive.match(/readTodayNewWordsCompleted\(/g) || []).length;
-  assert.equal(todayReadCount, 1, `expected exactly one readTodayNewWordsCompleted( call site, found ${todayReadCount}`);
-  const streakReadCount = (dailyStreakCardLive.match(/readDailyStreakStats\(/g) || []).length;
-  assert.equal(streakReadCount, 1, `expected exactly one readDailyStreakStats( call site, found ${streakReadCount}`);
+test('11. Date "ready" is required (alongside a ready dailyStatsStatus) before either card derives its own daily-stats-based value, and each derivation reads dailyStatsRows exactly once', () => {
+  const todayReadCount = (todayProgressCardLive.match(/findTodayNewWordsCompleted\(/g) || []).length;
+  assert.equal(todayReadCount, 1, `expected exactly one findTodayNewWordsCompleted( call site, found ${todayReadCount}`);
+  // DailyStreakCard passes dailyStatsRows straight through as `stats` (no
+  // second row-shaping call) — computeDailyStreakSummary(stats, todayISO)
+  // is the pure consumer, exercised separately by test-daily-streak.mjs.
+  assert.match(dailyStreakCardLive, /stats:\s*dailyStatsRows/, "DailyStreakCard must derive its ready state's stats directly from dailyStatsRows");
 
   for (const [label, liveSource, readCallName] of [
-    ["TodayProgressCard", todayProgressCardLive, "readTodayNewWordsCompleted("],
-    ["DailyStreakCard", dailyStreakCardLive, "readDailyStreakStats("],
+    ["TodayProgressCard", todayProgressCardLive, "findTodayNewWordsCompleted("],
+    ["DailyStreakCard", dailyStreakCardLive, "stats: dailyStatsRows"],
   ]) {
-    const { body } = extractFetchEffect(liveSource, label);
+    const { body } = extractDerivationMemo(liveSource, label);
     const loadingGuardIndex = body.indexOf('todayISOStatus === "loading"');
     const errorGuardIndex = body.indexOf('todayISOStatus === "error"');
     const readIndex = body.indexOf(readCallName);
-    assert.ok(loadingGuardIndex >= 0 && errorGuardIndex >= 0 && readIndex >= 0, `${label} must have both guards and its own read call in the same effect`);
-    assert.ok(readIndex > loadingGuardIndex && readIndex > errorGuardIndex, `${label}'s own request must be reachable only after both the "loading" and "error" guards`);
+    assert.ok(loadingGuardIndex >= 0 && errorGuardIndex >= 0 && readIndex >= 0, `${label} must have both guards and its own daily-stats-derived value in the same derivation`);
+    assert.ok(readIndex > loadingGuardIndex && readIndex > errorGuardIndex, `${label}'s own daily-stats-derived value must be reachable only after both the "loading" and "error" guards`);
   }
 });
 
@@ -286,7 +302,7 @@ test('12. Date "unavailable" remains distinguishable from "error" — both at th
     ["TodayProgressCard", todayProgressCardLive],
     ["DailyStreakCard", dailyStreakCardLive],
   ]) {
-    const { body } = extractFetchEffect(liveSource, label);
+    const { body } = extractDerivationMemo(liveSource, label);
     // "unavailable" must never be folded into the same explicit branch as
     // "error" (e.g. `todayISOStatus === "error" || todayISOStatus ===
     // "unavailable"`) — it must fall through to the pre-existing generic

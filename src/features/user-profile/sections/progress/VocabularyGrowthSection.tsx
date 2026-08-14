@@ -2,11 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { TrendingUp } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
-import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { describeSupabaseError } from "../../../../lib/supabaseError";
 import type { UserProfile } from "../../../../lib/userProfile";
-import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
+import type { UserWordProgressFullRow, VocabularyGrowthEventRow } from "../../../../lib/newWordProgress";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 import type { VocabularyGrowthDayCounts, VocabularyGrowthRange } from "../../../../data/learning/vocabularyGrowth";
 import { loadVocabularyGrowthHistory, filterVocabularyGrowthByRange } from "./loadVocabularyGrowthHistory";
 import { VocabularyGrowthChart } from "./VocabularyGrowthChart";
@@ -35,14 +34,22 @@ interface VocabularyGrowthSectionProps {
   // and fetched exactly once by UserProfileDashboardPage's
   // useProfileSharedProgressData (see that hook's own header) — this
   // section no longer calls getCurrentLearningDate or readUserWordProgress
-  // itself. Still owns its own readVocabularyGrowthEvents fetch (see
-  // loadVocabularyGrowthHistory.ts).
+  // itself.
   todayISO: string | null;
   todayISOStatus: ProfileSharedDataStatus;
   onRetryLearningDate: () => void;
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
   onRetryWordProgress: () => void;
+  // Fetch-audit Phase 1: the shared, lazily-loaded vocabulary-growth-events
+  // resource (see useProfileSharedDailyStats.ts) — requested exactly once
+  // here (see the mount effect below), shared as-is with Dashboard's Words
+  // Learned card when the user switches there instead of either fetching
+  // its own copy on mount (see the fetch audit's FETCH-002).
+  vocabularyGrowthStatus: SharedLazyResourceStatus;
+  vocabularyGrowthEvents: VocabularyGrowthEventRow[];
+  onRequestVocabularyGrowthEvents: () => void;
+  onRetryVocabularyGrowthEvents: () => void;
   onStartNewWordStudy?: () => void;
 }
 
@@ -61,78 +68,73 @@ export function VocabularyGrowthSection({
   wordProgressRows,
   wordProgressStatus,
   onRetryWordProgress,
+  vocabularyGrowthStatus,
+  vocabularyGrowthEvents,
+  onRequestVocabularyGrowthEvents,
+  onRetryVocabularyGrowthEvents,
   onStartNewWordStudy,
 }: VocabularyGrowthSectionProps) {
   const { t } = useLanguage();
   const { authUserId } = useAuthSession();
-  const [state, setState] = useState<LoadState>({ status: "loading" });
-  const [retryToken, setRetryToken] = useState(0);
   const [range, setRange] = useState<VocabularyGrowthRange>(DEFAULT_RANGE);
 
   const targetLanguage = userProfile.practiceLanguage;
 
+  // Fetch-audit Phase 1: requests the shared vocabulary-growth-events
+  // resource once per mount (a no-op if Dashboard already requested it for
+  // the same context — see useProfileSharedDailyStats.ts).
   useEffect(() => {
-    if (!authUserId) {
-      setState({ status: "ready", history: [], todayISO: "" });
-      return;
+    onRequestVocabularyGrowthEvents();
+  }, [onRequestVocabularyGrowthEvents]);
+
+  // loadVocabularyGrowthHistory is now a pure, synchronous computation over
+  // already-loaded rows (see that file's own header) — no fetch effect of
+  // this section's own remains; only the *inputs'* statuses (shared word
+  // progress, shared learning date, shared vocabulary-growth events)
+  // determine loading/error/ready here. range is deliberately not part of
+  // this computation at all — it only re-slices the already-computed
+  // fullHistory below (see visibleData), never triggers a re-derivation.
+  const state = useMemo<LoadState>(() => {
+    if (!authUserId || !targetLanguage) {
+      return { status: "ready", history: [], todayISO: "" };
     }
 
     if (!isProfileLoaded || todayISOStatus === "loading" || wordProgressStatus === "loading") {
-      setState({ status: "loading" });
-      return;
+      return { status: "loading" };
     }
 
-    if (todayISOStatus === "error" || wordProgressStatus === "error") {
-      // One of the two shared sources genuinely failed — surface this
+    if (todayISOStatus === "error" || wordProgressStatus === "error" || !todayISO) {
+      // One of the shared sources genuinely failed — surface this
       // section's own error/retry UI rather than presenting an empty
       // result as though it were successfully loaded data.
-      setState({ status: "error" });
-      return;
+      return { status: "error" };
     }
 
-    if (!targetLanguage || !todayISO) {
-      setState({ status: "ready", history: [], todayISO: "" });
-      return;
+    if (vocabularyGrowthStatus === "idle" || vocabularyGrowthStatus === "loading") {
+      return { status: "loading" };
     }
 
-    let cancelled = false;
-    setState({ status: "loading" });
+    if (vocabularyGrowthStatus === "error") {
+      return { status: "error" };
+    }
 
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        if (!session) {
-          if (!cancelled) setState({ status: "ready", history: [], todayISO: "" });
-          return;
-        }
-
-        const history = await loadVocabularyGrowthHistory({
-          session,
-          progressRows: wordProgressRows,
-          targetLanguage,
-          todayISO,
-        });
-        if (cancelled) return;
-        setState({ status: "ready", history, todayISO });
-      } catch (error) {
-        if (cancelled) return;
-        console.warn(
-          "VocabularyGrowthSection: failed to load vocabulary growth history.",
-          describeSupabaseError("loadVocabularyGrowthHistory", error),
-        );
-        setState({ status: "error" });
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-    // targetLanguage changing re-fetches (a different language's history is
-    // a genuinely different dataset — see the task brief's "switch target
-    // language and confirm chart data changes" manual-verification step).
-    // range is deliberately NOT a dependency: it only re-slices the
-    // already-loaded fullHistory below, never triggers a new load.
-  }, [authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, retryToken]);
+    const history = loadVocabularyGrowthHistory({
+      progressRows: wordProgressRows,
+      eventRows: vocabularyGrowthEvents,
+      todayISO,
+    });
+    return { status: "ready", history, todayISO };
+  }, [
+    authUserId,
+    isProfileLoaded,
+    targetLanguage,
+    todayISO,
+    todayISOStatus,
+    wordProgressRows,
+    wordProgressStatus,
+    vocabularyGrowthStatus,
+    vocabularyGrowthEvents,
+  ]);
 
   const isLoading = state.status === "loading";
   const isError = state.status === "error";
@@ -145,15 +147,16 @@ export function VocabularyGrowthSection({
     [fullHistory, range, chartTodayISO],
   );
 
-  // A single Retry covers whichever of the three sources actually failed
-  // (the shared date, the shared word-progress rows, or this section's own
-  // readVocabularyGrowthEvents) — retrying an already-"ready" shared source
-  // is a harmless no-visible-change background refresh (see
-  // useProfileSharedProgressData.ts's preserve-on-refresh behavior).
+  // A single Retry covers whichever of the three shared sources actually
+  // failed (the shared date, the shared word-progress rows, or the shared
+  // vocabulary-growth-events resource) — retrying an already-"ready"
+  // shared source is a harmless no-visible-change background refresh (see
+  // useProfileSharedProgressData.ts's/useProfileSharedDailyStats.ts's own
+  // preserve-on-refresh behavior).
   const handleRetry = () => {
     onRetryLearningDate();
     onRetryWordProgress();
-    setRetryToken((token) => token + 1);
+    onRetryVocabularyGrowthEvents();
   };
 
   return (

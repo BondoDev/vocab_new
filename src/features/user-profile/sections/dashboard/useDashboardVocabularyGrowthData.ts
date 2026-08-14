@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { computeVocabularyCounts } from "../../../../data/learning/vocabularyCategory";
 import {
   applyCurrentDayOverride,
@@ -9,21 +9,16 @@ import {
   type VocabularyGrowthWordInput,
 } from "../../../../data/learning/vocabularyGrowth";
 import { useAuthSession } from "../../../../app/hooks/useAuthSession";
-import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { readVocabularyGrowthEvents, type UserWordProgressFullRow } from "../../../../lib/newWordProgress";
-import { describeSupabaseError } from "../../../../lib/supabaseError";
+import type { UserWordProgressFullRow, VocabularyGrowthEventRow } from "../../../../lib/newWordProgress";
 import type { UserProfile } from "../../../../lib/userProfile";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 
 export type DashboardVocabularyGrowthStatus = "loading" | "ready" | "blocked" | "error";
 
 interface DashboardVocabularyGrowthState {
   status: DashboardVocabularyGrowthStatus;
   history: VocabularyGrowthDayCounts[];
-}
-
-interface DashboardVocabularyGrowthData extends DashboardVocabularyGrowthState {
-  retry: () => void;
 }
 
 interface UseDashboardVocabularyGrowthDataParams {
@@ -33,10 +28,21 @@ interface UseDashboardVocabularyGrowthDataParams {
   todayISOStatus: ProfileSharedDataStatus;
   wordProgressRows: UserWordProgressFullRow[];
   wordProgressStatus: ProfileSharedDataStatus;
+  // The shared vocabulary-growth-events resource — see
+  // useProfileSharedDailyStats.ts's own header.
+  vocabularyGrowthStatus: SharedLazyResourceStatus;
+  vocabularyGrowthEvents: VocabularyGrowthEventRow[];
 }
 
-const LOADING_STATE: DashboardVocabularyGrowthState = { status: "loading", history: [] };
-
+// Fetch-audit Phase 1: prior to this phase, this hook owned its own fetch
+// effect (one call to readVocabularyGrowthEvents per Dashboard mount,
+// duplicating Progress's VocabularyGrowthSection reading the exact same RPC
+// on its own mount — see the fetch audit's FETCH-002). It is now a pure
+// combination of the shared vocabulary-growth-events resource with the
+// already-shared wordProgressRows, reusing the exact same reconstruction
+// engine (computeVocabularyGrowthHistory/applyCurrentDayOverride/
+// resolveWordCreatedDateISO) loadVocabularyGrowthHistory.ts (Progress) also
+// calls — no forked copy of the algorithm.
 export function useDashboardVocabularyGrowthData({
   isProfileLoaded,
   practiceLanguage,
@@ -44,81 +50,64 @@ export function useDashboardVocabularyGrowthData({
   todayISOStatus,
   wordProgressRows,
   wordProgressStatus,
-}: UseDashboardVocabularyGrowthDataParams): DashboardVocabularyGrowthData {
+  vocabularyGrowthStatus,
+  vocabularyGrowthEvents,
+}: UseDashboardVocabularyGrowthDataParams): DashboardVocabularyGrowthState {
   const { authUserId } = useAuthSession();
-  const [state, setState] = useState<DashboardVocabularyGrowthState>(LOADING_STATE);
-  const [retryToken, setRetryToken] = useState(0);
 
-  useEffect(() => {
+  return useMemo<DashboardVocabularyGrowthState>(() => {
     if (!authUserId || !practiceLanguage) {
-      setState({ status: "ready", history: [] });
-      return;
+      return { status: "ready", history: [] };
     }
 
     if (!isProfileLoaded || todayISOStatus === "loading" || wordProgressStatus === "loading") {
-      setState(LOADING_STATE);
-      return;
+      return { status: "loading", history: [] };
     }
 
     if (todayISOStatus === "error" || wordProgressStatus === "error" || !todayISO) {
-      setState({ status: "blocked", history: [] });
-      return;
+      return { status: "blocked", history: [] };
     }
 
-    let cancelled = false;
-    setState(LOADING_STATE);
+    if (vocabularyGrowthStatus === "idle" || vocabularyGrowthStatus === "loading") {
+      return { status: "loading", history: [] };
+    }
 
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        if (!session) {
-          if (!cancelled) setState({ status: "ready", history: [] });
-          return;
+    if (vocabularyGrowthStatus === "error") {
+      return { status: "error", history: [] };
+    }
+
+    try {
+      const words: VocabularyGrowthWordInput[] = [];
+      for (const row of wordProgressRows) {
+        const createdDateISO = resolveWordCreatedDateISO(row.firstStudiedStatDate, row.createdAt ?? "");
+        if (createdDateISO !== null) {
+          words.push({ wordProgressId: row.id, createdDateISO });
         }
-
-        const eventRows = await readVocabularyGrowthEvents(session, practiceLanguage);
-        if (cancelled) return;
-
-        const words: VocabularyGrowthWordInput[] = [];
-        for (const row of wordProgressRows) {
-          const createdDateISO = resolveWordCreatedDateISO(row.firstStudiedStatDate, row.createdAt ?? "");
-          if (createdDateISO !== null) {
-            words.push({ wordProgressId: row.id, createdDateISO });
-          }
-        }
-
-        const events: VocabularyGrowthEventInput[] = eventRows.map((row) => ({
-          wordProgressId: row.wordProgressId,
-          previousState: row.previousState,
-          newState: row.newState,
-          eventDateISO: row.eventDateISO,
-        }));
-
-        const currentCounts = computeVocabularyCounts(wordProgressRows);
-        const history = applyCurrentDayOverride(
-          computeVocabularyGrowthHistory(words, events, todayISO),
-          todayISO,
-          {
-            learning: currentCounts.learning,
-            known: currentCounts.known,
-            mastered: currentCounts.mastered,
-          },
-        );
-
-        setState({ status: "ready", history });
-      } catch (error) {
-        if (cancelled) return;
-        console.warn(
-          "useDashboardVocabularyGrowthData: failed to load vocabulary growth history.",
-          describeSupabaseError("useDashboardVocabularyGrowthData", error),
-        );
-        setState({ status: "error", history: [] });
       }
-    })();
 
-    return () => {
-      cancelled = true;
-    };
+      const events: VocabularyGrowthEventInput[] = vocabularyGrowthEvents.map((row) => ({
+        wordProgressId: row.wordProgressId,
+        previousState: row.previousState,
+        newState: row.newState,
+        eventDateISO: row.eventDateISO,
+      }));
+
+      const currentCounts = computeVocabularyCounts(wordProgressRows);
+      const history = applyCurrentDayOverride(
+        computeVocabularyGrowthHistory(words, events, todayISO),
+        todayISO,
+        {
+          learning: currentCounts.learning,
+          known: currentCounts.known,
+          mastered: currentCounts.mastered,
+        },
+      );
+
+      return { status: "ready", history };
+    } catch (error) {
+      console.warn("useDashboardVocabularyGrowthData: failed to compute vocabulary growth history.", error);
+      return { status: "error", history: [] };
+    }
   }, [
     authUserId,
     isProfileLoaded,
@@ -127,8 +116,7 @@ export function useDashboardVocabularyGrowthData({
     todayISOStatus,
     wordProgressRows,
     wordProgressStatus,
-    retryToken,
+    vocabularyGrowthStatus,
+    vocabularyGrowthEvents,
   ]);
-
-  return { ...state, retry: () => setRetryToken((token) => token + 1) };
 }

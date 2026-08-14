@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
+import type { MilestoneDailyStatRow } from "../../../../lib/newWordProgress";
 import type { UserProfile } from "../../../../lib/userProfile";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { SharedLazyResourceStatus } from "../useProfileSharedDailyStats";
 import { DailyGoalSelector } from "./DailyGoalSelector";
 import { TodayProgressCard } from "./TodayProgressCard";
 import { DailyStreakCard } from "./DailyStreakCard";
@@ -39,6 +41,19 @@ interface LearningSectionProps {
   // re-request the shared date after a failure — there is no local retry
   // state here anymore.
   onRetryLearningDate: () => void;
+  // Fetch-audit Phase 1: the shared, lazily-loaded user_daily_stats
+  // resource (see useProfileSharedDailyStats.ts) TodayProgressCard/
+  // DailyStreakCard both derive from — requested exactly once here (see
+  // the mount effect below), never fetched by either card itself.
+  // No onRetryDailyStats here, deliberately: neither TodayProgressCard nor
+  // DailyStreakCard ever exposed a distinct error/retry UI for their own
+  // read (a failed fetch silently fell back to 0/empty even before this
+  // phase — see each card's own comment) — only Dashboard/Progress expose
+  // a Retry control for this resource, matching their own pre-existing
+  // error-handling contract.
+  dailyStatsStatus: SharedLazyResourceStatus;
+  dailyStatsRows: MilestoneDailyStatRow[];
+  onRequestDailyStats: () => void;
   onStartCustomPractice?: () => void;
   onStartNewWordStudy?: () => void;
   onStartReviewWords?: () => void;
@@ -51,6 +66,9 @@ export function LearningSection({
   todayISO,
   todayISOStatus,
   onRetryLearningDate,
+  dailyStatsStatus,
+  dailyStatsRows,
+  onRequestDailyStats,
   onStartCustomPractice,
   onStartNewWordStudy,
   onStartReviewWords,
@@ -58,24 +76,19 @@ export function LearningSection({
 }: LearningSectionProps) {
   const { t } = useLanguage();
 
-  // Opaque refresh trigger for DailyStreakCard's own user_daily_stats
-  // fetch — carries no goal value itself, just a reason to refetch.
-  // DailyGoalSelector's onDailyGoalChange only ever fires from its .then()
-  // success branch (never .catch()), so a failed save leaves this
-  // untouched and DailyStreakCard's cached stats/summary are left exactly
-  // as they were: no optimistic or false refresh. DailyStreakCard still
-  // never receives the goal value itself — only this token — so historical
-  // completion stays exactly as impervious to the live profile goal as
-  // computeDailyStreakSummary's own signature already guarantees; this
-  // only widens *when* DailyStreakCard re-reads the authoritative rows,
-  // never *what* it judges them against. A goal save never touches the
-  // shared learning date, so it never calls onRetryLearningDate.
-  const [streakRefreshToken, setStreakRefreshToken] = useState(0);
-
-  const handleDailyGoalChange = (dailyGoal: number) => {
-    setStreakRefreshToken((token) => token + 1);
-    onDailyGoalChange?.(dailyGoal);
-  };
+  // Fetch-audit Phase 1: requests the shared daily-stats resource once per
+  // mount (a no-op if Dashboard or Progress already requested it for the
+  // same context — see useProfileSharedDailyStats.ts). A successful
+  // daily-goal save (DailyGoalSelector.tsx) fires notifyDailyStatsChanged()
+  // directly, which refreshes this same shared resource in the background —
+  // that replaces the previous local streakRefreshToken mechanism, which
+  // existed only to force DailyStreakCard's own now-removed fetch effect to
+  // re-run after a goal save. DailyStreakCard therefore no longer takes a
+  // refresh-token prop at all; it re-renders from the shared rows like any
+  // other invalidation.
+  useEffect(() => {
+    onRequestDailyStats();
+  }, [onRequestDailyStats]);
 
   const isDateError = todayISOStatus === "error";
 
@@ -107,14 +120,15 @@ export function LearningSection({
         <DailyGoalSelector
           userProfile={userProfile}
           isProfileLoaded={isProfileLoaded}
-          onDailyGoalChange={handleDailyGoalChange}
+          onDailyGoalChange={onDailyGoalChange}
         />
         <DailyStreakCard
           practiceLanguage={userProfile.practiceLanguage}
           isProfileLoaded={isProfileLoaded}
           todayISO={todayISO}
           todayISOStatus={todayISOStatus}
-          streakRefreshToken={streakRefreshToken}
+          dailyStatsStatus={dailyStatsStatus}
+          dailyStatsRows={dailyStatsRows}
         />
         <TodayProgressCard
           practiceLanguage={userProfile.practiceLanguage}
@@ -122,6 +136,8 @@ export function LearningSection({
           isProfileLoaded={isProfileLoaded}
           todayISO={todayISO}
           todayISOStatus={todayISOStatus}
+          dailyStatsStatus={dailyStatsStatus}
+          dailyStatsRows={dailyStatsRows}
         />
       </div>
       <LearningModeCards

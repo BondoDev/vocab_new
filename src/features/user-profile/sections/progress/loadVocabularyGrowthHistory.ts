@@ -1,15 +1,22 @@
 // Orchestrates the Vocabulary Growth chart's real data: combines the
-// active-language user_word_progress rows — as of Phase 1 of the
-// profile-section data optimization, passed in already-loaded from
-// UserProfileDashboardPage's shared useProfileSharedProgressData rather
-// than fetched here (see that hook's own header) — with review-event
-// transitions (still fetched here), then feeds both into the
+// active-language user_word_progress rows and the shared vocabulary-growth
+// review-event transitions — as of Phase 1 of the profile-section data
+// optimization, both passed in already-loaded from
+// UserProfileDashboardPage's shared hooks (useProfileSharedProgressData for
+// progressRows, useProfileSharedDailyStats for eventRows — see each hook's
+// own header) rather than fetched here — then feeds both into the
 // already-existing pure reconstruction engine
 // (src/data/learning/vocabularyGrowth.ts) — this file duplicates none of
-// that logic, it only fetches/shapes the one remaining input that engine
-// expects. Read-only; performs no Supabase writes.
-import type { StoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { readVocabularyGrowthEvents, type UserWordProgressFullRow } from "../../../../lib/newWordProgress";
+// that logic, it only shapes the two inputs that engine expects.
+//
+// Fetch-audit Phase 1 removed the last fetch this file used to own
+// (readVocabularyGrowthEvents, previously called once per Progress-page
+// mount — the exact same RPC call Dashboard's
+// useDashboardVocabularyGrowthData made independently on its own mount;
+// see the fetch audit's FETCH-002). This function is now a plain,
+// synchronous, pure computation — no session, no network, no async —
+// exactly like loadMilestoneMetrics.ts's own equivalent change in this
+// phase.
 import { computeVocabularyCounts } from "../../../../data/learning/vocabularyCategory";
 import {
   computeVocabularyGrowthHistory,
@@ -20,19 +27,22 @@ import {
   type VocabularyGrowthWordInput,
   type VocabularyGrowthEventInput,
 } from "../../../../data/learning/vocabularyGrowth";
+import type { UserWordProgressFullRow, VocabularyGrowthEventRow } from "../../../../lib/newWordProgress";
 
 export interface LoadVocabularyGrowthHistoryParams {
-  session: StoredSupabaseSession;
   // Already-loaded active-language rows — see this file's own header.
-  // Callers must not pass rows for a different language than
-  // targetLanguage below; UserProfileDashboardPage's shared hook already
-  // guarantees this (it resets the rows on a target-language change).
+  // Callers must not pass rows for a different language than the shared
+  // hooks' own active targetLanguage; UserProfileDashboardPage's shared
+  // hooks already guarantee this (both reset their rows on a
+  // target-language change).
   progressRows: UserWordProgressFullRow[];
-  // Milestones is language-specific (see loadMilestoneMetrics.ts); this
-  // loader follows the identical contract — switching the active target
-  // language must show that language's own vocabulary growth, never a
-  // cross-language total.
-  targetLanguage: string;
+  // Already-loaded vocabulary-growth review-event transitions for the
+  // active target language — see this file's own header.
+  // readVocabularyGrowthEvents itself (src/lib/newWordProgress.ts) remains
+  // scoped by the same user_id + target_language pair as progressRows
+  // above, so the two inputs can never mix data across languages or
+  // accounts.
+  eventRows: VocabularyGrowthEventRow[];
   // The authoritative current learning date (getCurrentLearningDate) —
   // the same server-derived "today" every other Progress-page loader
   // already uses. Both the reconstruction end-date and the current-day
@@ -47,14 +57,11 @@ export interface LoadVocabularyGrowthHistoryParams {
 // time-range filtering is a separate, cheap client-side step — see
 // filterVocabularyGrowthByRange, re-exported below so callers don't need
 // a second import to slice what this function already returned.
-export async function loadVocabularyGrowthHistory({
-  session,
+export function loadVocabularyGrowthHistory({
   progressRows,
-  targetLanguage,
+  eventRows,
   todayISO,
-}: LoadVocabularyGrowthHistoryParams): Promise<VocabularyGrowthDayCounts[]> {
-  const eventRows = await readVocabularyGrowthEvents(session, targetLanguage);
-
+}: LoadVocabularyGrowthHistoryParams): VocabularyGrowthDayCounts[] {
   const words: VocabularyGrowthWordInput[] = [];
   for (const row of progressRows) {
     const createdDateISO = resolveWordCreatedDateISO(row.firstStudiedStatDate, row.createdAt ?? "");

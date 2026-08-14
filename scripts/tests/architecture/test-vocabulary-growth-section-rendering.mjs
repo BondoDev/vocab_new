@@ -90,19 +90,23 @@ test("7. Default range is 30 days", () => {
 
 test("8. Selecting a range only updates local state (setRange) — it never triggers a new Supabase load", () => {
   // The range-button onClick must call setRange, and setRange must not
-  // appear anywhere in the load-effect's own dependency array — a
+  // appear anywhere in the state-derivation's own dependency array — a
   // regression here would silently turn every range click into a fresh
-  // network round trip, defeating "filter locally, don't refetch". Phase 1
-  // added todayISO/todayISOStatus/wordProgressRows/wordProgressStatus (the
-  // shared sources from useProfileSharedProgressData) to that dependency
-  // array in place of the section's own now-removed date/progress fetch.
+  // network round trip, defeating "filter locally, don't refetch".
+  //
+  // Fetch-audit Phase 1 replaced this section's own readVocabularyGrowthEvents
+  // fetch effect with a pure useMemo derivation over the shared
+  // vocabularyGrowthStatus/vocabularyGrowthEvents resource
+  // (useProfileSharedDailyStats.ts — see test-daily-stats-shared-ownership.mjs
+  // for that hook's own guards), so this now checks the derivation's
+  // dependency array instead of a fetch effect's.
   assert.match(sectionSource, /onClick=\{\(\) => setRange\(option\.value\)\}/);
-  const effectDeps = sectionSource.match(
-    /\}, \[authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, retryToken\]\);/,
+  const derivationDeps = sectionSource.match(
+    /\}, \[\s*authUserId,\s*isProfileLoaded,\s*targetLanguage,\s*todayISO,\s*todayISOStatus,\s*wordProgressRows,\s*wordProgressStatus,\s*vocabularyGrowthStatus,\s*vocabularyGrowthEvents,\s*\]\);/,
   );
   assert.ok(
-    effectDeps,
-    "the load effect's dependency array must be exactly [authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, retryToken] — range must not appear in it",
+    derivationDeps,
+    "the state derivation's dependency array must be exactly [authUserId, isProfileLoaded, targetLanguage, todayISO, todayISOStatus, wordProgressRows, wordProgressStatus, vocabularyGrowthStatus, vocabularyGrowthEvents] — range must not appear in it",
   );
 });
 

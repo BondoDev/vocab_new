@@ -37,7 +37,11 @@ import {
   type LanguageLevelCode,
   type UserProfile,
 } from "../../../../lib/userProfile";
-import { notifyWordProgressChanged } from "../../../../lib/sharedProgressInvalidation";
+import {
+  notifyWordProgressChanged,
+  notifyDailyStatsChanged,
+  notifyVocabularyGrowthChanged,
+} from "../../../../lib/sharedProgressInvalidation";
 import { DeleteAccountDialog } from "./DeleteAccountDialog";
 import { ResetProgressDialog } from "./ResetProgressDialog";
 import { TimezoneSelector } from "./TimezoneSelector";
@@ -666,15 +670,25 @@ export function SettingsSection({
     void resetLearningLanguageProgress(authSession, resetTargetLanguage)
       .then(() => {
         setResetTargetLanguage(null);
-        // Existing invalidation signal (src/lib/sharedProgressInvalidation.ts)
-        // — the shared active-language word-progress rows
-        // (useProfileSharedProgressData, kept alive across section switches
-        // at the UserProfileDashboardPage level) refetch and correctly come
-        // back empty. Daily-stats-derived cards (Daily Streak, Study
-        // Activity, ...) live in sections that unmount when not active and
-        // already fetch fresh on their next mount — no separate signal
-        // exists for them today, and inventing one is out of scope here.
+        // reset_learning_language_progress deletes this language's
+        // user_word_progress, user_daily_stats, review_events, and
+        // custom_practice_events rows in one transaction (see
+        // resetLearningLanguageProgress's own header in
+        // src/lib/userProfile.ts) — all three shared/cached datasets the
+        // profile dashboard owns for this language are now stale:
+        //   - the shared active-language word-progress rows
+        //     (useProfileSharedProgressData) — notifyWordProgressChanged;
+        //   - the shared unbounded user_daily_stats rows
+        //     (useProfileSharedDailyStats) — notifyDailyStatsChanged;
+        //   - the shared vocabulary-growth events, since review_events was
+        //     also deleted (useProfileSharedDailyStats) —
+        //     notifyVocabularyGrowthChanged.
+        // Whichever of Dashboard/Learning/Progress the user navigates to
+        // next will show the correctly-empty reset state instead of a
+        // stale pre-reset snapshot.
         notifyWordProgressChanged();
+        notifyDailyStatsChanged();
+        notifyVocabularyGrowthChanged();
         showDataAccountToast(t("userProfile.settingsSection.dataAccount.resetDialog.successToast"));
       })
       .catch((error) => {

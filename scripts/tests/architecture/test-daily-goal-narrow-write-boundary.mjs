@@ -188,13 +188,18 @@ test("5b. DailyStreakCard never receives or forwards a dailyGoal prop into the s
   );
 });
 
-test("5c. A successful daily-goal save — and only a successful save — triggers DailyStreakCard's refresh", () => {
+test("5c. A successful daily-goal save — and only a successful save — refreshes the shared daily-stats resource DailyStreakCard derives from", () => {
+  // Fetch-audit Phase 1 replaced LearningSection's local streakRefreshToken
+  // (a card-specific refetch trigger) with the general
+  // notifyDailyStatsChanged/subscribeDailyStatsChanged signal
+  // (src/lib/sharedProgressInvalidation.ts), fired directly from
+  // DailyGoalSelector's own save handler. DailyStreakCard no longer takes a
+  // refresh-token prop at all — see test 5b above for its full prop
+  // contract, unchanged by this phase except for gaining
+  // dailyStatsStatus/dailyStatsRows (checked in
+  // test-learning-section-date-ownership.mjs).
   const learningSectionSource = fs.readFileSync(
     path.join(SRC_DIR, "features", "user-profile", "sections", "learning", "LearningSection.tsx"),
-    "utf8",
-  );
-  const dailyStreakCardSource = fs.readFileSync(
-    path.join(SRC_DIR, "features", "user-profile", "sections", "learning", "DailyStreakCard.tsx"),
     "utf8",
   );
   const selectorSource = fs.readFileSync(
@@ -202,29 +207,42 @@ test("5c. A successful daily-goal save — and only a successful save — trigge
     "utf8",
   );
 
-  // LearningSection owns the token and increments it inside the handler it
-  // passes to DailyGoalSelector as onDailyGoalChange — not inside a .catch.
-  assert.match(learningSectionSource, /const \[streakRefreshToken, setStreakRefreshToken\] = useState\(0\)/);
-  assert.match(
+  // Checks for a *live* reference (a useState declaration or a JSX prop),
+  // not the word appearing at all — LearningSection's own comments
+  // legitimately still explain what replaced the mechanism, by name.
+  assert.doesNotMatch(
     learningSectionSource,
-    /const handleDailyGoalChange = \(dailyGoal: number\) => \{\s*setStreakRefreshToken\(\(token\) => token \+ 1\);\s*onDailyGoalChange\?\.\(dailyGoal\);\s*\};/,
-    "handleDailyGoalChange must increment the token and forward to onDailyGoalChange, in that order",
+    /const \[streakRefreshToken/,
+    "LearningSection must no longer declare a local streakRefreshToken state",
+  );
+  assert.doesNotMatch(
+    learningSectionSource,
+    /streakRefreshToken=\{/,
+    "LearningSection must no longer pass a streakRefreshToken prop to DailyStreakCard",
   );
   assert.match(
     learningSectionSource,
-    /<DailyGoalSelector[\s\S]*?onDailyGoalChange=\{handleDailyGoalChange\}[\s\S]*?\/>/,
-    "DailyGoalSelector must receive the wrapping handler, not the raw onDailyGoalChange prop",
+    /<DailyGoalSelector[\s\S]*?onDailyGoalChange=\{onDailyGoalChange\}[\s\S]*?\/>/,
+    "DailyGoalSelector must receive the raw onDailyGoalChange prop directly — no wrapping handler is needed once the shared resource owns its own refresh",
   );
-  const dailyStreakCardJsxMatch = learningSectionSource.match(/<DailyStreakCard\s+([\s\S]*?)\/>/);
-  assert.match(dailyStreakCardJsxMatch[1], /streakRefreshToken=\{streakRefreshToken\}/);
 
-  // DailyGoalSelector's own onDailyGoalChange call site must stay inside a
-  // success branch (.then), never in its .catch — this is what makes a
-  // failed save leave LearningSection's token (and therefore
-  // DailyStreakCard) untouched. Split on the .then(/.catch(/.finally(
-  // boundaries themselves (rather than a brace-balancing regex, which
-  // can't handle the nested object literal inside the .then branch) to
-  // isolate each branch's own text.
+  // DailyGoalSelector must import and call notifyDailyStatsChanged from the
+  // shared invalidation module — the same narrow-signal module
+  // completeNewWordStudy/completeWordReview/completeCustomPracticeWord/
+  // resetLearningLanguageProgress also fire (see
+  // src/lib/sharedProgressInvalidation.ts).
+  assert.match(
+    selectorSource,
+    /import\s*\{\s*notifyDailyStatsChanged\s*\}\s*from\s*"..\/..\/..\/..\/lib\/sharedProgressInvalidation"/,
+    "DailyGoalSelector must import notifyDailyStatsChanged from src/lib/sharedProgressInvalidation.ts",
+  );
+
+  // notifyDailyStatsChanged's own call site must stay inside a success
+  // branch (.then), never in its .catch — a failed save must never falsely
+  // refresh the shared daily-stats resource. Split on the .then(/.catch(/
+  // .finally( boundaries themselves (rather than a brace-balancing regex,
+  // which can't handle the nested object literal inside the .then branch)
+  // to isolate each branch's own text.
   const handleSaveMatch = selectorSource.match(/const handleSave = \(\) => \{[\s\S]*?\n  \};/);
   assert.ok(handleSaveMatch, "DailyGoalSelector's handleSave must exist");
   const [, afterThen] = handleSaveMatch[0].split(/\.then\(\(result\) => \{/);
@@ -234,17 +252,17 @@ test("5c. A successful daily-goal save — and only a successful save — trigge
   const [catchBody] = afterCatch.split(/\.finally\(/);
   assert.ok(catchBody, "handleSave must have a .finally( branch closing the catch body");
   assert.match(thenBody, /onDailyGoalChange\?\.\(nextProfile\.dailyGoal\)/);
+  assert.match(thenBody, /notifyDailyStatsChanged\(\)/, "a successful save must call notifyDailyStatsChanged()");
   assert.doesNotMatch(
     catchBody,
     /onDailyGoalChange/,
-    "a failed save must never call onDailyGoalChange — that would falsely bump the streak-refresh token",
+    "a failed save must never call onDailyGoalChange",
   );
-
-  // The refetch effect must actually depend on the token — otherwise
-  // bumping it would be a no-op.
-  const effectMatch = dailyStreakCardSource.match(/useEffect\(\(\) => \{[\s\S]*?\}, \[([^\]]*)\]\);/);
-  assert.ok(effectMatch, "DailyStreakCard's fetch effect must exist");
-  assert.match(effectMatch[1], /\bstreakRefreshToken\b/);
+  assert.doesNotMatch(
+    catchBody,
+    /notifyDailyStatsChanged/,
+    "a failed save must never call notifyDailyStatsChanged — that would falsely refresh the shared daily-stats resource",
+  );
 });
 
 test("6. Streak Phase 1's migration never bulk-rewrites existing user_profiles or user_daily_stats rows", () => {

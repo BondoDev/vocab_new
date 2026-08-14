@@ -24,6 +24,7 @@ import {
 } from "./supabaseAuth";
 import { classifySupabaseError, describeSupabaseError, type SupabaseErrorCategory } from "./supabaseError";
 import { isValidWordTimeSeconds } from "../data/learning/activeWordTimer";
+import { notifyDailyStatsChanged } from "./sharedProgressInvalidation";
 
 function getAuthorizedHeaders(session: StoredSupabaseSession) {
   return {
@@ -196,5 +197,14 @@ export async function completeCustomPracticeWord(
   }
 
   const row = Array.isArray(rows) ? rows[0] : rows;
-  return parseCompleteCustomPracticeWordRow(row);
+  const parsedResult = parseCompleteCustomPracticeWordRow(row);
+  // This write upsert-increments today's
+  // user_daily_stats.custom_practice_time_seconds only (see this module's
+  // own header — never user_word_progress, never review_events) — the
+  // shared daily-stats resource (useProfileSharedDailyStats.ts) may now be
+  // stale. Deliberately does NOT call notifyWordProgressChanged (word
+  // progress is genuinely untouched) or notifyVocabularyGrowthChanged (no
+  // review_events row is written).
+  notifyDailyStatsChanged();
+  return parsedResult;
 }

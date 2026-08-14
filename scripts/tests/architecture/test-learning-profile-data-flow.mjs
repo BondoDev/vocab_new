@@ -53,6 +53,7 @@ const dashboardPage = read("src/features/user-profile/sections/UserProfileDashbo
 const appTsx = read("src/app/App.tsx");
 const useUserProfileLoad = read("src/app/hooks/useUserProfileLoad.ts");
 const userProfileLib = read("src/lib/userProfile.ts");
+const sharedDailyStats = read("src/features/user-profile/sections/useProfileSharedDailyStats.ts");
 
 test("1. useUserProfileLoad is the only profile-loading path reachable from the Learning dashboard", () => {
   // The three Learning cards must not import or call either profile-read
@@ -162,9 +163,19 @@ test("5. Daily-goal updates propagate from DailyGoalSelector back up to App.tsx'
 test("6. Loading and error states remain represented in all three cards", () => {
   assert.match(dailyGoalSelector, /saveError/, "DailyGoalSelector must keep a save-error toast path");
   assert.match(dailyStreakCard, /"loading"/, "DailyStreakCard must keep a loading state");
-  assert.match(dailyStreakCard, /console\.warn/, "DailyStreakCard must keep dev logging on failure");
   assert.match(todayProgressCard, /"loading"/, "TodayProgressCard must keep a loading state");
-  assert.match(todayProgressCard, /console\.warn/, "TodayProgressCard must keep dev logging on failure");
+  // Fetch-audit Phase 1: DailyStreakCard/TodayProgressCard no longer fetch
+  // their own daily-stats read at all (see
+  // test-daily-stats-shared-ownership.mjs) — both are now pure derivations
+  // over the shared useProfileSharedDailyStats.ts resource, so a failed
+  // load's dev logging moved with the fetch itself, into that shared hook,
+  // rather than staying duplicated in every consuming card. TodayProgressCard
+  // keeps an unrelated console.warn for an invalid/missing daily goal (not a
+  // fetch failure), so this checks for the old fetch-failure message
+  // specifically, not console.warn's mere presence.
+  assert.doesNotMatch(dailyStreakCard, /failed to load streak data/, "DailyStreakCard no longer owns a fetch to log a failure from");
+  assert.doesNotMatch(todayProgressCard, /failed to load today's progress/, "TodayProgressCard no longer owns a fetch to log a failure from");
+  assert.match(sharedDailyStats, /console\.warn/, "useProfileSharedDailyStats.ts must keep dev logging on failure");
 });
 
 test("7. Learning profile writes cannot smuggle timezone through either narrow profile RPC (Profile Phase 1 removed the generic upsert entirely)", () => {
