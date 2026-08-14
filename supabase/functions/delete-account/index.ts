@@ -1,8 +1,14 @@
 // Account-deletion primitive — Supabase Edge Function.
 //
-// Backend-only piece of the account-deletion capability (no frontend UI is
-// wired to this yet — see supabase/README.md's "Account Deletion" section
-// for the full audit/decision record this function implements). Runs on
+// Called by the frontend account-deletion flow: the client wrapper is
+// deleteAccount() in src/lib/accountDeletion.ts, invoked from Settings'
+// Delete Account dialog (DeleteAccountDialog.tsx) once the user confirms —
+// see supabase/README.md's "Account Deletion" section (and its "Built"
+// follow-up) for the full audit/decision record this function implements.
+// That frontend flow is never trusted on its own, though: this function
+// independently re-verifies the caller's bearer token and recent-
+// authentication state itself on every call, regardless of what the client
+// already did — see "Identity model" and "Reauthentication" below. Runs on
 // Supabase's own Edge Runtime, the only place in this repository that may
 // legitimately hold the Supabase `service_role` key: it is set as an Edge
 // Function secret (`supabase secrets set SUPABASE_SERVICE_ROLE_KEY=...`),
