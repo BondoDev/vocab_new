@@ -370,6 +370,10 @@ function AppContent({
     useState(0);
   const [swapRotation, setSwapRotation] = useState(0);
   const resolvedPage = ssrRouteOverride?.page ?? currentPage;
+  const isProtectedAccountPage =
+    resolvedPage === "profile" ||
+    resolvedPage === "newWordStudy" ||
+    resolvedPage === "reviewWords";
   const wordRoute = ssrRouteOverride?.wordRoute ?? detectedWordRoute;
   const siteOrigin = useSeoSiteOrigin();
   const routeMetadata = useMemo(() => {
@@ -387,6 +391,12 @@ function AppContent({
         return buildRouteMetadata(location.pathname, siteOrigin);
     }
   }, [location.pathname, resolvedPage, siteOrigin]);
+
+  useEffect(() => {
+    if (isAuthResolved && !authUserId && isProtectedAccountPage) {
+      navigate(ROUTES.exerciseSelection, { replace: true });
+    }
+  }, [authUserId, isAuthResolved, isProtectedAccountPage, navigate]);
 
   const handleStartPracticing = () => {
     if (isContinueDisabled) {
@@ -861,6 +871,17 @@ function AppContent({
       onSubmit={handleAccountOnboardingSubmit}
     />
   ) : null;
+
+  if (isProtectedAccountPage && isAuthResolved && !authUserId) {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
+        <RouteLoadingFallback />
+        {passwordRecoveryDialog}
+        {accountIntroDialog}
+      </div>
+    );
+  }
 
   if (resolvedPage === "practice") {
     // A Practice List entry bypasses the ordinary language/filters/
