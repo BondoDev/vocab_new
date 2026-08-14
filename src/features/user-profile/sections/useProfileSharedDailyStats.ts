@@ -211,7 +211,35 @@ function useLazyKeyedRows<TRow>({
     // running — perform the fetch (first load, an explicit retry, or a
     // background refresh after an invalidation signal all funnel through
     // this same branch).
-    let cancelled = false;
+    //
+    // Deliberately no `cancelled`-closure/cleanup pair here (a prior version
+    // of this effect had one). Because this effect's dependency array
+    // includes requestVersion/retryToken/invalidationVersion — each bumped
+    // by a *separate* state update from request()/retry()/an invalidation
+    // signal, not necessarily in the same commit as contextKey resolving —
+    // this effect can legitimately re-run for the *same* contextKey while a
+    // fetch it already started is still in flight (inFlightKeyRef's own
+    // comment documents the concrete race: contextKey resolving and
+    // request()'s requestVersion bump independently re-running this effect
+    // for the same freshly-armed key). React invokes the previous
+    // invocation's cleanup on every such re-run, not only on unmount. A
+    // `cancelled = true` cleanup would therefore mark the one real in-flight
+    // fetch as cancelled before it ever resolves — and since inFlightKeyRef
+    // already stops that second effect run from starting a *replacement*
+    // fetch (the guard above), the discarded result is never replaced:
+    // state gets stuck on "loading" forever. This was caught live (see the
+    // fetch-audit report for this fix) — both requests actually succeeded
+    // over the network, but their results were silently thrown away.
+    //
+    // The fix mirrors useProfileSharedProgressData's own learning-date
+    // effect: gate result application on inFlightKeyRef.current still
+    // matching contextKey, re-checked fresh at resolution time, instead of
+    // a per-invocation closure flag. inFlightKeyRef is only ever pointed at
+    // contextKey by *this* attempt (a same-key re-run returns early above
+    // without touching it), so it keeps identifying "am I still the
+    // attempt that owns this context" across any number of harmless
+    // intermediate re-runs, and is only cleared by this attempt's own
+    // finally block or by a genuine context change.
     inFlightKeyRef.current = contextKey;
     setState((prev) =>
       prev.key === contextKey && prev.status === "ready" ? prev : { key: contextKey, status: "loading", rows: prev.key === contextKey ? prev.rows : [] },
@@ -221,7 +249,7 @@ function useLazyKeyedRows<TRow>({
       try {
         const session = getStoredSupabaseSession();
         if (!session) {
-          if (!cancelled) {
+          if (inFlightKeyRef.current === contextKey) {
             requestedKeyRef.current = null;
             setState(idleState(contextKey));
           }
@@ -229,10 +257,10 @@ function useLazyKeyedRows<TRow>({
         }
 
         const rows = await fetchRows(session, targetLanguage);
-        if (cancelled) return;
+        if (inFlightKeyRef.current !== contextKey) return;
         setState({ key: contextKey, status: "ready", rows });
       } catch (error) {
-        if (cancelled) return;
+        if (inFlightKeyRef.current !== contextKey) return;
         console.warn(
           `useProfileSharedDailyStats: failed to load ${label}.`,
           describeSupabaseError(label, error),
@@ -253,10 +281,6 @@ function useLazyKeyedRows<TRow>({
         }
       }
     })();
-
-    return () => {
-      cancelled = true;
-    };
   }, [contextKey, targetLanguage, requestVersion, retryToken, invalidationVersion, fetchRows, label]);
 
   const request = useCallback(() => {
