@@ -543,6 +543,22 @@ export function SettingsSection({
       });
   };
 
+  // Discards an in-progress Languages edit without any RPC/backend call —
+  // restores all three drafts from the current confirmed userProfile values
+  // (never from whatever they were at the original mount, so this stays
+  // correct even after a prior successful save moved userProfile forward)
+  // and clears the save-error state a previous failed attempt may have left
+  // behind. Mirrors handleCancelEditNickname/handleCancelEditEmail/
+  // handleCancelEditPassword's own "restore + clear error" shape above,
+  // just without an isEditing flag to unset since this card has no separate
+  // edit mode (ACCOUNT-001).
+  const handleCancelLanguages = () => {
+    setNativeDraft(userProfile.nativeLanguage);
+    setPracticeDraft(userProfile.practiceLanguage);
+    setLevelDraft(userProfile.languageLevel);
+    setLanguagesError(null);
+  };
+
   // ---- Time & Region ---------------------------------------------------
   const [timezoneDraft, setTimezoneDraft] = useState<string>(userProfile.timezone ?? "");
   const [isSavingTimezone, setIsSavingTimezone] = useState(false);
@@ -568,6 +584,18 @@ export function SettingsSection({
     setDetectionError(null);
     setTimezoneError(null);
     setTimezoneDraft(detected);
+  };
+
+  // Discards an in-progress Timezone edit without any RPC/backend call —
+  // restores timezoneDraft from the current confirmed userProfile.timezone
+  // (not whatever it was at original mount) and clears both transient error
+  // states this card can show (a failed save, or a failed "Use current
+  // timezone" detection) — same "restore + clear error" shape as
+  // handleCancelLanguages above (ACCOUNT-001).
+  const handleCancelTimezone = () => {
+    setTimezoneDraft(userProfile.timezone ?? "");
+    setTimezoneError(null);
+    setDetectionError(null);
   };
 
   const handleSaveTimezone = () => {
@@ -1145,6 +1173,11 @@ export function SettingsSection({
         ) : null}
 
         <div className="settings-surface__actions">
+          {!isLanguagesUnchanged ? (
+            <Button type="button" variant="outline" onClick={handleCancelLanguages} disabled={isSavingLanguages}>
+              {t("userProfile.settingsSection.cancel")}
+            </Button>
+          ) : null}
           <Button type="button" onClick={handleSaveLanguages} disabled={!canSaveLanguages}>
             {isSavingLanguages ? t("userProfile.settingsSection.saving") : t("userProfile.settingsSection.save")}
           </Button>
@@ -1197,6 +1230,11 @@ export function SettingsSection({
           <Button type="button" variant="outline" onClick={handleUseCurrentTimezone} disabled={isSavingTimezone}>
             {t("userProfile.settingsSection.timeRegion.useCurrent")}
           </Button>
+          {!isTimezoneUnchanged ? (
+            <Button type="button" variant="outline" onClick={handleCancelTimezone} disabled={isSavingTimezone}>
+              {t("userProfile.settingsSection.cancel")}
+            </Button>
+          ) : null}
           <Button type="button" onClick={handleSaveTimezone} disabled={!canSaveTimezone}>
             {isSavingTimezone ? t("userProfile.settingsSection.saving") : t("userProfile.settingsSection.save")}
           </Button>
