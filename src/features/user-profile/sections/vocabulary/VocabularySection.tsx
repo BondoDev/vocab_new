@@ -13,6 +13,7 @@ import { adjustFavoritesCount, applyFavoriteToggle, canStartFavoriteToggle } fro
 import { VocabularySummaryCards } from "./VocabularySummaryCards";
 import { VocabularyTabs, type VocabularyTabCounts } from "./VocabularyTabs";
 import { VocabularyTable } from "./VocabularyTable";
+import { AddWordToListDialog, type AddToListWord } from "./AddWordToListDialog";
 import "./vocabulary-section.scss";
 
 const EMPTY_COUNTS: VocabularyCounts = { learning: 0, known: 0, mastered: 0, favorites: 0, total: 0 };
@@ -64,6 +65,7 @@ export function VocabularySection({
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(PAGE_SIZE_DEFAULT);
   const [togglingIds, setTogglingIds] = useState<ReadonlySet<string>>(new Set());
+  const [addToListWord, setAddToListWord] = useState<AddToListWord | null>(null);
   const { message: confirmationMessage, show: showConfirmation } = useAutoDismissMessage();
 
   const targetLanguage = userProfile.practiceLanguage;
@@ -218,6 +220,10 @@ export function VocabularySection({
       });
   };
 
+  const handleOpenAddToList = (row: ResolvedVocabularyRow) => {
+    setAddToListWord({ wordId: row.conceptId, targetWord: row.targetWord });
+  };
+
   const isLoading = state.status === "loading";
   const isError = state.status === "error";
   const data = state.status === "result" ? state.data : null;
@@ -286,10 +292,20 @@ export function VocabularySection({
             onPageSizeChange={setPageSize}
             togglingIds={togglingIds}
             onToggleFavorite={handleToggleFavorite}
+            onAddToList={handleOpenAddToList}
             targetLanguage={targetLanguage}
           />
         )}
       </div>
+
+      <AddWordToListDialog
+        word={addToListWord}
+        targetLanguage={targetLanguage}
+        onOpenChange={(open) => {
+          if (!open) setAddToListWord(null);
+        }}
+        onShowToast={showConfirmation}
+      />
 
       <Toast message={confirmationMessage} />
     </>

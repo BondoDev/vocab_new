@@ -1,0 +1,387 @@
+import { useEffect, useMemo, useState } from "react";
+import { Check, Loader2, Plus, Search } from "lucide-react";
+import { useLanguage } from "../../../../contexts/LanguageContext";
+import { Button } from "../../../../app/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../../../../app/components/ui/dialog";
+import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
+import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
+import {
+  addWordsToVocabularyList,
+  createUserVocabularyList,
+  readUserVocabularyLists,
+  readUserVocabularyListMembershipsForWord,
+  removeWordFromVocabularyList,
+  VocabularyListError,
+  type UserVocabularyList,
+} from "../../../../lib/vocabularyLists";
+// Reuses My Lists' own pure search filter and name-validation helpers rather
+// than duplicating them — both are import-free, component-free pure
+// functions (see their own file headers), so this cross-feature import
+// stays a one-way dependency on plain logic, not on My Lists' UI/state.
+import { filterListsBySearchQuery } from "../my-lists/listSearchSort";
+import { normalizeListNameForComparison, validateListName, LIST_NAME_MAX_LENGTH } from "../my-lists/listNameValidation";
+
+export interface AddToListWord {
+  // Vocabulary concept id (ResolvedVocabularyRow.conceptId) — the same id
+  // user_vocabulary_list_words.word_id stores. Never the progress row id
+  // (ResolvedVocabularyRow.id) — a list's membership is concept-based, see
+  // vocabularyLists.ts's own header.
+  wordId: string;
+  targetWord: string;
+}
+
+interface AddWordToListDialogProps {
+  // null closes the dialog; a word opens it scoped to that word — mirrors
+  // RenameListDialog's "list: UserVocabularyList | null" shape, since this
+  // dialog needs the word's id/display text, not just a boolean.
+  word: AddToListWord | null;
+  targetLanguage: string;
+  onOpenChange: (open: boolean) => void;
+  // Reuses VocabularySection's own Toast/useAutoDismissMessage instance
+  // rather than mounting a second one — this dialog never renders its own
+  // Toast.
+  onShowToast: (message: string) => void;
+}
+
+type ListsLoadState =
+  | { status: "loading" }
+  | { status: "error" }
+  | { status: "ready"; lists: UserVocabularyList[] };
+
+// The scroll box's own SCSS (.vocabulary-add-to-list__list max-height)
+// hardcodes a 5-row cap matching this comment — a user with a large number
+// of lists still gets a compact popup with search, rather than every list
+// rendered at once.
+
+// Vocabulary page's "Add to list" popup: pick from the caller's existing
+// lists (search + scroll, capped at roughly 5 visible rows) or
+// create a new one inline, all for exactly one word. Each list row is a
+// toggle (click adds, click again removes) — mirrors VocabularySection's
+// own Favorites-star optimistic-toggle precedent rather than a separate
+// "confirm" step. Lists and this word's own membership are both fetched
+// fresh every time the dialog opens (no cross-open caching) — this dialog
+// intentionally stays a self-contained data owner rather than adding a
+// second lists cache to VocabularySection itself.
+export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShowToast }: AddWordToListDialogProps) {
+  const { t } = useLanguage();
+  const open = word !== null;
+  const [state, setState] = useState<ListsLoadState>({ status: "loading" });
+  const [memberListIds, setMemberListIds] = useState<ReadonlySet<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
+  const [togglingListIds, setTogglingListIds] = useState<ReadonlySet<string>>(new Set());
+  const [actionError, setActionError] = useState<string | null>(null);
+
+  const [isCreatingNew, setIsCreatingNew] = useState(false);
+  const [newListName, setNewListName] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
+
+  // Resets every draft/error whenever the dialog closes, so reopening it —
+  // for the same word or a different one — never shows stale search text,
+  // a still-open create form, or a previous attempt's error.
+  useEffect(() => {
+    if (!open) {
+      setSearchQuery("");
+      setActionError(null);
+      setIsCreatingNew(false);
+      setNewListName("");
+      setCreateError(null);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (!open || !word) return;
+
+    let cancelled = false;
+    setState({ status: "loading" });
+    setMemberListIds(new Set());
+
+    void (async () => {
+      const session = getStoredSupabaseSession();
+      if (!session) {
+        if (!cancelled) {
+          setState({ status: "ready", lists: [] });
+          onShowToast(t("supabaseErrors.sessionExpired"));
+        }
+        return;
+      }
+
+      try {
+        const [lists, memberships] = await Promise.all([
+          readUserVocabularyLists(session, targetLanguage),
+          readUserVocabularyListMembershipsForWord(session, word.wordId),
+        ]);
+        if (cancelled) return;
+        setState({ status: "ready", lists });
+        setMemberListIds(new Set(memberships.map((membership) => membership.listId)));
+      } catch (error) {
+        if (cancelled) return;
+        console.warn("AddWordToListDialog: failed to load lists.", describeSupabaseError("readUserVocabularyLists", error));
+        setState({ status: "error" });
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, word?.wordId, targetLanguage]);
+
+  const lists = state.status === "ready" ? state.lists : [];
+  const visibleLists = useMemo(() => filterListsBySearchQuery(lists, searchQuery), [lists, searchQuery]);
+
+  // Optimistic add/remove toggle — the row's checkmark flips immediately,
+  // the RPC call happens in the background, and a failure rolls the
+  // membership back and surfaces an inline error, matching
+  // VocabularySection.handleToggleFavorite's own precedent exactly.
+  const handleToggleList = (list: UserVocabularyList) => {
+    if (!word || togglingListIds.has(list.id)) return;
+    const session = getStoredSupabaseSession();
+    if (!session) {
+      onShowToast(t("supabaseErrors.sessionExpired"));
+      return;
+    }
+
+    const isMember = memberListIds.has(list.id);
+    setActionError(null);
+    setTogglingListIds((prev) => new Set(prev).add(list.id));
+    setMemberListIds((prev) => {
+      const next = new Set(prev);
+      if (isMember) next.delete(list.id);
+      else next.add(list.id);
+      return next;
+    });
+
+    const request = isMember
+      ? removeWordFromVocabularyList(session, list.id, word.wordId)
+      : addWordsToVocabularyList(session, list.id, [word.wordId]);
+
+    void request
+      .then(() => {
+        const messageKey = isMember
+          ? "userProfile.vocabularySection.addToListDialog.removedFromList"
+          : "userProfile.vocabularySection.addToListDialog.addedToList";
+        onShowToast(t(messageKey).replace("{name}", list.name));
+      })
+      .catch((error) => {
+        console.warn("AddWordToListDialog: failed to toggle list membership.", error);
+        setMemberListIds((prev) => {
+          const next = new Set(prev);
+          if (isMember) next.add(list.id);
+          else next.delete(list.id);
+          return next;
+        });
+        const category = error instanceof VocabularyListError ? error.category : "unknown";
+        const fallbackKey = isMember
+          ? "userProfile.vocabularySection.addToListDialog.removeWordError"
+          : "userProfile.vocabularySection.addToListDialog.addWordError";
+        setActionError(t(resolveSupabaseErrorMessageKey(category, fallbackKey)));
+      })
+      .finally(() => {
+        setTogglingListIds((prev) => {
+          const next = new Set(prev);
+          next.delete(list.id);
+          return next;
+        });
+      });
+  };
+
+  const handleCreateAndAdd = async () => {
+    if (!word) return;
+    const validation = validateListName(newListName);
+    if (!validation.ok) return;
+
+    const normalized = normalizeListNameForComparison(validation.name);
+    if (lists.some((list) => normalizeListNameForComparison(list.name) === normalized)) {
+      setCreateError(t("userProfile.myListsSection.duplicateNameError"));
+      return;
+    }
+
+    const session = getStoredSupabaseSession();
+    if (!session) {
+      setCreateError(t("supabaseErrors.sessionExpired"));
+      return;
+    }
+
+    setIsCreating(true);
+    setCreateError(null);
+    try {
+      const created = await createUserVocabularyList(session, targetLanguage, validation.name);
+      setState((prev) => (prev.status === "ready" ? { status: "ready", lists: [created, ...prev.lists] } : prev));
+      setIsCreatingNew(false);
+      setNewListName("");
+      // Reuses the same optimistic add path every existing-list row uses —
+      // `created` is guaranteed not yet in memberListIds/togglingListIds.
+      handleToggleList(created);
+    } catch (error) {
+      console.warn("AddWordToListDialog: failed to create list.", error);
+      const category = error instanceof VocabularyListError ? error.category : "unknown";
+      setCreateError(
+        category === "conflict"
+          ? t("userProfile.myListsSection.duplicateNameError")
+          : t(resolveSupabaseErrorMessageKey(category, "userProfile.myListsSection.createError")),
+      );
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const dialogTitle = word
+    ? `${t("userProfile.vocabularySection.addToListDialog.titlePrefix")} "${word.targetWord}" ${t(
+        "userProfile.vocabularySection.addToListDialog.titleSuffix",
+      )}`.replace(/\s+/g, " ").trim()
+    : t("userProfile.vocabularySection.table.menu.addToList");
+
+  return (
+    <Dialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!isCreating) onOpenChange(nextOpen);
+      }}
+    >
+      <DialogContent className="vocabulary-add-to-list-dialog sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>{dialogTitle}</DialogTitle>
+          <DialogDescription className="sr-only">{dialogTitle}</DialogDescription>
+        </DialogHeader>
+
+        {word ? (
+          <div className="vocabulary-add-to-list">
+            <div className="vocabulary-add-to-list__search">
+              <Search size={15} strokeWidth={2} aria-hidden="true" className="vocabulary-add-to-list__search-icon" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder={t("userProfile.myListsSection.search.placeholder")}
+                aria-label={t("userProfile.myListsSection.search.ariaLabel")}
+                className="vocabulary-add-to-list__search-input"
+              />
+            </div>
+
+            {actionError ? (
+              <div role="alert" className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                {actionError}
+              </div>
+            ) : null}
+
+            <div className="vocabulary-add-to-list__list" role="listbox" aria-multiselectable="true">
+              {state.status === "loading" ? (
+                <div className="vocabulary-add-to-list__loading" role="status" aria-live="polite" aria-busy="true">
+                  <Loader2 size={16} className="vocabulary-add-to-list__spinner" aria-hidden="true" />
+                  <span>{t("userProfile.vocabularySection.addToListDialog.loading")}</span>
+                </div>
+              ) : state.status === "error" ? (
+                <p className="vocabulary-add-to-list__message">{t("userProfile.myListsSection.loadError")}</p>
+              ) : lists.length === 0 ? (
+                <p className="vocabulary-add-to-list__message">
+                  {t("userProfile.vocabularySection.addToListDialog.emptyState")}
+                </p>
+              ) : visibleLists.length === 0 ? (
+                <p className="vocabulary-add-to-list__message">
+                  {t("userProfile.vocabularySection.addToListDialog.noMatch")}
+                </p>
+              ) : (
+                visibleLists.map((list) => {
+                  const isMember = memberListIds.has(list.id);
+                  const isToggling = togglingListIds.has(list.id);
+                  return (
+                    <button
+                      key={list.id}
+                      type="button"
+                      role="option"
+                      aria-selected={isMember}
+                      disabled={isToggling}
+                      className={`vocabulary-add-to-list__row ${isMember ? "is-member" : ""}`}
+                      onClick={() => handleToggleList(list)}
+                    >
+                      <span className="vocabulary-add-to-list__row-name">{list.name}</span>
+                      {isToggling ? (
+                        <Loader2 size={15} className="vocabulary-add-to-list__spinner" aria-hidden="true" />
+                      ) : isMember ? (
+                        <span className="vocabulary-add-to-list__row-status">
+                          <Check size={14} strokeWidth={2.5} aria-hidden="true" />
+                          {t("userProfile.vocabularySection.addToListDialog.added")}
+                        </span>
+                      ) : (
+                        <Plus size={15} strokeWidth={2} aria-hidden="true" className="vocabulary-add-to-list__row-add-icon" />
+                      )}
+                    </button>
+                  );
+                })
+              )}
+            </div>
+
+            <div className="vocabulary-add-to-list__footer">
+              <div className="vocabulary-add-to-list__create">
+                {isCreatingNew ? (
+                  <div className="vocabulary-add-to-list__create-form">
+                    <input
+                      type="text"
+                      value={newListName}
+                      onChange={(event) => setNewListName(event.target.value)}
+                      placeholder={t("userProfile.myListsSection.modal.placeholder")}
+                      maxLength={LIST_NAME_MAX_LENGTH}
+                      disabled={isCreating}
+                      autoFocus
+                      className="vocabulary-add-to-list__search-input"
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          event.preventDefault();
+                          void handleCreateAndAdd();
+                        }
+                      }}
+                    />
+                    {createError ? <p className="vocabulary-add-to-list__create-error">{createError}</p> : null}
+                    <div className="vocabulary-add-to-list__create-actions">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        disabled={isCreating}
+                        onClick={() => {
+                          setIsCreatingNew(false);
+                          setNewListName("");
+                          setCreateError(null);
+                        }}
+                      >
+                        {t("userProfile.myListsSection.modal.cancel")}
+                      </Button>
+                      <Button
+                        type="button"
+                        disabled={!validateListName(newListName).ok || isCreating}
+                        onClick={() => void handleCreateAndAdd()}
+                      >
+                        {isCreating ? (
+                          <Loader2 size={15} className="vocabulary-add-to-list__spinner" aria-hidden="true" />
+                        ) : null}
+                        {t("userProfile.vocabularySection.addToListDialog.createAndAdd")}
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="vocabulary-add-to-list__create-trigger"
+                    onClick={() => setIsCreatingNew(true)}
+                  >
+                    <Plus size={15} strokeWidth={2} aria-hidden="true" />
+                    {t("userProfile.myListsSection.createButton")}
+                  </button>
+                )}
+              </div>
+              <Button type="button" disabled={isCreating} onClick={() => onOpenChange(false)}>
+                {t("userProfile.vocabularySection.addToListDialog.done")}
+              </Button>
+            </div>
+          </div>
+        ) : null}
+      </DialogContent>
+    </Dialog>
+  );
+}

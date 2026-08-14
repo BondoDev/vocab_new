@@ -6,6 +6,7 @@ import { buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
 import { getUiVocabularyLanguage } from "../../../../data/seo/shared/slugs";
 import type { ResolvedVocabularyRow } from "./loadVocabularyProgress";
 import { computeLastPracticedDisplay } from "./lastPracticedDisplay";
+import { speakGuidedWord } from "../../../study-new-words/utils/speakGuidedWord";
 
 const MENU_ACTION_KEYS = [
   "userProfile.vocabularySection.table.menu.viewDetails",
@@ -24,6 +25,7 @@ interface VocabularyTableProps {
   onPageSizeChange: (size: number) => void;
   togglingIds: ReadonlySet<string>;
   onToggleFavorite: (row: ResolvedVocabularyRow) => void;
+  onAddToList: (row: ResolvedVocabularyRow) => void;
   targetLanguage: UILanguage;
 }
 
@@ -55,6 +57,7 @@ export function VocabularyTable({
   onPageSizeChange,
   togglingIds,
   onToggleFavorite,
+  onAddToList,
   targetLanguage,
 }: VocabularyTableProps) {
   const { t } = useLanguage();
@@ -117,12 +120,14 @@ export function VocabularyTable({
                 <td>
                   <div className="vocabulary-table__word-cell">
                     <span className="vocabulary-table__word">{row.targetWord}</span>
-                    <span
+                    <button
+                      type="button"
                       className="vocabulary-table__audio-icon"
                       aria-label={t("userProfile.vocabularySection.table.audioAriaLabel")}
+                      onClick={() => speakGuidedWord(row.targetWord, targetLanguage)}
                     >
                       <Volume2 size={13} strokeWidth={2} aria-hidden="true" />
-                    </span>
+                    </button>
                   </div>
                 </td>
                 <td className="vocabulary-table__translation">{row.translation}</td>
@@ -138,6 +143,7 @@ export function VocabularyTable({
                     row={row}
                     isToggling={togglingIds.has(row.id)}
                     onToggleFavorite={() => onToggleFavorite(row)}
+                    onAddToList={() => onAddToList(row)}
                     targetLanguage={targetLanguage}
                     isMenuOpen={openMenuId === row.id}
                     onToggleMenu={() =>
@@ -158,12 +164,14 @@ export function VocabularyTable({
             <div className="vocabulary-mobile-card__top">
               <div className="vocabulary-table__word-cell">
                 <span className="vocabulary-table__word">{row.targetWord}</span>
-                <span
+                <button
+                  type="button"
                   className="vocabulary-table__audio-icon"
                   aria-label={t("userProfile.vocabularySection.table.audioAriaLabel")}
+                  onClick={() => speakGuidedWord(row.targetWord, targetLanguage)}
                 >
                   <Volume2 size={13} strokeWidth={2} aria-hidden="true" />
-                </span>
+                </button>
               </div>
 
               {/* Favorite + more together, top-right - keeps the row the card
@@ -173,6 +181,7 @@ export function VocabularyTable({
                 row={row}
                 isToggling={togglingIds.has(row.id)}
                 onToggleFavorite={() => onToggleFavorite(row)}
+                onAddToList={() => onAddToList(row)}
                 targetLanguage={targetLanguage}
                 isMenuOpen={openMenuId === `${row.id}-mobile`}
                 onToggleMenu={() =>
@@ -269,6 +278,7 @@ interface RowActionsProps {
   row: ResolvedVocabularyRow;
   isToggling: boolean;
   onToggleFavorite: () => void;
+  onAddToList: () => void;
   targetLanguage: UILanguage;
   isMenuOpen: boolean;
   onToggleMenu: () => void;
@@ -279,6 +289,7 @@ function RowActions({
   row,
   isToggling,
   onToggleFavorite,
+  onAddToList,
   targetLanguage,
   isMenuOpen,
   onToggleMenu,
@@ -359,6 +370,8 @@ function RowActions({
         row.conceptId,
       );
       window.open(wordPath, "_blank", "noopener,noreferrer");
+    } else if (key === "userProfile.vocabularySection.table.menu.addToList") {
+      onAddToList();
     }
   };
 

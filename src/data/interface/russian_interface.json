@@ -865,6 +865,20 @@
         "previous": "Назад",
         "next": "Далее",
         "rowsPerPage": "Строк на странице"
+      },
+      "addToListDialog": {
+        "titlePrefix": "Добавить",
+        "titleSuffix": "в список",
+        "loading": "Загрузка ваших списков…",
+        "emptyState": "У вас пока нет ни одного списка.",
+        "noMatch": "Списки не найдены.",
+        "added": "Добавлено",
+        "createAndAdd": "Создать и добавить",
+        "done": "Готово",
+        "addedToList": "Добавлено в «{name}»",
+        "removedFromList": "Удалено из «{name}»",
+        "addWordError": "Не удалось добавить это слово в список. Попробуйте снова.",
+        "removeWordError": "Не удалось удалить это слово из списка. Попробуйте снова."
       }
     },
     "progressPage": {

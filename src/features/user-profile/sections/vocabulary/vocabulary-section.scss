@@ -448,7 +448,24 @@
 
 .vocabulary-table__audio-icon {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  background: none;
   color: var(--muted-foreground);
+  cursor: pointer;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+    border-radius: calc(var(--radius) - 6px);
+  }
 }
 
 .vocabulary-table__translation {
@@ -819,5 +836,231 @@
 
   .vocabulary-mobile-list {
     display: flex;
+  }
+}
+
+/* ============================================================
+   Add to List popup (AddWordToListDialog) — search + a capped, scrollable
+   list of the caller's own lists, plus an inline "create new list" form.
+   Colors/radii reuse the same tokens as the rest of this file's buttons
+   (var(--muted-foreground), var(--border), var(--ring)) rather than
+   introducing a new palette just for this dialog.
+   ============================================================ */
+
+.vocabulary-add-to-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.vocabulary-add-to-list-dialog {
+  width: min(92vw, 28rem);
+  max-width: none;
+  overflow-x: hidden;
+}
+
+.vocabulary-add-to-list__search {
+  position: relative;
+}
+
+.vocabulary-add-to-list__search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.vocabulary-add-to-list__search-input {
+  width: 100%;
+  padding: 0.55rem 0.75rem 0.55rem 2.1rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--input-background, var(--background));
+  color: var(--foreground);
+  font-size: 0.875rem;
+
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 1px;
+  }
+}
+
+.vocabulary-add-to-list__create-form .vocabulary-add-to-list__search-input {
+  padding-left: 0.75rem;
+}
+
+/* Caps the box at roughly 5 rows (each row ~2.65rem tall including its
+   1px border) before scrolling kicks in — see AddWordToListDialog.tsx's
+   own header comment for the same "5 visible rows" contract. */
+.vocabulary-add-to-list__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 13.25rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 0.15rem;
+}
+
+.vocabulary-add-to-list__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.35rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius) - 4px);
+  background: none;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+
+  &:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--muted-foreground) 8%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  &.is-member {
+    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+    background: color-mix(in srgb, var(--primary) 6%, transparent);
+  }
+}
+
+.vocabulary-add-to-list__row-name {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vocabulary-add-to-list__row-status {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  svg {
+    flex: 0 0 auto;
+  }
+}
+
+.vocabulary-add-to-list__row-add-icon {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+
+.vocabulary-add-to-list__spinner {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  animation: vocabulary-add-to-list-spin 0.8s linear infinite;
+}
+
+@keyframes vocabulary-add-to-list-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.vocabulary-add-to-list__loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+}
+
+.vocabulary-add-to-list__message {
+  margin: 0;
+  padding: 0.9rem 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.vocabulary-add-to-list__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.65rem;
+}
+
+.vocabulary-add-to-list__create {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.vocabulary-add-to-list__create-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.15rem;
+  border: none;
+  background: none;
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.vocabulary-add-to-list__create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.vocabulary-add-to-list__create-error {
+  margin: 0;
+  color: #dc2626;
+  font-size: 0.8rem;
+}
+
+.vocabulary-add-to-list__create-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+@media (max-width: 420px) {
+  .vocabulary-add-to-list__footer {
+    align-items: flex-end;
+  }
+
+  .vocabulary-add-to-list__create-form .vocabulary-add-to-list__create-actions {
+    flex-wrap: wrap;
   }
 }

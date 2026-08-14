@@ -392,6 +392,20 @@
         "previous": "Precedente",
         "next": "Successivo",
         "rowsPerPage": "Righe per pagina"
+      },
+      "addToListDialog": {
+        "titlePrefix": "Aggiungi",
+        "titleSuffix": "a una lista",
+        "loading": "Caricamento delle tue liste…",
+        "emptyState": "Non hai ancora nessuna lista.",
+        "noMatch": "Nessuna lista corrisponde alla tua ricerca.",
+        "added": "Aggiunta",
+        "createAndAdd": "Crea e aggiungi",
+        "done": "Fatto",
+        "addedToList": "Aggiunta a \"{name}\"",
+        "removedFromList": "Rimossa da \"{name}\"",
+        "addWordError": "Non siamo riusciti ad aggiungere questa parola a quella lista. Riprova.",
+        "removeWordError": "Non siamo riusciti a rimuovere questa parola da quella lista. Riprova."
       }
     },
     "progressPage": {

@@ -334,6 +334,21 @@ interface UserVocabularyListMembershipRawRow {
   created_at?: unknown;
 }
 
+function parseMembershipRows(rawRows: UserVocabularyListMembershipRawRow[]): UserVocabularyListMembership[] {
+  const rows: UserVocabularyListMembership[] = [];
+  for (const raw of rawRows) {
+    if (
+      typeof raw.list_id !== "string" ||
+      typeof raw.word_id !== "string" ||
+      typeof raw.created_at !== "string"
+    ) {
+      continue;
+    }
+    rows.push({ listId: raw.list_id, wordId: raw.word_id, createdAt: raw.created_at });
+  }
+  return rows;
+}
+
 // Reads every membership row for a batch of the caller's own lists in one
 // request — never one query per card (see the Phase 2A brief's own "avoid
 // one query per card" requirement). Direct SELECT, not an RPC: RLS already
@@ -355,18 +370,32 @@ export async function readUserVocabularyListMemberships(
     `/rest/v1/user_vocabulary_list_words?list_id=in.(${listIds.join(",")})&select=list_id,word_id,created_at`,
   );
 
-  const rows: UserVocabularyListMembership[] = [];
-  for (const raw of rawRows) {
-    if (
-      typeof raw.list_id !== "string" ||
-      typeof raw.word_id !== "string" ||
-      typeof raw.created_at !== "string"
-    ) {
-      continue;
-    }
-    rows.push({ listId: raw.list_id, wordId: raw.word_id, createdAt: raw.created_at });
+  return parseMembershipRows(rawRows);
+}
+
+// Reads every membership row for a single word (concept id) across every
+// list the caller owns, in one request — used by the Vocabulary page's "Add
+// to list" popup, which needs to know which of the caller's (possibly many)
+// lists already contain this one word, without first loading that list's
+// full membership set. Safe to filter by word_id alone with no list_id
+// filter: the table's RLS policy (see the Phase 2A migration) already scopes
+// every row to lists owned by auth.uid(), regardless of which columns the
+// query filters on — a foreign word_id simply matches zero rows.
+export async function readUserVocabularyListMembershipsForWord(
+  session: StoredSupabaseSession,
+  wordId: string,
+): Promise<UserVocabularyListMembership[]> {
+  const userId = session.user?.id;
+  if (!userId || !wordId) {
+    return [];
   }
-  return rows;
+
+  const rawRows = await supabaseListsRequest<UserVocabularyListMembershipRawRow[]>(
+    session,
+    `/rest/v1/user_vocabulary_list_words?word_id=eq.${encodeURIComponent(wordId)}&select=list_id,word_id,created_at`,
+  );
+
+  return parseMembershipRows(rawRows);
 }
 
 export interface AddWordsToListResultRow {
