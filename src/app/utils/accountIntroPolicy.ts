@@ -1,26 +1,34 @@
-// Deliberately import-free: scripts/tests/account/test-account-intro-popup.mjs loads this
-// file directly via Node's native TypeScript stripping (see
-// storedLanguagePreferencePolicy.ts for why extensionless relative imports
-// block that path). Keeping this file dependency-free is what lets the
-// regression test exercise the real decision logic instead of a
+// Deliberately import-free at runtime (the one `import type { PageKey }`
+// below is erased entirely by Node's native TypeScript stripping, so it
+// carries no runtime dependency): scripts/tests/account/test-account-intro-popup.mjs loads
+// this file directly that way (see storedLanguagePreferencePolicy.ts for why
+// extensionless relative imports block that path for this project's other
+// .ts modules). Keeping this file free of *runtime* dependencies is what
+// lets the regression test exercise the real decision logic instead of a
 // reimplementation of it.
 //
 // Owns the pure decisions behind the anonymous "account intro" popup, shared
-// across its three trigger contexts:
+// across its four trigger contexts:
 //   1. shouldSignalAccountIntro - on the Languages page's Continue click,
 //      should the one-time navigation signal be attached to the Filters
-//      navigation at all? (language-setup only - the other two contexts
-//      don't navigate to trigger, see requestAccountIntro in
+//      navigation at all? (language-setup only - the other contexts don't
+//      navigate to trigger, see requestAccountIntro in
 //      useAccountIntroPopup.ts.)
 //   2. shouldShowAccountIntro - given a trigger has arrived for a given
 //      context, and auth status is known, should the popup actually open
 //      right now? Centralizes the frequency policy: a single global rolling
-//      24-hour cooldown, shared across all three contexts (see
+//      24-hour cooldown, shared across all four contexts (see
 //      isWithinAccountIntroCooldown below) - not a permanent per-trigger
 //      flag, and not a once-per-browser-session cap. Once any account-intro
 //      popup has actually been shown, every trigger (including the same one
 //      again) is suppressed until 24 hours have passed; after that, any
 //      eligible trigger may show it again.
+//   3. isAccountIntroSeoEligibleRoute / computeAccountIntroSeoActiveTotalMs /
+//      foldAccountIntroSeoActiveSegment - the seo-engagement trigger's own
+//      pure decisions (which routes count, and how cumulative active time
+//      folds/resets), consumed by useAccountIntroSeoEngagement.ts. Kept
+//      here rather than a separate module so there is exactly one place
+//      that reasons about this feature's frequency policy end to end.
 //
 // "First-time" for language-setup is decided from whether a *complete*
 // language pair was already in localStorage before this Continue click
@@ -28,12 +36,14 @@
 // useStoredAppPreferences.ts's mount effect), never re-derived afterward,
 // since by then localStorage is never empty. This is the trigger's only
 // special-cased eligibility rule - it still goes through the same cooldown
-// as the other two once signaled.
+// as the others once signaled.
+import type { PageKey } from "./pageRouting";
 
 export type AccountIntroContext =
   | "language-setup"
   | "practice-complete"
-  | "level-test-complete";
+  | "level-test-complete"
+  | "seo-engagement";
 
 // The contexts that can be requested imperatively via useAccountIntroPopup's
 // requestAccountIntro() - i.e. every context except "language-setup", which
@@ -122,4 +132,111 @@ export function shouldShowAccountIntro(
     lastShownAtMs: input.lastShownAtMs,
     nowMs: input.nowMs,
   });
+}
+
+// --- seo-engagement trigger ------------------------------------------------
+//
+// Reuses the app's single canonical route classification (PageKey, computed
+// by pageFromPath in pageRouting.ts) instead of re-deriving "is this an SEO
+// page" from URL patterns a second time. The eligible set is exactly the
+// PageKey values that exist ONLY for vocabulary-learning SEO content pages -
+// every PageKey that is NOT part of the interactive RouteKey map (Languages,
+// Filters, Exercises, practice, exam, About, Help, profile, Explore, ...)
+// and is NOT the dev-only placeholder route or notFound:
+//   - "vocabularyLevel"   CEFR-level vocabulary browse pages
+//   - "levelTestSeo"      the Level Test's own SEO content page
+//   - "verbListSeo"       common-100-verbs list pages
+//   - "pastVerbFormsSeo"  verb past-forms pages
+//   - "seoHub"            the SEO hub/index page
+//   - "wordSeoHub"        the word-page hub/index
+//   - "wordPage"          individual word detail pages
+// Adding a future SEO route family only means adding its PageKey to this one
+// set - nothing else in the trigger needs to change.
+const ACCOUNT_INTRO_SEO_ELIGIBLE_PAGE_KEYS: ReadonlySet<PageKey> = new Set([
+  "vocabularyLevel",
+  "levelTestSeo",
+  "verbListSeo",
+  "pastVerbFormsSeo",
+  "seoHub",
+  "wordSeoHub",
+  "wordPage",
+] satisfies PageKey[]);
+
+export function isAccountIntroSeoEligibleRoute(resolvedPage: PageKey): boolean {
+  return ACCOUNT_INTRO_SEO_ELIGIBLE_PAGE_KEYS.has(resolvedPage);
+}
+
+// Named constant instead of a magic `60000` scattered through the codebase -
+// the single source of truth for how much cumulative active SEO-page time
+// triggers the popup.
+export const ACCOUNT_INTRO_SEO_ACTIVE_TIME_THRESHOLD_MS = 60 * 1000;
+
+export function hasAccountIntroSeoActiveTimeReachedThreshold(
+  totalActiveMs: number,
+): boolean {
+  return totalActiveMs >= ACCOUNT_INTRO_SEO_ACTIVE_TIME_THRESHOLD_MS;
+}
+
+export interface ComputeAccountIntroSeoActiveTotalMsInput {
+  // Cumulative active time already folded in from prior completed segments
+  // (see foldAccountIntroSeoActiveSegment below) - what's currently persisted
+  // in sessionStorage.
+  accumulatedMs: number;
+  // Epoch ms the currently-running active segment (eligible route, visible
+  // tab) started, or null if no segment is currently running.
+  activeSegmentStartedAtMs: number | null;
+  nowMs: number;
+}
+
+// Pure timestamp math for "what would the total be right now if I ended the
+// running segment this instant" - used both by the periodic threshold check
+// (while a single long visit is still ongoing, with no route/visibility
+// change to naturally end the segment) and is the same arithmetic
+// foldAccountIntroSeoActiveSegment performs when a segment genuinely ends.
+// Never assumes a timer tick equals exact elapsed wall-clock time - always
+// derived from real timestamps.
+export function computeAccountIntroSeoActiveTotalMs(
+  input: ComputeAccountIntroSeoActiveTotalMsInput,
+): number {
+  const runningMs =
+    input.activeSegmentStartedAtMs === null
+      ? 0
+      : Math.max(0, input.nowMs - input.activeSegmentStartedAtMs);
+  return Math.max(0, input.accumulatedMs) + runningMs;
+}
+
+export interface FoldAccountIntroSeoActiveSegmentInput {
+  previousAccumulatedMs: number;
+  elapsedSegmentMs: number;
+  // Whether the account-intro cooldown (see isWithinAccountIntroCooldown) is
+  // currently active. Per the product requirement: engagement built up
+  // during an active cooldown must not silently carry over and fire the
+  // popup the instant the cooldown expires - so folding a segment while in
+  // cooldown resets the accumulator to 0 instead of adding to it, and a
+  // fresh 60 seconds is required once the cooldown has actually expired.
+  isWithinCooldown: boolean;
+}
+
+export interface FoldAccountIntroSeoActiveSegmentResult {
+  nextAccumulatedMs: number;
+  hasReachedThreshold: boolean;
+}
+
+// Folds one just-ended active segment into the running total - the
+// segment-end counterpart to computeAccountIntroSeoActiveTotalMs above.
+export function foldAccountIntroSeoActiveSegment(
+  input: FoldAccountIntroSeoActiveSegmentInput,
+): FoldAccountIntroSeoActiveSegmentResult {
+  if (input.isWithinCooldown) {
+    return { nextAccumulatedMs: 0, hasReachedThreshold: false };
+  }
+
+  const nextAccumulatedMs =
+    Math.max(0, input.previousAccumulatedMs) +
+    Math.max(0, input.elapsedSegmentMs);
+
+  return {
+    nextAccumulatedMs,
+    hasReachedThreshold: hasAccountIntroSeoActiveTimeReachedThreshold(nextAccumulatedMs),
+  };
 }

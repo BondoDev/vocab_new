@@ -78,6 +78,7 @@ import { useStoredLanguageAutoRedirect } from "./hooks/useStoredLanguageAutoRedi
 import { useExploreItems } from "./pages/explore/useExploreItems";
 import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
 import { useAccountIntroPopup } from "./hooks/useAccountIntroPopup";
+import { useAccountIntroSeoEngagement } from "./hooks/useAccountIntroSeoEngagement";
 import { usePracticeListSession } from "./hooks/usePracticeListSession";
 import { shouldSignalAccountIntro } from "./utils/accountIntroPolicy";
 import type { PracticeListStartConfig } from "../features/user-profile/sections/my-lists/MyListsSection";
@@ -469,6 +470,18 @@ function AppContent({
     navigate,
     authUserId,
     isAuthResolved,
+  });
+  // Fourth trigger: cumulative active time across eligible SEO pages (see
+  // useAccountIntroSeoEngagement.ts). Purely a requestAccountIntro() source -
+  // shares the same pendingContext/cooldown/auth handling as the other three
+  // triggers, so no dialog-state or cooldown wiring belongs here.
+  useAccountIntroSeoEngagement({
+    resolvedPage,
+    isAuthResolved,
+    authUserId,
+    isOpen: accountIntroPopup.isOpen,
+    context: accountIntroPopup.context,
+    requestAccountIntro: accountIntroPopup.requestAccountIntro,
   });
   // Requests Header's existing login/signup dialog open (see
   // requestedAuthMode's doc comment in Header.tsx) - set by the account-intro
@@ -924,6 +937,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1000,6 +1014,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1030,6 +1045,7 @@ function AppContent({
         />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1052,6 +1068,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1073,6 +1090,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1096,6 +1114,7 @@ function AppContent({
         />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1110,6 +1129,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1122,6 +1142,7 @@ function AppContent({
           <NotFoundPage message="Invalid level test page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
+          {accountIntroDialog}
         </div>
       );
     }
@@ -1159,6 +1180,7 @@ function AppContent({
         />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1171,6 +1193,7 @@ function AppContent({
           <NotFoundPage message="Invalid verbs page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
+          {accountIntroDialog}
         </div>
       );
     }
@@ -1187,6 +1210,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1199,6 +1223,7 @@ function AppContent({
           <NotFoundPage message="Invalid past-verb-forms page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
+          {accountIntroDialog}
         </div>
       );
     }
@@ -1215,6 +1240,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1228,6 +1254,7 @@ function AppContent({
           </WordPageLayout>
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
+          {accountIntroDialog}
         </>
       );
     }
@@ -1249,6 +1276,7 @@ function AppContent({
         </WordPageLayout>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </>
     );
   }
@@ -1273,6 +1301,7 @@ function AppContent({
           <NotFoundPage message={vocabularyLevelRenderDecision.message} />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
+          {accountIntroDialog}
         </div>
       );
     }
@@ -1290,6 +1319,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1302,6 +1332,7 @@ function AppContent({
           <NotFoundPage message="Invalid SEO page index." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
+          {accountIntroDialog}
         </div>
       );
     }
@@ -1314,6 +1345,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1326,6 +1358,7 @@ function AppContent({
           <NotFoundPage message="Invalid word SEO page index." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
+          {accountIntroDialog}
         </div>
       );
     }
@@ -1341,6 +1374,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1355,6 +1389,7 @@ function AppContent({
           <NotFoundPage message="Invalid preview page." />
           {accountOnboardingDialog}
           {passwordRecoveryDialog}
+          {accountIntroDialog}
         </div>
       );
     }
@@ -1374,6 +1409,7 @@ function AppContent({
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1386,6 +1422,7 @@ function AppContent({
         <NotFoundPage />
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
+        {accountIntroDialog}
       </div>
     );
   }
@@ -1410,6 +1447,7 @@ function AppContent({
 
       {accountOnboardingDialog}
       {passwordRecoveryDialog}
+      {accountIntroDialog}
       {authUserId ? (
         <AccountLanguageConfirmDialog
           open={accountLanguageConfirm.isOpen}

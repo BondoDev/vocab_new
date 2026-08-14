@@ -1,6 +1,7 @@
-// Compact, anonymous-only onboarding nudge shown once on the Filters page
-// right after a first-time visitor finishes the Languages page's Continue
-// flow (see useAccountIntroPopup.ts for the trigger/consumption logic).
+// Compact, anonymous-only onboarding nudge shared by all of the account-intro
+// triggers (first-time language setup, practice completion, Level Test
+// completion, and cumulative SEO-page engagement - see useAccountIntroPopup.ts
+// and useAccountIntroSeoEngagement.ts for the trigger/consumption logic).
 // Reads as a short product introduction (branded icon band, title, one-line
 // intro, three scannable benefit rows, then the CTA stack) rather than a
 // generic confirmation dialog - but stays a single compact card: no
@@ -36,7 +37,7 @@ interface AccountIntroDialogProps {
 
 // Maps each trigger context to its own title/intro translation keys.
 // createAccount/maybeLater/logIn and the three benefit rows are
-// deliberately NOT contextual - they're the same across all three triggers,
+// deliberately NOT contextual - they're the same across all four triggers,
 // so they stay as single shared keys below instead of being duplicated per
 // context.
 const CONTEXT_COPY_KEYS: Record<
@@ -54,6 +55,10 @@ const CONTEXT_COPY_KEYS: Record<
   "level-test-complete": {
     titleKey: "accountIntroPopup.levelTestComplete.title",
     descriptionKey: "accountIntroPopup.levelTestComplete.description",
+  },
+  "seo-engagement": {
+    titleKey: "accountIntroPopup.seoEngagement.title",
+    descriptionKey: "accountIntroPopup.seoEngagement.description",
   },
 };
 

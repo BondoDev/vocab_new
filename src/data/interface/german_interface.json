@@ -73,6 +73,10 @@
     "levelTestComplete": {
       "title": "Verwandle dein Ergebnis in Fortschritt",
       "description": "Nutze dein Sprachniveau als Ausgangspunkt für strukturiertes Lernen."
+    },
+    "seoEngagement": {
+      "title": "Mach aus Stöbern echtes Lernen",
+      "description": "Baue dir eine strukturierte Wortschatzroutine mit Lernen, Wiederholen und Fortschrittsverfolgung auf."
     }
   },
   "accountOnboarding": {

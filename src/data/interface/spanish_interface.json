@@ -73,6 +73,10 @@
     "levelTestComplete": {
       "title": "Convierte tu resultado en progreso",
       "description": "Usa tu nivel de idioma como punto de partida para un aprendizaje estructurado."
+    },
+    "seoEngagement": {
+      "title": "Convierte la exploración en aprendizaje",
+      "description": "Crea una rutina de vocabulario estructurada con estudio, repaso y seguimiento del progreso."
     }
   },
   "accountOnboarding": {

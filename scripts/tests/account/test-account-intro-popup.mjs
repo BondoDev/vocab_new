@@ -1,34 +1,44 @@
 // Regression guard for the anonymous "account intro" popup, shared across
-// its three trigger contexts (language-setup, practice-complete,
-// level-test-complete):
+// its four trigger contexts (language-setup, practice-complete,
+// level-test-complete, seo-engagement):
 //
 // - src/app/utils/accountIntroPolicy.ts owns the pure decisions: whether the
 //   Languages page's Continue click should attach the one-time
-//   showAccountIntro navigation signal (language-setup only), and -
-//   centrally, for all three contexts - whether a popup should actually
-//   open given auth status and the frequency policy: a single global
-//   rolling 24-hour cooldown (isWithinAccountIntroCooldown /
-//   ACCOUNT_INTRO_COOLDOWN_MS), shared across all three contexts. This
-//   supersedes an earlier once-per-browser-session cap and permanent
-//   per-context "shown forever" flags - neither exists anymore.
-// - src/app/utils/accountIntroStorage.ts centralizes the one localStorage
-//   key (an epoch-ms lastShownAt timestamp) that backs the cooldown - the
-//   only place in the app that touches it - and best-effort clears the two
-//   now-unread legacy keys from the superseded policy.
+//   showAccountIntro navigation signal (language-setup only); centrally, for
+//   all four contexts, whether a popup should actually open given auth
+//   status and the frequency policy: a single global rolling 24-hour
+//   cooldown (isWithinAccountIntroCooldown / ACCOUNT_INTRO_COOLDOWN_MS),
+//   shared across all four contexts; which routes count as "SEO" for the
+//   seo-engagement trigger (isAccountIntroSeoEligibleRoute, reusing the
+//   app's own PageKey route classification); and that trigger's own
+//   cumulative-active-time math (computeAccountIntroSeoActiveTotalMs /
+//   foldAccountIntroSeoActiveSegment / hasAccountIntroSeoActiveTimeReachedThreshold).
+// - src/app/utils/accountIntroStorage.ts centralizes the localStorage
+//   lastShownAt cooldown timestamp and the sessionStorage seoActiveMs
+//   cumulative-engagement counter - the only place in the app that touches
+//   either - and best-effort clears two now-unread legacy keys from a
+//   superseded earlier policy.
 // - src/app/hooks/useStoredAppPreferences.ts captures whether a *complete*
 //   language pair already existed in localStorage before this load (the
 //   sole source of language-setup's "first-time" eligibility signal - it
-//   still goes through the same shared cooldown as the other two once
+//   still goes through the same shared cooldown as the others once
 //   signaled).
 // - src/app/hooks/useAccountIntroPopup.ts consumes the router-state signal
-//   and exposes requestAccountIntro() for the other two triggers, then
+//   and exposes requestAccountIntro() for the other three triggers, then
 //   applies the shared policy before ever opening or writing the cooldown
-//   timestamp.
+//   timestamp. Untouched by the seo-engagement trigger's addition - it was
+//   already fully generic across contexts.
+// - src/app/hooks/useAccountIntroSeoEngagement.ts owns the seo-engagement
+//   trigger's timestamp-segment tracking (Page Visibility API, a 1s
+//   threshold-check interval, sessionStorage persistence) and calls
+//   requestAccountIntro("seo-engagement") - nothing else.
 // - VocabularyPractice.tsx / VocabularyLevelExam.tsx fire onSessionComplete/
 //   onExamComplete at their own canonical completion events only.
-// - src/app/App.tsx wires all three triggers into the one shared dialog and
-//   reuses Header's existing login/signup dialog for Create account / Log in
-//   (no second auth flow).
+// - src/app/App.tsx wires all four triggers into the one shared dialog
+//   (rendered on every page, since seo-engagement can request it while the
+//   user is on any route, not just the original three) and reuses Header's
+//   existing login/signup dialog for Create account / Log in (no second
+//   auth flow).
 //
 // Behavioral for the pure policy module and the storage module (both
 // import-free / minimally-dependent, loadable directly via Node's native
@@ -38,8 +48,8 @@
 // Storage on globalThis.window first (this repo has no jsdom/testing-library
 // dependency - see package.json - so this is the lightest way to exercise
 // real read/write behavior rather than only asserting on source text). Every
-// cooldown-boundary test below uses controllable timestamps (plain numbers),
-// never real waiting/timeouts.
+// cooldown/timer-boundary test below uses controllable timestamps (plain
+// numbers), never real waiting/timeouts.
 // Source-text checks for the React hook/component wiring, matching
 // test-account-language-sync.mjs's own documented module-boundary tradeoff.
 //
@@ -50,6 +60,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   ACCOUNT_INTRO_COOLDOWN_MS,
+  ACCOUNT_INTRO_SEO_ACTIVE_TIME_THRESHOLD_MS,
+  computeAccountIntroSeoActiveTotalMs,
+  foldAccountIntroSeoActiveSegment,
+  hasAccountIntroSeoActiveTimeReachedThreshold,
+  isAccountIntroSeoEligibleRoute,
   isWithinAccountIntroCooldown,
   shouldShowAccountIntro,
   shouldSignalAccountIntro,
@@ -179,7 +194,7 @@ async function main() {
     );
   });
 
-  console.log("\n[2] isWithinAccountIntroCooldown / shouldShowAccountIntro - global 24h cooldown, all 3 contexts");
+  console.log("\n[2] isWithinAccountIntroCooldown / shouldShowAccountIntro - global 24h cooldown, all 4 contexts");
 
   const NOW = 1_800_000_000_000; // arbitrary fixed instant - all "controllable timestamp" math below is relative to this
   const HOUR_MS = 60 * 60 * 1000;
@@ -263,8 +278,15 @@ async function main() {
     }
   });
 
-  await test("Case 12: authenticated -> never shows, for any of the 3 contexts, regardless of cooldown state", () => {
-    for (const context of ["language-setup", "practice-complete", "level-test-complete"]) {
+  const ALL_CONTEXTS = [
+    "language-setup",
+    "practice-complete",
+    "level-test-complete",
+    "seo-engagement",
+  ];
+
+  await test("Case 3 (SEO): authenticated -> never shows, for any of the 4 contexts, regardless of cooldown state", () => {
+    for (const context of ALL_CONTEXTS) {
       assert.equal(
         shouldShowAccountIntro({ ...BASE_ELIGIBLE, context, isAuthenticated: true }),
         false,
@@ -283,8 +305,8 @@ async function main() {
     }
   });
 
-  await test("auth not yet resolved -> never shows, even otherwise fully eligible (no flash for a signed-in user)", () => {
-    for (const context of ["language-setup", "practice-complete", "level-test-complete"]) {
+  await test("auth not yet resolved -> never shows, even otherwise fully eligible (no flash for a signed-in user), for all 4 contexts", () => {
+    for (const context of ALL_CONTEXTS) {
       assert.equal(
         shouldShowAccountIntro({ ...BASE_ELIGIBLE, context, isAuthResolved: false }),
         false,
@@ -337,6 +359,46 @@ async function main() {
     );
   });
 
+  await test("Case 1 (SEO): seo-engagement, resolved+anonymous, no prior popup -> eligible", () => {
+    assert.equal(
+      shouldShowAccountIntro({ ...BASE_ELIGIBLE, context: "seo-engagement" }),
+      true,
+    );
+  });
+
+  await test("Case 16: practice popup shown recently -> seo-engagement trigger suppressed too (global cooldown)", () => {
+    assert.equal(
+      shouldShowAccountIntro({
+        ...BASE_ELIGIBLE,
+        context: "seo-engagement",
+        lastShownAtMs: NOW - 2 * HOUR_MS,
+      }),
+      false,
+    );
+  });
+
+  await test("Case 17: Level Test popup shown recently -> seo-engagement trigger suppressed too (global cooldown)", () => {
+    assert.equal(
+      shouldShowAccountIntro({
+        ...BASE_ELIGIBLE,
+        context: "seo-engagement",
+        lastShownAtMs: NOW - 2 * HOUR_MS,
+      }),
+      false,
+    );
+  });
+
+  await test("seo-engagement can appear again once the cooldown from a prior popup (any context) has elapsed", () => {
+    assert.equal(
+      shouldShowAccountIntro({
+        ...BASE_ELIGIBLE,
+        context: "seo-engagement",
+        lastShownAtMs: NOW - 25 * HOUR_MS,
+      }),
+      true,
+    );
+  });
+
   await test("Example 1: Monday 10:00 practice popup shown -> Monday 12:00 Level Test suppressed -> Tuesday 09:00 (23h) practice suppressed -> Tuesday 10:01 (24h01m) Level Test eligible", () => {
     const mondayTenAm = NOW;
     const mondayNoon = mondayTenAm + 2 * HOUR_MS;
@@ -375,6 +437,184 @@ async function main() {
     );
   });
 
+  console.log("\n[2b] isAccountIntroSeoEligibleRoute - SEO route eligibility (reuses PageKey, no duplicated route knowledge)");
+
+  const SEO_ELIGIBLE_PAGE_KEYS = [
+    "vocabularyLevel",
+    "levelTestSeo",
+    "verbListSeo",
+    "pastVerbFormsSeo",
+    "seoHub",
+    "wordSeoHub",
+    "wordPage",
+  ];
+
+  const NON_ELIGIBLE_PAGE_KEYS = [
+    // Interactive/app RouteKey pages - explicitly excluded by the product
+    // requirement (About, Help, Filters, Exercises, practice, exam, account
+    // pages, generic navigation).
+    "language",
+    "levelCategory",
+    "exerciseSelection",
+    "practice",
+    "explore",
+    "exam",
+    "about",
+    "help",
+    "profile",
+    "newWordStudy",
+    "reviewWords",
+    // Non-content PageKeys.
+    "devSeoCefrPlaceholder",
+    "notFound",
+  ];
+
+  await test("Case 1/2 (SEO eligibility): all 7 real SEO content route families are eligible", () => {
+    for (const pageKey of SEO_ELIGIBLE_PAGE_KEYS) {
+      assert.equal(isAccountIntroSeoEligibleRoute(pageKey), true, `${pageKey} should be eligible`);
+    }
+  });
+
+  await test("Case 2 (SEO eligibility): every interactive app page, the dev-only placeholder, and notFound are all ineligible", () => {
+    for (const pageKey of NON_ELIGIBLE_PAGE_KEYS) {
+      assert.equal(isAccountIntroSeoEligibleRoute(pageKey), false, `${pageKey} should not be eligible`);
+    }
+  });
+
+  console.log("\n[2c] SEO active-time math - computeAccountIntroSeoActiveTotalMs / foldAccountIntroSeoActiveSegment / hasAccountIntroSeoActiveTimeReachedThreshold");
+
+  const SECOND_MS = 1000;
+
+  await test("ACCOUNT_INTRO_SEO_ACTIVE_TIME_THRESHOLD_MS is exactly 60 seconds, defined as a single named constant", () => {
+    assert.equal(ACCOUNT_INTRO_SEO_ACTIVE_TIME_THRESHOLD_MS, 60 * SECOND_MS);
+  });
+
+  await test("Case 12: 59,999ms accumulated -> threshold not reached", () => {
+    assert.equal(hasAccountIntroSeoActiveTimeReachedThreshold(59_999), false);
+  });
+
+  await test("Case 13: exactly 60,000ms accumulated -> threshold reached", () => {
+    assert.equal(hasAccountIntroSeoActiveTimeReachedThreshold(60_000), true);
+  });
+
+  await test("computeAccountIntroSeoActiveTotalMs: live total is the persisted baseline plus the running segment's real elapsed time (timestamp math, not tick-counting)", () => {
+    assert.equal(
+      computeAccountIntroSeoActiveTotalMs({
+        accumulatedMs: 20_000,
+        activeSegmentStartedAtMs: NOW - 15_000,
+        nowMs: NOW,
+      }),
+      35_000,
+    );
+  });
+
+  await test("computeAccountIntroSeoActiveTotalMs: no running segment -> total is just the persisted baseline", () => {
+    assert.equal(
+      computeAccountIntroSeoActiveTotalMs({
+        accumulatedMs: 42_000,
+        activeSegmentStartedAtMs: null,
+        nowMs: NOW,
+      }),
+      42_000,
+    );
+  });
+
+  await test("Case 5: SEO A 30s + SEO B 30s -> 60s total, threshold reached (a single continuous segment spanning both pages)", () => {
+    // "The timer must not reset on every SEO route change" - modeled here as
+    // one segment (the effect never restarts on an eligible -> eligible
+    // transition - see section [5b] below), so this is really just
+    // computeAccountIntroSeoActiveTotalMs/foldAccountIntroSeoActiveSegment
+    // applied to a single 60s elapsed span.
+    const result = foldAccountIntroSeoActiveSegment({
+      previousAccumulatedMs: 0,
+      elapsedSegmentMs: 60_000,
+      isWithinCooldown: false,
+    });
+    assert.equal(result.nextAccumulatedMs, 60_000);
+    assert.equal(result.hasReachedThreshold, true);
+  });
+
+  await test("Case 6: SEO A 30s + non-SEO 20s + SEO B 30s -> trigger at 60 cumulative SEO seconds (the non-SEO interval contributes nothing but doesn't erase what came before)", () => {
+    const afterSeoA = foldAccountIntroSeoActiveSegment({
+      previousAccumulatedMs: 0,
+      elapsedSegmentMs: 30_000,
+      isWithinCooldown: false,
+    });
+    assert.equal(afterSeoA.nextAccumulatedMs, 30_000);
+    assert.equal(afterSeoA.hasReachedThreshold, false);
+    // The 20s on a non-SEO page never becomes a fold() call at all - no
+    // segment runs there, so accumulatedMs is untouched at 30_000.
+    const afterSeoB = foldAccountIntroSeoActiveSegment({
+      previousAccumulatedMs: afterSeoA.nextAccumulatedMs,
+      elapsedSegmentMs: 30_000,
+      isWithinCooldown: false,
+    });
+    assert.equal(afterSeoB.nextAccumulatedMs, 60_000);
+    assert.equal(afterSeoB.hasReachedThreshold, true);
+  });
+
+  await test("Case 7/8: SEO A 20s + SEO B 20s + SEO C 20s -> trigger, and each route change only adds - never resets - progress", () => {
+    let accumulatedMs = 0;
+    for (const pageSeconds of [20_000, 20_000, 20_000]) {
+      const result = foldAccountIntroSeoActiveSegment({
+        previousAccumulatedMs: accumulatedMs,
+        elapsedSegmentMs: pageSeconds,
+        isWithinCooldown: false,
+      });
+      assert.ok(result.nextAccumulatedMs >= accumulatedMs, "progress must never move backward on a route change");
+      accumulatedMs = result.nextAccumulatedMs;
+    }
+    assert.equal(accumulatedMs, 60_000);
+    assert.equal(hasAccountIntroSeoActiveTimeReachedThreshold(accumulatedMs), true);
+  });
+
+  await test("Case 9/Example C: visible 30s + hidden 60s + visible 30s -> only the 2 visible segments (60s) are ever folded in", () => {
+    // The hidden 60s never produces a fold() call at all (no segment runs
+    // while hidden - see section [5b]'s startActiveSegmentIfPossible check)
+    // - modeled here as simply never folding anything for it.
+    const afterFirstVisible = foldAccountIntroSeoActiveSegment({
+      previousAccumulatedMs: 0,
+      elapsedSegmentMs: 30_000,
+      isWithinCooldown: false,
+    });
+    const afterSecondVisible = foldAccountIntroSeoActiveSegment({
+      previousAccumulatedMs: afterFirstVisible.nextAccumulatedMs,
+      elapsedSegmentMs: 30_000,
+      isWithinCooldown: false,
+    });
+    assert.equal(afterSecondVisible.nextAccumulatedMs, 60_000);
+    assert.equal(afterSecondVisible.hasReachedThreshold, true);
+  });
+
+  await test("Case 10: hidden time alone (no fold ever called for it) never reaches the threshold", () => {
+    // There is no pure-function equivalent of "hidden time" to fold - by
+    // design, hidden time never produces a call to fold at all. This is
+    // exactly what guarantees it can't reach the threshold: the accumulator
+    // simply never moves while hidden.
+    assert.equal(hasAccountIntroSeoActiveTimeReachedThreshold(0), false);
+  });
+
+  await test("Case 4/18/19 (cooldown interaction): folding while the cooldown is active always resets to 0, regardless of how much was previously accumulated - a fresh 60s is required after it expires", () => {
+    const foldedDuringCooldown = foldAccountIntroSeoActiveSegment({
+      previousAccumulatedMs: 59_000, // right at the edge of firing
+      elapsedSegmentMs: 5_000,
+      isWithinCooldown: true,
+    });
+    assert.equal(foldedDuringCooldown.nextAccumulatedMs, 0);
+    assert.equal(foldedDuringCooldown.hasReachedThreshold, false);
+
+    // Once the cooldown has expired, accumulation starts fresh at 0 - not at
+    // the 59_000 that was building up before the cooldown began - so 30s
+    // more is nowhere near enough on its own.
+    const afterCooldownExpired = foldAccountIntroSeoActiveSegment({
+      previousAccumulatedMs: foldedDuringCooldown.nextAccumulatedMs,
+      elapsedSegmentMs: 30_000,
+      isWithinCooldown: false,
+    });
+    assert.equal(afterCooldownExpired.nextAccumulatedMs, 30_000);
+    assert.equal(afterCooldownExpired.hasReachedThreshold, false);
+  });
+
   console.log("\n[3] accountIntroStorage.ts - behavioral tests against a fake Storage");
 
   // Fresh fake storages per test file run, installed before the module's
@@ -384,9 +624,12 @@ async function main() {
   globalThis.window.localStorage = new FakeStorage();
   globalThis.window.sessionStorage = new FakeStorage();
 
-  const { markAccountIntroShown, readAccountIntroLastShownAtMs } = await import(
-    "../../../src/app/utils/accountIntroStorage.ts"
-  );
+  const {
+    markAccountIntroShown,
+    readAccountIntroLastShownAtMs,
+    readAccountIntroSeoActiveMs,
+    writeAccountIntroSeoActiveMs,
+  } = await import("../../../src/app/utils/accountIntroStorage.ts");
 
   await test("Case 1: no stored value -> readAccountIntroLastShownAtMs returns null (never shown)", () => {
     window.localStorage.clear();
@@ -450,6 +693,58 @@ async function main() {
     assert.doesNotThrow(() => readAccountIntroLastShownAtMs());
     assert.equal(readAccountIntroLastShownAtMs(), null);
     assert.doesNotThrow(() => markAccountIntroShown(NOW));
+    globalThis.window = savedWindow;
+  });
+
+  await test("Case 22 (SEO): no stored value -> readAccountIntroSeoActiveMs returns 0 (represents a freshly-closed/never-started session)", () => {
+    window.sessionStorage.clear();
+    assert.equal(readAccountIntroSeoActiveMs(), 0);
+  });
+
+  await test("Case 20 (SEO): writing the counter round-trips through a fresh read, and writing 0 genuinely resets it back down", () => {
+    window.sessionStorage.clear();
+    writeAccountIntroSeoActiveMs(45_000);
+    assert.equal(readAccountIntroSeoActiveMs(), 45_000);
+    writeAccountIntroSeoActiveMs(0);
+    assert.equal(readAccountIntroSeoActiveMs(), 0);
+  });
+
+  await test("the SEO counter is namespaced under fluentstellar.accountIntro.seoActiveMs, stored under sessionStorage specifically (not localStorage - it must not survive a closed tab/browser restart)", () => {
+    window.sessionStorage.clear();
+    writeAccountIntroSeoActiveMs(12_345);
+    assert.equal(window.sessionStorage.getItem("fluentstellar.accountIntro.seoActiveMs"), "12345");
+    assert.equal(window.localStorage.getItem("fluentstellar.accountIntro.seoActiveMs"), null);
+  });
+
+  await test("Case 22 (continued): a brand-new sessionStorage instance (representing a closed tab/browser) reads back as 0, independent of whatever the old session had accumulated", () => {
+    const previousSessionStorage = window.sessionStorage;
+    previousSessionStorage.clear();
+    writeAccountIntroSeoActiveMs(58_000);
+    assert.equal(readAccountIntroSeoActiveMs(), 58_000);
+
+    // Simulate the browser/tab actually closing: sessionStorage is replaced
+    // with a fresh, empty instance (this is exactly what a new session looks
+    // like - nothing carries over from the old one).
+    window.sessionStorage = new FakeStorage();
+    assert.equal(readAccountIntroSeoActiveMs(), 0);
+    window.sessionStorage = previousSessionStorage;
+  });
+
+  await test("malformed/corrupt/negative stored SEO counters are treated as 0 rather than throwing", () => {
+    for (const corruptValue of ["not-a-number", "", "NaN", "-500", "Infinity", "{}"]) {
+      window.sessionStorage.clear();
+      window.sessionStorage.setItem("fluentstellar.accountIntro.seoActiveMs", corruptValue);
+      assert.doesNotThrow(() => readAccountIntroSeoActiveMs());
+      assert.equal(readAccountIntroSeoActiveMs(), 0, `expected 0 for corrupt value ${JSON.stringify(corruptValue)}`);
+    }
+  });
+
+  await test("writeAccountIntroSeoActiveMs never throws when sessionStorage is unavailable (SSR/private browsing)", () => {
+    const savedWindow = globalThis.window;
+    globalThis.window = undefined;
+    assert.doesNotThrow(() => readAccountIntroSeoActiveMs());
+    assert.equal(readAccountIntroSeoActiveMs(), 0);
+    assert.doesNotThrow(() => writeAccountIntroSeoActiveMs(1000));
     globalThis.window = savedWindow;
   });
 
@@ -589,6 +884,84 @@ async function main() {
     }
   });
 
+  console.log("\n[5b] useAccountIntroSeoEngagement.ts wiring - source-text checks (module-boundary tradeoff, see file header)");
+
+  const seoEngagementSource = readFile("src/app/hooks/useAccountIntroSeoEngagement.ts");
+
+  await test("useAccountIntroPopup.ts required zero changes to support seo-engagement (it was already fully context-agnostic)", () => {
+    assert.doesNotMatch(popupHookSource, /seo-engagement/);
+    assert.doesNotMatch(popupHookSource, /Seo/);
+  });
+
+  await test("Case 2/8: eligibility is derived from isAccountIntroSeoEligibleRoute + auth state, and the tracking effect depends only on that derived boolean (not on resolvedPage itself) - so an eligible SEO page -> eligible SEO page navigation never restarts the segment", () => {
+    assert.match(
+      seoEngagementSource,
+      /const isEligibleNow =\s*\n\s*isAccountIntroSeoEligibleRoute\(resolvedPage\) &&\s*\n\s*isAuthResolved &&\s*\n\s*!authUserId;/,
+    );
+    assert.match(seoEngagementSource, /\}, \[isEligibleNow, requestAccountIntro\]\);/);
+  });
+
+  await test("Case 3: an authenticated visitor is excluded from isEligibleNow, so accumulation never starts for them (not merely never shown)", () => {
+    assert.match(seoEngagementSource, /!authUserId/);
+  });
+
+  await test("uses the Page Visibility API (visibilitychange + document.visibilityState), not a naive setTimeout(60000)", () => {
+    assert.match(seoEngagementSource, /document\.addEventListener\("visibilitychange", handleVisibilityChange\)/);
+    assert.match(seoEngagementSource, /document\.visibilityState/);
+    assert.doesNotMatch(seoEngagementSource, /setTimeout\(/);
+  });
+
+  await test("Case 11: starting a segment is guarded so it can never start twice (activeSegmentStartedAtRef.current === null check) - visibility transitions can't double-count", () => {
+    assert.match(
+      seoEngagementSource,
+      /if \(activeSegmentStartedAtRef\.current === null\) \{\s*\n\s*activeSegmentStartedAtRef\.current = Date\.now\(\);/,
+    );
+  });
+
+  await test("Case 14: requestAccountIntro(\"seo-engagement\") is guarded by hasRequestedRef - a threshold crossing can only ever request once until reset", () => {
+    assert.match(
+      seoEngagementSource,
+      /function requestIfThresholdReached\(hasReachedThreshold: boolean\): void \{\s*\n\s*if \(hasReachedThreshold && !hasRequestedRef\.current\) \{\s*\n\s*hasRequestedRef\.current = true;\s*\n\s*requestAccountIntro\("seo-engagement"\);/,
+    );
+  });
+
+  await test("the 1-second interval only checks the threshold via real timestamp math (computeAccountIntroSeoActiveTotalMs) - it never itself increments a counter per tick", () => {
+    const tickMatch = seoEngagementSource.match(/function checkTick\(\): void \{([\s\S]*?)\n    \}/);
+    assert.ok(tickMatch, "could not locate checkTick");
+    assert.match(tickMatch[1], /computeAccountIntroSeoActiveTotalMs\(/);
+    assert.doesNotMatch(tickMatch[1], /accumulatedMsRef\.current \+=/);
+    assert.doesNotMatch(tickMatch[1], /accumulatedMsRef\.current\+\+/);
+  });
+
+  await test("Case 4/18/19 (cooldown): every point that could start or fold a segment first checks isWithinAccountIntroCooldown and resets (not merely skips) the accumulator when active", () => {
+    const occurrences = (seoEngagementSource.match(/isCurrentlyWithinCooldown\(\)/g) ?? []).length;
+    assert.ok(occurrences >= 3, `expected the cooldown check in at least 3 places (segment-start, segment-end, periodic tick), found ${occurrences}`);
+    assert.match(seoEngagementSource, /function resetForCooldown\(\): void \{/);
+  });
+
+  await test("Case 20: the counter resets specifically when this trigger's own popup actually opens (isOpen && context === \"seo-engagement\"), not merely when threshold is reached", () => {
+    const match = seoEngagementSource.match(/useEffect\(\(\) => \{\s*\n\s*if \(isOpen && context === "seo-engagement"\) \{([\s\S]*?)\n {4}\}\s*\n {2}\}, \[isOpen, context\]\);/);
+    assert.ok(match, "could not locate the isOpen/context reset effect");
+    assert.match(match[1], /accumulatedMsRef\.current = 0;/);
+    assert.match(match[1], /writeAccountIntroSeoActiveMs\(0\);/);
+    assert.match(match[1], /hasRequestedRef\.current = false;/);
+  });
+
+  await test("cleans up its listener and interval on every effect teardown (route change away from an eligible page, or unmount)", () => {
+    const match = seoEngagementSource.match(/return \(\) => \{([\s\S]*?)\n    \};\s*\n {2}\}, \[isEligibleNow, requestAccountIntro\]\);/);
+    assert.ok(match, "could not locate the tracking effect's cleanup function");
+    assert.match(match[1], /document\.removeEventListener\("visibilitychange", handleVisibilityChange\)/);
+    assert.match(match[1], /window\.clearInterval\(intervalId\)/);
+  });
+
+  await test("only ever calls requestAccountIntro with the literal \"seo-engagement\" context (matches RequestableAccountIntroContext)", () => {
+    const calls = seoEngagementSource.match(/requestAccountIntro\("[^"]*"\)/g) ?? [];
+    assert.ok(calls.length > 0, "expected at least one requestAccountIntro call");
+    for (const call of calls) {
+      assert.equal(call, 'requestAccountIntro("seo-engagement")');
+    }
+  });
+
   console.log("\n[6] Header.tsx wiring - reuses the existing login/signup dialog (module-boundary tradeoff, see file header)");
 
   const headerSource = readFile("src/app/components/layout/Header.tsx");
@@ -678,13 +1051,28 @@ async function main() {
     assert.match(examSource, /onComplete: \(level: string\) => void;/);
   });
 
-  console.log("\n[10] App.tsx wiring - all 3 triggers share one dialog instance (module-boundary tradeoff, see file header)");
+  console.log("\n[10] App.tsx wiring - all 4 triggers share one dialog instance (module-boundary tradeoff, see file header)");
 
   const appSource = readFile("src/app/App.tsx");
 
   await test("imports and wires useAccountIntroPopup", () => {
     assert.match(appSource, /import \{ useAccountIntroPopup \} from "\.\/hooks\/useAccountIntroPopup"/);
     assert.match(appSource, /useAccountIntroPopup\(\{/);
+  });
+
+  await test("imports and wires useAccountIntroSeoEngagement, fed by the same accountIntroPopup instance (isOpen/context/requestAccountIntro)", () => {
+    assert.match(
+      appSource,
+      /import \{ useAccountIntroSeoEngagement \} from "\.\/hooks\/useAccountIntroSeoEngagement"/,
+    );
+    const match = appSource.match(/useAccountIntroSeoEngagement\(\{([\s\S]*?)\n {2}\}\);/);
+    assert.ok(match, "could not locate the useAccountIntroSeoEngagement call");
+    assert.match(match[1], /resolvedPage,/);
+    assert.match(match[1], /isAuthResolved,/);
+    assert.match(match[1], /authUserId,/);
+    assert.match(match[1], /isOpen: accountIntroPopup\.isOpen,/);
+    assert.match(match[1], /context: accountIntroPopup\.context,/);
+    assert.match(match[1], /requestAccountIntro: accountIntroPopup\.requestAccountIntro,/);
   });
 
   await test("defines exactly one shared accountIntroDialog element (not a separate modal per trigger)", () => {
@@ -696,9 +1084,51 @@ async function main() {
     assert.match(match[1], /onLogIn=\{handleAccountIntroLogIn\}/);
   });
 
-  await test("the shared dialog is rendered on all 3 trigger-reachable pages (levelCategory, practice, exam) via {accountIntroDialog}", () => {
-    const occurrences = (appSource.match(/\{accountIntroDialog\}/g) ?? []).length;
-    assert.equal(occurrences, 3, `expected {accountIntroDialog} on all 3 pages, found ${occurrences}`);
+  await test("Case 2/8: the shared dialog is rendered on literally every page (not just the original 3) - seo-engagement can request it while the user is on any route, including one it just navigated away from an eligible SEO page to", () => {
+    const onboardingOccurrences = (appSource.match(/\{accountOnboardingDialog\}/g) ?? []).length;
+    const introOccurrences = (appSource.match(/\{accountIntroDialog\}/g) ?? []).length;
+    assert.ok(onboardingOccurrences > 3, "sanity check: the existing shared dialogs should appear on many pages");
+    assert.equal(
+      introOccurrences,
+      onboardingOccurrences,
+      `accountIntroDialog must be rendered everywhere accountOnboardingDialog is (found ${introOccurrences} vs ${onboardingOccurrences})`,
+    );
+  });
+
+  await test("all 7 SEO PageKey page blocks specifically render {accountIntroDialog} (vocabularyLevel, levelTestSeo, verbListSeo, pastVerbFormsSeo, seoHub, wordSeoHub, wordPage)", () => {
+    const seoPageKeys = [
+      "vocabularyLevel",
+      "levelTestSeo",
+      "verbListSeo",
+      "pastVerbFormsSeo",
+      "seoHub",
+      "wordSeoHub",
+      "wordPage",
+    ];
+    const blockStarts = [];
+    const lines = appSource.split("\n");
+    lines.forEach((line, index) => {
+      const match = line.match(/resolvedPage === "(\w+)"/);
+      if (match && seoPageKeys.includes(match[1])) {
+        blockStarts.push([index, match[1]]);
+      }
+    });
+    assert.equal(blockStarts.length, seoPageKeys.length, "expected exactly one resolvedPage branch per SEO PageKey");
+
+    // Find where the NEXT top-level resolvedPage branch (any PageKey) starts,
+    // to know where each SEO block ends.
+    const allBranchLines = [];
+    lines.forEach((line, index) => {
+      if (/^\s*if \(resolvedPage === "\w+"\) \{/.test(line)) {
+        allBranchLines.push(index);
+      }
+    });
+
+    for (const [startLine, pageKey] of blockStarts) {
+      const nextBranchLine = allBranchLines.find((line) => line > startLine) ?? lines.length;
+      const block = lines.slice(startLine, nextBranchLine).join("\n");
+      assert.match(block, /\{accountIntroDialog\}/, `${pageKey}'s branch must render {accountIntroDialog}`);
+    }
   });
 
   await test("the Languages-page Continue's proceed() callback decides the signal via shouldSignalAccountIntro, using the pre-save ref", () => {
@@ -755,7 +1185,7 @@ async function main() {
     assert.deepEqual(offenders, [], `must not introduce a permanent "seen" flag: ${offenders.join(", ")}`);
   });
 
-  console.log("\n[11] accountIntroPopup localization contract - all 7 languages, all 3 contexts");
+  console.log("\n[11] accountIntroPopup localization contract - all 7 languages, all 4 contexts");
 
   const englishData = readJson(`src/data/interface/${LOCALE_FILES[0]}`);
   const expectedKeys = flattenKeys(englishData.accountIntroPopup, "accountIntroPopup");
@@ -803,9 +1233,13 @@ async function main() {
       title: "Turn your result into progress",
       description: "Use your vocabulary level as a starting point for structured learning.",
     },
+    seoEngagement: {
+      title: "Turn browsing into learning",
+      description: "Build a structured vocabulary routine with study, reviews, and progress tracking.",
+    },
   };
 
-  await test("English copy matches the task's pinned (do-not-reword) strings exactly, for all 3 contexts", () => {
+  await test("Case 23/24: English copy matches the task's pinned (do-not-reword) strings exactly, for all 4 contexts, including the new seo-engagement copy", () => {
     assert.deepEqual(englishData.accountIntroPopup, PINNED_ENGLISH_COPY);
   });
 
@@ -825,16 +1259,32 @@ async function main() {
     assert.match(dialogSource, /context: AccountIntroContext;/);
   });
 
-  await test("CONTEXT_COPY_KEYS maps all 3 contexts to their own title/description keys, and the dialog reads through it (not a hardcoded key)", () => {
+  await test("Case 23: CONTEXT_COPY_KEYS maps all 4 contexts (including the new seo-engagement) to their own title/description keys, and the dialog reads through it (not a hardcoded key)", () => {
     assert.match(dialogSource, /"language-setup": \{[\s\S]*?"accountIntroPopup\.title"[\s\S]*?"accountIntroPopup\.description"/);
     assert.match(dialogSource, /"practice-complete": \{[\s\S]*?"accountIntroPopup\.practiceComplete\.title"[\s\S]*?"accountIntroPopup\.practiceComplete\.description"/);
     assert.match(dialogSource, /"level-test-complete": \{[\s\S]*?"accountIntroPopup\.levelTestComplete\.title"[\s\S]*?"accountIntroPopup\.levelTestComplete\.description"/);
+    assert.match(dialogSource, /"seo-engagement": \{[\s\S]*?"accountIntroPopup\.seoEngagement\.title"[\s\S]*?"accountIntroPopup\.seoEngagement\.description"/);
     assert.match(dialogSource, /const \{ titleKey, descriptionKey \} = CONTEXT_COPY_KEYS\[context\];/);
     assert.match(dialogSource, /\{t\(titleKey\)\}/);
     assert.match(dialogSource, /\{t\(descriptionKey\)\}/);
   });
 
-  await test("createAccount/maybeLater/logIn and the 3 benefit rows are NOT duplicated per context - single shared keys reused across all 3 triggers", () => {
+  await test("Case 25: no second dialog component was created for the SEO trigger - exactly one AccountIntroDialog.tsx file exists, and it's the only dialogs/*.tsx file referencing seo-engagement", () => {
+    const dialogsDir = path.join(ROOT_DIR, "src", "app", "components", "dialogs");
+    const dialogFiles = fs.readdirSync(dialogsDir).filter((name) => name.endsWith(".tsx"));
+    assert.equal(
+      dialogFiles.filter((name) => /accountintro/i.test(name)).length,
+      1,
+      "expected exactly one AccountIntroDialog component file",
+    );
+    const filesReferencingSeoEngagement = dialogFiles.filter((name) => {
+      const text = fs.readFileSync(path.join(dialogsDir, name), "utf8");
+      return text.includes("seo-engagement");
+    });
+    assert.deepEqual(filesReferencingSeoEngagement, ["AccountIntroDialog.tsx"]);
+  });
+
+  await test("createAccount/maybeLater/logIn and the 3 benefit rows are NOT duplicated per context - single shared keys reused across all 4 triggers", () => {
     for (const key of ["createAccount", "maybeLater", "logIn"]) {
       const occurrences = (dialogSource.match(new RegExp(`"accountIntroPopup\\.${key}"`, "g")) ?? []).length;
       assert.equal(occurrences, 1, `expected exactly 1 reference to accountIntroPopup.${key}, found ${occurrences}`);

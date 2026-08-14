@@ -73,6 +73,10 @@
     "levelTestComplete": {
       "title": "Turn your result into progress",
       "description": "Use your vocabulary level as a starting point for structured learning."
+    },
+    "seoEngagement": {
+      "title": "Turn browsing into learning",
+      "description": "Build a structured vocabulary routine with study, reviews, and progress tracking."
     }
   },
   "accountOnboarding": {
