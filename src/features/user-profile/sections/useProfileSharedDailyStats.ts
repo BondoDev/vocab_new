@@ -143,6 +143,27 @@ function useLazyKeyedRows<TRow>({
   // the whole "lazy" half of "shared + lazy + cached".
   const requestedKeyRef = useRef<string | null>(null);
 
+  // The context key a fetch is *currently in flight* for — distinct from
+  // requestedKeyRef above. Fetch-audit Phase 2's own live-network
+  // verification found a genuine duplicate-request race this ref exists to
+  // close: contextKey resolving from null to a real value (once
+  // auth/profile load) and request()'s requestVersion bump are two
+  // *separate* dependency changes on this effect, and both can independently
+  // satisfy "requestedKeyRef.current === contextKey" — because
+  // requestedKeyRef is a plain ref, mutated synchronously inside request()
+  // (itself called from a child section's own mount effect, which React
+  // flushes before this hook's own effect in the same commit), the very
+  // first time this effect runs for a freshly-resolved contextKey it can
+  // already see requestedKeyRef armed and start a fetch; the requestVersion
+  // state update request() *also* queued then lands as its own render,
+  // re-running this effect a second time for the same still-matching key
+  // and starting a second, fully redundant network request. This ref makes
+  // "a fetch for this exact key is already running" independently
+  // checkable, synchronously, regardless of which dependency triggered the
+  // re-run — the second effect run sees it set and skips, instead of
+  // re-deriving "should I fetch" purely from requestedKeyRef/contextKey.
+  const inFlightKeyRef = useRef<string | null>(null);
+
   // Mirrors `state` so request() (a stable useCallback, not re-created on
   // every state change) can read the *latest* status synchronously without
   // needing state itself as a dependency — see request()'s own comment for
@@ -158,6 +179,7 @@ function useLazyKeyedRows<TRow>({
   useEffect(() => {
     if (!contextKey) {
       requestedKeyRef.current = null;
+      inFlightKeyRef.current = null;
       setState(idleState(null));
       return;
     }
@@ -174,11 +196,23 @@ function useLazyKeyedRows<TRow>({
       return;
     }
 
-    // requestedKeyRef.current === contextKey: at least one consumer has
-    // asked for this exact context — perform the fetch (first load, an
-    // explicit retry, or a background refresh after an invalidation
-    // signal all funnel through this same branch).
+    if (inFlightKeyRef.current === contextKey) {
+      // A fetch for this exact context is already running — this effect
+      // run was triggered by a *different* dependency (contextKey resolving
+      // and requestVersion's own bump can each independently re-run this
+      // effect for the same already-armed requestedKeyRef; see
+      // inFlightKeyRef's own header for the full mechanics). Nothing new to
+      // do: the in-flight attempt already owns getting this context to
+      // "ready"/"error".
+      return;
+    }
+
+    // requestedKeyRef.current === contextKey and no fetch for it is already
+    // running — perform the fetch (first load, an explicit retry, or a
+    // background refresh after an invalidation signal all funnel through
+    // this same branch).
     let cancelled = false;
+    inFlightKeyRef.current = contextKey;
     setState((prev) =>
       prev.key === contextKey && prev.status === "ready" ? prev : { key: contextKey, status: "loading", rows: prev.key === contextKey ? prev.rows : [] },
     );
@@ -210,6 +244,13 @@ function useLazyKeyedRows<TRow>({
         // only a genuine first-load failure for this context surfaces
         // "error".
         setState((prev) => (prev.key === contextKey && prev.status === "ready" ? prev : { key: contextKey, status: "error", rows: [] }));
+      } finally {
+        // Only clear this attempt's own marker — a defensive check against
+        // a later, genuinely new attempt (retry/invalidation) for the same
+        // key already having replaced it by the time this one settles.
+        if (inFlightKeyRef.current === contextKey) {
+          inFlightKeyRef.current = null;
+        }
       }
     })();
 
