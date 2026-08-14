@@ -1111,26 +1111,62 @@ items above. This repository's own tests only ever verify the code — never
 the live secret's actual deployed value, which is Supabase-project
 configuration outside this repository's source control.
 
-**Actual live state, updated (2026-08-13):** `ACCOUNT_DELETION_ENABLED` was
-briefly set to `true` and account deletion manually verified working
-end-to-end — at that point **without** item 2 (genuine reauthentication)
-being implemented yet; every earlier Settings phase's own task scope had
-explicitly forbidden inventing a frontend-only reauthentication step with
-no corresponding backend enforcement, and no backend enforcement existed
-yet either. That gap was then closed in a dedicated reauthentication phase
-(see "Reauthentication" below) — the delete-account Edge Function now
-independently enforces a recent-authentication requirement server-side,
-and Settings' Delete Account dialog produces a fresh one for password
-accounts before calling it. While that phase was implemented and tested,
-`ACCOUNT_DELETION_ENABLED` was deliberately set back to `false` on the live
-project — re-enabling it (and re-verifying end-to-end with reauthentication
-in place) is a live-deployment step outside this repository, not something
-this repository's own code/tests can confirm. Item 1 is satisfied (the
-"Delete account" UI, typed-`DELETE`-confirmation `AlertDialog`) and item 4
-passes (see `test-delete-account-function-contract.mjs`'s own current
-results). Item 3 (live cascade re-verification) still cannot be
-independently re-confirmed from this environment (no database/CLI access
-here — see "Live cascade verification" below).
+**Historical state (2026-08-12 – 2026-08-13, superseded — see the live
+verification below):** `ACCOUNT_DELETION_ENABLED` was briefly set to `true`
+and account deletion manually verified working end-to-end — at that point
+**without** item 2 (genuine reauthentication) being implemented yet; every
+earlier Settings phase's own task scope had explicitly forbidden inventing a
+frontend-only reauthentication step with no corresponding backend
+enforcement, and no backend enforcement existed yet either. That gap was
+then closed in a dedicated reauthentication phase (see "Reauthentication"
+below) — the delete-account Edge Function now independently enforces a
+recent-authentication requirement server-side, and Settings' Delete Account
+dialog produces a fresh one for password accounts before calling it. While
+that phase was implemented and tested, `ACCOUNT_DELETION_ENABLED` was
+deliberately set back to `false` on the live project — re-enabling it (and
+re-verifying end-to-end with reauthentication in place) was, at the time
+this paragraph was written, a live-deployment step outside this repository
+that this repository's own code/tests could not confirm. Item 1 is
+satisfied (the "Delete account" UI, typed-`DELETE`-confirmation
+`AlertDialog`) and item 4 passes (see
+`test-delete-account-function-contract.mjs`'s own current results).
+
+**Actual live state, confirmed (2026-08-14):** A read-only Supabase
+CLI/Management API session against the live production project (`supabase
+db query --linked`, `supabase functions download`, `supabase secrets
+list` — no `db push`, `functions deploy`, `secrets set`, or migration
+application) directly confirmed, rather than inferred from this README:
+
+- `ACCOUNT_DELETION_ENABLED` is currently set to the literal string `true`.
+  Supabase never exposes a secret's plaintext via the CLI/Management API —
+  only a SHA-256 content digest — so this was confirmed by comparing that
+  published digest against a locally computed `sha256("true")`, which
+  matched exactly (`"True"`/`"FALSE"`/other casings do not); this is the
+  strongest available non-mutating evidence of the secret's actual value.
+- The deployed `delete-account` Edge Function (`index.ts` and
+  `recentAuth.ts`) is byte-for-byte identical to this repository's current
+  implementation, downloaded and diffed directly rather than assumed from
+  version/timestamp metadata alone — including the 2026-08-14
+  `token_refresh`-exclusion correction described in "Reauthentication"
+  below.
+- Every account-related migration through `20260813140000` is applied in
+  production, confirmed by direct schema/function/RLS/grant introspection
+  (function `SECURITY DEFINER`/`search_path`/signatures, `user_profiles`
+  grants and RLS policy, its seven `CHECK` constraints, and
+  `reset_learning_language_progress`'s corrected, alias-qualified function
+  body) — not by `supabase migration list`, whose remote-tracking table
+  (`supabase_migrations.schema_migrations`) does not exist on this project
+  (see "Live cascade verification" below for why migration-file inspection
+  alone has never been sufficient here).
+
+**Account deletion is therefore intentionally live in production today,
+fully protected by the reauthentication design documented below (including
+the `token_refresh` exclusion). No configuration change is currently
+required.** This supersedes the 2026-08-13 "set back to `false`" note
+above, which described an intermediate state while the reauthentication
+phase was still being finished, not the current one. Item 3 (live
+FK-cascade re-verification, immediately below) was not part of this
+specific check and remains open on its own terms.
 
 ### Live cascade verification (must be run against the live project)
 
