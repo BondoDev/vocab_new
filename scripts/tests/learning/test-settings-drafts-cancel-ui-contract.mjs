@@ -119,6 +119,36 @@ test("8. Existing Save semantics for both cards are untouched: handleSaveLanguag
   assert.match(source, /<Button type="button" onClick=\{handleSaveTimezone\} disabled=\{!canSaveTimezone\}>/);
 });
 
+console.log("\n=== Invariant: Save-active and Cancel-visible can never disagree (ACCOUNT-001 regression report) ===\n");
+
+// A prior manual QA report claimed Save became active on a language change
+// while no Cancel button appeared. That can only happen if Save's enablement
+// and Cancel's visibility are driven by two different "dirty" booleans that
+// can disagree. These two tests assert there is only ever one: extract
+// canSaveLanguages/canSaveTimezone's own formula and the Cancel button's
+// render condition independently, then require both to reference the exact
+// same identifier (isLanguagesUnchanged / isTimezoneUnchanged) rather than
+// merely happening to look similar.
+test("9. canSaveLanguages's formula and the Languages Cancel button's render condition both gate on the literal identifier isLanguagesUnchanged (one shared dirty-check, not two)", () => {
+  const canSaveMatch = source.match(/const canSaveLanguages =([\s\S]*?);\r?\n\r?\n/);
+  assert.ok(canSaveMatch, "canSaveLanguages must exist");
+  assert.match(canSaveMatch[1], /!isLanguagesUnchanged/, "canSaveLanguages must negate isLanguagesUnchanged");
+
+  const cancelConditionMatch = source.match(/\{(!isLanguagesUnchanged) \? \(\s*\n\s*<Button type="button" variant="outline" onClick=\{handleCancelLanguages\}/);
+  assert.ok(cancelConditionMatch, "the Languages Cancel button's render condition must exist");
+  assert.equal(cancelConditionMatch[1], "!isLanguagesUnchanged");
+});
+
+test("10. canSaveTimezone's formula and the Timezone Cancel button's render condition both gate on the literal identifier isTimezoneUnchanged (one shared dirty-check, not two)", () => {
+  const canSaveMatch = source.match(/const canSaveTimezone =([\s\S]*?);\r?\n\r?\n/);
+  assert.ok(canSaveMatch, "canSaveTimezone must exist");
+  assert.match(canSaveMatch[1], /!isTimezoneUnchanged/, "canSaveTimezone must negate isTimezoneUnchanged");
+
+  const cancelConditionMatch = source.match(/\{(!isTimezoneUnchanged) \? \(\s*\n\s*<Button type="button" variant="outline" onClick=\{handleCancelTimezone\}/);
+  assert.ok(cancelConditionMatch, "the Timezone Cancel button's render condition must exist");
+  assert.equal(cancelConditionMatch[1], "!isTimezoneUnchanged");
+});
+
 console.log(`\n─────────────────────────────────────────`);
 console.log(`  ${passed} passed, ${failed} failed`);
 console.log(`─────────────────────────────────────────\n`);
