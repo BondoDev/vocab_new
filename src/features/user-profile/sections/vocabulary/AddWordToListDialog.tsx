@@ -20,12 +20,13 @@ import {
   VocabularyListError,
   type UserVocabularyList,
 } from "../../../../lib/vocabularyLists";
-// Reuses My Lists' own pure search filter and name-validation helpers rather
-// than duplicating them — both are import-free, component-free pure
-// functions (see their own file headers), so this cross-feature import
-// stays a one-way dependency on plain logic, not on My Lists' UI/state.
+// Reuses My Lists' own pure search filter/name-validation helpers, and its
+// existing Create List dialog itself, rather than duplicating any of it —
+// "Create List" here opens the identical dialog MyListsSection uses, as a
+// second popup stacked on top of this one (see the render below).
 import { filterListsBySearchQuery } from "../my-lists/listSearchSort";
-import { normalizeListNameForComparison, validateListName, LIST_NAME_MAX_LENGTH } from "../my-lists/listNameValidation";
+import { normalizeListNameForComparison, validateListName } from "../my-lists/listNameValidation";
+import { CreateListDialog } from "../my-lists/CreateListDialog";
 
 export interface AddToListWord {
   // Vocabulary concept id (ResolvedVocabularyRow.conceptId) — the same id
@@ -77,20 +78,18 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
   const [togglingListIds, setTogglingListIds] = useState<ReadonlySet<string>>(new Set());
   const [actionError, setActionError] = useState<string | null>(null);
 
-  const [isCreatingNew, setIsCreatingNew] = useState(false);
-  const [newListName, setNewListName] = useState("");
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
 
   // Resets every draft/error whenever the dialog closes, so reopening it —
   // for the same word or a different one — never shows stale search text,
-  // a still-open create form, or a previous attempt's error.
+  // a still-open create dialog, or a previous attempt's error.
   useEffect(() => {
     if (!open) {
       setSearchQuery("");
       setActionError(null);
-      setIsCreatingNew(false);
-      setNewListName("");
+      setIsCreateDialogOpen(false);
       setCreateError(null);
     }
   }, [open]);
@@ -192,9 +191,12 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
       });
   };
 
-  const handleCreateAndAdd = async () => {
+  // Passed as CreateListDialog's own onSubmit — that dialog already trims/
+  // validates the name itself before ever calling this, so the
+  // validateListName check below is defensive only.
+  const handleCreateList = async (name: string) => {
     if (!word) return;
-    const validation = validateListName(newListName);
+    const validation = validateListName(name);
     if (!validation.ok) return;
 
     const normalized = normalizeListNameForComparison(validation.name);
@@ -214,8 +216,10 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
     try {
       const created = await createUserVocabularyList(session, targetLanguage, validation.name);
       setState((prev) => (prev.status === "ready" ? { status: "ready", lists: [created, ...prev.lists] } : prev));
-      setIsCreatingNew(false);
-      setNewListName("");
+      // Closes the Create List popup — the Add to List popup underneath was
+      // never actually closed (see the render below), so it's already
+      // visible again the instant this one goes away.
+      setIsCreateDialogOpen(false);
       // Reuses the same optimistic add path every existing-list row uses —
       // `created` is guaranteed not yet in memberListIds/togglingListIds.
       handleToggleList(created);
@@ -239,6 +243,7 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
     : t("userProfile.vocabularySection.table.menu.addToList");
 
   return (
+    <>
     <Dialog
       open={open}
       onOpenChange={(nextOpen) => {
@@ -319,62 +324,21 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
             </div>
 
             <div className="vocabulary-add-to-list__footer">
-              <div className="vocabulary-add-to-list__create">
-                {isCreatingNew ? (
-                  <div className="vocabulary-add-to-list__create-form">
-                    <input
-                      type="text"
-                      value={newListName}
-                      onChange={(event) => setNewListName(event.target.value)}
-                      placeholder={t("userProfile.myListsSection.modal.placeholder")}
-                      maxLength={LIST_NAME_MAX_LENGTH}
-                      disabled={isCreating}
-                      autoFocus
-                      className="vocabulary-add-to-list__search-input"
-                      onKeyDown={(event) => {
-                        if (event.key === "Enter") {
-                          event.preventDefault();
-                          void handleCreateAndAdd();
-                        }
-                      }}
-                    />
-                    {createError ? <p className="vocabulary-add-to-list__create-error">{createError}</p> : null}
-                    <div className="vocabulary-add-to-list__create-actions">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        disabled={isCreating}
-                        onClick={() => {
-                          setIsCreatingNew(false);
-                          setNewListName("");
-                          setCreateError(null);
-                        }}
-                      >
-                        {t("userProfile.myListsSection.modal.cancel")}
-                      </Button>
-                      <Button
-                        type="button"
-                        disabled={!validateListName(newListName).ok || isCreating}
-                        onClick={() => void handleCreateAndAdd()}
-                      >
-                        {isCreating ? (
-                          <Loader2 size={15} className="vocabulary-add-to-list__spinner" aria-hidden="true" />
-                        ) : null}
-                        {t("userProfile.vocabularySection.addToListDialog.createAndAdd")}
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    className="vocabulary-add-to-list__create-trigger"
-                    onClick={() => setIsCreatingNew(true)}
-                  >
-                    <Plus size={15} strokeWidth={2} aria-hidden="true" />
-                    {t("userProfile.myListsSection.createButton")}
-                  </button>
-                )}
-              </div>
+              {/* Opens CreateListDialog as a second, stacked popup (see the
+                  render below) rather than expanding an inline form here —
+                  this popup itself is never closed underneath it, so it's
+                  visible again the instant the create popup closes. */}
+              <button
+                type="button"
+                className="vocabulary-add-to-list__create-trigger"
+                onClick={() => {
+                  setCreateError(null);
+                  setIsCreateDialogOpen(true);
+                }}
+              >
+                <Plus size={15} strokeWidth={2} aria-hidden="true" />
+                {t("userProfile.myListsSection.createButton")}
+              </button>
               <Button type="button" disabled={isCreating} onClick={() => onOpenChange(false)}>
                 {t("userProfile.vocabularySection.addToListDialog.done")}
               </Button>
@@ -383,5 +347,14 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
         ) : null}
       </DialogContent>
     </Dialog>
+
+    <CreateListDialog
+      open={isCreateDialogOpen}
+      isSubmitting={isCreating}
+      error={createError}
+      onOpenChange={setIsCreateDialogOpen}
+      onSubmit={handleCreateList}
+    />
+    </>
   );
 }

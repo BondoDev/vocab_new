@@ -892,10 +892,6 @@
   }
 }
 
-.vocabulary-add-to-list__create-form .vocabulary-add-to-list__search-input {
-  padding-left: 0.75rem;
-}
-
 /* Caps the box at roughly 5 rows (each row ~2.65rem tall including its
    1px border) before scrolling kicks in — see AddWordToListDialog.tsx's
    own header comment for the same "5 visible rows" contract. */
@@ -1015,11 +1011,6 @@
   padding-top: 0.65rem;
 }
 
-.vocabulary-add-to-list__create {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
 .vocabulary-add-to-list__create-trigger {
   display: inline-flex;
   align-items: center;
@@ -1037,30 +1028,8 @@
   }
 }
 
-.vocabulary-add-to-list__create-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.vocabulary-add-to-list__create-error {
-  margin: 0;
-  color: #dc2626;
-  font-size: 0.8rem;
-}
-
-.vocabulary-add-to-list__create-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
-
 @media (max-width: 420px) {
   .vocabulary-add-to-list__footer {
     align-items: flex-end;
-  }
-
-  .vocabulary-add-to-list__create-form .vocabulary-add-to-list__create-actions {
-    flex-wrap: wrap;
   }
 }
