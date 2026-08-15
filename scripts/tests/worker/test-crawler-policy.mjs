@@ -3,13 +3,19 @@
 // external crawlers walking the ~75k-URL sitemap corpus of server-rendered
 // word pages consumed the Free-plan Worker request quota, and SSR CPU over
 // the Free-plan allowance produced "Worker exceeded CPU time limit" 503s.
-// The fix is a robots.txt crawl policy for AI crawlers and high-volume
+// The fix is a robots.txt crawl policy for AI training/high-volume
 // low-value crawlers while keeping normal search-engine discovery open.
+// Updated 2026-08-15: low-risk AI search/user-fetch agents (OAI-SearchBot,
+// ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot,
+// Perplexity-User) were moved from blocked to allowed - they are either
+// user-triggered (low crawl volume) or search/discovery crawlers we want
+// for AI-search referral visibility. AI training crawlers and high-volume
+// SEO/data crawlers remain blocked.
 // These asserts keep the policy (and the invariants the audit proved) from
 // silently regressing:
-//   1. robots.txt still disallows measured heavy bots and AI crawlers, still
-//      allows search-engine crawlers through the catch-all, and still points at
-//      the sitemap.
+//   1. robots.txt still disallows measured heavy bots and AI training
+//      crawlers, still allows the selected AI search/user-fetch agents and
+//      search-engine crawlers, and still points at the sitemap.
 //   2. The deployed copies of robots.txt (dist/, assets-full/) match public/.
 //   3. wrangler.production.toml keeps the Worker name, asset-first serving
 //      for everything except the selective /records/* run_worker_first
@@ -64,18 +70,12 @@ const MUST_DISALLOW = [
   "Amzn-SearchBot",
   "PetalBot",
   "GPTBot",
-  "ChatGPT-User",
-  "OAI-SearchBot",
   "OAI-AdsBot",
   "ClaudeBot",
-  "Claude-SearchBot",
-  "Claude-User",
   "anthropic-ai",
   "Claude-Web",
   "Google-Extended",
   "Google-CloudVertexBot",
-  "PerplexityBot",
-  "Perplexity-User",
   "CCBot",
   "Bytespider",
   "Applebot-Extended",
@@ -94,12 +94,42 @@ for (const bot of MUST_DISALLOW) {
   );
 }
 
+// Low-risk AI search/user-fetch agents (2026-08-15 policy change): allowed
+// via a dedicated group with an explicit "Allow: /" rule, not merely by
+// falling through to the catch-all - this pins down the intentional policy
+// so a future re-block (or an accidental removal that silently falls back
+// to the catch-all) fails loudly here.
+const MUST_ALLOW_DEDICATED_AI = [
+  "OAI-SearchBot",
+  "ChatGPT-User",
+  "Claude-SearchBot",
+  "Claude-User",
+  "PerplexityBot",
+  "Perplexity-User",
+];
+for (const bot of MUST_ALLOW_DEDICATED_AI) {
+  const group = groupFor(bot);
+  assert.ok(
+    group && !group.agents.includes("*"),
+    `robots.txt must have a dedicated group for ${bot}`,
+  );
+  assert.ok(
+    !group.rules.some((r) => r.type === "disallow" && r.value === "/"),
+    `robots.txt must NOT disallow ${bot} - low-risk AI search/user-fetch agents stay allowed`,
+  );
+  assert.ok(
+    group.rules.some((r) => r.type === "allow" && r.value === "/"),
+    `robots.txt must explicitly allow ${bot} via "Allow: /"`,
+  );
+}
+
 const MUST_ALLOW = [
   "Googlebot",
   "Bingbot",
   "YandexBot",
   "DuckDuckBot",
   "Applebot",
+  ...MUST_ALLOW_DEDICATED_AI,
 ];
 for (const bot of MUST_ALLOW) {
   const group = groupFor(bot);
