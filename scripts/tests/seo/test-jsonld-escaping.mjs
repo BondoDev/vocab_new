@@ -361,6 +361,13 @@ const wordMetadata = {
       href: "https://www.fluentstellar.com/en/english-word-about--A1-00001",
     },
   ],
+  // Individual word pages are intentionally non-indexable (crawlable and
+  // internally linked, but never eligible for search-engine indexing — see
+  // src/seo/wordPages/wordMetadata.ts buildWordSeoMetadata()). This fixture
+  // is hand-built (not routed through the real builder) to exercise
+  // renderSeoTags()'s generic escaping/rendering pipeline in isolation, so it
+  // must mirror the real builder's output shape, including this field.
+  robots: "noindex, follow",
 };
 
 {
@@ -398,8 +405,9 @@ const wordMetadata = {
     assert.ok(rendered.includes('hreflang="en"'));
   });
 
-  test("Word page has no noindex", () => {
-    assert.ok(!rendered.includes("noindex"));
+  test("Word page renders noindex, follow (crawlable, non-indexable, link-equity-preserving)", () => {
+    assert.ok(rendered.includes('<meta name="robots" content="noindex, follow">'));
+    assert.ok(!rendered.includes("nofollow"));
   });
 }
 
@@ -609,8 +617,8 @@ console.log("\n[8] Non-JSON-LD metadata: canonical, hreflang, title, description
     assert.ok(rendered.includes('property="og:type"'));
   });
 
-  test("No noindex on canonical word page", () => {
-    assert.ok(!rendered.includes("noindex"));
+  test("Word page robots meta is noindex, follow (not absent, not nofollow)", () => {
+    assert.ok(rendered.includes('<meta name="robots" content="noindex, follow">'));
   });
 
   // Verify robots is included when set
@@ -743,6 +751,53 @@ console.log("\n[10] Real JSON-LD builder output for vocabularyLevels/seoSchema.t
   test("buildWordSeoMetadata has no forbidden schema types", () => {
     assertNoForbiddenTypes("wordMetadata.ts", wordJsonLd["@graph"]);
   });
+
+  // ── Indexing policy: individual word pages must always be non-indexable ──
+  // (crawlable and internally linkable — hence `follow`, not `nofollow` —
+  // but never indexable). Covers a canonical page-1 word page and a
+  // browse-pagination word page, across more than one UI/target language so
+  // this isn't accidentally English-only.
+  const WORD_ROBOTS_CASES = [
+    {
+      label: "en canonical page-1 (default browsePage)",
+      uiLang: "en",
+      targetLanguage: "english",
+      pathname: "/en/english-word-test--A1-00001",
+    },
+    {
+      label: "es canonical page-1 (explicit browsePage: 1)",
+      uiLang: "es",
+      targetLanguage: "german",
+      pathname: "/es/german-word-prueba--B2-00042",
+      browsePage: 1,
+    },
+    {
+      label: "ru browse-pagination page-3",
+      uiLang: "ru",
+      targetLanguage: "russian",
+      pathname: "/ru/russian-word-test--C1-00007/browse/page/3",
+      browsePage: 3,
+    },
+  ];
+
+  for (const testCase of WORD_ROBOTS_CASES) {
+    test(`buildWordSeoMetadata robots === "noindex, follow" for ${testCase.label}`, () => {
+      const metadata = buildWordSeoMetadata({
+        uiLang: testCase.uiLang,
+        targetLanguage: testCase.targetLanguage,
+        targetLanguageDisplayName: testCase.targetLanguage,
+        wordLemma: "test",
+        conceptId: "A1-00001",
+        definition: "a trial or examination",
+        wordType: "noun",
+        cefrLevel: "A1",
+        pathname: testCase.pathname,
+        siteOrigin: "https://www.fluentstellar.com",
+        ...(testCase.browsePage !== undefined ? { browsePage: testCase.browsePage } : {}),
+      });
+      assert.equal(metadata.robots, "noindex, follow");
+    });
+  }
 
   const verbListJsonLd = JSON.parse(
     buildVerbListSeoMetadata({

@@ -128,6 +128,12 @@ export function buildWordSeoMetadata(params: WordSeoMetadataParams): SeoMetadata
     canonical: `${origin}${pathname}`,
     alternates,
     jsonLd,
-    ...(browsePage > 1 ? { robots: "noindex, follow" } : {}),
+    // Individual word pages (canonical and browse-pagination alike) are
+    // intentionally non-indexable: they stay live, crawlable, and internally
+    // linked (see the word-page indexing-policy audit), but must never be
+    // eligible for search-engine indexing. `follow` is deliberate — it keeps
+    // link equity flowing through the related/discovery/browse word mesh and
+    // into indexable pages (CEFR levels, word SEO hubs) that link from here.
+    robots: "noindex, follow",
   };
 }

@@ -264,11 +264,25 @@ function assertWordHtml(response, entry, pathname) {
   assert.ok(extractCanonical(response.body)?.endsWith(pathname), `wrong canonical for ${pathname}`);
   assert.ok(extractTagContent(response.body, "title"), `missing title for ${pathname}`);
   assert.ok(extractMetaContent(response.body, "description"), `missing description for ${pathname}`);
+  // Individual word pages are intentionally non-indexable (they stay
+  // crawlable, self-canonicalizing, and internally linked — hence `follow`,
+  // not `nofollow` — but must never be eligible for search-engine indexing;
+  // see src/seo/wordPages/wordMetadata.ts buildWordSeoMetadata()). The meta
+  // tag is the single source of truth for this policy: no X-Robots-Tag
+  // header duplicates it (asserted below).
+  assert.equal(
+    extractMetaContent(response.body, "robots"),
+    "noindex, follow",
+    `word page must emit <meta name="robots" content="noindex, follow"> for ${pathname}`,
+  );
   assert.ok(response.body.includes("application/ld+json"), `missing JSON-LD for ${pathname}`);
   assert.ok(response.body.includes("window.__WORD_PAGE_DATA__"), `missing word payload for ${pathname}`);
   assert.ok(response.body.includes("hreflang="), `missing hreflang for ${pathname}`);
   assert.ok(countLinks(response.body) > 0, `expected internal links for ${pathname}`);
-  assert.ok(!("x-robots-tag" in response.headers), `public route must stay indexable for ${pathname}`);
+  assert.ok(
+    !("x-robots-tag" in response.headers),
+    `word page must rely solely on the meta-tag noindex policy, not a duplicate X-Robots-Tag header, for ${pathname}`,
+  );
 }
 
 function assertImmediateWordServerRender(response, pathname) {
@@ -329,6 +343,11 @@ function assertWordHtmlViaInternalApi(response, pathname) {
     `wrong cache control for ${pathname}`,
   );
   assert.equal(extractCanonical(response.body), `${siteOrigin}${pathname}`, `wrong canonical for ${pathname}`);
+  assert.equal(
+    extractMetaContent(response.body, "robots"),
+    "noindex, follow",
+    `word page (internal API render path) must emit <meta name="robots" content="noindex, follow"> for ${pathname}`,
+  );
   assert.ok(response.body.includes("window.__WORD_PAGE_DATA__"), `missing word payload for ${pathname}`);
 }
 
@@ -732,6 +751,26 @@ async function main() {
       title: "FluentStellar - Structured Vocabulary Learning Platform",
       canonical: `${siteOrigin}/`,
     });
+    assert.notEqual(
+      extractMetaContent(homepageResponse.body, "robots"),
+      "noindex, follow",
+      "homepage must not inherit the individual word-page noindex policy",
+    );
+
+    // Negative guard: the word-page-specific noindex policy (added above)
+    // must not leak into curated, valuable SEO pages that live under a
+    // superficially similar prefix. The word SEO hub is the most directly
+    // adjacent case — a curated *index of* word pages, one path segment away
+    // from the word pages it links to — so it's the sharpest test of route-
+    // family isolation between buildWordSeoMetadata() (word pages only) and
+    // the hub's own, separate metadata builder (src/seo/hubPages/hubMetadata.ts).
+    const wordSeoHubResponse = await request(baseUrl, "/en/seo-pages/english-word-pages");
+    assert.equal(wordSeoHubResponse.status, 200, "word SEO hub page must stay reachable");
+    assert.notEqual(
+      extractMetaContent(wordSeoHubResponse.body, "robots"),
+      "noindex, follow",
+      "word SEO hub (a curated index page, not an individual word page) must not inherit the word-page noindex policy",
+    );
 
     const profileResponse = await request(baseUrl, "/profile");
     assertRouteMetadata(profileResponse, "/profile", {
