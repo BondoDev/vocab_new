@@ -91,8 +91,8 @@
   },
   {
     "concept_id": "A1-01012",
-    "imperfect": "discutevo",
-    "pastParticiple": "discusso",
+    "imperfect": "parlavo",
+    "pastParticiple": "parlato",
     "auxiliary": "avere"
   },
   {
@@ -193,8 +193,8 @@
   },
   {
     "concept_id": "A1-00615",
-    "imperfect": "vivevo",
-    "pastParticiple": "vissuto",
+    "imperfect": "abitavo",
+    "pastParticiple": "abitato",
     "auxiliary": "avere"
   },
   {
@@ -229,8 +229,8 @@
   },
   {
     "concept_id": "A1-00431",
-    "imperfect": "ottenevo",
-    "pastParticiple": "ottenuto",
+    "imperfect": "ricevevo",
+    "pastParticiple": "ricevuto",
     "auxiliary": "avere"
   },
   {
@@ -241,9 +241,9 @@
   },
   {
     "concept_id": "A1-00978",
-    "imperfect": "smettevo",
-    "pastParticiple": "smesso",
-    "auxiliary": "avere"
+    "imperfect": "mi fermavo",
+    "pastParticiple": "fermato",
+    "auxiliary": "essere"
   },
   {
     "concept_id": "A1-00158",
@@ -337,8 +337,8 @@
   },
   {
     "concept_id": "B1-04098",
-    "imperfect": "impostavo",
-    "pastParticiple": "impostato",
+    "imperfect": "mettevo",
+    "pastParticiple": "messo",
     "auxiliary": "avere"
   },
   {
@@ -403,8 +403,8 @@
   },
   {
     "concept_id": "A1-00088",
-    "imperfect": "cominciavo",
-    "pastParticiple": "cominciato",
+    "imperfect": "iniziavo",
+    "pastParticiple": "iniziato",
     "auxiliary": "avere"
   },
   {
@@ -439,8 +439,8 @@
   },
   {
     "concept_id": "A1-01022",
-    "imperfect": "raccontavo",
-    "pastParticiple": "raccontato",
+    "imperfect": "dicevo",
+    "pastParticiple": "detto",
     "auxiliary": "avere"
   },
   {
@@ -475,8 +475,8 @@
   },
   {
     "concept_id": "A2-01117",
-    "imperfect": "mandavo",
-    "pastParticiple": "mandato",
+    "imperfect": "spedivo",
+    "pastParticiple": "spedito",
     "auxiliary": "avere"
   },
   {
@@ -595,8 +595,8 @@
   },
   {
     "concept_id": "A1-00596",
-    "imperfect": "partivo",
-    "pastParticiple": "partito",
-    "auxiliary": "essere"
+    "imperfect": "lasciavo",
+    "pastParticiple": "lasciato",
+    "auxiliary": "avere"
   }
 ]
