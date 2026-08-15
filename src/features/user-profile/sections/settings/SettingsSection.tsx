@@ -39,6 +39,7 @@ import {
 } from "../../../../lib/userProfile";
 import {
   notifyWordProgressChanged,
+  notifyLearningDateChanged,
   notifyDailyStatsChanged,
   notifyVocabularyGrowthChanged,
 } from "../../../../lib/sharedProgressInvalidation";
@@ -636,6 +637,14 @@ export function SettingsSection({
           timezone: nextProfile.timezone ?? result.timezone,
           timezoneUpdatedAt: nextProfile.timezoneUpdatedAt ?? result.timezoneUpdatedAt,
         });
+        // Root-cause investigation, 2026-08-15: the shared authoritative
+        // learning date (useProfileSharedProgressData.ts) no longer watches
+        // the raw timezone value as an effect dependency (that caused a
+        // spurious second get_current_learning_date call on most cold
+        // loads — see that file's own header) — this explicit signal is
+        // now the only thing that makes it refetch after a real,
+        // successful timezone change during an established session.
+        notifyLearningDateChanged();
         showTimezoneToast(t("userProfile.settingsSection.timeRegion.savedToast"));
       })
       .catch((error) => {

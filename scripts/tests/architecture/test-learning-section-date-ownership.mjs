@@ -3,8 +3,10 @@
 // useProfileSharedProgressData.ts (called once from UserProfileDashboardPage,
 // the common parent of Learning/Vocabulary/Progress) is the whole /profile
 // dashboard's single frontend owner of getCurrentLearningDate() — it calls
-// the RPC exactly once per (authUserId, timezone) context and exposes the
-// result as todayISO (string | null) and todayISOStatus ("loading" |
+// the RPC exactly once per authUserId context (refreshed only via an
+// explicit retry or a real, successful timezone-change signal — see test
+// 13's own "Round 2" comment) and exposes the result as todayISO (string |
+// null) and todayISOStatus ("loading" |
 // "ready" | "unavailable" | "error"), threaded down through LearningSection
 // to TodayProgressCard and DailyStreakCard as props. No section may call
 // getCurrentLearningDate itself, and neither a practice-language change nor
@@ -321,7 +323,7 @@ test('12. Date "unavailable" remains distinguishable from "error" — both at th
   }
 });
 
-test("13. useProfileSharedProgressData's date-loading effect is scoped to auth/profile readiness, timezone, and its own retry token only — never targetLanguage", () => {
+test("13. useProfileSharedProgressData's date-loading effect is scoped to auth/profile readiness, its own retry token, and its own invalidation signal only — never targetLanguage or the raw timezone value", () => {
   // Isolates the specific effect that calls getCurrentLearningDate (rather
   // than matching the first useEffect in the file — the hook declares more
   // than one).
@@ -332,8 +334,18 @@ test("13. useProfileSharedProgressData's date-loading effect is scoped to auth/p
   const deps = dateEffectMatch[1];
   assert.match(deps, /\bauthUserId\b/, "the date effect must depend on authUserId (refetch on account change)");
   assert.match(deps, /\bisProfileLoaded\b/, "the date effect must depend on isProfileLoaded (wait for profile readiness)");
-  assert.match(deps, /\btimezone\b/, "the date effect must depend on timezone (refetch when user_profiles.timezone changes)");
+  // Root-cause investigation, 2026-08-15: the effect no longer watches the
+  // raw `timezone` prop — that transitions from an empty placeholder to its
+  // real persisted value during ordinary cold-load hydration (unrelated to
+  // any real timezone mutation), which was firing a genuine, reproducible
+  // second get_current_learning_date call on most cold loads. A real,
+  // successful timezone save now signals dateInvalidationVersion via
+  // notifyLearningDateChanged()/subscribeLearningDateChanged() instead —
+  // see test-learning-date-in-flight-dedup.mjs's own "Round 2" tests for
+  // the full mechanism.
+  assert.doesNotMatch(deps, /\btimezone\b/, "the date effect must NOT depend on the raw timezone value anymore");
   assert.match(deps, /\bdateRetryToken\b/, "the date effect must depend on its own retry token");
+  assert.match(deps, /\bdateInvalidationVersion\b/, "the date effect must depend on its own invalidation-signal version counter");
   assert.doesNotMatch(
     deps,
     /\btargetLanguage\b/,

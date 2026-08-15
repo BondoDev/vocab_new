@@ -3,7 +3,7 @@ import { getStoredSupabaseSession } from "../../../lib/supabaseAuth";
 import { getCurrentLearningDate } from "../../../lib/learningDate";
 import { describeSupabaseError } from "../../../lib/supabaseError";
 import { readUserWordProgress, type UserWordProgressFullRow } from "../../../lib/newWordProgress";
-import { subscribeWordProgressChanged } from "../../../lib/sharedProgressInvalidation";
+import { subscribeWordProgressChanged, subscribeLearningDateChanged } from "../../../lib/sharedProgressInvalidation";
 
 // Phase 1 of the authenticated profile-section data optimization: the
 // single frontend owner, for the whole /profile dashboard, of the two
@@ -62,15 +62,6 @@ export interface UseProfileSharedProgressDataParams {
   // cross-language set. Deliberately not a dependency of the date effect
   // below — the authoritative date does not depend on the target language.
   targetLanguage: string;
-  // user_profiles.timezone (null until the profile loads or a session has
-  // no stored timezone yet). A dependency of the date effect only: the
-  // authoritative date is resolved server-side from this column (see
-  // supabase/migrations/20260806150000_add_server_derived_learning_dates.sql),
-  // so if it changes mid-session (most commonly useUserProfileLoad's own
-  // initializeUserTimezone call resolving shortly after the first render)
-  // the already-fetched date must be refreshed instead of silently staying
-  // pinned to whatever was resolved before the timezone was known.
-  timezone: string | null;
 }
 
 const LOADING_DATE_STATE: LearningDateState = { status: "loading", todayISO: null };
@@ -80,16 +71,16 @@ export function useProfileSharedProgressData({
   authUserId,
   isProfileLoaded,
   targetLanguage,
-  timezone,
 }: UseProfileSharedProgressDataParams): ProfileSharedProgressData {
   const [dateState, setDateState] = useState<LearningDateState>(LOADING_DATE_STATE);
   const [dateRetryToken, setDateRetryToken] = useState(0);
+  const [dateInvalidationVersion, setDateInvalidationVersion] = useState(0);
   // The authUserId the currently-held dateState.todayISO (if any) was
   // resolved for — used only to tell a genuine account change (must hard
-  // reset) apart from a same-account refresh (timezone change / retry;
-  // must preserve the already-loaded date so dependent counters never
-  // flash back to a loading skeleton for data that hasn't actually
-  // changed).
+  // reset) apart from a same-account refresh (a timezone-mutation signal or
+  // an explicit retry; must preserve the already-loaded date so dependent
+  // counters never flash back to a loading skeleton for data that hasn't
+  // actually changed).
   const loadedDateKeyRef = useRef<string | null>(null);
 
   // Fetch-audit Phase 2A: the authUserId a getCurrentLearningDate() request
@@ -123,7 +114,47 @@ export function useProfileSharedProgressData({
   // Gating on this ref instead of a `cancelled` closure means the one
   // request that does start always gets to apply its result once it
   // resolves, and is only superseded by a genuine authUserId change.
+  //
+  // CORRECTION (root-cause investigation, 2026-08-15): the Phase 2A fix
+  // above closes the *concurrent* duplicate case (two effect runs racing
+  // for the same authUserId while one is still in flight), but live network
+  // capture proved a second, *sequential* duplicate remained: this effect's
+  // dependency array used to include the raw `timezone` prop, and
+  // `timezone` genuinely transitions from an empty placeholder to its real
+  // persisted value partway through useUserProfileLoad's own async
+  // resolution — a later, separate commit from the one where
+  // isProfileLoaded first settles true. Request #1 (fired while timezone
+  // was still the placeholder) would resolve and fully clear
+  // inFlightDateKeyRef *before* the later commit changed `timezone`'s
+  // value, so the in-flight guard never saw the two as concurrent — the
+  // second effect run legitimately fired its own complete request #2, for
+  // the same authUserId, immediately after the first had already succeeded.
+  // Reproduced live in 9 of 12 fresh cold starts. Since
+  // get_current_learning_date takes no client-supplied timezone parameter
+  // (see above), that placeholder-to-real-value transition was never a
+  // reason to refetch in the first place — only a genuine, successful
+  // update_user_timezone save (an established session's timezone actually
+  // changing) is. `timezone` is no longer a dependency of this effect;
+  // notifyLearningDateChanged()/subscribeLearningDateChanged()
+  // (sharedProgressInvalidation.ts, fired only from SettingsSection.tsx's
+  // handleSaveTimezone success branch) is the explicit signal for that
+  // real case instead — the same explicit-signal-over-raw-value-watching
+  // pattern the word-progress effect below already uses for
+  // notifyWordProgressChanged.
   const inFlightDateKeyRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    return subscribeLearningDateChanged(() => {
+      setDateInvalidationVersion((version) => version + 1);
+    });
+  }, []);
+
+  // The dateRetryToken/dateInvalidationVersion values a *successful* fetch
+  // was last applied for, for whichever authUserId loadedDateKeyRef
+  // currently names — see the "already-settled" gate below, added by the
+  // same root-cause investigation as inFlightDateKeyRef's own header.
+  const loadedDateRetryTokenRef = useRef(dateRetryToken);
+  const loadedDateInvalidationVersionRef = useRef(dateInvalidationVersion);
 
   useEffect(() => {
     if (!authUserId) {
@@ -151,6 +182,42 @@ export function useProfileSharedProgressData({
 
     const requestKey = authUserId;
     const isSameContext = loadedDateKeyRef.current === requestKey;
+
+    // CORRECTION (root-cause investigation round 2, 2026-08-15): removing
+    // `timezone` as a dependency (above) did not fully fix the duplicate —
+    // live capture proved isProfileLoaded ALONE (true, then briefly false
+    // again while useUserProfileLoad's own profile fetch is genuinely in
+    // flight, then true again once it resolves) is sufficient to reproduce
+    // it: request #1 (started on the first "true") resolves and fully
+    // clears inFlightDateKeyRef *before* the second "true" render happens,
+    // so the in-flight guard never sees them as concurrent, and — because
+    // nothing below ever checked whether this exact (authUserId,
+    // dateRetryToken, dateInvalidationVersion) signature had *already* been
+    // successfully applied — the second render started a fully redundant
+    // request #2 for data it already had. Reproduced live in 9 of 12 fresh
+    // cold starts even after the timezone fix alone. This gate is the
+    // actual fix: a same-context re-run is only worth a new fetch if
+    // dateRetryToken or dateInvalidationVersion has genuinely advanced past
+    // what the last successful fetch already satisfied — an
+    // isProfileLoaded/authUserId re-settling to values already reflected in
+    // a ready result is not such a reason.
+    //
+    // Deliberately checked via loadedDateKeyRef/loadedDateRetryTokenRef/
+    // loadedDateInvalidationVersionRef (refs, updated synchronously the
+    // instant a fetch succeeds) rather than dateState.status === "ready" (a
+    // React state value): live capture also proved the two can legitimately
+    // disagree for a render or two — a same-tick isProfileLoaded-driven
+    // re-run can execute before the *state update* from the just-settled
+    // fetch has actually committed, even though the refs it set are already
+    // current. Gating on dateState here would silently readmit the exact
+    // duplicate this fix removes.
+    if (
+      isSameContext &&
+      dateRetryToken === loadedDateRetryTokenRef.current &&
+      dateInvalidationVersion === loadedDateInvalidationVersionRef.current
+    ) {
+      return;
+    }
 
     if (inFlightDateKeyRef.current === requestKey) {
       // Already fetching this exact user — join the existing attempt
@@ -185,6 +252,8 @@ export function useProfileSharedProgressData({
         if (inFlightDateKeyRef.current !== requestKey) return;
         inFlightDateKeyRef.current = null;
         loadedDateKeyRef.current = requestKey;
+        loadedDateRetryTokenRef.current = dateRetryToken;
+        loadedDateInvalidationVersionRef.current = dateInvalidationVersion;
         setDateState({ status: "ready", todayISO });
       } catch (error) {
         if (inFlightDateKeyRef.current !== requestKey) return;
@@ -193,14 +262,15 @@ export function useProfileSharedProgressData({
           "useProfileSharedProgressData: failed to load the current learning date.",
           describeSupabaseError("getCurrentLearningDate", error),
         );
-        // A same-context background refresh failure (timezone change/retry
-        // on an already-loaded date) keeps the previous ready value instead
-        // of regressing every dependent section to its error state; only a
-        // genuine first-load failure for this account surfaces "error".
+        // A same-context background refresh failure (a timezone-mutation
+        // signal or an explicit retry on an already-loaded date) keeps the
+        // previous ready value instead of regressing every dependent
+        // section to its error state; only a genuine first-load failure for
+        // this account surfaces "error".
         setDateState((prev) => (isSameContext && prev.status === "ready" ? prev : { status: "error", todayISO: null }));
       }
     })();
-  }, [authUserId, isProfileLoaded, timezone, dateRetryToken]);
+  }, [authUserId, isProfileLoaded, dateRetryToken, dateInvalidationVersion]);
 
   const [progressState, setProgressState] = useState<WordProgressState>(LOADING_PROGRESS_STATE);
   const [progressRetryToken, setProgressRetryToken] = useState(0);

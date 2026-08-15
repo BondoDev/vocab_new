@@ -27,11 +27,38 @@
 // gates result-application on inFlightDateKeyRef matching the attempt's own
 // requestKey, which only a genuine authUserId change invalidates.
 //
+// ROUND 2 (root-cause investigation, 2026-08-15): live network capture
+// proved the Phase 2A fix above closes only the *concurrent* duplicate —
+// two effect runs racing while one is genuinely still in flight. A second,
+// *sequential* duplicate survived: nothing checked whether a same-context
+// re-run (isProfileLoaded/authUserId re-settling to values a fetch had
+// already successfully resolved for) had anything new to fetch at all, so
+// every such re-run fired its own complete, fully redundant request —
+// reproduced live in 9 of 12, then 7 of 12 (after a first, incomplete fix
+// attempt that removed `timezone` as a dependency but didn't add this
+// gate), fresh cold starts. The shipped fix adds an "already settled" gate,
+// checked via loadedDateKeyRef/loadedDateRetryTokenRef/
+// loadedDateInvalidationVersionRef (refs, always synchronously current) —
+// deliberately never dateState.status, which live capture also proved can
+// still read "loading" for a render or two after the refs a same-tick
+// re-run needs are already correct. `timezone` was removed as a raw effect
+// dependency entirely (a cold-load hydration transition of that prop —
+// from an empty placeholder to its real persisted value — was never a
+// legitimate reason to refetch, since get_current_learning_date takes no
+// client-supplied timezone parameter at all); a real, successful
+// update_user_timezone save now fires the explicit
+// notifyLearningDateChanged() signal instead, verified live to still
+// produce exactly one fresh request per successful save. 24/24 fresh cold
+// starts were clean after this fix (0 duplicates), reproducing 100% of the
+// time before it across two independent 12-run sweeps.
+//
 // Deliberately static/deterministic (Node stdlib only, no build, no
 // network) so it stays cheap to run in CI and can't rot into a flaky check,
 // matching every other architecture/data-flow guard in this repo (see
 // test-daily-stats-shared-ownership.mjs, which this guard is a direct
-// sibling of).
+// sibling of). The live reproduction/verification itself (Playwright
+// against a real authenticated session) is not repeated here — see the
+// investigation's own report for the full request timelines.
 //
 // Run: node scripts/tests/architecture/test-learning-date-in-flight-dedup.mjs
 import assert from "node:assert/strict";
@@ -65,13 +92,31 @@ const hookSource = fs.readFileSync(hookPath, "utf8");
 // one effect, and the later word-progress effect deliberately keeps its own
 // unrelated `cancelled`-closure pattern (out of scope for this phase).
 const dateEffectMatch = hookSource.match(
-  /useEffect\(\(\) => \{([\s\S]*?)\}, \[authUserId, isProfileLoaded, timezone, dateRetryToken\]\);/,
+  /useEffect\(\(\) => \{([\s\S]*?)\}, \[authUserId, isProfileLoaded, dateRetryToken, dateInvalidationVersion\]\);/,
 );
 
 console.log("\n=== Learning-date in-flight dedup guards ===\n");
 
-test("1. The learning-date effect exists with its documented dependency array unchanged (authUserId, isProfileLoaded, timezone, dateRetryToken)", () => {
+test("1. The learning-date effect exists with its current dependency array (authUserId, isProfileLoaded, dateRetryToken, dateInvalidationVersion) — timezone is deliberately NOT a dependency (round 2 fix)", () => {
   assert.ok(dateEffectMatch, "expected the learning-date effect (ending in the exact dependency array) to exist");
+  assert.doesNotMatch(hookSource, /}, \[authUserId, isProfileLoaded, timezone, dateRetryToken\]\);/, "the old timezone-watching dependency array must be gone");
+});
+
+test("1b. timezone is no longer a parameter of useProfileSharedProgressData at all — the hook's params interface has exactly authUserId/isProfileLoaded/targetLanguage", () => {
+  const paramsMatch = hookSource.match(/export interface UseProfileSharedProgressDataParams \{([\s\S]*?)\}/);
+  assert.ok(paramsMatch, "expected UseProfileSharedProgressDataParams to exist");
+  assert.doesNotMatch(paramsMatch[1], /timezone/, "timezone must not remain a param of this hook");
+  assert.match(paramsMatch[1], /authUserId: string \| null;/);
+  assert.match(paramsMatch[1], /isProfileLoaded: boolean;/);
+  assert.match(paramsMatch[1], /targetLanguage: string;/);
+});
+
+test("1c. UserProfileDashboardPage no longer passes timezone into useProfileSharedProgressData", () => {
+  const dashboardPagePath = path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "UserProfileDashboardPage.tsx");
+  const dashboardSource = fs.readFileSync(dashboardPagePath, "utf8");
+  const callMatch = dashboardSource.match(/= useProfileSharedProgressData\(\{([\s\S]*?)\}\);/);
+  assert.ok(callMatch, "expected the useProfileSharedProgressData(...) call site");
+  assert.doesNotMatch(callMatch[1], /timezone/, "the call site must not pass a timezone prop anymore");
 });
 
 const effectBody = dateEffectMatch ? dateEffectMatch[1] : "";
@@ -90,6 +135,81 @@ test("3. A request is skipped (no fetch) when inFlightDateKeyRef already names t
   const armIndex = effectBody.indexOf("inFlightDateKeyRef.current = requestKey;");
   assert.ok(guardIndex >= 0 && armIndex > guardIndex, "the in-flight guard must run before inFlightDateKeyRef is armed for a new attempt");
 });
+
+console.log("\n=== Round 2: the \"already settled\" gate (the actual sequential-duplicate fix) ===\n");
+
+test("3b. loadedDateRetryTokenRef/loadedDateInvalidationVersionRef exist, initialized from the live state values", () => {
+  assert.match(hookSource, /const loadedDateRetryTokenRef = useRef\(dateRetryToken\);/);
+  assert.match(hookSource, /const loadedDateInvalidationVersionRef = useRef\(dateInvalidationVersion\);/);
+});
+
+test("3c. A same-context re-run is skipped entirely (no fetch, no state change) when dateRetryToken and dateInvalidationVersion both still match what the last successful fetch already satisfied", () => {
+  const skipMatch = effectBody.match(
+    /if \(\s*isSameContext &&\s*dateRetryToken === loadedDateRetryTokenRef\.current &&\s*dateInvalidationVersion === loadedDateInvalidationVersionRef\.current\s*\) \{([\s\S]*?)\}/,
+  );
+  assert.ok(skipMatch, "expected the already-settled gate comparing isSameContext + both token refs");
+  assert.match(skipMatch[1], /return;/, "the already-settled gate must return before touching inFlightDateKeyRef or starting a fetch");
+  // Must run before the fetch is armed, and must NOT gate on dateState.status
+  // (proven live to lag behind the refs by a render or two — see this
+  // file's own header).
+  const gateIndex = effectBody.indexOf(skipMatch[0]);
+  const armIndex = effectBody.indexOf("inFlightDateKeyRef.current = requestKey;");
+  assert.ok(gateIndex >= 0 && armIndex > gateIndex, "the already-settled gate must run before inFlightDateKeyRef is armed");
+  assert.doesNotMatch(skipMatch[0], /dateState\.status/, "the already-settled gate must not read dateState.status — only the always-synchronous refs");
+});
+
+test("3d. A successful fetch records the retry/invalidation signature it satisfied, in the same place it records loadedDateKeyRef", () => {
+  const successBlock = effectBody.match(/const todayISO = await getCurrentLearningDate\(session\);([\s\S]*?)\} catch/);
+  assert.ok(successBlock, "expected the success path following the getCurrentLearningDate call");
+  assert.match(successBlock[1], /loadedDateKeyRef\.current = requestKey;/);
+  assert.match(successBlock[1], /loadedDateRetryTokenRef\.current = dateRetryToken;/);
+  assert.match(successBlock[1], /loadedDateInvalidationVersionRef\.current = dateInvalidationVersion;/);
+});
+
+test("3e. A background-refresh failure does NOT record a new satisfied signature (so a later retry-token bump is never mistaken for already-settled)", () => {
+  const catchBlock = effectBody.match(/\} catch \(error\) \{([\s\S]*?)\}\)\(\);/);
+  assert.ok(catchBlock, "expected the catch (error) branch");
+  assert.doesNotMatch(catchBlock[1], /loadedDateRetryTokenRef\.current = /);
+  assert.doesNotMatch(catchBlock[1], /loadedDateInvalidationVersionRef\.current = /);
+});
+
+test("3f. notifyLearningDateChanged/subscribeLearningDateChanged exist as a dedicated channel in sharedProgressInvalidation.ts, mirroring the other narrow signals", () => {
+  const invalidationPath = path.join(ROOT_DIR, "src", "lib", "sharedProgressInvalidation.ts");
+  const invalidationSource = fs.readFileSync(invalidationPath, "utf8");
+  assert.match(invalidationSource, /export function notifyLearningDateChanged\(\): void \{/);
+  assert.match(invalidationSource, /export function subscribeLearningDateChanged\(listener: Listener\): \(\) => void \{/);
+});
+
+test("3g. The learning-date effect subscribes to subscribeLearningDateChanged and bumps dateInvalidationVersion, mirroring the sibling word-progress effect's own subscribeWordProgressChanged pattern in this same file", () => {
+  assert.match(
+    hookSource,
+    /useEffect\(\(\) => \{\s*\n\s*return subscribeLearningDateChanged\(\(\) => \{\s*\n\s*setDateInvalidationVersion\(\(version\) => version \+ 1\);\s*\n\s*\}\);\s*\n\s*\}, \[\]\);/,
+  );
+});
+
+test("3h. SettingsSection's handleSaveTimezone fires notifyLearningDateChanged() only from its real success branch (updated + value matches), never from its catch/failure branch", () => {
+  const settingsPath = path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "settings", "SettingsSection.tsx");
+  const settingsSource = fs.readFileSync(settingsPath, "utf8");
+  const saveMatch = settingsSource.match(/const handleSaveTimezone = \(\) => \{[\s\S]*?\n  \};/);
+  assert.ok(saveMatch, "expected handleSaveTimezone to exist");
+  const thenMatch = saveMatch[0].match(/\.then\(\(result\) => \{([\s\S]*?)\}\)\s*\n\s*\.catch/);
+  assert.ok(thenMatch, "expected handleSaveTimezone's .then success branch");
+  assert.match(thenMatch[1], /notifyLearningDateChanged\(\);/);
+  const catchMatch = saveMatch[0].match(/\.catch\(\(error\) => \{([\s\S]*?)\}\)\s*\n\s*\.finally/);
+  assert.ok(catchMatch, "expected handleSaveTimezone's .catch branch");
+  assert.doesNotMatch(catchMatch[1], /notifyLearningDateChanged/, "a failed timezone save must never fire this signal");
+});
+
+test("3i. useUserProfileLoad's first-time initializeUserTimezone success also fires notifyLearningDateChanged() (the same real persisted-timezone-change event as an explicit Settings save)", () => {
+  const loadHookPath = path.join(ROOT_DIR, "src", "app", "hooks", "useUserProfileLoad.ts");
+  const loadHookSource = fs.readFileSync(loadHookPath, "utf8");
+  assert.match(loadHookSource, /import \{ notifyLearningDateChanged \} from "\.\.\/\.\.\/lib\/sharedProgressInvalidation";/);
+  const initMatch = loadHookSource.match(/void initializeUserTimezone\(session, detectedTimezone\)\s*\n\s*\.then\(\(result\) => \{([\s\S]*?)\}\)\s*\n\s*\.catch/);
+  assert.ok(initMatch, "expected initializeUserTimezone's .then success branch");
+  assert.match(initMatch[1], /notifyLearningDateChanged\(\);/);
+});
+
+console.log("\n=== Phase 2A: the original concurrent-duplicate guards, unchanged ===\n");
 
 test("4. requestKey is authUserId alone, not authUserId+timezone — get_current_learning_date takes no client timezone parameter", () => {
   assert.match(effectBody, /const requestKey = authUserId;/);

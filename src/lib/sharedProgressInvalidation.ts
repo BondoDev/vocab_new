@@ -12,6 +12,27 @@
 //   - notifyVocabularyListsChanged/subscribeVocabularyListsChanged — the
 //     signed-in user's vocabulary lists + list-word memberships (see
 //     src/features/user-profile/sections/useProfileSharedMyLists.ts).
+//   - notifyLearningDateChanged/subscribeLearningDateChanged — the shared
+//     authoritative current learning date (see the same
+//     useProfileSharedProgressData.ts). Fired only by a successful
+//     update_user_timezone save (SettingsSection.tsx's handleSaveTimezone)
+//     — the one write that can actually change what get_current_learning_date
+//     resolves to for an already-loaded session. Root-cause investigation,
+//     2026-08-15: this signal replaces watching the raw `timezone` value as
+//     a fetch-triggering effect dependency, which fired a genuine second
+//     get_current_learning_date call on most cold loads — not from a real
+//     timezone mutation, but because `timezone` itself transitions from an
+//     empty placeholder to its real persisted value partway through
+//     useUserProfileLoad's own async resolution (a client-side render
+//     detail get_current_learning_date's server-side resolution never
+//     depended on in the first place — see learningDate.ts: the RPC takes
+//     no client-supplied timezone parameter at all). Using an explicit
+//     signal instead of the raw prop means only a genuine, successful
+//     mutation of the *persisted* timezone triggers a refresh — mirroring
+//     every other signal in this file, and the sibling word-progress effect
+//     two effects below in that same hook, which already uses exactly this
+//     pattern (subscribeWordProgressChanged) instead of watching a raw
+//     value.
 //
 // Each is module-scope pub/sub only — no React, no new dependency — so any
 // of them can be called from a lib mutation module (newWordProgress.ts,
@@ -114,4 +135,19 @@ export function notifyVocabularyListsChanged(): void {
 }
 export function subscribeVocabularyListsChanged(listener: Listener): () => void {
   return vocabularyListsChannel.subscribe(listener);
+}
+
+// Fired only by a successful update_user_timezone save (SettingsSection.tsx)
+// — see this file's own header for the full root-cause reasoning this
+// signal replaces (watching the raw `timezone` prop as an effect
+// dependency). useProfileSharedProgressData.ts treats this as "the
+// authoritative learning date may now resolve differently server-side" and
+// re-fetches it in the background for whichever authUserId is currently
+// loaded.
+const learningDateChannel = createChannel();
+export function notifyLearningDateChanged(): void {
+  learningDateChannel.notify();
+}
+export function subscribeLearningDateChanged(listener: Listener): () => void {
+  return learningDateChannel.subscribe(listener);
 }

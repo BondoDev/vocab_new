@@ -16,6 +16,7 @@ import {
   type UserProfile,
 } from "../../lib/userProfile";
 import { describeSupabaseError } from "../../lib/supabaseError";
+import { notifyLearningDateChanged } from "../../lib/sharedProgressInvalidation";
 import {
   buildFallbackUserProfile,
   buildMergedUserProfile,
@@ -154,6 +155,16 @@ export function useUserProfileLoad({
                   writeStoredUserProfile(authUserId, nextProfileWithTimezone);
                   return nextProfileWithTimezone;
                 });
+                // A real, first-time persisted-timezone write — the same
+                // class of event SettingsSection.tsx's handleSaveTimezone
+                // signals after an explicit Save (see that file's own
+                // comment and useProfileSharedProgressData.ts's header):
+                // the shared authoritative learning date no longer watches
+                // the raw timezone value, so this is what makes it refetch
+                // with the now-correct persisted timezone instead of
+                // silently staying pinned to whatever it resolved before
+                // this initialization completed.
+                notifyLearningDateChanged();
               })
               .catch((error) => {
                 if (cancelled) {

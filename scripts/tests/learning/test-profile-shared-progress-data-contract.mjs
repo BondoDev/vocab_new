@@ -171,7 +171,7 @@ test("5. completeNewWordStudy and completeWordReview both notify the shared inva
 test("6. useProfileSharedProgressData subscribes to the shared invalidation store", () => {
   assert.match(
     sharedHook,
-    /import\s*\{\s*subscribeWordProgressChanged\s*\}\s*from\s*"..\/..\/..\/lib\/sharedProgressInvalidation"/,
+    /import\s*\{[^}]*\bsubscribeWordProgressChanged\b[^}]*\}\s*from\s*"..\/..\/..\/lib\/sharedProgressInvalidation"/,
     "useProfileSharedProgressData.ts must import subscribeWordProgressChanged",
   );
   assert.match(sharedHook, /subscribeWordProgressChanged\(/, "useProfileSharedProgressData.ts must call subscribeWordProgressChanged");

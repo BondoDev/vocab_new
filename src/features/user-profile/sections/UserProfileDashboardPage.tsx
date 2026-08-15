@@ -118,7 +118,6 @@ export function UserProfileDashboardPage({
     authUserId,
     isProfileLoaded,
     targetLanguage: userProfile.practiceLanguage,
-    timezone: userProfile.timezone,
   });
 
   // Fetch-audit Phase 1: the shared, lazily-loaded owner of user_daily_stats
