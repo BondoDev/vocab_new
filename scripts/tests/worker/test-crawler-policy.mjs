@@ -171,6 +171,27 @@ for (const file of fs.readdirSync(workerSrcDir)) {
 }
 
 // --- 5. no polling loops in browser code -----------------------------------
+// Zero-tolerance by default: a browser-side setInterval that ends up
+// repeatedly hitting the Worker after hydration would reproduce the same
+// request-volume failure mode as the 2026-07-10 incident (see file header),
+// mirroring guard 4's server-side "no recursive fetch()" invariant from the
+// browser side. One narrow, manually-audited exception is allowlisted below
+// - every entry's setInterval was traced end-to-end and confirmed to touch
+// no fetch/Supabase/API call anywhere in its call graph before being added;
+// do not add another entry without doing the same.
+const SAFE_BROWSER_INTERVAL_FILES = new Set([
+  // Periodically re-checks (never accumulates) elapsed local active time
+  // against a threshold, purely via Date.now() math plus sessionStorage/
+  // localStorage reads/writes - see accountIntroPolicy.ts (explicitly
+  // import-free at runtime) and accountIntroStorage.ts (plain Storage
+  // access only). No network call anywhere in its reachable code.
+  "src/app/hooks/useAccountIntroSeoEngagement.ts",
+]);
+
+function toPosixRelativePath(file) {
+  return path.relative(rootDir, file).split(path.sep).join("/");
+}
+
 function walk(dir, out = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, entry.name);
@@ -180,10 +201,30 @@ function walk(dir, out = []) {
   return out;
 }
 for (const file of walk(path.join(rootDir, "src"))) {
+  const relativePath = toPosixRelativePath(file);
+  if (SAFE_BROWSER_INTERVAL_FILES.has(relativePath)) {
+    continue;
+  }
   const source = fs.readFileSync(file, "utf8");
   assert.ok(
     !/setInterval\s*\(/.test(source),
-    `${path.relative(rootDir, file)} uses setInterval - no request polling loops allowed`,
+    `${relativePath} uses setInterval - no request polling loops allowed (only src/app/hooks/useAccountIntroSeoEngagement.ts is allowlisted, and only after a manual network-I/O audit)`,
+  );
+}
+
+// Stale-allowlist guard: every entry above must still exist and still
+// actually use setInterval, so a future refactor that removes the interval
+// (or the file) surfaces as a failure prompting removal of the now-obsolete
+// entry, instead of the exception silently outliving its justification.
+for (const relativePath of SAFE_BROWSER_INTERVAL_FILES) {
+  const filePath = path.join(rootDir, ...relativePath.split("/"));
+  assert.ok(
+    fs.existsSync(filePath),
+    `SAFE_BROWSER_INTERVAL_FILES entry "${relativePath}" no longer exists - remove it`,
+  );
+  assert.ok(
+    /setInterval\s*\(/.test(fs.readFileSync(filePath, "utf8")),
+    `SAFE_BROWSER_INTERVAL_FILES entry "${relativePath}" no longer uses setInterval - remove the now-obsolete allowlist entry`,
   );
 }
 
