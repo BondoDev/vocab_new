@@ -15,6 +15,7 @@ import { ExplorePage } from "./pages/explore/ExplorePage";
 import { AccountOnboardingDialog } from "./components/dialogs/AccountOnboardingDialog";
 import { AccountLanguageConfirmDialog } from "./components/dialogs/AccountLanguageConfirmDialog";
 import { AccountIntroDialog } from "./components/dialogs/AccountIntroDialog";
+import { LanguageAccountChoiceDialog } from "./components/dialogs/LanguageAccountChoiceDialog";
 import { PasswordRecoveryDialog } from "./components/dialogs/PasswordRecoveryDialog";
 import { LevelTestLanguageModal } from "./pages/level-test/LevelTestLanguageModal";
 import { HomePage } from "./pages/home/HomePage";
@@ -80,9 +81,9 @@ import { useStoredLanguageAutoRedirect } from "./hooks/useStoredLanguageAutoRedi
 import { useExploreItems } from "./pages/explore/useExploreItems";
 import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
 import { useAccountIntroPopup } from "./hooks/useAccountIntroPopup";
+import { useLanguageAccountChoice } from "./hooks/useLanguageAccountChoice";
 import { useAccountIntroSeoEngagement } from "./hooks/useAccountIntroSeoEngagement";
 import { usePracticeListSession } from "./hooks/usePracticeListSession";
-import { shouldSignalAccountIntro } from "./utils/accountIntroPolicy";
 import type { PracticeListStartConfig } from "../features/user-profile/sections/my-lists/MyListsSection";
 
 const LevelCategorySelection = lazy(() =>
@@ -504,11 +505,36 @@ function AppContent({
   });
   // Requests Header's existing login/signup dialog open (see
   // requestedAuthMode's doc comment in Header.tsx) - set by the account-intro
-  // popup's Create account / Log in actions below, cleared once Header has
-  // consumed it.
+  // popup's and the language-account-choice popup's Create account / Log in
+  // actions below, cleared once Header has consumed it.
   const [requestedHeaderAuthMode, setRequestedHeaderAuthMode] = useState<
     "login" | "signup" | null
   >(null);
+
+  // Languages page Continue-time gate: for a brand-new anonymous visitor's
+  // first-ever completed language setup, asks Create account / Log in /
+  // Continue as guest before leaving the page - see
+  // useLanguageAccountChoice.ts. This fully replaces the old one-time
+  // router-state intro signal that used to attach to this same navigation
+  // and show AccountIntroDialog after arriving on the Filters page (see
+  // accountIntroPolicy.ts/useAccountIntroPopup.ts) - every path below ends
+  // by navigating to the Filters page exactly once, so choosing Create
+  // account or Log in here still lands the visitor there, just with
+  // Header's auth dialog open on top instead of the old nudge.
+  const languageAccountChoice = useLanguageAccountChoice({
+    isAuthenticated: Boolean(authUserId),
+    hadCompleteStoredLanguagePairBeforeSetup:
+      hadCompleteStoredLanguagePairAtLoadRef.current,
+    onCreateAccount: () => {
+      navigate(ROUTES.levelCategory);
+      setRequestedHeaderAuthMode("signup");
+    },
+    onLogIn: () => {
+      navigate(ROUTES.levelCategory);
+      setRequestedHeaderAuthMode("login");
+    },
+    onContinueAsGuest: () => navigate(ROUTES.levelCategory),
+  });
 
   const accountLanguageConfirm = useAccountLanguageConfirm({
     authSession,
@@ -518,24 +544,7 @@ function AppContent({
     setUserProfile,
     yourLanguage,
     practiceLanguage,
-    // Attaches the one-time showAccountIntro signal to this navigation when
-    // (and only when) this Continue is a brand-new anonymous visitor's
-    // first-ever completed language setup - see accountIntroPolicy.ts and
-    // hadCompleteStoredLanguagePairAtLoadRef's own doc comment
-    // (useStoredAppPreferences.ts) for why that ref, captured before any
-    // save, is the only valid source for "first-time" here. Consumed once by
-    // useAccountIntroPopup on the Filters page.
-    proceed: () => {
-      const showAccountIntro = shouldSignalAccountIntro({
-        isAuthenticated: Boolean(authUserId),
-        hadCompleteStoredLanguagePairBeforeSetup:
-          hadCompleteStoredLanguagePairAtLoadRef.current,
-      });
-      navigate(
-        ROUTES.levelCategory,
-        showAccountIntro ? { state: { showAccountIntro: true } } : undefined,
-      );
-    },
+    proceed: () => languageAccountChoice.attemptProceed(),
   });
 
   const handleContinueToExerciseSelection = () => {
@@ -1509,6 +1518,17 @@ function AppContent({
       {accountOnboardingDialog}
       {passwordRecoveryDialog}
       {accountIntroDialog}
+      <LanguageAccountChoiceDialog
+        open={languageAccountChoice.isOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            languageAccountChoice.close();
+          }
+        }}
+        onCreateAccount={languageAccountChoice.handleCreateAccount}
+        onLogIn={languageAccountChoice.handleLogIn}
+        onContinueAsGuest={languageAccountChoice.handleContinueAsGuest}
+      />
       {authUserId ? (
         <AccountLanguageConfirmDialog
           open={accountLanguageConfirm.isOpen}

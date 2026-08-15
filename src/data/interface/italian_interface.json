@@ -37,6 +37,13 @@
     "close": "Chiudi",
     "closePopup": "Chiudi popup"
   },
+  "languageAccountChoice": {
+    "title": "Vuoi salvare i tuoi progressi?",
+    "description": "Crea un account gratuito per monitorare il tuo vocabolario, oppure continua come ospite per ora.",
+    "createAccount": "Crea account",
+    "logIn": "Accedi",
+    "continueAsGuest": "Continua come ospite"
+  },
   "accountLanguageConfirm": {
     "title": "Aggiornare le lingue del tuo account?",
     "description": "Queste lingue sono diverse da quelle salvate nel tuo account. Scegli come continuare.",

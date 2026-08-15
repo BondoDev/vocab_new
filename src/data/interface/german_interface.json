@@ -37,6 +37,13 @@
     "close": "Schließen",
     "closePopup": "Popup schließen"
   },
+  "languageAccountChoice": {
+    "title": "Fortschritt speichern?",
+    "description": "Erstelle ein kostenloses Konto, um deinen Wortschatz zu verfolgen, oder fahre vorerst als Gast fort.",
+    "createAccount": "Konto erstellen",
+    "logIn": "Anmelden",
+    "continueAsGuest": "Als Gast fortfahren"
+  },
   "accountLanguageConfirm": {
     "title": "Kontosprachen aktualisieren?",
     "description": "Diese Sprachen unterscheiden sich von den in deinem Konto gespeicherten. Wähle, wie du fortfahren möchtest.",

@@ -37,6 +37,13 @@
     "close": "Close",
     "closePopup": "Close popup"
   },
+  "languageAccountChoice": {
+    "title": "Save your progress?",
+    "description": "Create a free account to track your vocabulary, or continue as a guest for now.",
+    "createAccount": "Create account",
+    "logIn": "Log in",
+    "continueAsGuest": "Continue as guest"
+  },
   "accountLanguageConfirm": {
     "title": "Update your account languages?",
     "description": "These languages are different from the ones saved to your account. Choose how you'd like to continue.",
