@@ -20,6 +20,7 @@ import {
   VocabularyListError,
   type UserVocabularyList,
 } from "../../../../lib/vocabularyLists";
+import { notifyVocabularyListsChanged } from "../../../../lib/sharedProgressInvalidation";
 // Reuses My Lists' own pure search filter/name-validation helpers, and its
 // existing Create List dialog itself, rather than duplicating any of it —
 // "Create List" here opens the identical dialog MyListsSection uses, as a
@@ -167,6 +168,16 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
           ? "userProfile.vocabularySection.addToListDialog.removedFromList"
           : "userProfile.vocabularySection.addToListDialog.addedToList";
         onShowToast(t(messageKey).replace("{name}", list.name));
+        // This dialog is a self-contained data owner (see this file's own
+        // header) with no access to My Lists' own shared cache
+        // (useProfileSharedMyLists) — it can't patch that cache precisely
+        // (addWordsToVocabularyList's response has no created_at for the
+        // new membership row; see sharedProgressInvalidation.ts's own
+        // header for the full reasoning), so it notifies the narrow
+        // vocabulary-lists channel instead, which triggers a background
+        // refetch only if My Lists has actually already been loaded this
+        // profile session.
+        notifyVocabularyListsChanged();
       })
       .catch((error) => {
         console.warn("AddWordToListDialog: failed to toggle list membership.", error);
@@ -216,6 +227,12 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
     try {
       const created = await createUserVocabularyList(session, targetLanguage, validation.name);
       setState((prev) => (prev.status === "ready" ? { status: "ready", lists: [created, ...prev.lists] } : prev));
+      // Signaled independently of the handleToggleList(created) call below
+      // — the new list itself already exists server-side the instant this
+      // resolves, regardless of whether the follow-up add-word call
+      // succeeds, so My Lists' own shared cache must not miss it if that
+      // follow-up happens to fail.
+      notifyVocabularyListsChanged();
       // Closes the Create List popup — the Add to List popup underneath was
       // never actually closed (see the render below), so it's already
       // visible again the instant this one goes away.

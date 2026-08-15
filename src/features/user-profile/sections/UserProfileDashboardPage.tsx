@@ -20,6 +20,7 @@ import {
 } from "./settings/SettingsSection";
 import { useProfileSharedProgressData } from "./useProfileSharedProgressData";
 import { useProfileSharedDailyStats } from "./useProfileSharedDailyStats";
+import { useProfileSharedMyLists } from "./useProfileSharedMyLists";
 
 interface UserProfileDashboardPageProps {
   nickname?: string;
@@ -144,6 +145,31 @@ export function UserProfileDashboardPage({
     targetLanguage: userProfile.practiceLanguage,
   });
 
+  // My Lists Phase 3: the shared, lazily-loaded owner of the signed-in
+  // user's vocabulary lists + list-word memberships — see
+  // useProfileSharedMyLists.ts's own header for the full contract. Like
+  // useProfileSharedDailyStats above, this fetches nothing merely because
+  // /profile mounted: only MyListsSection's own mount effect calls
+  // requestMyLists(), so switching to Dashboard/Learning/Vocabulary/
+  // Progress/Settings never triggers a My Lists Supabase read.
+  const {
+    myListsStatus,
+    myLists,
+    myListsMemberships,
+    requestMyLists,
+    retryMyLists,
+    applyListCreated,
+    applyListRenamed,
+    applyListDeleted,
+    applyListMembershipsReplaced,
+    applyMembershipRemoved,
+    applyMembershipAdded,
+  } = useProfileSharedMyLists({
+    authUserId,
+    isProfileLoaded,
+    targetLanguage: userProfile.practiceLanguage,
+  });
+
   return (
     <main className="user-profile-dashboard flex-1">
       <section className="user-profile-dashboard__shell">
@@ -196,6 +222,17 @@ export function UserProfileDashboardPage({
                 wordProgressStatus={wordProgressStatus}
                 onRetryWordProgress={retryWordProgress}
                 onStartPracticeList={onStartPracticeList}
+                myListsStatus={myListsStatus}
+                myLists={myLists}
+                myListsMemberships={myListsMemberships}
+                onRequestMyLists={requestMyLists}
+                onRetryMyLists={retryMyLists}
+                onListCreated={applyListCreated}
+                onListRenamed={applyListRenamed}
+                onListDeleted={applyListDeleted}
+                onListMembershipsReplaced={applyListMembershipsReplaced}
+                onListMembershipRemoved={applyMembershipRemoved}
+                onListMembershipAdded={applyMembershipAdded}
               />
             ) : null}
             {activeSection === "progress" ? (

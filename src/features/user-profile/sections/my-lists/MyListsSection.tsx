@@ -2,17 +2,15 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { ListPlus, Plus, Search } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
-import { useAuthSession } from "../../../../app/hooks/useAuthSession";
 import { Button } from "../../../../app/components/ui/button";
 import { Toast, useAutoDismissMessage } from "../../../../app/components/Toast";
 import { getStoredSupabaseSession } from "../../../../lib/supabaseAuth";
-import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
+import { resolveSupabaseErrorMessageKey } from "../../../../lib/supabaseError";
 import {
   addWordsToVocabularyList,
   createUserVocabularyList,
   deleteUserVocabularyList,
   readUserVocabularyListMemberships,
-  readUserVocabularyLists,
   removeWordFromVocabularyList,
   renameUserVocabularyList,
   VocabularyListError,
@@ -23,6 +21,7 @@ import type { UserWordProgressFullRow } from "../../../../lib/newWordProgress";
 import type { UserProfile } from "../../../../lib/userProfile";
 import type { ExerciseId } from "../../../../exercises/exerciseIds";
 import type { ProfileSharedDataStatus } from "../useProfileSharedProgressData";
+import type { MyListsResourceStatus } from "../useProfileSharedMyLists";
 import { CreateListDialog } from "./CreateListDialog";
 import { RenameListDialog } from "./RenameListDialog";
 import { DeleteListDialog } from "./DeleteListDialog";
@@ -34,11 +33,6 @@ import { normalizeListNameForComparison } from "./listNameValidation";
 import { computeListWordCountsByListId, getListWordCount } from "./listWordCounts";
 import { filterListsBySearchQuery, sortLists, type ListSortMode } from "./listSearchSort";
 import "./my-lists-section.scss";
-
-type LoadState =
-  | { status: "loading" }
-  | { status: "error" }
-  | { status: "result"; lists: UserVocabularyList[]; memberships: UserVocabularyListMembership[] };
 
 // The fully-resolved Practice List launch config (My Lists Phase 3):
 // conceptIds/exercises are already final (quantity+order already applied —
@@ -75,6 +69,26 @@ interface MyListsSectionProps {
   // section never navigates into practice itself and never touches
   // App.tsx-level state directly.
   onStartPracticeList?: (config: PracticeListStartConfig) => void;
+
+  // Fetch-audit Phase 3 — the shared, lazily-loaded owner of this user's
+  // vocabulary lists + memberships, living in UserProfileDashboardPage
+  // (useProfileSharedMyLists.ts) instead of this section's own
+  // useState/useEffect, so the data survives switching to another profile
+  // section and back. See that hook's own header for the full contract;
+  // this section now only calls onRequestMyLists() once per mount and
+  // reports mutations through the onList*/onListMembership* appliers
+  // instead of ever holding its own copy of lists/memberships in state.
+  myListsStatus: MyListsResourceStatus;
+  myLists: UserVocabularyList[];
+  myListsMemberships: UserVocabularyListMembership[];
+  onRequestMyLists: () => void;
+  onRetryMyLists: () => void;
+  onListCreated: (list: UserVocabularyList) => void;
+  onListRenamed: (list: UserVocabularyList) => void;
+  onListDeleted: (listId: string) => void;
+  onListMembershipsReplaced: (listId: string, memberships: UserVocabularyListMembership[]) => void;
+  onListMembershipRemoved: (listId: string, wordId: string) => void;
+  onListMembershipAdded: (membership: UserVocabularyListMembership) => void;
 }
 
 function resolveListIdFromSearch(search: string): string | null {
@@ -111,15 +125,32 @@ export function MyListsSection({
   wordProgressStatus,
   onRetryWordProgress,
   onStartPracticeList,
+  myListsStatus,
+  myLists,
+  myListsMemberships,
+  onRequestMyLists,
+  onRetryMyLists,
+  onListCreated,
+  onListRenamed,
+  onListDeleted,
+  onListMembershipsReplaced,
+  onListMembershipRemoved,
+  onListMembershipAdded,
 }: MyListsSectionProps) {
   const { t } = useLanguage();
-  const { authUserId } = useAuthSession();
   const location = useLocation();
   const navigate = useNavigate();
   const targetLanguage = userProfile.practiceLanguage;
 
-  const [state, setState] = useState<LoadState>({ status: "loading" });
-  const [retryToken, setRetryToken] = useState(0);
+  // Lazy, matching every other shared-lazy resource's own consumer
+  // precedent (DashboardSection/LearningSection's identical
+  // onRequestDailyStats() mount effect) — idempotent, so a remount that
+  // finds this context already loading/loaded for is a no-op; only a
+  // genuinely new (authUserId, targetLanguage) context or an explicit
+  // Retry actually issues a request.
+  useEffect(() => {
+    onRequestMyLists();
+  }, [onRequestMyLists]);
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -144,53 +175,8 @@ export function MyListsSection({
   const [searchQuery, setSearchQuery] = useState("");
   const [sortMode, setSortMode] = useState<ListSortMode>("recentlyUpdated");
 
-  useEffect(() => {
-    if (!authUserId) {
-      setState({ status: "result", lists: [], memberships: [] });
-      return;
-    }
-
-    if (!isProfileLoaded || !targetLanguage) {
-      setState({ status: "loading" });
-      return;
-    }
-
-    let cancelled = false;
-    setState({ status: "loading" });
-
-    void (async () => {
-      try {
-        const session = getStoredSupabaseSession();
-        if (!session) {
-          if (!cancelled) setState({ status: "result", lists: [], memberships: [] });
-          return;
-        }
-
-        const lists = await readUserVocabularyLists(session, targetLanguage);
-        if (cancelled) return;
-        // Batched — one request for every loaded list's memberships, never
-        // one request per card (see the Phase 2A brief's own "avoid one
-        // query per card" requirement).
-        const memberships = await readUserVocabularyListMemberships(
-          session,
-          lists.map((list) => list.id),
-        );
-        if (cancelled) return;
-        setState({ status: "result", lists, memberships });
-      } catch (error) {
-        if (cancelled) return;
-        console.warn("MyListsSection: failed to load vocabulary lists.", describeSupabaseError("readUserVocabularyLists", error));
-        setState({ status: "error" });
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [authUserId, isProfileLoaded, targetLanguage, retryToken]);
-
-  const lists = state.status === "result" ? state.lists : [];
-  const memberships = state.status === "result" ? state.memberships : [];
+  const lists = myLists;
+  const memberships = myListsMemberships;
 
   // A card's word count comes directly from its membership rows — never
   // from resolving learning progress or the vocabulary dataset (membership
@@ -209,15 +195,15 @@ export function MyListsSection({
   // have actually finished loading — bounce back to the grid rather than
   // rendering a detail view for a list that doesn't exist.
   useEffect(() => {
-    if (state.status === "result" && listId && !activeList) {
+    if (myListsStatus === "ready" && listId && !activeList) {
       goToGrid();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.status, listId, activeList]);
+  }, [myListsStatus, listId, activeList]);
 
   const handleRetry = () => {
     onRetryWordProgress();
-    setRetryToken((token) => token + 1);
+    onRetryMyLists();
   };
 
   // ---- create ----
@@ -250,11 +236,7 @@ export function MyListsSection({
     setCreateError(null);
     try {
       const created = await createUserVocabularyList(session, targetLanguage, name);
-      setState((prev) =>
-        prev.status === "result"
-          ? { status: "result", lists: [created, ...prev.lists], memberships: prev.memberships }
-          : prev,
-      );
+      onListCreated(created);
       setIsCreateDialogOpen(false);
     } catch (error) {
       console.warn("MyListsSection: failed to create list.", error);
@@ -292,15 +274,7 @@ export function MyListsSection({
     setRenameError(null);
     try {
       const renamed = await renameUserVocabularyList(session, renameTarget.id, name);
-      setState((prev) =>
-        prev.status === "result"
-          ? {
-              status: "result",
-              lists: prev.lists.map((list) => (list.id === renamed.id ? renamed : list)),
-              memberships: prev.memberships,
-            }
-          : prev,
-      );
+      onListRenamed(renamed);
       setRenameTarget(null);
     } catch (error) {
       console.warn("MyListsSection: failed to rename list.", error);
@@ -330,15 +304,7 @@ export function MyListsSection({
     setDeleteError(null);
     try {
       await deleteUserVocabularyList(session, deletedId);
-      setState((prev) =>
-        prev.status === "result"
-          ? {
-              status: "result",
-              lists: prev.lists.filter((list) => list.id !== deletedId),
-              memberships: prev.memberships.filter((membership) => membership.listId !== deletedId),
-            }
-          : prev,
-      );
+      onListDeleted(deletedId);
       setDeleteTarget(null);
       // The deleted list's own detail view can't render anything once it's
       // gone from state — navigate back to the grid rather than leaving the
@@ -387,18 +353,7 @@ export function MyListsSection({
     try {
       await addWordsToVocabularyList(session, listIdToUpdate, wordIds);
       const freshMemberships = await readUserVocabularyListMemberships(session, [listIdToUpdate]);
-      setState((prev) =>
-        prev.status === "result"
-          ? {
-              status: "result",
-              lists: prev.lists,
-              memberships: [
-                ...prev.memberships.filter((membership) => membership.listId !== listIdToUpdate),
-                ...freshMemberships,
-              ],
-            }
-          : prev,
-      );
+      onListMembershipsReplaced(listIdToUpdate, freshMemberships);
       setIsAddWordsDialogOpen(false);
     } catch (error) {
       console.warn("MyListsSection: failed to add words to list.", error);
@@ -456,35 +411,21 @@ export function MyListsSection({
     const removedMembership = memberships.find(
       (membership) => membership.listId === listIdToUpdate && membership.wordId === wordId,
     );
-    setState((prev) =>
-      prev.status === "result"
-        ? {
-            status: "result",
-            lists: prev.lists,
-            memberships: prev.memberships.filter(
-              (membership) => !(membership.listId === listIdToUpdate && membership.wordId === wordId),
-            ),
-          }
-        : prev,
-    );
+    onListMembershipRemoved(listIdToUpdate, wordId);
 
     void removeWordFromVocabularyList(session, listIdToUpdate, wordId)
       .then(() => showToast(t("userProfile.myListsSection.removedFromList")))
       .catch((error) => {
         console.warn("MyListsSection: failed to remove word from list.", error);
         if (removedMembership) {
-          setState((prev) =>
-            prev.status === "result"
-              ? { status: "result", lists: prev.lists, memberships: [...prev.memberships, removedMembership] }
-              : prev,
-          );
+          onListMembershipAdded(removedMembership);
         }
         showToast(t("userProfile.myListsSection.removeError"));
       });
   };
 
-  const isLoading = state.status === "loading" || wordProgressStatus === "loading";
-  const isError = state.status === "error" || wordProgressStatus === "error";
+  const isLoading = myListsStatus === "idle" || myListsStatus === "loading" || wordProgressStatus === "loading";
+  const isError = myListsStatus === "error" || wordProgressStatus === "error";
   const hasLists = lists.length > 0;
 
   const visibleLists = useMemo(

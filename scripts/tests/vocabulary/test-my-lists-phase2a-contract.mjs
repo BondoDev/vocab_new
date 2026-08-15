@@ -151,12 +151,21 @@ test("The delete confirmation copy explains list + memberships are removed and v
 
 console.log("\n=== 18-19-20. Delete flow: local state stays consistent, no reload ===\n");
 
-test("18/20. A successful delete removes the list AND its membership rows from local state — no full reload, no stale cards", () => {
+test("18/20. A successful delete removes the list AND its membership rows from the shared cache (via onListDeleted) — no full reload, no stale cards", () => {
+  // Fetch-audit Phase 3: the list/membership local-state updater moved from
+  // this section's own setState to useProfileSharedMyLists.ts's
+  // applyListDeleted — see that hook's own header. MyListsSection now only
+  // reports the deleted id through that applier.
   const fnMatch = sectionSource.match(/const handleConfirmDelete = async \(\) => \{([\s\S]*?)\n  \};/);
   assert.ok(fnMatch, "handleConfirmDelete must exist");
-  assert.match(fnMatch[1], /lists: prev\.lists\.filter\(\(list\) => list\.id !== deletedId\)/);
-  assert.match(fnMatch[1], /memberships: prev\.memberships\.filter\(\(membership\) => membership\.listId !== deletedId\)/);
+  assert.match(fnMatch[1], /onListDeleted\(deletedId\);/);
   assert.doesNotMatch(sectionSource, /location\.reload|window\.location/);
+  const applierMatch = fs
+    .readFileSync(path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "useProfileSharedMyLists.ts"), "utf8")
+    .match(/const applyListDeleted = useCallback\(\s*\(listId: string\) => \{([\s\S]*?)\n {4}\},\s*\[contextKey\],\s*\);/);
+  assert.ok(applierMatch, "useProfileSharedMyLists.ts must define applyListDeleted");
+  assert.match(applierMatch[1], /lists: prev\.lists\.filter\(\(list\) => list\.id !== listId\)/);
+  assert.match(applierMatch[1], /memberships: prev\.memberships\.filter\(\(membership\) => membership\.listId !== listId\)/);
 });
 
 test("19. Delete never calls a user_word_progress-touching function — vocabulary progress stays untouched from the frontend too", () => {
@@ -166,8 +175,19 @@ test("19. Delete never calls a user_word_progress-touching function — vocabula
 console.log("\n=== Data loading: batched, no vocabulary.json for counts ===\n");
 
 test("Memberships for all loaded lists are fetched in one batched call, never one request per card", () => {
+  // Fetch-audit Phase 3: this batched initial-load call moved from
+  // MyListsSection's own fetch effect to useProfileSharedMyLists.ts (the
+  // shared owner) — see test-my-lists-shared-ownership.mjs guard 7 for the
+  // dedicated two-step-dependency check. MyListsSection.tsx itself still
+  // makes one other, narrower call to the same function (the add-words
+  // flow's own single-list authoritative re-read — see test 16 below),
+  // which is intentionally NOT this one.
+  const sharedHookSource = fs.readFileSync(
+    path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "useProfileSharedMyLists.ts"),
+    "utf8",
+  );
   assert.match(
-    sectionSource,
+    sharedHookSource,
     /readUserVocabularyListMemberships\(\s*session,\s*lists\.map\(\(list\) => list\.id\),\s*\)/,
   );
 });

@@ -116,23 +116,42 @@ test("9b. createUserVocabularyList calls the RPC (never a direct table POST), an
 
 console.log("\n=== 10. New list appears without a full page reload ===\n");
 
-test("10. A successful create prepends the returned row into local state (alongside the already-loaded memberships, untouched) and closes the dialog — no refetch, no location.reload", () => {
+test("10. A successful create prepends the returned row into the shared cache (via onListCreated, alongside the already-loaded memberships, untouched) and closes the dialog — no refetch, no location.reload", () => {
+  // Fetch-audit Phase 3 lifted lists/memberships out of this section's own
+  // local state into a shared owner (useProfileSharedMyLists.ts) so the
+  // data survives switching profile sections and back — see that hook's
+  // own applyListCreated for the identical prepend-only-if-ready update
+  // this used to do locally. MyListsSection itself now only reports the
+  // mutation result through that hook's precise applier.
   const fnMatch = sectionSource.match(/const handleCreate = async \(name: string\) => \{([\s\S]*?)\n  \};/);
-  assert.match(
-    fnMatch[1],
-    /setState\(\(prev\) =>\s*prev\.status === "result"\s*\?\s*\{ status: "result", lists: \[created, \.\.\.prev\.lists\], memberships: prev\.memberships \}\s*:\s*prev,\s*\);/,
-  );
+  assert.match(fnMatch[1], /onListCreated\(created\);/);
   assert.match(fnMatch[1], /setIsCreateDialogOpen\(false\);/);
   assert.doesNotMatch(sectionSource, /location\.reload|window\.location/);
+  const applierMatch = fs
+    .readFileSync(path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "useProfileSharedMyLists.ts"), "utf8")
+    .match(/const applyListCreated = useCallback\(\s*\(list: UserVocabularyList\) => \{([\s\S]*?)\n {4}\},\s*\[contextKey\],\s*\);/);
+  assert.ok(applierMatch, "useProfileSharedMyLists.ts must define applyListCreated");
+  assert.match(applierMatch[1], /lists: \[list, \.\.\.prev\.lists\]/, "applyListCreated must prepend the new list, leaving memberships untouched");
 });
 
 console.log("\n=== 11-12. Load error and create error handled safely ===\n");
 
 test("11. A load failure shows the restrained error state with Retry, not a raw Supabase error or a crash", () => {
+  // Fetch-audit Phase 3: the fetch effect itself (and its failure handling)
+  // moved to useProfileSharedMyLists.ts — see
+  // test-my-lists-in-flight-result-application.mjs for the guard covering
+  // that effect's own no-cancelled-closure result-application contract.
+  // This section still owns rendering the error state/Retry control from
+  // the shared myListsStatus it's handed.
   assert.match(sectionSource, /isError \? \(/);
   assert.match(sectionSource, /t\("userProfile\.myListsSection\.loadError"\)/);
   assert.match(sectionSource, /onClick=\{handleRetry\}/);
-  assert.match(sectionSource, /catch \(error\) \{\s*if \(cancelled\) return;\s*console\.warn\([\s\S]*?setState\(\{ status: "error" \}\);/);
+  assert.match(sectionSource, /const isError = myListsStatus === "error" \|\| wordProgressStatus === "error";/);
+  const sharedHookSource = fs.readFileSync(
+    path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "useProfileSharedMyLists.ts"),
+    "utf8",
+  );
+  assert.match(sharedHookSource, /console\.warn\(\s*"useProfileSharedMyLists: failed to load vocabulary lists\."/);
 });
 
 test("12. A create failure surfaces the safe, localized createError copy (or a sharper safe category message, including the Phase 2A duplicate-name case) — never the raw error", () => {
