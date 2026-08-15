@@ -46,6 +46,11 @@ const UI_LANGUAGE_SWITCHER_SOURCE = fs.readFileSync(
   "utf8",
 );
 
+const EXPLORE_ITEMS_SOURCE = fs.readFileSync(
+  path.join(ROOT_DIR, "src", "app", "pages", "explore", "useExploreItems.ts"),
+  "utf8",
+);
+
 function test(name, fn) {
   try {
     fn();
@@ -165,6 +170,39 @@ try {
     });
     assert.equal(rows.get("A1-00008")?.past_simple?.i, "was");
   });
+
+  test("conjugation list loader supports per-tense targetLanguage short codes", () => {
+    const source = fs.readFileSync(
+      path.join(
+        ROOT_DIR,
+        "src",
+        "data",
+        "seo",
+        "verbLists",
+        "conjugated100Verbs",
+        "conjugated100VerbFormsData.ts",
+      ),
+      "utf8",
+    );
+
+    assert.match(source, /targetLanguage\?: string/);
+    assert.match(source, /return "en"/);
+    assert.match(source, /getUiVocabularyLanguage\(targetLanguageCode\)/);
+    assert.match(source, /duplicate tense "\$\{tense\}" for targetLanguage/);
+  });
+
+  test("Spanish pronoun labels normalize to the JSON pronoun column keys", () => {
+    const rows = formsData.getConjugatedVerbFormsRowsById("spanish");
+    assert.ok(rows, "expected Spanish conjugation rows after adding Spanish tense data");
+    assert.deepEqual(rows.get("A1-00008")?.present_indicative, {
+      yo: "soy",
+      tu: "eres",
+      el_ella_usted: "es",
+      nosotros: "somos",
+      vosotros: "sois",
+      ellos_ellas_ustedes: "son",
+    });
+  });
 } finally {
   registryLoader.cleanup();
   metadataLoader.cleanup();
@@ -218,6 +256,12 @@ test("UI language switcher maps conjugated verb forms routes between authored UI
     UI_LANGUAGE_SWITCHER_SOURCE,
     /getConjugatedVerbFormsPath\(conjugatedVerbFormsRoute\.targetLanguage, code\)/,
   );
+});
+
+test("Explore dropdowns append conjugated verb links for authored target-language pages", () => {
+  assert.match(EXPLORE_ITEMS_SOURCE, /buildConjugatedVerbFormsExploreTopic\("english", uiLanguage\)/);
+  assert.match(EXPLORE_ITEMS_SOURCE, /buildConjugatedVerbFormsExploreTopic\("spanish", uiLanguage\)/);
+  assert.match(EXPLORE_ITEMS_SOURCE, /\.\.\.\(conjugatedVerbFormsTopic \? \[conjugatedVerbFormsTopic\] : \[\]\)/);
 });
 
 if (process.exitCode) {

@@ -1,4 +1,9 @@
-import { SUPPORTED_TARGET_LANGUAGES, type TargetLanguageSlug } from "../../shared/slugs";
+import {
+  SUPPORTED_UI_LANGUAGES,
+  getUiVocabularyLanguage,
+  type TargetLanguageSlug,
+  type UiLanguageCode,
+} from "../../shared/slugs";
 import conjugatedVerbFormsListJson from "./conjucated100VerbsList.json";
 
 export type ConjugatedVerbFormsRowForms = Record<string, string | null>;
@@ -16,25 +21,73 @@ interface RawConjugatedVerbRow {
 
 interface RawConjugatedVerbTenseGroup {
   tense: string;
+  targetLanguage?: string;
   verbs: RawConjugatedVerbRow[];
 }
 
 function normalizePronounKey(pronoun: string): string {
-  return pronoun
+  const key = pronoun
     .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/\s*\/\s*/g, "_")
     .replace(/[^a-z0-9]+/g, "_")
     .replace(/^_+|_+$/g, "");
+
+  switch (key) {
+    case "nosotros_nosotras":
+      return "nosotros";
+    case "vosotros_vosotras":
+      return "vosotros";
+    default:
+      return key;
+  }
 }
 
-function buildEnglishRowsFromTenseList(rawContent: unknown): Map<string, ConjugatedVerbFormsRowTenses> | null {
-  if (!Array.isArray(rawContent) || rawContent.length === 0) {
-    return null;
+function readTargetLanguageCode(
+  tenseGroup: Partial<RawConjugatedVerbTenseGroup>,
+  tense: string,
+): UiLanguageCode {
+  const rawTargetLanguage = tenseGroup.targetLanguage;
+  if (rawTargetLanguage === undefined) {
+    return "en";
+  }
+
+  const targetLanguageCode = String(rawTargetLanguage).trim();
+  if (!(SUPPORTED_UI_LANGUAGES as readonly string[]).includes(targetLanguageCode)) {
+    throw new Error(
+      `Invalid conjugated-verb-forms data: tense "${tense}" has unsupported targetLanguage "${targetLanguageCode}".`,
+    );
+  }
+
+  return targetLanguageCode as UiLanguageCode;
+}
+
+function getOrCreateRows(
+  rowsByTargetLanguage: Partial<Record<TargetLanguageSlug, Map<string, ConjugatedVerbFormsRowTenses>>>,
+  targetLanguage: TargetLanguageSlug,
+): Map<string, ConjugatedVerbFormsRowTenses> {
+  const existingRows = rowsByTargetLanguage[targetLanguage];
+  if (existingRows) {
+    return existingRows;
   }
 
   const rows = new Map<string, ConjugatedVerbFormsRowTenses>();
-  const seenTenses = new Set<string>();
+  rowsByTargetLanguage[targetLanguage] = rows;
+  return rows;
+}
+
+function buildRowsByTargetLanguageFromTenseList(
+  rawContent: unknown,
+): Partial<Record<TargetLanguageSlug, Map<string, ConjugatedVerbFormsRowTenses>>> {
+  const rowsByTargetLanguage: Partial<Record<TargetLanguageSlug, Map<string, ConjugatedVerbFormsRowTenses>>> = {};
+
+  if (!Array.isArray(rawContent) || rawContent.length === 0) {
+    return rowsByTargetLanguage;
+  }
+
+  const seenTensesByTargetLanguage = new Map<TargetLanguageSlug, Set<string>>();
 
   rawContent.forEach((rawTenseGroup, tenseIndex) => {
     if (!rawTenseGroup || typeof rawTenseGroup !== "object" || Array.isArray(rawTenseGroup)) {
@@ -51,8 +104,16 @@ function buildEnglishRowsFromTenseList(rawContent: unknown): Map<string, Conjuga
       );
     }
 
+    const targetLanguageCode = readTargetLanguageCode(tenseGroup, tense);
+    const targetLanguage = getUiVocabularyLanguage(targetLanguageCode);
+    const rows = getOrCreateRows(rowsByTargetLanguage, targetLanguage);
+    const seenTenses = seenTensesByTargetLanguage.get(targetLanguage) ?? new Set<string>();
+    seenTensesByTargetLanguage.set(targetLanguage, seenTenses);
+
     if (seenTenses.has(tense)) {
-      throw new Error(`Invalid conjugated-verb-forms data: duplicate tense "${tense}".`);
+      throw new Error(
+        `Invalid conjugated-verb-forms data: duplicate tense "${tense}" for targetLanguage "${targetLanguageCode}".`,
+      );
     }
     seenTenses.add(tense);
 
@@ -132,22 +193,11 @@ function buildEnglishRowsFromTenseList(rawContent: unknown): Map<string, Conjuga
     });
   });
 
-  return rows;
+  return rowsByTargetLanguage;
 }
 
 function buildRowsByTargetLanguage(): Partial<Record<TargetLanguageSlug, Map<string, ConjugatedVerbFormsRowTenses>>> {
-  const result: Partial<Record<TargetLanguageSlug, Map<string, ConjugatedVerbFormsRowTenses>>> = {};
-  const supportedSet: ReadonlySet<string> = new Set(SUPPORTED_TARGET_LANGUAGES);
-  const englishRows = buildEnglishRowsFromTenseList(conjugatedVerbFormsListJson);
-
-  if (englishRows) {
-    if (!supportedSet.has("english")) {
-      throw new Error('Invalid conjugated-verb-forms data: "english" is not a supported target language.');
-    }
-    result.english = englishRows;
-  }
-
-  return result;
+  return buildRowsByTargetLanguageFromTenseList(conjugatedVerbFormsListJson);
 }
 
 const ROWS_BY_TARGET_LANGUAGE = buildRowsByTargetLanguage();

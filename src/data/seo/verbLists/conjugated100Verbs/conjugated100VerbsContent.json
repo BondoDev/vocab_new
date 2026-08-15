@@ -3048,5 +3048,3388 @@
         }
       ]
     }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "en",
+    "urlSlug": "100-most-common-spanish-verb-conjugations",
+    "entryButtonLabel": "Spanish Verb Conjugations",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "meaning": "Meaning"
+    },
+    "pronounForms": [
+      {
+        "key": "yo",
+        "label": "yo"
+      },
+      {
+        "key": "tu",
+        "label": "tú"
+      },
+      {
+        "key": "el_ella_usted",
+        "label": "él / ella / usted"
+      },
+      {
+        "key": "nosotros",
+        "label": "nosotros / nosotras"
+      },
+      {
+        "key": "vosotros",
+        "label": "vosotros / vosotras"
+      },
+      {
+        "key": "ellos_ellas_ustedes",
+        "label": "ellos / ellas / ustedes"
+      }
+    ],
+    "metadata": {
+      "title": "100 Most Common Spanish Verb Conjugations",
+      "metaTitle": "100 Most Common Spanish Verb Conjugations by Tense",
+      "metaDescription": "Compare 100 common Spanish verbs across indicative, conditional, subjunctive, and imperative forms, with conjugations for the main Spanish subject persons."
+    },
+    "hero": {
+      "heading": "100 Most Common Spanish Verb Conjugations",
+      "subtitle": "Compare high-frequency Spanish verbs across the most useful tenses and moods.",
+      "introParagraphs": [
+        "This reference brings together 100 common Spanish verbs and lets you compare their conjugations across the indicative, conditional, subjunctive, and imperative forms included on the page.",
+        "Switching between tenses while keeping the same verb and person in view makes it easier to recognize recurring endings, stem changes, auxiliary constructions, and irregular patterns instead of memorizing every form in isolation."
+      ]
+    },
+    "overview": {
+      "heading": "How Spanish Verb Conjugation Works",
+      "paragraphs": [
+        "Spanish verbs change form according to person, number, tense, and mood. Regular infinitives belong mainly to the -ar, -er, or -ir classes, and each class follows characteristic endings, although many high-frequency verbs contain irregular stems or endings.",
+        "Simple forms such as the present, preterite, imperfect, future, and conditional are generally built by adding tense-specific endings to a verb stem or, in some tenses, to the infinitive. Compound forms use the auxiliary haber together with the past participle.",
+        "Spanish also distinguishes mood. The indicative normally presents information as factual or asserted, while the subjunctive commonly appears in contexts involving wishes, doubt, emotion, evaluation, purpose, or other non-asserted situations. The imperative is used for commands and instructions."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Choose a Tense or Mood",
+      "description": "Select a form to compare how the same common Spanish verbs change across persons and grammatical contexts.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicative"
+        },
+        {
+          "key": "conditional",
+          "label": "Conditional"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjunctive"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperative"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Present Indicative",
+        "group": "indicative",
+        "tableHeading": "100 Common Spanish Verbs in the Present Indicative",
+        "tableDescription": "Compare present-tense forms used for current situations, habits, general truths, and other indicative statements.",
+        "grammar": {
+          "heading": "How to Form the Spanish Present Indicative",
+          "description": "For regular verbs, remove the infinitive ending -ar, -er, or -ir and add the present-tense ending that matches the subject. Many frequent verbs also have stem changes, spelling changes, or fully irregular forms.",
+          "formula": "verb stem + present indicative ending"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Preterite",
+        "group": "indicative",
+        "tableHeading": "100 Common Spanish Verbs in the Preterite",
+        "tableDescription": "Compare forms used for completed past events that are viewed as bounded or finished.",
+        "grammar": {
+          "heading": "How to Form the Spanish Preterite",
+          "description": "Regular -ar verbs and regular -er/-ir verbs use two main sets of preterite endings. Many common verbs have irregular preterite stems, and some spelling changes occur to preserve pronunciation.",
+          "formula": "preterite stem + preterite ending"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imperfect Indicative",
+        "group": "indicative",
+        "tableHeading": "100 Common Spanish Verbs in the Imperfect",
+        "tableDescription": "Compare past forms used for habitual actions, ongoing background situations, descriptions, and actions without a stated endpoint.",
+        "grammar": {
+          "heading": "How to Form the Spanish Imperfect",
+          "description": "Regular -ar verbs take endings based on -aba-, while regular -er and -ir verbs use endings based on -ía-. The imperfect is highly regular, with only a small number of common irregular verbs.",
+          "formula": "-ar stem + -aba endings; -er/-ir stem + -ía endings"
+        }
+      },
+      {
+        "key": "present_perfect_indicative",
+        "label": "Present Perfect Indicative",
+        "group": "indicative",
+        "tableHeading": "100 Common Spanish Verbs in the Present Perfect",
+        "tableDescription": "Compare compound forms that connect a completed action or experience with the present context.",
+        "grammar": {
+          "heading": "How to Form the Spanish Present Perfect",
+          "description": "The present perfect uses the present indicative of haber followed by the past participle of the main verb. In this construction, the participle normally remains unchanged for gender and number.",
+          "formula": "present indicative of haber + past participle",
+          "additionalFormula": "he / has / ha / hemos / habéis / han + past participle"
+        }
+      },
+      {
+        "key": "past_perfect_indicative",
+        "label": "Past Perfect Indicative",
+        "group": "indicative",
+        "tableHeading": "100 Common Spanish Verbs in the Past Perfect",
+        "tableDescription": "Compare forms used for an action that had already occurred before another point or event in the past.",
+        "grammar": {
+          "heading": "How to Form the Spanish Past Perfect",
+          "description": "The past perfect, or pluperfect, combines the imperfect indicative of haber with the past participle of the main verb.",
+          "formula": "imperfect indicative of haber + past participle",
+          "additionalFormula": "había / habías / había / habíamos / habíais / habían + past participle"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Future Indicative",
+        "group": "indicative",
+        "tableHeading": "100 Common Spanish Verbs in the Future",
+        "tableDescription": "Compare forms used for future events as well as certain predictions, assumptions, and conjectures.",
+        "grammar": {
+          "heading": "How to Form the Spanish Future",
+          "description": "For regular verbs, future endings are added directly to the full infinitive. The endings are shared by -ar, -er, and -ir verbs, although several common verbs use an irregular future stem.",
+          "formula": "infinitive or irregular future stem + future ending"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Future Perfect Indicative",
+        "group": "indicative",
+        "tableHeading": "100 Common Spanish Verbs in the Future Perfect",
+        "tableDescription": "Compare forms used for actions expected to be completed before a future reference point or for conjecture about completed events.",
+        "grammar": {
+          "heading": "How to Form the Spanish Future Perfect",
+          "description": "The future perfect combines the future indicative of haber with the past participle of the main verb.",
+          "formula": "future indicative of haber + past participle",
+          "additionalFormula": "habré / habrás / habrá / habremos / habréis / habrán + past participle"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Conditional",
+        "group": "conditional",
+        "tableHeading": "100 Common Spanish Verbs in the Conditional",
+        "tableDescription": "Compare forms used for hypothetical results, polite statements, future-in-the-past meanings, and other conditional situations.",
+        "grammar": {
+          "heading": "How to Form the Spanish Conditional",
+          "description": "Regular conditional endings are added directly to the infinitive and are the same for -ar, -er, and -ir verbs. Verbs with irregular future stems normally use those same irregular stems in the conditional.",
+          "formula": "infinitive or irregular conditional stem + conditional ending"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Conditional Perfect",
+        "group": "conditional",
+        "tableHeading": "100 Common Spanish Verbs in the Conditional Perfect",
+        "tableDescription": "Compare forms used for hypothetical past results, unrealized outcomes, and actions that would have occurred under different conditions.",
+        "grammar": {
+          "heading": "How to Form the Spanish Conditional Perfect",
+          "description": "The conditional perfect combines the conditional form of haber with the past participle of the main verb.",
+          "formula": "conditional of haber + past participle",
+          "additionalFormula": "habría / habrías / habría / habríamos / habríais / habrían + past participle"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Present Subjunctive",
+        "group": "subjunctive",
+        "tableHeading": "100 Common Spanish Verbs in the Present Subjunctive",
+        "tableDescription": "Compare subjunctive forms commonly used after expressions of wishes, doubt, emotion, evaluation, purpose, and other non-asserted contexts.",
+        "grammar": {
+          "heading": "How to Form the Spanish Present Subjunctive",
+          "description": "For many verbs, the present subjunctive is based on the yo form of the present indicative: remove the final -o and add the opposite-vowel subjunctive endings. -ar verbs generally use e-based endings, while -er and -ir verbs generally use a-based endings. Irregular and stem-changing patterns are common.",
+          "formula": "present indicative yo stem without -o + present subjunctive ending"
+        }
+      },
+      {
+        "key": "imperfect_subjunctive",
+        "label": "Imperfect Subjunctive",
+        "group": "subjunctive",
+        "tableHeading": "100 Common Spanish Verbs in the Imperfect Subjunctive",
+        "tableDescription": "Compare past subjunctive forms used in hypothetical, dependent, polite, and past-time subjunctive contexts.",
+        "grammar": {
+          "heading": "How to Form the Spanish Imperfect Subjunctive",
+          "description": "The imperfect subjunctive is normally derived from the third-person plural preterite form. Remove -ron from that form and add the imperfect subjunctive endings. Spanish has both -ra and -se series; the -ra forms are especially common in modern usage.",
+          "formula": "ellos/ellas/ustedes preterite form minus -ron + imperfect subjunctive ending",
+          "additionalFormula": "common series: -ra, -ras, -ra, -ramos, -rais, -ran"
+        }
+      },
+      {
+        "key": "present_perfect_subjunctive",
+        "label": "Present Perfect Subjunctive",
+        "group": "subjunctive",
+        "tableHeading": "100 Common Spanish Verbs in the Present Perfect Subjunctive",
+        "tableDescription": "Compare compound subjunctive forms used for completed actions connected to a present or future subjunctive context.",
+        "grammar": {
+          "heading": "How to Form the Spanish Present Perfect Subjunctive",
+          "description": "The present perfect subjunctive combines the present subjunctive of haber with the past participle of the main verb.",
+          "formula": "present subjunctive of haber + past participle",
+          "additionalFormula": "haya / hayas / haya / hayamos / hayáis / hayan + past participle"
+        }
+      },
+      {
+        "key": "past_perfect_subjunctive",
+        "label": "Past Perfect Subjunctive",
+        "group": "subjunctive",
+        "tableHeading": "100 Common Spanish Verbs in the Past Perfect Subjunctive",
+        "tableDescription": "Compare forms used for unreal, hypothetical, or dependent actions that had occurred or might have occurred before another past reference point.",
+        "grammar": {
+          "heading": "How to Form the Spanish Past Perfect Subjunctive",
+          "description": "The past perfect subjunctive combines the imperfect subjunctive of haber with the past participle. Both hubiera-based and hubiese-based forms are grammatical, with hubiera forms very common in everyday Spanish.",
+          "formula": "imperfect subjunctive of haber + past participle",
+          "additionalFormula": "hubiera / hubieras / hubiera / hubiéramos / hubierais / hubieran + past participle"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperative",
+        "group": "imperative",
+        "tableHeading": "100 Common Spanish Verbs in the Imperative",
+        "tableDescription": "Compare command forms used to tell, ask, advise, or instruct someone to do or not do something.",
+        "grammar": {
+          "heading": "How to Form the Spanish Imperative",
+          "description": "Spanish command forms depend on the person and on whether the command is affirmative or negative. Affirmative tú and vosotros forms have characteristic imperative patterns, while usted, ustedes, nosotros, and negative commands use forms based on the present subjunctive. Spanish does not have a first-person singular yo imperative.",
+          "formula": "person-specific affirmative imperative form; negative commands: no + present subjunctive form"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Spanish Verb Conjugation Table",
+      "description": "Use the table to compare each common verb across the Spanish subject persons for the tense or mood you select.",
+      "scrollHint": "Scroll horizontally to see all conjugated forms.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right",
+      "notes": [
+        "Spanish verb endings often identify the subject, so explicit subject pronouns are frequently omitted in natural sentences when the person is already clear.",
+        "The forms for usted and ustedes use third-person conjugations even though they refer directly to the person or people being addressed.",
+        "The vosotros / vosotras forms are standard in much of Spain, while ustedes commonly serves as the plural form of address throughout Latin America and also as the formal plural in Spain."
+      ]
+    },
+    "rules": {
+      "heading": "Key Spanish Conjugation Rules",
+      "intro": "Learning a few recurring structural patterns makes Spanish conjugation much easier to organize.",
+      "items": [
+        {
+          "heading": "Regular Verbs Follow -ar, -er, and -ir Patterns",
+          "text": "Most regular Spanish verbs belong to one of three infinitive classes. Removing the infinitive ending reveals the stem, and person- and tense-specific endings are then added according to the conjugation pattern.",
+          "examples": [
+            "hablar → hablo, hablas, hablamos",
+            "comer → como, comes, comemos",
+            "vivir → vivo, vives, vivimos"
+          ]
+        },
+        {
+          "heading": "Stem-Changing Verbs Alter the Stem in Certain Forms",
+          "text": "Many common verbs change a vowel in the stem in selected persons and tenses. Typical patterns include e → ie, o → ue, and e → i, while some forms such as nosotros and vosotros may keep the original stem in the present indicative.",
+          "examples": ["pensar → pienso", "poder → puedo", "pedir → pido"]
+        },
+        {
+          "heading": "Compound Tenses Use Haber",
+          "text": "Perfect forms are built with a conjugated form of haber followed by the past participle. The auxiliary carries the person, tense, and mood information.",
+          "examples": ["he hablado", "habíamos comido", "habrán vivido"]
+        },
+        {
+          "heading": "Past Participles Are Usually Invariable with Haber",
+          "text": "When a past participle appears with haber in a compound tense, it normally does not change to agree with the subject in gender or number.",
+          "examples": [
+            "ella ha llegado",
+            "ellos han llegado",
+            "nosotras habíamos llegado"
+          ]
+        },
+        {
+          "heading": "Irregular Stems Often Reappear Across Related Tenses",
+          "text": "Several frequent verbs use the same irregular stem in both the future and conditional. Recognizing these shared stems reduces the number of forms that need to be memorized separately.",
+          "examples": [
+            "tener → tendré → tendría",
+            "hacer → haré → haría",
+            "decir → diré → diría"
+          ]
+        },
+        {
+          "heading": "Subjunctive Forms Often Build on Familiar Indicative Forms",
+          "text": "The present subjunctive of many verbs is derived from the present indicative yo form, while the imperfect subjunctive is based on the third-person plural preterite. This preserves many irregularities across related forms.",
+          "examples": [
+            "tengo → tenga",
+            "conozco → conozca",
+            "tuvieron → tuviera"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Common Spanish Conjugation Mistakes",
+      "intro": "These errors are especially common when learners transfer patterns from English or overgeneralize regular Spanish endings.",
+      "items": [
+        {
+          "incorrect": "Yo habla español.",
+          "correct": "Yo hablo español.",
+          "explanation": "The present indicative must agree with the first-person singular subject. For a regular -ar verb such as hablar, the yo ending is -o."
+        },
+        {
+          "incorrect": "Ayer comía una pizza y después fui a casa.",
+          "correct": "Ayer comí una pizza y después fui a casa.",
+          "explanation": "When the action is presented as a completed event in a finished sequence, the preterite is normally more appropriate than the imperfect."
+        },
+        {
+          "incorrect": "He comido la cena ayer.",
+          "correct": "Comí la cena ayer.",
+          "explanation": "In many varieties of Spanish, a completed action placed in a clearly finished past period such as ayer is normally expressed with the preterite. Usage of the present perfect varies regionally, but the preterite is the safer choice in this example."
+        },
+        {
+          "incorrect": "Espero que viene mañana.",
+          "correct": "Espero que venga mañana.",
+          "explanation": "After expressions such as esperar que when referring to a desired or anticipated event, Spanish normally uses the subjunctive in the dependent clause."
+        },
+        {
+          "incorrect": "Si tendría más tiempo, viajaría más.",
+          "correct": "Si tuviera más tiempo, viajaría más.",
+          "explanation": "In a hypothetical si-clause of this type, Spanish normally uses the imperfect subjunctive in the condition and the conditional in the result."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study Spanish Conjugations with This Page",
+      "steps": [
+        {
+          "heading": "Start with the Present Indicative",
+          "text": "Use the present as your baseline and compare the endings for yo, tú, third person, nosotros, vosotros, and third-person plural forms."
+        },
+        {
+          "heading": "Compare the Preterite and Imperfect",
+          "text": "Study the same verb in both past tenses. Focus not only on the endings but also on the difference between completed events and ongoing, habitual, or descriptive past situations."
+        },
+        {
+          "heading": "Group the Perfect Tenses Together",
+          "text": "Notice that present perfect, past perfect, future perfect, conditional perfect, and perfect subjunctive forms all use haber plus a past participle. The main difference is the form of haber."
+        },
+        {
+          "heading": "Track Repeated Irregular Stems",
+          "text": "When a verb is irregular, compare its forms across several tenses. Irregularities often recur in related parts of the conjugation system."
+        },
+        {
+          "heading": "Compare Indicative and Subjunctive Forms",
+          "text": "Look at the same person in both moods and connect each form with a complete sentence. This helps separate the form itself from the grammatical context that triggers the subjunctive."
+        },
+        {
+          "heading": "Use the Forms in Full Sentences",
+          "text": "After reviewing a conjugation, create short sentences with different subjects and time references. Context makes person, tense, and mood distinctions easier to remember."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Mastering Spanish Verb Conjugation",
+      "items": [
+        {
+          "heading": "Learn Endings as Systems",
+          "text": "Memorize recurring -ar, -er, and -ir patterns by tense rather than treating every conjugated form as an unrelated word."
+        },
+        {
+          "heading": "Prioritize High-Frequency Irregular Verbs",
+          "text": "Common verbs such as ser, estar, ir, haber, tener, hacer, poder, decir, and venir deserve extra attention because their irregular forms appear constantly."
+        },
+        {
+          "heading": "Study Contrasting Tenses Together",
+          "text": "Pairs such as preterite versus imperfect or present indicative versus present subjunctive are easier to understand when compared directly in meaningful sentences."
+        },
+        {
+          "heading": "Notice the Auxiliary Before the Participle",
+          "text": "In compound tenses, focus on the form of haber first. It tells you the person, tense, and mood, while the main verb appears as a past participle."
+        },
+        {
+          "heading": "Practise Without Always Writing the Pronoun",
+          "text": "Because Spanish verb endings frequently identify the subject, practise recognizing forms both with and without explicit subject pronouns."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Practise Common Spanish Verbs",
+      "description": "Use the conjugation patterns in context, or continue with the most common Spanish verbs to strengthen both form recognition and vocabulary.",
+      "primaryLabel": "Practise Spanish Verbs",
+      "secondaryLabel": "Explore 100 Common Spanish Verbs"
+    },
+    "related": {
+      "heading": "Related Spanish Learning Resources",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 Most Common Spanish Verbs"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 Common Spanish Verb Past Forms"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Spanish Vocabulary by CEFR Level"
+        },
+        {
+          "key": "levelTest",
+          "label": "Spanish Level Test"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Spanish Verb Conjugation FAQ",
+      "items": [
+        {
+          "question": "What does it mean to conjugate a Spanish verb?",
+          "answer": "To conjugate a Spanish verb means changing its form to express grammatical information such as person, number, tense, and mood. For example, hablar can become hablo, hablaste, hablaremos, or hable depending on the context."
+        },
+        {
+          "question": "Do Spanish verbs change for every subject pronoun?",
+          "answer": "Spanish verbs generally have person-specific forms, although some forms are identical. Él, ella, and usted normally share the same conjugation, while ellos, ellas, and ustedes also share one form. Because the verb ending often identifies the subject, Spanish frequently omits the explicit pronoun."
+        },
+        {
+          "question": "What is the difference between the preterite and the imperfect?",
+          "answer": "The preterite usually presents a past action as completed or bounded, while the imperfect commonly describes habitual actions, ongoing background situations, states, descriptions, or events without a stated endpoint. The choice depends on how the speaker presents the past situation, not simply on when it happened."
+        },
+        {
+          "question": "How are Spanish perfect tenses formed?",
+          "answer": "Spanish perfect tenses use a conjugated form of haber plus the past participle of the main verb. Changing the form of haber creates different perfect tenses and moods, such as he hablado, había hablado, habré hablado, habría hablado, and haya hablado."
+        },
+        {
+          "question": "Does the Spanish past participle agree with the subject in perfect tenses?",
+          "answer": "Normally no. When the participle is used with haber in a compound tense, it remains unchanged for the subject: ella ha llegado and ellos han llegado both use llegado."
+        },
+        {
+          "question": "When is the Spanish subjunctive used?",
+          "answer": "The subjunctive commonly appears in dependent clauses involving wishes, recommendations, doubt, emotion, evaluation, purpose, possibility, and other contexts where the information is not simply asserted as a fact. The exact trigger depends on the structure and intended meaning."
+        },
+        {
+          "question": "How is the present subjunctive formed?",
+          "answer": "For many verbs, start with the present indicative yo form, remove the final -o, and add subjunctive endings. Regular -ar verbs generally take e-based endings, while -er and -ir verbs generally take a-based endings. Irregular yo forms therefore often carry their irregularity into the subjunctive."
+        },
+        {
+          "question": "Why do Spanish future and conditional forms look similar?",
+          "answer": "Both are normally formed by adding endings to the infinitive, and many verbs use the same irregular stem in both tenses. For example, tener uses tendr- in tendré and tendría, while hacer uses har- in haré and haría."
+        },
+        {
+          "question": "Does Spanish have an imperative form for yo?",
+          "answer": "No. The imperative is used to direct commands or instructions toward another person or group, so Spanish does not have a first-person singular yo imperative. Nosotros can be used for commands meaning roughly 'let us' or 'let's.'"
+        },
+        {
+          "question": "What is the best way to learn Spanish verb conjugations?",
+          "answer": "Learn the regular patterns first, then focus on high-frequency irregular verbs and recurring irregular stems. Compare related tenses side by side and practise each form in complete sentences so that conjugation becomes connected with meaning and grammatical context."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "es",
+    "urlSlug": "100-verbos-espanoles-mas-comunes-conjugados",
+    "entryButtonLabel": "Conjugaciones de verbos españoles",
+
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "meaning": "Significado"
+    },
+
+    "pronounForms": [
+      {
+        "key": "yo",
+        "label": "yo"
+      },
+      {
+        "key": "tu",
+        "label": "tú"
+      },
+      {
+        "key": "el_ella_usted",
+        "label": "él / ella / usted"
+      },
+      {
+        "key": "nosotros",
+        "label": "nosotros / nosotras"
+      },
+      {
+        "key": "vosotros",
+        "label": "vosotros / vosotras"
+      },
+      {
+        "key": "ellos_ellas_ustedes",
+        "label": "ellos / ellas / ustedes"
+      }
+    ],
+
+    "metadata": {
+      "title": "100 verbos españoles más comunes conjugados",
+      "metaTitle": "100 verbos españoles más comunes conjugados por tiempo",
+      "metaDescription": "Compara la conjugación de 100 verbos españoles frecuentes en distintos tiempos, modos y personas gramaticales."
+    },
+
+    "hero": {
+      "heading": "100 verbos españoles más comunes conjugados",
+      "subtitle": "Compara los verbos más frecuentes del español en diferentes tiempos, modos y personas.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos frecuentes del español y permite consultar sus conjugaciones en los principales tiempos del indicativo, el condicional, el subjuntivo y el imperativo incluidos en este recurso.",
+        "Cambiar de tiempo verbal y comparar las formas de un mismo verbo ayuda a reconocer terminaciones, cambios de raíz, construcciones con auxiliares y patrones irregulares sin memorizar cada forma de manera aislada."
+      ]
+    },
+
+    "overview": {
+      "heading": "Cómo funciona la conjugación de los verbos en español",
+      "paragraphs": [
+        "Los verbos españoles cambian de forma según la persona, el número, el tiempo y el modo. Los verbos regulares pertenecen principalmente a las conjugaciones en -ar, -er e -ir, cada una con sus propias terminaciones.",
+        "Los tiempos simples, como el presente, el pretérito, el imperfecto, el futuro y el condicional, se forman mediante terminaciones específicas. Los tiempos compuestos utilizan el verbo auxiliar haber junto con el participio del verbo principal.",
+        "El español también distingue diferentes modos verbales. El indicativo suele presentar hechos o situaciones como reales o afirmados; el subjuntivo aparece con frecuencia en contextos de deseo, duda, valoración, emoción o finalidad; y el imperativo se utiliza para dar órdenes, instrucciones o consejos."
+      ]
+    },
+
+    "tenseSelector": {
+      "heading": "Elige un tiempo o modo verbal",
+      "description": "Selecciona una forma verbal para comparar cómo cambian los mismos verbos españoles según la persona y el contexto gramatical.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "conditional",
+          "label": "Condicional"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Presente de indicativo",
+        "group": "indicative",
+        "tableHeading": "100 verbos españoles frecuentes en presente de indicativo",
+        "tableDescription": "Compara las formas del presente usadas para situaciones actuales, hábitos, hechos generales y otras afirmaciones.",
+        "grammar": {
+          "heading": "Cómo se forma el presente de indicativo",
+          "description": "En los verbos regulares se elimina la terminación del infinitivo -ar, -er o -ir y se añade la terminación correspondiente a cada persona. Muchos verbos frecuentes presentan cambios de raíz, cambios ortográficos o formas irregulares.",
+          "formula": "raíz verbal + terminación del presente de indicativo"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Pretérito perfecto simple",
+        "group": "indicative",
+        "tableHeading": "100 verbos españoles frecuentes en pretérito perfecto simple",
+        "tableDescription": "Compara las formas utilizadas para acciones pasadas presentadas como terminadas o delimitadas.",
+        "grammar": {
+          "heading": "Cómo se forma el pretérito perfecto simple",
+          "description": "Los verbos regulares en -ar utilizan un conjunto de terminaciones y los verbos en -er e -ir comparten otro. Muchos verbos frecuentes tienen raíces irregulares en este tiempo y algunos presentan cambios ortográficos.",
+          "formula": "raíz del pretérito + terminación correspondiente"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Pretérito imperfecto",
+        "group": "indicative",
+        "tableHeading": "100 verbos españoles frecuentes en pretérito imperfecto",
+        "tableDescription": "Compara formas usadas para hábitos pasados, acciones en desarrollo, descripciones y situaciones sin un límite temporal destacado.",
+        "grammar": {
+          "heading": "Cómo se forma el pretérito imperfecto",
+          "description": "Los verbos regulares en -ar utilizan terminaciones basadas en -aba-, mientras que los verbos en -er e -ir utilizan terminaciones basadas en -ía-. Es uno de los tiempos más regulares del español.",
+          "formula": "raíz de -ar + terminaciones en -aba; raíz de -er/-ir + terminaciones en -ía"
+        }
+      },
+      {
+        "key": "present_perfect_indicative",
+        "label": "Pretérito perfecto compuesto",
+        "group": "indicative",
+        "tableHeading": "100 verbos españoles frecuentes en pretérito perfecto compuesto",
+        "tableDescription": "Compara formas compuestas que presentan una acción terminada en relación con un marco temporal actual.",
+        "grammar": {
+          "heading": "Cómo se forma el pretérito perfecto compuesto",
+          "description": "Se forma con el presente de indicativo de haber seguido del participio del verbo principal. En esta construcción, el participio normalmente no cambia según el género o el número del sujeto.",
+          "formula": "presente de haber + participio",
+          "additionalFormula": "he / has / ha / hemos / habéis / han + participio"
+        }
+      },
+      {
+        "key": "past_perfect_indicative",
+        "label": "Pretérito pluscuamperfecto",
+        "group": "indicative",
+        "tableHeading": "100 verbos españoles frecuentes en pretérito pluscuamperfecto",
+        "tableDescription": "Compara formas utilizadas para expresar una acción anterior a otro momento o acontecimiento del pasado.",
+        "grammar": {
+          "heading": "Cómo se forma el pretérito pluscuamperfecto",
+          "description": "Se forma con el pretérito imperfecto de haber y el participio del verbo principal.",
+          "formula": "pretérito imperfecto de haber + participio",
+          "additionalFormula": "había / habías / había / habíamos / habíais / habían + participio"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futuro simple",
+        "group": "indicative",
+        "tableHeading": "100 verbos españoles frecuentes en futuro simple",
+        "tableDescription": "Compara formas utilizadas para acciones futuras, predicciones y determinados usos de probabilidad o conjetura.",
+        "grammar": {
+          "heading": "Cómo se forma el futuro simple",
+          "description": "En los verbos regulares, las terminaciones del futuro se añaden directamente al infinitivo. Las tres conjugaciones utilizan las mismas terminaciones, aunque varios verbos frecuentes presentan una raíz irregular.",
+          "formula": "infinitivo o raíz irregular de futuro + terminación de futuro"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futuro compuesto",
+        "group": "indicative",
+        "tableHeading": "100 verbos españoles frecuentes en futuro compuesto",
+        "tableDescription": "Compara formas usadas para acciones que se consideran terminadas antes de un momento futuro o para formular conjeturas sobre hechos ya ocurridos.",
+        "grammar": {
+          "heading": "Cómo se forma el futuro compuesto",
+          "description": "Se forma con el futuro simple de haber seguido del participio del verbo principal.",
+          "formula": "futuro de haber + participio",
+          "additionalFormula": "habré / habrás / habrá / habremos / habréis / habrán + participio"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condicional simple",
+        "group": "conditional",
+        "tableHeading": "100 verbos españoles frecuentes en condicional simple",
+        "tableDescription": "Compara formas utilizadas para situaciones hipotéticas, peticiones corteses, consecuencias condicionadas y futuro visto desde un punto del pasado.",
+        "grammar": {
+          "heading": "Cómo se forma el condicional simple",
+          "description": "Las terminaciones del condicional se añaden al infinitivo y son iguales para los verbos en -ar, -er e -ir. Los verbos con raíz irregular en futuro suelen conservar la misma raíz en el condicional.",
+          "formula": "infinitivo o raíz irregular + terminación del condicional"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Condicional compuesto",
+        "group": "conditional",
+        "tableHeading": "100 verbos españoles frecuentes en condicional compuesto",
+        "tableDescription": "Compara formas empleadas para consecuencias hipotéticas pasadas o acciones que habrían ocurrido bajo otras condiciones.",
+        "grammar": {
+          "heading": "Cómo se forma el condicional compuesto",
+          "description": "Se forma con el condicional simple de haber y el participio del verbo principal.",
+          "formula": "condicional de haber + participio",
+          "additionalFormula": "habría / habrías / habría / habríamos / habríais / habrían + participio"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Presente de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos españoles frecuentes en presente de subjuntivo",
+        "tableDescription": "Compara formas habituales en contextos de deseo, duda, emoción, valoración, finalidad y otras situaciones que requieren subjuntivo.",
+        "grammar": {
+          "heading": "Cómo se forma el presente de subjuntivo",
+          "description": "En muchos verbos se parte de la forma de yo del presente de indicativo, se elimina la -o final y se añaden las terminaciones del subjuntivo. Los verbos en -ar suelen usar terminaciones con e y los verbos en -er e -ir, terminaciones con a.",
+          "formula": "forma de yo del presente sin -o + terminación del presente de subjuntivo"
+        }
+      },
+      {
+        "key": "imperfect_subjunctive",
+        "label": "Pretérito imperfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos españoles frecuentes en pretérito imperfecto de subjuntivo",
+        "tableDescription": "Compara formas empleadas en hipótesis, subordinadas en pasado y otros contextos que requieren subjuntivo.",
+        "grammar": {
+          "heading": "Cómo se forma el pretérito imperfecto de subjuntivo",
+          "description": "Normalmente se parte de la tercera persona del plural del pretérito perfecto simple. Se elimina -ron y se añaden las terminaciones del imperfecto de subjuntivo. Existen las series en -ra y en -se.",
+          "formula": "forma de ellos/ellas/ustedes del pretérito menos -ron + terminación del imperfecto de subjuntivo",
+          "additionalFormula": "serie frecuente: -ra, -ras, -ra, -ramos, -rais, -ran"
+        }
+      },
+      {
+        "key": "present_perfect_subjunctive",
+        "label": "Pretérito perfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos españoles frecuentes en pretérito perfecto de subjuntivo",
+        "tableDescription": "Compara formas compuestas para acciones terminadas relacionadas con un contexto presente o futuro que exige subjuntivo.",
+        "grammar": {
+          "heading": "Cómo se forma el pretérito perfecto de subjuntivo",
+          "description": "Se forma con el presente de subjuntivo de haber y el participio del verbo principal.",
+          "formula": "presente de subjuntivo de haber + participio",
+          "additionalFormula": "haya / hayas / haya / hayamos / hayáis / hayan + participio"
+        }
+      },
+      {
+        "key": "past_perfect_subjunctive",
+        "label": "Pretérito pluscuamperfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos españoles frecuentes en pretérito pluscuamperfecto de subjuntivo",
+        "tableDescription": "Compara formas utilizadas para situaciones irreales, hipotéticas o subordinadas anteriores a otro punto del pasado.",
+        "grammar": {
+          "heading": "Cómo se forma el pretérito pluscuamperfecto de subjuntivo",
+          "description": "Se forma con el pretérito imperfecto de subjuntivo de haber seguido del participio. Tanto las formas con hubiera como las formas con hubiese son correctas.",
+          "formula": "imperfecto de subjuntivo de haber + participio",
+          "additionalFormula": "hubiera / hubieras / hubiera / hubiéramos / hubierais / hubieran + participio"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo",
+        "group": "imperative",
+        "tableHeading": "100 verbos españoles frecuentes en imperativo",
+        "tableDescription": "Compara formas utilizadas para dar órdenes, instrucciones, recomendaciones o indicaciones.",
+        "grammar": {
+          "heading": "Cómo se forma el imperativo",
+          "description": "La forma del imperativo depende de la persona y de si la orden es afirmativa o negativa. Tú y vosotros tienen formas afirmativas características, mientras que usted, ustedes, nosotros y las órdenes negativas utilizan formas relacionadas con el presente de subjuntivo. No existe una forma de imperativo para yo.",
+          "formula": "forma afirmativa según la persona; orden negativa: no + presente de subjuntivo"
+        }
+      }
+    ],
+
+    "table": {
+      "heading": "Tabla de conjugación de verbos españoles",
+      "description": "Compara cada verbo frecuente en las distintas personas gramaticales para el tiempo o modo verbal seleccionado.",
+      "scrollHint": "Desplázate horizontalmente para ver todas las formas conjugadas.",
+      "scrollLeftLabel": "Desplazar tabla hacia la izquierda",
+      "scrollRightLabel": "Desplazar tabla hacia la derecha",
+      "notes": [
+        "Las terminaciones verbales del español suelen indicar quién realiza la acción, por lo que el pronombre sujeto puede omitirse cuando la persona está clara por el contexto.",
+        "Usted y ustedes utilizan formas verbales de tercera persona aunque se empleen para dirigirse directamente al interlocutor o a los interlocutores.",
+        "Vosotros y vosotras se usan principalmente en España, mientras que ustedes es la forma plural habitual de tratamiento en la mayor parte de Hispanoamérica."
+      ]
+    },
+
+    "rules": {
+      "heading": "Reglas clave de la conjugación española",
+      "intro": "Reconocer unos cuantos patrones recurrentes ayuda a comprender el sistema verbal español y reduce la cantidad de formas que hay que memorizar de manera aislada.",
+      "items": [
+        {
+          "heading": "Los verbos regulares siguen los modelos de -ar, -er e -ir",
+          "text": "La mayoría de los verbos regulares pertenecen a una de las tres conjugaciones principales. Se elimina la terminación del infinitivo y se añaden las terminaciones propias de cada tiempo y persona.",
+          "examples": [
+            "hablar → hablo, hablas, hablamos",
+            "comer → como, comes, comemos",
+            "vivir → vivo, vives, vivimos"
+          ]
+        },
+        {
+          "heading": "Algunos verbos cambian la vocal de la raíz",
+          "text": "Muchos verbos frecuentes presentan cambios vocálicos en determinadas personas y tiempos. Son habituales los cambios e → ie, o → ue y e → i.",
+          "examples": ["pensar → pienso", "poder → puedo", "pedir → pido"]
+        },
+        {
+          "heading": "Los tiempos compuestos se forman con haber",
+          "text": "Las formas perfectas utilizan una forma conjugada de haber seguida del participio. El auxiliar expresa la persona, el tiempo y el modo.",
+          "examples": ["he hablado", "habíamos comido", "habrán vivido"]
+        },
+        {
+          "heading": "El participio no suele concordar cuando se usa con haber",
+          "text": "En los tiempos compuestos formados con haber, el participio normalmente permanece invariable aunque cambien el género o el número del sujeto.",
+          "examples": [
+            "ella ha llegado",
+            "ellos han llegado",
+            "nosotras habíamos llegado"
+          ]
+        },
+        {
+          "heading": "Las raíces irregulares pueden repetirse en tiempos relacionados",
+          "text": "Muchos verbos frecuentes conservan la misma raíz irregular en el futuro y el condicional. Aprender estas relaciones evita memorizar cada tiempo por separado.",
+          "examples": [
+            "tener → tendré → tendría",
+            "hacer → haré → haría",
+            "decir → diré → diría"
+          ]
+        },
+        {
+          "heading": "El subjuntivo conserva irregularidades de otras formas",
+          "text": "El presente de subjuntivo suele partir de la forma de yo del presente de indicativo, mientras que el imperfecto de subjuntivo parte de la tercera persona plural del pretérito. Por eso muchas irregularidades reaparecen.",
+          "examples": [
+            "tengo → tenga",
+            "conozco → conozca",
+            "tuvieron → tuviera"
+          ]
+        }
+      ]
+    },
+
+    "commonMistakes": {
+      "heading": "Errores frecuentes al conjugar verbos en español",
+      "intro": "Estos errores aparecen a menudo cuando se generalizan demasiado las reglas o se confunden tiempos y modos con funciones distintas.",
+      "items": [
+        {
+          "incorrect": "Yo habla español.",
+          "correct": "Yo hablo español.",
+          "explanation": "El verbo debe concordar con la primera persona del singular. En el presente de un verbo regular en -ar, la terminación de yo es -o."
+        },
+        {
+          "incorrect": "Ayer comía una pizza y después fui a casa.",
+          "correct": "Ayer comí una pizza y después fui a casa.",
+          "explanation": "Si la acción se presenta como un acontecimiento terminado dentro de una secuencia pasada, normalmente corresponde el pretérito perfecto simple."
+        },
+        {
+          "incorrect": "He comido la cena ayer.",
+          "correct": "Comí la cena ayer.",
+          "explanation": "En muchas variedades del español, una acción situada en un periodo claramente terminado como ayer suele expresarse con el pretérito perfecto simple. El uso del perfecto compuesto varía según la región."
+        },
+        {
+          "incorrect": "Espero que viene mañana.",
+          "correct": "Espero que venga mañana.",
+          "explanation": "Después de expresiones como esperar que, cuando se habla de una situación deseada o esperada, normalmente se utiliza el subjuntivo."
+        },
+        {
+          "incorrect": "Si tendría más tiempo, viajaría más.",
+          "correct": "Si tuviera más tiempo, viajaría más.",
+          "explanation": "En una condición hipotética de este tipo, la oración introducida por si lleva normalmente imperfecto de subjuntivo y la consecuencia se expresa en condicional."
+        }
+      ]
+    },
+
+    "howToUse": {
+      "heading": "Cómo usar esta tabla para estudiar conjugaciones",
+      "steps": [
+        {
+          "heading": "Empieza por el presente de indicativo",
+          "text": "Utilízalo como referencia inicial para comparar las terminaciones de yo, tú, tercera persona, nosotros, vosotros y tercera persona plural."
+        },
+        {
+          "heading": "Compara el pretérito y el imperfecto",
+          "text": "Observa el mismo verbo en ambos tiempos y relaciona cada forma con la diferencia entre acciones terminadas y situaciones habituales, descriptivas o en desarrollo."
+        },
+        {
+          "heading": "Agrupa los tiempos compuestos",
+          "text": "Compara el perfecto, el pluscuamperfecto, el futuro compuesto, el condicional compuesto y los tiempos perfectos del subjuntivo. Todos utilizan haber más participio."
+        },
+        {
+          "heading": "Busca irregularidades que se repiten",
+          "text": "Si un verbo es irregular, compáralo en varios tiempos. Muchas raíces y cambios reaparecen en zonas relacionadas del sistema verbal."
+        },
+        {
+          "heading": "Compara indicativo y subjuntivo",
+          "text": "Observa la misma persona en ambos modos y utiliza las formas dentro de oraciones completas para entender cuándo se necesita cada una."
+        },
+        {
+          "heading": "Practica las formas dentro de frases",
+          "text": "Después de consultar una conjugación, crea frases breves con diferentes sujetos y referencias temporales. El contexto ayuda a consolidar la forma y su función."
+        }
+      ]
+    },
+
+    "tips": {
+      "heading": "Consejos para dominar la conjugación española",
+      "items": [
+        {
+          "heading": "Aprende patrones, no listas aisladas",
+          "text": "Memoriza las terminaciones recurrentes de los verbos en -ar, -er e -ir por tiempo y persona."
+        },
+        {
+          "heading": "Prioriza los verbos irregulares más frecuentes",
+          "text": "Verbos como ser, estar, ir, haber, tener, hacer, poder, decir y venir aparecen constantemente y merecen una práctica específica."
+        },
+        {
+          "heading": "Estudia juntos los tiempos que suelen confundirse",
+          "text": "Comparar directamente el pretérito con el imperfecto o el indicativo con el subjuntivo facilita comprender sus diferencias de uso."
+        },
+        {
+          "heading": "Identifica primero el auxiliar en los tiempos compuestos",
+          "text": "La forma de haber indica la persona, el tiempo y el modo, mientras que el verbo principal aparece como participio."
+        },
+        {
+          "heading": "Practica también sin pronombres",
+          "text": "Como las terminaciones suelen indicar la persona, conviene aprender a reconocer las formas verbales tanto con pronombre explícito como sin él."
+        }
+      ]
+    },
+
+    "cta": {
+      "heading": "Practica los verbos españoles más frecuentes",
+      "description": "Pon en práctica las conjugaciones en contexto o continúa estudiando los verbos españoles más comunes para reforzar tanto la gramática como el vocabulario.",
+      "primaryLabel": "Practicar verbos españoles",
+      "secondaryLabel": "Ver 100 verbos españoles comunes"
+    },
+
+    "related": {
+      "heading": "Recursos relacionados para aprender español",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbos españoles más comunes"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbos españoles y sus formas de pasado"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario español por nivel MCER"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test de nivel de español"
+        }
+      ]
+    },
+
+    "faq": {
+      "heading": "Preguntas frecuentes sobre la conjugación española",
+      "items": [
+        {
+          "question": "¿Qué significa conjugar un verbo en español?",
+          "answer": "Conjugar un verbo significa cambiar su forma para expresar información gramatical como la persona, el número, el tiempo y el modo. Por ejemplo, hablar puede convertirse en hablo, hablaste, hablaremos o hable según el contexto."
+        },
+        {
+          "question": "¿Los verbos españoles cambian con cada persona?",
+          "answer": "En general, sí. Los verbos presentan formas relacionadas con la persona y el número, aunque algunas personas comparten la misma forma. Él, ella y usted suelen utilizar la misma conjugación, al igual que ellos, ellas y ustedes."
+        },
+        {
+          "question": "¿Cuál es la diferencia entre pretérito e imperfecto?",
+          "answer": "El pretérito perfecto simple suele presentar una acción pasada como terminada o delimitada. El imperfecto suele describir hábitos, acciones en desarrollo, estados, descripciones o situaciones sin un final destacado."
+        },
+        {
+          "question": "¿Cómo se forman los tiempos compuestos en español?",
+          "answer": "Se forman con una forma conjugada del verbo haber seguida del participio del verbo principal. Cambiando la forma de haber se obtienen construcciones como he hablado, había hablado, habré hablado, habría hablado o haya hablado."
+        },
+        {
+          "question": "¿El participio cambia según el género o el número en los tiempos compuestos?",
+          "answer": "Normalmente no. Cuando el participio aparece con haber, permanece invariable: se dice ella ha llegado y ellos han llegado."
+        },
+        {
+          "question": "¿Cuándo se utiliza el subjuntivo en español?",
+          "answer": "El subjuntivo aparece con frecuencia en oraciones subordinadas relacionadas con deseos, recomendaciones, duda, emoción, valoración, finalidad, posibilidad y otros contextos en los que el contenido no se presenta simplemente como un hecho afirmado."
+        },
+        {
+          "question": "¿Cómo se forma el presente de subjuntivo?",
+          "answer": "En muchos verbos se parte de la forma de yo del presente de indicativo, se elimina la -o final y se añaden las terminaciones del subjuntivo. Los verbos en -ar suelen utilizar terminaciones con e y los verbos en -er e -ir, terminaciones con a."
+        },
+        {
+          "question": "¿Por qué el futuro y el condicional tienen formas parecidas?",
+          "answer": "Ambos suelen formarse añadiendo terminaciones al infinitivo y muchos verbos utilizan la misma raíz irregular en los dos tiempos. Por ejemplo, tener produce tendré y tendría, y hacer produce haré y haría."
+        },
+        {
+          "question": "¿Existe una forma de imperativo para yo?",
+          "answer": "No. El imperativo sirve para dirigir una orden, petición o instrucción a otra persona o grupo, por lo que no existe una forma de primera persona singular. Sí existen formas con nosotros para expresar propuestas o instrucciones colectivas."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de aprender las conjugaciones españolas?",
+          "answer": "Conviene dominar primero los patrones regulares, después estudiar los verbos irregulares más frecuentes y comparar tiempos relacionados. Practicar cada forma dentro de frases completas ayuda a relacionar la conjugación con su significado y su contexto."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "fr",
+    "urlSlug": "100-verbes-espagnols-les-plus-courants-conjugues",
+    "entryButtonLabel": "Conjugaisons des verbes espagnols",
+
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "meaning": "Signification"
+    },
+
+    "pronounForms": [
+      {
+        "key": "yo",
+        "label": "yo"
+      },
+      {
+        "key": "tu",
+        "label": "tú"
+      },
+      {
+        "key": "el_ella_usted",
+        "label": "él / ella / usted"
+      },
+      {
+        "key": "nosotros",
+        "label": "nosotros / nosotras"
+      },
+      {
+        "key": "vosotros",
+        "label": "vosotros / vosotras"
+      },
+      {
+        "key": "ellos_ellas_ustedes",
+        "label": "ellos / ellas / ustedes"
+      }
+    ],
+
+    "metadata": {
+      "title": "100 verbes espagnols les plus courants conjugués",
+      "metaTitle": "100 verbes espagnols courants conjugués par temps",
+      "metaDescription": "Comparez la conjugaison de 100 verbes espagnols fréquents selon différents temps, modes et personnes grammaticales."
+    },
+
+    "hero": {
+      "heading": "100 verbes espagnols les plus courants conjugués",
+      "subtitle": "Comparez les verbes espagnols les plus fréquents à travers différents temps, modes et personnes.",
+      "introParagraphs": [
+        "Cette page rassemble 100 verbes espagnols fréquents et permet de consulter leurs conjugaisons dans les principaux temps de l’indicatif, du conditionnel, du subjonctif et de l’impératif proposés dans cette ressource.",
+        "Passer d’un temps à l’autre tout en comparant les formes d’un même verbe aide à repérer les terminaisons récurrentes, les modifications du radical, les constructions avec auxiliaire et les irrégularités."
+      ]
+    },
+
+    "overview": {
+      "heading": "Comment fonctionne la conjugaison des verbes espagnols",
+      "paragraphs": [
+        "En espagnol, le verbe varie selon la personne, le nombre, le temps et le mode. Les verbes réguliers appartiennent principalement aux trois groupes en -ar, -er et -ir, chacun suivant des modèles de terminaisons caractéristiques.",
+        "Les formes simples comme le présent, le prétérit, l’imparfait, le futur et le conditionnel utilisent des terminaisons propres à chaque temps. Les temps composés se construisent avec l’auxiliaire haber suivi du participe passé du verbe principal.",
+        "L’espagnol distingue également plusieurs modes. L’indicatif sert généralement à présenter un fait comme réel ou affirmé, le subjonctif apparaît notamment avec le souhait, le doute, l’émotion, l’évaluation ou le but, tandis que l’impératif sert à exprimer des ordres, des consignes ou des recommandations."
+      ]
+    },
+
+    "tenseSelector": {
+      "heading": "Choisissez un temps ou un mode",
+      "description": "Sélectionnez une forme verbale pour comparer la conjugaison des mêmes verbes espagnols selon la personne et le contexte grammatical.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicatif"
+        },
+        {
+          "key": "conditional",
+          "label": "Conditionnel"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjonctif"
+        },
+        {
+          "key": "imperative",
+          "label": "Impératif"
+        }
+      ]
+    },
+
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Présent de l’indicatif",
+        "group": "indicative",
+        "tableHeading": "100 verbes espagnols courants au présent de l’indicatif",
+        "tableDescription": "Comparez les formes utilisées pour parler de situations présentes, d’habitudes, de vérités générales et d’autres faits exprimés à l’indicatif.",
+        "grammar": {
+          "heading": "Comment former le présent de l’indicatif en espagnol",
+          "description": "Pour les verbes réguliers, on retire la terminaison de l’infinitif -ar, -er ou -ir, puis on ajoute la terminaison correspondant à la personne. De nombreux verbes fréquents présentent aussi des changements de radical, des modifications orthographiques ou des formes irrégulières.",
+          "formula": "radical du verbe + terminaison du présent de l’indicatif"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Prétérit",
+        "group": "indicative",
+        "tableHeading": "100 verbes espagnols courants au prétérit",
+        "tableDescription": "Comparez les formes utilisées pour présenter des événements passés comme achevés ou délimités.",
+        "grammar": {
+          "heading": "Comment former le prétérit espagnol",
+          "description": "Les verbes réguliers en -ar suivent un ensemble de terminaisons, tandis que les verbes en -er et -ir en partagent un autre. De nombreux verbes fréquents ont un radical irrégulier au prétérit et certains subissent des modifications orthographiques.",
+          "formula": "radical du prétérit + terminaison correspondante"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imparfait de l’indicatif",
+        "group": "indicative",
+        "tableHeading": "100 verbes espagnols courants à l’imparfait",
+        "tableDescription": "Comparez les formes servant à exprimer des habitudes passées, des actions en cours, des descriptions et des situations sans limite temporelle mise en avant.",
+        "grammar": {
+          "heading": "Comment former l’imparfait espagnol",
+          "description": "Les verbes réguliers en -ar prennent des terminaisons construites autour de -aba-, tandis que les verbes en -er et -ir utilisent des terminaisons en -ía-. L’imparfait espagnol est très régulier et ne compte que quelques verbes irréguliers fréquents.",
+          "formula": "radical en -ar + terminaisons en -aba ; radical en -er/-ir + terminaisons en -ía"
+        }
+      },
+      {
+        "key": "present_perfect_indicative",
+        "label": "Passé composé de l’indicatif",
+        "group": "indicative",
+        "tableHeading": "100 verbes espagnols courants au passé composé",
+        "tableDescription": "Comparez les formes composées qui relient une action achevée à une période ou à une situation présente.",
+        "grammar": {
+          "heading": "Comment former le passé composé espagnol",
+          "description": "Le pretérito perfecto compuesto se forme avec le présent de l’indicatif de haber suivi du participe passé du verbe principal. Dans cette construction, le participe reste normalement invariable en genre et en nombre.",
+          "formula": "présent de haber + participe passé",
+          "additionalFormula": "he / has / ha / hemos / habéis / han + participe passé"
+        }
+      },
+      {
+        "key": "past_perfect_indicative",
+        "label": "Plus-que-parfait de l’indicatif",
+        "group": "indicative",
+        "tableHeading": "100 verbes espagnols courants au plus-que-parfait",
+        "tableDescription": "Comparez les formes exprimant une action déjà accomplie avant un autre moment ou événement du passé.",
+        "grammar": {
+          "heading": "Comment former le plus-que-parfait espagnol",
+          "description": "Le pretérito pluscuamperfecto se forme avec l’imparfait de l’indicatif de haber suivi du participe passé du verbe principal.",
+          "formula": "imparfait de haber + participe passé",
+          "additionalFormula": "había / habías / había / habíamos / habíais / habían + participe passé"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur simple",
+        "group": "indicative",
+        "tableHeading": "100 verbes espagnols courants au futur simple",
+        "tableDescription": "Comparez les formes employées pour parler d’événements futurs, de prédictions et de certaines suppositions ou conjectures.",
+        "grammar": {
+          "heading": "Comment former le futur simple espagnol",
+          "description": "Pour les verbes réguliers, les terminaisons du futur s’ajoutent directement à l’infinitif. Elles sont identiques pour les verbes en -ar, -er et -ir, mais plusieurs verbes fréquents utilisent un radical irrégulier.",
+          "formula": "infinitif ou radical irrégulier du futur + terminaison du futur"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futur antérieur",
+        "group": "indicative",
+        "tableHeading": "100 verbes espagnols courants au futur antérieur",
+        "tableDescription": "Comparez les formes exprimant une action qui sera accomplie avant un repère futur ou une conjecture portant sur un événement déjà terminé.",
+        "grammar": {
+          "heading": "Comment former le futur antérieur espagnol",
+          "description": "Le futuro compuesto se forme avec le futur simple de haber suivi du participe passé du verbe principal.",
+          "formula": "futur de haber + participe passé",
+          "additionalFormula": "habré / habrás / habrá / habremos / habréis / habrán + participe passé"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Conditionnel présent",
+        "group": "conditional",
+        "tableHeading": "100 verbes espagnols courants au conditionnel présent",
+        "tableDescription": "Comparez les formes utilisées pour les situations hypothétiques, les demandes polies, les conséquences conditionnelles et le futur dans le passé.",
+        "grammar": {
+          "heading": "Comment former le conditionnel présent espagnol",
+          "description": "Les terminaisons du conditionnel s’ajoutent à l’infinitif et sont les mêmes pour les trois groupes de verbes. Les verbes qui ont un radical irrégulier au futur utilisent généralement le même radical au conditionnel.",
+          "formula": "infinitif ou radical irrégulier + terminaison du conditionnel"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Conditionnel passé",
+        "group": "conditional",
+        "tableHeading": "100 verbes espagnols courants au conditionnel passé",
+        "tableDescription": "Comparez les formes qui expriment des conséquences hypothétiques dans le passé ou des actions qui se seraient produites dans d’autres circonstances.",
+        "grammar": {
+          "heading": "Comment former le conditionnel passé espagnol",
+          "description": "Le condicional compuesto se forme avec le conditionnel de haber suivi du participe passé du verbe principal.",
+          "formula": "conditionnel de haber + participe passé",
+          "additionalFormula": "habría / habrías / habría / habríamos / habríais / habrían + participe passé"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Présent du subjonctif",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes espagnols courants au présent du subjonctif",
+        "tableDescription": "Comparez les formes couramment utilisées dans des contextes de souhait, de doute, d’émotion, d’évaluation, de but et d’autres constructions exigeant le subjonctif.",
+        "grammar": {
+          "heading": "Comment former le présent du subjonctif espagnol",
+          "description": "Pour de nombreux verbes, on part de la forme de yo au présent de l’indicatif, on retire le -o final, puis on ajoute les terminaisons du subjonctif. Les verbes en -ar prennent généralement des terminaisons en e, tandis que ceux en -er et -ir prennent des terminaisons en a.",
+          "formula": "forme de yo au présent sans -o + terminaison du présent du subjonctif"
+        }
+      },
+      {
+        "key": "imperfect_subjunctive",
+        "label": "Imparfait du subjonctif",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes espagnols courants à l’imparfait du subjonctif",
+        "tableDescription": "Comparez les formes utilisées dans les hypothèses, les propositions subordonnées au passé et d’autres contextes nécessitant le subjonctif.",
+        "grammar": {
+          "heading": "Comment former l’imparfait du subjonctif espagnol",
+          "description": "On part généralement de la troisième personne du pluriel du prétérit. On retire -ron et on ajoute les terminaisons de l’imparfait du subjonctif. L’espagnol possède deux séries, en -ra et en -se, toutes deux grammaticalement correctes.",
+          "formula": "forme ellos/ellas/ustedes du prétérit sans -ron + terminaison de l’imparfait du subjonctif",
+          "additionalFormula": "série fréquente : -ra, -ras, -ra, -ramos, -rais, -ran"
+        }
+      },
+      {
+        "key": "present_perfect_subjunctive",
+        "label": "Passé du subjonctif",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes espagnols courants au passé du subjonctif",
+        "tableDescription": "Comparez les formes composées utilisées pour des actions achevées liées à un contexte présent ou futur qui exige le subjonctif.",
+        "grammar": {
+          "heading": "Comment former le passé du subjonctif espagnol",
+          "description": "Le pretérito perfecto de subjuntivo se forme avec le présent du subjonctif de haber suivi du participe passé du verbe principal.",
+          "formula": "présent du subjonctif de haber + participe passé",
+          "additionalFormula": "haya / hayas / haya / hayamos / hayáis / hayan + participe passé"
+        }
+      },
+      {
+        "key": "past_perfect_subjunctive",
+        "label": "Plus-que-parfait du subjonctif",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes espagnols courants au plus-que-parfait du subjonctif",
+        "tableDescription": "Comparez les formes utilisées pour des situations irréelles, hypothétiques ou subordonnées antérieures à un autre moment du passé.",
+        "grammar": {
+          "heading": "Comment former le plus-que-parfait du subjonctif espagnol",
+          "description": "Le pretérito pluscuamperfecto de subjuntivo se forme avec l’imparfait du subjonctif de haber suivi du participe passé. Les séries avec hubiera et hubiese sont toutes deux correctes.",
+          "formula": "imparfait du subjonctif de haber + participe passé",
+          "additionalFormula": "hubiera / hubieras / hubiera / hubiéramos / hubierais / hubieran + participe passé"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Impératif",
+        "group": "imperative",
+        "tableHeading": "100 verbes espagnols courants à l’impératif",
+        "tableDescription": "Comparez les formes utilisées pour donner des ordres, des instructions, des conseils ou des recommandations.",
+        "grammar": {
+          "heading": "Comment former l’impératif espagnol",
+          "description": "La forme de l’impératif dépend de la personne et du caractère affirmatif ou négatif de l’ordre. Tú et vosotros possèdent des formes affirmatives spécifiques, tandis que usted, ustedes, nosotros et les ordres négatifs utilisent des formes liées au présent du subjonctif. Il n’existe pas d’impératif à la première personne du singulier yo.",
+          "formula": "forme affirmative selon la personne ; ordre négatif : no + présent du subjonctif"
+        }
+      }
+    ],
+
+    "table": {
+      "heading": "Tableau de conjugaison des verbes espagnols",
+      "description": "Comparez chaque verbe fréquent selon les différentes personnes grammaticales pour le temps ou le mode sélectionné.",
+      "scrollHint": "Faites défiler horizontalement pour voir toutes les formes conjuguées.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite",
+      "notes": [
+        "Les terminaisons verbales espagnoles indiquent souvent la personne, ce qui permet d’omettre le pronom sujet lorsque le contexte est suffisamment clair.",
+        "Usted et ustedes se conjuguent avec des formes de troisième personne, même s’ils servent à s’adresser directement à une ou plusieurs personnes.",
+        "Vosotros et vosotras sont principalement utilisés en Espagne, tandis que ustedes est la forme plurielle habituelle dans la majeure partie de l’Amérique latine."
+      ]
+    },
+
+    "rules": {
+      "heading": "Règles essentielles de la conjugaison espagnole",
+      "intro": "Identifier quelques grands mécanismes récurrents permet de mieux comprendre le système verbal espagnol et d’éviter de mémoriser chaque forme séparément.",
+      "items": [
+        {
+          "heading": "Les verbes réguliers suivent les modèles en -ar, -er et -ir",
+          "text": "La plupart des verbes réguliers appartiennent à l’un des trois grands groupes. On retire la terminaison de l’infinitif et on ajoute ensuite les terminaisons correspondant au temps et à la personne.",
+          "examples": [
+            "hablar → hablo, hablas, hablamos",
+            "comer → como, comes, comemos",
+            "vivir → vivo, vives, vivimos"
+          ]
+        },
+        {
+          "heading": "Certains verbes modifient la voyelle du radical",
+          "text": "De nombreux verbes fréquents présentent un changement de voyelle dans certaines personnes et certains temps. Les alternances e → ie, o → ue et e → i sont particulièrement courantes.",
+          "examples": ["pensar → pienso", "poder → puedo", "pedir → pido"]
+        },
+        {
+          "heading": "Les temps composés utilisent haber",
+          "text": "Les formes composées se construisent avec une forme conjuguée de haber suivie du participe passé. C’est l’auxiliaire qui porte les informations de personne, de temps et de mode.",
+          "examples": ["he hablado", "habíamos comido", "habrán vivido"]
+        },
+        {
+          "heading": "Le participe reste généralement invariable avec haber",
+          "text": "Dans les temps composés construits avec haber, le participe passé ne s’accorde normalement ni avec le genre ni avec le nombre du sujet.",
+          "examples": [
+            "ella ha llegado",
+            "ellos han llegado",
+            "nosotras habíamos llegado"
+          ]
+        },
+        {
+          "heading": "Les mêmes radicaux irréguliers réapparaissent dans des temps liés",
+          "text": "Plusieurs verbes fréquents utilisent le même radical irrégulier au futur et au conditionnel. Apprendre ces liens réduit le nombre de formes à mémoriser séparément.",
+          "examples": [
+            "tener → tendré → tendría",
+            "hacer → haré → haría",
+            "decir → diré → diría"
+          ]
+        },
+        {
+          "heading": "Le subjonctif reprend souvent des irrégularités déjà connues",
+          "text": "Le présent du subjonctif se construit souvent à partir de la forme de yo du présent de l’indicatif, tandis que l’imparfait du subjonctif dérive de la troisième personne du pluriel du prétérit. Les irrégularités se retrouvent donc souvent d’un temps à l’autre.",
+          "examples": [
+            "tengo → tenga",
+            "conozco → conozca",
+            "tuvieron → tuviera"
+          ]
+        }
+      ]
+    },
+
+    "commonMistakes": {
+      "heading": "Erreurs fréquentes dans la conjugaison espagnole",
+      "intro": "Ces erreurs apparaissent souvent lorsque l’on généralise trop les modèles réguliers ou que l’on confond des temps et des modes ayant des fonctions différentes.",
+      "items": [
+        {
+          "incorrect": "Yo habla español.",
+          "correct": "Yo hablo español.",
+          "explanation": "Le verbe doit s’accorder avec la première personne du singulier. Au présent d’un verbe régulier en -ar, la terminaison de yo est -o."
+        },
+        {
+          "incorrect": "Ayer comía una pizza y después fui a casa.",
+          "correct": "Ayer comí una pizza y después fui a casa.",
+          "explanation": "Lorsque l’action est présentée comme un événement achevé dans une succession d’actions passées, le prétérit est généralement plus approprié que l’imparfait."
+        },
+        {
+          "incorrect": "He comido la cena ayer.",
+          "correct": "Comí la cena ayer.",
+          "explanation": "Dans de nombreuses variétés d’espagnol, une action située dans une période clairement achevée comme ayer s’exprime normalement au prétérit. L’emploi du passé composé espagnol varie toutefois selon les régions."
+        },
+        {
+          "incorrect": "Espero que viene mañana.",
+          "correct": "Espero que venga mañana.",
+          "explanation": "Après des expressions comme esperar que lorsqu’elles introduisent un événement souhaité ou attendu, l’espagnol emploie normalement le subjonctif."
+        },
+        {
+          "incorrect": "Si tendría más tiempo, viajaría más.",
+          "correct": "Si tuviera más tiempo, viajaría más.",
+          "explanation": "Dans une hypothèse de ce type, la proposition introduite par si se met normalement à l’imparfait du subjonctif, tandis que la conséquence se met au conditionnel."
+        }
+      ]
+    },
+
+    "howToUse": {
+      "heading": "Comment utiliser ce tableau pour apprendre les conjugaisons espagnoles",
+      "steps": [
+        {
+          "heading": "Commencez par le présent de l’indicatif",
+          "text": "Utilisez-le comme point de départ pour comparer les terminaisons de yo, tú, de la troisième personne, de nosotros, de vosotros et de la troisième personne du pluriel."
+        },
+        {
+          "heading": "Comparez le prétérit et l’imparfait",
+          "text": "Observez le même verbe aux deux temps et associez chaque forme à sa fonction : événement achevé d’un côté, habitude, description ou action en cours de l’autre."
+        },
+        {
+          "heading": "Regroupez les temps composés",
+          "text": "Comparez le passé composé, le plus-que-parfait, le futur antérieur, le conditionnel passé et les formes composées du subjonctif. Tous reposent sur haber suivi d’un participe passé."
+        },
+        {
+          "heading": "Repérez les irrégularités qui se répètent",
+          "text": "Lorsqu’un verbe est irrégulier, comparez-le à plusieurs temps. Les mêmes radicaux et modifications apparaissent souvent dans des parties liées du système verbal."
+        },
+        {
+          "heading": "Comparez l’indicatif et le subjonctif",
+          "text": "Observez la même personne dans les deux modes et replacez chaque forme dans une phrase complète pour mieux comprendre le contexte qui déclenche le subjonctif."
+        },
+        {
+          "heading": "Utilisez les formes dans des phrases complètes",
+          "text": "Après avoir étudié une conjugaison, créez de courtes phrases avec différentes personnes et différents repères temporels afin de mémoriser à la fois la forme et son emploi."
+        }
+      ]
+    },
+
+    "tips": {
+      "heading": "Conseils pour maîtriser la conjugaison espagnole",
+      "items": [
+        {
+          "heading": "Apprenez des modèles plutôt que des formes isolées",
+          "text": "Mémorisez les terminaisons récurrentes des verbes en -ar, -er et -ir par temps et par personne."
+        },
+        {
+          "heading": "Donnez la priorité aux verbes irréguliers fréquents",
+          "text": "Des verbes comme ser, estar, ir, haber, tener, hacer, poder, decir et venir sont extrêmement fréquents et méritent une attention particulière."
+        },
+        {
+          "heading": "Étudiez ensemble les temps faciles à confondre",
+          "text": "Comparer directement le prétérit et l’imparfait, ou l’indicatif et le subjonctif, permet de mieux comprendre leurs différences d’emploi."
+        },
+        {
+          "heading": "Repérez d’abord l’auxiliaire dans les temps composés",
+          "text": "La forme de haber indique la personne, le temps et le mode, tandis que le verbe principal reste au participe passé."
+        },
+        {
+          "heading": "Entraînez-vous aussi sans les pronoms",
+          "text": "Comme les terminaisons espagnoles indiquent souvent la personne, apprenez à reconnaître les formes verbales avec ou sans pronom sujet explicite."
+        }
+      ]
+    },
+
+    "cta": {
+      "heading": "Pratiquez les verbes espagnols les plus fréquents",
+      "description": "Utilisez les conjugaisons en contexte ou poursuivez avec les verbes espagnols les plus courants pour renforcer à la fois votre grammaire et votre vocabulaire.",
+      "primaryLabel": "Pratiquer les verbes espagnols",
+      "secondaryLabel": "Voir 100 verbes espagnols courants"
+    },
+
+    "related": {
+      "heading": "Ressources connexes pour apprendre l’espagnol",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbes espagnols les plus courants"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbes espagnols et leurs formes au passé"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire espagnol par niveau CECR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test de niveau d’espagnol"
+        }
+      ]
+    },
+
+    "faq": {
+      "heading": "Questions fréquentes sur la conjugaison espagnole",
+      "items": [
+        {
+          "question": "Que signifie conjuguer un verbe en espagnol ?",
+          "answer": "Conjuguer un verbe espagnol consiste à modifier sa forme pour exprimer notamment la personne, le nombre, le temps et le mode. Par exemple, hablar peut devenir hablo, hablaste, hablaremos ou hable selon le contexte."
+        },
+        {
+          "question": "Les verbes espagnols changent-ils à chaque personne ?",
+          "answer": "En général, oui. Les verbes possèdent des formes liées à la personne et au nombre, même si plusieurs personnes peuvent partager la même forme. Él, ella et usted utilisent normalement la même conjugaison, tout comme ellos, ellas et ustedes."
+        },
+        {
+          "question": "Quelle est la différence entre le prétérit et l’imparfait en espagnol ?",
+          "answer": "Le prétérit présente généralement une action passée comme achevée ou délimitée. L’imparfait sert plutôt à exprimer une habitude, une description, un état ou une action en cours dans le passé."
+        },
+        {
+          "question": "Comment forme-t-on les temps composés en espagnol ?",
+          "answer": "Ils se forment avec une forme conjuguée du verbe haber suivie du participe passé du verbe principal. En changeant la forme de haber, on obtient notamment he hablado, había hablado, habré hablado, habría hablado ou haya hablado."
+        },
+        {
+          "question": "Le participe passé s’accorde-t-il avec le sujet dans les temps composés espagnols ?",
+          "answer": "Normalement non. Lorsqu’il est employé avec haber, le participe reste invariable : on dit ella ha llegado et ellos han llegado."
+        },
+        {
+          "question": "Quand utilise-t-on le subjonctif en espagnol ?",
+          "answer": "Le subjonctif apparaît fréquemment dans des propositions subordonnées exprimant un souhait, une recommandation, un doute, une émotion, une appréciation, un but, une possibilité ou d’autres situations où le contenu n’est pas simplement présenté comme un fait affirmé."
+        },
+        {
+          "question": "Comment forme-t-on le présent du subjonctif espagnol ?",
+          "answer": "Pour beaucoup de verbes, on part de la forme de yo au présent de l’indicatif, on retire le -o final et on ajoute les terminaisons du subjonctif. Les verbes en -ar prennent généralement des terminaisons en e, et ceux en -er ou -ir des terminaisons en a."
+        },
+        {
+          "question": "Pourquoi le futur et le conditionnel espagnols se ressemblent-ils ?",
+          "answer": "Les deux se construisent généralement en ajoutant des terminaisons à l’infinitif et de nombreux verbes utilisent le même radical irrégulier dans les deux temps. Tener donne par exemple tendré et tendría, tandis que hacer donne haré et haría."
+        },
+        {
+          "question": "Existe-t-il un impératif pour yo en espagnol ?",
+          "answer": "Non. L’impératif sert à adresser un ordre, une demande ou une instruction à une autre personne ou à un groupe. Il n’existe donc pas de forme impérative à la première personne du singulier yo. Il existe toutefois des formes avec nosotros pour exprimer une proposition collective."
+        },
+        {
+          "question": "Quelle est la meilleure façon d’apprendre les conjugaisons espagnoles ?",
+          "answer": "Commencez par les modèles réguliers, puis concentrez-vous sur les verbes irréguliers les plus fréquents et sur les irrégularités récurrentes. Comparez les temps proches et entraînez-vous avec des phrases complètes afin d’associer chaque forme à son sens et à son contexte."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "de",
+    "urlSlug": "100-haeufigste-spanische-verben-konjugationen",
+    "entryButtonLabel": "Spanische Verbkonjugationen",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "meaning": "Bedeutung"
+    },
+    "pronounForms": [
+      {
+        "key": "yo",
+        "label": "yo"
+      },
+      {
+        "key": "tu",
+        "label": "tú"
+      },
+      {
+        "key": "el_ella_usted",
+        "label": "él / ella / usted"
+      },
+      {
+        "key": "nosotros",
+        "label": "nosotros / nosotras"
+      },
+      {
+        "key": "vosotros",
+        "label": "vosotros / vosotras"
+      },
+      {
+        "key": "ellos_ellas_ustedes",
+        "label": "ellos / ellas / ustedes"
+      }
+    ],
+    "metadata": {
+      "title": "100 häufigste spanische Verben konjugiert",
+      "metaTitle": "100 häufigste spanische Verben und ihre Konjugationen",
+      "metaDescription": "Vergleiche 100 häufige spanische Verben in verschiedenen Zeiten, Modi und Personen und erkenne wichtige Konjugationsmuster."
+    },
+    "hero": {
+      "heading": "100 häufigste spanische Verben und ihre Konjugationen",
+      "subtitle": "Vergleiche häufige spanische Verben in wichtigen Zeiten, Modi und Personen.",
+      "introParagraphs": [
+        "Diese Übersicht zeigt die Konjugationen von 100 häufig verwendeten spanischen Verben in den wichtigsten Formen des Indikativs, Konditionals, Subjuntivo und Imperativs.",
+        "Wenn du zwischen den Zeiten wechselst und dieselben Verben für verschiedene Personen vergleichst, erkennst du regelmäßige Endungen, Stammwechsel, zusammengesetzte Formen und typische Unregelmäßigkeiten deutlich leichter."
+      ]
+    },
+    "overview": {
+      "heading": "So funktioniert die spanische Verbkonjugation",
+      "paragraphs": [
+        "Spanische Verben verändern ihre Form nach Person, Numerus, Zeit und Modus. Regelmäßige Verben gehören hauptsächlich zu den drei Gruppen auf -ar, -er und -ir, die jeweils charakteristische Endungen verwenden.",
+        "Einfache Formen wie Präsens, Pretérito, Imperfecto, Futur und Konditional werden mit bestimmten Endungen gebildet. Zusammengesetzte Zeiten bestehen aus einer konjugierten Form des Hilfsverbs haber und dem Partizip des Hauptverbs.",
+        "Außerdem unterscheidet das Spanische verschiedene Modi. Der Indikativ stellt Sachverhalte meist als tatsächlich oder behauptet dar, der Subjuntivo erscheint unter anderem bei Wunsch, Zweifel, Bewertung, Emotion und Absicht, und der Imperativ dient für Aufforderungen, Anweisungen und Ratschläge."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Zeit oder Modus auswählen",
+      "description": "Wähle eine Form aus und vergleiche, wie sich dieselben spanischen Verben je nach Person und grammatischem Kontext verändern.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indikativ"
+        },
+        {
+          "key": "conditional",
+          "label": "Konditional"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativ"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Präsens Indikativ",
+        "group": "indicative",
+        "tableHeading": "100 häufige spanische Verben im Präsens",
+        "tableDescription": "Vergleiche Präsensformen für gegenwärtige Situationen, Gewohnheiten, allgemeine Aussagen und regelmäßig wiederkehrende Handlungen.",
+        "grammar": {
+          "heading": "So wird das spanische Präsens gebildet",
+          "description": "Bei regelmäßigen Verben wird die Infinitivendung -ar, -er oder -ir entfernt und durch die passende Personenendung ersetzt. Viele häufige Verben haben zusätzlich Stammwechsel, Rechtschreibänderungen oder unregelmäßige Formen.",
+          "formula": "Verbstamm + Präsensendung"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Pretérito indefinido",
+        "group": "indicative",
+        "tableHeading": "100 häufige spanische Verben im Pretérito indefinido",
+        "tableDescription": "Vergleiche Formen für abgeschlossene oder klar begrenzte Ereignisse in der Vergangenheit.",
+        "grammar": {
+          "heading": "So wird das Pretérito indefinido gebildet",
+          "description": "Regelmäßige -ar-Verben verwenden eine eigene Reihe von Endungen, während -er- und -ir-Verben eine zweite Reihe teilen. Viele häufige Verben besitzen in dieser Zeit unregelmäßige Stämme oder besondere Schreibweisen.",
+          "formula": "Pretérito-Stamm + passende Endung"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imperfecto",
+        "group": "indicative",
+        "tableHeading": "100 häufige spanische Verben im Imperfecto",
+        "tableDescription": "Vergleiche Formen für Gewohnheiten in der Vergangenheit, Hintergrundhandlungen, Beschreibungen und nicht klar abgeschlossene Situationen.",
+        "grammar": {
+          "heading": "So wird das spanische Imperfecto gebildet",
+          "description": "Regelmäßige -ar-Verben verwenden Endungen mit -aba-, während -er- und -ir-Verben Endungen mit -ía- bilden. Das Imperfecto ist insgesamt sehr regelmäßig und hat nur wenige häufige unregelmäßige Verben.",
+          "formula": "-ar-Stamm + -aba-Endungen; -er/-ir-Stamm + -ía-Endungen"
+        }
+      },
+      {
+        "key": "present_perfect_indicative",
+        "label": "Pretérito perfecto compuesto",
+        "group": "indicative",
+        "tableHeading": "100 häufige spanische Verben im Pretérito perfecto compuesto",
+        "tableDescription": "Vergleiche zusammengesetzte Formen für abgeschlossene Handlungen, die mit einem aktuellen Zeitraum oder der Gegenwart verbunden sind.",
+        "grammar": {
+          "heading": "So wird das Pretérito perfecto compuesto gebildet",
+          "description": "Diese Zeit besteht aus dem Präsens von haber und dem Partizip des Hauptverbs. Das Partizip wird in dieser Konstruktion normalerweise nicht an Genus oder Numerus des Subjekts angepasst.",
+          "formula": "Präsens von haber + Partizip",
+          "additionalFormula": "he / has / ha / hemos / habéis / han + Partizip"
+        }
+      },
+      {
+        "key": "past_perfect_indicative",
+        "label": "Pluscuamperfecto",
+        "group": "indicative",
+        "tableHeading": "100 häufige spanische Verben im Pluscuamperfecto",
+        "tableDescription": "Vergleiche Formen für Handlungen, die bereits vor einem anderen Zeitpunkt oder Ereignis in der Vergangenheit abgeschlossen waren.",
+        "grammar": {
+          "heading": "So wird das spanische Pluscuamperfecto gebildet",
+          "description": "Das Pluscuamperfecto besteht aus dem Imperfecto von haber und dem Partizip des Hauptverbs.",
+          "formula": "Imperfecto von haber + Partizip",
+          "additionalFormula": "había / habías / había / habíamos / habíais / habían + Partizip"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futuro simple",
+        "group": "indicative",
+        "tableHeading": "100 häufige spanische Verben im Futuro simple",
+        "tableDescription": "Vergleiche Formen für zukünftige Handlungen sowie bestimmte Vermutungen und Annahmen.",
+        "grammar": {
+          "heading": "So wird das spanische Futur gebildet",
+          "description": "Bei regelmäßigen Verben werden die Futurendungen direkt an den vollständigen Infinitiv angehängt. Dieselben Endungen gelten für -ar-, -er- und -ir-Verben. Einige häufige Verben verwenden jedoch einen unregelmäßigen Futurstamm.",
+          "formula": "Infinitiv oder unregelmäßiger Futurstamm + Futurendung"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futuro compuesto",
+        "group": "indicative",
+        "tableHeading": "100 häufige spanische Verben im Futuro compuesto",
+        "tableDescription": "Vergleiche Formen für Handlungen, die vor einem zukünftigen Bezugspunkt abgeschlossen sein werden, sowie für Vermutungen über bereits abgeschlossene Ereignisse.",
+        "grammar": {
+          "heading": "So wird das Futuro compuesto gebildet",
+          "description": "Das Futuro compuesto wird mit dem Futur von haber und dem Partizip des Hauptverbs gebildet.",
+          "formula": "Futur von haber + Partizip",
+          "additionalFormula": "habré / habrás / habrá / habremos / habréis / habrán + Partizip"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condicional simple",
+        "group": "conditional",
+        "tableHeading": "100 häufige spanische Verben im Condicional simple",
+        "tableDescription": "Vergleiche Formen für hypothetische Situationen, höfliche Aussagen, bedingte Folgen und Zukunft aus Sicht der Vergangenheit.",
+        "grammar": {
+          "heading": "So wird das spanische Condicional simple gebildet",
+          "description": "Die Konditionalendungen werden direkt an den Infinitiv angehängt und sind für -ar-, -er- und -ir-Verben gleich. Verben mit unregelmäßigem Futurstamm verwenden diesen normalerweise auch im Konditional.",
+          "formula": "Infinitiv oder unregelmäßiger Stamm + Konditionalendung"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Condicional compuesto",
+        "group": "conditional",
+        "tableHeading": "100 häufige spanische Verben im Condicional compuesto",
+        "tableDescription": "Vergleiche Formen für hypothetische Folgen in der Vergangenheit und Handlungen, die unter anderen Bedingungen stattgefunden hätten.",
+        "grammar": {
+          "heading": "So wird das Condicional compuesto gebildet",
+          "description": "Diese Form besteht aus dem Konditional von haber und dem Partizip des Hauptverbs.",
+          "formula": "Konditional von haber + Partizip",
+          "additionalFormula": "habría / habrías / habría / habríamos / habríais / habrían + Partizip"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Presente de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige spanische Verben im Presente de subjuntivo",
+        "tableDescription": "Vergleiche Formen, die häufig bei Wunsch, Zweifel, Emotion, Bewertung, Absicht und anderen Subjuntivo-Kontexten verwendet werden.",
+        "grammar": {
+          "heading": "So wird das Presente de subjuntivo gebildet",
+          "description": "Bei vielen Verben dient die yo-Form des Präsens als Ausgangspunkt. Das abschließende -o wird entfernt und die Subjuntivo-Endung angefügt. -ar-Verben verwenden meist e-basierte Endungen, -er- und -ir-Verben dagegen a-basierte Endungen.",
+          "formula": "yo-Form des Präsens ohne -o + Subjuntivo-Endung"
+        }
+      },
+      {
+        "key": "imperfect_subjunctive",
+        "label": "Pretérito imperfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige spanische Verben im Pretérito imperfecto de subjuntivo",
+        "tableDescription": "Vergleiche Formen für hypothetische Situationen, abhängige Strukturen in der Vergangenheit und weitere Kontexte, die den Subjuntivo verlangen.",
+        "grammar": {
+          "heading": "So wird das Pretérito imperfecto de subjuntivo gebildet",
+          "description": "Als Grundlage dient normalerweise die dritte Person Plural des Pretérito indefinido. Von dieser Form wird -ron entfernt und anschließend die Endung des Imperfecto de subjuntivo angefügt. Im Spanischen existieren sowohl die -ra- als auch die -se-Reihe.",
+          "formula": "ellos/ellas/ustedes-Form des Pretérito ohne -ron + Subjuntivo-Endung",
+          "additionalFormula": "häufige Reihe: -ra, -ras, -ra, -ramos, -rais, -ran"
+        }
+      },
+      {
+        "key": "present_perfect_subjunctive",
+        "label": "Pretérito perfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige spanische Verben im Pretérito perfecto de subjuntivo",
+        "tableDescription": "Vergleiche zusammengesetzte Subjuntivo-Formen für abgeschlossene Handlungen mit Bezug zu einem gegenwärtigen oder zukünftigen Kontext.",
+        "grammar": {
+          "heading": "So wird das Pretérito perfecto de subjuntivo gebildet",
+          "description": "Diese Form besteht aus dem Presente de subjuntivo von haber und dem Partizip des Hauptverbs.",
+          "formula": "Presente de subjuntivo von haber + Partizip",
+          "additionalFormula": "haya / hayas / haya / hayamos / hayáis / hayan + Partizip"
+        }
+      },
+      {
+        "key": "past_perfect_subjunctive",
+        "label": "Pretérito pluscuamperfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige spanische Verben im Pretérito pluscuamperfecto de subjuntivo",
+        "tableDescription": "Vergleiche Formen für irreale, hypothetische oder abhängige Handlungen, die vor einem anderen Zeitpunkt in der Vergangenheit liegen.",
+        "grammar": {
+          "heading": "So wird das Pretérito pluscuamperfecto de subjuntivo gebildet",
+          "description": "Diese Zeit besteht aus dem Pretérito imperfecto de subjuntivo von haber und dem Partizip des Hauptverbs. Sowohl Formen mit hubiera als auch mit hubiese sind grammatisch korrekt.",
+          "formula": "Imperfecto de subjuntivo von haber + Partizip",
+          "additionalFormula": "hubiera / hubieras / hubiera / hubiéramos / hubierais / hubieran + Partizip"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativ",
+        "group": "imperative",
+        "tableHeading": "100 häufige spanische Verben im Imperativ",
+        "tableDescription": "Vergleiche Formen für Aufforderungen, Befehle, Anweisungen und Empfehlungen.",
+        "grammar": {
+          "heading": "So wird der spanische Imperativ gebildet",
+          "description": "Die Imperativform hängt von der angesprochenen Person und davon ab, ob die Aufforderung bejaht oder verneint ist. Tú und vosotros besitzen besondere affirmative Formen, während usted, ustedes, nosotros und negative Befehle Formen verwenden, die mit dem Presente de subjuntivo zusammenhängen. Für yo gibt es keinen Imperativ.",
+          "formula": "affirmative Form je nach Person; negativer Befehl: no + Presente de subjuntivo"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabelle der spanischen Verbkonjugationen",
+      "description": "Vergleiche jedes häufige Verb für die verschiedenen spanischen Personen in der ausgewählten Zeit oder im ausgewählten Modus.",
+      "scrollHint": "Horizontal scrollen, um alle konjugierten Formen zu sehen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen",
+      "notes": [
+        "Spanische Verbendungen zeigen häufig bereits die Person an. Deshalb kann das Subjektpronomen weggelassen werden, wenn aus Form oder Kontext klar ist, wer gemeint ist.",
+        "Usted und ustedes verwenden Verbformen der dritten Person, obwohl sie zur direkten Anrede dienen.",
+        "Vosotros und vosotras werden vor allem in Spanien verwendet. In den meisten Ländern Lateinamerikas ist ustedes die übliche Form für die Anrede mehrerer Personen."
+      ]
+    },
+    "rules": {
+      "heading": "Wichtige Regeln der spanischen Verbkonjugation",
+      "intro": "Wer wiederkehrende Muster erkennt, kann spanische Verbformen systematischer lernen und muss deutlich weniger Einzelwerte auswendig lernen.",
+      "items": [
+        {
+          "heading": "Regelmäßige Verben folgen den Mustern auf -ar, -er und -ir",
+          "text": "Regelmäßige spanische Verben gehören zu drei Hauptgruppen. Die Infinitivendung wird entfernt und anschließend wird die passende Endung für Person und Zeit angefügt.",
+          "examples": [
+            "hablar → hablo, hablas, hablamos",
+            "comer → como, comes, comemos",
+            "vivir → vivo, vives, vivimos"
+          ]
+        },
+        {
+          "heading": "Viele Verben verändern den Stammvokal",
+          "text": "Häufige spanische Verben können in bestimmten Personen und Zeiten einen Vokalwechsel im Stamm zeigen. Besonders verbreitet sind e → ie, o → ue und e → i.",
+          "examples": ["pensar → pienso", "poder → puedo", "pedir → pido"]
+        },
+        {
+          "heading": "Zusammengesetzte Zeiten verwenden haber",
+          "text": "Perfektformen bestehen aus einer konjugierten Form von haber und dem Partizip des Hauptverbs. Das Hilfsverb trägt dabei die Informationen zu Person, Zeit und Modus.",
+          "examples": ["he hablado", "habíamos comido", "habrán vivido"]
+        },
+        {
+          "heading": "Das Partizip bleibt mit haber normalerweise unverändert",
+          "text": "In zusammengesetzten Zeiten mit haber richtet sich das Partizip normalerweise nicht nach Genus oder Numerus des Subjekts.",
+          "examples": [
+            "ella ha llegado",
+            "ellos han llegado",
+            "nosotras habíamos llegado"
+          ]
+        },
+        {
+          "heading": "Unregelmäßige Stämme wiederholen sich oft",
+          "text": "Viele häufige Verben verwenden denselben unregelmäßigen Stamm im Futur und im Konditional. Wer diese Beziehungen erkennt, muss weniger Formen getrennt lernen.",
+          "examples": [
+            "tener → tendré → tendría",
+            "hacer → haré → haría",
+            "decir → diré → diría"
+          ]
+        },
+        {
+          "heading": "Der Subjuntivo übernimmt häufig bekannte Unregelmäßigkeiten",
+          "text": "Das Presente de subjuntivo basiert bei vielen Verben auf der yo-Form des Präsens, während das Pretérito imperfecto de subjuntivo von der dritten Person Plural des Pretérito ausgeht. Deshalb erscheinen bekannte Unregelmäßigkeiten erneut.",
+          "examples": [
+            "tengo → tenga",
+            "conozco → conozca",
+            "tuvieron → tuviera"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Häufige Fehler bei der spanischen Verbkonjugation",
+      "intro": "Viele typische Fehler entstehen dadurch, dass regelmäßige Muster zu stark verallgemeinert oder Zeiten und Modi mit unterschiedlichen Funktionen verwechselt werden.",
+      "items": [
+        {
+          "incorrect": "Yo habla español.",
+          "correct": "Yo hablo español.",
+          "explanation": "Das Verb muss zur ersten Person Singular passen. Bei einem regelmäßigen -ar-Verb lautet die Endung für yo im Präsens -o."
+        },
+        {
+          "incorrect": "Ayer comía una pizza y después fui a casa.",
+          "correct": "Ayer comí una pizza y después fui a casa.",
+          "explanation": "Wenn die Handlung als abgeschlossenes Ereignis innerhalb einer vergangenen Abfolge dargestellt wird, ist normalerweise das Pretérito indefinido passender als das Imperfecto."
+        },
+        {
+          "incorrect": "He comido la cena ayer.",
+          "correct": "Comí la cena ayer.",
+          "explanation": "In vielen spanischen Varietäten wird eine Handlung in einem eindeutig abgeschlossenen Zeitraum wie ayer normalerweise im Pretérito indefinido ausgedrückt. Die Verwendung des Pretérito perfecto compuesto unterscheidet sich jedoch regional."
+        },
+        {
+          "incorrect": "Espero que viene mañana.",
+          "correct": "Espero que venga mañana.",
+          "explanation": "Nach Ausdrücken wie esperar que wird bei einem gewünschten oder erwarteten Ereignis normalerweise der Subjuntivo verwendet."
+        },
+        {
+          "incorrect": "Si tendría más tiempo, viajaría más.",
+          "correct": "Si tuviera más tiempo, viajaría más.",
+          "explanation": "Bei einer hypothetischen Bedingung dieser Art steht im si-Satz normalerweise das Pretérito imperfecto de subjuntivo und im Ergebnissatz das Konditional."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "So nutzt du die Konjugationstabelle zum Lernen",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Präsens",
+          "text": "Nutze das Präsens als Ausgangspunkt und vergleiche die Endungen für yo, tú, die dritte Person, nosotros, vosotros und die dritte Person Plural."
+        },
+        {
+          "heading": "Vergleiche Pretérito und Imperfecto",
+          "text": "Betrachte dasselbe Verb in beiden Vergangenheitsformen und achte sowohl auf die Form als auch auf den Unterschied zwischen abgeschlossenen Ereignissen und gewohnheitsmäßigen, beschreibenden oder laufenden Situationen."
+        },
+        {
+          "heading": "Lerne zusammengesetzte Zeiten als Gruppe",
+          "text": "Vergleiche Pretérito perfecto compuesto, Pluscuamperfecto, Futuro compuesto, Condicional compuesto und die zusammengesetzten Subjuntivo-Formen. Sie folgen alle dem Muster haber plus Partizip."
+        },
+        {
+          "heading": "Suche nach wiederkehrenden Unregelmäßigkeiten",
+          "text": "Vergleiche unregelmäßige Verben über mehrere Zeiten hinweg. Häufig tauchen dieselben Stämme oder Änderungen in verwandten Formen erneut auf."
+        },
+        {
+          "heading": "Vergleiche Indikativ und Subjuntivo",
+          "text": "Betrachte dieselbe Person in beiden Modi und verwende die Formen in vollständigen Sätzen. So wird klarer, welche grammatischen Kontexte den Subjuntivo auslösen."
+        },
+        {
+          "heading": "Verwende die Formen in vollständigen Sätzen",
+          "text": "Bilde nach dem Nachschlagen kurze Sätze mit unterschiedlichen Personen und Zeitbezügen. Dadurch verbindest du die Form mit ihrer tatsächlichen Funktion."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Lernen spanischer Verbkonjugationen",
+      "items": [
+        {
+          "heading": "Lerne Muster statt einzelner Formen",
+          "text": "Präge dir wiederkehrende Endungen der -ar-, -er- und -ir-Verben nach Zeit und Person ein."
+        },
+        {
+          "heading": "Konzentriere dich auf häufige unregelmäßige Verben",
+          "text": "Verben wie ser, estar, ir, haber, tener, hacer, poder, decir und venir kommen sehr häufig vor und sollten besonders intensiv geübt werden."
+        },
+        {
+          "heading": "Vergleiche leicht verwechselbare Zeiten direkt",
+          "text": "Pretérito und Imperfecto oder Indikativ und Subjuntivo lassen sich besser verstehen, wenn ihre Formen und Funktionen unmittelbar gegenübergestellt werden."
+        },
+        {
+          "heading": "Achte in zusammengesetzten Zeiten zuerst auf haber",
+          "text": "Die Form von haber zeigt Person, Zeit und Modus an, während das Hauptverb als Partizip erscheint."
+        },
+        {
+          "heading": "Übe auch ohne Subjektpronomen",
+          "text": "Da spanische Verbendungen die Person häufig bereits erkennen lassen, solltest du Formen sowohl mit als auch ohne ausdrücklich genanntes Pronomen verstehen können."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Übe die häufigsten spanischen Verben",
+      "description": "Wende die Konjugationen im Kontext an oder erkunde die häufigsten spanischen Verben, um Grammatik und Wortschatz gemeinsam zu festigen.",
+      "primaryLabel": "Spanische Verben üben",
+      "secondaryLabel": "100 häufige spanische Verben ansehen"
+    },
+    "related": {
+      "heading": "Weitere Ressourcen zum Spanischlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 häufigste spanische Verben"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 spanische Verben und ihre Vergangenheitsformen"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Spanischer Wortschatz nach GER-Niveau"
+        },
+        {
+          "key": "levelTest",
+          "label": "Spanisch-Einstufungstest"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zur spanischen Verbkonjugation",
+      "items": [
+        {
+          "question": "Was bedeutet es, ein spanisches Verb zu konjugieren?",
+          "answer": "Ein spanisches Verb zu konjugieren bedeutet, seine Form an grammatische Merkmale wie Person, Numerus, Zeit und Modus anzupassen. Aus hablar können je nach Kontext zum Beispiel hablo, hablaste, hablaremos oder hable werden."
+        },
+        {
+          "question": "Verändern sich spanische Verben bei jeder Person?",
+          "answer": "Grundsätzlich besitzen spanische Verben personenbezogene Formen, auch wenn mehrere Personen dieselbe Form teilen können. Él, ella und usted verwenden normalerweise dieselbe Konjugation, ebenso ellos, ellas und ustedes."
+        },
+        {
+          "question": "Was ist der Unterschied zwischen Pretérito und Imperfecto?",
+          "answer": "Das Pretérito indefinido stellt vergangene Handlungen meist als abgeschlossen oder begrenzt dar. Das Imperfecto beschreibt dagegen häufig Gewohnheiten, Hintergrundsituationen, Zustände, Beschreibungen oder nicht klar abgeschlossene Vorgänge."
+        },
+        {
+          "question": "Wie werden zusammengesetzte Zeiten im Spanischen gebildet?",
+          "answer": "Sie bestehen aus einer konjugierten Form von haber und dem Partizip des Hauptverbs. Je nach Form von haber entstehen unter anderem he hablado, había hablado, habré hablado, habría hablado oder haya hablado."
+        },
+        {
+          "question": "Passt sich das spanische Partizip in Perfektformen an das Subjekt an?",
+          "answer": "Normalerweise nicht. Wenn das Partizip zusammen mit haber verwendet wird, bleibt es unverändert: ella ha llegado und ellos han llegado verwenden beide llegado."
+        },
+        {
+          "question": "Wann wird der Subjuntivo im Spanischen verwendet?",
+          "answer": "Der Subjuntivo erscheint häufig in Nebensätzen mit Wunsch, Empfehlung, Zweifel, Emotion, Bewertung, Ziel, Möglichkeit und anderen Kontexten, in denen ein Inhalt nicht einfach als feststehende Tatsache dargestellt wird."
+        },
+        {
+          "question": "Wie bildet man das Presente de subjuntivo?",
+          "answer": "Bei vielen Verben nimmt man die yo-Form des Präsens, entfernt das abschließende -o und fügt die Subjuntivo-Endungen an. -ar-Verben verwenden meist Endungen mit e, während -er- und -ir-Verben überwiegend Endungen mit a erhalten."
+        },
+        {
+          "question": "Warum ähneln sich Futur und Konditional im Spanischen?",
+          "answer": "Beide werden normalerweise durch Endungen gebildet, die an den Infinitiv angefügt werden. Außerdem verwenden viele unregelmäßige Verben denselben Stamm in beiden Formen, etwa tener → tendré → tendría oder hacer → haré → haría."
+        },
+        {
+          "question": "Gibt es im Spanischen einen Imperativ für yo?",
+          "answer": "Nein. Der Imperativ richtet eine Aufforderung, Bitte oder Anweisung an eine andere Person oder Gruppe. Deshalb gibt es keine Form für die erste Person Singular yo. Mit nosotros können jedoch gemeinsame Aufforderungen im Sinn von „Lasst uns …“ ausgedrückt werden."
+        },
+        {
+          "question": "Wie lernt man spanische Verbkonjugationen am besten?",
+          "answer": "Lerne zunächst die regelmäßigen Muster und konzentriere dich anschließend auf die häufigsten unregelmäßigen Verben und wiederkehrenden Stammänderungen. Vergleiche verwandte Zeiten direkt miteinander und übe die Formen in vollständigen Sätzen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "it",
+    "urlSlug": "100-verbi-spagnoli-piu-comuni-coniugati",
+    "entryButtonLabel": "Coniugazioni dei verbi spagnoli",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "meaning": "Significato"
+    },
+    "pronounForms": [
+      {
+        "key": "yo",
+        "label": "yo"
+      },
+      {
+        "key": "tu",
+        "label": "tú"
+      },
+      {
+        "key": "el_ella_usted",
+        "label": "él / ella / usted"
+      },
+      {
+        "key": "nosotros",
+        "label": "nosotros / nosotras"
+      },
+      {
+        "key": "vosotros",
+        "label": "vosotros / vosotras"
+      },
+      {
+        "key": "ellos_ellas_ustedes",
+        "label": "ellos / ellas / ustedes"
+      }
+    ],
+    "metadata": {
+      "title": "100 verbi spagnoli più comuni coniugati",
+      "metaTitle": "100 verbi spagnoli più comuni: coniugazioni per tempo",
+      "metaDescription": "Confronta la coniugazione di 100 verbi spagnoli frequenti nei diversi tempi, modi e persone grammaticali."
+    },
+    "hero": {
+      "heading": "100 verbi spagnoli più comuni coniugati",
+      "subtitle": "Confronta i verbi spagnoli più frequenti nei principali tempi, modi e persone.",
+      "introParagraphs": [
+        "Questa risorsa raccoglie 100 verbi spagnoli frequenti e permette di confrontarne le coniugazioni nei tempi dell’indicativo, del condizionale, del congiuntivo e dell’imperativo inclusi nella pagina.",
+        "Passare da un tempo all’altro e confrontare le forme dello stesso verbo aiuta a riconoscere desinenze ricorrenti, cambiamenti della radice, costruzioni con ausiliare e irregolarità senza dover memorizzare ogni forma separatamente."
+      ]
+    },
+    "overview": {
+      "heading": "Come funziona la coniugazione dei verbi spagnoli",
+      "paragraphs": [
+        "In spagnolo il verbo cambia forma in base alla persona, al numero, al tempo e al modo. I verbi regolari appartengono principalmente alle tre coniugazioni in -ar, -er e -ir, ciascuna con desinenze caratteristiche.",
+        "I tempi semplici, come il presente, il pretérito, l’imperfetto, il futuro e il condizionale, si formano con specifiche desinenze. I tempi composti utilizzano invece una forma coniugata dell’ausiliare haber seguita dal participio passato del verbo principale.",
+        "Lo spagnolo distingue anche diversi modi verbali. L’indicativo presenta normalmente fatti o situazioni come reali o affermati; il congiuntivo compare spesso in contesti di desiderio, dubbio, emozione, valutazione o finalità; l’imperativo viene usato per ordini, istruzioni e consigli."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Scegli un tempo o un modo verbale",
+      "description": "Seleziona una forma per confrontare come cambiano gli stessi verbi spagnoli in base alla persona e al contesto grammaticale.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "conditional",
+          "label": "Condizionale"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Congiuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Presente indicativo",
+        "group": "indicative",
+        "tableHeading": "100 verbi spagnoli comuni al presente indicativo",
+        "tableDescription": "Confronta le forme usate per situazioni presenti, abitudini, verità generali e altre affermazioni all’indicativo.",
+        "grammar": {
+          "heading": "Come si forma il presente indicativo in spagnolo",
+          "description": "Nei verbi regolari si elimina la terminazione dell’infinito -ar, -er o -ir e si aggiunge la desinenza corrispondente alla persona. Molti verbi frequenti presentano anche cambiamenti della radice, modifiche ortografiche o forme irregolari.",
+          "formula": "radice del verbo + desinenza del presente indicativo"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Pretérito indefinido",
+        "group": "indicative",
+        "tableHeading": "100 verbi spagnoli comuni al pretérito indefinido",
+        "tableDescription": "Confronta le forme utilizzate per eventi passati presentati come conclusi o chiaramente delimitati.",
+        "grammar": {
+          "heading": "Come si forma il pretérito indefinido",
+          "description": "I verbi regolari in -ar seguono una serie di desinenze, mentre i verbi in -er e -ir ne condividono un’altra. Molti verbi frequenti presentano radici irregolari o particolari cambiamenti ortografici.",
+          "formula": "radice del pretérito + desinenza corrispondente"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Pretérito imperfecto",
+        "group": "indicative",
+        "tableHeading": "100 verbi spagnoli comuni al pretérito imperfecto",
+        "tableDescription": "Confronta le forme usate per abitudini nel passato, azioni in corso, descrizioni e situazioni senza un limite temporale messo in evidenza.",
+        "grammar": {
+          "heading": "Come si forma il pretérito imperfecto",
+          "description": "I verbi regolari in -ar usano desinenze basate su -aba-, mentre i verbi in -er e -ir usano desinenze basate su -ía-. È uno dei tempi più regolari dello spagnolo e presenta poche eccezioni.",
+          "formula": "radice in -ar + desinenze in -aba; radice in -er/-ir + desinenze in -ía"
+        }
+      },
+      {
+        "key": "present_perfect_indicative",
+        "label": "Pretérito perfecto compuesto",
+        "group": "indicative",
+        "tableHeading": "100 verbi spagnoli comuni al pretérito perfecto compuesto",
+        "tableDescription": "Confronta le forme composte che collegano un’azione conclusa a un periodo o a un contesto presente.",
+        "grammar": {
+          "heading": "Come si forma il pretérito perfecto compuesto",
+          "description": "Si forma con il presente indicativo di haber seguito dal participio passato del verbo principale. In questa costruzione il participio normalmente non varia in genere o numero.",
+          "formula": "presente di haber + participio passato",
+          "additionalFormula": "he / has / ha / hemos / habéis / han + participio passato"
+        }
+      },
+      {
+        "key": "past_perfect_indicative",
+        "label": "Pretérito pluscuamperfecto",
+        "group": "indicative",
+        "tableHeading": "100 verbi spagnoli comuni al pretérito pluscuamperfecto",
+        "tableDescription": "Confronta le forme usate per azioni già concluse prima di un altro momento o evento del passato.",
+        "grammar": {
+          "heading": "Come si forma il pretérito pluscuamperfecto",
+          "description": "Si forma con l’imperfetto indicativo di haber seguito dal participio passato del verbo principale.",
+          "formula": "imperfetto indicativo di haber + participio passato",
+          "additionalFormula": "había / habías / había / habíamos / habíais / habían + participio passato"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futuro semplice",
+        "group": "indicative",
+        "tableHeading": "100 verbi spagnoli comuni al futuro semplice",
+        "tableDescription": "Confronta le forme usate per eventi futuri, previsioni e determinati usi di supposizione o probabilità.",
+        "grammar": {
+          "heading": "Come si forma il futuro semplice in spagnolo",
+          "description": "Nei verbi regolari le desinenze del futuro si aggiungono direttamente all’infinito. Le stesse desinenze valgono per i verbi in -ar, -er e -ir, anche se diversi verbi frequenti utilizzano una radice irregolare.",
+          "formula": "infinito o radice irregolare del futuro + desinenza del futuro"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futuro composto",
+        "group": "indicative",
+        "tableHeading": "100 verbi spagnoli comuni al futuro composto",
+        "tableDescription": "Confronta le forme usate per azioni che saranno concluse prima di un momento futuro o per formulare supposizioni su eventi già avvenuti.",
+        "grammar": {
+          "heading": "Come si forma il futuro composto",
+          "description": "Si forma con il futuro di haber seguito dal participio passato del verbo principale.",
+          "formula": "futuro di haber + participio passato",
+          "additionalFormula": "habré / habrás / habrá / habremos / habréis / habrán + participio passato"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condizionale semplice",
+        "group": "conditional",
+        "tableHeading": "100 verbi spagnoli comuni al condizionale semplice",
+        "tableDescription": "Confronta le forme utilizzate per situazioni ipotetiche, richieste cortesi, conseguenze condizionali e futuro visto dal passato.",
+        "grammar": {
+          "heading": "Come si forma il condizionale semplice in spagnolo",
+          "description": "Le desinenze del condizionale si aggiungono direttamente all’infinito e sono uguali per i verbi in -ar, -er e -ir. I verbi con una radice irregolare al futuro mantengono normalmente la stessa radice anche al condizionale.",
+          "formula": "infinito o radice irregolare + desinenza del condizionale"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Condizionale composto",
+        "group": "conditional",
+        "tableHeading": "100 verbi spagnoli comuni al condizionale composto",
+        "tableDescription": "Confronta le forme impiegate per conseguenze ipotetiche nel passato o azioni che sarebbero avvenute in condizioni diverse.",
+        "grammar": {
+          "heading": "Come si forma il condizionale composto",
+          "description": "Si forma con il condizionale di haber seguito dal participio passato del verbo principale.",
+          "formula": "condizionale di haber + participio passato",
+          "additionalFormula": "habría / habrías / habría / habríamos / habríais / habrían + participio passato"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Presente del congiuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi spagnoli comuni al presente del congiuntivo",
+        "tableDescription": "Confronta le forme frequentemente usate in contesti di desiderio, dubbio, emozione, valutazione, finalità e altre costruzioni che richiedono il congiuntivo.",
+        "grammar": {
+          "heading": "Come si forma il presente del congiuntivo in spagnolo",
+          "description": "Per molti verbi si parte dalla forma yo del presente indicativo, si elimina la -o finale e si aggiungono le desinenze del congiuntivo. I verbi in -ar usano generalmente desinenze con e, mentre quelli in -er e -ir usano desinenze con a.",
+          "formula": "forma yo del presente senza -o + desinenza del congiuntivo"
+        }
+      },
+      {
+        "key": "imperfect_subjunctive",
+        "label": "Imperfetto del congiuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi spagnoli comuni all’imperfetto del congiuntivo",
+        "tableDescription": "Confronta le forme utilizzate nelle ipotesi, nelle subordinate riferite al passato e in altri contesti che richiedono il congiuntivo.",
+        "grammar": {
+          "heading": "Come si forma l’imperfetto del congiuntivo in spagnolo",
+          "description": "Di norma si parte dalla terza persona plurale del pretérito indefinido. Si elimina -ron e si aggiungono le desinenze dell’imperfetto del congiuntivo. In spagnolo esistono sia la serie in -ra sia quella in -se.",
+          "formula": "forma ellos/ellas/ustedes del pretérito senza -ron + desinenza dell’imperfetto del congiuntivo",
+          "additionalFormula": "serie frequente: -ra, -ras, -ra, -ramos, -rais, -ran"
+        }
+      },
+      {
+        "key": "present_perfect_subjunctive",
+        "label": "Pretérito perfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi spagnoli comuni al pretérito perfecto de subjuntivo",
+        "tableDescription": "Confronta le forme composte del congiuntivo per azioni concluse collegate a un contesto presente o futuro.",
+        "grammar": {
+          "heading": "Come si forma il pretérito perfecto de subjuntivo",
+          "description": "Si forma con il presente del congiuntivo di haber seguito dal participio passato del verbo principale.",
+          "formula": "presente del congiuntivo di haber + participio passato",
+          "additionalFormula": "haya / hayas / haya / hayamos / hayáis / hayan + participio passato"
+        }
+      },
+      {
+        "key": "past_perfect_subjunctive",
+        "label": "Pretérito pluscuamperfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi spagnoli comuni al pretérito pluscuamperfecto de subjuntivo",
+        "tableDescription": "Confronta le forme usate per situazioni irreali, ipotetiche o subordinate anteriori a un altro momento del passato.",
+        "grammar": {
+          "heading": "Come si forma il pretérito pluscuamperfecto de subjuntivo",
+          "description": "Si forma con l’imperfetto del congiuntivo di haber seguito dal participio passato. Sono corrette sia le forme con hubiera sia quelle con hubiese.",
+          "formula": "imperfetto del congiuntivo di haber + participio passato",
+          "additionalFormula": "hubiera / hubieras / hubiera / hubiéramos / hubierais / hubieran + participio passato"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo",
+        "group": "imperative",
+        "tableHeading": "100 verbi spagnoli comuni all’imperativo",
+        "tableDescription": "Confronta le forme usate per dare ordini, istruzioni, consigli e raccomandazioni.",
+        "grammar": {
+          "heading": "Come si forma l’imperativo in spagnolo",
+          "description": "La forma dell’imperativo dipende dalla persona e dal fatto che il comando sia affermativo o negativo. Tú e vosotros hanno forme affermative specifiche, mentre usted, ustedes, nosotros e i comandi negativi usano forme collegate al presente del congiuntivo. Non esiste una forma dell’imperativo per yo.",
+          "formula": "forma affermativa secondo la persona; comando negativo: no + presente del congiuntivo"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabella delle coniugazioni dei verbi spagnoli",
+      "description": "Confronta ogni verbo frequente nelle diverse persone grammaticali per il tempo o il modo selezionato.",
+      "scrollHint": "Scorri orizzontalmente per vedere tutte le forme coniugate.",
+      "scrollLeftLabel": "Scorri la tabella verso sinistra",
+      "scrollRightLabel": "Scorri la tabella verso destra",
+      "notes": [
+        "Le desinenze dei verbi spagnoli spesso indicano già la persona, quindi il pronome soggetto può essere omesso quando il contesto rende chiaro chi compie l’azione.",
+        "Usted e ustedes usano forme verbali di terza persona anche se servono per rivolgersi direttamente all’interlocutore o agli interlocutori.",
+        "Vosotros e vosotras sono usati soprattutto in Spagna, mentre ustedes è la forma plurale abituale nella maggior parte dell’America Latina."
+      ]
+    },
+    "rules": {
+      "heading": "Regole fondamentali della coniugazione spagnola",
+      "intro": "Riconoscere alcuni schemi ricorrenti rende più semplice organizzare il sistema verbale spagnolo e riduce il numero di forme da memorizzare separatamente.",
+      "items": [
+        {
+          "heading": "I verbi regolari seguono i modelli in -ar, -er e -ir",
+          "text": "La maggior parte dei verbi regolari appartiene a una delle tre coniugazioni principali. Si elimina la terminazione dell’infinito e si aggiungono le desinenze proprie della persona e del tempo.",
+          "examples": [
+            "hablar → hablo, hablas, hablamos",
+            "comer → como, comes, comemos",
+            "vivir → vivo, vives, vivimos"
+          ]
+        },
+        {
+          "heading": "Molti verbi cambiano la vocale della radice",
+          "text": "Numerosi verbi frequenti modificano una vocale della radice in determinate persone o tempi. Tra i cambiamenti più comuni ci sono e → ie, o → ue ed e → i.",
+          "examples": ["pensar → pienso", "poder → puedo", "pedir → pido"]
+        },
+        {
+          "heading": "I tempi composti usano haber",
+          "text": "Le forme composte si costruiscono con una forma coniugata di haber seguita dal participio passato. L’ausiliare esprime persona, tempo e modo.",
+          "examples": ["he hablado", "habíamos comido", "habrán vivido"]
+        },
+        {
+          "heading": "Il participio con haber resta normalmente invariato",
+          "text": "Nei tempi composti costruiti con haber, il participio passato normalmente non concorda con il genere o il numero del soggetto.",
+          "examples": [
+            "ella ha llegado",
+            "ellos han llegado",
+            "nosotras habíamos llegado"
+          ]
+        },
+        {
+          "heading": "Le radici irregolari spesso ricompaiono nei tempi collegati",
+          "text": "Molti verbi frequenti usano la stessa radice irregolare nel futuro e nel condizionale. Imparare questi collegamenti evita di memorizzare ogni forma separatamente.",
+          "examples": [
+            "tener → tendré → tendría",
+            "hacer → haré → haría",
+            "decir → diré → diría"
+          ]
+        },
+        {
+          "heading": "Il congiuntivo conserva spesso irregolarità già note",
+          "text": "Il presente del congiuntivo deriva spesso dalla forma yo del presente indicativo, mentre l’imperfetto del congiuntivo deriva dalla terza persona plurale del pretérito. Per questo molte irregolarità ricompaiono in forme diverse.",
+          "examples": [
+            "tengo → tenga",
+            "conozco → conozca",
+            "tuvieron → tuviera"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Errori comuni nella coniugazione spagnola",
+      "intro": "Molti errori tipici nascono dall’estensione eccessiva dei modelli regolari o dalla confusione tra tempi e modi con funzioni differenti.",
+      "items": [
+        {
+          "incorrect": "Yo habla español.",
+          "correct": "Yo hablo español.",
+          "explanation": "Il verbo deve concordare con la prima persona singolare. Nel presente di un verbo regolare in -ar, la desinenza di yo è -o."
+        },
+        {
+          "incorrect": "Ayer comía una pizza y después fui a casa.",
+          "correct": "Ayer comí una pizza y después fui a casa.",
+          "explanation": "Quando l’azione viene presentata come un evento concluso all’interno di una sequenza passata, normalmente si usa il pretérito indefinido invece dell’imperfetto."
+        },
+        {
+          "incorrect": "He comido la cena ayer.",
+          "correct": "Comí la cena ayer.",
+          "explanation": "In molte varietà di spagnolo, un’azione collocata in un periodo chiaramente concluso come ayer viene normalmente espressa con il pretérito indefinido. L’uso del pretérito perfecto compuesto varia però a seconda della regione."
+        },
+        {
+          "incorrect": "Espero que viene mañana.",
+          "correct": "Espero que venga mañana.",
+          "explanation": "Dopo espressioni come esperar que, quando si parla di un evento desiderato o atteso, lo spagnolo usa normalmente il congiuntivo."
+        },
+        {
+          "incorrect": "Si tendría más tiempo, viajaría más.",
+          "correct": "Si tuviera más tiempo, viajaría más.",
+          "explanation": "In un’ipotesi di questo tipo, la proposizione introdotta da si richiede normalmente l’imperfetto del congiuntivo, mentre la conseguenza viene espressa al condizionale."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Come usare questa tabella per studiare le coniugazioni",
+      "steps": [
+        {
+          "heading": "Inizia dal presente indicativo",
+          "text": "Usalo come punto di riferimento per confrontare le desinenze di yo, tú, della terza persona, di nosotros, vosotros e della terza persona plurale."
+        },
+        {
+          "heading": "Confronta pretérito e imperfecto",
+          "text": "Osserva lo stesso verbo nei due tempi e collega le forme alla differenza tra eventi conclusi e situazioni abituali, descrittive o in corso nel passato."
+        },
+        {
+          "heading": "Studia insieme i tempi composti",
+          "text": "Confronta pretérito perfecto compuesto, pluscuamperfecto, futuro compuesto, condicional compuesto e i tempi composti del congiuntivo. Tutti seguono lo schema haber più participio."
+        },
+        {
+          "heading": "Individua le irregolarità ricorrenti",
+          "text": "Quando un verbo è irregolare, confrontalo in più tempi. Le stesse radici e modifiche spesso ricompaiono in parti collegate del sistema verbale."
+        },
+        {
+          "heading": "Confronta indicativo e congiuntivo",
+          "text": "Osserva la stessa persona nei due modi e inserisci le forme in frasi complete per capire meglio quali contesti richiedono il congiuntivo."
+        },
+        {
+          "heading": "Usa le forme in frasi complete",
+          "text": "Dopo aver consultato una coniugazione, crea brevi frasi con persone e riferimenti temporali diversi. Il contesto aiuta a ricordare sia la forma sia il suo uso."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per imparare le coniugazioni spagnole",
+      "items": [
+        {
+          "heading": "Impara gli schemi invece delle singole forme",
+          "text": "Memorizza le desinenze ricorrenti dei verbi in -ar, -er e -ir organizzandole per tempo e persona."
+        },
+        {
+          "heading": "Dai priorità ai verbi irregolari più frequenti",
+          "text": "Verbi come ser, estar, ir, haber, tener, hacer, poder, decir e venir sono molto frequenti e meritano una pratica specifica."
+        },
+        {
+          "heading": "Confronta direttamente i tempi che si confondono facilmente",
+          "text": "Pretérito e imperfecto, oppure indicativo e congiuntivo, diventano più chiari quando vengono studiati fianco a fianco."
+        },
+        {
+          "heading": "Nei tempi composti osserva prima haber",
+          "text": "La forma di haber indica persona, tempo e modo, mentre il verbo principale rimane al participio passato."
+        },
+        {
+          "heading": "Esercitati anche senza il pronome soggetto",
+          "text": "Poiché le desinenze spagnole spesso indicano già la persona, è utile imparare a riconoscere le forme verbali sia con sia senza pronome esplicito."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Esercitati con i verbi spagnoli più frequenti",
+      "description": "Usa le coniugazioni in contesto oppure continua con i verbi spagnoli più comuni per rafforzare insieme grammatica e vocabolario.",
+      "primaryLabel": "Esercitati con i verbi spagnoli",
+      "secondaryLabel": "Scopri 100 verbi spagnoli comuni"
+    },
+    "related": {
+      "heading": "Risorse correlate per imparare lo spagnolo",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbi spagnoli più comuni"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbi spagnoli e le loro forme al passato"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario spagnolo per livello QCER"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test di livello di spagnolo"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulla coniugazione spagnola",
+      "items": [
+        {
+          "question": "Che cosa significa coniugare un verbo in spagnolo?",
+          "answer": "Coniugare un verbo spagnolo significa modificarne la forma per esprimere informazioni grammaticali come persona, numero, tempo e modo. Per esempio, hablar può diventare hablo, hablaste, hablaremos o hable a seconda del contesto."
+        },
+        {
+          "question": "I verbi spagnoli cambiano per ogni persona?",
+          "answer": "In generale sì. I verbi hanno forme legate alla persona e al numero, anche se alcune persone condividono la stessa coniugazione. Él, ella e usted usano normalmente la stessa forma, così come ellos, ellas e ustedes."
+        },
+        {
+          "question": "Qual è la differenza tra pretérito e imperfecto?",
+          "answer": "Il pretérito indefinido presenta generalmente un’azione passata come conclusa o delimitata. L’imperfecto descrive invece più spesso abitudini, azioni in corso, stati, descrizioni o situazioni senza un limite finale messo in evidenza."
+        },
+        {
+          "question": "Come si formano i tempi composti in spagnolo?",
+          "answer": "Si formano con una forma coniugata di haber seguita dal participio passato del verbo principale. Modificando la forma di haber si ottengono costruzioni come he hablado, había hablado, habré hablado, habría hablado o haya hablado."
+        },
+        {
+          "question": "Il participio passato concorda con il soggetto nei tempi composti spagnoli?",
+          "answer": "Normalmente no. Quando viene usato con haber, il participio resta invariato: si dice ella ha llegado ed ellos han llegado."
+        },
+        {
+          "question": "Quando si usa il congiuntivo in spagnolo?",
+          "answer": "Il congiuntivo compare spesso nelle subordinate legate a desiderio, raccomandazione, dubbio, emozione, valutazione, finalità, possibilità e altri contesti in cui il contenuto non viene semplicemente presentato come un fatto certo."
+        },
+        {
+          "question": "Come si forma il presente del congiuntivo spagnolo?",
+          "answer": "Per molti verbi si parte dalla forma yo del presente indicativo, si elimina la -o finale e si aggiungono le desinenze del congiuntivo. I verbi in -ar usano generalmente desinenze con e, mentre quelli in -er e -ir usano soprattutto desinenze con a."
+        },
+        {
+          "question": "Perché futuro e condizionale si assomigliano in spagnolo?",
+          "answer": "Entrambi si formano normalmente aggiungendo desinenze all’infinito e molti verbi irregolari usano la stessa radice nei due tempi. Per esempio, tener dà tendré e tendría, mentre hacer dà haré e haría."
+        },
+        {
+          "question": "Esiste un imperativo per yo in spagnolo?",
+          "answer": "No. L’imperativo serve a rivolgere un ordine, una richiesta o un’istruzione a un’altra persona o a un gruppo, quindi non esiste una forma per la prima persona singolare yo. Esistono però forme con nosotros per esprimere proposte o inviti collettivi."
+        },
+        {
+          "question": "Qual è il modo migliore per imparare le coniugazioni spagnole?",
+          "answer": "Conviene imparare prima i modelli regolari, poi concentrarsi sui verbi irregolari più frequenti e sulle irregolarità che ricompaiono in tempi diversi. Confrontare forme correlate e usarle in frasi complete aiuta a collegare la coniugazione al significato e al contesto."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "pt",
+    "urlSlug": "100-verbos-espanhois-mais-comuns-conjugados",
+    "entryButtonLabel": "Conjugações de verbos espanhóis",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "meaning": "Significado"
+    },
+    "pronounForms": [
+      {
+        "key": "yo",
+        "label": "yo"
+      },
+      {
+        "key": "tu",
+        "label": "tú"
+      },
+      {
+        "key": "el_ella_usted",
+        "label": "él / ella / usted"
+      },
+      {
+        "key": "nosotros",
+        "label": "nosotros / nosotras"
+      },
+      {
+        "key": "vosotros",
+        "label": "vosotros / vosotras"
+      },
+      {
+        "key": "ellos_ellas_ustedes",
+        "label": "ellos / ellas / ustedes"
+      }
+    ],
+    "metadata": {
+      "title": "100 verbos espanhóis mais comuns conjugados",
+      "metaTitle": "100 verbos espanhóis mais comuns: conjugações por tempo",
+      "metaDescription": "Compare a conjugação de 100 verbos espanhóis frequentes em diferentes tempos, modos e pessoas gramaticais."
+    },
+    "hero": {
+      "heading": "100 verbos espanhóis mais comuns conjugados",
+      "subtitle": "Compare os verbos espanhóis mais frequentes nos principais tempos, modos e pessoas.",
+      "introParagraphs": [
+        "Esta página reúne 100 verbos frequentes do espanhol e permite comparar suas conjugações nos tempos do indicativo, do condicional, do subjuntivo e do imperativo incluídos neste recurso.",
+        "Alternar entre os tempos e comparar as formas do mesmo verbo ajuda a identificar terminações recorrentes, mudanças no radical, construções com auxiliar e padrões irregulares sem precisar memorizar cada forma isoladamente."
+      ]
+    },
+    "overview": {
+      "heading": "Como funciona a conjugação dos verbos em espanhol",
+      "paragraphs": [
+        "Em espanhol, os verbos mudam de forma de acordo com a pessoa, o número, o tempo e o modo. Os verbos regulares pertencem principalmente às três conjugações terminadas em -ar, -er e -ir, cada uma com padrões próprios de terminações.",
+        "Os tempos simples, como o presente, o pretérito, o imperfeito, o futuro e o condicional, usam terminações específicas. Já os tempos compostos são formados com uma forma conjugada do verbo auxiliar haber seguida do particípio do verbo principal.",
+        "O espanhol também distingue diferentes modos verbais. O indicativo normalmente apresenta fatos ou situações como reais ou afirmados; o subjuntivo aparece com frequência em contextos de desejo, dúvida, emoção, avaliação ou finalidade; e o imperativo é usado para ordens, instruções e recomendações."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Escolha um tempo ou modo verbal",
+      "description": "Selecione uma forma verbal para comparar como os mesmos verbos espanhóis mudam de acordo com a pessoa e o contexto gramatical.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "conditional",
+          "label": "Condicional"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Presente do indicativo",
+        "group": "indicative",
+        "tableHeading": "100 verbos espanhóis frequentes no presente do indicativo",
+        "tableDescription": "Compare as formas usadas para situações atuais, hábitos, verdades gerais e outras afirmações no indicativo.",
+        "grammar": {
+          "heading": "Como formar o presente do indicativo em espanhol",
+          "description": "Nos verbos regulares, retira-se a terminação do infinitivo -ar, -er ou -ir e acrescenta-se a terminação correspondente à pessoa. Muitos verbos frequentes também apresentam mudanças no radical, alterações ortográficas ou formas irregulares.",
+          "formula": "radical do verbo + terminação do presente do indicativo"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Pretérito indefinido",
+        "group": "indicative",
+        "tableHeading": "100 verbos espanhóis frequentes no pretérito indefinido",
+        "tableDescription": "Compare as formas usadas para eventos passados apresentados como concluídos ou claramente delimitados.",
+        "grammar": {
+          "heading": "Como formar o pretérito indefinido em espanhol",
+          "description": "Os verbos regulares em -ar usam um conjunto de terminações, enquanto os verbos em -er e -ir compartilham outro. Muitos verbos frequentes apresentam radicais irregulares ou mudanças ortográficas específicas.",
+          "formula": "radical do pretérito + terminação correspondente"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Pretérito imperfeito do indicativo",
+        "group": "indicative",
+        "tableHeading": "100 verbos espanhóis frequentes no pretérito imperfeito",
+        "tableDescription": "Compare formas usadas para hábitos no passado, ações em andamento, descrições e situações sem um limite temporal destacado.",
+        "grammar": {
+          "heading": "Como formar o pretérito imperfeito em espanhol",
+          "description": "Os verbos regulares em -ar usam terminações baseadas em -aba-, enquanto os verbos em -er e -ir usam terminações baseadas em -ía-. É um dos tempos mais regulares do espanhol.",
+          "formula": "radical de -ar + terminações em -aba; radical de -er/-ir + terminações em -ía"
+        }
+      },
+      {
+        "key": "present_perfect_indicative",
+        "label": "Pretérito perfeito composto do indicativo",
+        "group": "indicative",
+        "tableHeading": "100 verbos espanhóis frequentes no pretérito perfeito composto",
+        "tableDescription": "Compare formas compostas que relacionam uma ação concluída a um período ou contexto presente.",
+        "grammar": {
+          "heading": "Como formar o pretérito perfeito composto em espanhol",
+          "description": "Forma-se com o presente do indicativo de haber seguido do particípio do verbo principal. Nessa construção, o particípio normalmente não varia em gênero ou número.",
+          "formula": "presente de haber + particípio",
+          "additionalFormula": "he / has / ha / hemos / habéis / han + particípio"
+        }
+      },
+      {
+        "key": "past_perfect_indicative",
+        "label": "Pretérito mais-que-perfeito do indicativo",
+        "group": "indicative",
+        "tableHeading": "100 verbos espanhóis frequentes no pretérito mais-que-perfeito",
+        "tableDescription": "Compare formas usadas para ações que já tinham ocorrido antes de outro momento ou acontecimento no passado.",
+        "grammar": {
+          "heading": "Como formar o pretérito mais-que-perfeito em espanhol",
+          "description": "Forma-se com o pretérito imperfeito do indicativo de haber seguido do particípio do verbo principal.",
+          "formula": "pretérito imperfeito de haber + particípio",
+          "additionalFormula": "había / habías / había / habíamos / habíais / habían + particípio"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futuro simples",
+        "group": "indicative",
+        "tableHeading": "100 verbos espanhóis frequentes no futuro simples",
+        "tableDescription": "Compare formas usadas para eventos futuros, previsões e determinados usos de suposição ou probabilidade.",
+        "grammar": {
+          "heading": "Como formar o futuro simples em espanhol",
+          "description": "Nos verbos regulares, as terminações do futuro são acrescentadas diretamente ao infinitivo. As mesmas terminações são usadas com verbos em -ar, -er e -ir, embora vários verbos frequentes apresentem um radical irregular.",
+          "formula": "infinitivo ou radical irregular do futuro + terminação do futuro"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futuro composto",
+        "group": "indicative",
+        "tableHeading": "100 verbos espanhóis frequentes no futuro composto",
+        "tableDescription": "Compare formas usadas para ações que estarão concluídas antes de um momento futuro ou para formular suposições sobre acontecimentos já terminados.",
+        "grammar": {
+          "heading": "Como formar o futuro composto em espanhol",
+          "description": "Forma-se com o futuro de haber seguido do particípio do verbo principal.",
+          "formula": "futuro de haber + particípio",
+          "additionalFormula": "habré / habrás / habrá / habremos / habréis / habrán + particípio"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condicional simples",
+        "group": "conditional",
+        "tableHeading": "100 verbos espanhóis frequentes no condicional simples",
+        "tableDescription": "Compare formas usadas para situações hipotéticas, pedidos corteses, consequências condicionais e futuro visto a partir do passado.",
+        "grammar": {
+          "heading": "Como formar o condicional simples em espanhol",
+          "description": "As terminações do condicional são acrescentadas diretamente ao infinitivo e são iguais para os verbos em -ar, -er e -ir. Os verbos com radical irregular no futuro normalmente mantêm o mesmo radical no condicional.",
+          "formula": "infinitivo ou radical irregular + terminação do condicional"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Condicional composto",
+        "group": "conditional",
+        "tableHeading": "100 verbos espanhóis frequentes no condicional composto",
+        "tableDescription": "Compare formas usadas para consequências hipotéticas no passado ou ações que teriam acontecido em outras condições.",
+        "grammar": {
+          "heading": "Como formar o condicional composto em espanhol",
+          "description": "Forma-se com o condicional de haber seguido do particípio do verbo principal.",
+          "formula": "condicional de haber + particípio",
+          "additionalFormula": "habría / habrías / habría / habríamos / habríais / habrían + particípio"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Presente do subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos espanhóis frequentes no presente do subjuntivo",
+        "tableDescription": "Compare formas usadas com frequência em contextos de desejo, dúvida, emoção, avaliação, finalidade e outras construções que exigem o subjuntivo.",
+        "grammar": {
+          "heading": "Como formar o presente do subjuntivo em espanhol",
+          "description": "Para muitos verbos, parte-se da forma yo do presente do indicativo, retira-se o -o final e acrescentam-se as terminações do subjuntivo. Verbos em -ar geralmente usam terminações com e, enquanto verbos em -er e -ir usam terminações com a.",
+          "formula": "forma yo do presente sem -o + terminação do presente do subjuntivo"
+        }
+      },
+      {
+        "key": "imperfect_subjunctive",
+        "label": "Pretérito imperfeito do subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos espanhóis frequentes no pretérito imperfeito do subjuntivo",
+        "tableDescription": "Compare formas usadas em hipóteses, orações subordinadas relacionadas ao passado e outros contextos que exigem o subjuntivo.",
+        "grammar": {
+          "heading": "Como formar o pretérito imperfeito do subjuntivo em espanhol",
+          "description": "Normalmente parte-se da terceira pessoa do plural do pretérito indefinido. Retira-se -ron e acrescentam-se as terminações do imperfeito do subjuntivo. O espanhol possui tanto a série em -ra quanto a série em -se.",
+          "formula": "forma ellos/ellas/ustedes do pretérito sem -ron + terminação do imperfeito do subjuntivo",
+          "additionalFormula": "série frequente: -ra, -ras, -ra, -ramos, -rais, -ran"
+        }
+      },
+      {
+        "key": "present_perfect_subjunctive",
+        "label": "Pretérito perfeito do subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos espanhóis frequentes no pretérito perfeito do subjuntivo",
+        "tableDescription": "Compare formas compostas do subjuntivo para ações concluídas relacionadas a um contexto presente ou futuro.",
+        "grammar": {
+          "heading": "Como formar o pretérito perfeito do subjuntivo em espanhol",
+          "description": "Forma-se com o presente do subjuntivo de haber seguido do particípio do verbo principal.",
+          "formula": "presente do subjuntivo de haber + particípio",
+          "additionalFormula": "haya / hayas / haya / hayamos / hayáis / hayan + particípio"
+        }
+      },
+      {
+        "key": "past_perfect_subjunctive",
+        "label": "Pretérito mais-que-perfeito do subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos espanhóis frequentes no pretérito mais-que-perfeito do subjuntivo",
+        "tableDescription": "Compare formas usadas para situações irreais, hipotéticas ou subordinadas anteriores a outro momento do passado.",
+        "grammar": {
+          "heading": "Como formar o pretérito mais-que-perfeito do subjuntivo em espanhol",
+          "description": "Forma-se com o pretérito imperfeito do subjuntivo de haber seguido do particípio. Tanto as formas com hubiera quanto as formas com hubiese são gramaticalmente corretas.",
+          "formula": "pretérito imperfeito do subjuntivo de haber + particípio",
+          "additionalFormula": "hubiera / hubieras / hubiera / hubiéramos / hubierais / hubieran + particípio"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo",
+        "group": "imperative",
+        "tableHeading": "100 verbos espanhóis frequentes no imperativo",
+        "tableDescription": "Compare formas usadas para dar ordens, instruções, conselhos e recomendações.",
+        "grammar": {
+          "heading": "Como formar o imperativo em espanhol",
+          "description": "A forma do imperativo depende da pessoa e de a ordem ser afirmativa ou negativa. Tú e vosotros têm formas afirmativas específicas, enquanto usted, ustedes, nosotros e as ordens negativas usam formas relacionadas ao presente do subjuntivo. Não existe uma forma de imperativo para yo.",
+          "formula": "forma afirmativa de acordo com a pessoa; ordem negativa: no + presente do subjuntivo"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabela de conjugação dos verbos espanhóis",
+      "description": "Compare cada verbo frequente nas diferentes pessoas gramaticais para o tempo ou modo selecionado.",
+      "scrollHint": "Deslize horizontalmente para ver todas as formas conjugadas.",
+      "scrollLeftLabel": "Deslizar tabela para a esquerda",
+      "scrollRightLabel": "Deslizar tabela para a direita",
+      "notes": [
+        "As terminações dos verbos espanhóis frequentemente já indicam a pessoa, por isso o pronome sujeito pode ser omitido quando o contexto deixa claro quem realiza a ação.",
+        "Usted e ustedes usam formas verbais de terceira pessoa, embora sejam empregados para se dirigir diretamente a uma ou mais pessoas.",
+        "Vosotros e vosotras são usados principalmente na Espanha, enquanto ustedes é a forma plural de tratamento habitual na maior parte da América Latina."
+      ]
+    },
+    "rules": {
+      "heading": "Regras essenciais da conjugação espanhola",
+      "intro": "Reconhecer alguns padrões recorrentes facilita a compreensão do sistema verbal espanhol e reduz a necessidade de memorizar cada forma separadamente.",
+      "items": [
+        {
+          "heading": "Os verbos regulares seguem os padrões em -ar, -er e -ir",
+          "text": "A maioria dos verbos regulares pertence a uma das três conjugações principais. Retira-se a terminação do infinitivo e acrescentam-se as terminações correspondentes à pessoa e ao tempo.",
+          "examples": [
+            "hablar → hablo, hablas, hablamos",
+            "comer → como, comes, comemos",
+            "vivir → vivo, vives, vivimos"
+          ]
+        },
+        {
+          "heading": "Muitos verbos mudam a vogal do radical",
+          "text": "Diversos verbos frequentes apresentam mudanças vocálicas no radical em determinadas pessoas e tempos. Entre as mais comuns estão e → ie, o → ue e e → i.",
+          "examples": ["pensar → pienso", "poder → puedo", "pedir → pido"]
+        },
+        {
+          "heading": "Os tempos compostos usam haber",
+          "text": "As formas compostas são construídas com uma forma conjugada de haber seguida do particípio. O auxiliar expressa a pessoa, o tempo e o modo.",
+          "examples": ["he hablado", "habíamos comido", "habrán vivido"]
+        },
+        {
+          "heading": "O particípio com haber normalmente permanece invariável",
+          "text": "Nos tempos compostos formados com haber, o particípio normalmente não concorda com o gênero ou o número do sujeito.",
+          "examples": [
+            "ella ha llegado",
+            "ellos han llegado",
+            "nosotras habíamos llegado"
+          ]
+        },
+        {
+          "heading": "Radicais irregulares costumam reaparecer em tempos relacionados",
+          "text": "Muitos verbos frequentes usam o mesmo radical irregular no futuro e no condicional. Aprender essas relações evita memorizar cada forma de maneira isolada.",
+          "examples": [
+            "tener → tendré → tendría",
+            "hacer → haré → haría",
+            "decir → diré → diría"
+          ]
+        },
+        {
+          "heading": "O subjuntivo frequentemente preserva irregularidades já conhecidas",
+          "text": "O presente do subjuntivo costuma derivar da forma yo do presente do indicativo, enquanto o imperfeito do subjuntivo deriva da terceira pessoa do plural do pretérito. Por isso, muitas irregularidades reaparecem.",
+          "examples": [
+            "tengo → tenga",
+            "conozco → conozca",
+            "tuvieron → tuviera"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Erros comuns na conjugação espanhola",
+      "intro": "Muitos erros surgem quando padrões regulares são generalizados demais ou quando tempos e modos com funções diferentes são confundidos.",
+      "items": [
+        {
+          "incorrect": "Yo habla español.",
+          "correct": "Yo hablo español.",
+          "explanation": "O verbo deve concordar com a primeira pessoa do singular. No presente de um verbo regular em -ar, a terminação de yo é -o."
+        },
+        {
+          "incorrect": "Ayer comía una pizza y después fui a casa.",
+          "correct": "Ayer comí una pizza y después fui a casa.",
+          "explanation": "Quando a ação é apresentada como um acontecimento concluído dentro de uma sequência passada, normalmente se usa o pretérito indefinido em vez do imperfeito."
+        },
+        {
+          "incorrect": "He comido la cena ayer.",
+          "correct": "Comí la cena ayer.",
+          "explanation": "Em muitas variedades do espanhol, uma ação situada em um período claramente concluído como ayer costuma ser expressa com o pretérito indefinido. O uso do pretérito perfeito composto varia, porém, de acordo com a região."
+        },
+        {
+          "incorrect": "Espero que viene mañana.",
+          "correct": "Espero que venga mañana.",
+          "explanation": "Depois de expressões como esperar que, quando se fala de um acontecimento desejado ou esperado, o espanhol normalmente usa o subjuntivo."
+        },
+        {
+          "incorrect": "Si tendría más tiempo, viajaría más.",
+          "correct": "Si tuviera más tiempo, viajaría más.",
+          "explanation": "Em uma hipótese desse tipo, a oração introduzida por si normalmente usa o imperfeito do subjuntivo, enquanto a consequência aparece no condicional."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Como usar esta tabela para estudar as conjugações",
+      "steps": [
+        {
+          "heading": "Comece pelo presente do indicativo",
+          "text": "Use-o como ponto de partida para comparar as terminações de yo, tú, da terceira pessoa, de nosotros, vosotros e da terceira pessoa do plural."
+        },
+        {
+          "heading": "Compare o pretérito e o imperfeito",
+          "text": "Observe o mesmo verbo nos dois tempos e relacione as formas à diferença entre acontecimentos concluídos e situações habituais, descritivas ou em andamento no passado."
+        },
+        {
+          "heading": "Estude os tempos compostos em conjunto",
+          "text": "Compare o pretérito perfeito composto, o mais-que-perfeito, o futuro composto, o condicional composto e os tempos compostos do subjuntivo. Todos seguem o padrão haber mais particípio."
+        },
+        {
+          "heading": "Identifique irregularidades recorrentes",
+          "text": "Quando um verbo for irregular, compare suas formas em vários tempos. Os mesmos radicais e mudanças frequentemente reaparecem em partes relacionadas do sistema verbal."
+        },
+        {
+          "heading": "Compare indicativo e subjuntivo",
+          "text": "Observe a mesma pessoa nos dois modos e use as formas em frases completas para entender melhor quais contextos exigem o subjuntivo."
+        },
+        {
+          "heading": "Use as formas em frases completas",
+          "text": "Depois de consultar uma conjugação, crie frases curtas com diferentes pessoas e referências temporais. O contexto ajuda a memorizar tanto a forma quanto o uso."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para dominar as conjugações espanholas",
+      "items": [
+        {
+          "heading": "Aprenda padrões em vez de formas isoladas",
+          "text": "Memorize as terminações recorrentes dos verbos em -ar, -er e -ir organizadas por tempo e pessoa."
+        },
+        {
+          "heading": "Priorize os verbos irregulares mais frequentes",
+          "text": "Verbos como ser, estar, ir, haber, tener, hacer, poder, decir e venir aparecem com muita frequência e merecem prática específica."
+        },
+        {
+          "heading": "Compare diretamente os tempos que causam confusão",
+          "text": "Pretérito e imperfeito, ou indicativo e subjuntivo, ficam mais claros quando suas formas e funções são estudadas lado a lado."
+        },
+        {
+          "heading": "Nos tempos compostos, observe primeiro haber",
+          "text": "A forma de haber indica a pessoa, o tempo e o modo, enquanto o verbo principal permanece no particípio."
+        },
+        {
+          "heading": "Pratique também sem pronome sujeito",
+          "text": "Como as terminações espanholas muitas vezes já indicam a pessoa, é útil aprender a reconhecer as formas verbais tanto com quanto sem o pronome explícito."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pratique os verbos espanhóis mais frequentes",
+      "description": "Use as conjugações em contexto ou continue estudando os verbos espanhóis mais comuns para reforçar a gramática e o vocabulário ao mesmo tempo.",
+      "primaryLabel": "Praticar verbos espanhóis",
+      "secondaryLabel": "Ver 100 verbos espanhóis comuns"
+    },
+    "related": {
+      "heading": "Recursos relacionados para aprender espanhol",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbos espanhóis mais comuns"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbos espanhóis e suas formas no passado"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulário espanhol por nível do QECR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Teste de nível de espanhol"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre a conjugação espanhola",
+      "items": [
+        {
+          "question": "O que significa conjugar um verbo em espanhol?",
+          "answer": "Conjugar um verbo em espanhol significa mudar sua forma para expressar informações gramaticais como pessoa, número, tempo e modo. Por exemplo, hablar pode se transformar em hablo, hablaste, hablaremos ou hable, dependendo do contexto."
+        },
+        {
+          "question": "Os verbos espanhóis mudam em cada pessoa?",
+          "answer": "Em geral, sim. Os verbos apresentam formas relacionadas à pessoa e ao número, embora algumas pessoas compartilhem a mesma forma. Él, ella e usted normalmente usam a mesma conjugação, assim como ellos, ellas e ustedes."
+        },
+        {
+          "question": "Qual é a diferença entre pretérito e imperfeito em espanhol?",
+          "answer": "O pretérito indefinido normalmente apresenta uma ação passada como concluída ou delimitada. O imperfeito costuma descrever hábitos, ações em andamento, estados, descrições ou situações sem um ponto final destacado."
+        },
+        {
+          "question": "Como são formados os tempos compostos em espanhol?",
+          "answer": "Eles são formados com uma forma conjugada de haber seguida do particípio do verbo principal. Alterando a forma de haber, surgem construções como he hablado, había hablado, habré hablado, habría hablado e haya hablado."
+        },
+        {
+          "question": "O particípio concorda com o sujeito nos tempos compostos espanhóis?",
+          "answer": "Normalmente não. Quando é usado com haber, o particípio permanece invariável: diz-se ella ha llegado e ellos han llegado."
+        },
+        {
+          "question": "Quando se usa o subjuntivo em espanhol?",
+          "answer": "O subjuntivo aparece com frequência em orações subordinadas relacionadas a desejo, recomendação, dúvida, emoção, avaliação, finalidade, possibilidade e outros contextos em que o conteúdo não é simplesmente apresentado como um fato afirmado."
+        },
+        {
+          "question": "Como se forma o presente do subjuntivo em espanhol?",
+          "answer": "Para muitos verbos, parte-se da forma yo do presente do indicativo, retira-se o -o final e acrescentam-se as terminações do subjuntivo. Os verbos em -ar geralmente usam terminações com e, enquanto os verbos em -er e -ir usam principalmente terminações com a."
+        },
+        {
+          "question": "Por que o futuro e o condicional se parecem em espanhol?",
+          "answer": "Ambos normalmente são formados acrescentando terminações ao infinitivo, e muitos verbos irregulares usam o mesmo radical nos dois tempos. Por exemplo, tener gera tendré e tendría, enquanto hacer gera haré e haría."
+        },
+        {
+          "question": "Existe imperativo para yo em espanhol?",
+          "answer": "Não. O imperativo serve para dirigir uma ordem, pedido ou instrução a outra pessoa ou grupo, portanto não existe forma para a primeira pessoa do singular yo. Existem, porém, formas com nosotros para expressar propostas ou ações coletivas."
+        },
+        {
+          "question": "Qual é a melhor maneira de aprender as conjugações espanholas?",
+          "answer": "Aprenda primeiro os padrões regulares e depois concentre-se nos verbos irregulares mais frequentes e nas irregularidades que reaparecem em diferentes tempos. Comparar formas relacionadas e praticá-las em frases completas ajuda a associar cada conjugação ao seu significado e contexto."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "es",
+    "uiLanguage": "ru",
+    "urlSlug": "100-samyh-upotreblyaemyh-ispanskih-glagolov-spryazhenie",
+    "entryButtonLabel": "Спряжение испанских глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "meaning": "Значение"
+    },
+    "pronounForms": [
+      {
+        "key": "yo",
+        "label": "yo"
+      },
+      {
+        "key": "tu",
+        "label": "tú"
+      },
+      {
+        "key": "el_ella_usted",
+        "label": "él / ella / usted"
+      },
+      {
+        "key": "nosotros",
+        "label": "nosotros / nosotras"
+      },
+      {
+        "key": "vosotros",
+        "label": "vosotros / vosotras"
+      },
+      {
+        "key": "ellos_ellas_ustedes",
+        "label": "ellos / ellas / ustedes"
+      }
+    ],
+    "metadata": {
+      "title": "100 самых употребительных испанских глаголов: спряжение",
+      "metaTitle": "100 самых употребительных испанских глаголов и их спряжение",
+      "metaDescription": "Сравнивайте спряжение 100 частотных испанских глаголов в разных временах, наклонениях и лицах."
+    },
+    "hero": {
+      "heading": "100 самых употребительных испанских глаголов и их спряжение",
+      "subtitle": "Сравнивайте частотные испанские глаголы в основных временах, наклонениях и лицах.",
+      "introParagraphs": [
+        "На этой странице собраны 100 часто употребляемых испанских глаголов с возможностью сравнивать их формы в представленных временах изъявительного наклонения, условном наклонении, сослагательном наклонении и императиве.",
+        "Переключение между временами и сравнение форм одного и того же глагола помогают быстрее замечать типичные окончания, изменения основы, конструкции со вспомогательным глаголом и повторяющиеся неправильные формы."
+      ]
+    },
+    "overview": {
+      "heading": "Как работает спряжение испанских глаголов",
+      "paragraphs": [
+        "В испанском языке форма глагола меняется в зависимости от лица, числа, времени и наклонения. Регулярные глаголы в основном относятся к трем типам с окончаниями инфинитива -ar, -er и -ir, каждый из которых имеет свои типичные модели окончаний.",
+        "Простые формы, такие как настоящее время, Pretérito, Imperfecto, будущее время и условное наклонение, образуются с помощью специальных окончаний. Сложные формы строятся с помощью спрягаемой формы вспомогательного глагола haber и причастия прошедшего времени основного глагола.",
+        "В испанском также важно различать наклонения. Indicativo обычно представляет ситуацию как факт или утверждение, Subjuntivo часто используется при желании, сомнении, эмоции, оценке, цели и других зависимых контекстах, а Imperativo служит для приказов, просьб, инструкций и советов."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Выберите время или наклонение",
+      "description": "Выберите форму, чтобы сравнить, как одни и те же испанские глаголы изменяются по лицам и в разных грамматических контекстах.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Изъявительное наклонение"
+        },
+        {
+          "key": "conditional",
+          "label": "Условное наклонение"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Сослагательное наклонение"
+        },
+        {
+          "key": "imperative",
+          "label": "Повелительное наклонение"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Настоящее время Indicativo",
+        "group": "indicative",
+        "tableHeading": "100 частотных испанских глаголов в настоящем времени",
+        "tableDescription": "Сравнивайте формы для действий и состояний в настоящем, привычных действий, общих фактов и других значений изъявительного наклонения.",
+        "grammar": {
+          "heading": "Как образуется настоящее время в испанском",
+          "description": "У регулярных глаголов окончание инфинитива -ar, -er или -ir отбрасывается, после чего к основе добавляется окончание, соответствующее лицу. Многие частотные глаголы также имеют чередования в основе, орфографические изменения или неправильные формы.",
+          "formula": "основа глагола + окончание настоящего времени"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Pretérito indefinido",
+        "group": "indicative",
+        "tableHeading": "100 частотных испанских глаголов в Pretérito indefinido",
+        "tableDescription": "Сравнивайте формы для завершенных или четко ограниченных событий в прошлом.",
+        "grammar": {
+          "heading": "Как образуется Pretérito indefinido",
+          "description": "Регулярные глаголы на -ar используют один набор окончаний, а глаголы на -er и -ir — другой. У многих частотных глаголов в этом времени встречаются неправильные основы и особые орфографические изменения.",
+          "formula": "основа Pretérito + соответствующее окончание"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Pretérito imperfecto",
+        "group": "indicative",
+        "tableHeading": "100 частотных испанских глаголов в Pretérito imperfecto",
+        "tableDescription": "Сравнивайте формы для повторяющихся действий в прошлом, фоновых процессов, описаний и ситуаций без подчеркнутой конечной границы.",
+        "grammar": {
+          "heading": "Как образуется Pretérito imperfecto",
+          "description": "Регулярные глаголы на -ar используют окончания с элементом -aba-, а глаголы на -er и -ir — окончания с -ía-. Это одно из наиболее регулярных времен испанского языка.",
+          "formula": "основа -ar + окончания с -aba; основа -er/-ir + окончания с -ía"
+        }
+      },
+      {
+        "key": "present_perfect_indicative",
+        "label": "Pretérito perfecto compuesto",
+        "group": "indicative",
+        "tableHeading": "100 частотных испанских глаголов в Pretérito perfecto compuesto",
+        "tableDescription": "Сравнивайте сложные формы для завершенных действий, связанных с настоящим периодом или текущей ситуацией.",
+        "grammar": {
+          "heading": "Как образуется Pretérito perfecto compuesto",
+          "description": "Форма образуется с помощью настоящего времени haber и причастия прошедшего времени основного глагола. В этой конструкции причастие обычно не изменяется по роду и числу.",
+          "formula": "настоящее время haber + причастие прошедшего времени",
+          "additionalFormula": "he / has / ha / hemos / habéis / han + причастие"
+        }
+      },
+      {
+        "key": "past_perfect_indicative",
+        "label": "Pretérito pluscuamperfecto",
+        "group": "indicative",
+        "tableHeading": "100 частотных испанских глаголов в Pretérito pluscuamperfecto",
+        "tableDescription": "Сравнивайте формы для действий, которые уже завершились до другого момента или события в прошлом.",
+        "grammar": {
+          "heading": "Как образуется Pretérito pluscuamperfecto",
+          "description": "Эта форма образуется с помощью Pretérito imperfecto глагола haber и причастия прошедшего времени основного глагола.",
+          "formula": "Pretérito imperfecto от haber + причастие",
+          "additionalFormula": "había / habías / había / habíamos / habíais / habían + причастие"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futuro simple",
+        "group": "indicative",
+        "tableHeading": "100 частотных испанских глаголов в Futuro simple",
+        "tableDescription": "Сравнивайте формы для будущих событий, прогнозов, предположений и некоторых значений вероятности.",
+        "grammar": {
+          "heading": "Как образуется Futuro simple",
+          "description": "У регулярных глаголов окончания будущего времени добавляются прямо к полному инфинитиву. Окончания одинаковы для глаголов на -ar, -er и -ir, но несколько частотных глаголов используют неправильную основу.",
+          "formula": "инфинитив или неправильная основа будущего времени + окончание"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futuro compuesto",
+        "group": "indicative",
+        "tableHeading": "100 частотных испанских глаголов в Futuro compuesto",
+        "tableDescription": "Сравнивайте формы для действий, которые будут завершены к определенному моменту в будущем, а также для предположений о завершенных событиях.",
+        "grammar": {
+          "heading": "Как образуется Futuro compuesto",
+          "description": "Эта форма строится с помощью будущего времени haber и причастия прошедшего времени основного глагола.",
+          "formula": "будущее время haber + причастие",
+          "additionalFormula": "habré / habrás / habrá / habremos / habréis / habrán + причастие"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condicional simple",
+        "group": "conditional",
+        "tableHeading": "100 частотных испанских глаголов в Condicional simple",
+        "tableDescription": "Сравнивайте формы для гипотетических ситуаций, вежливых высказываний, условных последствий и будущего с точки зрения прошлого.",
+        "grammar": {
+          "heading": "Как образуется Condicional simple",
+          "description": "Окончания условного наклонения добавляются прямо к инфинитиву и одинаковы для глаголов на -ar, -er и -ir. Глаголы с неправильной основой в будущем времени обычно используют ту же основу и в условном наклонении.",
+          "formula": "инфинитив или неправильная основа + окончание Condicional"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Condicional compuesto",
+        "group": "conditional",
+        "tableHeading": "100 частотных испанских глаголов в Condicional compuesto",
+        "tableDescription": "Сравнивайте формы для гипотетических последствий в прошлом и действий, которые произошли бы при других условиях.",
+        "grammar": {
+          "heading": "Как образуется Condicional compuesto",
+          "description": "Эта форма состоит из Condicional глагола haber и причастия прошедшего времени основного глагола.",
+          "formula": "Condicional от haber + причастие",
+          "additionalFormula": "habría / habrías / habría / habríamos / habríais / habrían + причастие"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Presente de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 частотных испанских глаголов в Presente de subjuntivo",
+        "tableDescription": "Сравнивайте формы, которые часто используются при желании, сомнении, эмоции, оценке, цели и в других конструкциях с Subjuntivo.",
+        "grammar": {
+          "heading": "Как образуется Presente de subjuntivo",
+          "description": "Для многих глаголов исходной служит форма yo настоящего времени Indicativo. Конечное -o убирается, после чего добавляются окончания Subjuntivo. Глаголы на -ar обычно получают окончания с e, а глаголы на -er и -ir — с a.",
+          "formula": "форма yo настоящего времени без -o + окончание Presente de subjuntivo"
+        }
+      },
+      {
+        "key": "imperfect_subjunctive",
+        "label": "Pretérito imperfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 частотных испанских глаголов в Pretérito imperfecto de subjuntivo",
+        "tableDescription": "Сравнивайте формы для гипотетических ситуаций, зависимых конструкций в прошлом и других контекстов, требующих Subjuntivo.",
+        "grammar": {
+          "heading": "Как образуется Pretérito imperfecto de subjuntivo",
+          "description": "Обычно за основу берется форма третьего лица множественного числа Pretérito indefinido. От нее отбрасывается -ron, после чего добавляются окончания Imperfecto de subjuntivo. В испанском существуют как формы на -ra, так и формы на -se.",
+          "formula": "форма ellos/ellas/ustedes в Pretérito без -ron + окончание Imperfecto de subjuntivo",
+          "additionalFormula": "частая серия: -ra, -ras, -ra, -ramos, -rais, -ran"
+        }
+      },
+      {
+        "key": "present_perfect_subjunctive",
+        "label": "Pretérito perfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 частотных испанских глаголов в Pretérito perfecto de subjuntivo",
+        "tableDescription": "Сравнивайте сложные формы Subjuntivo для завершенных действий, связанных с настоящим или будущим контекстом.",
+        "grammar": {
+          "heading": "Как образуется Pretérito perfecto de subjuntivo",
+          "description": "Эта форма образуется с помощью Presente de subjuntivo глагола haber и причастия прошедшего времени основного глагола.",
+          "formula": "Presente de subjuntivo от haber + причастие",
+          "additionalFormula": "haya / hayas / haya / hayamos / hayáis / hayan + причастие"
+        }
+      },
+      {
+        "key": "past_perfect_subjunctive",
+        "label": "Pretérito pluscuamperfecto de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 частотных испанских глаголов в Pretérito pluscuamperfecto de subjuntivo",
+        "tableDescription": "Сравнивайте формы для нереальных, гипотетических или зависимых действий, предшествующих другому моменту в прошлом.",
+        "grammar": {
+          "heading": "Как образуется Pretérito pluscuamperfecto de subjuntivo",
+          "description": "Эта форма строится с помощью Pretérito imperfecto de subjuntivo глагола haber и причастия прошедшего времени. Варианты с hubiera и hubiese грамматически правильны.",
+          "formula": "Imperfecto de subjuntivo от haber + причастие",
+          "additionalFormula": "hubiera / hubieras / hubiera / hubiéramos / hubierais / hubieran + причастие"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo",
+        "group": "imperative",
+        "tableHeading": "100 частотных испанских глаголов в Imperativo",
+        "tableDescription": "Сравнивайте формы для приказов, просьб, инструкций, советов и рекомендаций.",
+        "grammar": {
+          "heading": "Как образуется испанский Imperativo",
+          "description": "Форма Imperativo зависит от лица и от того, является ли приказ утвердительным или отрицательным. У tú и vosotros есть особые утвердительные формы, а usted, ustedes, nosotros и отрицательные команды используют формы, связанные с Presente de subjuntivo. Формы Imperativo для yo не существует.",
+          "formula": "утвердительная форма по лицу; отрицательная команда: no + Presente de subjuntivo"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Таблица спряжения испанских глаголов",
+      "description": "Сравнивайте каждый частотный глагол по основным испанским лицам для выбранного времени или наклонения.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все формы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо",
+      "notes": [
+        "Испанские глагольные окончания часто уже указывают на лицо, поэтому подлежащее-местоимение нередко опускается, если из формы или контекста понятно, о ком идет речь.",
+        "Usted и ustedes используют формы третьего лица, несмотря на то что служат для прямого обращения к одному или нескольким собеседникам.",
+        "Vosotros и vosotras в основном употребляются в Испании, тогда как ustedes является обычной формой множественного обращения в большинстве стран Латинской Америки."
+      ]
+    },
+    "rules": {
+      "heading": "Основные правила спряжения испанских глаголов",
+      "intro": "Если понимать повторяющиеся модели, систему испанского спряжения можно изучать намного эффективнее, чем заучивая каждую форму отдельно.",
+      "items": [
+        {
+          "heading": "Регулярные глаголы следуют моделям -ar, -er и -ir",
+          "text": "Большинство регулярных глаголов относится к одной из трех основных групп. Окончание инфинитива убирается, а к основе добавляется окончание, соответствующее лицу и времени.",
+          "examples": [
+            "hablar → hablo, hablas, hablamos",
+            "comer → como, comes, comemos",
+            "vivir → vivo, vives, vivimos"
+          ]
+        },
+        {
+          "heading": "У многих глаголов меняется гласная в основе",
+          "text": "У частотных испанских глаголов в некоторых лицах и временах встречаются чередования гласных в основе. Особенно распространены e → ie, o → ue и e → i.",
+          "examples": ["pensar → pienso", "poder → puedo", "pedir → pido"]
+        },
+        {
+          "heading": "Сложные времена образуются с haber",
+          "text": "Сложные формы строятся с помощью спрягаемой формы haber и причастия прошедшего времени. Именно haber выражает лицо, время и наклонение.",
+          "examples": ["he hablado", "habíamos comido", "habrán vivido"]
+        },
+        {
+          "heading": "Причастие с haber обычно не изменяется",
+          "text": "В сложных временах с haber причастие прошедшего времени обычно не согласуется с подлежащим по роду или числу.",
+          "examples": [
+            "ella ha llegado",
+            "ellos han llegado",
+            "nosotras habíamos llegado"
+          ]
+        },
+        {
+          "heading": "Неправильные основы часто повторяются",
+          "text": "Многие частотные глаголы используют одну и ту же неправильную основу в будущем времени и Condicional. Это позволяет учить связанные формы вместе.",
+          "examples": [
+            "tener → tendré → tendría",
+            "hacer → haré → haría",
+            "decir → diré → diría"
+          ]
+        },
+        {
+          "heading": "Subjuntivo часто сохраняет уже знакомые неправильности",
+          "text": "Presente de subjuntivo у многих глаголов строится от формы yo настоящего времени, а Pretérito imperfecto de subjuntivo — от третьего лица множественного числа Pretérito. Поэтому знакомые неправильные основы часто появляются снова.",
+          "examples": [
+            "tengo → tenga",
+            "conozco → conozca",
+            "tuvieron → tuviera"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Частые ошибки при спряжении испанских глаголов",
+      "intro": "Многие типичные ошибки возникают из-за чрезмерного переноса регулярных моделей или смешения времен и наклонений с разными функциями.",
+      "items": [
+        {
+          "incorrect": "Yo habla español.",
+          "correct": "Yo hablo español.",
+          "explanation": "Глагол должен согласовываться с первым лицом единственного числа. У регулярного глагола на -ar окончание формы yo в настоящем времени — -o."
+        },
+        {
+          "incorrect": "Ayer comía una pizza y después fui a casa.",
+          "correct": "Ayer comí una pizza y después fui a casa.",
+          "explanation": "Если действие представлено как завершенное событие в последовательности прошлых действий, обычно используется Pretérito indefinido, а не Imperfecto."
+        },
+        {
+          "incorrect": "He comido la cena ayer.",
+          "correct": "Comí la cena ayer.",
+          "explanation": "Во многих вариантах испанского завершенное действие в явно законченном периоде, например ayer, обычно выражается Pretérito indefinido. При этом употребление Pretérito perfecto compuesto заметно различается по регионам."
+        },
+        {
+          "incorrect": "Espero que viene mañana.",
+          "correct": "Espero que venga mañana.",
+          "explanation": "После выражений типа esperar que при желаемом или ожидаемом событии обычно используется Subjuntivo."
+        },
+        {
+          "incorrect": "Si tendría más tiempo, viajaría más.",
+          "correct": "Si tuviera más tiempo, viajaría más.",
+          "explanation": "В гипотетическом условии такого типа после si обычно используется Pretérito imperfecto de subjuntivo, а в главной части — Condicional."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Как использовать таблицу для изучения спряжения",
+      "steps": [
+        {
+          "heading": "Начните с настоящего времени",
+          "text": "Используйте его как базовую точку сравнения и обратите внимание на окончания для yo, tú, третьего лица, nosotros, vosotros и третьего лица множественного числа."
+        },
+        {
+          "heading": "Сравните Pretérito и Imperfecto",
+          "text": "Посмотрите на один и тот же глагол в двух прошедших временах и свяжите формы с разницей между завершенным событием и привычной, фоновой, описательной или продолжающейся ситуацией."
+        },
+        {
+          "heading": "Учите сложные времена как систему",
+          "text": "Сравнивайте Pretérito perfecto compuesto, Pluscuamperfecto, Futuro compuesto, Condicional compuesto и сложные формы Subjuntivo. Все они используют haber плюс причастие."
+        },
+        {
+          "heading": "Ищите повторяющиеся неправильности",
+          "text": "Если глагол неправильный, сравните его сразу в нескольких временах. Одни и те же основы и изменения часто повторяются в связанных формах."
+        },
+        {
+          "heading": "Сравнивайте Indicativo и Subjuntivo",
+          "text": "Смотрите на одну и ту же форму лица в обоих наклонениях и используйте ее в полных предложениях, чтобы лучше понимать контексты, требующие Subjuntivo."
+        },
+        {
+          "heading": "Используйте формы в полных предложениях",
+          "text": "После изучения формы составьте несколько коротких предложений с разными лицами и временными ориентирами. Контекст помогает запоминать одновременно форму и ее функцию."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Советы по изучению испанского спряжения",
+      "items": [
+        {
+          "heading": "Учите модели, а не отдельные формы",
+          "text": "Запоминайте повторяющиеся окончания глаголов на -ar, -er и -ir, группируя их по времени и лицу."
+        },
+        {
+          "heading": "Сосредоточьтесь на частотных неправильных глаголах",
+          "text": "Глаголы ser, estar, ir, haber, tener, hacer, poder, decir и venir встречаются очень часто и требуют отдельной практики."
+        },
+        {
+          "heading": "Сравнивайте похожие времена напрямую",
+          "text": "Pretérito и Imperfecto, а также Indicativo и Subjuntivo легче понять, если изучать их формы и функции рядом."
+        },
+        {
+          "heading": "В сложных формах сначала смотрите на haber",
+          "text": "Именно форма haber показывает лицо, время и наклонение, тогда как основной глагол остается в форме причастия."
+        },
+        {
+          "heading": "Практикуйтесь и без подлежащего-местоимения",
+          "text": "Поскольку окончание испанского глагола часто уже показывает лицо, полезно учиться распознавать формы как с явно указанным местоимением, так и без него."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Практикуйте самые употребительные испанские глаголы",
+      "description": "Используйте спряжения в контексте или продолжите изучение самых частотных испанских глаголов, одновременно укрепляя грамматику и словарный запас.",
+      "primaryLabel": "Практиковать испанские глаголы",
+      "secondaryLabel": "Посмотреть 100 частотных испанских глаголов"
+    },
+    "related": {
+      "heading": "Другие материалы для изучения испанского",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных испанских глаголов"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 испанских глаголов и их формы прошедшего времени"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Испанская лексика по уровням CEFR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Тест на уровень испанского языка"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о спряжении испанских глаголов",
+      "items": [
+        {
+          "question": "Что значит спрягать глагол в испанском языке?",
+          "answer": "Спрягать испанский глагол значит изменять его форму в зависимости от лица, числа, времени и наклонения. Например, hablar в разных контекстах может иметь формы hablo, hablaste, hablaremos или hable."
+        },
+        {
+          "question": "Меняются ли испанские глаголы для каждого лица?",
+          "answer": "В целом да. Испанские глаголы имеют формы, связанные с лицом и числом, хотя некоторые лица совпадают по форме. Él, ella и usted обычно используют одну форму, как и ellos, ellas и ustedes."
+        },
+        {
+          "question": "В чем разница между Pretérito и Imperfecto?",
+          "answer": "Pretérito indefinido обычно представляет прошлое действие как завершенное или ограниченное. Imperfecto чаще используется для привычек, фоновых процессов, состояний, описаний и ситуаций без подчеркнутого завершения."
+        },
+        {
+          "question": "Как образуются сложные времена в испанском?",
+          "answer": "Они строятся с помощью спрягаемой формы haber и причастия прошедшего времени основного глагола. Изменяя форму haber, можно получить конструкции he hablado, había hablado, habré hablado, habría hablado или haya hablado."
+        },
+        {
+          "question": "Согласуется ли причастие с подлежащим в испанских сложных временах?",
+          "answer": "Обычно нет. В конструкции с haber причастие остается неизменным: говорят ella ha llegado и ellos han llegado."
+        },
+        {
+          "question": "Когда в испанском используется Subjuntivo?",
+          "answer": "Subjuntivo часто используется в зависимых предложениях при желании, рекомендации, сомнении, эмоции, оценке, цели, возможности и других ситуациях, где содержание не просто утверждается как факт."
+        },
+        {
+          "question": "Как образуется Presente de subjuntivo?",
+          "answer": "Для многих глаголов берут форму yo настоящего времени Indicativo, убирают конечное -o и добавляют окончания Subjuntivo. Глаголы на -ar обычно используют окончания с e, а глаголы на -er и -ir — окончания с a."
+        },
+        {
+          "question": "Почему Futuro и Condicional в испанском похожи?",
+          "answer": "Обе формы обычно образуются добавлением окончаний к инфинитиву, а многие неправильные глаголы используют одну и ту же основу. Например, tener дает tendré и tendría, а hacer — haré и haría."
+        },
+        {
+          "question": "Есть ли в испанском Imperativo для yo?",
+          "answer": "Нет. Imperativo используется для приказа, просьбы или инструкции, направленных другому человеку или группе, поэтому формы первого лица единственного числа yo нет. При этом существуют формы с nosotros для совместного призыва к действию."
+        },
+        {
+          "question": "Как лучше всего учить спряжение испанских глаголов?",
+          "answer": "Сначала освойте регулярные модели, затем сосредоточьтесь на самых частотных неправильных глаголах и повторяющихся изменениях основы. Сравнивайте связанные времена и используйте формы в полных предложениях, чтобы связывать спряжение с конкретным значением и контекстом."
+        }
+      ]
+    }
   }
 ]

@@ -84,6 +84,7 @@ export function useExploreItems(
   }, [englishExploreTopics, uiLanguage]);
   const spanishExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("spanish", uiLanguage);
+    const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("spanish", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         spanishExploreTopics,
@@ -101,10 +102,12 @@ export function useExploreItems(
         targetLanguage: "spanish" as const,
       },
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+      ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
   }, [spanishExploreTopics, uiLanguage]);
   const frenchExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("french", uiLanguage);
+    const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("french", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         frenchExploreTopics,
@@ -122,10 +125,12 @@ export function useExploreItems(
         targetLanguage: "french" as const,
       },
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+      ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
   }, [frenchExploreTopics, uiLanguage]);
   const germanExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("german", uiLanguage);
+    const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("german", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         germanExploreTopics,
@@ -143,10 +148,12 @@ export function useExploreItems(
         targetLanguage: "german" as const,
       },
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+      ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
   }, [germanExploreTopics, uiLanguage]);
   const italianExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("italian", uiLanguage);
+    const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("italian", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         italianExploreTopics,
@@ -164,10 +171,12 @@ export function useExploreItems(
         targetLanguage: "italian" as const,
       },
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+      ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
   }, [italianExploreTopics, uiLanguage]);
   const portugueseExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("portuguese", uiLanguage);
+    const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("portuguese", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         portugueseExploreTopics,
@@ -185,10 +194,12 @@ export function useExploreItems(
         targetLanguage: "portuguese" as const,
       },
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+      ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
   }, [portugueseExploreTopics, uiLanguage]);
   const russianExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("russian", uiLanguage);
+    const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("russian", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         russianExploreTopics,
@@ -206,6 +217,7 @@ export function useExploreItems(
         targetLanguage: "russian" as const,
       },
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+      ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
   }, [russianExploreTopics, uiLanguage]);
 

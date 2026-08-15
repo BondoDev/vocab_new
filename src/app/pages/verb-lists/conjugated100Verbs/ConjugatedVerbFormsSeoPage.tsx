@@ -257,7 +257,7 @@ export function ConjugatedVerbFormsSeoPage({
                           type="button"
                           aria-pressed={isActive}
                           onClick={() => setActiveTenseKey(tense.key)}
-                          className={`min-w-0 rounded-full border px-3 py-2 text-center text-sm font-medium leading-snug transition sm:whitespace-nowrap sm:px-4 ${
+                          className={`min-w-0 whitespace-normal rounded-full border px-3 py-2 text-center text-sm font-medium leading-snug break-words transition sm:px-4 ${
                             isActive
                               ? "border-primary/70 bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20"
                               : "border-border bg-background text-foreground hover:border-primary/40 hover:bg-primary/5"

@@ -58,7 +58,7 @@ function speakVerb(verb: string, speechLang: string) {
 
 const HINT_ID = "conjugated-verb-forms-scroll-hint";
 const NUMBER_COLUMN_WIDTH = "1.5rem";
-const INFINITIVE_COLUMN_WIDTH_REM = 8;
+const INFINITIVE_COLUMN_WIDTH_REM = 9.5;
 const MEANING_COLUMN_WIDTH_REM = 8;
 const PRONOUN_COLUMN_WIDTH_REM = 7;
 
@@ -187,10 +187,14 @@ export function ConjugatedVerbFormsTableSection({
                         {row.index}
                       </td>
                       <td
-                        style={{ left: NUMBER_COLUMN_WIDTH, width: `${INFINITIVE_COLUMN_WIDTH_REM}rem` }}
-                        className={`${STICKY_BODY_CELL} ${scrollState.canScroll ? STICKY_EDGE_SHADOW : ""} whitespace-normal break-words border-b border-border/70 py-3 pl-2 pr-3 align-top text-sm font-medium text-foreground sm:whitespace-nowrap`}
+                        style={{
+                          left: NUMBER_COLUMN_WIDTH,
+                          width: `${INFINITIVE_COLUMN_WIDTH_REM}rem`,
+                          maxWidth: `${INFINITIVE_COLUMN_WIDTH_REM}rem`,
+                        }}
+                        className={`${STICKY_BODY_CELL} ${scrollState.canScroll ? STICKY_EDGE_SHADOW : ""} whitespace-normal break-words border-b border-border/70 py-3 pl-2 pr-3 align-top text-sm font-medium leading-6 text-foreground`}
                       >
-                        <div className="flex min-w-0 items-center gap-1.5">
+                        <div className="flex min-w-0 items-start gap-1.5">
                           <button
                             type="button"
                             aria-label={row.infinitive}
@@ -200,11 +204,11 @@ export function ConjugatedVerbFormsTableSection({
                             <Volume2 className="h-3.5 w-3.5" />
                           </button>
                           {row.href ? (
-                            <Link className="min-w-0 break-words text-primary transition hover:underline" to={row.href}>
+                            <Link className="min-w-0 whitespace-normal break-words [overflow-wrap:anywhere] text-primary transition hover:underline" to={row.href}>
                               {row.infinitive}
                             </Link>
                           ) : (
-                            <span className="min-w-0 break-words">{row.infinitive}</span>
+                            <span className="min-w-0 whitespace-normal break-words [overflow-wrap:anywhere]">{row.infinitive}</span>
                           )}
                         </div>
                       </td>
