@@ -171,12 +171,19 @@ holds `VerbListSeoPage.tsx` (route entry), `RichVerbListSeoPage.tsx`
 runtime-coupled to common100Verbs fallback copy). `pastForms100Verbs/` is a
 sibling subtype (`PastVerbFormsSeoPage.tsx` + `PastVerbFormsTableSection.tsx`)
 for the "Past Forms of the 100 Most Common {Target Language} Verbs" family.
-Its registry and metadata builder own that subtype's routing and SEO policy;
+`conjugated100Verbs/` is another sibling subtype
+(`ConjugatedVerbFormsSeoPage.tsx` + `ConjugatedVerbFormsTableSection.tsx`)
+for the "100 Most Common {Target Language} Verbs Conjugated in the Present
+Tense" family. Each subtype's registry and metadata builder own that
+subtype's routing and SEO policy;
 the `PAST_VERB_FORMS_LAUNCHED` flag (`src/seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus.ts`)
 keeps the current 49 authored canonical pages indexable and included in
-`verb-lists.xml`. Future verb-list families (e.g. irregular, modal, or
-separable verbs) would live as further sibling subtype folders under
-`verb-lists/`; shared extraction across subtypes should happen only once a
+`verb-lists.xml`, while the `CONJUGATED_VERB_FORMS_LAUNCHED` flag
+(`src/seo/verbLists/conjugated100Verbs/conjugatedVerbFormsLaunchStatus.ts`)
+keeps the conjugation placeholder routes out of the XML sitemap until launch.
+Future verb-list families (e.g. irregular, modal, or separable verbs) would
+live as further sibling subtype folders under `verb-lists/`; shared
+extraction across subtypes should happen only once a
 subtype genuinely reuses another's implementation, not preemptively.
 `src/app/pages/vocabulary/` owns the Vocabulary Level/CEFR page family:
 `VocabularyLevelPage.tsx` (the production vocabulary-level rendering flow),
@@ -333,10 +340,10 @@ is the authoritative reference; this section only orients:
 - Hand-maintained sources (no generator; edit directly): `src/data/vocabulary/`,
   `src/data/seo/vocabularyLevels/` (incl. `level-browse-preview/`,
   `seo-cefr-content.json`), `src/data/seo/levelTests/seo_level_test_content.json`,
-  `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`
-  (Phase 1 foundation for the "Past Forms of the 100 Most Common
-  {Target Language} Verbs" family — every field is an empty placeholder
-  until a later phase authors real content; see
+  `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`,
+  `src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbsContent.json`,
+  `src/data/seo/verbLists/conjugated100Verbs/conjucated100VerbsList.json`
+  (localized content plus hand-authored verb-list subtype data; see
   [`docs/generated-data.md`](generated-data.md)).
 - Generated, committed mirrors/output (never hand-edited):
   `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`,

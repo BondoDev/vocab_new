@@ -20,14 +20,19 @@ import {
   type TargetLanguageSlug,
 } from "../../../data/seo/shared/slugs";
 import { getLevelTestContent, getLevelTestSeoPath } from "../../../data/seo/levelTests";
-import { getPastVerbFormsContent, getPastVerbFormsPath } from "../../../data/seo/verbLists";
+import {
+  getConjugatedVerbFormsContent,
+  getConjugatedVerbFormsPath,
+  getPastVerbFormsContent,
+  getPastVerbFormsPath,
+} from "../../../data/seo/verbLists";
 import { TARGET_LANGUAGE_TO_UI_CODE } from "../../utils/pageRouting";
 
 export type TranslateFn = (key: string) => string;
 
 export interface ExploreTopic {
   id: string;
-  level: CefrLevelCode | "test" | "verbs" | "pastVerbForms";
+  level: CefrLevelCode | "test" | "verbs" | "pastVerbForms" | "conjugatedVerbForms";
   label: string;
   path: string;
   kind: "level" | "test" | "custom";
@@ -122,6 +127,27 @@ export function buildPastVerbFormsExploreTopic(
   return {
     id: "past-verb-forms",
     level: "pastVerbForms",
+    label: content.entryButtonLabel,
+    path,
+    kind: "custom",
+    targetLanguage,
+  };
+}
+
+export function buildConjugatedVerbFormsExploreTopic(
+  targetLanguage: TargetLanguageSlug,
+  uiLanguage: UILanguage,
+): ExploreTopic | null {
+  const content = getConjugatedVerbFormsContent(targetLanguage, uiLanguage);
+  const path = getConjugatedVerbFormsPath(targetLanguage, uiLanguage);
+
+  if (!content?.entryButtonLabel || !path) {
+    return null;
+  }
+
+  return {
+    id: "conjugated-verb-forms",
+    level: "conjugatedVerbForms",
     label: content.entryButtonLabel,
     path,
     kind: "custom",

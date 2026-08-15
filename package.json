@@ -26,6 +26,7 @@
     "test:sitemap-vocabulary-route-source": "node scripts/tests/seo/test-sitemap-vocabulary-route-source.mjs",
     "test:sitemap-lastmod": "node scripts/tests/seo/test-sitemap-lastmod-stability.mjs",
     "test:seo-core-routes": "node scripts/tests/seo/test-seo-core-routes.mjs",
+    "test:conjugated-verb-forms-page": "node scripts/tests/seo/test-conjugated-verb-forms-page.mjs",
     "test:html-lang-init": "node scripts/tests/routing/test-html-lang-init-script.mjs",
     "test:seo-output": "npm run -s test:word-ssr-http && npm run -s test:word-ssr-package && npm run -s test:homepage-visibility && npm run -s test:jsonld-escaping && npm run -s test:schema-graph && npm run -s test:word-browse-pagination && npm run -s test:prerender-parity && npm run -s test:sitemap-structure && npm run -s test:sitemap-vocabulary-route-source && npm run -s test:sitemap-lastmod && npm run -s test:seo-core-routes && npm run -s test:html-lang-init",
     "test:seo-baseline": "npm run -s test:seo-output",

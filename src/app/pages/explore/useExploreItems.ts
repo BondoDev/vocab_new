@@ -3,6 +3,7 @@ import type { UILanguage } from "../../../contexts/LanguageContext";
 import { getVerbListPath, getVerbListTitle } from "../../../data/seo/verbLists";
 import {
   buildEnglishExploreTopics,
+  buildConjugatedVerbFormsExploreTopic,
   buildFrenchExploreTopics,
   buildGermanExploreTopics,
   buildItalianExploreTopics,
@@ -60,6 +61,7 @@ export function useExploreItems(
   );
   const englishExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("english", uiLanguage);
+    const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("english", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         englishExploreTopics,
@@ -77,6 +79,7 @@ export function useExploreItems(
         targetLanguage: "english" as const,
       },
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
+      ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
   }, [englishExploreTopics, uiLanguage]);
   const spanishExploreItems = useMemo(() => {

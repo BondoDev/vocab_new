@@ -25,6 +25,7 @@ import { LevelTestSeoPage } from "./pages/level-test/LevelTestSeoPage";
 import { SeoHubPage } from "./pages/SeoHubPage";
 import { VerbListSeoPage } from "./pages/verb-lists/common100Verbs/VerbListSeoPage";
 import { PastVerbFormsSeoPage } from "./pages/verb-lists/pastForms100Verbs/PastVerbFormsSeoPage";
+import { ConjugatedVerbFormsSeoPage } from "./pages/verb-lists/conjugated100Verbs/ConjugatedVerbFormsSeoPage";
 import { WordSeoPage } from "./pages/word-pages/detail/WordSeoPage";
 import { WordPageLayout } from "./pages/word-pages/detail/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./pages/vocabulary/DevSeoCefrPlaceholderPage";
@@ -54,6 +55,7 @@ import {
   buildPracticeRoute,
   getRouteUILanguage,
   pageFromPath,
+  parseConjugatedVerbFormsSeoRoute,
   parseDevSeoCefrPlaceholderRoute,
   parseLevelTestSeoRoute,
   parsePastVerbFormsSeoRoute,
@@ -303,6 +305,10 @@ function AppContent({
     () => parsePastVerbFormsSeoRoute(location.pathname),
     [location.pathname],
   );
+  const conjugatedVerbFormsSeoRoute = useMemo(
+    () => parseConjugatedVerbFormsSeoRoute(location.pathname),
+    [location.pathname],
+  );
   const seoHubRoute = useMemo(
     () => parseSeoHubRoute(location.pathname),
     [location.pathname],
@@ -383,6 +389,7 @@ function AppContent({
       case "levelTestSeo":
       case "verbListSeo":
       case "pastVerbFormsSeo":
+      case "conjugatedVerbFormsSeo":
       case "seoHub":
       case "wordSeoHub":
       case "devSeoCefrPlaceholder":
@@ -428,6 +435,7 @@ function AppContent({
         levelTestSeoRoute,
         verbListSeoRoute,
         pastVerbFormsSeoRoute,
+        conjugatedVerbFormsSeoRoute,
         seoHubRoute,
         wordSeoHubRoute,
         wordRoute,
@@ -438,6 +446,7 @@ function AppContent({
       levelTestSeoRoute,
       verbListSeoRoute,
       pastVerbFormsSeoRoute,
+      conjugatedVerbFormsSeoRoute,
       seoHubRoute,
       wordSeoHubRoute,
       wordRoute,
@@ -877,6 +886,7 @@ function AppContent({
       <div className="min-h-screen flex flex-col bg-background">
         {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <RouteLoadingFallback />
+        {accountOnboardingDialog}
         {passwordRecoveryDialog}
         {accountIntroDialog}
       </div>
@@ -1256,6 +1266,36 @@ function AppContent({
           <PastVerbFormsSeoPage
             uiLang={pastVerbFormsSeoRoute.uiLang}
             targetLanguage={pastVerbFormsSeoRoute.targetLanguage}
+            onStartPractice={handleStartVocabularyPractice}
+          />
+        </Suspense>
+        {accountOnboardingDialog}
+        {passwordRecoveryDialog}
+        {accountIntroDialog}
+      </div>
+    );
+  }
+
+  if (resolvedPage === "conjugatedVerbFormsSeo") {
+    if (!conjugatedVerbFormsSeoRoute) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header {...sharedHeaderProps} activePage="notFound" />
+          <NotFoundPage message="Invalid conjugated-verb-forms page." />
+          {accountOnboardingDialog}
+          {passwordRecoveryDialog}
+          {accountIntroDialog}
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <ConjugatedVerbFormsSeoPage
+            uiLang={conjugatedVerbFormsSeoRoute.uiLang}
+            targetLanguage={conjugatedVerbFormsSeoRoute.targetLanguage}
             onStartPractice={handleStartVocabularyPractice}
           />
         </Suspense>

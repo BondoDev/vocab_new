@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { loadWordRouteManifest } from "../lib/load-word-route-manifest.mjs";
 import { loadVerbListRegistry } from "../lib/load-verb-list-registry.mjs";
 import { loadPastVerbFormsRegistry } from "../lib/load-past-verb-forms-registry.mjs";
+import { loadConjugatedVerbFormsRegistry } from "../lib/load-conjugated-verb-forms-registry.mjs";
 import { loadVocabularyLevelRoutes } from "../lib/load-vocabulary-level-routes.mjs";
 import { createLastmodLedger } from "../lib/sitemap-lastmod.mjs";
 
@@ -277,6 +278,7 @@ async function main() {
   const manifestLoader = loadWordRouteManifest(".tmp-word-route-manifest-sitemap");
   const verbListRegistryLoader = loadVerbListRegistry(".tmp-verb-list-registry-sitemap");
   const pastVerbFormsRegistryLoader = loadPastVerbFormsRegistry(".tmp-past-verb-forms-registry-sitemap");
+  const conjugatedVerbFormsRegistryLoader = loadConjugatedVerbFormsRegistry(".tmp-conjugated-verb-forms-registry-sitemap");
   const vocabularyLevelRoutesLoader = loadVocabularyLevelRoutes(".tmp-vocabulary-level-routes-sitemap");
   const publicDir = path.join(ROOT_DIR, "public");
   const sitemapsDir = path.join(publicDir, "sitemaps");
@@ -311,8 +313,14 @@ async function main() {
     const pastVerbFormsRoutes = pastVerbFormsRegistryLoader.launchStatus.PAST_VERB_FORMS_LAUNCHED
       ? Array.from(new Set(pastVerbFormsRegistryLoader.registry.getAllPastVerbFormsPaths())).sort()
       : [];
+    const conjugatedVerbFormsRoutes =
+      conjugatedVerbFormsRegistryLoader.launchStatus.CONJUGATED_VERB_FORMS_LAUNCHED
+        ? Array.from(
+            new Set(conjugatedVerbFormsRegistryLoader.registry.getAllConjugatedVerbFormsPaths()),
+          ).sort()
+        : [];
     const verbListRoutes = Array.from(
-      new Set([...commonVerbListRoutes, ...pastVerbFormsRoutes]),
+      new Set([...commonVerbListRoutes, ...pastVerbFormsRoutes, ...conjugatedVerbFormsRoutes]),
     ).sort();
     const verbListSections = [
       {
@@ -322,6 +330,10 @@ async function main() {
       {
         comment: "Past tense forms of 100 common verbs SEO pages.",
         paths: pastVerbFormsRoutes,
+      },
+      {
+        comment: "Multi-tense conjugations of 100 common verbs SEO pages.",
+        paths: conjugatedVerbFormsRoutes,
       },
     ];
     const wordRoutesByPair = INCLUDE_WORD_SITEMAPS

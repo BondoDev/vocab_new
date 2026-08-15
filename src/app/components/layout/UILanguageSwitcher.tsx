@@ -8,8 +8,10 @@ import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../../data/seo
 import { getSeoHubPath, resolveSeoHubRoute } from "../../../data/seo/shared/hub";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../../data/seo/wordPages/wordSlugs";
 import {
+  getConjugatedVerbFormsPath,
   getPastVerbFormsPath,
   getVerbListPath,
+  resolveConjugatedVerbFormsRoute,
   resolvePastVerbFormsRoute,
   resolveVerbListRoute,
 } from "../../../data/seo/verbLists";
@@ -177,6 +179,17 @@ export function UILanguageSwitcher({
       const pastVerbFormsRoute = resolvePastVerbFormsRoute(location.pathname);
       if (pastVerbFormsRoute) {
         const nextPath = getPastVerbFormsPath(pastVerbFormsRoute.targetLanguage, code);
+        if (nextPath && nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+        setUILanguage(code);
+        setIsOpen(false);
+        return;
+      }
+
+      const conjugatedVerbFormsRoute = resolveConjugatedVerbFormsRoute(location.pathname);
+      if (conjugatedVerbFormsRoute) {
+        const nextPath = getConjugatedVerbFormsPath(conjugatedVerbFormsRoute.targetLanguage, code);
         if (nextPath && nextPath !== location.pathname) {
           navigate(nextPath);
         }
@@ -355,4 +368,3 @@ export function UILanguageSwitcher({
     </>
   );
 }
-

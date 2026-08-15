@@ -444,6 +444,7 @@ async function main() {
     "levelTestSeo",
     "verbListSeo",
     "pastVerbFormsSeo",
+    "conjugatedVerbFormsSeo",
     "seoHub",
     "wordSeoHub",
     "wordPage",
@@ -1095,12 +1096,13 @@ async function main() {
     );
   });
 
-  await test("all 7 SEO PageKey page blocks specifically render {accountIntroDialog} (vocabularyLevel, levelTestSeo, verbListSeo, pastVerbFormsSeo, seoHub, wordSeoHub, wordPage)", () => {
+  await test("all 8 SEO PageKey page blocks specifically render {accountIntroDialog} (vocabularyLevel, levelTestSeo, verbListSeo, pastVerbFormsSeo, conjugatedVerbFormsSeo, seoHub, wordSeoHub, wordPage)", () => {
     const seoPageKeys = [
       "vocabularyLevel",
       "levelTestSeo",
       "verbListSeo",
       "pastVerbFormsSeo",
+      "conjugatedVerbFormsSeo",
       "seoHub",
       "wordSeoHub",
       "wordPage",

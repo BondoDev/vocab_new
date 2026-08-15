@@ -37,6 +37,12 @@ export {
   getPastVerbFormsPath,
   resolvePastVerbFormsRoute,
 } from "./pastForms100Verbs/pastForms100VerbRegistry";
+export {
+  getAllConjugatedVerbFormsPaths,
+  getConjugatedVerbFormsContent,
+  getConjugatedVerbFormsPath,
+  resolveConjugatedVerbFormsRoute,
+} from "./conjugated100Verbs/conjugated100VerbRegistry";
 // Imported from the table-config module directly, NOT from
 // pastForms100VerbRegistry.ts — see that file's header comment. This module
 // (verbLists/index.ts) is itself client/SSR-only and is never compiled by
@@ -46,6 +52,10 @@ export {
   getPastVerbFormsTableConfig,
   type PastVerbFormsTableConfig,
 } from "./pastForms100Verbs/pastForms100VerbTableConfig";
+export {
+  getConjugatedVerbFormsTableConfig,
+  type ConjugatedVerbFormsTableConfig,
+} from "./conjugated100Verbs/conjugated100VerbTableConfig";
 
 export const VERB_LIST_ITEMS = BASE_VERB_LIST_ITEMS;
 export type SharedVerbListItem = VerbListItem;
