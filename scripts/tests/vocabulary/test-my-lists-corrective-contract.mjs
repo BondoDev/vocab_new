@@ -225,10 +225,10 @@ test("31. Rename flow is unchanged: prefilled dialog, same duplicate-aware handl
   assert.match(renameDialogSource, /setName\(list\?\.name \?\? ""\)/);
 });
 
-test("32. Delete flow is unchanged: AlertDialog confirmation, same handler, memberships still filtered out of local state", () => {
+test("32. Delete flow is unchanged: AlertDialog confirmation, same handler, memberships still filtered out of the shared cache (via onListDeleted — see test-my-lists-phase2a-contract.mjs for the shared-cache applier's own filter check)", () => {
   assert.match(sectionSource, /const handleConfirmDelete = async \(\) => \{/);
   assert.match(deleteDialogSource, /from "\.\.\/\.\.\/\.\.\/\.\.\/app\/components\/ui\/alert-dialog"/);
-  assert.match(sectionSource, /memberships: prev\.memberships\.filter\(\(membership\) => membership\.listId !== deletedId\)/);
+  assert.match(sectionSource, /onListDeleted\(deletedId\);/);
 });
 
 test("33. Duplicate-name rejection still surfaces the shared conflict copy", () => {

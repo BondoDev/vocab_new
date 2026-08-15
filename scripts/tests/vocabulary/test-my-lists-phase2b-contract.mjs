@@ -75,27 +75,41 @@ test("Selected rows are visually marked and the checkbox reflects selection stat
 
 console.log("\n=== 16. Successful add updates list immediately ===\n");
 
-test("16. handleSubmitAddWords calls the RPC, refetches only this list's memberships, and replaces them in local state — no full reload", () => {
+test("16. handleSubmitAddWords calls the RPC, refetches only this list's memberships, and replaces them in the shared cache (via onListMembershipsReplaced) — no full reload", () => {
+  // Fetch-audit Phase 3: the "replace this list's own membership rows"
+  // updater moved from this section's own setState to
+  // useProfileSharedMyLists.ts's applyListMembershipsReplaced — see that
+  // hook's own header. The RPC call + targeted authoritative re-read
+  // (needed because add_words_to_vocabulary_list's response has no
+  // created_at) stay exactly where they were, in this section.
   const fnMatch = sectionSource.match(/const handleSubmitAddWords = async \(wordIds: string\[\]\) => \{([\s\S]*?)\n  \};/);
   assert.ok(fnMatch, "handleSubmitAddWords must exist");
   assert.match(fnMatch[1], /addWordsToVocabularyList\(session, listIdToUpdate, wordIds\)/);
   assert.match(fnMatch[1], /readUserVocabularyListMemberships\(session, \[listIdToUpdate\]\)/);
-  assert.match(
-    fnMatch[1],
-    /memberships: \[\s*\.\.\.prev\.memberships\.filter\(\(membership\) => membership\.listId !== listIdToUpdate\),\s*\.\.\.freshMemberships,\s*\],/,
-  );
+  assert.match(fnMatch[1], /onListMembershipsReplaced\(listIdToUpdate, freshMemberships\)/);
   assert.doesNotMatch(sectionSource, /location\.reload|window\.location/);
+  const applierMatch = fs
+    .readFileSync(path.join(ROOT_DIR, "src", "features", "user-profile", "sections", "useProfileSharedMyLists.ts"), "utf8")
+    .match(/const applyListMembershipsReplaced = useCallback\(\s*\(listId: string, memberships: UserVocabularyListMembership\[\]\) => \{([\s\S]*?)\n {4}\},\s*\[contextKey\],\s*\);/);
+  assert.ok(applierMatch, "useProfileSharedMyLists.ts must define applyListMembershipsReplaced");
+  assert.match(
+    applierMatch[1],
+    /memberships: \[\.\.\.prev\.memberships\.filter\(\(membership\) => membership\.listId !== listId\), \.\.\.memberships\]/,
+  );
 });
 
 console.log("\n=== 17. Remove updates list immediately (optimistic) ===\n");
 
-test("17. handleRemoveWord removes the membership from local state before the RPC resolves (optimistic), and rolls back on failure", () => {
+test("17. handleRemoveWord removes the membership from the shared cache before the RPC resolves (optimistic, via onListMembershipRemoved), and rolls back via onListMembershipAdded on failure", () => {
+  // Fetch-audit Phase 3: same lift as test 16 above — the optimistic
+  // remove/rollback updaters moved to useProfileSharedMyLists.ts's
+  // applyMembershipRemoved/applyMembershipAdded.
   const fnMatch = sectionSource.match(/const handleRemoveWord = \(wordId: string\) => \{([\s\S]*?)\n  \};/);
   assert.ok(fnMatch, "handleRemoveWord must exist");
-  const setStateIndex = fnMatch[1].indexOf("setState((prev) =>");
+  const applyRemovedIndex = fnMatch[1].indexOf("onListMembershipRemoved(listIdToUpdate, wordId);");
   const rpcCallIndex = fnMatch[1].indexOf("removeWordFromVocabularyList(");
-  assert.ok(setStateIndex > -1 && rpcCallIndex > -1 && setStateIndex < rpcCallIndex, "local state must update before the RPC call fires");
-  assert.match(fnMatch[1], /\.catch\(\(error\) => \{[\s\S]*?memberships: \[\.\.\.prev\.memberships, removedMembership\]/);
+  assert.ok(applyRemovedIndex > -1 && rpcCallIndex > -1 && applyRemovedIndex < rpcCallIndex, "the shared cache must update before the RPC call fires");
+  assert.match(fnMatch[1], /\.catch\(\(error\) => \{[\s\S]*?onListMembershipAdded\(removedMembership\)/);
 });
 
 test("A successful remove shows the 'Removed from list' toast; a failed remove shows a distinct error toast", () => {
