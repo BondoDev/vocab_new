@@ -1,4 +1,4 @@
-export const CONJUGATED_VERB_FORMS_LAUNCHED = false;
+export const CONJUGATED_VERB_FORMS_LAUNCHED = true;
 
 export const CONJUGATED_VERB_FORMS_PRELAUNCH_ROBOTS = "noindex, follow";
 
