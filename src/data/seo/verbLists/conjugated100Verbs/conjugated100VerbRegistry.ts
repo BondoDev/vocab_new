@@ -1,62 +1,68 @@
-import conjugatedVerbFormsContentJson from "./conjugated100VerbsContent.json";
-import {
-  getUiVocabularyLanguage,
-  TARGET_LANGUAGE_TO_UI_LANGUAGE,
-  type TargetLanguageSlug,
-  type UiLanguageCode,
-} from "../../shared/slugs";
+// Route/content registry for the "100 Most Common Conjugated Verb Forms"
+// page family — the single import surface other code (routing, SSR,
+// sitemap generation, the page component) should use.
+//
+// SEO text content is loaded from one hand-authored JSON file per target
+// language under ./textContent/ (e.g. english.json), discovered eagerly via
+// Vite's import.meta.glob and merged/validated by
+// conjugated100VerbRouteHelpers.ts (which does the real work and stays
+// import.meta-free). Mirrors the ./conjugatedVerbs/ split already used for
+// the verb-forms table data — see conjugated100VerbFormsData.ts.
+//
+// Because this file uses import.meta.glob, it cannot be compiled by
+// scripts/lib/compileTs.mjs's CommonJS target — the Node-only sitemap
+// generator and the test suite therefore do NOT compile this file. Instead
+// scripts/lib/load-conjugated-verb-forms-registry.mjs reads
+// ./textContent/*.json directly off disk and builds the identical API from
+// conjugated100VerbRouteHelpers.ts's createConjugatedVerbFormsRegistry().
+// Keep this file's exported function names/signatures in sync with that
+// loader's expectations if either changes.
+import { SUPPORTED_TARGET_LANGUAGES, type TargetLanguageSlug } from "../../shared/slugs";
 import {
   buildConjugatedVerbFormsContentLookup,
-  getConjugatedVerbFormsContentEntry,
-  type ConjugatedVerbFormsContentEntry,
+  createConjugatedVerbFormsRegistry,
+  mergeConjugatedVerbFormsContentByTargetLanguage,
 } from "./conjugated100VerbRouteHelpers";
 
-const CONJUGATED_VERB_FORMS_CONTENT_LOOKUP =
-  buildConjugatedVerbFormsContentLookup(conjugatedVerbFormsContentJson);
+const rawModules = import.meta.glob("./textContent/*.json", { eager: true }) as Record<
+  string,
+  { default: unknown }
+>;
 
-export function getConjugatedVerbFormsContent(
-  targetLanguage: TargetLanguageSlug,
-  uiLanguage: UiLanguageCode,
-): ConjugatedVerbFormsContentEntry | null {
-  const targetLanguageCode = TARGET_LANGUAGE_TO_UI_LANGUAGE[targetLanguage];
-  return getConjugatedVerbFormsContentEntry(
-    CONJUGATED_VERB_FORMS_CONTENT_LOOKUP,
-    targetLanguageCode,
-    uiLanguage,
-  );
-}
+function buildContentByTargetLanguageSlug(): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  const supportedSet: ReadonlySet<string> = new Set(SUPPORTED_TARGET_LANGUAGES);
 
-export function getConjugatedVerbFormsPath(
-  targetLanguage: TargetLanguageSlug,
-  uiLanguage: UiLanguageCode,
-): string | null {
-  const content = getConjugatedVerbFormsContent(targetLanguage, uiLanguage);
-  return content?.urlSlug ? `/${uiLanguage}/${content.urlSlug}` : null;
-}
+  for (const [modulePath, module] of Object.entries(rawModules)) {
+    const fileName = modulePath.split("/").pop() ?? "";
+    const targetLanguage = fileName.replace(/\.json$/, "");
 
-export function getAllConjugatedVerbFormsPaths(): string[] {
-  const paths: string[] = [];
-
-  for (const entry of CONJUGATED_VERB_FORMS_CONTENT_LOOKUP.values()) {
-    if (entry.urlSlug) {
-      paths.push(`/${entry.uiLanguage}/${entry.urlSlug}`);
+    if (!supportedSet.has(targetLanguage)) {
+      throw new Error(
+        `Invalid conjugated-verb-forms content: "${modulePath}" does not match a supported target language (got "${targetLanguage}").`,
+      );
     }
+
+    result[targetLanguage as TargetLanguageSlug] = module.default;
   }
 
-  return paths;
+  return result;
 }
 
-export function resolveConjugatedVerbFormsRoute(
-  path: string,
-): { uiLang: UiLanguageCode; targetLanguage: TargetLanguageSlug } | null {
-  for (const entry of CONJUGATED_VERB_FORMS_CONTENT_LOOKUP.values()) {
-    if (entry.urlSlug && `/${entry.uiLanguage}/${entry.urlSlug}` === path) {
-      return {
-        uiLang: entry.uiLanguage,
-        targetLanguage: getUiVocabularyLanguage(entry.targetLanguage),
-      };
-    }
-  }
+const CONJUGATED_VERB_FORMS_CONTENT_LOOKUP = buildConjugatedVerbFormsContentLookup(
+  mergeConjugatedVerbFormsContentByTargetLanguage(buildContentByTargetLanguageSlug()),
+);
 
-  return null;
-}
+const {
+  getConjugatedVerbFormsContent,
+  getConjugatedVerbFormsPath,
+  getAllConjugatedVerbFormsPaths,
+  resolveConjugatedVerbFormsRoute,
+} = createConjugatedVerbFormsRegistry(CONJUGATED_VERB_FORMS_CONTENT_LOOKUP);
+
+export {
+  getConjugatedVerbFormsContent,
+  getConjugatedVerbFormsPath,
+  getAllConjugatedVerbFormsPaths,
+  resolveConjugatedVerbFormsRoute,
+};

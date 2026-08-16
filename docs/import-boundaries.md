@@ -70,12 +70,14 @@ is in `scripts/import-boundaries/current/globs.json`. Summary:
 | G9 | `src/data/seo/vocabularyLevels/levelBrowseWords.ts` | `./level-browse-preview/*.json` | client + SSR | lazy | 42 | medium — hand-authored data, no generator script exists |
 | G10 | `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbFormsData.ts` | `./pastForms/*.json` | client + SSR (past-verb-forms table; not the Worker) | eager | grows as languages are authored (1 as of this writing) | medium — hand-authored data, no generator script exists; same risk shape as G9 |
 | G11 | `src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbFormsData.ts` | `./conjugatedVerbs/*.json` | client + SSR (conjugated-verb-forms table; not the Worker) | eager | grows as languages are authored (1 as of this writing) | medium — hand-authored data, no generator script exists; same risk shape as G9/G10. The row-shaping logic lives in the import.meta-free `conjugated100VerbFormsRowBuilder.ts` in the same directory so it stays unit-testable under Node. |
+| G12 | `src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbRegistry.ts` | `./textContent/*.json` | client + SSR (conjugated-verb-forms SEO copy; not the Worker) | eager | grows as languages are authored (2 as of this writing) | medium — hand-authored data, no generator script exists; same risk shape as G9–G11. The merge/validation logic lives in the import.meta-free `conjugated100VerbRouteHelpers.ts` in the same directory. Because this registry itself contains `import.meta.glob`, `scripts/generation/generate-sitemap.mjs` and the test suite do **not** compile it — `scripts/lib/load-conjugated-verb-forms-registry.mjs` instead reads `./textContent/*.json` directly off disk and builds the same API via `conjugated100VerbRouteHelpers.ts`'s `createConjugatedVerbFormsRegistry()`. This mirrors why `pastForms100VerbsContent.json` (used by the equivalent pastForms registry) was deliberately kept as one monolithic file instead of a glob — see `pastForms100VerbRegistry.ts`'s header comment — except here the Node-only loader was updated to work around it instead. |
 
-Match counts G1–G9 are asserted by `npm run test:import-boundaries`. G10 and
-G11 are intentionally not count-asserted there — their match counts are
-expected to grow over time as `pastForms/{targetLanguage}.json` and
-`conjugatedVerbs/{targetLanguage}.json` files are added by hand, one language
-at a time (see `docs/generated-data.md`), not a fixed contract.
+Match counts G1–G9 are asserted by `npm run test:import-boundaries`. G10,
+G11, and G12 are intentionally not count-asserted there — their match
+counts are expected to grow over time as `pastForms/{targetLanguage}.json`,
+`conjugatedVerbs/{targetLanguage}.json`, and
+`textContent/{targetLanguage}.json` files are added by hand, one language at
+a time (see `docs/generated-data.md`), not a fixed contract.
 
 ## Related path-sensitive loaders
 

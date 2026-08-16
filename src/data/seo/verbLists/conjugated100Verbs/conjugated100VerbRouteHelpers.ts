@@ -1,4 +1,11 @@
-import { SUPPORTED_UI_LANGUAGES, type UiLanguageCode } from "../../shared/slugs";
+import {
+  getUiVocabularyLanguage,
+  SUPPORTED_TARGET_LANGUAGES,
+  SUPPORTED_UI_LANGUAGES,
+  TARGET_LANGUAGE_TO_UI_LANGUAGE,
+  type TargetLanguageSlug,
+  type UiLanguageCode,
+} from "../../shared/slugs";
 
 export type ConjugatedVerbFormsTargetLanguageCode = UiLanguageCode;
 
@@ -520,4 +527,122 @@ export function getConjugatedVerbFormsContentEntry(
   uiLanguage: UiLanguageCode,
 ): ConjugatedVerbFormsContentEntry | null {
   return lookup.get(lookupKey(targetLanguageCode, uiLanguage)) ?? null;
+}
+
+// Merges the raw (pre-validation) content arrays from one hand-authored
+// JSON file per target language (e.g. textContent/english.json) into the
+// single flat array buildConjugatedVerbFormsContentLookup() expects, keyed
+// by the file's own TargetLanguageSlug (its filename minus ".json"). Kept
+// storage-agnostic — callers hand it a plain
+// { [targetLanguageSlug]: rawContent } record however they discovered it
+// (Vite's import.meta.glob for client/SSR, or a plain fs.readdirSync scan
+// for the Node-only sitemap/test tooling) — so this one validation path is
+// shared by both instead of duplicated.
+export function mergeConjugatedVerbFormsContentByTargetLanguage(
+  contentByTargetLanguageSlug: Record<string, unknown>,
+): unknown[] {
+  const supportedSet: ReadonlySet<string> = new Set(SUPPORTED_TARGET_LANGUAGES);
+  const merged: unknown[] = [];
+
+  for (const [targetLanguageSlug, rawContent] of Object.entries(contentByTargetLanguageSlug)) {
+    if (!supportedSet.has(targetLanguageSlug)) {
+      throw new Error(
+        `Invalid conjugated-verb-forms content: "${targetLanguageSlug}.json" does not match a supported target language.`,
+      );
+    }
+
+    if (!Array.isArray(rawContent)) {
+      throw new Error(
+        `Invalid conjugated-verb-forms content: "${targetLanguageSlug}.json" must export a top-level array.`,
+      );
+    }
+
+    const expectedTargetLanguageCode = TARGET_LANGUAGE_TO_UI_LANGUAGE[targetLanguageSlug as TargetLanguageSlug];
+
+    rawContent.forEach((rawEntry, index) => {
+      const targetLanguageCode =
+        rawEntry && typeof rawEntry === "object" ? (rawEntry as Record<string, unknown>).targetLanguage : undefined;
+
+      if (targetLanguageCode !== expectedTargetLanguageCode) {
+        throw new Error(
+          `Invalid conjugated-verb-forms content: "${targetLanguageSlug}.json" entry #${index} has targetLanguage ` +
+            `${JSON.stringify(targetLanguageCode)}, expected "${expectedTargetLanguageCode}" (derived from the file name).`,
+        );
+      }
+    });
+
+    merged.push(...rawContent);
+  }
+
+  return merged;
+}
+
+export interface ConjugatedVerbFormsRegistryApi {
+  getConjugatedVerbFormsContent: (
+    targetLanguage: TargetLanguageSlug,
+    uiLanguage: UiLanguageCode,
+  ) => ConjugatedVerbFormsContentEntry | null;
+  getConjugatedVerbFormsPath: (targetLanguage: TargetLanguageSlug, uiLanguage: UiLanguageCode) => string | null;
+  getAllConjugatedVerbFormsPaths: () => string[];
+  resolveConjugatedVerbFormsRoute: (
+    path: string,
+  ) => { uiLang: UiLanguageCode; targetLanguage: TargetLanguageSlug } | null;
+}
+
+// Builds the four route/content query functions other code imports (the
+// same shape conjugated100VerbRegistry.ts has always exported) bound to one
+// already-built lookup. Factored out here — rather than left inline in the
+// registry — so the Node-only sitemap/test loader
+// (scripts/lib/load-conjugated-verb-forms-registry.mjs) can build the
+// identical API from a lookup it assembled via plain fs reads, without ever
+// touching conjugated100VerbRegistry.ts's import.meta.glob.
+export function createConjugatedVerbFormsRegistry(
+  lookup: ConjugatedVerbFormsContentLookup,
+): ConjugatedVerbFormsRegistryApi {
+  function getConjugatedVerbFormsContent(
+    targetLanguage: TargetLanguageSlug,
+    uiLanguage: UiLanguageCode,
+  ): ConjugatedVerbFormsContentEntry | null {
+    const targetLanguageCode = TARGET_LANGUAGE_TO_UI_LANGUAGE[targetLanguage];
+    return getConjugatedVerbFormsContentEntry(lookup, targetLanguageCode, uiLanguage);
+  }
+
+  function getConjugatedVerbFormsPath(targetLanguage: TargetLanguageSlug, uiLanguage: UiLanguageCode): string | null {
+    const content = getConjugatedVerbFormsContent(targetLanguage, uiLanguage);
+    return content?.urlSlug ? `/${uiLanguage}/${content.urlSlug}` : null;
+  }
+
+  function getAllConjugatedVerbFormsPaths(): string[] {
+    const paths: string[] = [];
+
+    for (const entry of lookup.values()) {
+      if (entry.urlSlug) {
+        paths.push(`/${entry.uiLanguage}/${entry.urlSlug}`);
+      }
+    }
+
+    return paths;
+  }
+
+  function resolveConjugatedVerbFormsRoute(
+    path: string,
+  ): { uiLang: UiLanguageCode; targetLanguage: TargetLanguageSlug } | null {
+    for (const entry of lookup.values()) {
+      if (entry.urlSlug && `/${entry.uiLanguage}/${entry.urlSlug}` === path) {
+        return {
+          uiLang: entry.uiLanguage,
+          targetLanguage: getUiVocabularyLanguage(entry.targetLanguage),
+        };
+      }
+    }
+
+    return null;
+  }
+
+  return {
+    getConjugatedVerbFormsContent,
+    getConjugatedVerbFormsPath,
+    getAllConjugatedVerbFormsPaths,
+    resolveConjugatedVerbFormsRoute,
+  };
 }
