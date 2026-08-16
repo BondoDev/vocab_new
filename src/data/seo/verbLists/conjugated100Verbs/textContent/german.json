@@ -1,0 +1,3019 @@
+[
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "en",
+    "urlSlug": "100-most-common-german-verb-conjugations",
+    "entryButtonLabel": "German Verb Conjugations",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "meaning": "Meaning"
+    },
+    "pronounForms": [
+      {
+        "key": "ich",
+        "label": "ich"
+      },
+      {
+        "key": "du",
+        "label": "du"
+      },
+      {
+        "key": "er_sie_es",
+        "label": "er / sie / es"
+      },
+      {
+        "key": "wir",
+        "label": "wir"
+      },
+      {
+        "key": "ihr",
+        "label": "ihr"
+      },
+      {
+        "key": "sie_sie",
+        "label": "sie / Sie"
+      }
+    ],
+    "metadata": {
+      "title": "100 Most Common German Verb Conjugations",
+      "metaTitle": "100 Most Common German Verb Conjugations by Tense",
+      "metaDescription": "Compare 100 common German verbs across Präsens, past and future forms, Konjunktiv and Imperativ, with conjugations for German persons and pronouns."
+    },
+    "hero": {
+      "heading": "100 Most Common German Verb Conjugations",
+      "subtitle": "Compare high-frequency German verbs across the most important tenses, moods and persons.",
+      "introParagraphs": [
+        "Explore the conjugations of 100 frequently used German verbs and compare how each verb changes with ich, du, er / sie / es, wir, ihr and sie / Sie.",
+        "Switch between Präsens, past and future forms, Konjunktiv and Imperativ to see recurring endings, auxiliary patterns and irregular changes more clearly."
+      ]
+    },
+    "overview": {
+      "heading": "How German Verb Conjugation Works",
+      "paragraphs": [
+        "German finite verbs usually change according to person and number. In the present tense, regular verbs follow predictable endings, while many common strong and irregular verbs also change their stem in certain forms.",
+        "Several German tenses are built with auxiliary verbs. Perfekt and Plusquamperfekt use haben or sein together with a past participle, while Futur I and Futur II use werden. Choosing the correct auxiliary and participle is therefore an important part of German conjugation.",
+        "German also uses the subjunctive moods Konjunktiv I and Konjunktiv II. Konjunktiv I is especially associated with reported speech, while Konjunktiv II commonly expresses hypothetical situations, wishes and polite requests. In everyday German, some synthetic forms are frequently replaced by constructions with würde."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Choose a German Tense or Mood",
+      "description": "Select a form to compare the same 100 German verbs across persons and grammatical contexts.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicative"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjunctive"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperative"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Präsens",
+        "group": "indicative",
+        "tableHeading": "100 Common German Verbs in the Präsens",
+        "tableDescription": "Compare present-tense forms of common German verbs across all supplied persons and pronouns.",
+        "grammar": {
+          "heading": "How the German Präsens Is Formed",
+          "description": "The Präsens is formed by adding person-specific endings to the verb stem. Regular verbs commonly use -e, -st, -t, -en, -t and -en. Strong and irregular verbs may change their stem, especially in the du and er / sie / es forms. German Präsens can describe present actions, habits and, with suitable context, future events.",
+          "formula": "verb stem + personal ending"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Präteritum",
+        "group": "indicative",
+        "tableHeading": "100 Common German Verbs in the Präteritum",
+        "tableDescription": "Compare Präteritum forms, including regular past endings and the stem changes found in many strong verbs.",
+        "grammar": {
+          "heading": "How the German Präteritum Is Formed",
+          "description": "Weak verbs typically form the Präteritum with -te plus personal endings, while strong verbs usually change their stem vowel and use a different set of endings. The Präteritum is especially common in written narration, and the verbs sein, haben and modal verbs also occur frequently in this tense in everyday speech.",
+          "formula": "weak verbs: stem + -te + personal ending; strong verbs: preterite stem + personal ending"
+        }
+      },
+      {
+        "key": "present_perfect",
+        "label": "Perfekt",
+        "group": "indicative",
+        "tableHeading": "100 Common German Verbs in the Perfekt",
+        "tableDescription": "Compare Perfekt forms and see which common verbs use haben or sein with the past participle.",
+        "grammar": {
+          "heading": "How the German Perfekt Is Formed",
+          "description": "The Perfekt consists of a present-tense form of haben or sein plus the Partizip II. Most verbs use haben, while sein is used with a smaller group that includes many verbs expressing a change of location or state, as well as verbs such as sein and bleiben. The past participle normally appears at the end of a main clause.",
+          "formula": "Präsens of haben or sein + Partizip II"
+        }
+      },
+      {
+        "key": "past_perfect",
+        "label": "Plusquamperfekt",
+        "group": "indicative",
+        "tableHeading": "100 Common German Verbs in the Plusquamperfekt",
+        "tableDescription": "Compare German past-perfect forms used to describe an event that happened before another past event.",
+        "grammar": {
+          "heading": "How the German Plusquamperfekt Is Formed",
+          "description": "The Plusquamperfekt uses the Präteritum form of haben or sein together with the Partizip II. It places an action before another point or event in the past. The choice between haben and sein follows essentially the same pattern as in the Perfekt.",
+          "formula": "Präteritum of haben or sein + Partizip II"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur I",
+        "group": "indicative",
+        "tableHeading": "100 Common German Verbs in Futur I",
+        "tableDescription": "Compare Futur I forms built with werden and the infinitive of each German verb.",
+        "grammar": {
+          "heading": "How German Futur I Is Formed",
+          "description": "Futur I is formed with a conjugated form of werden and the infinitive of the main verb, which normally appears at the end of a main clause. German often uses Präsens instead when the future meaning is already clear from context, but Futur I can emphasize prediction, intention or assumption.",
+          "formula": "Präsens of werden + infinitive"
+        }
+      },
+      {
+        "key": "future_perfect",
+        "label": "Futur II",
+        "group": "indicative",
+        "tableHeading": "100 Common German Verbs in Futur II",
+        "tableDescription": "Compare Futur II forms for actions expected to be completed by a future point or assumed to have already occurred.",
+        "grammar": {
+          "heading": "How German Futur II Is Formed",
+          "description": "Futur II combines a conjugated form of werden with the Partizip II and the infinitive haben or sein. It can describe an action that will have been completed by a future point and can also express an assumption about a completed past event.",
+          "formula": "Präsens of werden + Partizip II + haben or sein",
+          "additionalFormula": "Example structure: er wird gearbeitet haben / er wird gegangen sein"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Konjunktiv II",
+        "group": "subjunctive",
+        "tableHeading": "100 Common German Verbs in Konjunktiv II",
+        "tableDescription": "Compare Konjunktiv II forms used for hypothetical situations, wishes, polite requests and unreal conditions.",
+        "grammar": {
+          "heading": "How German Konjunktiv II Is Formed",
+          "description": "Many verbs form Konjunktiv II from the Präteritum stem, often with an umlaut in strong verbs where possible, plus subjunctive endings. Common verbs such as sein, haben and the modal verbs frequently use these synthetic forms. For many other verbs, especially when the synthetic form is uncommon or identical to the Präteritum, German often uses würde plus infinitive.",
+          "formula": "Konjunktiv-II stem + subjunctive ending",
+          "additionalFormula": "common alternative: würde + infinitive"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Konjunktiv II Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 Common German Verbs in Konjunktiv II Vergangenheit",
+        "tableDescription": "Compare forms used for unreal, hypothetical or wished-for situations referring to the past.",
+        "grammar": {
+          "heading": "How Konjunktiv II Vergangenheit Is Formed",
+          "description": "Konjunktiv II Vergangenheit uses hätte or wäre together with the Partizip II. It expresses situations that did not happen, hypothetical past consequences, regrets and wishes about the past. The choice between hätte and wäre follows the auxiliary used by the verb in the perfect tenses.",
+          "formula": "hätte or wäre + Partizip II"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Konjunktiv I",
+        "group": "subjunctive",
+        "tableHeading": "100 Common German Verbs in Konjunktiv I",
+        "tableDescription": "Compare Konjunktiv I forms, especially important for indirect and reported speech in German.",
+        "grammar": {
+          "heading": "How German Konjunktiv I Is Formed",
+          "description": "Konjunktiv I is generally formed from the infinitive stem with characteristic subjunctive endings. It is used primarily to report another person's statements without explicitly confirming them as fact. Some forms are identical to the indicative; in those cases, German may use Konjunktiv II to make the reported-speech distinction clear.",
+          "formula": "infinitive stem + Konjunktiv-I ending"
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Konjunktiv I Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 Common German Verbs in Konjunktiv I Vergangenheit",
+        "tableDescription": "Compare past forms of Konjunktiv I used to report completed actions and earlier events.",
+        "grammar": {
+          "heading": "How Konjunktiv I Vergangenheit Is Formed",
+          "description": "The past form of Konjunktiv I combines the Konjunktiv I form of haben or sein with the Partizip II. It is particularly useful in indirect speech when the reported event is already completed. The main verb uses the same past participle and auxiliary selection found in the Perfekt.",
+          "formula": "Konjunktiv I of haben or sein + Partizip II"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativ",
+        "group": "imperative",
+        "tableHeading": "100 Common German Verbs in the Imperativ",
+        "tableDescription": "Study the command forms of common German verbs and compare the forms used when addressing different people.",
+        "grammar": {
+          "heading": "How the German Imperativ Is Formed",
+          "description": "German imperative forms depend on whom you are addressing. The du imperative often uses the verb stem, the ihr form normally matches the ihr form of the Präsens without the pronoun, and the formal Sie imperative uses the infinitive-like verb form followed by Sie. A wir construction can also be used for suggestions such as Gehen wir. German does not normally have corresponding imperative forms for every ordinary indicative person.",
+          "formula": "du: imperative stem; ihr: present-tense verb form without ihr; Sie: verb + Sie",
+          "additionalFormula": "suggestion with wir: verb + wir"
+        }
+      }
+    ],
+    "table": {
+      "heading": "German Verb Conjugation Table",
+      "description": "Use the table to compare how 100 common German verbs change by person and by the selected tense or mood.",
+      "scrollHint": "Scroll horizontally to see all conjugation forms.",
+      "scrollLeftLabel": "Scroll left",
+      "scrollRightLabel": "Scroll right",
+      "notes": [
+        "The pronouns sie and Sie use the same verb forms, although Sie is capitalized when it means formal 'you'.",
+        "Many strong verbs show stem-vowel changes that must be learned together with their infinitive and principal forms.",
+        "Compound tenses require the correct auxiliary, haben or sein, as well as the correct Partizip II."
+      ]
+    },
+    "rules": {
+      "heading": "Key German Conjugation Rules",
+      "intro": "German has many recurring conjugation patterns. Learning these patterns makes it easier to recognize unfamiliar forms instead of memorizing every verb independently.",
+      "items": [
+        {
+          "heading": "Regular Present-Tense Endings",
+          "text": "Most weak verbs use a predictable set of endings in the Präsens. The stem stays stable while the ending changes according to person and number.",
+          "examples": ["ich mache", "du machst", "wir machen"]
+        },
+        {
+          "heading": "Stem Changes in Strong Verbs",
+          "text": "Some strong verbs change their stem vowel in the du and er / sie / es forms of the Präsens, while the plural forms often keep the infinitive vowel.",
+          "examples": ["du fährst", "er liest", "sie spricht"]
+        },
+        {
+          "heading": "Perfect Tenses Use haben or sein",
+          "text": "Perfekt and Plusquamperfekt require an auxiliary verb plus the Partizip II. Most verbs use haben, while a smaller set uses sein.",
+          "examples": [
+            "ich habe gearbeitet",
+            "sie ist gekommen",
+            "wir waren geblieben"
+          ]
+        },
+        {
+          "heading": "Past Participles Follow Several Patterns",
+          "text": "Many weak verbs form the Partizip II with ge- and -t, strong verbs often use ge- and -en, while inseparable-prefix verbs and verbs ending in -ieren normally do not take ge-.",
+          "examples": [
+            "machen → gemacht",
+            "sehen → gesehen",
+            "studieren → studiert"
+          ]
+        },
+        {
+          "heading": "Separable Prefixes Affect Word Order",
+          "text": "With separable verbs, the prefix separates from the finite verb in simple main clauses. In the Partizip II, ge- commonly appears between the prefix and the stem.",
+          "examples": ["ich stehe auf", "er ruft an", "wir sind angekommen"]
+        },
+        {
+          "heading": "Subjunctive Forms Have Their Own Patterns",
+          "text": "Konjunktiv I and Konjunktiv II are not simply additional past or future tenses. They are moods used for functions such as reported speech, hypothetical situations, wishes and polite requests.",
+          "examples": [
+            "Er sagt, er sei müde.",
+            "Ich hätte mehr Zeit.",
+            "Würdest du mir helfen?"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Common German Conjugation Mistakes",
+      "intro": "These errors are especially common when learners combine person endings, auxiliaries, participles and irregular stems.",
+      "items": [
+        {
+          "incorrect": "Du machen das jeden Tag.",
+          "correct": "Du machst das jeden Tag.",
+          "explanation": "With du in the Präsens, a regular verb normally takes the ending -st."
+        },
+        {
+          "incorrect": "Er hat nach Hause gegangen.",
+          "correct": "Er ist nach Hause gegangen.",
+          "explanation": "Gehen forms its perfect tenses with sein, not haben."
+        },
+        {
+          "incorrect": "Ich habe das Buch gelest.",
+          "correct": "Ich habe das Buch gelesen.",
+          "explanation": "Lesen is a strong verb, and its Partizip II is gelesen."
+        },
+        {
+          "incorrect": "Sie hat gestern anruft.",
+          "correct": "Sie hat gestern angerufen.",
+          "explanation": "Anrufen is separable and strong. Its Partizip II is angerufen."
+        },
+        {
+          "incorrect": "Wenn ich mehr Zeit habe, würde ich mehr reisen.",
+          "correct": "Wenn ich mehr Zeit hätte, würde ich mehr reisen.",
+          "explanation": "For a hypothetical present condition, Konjunktiv II is required in the wenn-clause: hätte rather than indicative habe."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study German Conjugations with This Table",
+      "steps": [
+        {
+          "heading": "Start with Präsens",
+          "text": "Begin with the present tense and compare all six supplied pronoun groups. Look for the standard personal endings and note verbs with stem changes."
+        },
+        {
+          "heading": "Compare the Same Verb Across Tenses",
+          "text": "Switch between Präsens, Präteritum and Perfekt for the same verb. This helps you connect the infinitive, past stem and Partizip II."
+        },
+        {
+          "heading": "Learn the Perfect Auxiliary",
+          "text": "When studying a verb, notice whether its compound past forms use haben or sein instead of learning the participle alone."
+        },
+        {
+          "heading": "Identify Strong and Irregular Forms",
+          "text": "Spend extra time on frequent verbs whose stems or principal forms cannot be predicted reliably from regular patterns."
+        },
+        {
+          "heading": "Compare Indicative and Subjunctive",
+          "text": "Use the tense selector to contrast ordinary statements with Konjunktiv I and Konjunktiv II forms so that their different functions become easier to recognize."
+        },
+        {
+          "heading": "Practise Forms in Full Sentences",
+          "text": "After reviewing a conjugation, use it in a complete sentence. German word order, separable prefixes and compound verb structures are easier to remember in context."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Learning German Verb Conjugation",
+      "items": [
+        {
+          "heading": "Learn Principal Forms Together",
+          "text": "For strong verbs, learn the infinitive, Präteritum and Partizip II together, for example sehen – sah – gesehen."
+        },
+        {
+          "heading": "Notice the Auxiliary",
+          "text": "When learning a past participle, also learn whether the verb takes haben or sein in the Perfekt."
+        },
+        {
+          "heading": "Group Similar Patterns",
+          "text": "Study verbs with similar stem changes or participle patterns together instead of treating every conjugation as unrelated."
+        },
+        {
+          "heading": "Prioritize Frequent Irregular Verbs",
+          "text": "Forms of sein, haben, werden and modal verbs occur constantly, so mastering them gives an immediate benefit across many sentence types."
+        },
+        {
+          "heading": "Use Context, Not Forms Alone",
+          "text": "Build short sentences with each tense or mood so that you learn both the conjugated form and when German speakers actually use it."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Practise Common German Verbs",
+      "description": "Use the conjugation patterns in real vocabulary practice, or explore the list of the 100 most common German verbs.",
+      "primaryLabel": "Practise German Verbs",
+      "secondaryLabel": "See 100 Common German Verbs"
+    },
+    "related": {
+      "heading": "More German Learning Resources",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 Most Common German Verbs"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 Common German Verbs in Past Forms"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "German Vocabulary by CEFR Level"
+        },
+        {
+          "key": "levelTest",
+          "label": "German Level Test"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "German Verb Conjugation FAQ",
+      "items": [
+        {
+          "question": "What does it mean to conjugate a verb in German?",
+          "answer": "To conjugate a German verb means changing its form to match grammatical information such as person, number, tense and mood. For example, the infinitive machen becomes ich mache, du machst and er macht in the Präsens."
+        },
+        {
+          "question": "Do German verbs change for every pronoun?",
+          "answer": "German finite verbs change according to person and number, although some forms are identical. For example, wir and sie / Sie frequently share the same verb form, while du and ihr normally have distinct endings."
+        },
+        {
+          "question": "What is the difference between Präteritum and Perfekt?",
+          "answer": "Both can refer to past events, but their distribution differs. Perfekt is very common in spoken German, while Präteritum is especially common in written narration. However, sein, haben and modal verbs are also frequently used in the Präteritum in everyday speech."
+        },
+        {
+          "question": "How do I know whether to use haben or sein in the Perfekt?",
+          "answer": "Most German verbs use haben. A smaller group uses sein, including many intransitive verbs that express a change of location or state, as well as verbs such as sein and bleiben. Because the choice is lexical, it is useful to learn the auxiliary together with each verb."
+        },
+        {
+          "question": "How is the German Partizip II formed?",
+          "answer": "Weak verbs commonly use ge- + stem + -t, while strong verbs often use ge- + changed or unchanged stem + -en. Inseparable-prefix verbs and verbs ending in -ieren normally omit ge-. Irregular forms should be learned individually."
+        },
+        {
+          "question": "What is the difference between Konjunktiv I and Konjunktiv II?",
+          "answer": "Konjunktiv I is used mainly for indirect or reported speech. Konjunktiv II is used for hypothetical or unreal situations, wishes, polite requests and conditions. Their functions are therefore different even though both belong to the German subjunctive system."
+        },
+        {
+          "question": "When should I use würde plus infinitive?",
+          "answer": "Würde plus infinitive is a common way to express Konjunktiv II, particularly when a synthetic Konjunktiv-II form sounds unusual or could be confused with the Präteritum. Very common verbs such as sein, haben and modal verbs often use their own synthetic forms instead."
+        },
+        {
+          "question": "Is Futur I always necessary when talking about the future in German?",
+          "answer": "No. German frequently uses the Präsens for future events when a time expression or the context makes the future meaning clear. Futur I with werden is useful when emphasizing a prediction, intention or assumption."
+        },
+        {
+          "question": "Why do some German verbs change their vowel when conjugated?",
+          "answer": "Many strong verbs have historical stem-vowel alternations. Some change their vowel in the du and er / sie / es forms of the Präsens, while others show different vowels in the Präteritum or Partizip II. These patterns are common but not completely predictable."
+        },
+        {
+          "question": "What is the best way to memorize German verb conjugations?",
+          "answer": "Learn recurring endings first, then focus on the principal forms and auxiliaries of high-frequency irregular verbs. Comparing the same verb across several tenses and using each form in a complete sentence is generally more effective than memorizing isolated tables."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "es",
+    "urlSlug": "100-verbos-alemanes-mas-comunes-conjugados",
+    "entryButtonLabel": "Conjugaciones de verbos alemanes",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "meaning": "Significado"
+    },
+    "pronounForms": [
+      {
+        "key": "ich",
+        "label": "ich"
+      },
+      {
+        "key": "du",
+        "label": "du"
+      },
+      {
+        "key": "er_sie_es",
+        "label": "er / sie / es"
+      },
+      {
+        "key": "wir",
+        "label": "wir"
+      },
+      {
+        "key": "ihr",
+        "label": "ihr"
+      },
+      {
+        "key": "sie_sie",
+        "label": "sie / Sie"
+      }
+    ],
+    "metadata": {
+      "title": "100 verbos alemanes más comunes conjugados",
+      "metaTitle": "100 verbos alemanes más comunes: conjugaciones por tiempo",
+      "metaDescription": "Compara 100 verbos alemanes frecuentes en Präsens, tiempos pasados y futuros, Konjunktiv e Imperativ, con sus formas para cada persona."
+    },
+    "hero": {
+      "heading": "100 verbos alemanes más comunes conjugados",
+      "subtitle": "Compara verbos alemanes de alta frecuencia en los principales tiempos, modos y personas gramaticales.",
+      "introParagraphs": [
+        "Consulta las conjugaciones de 100 verbos alemanes de uso frecuente y compara cómo cambia cada verbo con ich, du, er / sie / es, wir, ihr y sie / Sie.",
+        "Cambia entre Präsens, formas de pasado y futuro, Konjunktiv e Imperativ para reconocer con mayor facilidad las terminaciones, los auxiliares y los cambios irregulares."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funciona la conjugación de los verbos alemanes",
+      "paragraphs": [
+        "Los verbos finitos en alemán suelen cambiar según la persona y el número. En Präsens, los verbos regulares siguen terminaciones bastante predecibles, mientras que muchos verbos fuertes e irregulares presentan también cambios en la raíz.",
+        "Varios tiempos alemanes se construyen con verbos auxiliares. Perfekt y Plusquamperfekt utilizan haben o sein junto con el Partizip II, mientras que Futur I y Futur II se forman con werden. Por eso, aprender el auxiliar correcto y el participio es una parte esencial de la conjugación alemana.",
+        "El alemán también emplea los modos Konjunktiv I y Konjunktiv II. Konjunktiv I se utiliza especialmente en el discurso indirecto, mientras que Konjunktiv II expresa con frecuencia situaciones hipotéticas, deseos, condiciones irreales y peticiones corteses."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Elige un tiempo o modo verbal alemán",
+      "description": "Selecciona una forma para comparar los mismos 100 verbos alemanes entre distintas personas y contextos gramaticales.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Präsens",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemanes comunes en Präsens",
+        "tableDescription": "Compara las formas de presente de verbos alemanes frecuentes en todas las personas y pronombres incluidos.",
+        "grammar": {
+          "heading": "Cómo se forma el Präsens en alemán",
+          "description": "El Präsens se forma añadiendo terminaciones personales a la raíz verbal. Los verbos regulares suelen seguir las terminaciones -e, -st, -t, -en, -t y -en. Algunos verbos fuertes e irregulares cambian además la vocal de la raíz, especialmente con du y er / sie / es. El Präsens puede expresar acciones actuales, hábitos y también hechos futuros cuando el contexto lo deja claro.",
+          "formula": "raíz verbal + terminación personal"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Präteritum",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemanes comunes en Präteritum",
+        "tableDescription": "Compara las formas del Präteritum, incluidas las terminaciones regulares y los cambios de raíz de muchos verbos fuertes.",
+        "grammar": {
+          "heading": "Cómo se forma el Präteritum en alemán",
+          "description": "Los verbos débiles suelen formar el Präteritum con -te y las terminaciones personales correspondientes. Los verbos fuertes normalmente modifican la vocal de la raíz y utilizan un patrón distinto de terminaciones. El Präteritum aparece especialmente en la narración escrita, aunque sein, haben y los verbos modales también son muy frecuentes en este tiempo en la lengua hablada.",
+          "formula": "verbos débiles: raíz + -te + terminación personal; verbos fuertes: raíz de Präteritum + terminación personal"
+        }
+      },
+      {
+        "key": "present_perfect",
+        "label": "Perfekt",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemanes comunes en Perfekt",
+        "tableDescription": "Compara las formas del Perfekt y observa qué verbos frecuentes utilizan haben o sein con el Partizip II.",
+        "grammar": {
+          "heading": "Cómo se forma el Perfekt en alemán",
+          "description": "El Perfekt se construye con una forma en Präsens de haben o sein y el Partizip II. La mayoría de los verbos utilizan haben, mientras que sein se emplea con un grupo más reducido que incluye muchos verbos de desplazamiento o cambio de estado, además de verbos como sein y bleiben. En una oración principal, el participio suele aparecer al final.",
+          "formula": "Präsens de haben o sein + Partizip II"
+        }
+      },
+      {
+        "key": "past_perfect",
+        "label": "Plusquamperfekt",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemanes comunes en Plusquamperfekt",
+        "tableDescription": "Compara las formas del pasado anterior alemán utilizadas para expresar una acción previa a otro acontecimiento pasado.",
+        "grammar": {
+          "heading": "Cómo se forma el Plusquamperfekt en alemán",
+          "description": "El Plusquamperfekt utiliza el Präteritum de haben o sein junto con el Partizip II. Sirve para situar una acción antes de otro momento o acontecimiento del pasado. La elección entre haben y sein sigue básicamente las mismas reglas que en el Perfekt.",
+          "formula": "Präteritum de haben o sein + Partizip II"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur I",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemanes comunes en Futur I",
+        "tableDescription": "Compara las formas de Futur I construidas con werden y el infinitivo de cada verbo alemán.",
+        "grammar": {
+          "heading": "Cómo se forma el Futur I en alemán",
+          "description": "Futur I se forma con una forma conjugada de werden y el infinitivo del verbo principal, que normalmente aparece al final de una oración principal. En alemán se utiliza con frecuencia el Präsens para hablar del futuro cuando el contexto ya lo indica, pero Futur I puede enfatizar una predicción, una intención o una suposición.",
+          "formula": "Präsens de werden + infinitivo"
+        }
+      },
+      {
+        "key": "future_perfect",
+        "label": "Futur II",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemanes comunes en Futur II",
+        "tableDescription": "Compara las formas de Futur II para acciones que estarán terminadas en un momento futuro o que se supone que ya han ocurrido.",
+        "grammar": {
+          "heading": "Cómo se forma el Futur II en alemán",
+          "description": "Futur II combina una forma conjugada de werden con el Partizip II y el infinitivo haben o sein. Puede expresar una acción que habrá finalizado antes de un momento futuro y también una suposición sobre un hecho ya completado.",
+          "formula": "Präsens de werden + Partizip II + haben o sein",
+          "additionalFormula": "Estructura de ejemplo: er wird gearbeitet haben / er wird gegangen sein"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Konjunktiv II",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos alemanes comunes en Konjunktiv II",
+        "tableDescription": "Compara las formas de Konjunktiv II utilizadas para situaciones hipotéticas, deseos, peticiones corteses y condiciones irreales.",
+        "grammar": {
+          "heading": "Cómo se forma el Konjunktiv II en alemán",
+          "description": "Muchos verbos forman Konjunktiv II a partir de la raíz del Präteritum, con frecuencia añadiendo Umlaut en los verbos fuertes cuando es posible, además de terminaciones propias del subjuntivo. Verbos frecuentes como sein, haben y los modales suelen conservar estas formas sintéticas. Con muchos otros verbos se utiliza habitualmente würde más infinitivo, especialmente cuando la forma sintética es poco frecuente o coincide con el Präteritum.",
+          "formula": "raíz de Konjunktiv II + terminación de subjuntivo",
+          "additionalFormula": "alternativa frecuente: würde + infinitivo"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Konjunktiv II Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos alemanes comunes en Konjunktiv II Vergangenheit",
+        "tableDescription": "Compara las formas utilizadas para situaciones irreales, hipotéticas o deseadas que se refieren al pasado.",
+        "grammar": {
+          "heading": "Cómo se forma el Konjunktiv II Vergangenheit",
+          "description": "Konjunktiv II Vergangenheit se forma con hätte o wäre y el Partizip II. Se utiliza para expresar situaciones que no ocurrieron, consecuencias hipotéticas en el pasado, arrepentimientos y deseos referidos al pasado. La elección entre hätte y wäre depende del auxiliar que utilice el verbo en los tiempos perfectos.",
+          "formula": "hätte o wäre + Partizip II"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Konjunktiv I",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos alemanes comunes en Konjunktiv I",
+        "tableDescription": "Compara las formas de Konjunktiv I, especialmente importantes para el estilo indirecto y el discurso referido en alemán.",
+        "grammar": {
+          "heading": "Cómo se forma el Konjunktiv I en alemán",
+          "description": "Konjunktiv I se forma generalmente a partir de la raíz del infinitivo con terminaciones específicas del subjuntivo. Se utiliza sobre todo para reproducir afirmaciones de otra persona sin presentarlas directamente como hechos confirmados. Algunas formas coinciden con el indicativo; en esos casos, puede utilizarse Konjunktiv II para mantener clara la distinción.",
+          "formula": "raíz del infinitivo + terminación de Konjunktiv I"
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Konjunktiv I Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos alemanes comunes en Konjunktiv I Vergangenheit",
+        "tableDescription": "Compara las formas pasadas de Konjunktiv I utilizadas para reproducir acciones terminadas o acontecimientos anteriores.",
+        "grammar": {
+          "heading": "Cómo se forma el Konjunktiv I Vergangenheit",
+          "description": "La forma pasada de Konjunktiv I combina el Konjunktiv I de haben o sein con el Partizip II. Es especialmente útil en el discurso indirecto cuando el acontecimiento referido ya se ha completado. El verbo principal conserva el mismo participio y la misma selección de auxiliar que en el Perfekt.",
+          "formula": "Konjunktiv I de haben o sein + Partizip II"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativ",
+        "group": "imperative",
+        "tableHeading": "100 verbos alemanes comunes en Imperativ",
+        "tableDescription": "Estudia las formas de mandato de verbos alemanes frecuentes y compara cómo cambian según la persona a la que se dirige la orden o petición.",
+        "grammar": {
+          "heading": "Cómo se forma el Imperativ en alemán",
+          "description": "Las formas del Imperativ dependen de la persona a la que se dirige el hablante. El imperativo de du suele utilizar la raíz verbal; la forma de ihr normalmente coincide con el Präsens de ihr sin el pronombre; y el imperativo formal con Sie utiliza la forma verbal correspondiente seguida de Sie. También puede emplearse una construcción con wir para expresar propuestas. El alemán no dispone normalmente de una forma imperativa equivalente para todas las personas del indicativo.",
+          "formula": "du: raíz de imperativo; ihr: forma de Präsens sin ihr; Sie: verbo + Sie",
+          "additionalFormula": "propuesta con wir: verbo + wir"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabla de conjugación de verbos alemanes",
+      "description": "Utiliza la tabla para comparar cómo cambian 100 verbos alemanes comunes según la persona y el tiempo o modo seleccionado.",
+      "scrollHint": "Desplázate horizontalmente para ver todas las formas de conjugación.",
+      "scrollLeftLabel": "Desplazar a la izquierda",
+      "scrollRightLabel": "Desplazar a la derecha",
+      "notes": [
+        "Los pronombres sie y Sie utilizan las mismas formas verbales, aunque Sie se escribe con mayúscula cuando significa «usted» o «ustedes» en el tratamiento formal.",
+        "Muchos verbos fuertes presentan cambios vocálicos en la raíz que conviene aprender junto con el infinitivo y sus formas principales.",
+        "Los tiempos compuestos requieren elegir correctamente entre haben y sein y utilizar además el Partizip II adecuado."
+      ]
+    },
+    "rules": {
+      "heading": "Reglas clave de la conjugación alemana",
+      "intro": "La conjugación alemana contiene numerosos patrones recurrentes. Aprenderlos permite reconocer formas nuevas con más facilidad y reduce la necesidad de memorizar cada verbo de manera aislada.",
+      "items": [
+        {
+          "heading": "Terminaciones regulares del Präsens",
+          "text": "La mayoría de los verbos débiles utilizan un conjunto predecible de terminaciones en Präsens. La raíz se mantiene estable y la terminación cambia según la persona y el número.",
+          "examples": ["ich mache", "du machst", "wir machen"]
+        },
+        {
+          "heading": "Cambios de raíz en los verbos fuertes",
+          "text": "Algunos verbos fuertes cambian la vocal de la raíz con du y er / sie / es en Präsens, mientras que las formas plurales suelen conservar la vocal del infinitivo.",
+          "examples": ["du fährst", "er liest", "sie spricht"]
+        },
+        {
+          "heading": "Los tiempos perfectos usan haben o sein",
+          "text": "Perfekt y Plusquamperfekt requieren un verbo auxiliar más el Partizip II. La mayoría de los verbos utilizan haben, mientras que un grupo más reducido utiliza sein.",
+          "examples": [
+            "ich habe gearbeitet",
+            "sie ist gekommen",
+            "wir waren geblieben"
+          ]
+        },
+        {
+          "heading": "El Partizip II sigue varios patrones",
+          "text": "Muchos verbos débiles forman el Partizip II con ge- y -t, mientras que los verbos fuertes suelen utilizar ge- y -en. Los verbos con prefijos inseparables y los terminados en -ieren normalmente no llevan ge-.",
+          "examples": [
+            "machen → gemacht",
+            "sehen → gesehen",
+            "studieren → studiert"
+          ]
+        },
+        {
+          "heading": "Los prefijos separables afectan al orden de palabras",
+          "text": "En los verbos separables, el prefijo se separa del verbo finito en las oraciones principales simples. En el Partizip II, ge- suele colocarse entre el prefijo y la raíz.",
+          "examples": ["ich stehe auf", "er ruft an", "wir sind angekommen"]
+        },
+        {
+          "heading": "Los modos subjuntivos tienen funciones propias",
+          "text": "Konjunktiv I y Konjunktiv II no son simplemente tiempos verbales adicionales. Son modos utilizados para funciones como el discurso indirecto, las situaciones hipotéticas, los deseos y las peticiones corteses.",
+          "examples": [
+            "Er sagt, er sei müde.",
+            "Ich hätte mehr Zeit.",
+            "Würdest du mir helfen?"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Errores frecuentes al conjugar verbos alemanes",
+      "intro": "Estos errores aparecen a menudo cuando se combinan terminaciones personales, auxiliares, participios y raíces irregulares.",
+      "items": [
+        {
+          "incorrect": "Du machen das jeden Tag.",
+          "correct": "Du machst das jeden Tag.",
+          "explanation": "Con du en Präsens, un verbo regular normalmente lleva la terminación -st."
+        },
+        {
+          "incorrect": "Er hat nach Hause gegangen.",
+          "correct": "Er ist nach Hause gegangen.",
+          "explanation": "Gehen forma los tiempos perfectos con sein, no con haben."
+        },
+        {
+          "incorrect": "Ich habe das Buch gelest.",
+          "correct": "Ich habe das Buch gelesen.",
+          "explanation": "Lesen es un verbo fuerte y su Partizip II correcto es gelesen."
+        },
+        {
+          "incorrect": "Sie hat gestern anruft.",
+          "correct": "Sie hat gestern angerufen.",
+          "explanation": "Anrufen es separable y fuerte. Su Partizip II es angerufen."
+        },
+        {
+          "incorrect": "Wenn ich mehr Zeit habe, würde ich mehr reisen.",
+          "correct": "Wenn ich mehr Zeit hätte, würde ich mehr reisen.",
+          "explanation": "En una condición hipotética presente se utiliza Konjunktiv II en la oración con wenn: hätte, no el indicativo habe."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar las conjugaciones alemanas con esta tabla",
+      "steps": [
+        {
+          "heading": "Empieza por el Präsens",
+          "text": "Comienza con el presente y compara los seis grupos de pronombres. Observa las terminaciones personales habituales e identifica los verbos que cambian de raíz."
+        },
+        {
+          "heading": "Compara el mismo verbo entre varios tiempos",
+          "text": "Alterna entre Präsens, Präteritum y Perfekt para un mismo verbo. Así podrás relacionar el infinitivo, la raíz del pasado y el Partizip II."
+        },
+        {
+          "heading": "Aprende el auxiliar del Perfekt",
+          "text": "Cuando estudies un verbo, fíjate en si sus tiempos compuestos se forman con haben o con sein en lugar de memorizar únicamente el participio."
+        },
+        {
+          "heading": "Identifica los verbos fuertes e irregulares",
+          "text": "Dedica más atención a los verbos frecuentes cuyas raíces o formas principales no pueden deducirse de manera fiable a partir de los patrones regulares."
+        },
+        {
+          "heading": "Compara indicativo y subjuntivo",
+          "text": "Utiliza el selector para contrastar las formas del indicativo con Konjunktiv I y Konjunktiv II y entender mejor las funciones propias de cada modo."
+        },
+        {
+          "heading": "Practica las formas dentro de frases completas",
+          "text": "Después de revisar una conjugación, úsala en una frase completa. El orden de palabras, los prefijos separables y las estructuras verbales compuestas se recuerdan mejor en contexto."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para aprender la conjugación alemana",
+      "items": [
+        {
+          "heading": "Aprende juntas las formas principales",
+          "text": "Con los verbos fuertes, memoriza juntos el infinitivo, el Präteritum y el Partizip II, por ejemplo: sehen – sah – gesehen."
+        },
+        {
+          "heading": "Fíjate siempre en el auxiliar",
+          "text": "Cuando aprendas un participio, memoriza también si el verbo utiliza haben o sein en Perfekt."
+        },
+        {
+          "heading": "Agrupa patrones parecidos",
+          "text": "Estudia juntos los verbos que presentan cambios de raíz o patrones de participio similares en lugar de tratarlos como formas completamente independientes."
+        },
+        {
+          "heading": "Prioriza los irregulares de alta frecuencia",
+          "text": "Las formas de sein, haben, werden y los verbos modales aparecen constantemente, por lo que dominarlas ayuda en una gran variedad de estructuras."
+        },
+        {
+          "heading": "Aprende las formas dentro de contexto",
+          "text": "Crea frases breves con cada tiempo o modo para aprender no solo la conjugación, sino también cuándo se utiliza realmente en alemán."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Practica los verbos alemanes más comunes",
+      "description": "Utiliza estos patrones de conjugación en ejercicios de vocabulario o explora la lista de los 100 verbos alemanes más frecuentes.",
+      "primaryLabel": "Practicar verbos alemanes",
+      "secondaryLabel": "Ver 100 verbos alemanes comunes"
+    },
+    "related": {
+      "heading": "Más recursos para aprender alemán",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbos alemanes más comunes"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbos alemanes comunes en pasado"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario alemán por nivel MCER"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test de nivel de alemán"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre la conjugación alemana",
+      "items": [
+        {
+          "question": "¿Qué significa conjugar un verbo en alemán?",
+          "answer": "Conjugar un verbo alemán significa modificar su forma según información gramatical como la persona, el número, el tiempo y el modo. Por ejemplo, el infinitivo machen se convierte en ich mache, du machst y er macht en Präsens."
+        },
+        {
+          "question": "¿Los verbos alemanes cambian con cada pronombre?",
+          "answer": "Los verbos finitos alemanes cambian según la persona y el número, aunque algunas formas coinciden. Por ejemplo, wir y sie / Sie suelen utilizar la misma forma verbal, mientras que du e ihr normalmente tienen terminaciones distintas."
+        },
+        {
+          "question": "¿Cuál es la diferencia entre Präteritum y Perfekt?",
+          "answer": "Ambos pueden expresar acontecimientos pasados, pero su uso es diferente. Perfekt es muy frecuente en la lengua hablada, mientras que Präteritum aparece especialmente en la narración escrita. Sin embargo, sein, haben y los verbos modales también se utilizan habitualmente en Präteritum al hablar."
+        },
+        {
+          "question": "¿Cómo sé si debo usar haben o sein en Perfekt?",
+          "answer": "La mayoría de los verbos alemanes utilizan haben. Un grupo más reducido utiliza sein, entre ellos muchos verbos intransitivos que expresan desplazamiento o cambio de estado, además de verbos como sein y bleiben. Como la elección depende del verbo, conviene aprender el auxiliar junto con cada infinitivo."
+        },
+        {
+          "question": "¿Cómo se forma el Partizip II en alemán?",
+          "answer": "Los verbos débiles suelen utilizar ge- + raíz + -t, mientras que los verbos fuertes emplean con frecuencia ge- + raíz, que puede cambiar, + -en. Los verbos con prefijos inseparables y los terminados en -ieren normalmente no añaden ge-. Las formas irregulares deben aprenderse individualmente."
+        },
+        {
+          "question": "¿Cuál es la diferencia entre Konjunktiv I y Konjunktiv II?",
+          "answer": "Konjunktiv I se utiliza principalmente para el discurso indirecto. Konjunktiv II se emplea para situaciones hipotéticas o irreales, deseos, peticiones corteses y condiciones. Por tanto, cumplen funciones distintas dentro del sistema verbal alemán."
+        },
+        {
+          "question": "¿Cuándo se utiliza würde más infinitivo?",
+          "answer": "Würde + infinitivo es una construcción muy frecuente para expresar Konjunktiv II, especialmente cuando la forma sintética suena poco natural o podría confundirse con el Präteritum. Verbos muy comunes como sein, haben y los modales suelen utilizar sus propias formas sintéticas."
+        },
+        {
+          "question": "¿Es necesario utilizar siempre Futur I para hablar del futuro en alemán?",
+          "answer": "No. El alemán utiliza con mucha frecuencia el Präsens para acontecimientos futuros cuando una expresión temporal o el contexto deja claro que se habla del futuro. Futur I con werden resulta útil para enfatizar predicciones, intenciones o suposiciones."
+        },
+        {
+          "question": "¿Por qué algunos verbos alemanes cambian de vocal al conjugarse?",
+          "answer": "Muchos verbos fuertes conservan alternancias históricas de la vocal de la raíz. Algunos cambian con du y er / sie / es en Präsens, mientras que otros presentan vocales diferentes en Präteritum o Partizip II. Son patrones frecuentes, pero no siempre pueden predecirse completamente."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las conjugaciones alemanas?",
+          "answer": "Aprende primero las terminaciones recurrentes y después céntrate en las formas principales y los auxiliares de los verbos irregulares más frecuentes. Comparar un mismo verbo en varios tiempos y utilizar cada forma en frases completas suele ser más eficaz que memorizar tablas de manera aislada."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "fr",
+    "urlSlug": "100-verbes-allemands-les-plus-courants-conjugaisons",
+    "entryButtonLabel": "Conjugaisons des verbes allemands",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "meaning": "Signification"
+    },
+    "pronounForms": [
+      {
+        "key": "ich",
+        "label": "ich"
+      },
+      {
+        "key": "du",
+        "label": "du"
+      },
+      {
+        "key": "er_sie_es",
+        "label": "er / sie / es"
+      },
+      {
+        "key": "wir",
+        "label": "wir"
+      },
+      {
+        "key": "ihr",
+        "label": "ihr"
+      },
+      {
+        "key": "sie_sie",
+        "label": "sie / Sie"
+      }
+    ],
+    "metadata": {
+      "title": "100 verbes allemands les plus courants conjugués",
+      "metaTitle": "100 verbes allemands courants : conjugaisons par temps",
+      "metaDescription": "Comparez 100 verbes allemands fréquents au Präsens, aux temps du passé et du futur, au Konjunktiv et à l’Imperativ, selon les différentes personnes."
+    },
+    "hero": {
+      "heading": "100 verbes allemands les plus courants conjugués",
+      "subtitle": "Comparez les verbes allemands les plus fréquents à travers les principaux temps, modes et personnes grammaticales.",
+      "introParagraphs": [
+        "Consultez les conjugaisons de 100 verbes allemands très courants et comparez leurs formes avec ich, du, er / sie / es, wir, ihr et sie / Sie.",
+        "Passez du Präsens aux formes du passé et du futur, puis au Konjunktiv et à l’Imperativ, afin de repérer plus facilement les terminaisons régulières, les auxiliaires et les changements irréguliers."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionne la conjugaison des verbes allemands",
+      "paragraphs": [
+        "En allemand, les verbes conjugués varient généralement selon la personne et le nombre. Au Präsens, les verbes réguliers suivent des terminaisons assez prévisibles, tandis que de nombreux verbes forts et irréguliers présentent également des changements dans le radical.",
+        "Plusieurs temps allemands se construisent avec des auxiliaires. Le Perfekt et le Plusquamperfekt utilisent haben ou sein avec le Partizip II, tandis que le Futur I et le Futur II se forment avec werden. Il est donc essentiel d’apprendre à la fois le bon auxiliaire et le participe passé.",
+        "L’allemand possède aussi les modes Konjunktiv I et Konjunktiv II. Le Konjunktiv I est surtout employé dans le discours indirect, tandis que le Konjunktiv II sert notamment à exprimer des situations hypothétiques, des souhaits, des conditions irréelles et des demandes polies."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Choisissez un temps ou un mode allemand",
+      "description": "Sélectionnez une forme pour comparer les mêmes 100 verbes allemands selon les personnes et les contextes grammaticaux.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicatif"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjonctif"
+        },
+        {
+          "key": "imperative",
+          "label": "Impératif"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Präsens",
+        "group": "indicative",
+        "tableHeading": "100 verbes allemands courants au Präsens",
+        "tableDescription": "Comparez les formes du présent des verbes allemands fréquents pour toutes les personnes et tous les pronoms fournis.",
+        "grammar": {
+          "heading": "Comment se forme le Präsens en allemand",
+          "description": "Le Präsens se forme en ajoutant des terminaisons personnelles au radical du verbe. Les verbes réguliers utilisent généralement les terminaisons -e, -st, -t, -en, -t et -en. Certains verbes forts et irréguliers modifient aussi la voyelle du radical, surtout avec du et er / sie / es. Le Präsens peut exprimer une action actuelle, une habitude ou encore un événement futur lorsque le contexte l’indique clairement.",
+          "formula": "radical verbal + terminaison personnelle"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Präteritum",
+        "group": "indicative",
+        "tableHeading": "100 verbes allemands courants au Präteritum",
+        "tableDescription": "Comparez les formes du Präteritum, y compris les terminaisons régulières et les changements de radical de nombreux verbes forts.",
+        "grammar": {
+          "heading": "Comment se forme le Präteritum en allemand",
+          "description": "Les verbes faibles forment généralement le Präteritum avec -te suivi des terminaisons personnelles. Les verbes forts modifient souvent la voyelle de leur radical et suivent un autre modèle de terminaisons. Le Präteritum est particulièrement fréquent dans les récits écrits, tandis que sein, haben et les verbes modaux sont aussi très souvent utilisés à ce temps dans la langue parlée.",
+          "formula": "verbes faibles : radical + -te + terminaison personnelle ; verbes forts : radical du Präteritum + terminaison personnelle"
+        }
+      },
+      {
+        "key": "present_perfect",
+        "label": "Perfekt",
+        "group": "indicative",
+        "tableHeading": "100 verbes allemands courants au Perfekt",
+        "tableDescription": "Comparez les formes du Perfekt et identifiez les verbes fréquents qui utilisent haben ou sein avec le Partizip II.",
+        "grammar": {
+          "heading": "Comment se forme le Perfekt en allemand",
+          "description": "Le Perfekt se construit avec une forme au Präsens de haben ou sein et le Partizip II. La majorité des verbes utilisent haben, tandis que sein s’emploie avec un groupe plus restreint comprenant de nombreux verbes exprimant un déplacement ou un changement d’état, ainsi que des verbes comme sein et bleiben. Dans une proposition principale, le participe se place généralement en fin de phrase.",
+          "formula": "Präsens de haben ou sein + Partizip II"
+        }
+      },
+      {
+        "key": "past_perfect",
+        "label": "Plusquamperfekt",
+        "group": "indicative",
+        "tableHeading": "100 verbes allemands courants au Plusquamperfekt",
+        "tableDescription": "Comparez les formes utilisées pour exprimer une action accomplie avant un autre événement passé.",
+        "grammar": {
+          "heading": "Comment se forme le Plusquamperfekt en allemand",
+          "description": "Le Plusquamperfekt utilise le Präteritum de haben ou sein accompagné du Partizip II. Il sert à situer une action avant un autre moment ou événement du passé. Le choix entre haben et sein suit essentiellement les mêmes règles qu’au Perfekt.",
+          "formula": "Präteritum de haben ou sein + Partizip II"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur I",
+        "group": "indicative",
+        "tableHeading": "100 verbes allemands courants au Futur I",
+        "tableDescription": "Comparez les formes du Futur I construites avec werden et l’infinitif de chaque verbe allemand.",
+        "grammar": {
+          "heading": "Comment se forme le Futur I en allemand",
+          "description": "Le Futur I se forme avec une forme conjuguée de werden et l’infinitif du verbe principal, généralement placé à la fin de la proposition principale. L’allemand emploie souvent le Präsens pour parler du futur lorsque le contexte suffit, mais le Futur I peut servir à insister sur une prédiction, une intention ou une supposition.",
+          "formula": "Präsens de werden + infinitif"
+        }
+      },
+      {
+        "key": "future_perfect",
+        "label": "Futur II",
+        "group": "indicative",
+        "tableHeading": "100 verbes allemands courants au Futur II",
+        "tableDescription": "Comparez les formes du Futur II pour les actions qui seront achevées à un moment futur ou que l’on suppose déjà accomplies.",
+        "grammar": {
+          "heading": "Comment se forme le Futur II en allemand",
+          "description": "Le Futur II combine une forme conjuguée de werden avec le Partizip II et l’infinitif haben ou sein. Il peut exprimer une action qui sera terminée avant un moment futur, mais aussi une supposition concernant un événement déjà accompli.",
+          "formula": "Präsens de werden + Partizip II + haben ou sein",
+          "additionalFormula": "Structure type : er wird gearbeitet haben / er wird gegangen sein"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Konjunktiv II",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes allemands courants au Konjunktiv II",
+        "tableDescription": "Comparez les formes du Konjunktiv II employées pour les situations hypothétiques, les souhaits, les demandes polies et les conditions irréelles.",
+        "grammar": {
+          "heading": "Comment se forme le Konjunktiv II en allemand",
+          "description": "De nombreux verbes forment le Konjunktiv II à partir du radical du Präteritum, souvent avec un Umlaut pour les verbes forts lorsque cela est possible, auquel s’ajoutent des terminaisons propres au subjonctif. Les verbes fréquents comme sein, haben et les verbes modaux utilisent couramment ces formes synthétiques. Avec beaucoup d’autres verbes, on emploie souvent würde suivi de l’infinitif, notamment lorsque la forme synthétique est rare ou identique au Präteritum.",
+          "formula": "radical du Konjunktiv II + terminaison du subjonctif",
+          "additionalFormula": "alternative fréquente : würde + infinitif"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Konjunktiv II Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes allemands courants au Konjunktiv II Vergangenheit",
+        "tableDescription": "Comparez les formes utilisées pour les situations passées irréelles, hypothétiques ou souhaitées.",
+        "grammar": {
+          "heading": "Comment se forme le Konjunktiv II Vergangenheit",
+          "description": "Le Konjunktiv II Vergangenheit se construit avec hätte ou wäre et le Partizip II. Il sert à exprimer des événements qui n’ont pas eu lieu, des conséquences hypothétiques dans le passé, des regrets ou des souhaits concernant le passé. Le choix entre hätte et wäre dépend de l’auxiliaire employé par le verbe dans les temps composés.",
+          "formula": "hätte ou wäre + Partizip II"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Konjunktiv I",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes allemands courants au Konjunktiv I",
+        "tableDescription": "Comparez les formes du Konjunktiv I, particulièrement importantes dans le discours indirect en allemand.",
+        "grammar": {
+          "heading": "Comment se forme le Konjunktiv I en allemand",
+          "description": "Le Konjunktiv I se forme généralement à partir du radical de l’infinitif auquel s’ajoutent des terminaisons spécifiques. Il est principalement utilisé pour rapporter les propos d’une autre personne sans les présenter directement comme des faits confirmés. Certaines formes sont identiques à l’indicatif ; dans ce cas, le Konjunktiv II peut être employé afin de conserver une distinction claire.",
+          "formula": "radical de l’infinitif + terminaison du Konjunktiv I"
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Konjunktiv I Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes allemands courants au Konjunktiv I Vergangenheit",
+        "tableDescription": "Comparez les formes passées du Konjunktiv I utilisées pour rapporter des actions achevées ou des événements antérieurs.",
+        "grammar": {
+          "heading": "Comment se forme le Konjunktiv I Vergangenheit",
+          "description": "La forme passée du Konjunktiv I combine le Konjunktiv I de haben ou sein avec le Partizip II. Elle est particulièrement utile dans le discours indirect lorsqu’un événement rapporté est déjà terminé. Le verbe principal conserve le même participe et le même choix d’auxiliaire qu’au Perfekt.",
+          "formula": "Konjunktiv I de haben ou sein + Partizip II"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativ",
+        "group": "imperative",
+        "tableHeading": "100 verbes allemands courants à l’Imperativ",
+        "tableDescription": "Étudiez les formes de l’impératif des verbes allemands fréquents et comparez-les selon la personne à laquelle on s’adresse.",
+        "grammar": {
+          "heading": "Comment se forme l’Imperativ en allemand",
+          "description": "Les formes de l’Imperativ dépendent de la personne à laquelle on s’adresse. L’impératif avec du utilise souvent le radical verbal ; la forme avec ihr correspond généralement à la forme du Präsens sans le pronom ; et l’impératif de politesse avec Sie utilise la forme verbale suivie de Sie. Une construction avec wir peut aussi servir à formuler une proposition. L’allemand ne possède pas normalement une forme impérative équivalente pour toutes les personnes de l’indicatif.",
+          "formula": "du : radical de l’impératif ; ihr : forme du Präsens sans ihr ; Sie : verbe + Sie",
+          "additionalFormula": "proposition avec wir : verbe + wir"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tableau de conjugaison des verbes allemands",
+      "description": "Utilisez le tableau pour comparer la manière dont 100 verbes allemands courants changent selon la personne et le temps ou le mode sélectionné.",
+      "scrollHint": "Faites défiler horizontalement pour voir toutes les formes de conjugaison.",
+      "scrollLeftLabel": "Faire défiler vers la gauche",
+      "scrollRightLabel": "Faire défiler vers la droite",
+      "notes": [
+        "Les pronoms sie et Sie utilisent les mêmes formes verbales, mais Sie prend une majuscule lorsqu’il correspond au vouvoiement.",
+        "De nombreux verbes forts présentent des changements de voyelle dans le radical qu’il est utile d’apprendre avec l’infinitif et les principales formes du verbe.",
+        "Les temps composés exigent de choisir correctement entre haben et sein et d’utiliser le bon Partizip II."
+      ]
+    },
+    "rules": {
+      "heading": "Règles essentielles de la conjugaison allemande",
+      "intro": "La conjugaison allemande repose sur de nombreux schémas récurrents. Les connaître permet de reconnaître plus facilement les formes nouvelles sans devoir mémoriser chaque verbe isolément.",
+      "items": [
+        {
+          "heading": "Terminaisons régulières au Präsens",
+          "text": "La plupart des verbes faibles suivent un ensemble prévisible de terminaisons au Präsens. Le radical reste généralement stable tandis que la terminaison change selon la personne et le nombre.",
+          "examples": ["ich mache", "du machst", "wir machen"]
+        },
+        {
+          "heading": "Changements de radical des verbes forts",
+          "text": "Certains verbes forts modifient la voyelle de leur radical avec du et er / sie / es au Präsens, tandis que les formes du pluriel conservent souvent la voyelle de l’infinitif.",
+          "examples": ["du fährst", "er liest", "sie spricht"]
+        },
+        {
+          "heading": "Les temps composés utilisent haben ou sein",
+          "text": "Le Perfekt et le Plusquamperfekt nécessitent un auxiliaire ainsi que le Partizip II. La majorité des verbes utilisent haben, tandis qu’un groupe plus restreint se construit avec sein.",
+          "examples": [
+            "ich habe gearbeitet",
+            "sie ist gekommen",
+            "wir waren geblieben"
+          ]
+        },
+        {
+          "heading": "Le Partizip II suit plusieurs modèles",
+          "text": "De nombreux verbes faibles forment leur Partizip II avec ge- et -t, tandis que les verbes forts utilisent souvent ge- et -en. Les verbes à préfixe inséparable et ceux en -ieren ne prennent normalement pas ge-.",
+          "examples": [
+            "machen → gemacht",
+            "sehen → gesehen",
+            "studieren → studiert"
+          ]
+        },
+        {
+          "heading": "Les préfixes séparables influencent l’ordre des mots",
+          "text": "Avec les verbes séparables, le préfixe se détache du verbe conjugué dans une proposition principale simple. Au Partizip II, ge- se place généralement entre le préfixe et le radical.",
+          "examples": ["ich stehe auf", "er ruft an", "wir sind angekommen"]
+        },
+        {
+          "heading": "Les formes du Konjunktiv ont leurs propres fonctions",
+          "text": "Le Konjunktiv I et le Konjunktiv II ne sont pas simplement des temps supplémentaires. Ce sont des modes utilisés notamment pour le discours indirect, les situations hypothétiques, les souhaits et les demandes polies.",
+          "examples": [
+            "Er sagt, er sei müde.",
+            "Ich hätte mehr Zeit.",
+            "Würdest du mir helfen?"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Erreurs fréquentes dans la conjugaison allemande",
+      "intro": "Ces erreurs apparaissent souvent lorsque les apprenants combinent les terminaisons personnelles, les auxiliaires, les participes et les radicaux irréguliers.",
+      "items": [
+        {
+          "incorrect": "Du machen das jeden Tag.",
+          "correct": "Du machst das jeden Tag.",
+          "explanation": "Avec du au Präsens, un verbe régulier prend normalement la terminaison -st."
+        },
+        {
+          "incorrect": "Er hat nach Hause gegangen.",
+          "correct": "Er ist nach Hause gegangen.",
+          "explanation": "Le verbe gehen forme ses temps composés avec sein, et non avec haben."
+        },
+        {
+          "incorrect": "Ich habe das Buch gelest.",
+          "correct": "Ich habe das Buch gelesen.",
+          "explanation": "Lesen est un verbe fort et son Partizip II correct est gelesen."
+        },
+        {
+          "incorrect": "Sie hat gestern anruft.",
+          "correct": "Sie hat gestern angerufen.",
+          "explanation": "Anrufen est un verbe séparable et fort. Son Partizip II est angerufen."
+        },
+        {
+          "incorrect": "Wenn ich mehr Zeit habe, würde ich mehr reisen.",
+          "correct": "Wenn ich mehr Zeit hätte, würde ich mehr reisen.",
+          "explanation": "Pour une condition hypothétique au présent, on utilise le Konjunktiv II dans la proposition introduite par wenn : hätte et non l’indicatif habe."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment étudier les conjugaisons allemandes avec ce tableau",
+      "steps": [
+        {
+          "heading": "Commencez par le Präsens",
+          "text": "Commencez par le présent et comparez les six groupes de pronoms. Repérez les terminaisons personnelles régulières et les verbes qui modifient leur radical."
+        },
+        {
+          "heading": "Comparez le même verbe à plusieurs temps",
+          "text": "Passez du Präsens au Präteritum puis au Perfekt pour un même verbe. Cela permet de relier plus facilement l’infinitif, le radical du passé et le Partizip II."
+        },
+        {
+          "heading": "Apprenez l’auxiliaire du Perfekt",
+          "text": "Lorsque vous étudiez un verbe, vérifiez si ses temps composés utilisent haben ou sein au lieu de mémoriser uniquement son participe passé."
+        },
+        {
+          "heading": "Repérez les verbes forts et irréguliers",
+          "text": "Accordez davantage d’attention aux verbes fréquents dont le radical ou les formes principales ne peuvent pas être déduits de manière fiable à partir des modèles réguliers."
+        },
+        {
+          "heading": "Comparez indicatif et Konjunktiv",
+          "text": "Utilisez le sélecteur pour comparer les formes de l’indicatif avec celles du Konjunktiv I et du Konjunktiv II et mieux comprendre le rôle de chaque mode."
+        },
+        {
+          "heading": "Pratiquez dans des phrases complètes",
+          "text": "Après avoir étudié une conjugaison, employez-la dans une phrase complète. L’ordre des mots, les préfixes séparables et les constructions verbales composées sont plus faciles à retenir en contexte."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour apprendre la conjugaison allemande",
+      "items": [
+        {
+          "heading": "Apprenez ensemble les formes principales",
+          "text": "Pour les verbes forts, mémorisez ensemble l’infinitif, le Präteritum et le Partizip II, par exemple : sehen – sah – gesehen."
+        },
+        {
+          "heading": "Retenez toujours l’auxiliaire",
+          "text": "Lorsque vous apprenez un participe passé, mémorisez également si le verbe utilise haben ou sein au Perfekt."
+        },
+        {
+          "heading": "Regroupez les modèles similaires",
+          "text": "Étudiez ensemble les verbes qui présentent des changements de radical ou des modèles de participe similaires plutôt que de considérer chaque conjugaison comme totalement indépendante."
+        },
+        {
+          "heading": "Priorisez les verbes irréguliers fréquents",
+          "text": "Les formes de sein, haben, werden et des verbes modaux sont extrêmement fréquentes. Les maîtriser facilite immédiatement de nombreuses constructions."
+        },
+        {
+          "heading": "Apprenez les formes en contexte",
+          "text": "Construisez de courtes phrases avec chaque temps ou mode pour apprendre non seulement la forme conjuguée, mais aussi son emploi réel en allemand."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pratiquez les verbes allemands les plus courants",
+      "description": "Utilisez ces modèles de conjugaison dans vos exercices de vocabulaire ou explorez la liste des 100 verbes allemands les plus fréquents.",
+      "primaryLabel": "Pratiquer les verbes allemands",
+      "secondaryLabel": "Voir 100 verbes allemands courants"
+    },
+    "related": {
+      "heading": "Plus de ressources pour apprendre l’allemand",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbes allemands les plus courants"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbes allemands courants au passé"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire allemand par niveau CECR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test de niveau d’allemand"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur la conjugaison allemande",
+      "items": [
+        {
+          "question": "Que signifie conjuguer un verbe en allemand ?",
+          "answer": "Conjuguer un verbe allemand signifie modifier sa forme en fonction d’informations grammaticales comme la personne, le nombre, le temps et le mode. Par exemple, l’infinitif machen devient ich mache, du machst et er macht au Präsens."
+        },
+        {
+          "question": "Les verbes allemands changent-ils avec chaque pronom ?",
+          "answer": "Les verbes conjugués allemands varient selon la personne et le nombre, même si certaines formes sont identiques. Par exemple, wir et sie / Sie utilisent souvent la même forme verbale, alors que du et ihr ont généralement des terminaisons différentes."
+        },
+        {
+          "question": "Quelle est la différence entre le Präteritum et le Perfekt ?",
+          "answer": "Les deux peuvent exprimer des événements passés, mais leur emploi diffère. Le Perfekt est très fréquent à l’oral, tandis que le Präteritum est particulièrement courant dans les récits écrits. Toutefois, sein, haben et les verbes modaux sont également très souvent employés au Präteritum dans la langue parlée."
+        },
+        {
+          "question": "Comment savoir s’il faut utiliser haben ou sein au Perfekt ?",
+          "answer": "La majorité des verbes allemands utilisent haben. Un groupe plus restreint utilise sein, notamment de nombreux verbes intransitifs exprimant un déplacement ou un changement d’état, ainsi que des verbes comme sein et bleiben. Comme ce choix dépend du verbe, il est utile d’apprendre l’auxiliaire en même temps que l’infinitif."
+        },
+        {
+          "question": "Comment forme-t-on le Partizip II en allemand ?",
+          "answer": "Les verbes faibles utilisent souvent ge- + radical + -t, tandis que les verbes forts prennent fréquemment ge- + radical, parfois modifié, + -en. Les verbes à préfixe inséparable et ceux qui se terminent par -ieren n’ajoutent normalement pas ge-. Les formes irrégulières doivent être apprises individuellement."
+        },
+        {
+          "question": "Quelle est la différence entre le Konjunktiv I et le Konjunktiv II ?",
+          "answer": "Le Konjunktiv I est principalement utilisé dans le discours indirect. Le Konjunktiv II sert à exprimer des situations hypothétiques ou irréelles, des souhaits, des demandes polies et des conditions. Ces deux modes remplissent donc des fonctions différentes."
+        },
+        {
+          "question": "Quand utilise-t-on würde suivi de l’infinitif ?",
+          "answer": "La construction würde + infinitif est très fréquente pour exprimer le Konjunktiv II, notamment lorsque la forme synthétique paraît peu naturelle ou risque d’être confondue avec le Präteritum. Les verbes très courants comme sein, haben et les verbes modaux utilisent souvent leurs propres formes synthétiques."
+        },
+        {
+          "question": "Faut-il toujours utiliser le Futur I pour parler du futur en allemand ?",
+          "answer": "Non. L’allemand utilise très souvent le Präsens pour parler d’événements futurs lorsqu’une indication temporelle ou le contexte rend le sens futur évident. Le Futur I avec werden est utile notamment pour insister sur une prédiction, une intention ou une supposition."
+        },
+        {
+          "question": "Pourquoi certains verbes allemands changent-ils de voyelle lorsqu’ils sont conjugués ?",
+          "answer": "De nombreux verbes forts présentent des alternances historiques de voyelles dans leur radical. Certains changent de voyelle avec du et er / sie / es au Präsens, tandis que d’autres présentent des voyelles différentes au Präteritum ou au Partizip II. Ces schémas sont fréquents, mais ils ne sont pas toujours entièrement prévisibles."
+        },
+        {
+          "question": "Quelle est la meilleure façon de mémoriser les conjugaisons allemandes ?",
+          "answer": "Commencez par apprendre les terminaisons récurrentes, puis concentrez-vous sur les formes principales et les auxiliaires des verbes irréguliers les plus fréquents. Comparer un même verbe à plusieurs temps et utiliser chaque forme dans une phrase complète est généralement plus efficace que de mémoriser des tableaux isolés."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "de",
+    "urlSlug": "100-haeufigste-deutsche-verben-konjugationen",
+    "entryButtonLabel": "Deutsche Verbkonjugationen",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "meaning": "Bedeutung"
+    },
+    "pronounForms": [
+      {
+        "key": "ich",
+        "label": "ich"
+      },
+      {
+        "key": "du",
+        "label": "du"
+      },
+      {
+        "key": "er_sie_es",
+        "label": "er / sie / es"
+      },
+      {
+        "key": "wir",
+        "label": "wir"
+      },
+      {
+        "key": "ihr",
+        "label": "ihr"
+      },
+      {
+        "key": "sie_sie",
+        "label": "sie / Sie"
+      }
+    ],
+    "metadata": {
+      "title": "100 häufigste deutsche Verben mit Konjugationen",
+      "metaTitle": "100 häufigste deutsche Verben: Konjugationen nach Zeitform",
+      "metaDescription": "Vergleiche 100 häufige deutsche Verben im Präsens, Präteritum, Perfekt, Futur, Konjunktiv und Imperativ für alle wichtigen Personen."
+    },
+    "hero": {
+      "heading": "100 häufigste deutsche Verben mit Konjugationen",
+      "subtitle": "Vergleiche häufige deutsche Verben in wichtigen Zeitformen, Modi und Personen.",
+      "introParagraphs": [
+        "Diese Übersicht zeigt die Konjugationen von 100 häufig verwendeten deutschen Verben für ich, du, er / sie / es, wir, ihr und sie / Sie.",
+        "Wechsle zwischen Präsens, Vergangenheit, Zukunft, Konjunktiv und Imperativ, um Endungen, Hilfsverben, Stammwechsel und unregelmäßige Formen direkt miteinander zu vergleichen."
+      ]
+    },
+    "overview": {
+      "heading": "So funktioniert die deutsche Verbkonjugation",
+      "paragraphs": [
+        "Deutsche finite Verben verändern ihre Form nach Person und Numerus. Im Präsens folgen regelmäßige Verben weitgehend festen Personalendungen, während starke und unregelmäßige Verben zusätzlich Stammveränderungen zeigen können.",
+        "Mehrere deutsche Zeitformen werden mit Hilfsverben gebildet. Perfekt und Plusquamperfekt verwenden haben oder sein zusammen mit dem Partizip II, während Futur I und Futur II mit werden gebildet werden. Deshalb gehört bei vielen Verben auch die Wahl des richtigen Hilfsverbs zur Konjugation.",
+        "Neben dem Indikativ verwendet das Deutsche den Konjunktiv I und den Konjunktiv II. Der Konjunktiv I spielt vor allem in der indirekten Rede eine Rolle, während der Konjunktiv II häufig für irreale Bedingungen, Wünsche, höfliche Bitten und hypothetische Situationen verwendet wird."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Zeitform oder Modus auswählen",
+      "description": "Wähle eine Form aus und vergleiche dieselben 100 deutschen Verben über verschiedene Personen und grammatische Funktionen hinweg.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indikativ"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Konjunktiv"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativ"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Präsens",
+        "group": "indicative",
+        "tableHeading": "100 häufige deutsche Verben im Präsens",
+        "tableDescription": "Vergleiche die Präsensformen häufiger deutscher Verben für alle angegebenen Personen.",
+        "grammar": {
+          "heading": "So wird das Präsens gebildet",
+          "description": "Das Präsens wird in der Regel aus dem Verbstamm und einer Personalendung gebildet. Regelmäßige Verben verwenden typischerweise die Endungen -e, -st, -t, -en, -t und -en. Bei manchen starken und unregelmäßigen Verben verändert sich zusätzlich der Stamm, besonders bei du und er / sie / es. Das Präsens kann Gegenwart, Gewohnheiten und bei passendem Kontext auch Zukunft ausdrücken.",
+          "formula": "Verbstamm + Personalendung"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Präteritum",
+        "group": "indicative",
+        "tableHeading": "100 häufige deutsche Verben im Präteritum",
+        "tableDescription": "Vergleiche regelmäßige Präteritumformen und die Stammveränderungen vieler starker Verben.",
+        "grammar": {
+          "heading": "So wird das Präteritum gebildet",
+          "description": "Schwache Verben bilden das Präteritum meist mit -te und den entsprechenden Personalendungen. Starke Verben verändern häufig ihren Stammvokal und verwenden ein anderes Endungsmuster. Das Präteritum ist besonders in geschriebenen Erzählungen häufig, während sein, haben und Modalverben auch in der gesprochenen Sprache oft im Präteritum stehen.",
+          "formula": "schwache Verben: Stamm + -te + Personalendung; starke Verben: Präteritumstamm + Personalendung"
+        }
+      },
+      {
+        "key": "present_perfect",
+        "label": "Perfekt",
+        "group": "indicative",
+        "tableHeading": "100 häufige deutsche Verben im Perfekt",
+        "tableDescription": "Vergleiche Perfektformen und erkenne, welche häufigen Verben haben oder sein verwenden.",
+        "grammar": {
+          "heading": "So wird das Perfekt gebildet",
+          "description": "Das Perfekt besteht aus einer Präsensform von haben oder sein und dem Partizip II. Die meisten Verben verwenden haben. Sein steht bei einer kleineren Gruppe von Verben, darunter viele intransitive Verben der Orts- oder Zustandsveränderung sowie Verben wie sein und bleiben. Im Hauptsatz steht das Partizip II normalerweise am Satzende.",
+          "formula": "Präsens von haben oder sein + Partizip II"
+        }
+      },
+      {
+        "key": "past_perfect",
+        "label": "Plusquamperfekt",
+        "group": "indicative",
+        "tableHeading": "100 häufige deutsche Verben im Plusquamperfekt",
+        "tableDescription": "Vergleiche Formen für Handlungen, die vor einem anderen Zeitpunkt oder Ereignis in der Vergangenheit stattgefunden haben.",
+        "grammar": {
+          "heading": "So wird das Plusquamperfekt gebildet",
+          "description": "Das Plusquamperfekt wird mit dem Präteritum von haben oder sein und dem Partizip II gebildet. Es bezeichnet eine Handlung oder einen Zustand, der bereits vor einem anderen vergangenen Zeitpunkt abgeschlossen war. Die Wahl zwischen haben und sein entspricht im Wesentlichen der Wahl im Perfekt.",
+          "formula": "Präteritum von haben oder sein + Partizip II"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur I",
+        "group": "indicative",
+        "tableHeading": "100 häufige deutsche Verben im Futur I",
+        "tableDescription": "Vergleiche Futur-I-Formen mit werden und dem Infinitiv des jeweiligen Verbs.",
+        "grammar": {
+          "heading": "So wird das Futur I gebildet",
+          "description": "Das Futur I besteht aus einer konjugierten Form von werden und dem Infinitiv des Vollverbs, der im Hauptsatz normalerweise am Satzende steht. Im Deutschen wird für zukünftige Ereignisse häufig auch das Präsens verwendet, wenn der Zeitbezug aus dem Kontext klar ist. Das Futur I kann dagegen Zukunft, Absicht, Vorhersage oder Vermutung stärker hervorheben.",
+          "formula": "Präsens von werden + Infinitiv"
+        }
+      },
+      {
+        "key": "future_perfect",
+        "label": "Futur II",
+        "group": "indicative",
+        "tableHeading": "100 häufige deutsche Verben im Futur II",
+        "tableDescription": "Vergleiche Futur-II-Formen für zukünftig abgeschlossene Handlungen oder Vermutungen über bereits Geschehenes.",
+        "grammar": {
+          "heading": "So wird das Futur II gebildet",
+          "description": "Das Futur II verbindet eine konjugierte Form von werden mit dem Partizip II und dem Infinitiv haben oder sein. Es kann ausdrücken, dass eine Handlung bis zu einem zukünftigen Zeitpunkt abgeschlossen sein wird, und außerdem eine Vermutung über ein bereits abgeschlossenes Ereignis kennzeichnen.",
+          "formula": "Präsens von werden + Partizip II + haben oder sein",
+          "additionalFormula": "Beispielstruktur: er wird gearbeitet haben / er wird gegangen sein"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Konjunktiv II",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige deutsche Verben im Konjunktiv II",
+        "tableDescription": "Vergleiche Formen für hypothetische Situationen, Wünsche, höfliche Bitten und irreale Bedingungen.",
+        "grammar": {
+          "heading": "So wird der Konjunktiv II gebildet",
+          "description": "Viele Verben bilden den Konjunktiv II auf Grundlage des Präteritumstamms. Bei starken Verben tritt dabei, sofern möglich, häufig ein Umlaut auf; hinzu kommen typische Konjunktivendungen. Häufige Verben wie sein, haben und Modalverben verwenden oft eigene synthetische Formen. Bei vielen anderen Verben ist würde plus Infinitiv besonders gebräuchlich, vor allem wenn die synthetische Form ungewohnt klingt oder mit dem Präteritum identisch wäre.",
+          "formula": "Konjunktiv-II-Stamm + Konjunktivendung",
+          "additionalFormula": "häufige Ersatzform: würde + Infinitiv"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Konjunktiv II Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige deutsche Verben im Konjunktiv II Vergangenheit",
+        "tableDescription": "Vergleiche Formen für irreale, hypothetische oder gewünschte Situationen in der Vergangenheit.",
+        "grammar": {
+          "heading": "So wird der Konjunktiv II Vergangenheit gebildet",
+          "description": "Der Konjunktiv II Vergangenheit wird mit hätte oder wäre und dem Partizip II gebildet. Er beschreibt nicht eingetretene Ereignisse, irreale Folgen, Bedauern und Wünsche mit Vergangenheitsbezug. Ob hätte oder wäre verwendet wird, richtet sich nach dem Hilfsverb des jeweiligen Verbs in den zusammengesetzten Zeiten.",
+          "formula": "hätte oder wäre + Partizip II"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Konjunktiv I",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige deutsche Verben im Konjunktiv I",
+        "tableDescription": "Vergleiche Konjunktiv-I-Formen, die besonders für indirekte und berichtete Rede wichtig sind.",
+        "grammar": {
+          "heading": "So wird der Konjunktiv I gebildet",
+          "description": "Der Konjunktiv I wird meist aus dem Infinitivstamm und besonderen Konjunktivendungen gebildet. Er wird vor allem in der indirekten Rede verwendet, um die Aussage einer anderen Person wiederzugeben, ohne sie ausdrücklich als eigene Tatsachenbehauptung zu übernehmen. Wenn eine Form mit dem Indikativ identisch ist, kann zur eindeutigen Abgrenzung der Konjunktiv II verwendet werden.",
+          "formula": "Infinitivstamm + Konjunktiv-I-Endung"
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Konjunktiv I Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige deutsche Verben im Konjunktiv I Vergangenheit",
+        "tableDescription": "Vergleiche Vergangenheitsformen des Konjunktiv I für bereits abgeschlossene berichtete Handlungen.",
+        "grammar": {
+          "heading": "So wird der Konjunktiv I Vergangenheit gebildet",
+          "description": "Der Konjunktiv I Vergangenheit kombiniert den Konjunktiv I von haben oder sein mit dem Partizip II. Diese Form wird besonders in der indirekten Rede verwendet, wenn das berichtete Ereignis bereits abgeschlossen ist. Das Vollverb verwendet dasselbe Partizip und grundsätzlich dasselbe Hilfsverb wie im Perfekt.",
+          "formula": "Konjunktiv I von haben oder sein + Partizip II"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativ",
+        "group": "imperative",
+        "tableHeading": "100 häufige deutsche Verben im Imperativ",
+        "tableDescription": "Lerne Befehls-, Aufforderungs- und Vorschlagsformen häufiger deutscher Verben.",
+        "grammar": {
+          "heading": "So wird der Imperativ gebildet",
+          "description": "Die Imperativform hängt davon ab, an wen sich die Aufforderung richtet. Bei du wird häufig der Verbstamm verwendet. Die ihr-Form entspricht normalerweise der Präsensform ohne das Pronomen ihr. Beim höflichen Sie steht die Verbform vor Sie. Mit wir können außerdem gemeinsame Vorschläge formuliert werden. Für die übrigen normalen Indikativpersonen gibt es keine entsprechenden Imperativformen.",
+          "formula": "du: Imperativstamm; ihr: Präsensform ohne ihr; Sie: Verb + Sie",
+          "additionalFormula": "Vorschlag mit wir: Verb + wir"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabelle der deutschen Verbkonjugationen",
+      "description": "Vergleiche in der Tabelle, wie sich 100 häufige deutsche Verben nach Person, Zeitform und Modus verändern.",
+      "scrollHint": "Horizontal scrollen, um alle Konjugationsformen zu sehen.",
+      "scrollLeftLabel": "Nach links scrollen",
+      "scrollRightLabel": "Nach rechts scrollen",
+      "notes": [
+        "sie und Sie verwenden dieselben Verbformen; das großgeschriebene Sie kennzeichnet die höfliche Anrede.",
+        "Viele starke Verben zeigen Stammvokalwechsel, die am besten zusammen mit Infinitiv, Präteritum und Partizip II gelernt werden.",
+        "Bei zusammengesetzten Zeiten müssen sowohl das richtige Hilfsverb haben oder sein als auch das passende Partizip II beherrscht werden."
+      ]
+    },
+    "rules": {
+      "heading": "Wichtige Regeln der deutschen Verbkonjugation",
+      "intro": "Viele deutsche Verbformen folgen wiederkehrenden Mustern. Wer diese Muster erkennt, kann neue Formen leichter verstehen und muss nicht jede Konjugation isoliert auswendig lernen.",
+      "items": [
+        {
+          "heading": "Regelmäßige Endungen im Präsens",
+          "text": "Die meisten schwachen Verben verwenden im Präsens ein vorhersehbares System von Personalendungen. Der Verbstamm bleibt dabei grundsätzlich erhalten.",
+          "examples": ["ich mache", "du machst", "wir machen"]
+        },
+        {
+          "heading": "Stammwechsel bei starken Verben",
+          "text": "Einige starke Verben verändern im Präsens bei du und er / sie / es ihren Stammvokal, während die Pluralformen häufig den Vokal des Infinitivs behalten.",
+          "examples": ["du fährst", "er liest", "sie spricht"]
+        },
+        {
+          "heading": "Perfektformen verwenden haben oder sein",
+          "text": "Perfekt und Plusquamperfekt bestehen aus einem Hilfsverb und dem Partizip II. Die meisten Verben verwenden haben, eine kleinere Gruppe verwendet sein.",
+          "examples": [
+            "ich habe gearbeitet",
+            "sie ist gekommen",
+            "wir waren geblieben"
+          ]
+        },
+        {
+          "heading": "Das Partizip II folgt verschiedenen Mustern",
+          "text": "Viele schwache Verben bilden das Partizip II mit ge- und -t, starke Verben häufig mit ge- und -en. Verben mit untrennbaren Präfixen und Verben auf -ieren erhalten normalerweise kein ge-.",
+          "examples": [
+            "machen → gemacht",
+            "sehen → gesehen",
+            "studieren → studiert"
+          ]
+        },
+        {
+          "heading": "Trennbare Verben beeinflussen die Wortstellung",
+          "text": "Bei trennbaren Verben wird das Präfix im einfachen Hauptsatz vom finiten Verb getrennt. Beim Partizip II steht ge- häufig zwischen Präfix und Verbstamm.",
+          "examples": ["ich stehe auf", "er ruft an", "wir sind angekommen"]
+        },
+        {
+          "heading": "Konjunktiv I und II haben unterschiedliche Funktionen",
+          "text": "Der Konjunktiv I wird besonders für indirekte Rede verwendet. Der Konjunktiv II dient unter anderem für Irrealität, Hypothesen, Wünsche und höfliche Bitten.",
+          "examples": [
+            "Er sagt, er sei müde.",
+            "Ich hätte mehr Zeit.",
+            "Würdest du mir helfen?"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Häufige Fehler bei der deutschen Verbkonjugation",
+      "intro": "Diese Fehler treten besonders oft bei Personalendungen, Hilfsverben, Partizipien und unregelmäßigen Stammformen auf.",
+      "items": [
+        {
+          "incorrect": "Du machen das jeden Tag.",
+          "correct": "Du machst das jeden Tag.",
+          "explanation": "Bei du erhält ein regelmäßiges Verb im Präsens normalerweise die Endung -st."
+        },
+        {
+          "incorrect": "Er hat nach Hause gegangen.",
+          "correct": "Er ist nach Hause gegangen.",
+          "explanation": "Gehen bildet die zusammengesetzten Vergangenheitsformen mit sein, nicht mit haben."
+        },
+        {
+          "incorrect": "Ich habe das Buch gelest.",
+          "correct": "Ich habe das Buch gelesen.",
+          "explanation": "Lesen ist ein starkes Verb. Das korrekte Partizip II lautet gelesen."
+        },
+        {
+          "incorrect": "Sie hat gestern anruft.",
+          "correct": "Sie hat gestern angerufen.",
+          "explanation": "Anrufen ist ein trennbares starkes Verb. Das korrekte Partizip II lautet angerufen."
+        },
+        {
+          "incorrect": "Wenn ich mehr Zeit habe, würde ich mehr reisen.",
+          "correct": "Wenn ich mehr Zeit hätte, würde ich mehr reisen.",
+          "explanation": "Bei einer irrealen oder hypothetischen Bedingung in der Gegenwart steht im wenn-Satz der Konjunktiv II: hätte statt des Indikativs habe."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "So lernst du mit dieser Konjugationstabelle",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Präsens",
+          "text": "Vergleiche zuerst alle sechs Pronomenformen im Präsens. Achte auf die regelmäßigen Personalendungen und markiere Verben mit Stammwechsel."
+        },
+        {
+          "heading": "Vergleiche dasselbe Verb in mehreren Zeiten",
+          "text": "Wechsle für dasselbe Verb zwischen Präsens, Präteritum und Perfekt. So erkennst du den Zusammenhang zwischen Infinitiv, Präteritumstamm und Partizip II."
+        },
+        {
+          "heading": "Lerne das Hilfsverb mit",
+          "text": "Merke dir bei zusammengesetzten Formen nicht nur das Partizip II, sondern auch, ob ein Verb haben oder sein verwendet."
+        },
+        {
+          "heading": "Konzentriere dich auf starke und unregelmäßige Verben",
+          "text": "Investiere mehr Zeit in häufige Verben, deren Stammformen sich nicht zuverlässig aus regelmäßigen Mustern ableiten lassen."
+        },
+        {
+          "heading": "Vergleiche Indikativ und Konjunktiv",
+          "text": "Stelle normale Aussageformen den Formen von Konjunktiv I und Konjunktiv II gegenüber, um deren Bildung und Funktion besser auseinanderzuhalten."
+        },
+        {
+          "heading": "Verwende die Formen in ganzen Sätzen",
+          "text": "Bilde mit jeder neuen Form einen vollständigen Satz. Dadurch lernst du gleichzeitig Konjugation, Satzstellung, trennbare Präfixe und Verbklammern."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Lernen deutscher Verbkonjugationen",
+      "items": [
+        {
+          "heading": "Lerne die Stammformen zusammen",
+          "text": "Bei starken Verben solltest du Infinitiv, Präteritum und Partizip II gemeinsam lernen, zum Beispiel: sehen – sah – gesehen."
+        },
+        {
+          "heading": "Merke dir das Hilfsverb",
+          "text": "Lerne bei jedem Partizip II möglichst gleichzeitig, ob das Verb im Perfekt haben oder sein verwendet."
+        },
+        {
+          "heading": "Gruppiere ähnliche Muster",
+          "text": "Lerne Verben mit ähnlichen Stammwechseln oder Partizipmustern gemeinsam, statt jede Form als völlig unabhängig zu behandeln."
+        },
+        {
+          "heading": "Priorisiere häufige unregelmäßige Verben",
+          "text": "sein, haben, werden und die Modalverben kommen besonders häufig vor. Ihre Formen zu beherrschen bringt deshalb schnell einen großen praktischen Nutzen."
+        },
+        {
+          "heading": "Lerne Formen im Kontext",
+          "text": "Verwende jede Zeitform und jeden Modus in kurzen Beispielsätzen, damit du nicht nur die Form, sondern auch ihren tatsächlichen Gebrauch verinnerlichst."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Häufige deutsche Verben üben",
+      "description": "Nutze die Konjugationsmuster in der Wortschatzpraxis oder entdecke die Liste der 100 häufigsten deutschen Verben.",
+      "primaryLabel": "Deutsche Verben üben",
+      "secondaryLabel": "100 häufige deutsche Verben ansehen"
+    },
+    "related": {
+      "heading": "Weitere Ressourcen zum Deutschlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 häufigste deutsche Verben"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 häufige deutsche Verben in Vergangenheitsformen"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Deutscher Wortschatz nach GER-Niveau"
+        },
+        {
+          "key": "levelTest",
+          "label": "Deutsch-Einstufungstest"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zur deutschen Verbkonjugation",
+      "items": [
+        {
+          "question": "Was bedeutet es, ein deutsches Verb zu konjugieren?",
+          "answer": "Ein Verb zu konjugieren bedeutet, seine Form an grammatische Merkmale wie Person, Numerus, Zeitform und Modus anzupassen. Aus dem Infinitiv machen werden im Präsens zum Beispiel ich mache, du machst und er macht."
+        },
+        {
+          "question": "Ändern sich deutsche Verben bei jedem Pronomen?",
+          "answer": "Finite deutsche Verben verändern sich nach Person und Numerus, allerdings sind manche Formen identisch. wir und sie / Sie haben zum Beispiel häufig dieselbe Verbform, während du und ihr normalerweise unterschiedliche Endungen verwenden."
+        },
+        {
+          "question": "Was ist der Unterschied zwischen Präteritum und Perfekt?",
+          "answer": "Beide Formen können Vergangenes ausdrücken, unterscheiden sich aber im typischen Gebrauch. Das Perfekt ist in der gesprochenen Sprache besonders verbreitet, während das Präteritum häufig in schriftlichen Erzählungen vorkommt. sein, haben und Modalverben stehen allerdings auch mündlich oft im Präteritum."
+        },
+        {
+          "question": "Woher weiß ich, ob ein Verb im Perfekt haben oder sein verwendet?",
+          "answer": "Die meisten deutschen Verben bilden das Perfekt mit haben. Eine kleinere Gruppe verwendet sein, darunter viele intransitive Verben, die eine Orts- oder Zustandsveränderung ausdrücken, sowie Verben wie sein und bleiben. Deshalb ist es sinnvoll, das Hilfsverb zusammen mit dem Verb zu lernen."
+        },
+        {
+          "question": "Wie wird das Partizip II gebildet?",
+          "answer": "Schwache Verben bilden das Partizip II häufig mit ge- + Stamm + -t. Starke Verben verwenden oft ge- + gegebenenfalls veränderten Stamm + -en. Verben mit untrennbaren Präfixen und Verben auf -ieren erhalten normalerweise kein ge-. Unregelmäßige Formen müssen teilweise einzeln gelernt werden."
+        },
+        {
+          "question": "Was ist der Unterschied zwischen Konjunktiv I und Konjunktiv II?",
+          "answer": "Der Konjunktiv I wird hauptsächlich für indirekte Rede verwendet. Der Konjunktiv II drückt unter anderem irreale oder hypothetische Situationen, Wünsche, Bedingungen und höfliche Bitten aus. Die beiden Modi erfüllen also unterschiedliche grammatische Funktionen."
+        },
+        {
+          "question": "Wann verwendet man würde plus Infinitiv?",
+          "answer": "würde + Infinitiv ist eine sehr häufige Ersatzform des Konjunktiv II, besonders wenn eine synthetische Form ungebräuchlich klingt oder mit dem Präteritum identisch ist. Häufige Verben wie sein, haben und Modalverben werden dagegen oft mit ihren eigenen Konjunktiv-II-Formen verwendet."
+        },
+        {
+          "question": "Muss man für die Zukunft immer Futur I verwenden?",
+          "answer": "Nein. Im Deutschen wird sehr häufig das Präsens verwendet, wenn durch eine Zeitangabe oder den Kontext ohnehin klar ist, dass es um die Zukunft geht. Das Futur I mit werden kann dagegen Vorhersagen, Absichten oder Vermutungen besonders hervorheben."
+        },
+        {
+          "question": "Warum ändern manche deutsche Verben beim Konjugieren ihren Vokal?",
+          "answer": "Viele starke Verben besitzen historische Stammvokalwechsel. Einige verändern den Vokal bei du und er / sie / es im Präsens, andere zeigen unterschiedliche Vokale im Präteritum oder Partizip II. Diese Muster sind häufig, aber nicht vollständig vorhersehbar."
+        },
+        {
+          "question": "Wie lernt man deutsche Verbkonjugationen am effektivsten?",
+          "answer": "Lerne zuerst die häufigen Endungsmuster und konzentriere dich anschließend auf die Stammformen und Hilfsverben häufiger unregelmäßiger Verben. Dasselbe Verb über mehrere Zeitformen hinweg zu vergleichen und die Formen in vollständigen Sätzen zu verwenden ist meist hilfreicher, als Tabellen isoliert auswendig zu lernen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "it",
+    "urlSlug": "100-verbi-tedeschi-piu-comuni-coniugati",
+    "entryButtonLabel": "Coniugazioni dei verbi tedeschi",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "meaning": "Significato"
+    },
+    "pronounForms": [
+      {
+        "key": "ich",
+        "label": "ich"
+      },
+      {
+        "key": "du",
+        "label": "du"
+      },
+      {
+        "key": "er_sie_es",
+        "label": "er / sie / es"
+      },
+      {
+        "key": "wir",
+        "label": "wir"
+      },
+      {
+        "key": "ihr",
+        "label": "ihr"
+      },
+      {
+        "key": "sie_sie",
+        "label": "sie / Sie"
+      }
+    ],
+    "metadata": {
+      "title": "100 verbi tedeschi più comuni coniugati",
+      "metaTitle": "100 verbi tedeschi più comuni: coniugazioni per tempo",
+      "metaDescription": "Confronta 100 verbi tedeschi frequenti al Präsens, nei tempi passati e futuri, al Konjunktiv e all’Imperativ per tutte le principali persone."
+    },
+    "hero": {
+      "heading": "100 verbi tedeschi più comuni coniugati",
+      "subtitle": "Confronta i verbi tedeschi più frequenti nei principali tempi, modi e persone grammaticali.",
+      "introParagraphs": [
+        "Consulta le coniugazioni di 100 verbi tedeschi di uso frequente e confronta come cambia ogni verbo con ich, du, er / sie / es, wir, ihr e sie / Sie.",
+        "Passa dal Präsens alle forme del passato e del futuro, al Konjunktiv e all’Imperativ per riconoscere più facilmente desinenze, verbi ausiliari, cambiamenti della radice e forme irregolari."
+      ]
+    },
+    "overview": {
+      "heading": "Come funziona la coniugazione dei verbi tedeschi",
+      "paragraphs": [
+        "In tedesco i verbi finiti cambiano generalmente in base alla persona e al numero. Al Präsens, i verbi regolari seguono desinenze piuttosto prevedibili, mentre molti verbi forti e irregolari presentano anche modifiche della radice.",
+        "Diversi tempi tedeschi si formano con verbi ausiliari. Perfekt e Plusquamperfekt utilizzano haben o sein insieme al Partizip II, mentre Futur I e Futur II si costruiscono con werden. Per questo è importante imparare non solo il participio, ma anche l’ausiliare corretto.",
+        "Il tedesco utilizza inoltre Konjunktiv I e Konjunktiv II. Il Konjunktiv I è particolarmente importante nel discorso indiretto, mentre il Konjunktiv II viene spesso usato per situazioni ipotetiche, desideri, condizioni irreali e richieste cortesi."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Scegli un tempo o un modo verbale tedesco",
+      "description": "Seleziona una forma per confrontare gli stessi 100 verbi tedeschi nelle diverse persone e funzioni grammaticali.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Congiuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Präsens",
+        "group": "indicative",
+        "tableHeading": "100 verbi tedeschi comuni al Präsens",
+        "tableDescription": "Confronta le forme del presente dei verbi tedeschi più frequenti per tutte le persone indicate.",
+        "grammar": {
+          "heading": "Come si forma il Präsens in tedesco",
+          "description": "Il Präsens si forma normalmente aggiungendo alla radice del verbo una desinenza personale. I verbi regolari usano tipicamente le desinenze -e, -st, -t, -en, -t e -en. Alcuni verbi forti e irregolari modificano anche la vocale della radice, soprattutto con du ed er / sie / es. Il Präsens può esprimere il presente, azioni abituali e, quando il contesto lo chiarisce, anche il futuro.",
+          "formula": "radice del verbo + desinenza personale"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Präteritum",
+        "group": "indicative",
+        "tableHeading": "100 verbi tedeschi comuni al Präteritum",
+        "tableDescription": "Confronta le forme del Präteritum, comprese le desinenze regolari e i cambiamenti di radice di molti verbi forti.",
+        "grammar": {
+          "heading": "Come si forma il Präteritum in tedesco",
+          "description": "I verbi deboli formano normalmente il Präteritum con -te seguito dalle relative desinenze personali. I verbi forti modificano spesso la vocale della radice e seguono un diverso schema di desinenze. Il Präteritum è particolarmente comune nella narrazione scritta, mentre sein, haben e i verbi modali sono frequenti in questo tempo anche nella lingua parlata.",
+          "formula": "verbi deboli: radice + -te + desinenza personale; verbi forti: radice del Präteritum + desinenza personale"
+        }
+      },
+      {
+        "key": "present_perfect",
+        "label": "Perfekt",
+        "group": "indicative",
+        "tableHeading": "100 verbi tedeschi comuni al Perfekt",
+        "tableDescription": "Confronta le forme del Perfekt e osserva quali verbi frequenti usano haben o sein con il Partizip II.",
+        "grammar": {
+          "heading": "Come si forma il Perfekt in tedesco",
+          "description": "Il Perfekt si costruisce con una forma al Präsens di haben o sein e il Partizip II. La maggior parte dei verbi usa haben, mentre sein si usa con un gruppo più ristretto che comprende molti verbi intransitivi di movimento o cambiamento di stato, oltre a verbi come sein e bleiben. Nella frase principale il participio si trova normalmente alla fine.",
+          "formula": "Präsens di haben o sein + Partizip II"
+        }
+      },
+      {
+        "key": "past_perfect",
+        "label": "Plusquamperfekt",
+        "group": "indicative",
+        "tableHeading": "100 verbi tedeschi comuni al Plusquamperfekt",
+        "tableDescription": "Confronta le forme utilizzate per esprimere un’azione avvenuta prima di un altro momento o evento passato.",
+        "grammar": {
+          "heading": "Come si forma il Plusquamperfekt in tedesco",
+          "description": "Il Plusquamperfekt utilizza il Präteritum di haben o sein insieme al Partizip II. Serve a collocare un’azione o uno stato prima di un altro momento del passato. La scelta tra haben e sein segue sostanzialmente le stesse regole del Perfekt.",
+          "formula": "Präteritum di haben o sein + Partizip II"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur I",
+        "group": "indicative",
+        "tableHeading": "100 verbi tedeschi comuni al Futur I",
+        "tableDescription": "Confronta le forme del Futur I costruite con werden e l’infinito del verbo principale.",
+        "grammar": {
+          "heading": "Come si forma il Futur I in tedesco",
+          "description": "Il Futur I si forma con una forma coniugata di werden e l’infinito del verbo principale, che nella frase principale appare normalmente alla fine. In tedesco il Präsens viene spesso usato anche per parlare del futuro quando il riferimento temporale è chiaro dal contesto. Il Futur I può invece mettere maggiormente in evidenza una previsione, un’intenzione o una supposizione.",
+          "formula": "Präsens di werden + infinito"
+        }
+      },
+      {
+        "key": "future_perfect",
+        "label": "Futur II",
+        "group": "indicative",
+        "tableHeading": "100 verbi tedeschi comuni al Futur II",
+        "tableDescription": "Confronta le forme del Futur II per azioni che saranno concluse nel futuro o per supposizioni su eventi già avvenuti.",
+        "grammar": {
+          "heading": "Come si forma il Futur II in tedesco",
+          "description": "Il Futur II combina una forma coniugata di werden con il Partizip II e l’infinito haben o sein. Può indicare che un’azione sarà completata entro un determinato momento futuro oppure esprimere una supposizione riguardo a un evento già concluso.",
+          "formula": "Präsens di werden + Partizip II + haben o sein",
+          "additionalFormula": "Struttura di esempio: er wird gearbeitet haben / er wird gegangen sein"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Konjunktiv II",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi tedeschi comuni al Konjunktiv II",
+        "tableDescription": "Confronta le forme usate per situazioni ipotetiche, desideri, richieste cortesi e condizioni irreali.",
+        "grammar": {
+          "heading": "Come si forma il Konjunktiv II in tedesco",
+          "description": "Molti verbi formano il Konjunktiv II a partire dalla radice del Präteritum. Nei verbi forti compare spesso l’Umlaut, quando possibile, insieme alle tipiche desinenze del congiuntivo. Verbi frequenti come sein, haben e i modali usano spesso queste forme sintetiche. Con molti altri verbi è molto comune la costruzione würde + infinito, soprattutto quando la forma sintetica è rara o coincide con il Präteritum.",
+          "formula": "radice del Konjunktiv II + desinenza del congiuntivo",
+          "additionalFormula": "alternativa frequente: würde + infinito"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Konjunktiv II Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi tedeschi comuni al Konjunktiv II Vergangenheit",
+        "tableDescription": "Confronta le forme usate per situazioni passate irreali, ipotetiche o desiderate.",
+        "grammar": {
+          "heading": "Come si forma il Konjunktiv II Vergangenheit",
+          "description": "Il Konjunktiv II Vergangenheit si forma con hätte o wäre e il Partizip II. Serve a esprimere eventi che non si sono verificati, conseguenze ipotetiche nel passato, rimpianti e desideri riferiti al passato. La scelta tra hätte e wäre dipende dall’ausiliare utilizzato dal verbo nei tempi composti.",
+          "formula": "hätte o wäre + Partizip II"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Konjunktiv I",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi tedeschi comuni al Konjunktiv I",
+        "tableDescription": "Confronta le forme del Konjunktiv I, particolarmente importanti nel discorso indiretto tedesco.",
+        "grammar": {
+          "heading": "Come si forma il Konjunktiv I in tedesco",
+          "description": "Il Konjunktiv I si forma generalmente dalla radice dell’infinito con specifiche desinenze del congiuntivo. Viene usato soprattutto per riportare le parole di un’altra persona senza presentarle direttamente come fatti confermati. Quando una forma coincide con l’indicativo, può essere utilizzato il Konjunktiv II per mantenere chiara la distinzione.",
+          "formula": "radice dell’infinito + desinenza del Konjunktiv I"
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Konjunktiv I Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi tedeschi comuni al Konjunktiv I Vergangenheit",
+        "tableDescription": "Confronta le forme passate del Konjunktiv I usate per riportare azioni già concluse.",
+        "grammar": {
+          "heading": "Come si forma il Konjunktiv I Vergangenheit",
+          "description": "Il Konjunktiv I Vergangenheit combina il Konjunktiv I di haben o sein con il Partizip II. È particolarmente utile nel discorso indiretto quando l’evento riferito è già terminato. Il verbo principale conserva lo stesso participio e, in linea generale, lo stesso ausiliare usato nel Perfekt.",
+          "formula": "Konjunktiv I di haben o sein + Partizip II"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativ",
+        "group": "imperative",
+        "tableHeading": "100 verbi tedeschi comuni all’Imperativ",
+        "tableDescription": "Studia le forme di comando e richiesta dei verbi tedeschi più frequenti e confrontale in base alla persona a cui ci si rivolge.",
+        "grammar": {
+          "heading": "Come si forma l’Imperativ in tedesco",
+          "description": "Le forme dell’Imperativ dipendono dalla persona a cui ci si rivolge. Con du si usa spesso la radice del verbo; la forma con ihr corrisponde normalmente alla forma del Präsens senza il pronome ihr; con il Sie formale si usa la forma verbale seguita da Sie. Una costruzione con wir può inoltre essere usata per formulare proposte comuni. Non esistono normalmente forme imperative corrispondenti a tutte le persone dell’indicativo.",
+          "formula": "du: radice dell’imperativo; ihr: forma del Präsens senza ihr; Sie: verbo + Sie",
+          "additionalFormula": "proposta con wir: verbo + wir"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabella delle coniugazioni dei verbi tedeschi",
+      "description": "Usa la tabella per confrontare come cambiano 100 verbi tedeschi comuni in base alla persona, al tempo e al modo selezionato.",
+      "scrollHint": "Scorri orizzontalmente per vedere tutte le forme di coniugazione.",
+      "scrollLeftLabel": "Scorri a sinistra",
+      "scrollRightLabel": "Scorri a destra",
+      "notes": [
+        "I pronomi sie e Sie usano le stesse forme verbali, ma Sie si scrive con la maiuscola quando indica il trattamento formale.",
+        "Molti verbi forti presentano cambiamenti della vocale della radice che è utile imparare insieme all’infinito, al Präteritum e al Partizip II.",
+        "Nei tempi composti è necessario conoscere sia l’ausiliare corretto, haben o sein, sia il Partizip II appropriato."
+      ]
+    },
+    "rules": {
+      "heading": "Regole fondamentali della coniugazione tedesca",
+      "intro": "Molte forme verbali tedesche seguono schemi ricorrenti. Imparare questi schemi aiuta a riconoscere nuove forme senza dover memorizzare ogni verbo separatamente.",
+      "items": [
+        {
+          "heading": "Desinenze regolari del Präsens",
+          "text": "La maggior parte dei verbi deboli utilizza al Präsens un sistema prevedibile di desinenze personali. La radice rimane generalmente stabile mentre cambia la desinenza.",
+          "examples": ["ich mache", "du machst", "wir machen"]
+        },
+        {
+          "heading": "Cambiamenti della radice nei verbi forti",
+          "text": "Alcuni verbi forti cambiano la vocale della radice al Präsens con du ed er / sie / es, mentre le forme plurali mantengono spesso la vocale dell’infinito.",
+          "examples": ["du fährst", "er liest", "sie spricht"]
+        },
+        {
+          "heading": "I tempi composti usano haben o sein",
+          "text": "Perfekt e Plusquamperfekt richiedono un verbo ausiliare insieme al Partizip II. La maggior parte dei verbi usa haben, mentre un gruppo più ristretto usa sein.",
+          "examples": [
+            "ich habe gearbeitet",
+            "sie ist gekommen",
+            "wir waren geblieben"
+          ]
+        },
+        {
+          "heading": "Il Partizip II segue diversi schemi",
+          "text": "Molti verbi deboli formano il Partizip II con ge- e -t, mentre i verbi forti usano spesso ge- e -en. I verbi con prefissi inseparabili e quelli che terminano in -ieren normalmente non prendono ge-.",
+          "examples": [
+            "machen → gemacht",
+            "sehen → gesehen",
+            "studieren → studiert"
+          ]
+        },
+        {
+          "heading": "I prefissi separabili influenzano l’ordine delle parole",
+          "text": "Nei verbi separabili, il prefisso si separa dal verbo finito nelle frasi principali semplici. Nel Partizip II, ge- viene normalmente inserito tra il prefisso e la radice.",
+          "examples": ["ich stehe auf", "er ruft an", "wir sind angekommen"]
+        },
+        {
+          "heading": "Konjunktiv I e II hanno funzioni diverse",
+          "text": "Il Konjunktiv I viene usato soprattutto nel discorso indiretto, mentre il Konjunktiv II serve per ipotesi, irrealtà, desideri e richieste cortesi.",
+          "examples": [
+            "Er sagt, er sei müde.",
+            "Ich hätte mehr Zeit.",
+            "Würdest du mir helfen?"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Errori comuni nella coniugazione tedesca",
+      "intro": "Questi errori sono particolarmente frequenti con le desinenze personali, gli ausiliari, i participi e le radici irregolari.",
+      "items": [
+        {
+          "incorrect": "Du machen das jeden Tag.",
+          "correct": "Du machst das jeden Tag.",
+          "explanation": "Con du, un verbo regolare al Präsens prende normalmente la desinenza -st."
+        },
+        {
+          "incorrect": "Er hat nach Hause gegangen.",
+          "correct": "Er ist nach Hause gegangen.",
+          "explanation": "Gehen forma i tempi composti con sein, non con haben."
+        },
+        {
+          "incorrect": "Ich habe das Buch gelest.",
+          "correct": "Ich habe das Buch gelesen.",
+          "explanation": "Lesen è un verbo forte e il suo Partizip II corretto è gelesen."
+        },
+        {
+          "incorrect": "Sie hat gestern anruft.",
+          "correct": "Sie hat gestern angerufen.",
+          "explanation": "Anrufen è un verbo forte separabile. Il suo Partizip II corretto è angerufen."
+        },
+        {
+          "incorrect": "Wenn ich mehr Zeit habe, würde ich mehr reisen.",
+          "correct": "Wenn ich mehr Zeit hätte, würde ich mehr reisen.",
+          "explanation": "In una condizione ipotetica o irreale al presente, nella proposizione introdotta da wenn si usa il Konjunktiv II: hätte, non l’indicativo habe."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Come studiare le coniugazioni tedesche con questa tabella",
+      "steps": [
+        {
+          "heading": "Inizia dal Präsens",
+          "text": "Confronta per prima cosa tutte le sei forme pronominali al Präsens. Osserva le desinenze personali regolari e individua i verbi con cambiamenti della radice."
+        },
+        {
+          "heading": "Confronta lo stesso verbo in più tempi",
+          "text": "Passa da Präsens a Präteritum e Perfekt mantenendo lo stesso verbo. In questo modo colleghi più facilmente infinito, radice del passato e Partizip II."
+        },
+        {
+          "heading": "Impara anche l’ausiliare",
+          "text": "Quando studi una forma composta, non memorizzare soltanto il participio: nota anche se il verbo usa haben o sein."
+        },
+        {
+          "heading": "Concentrati sui verbi forti e irregolari",
+          "text": "Dedica più attenzione ai verbi frequenti le cui forme principali non possono essere previste con sicurezza partendo dai modelli regolari."
+        },
+        {
+          "heading": "Confronta indicativo e Konjunktiv",
+          "text": "Metti a confronto le normali forme dell’indicativo con Konjunktiv I e Konjunktiv II per capire meglio sia la loro formazione sia la loro funzione."
+        },
+        {
+          "heading": "Usa le forme in frasi complete",
+          "text": "Dopo aver studiato una coniugazione, usala in una frase completa. Così eserciti insieme coniugazione, ordine delle parole, prefissi separabili e strutture verbali."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per imparare la coniugazione tedesca",
+      "items": [
+        {
+          "heading": "Impara insieme le forme principali",
+          "text": "Per i verbi forti, memorizza insieme infinito, Präteritum e Partizip II, per esempio: sehen – sah – gesehen."
+        },
+        {
+          "heading": "Ricorda sempre l’ausiliare",
+          "text": "Quando impari un Partizip II, memorizza anche se il verbo usa haben o sein al Perfekt."
+        },
+        {
+          "heading": "Raggruppa gli schemi simili",
+          "text": "Studia insieme i verbi con cambiamenti della radice o schemi del participio simili invece di trattare ogni coniugazione come completamente indipendente."
+        },
+        {
+          "heading": "Dai priorità agli irregolari più frequenti",
+          "text": "sein, haben, werden e i verbi modali compaiono molto spesso. Conoscerne bene le forme è utile in un gran numero di strutture."
+        },
+        {
+          "heading": "Impara le forme nel contesto",
+          "text": "Crea brevi frasi con ogni tempo e modo per imparare non solo la forma coniugata, ma anche quando viene realmente usata in tedesco."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Esercitati con i verbi tedeschi più comuni",
+      "description": "Usa questi schemi di coniugazione nella pratica del vocabolario oppure esplora la lista dei 100 verbi tedeschi più frequenti.",
+      "primaryLabel": "Esercitati con i verbi tedeschi",
+      "secondaryLabel": "Vedi 100 verbi tedeschi comuni"
+    },
+    "related": {
+      "heading": "Altre risorse per imparare il tedesco",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbi tedeschi più comuni"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbi tedeschi comuni al passato"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario tedesco per livello QCER"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test di livello di tedesco"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulla coniugazione tedesca",
+      "items": [
+        {
+          "question": "Che cosa significa coniugare un verbo in tedesco?",
+          "answer": "Coniugare un verbo tedesco significa modificarne la forma in base a elementi grammaticali come persona, numero, tempo e modo. Per esempio, l’infinito machen diventa ich mache, du machst ed er macht al Präsens."
+        },
+        {
+          "question": "I verbi tedeschi cambiano con ogni pronome?",
+          "answer": "I verbi finiti tedeschi cambiano in base alla persona e al numero, anche se alcune forme coincidono. Per esempio, wir e sie / Sie usano spesso la stessa forma verbale, mentre du e ihr hanno normalmente desinenze diverse."
+        },
+        {
+          "question": "Qual è la differenza tra Präteritum e Perfekt?",
+          "answer": "Entrambi possono esprimere eventi passati, ma il loro uso tipico è diverso. Il Perfekt è molto comune nella lingua parlata, mentre il Präteritum è particolarmente frequente nella narrazione scritta. Tuttavia, sein, haben e i verbi modali vengono spesso usati al Präteritum anche nel parlato."
+        },
+        {
+          "question": "Come faccio a sapere se devo usare haben o sein al Perfekt?",
+          "answer": "La maggior parte dei verbi tedeschi usa haben. Un gruppo più ristretto usa sein, tra cui molti verbi intransitivi che esprimono movimento o cambiamento di stato, oltre a verbi come sein e bleiben. Conviene quindi imparare l’ausiliare insieme al verbo."
+        },
+        {
+          "question": "Come si forma il Partizip II in tedesco?",
+          "answer": "I verbi deboli formano spesso il Partizip II con ge- + radice + -t, mentre i verbi forti usano frequentemente ge- + radice, talvolta modificata, + -en. I verbi con prefisso inseparabile e quelli che terminano in -ieren normalmente non prendono ge-. Le forme irregolari vanno imparate singolarmente."
+        },
+        {
+          "question": "Qual è la differenza tra Konjunktiv I e Konjunktiv II?",
+          "answer": "Il Konjunktiv I viene usato principalmente nel discorso indiretto. Il Konjunktiv II serve invece per situazioni ipotetiche o irreali, desideri, condizioni e richieste cortesi. I due modi hanno quindi funzioni grammaticali diverse."
+        },
+        {
+          "question": "Quando si usa würde più infinito?",
+          "answer": "La costruzione würde + infinito è molto comune per esprimere il Konjunktiv II, soprattutto quando la forma sintetica è poco usata o potrebbe essere confusa con il Präteritum. Verbi molto frequenti come sein, haben e i modali usano invece spesso le proprie forme sintetiche."
+        },
+        {
+          "question": "Bisogna sempre usare il Futur I per parlare del futuro in tedesco?",
+          "answer": "No. In tedesco si usa molto spesso il Präsens per riferirsi al futuro quando un’espressione temporale o il contesto rendono chiaro il riferimento. Il Futur I con werden può invece sottolineare una previsione, un’intenzione o una supposizione."
+        },
+        {
+          "question": "Perché alcuni verbi tedeschi cambiano vocale durante la coniugazione?",
+          "answer": "Molti verbi forti presentano alternanze storiche della vocale della radice. Alcuni cambiano vocale con du ed er / sie / es al Präsens, mentre altri mostrano vocali diverse al Präteritum o nel Partizip II. Questi schemi sono comuni, ma non sempre completamente prevedibili."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le coniugazioni tedesche?",
+          "answer": "Impara prima le desinenze ricorrenti, poi concentrati sulle forme principali e sugli ausiliari dei verbi irregolari più frequenti. Confrontare lo stesso verbo in più tempi e usare ogni forma in una frase completa è generalmente più efficace che memorizzare tabelle isolate."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "pt",
+    "urlSlug": "100-verbos-alemaes-mais-comuns-conjugados",
+    "entryButtonLabel": "Conjugações de verbos alemães",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "meaning": "Significado"
+    },
+    "pronounForms": [
+      {
+        "key": "ich",
+        "label": "ich"
+      },
+      {
+        "key": "du",
+        "label": "du"
+      },
+      {
+        "key": "er_sie_es",
+        "label": "er / sie / es"
+      },
+      {
+        "key": "wir",
+        "label": "wir"
+      },
+      {
+        "key": "ihr",
+        "label": "ihr"
+      },
+      {
+        "key": "sie_sie",
+        "label": "sie / Sie"
+      }
+    ],
+    "metadata": {
+      "title": "100 verbos alemães mais comuns conjugados",
+      "metaTitle": "100 verbos alemães mais comuns: conjugações por tempo verbal",
+      "metaDescription": "Compare 100 verbos alemães frequentes no Präsens, nos tempos passados e futuros, no Konjunktiv e no Imperativ para as principais pessoas gramaticais."
+    },
+    "hero": {
+      "heading": "100 verbos alemães mais comuns conjugados",
+      "subtitle": "Compare os verbos alemães mais frequentes nos principais tempos, modos e pessoas gramaticais.",
+      "introParagraphs": [
+        "Consulte as conjugações de 100 verbos alemães de uso frequente e compare como cada verbo muda com ich, du, er / sie / es, wir, ihr e sie / Sie.",
+        "Alterne entre Präsens, formas do passado e do futuro, Konjunktiv e Imperativ para identificar com mais facilidade terminações, verbos auxiliares, mudanças de radical e formas irregulares."
+      ]
+    },
+    "overview": {
+      "heading": "Como funciona a conjugação dos verbos alemães",
+      "paragraphs": [
+        "Em alemão, os verbos finitos normalmente mudam de acordo com a pessoa e o número. No Präsens, os verbos regulares seguem terminações relativamente previsíveis, enquanto muitos verbos fortes e irregulares também apresentam alterações no radical.",
+        "Vários tempos verbais alemães são formados com auxiliares. Perfekt e Plusquamperfekt usam haben ou sein juntamente com o Partizip II, enquanto Futur I e Futur II são construídos com werden. Por isso, aprender o auxiliar correto e o particípio faz parte do domínio da conjugação alemã.",
+        "O alemão também usa Konjunktiv I e Konjunktiv II. O Konjunktiv I aparece sobretudo no discurso indireto, enquanto o Konjunktiv II é frequentemente usado para situações hipotéticas, desejos, condições irreais e pedidos corteses."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Escolha um tempo ou modo verbal alemão",
+      "description": "Selecione uma forma para comparar os mesmos 100 verbos alemães entre diferentes pessoas e contextos gramaticais.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Präsens",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemães comuns no Präsens",
+        "tableDescription": "Compare as formas do presente de verbos alemães frequentes para todas as pessoas e pronomes fornecidos.",
+        "grammar": {
+          "heading": "Como se forma o Präsens em alemão",
+          "description": "O Präsens é normalmente formado acrescentando terminações pessoais ao radical do verbo. Os verbos regulares costumam usar as terminações -e, -st, -t, -en, -t e -en. Alguns verbos fortes e irregulares também alteram a vogal do radical, especialmente com du e er / sie / es. O Präsens pode expressar ações atuais, hábitos e também eventos futuros quando o contexto é claro.",
+          "formula": "radical do verbo + terminação pessoal"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Präteritum",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemães comuns no Präteritum",
+        "tableDescription": "Compare as formas do Präteritum, incluindo terminações regulares e mudanças de radical encontradas em muitos verbos fortes.",
+        "grammar": {
+          "heading": "Como se forma o Präteritum em alemão",
+          "description": "Os verbos fracos geralmente formam o Präteritum com -te seguido das terminações pessoais correspondentes. Os verbos fortes costumam alterar a vogal do radical e seguem outro padrão de terminações. O Präteritum é especialmente frequente na narrativa escrita, embora sein, haben e os verbos modais também sejam muito usados nesse tempo na língua falada.",
+          "formula": "verbos fracos: radical + -te + terminação pessoal; verbos fortes: radical do Präteritum + terminação pessoal"
+        }
+      },
+      {
+        "key": "present_perfect",
+        "label": "Perfekt",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemães comuns no Perfekt",
+        "tableDescription": "Compare as formas do Perfekt e veja quais verbos frequentes usam haben ou sein com o Partizip II.",
+        "grammar": {
+          "heading": "Como se forma o Perfekt em alemão",
+          "description": "O Perfekt é formado por uma forma no Präsens de haben ou sein mais o Partizip II. A maioria dos verbos usa haben, enquanto sein é usado por um grupo menor que inclui muitos verbos intransitivos de deslocamento ou mudança de estado, além de verbos como sein e bleiben. Em uma oração principal, o particípio normalmente aparece no final.",
+          "formula": "Präsens de haben ou sein + Partizip II"
+        }
+      },
+      {
+        "key": "past_perfect",
+        "label": "Plusquamperfekt",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemães comuns no Plusquamperfekt",
+        "tableDescription": "Compare formas usadas para expressar uma ação ocorrida antes de outro momento ou acontecimento no passado.",
+        "grammar": {
+          "heading": "Como se forma o Plusquamperfekt em alemão",
+          "description": "O Plusquamperfekt usa o Präteritum de haben ou sein juntamente com o Partizip II. Ele situa uma ação ou estado antes de outro ponto no passado. A escolha entre haben e sein segue, em essência, as mesmas regras usadas no Perfekt.",
+          "formula": "Präteritum de haben ou sein + Partizip II"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur I",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemães comuns no Futur I",
+        "tableDescription": "Compare as formas do Futur I construídas com werden e o infinitivo do verbo principal.",
+        "grammar": {
+          "heading": "Como se forma o Futur I em alemão",
+          "description": "O Futur I é formado com uma forma conjugada de werden e o infinitivo do verbo principal, que normalmente aparece no final da oração principal. Em alemão, o Präsens é usado com muita frequência para falar do futuro quando o contexto já deixa clara a referência temporal. O Futur I pode enfatizar uma previsão, intenção ou suposição.",
+          "formula": "Präsens de werden + infinitivo"
+        }
+      },
+      {
+        "key": "future_perfect",
+        "label": "Futur II",
+        "group": "indicative",
+        "tableHeading": "100 verbos alemães comuns no Futur II",
+        "tableDescription": "Compare as formas do Futur II para ações que estarão concluídas no futuro ou para suposições sobre eventos já ocorridos.",
+        "grammar": {
+          "heading": "Como se forma o Futur II em alemão",
+          "description": "O Futur II combina uma forma conjugada de werden com o Partizip II e o infinitivo haben ou sein. Pode indicar que uma ação estará concluída até determinado momento futuro e também expressar uma suposição sobre algo que provavelmente já aconteceu.",
+          "formula": "Präsens de werden + Partizip II + haben ou sein",
+          "additionalFormula": "Estrutura de exemplo: er wird gearbeitet haben / er wird gegangen sein"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Konjunktiv II",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos alemães comuns no Konjunktiv II",
+        "tableDescription": "Compare as formas usadas para situações hipotéticas, desejos, pedidos corteses e condições irreais.",
+        "grammar": {
+          "heading": "Como se forma o Konjunktiv II em alemão",
+          "description": "Muitos verbos formam o Konjunktiv II a partir do radical do Präteritum. Nos verbos fortes, pode ocorrer Umlaut quando possível, juntamente com terminações próprias do subjuntivo. Verbos frequentes como sein, haben e os verbos modais costumam usar essas formas sintéticas. Com muitos outros verbos, a construção würde + infinitivo é muito comum, especialmente quando a forma sintética é pouco usada ou coincide com o Präteritum.",
+          "formula": "radical do Konjunktiv II + terminação do subjuntivo",
+          "additionalFormula": "alternativa frequente: würde + infinitivo"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Konjunktiv II Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos alemães comuns no Konjunktiv II Vergangenheit",
+        "tableDescription": "Compare as formas usadas para situações passadas irreais, hipotéticas ou desejadas.",
+        "grammar": {
+          "heading": "Como se forma o Konjunktiv II Vergangenheit",
+          "description": "O Konjunktiv II Vergangenheit é formado com hätte ou wäre mais o Partizip II. Ele expressa acontecimentos que não ocorreram, consequências hipotéticas no passado, arrependimentos e desejos referentes ao passado. A escolha entre hätte e wäre depende do auxiliar usado pelo verbo nos tempos compostos.",
+          "formula": "hätte ou wäre + Partizip II"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Konjunktiv I",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos alemães comuns no Konjunktiv I",
+        "tableDescription": "Compare as formas do Konjunktiv I, especialmente importantes no discurso indireto em alemão.",
+        "grammar": {
+          "heading": "Como se forma o Konjunktiv I em alemão",
+          "description": "O Konjunktiv I é geralmente formado a partir do radical do infinitivo com terminações específicas do subjuntivo. É usado sobretudo para reproduzir declarações de outra pessoa sem apresentá-las diretamente como fatos confirmados pelo falante. Quando uma forma coincide com o indicativo, pode-se usar o Konjunktiv II para manter clara a distinção.",
+          "formula": "radical do infinitivo + terminação do Konjunktiv I"
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Konjunktiv I Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos alemães comuns no Konjunktiv I Vergangenheit",
+        "tableDescription": "Compare as formas passadas do Konjunktiv I usadas para relatar ações já concluídas.",
+        "grammar": {
+          "heading": "Como se forma o Konjunktiv I Vergangenheit",
+          "description": "O Konjunktiv I Vergangenheit combina o Konjunktiv I de haben ou sein com o Partizip II. É particularmente útil no discurso indireto quando o evento relatado já foi concluído. O verbo principal mantém o mesmo particípio e, em geral, o mesmo auxiliar usado no Perfekt.",
+          "formula": "Konjunktiv I de haben ou sein + Partizip II"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativ",
+        "group": "imperative",
+        "tableHeading": "100 verbos alemães comuns no Imperativ",
+        "tableDescription": "Estude formas de ordem, pedido e sugestão dos verbos alemães mais frequentes.",
+        "grammar": {
+          "heading": "Como se forma o Imperativ em alemão",
+          "description": "As formas do Imperativ dependem da pessoa a quem se dirige a ordem ou pedido. Com du, costuma-se usar o radical verbal; a forma com ihr geralmente corresponde à forma do Präsens sem o pronome ihr; e, com o Sie formal, usa-se a forma verbal seguida de Sie. Uma construção com wir também pode ser usada para fazer sugestões conjuntas. O alemão não possui normalmente formas imperativas equivalentes para todas as pessoas do indicativo.",
+          "formula": "du: radical do imperativo; ihr: forma do Präsens sem ihr; Sie: verbo + Sie",
+          "additionalFormula": "sugestão com wir: verbo + wir"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabela de conjugação dos verbos alemães",
+      "description": "Use a tabela para comparar como 100 verbos alemães comuns mudam de acordo com a pessoa, o tempo e o modo selecionado.",
+      "scrollHint": "Deslize horizontalmente para ver todas as formas de conjugação.",
+      "scrollLeftLabel": "Deslizar para a esquerda",
+      "scrollRightLabel": "Deslizar para a direita",
+      "notes": [
+        "Os pronomes sie e Sie usam as mesmas formas verbais, mas Sie é escrito com inicial maiúscula quando representa o tratamento formal.",
+        "Muitos verbos fortes apresentam mudanças na vogal do radical que vale a pena aprender juntamente com o infinitivo, o Präteritum e o Partizip II.",
+        "Nos tempos compostos, é necessário conhecer tanto o auxiliar correto, haben ou sein, quanto o Partizip II adequado."
+      ]
+    },
+    "rules": {
+      "heading": "Regras essenciais da conjugação alemã",
+      "intro": "Muitas formas verbais alemãs seguem padrões recorrentes. Aprender esses padrões facilita o reconhecimento de novas formas sem precisar memorizar cada verbo isoladamente.",
+      "items": [
+        {
+          "heading": "Terminações regulares no Präsens",
+          "text": "A maioria dos verbos fracos usa no Präsens um conjunto previsível de terminações pessoais. O radical normalmente permanece estável enquanto a terminação muda.",
+          "examples": ["ich mache", "du machst", "wir machen"]
+        },
+        {
+          "heading": "Mudanças de radical nos verbos fortes",
+          "text": "Alguns verbos fortes alteram a vogal do radical no Präsens com du e er / sie / es, enquanto as formas do plural frequentemente mantêm a vogal do infinitivo.",
+          "examples": ["du fährst", "er liest", "sie spricht"]
+        },
+        {
+          "heading": "Os tempos compostos usam haben ou sein",
+          "text": "Perfekt e Plusquamperfekt exigem um verbo auxiliar juntamente com o Partizip II. A maioria dos verbos usa haben, enquanto um grupo menor usa sein.",
+          "examples": [
+            "ich habe gearbeitet",
+            "sie ist gekommen",
+            "wir waren geblieben"
+          ]
+        },
+        {
+          "heading": "O Partizip II segue diferentes padrões",
+          "text": "Muitos verbos fracos formam o Partizip II com ge- e -t, enquanto verbos fortes frequentemente usam ge- e -en. Verbos com prefixos inseparáveis e verbos terminados em -ieren normalmente não recebem ge-.",
+          "examples": [
+            "machen → gemacht",
+            "sehen → gesehen",
+            "studieren → studiert"
+          ]
+        },
+        {
+          "heading": "Prefixos separáveis afetam a ordem das palavras",
+          "text": "Nos verbos separáveis, o prefixo se separa do verbo finito em orações principais simples. No Partizip II, ge- costuma ser colocado entre o prefixo e o radical.",
+          "examples": ["ich stehe auf", "er ruft an", "wir sind angekommen"]
+        },
+        {
+          "heading": "Konjunktiv I e II têm funções diferentes",
+          "text": "O Konjunktiv I é usado principalmente no discurso indireto, enquanto o Konjunktiv II expressa hipóteses, situações irreais, desejos e pedidos corteses.",
+          "examples": [
+            "Er sagt, er sei müde.",
+            "Ich hätte mehr Zeit.",
+            "Würdest du mir helfen?"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Erros comuns na conjugação alemã",
+      "intro": "Estes erros são especialmente frequentes com terminações pessoais, auxiliares, particípios e radicais irregulares.",
+      "items": [
+        {
+          "incorrect": "Du machen das jeden Tag.",
+          "correct": "Du machst das jeden Tag.",
+          "explanation": "Com du no Präsens, um verbo regular normalmente recebe a terminação -st."
+        },
+        {
+          "incorrect": "Er hat nach Hause gegangen.",
+          "correct": "Er ist nach Hause gegangen.",
+          "explanation": "Gehen forma os tempos compostos com sein, e não com haben."
+        },
+        {
+          "incorrect": "Ich habe das Buch gelest.",
+          "correct": "Ich habe das Buch gelesen.",
+          "explanation": "Lesen é um verbo forte e o Partizip II correto é gelesen."
+        },
+        {
+          "incorrect": "Sie hat gestern anruft.",
+          "correct": "Sie hat gestern angerufen.",
+          "explanation": "Anrufen é um verbo forte e separável. O Partizip II correto é angerufen."
+        },
+        {
+          "incorrect": "Wenn ich mehr Zeit habe, würde ich mehr reisen.",
+          "correct": "Wenn ich mehr Zeit hätte, würde ich mehr reisen.",
+          "explanation": "Em uma condição hipotética ou irreal no presente, a oração com wenn usa o Konjunktiv II: hätte em vez do indicativo habe."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Como estudar as conjugações alemãs com esta tabela",
+      "steps": [
+        {
+          "heading": "Comece pelo Präsens",
+          "text": "Primeiro, compare as seis formas pronominais no Präsens. Observe as terminações pessoais regulares e identifique os verbos que apresentam mudança de radical."
+        },
+        {
+          "heading": "Compare o mesmo verbo em vários tempos",
+          "text": "Alterne entre Präsens, Präteritum e Perfekt mantendo o mesmo verbo. Isso ajuda a relacionar o infinitivo, o radical do passado e o Partizip II."
+        },
+        {
+          "heading": "Aprenda também o auxiliar",
+          "text": "Ao estudar uma forma composta, não memorize apenas o particípio: observe também se o verbo usa haben ou sein."
+        },
+        {
+          "heading": "Concentre-se nos verbos fortes e irregulares",
+          "text": "Dedique mais atenção aos verbos frequentes cujas principais formas não podem ser previstas com segurança a partir de padrões regulares."
+        },
+        {
+          "heading": "Compare indicativo e Konjunktiv",
+          "text": "Compare as formas comuns do indicativo com o Konjunktiv I e o Konjunktiv II para entender melhor tanto a formação quanto a função de cada modo."
+        },
+        {
+          "heading": "Use as formas em frases completas",
+          "text": "Depois de estudar uma conjugação, use-a em uma frase completa. Assim você pratica ao mesmo tempo a conjugação, a ordem das palavras, os prefixos separáveis e as estruturas verbais."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para aprender a conjugação alemã",
+      "items": [
+        {
+          "heading": "Aprenda as formas principais juntas",
+          "text": "Para verbos fortes, memorize em conjunto o infinitivo, o Präteritum e o Partizip II, por exemplo: sehen – sah – gesehen."
+        },
+        {
+          "heading": "Lembre-se sempre do auxiliar",
+          "text": "Ao aprender um Partizip II, memorize também se o verbo usa haben ou sein no Perfekt."
+        },
+        {
+          "heading": "Agrupe padrões semelhantes",
+          "text": "Estude juntos os verbos que apresentam mudanças de radical ou padrões de particípio semelhantes, em vez de tratar cada conjugação como totalmente independente."
+        },
+        {
+          "heading": "Priorize os irregulares mais frequentes",
+          "text": "sein, haben, werden e os verbos modais aparecem com muita frequência. Dominar suas formas ajuda em uma grande variedade de estruturas."
+        },
+        {
+          "heading": "Aprenda as formas em contexto",
+          "text": "Crie frases curtas com cada tempo e modo para aprender não apenas a forma conjugada, mas também quando ela é realmente usada em alemão."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pratique os verbos alemães mais comuns",
+      "description": "Use estes padrões de conjugação na prática de vocabulário ou explore a lista dos 100 verbos alemães mais frequentes.",
+      "primaryLabel": "Praticar verbos alemães",
+      "secondaryLabel": "Ver 100 verbos alemães comuns"
+    },
+    "related": {
+      "heading": "Mais recursos para aprender alemão",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbos alemães mais comuns"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbos alemães comuns no passado"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulário alemão por nível QECR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Teste de nível de alemão"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre a conjugação alemã",
+      "items": [
+        {
+          "question": "O que significa conjugar um verbo em alemão?",
+          "answer": "Conjugar um verbo alemão significa alterar sua forma de acordo com informações gramaticais como pessoa, número, tempo e modo. Por exemplo, o infinitivo machen torna-se ich mache, du machst e er macht no Präsens."
+        },
+        {
+          "question": "Os verbos alemães mudam com cada pronome?",
+          "answer": "Os verbos finitos alemães mudam de acordo com a pessoa e o número, embora algumas formas sejam iguais. Por exemplo, wir e sie / Sie frequentemente usam a mesma forma verbal, enquanto du e ihr normalmente têm terminações diferentes."
+        },
+        {
+          "question": "Qual é a diferença entre Präteritum e Perfekt?",
+          "answer": "Ambos podem expressar acontecimentos passados, mas seu uso típico é diferente. O Perfekt é muito comum na língua falada, enquanto o Präteritum aparece especialmente em narrativas escritas. No entanto, sein, haben e os verbos modais também são usados com frequência no Präteritum na fala."
+        },
+        {
+          "question": "Como saber se devo usar haben ou sein no Perfekt?",
+          "answer": "A maioria dos verbos alemães usa haben. Um grupo menor usa sein, incluindo muitos verbos intransitivos que expressam deslocamento ou mudança de estado, além de verbos como sein e bleiben. Por isso, é útil aprender o auxiliar juntamente com cada verbo."
+        },
+        {
+          "question": "Como se forma o Partizip II em alemão?",
+          "answer": "Os verbos fracos frequentemente formam o Partizip II com ge- + radical + -t, enquanto os verbos fortes costumam usar ge- + radical, às vezes modificado, + -en. Verbos com prefixos inseparáveis e os terminados em -ieren normalmente não recebem ge-. As formas irregulares precisam ser aprendidas individualmente."
+        },
+        {
+          "question": "Qual é a diferença entre Konjunktiv I e Konjunktiv II?",
+          "answer": "O Konjunktiv I é usado principalmente no discurso indireto. O Konjunktiv II serve para expressar situações hipotéticas ou irreais, desejos, condições e pedidos corteses. Portanto, os dois modos cumprem funções gramaticais diferentes."
+        },
+        {
+          "question": "Quando se usa würde mais infinitivo?",
+          "answer": "A construção würde + infinitivo é muito comum para expressar o Konjunktiv II, especialmente quando a forma sintética é pouco usada ou poderia ser confundida com o Präteritum. Verbos muito frequentes como sein, haben e os verbos modais costumam usar suas próprias formas sintéticas."
+        },
+        {
+          "question": "É sempre necessário usar Futur I para falar do futuro em alemão?",
+          "answer": "Não. Em alemão, o Präsens é usado com muita frequência para falar de eventos futuros quando uma expressão temporal ou o contexto deixa clara a referência ao futuro. O Futur I com werden pode enfatizar previsões, intenções ou suposições."
+        },
+        {
+          "question": "Por que alguns verbos alemães mudam de vogal durante a conjugação?",
+          "answer": "Muitos verbos fortes apresentam alternâncias históricas na vogal do radical. Alguns mudam a vogal com du e er / sie / es no Präsens, enquanto outros mostram vogais diferentes no Präteritum ou no Partizip II. Esses padrões são comuns, mas nem sempre totalmente previsíveis."
+        },
+        {
+          "question": "Qual é a melhor maneira de memorizar as conjugações alemãs?",
+          "answer": "Aprenda primeiro as terminações recorrentes e depois concentre-se nas formas principais e nos auxiliares dos verbos irregulares mais frequentes. Comparar o mesmo verbo em vários tempos e usar cada forma em frases completas costuma ser mais eficaz do que memorizar tabelas isoladas."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "de",
+    "uiLanguage": "ru",
+    "urlSlug": "100-samyh-upotrebitelnyh-nemeckih-glagolov-spryazhenie",
+    "entryButtonLabel": "Спряжение немецких глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "meaning": "Значение"
+    },
+    "pronounForms": [
+      {
+        "key": "ich",
+        "label": "ich"
+      },
+      {
+        "key": "du",
+        "label": "du"
+      },
+      {
+        "key": "er_sie_es",
+        "label": "er / sie / es"
+      },
+      {
+        "key": "wir",
+        "label": "wir"
+      },
+      {
+        "key": "ihr",
+        "label": "ihr"
+      },
+      {
+        "key": "sie_sie",
+        "label": "sie / Sie"
+      }
+    ],
+    "metadata": {
+      "title": "100 самых употребительных немецких глаголов: спряжение",
+      "metaTitle": "100 самых употребительных немецких глаголов — спряжение по временам",
+      "metaDescription": "Сравните спряжение 100 частотных немецких глаголов в Präsens, прошедших и будущих формах, Konjunktiv и Imperativ по лицам и местоимениям."
+    },
+    "hero": {
+      "heading": "100 самых употребительных немецких глаголов: спряжение",
+      "subtitle": "Сравнивайте частотные немецкие глаголы в основных временах, наклонениях и лицах.",
+      "introParagraphs": [
+        "В этой таблице собраны формы спряжения 100 часто употребляемых немецких глаголов для ich, du, er / sie / es, wir, ihr и sie / Sie.",
+        "Переключайтесь между Präsens, формами прошедшего и будущего времени, Konjunktiv и Imperativ, чтобы лучше замечать личные окончания, вспомогательные глаголы, изменения корня и неправильные формы."
+      ]
+    },
+    "overview": {
+      "heading": "Как устроено спряжение немецких глаголов",
+      "paragraphs": [
+        "В немецком языке личная форма глагола обычно меняется в зависимости от лица и числа. В Präsens регулярные глаголы следуют достаточно предсказуемой системе окончаний, а многие сильные и неправильные глаголы дополнительно изменяют корневую гласную.",
+        "Некоторые немецкие времена образуются с помощью вспомогательных глаголов. Perfekt и Plusquamperfekt используют haben или sein вместе с Partizip II, а Futur I и Futur II строятся с werden. Поэтому при изучении глагола важно запоминать не только его причастие, но и правильный вспомогательный глагол.",
+        "В немецком также используются Konjunktiv I и Konjunktiv II. Konjunktiv I особенно характерен для косвенной речи, а Konjunktiv II часто выражает гипотетические и нереальные ситуации, желания, условия и вежливые просьбы."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Выберите время или наклонение",
+      "description": "Выберите форму, чтобы сравнить одни и те же 100 немецких глаголов по лицам и грамматическим значениям.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Изъявительное наклонение"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Сослагательное наклонение"
+        },
+        {
+          "key": "imperative",
+          "label": "Повелительное наклонение"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Präsens",
+        "group": "indicative",
+        "tableHeading": "100 частотных немецких глаголов в Präsens",
+        "tableDescription": "Сравните формы настоящего времени немецких глаголов для всех указанных лиц и местоимений.",
+        "grammar": {
+          "heading": "Как образуется Präsens в немецком языке",
+          "description": "Präsens обычно образуется добавлением личного окончания к основе глагола. Регулярные глаголы чаще всего используют окончания -e, -st, -t, -en, -t и -en. У некоторых сильных и неправильных глаголов также меняется гласная в корне, особенно в формах du и er / sie / es. Präsens может обозначать настоящее действие, привычку, а при ясном контексте — и будущее.",
+          "formula": "основа глагола + личное окончание"
+        }
+      },
+      {
+        "key": "preterite",
+        "label": "Präteritum",
+        "group": "indicative",
+        "tableHeading": "100 частотных немецких глаголов в Präteritum",
+        "tableDescription": "Сравните формы Präteritum, включая регулярные окончания и изменения основы у сильных глаголов.",
+        "grammar": {
+          "heading": "Как образуется Präteritum в немецком языке",
+          "description": "Слабые глаголы обычно образуют Präteritum с помощью -te и соответствующих личных окончаний. Сильные глаголы часто изменяют корневую гласную и используют другой набор окончаний. Präteritum особенно распространён в письменном повествовании, хотя sein, haben и модальные глаголы часто употребляются в этой форме и в разговорной речи.",
+          "formula": "слабые глаголы: основа + -te + личное окончание; сильные глаголы: основа Präteritum + личное окончание"
+        }
+      },
+      {
+        "key": "present_perfect",
+        "label": "Perfekt",
+        "group": "indicative",
+        "tableHeading": "100 частотных немецких глаголов в Perfekt",
+        "tableDescription": "Сравните формы Perfekt и посмотрите, какие частотные глаголы используют haben, а какие sein.",
+        "grammar": {
+          "heading": "Как образуется Perfekt в немецком языке",
+          "description": "Perfekt образуется из формы Präsens вспомогательного глагола haben или sein и Partizip II смыслового глагола. Большинство глаголов используют haben, а sein употребляется с более ограниченной группой, включая многие непереходные глаголы движения или изменения состояния, а также sein и bleiben. В главном предложении Partizip II обычно стоит в конце.",
+          "formula": "Präsens глагола haben или sein + Partizip II"
+        }
+      },
+      {
+        "key": "past_perfect",
+        "label": "Plusquamperfekt",
+        "group": "indicative",
+        "tableHeading": "100 частотных немецких глаголов в Plusquamperfekt",
+        "tableDescription": "Сравните формы для действий, которые произошли раньше другого момента или события в прошлом.",
+        "grammar": {
+          "heading": "Как образуется Plusquamperfekt в немецком языке",
+          "description": "Plusquamperfekt образуется с помощью Präteritum глагола haben или sein и Partizip II. Эта форма показывает, что действие или состояние уже произошло до другого момента в прошлом. Выбор между haben и sein в целом подчиняется тем же правилам, что и в Perfekt.",
+          "formula": "Präteritum глагола haben или sein + Partizip II"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur I",
+        "group": "indicative",
+        "tableHeading": "100 частотных немецких глаголов в Futur I",
+        "tableDescription": "Сравните формы Futur I, образованные с werden и инфинитивом смыслового глагола.",
+        "grammar": {
+          "heading": "Как образуется Futur I в немецком языке",
+          "description": "Futur I образуется с помощью личной формы werden и инфинитива смыслового глагола, который в главном предложении обычно стоит в конце. В немецком для будущих событий очень часто используется Präsens, если будущее уже понятно из контекста. Futur I может сильнее подчёркивать прогноз, намерение или предположение.",
+          "formula": "Präsens глагола werden + инфинитив"
+        }
+      },
+      {
+        "key": "future_perfect",
+        "label": "Futur II",
+        "group": "indicative",
+        "tableHeading": "100 частотных немецких глаголов в Futur II",
+        "tableDescription": "Сравните формы Futur II для завершённых к будущему моменту действий и предположений о уже произошедших событиях.",
+        "grammar": {
+          "heading": "Как образуется Futur II в немецком языке",
+          "description": "Futur II сочетает личную форму werden с Partizip II и инфинитивом haben или sein. Эта конструкция может обозначать действие, которое будет завершено к определённому моменту в будущем, а также предположение о том, что событие, вероятно, уже произошло.",
+          "formula": "Präsens глагола werden + Partizip II + haben или sein",
+          "additionalFormula": "Пример структуры: er wird gearbeitet haben / er wird gegangen sein"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Konjunktiv II",
+        "group": "subjunctive",
+        "tableHeading": "100 частотных немецких глаголов в Konjunktiv II",
+        "tableDescription": "Сравните формы для гипотетических ситуаций, желаний, вежливых просьб и нереальных условий.",
+        "grammar": {
+          "heading": "Как образуется Konjunktiv II в немецком языке",
+          "description": "Многие глаголы образуют Konjunktiv II от основы Präteritum. У сильных глаголов при возможности часто появляется умлаут, а также используются характерные окончания Konjunktiv. Частотные глаголы, такие как sein, haben и модальные глаголы, часто употребляются в собственных синтетических формах. Для многих других глаголов очень распространена конструкция würde + инфинитив, особенно если синтетическая форма редка или совпадает с Präteritum.",
+          "formula": "основа Konjunktiv II + окончание Konjunktiv",
+          "additionalFormula": "частая альтернативная конструкция: würde + инфинитив"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Konjunktiv II Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 частотных немецких глаголов в Konjunktiv II Vergangenheit",
+        "tableDescription": "Сравните формы для нереальных, гипотетических или желаемых ситуаций в прошлом.",
+        "grammar": {
+          "heading": "Как образуется Konjunktiv II Vergangenheit",
+          "description": "Konjunktiv II Vergangenheit образуется с hätte или wäre и Partizip II. Он используется для событий, которые не произошли, нереальных последствий, сожалений и желаний, относящихся к прошлому. Выбор между hätte и wäre зависит от вспомогательного глагола, который используется с данным глаголом в сложных временах.",
+          "formula": "hätte или wäre + Partizip II"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Konjunktiv I",
+        "group": "subjunctive",
+        "tableHeading": "100 частотных немецких глаголов в Konjunktiv I",
+        "tableDescription": "Сравните формы Konjunktiv I, особенно важные для косвенной речи в немецком языке.",
+        "grammar": {
+          "heading": "Как образуется Konjunktiv I в немецком языке",
+          "description": "Konjunktiv I обычно образуется от основы инфинитива с особыми окончаниями. Он используется прежде всего для передачи чужих слов без прямого представления их как подтверждённого факта со стороны говорящего. Если форма совпадает с индикативом, для более ясного разграничения может использоваться Konjunktiv II.",
+          "formula": "основа инфинитива + окончание Konjunktiv I"
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Konjunktiv I Vergangenheit",
+        "group": "subjunctive",
+        "tableHeading": "100 частотных немецких глаголов в Konjunktiv I Vergangenheit",
+        "tableDescription": "Сравните прошедшие формы Konjunktiv I для передачи уже завершённых действий в косвенной речи.",
+        "grammar": {
+          "heading": "Как образуется Konjunktiv I Vergangenheit",
+          "description": "Konjunktiv I Vergangenheit сочетает Konjunktiv I глагола haben или sein с Partizip II. Эта форма особенно полезна в косвенной речи, когда сообщаемое действие уже завершено. Смысловой глагол использует то же причастие и, как правило, тот же вспомогательный глагол, что и в Perfekt.",
+          "formula": "Konjunktiv I глагола haben или sein + Partizip II"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativ",
+        "group": "imperative",
+        "tableHeading": "100 частотных немецких глаголов в Imperativ",
+        "tableDescription": "Изучите формы приказа, просьбы и предложения у наиболее употребительных немецких глаголов.",
+        "grammar": {
+          "heading": "Как образуется Imperativ в немецком языке",
+          "description": "Форма Imperativ зависит от того, к кому обращаются. С du часто используется основа глагола; форма для ihr обычно совпадает с соответствующей формой Präsens без местоимения ihr; при вежливом обращении с Sie используется форма глагола перед Sie. Конструкция с wir также может выражать совместное предложение. Для остальных обычных лиц индикатива отдельные формы Imperativ, как правило, не используются.",
+          "formula": "du: основа Imperativ; ihr: форма Präsens без ihr; Sie: глагол + Sie",
+          "additionalFormula": "предложение с wir: глагол + wir"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Таблица спряжения немецких глаголов",
+      "description": "Используйте таблицу, чтобы сравнивать, как меняются 100 частотных немецких глаголов в зависимости от лица, времени и наклонения.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все формы.",
+      "scrollLeftLabel": "Прокрутить влево",
+      "scrollRightLabel": "Прокрутить вправо",
+      "notes": [
+        "Местоимения sie и Sie используют одинаковые формы глагола, но Sie пишется с заглавной буквы при вежливом обращении.",
+        "У многих сильных глаголов меняется корневая гласная, поэтому полезно учить их вместе с инфинитивом, Präteritum и Partizip II.",
+        "В сложных временах важно запоминать и правильный вспомогательный глагол haben или sein, и соответствующий Partizip II."
+      ]
+    },
+    "rules": {
+      "heading": "Основные правила спряжения немецких глаголов",
+      "intro": "Многие немецкие глагольные формы строятся по повторяющимся моделям. Понимание этих моделей помогает распознавать новые формы без необходимости заучивать каждое спряжение отдельно.",
+      "items": [
+        {
+          "heading": "Регулярные окончания в Präsens",
+          "text": "Большинство слабых глаголов в Präsens используют предсказуемую систему личных окончаний. Основа обычно сохраняется, а окончание меняется в зависимости от лица и числа.",
+          "examples": ["ich mache", "du machst", "wir machen"]
+        },
+        {
+          "heading": "Изменения основы у сильных глаголов",
+          "text": "Некоторые сильные глаголы меняют корневую гласную в Präsens с du и er / sie / es, тогда как формы множественного числа часто сохраняют гласную инфинитива.",
+          "examples": ["du fährst", "er liest", "sie spricht"]
+        },
+        {
+          "heading": "Сложные прошедшие времена используют haben или sein",
+          "text": "Perfekt и Plusquamperfekt требуют вспомогательного глагола и Partizip II. Большинство глаголов используют haben, а более ограниченная группа — sein.",
+          "examples": [
+            "ich habe gearbeitet",
+            "sie ist gekommen",
+            "wir waren geblieben"
+          ]
+        },
+        {
+          "heading": "Partizip II образуется по разным моделям",
+          "text": "Многие слабые глаголы образуют Partizip II с ge- и -t, а сильные часто с ge- и -en. Глаголы с неотделяемыми приставками и глаголы на -ieren обычно не получают ge-.",
+          "examples": [
+            "machen → gemacht",
+            "sehen → gesehen",
+            "studieren → studiert"
+          ]
+        },
+        {
+          "heading": "Отделяемые приставки влияют на порядок слов",
+          "text": "У отделяемых глаголов приставка в простом главном предложении отделяется от личной формы глагола. В Partizip II элемент ge- обычно ставится между приставкой и основой.",
+          "examples": ["ich stehe auf", "er ruft an", "wir sind angekommen"]
+        },
+        {
+          "heading": "Konjunktiv I и Konjunktiv II выполняют разные функции",
+          "text": "Konjunktiv I используется главным образом в косвенной речи, а Konjunktiv II — для гипотез, нереальных ситуаций, желаний и вежливых просьб.",
+          "examples": [
+            "Er sagt, er sei müde.",
+            "Ich hätte mehr Zeit.",
+            "Würdest du mir helfen?"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Частые ошибки при спряжении немецких глаголов",
+      "intro": "Такие ошибки особенно часто возникают при выборе личных окончаний, вспомогательных глаголов, причастий и неправильных форм основы.",
+      "items": [
+        {
+          "incorrect": "Du machen das jeden Tag.",
+          "correct": "Du machst das jeden Tag.",
+          "explanation": "С du регулярный глагол в Präsens обычно получает окончание -st."
+        },
+        {
+          "incorrect": "Er hat nach Hause gegangen.",
+          "correct": "Er ist nach Hause gegangen.",
+          "explanation": "Глагол gehen образует сложные прошедшие формы с sein, а не с haben."
+        },
+        {
+          "incorrect": "Ich habe das Buch gelest.",
+          "correct": "Ich habe das Buch gelesen.",
+          "explanation": "Lesen — сильный глагол, и его правильная форма Partizip II — gelesen."
+        },
+        {
+          "incorrect": "Sie hat gestern anruft.",
+          "correct": "Sie hat gestern angerufen.",
+          "explanation": "Anrufen — сильный отделяемый глагол. Его правильная форма Partizip II — angerufen."
+        },
+        {
+          "incorrect": "Wenn ich mehr Zeit habe, würde ich mehr reisen.",
+          "correct": "Wenn ich mehr Zeit hätte, würde ich mehr reisen.",
+          "explanation": "В нереальном или гипотетическом условии в настоящем в придаточном с wenn используется Konjunktiv II: hätte вместо индикатива habe."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Как учить немецкое спряжение по этой таблице",
+      "steps": [
+        {
+          "heading": "Начните с Präsens",
+          "text": "Сначала сравните все шесть групп местоимений в Präsens. Обратите внимание на регулярные личные окончания и отметьте глаголы с изменением основы."
+        },
+        {
+          "heading": "Сравнивайте один глагол в разных временах",
+          "text": "Переключайтесь для одного и того же глагола между Präsens, Präteritum и Perfekt. Так легче связать инфинитив, прошедшую основу и Partizip II."
+        },
+        {
+          "heading": "Учите вспомогательный глагол вместе с формой",
+          "text": "При изучении сложных времён запоминайте не только Partizip II, но и то, используется ли с глаголом haben или sein."
+        },
+        {
+          "heading": "Уделяйте больше внимания сильным и неправильным глаголам",
+          "text": "Чаще повторяйте распространённые глаголы, основные формы которых нельзя надёжно вывести из регулярных правил."
+        },
+        {
+          "heading": "Сравнивайте индикатив и Konjunktiv",
+          "text": "Сопоставляйте обычные формы изъявительного наклонения с Konjunktiv I и Konjunktiv II, чтобы лучше понимать как их образование, так и функции."
+        },
+        {
+          "heading": "Используйте формы в полных предложениях",
+          "text": "После изучения новой формы составьте с ней полноценное предложение. Так вы одновременно тренируете спряжение, порядок слов, отделяемые приставки и глагольные конструкции."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Советы по изучению немецкого спряжения",
+      "items": [
+        {
+          "heading": "Учите основные формы вместе",
+          "text": "Для сильных глаголов полезно сразу запоминать инфинитив, Präteritum и Partizip II, например: sehen – sah – gesehen."
+        },
+        {
+          "heading": "Запоминайте вспомогательный глагол",
+          "text": "Когда учите Partizip II, одновременно запоминайте, образует ли глагол Perfekt с haben или sein."
+        },
+        {
+          "heading": "Группируйте похожие модели",
+          "text": "Учите вместе глаголы с похожими изменениями основы или похожими моделями Partizip II, а не воспринимайте каждую форму как полностью отдельную."
+        },
+        {
+          "heading": "Сначала освойте частотные неправильные глаголы",
+          "text": "sein, haben, werden и модальные глаголы встречаются постоянно, поэтому хорошее знание их форм сразу помогает во множестве конструкций."
+        },
+        {
+          "heading": "Учите формы в контексте",
+          "text": "Составляйте короткие предложения с каждым временем и наклонением, чтобы запоминать не только форму, но и её реальное употребление в немецком языке."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Практикуйте самые употребительные немецкие глаголы",
+      "description": "Используйте эти модели спряжения в упражнениях по словарному запасу или изучите список 100 самых употребительных немецких глаголов.",
+      "primaryLabel": "Практиковать немецкие глаголы",
+      "secondaryLabel": "Посмотреть 100 частотных немецких глаголов"
+    },
+    "related": {
+      "heading": "Другие ресурсы для изучения немецкого",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных немецких глаголов"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 частотных немецких глаголов в прошедших формах"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Немецкая лексика по уровням CEFR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Тест на уровень немецкого языка"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о спряжении немецких глаголов",
+      "items": [
+        {
+          "question": "Что значит спрягать глагол в немецком языке?",
+          "answer": "Спрягать немецкий глагол — значит изменять его форму в зависимости от грамматических признаков, таких как лицо, число, время и наклонение. Например, инфинитив machen в Präsens превращается в ich mache, du machst и er macht."
+        },
+        {
+          "question": "Меняются ли немецкие глаголы с каждым местоимением?",
+          "answer": "Личные формы немецких глаголов меняются в зависимости от лица и числа, хотя некоторые формы совпадают. Например, wir и sie / Sie часто имеют одну и ту же форму глагола, а du и ihr обычно используют разные окончания."
+        },
+        {
+          "question": "В чём разница между Präteritum и Perfekt?",
+          "answer": "Обе формы могут описывать прошлые события, но типичное употребление различается. Perfekt особенно распространён в разговорной речи, а Präteritum часто используется в письменном повествовании. При этом sein, haben и модальные глаголы нередко употребляются в Präteritum и в устной речи."
+        },
+        {
+          "question": "Как понять, использовать haben или sein в Perfekt?",
+          "answer": "Большинство немецких глаголов образуют Perfekt с haben. Более ограниченная группа использует sein, включая многие непереходные глаголы движения или изменения состояния, а также такие глаголы, как sein и bleiben. Поэтому вспомогательный глагол полезно учить вместе с самим глаголом."
+        },
+        {
+          "question": "Как образуется Partizip II в немецком языке?",
+          "answer": "Слабые глаголы часто образуют Partizip II по модели ge- + основа + -t, а сильные — ge- + иногда изменённая основа + -en. Глаголы с неотделяемыми приставками и глаголы на -ieren обычно не получают ge-. Неправильные формы приходится частично запоминать отдельно."
+        },
+        {
+          "question": "В чём разница между Konjunktiv I и Konjunktiv II?",
+          "answer": "Konjunktiv I используется главным образом для косвенной речи. Konjunktiv II выражает гипотетические и нереальные ситуации, желания, условия и вежливые просьбы. Поэтому эти два наклонения выполняют разные функции."
+        },
+        {
+          "question": "Когда используется würde + инфинитив?",
+          "answer": "Конструкция würde + инфинитив очень распространена как способ выразить Konjunktiv II, особенно если синтетическая форма употребляется редко или совпадает с Präteritum. Очень частотные глаголы, такие как sein, haben и модальные глаголы, часто используют собственные формы Konjunktiv II."
+        },
+        {
+          "question": "Нужно ли всегда использовать Futur I, когда речь идёт о будущем?",
+          "answer": "Нет. В немецком языке для будущих событий очень часто используется Präsens, если временное выражение или контекст уже ясно указывают на будущее. Futur I с werden может сильнее подчёркивать прогноз, намерение или предположение."
+        },
+        {
+          "question": "Почему некоторые немецкие глаголы меняют гласную при спряжении?",
+          "answer": "У многих сильных глаголов сохранились исторические чередования корневых гласных. Некоторые меняют гласную с du и er / sie / es в Präsens, а другие имеют разные гласные в Präteritum или Partizip II. Эти модели распространены, но не всегда полностью предсказуемы."
+        },
+        {
+          "question": "Как лучше всего запоминать спряжение немецких глаголов?",
+          "answer": "Сначала выучите повторяющиеся окончания, а затем сосредоточьтесь на основных формах и вспомогательных глаголах наиболее частотных неправильных глаголов. Сравнивать один и тот же глагол в нескольких временах и использовать формы в полных предложениях обычно эффективнее, чем заучивать изолированные таблицы."
+        }
+      ]
+    }
+  }
+]

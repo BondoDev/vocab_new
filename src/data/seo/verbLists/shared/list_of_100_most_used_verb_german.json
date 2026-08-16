@@ -1,0 +1,402 @@
+[
+  {
+    "concept_id": "A1-00008",
+    "verb": "sein"
+  },
+  {
+    "concept_id": "A1-00487",
+    "verb": "haben"
+  },
+  {
+    "concept_id": "A2-01701",
+    "verb": "werden"
+  },
+  {
+    "concept_id": "A1-00167",
+    "verb": "können"
+  },
+  {
+    "concept_id": "A1-00687",
+    "verb": "müssen"
+  },
+  {
+    "concept_id": "A1-01120",
+    "verb": "wollen"
+  },
+  {
+    "concept_id": "A2-01787",
+    "verb": "sollen"
+  },
+  {
+    "concept_id": "A1-00643",
+    "verb": "dürfen"
+  },
+  {
+    "concept_id": "A1-00607",
+    "verb": "mögen"
+  },
+  {
+    "concept_id": "A1-00633",
+    "verb": "machen"
+  },
+  {
+    "concept_id": "A1-00292",
+    "verb": "tun"
+  },
+  {
+    "concept_id": "A1-00441",
+    "verb": "gehen"
+  },
+  {
+    "concept_id": "A1-00231",
+    "verb": "kommen"
+  },
+  {
+    "concept_id": "A1-00871",
+    "verb": "sagen"
+  },
+  {
+    "concept_id": "A1-00956",
+    "verb": "sprechen"
+  },
+  {
+    "concept_id": "A1-01012",
+    "verb": "reden"
+  },
+  {
+    "concept_id": "A1-00049",
+    "verb": "fragen"
+  },
+  {
+    "concept_id": "A1-00034",
+    "verb": "antworten"
+  },
+  {
+    "concept_id": "A1-00494",
+    "verb": "hören"
+  },
+  {
+    "concept_id": "A1-00879",
+    "verb": "sehen"
+  },
+  {
+    "concept_id": "A1-00621",
+    "verb": "schauen"
+  },
+  {
+    "concept_id": "A1-00383",
+    "verb": "finden"
+  },
+  {
+    "concept_id": "A2-01107",
+    "verb": "suchen"
+  },
+  {
+    "concept_id": "A1-00584",
+    "verb": "wissen"
+  },
+  {
+    "concept_id": "A1-01117",
+    "verb": "aufwachen"
+  },
+  {
+    "concept_id": "A1-01043",
+    "verb": "denken"
+  },
+  {
+    "concept_id": "A2-01482",
+    "verb": "glauben"
+  },
+  {
+    "concept_id": "A2-01361",
+    "verb": "verstehen"
+  },
+  {
+    "concept_id": "A1-00987",
+    "verb": "lernen"
+  },
+  {
+    "concept_id": "A2-00950",
+    "verb": "vorbereiten"
+  },
+  {
+    "concept_id": "A1-01160",
+    "verb": "arbeiten"
+  },
+  {
+    "concept_id": "A1-00614",
+    "verb": "leben"
+  },
+  {
+    "concept_id": "A1-00615",
+    "verb": "wohnen"
+  },
+  {
+    "concept_id": "A1-00973",
+    "verb": "bleiben"
+  },
+  {
+    "concept_id": "B1-02233",
+    "verb": "ausruhen"
+  },
+  {
+    "concept_id": "A1-00693",
+    "verb": "brauchen"
+  },
+  {
+    "concept_id": "A1-01011",
+    "verb": "nehmen"
+  },
+  {
+    "concept_id": "A1-00436",
+    "verb": "geben"
+  },
+  {
+    "concept_id": "A1-00431",
+    "verb": "bekommen"
+  },
+  {
+    "concept_id": "A1-00139",
+    "verb": "bringen"
+  },
+  {
+    "concept_id": "A1-00978",
+    "verb": "stoppen"
+  },
+  {
+    "concept_id": "A1-00158",
+    "verb": "kaufen"
+  },
+  {
+    "concept_id": "A1-00881",
+    "verb": "verkaufen"
+  },
+  {
+    "concept_id": "A1-00762",
+    "verb": "bezahlen"
+  },
+  {
+    "concept_id": "A2-00296",
+    "verb": "kosten"
+  },
+  {
+    "concept_id": "A1-00322",
+    "verb": "essen"
+  },
+  {
+    "concept_id": "A1-00308",
+    "verb": "trinken"
+  },
+  {
+    "concept_id": "A1-00237",
+    "verb": "kochen"
+  },
+  {
+    "concept_id": "A1-01125",
+    "verb": "ansehen"
+  },
+  {
+    "concept_id": "A1-00925",
+    "verb": "schlafen"
+  },
+  {
+    "concept_id": "A1-00021",
+    "verb": "aufstehen"
+  },
+  {
+    "concept_id": "A1-00916",
+    "verb": "sitzen"
+  },
+  {
+    "concept_id": "A1-00968",
+    "verb": "stehen"
+  },
+  {
+    "concept_id": "A2-00717",
+    "verb": "liegen"
+  },
+  {
+    "concept_id": "A1-00932",
+    "verb": "lächeln"
+  },
+  {
+    "concept_id": "A1-00817",
+    "verb": "legen"
+  },
+  {
+    "concept_id": "B1-04098",
+    "verb": "setzen"
+  },
+  {
+    "concept_id": "A1-00309",
+    "verb": "fahren"
+  },
+  {
+    "concept_id": "A2-01805",
+    "verb": "reisen"
+  },
+  {
+    "concept_id": "A1-00591",
+    "verb": "lachen"
+  },
+  {
+    "concept_id": "A1-00859",
+    "verb": "laufen"
+  },
+  {
+    "concept_id": "A1-00785",
+    "verb": "spielen"
+  },
+  {
+    "concept_id": "A1-00828",
+    "verb": "lesen"
+  },
+  {
+    "concept_id": "A1-01167",
+    "verb": "schreiben"
+  },
+  {
+    "concept_id": "A1-00731",
+    "verb": "öffnen"
+  },
+  {
+    "concept_id": "A1-00210",
+    "verb": "schließen"
+  },
+  {
+    "concept_id": "A1-00970",
+    "verb": "anfangen"
+  },
+  {
+    "concept_id": "A1-00088",
+    "verb": "beginnen"
+  },
+  {
+    "concept_id": "A2-00284",
+    "verb": "fortsetzen"
+  },
+  {
+    "concept_id": "A1-01114",
+    "verb": "warten"
+  },
+  {
+    "concept_id": "A1-00498",
+    "verb": "helfen"
+  },
+  {
+    "concept_id": "A1-00903",
+    "verb": "zeigen"
+  },
+  {
+    "concept_id": "A2-00460",
+    "verb": "erklären"
+  },
+  {
+    "concept_id": "A1-01022",
+    "verb": "erzählen"
+  },
+  {
+    "concept_id": "A1-01104",
+    "verb": "benutzen"
+  },
+  {
+    "concept_id": "B2-02656",
+    "verb": "nutzen"
+  },
+  {
+    "concept_id": "A1-01130",
+    "verb": "tragen"
+  },
+  {
+    "concept_id": "A1-01088",
+    "verb": "drehen"
+  },
+  {
+    "concept_id": "B1-01043",
+    "verb": "holen"
+  },
+  {
+    "concept_id": "A2-01117",
+    "verb": "senden"
+  },
+  {
+    "concept_id": "A2-01542",
+    "verb": "planen"
+  },
+  {
+    "concept_id": "A1-00163",
+    "verb": "anrufen"
+  },
+  {
+    "concept_id": "A1-00650",
+    "verb": "treffen"
+  },
+  {
+    "concept_id": "A1-01111",
+    "verb": "besuchen"
+  },
+  {
+    "concept_id": "A1-00623",
+    "verb": "lieben"
+  },
+  {
+    "concept_id": "A1-00679",
+    "verb": "sich bewegen"
+  },
+  {
+    "concept_id": "A1-00371",
+    "verb": "fühlen"
+  },
+  {
+    "concept_id": "A2-01742",
+    "verb": "passieren"
+  },
+  {
+    "concept_id": "A2-00133",
+    "verb": "gehören"
+  },
+  {
+    "concept_id": "A2-01814",
+    "verb": "gewinnen"
+  },
+  {
+    "concept_id": "B1-01577",
+    "verb": "verlieren"
+  },
+  {
+    "concept_id": "B2-00065",
+    "verb": "ändern"
+  },
+  {
+    "concept_id": "A1-00186",
+    "verb": "wechseln"
+  },
+  {
+    "concept_id": "A1-01083",
+    "verb": "versuchen"
+  },
+  {
+    "concept_id": "A1-00257",
+    "verb": "weinen"
+  },
+  {
+    "concept_id": "A1-00406",
+    "verb": "vergessen"
+  },
+  {
+    "concept_id": "A1-00836",
+    "verb": "erinnern"
+  },
+  {
+    "concept_id": "A1-00600",
+    "verb": "lassen"
+  },
+  {
+    "concept_id": "A1-00511",
+    "verb": "halten"
+  },
+  {
+    "concept_id": "A1-00596",
+    "verb": "verlassen"
+  }
+]

@@ -1,5 +1,6 @@
 import verbListJson from "../shared/list_of_100_most_used_verb.json";
 import frenchVerbListJson from "../shared/list_of_100_most_used_verb_french.json";
+import germanVerbListJson from "../shared/list_of_100_most_used_verb_german.json";
 import spanishVerbListJson from "../shared/list_of_100_most_used_verb_spanish.json";
 import { getUiVocabularyLanguage, type TargetLanguageSlug, type UiLanguageCode } from "../../shared/slugs";
 
@@ -68,11 +69,16 @@ function normalizeVerbListItems(items: VerbListJsonItem[]): VerbListItem[] {
 
 export const BASE_VERB_LIST_ITEMS = normalizeVerbListItems(verbListJson as VerbListJsonItem[]);
 export const FRENCH_VERB_LIST_ITEMS = normalizeVerbListItems(frenchVerbListJson as VerbListJsonItem[]);
+export const GERMAN_VERB_LIST_ITEMS = normalizeVerbListItems(germanVerbListJson as VerbListJsonItem[]);
 export const SPANISH_VERB_LIST_ITEMS = normalizeVerbListItems(spanishVerbListJson as VerbListJsonItem[]);
 
 export function getVerbListItems(targetLanguage: TargetLanguageSlug): VerbListItem[] {
   if (targetLanguage === "french") {
     return FRENCH_VERB_LIST_ITEMS;
+  }
+
+  if (targetLanguage === "german") {
+    return GERMAN_VERB_LIST_ITEMS;
   }
 
   if (targetLanguage === "spanish") {

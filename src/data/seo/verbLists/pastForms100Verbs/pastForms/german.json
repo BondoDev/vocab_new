@@ -169,8 +169,8 @@
   },
   {
     "concept_id": "A1-00987",
-    "preterite": "studierte",
-    "pastParticiple": "studiert",
+    "preterite": "lernte",
+    "pastParticiple": "gelernt",
     "auxiliary": "haben"
   },
   {
@@ -186,15 +186,15 @@
     "auxiliary": "haben"
   },
   {
-    "concept_id": "A1-01118",
-    "preterite": "ging zu Fuß",
-    "pastParticiple": "zu Fuß gegangen",
-    "auxiliary": "sein"
+    "concept_id": "A1-00614",
+    "preterite": "lebte",
+    "pastParticiple": "gelebt",
+    "auxiliary": "haben"
   },
   {
     "concept_id": "A1-00615",
-    "preterite": "lebte",
-    "pastParticiple": "gelebt",
+    "preterite": "wohnte",
+    "pastParticiple": "gewohnt",
     "auxiliary": "haben"
   },
   {
@@ -205,8 +205,8 @@
   },
   {
     "concept_id": "B1-02233",
-    "preterite": "ruhte sich aus",
-    "pastParticiple": "sich ausgeruht",
+    "preterite": "ruhte aus",
+    "pastParticiple": "ausgeruht",
     "auxiliary": "haben"
   },
   {
@@ -241,8 +241,8 @@
   },
   {
     "concept_id": "A1-00978",
-    "preterite": "hörte auf",
-    "pastParticiple": "aufgehört",
+    "preterite": "stoppte",
+    "pastParticiple": "gestoppt",
     "auxiliary": "haben"
   },
   {
@@ -331,8 +331,8 @@
   },
   {
     "concept_id": "A1-00817",
-    "preterite": "stellte",
-    "pastParticiple": "gestellt",
+    "preterite": "legte",
+    "pastParticiple": "gelegt",
     "auxiliary": "haben"
   },
   {
@@ -451,8 +451,8 @@
   },
   {
     "concept_id": "B2-02656",
-    "preterite": "verwendete",
-    "pastParticiple": "verwendet",
+    "preterite": "nutzte",
+    "pastParticiple": "genutzt",
     "auxiliary": "haben"
   },
   {
@@ -468,15 +468,15 @@
     "auxiliary": "haben"
   },
   {
-    "concept_id": "A1-00595",
-    "preterite": "lernte",
-    "pastParticiple": "gelernt",
+    "concept_id": "B1-01043",
+    "preterite": "holte",
+    "pastParticiple": "geholt",
     "auxiliary": "haben"
   },
   {
     "concept_id": "A2-01117",
-    "preterite": "schickte",
-    "pastParticiple": "geschickt",
+    "preterite": "sandte",
+    "pastParticiple": "gesandt",
     "auxiliary": "haben"
   },
   {
@@ -512,7 +512,7 @@
   {
     "concept_id": "A1-00679",
     "preterite": "bewegte sich",
-    "pastParticiple": "sich bewegt",
+    "pastParticiple": "bewegt",
     "auxiliary": "haben"
   },
   {
@@ -547,14 +547,14 @@
   },
   {
     "concept_id": "B2-00065",
-    "preterite": "veränderte",
-    "pastParticiple": "verändert",
+    "preterite": "änderte",
+    "pastParticiple": "geändert",
     "auxiliary": "haben"
   },
   {
     "concept_id": "A1-00186",
-    "preterite": "änderte",
-    "pastParticiple": "geändert",
+    "preterite": "wechselte",
+    "pastParticiple": "gewechselt",
     "auxiliary": "haben"
   },
   {
@@ -577,8 +577,8 @@
   },
   {
     "concept_id": "A1-00836",
-    "preterite": "erinnerte sich",
-    "pastParticiple": "sich erinnert",
+    "preterite": "erinnerte",
+    "pastParticiple": "erinnert",
     "auxiliary": "haben"
   },
   {
