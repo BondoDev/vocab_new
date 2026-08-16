@@ -293,6 +293,50 @@ try {
       ils_elles: "sont",
     });
   });
+test("Russian Cyrillic pronoun labels transliterate to the JSON pronoun column keys", () => {
+    // Regression test: the generic non-alphanumeric collapse only
+    // recognizes ASCII a-z0-9, so unhandled Cyrillic pronouns like "я"
+    // used to normalize straight to "" (the row builder's "missing a
+    // non-empty pronoun" error) instead of a real key. Cyrillic now gets
+    // transliterated to the Latin "ya"/"ty"/"on_ona_ono"/... keys already
+    // authored in textContent/russian.json's pronounForms.
+    assert.equal(formsRowBuilder.normalizePronounKey("я"), "ya");
+    assert.equal(formsRowBuilder.normalizePronounKey("ты"), "ty");
+    assert.equal(formsRowBuilder.normalizePronounKey("он / она / оно"), "on_ona_ono");
+    assert.equal(formsRowBuilder.normalizePronounKey("мы"), "my");
+    assert.equal(formsRowBuilder.normalizePronounKey("вы"), "vy");
+    assert.equal(formsRowBuilder.normalizePronounKey("они"), "oni");
+
+    const rows = formsRowBuilder.buildConjugatedVerbFormsRows("fixture", "russian", [
+      {
+        tense: "future",
+        targetLanguage: "ru",
+        verbs: [
+          {
+            word_id: "A1-00008",
+            conjugations: [
+              { pronoun: "я", form: "буду" },
+              { pronoun: "ты", form: "будешь" },
+              { pronoun: "он / она / оно", form: "будет" },
+              { pronoun: "мы", form: "будем" },
+              { pronoun: "вы", form: "будете" },
+              { pronoun: "они", form: "будут" },
+            ],
+          },
+        ],
+      },
+    ]);
+
+    assert.deepEqual(rows.get("A1-00008")?.future, {
+      ya: "буду",
+      ty: "будешь",
+      on_ona_ono: "будет",
+      my: "будем",
+      vy: "будете",
+      oni: "будут",
+    });
+  });
+
 } finally {
   registryLoader.cleanup();
   metadataLoader.cleanup();

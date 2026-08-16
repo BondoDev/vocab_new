@@ -1,0 +1,2501 @@
+[
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "en",
+    "urlSlug": "100-most-common-russian-verb-conjugations",
+    "entryButtonLabel": "Russian Verb Conjugations",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "meaning": "Meaning"
+    },
+    "pronounForms": [
+      {
+        "key": "ya",
+        "label": "я"
+      },
+      {
+        "key": "ty",
+        "label": "ты"
+      },
+      {
+        "key": "on_ona_ono",
+        "label": "он / она / оно"
+      },
+      {
+        "key": "my",
+        "label": "мы"
+      },
+      {
+        "key": "vy",
+        "label": "вы"
+      },
+      {
+        "key": "oni",
+        "label": "они"
+      }
+    ],
+    "metadata": {
+      "title": "100 Most Common Russian Verb Conjugations",
+      "metaTitle": "100 Most Common Russian Verb Conjugations | FluentStellar",
+      "metaDescription": "Compare 100 common Russian verbs across present, past, future, conditional and imperative forms, with Russian pronouns, grammar patterns and practical explanations."
+    },
+    "hero": {
+      "heading": "100 Most Common Russian Verb Conjugations",
+      "subtitle": "Compare essential Russian verbs across the most useful tense and mood forms.",
+      "introParagraphs": [
+        "This reference brings together 100 high-frequency Russian verbs and lets you compare their forms across the present, past, future, conditional and imperative.",
+        "Switching between forms and comparing the same verb across different persons helps you notice recurring endings, aspect-related differences and irregular patterns instead of memorizing every form in isolation."
+      ]
+    },
+    "overview": {
+      "heading": "How Russian Verb Conjugation Works",
+      "paragraphs": [
+        "Russian verbs change according to grammatical person and number in the present tense and in the simple future of perfective verbs. The endings attached to the verb stem depend largely on the verb's conjugation pattern, although several common verbs are irregular.",
+        "The Russian past tense works differently from the present: it does not normally change according to person. Instead, singular past forms distinguish masculine, feminine and neuter gender, while the plural has a single form. This means я, ты and он can share the same masculine form when referring to a male speaker or subject, while feminine subjects use the feminine ending.",
+        "Aspect is central to the Russian verb system. Most verbs belong to an imperfective-perfective relationship, and aspect affects both meaning and tense formation. Imperfective verbs usually form the future with быть plus an infinitive, while perfective verbs use a single conjugated future form."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Choose a Tense or Mood",
+      "description": "Select a form to compare how the 100 Russian verbs behave across persons, numbers and grammatical patterns.",
+      "defaultTense": "present",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicative"
+        },
+        {
+          "key": "conditional",
+          "label": "Conditional"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperative"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present",
+        "label": "Present Tense",
+        "group": "indicative",
+        "tableHeading": "100 Common Russian Verbs in the Present Tense",
+        "tableDescription": "Compare the present-tense forms of common Russian verbs across the supplied Russian pronouns and identify recurring personal endings.",
+        "grammar": {
+          "heading": "How the Russian Present Tense Is Formed",
+          "description": "The Russian present tense is formed by adding personal endings to an imperfective verb stem. The exact endings depend mainly on whether the verb follows the first or second conjugation pattern. Perfective verbs do not have a true present-tense meaning; their formally present-looking conjugated forms normally express future completed actions.",
+          "formula": "imperfective verb stem + personal ending",
+          "additionalFormula": "Example pattern: я -у/-ю, ты -ешь/-ишь, он/она/оно -ет/-ит, мы -ем/-им, вы -ете/-ите, они -ут/-ют/-ат/-ят"
+        }
+      },
+      {
+        "key": "past",
+        "label": "Past Tense",
+        "group": "indicative",
+        "tableHeading": "100 Common Russian Verbs in the Past Tense",
+        "tableDescription": "Compare past forms and see how Russian marks gender in the singular and number in the plural rather than using separate endings for each grammatical person.",
+        "grammar": {
+          "heading": "How the Russian Past Tense Is Formed",
+          "description": "Russian past-tense forms are usually built from the infinitive stem with the past marker -л. Singular forms agree with the subject in gender: masculine commonly has -л, feminine -ла and neuter -ло. The plural normally ends in -ли. Past-tense forms do not usually distinguish first, second and third person.",
+          "formula": "verb stem + -л / -ла / -ло / -ли",
+          "additionalFormula": "masculine singular: -л; feminine singular: -ла; neuter singular: -ло; plural: -ли"
+        }
+      },
+      {
+        "key": "future",
+        "label": "Future Tense",
+        "group": "indicative",
+        "tableHeading": "100 Common Russian Verbs in the Future Tense",
+        "tableDescription": "Compare how Russian expresses future actions differently with imperfective and perfective verbs.",
+        "grammar": {
+          "heading": "How the Russian Future Tense Is Formed",
+          "description": "Russian has two main future patterns determined by aspect. Imperfective verbs form a compound future using a conjugated form of быть followed by the infinitive. Perfective verbs form a simple future by taking personal endings directly, using forms that resemble present-tense conjugation but refer to completed future actions.",
+          "formula": "imperfective: буду / будешь / будет / будем / будете / будут + infinitive",
+          "additionalFormula": "perfective: perfective verb stem + personal ending"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Conditional Mood",
+        "group": "conditional",
+        "tableHeading": "100 Common Russian Verbs in the Conditional Mood",
+        "tableDescription": "Compare Russian conditional forms used for hypothetical situations, wishes, possibilities and actions dependent on a condition.",
+        "grammar": {
+          "heading": "How the Russian Conditional Is Formed",
+          "description": "The Russian conditional is normally formed with a past-tense verb form plus the particle бы or its shorter variant б. Because the verb itself has past-tense morphology, it agrees in gender and number rather than person. The particle may appear in different positions depending on sentence structure and emphasis.",
+          "formula": "past-tense form + бы",
+          "additionalFormula": "Example structure: я сделал бы / я сделала бы"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperative Mood",
+        "group": "imperative",
+        "tableHeading": "100 Common Russian Verbs in the Imperative Mood",
+        "tableDescription": "Study the command and request forms of common Russian verbs and compare the singular and plural or polite patterns used in the imperative.",
+        "grammar": {
+          "heading": "How the Russian Imperative Is Formed",
+          "description": "Russian imperatives are most commonly formed for second-person singular and second-person plural or polite address. Typical singular endings include -й, -и or a soft sign, while the plural or polite form normally adds -те. Other persons can express commands through different constructions rather than ordinary imperative inflection.",
+          "formula": "imperative stem + singular imperative ending",
+          "additionalFormula": "plural or polite command: singular imperative form + -те"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Russian Verb Conjugation Table",
+      "description": "Use the table to compare the same high-frequency Russian verbs across different tenses, moods and pronouns. Pay particular attention to aspect, personal endings and gender-dependent past forms.",
+      "scrollHint": "Scroll horizontally to view all pronoun forms.",
+      "scrollLeftLabel": "Scroll table left",
+      "scrollRightLabel": "Scroll table right",
+      "notes": [
+        "In the present tense, personal endings change according to person and number, but the exact ending depends on the verb's conjugation pattern.",
+        "In the past tense and conditional, Russian primarily marks gender and number rather than grammatical person, so several pronoun columns may share the same form depending on the subject's gender.",
+        "Imperative forms are mainly associated with ты and вы; commands involving other persons are normally expressed with separate constructions rather than a standard imperative ending."
+      ]
+    },
+    "rules": {
+      "heading": "Key Russian Conjugation Rules",
+      "intro": "Russian conjugation becomes much easier when you recognize a few recurring patterns involving personal endings, aspect, gender and verb stems.",
+      "items": [
+        {
+          "heading": "Learn the Two Main Present-Tense Conjugation Patterns",
+          "text": "Most Russian verbs follow one of two broad sets of personal endings. Knowing which pattern a verb uses makes many present and simple-future forms predictable.",
+          "examples": [
+            "я читаю — ты читаешь — они читают",
+            "я говорю — ты говоришь — они говорят",
+            "мы работаем — вы работаете"
+          ]
+        },
+        {
+          "heading": "Aspect Changes How the Future Is Built",
+          "text": "Imperfective verbs usually describe ongoing, repeated or process-focused actions and form the future with быть plus an infinitive. Perfective verbs normally describe a completed result and use a simple conjugated future.",
+          "examples": ["я буду читать", "мы будем работать", "я прочитаю"]
+        },
+        {
+          "heading": "Past Forms Agree in Gender and Number",
+          "text": "Russian past forms do not normally have separate endings for я, ты, он and other persons. In the singular, the form depends on whether the subject is masculine, feminine or neuter.",
+          "examples": ["он работал", "она работала", "они работали"]
+        },
+        {
+          "heading": "Conditional Forms Use бы",
+          "text": "The conditional combines a past-tense form with бы or б. The verb therefore keeps the same gender and number distinctions found in the past tense.",
+          "examples": ["я сделал бы", "я сделала бы", "мы сделали бы"]
+        },
+        {
+          "heading": "Imperatives Have Singular and Plural or Polite Forms",
+          "text": "Commands addressed to one familiar person generally use the singular imperative. Commands to several people or to one person formally normally use the corresponding form with -те.",
+          "examples": ["читай", "читайте", "говори — говорите"]
+        },
+        {
+          "heading": "Watch for Stem Changes and Irregular Verbs",
+          "text": "Some frequent verbs change their stem, consonants or vowels when conjugated. These forms are best learned as recurring patterns rather than treated as completely unrelated words.",
+          "examples": [
+            "писать — пишу",
+            "хотеть — хочу — хочешь",
+            "идти — иду — идёшь"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Common Russian Conjugation Mistakes",
+      "intro": "Many mistakes come from applying one conjugation pattern too widely or overlooking aspect, gender and person endings.",
+      "items": [
+        {
+          "incorrect": "Он читаю книгу.",
+          "correct": "Он читает книгу.",
+          "explanation": "The present-tense verb must agree with the third-person singular subject он, so читать takes the form читает."
+        },
+        {
+          "incorrect": "Она работал вчера.",
+          "correct": "Она работала вчера.",
+          "explanation": "A singular past-tense verb agrees with a feminine subject, so the feminine form работала is required."
+        },
+        {
+          "incorrect": "Я буду прочитаю книгу.",
+          "correct": "Я прочитаю книгу.",
+          "explanation": "A perfective verb such as прочитать forms a simple future. Do not combine буду with a conjugated perfective future form."
+        },
+        {
+          "incorrect": "Я буду читаю книгу.",
+          "correct": "Я буду читать книгу.",
+          "explanation": "The compound future of an imperfective verb uses a conjugated form of быть followed by the infinitive, not a present-tense form."
+        },
+        {
+          "incorrect": "Вы читай текст.",
+          "correct": "Вы читайте текст.",
+          "explanation": "With вы, the normal plural or polite imperative form is required, here читайте rather than the singular читай."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "How to Study Russian Conjugations with This Page",
+      "steps": [
+        {
+          "heading": "Start with the Present Tense",
+          "text": "Begin by comparing the personal endings used with я, ты, он / она / оно, мы, вы and они. Look for recurring first- and second-conjugation patterns."
+        },
+        {
+          "heading": "Compare the Same Verb Across Forms",
+          "text": "Switch between present, past and future while keeping your attention on the same verb. This makes changes in the stem, endings and auxiliary structure easier to notice."
+        },
+        {
+          "heading": "Pay Attention to Aspect",
+          "text": "When studying future forms, check whether the verb is imperfective or perfective. Aspect determines whether Russian uses a compound future or a simple future."
+        },
+        {
+          "heading": "Separate Person from Gender",
+          "text": "Do not expect past and conditional forms to behave like the present. In these forms, focus on masculine, feminine, neuter and plural agreement rather than separate person endings."
+        },
+        {
+          "heading": "Mark Irregular Patterns",
+          "text": "When a common verb changes its stem or does not follow the expected endings, study the whole pattern together instead of memorizing only one isolated form."
+        },
+        {
+          "heading": "Use the Forms in Complete Sentences",
+          "text": "After reviewing a conjugation, build a short sentence with it. Context helps connect grammatical form with aspect, tense and actual meaning."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for Learning Russian Verb Conjugation",
+      "items": [
+        {
+          "heading": "Learn Endings as Sets",
+          "text": "Memorize recurring personal endings together rather than learning every verb form independently. This makes unfamiliar verbs easier to predict."
+        },
+        {
+          "heading": "Study Aspect Alongside the Verb",
+          "text": "Russian tense usage cannot be separated from aspect. When possible, learn an imperfective verb together with its common perfective counterpart."
+        },
+        {
+          "heading": "Prioritize Frequent Irregular Verbs",
+          "text": "High-frequency verbs with irregular stems appear constantly in real Russian, so mastering their patterns gives a greater practical benefit than memorizing rare exceptions."
+        },
+        {
+          "heading": "Contrast Present and Future Forms",
+          "text": "Perfective future forms can resemble ordinary present-tense conjugation structurally. Comparing them directly helps prevent confusion about their meaning."
+        },
+        {
+          "heading": "Practise Gender in the Past",
+          "text": "Create paired examples such as он делал and она делала so that gender agreement becomes automatic rather than something you calculate word by word."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Practise Common Russian Verbs",
+      "description": "Use the conjugation patterns you have reviewed in vocabulary practice, or explore the list of the most common Russian verbs and their meanings.",
+      "primaryLabel": "Practise Russian Verbs",
+      "secondaryLabel": "Explore 100 Common Russian Verbs"
+    },
+    "related": {
+      "heading": "More Russian Learning Resources",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 Most Common Russian Verbs"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 Common Russian Verbs in the Past Tense"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Russian Vocabulary by CEFR Level"
+        },
+        {
+          "key": "levelTest",
+          "label": "Russian Level Test"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Russian Verb Conjugation FAQ",
+      "items": [
+        {
+          "question": "What does it mean to conjugate a verb in Russian?",
+          "answer": "Conjugating a Russian verb means changing its form to express grammatical information such as person, number, tense or mood. In the past and conditional, gender can also affect singular forms."
+        },
+        {
+          "question": "How many main tense forms does Russian have?",
+          "answer": "Russian is commonly described as having three basic tenses: present, past and future. Aspect is closely connected to this system, especially because perfective verbs do not express a true present meaning and form the future differently from imperfective verbs."
+        },
+        {
+          "question": "Do Russian verbs change for every pronoun?",
+          "answer": "In the present tense and the simple future of perfective verbs, forms normally change according to person and number. In the past tense and conditional, however, verbs primarily change according to gender and number rather than person."
+        },
+        {
+          "question": "What are the two main Russian conjugation types?",
+          "answer": "Most Russian verbs are traditionally grouped into first and second conjugations according to the personal endings they take. The distinction is especially useful for predicting present-tense endings, although spelling changes and irregular verbs must also be learned."
+        },
+        {
+          "question": "Why is verb aspect important in Russian conjugation?",
+          "answer": "Aspect distinguishes different ways of viewing an action, especially process or repetition versus completion and result. It also directly affects tense formation: imperfective verbs use a compound future, while perfective verbs normally use a simple future."
+        },
+        {
+          "question": "How is the Russian future tense formed?",
+          "answer": "Imperfective verbs normally use a conjugated form of быть plus an infinitive, as in буду читать. Perfective verbs normally use a single conjugated form, such as прочитаю, which expresses a completed future action."
+        },
+        {
+          "question": "Why do Russian past-tense verbs change for gender?",
+          "answer": "The Russian past tense developed differently from the present-tense person system. Singular forms agree with the subject in masculine, feminine or neuter gender, while plural subjects use a common plural form."
+        },
+        {
+          "question": "How is the conditional formed in Russian?",
+          "answer": "The conditional is usually formed with a past-tense verb plus the particle бы or б. Because the verb remains morphologically a past form, singular conditional forms also show gender agreement."
+        },
+        {
+          "question": "Does Russian have imperative forms for every pronoun?",
+          "answer": "No. The ordinary imperative is mainly used for second-person singular and second-person plural or polite address. Commands involving first or third persons are generally expressed with other grammatical constructions."
+        },
+        {
+          "question": "What is the best way to memorize Russian verb conjugations?",
+          "answer": "Learn recurring ending patterns, study common irregular verbs as complete paradigms, connect verbs with their aspectual partners and practise forms in short sentences. Comparing the same verb across several tenses and moods is usually more effective than memorizing isolated forms."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "es",
+    "urlSlug": "100-conjugaciones-verbos-rusos-mas-comunes",
+    "entryButtonLabel": "Conjugaciones de verbos rusos",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "meaning": "Significado"
+    },
+    "pronounForms": [
+      {
+        "key": "ya",
+        "label": "я"
+      },
+      {
+        "key": "ty",
+        "label": "ты"
+      },
+      {
+        "key": "on_ona_ono",
+        "label": "он / она / оно"
+      },
+      {
+        "key": "my",
+        "label": "мы"
+      },
+      {
+        "key": "vy",
+        "label": "вы"
+      },
+      {
+        "key": "oni",
+        "label": "они"
+      }
+    ],
+    "metadata": {
+      "title": "100 conjugaciones de los verbos rusos más comunes",
+      "metaTitle": "100 conjugaciones de verbos rusos más comunes | FluentStellar",
+      "metaDescription": "Compara 100 verbos rusos frecuentes en presente, pasado, futuro, condicional e imperativo, con pronombres, patrones gramaticales y explicaciones claras."
+    },
+    "hero": {
+      "heading": "100 conjugaciones de los verbos rusos más comunes",
+      "subtitle": "Compara verbos esenciales del ruso en sus principales tiempos y modos.",
+      "introParagraphs": [
+        "Esta referencia reúne 100 verbos rusos de alta frecuencia y permite comparar sus formas en presente, pasado, futuro, condicional e imperativo.",
+        "Cambiar de tiempo o modo y comparar un mismo verbo con distintos pronombres ayuda a reconocer terminaciones recurrentes, diferencias relacionadas con el aspecto y patrones irregulares sin memorizar cada forma por separado."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funciona la conjugación de los verbos rusos",
+      "paragraphs": [
+        "En ruso, los verbos cambian según la persona y el número en el presente y en el futuro simple de los verbos perfectivos. Las terminaciones dependen principalmente del patrón de conjugación del verbo, aunque varios verbos muy frecuentes presentan irregularidades.",
+        "El pasado ruso funciona de manera distinta al presente: normalmente no distingue la persona gramatical. En singular, la forma verbal concuerda con el género masculino, femenino o neutro del sujeto, mientras que en plural se utiliza una forma común.",
+        "El aspecto verbal es fundamental en ruso. La oposición entre imperfectivo y perfectivo influye tanto en el significado como en la formación de los tiempos. Los verbos imperfectivos suelen formar el futuro con быть más infinitivo, mientras que los perfectivos utilizan una forma futura simple conjugada."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Elige un tiempo o modo",
+      "description": "Selecciona una forma para comparar cómo se comportan los 100 verbos rusos según la persona, el número y sus principales patrones gramaticales.",
+      "defaultTense": "present",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "conditional",
+          "label": "Condicional"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present",
+        "label": "Presente",
+        "group": "indicative",
+        "tableHeading": "100 verbos rusos comunes en presente",
+        "tableDescription": "Compara las formas de presente de verbos rusos frecuentes con los pronombres indicados y observa las terminaciones personales que se repiten.",
+        "grammar": {
+          "heading": "Cómo se forma el presente en ruso",
+          "description": "El presente ruso se forma añadiendo terminaciones personales a la raíz de un verbo imperfectivo. Las terminaciones dependen principalmente de si el verbo sigue el primer o el segundo patrón de conjugación. Los verbos perfectivos no tienen un verdadero significado de presente: sus formas conjugadas equivalentes expresan normalmente una acción futura completada.",
+          "formula": "raíz del verbo imperfectivo + terminación personal",
+          "additionalFormula": "Patrón habitual: я -у/-ю, ты -ешь/-ишь, он/она/оно -ет/-ит, мы -ем/-им, вы -ете/-ите, они -ут/-ют/-ат/-ят"
+        }
+      },
+      {
+        "key": "past",
+        "label": "Pasado",
+        "group": "indicative",
+        "tableHeading": "100 verbos rusos comunes en pasado",
+        "tableDescription": "Compara las formas de pasado y observa cómo el ruso marca el género en singular y el número en plural en lugar de utilizar terminaciones diferentes para cada persona.",
+        "grammar": {
+          "heading": "Cómo se forma el pasado en ruso",
+          "description": "Las formas de pasado se construyen normalmente a partir de la raíz del infinitivo con el marcador -л. En singular, la forma concuerda con el género: masculino suele terminar en -л, femenino en -ла y neutro en -ло. El plural suele terminar en -ли. El pasado no distingue normalmente entre primera, segunda y tercera persona.",
+          "formula": "raíz verbal + -л / -ла / -ло / -ли",
+          "additionalFormula": "masculino singular: -л; femenino singular: -ла; neutro singular: -ло; plural: -ли"
+        }
+      },
+      {
+        "key": "future",
+        "label": "Futuro",
+        "group": "indicative",
+        "tableHeading": "100 verbos rusos comunes en futuro",
+        "tableDescription": "Compara las dos formas principales de expresar el futuro en ruso según el aspecto imperfectivo o perfectivo del verbo.",
+        "grammar": {
+          "heading": "Cómo se forma el futuro en ruso",
+          "description": "El ruso utiliza dos patrones principales de futuro determinados por el aspecto. Los verbos imperfectivos forman un futuro compuesto con una forma conjugada de быть seguida del infinitivo. Los verbos perfectivos forman un futuro simple mediante terminaciones personales directamente sobre el verbo.",
+          "formula": "imperfectivo: буду / будешь / будет / будем / будете / будут + infinitivo",
+          "additionalFormula": "perfectivo: raíz del verbo perfectivo + terminación personal"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condicional",
+        "group": "conditional",
+        "tableHeading": "100 verbos rusos comunes en condicional",
+        "tableDescription": "Compara las formas condicionales utilizadas para expresar situaciones hipotéticas, deseos, posibilidades y acciones que dependen de una condición.",
+        "grammar": {
+          "heading": "Cómo se forma el condicional en ruso",
+          "description": "El condicional ruso se forma normalmente con una forma verbal de pasado acompañada de la partícula бы o de su variante abreviada б. Como el verbo conserva la morfología del pasado, concuerda en género y número en lugar de hacerlo por persona.",
+          "formula": "forma de pasado + бы",
+          "additionalFormula": "Ejemplo de estructura: я сделал бы / я сделала бы"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo",
+        "group": "imperative",
+        "tableHeading": "100 verbos rusos comunes en imperativo",
+        "tableDescription": "Estudia las formas utilizadas para dar órdenes, hacer peticiones o instrucciones y compara las variantes singular y plural o de tratamiento formal.",
+        "grammar": {
+          "heading": "Cómo se forma el imperativo en ruso",
+          "description": "El imperativo ruso se forma principalmente para la segunda persona singular y para la segunda persona plural o de tratamiento formal. Entre las terminaciones habituales del singular se encuentran -й, -и y el signo blando. La forma plural o formal normalmente añade -те.",
+          "formula": "raíz del imperativo + terminación de singular",
+          "additionalFormula": "orden plural o formal: forma de imperativo singular + -те"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabla de conjugación de verbos rusos",
+      "description": "Utiliza la tabla para comparar los mismos verbos rusos de alta frecuencia entre distintos tiempos, modos y pronombres. Presta especial atención al aspecto, las terminaciones personales y las formas de pasado que dependen del género.",
+      "scrollHint": "Desplázate horizontalmente para ver todas las formas pronominales.",
+      "scrollLeftLabel": "Desplazar la tabla a la izquierda",
+      "scrollRightLabel": "Desplazar la tabla a la derecha",
+      "notes": [
+        "En presente, las terminaciones cambian según la persona y el número, pero la terminación concreta depende del patrón de conjugación del verbo.",
+        "En pasado y condicional, el ruso marca principalmente género y número en lugar de persona, por lo que varios pronombres pueden compartir la misma forma según el género del sujeto.",
+        "El imperativo se asocia principalmente con ты y вы; las órdenes relacionadas con otras personas suelen expresarse mediante construcciones diferentes."
+      ]
+    },
+    "rules": {
+      "heading": "Reglas clave de la conjugación rusa",
+      "intro": "La conjugación rusa resulta más predecible cuando reconoces los patrones recurrentes de terminaciones personales, aspecto, género y cambios en la raíz.",
+      "items": [
+        {
+          "heading": "Aprende los dos patrones principales de conjugación",
+          "text": "La mayoría de los verbos rusos siguen uno de dos grandes grupos de terminaciones personales. Reconocer el patrón ayuda a predecir muchas formas del presente y del futuro simple.",
+          "examples": [
+            "я читаю — ты читаешь — они читают",
+            "я говорю — ты говоришь — они говорят",
+            "мы работаем — вы работаете"
+          ]
+        },
+        {
+          "heading": "El aspecto determina cómo se forma el futuro",
+          "text": "Los verbos imperfectivos suelen expresar procesos, acciones repetidas o sin énfasis en su resultado y forman el futuro con быть más infinitivo. Los perfectivos suelen destacar una acción completada y utilizan un futuro simple.",
+          "examples": ["я буду читать", "мы будем работать", "я прочитаю"]
+        },
+        {
+          "heading": "El pasado concuerda en género y número",
+          "text": "El pasado ruso no suele tener formas distintas para я, ты, он y las demás personas. En singular, la forma depende de si el sujeto es masculino, femenino o neutro.",
+          "examples": ["он работал", "она работала", "они работали"]
+        },
+        {
+          "heading": "El condicional utiliza бы",
+          "text": "El condicional combina una forma de pasado con бы o б. Por eso, el verbo conserva las mismas diferencias de género y número que aparecen en el pasado.",
+          "examples": ["я сделал бы", "я сделала бы", "мы сделали бы"]
+        },
+        {
+          "heading": "El imperativo distingue singular y plural o cortesía",
+          "text": "Las órdenes dirigidas a una sola persona con trato informal suelen utilizar el imperativo singular. Para varias personas o para un tratamiento formal se emplea normalmente la forma correspondiente con -те.",
+          "examples": ["читай", "читайте", "говори — говорите"]
+        },
+        {
+          "heading": "Presta atención a los cambios de raíz y a los verbos irregulares",
+          "text": "Algunos verbos frecuentes modifican su raíz, consonantes o vocales durante la conjugación. Conviene aprender estas alternancias como patrones recurrentes.",
+          "examples": [
+            "писать — пишу",
+            "хотеть — хочу — хочешь",
+            "идти — иду — идёшь"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Errores comunes al conjugar verbos rusos",
+      "intro": "Muchos errores aparecen al aplicar un único patrón a todos los verbos o al ignorar el aspecto, el género y las terminaciones personales.",
+      "items": [
+        {
+          "incorrect": "Он читаю книгу.",
+          "correct": "Он читает книгу.",
+          "explanation": "El verbo en presente debe concordar con el sujeto de tercera persona singular он, por lo que читать adopta la forma читает."
+        },
+        {
+          "incorrect": "Она работал вчера.",
+          "correct": "Она работала вчера.",
+          "explanation": "En pasado singular, el verbo concuerda con el género femenino del sujeto, por lo que se necesita работала."
+        },
+        {
+          "incorrect": "Я буду прочитаю книгу.",
+          "correct": "Я прочитаю книгу.",
+          "explanation": "Un verbo perfectivo como прочитать forma el futuro simple. No se combina буду con una forma futura perfectiva ya conjugada."
+        },
+        {
+          "incorrect": "Я буду читаю книгу.",
+          "correct": "Я буду читать книгу.",
+          "explanation": "El futuro compuesto de un verbo imperfectivo utiliza una forma conjugada de быть seguida del infinitivo, no una forma de presente."
+        },
+        {
+          "incorrect": "Вы читай текст.",
+          "correct": "Вы читайте текст.",
+          "explanation": "Con вы se necesita la forma plural o de cortesía del imperativo, en este caso читайте en lugar de читай."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar las conjugaciones rusas con esta página",
+      "steps": [
+        {
+          "heading": "Empieza por el presente",
+          "text": "Compara las terminaciones utilizadas con я, ты, он / она / оно, мы, вы y они. Busca patrones recurrentes de la primera y la segunda conjugación."
+        },
+        {
+          "heading": "Compara el mismo verbo entre distintos tiempos",
+          "text": "Cambia entre presente, pasado y futuro manteniendo la atención en el mismo verbo. Así podrás detectar con mayor facilidad cambios de raíz, terminaciones y estructuras auxiliares."
+        },
+        {
+          "heading": "Presta atención al aspecto",
+          "text": "Cuando estudies el futuro, comprueba si el verbo es imperfectivo o perfectivo. El aspecto determina si se utiliza un futuro compuesto o una forma futura simple."
+        },
+        {
+          "heading": "Distingue persona y género",
+          "text": "No esperes que el pasado y el condicional funcionen como el presente. En estas formas debes fijarte en el género masculino, femenino, neutro y en el plural."
+        },
+        {
+          "heading": "Identifica los patrones irregulares",
+          "text": "Cuando un verbo frecuente cambie de raíz o no siga las terminaciones esperadas, estudia el paradigma completo en lugar de memorizar una sola forma."
+        },
+        {
+          "heading": "Practica con frases completas",
+          "text": "Después de revisar una conjugación, crea una frase breve con ella. El contexto ayuda a relacionar la forma verbal con el aspecto, el tiempo y el significado."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para aprender la conjugación rusa",
+      "items": [
+        {
+          "heading": "Aprende las terminaciones como conjuntos",
+          "text": "Memoriza las terminaciones personales recurrentes como un sistema en lugar de aprender cada forma verbal de manera independiente."
+        },
+        {
+          "heading": "Estudia el aspecto junto con el verbo",
+          "text": "El uso de los tiempos en ruso está estrechamente ligado al aspecto. Siempre que sea posible, aprende un verbo imperfectivo junto con su pareja perfectiva habitual."
+        },
+        {
+          "heading": "Prioriza los verbos irregulares frecuentes",
+          "text": "Los verbos de alta frecuencia con raíces irregulares aparecen constantemente en ruso real, por lo que dominar sus patrones ofrece un beneficio práctico inmediato."
+        },
+        {
+          "heading": "Compara presente y futuro",
+          "text": "Las formas futuras de los verbos perfectivos se conjugan de manera parecida a las formas de presente. Compararlas directamente ayuda a comprender por qué su significado es futuro."
+        },
+        {
+          "heading": "Practica el género en pasado",
+          "text": "Crea pares como он делал y она делала para automatizar la concordancia de género sin tener que pensar en la regla cada vez."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Practica los verbos rusos más comunes",
+      "description": "Utiliza los patrones de conjugación que has revisado en ejercicios de vocabulario o explora la lista de los verbos rusos más frecuentes y sus significados.",
+      "primaryLabel": "Practicar verbos rusos",
+      "secondaryLabel": "Ver 100 verbos rusos comunes"
+    },
+    "related": {
+      "heading": "Más recursos para aprender ruso",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbos rusos más comunes"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbos rusos comunes en pasado"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario ruso por nivel del MCER"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test de nivel de ruso"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre la conjugación rusa",
+      "items": [
+        {
+          "question": "¿Qué significa conjugar un verbo en ruso?",
+          "answer": "Conjugar un verbo ruso significa cambiar su forma para expresar información gramatical como persona, número, tiempo o modo. En el pasado y el condicional, el género también puede determinar la forma en singular."
+        },
+        {
+          "question": "¿Cuántos tiempos principales tiene el ruso?",
+          "answer": "Normalmente se consideran tres tiempos básicos: presente, pasado y futuro. El aspecto verbal está estrechamente relacionado con este sistema, ya que los verbos perfectivos no expresan un verdadero presente y forman el futuro de manera distinta a los imperfectivos."
+        },
+        {
+          "question": "¿Los verbos rusos cambian con cada pronombre?",
+          "answer": "En presente y en el futuro simple de los verbos perfectivos, las formas suelen cambiar según la persona y el número. En pasado y condicional, en cambio, los verbos varían principalmente según el género y el número."
+        },
+        {
+          "question": "¿Cuáles son las dos conjugaciones principales del ruso?",
+          "answer": "Tradicionalmente, la mayoría de los verbos rusos se clasifican en primera y segunda conjugación según las terminaciones personales que utilizan. Esta distinción ayuda especialmente a predecir las formas del presente."
+        },
+        {
+          "question": "¿Por qué es tan importante el aspecto verbal en ruso?",
+          "answer": "El aspecto distingue distintas maneras de presentar una acción, por ejemplo como proceso o repetición frente a resultado o finalización. También afecta directamente a la formación del futuro: los imperfectivos usan un futuro compuesto y los perfectivos, normalmente, uno simple."
+        },
+        {
+          "question": "¿Cómo se forma el futuro en ruso?",
+          "answer": "Los verbos imperfectivos suelen utilizar una forma conjugada de быть seguida del infinitivo, como буду читать. Los verbos perfectivos utilizan normalmente una sola forma conjugada, como прочитаю, que expresa una acción futura completada."
+        },
+        {
+          "question": "¿Por qué los verbos rusos en pasado cambian según el género?",
+          "answer": "El pasado ruso no utiliza el mismo sistema de terminaciones personales que el presente. En singular, la forma concuerda con el género masculino, femenino o neutro del sujeto, mientras que el plural tiene una forma común."
+        },
+        {
+          "question": "¿Cómo se forma el condicional en ruso?",
+          "answer": "El condicional suele formarse con una forma verbal de pasado más la partícula бы o б. Como la forma verbal sigue siendo morfológicamente un pasado, en singular conserva la concordancia de género."
+        },
+        {
+          "question": "¿El ruso tiene imperativo para todos los pronombres?",
+          "answer": "No. El imperativo normal se utiliza principalmente para la segunda persona singular y para la segunda persona plural o de cortesía. Las órdenes relacionadas con la primera o la tercera persona suelen expresarse mediante otras construcciones."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las conjugaciones rusas?",
+          "answer": "Aprende patrones de terminaciones, estudia los verbos irregulares frecuentes como paradigmas completos, relaciona los verbos con sus parejas aspectuales y practica las formas dentro de frases breves. Comparar un mismo verbo entre varios tiempos y modos suele ser más eficaz que memorizar formas aisladas."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "fr",
+    "urlSlug": "100-conjugaisons-verbes-russes-les-plus-courants",
+    "entryButtonLabel": "Conjugaison des verbes russes",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "meaning": "Signification"
+    },
+    "pronounForms": [
+      {
+        "key": "ya",
+        "label": "я"
+      },
+      {
+        "key": "ty",
+        "label": "ты"
+      },
+      {
+        "key": "on_ona_ono",
+        "label": "он / она / оно"
+      },
+      {
+        "key": "my",
+        "label": "мы"
+      },
+      {
+        "key": "vy",
+        "label": "вы"
+      },
+      {
+        "key": "oni",
+        "label": "они"
+      }
+    ],
+    "metadata": {
+      "title": "100 conjugaisons des verbes russes les plus courants",
+      "metaTitle": "100 conjugaisons de verbes russes courants | FluentStellar",
+      "metaDescription": "Comparez 100 verbes russes fréquents au présent, au passé, au futur, au conditionnel et à l’impératif, avec pronoms, règles et explications grammaticales."
+    },
+    "hero": {
+      "heading": "100 conjugaisons des verbes russes les plus courants",
+      "subtitle": "Comparez les verbes essentiels du russe dans leurs principaux temps et modes.",
+      "introParagraphs": [
+        "Cette ressource réunit 100 verbes russes très fréquents et permet de comparer leurs formes au présent, au passé, au futur, au conditionnel et à l’impératif.",
+        "Passer d’un temps ou d’un mode à l’autre et comparer un même verbe avec différents pronoms aide à repérer les terminaisons récurrentes, les différences liées à l’aspect et les irrégularités sans mémoriser chaque forme séparément."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionne la conjugaison des verbes russes",
+      "paragraphs": [
+        "En russe, les verbes varient selon la personne et le nombre au présent ainsi qu’au futur simple des verbes perfectifs. Les terminaisons dépendent principalement du modèle de conjugaison du verbe, même si plusieurs verbes très fréquents présentent des irrégularités.",
+        "Le passé russe fonctionne différemment du présent : il ne distingue généralement pas les personnes grammaticales. Au singulier, la forme verbale s’accorde en genre avec le sujet — masculin, féminin ou neutre — tandis qu’au pluriel une seule forme est utilisée.",
+        "L’aspect verbal est essentiel en russe. L’opposition entre imperfectif et perfectif influence à la fois le sens et la formation des temps. Les verbes imperfectifs forment généralement le futur avec быть suivi de l’infinitif, tandis que les perfectifs utilisent une forme future simple conjuguée."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Choisissez un temps ou un mode",
+      "description": "Sélectionnez une forme pour comparer le comportement des 100 verbes russes selon la personne, le nombre et les principaux modèles grammaticaux.",
+      "defaultTense": "present",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicatif"
+        },
+        {
+          "key": "conditional",
+          "label": "Conditionnel"
+        },
+        {
+          "key": "imperative",
+          "label": "Impératif"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present",
+        "label": "Présent",
+        "group": "indicative",
+        "tableHeading": "100 verbes russes courants au présent",
+        "tableDescription": "Comparez les formes du présent des verbes russes les plus fréquents avec les pronoms indiqués et repérez les terminaisons personnelles récurrentes.",
+        "grammar": {
+          "heading": "Comment former le présent en russe",
+          "description": "Le présent russe se forme en ajoutant des terminaisons personnelles au radical d’un verbe imperfectif. Les terminaisons dépendent principalement de la première ou de la deuxième conjugaison. Les verbes perfectifs n’ont pas de véritable valeur de présent : leurs formes conjuguées correspondantes expriment normalement une action future accomplie.",
+          "formula": "radical du verbe imperfectif + terminaison personnelle",
+          "additionalFormula": "Schéma fréquent : я -у/-ю, ты -ешь/-ишь, он/она/оно -ет/-ит, мы -ем/-им, вы -ете/-ите, они -ут/-ют/-ат/-ят"
+        }
+      },
+      {
+        "key": "past",
+        "label": "Passé",
+        "group": "indicative",
+        "tableHeading": "100 verbes russes courants au passé",
+        "tableDescription": "Comparez les formes du passé et observez comment le russe marque le genre au singulier et le nombre au pluriel plutôt que d’utiliser une terminaison différente pour chaque personne.",
+        "grammar": {
+          "heading": "Comment former le passé en russe",
+          "description": "Les formes du passé sont généralement construites à partir du radical de l’infinitif avec le marqueur -л. Au singulier, elles s’accordent en genre : le masculin se termine souvent par -л, le féminin par -ла et le neutre par -ло. Le pluriel se termine généralement par -ли. Le passé ne distingue normalement pas la première, la deuxième et la troisième personne.",
+          "formula": "radical verbal + -л / -ла / -ло / -ли",
+          "additionalFormula": "masculin singulier : -л ; féminin singulier : -ла ; neutre singulier : -ло ; pluriel : -ли"
+        }
+      },
+      {
+        "key": "future",
+        "label": "Futur",
+        "group": "indicative",
+        "tableHeading": "100 verbes russes courants au futur",
+        "tableDescription": "Comparez les deux principales façons d’exprimer le futur en russe selon que le verbe est imperfectif ou perfectif.",
+        "grammar": {
+          "heading": "Comment former le futur en russe",
+          "description": "Le russe possède deux principaux modèles de futur déterminés par l’aspect. Les verbes imperfectifs forment un futur composé avec une forme conjuguée de быть suivie de l’infinitif. Les verbes perfectifs forment un futur simple en prenant directement des terminaisons personnelles.",
+          "formula": "imperfectif : буду / будешь / будет / будем / будете / будут + infinitif",
+          "additionalFormula": "perfectif : radical du verbe perfectif + terminaison personnelle"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Conditionnel",
+        "group": "conditional",
+        "tableHeading": "100 verbes russes courants au conditionnel",
+        "tableDescription": "Comparez les formes du conditionnel utilisées pour exprimer des situations hypothétiques, des souhaits, des possibilités et des actions dépendant d’une condition.",
+        "grammar": {
+          "heading": "Comment former le conditionnel en russe",
+          "description": "Le conditionnel russe se forme généralement avec une forme verbale du passé accompagnée de la particule бы ou de sa variante abrégée б. Comme le verbe conserve la morphologie du passé, il s’accorde en genre et en nombre plutôt qu’en personne.",
+          "formula": "forme du passé + бы",
+          "additionalFormula": "Exemple de structure : я сделал бы / я сделала бы"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Impératif",
+        "group": "imperative",
+        "tableHeading": "100 verbes russes courants à l’impératif",
+        "tableDescription": "Étudiez les formes utilisées pour donner des ordres, formuler des demandes ou des instructions, et comparez les variantes du singulier et du pluriel ou de politesse.",
+        "grammar": {
+          "heading": "Comment former l’impératif en russe",
+          "description": "L’impératif russe se forme principalement pour la deuxième personne du singulier et pour la deuxième personne du pluriel ou de politesse. Parmi les terminaisons fréquentes du singulier figurent -й, -и et le signe mou. La forme du pluriel ou de politesse ajoute généralement -те.",
+          "formula": "radical de l’impératif + terminaison du singulier",
+          "additionalFormula": "ordre au pluriel ou de politesse : forme de l’impératif singulier + -те"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tableau de conjugaison des verbes russes",
+      "description": "Utilisez le tableau pour comparer les mêmes verbes russes très fréquents à travers différents temps, modes et pronoms. Portez une attention particulière à l’aspect, aux terminaisons personnelles et aux formes du passé qui dépendent du genre.",
+      "scrollHint": "Faites défiler horizontalement pour voir toutes les formes pronominales.",
+      "scrollLeftLabel": "Faire défiler le tableau vers la gauche",
+      "scrollRightLabel": "Faire défiler le tableau vers la droite",
+      "notes": [
+        "Au présent, les terminaisons varient selon la personne et le nombre, mais la terminaison exacte dépend du modèle de conjugaison du verbe.",
+        "Au passé et au conditionnel, le russe marque principalement le genre et le nombre plutôt que la personne, si bien que plusieurs pronoms peuvent partager la même forme selon le genre du sujet.",
+        "L’impératif concerne surtout ты et вы ; les ordres impliquant d’autres personnes sont généralement exprimés par d’autres constructions."
+      ]
+    },
+    "rules": {
+      "heading": "Règles essentielles de la conjugaison russe",
+      "intro": "La conjugaison russe devient plus prévisible lorsque l’on reconnaît les principaux modèles de terminaisons personnelles, d’aspect, de genre et de changements du radical.",
+      "items": [
+        {
+          "heading": "Apprenez les deux grands modèles de conjugaison",
+          "text": "La plupart des verbes russes suivent l’un des deux principaux ensembles de terminaisons personnelles. Identifier le modèle permet de prévoir de nombreuses formes du présent et du futur simple.",
+          "examples": [
+            "я читаю — ты читаешь — они читают",
+            "я говорю — ты говоришь — они говорят",
+            "мы работаем — вы работаете"
+          ]
+        },
+        {
+          "heading": "L’aspect détermine la formation du futur",
+          "text": "Les verbes imperfectifs expriment souvent un processus, une répétition ou une action sans accent sur son résultat et forment le futur avec быть plus l’infinitif. Les perfectifs mettent généralement l’accent sur l’accomplissement et utilisent un futur simple.",
+          "examples": ["я буду читать", "мы будем работать", "я прочитаю"]
+        },
+        {
+          "heading": "Le passé s’accorde en genre et en nombre",
+          "text": "Le passé russe ne possède généralement pas de formes distinctes pour я, ты, он et les autres personnes. Au singulier, la forme dépend du genre masculin, féminin ou neutre du sujet.",
+          "examples": ["он работал", "она работала", "они работали"]
+        },
+        {
+          "heading": "Le conditionnel utilise бы",
+          "text": "Le conditionnel associe une forme du passé à бы ou б. Le verbe conserve donc les mêmes distinctions de genre et de nombre qu’au passé.",
+          "examples": ["я сделал бы", "я сделала бы", "мы сделали бы"]
+        },
+        {
+          "heading": "L’impératif distingue le singulier et le pluriel ou la politesse",
+          "text": "Les ordres adressés à une seule personne de manière familière utilisent généralement l’impératif singulier. Pour plusieurs personnes ou pour s’adresser poliment à une personne, on emploie normalement la forme correspondante en -те.",
+          "examples": ["читай", "читайте", "говори — говорите"]
+        },
+        {
+          "heading": "Surveillez les changements de radical et les verbes irréguliers",
+          "text": "Certains verbes très fréquents modifient leur radical, leurs consonnes ou leurs voyelles lors de la conjugaison. Il est utile d’apprendre ces alternances comme des modèles récurrents.",
+          "examples": [
+            "писать — пишу",
+            "хотеть — хочу — хочешь",
+            "идти — иду — идёшь"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Erreurs fréquentes dans la conjugaison russe",
+      "intro": "De nombreuses erreurs viennent de l’application d’un même modèle à tous les verbes ou de l’oubli de l’aspect, du genre et des terminaisons personnelles.",
+      "items": [
+        {
+          "incorrect": "Он читаю книгу.",
+          "correct": "Он читает книгу.",
+          "explanation": "Au présent, le verbe doit s’accorder avec le sujet de troisième personne du singulier он ; читать prend donc la forme читает."
+        },
+        {
+          "incorrect": "Она работал вчера.",
+          "correct": "Она работала вчера.",
+          "explanation": "Au passé singulier, le verbe s’accorde avec le genre féminin du sujet ; il faut donc employer работала."
+        },
+        {
+          "incorrect": "Я буду прочитаю книгу.",
+          "correct": "Я прочитаю книгу.",
+          "explanation": "Un verbe perfectif comme прочитать forme un futur simple. On ne combine pas буду avec une forme future perfective déjà conjuguée."
+        },
+        {
+          "incorrect": "Я буду читаю книгу.",
+          "correct": "Я буду читать книгу.",
+          "explanation": "Le futur composé d’un verbe imperfectif utilise une forme conjuguée de быть suivie de l’infinitif, et non une forme du présent."
+        },
+        {
+          "incorrect": "Вы читай текст.",
+          "correct": "Вы читайте текст.",
+          "explanation": "Avec вы, il faut employer la forme de l’impératif au pluriel ou de politesse, ici читайте plutôt que читай."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment étudier les conjugaisons russes avec cette page",
+      "steps": [
+        {
+          "heading": "Commencez par le présent",
+          "text": "Comparez les terminaisons utilisées avec я, ты, он / она / оно, мы, вы et они. Repérez les modèles récurrents de la première et de la deuxième conjugaison."
+        },
+        {
+          "heading": "Comparez le même verbe dans plusieurs temps",
+          "text": "Passez du présent au passé puis au futur en gardant le même verbe comme point de référence. Les changements de radical, de terminaison et de structure auxiliaire deviennent ainsi plus visibles."
+        },
+        {
+          "heading": "Faites attention à l’aspect",
+          "text": "Lorsque vous étudiez le futur, vérifiez si le verbe est imperfectif ou perfectif. L’aspect détermine l’emploi d’un futur composé ou d’un futur simple."
+        },
+        {
+          "heading": "Distinguez la personne du genre",
+          "text": "Ne vous attendez pas à ce que le passé et le conditionnel fonctionnent comme le présent. Pour ces formes, concentrez-vous sur le masculin, le féminin, le neutre et le pluriel."
+        },
+        {
+          "heading": "Repérez les modèles irréguliers",
+          "text": "Lorsqu’un verbe fréquent change de radical ou ne suit pas les terminaisons attendues, apprenez l’ensemble de son paradigme plutôt qu’une seule forme isolée."
+        },
+        {
+          "heading": "Pratiquez dans des phrases complètes",
+          "text": "Après avoir étudié une conjugaison, utilisez-la dans une courte phrase. Le contexte aide à relier la forme verbale à l’aspect, au temps et au sens."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour apprendre la conjugaison russe",
+      "items": [
+        {
+          "heading": "Apprenez les terminaisons par séries",
+          "text": "Mémorisez les terminaisons personnelles récurrentes comme un système plutôt que d’apprendre chaque forme verbale indépendamment."
+        },
+        {
+          "heading": "Étudiez l’aspect avec le verbe",
+          "text": "L’emploi des temps russes est étroitement lié à l’aspect. Lorsque c’est possible, apprenez un verbe imperfectif avec son partenaire perfectif fréquent."
+        },
+        {
+          "heading": "Donnez la priorité aux verbes irréguliers fréquents",
+          "text": "Les verbes très courants avec des radicaux irréguliers apparaissent constamment en russe réel ; maîtriser leurs modèles apporte donc un bénéfice pratique important."
+        },
+        {
+          "heading": "Comparez le présent et le futur",
+          "text": "Les formes futures des verbes perfectifs se conjuguent de manière proche des formes du présent. Les comparer directement aide à comprendre pourquoi leur sens est futur."
+        },
+        {
+          "heading": "Pratiquez le genre au passé",
+          "text": "Créez des paires comme он делал et она делала pour automatiser l’accord en genre sans devoir réfléchir à la règle à chaque fois."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pratiquez les verbes russes les plus courants",
+      "description": "Utilisez les modèles de conjugaison étudiés dans des exercices de vocabulaire ou explorez la liste des verbes russes les plus fréquents et leur signification.",
+      "primaryLabel": "Pratiquer les verbes russes",
+      "secondaryLabel": "Voir 100 verbes russes courants"
+    },
+    "related": {
+      "heading": "Autres ressources pour apprendre le russe",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbes russes les plus courants"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbes russes courants au passé"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire russe par niveau du CECR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test de niveau de russe"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur la conjugaison russe",
+      "items": [
+        {
+          "question": "Que signifie conjuguer un verbe en russe ?",
+          "answer": "Conjuguer un verbe russe consiste à modifier sa forme pour exprimer des informations grammaticales telles que la personne, le nombre, le temps ou le mode. Au passé et au conditionnel, le genre peut aussi déterminer la forme au singulier."
+        },
+        {
+          "question": "Combien de temps principaux existe-t-il en russe ?",
+          "answer": "On distingue généralement trois temps de base : le présent, le passé et le futur. L’aspect verbal est étroitement lié à ce système, car les verbes perfectifs n’expriment pas de véritable présent et forment le futur différemment des verbes imperfectifs."
+        },
+        {
+          "question": "Les verbes russes changent-ils avec chaque pronom ?",
+          "answer": "Au présent et au futur simple des verbes perfectifs, les formes changent généralement selon la personne et le nombre. Au passé et au conditionnel, en revanche, les verbes varient surtout selon le genre et le nombre."
+        },
+        {
+          "question": "Quelles sont les deux principales conjugaisons en russe ?",
+          "answer": "La plupart des verbes russes sont traditionnellement classés dans la première ou la deuxième conjugaison selon les terminaisons personnelles qu’ils prennent. Cette distinction est particulièrement utile pour prévoir les formes du présent."
+        },
+        {
+          "question": "Pourquoi l’aspect verbal est-il si important en russe ?",
+          "answer": "L’aspect distingue différentes façons de présenter une action, par exemple comme un processus ou une répétition, par opposition à un résultat ou à un accomplissement. Il influence aussi directement la formation du futur : les imperfectifs utilisent un futur composé et les perfectifs généralement un futur simple."
+        },
+        {
+          "question": "Comment forme-t-on le futur en russe ?",
+          "answer": "Les verbes imperfectifs utilisent généralement une forme conjuguée de быть suivie de l’infinitif, comme буду читать. Les verbes perfectifs utilisent normalement une seule forme conjuguée, comme прочитаю, qui exprime une action future accomplie."
+        },
+        {
+          "question": "Pourquoi les verbes russes au passé changent-ils selon le genre ?",
+          "answer": "Le passé russe n’utilise pas le même système de terminaisons personnelles que le présent. Au singulier, la forme s’accorde avec le genre masculin, féminin ou neutre du sujet, tandis que le pluriel utilise une forme commune."
+        },
+        {
+          "question": "Comment forme-t-on le conditionnel en russe ?",
+          "answer": "Le conditionnel se forme généralement avec une forme verbale du passé accompagnée de la particule бы ou б. Comme la forme verbale reste morphologiquement un passé, elle conserve au singulier l’accord en genre."
+        },
+        {
+          "question": "Le russe possède-t-il un impératif pour tous les pronoms ?",
+          "answer": "Non. L’impératif ordinaire s’utilise principalement pour la deuxième personne du singulier et pour la deuxième personne du pluriel ou de politesse. Les ordres concernant la première ou la troisième personne sont généralement exprimés à l’aide d’autres constructions."
+        },
+        {
+          "question": "Quelle est la meilleure façon de mémoriser les conjugaisons russes ?",
+          "answer": "Apprenez les modèles de terminaisons, étudiez les verbes irréguliers fréquents comme des paradigmes complets, associez les verbes à leurs partenaires aspectuels et pratiquez les formes dans de courtes phrases. Comparer un même verbe dans plusieurs temps et modes est généralement plus efficace que mémoriser des formes isolées."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "de",
+    "urlSlug": "100-haeufigste-russische-verben-konjugationen",
+    "entryButtonLabel": "Russische Verbkonjugationen",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "meaning": "Bedeutung"
+    },
+    "pronounForms": [
+      {
+        "key": "ya",
+        "label": "я"
+      },
+      {
+        "key": "ty",
+        "label": "ты"
+      },
+      {
+        "key": "on_ona_ono",
+        "label": "он / она / оно"
+      },
+      {
+        "key": "my",
+        "label": "мы"
+      },
+      {
+        "key": "vy",
+        "label": "вы"
+      },
+      {
+        "key": "oni",
+        "label": "они"
+      }
+    ],
+    "metadata": {
+      "title": "100 häufigste russische Verbkonjugationen",
+      "metaTitle": "100 häufigste russische Verbkonjugationen | FluentStellar",
+      "metaDescription": "Vergleiche 100 häufige russische Verben im Präsens, Präteritum, Futur, Konditional und Imperativ mit Pronomen, Grammatikmustern und klaren Erklärungen."
+    },
+    "hero": {
+      "heading": "100 häufigste russische Verbkonjugationen",
+      "subtitle": "Vergleiche wichtige russische Verben in den zentralen Zeitformen und Modi.",
+      "introParagraphs": [
+        "Diese Übersicht zeigt 100 besonders häufige russische Verben und ermöglicht den Vergleich ihrer Formen im Präsens, in der Vergangenheit, im Futur, im Konditional und im Imperativ.",
+        "Wenn du zwischen den Formen wechselst und dasselbe Verb mit verschiedenen Pronomen vergleichst, erkennst du wiederkehrende Personalendungen, Aspektunterschiede und unregelmäßige Muster leichter, statt jede Form einzeln auswendig zu lernen."
+      ]
+    },
+    "overview": {
+      "heading": "Wie die russische Verbkonjugation funktioniert",
+      "paragraphs": [
+        "Russische Verben verändern sich im Präsens und im einfachen Futur perfektiver Verben nach Person und Numerus. Welche Endungen verwendet werden, hängt vor allem vom Konjugationsmuster des Verbs ab, wobei einige sehr häufige Verben unregelmäßige Formen besitzen.",
+        "Die russische Vergangenheit funktioniert anders als das Präsens: Sie unterscheidet normalerweise nicht nach grammatischer Person. Im Singular richtet sich die Verbform stattdessen nach dem Genus des Subjekts — maskulin, feminin oder neutrum — während im Plural eine gemeinsame Form verwendet wird.",
+        "Der Verbalaspekt ist für das russische Verbsystem zentral. Die Unterscheidung zwischen imperfektiven und perfektiven Verben beeinflusst sowohl die Bedeutung als auch die Tempusbildung. Imperfektive Verben bilden das Futur gewöhnlich mit быть plus Infinitiv, während perfektive Verben eine einfache konjugierte Futurform verwenden."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Zeitform oder Modus auswählen",
+      "description": "Wähle eine Form aus, um die 100 russischen Verben nach Person, Numerus und ihren wichtigsten grammatischen Mustern zu vergleichen.",
+      "defaultTense": "present",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indikativ"
+        },
+        {
+          "key": "conditional",
+          "label": "Konditional"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativ"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present",
+        "label": "Präsens",
+        "group": "indicative",
+        "tableHeading": "100 häufige russische Verben im Präsens",
+        "tableDescription": "Vergleiche die Präsensformen häufiger russischer Verben mit den angegebenen Pronomen und erkenne wiederkehrende Personalendungen.",
+        "grammar": {
+          "heading": "Wie das russische Präsens gebildet wird",
+          "description": "Das russische Präsens wird gebildet, indem Personalendungen an den Stamm eines imperfektiven Verbs angefügt werden. Die Endungen richten sich hauptsächlich danach, ob das Verb zur ersten oder zweiten Konjugation gehört. Perfektive Verben haben keine echte Präsensbedeutung; ihre entsprechend konjugierten Formen bezeichnen normalerweise eine abgeschlossene Handlung in der Zukunft.",
+          "formula": "Stamm des imperfektiven Verbs + Personalendung",
+          "additionalFormula": "Typisches Muster: я -у/-ю, ты -ешь/-ишь, он/она/оно -ет/-ит, мы -ем/-им, вы -ете/-ите, они -ут/-ют/-ат/-ят"
+        }
+      },
+      {
+        "key": "past",
+        "label": "Vergangenheit",
+        "group": "indicative",
+        "tableHeading": "100 häufige russische Verben in der Vergangenheit",
+        "tableDescription": "Vergleiche die Vergangenheitsformen und sieh, wie Russisch im Singular das Genus und im Plural den Numerus markiert, anstatt für jede Person eigene Endungen zu verwenden.",
+        "grammar": {
+          "heading": "Wie die russische Vergangenheit gebildet wird",
+          "description": "Russische Vergangenheitsformen werden meist aus dem Infinitivstamm mit dem Vergangenheitsmarker -л gebildet. Im Singular richtet sich die Form nach dem Genus: Maskulin endet häufig auf -л, Feminin auf -ла und Neutrum auf -ло. Der Plural endet gewöhnlich auf -ли. Eine Unterscheidung zwischen erster, zweiter und dritter Person gibt es in der Vergangenheit normalerweise nicht.",
+          "formula": "Verbstamm + -л / -ла / -ло / -ли",
+          "additionalFormula": "Maskulin Singular: -л; Feminin Singular: -ла; Neutrum Singular: -ло; Plural: -ли"
+        }
+      },
+      {
+        "key": "future",
+        "label": "Futur",
+        "group": "indicative",
+        "tableHeading": "100 häufige russische Verben im Futur",
+        "tableDescription": "Vergleiche die beiden wichtigsten Arten der Futurbildung im Russischen bei imperfektiven und perfektiven Verben.",
+        "grammar": {
+          "heading": "Wie das russische Futur gebildet wird",
+          "description": "Das Russische besitzt zwei zentrale Futurmuster, die vom Verbalaspekt abhängen. Imperfektive Verben bilden ein zusammengesetztes Futur mit einer konjugierten Form von быть und dem Infinitiv. Perfektive Verben bilden dagegen ein einfaches Futur mit Personalendungen direkt am Verb.",
+          "formula": "imperfektiv: буду / будешь / будет / будем / будете / будут + Infinitiv",
+          "additionalFormula": "perfektiv: Stamm des perfektiven Verbs + Personalendung"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Konditional",
+        "group": "conditional",
+        "tableHeading": "100 häufige russische Verben im Konditional",
+        "tableDescription": "Vergleiche russische Konditionalformen für hypothetische Situationen, Wünsche, Möglichkeiten und Handlungen, die von einer Bedingung abhängen.",
+        "grammar": {
+          "heading": "Wie das russische Konditional gebildet wird",
+          "description": "Das russische Konditional wird normalerweise mit einer Vergangenheitsform des Verbs und der Partikel бы oder ihrer verkürzten Form б gebildet. Da das Verb formal in der Vergangenheitsform steht, richtet es sich nach Genus und Numerus statt nach Person.",
+          "formula": "Vergangenheitsform + бы",
+          "additionalFormula": "Beispielstruktur: я сделал бы / я сделала бы"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativ",
+        "group": "imperative",
+        "tableHeading": "100 häufige russische Verben im Imperativ",
+        "tableDescription": "Lerne die Formen für Befehle, Aufforderungen und Bitten und vergleiche den informellen Singular mit Plural- und Höflichkeitsformen.",
+        "grammar": {
+          "heading": "Wie der russische Imperativ gebildet wird",
+          "description": "Der russische Imperativ wird hauptsächlich für die zweite Person Singular sowie für die zweite Person Plural oder die höfliche Anrede gebildet. Häufige Singularformen enden auf -й, -и oder ein Weichheitszeichen. Für den Plural beziehungsweise die höfliche Form wird normalerweise -те ergänzt.",
+          "formula": "Imperativstamm + Singularendung",
+          "additionalFormula": "Plural oder höfliche Aufforderung: Imperativ Singular + -те"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabelle der russischen Verbkonjugationen",
+      "description": "Nutze die Tabelle, um dieselben häufigen russischen Verben über verschiedene Zeitformen, Modi und Pronomen hinweg zu vergleichen. Achte besonders auf Aspekt, Personalendungen und genusabhängige Vergangenheitsformen.",
+      "scrollHint": "Horizontal scrollen, um alle Pronomenformen zu sehen.",
+      "scrollLeftLabel": "Tabelle nach links scrollen",
+      "scrollRightLabel": "Tabelle nach rechts scrollen",
+      "notes": [
+        "Im Präsens verändern sich die Endungen nach Person und Numerus; die konkrete Endung hängt jedoch vom Konjugationsmuster des Verbs ab.",
+        "In der Vergangenheit und im Konditional markiert das Russische vor allem Genus und Numerus statt Person. Deshalb können mehrere Pronomen je nach Genus des Subjekts dieselbe Verbform verwenden.",
+        "Der Imperativ wird hauptsächlich mit ты und вы verwendet; Aufforderungen mit anderen Personen werden in der Regel durch andere Konstruktionen ausgedrückt."
+      ]
+    },
+    "rules": {
+      "heading": "Wichtige Regeln der russischen Verbkonjugation",
+      "intro": "Russische Konjugation wird wesentlich übersichtlicher, wenn du wiederkehrende Muster bei Personalendungen, Aspekt, Genus und Stammveränderungen erkennst.",
+      "items": [
+        {
+          "heading": "Lerne die zwei wichtigsten Konjugationsmuster",
+          "text": "Die meisten russischen Verben folgen einem von zwei grundlegenden Systemen von Personalendungen. Wenn du das Muster eines Verbs kennst, kannst du viele Präsens- und einfache Futurformen vorhersagen.",
+          "examples": [
+            "я читаю — ты читаешь — они читают",
+            "я говорю — ты говоришь — они говорят",
+            "мы работаем — вы работаете"
+          ]
+        },
+        {
+          "heading": "Der Aspekt bestimmt die Futurbildung",
+          "text": "Imperfektive Verben beschreiben häufig einen Verlauf, eine Wiederholung oder eine Handlung ohne Fokus auf ihr Ergebnis und bilden das Futur mit быть plus Infinitiv. Perfektive Verben betonen meist ein abgeschlossenes Ergebnis und verwenden ein einfaches Futur.",
+          "examples": ["я буду читать", "мы будем работать", "я прочитаю"]
+        },
+        {
+          "heading": "Vergangenheitsformen richten sich nach Genus und Numerus",
+          "text": "Die russische Vergangenheit hat normalerweise keine unterschiedlichen Formen für я, ты, он und andere Personen. Im Singular richtet sich die Form danach, ob das Subjekt maskulin, feminin oder neutrum ist.",
+          "examples": ["он работал", "она работала", "они работали"]
+        },
+        {
+          "heading": "Das Konditional verwendet бы",
+          "text": "Das Konditional kombiniert eine Vergangenheitsform mit бы oder б. Deshalb behält das Verb dieselben Genus- und Numerusunterschiede wie in der Vergangenheit.",
+          "examples": ["я сделал бы", "я сделала бы", "мы сделали бы"]
+        },
+        {
+          "heading": "Der Imperativ unterscheidet Singular und Plural beziehungsweise Höflichkeit",
+          "text": "Aufforderungen an eine einzelne vertraute Person stehen gewöhnlich im Singular. Für mehrere Personen oder die höfliche Anrede wird normalerweise die entsprechende Form mit -те verwendet.",
+          "examples": ["читай", "читайте", "говори — говорите"]
+        },
+        {
+          "heading": "Achte auf Stammwechsel und unregelmäßige Verben",
+          "text": "Einige sehr häufige russische Verben verändern bei der Konjugation ihren Stamm, einzelne Konsonanten oder Vokale. Solche Wechsel lassen sich besser als wiederkehrende Muster lernen.",
+          "examples": [
+            "писать — пишу",
+            "хотеть — хочу — хочешь",
+            "идти — иду — идёшь"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Häufige Fehler bei der russischen Verbkonjugation",
+      "intro": "Viele Fehler entstehen dadurch, dass ein Konjugationsmuster auf zu viele Verben übertragen oder Aspekt, Genus und Personalendungen übersehen werden.",
+      "items": [
+        {
+          "incorrect": "Он читаю книгу.",
+          "correct": "Он читает книгу.",
+          "explanation": "Im Präsens muss das Verb zur dritten Person Singular он passen. Deshalb lautet die richtige Form von читать hier читает."
+        },
+        {
+          "incorrect": "Она работал вчера.",
+          "correct": "Она работала вчера.",
+          "explanation": "Im Singular der Vergangenheit richtet sich das Verb nach dem Genus des Subjekts. Bei einem femininen Subjekt wird deshalb работала verwendet."
+        },
+        {
+          "incorrect": "Я буду прочитаю книгу.",
+          "correct": "Я прочитаю книгу.",
+          "explanation": "Ein perfektives Verb wie прочитать bildet ein einfaches Futur. буду wird nicht mit einer bereits konjugierten perfektiven Futurform kombiniert."
+        },
+        {
+          "incorrect": "Я буду читаю книгу.",
+          "correct": "Я буду читать книгу.",
+          "explanation": "Das zusammengesetzte Futur eines imperfektiven Verbs besteht aus einer konjugierten Form von быть und dem Infinitiv, nicht aus einer Präsensform."
+        },
+        {
+          "incorrect": "Вы читай текст.",
+          "correct": "Вы читайте текст.",
+          "explanation": "Mit вы wird die Plural- beziehungsweise Höflichkeitsform des Imperativs benötigt, hier also читайте statt читай."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "So lernst du russische Konjugationen mit dieser Seite",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Präsens",
+          "text": "Vergleiche die Endungen bei я, ты, он / она / оно, мы, вы und они. Suche nach wiederkehrenden Mustern der ersten und zweiten Konjugation."
+        },
+        {
+          "heading": "Vergleiche dasselbe Verb in mehreren Formen",
+          "text": "Wechsle zwischen Präsens, Vergangenheit und Futur und behalte dabei dasselbe Verb im Blick. So erkennst du Stammänderungen, Endungen und Hilfsverbkonstruktionen leichter."
+        },
+        {
+          "heading": "Achte auf den Verbalaspekt",
+          "text": "Prüfe beim Futur, ob ein Verb imperfektiv oder perfektiv ist. Der Aspekt entscheidet darüber, ob ein zusammengesetztes oder einfaches Futur verwendet wird."
+        },
+        {
+          "heading": "Unterscheide Person und Genus",
+          "text": "Erwarte nicht, dass Vergangenheit und Konditional wie das Präsens funktionieren. Hier solltest du besonders auf maskuline, feminine, neutrale und plurale Formen achten."
+        },
+        {
+          "heading": "Markiere unregelmäßige Muster",
+          "text": "Wenn ein häufiges Verb seinen Stamm verändert oder nicht die erwarteten Endungen verwendet, lerne das gesamte Konjugationsmuster statt nur einer einzelnen Form."
+        },
+        {
+          "heading": "Verwende die Formen in ganzen Sätzen",
+          "text": "Bilde nach dem Lernen einer Form einen kurzen Satz damit. Kontext hilft dabei, die Verbform mit Aspekt, Zeit und Bedeutung zu verbinden."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Lernen russischer Verbkonjugationen",
+      "items": [
+        {
+          "heading": "Lerne Endungen als zusammengehörige Reihen",
+          "text": "Präge dir wiederkehrende Personalendungen als System ein, statt jede Form jedes Verbs unabhängig zu lernen."
+        },
+        {
+          "heading": "Lerne den Aspekt zusammen mit dem Verb",
+          "text": "Die Verwendung russischer Zeitformen ist eng mit dem Aspekt verbunden. Lerne ein imperfektives Verb nach Möglichkeit zusammen mit seinem häufigen perfektiven Partner."
+        },
+        {
+          "heading": "Priorisiere häufige unregelmäßige Verben",
+          "text": "Unregelmäßige Hochfrequenzverben begegnen dir ständig im realen Russisch. Ihre Muster zu beherrschen bringt daher besonders viel praktischen Nutzen."
+        },
+        {
+          "heading": "Vergleiche Präsens und Futur direkt",
+          "text": "Die Futurformen perfektiver Verben werden formal ähnlich wie Präsensformen konjugiert. Ein direkter Vergleich hilft zu verstehen, warum ihre Bedeutung trotzdem zukünftig ist."
+        },
+        {
+          "heading": "Übe das Genus in der Vergangenheit",
+          "text": "Bilde Gegensatzpaare wie он делал und она делала, damit die Genuskongruenz mit der Zeit automatisch wird."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Übe die häufigsten russischen Verben",
+      "description": "Wende die gelernten Konjugationsmuster in Vokabelübungen an oder entdecke die Liste der häufigsten russischen Verben mit ihren Bedeutungen.",
+      "primaryLabel": "Russische Verben üben",
+      "secondaryLabel": "100 häufige russische Verben ansehen"
+    },
+    "related": {
+      "heading": "Weitere Ressourcen zum Russischlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 häufigste russische Verben"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 häufige russische Verben in der Vergangenheit"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Russischer Wortschatz nach GER-Niveau"
+        },
+        {
+          "key": "levelTest",
+          "label": "Russisch-Einstufungstest"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zur russischen Verbkonjugation",
+      "items": [
+        {
+          "question": "Was bedeutet es, ein russisches Verb zu konjugieren?",
+          "answer": "Ein russisches Verb zu konjugieren bedeutet, seine Form so zu verändern, dass grammatische Informationen wie Person, Numerus, Zeitform oder Modus ausgedrückt werden. In der Vergangenheit und im Konditional beeinflusst zusätzlich das Genus die Singularformen."
+        },
+        {
+          "question": "Wie viele grundlegende Zeitformen hat das Russische?",
+          "answer": "Im Russischen unterscheidet man üblicherweise drei grundlegende Zeitformen: Präsens, Vergangenheit und Futur. Der Verbalaspekt ist eng mit diesem System verbunden, weil perfektive Verben kein echtes Präsens ausdrücken und ihr Futur anders bilden als imperfektive Verben."
+        },
+        {
+          "question": "Verändern sich russische Verben bei jedem Pronomen?",
+          "answer": "Im Präsens und im einfachen Futur perfektiver Verben ändern sich die Formen normalerweise nach Person und Numerus. In der Vergangenheit und im Konditional richten sie sich dagegen hauptsächlich nach Genus und Numerus."
+        },
+        {
+          "question": "Was sind die zwei wichtigsten russischen Konjugationen?",
+          "answer": "Traditionell werden die meisten russischen Verben je nach ihren Personalendungen der ersten oder zweiten Konjugation zugeordnet. Diese Unterscheidung ist besonders nützlich, um Präsensformen vorherzusagen."
+        },
+        {
+          "question": "Warum ist der Verbalaspekt im Russischen so wichtig?",
+          "answer": "Der Aspekt unterscheidet unterschiedliche Sichtweisen auf eine Handlung, etwa Verlauf oder Wiederholung gegenüber Abschluss und Ergebnis. Er beeinflusst außerdem direkt die Futurbildung: Imperfektive Verben verwenden ein zusammengesetztes Futur, perfektive Verben normalerweise ein einfaches."
+        },
+        {
+          "question": "Wie wird das Futur im Russischen gebildet?",
+          "answer": "Imperfektive Verben verwenden normalerweise eine konjugierte Form von быть plus Infinitiv, zum Beispiel буду читать. Perfektive Verben verwenden dagegen meist eine einzelne konjugierte Form wie прочитаю, die eine zukünftige abgeschlossene Handlung bezeichnet."
+        },
+        {
+          "question": "Warum verändern sich russische Verben in der Vergangenheit nach Genus?",
+          "answer": "Die russische Vergangenheit verwendet nicht dasselbe System von Personalendungen wie das Präsens. Im Singular stimmt die Form mit dem maskulinen, femininen oder neutralen Genus des Subjekts überein, während der Plural eine gemeinsame Form besitzt."
+        },
+        {
+          "question": "Wie wird das Konditional im Russischen gebildet?",
+          "answer": "Das Konditional wird gewöhnlich aus einer Vergangenheitsform des Verbs und der Partikel бы oder б gebildet. Da die Verbform morphologisch eine Vergangenheitsform bleibt, zeigt sie im Singular weiterhin Genuskongruenz."
+        },
+        {
+          "question": "Hat das Russische Imperativformen für alle Pronomen?",
+          "answer": "Nein. Der gewöhnliche Imperativ wird vor allem für die zweite Person Singular und die zweite Person Plural beziehungsweise die höfliche Anrede verwendet. Aufforderungen mit der ersten oder dritten Person werden normalerweise mit anderen Konstruktionen ausgedrückt."
+        },
+        {
+          "question": "Wie lernt man russische Verbkonjugationen am effektivsten?",
+          "answer": "Lerne wiederkehrende Endungsmuster, behandle häufige unregelmäßige Verben als vollständige Konjugationsmuster, verbinde Verben mit ihren Aspektpartnern und übe die Formen in kurzen Sätzen. Der Vergleich desselben Verbs über mehrere Zeiten und Modi hinweg ist meist wirksamer als das Auswendiglernen isolierter Formen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "it",
+    "urlSlug": "100-coniugazioni-verbi-russi-piu-comuni",
+    "entryButtonLabel": "Coniugazioni dei verbi russi",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "meaning": "Significato"
+    },
+    "pronounForms": [
+      {
+        "key": "ya",
+        "label": "я"
+      },
+      {
+        "key": "ty",
+        "label": "ты"
+      },
+      {
+        "key": "on_ona_ono",
+        "label": "он / она / оно"
+      },
+      {
+        "key": "my",
+        "label": "мы"
+      },
+      {
+        "key": "vy",
+        "label": "вы"
+      },
+      {
+        "key": "oni",
+        "label": "они"
+      }
+    ],
+    "metadata": {
+      "title": "100 coniugazioni dei verbi russi più comuni",
+      "metaTitle": "100 coniugazioni dei verbi russi più comuni | FluentStellar",
+      "metaDescription": "Confronta 100 verbi russi frequenti al presente, passato, futuro, condizionale e imperativo, con pronomi, schemi grammaticali e spiegazioni chiare."
+    },
+    "hero": {
+      "heading": "100 coniugazioni dei verbi russi più comuni",
+      "subtitle": "Confronta i verbi essenziali del russo nei principali tempi e modi.",
+      "introParagraphs": [
+        "Questa risorsa raccoglie 100 verbi russi ad alta frequenza e permette di confrontarne le forme al presente, passato, futuro, condizionale e imperativo.",
+        "Passare da un tempo o modo all'altro e confrontare lo stesso verbo con diversi pronomi aiuta a riconoscere desinenze ricorrenti, differenze legate all'aspetto e forme irregolari senza memorizzare ogni forma separatamente."
+      ]
+    },
+    "overview": {
+      "heading": "Come funziona la coniugazione dei verbi russi",
+      "paragraphs": [
+        "In russo, i verbi cambiano in base alla persona e al numero nel presente e nel futuro semplice dei verbi perfettivi. Le desinenze dipendono soprattutto dal modello di coniugazione del verbo, anche se diversi verbi molto frequenti presentano forme irregolari.",
+        "Il passato russo funziona diversamente dal presente: normalmente non distingue la persona grammaticale. Al singolare, la forma verbale concorda invece con il genere del soggetto, maschile, femminile o neutro, mentre al plurale si usa una forma comune.",
+        "L'aspetto verbale è fondamentale nel sistema russo. La distinzione tra imperfettivo e perfettivo influenza sia il significato sia la formazione dei tempi. I verbi imperfettivi formano normalmente il futuro con быть più infinito, mentre i verbi perfettivi usano una forma futura semplice coniugata."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Scegli un tempo o un modo",
+      "description": "Seleziona una forma per confrontare i 100 verbi russi in base alla persona, al numero e ai principali schemi grammaticali.",
+      "defaultTense": "present",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "conditional",
+          "label": "Condizionale"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present",
+        "label": "Presente",
+        "group": "indicative",
+        "tableHeading": "100 verbi russi comuni al presente",
+        "tableDescription": "Confronta le forme al presente dei verbi russi più frequenti con i pronomi indicati e osserva le desinenze personali ricorrenti.",
+        "grammar": {
+          "heading": "Come si forma il presente in russo",
+          "description": "Il presente russo si forma aggiungendo desinenze personali alla radice di un verbo imperfettivo. Le desinenze dipendono principalmente dalla prima o dalla seconda coniugazione. I verbi perfettivi non hanno un vero significato di presente: le loro corrispondenti forme coniugate esprimono normalmente un'azione futura completata.",
+          "formula": "radice del verbo imperfettivo + desinenza personale",
+          "additionalFormula": "Schema frequente: я -у/-ю, ты -ешь/-ишь, он/она/оно -ет/-ит, мы -ем/-им, вы -ете/-ите, они -ут/-ют/-ат/-ят"
+        }
+      },
+      {
+        "key": "past",
+        "label": "Passato",
+        "group": "indicative",
+        "tableHeading": "100 verbi russi comuni al passato",
+        "tableDescription": "Confronta le forme del passato e osserva come il russo esprime il genere al singolare e il numero al plurale invece di usare una desinenza diversa per ogni persona.",
+        "grammar": {
+          "heading": "Come si forma il passato in russo",
+          "description": "Le forme del passato russo si costruiscono normalmente a partire dalla radice dell'infinito con il marcatore -л. Al singolare, la forma concorda con il genere: il maschile termina spesso in -л, il femminile in -ла e il neutro in -ло. Il plurale termina generalmente in -ли. Il passato normalmente non distingue prima, seconda e terza persona.",
+          "formula": "radice verbale + -л / -ла / -ло / -ли",
+          "additionalFormula": "maschile singolare: -л; femminile singolare: -ла; neutro singolare: -ло; plurale: -ли"
+        }
+      },
+      {
+        "key": "future",
+        "label": "Futuro",
+        "group": "indicative",
+        "tableHeading": "100 verbi russi comuni al futuro",
+        "tableDescription": "Confronta i due principali modi di esprimere il futuro in russo a seconda che il verbo sia imperfettivo o perfettivo.",
+        "grammar": {
+          "heading": "Come si forma il futuro in russo",
+          "description": "Il russo usa due principali strutture del futuro determinate dall'aspetto. I verbi imperfettivi formano un futuro composto con una forma coniugata di быть seguita dall'infinito. I verbi perfettivi formano invece un futuro semplice con desinenze personali direttamente sul verbo.",
+          "formula": "imperfettivo: буду / будешь / будет / будем / будете / будут + infinito",
+          "additionalFormula": "perfettivo: radice del verbo perfettivo + desinenza personale"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condizionale",
+        "group": "conditional",
+        "tableHeading": "100 verbi russi comuni al condizionale",
+        "tableDescription": "Confronta le forme russe del condizionale usate per esprimere situazioni ipotetiche, desideri, possibilità e azioni dipendenti da una condizione.",
+        "grammar": {
+          "heading": "Come si forma il condizionale in russo",
+          "description": "Il condizionale russo si forma normalmente con una forma verbale del passato accompagnata dalla particella бы o dalla variante abbreviata б. Poiché il verbo mantiene la morfologia del passato, concorda in genere e numero invece che in persona.",
+          "formula": "forma del passato + бы",
+          "additionalFormula": "Esempio di struttura: я сделал бы / я сделала бы"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo",
+        "group": "imperative",
+        "tableHeading": "100 verbi russi comuni all'imperativo",
+        "tableDescription": "Studia le forme usate per dare ordini, formulare richieste o istruzioni e confronta il singolare con il plurale o la forma di cortesia.",
+        "grammar": {
+          "heading": "Come si forma l'imperativo in russo",
+          "description": "L'imperativo russo si forma soprattutto per la seconda persona singolare e per la seconda persona plurale o di cortesia. Tra le terminazioni frequenti del singolare ci sono -й, -и e il segno molle. La forma plurale o di cortesia aggiunge normalmente -те.",
+          "formula": "radice dell'imperativo + desinenza del singolare",
+          "additionalFormula": "comando plurale o di cortesia: forma imperativa singolare + -те"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabella di coniugazione dei verbi russi",
+      "description": "Usa la tabella per confrontare gli stessi verbi russi ad alta frequenza nei diversi tempi, modi e pronomi. Presta particolare attenzione all'aspetto, alle desinenze personali e alle forme del passato che dipendono dal genere.",
+      "scrollHint": "Scorri orizzontalmente per vedere tutte le forme pronominali.",
+      "scrollLeftLabel": "Scorri la tabella a sinistra",
+      "scrollRightLabel": "Scorri la tabella a destra",
+      "notes": [
+        "Al presente, le desinenze cambiano in base alla persona e al numero, ma la desinenza specifica dipende dal modello di coniugazione del verbo.",
+        "Al passato e al condizionale, il russo distingue soprattutto genere e numero invece della persona, quindi diversi pronomi possono condividere la stessa forma a seconda del genere del soggetto.",
+        "L'imperativo riguarda soprattutto ты e вы; gli ordini riferiti ad altre persone vengono normalmente espressi con costruzioni diverse."
+      ]
+    },
+    "rules": {
+      "heading": "Regole fondamentali della coniugazione russa",
+      "intro": "La coniugazione russa diventa più prevedibile quando si riconoscono alcuni schemi ricorrenti legati alle desinenze personali, all'aspetto, al genere e ai cambiamenti della radice.",
+      "items": [
+        {
+          "heading": "Impara i due principali modelli di coniugazione",
+          "text": "La maggior parte dei verbi russi segue uno dei due principali gruppi di desinenze personali. Riconoscere il modello di un verbo aiuta a prevedere molte forme del presente e del futuro semplice.",
+          "examples": [
+            "я читаю — ты читаешь — они читают",
+            "я говорю — ты говоришь — они говорят",
+            "мы работаем — вы работаете"
+          ]
+        },
+        {
+          "heading": "L'aspetto determina la formazione del futuro",
+          "text": "I verbi imperfettivi descrivono spesso un processo, una ripetizione o un'azione senza enfasi sul risultato e formano il futuro con быть più infinito. I verbi perfettivi mettono generalmente l'accento sul completamento e usano un futuro semplice.",
+          "examples": ["я буду читать", "мы будем работать", "я прочитаю"]
+        },
+        {
+          "heading": "Il passato concorda in genere e numero",
+          "text": "Il passato russo normalmente non presenta forme diverse per я, ты, он e le altre persone. Al singolare, la forma dipende dal genere maschile, femminile o neutro del soggetto.",
+          "examples": ["он работал", "она работала", "они работали"]
+        },
+        {
+          "heading": "Il condizionale usa бы",
+          "text": "Il condizionale combina una forma del passato con бы o б. Per questo il verbo conserva le stesse distinzioni di genere e numero presenti nel passato.",
+          "examples": ["я сделал бы", "я сделала бы", "мы сделали бы"]
+        },
+        {
+          "heading": "L'imperativo distingue singolare e plurale o cortesia",
+          "text": "Gli ordini rivolti a una sola persona in modo informale usano normalmente l'imperativo singolare. Per più persone o per rivolgersi formalmente a qualcuno si usa in genere la forma corrispondente con -те.",
+          "examples": ["читай", "читайте", "говори — говорите"]
+        },
+        {
+          "heading": "Fai attenzione ai cambiamenti di radice e ai verbi irregolari",
+          "text": "Alcuni verbi russi molto frequenti modificano la radice, le consonanti o le vocali durante la coniugazione. È più utile imparare queste alternanze come schemi ricorrenti.",
+          "examples": [
+            "писать — пишу",
+            "хотеть — хочу — хочешь",
+            "идти — иду — идёшь"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Errori comuni nella coniugazione russa",
+      "intro": "Molti errori derivano dall'applicare lo stesso schema a troppi verbi o dal trascurare l'aspetto, il genere e le desinenze personali.",
+      "items": [
+        {
+          "incorrect": "Он читаю книгу.",
+          "correct": "Он читает книгу.",
+          "explanation": "Al presente, il verbo deve concordare con il soggetto di terza persona singolare он. Per questo la forma corretta di читать è читает."
+        },
+        {
+          "incorrect": "Она работал вчера.",
+          "correct": "Она работала вчера.",
+          "explanation": "Al passato singolare, il verbo concorda con il genere femminile del soggetto, quindi è necessario usare работала."
+        },
+        {
+          "incorrect": "Я буду прочитаю книгу.",
+          "correct": "Я прочитаю книгу.",
+          "explanation": "Un verbo perfettivo come прочитать forma il futuro semplice. Non si combina буду con una forma futura perfettiva già coniugata."
+        },
+        {
+          "incorrect": "Я буду читаю книгу.",
+          "correct": "Я буду читать книгу.",
+          "explanation": "Il futuro composto di un verbo imperfettivo richiede una forma coniugata di быть seguita dall'infinito, non da una forma del presente."
+        },
+        {
+          "incorrect": "Вы читай текст.",
+          "correct": "Вы читайте текст.",
+          "explanation": "Con вы è necessaria la forma plurale o di cortesia dell'imperativo, in questo caso читайте invece di читай."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Come studiare le coniugazioni russe con questa pagina",
+      "steps": [
+        {
+          "heading": "Inizia dal presente",
+          "text": "Confronta le desinenze usate con я, ты, он / она / оно, мы, вы e они. Cerca gli schemi ricorrenti della prima e della seconda coniugazione."
+        },
+        {
+          "heading": "Confronta lo stesso verbo in più forme",
+          "text": "Passa dal presente al passato e al futuro mantenendo l'attenzione sullo stesso verbo. In questo modo i cambiamenti della radice, delle desinenze e delle strutture ausiliari diventano più evidenti."
+        },
+        {
+          "heading": "Presta attenzione all'aspetto",
+          "text": "Quando studi il futuro, controlla se il verbo è imperfettivo o perfettivo. L'aspetto determina se il russo usa un futuro composto o una forma futura semplice."
+        },
+        {
+          "heading": "Distingui persona e genere",
+          "text": "Non aspettarti che passato e condizionale funzionino come il presente. In queste forme è più importante concentrarsi su maschile, femminile, neutro e plurale."
+        },
+        {
+          "heading": "Individua gli schemi irregolari",
+          "text": "Quando un verbo frequente cambia radice o non segue le desinenze previste, studia l'intero paradigma invece di memorizzare una sola forma."
+        },
+        {
+          "heading": "Usa le forme in frasi complete",
+          "text": "Dopo aver studiato una coniugazione, inseriscila in una frase breve. Il contesto aiuta a collegare la forma verbale all'aspetto, al tempo e al significato."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per imparare la coniugazione russa",
+      "items": [
+        {
+          "heading": "Impara le desinenze come serie",
+          "text": "Memorizza le desinenze personali ricorrenti come un sistema, invece di imparare ogni forma verbale separatamente."
+        },
+        {
+          "heading": "Studia l'aspetto insieme al verbo",
+          "text": "L'uso dei tempi russi è strettamente legato all'aspetto. Quando possibile, impara un verbo imperfettivo insieme al suo comune equivalente perfettivo."
+        },
+        {
+          "heading": "Dai priorità ai verbi irregolari frequenti",
+          "text": "I verbi ad alta frequenza con radici irregolari compaiono continuamente nel russo reale, quindi padroneggiarne gli schemi offre un vantaggio pratico significativo."
+        },
+        {
+          "heading": "Confronta direttamente presente e futuro",
+          "text": "Le forme future dei verbi perfettivi si coniugano formalmente in modo simile alle forme del presente. Confrontarle aiuta a capire perché il loro significato è comunque futuro."
+        },
+        {
+          "heading": "Esercitati con il genere al passato",
+          "text": "Crea coppie come он делал e она делала per rendere automatica la concordanza di genere senza dover ripensare ogni volta alla regola."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Esercitati con i verbi russi più comuni",
+      "description": "Usa gli schemi di coniugazione che hai studiato negli esercizi di vocabolario oppure esplora l'elenco dei verbi russi più frequenti e i loro significati.",
+      "primaryLabel": "Esercitati con i verbi russi",
+      "secondaryLabel": "Vedi 100 verbi russi comuni"
+    },
+    "related": {
+      "heading": "Altre risorse per imparare il russo",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbi russi più comuni"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbi russi comuni al passato"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario russo per livello QCER"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test di livello di russo"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulla coniugazione russa",
+      "items": [
+        {
+          "question": "Che cosa significa coniugare un verbo in russo?",
+          "answer": "Coniugare un verbo russo significa modificarne la forma per esprimere informazioni grammaticali come persona, numero, tempo o modo. Nel passato e nel condizionale, anche il genere può determinare la forma al singolare."
+        },
+        {
+          "question": "Quanti tempi principali ha il russo?",
+          "answer": "In russo si distinguono normalmente tre tempi fondamentali: presente, passato e futuro. L'aspetto verbale è strettamente collegato a questo sistema, perché i verbi perfettivi non esprimono un vero presente e formano il futuro in modo diverso dai verbi imperfettivi."
+        },
+        {
+          "question": "I verbi russi cambiano con ogni pronome?",
+          "answer": "Al presente e nel futuro semplice dei verbi perfettivi, le forme cambiano normalmente in base alla persona e al numero. Nel passato e nel condizionale, invece, i verbi variano soprattutto in base al genere e al numero."
+        },
+        {
+          "question": "Quali sono le due principali coniugazioni russe?",
+          "answer": "Tradizionalmente, la maggior parte dei verbi russi viene classificata nella prima o nella seconda coniugazione in base alle desinenze personali che utilizza. Questa distinzione è particolarmente utile per prevedere le forme del presente."
+        },
+        {
+          "question": "Perché l'aspetto verbale è così importante in russo?",
+          "answer": "L'aspetto distingue diversi modi di presentare un'azione, per esempio come processo o ripetizione rispetto a completamento e risultato. Influenza anche direttamente la formazione del futuro: gli imperfettivi usano un futuro composto, mentre i perfettivi normalmente usano un futuro semplice."
+        },
+        {
+          "question": "Come si forma il futuro in russo?",
+          "answer": "I verbi imperfettivi usano normalmente una forma coniugata di быть seguita dall'infinito, come буду читать. I verbi perfettivi usano invece di solito una sola forma coniugata, come прочитаю, che esprime un'azione futura completata."
+        },
+        {
+          "question": "Perché i verbi russi al passato cambiano in base al genere?",
+          "answer": "Il passato russo non usa lo stesso sistema di desinenze personali del presente. Al singolare, la forma concorda con il genere maschile, femminile o neutro del soggetto, mentre il plurale utilizza una forma comune."
+        },
+        {
+          "question": "Come si forma il condizionale in russo?",
+          "answer": "Il condizionale si forma generalmente con una forma verbale del passato più la particella бы o б. Poiché la forma verbale rimane morfologicamente al passato, al singolare conserva la concordanza di genere."
+        },
+        {
+          "question": "Il russo ha forme imperative per tutti i pronomi?",
+          "answer": "No. L'imperativo ordinario si usa principalmente per la seconda persona singolare e per la seconda persona plurale o di cortesia. Gli ordini riferiti alla prima o alla terza persona vengono normalmente espressi con altre costruzioni."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le coniugazioni russe?",
+          "answer": "Impara gli schemi ricorrenti delle desinenze, studia i verbi irregolari frequenti come paradigmi completi, associa i verbi alle loro coppie aspettuali e pratica le forme in frasi brevi. Confrontare lo stesso verbo in più tempi e modi è in genere più efficace che memorizzare forme isolate."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "pt",
+    "urlSlug": "100-conjugacoes-verbos-russos-mais-comuns",
+    "entryButtonLabel": "Conjugações de verbos russos",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "meaning": "Significado"
+    },
+    "pronounForms": [
+      {
+        "key": "ya",
+        "label": "я"
+      },
+      {
+        "key": "ty",
+        "label": "ты"
+      },
+      {
+        "key": "on_ona_ono",
+        "label": "он / она / оно"
+      },
+      {
+        "key": "my",
+        "label": "мы"
+      },
+      {
+        "key": "vy",
+        "label": "вы"
+      },
+      {
+        "key": "oni",
+        "label": "они"
+      }
+    ],
+    "metadata": {
+      "title": "100 conjugações dos verbos russos mais comuns",
+      "metaTitle": "100 conjugações dos verbos russos mais comuns | FluentStellar",
+      "metaDescription": "Compare 100 verbos russos frequentes no presente, passado, futuro, condicional e imperativo, com pronomes, padrões gramaticais e explicações claras."
+    },
+    "hero": {
+      "heading": "100 conjugações dos verbos russos mais comuns",
+      "subtitle": "Compare verbos essenciais do russo nos principais tempos e modos.",
+      "introParagraphs": [
+        "Este recurso reúne 100 verbos russos de alta frequência e permite comparar suas formas no presente, passado, futuro, condicional e imperativo.",
+        "Alternar entre tempos e modos e comparar o mesmo verbo com diferentes pronomes ajuda a identificar terminações recorrentes, diferenças relacionadas ao aspecto e padrões irregulares sem precisar memorizar cada forma isoladamente."
+      ]
+    },
+    "overview": {
+      "heading": "Como funciona a conjugação dos verbos russos",
+      "paragraphs": [
+        "Em russo, os verbos mudam de acordo com a pessoa e o número no presente e no futuro simples dos verbos perfectivos. As terminações dependem principalmente do padrão de conjugação do verbo, embora vários verbos muito frequentes apresentem formas irregulares.",
+        "O passado russo funciona de maneira diferente do presente: normalmente não distingue a pessoa gramatical. No singular, a forma verbal concorda com o gênero do sujeito — masculino, feminino ou neutro — enquanto no plural é usada uma forma comum.",
+        "O aspecto verbal é fundamental no sistema russo. A distinção entre imperfectivo e perfectivo influencia tanto o significado quanto a formação dos tempos. Verbos imperfectivos normalmente formam o futuro com быть mais infinitivo, enquanto verbos perfectivos usam uma forma futura simples conjugada."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Escolha um tempo ou modo",
+      "description": "Selecione uma forma para comparar como os 100 verbos russos se comportam de acordo com pessoa, número e seus principais padrões gramaticais.",
+      "defaultTense": "present",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "conditional",
+          "label": "Condicional"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present",
+        "label": "Presente",
+        "group": "indicative",
+        "tableHeading": "100 verbos russos comuns no presente",
+        "tableDescription": "Compare as formas do presente de verbos russos frequentes com os pronomes indicados e identifique terminações pessoais recorrentes.",
+        "grammar": {
+          "heading": "Como formar o presente em russo",
+          "description": "O presente russo é formado acrescentando terminações pessoais ao radical de um verbo imperfectivo. As terminações dependem principalmente de o verbo seguir a primeira ou a segunda conjugação. Verbos perfectivos não têm um verdadeiro significado de presente: suas formas conjugadas correspondentes normalmente expressam uma ação futura concluída.",
+          "formula": "radical do verbo imperfectivo + terminação pessoal",
+          "additionalFormula": "Padrão comum: я -у/-ю, ты -ешь/-ишь, он/она/оно -ет/-ит, мы -ем/-им, вы -ете/-ите, они -ут/-ют/-ат/-ят"
+        }
+      },
+      {
+        "key": "past",
+        "label": "Passado",
+        "group": "indicative",
+        "tableHeading": "100 verbos russos comuns no passado",
+        "tableDescription": "Compare as formas do passado e veja como o russo marca gênero no singular e número no plural, em vez de usar uma terminação diferente para cada pessoa.",
+        "grammar": {
+          "heading": "Como formar o passado em russo",
+          "description": "As formas russas do passado são normalmente construídas a partir do radical do infinitivo com o marcador -л. No singular, a forma concorda com o gênero: o masculino frequentemente termina em -л, o feminino em -ла e o neutro em -ло. O plural geralmente termina em -ли. O passado normalmente não distingue primeira, segunda e terceira pessoa.",
+          "formula": "radical verbal + -л / -ла / -ло / -ли",
+          "additionalFormula": "masculino singular: -л; feminino singular: -ла; neutro singular: -ло; plural: -ли"
+        }
+      },
+      {
+        "key": "future",
+        "label": "Futuro",
+        "group": "indicative",
+        "tableHeading": "100 verbos russos comuns no futuro",
+        "tableDescription": "Compare as duas principais maneiras de expressar o futuro em russo, dependendo de o verbo ser imperfectivo ou perfectivo.",
+        "grammar": {
+          "heading": "Como formar o futuro em russo",
+          "description": "O russo usa dois padrões principais de futuro determinados pelo aspecto verbal. Verbos imperfectivos formam um futuro composto com uma forma conjugada de быть seguida do infinitivo. Verbos perfectivos formam um futuro simples com terminações pessoais diretamente no verbo.",
+          "formula": "imperfectivo: буду / будешь / будет / будем / будете / будут + infinitivo",
+          "additionalFormula": "perfectivo: radical do verbo perfectivo + terminação pessoal"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condicional",
+        "group": "conditional",
+        "tableHeading": "100 verbos russos comuns no condicional",
+        "tableDescription": "Compare formas condicionais russas usadas para expressar situações hipotéticas, desejos, possibilidades e ações dependentes de uma condição.",
+        "grammar": {
+          "heading": "Como formar o condicional em russo",
+          "description": "O condicional russo é normalmente formado com uma forma verbal do passado acompanhada da partícula бы ou de sua variante abreviada б. Como o verbo mantém a morfologia do passado, ele concorda em gênero e número, e não em pessoa.",
+          "formula": "forma do passado + бы",
+          "additionalFormula": "Exemplo de estrutura: я сделал бы / я сделала бы"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo",
+        "group": "imperative",
+        "tableHeading": "100 verbos russos comuns no imperativo",
+        "tableDescription": "Estude as formas usadas para dar ordens, fazer pedidos e instruções e compare o singular com o plural ou a forma de tratamento formal.",
+        "grammar": {
+          "heading": "Como formar o imperativo em russo",
+          "description": "O imperativo russo é formado principalmente para a segunda pessoa do singular e para a segunda pessoa do plural ou de tratamento formal. Entre as terminações comuns do singular estão -й, -и e o sinal brando. A forma plural ou formal normalmente acrescenta -те.",
+          "formula": "radical do imperativo + terminação do singular",
+          "additionalFormula": "ordem no plural ou forma de tratamento formal: imperativo singular + -те"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabela de conjugação dos verbos russos",
+      "description": "Use a tabela para comparar os mesmos verbos russos de alta frequência em diferentes tempos, modos e pronomes. Preste atenção especial ao aspecto, às terminações pessoais e às formas do passado que dependem do gênero.",
+      "scrollHint": "Deslize horizontalmente para ver todas as formas pronominais.",
+      "scrollLeftLabel": "Deslizar a tabela para a esquerda",
+      "scrollRightLabel": "Deslizar a tabela para a direita",
+      "notes": [
+        "No presente, as terminações mudam de acordo com pessoa e número, mas a terminação específica depende do padrão de conjugação do verbo.",
+        "No passado e no condicional, o russo marca principalmente gênero e número em vez de pessoa, por isso vários pronomes podem compartilhar a mesma forma dependendo do gênero do sujeito.",
+        "O imperativo está associado principalmente a ты e вы; ordens envolvendo outras pessoas normalmente são expressas por outras construções."
+      ]
+    },
+    "rules": {
+      "heading": "Regras essenciais da conjugação russa",
+      "intro": "A conjugação russa fica mais previsível quando você reconhece padrões recorrentes de terminações pessoais, aspecto, gênero e alterações no radical.",
+      "items": [
+        {
+          "heading": "Aprenda os dois principais padrões de conjugação",
+          "text": "A maioria dos verbos russos segue um de dois grandes conjuntos de terminações pessoais. Reconhecer o padrão de um verbo ajuda a prever muitas formas do presente e do futuro simples.",
+          "examples": [
+            "я читаю — ты читаешь — они читают",
+            "я говорю — ты говоришь — они говорят",
+            "мы работаем — вы работаете"
+          ]
+        },
+        {
+          "heading": "O aspecto determina a formação do futuro",
+          "text": "Verbos imperfectivos frequentemente descrevem processos, ações repetidas ou ações sem foco no resultado e formam o futuro com быть mais infinitivo. Verbos perfectivos geralmente destacam a conclusão ou o resultado e usam um futuro simples.",
+          "examples": ["я буду читать", "мы будем работать", "я прочитаю"]
+        },
+        {
+          "heading": "O passado concorda em gênero e número",
+          "text": "O passado russo normalmente não possui formas diferentes para я, ты, он e as demais pessoas. No singular, a forma depende de o sujeito ser masculino, feminino ou neutro.",
+          "examples": ["он работал", "она работала", "они работали"]
+        },
+        {
+          "heading": "O condicional usa бы",
+          "text": "O condicional combina uma forma do passado com бы ou б. Por isso, o verbo mantém as mesmas distinções de gênero e número encontradas no passado.",
+          "examples": ["я сделал бы", "я сделала бы", "мы сделали бы"]
+        },
+        {
+          "heading": "O imperativo distingue singular e plural ou tratamento formal",
+          "text": "Ordens dirigidas informalmente a uma única pessoa normalmente usam o imperativo singular. Para várias pessoas ou para tratamento formal, geralmente se usa a forma correspondente com -те.",
+          "examples": ["читай", "читайте", "говори — говорите"]
+        },
+        {
+          "heading": "Observe mudanças de radical e verbos irregulares",
+          "text": "Alguns verbos russos muito frequentes mudam o radical, consoantes ou vogais durante a conjugação. É mais útil aprender essas alternâncias como padrões recorrentes.",
+          "examples": [
+            "писать — пишу",
+            "хотеть — хочу — хочешь",
+            "идти — иду — идёшь"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Erros comuns na conjugação russa",
+      "intro": "Muitos erros surgem ao aplicar o mesmo padrão a verbos diferentes ou ao ignorar aspecto, gênero e terminações pessoais.",
+      "items": [
+        {
+          "incorrect": "Он читаю книгу.",
+          "correct": "Он читает книгу.",
+          "explanation": "No presente, o verbo deve concordar com o sujeito de terceira pessoa do singular он. Por isso, a forma correta de читать é читает."
+        },
+        {
+          "incorrect": "Она работал вчера.",
+          "correct": "Она работала вчера.",
+          "explanation": "No passado singular, o verbo concorda com o gênero feminino do sujeito, portanto a forma correta é работала."
+        },
+        {
+          "incorrect": "Я буду прочитаю книгу.",
+          "correct": "Я прочитаю книгу.",
+          "explanation": "Um verbo perfectivo como прочитать forma o futuro simples. Não se combina буду com uma forma futura perfectiva já conjugada."
+        },
+        {
+          "incorrect": "Я буду читаю книгу.",
+          "correct": "Я буду читать книгу.",
+          "explanation": "O futuro composto de um verbo imperfectivo usa uma forma conjugada de быть seguida do infinitivo, e não de uma forma do presente."
+        },
+        {
+          "incorrect": "Вы читай текст.",
+          "correct": "Вы читайте текст.",
+          "explanation": "Com вы, é necessária a forma plural ou formal do imperativo, neste caso читайте em vez de читай."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Como estudar as conjugações russas com esta página",
+      "steps": [
+        {
+          "heading": "Comece pelo presente",
+          "text": "Compare as terminações usadas com я, ты, он / она / оно, мы, вы e они. Procure padrões recorrentes da primeira e da segunda conjugação."
+        },
+        {
+          "heading": "Compare o mesmo verbo em diferentes formas",
+          "text": "Alterne entre presente, passado e futuro mantendo o foco no mesmo verbo. Isso facilita perceber mudanças no radical, nas terminações e nas estruturas auxiliares."
+        },
+        {
+          "heading": "Preste atenção ao aspecto",
+          "text": "Ao estudar o futuro, verifique se o verbo é imperfectivo ou perfectivo. O aspecto determina se o russo usa um futuro composto ou uma forma futura simples."
+        },
+        {
+          "heading": "Diferencie pessoa e gênero",
+          "text": "Não espere que passado e condicional funcionem como o presente. Nessas formas, concentre-se principalmente em masculino, feminino, neutro e plural."
+        },
+        {
+          "heading": "Identifique padrões irregulares",
+          "text": "Quando um verbo frequente mudar de radical ou não seguir as terminações esperadas, estude o paradigma completo em vez de memorizar apenas uma forma."
+        },
+        {
+          "heading": "Use as formas em frases completas",
+          "text": "Depois de estudar uma conjugação, use-a em uma frase curta. O contexto ajuda a relacionar a forma verbal com aspecto, tempo e significado."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para aprender a conjugação russa",
+      "items": [
+        {
+          "heading": "Aprenda as terminações como conjuntos",
+          "text": "Memorize terminações pessoais recorrentes como um sistema, em vez de aprender cada forma verbal isoladamente."
+        },
+        {
+          "heading": "Estude o aspecto junto com o verbo",
+          "text": "O uso dos tempos russos está fortemente ligado ao aspecto. Sempre que possível, aprenda um verbo imperfectivo junto com seu par perfectivo mais comum."
+        },
+        {
+          "heading": "Priorize verbos irregulares frequentes",
+          "text": "Verbos de alta frequência com radicais irregulares aparecem constantemente no russo real, por isso dominar seus padrões traz grande benefício prático."
+        },
+        {
+          "heading": "Compare diretamente presente e futuro",
+          "text": "As formas futuras dos verbos perfectivos são conjugadas de maneira formalmente semelhante às formas do presente. Compará-las ajuda a entender por que seu significado é futuro."
+        },
+        {
+          "heading": "Pratique o gênero no passado",
+          "text": "Crie pares como он делал e она делала para tornar a concordância de gênero automática, sem precisar repensar a regra a cada vez."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pratique os verbos russos mais comuns",
+      "description": "Use os padrões de conjugação que você estudou em exercícios de vocabulário ou explore a lista dos verbos russos mais frequentes e seus significados.",
+      "primaryLabel": "Praticar verbos russos",
+      "secondaryLabel": "Ver 100 verbos russos comuns"
+    },
+    "related": {
+      "heading": "Mais recursos para aprender russo",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbos russos mais comuns"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbos russos comuns no passado"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulário russo por nível do QECR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Teste de nível de russo"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre a conjugação russa",
+      "items": [
+        {
+          "question": "O que significa conjugar um verbo em russo?",
+          "answer": "Conjugar um verbo russo significa alterar sua forma para expressar informações gramaticais como pessoa, número, tempo ou modo. No passado e no condicional, o gênero também pode determinar a forma no singular."
+        },
+        {
+          "question": "Quantos tempos principais existem em russo?",
+          "answer": "Normalmente, o russo é descrito com três tempos básicos: presente, passado e futuro. O aspecto verbal está intimamente ligado a esse sistema, pois verbos perfectivos não expressam um verdadeiro presente e formam o futuro de maneira diferente dos imperfectivos."
+        },
+        {
+          "question": "Os verbos russos mudam com cada pronome?",
+          "answer": "No presente e no futuro simples dos verbos perfectivos, as formas normalmente mudam de acordo com pessoa e número. No passado e no condicional, porém, os verbos variam principalmente de acordo com gênero e número."
+        },
+        {
+          "question": "Quais são as duas principais conjugações do russo?",
+          "answer": "Tradicionalmente, a maioria dos verbos russos é classificada na primeira ou na segunda conjugação de acordo com as terminações pessoais que utiliza. Essa distinção é especialmente útil para prever formas do presente."
+        },
+        {
+          "question": "Por que o aspecto verbal é tão importante em russo?",
+          "answer": "O aspecto distingue diferentes maneiras de apresentar uma ação, como processo ou repetição em contraste com conclusão ou resultado. Ele também influencia diretamente a formação do futuro: verbos imperfectivos usam um futuro composto, enquanto perfectivos normalmente usam um futuro simples."
+        },
+        {
+          "question": "Como o futuro é formado em russo?",
+          "answer": "Verbos imperfectivos normalmente usam uma forma conjugada de быть seguida do infinitivo, como буду читать. Verbos perfectivos geralmente usam uma única forma conjugada, como прочитаю, que expressa uma ação futura concluída."
+        },
+        {
+          "question": "Por que os verbos russos no passado mudam de acordo com o gênero?",
+          "answer": "O passado russo não usa o mesmo sistema de terminações pessoais do presente. No singular, a forma concorda com o gênero masculino, feminino ou neutro do sujeito, enquanto o plural usa uma forma comum."
+        },
+        {
+          "question": "Como o condicional é formado em russo?",
+          "answer": "O condicional é normalmente formado com uma forma verbal do passado mais a partícula бы ou б. Como a forma verbal continua morfologicamente no passado, ela mantém a concordância de gênero no singular."
+        },
+        {
+          "question": "O russo tem formas de imperativo para todos os pronomes?",
+          "answer": "Não. O imperativo comum é usado principalmente para a segunda pessoa do singular e para a segunda pessoa do plural ou de tratamento formal. Ordens envolvendo a primeira ou a terceira pessoa normalmente são expressas por outras construções."
+        },
+        {
+          "question": "Qual é a melhor maneira de memorizar as conjugações russas?",
+          "answer": "Aprenda padrões recorrentes de terminações, estude verbos irregulares frequentes como paradigmas completos, relacione verbos aos seus pares aspectuais e pratique as formas em frases curtas. Comparar o mesmo verbo em vários tempos e modos costuma ser mais eficaz do que memorizar formas isoladas."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "ru",
+    "uiLanguage": "ru",
+    "urlSlug": "100-samyh-chastyh-russkih-glagolov-spryazhenie",
+    "entryButtonLabel": "Спряжение русских глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "meaning": "Значение"
+    },
+    "pronounForms": [
+      {
+        "key": "ya",
+        "label": "я"
+      },
+      {
+        "key": "ty",
+        "label": "ты"
+      },
+      {
+        "key": "on_ona_ono",
+        "label": "он / она / оно"
+      },
+      {
+        "key": "my",
+        "label": "мы"
+      },
+      {
+        "key": "vy",
+        "label": "вы"
+      },
+      {
+        "key": "oni",
+        "label": "они"
+      }
+    ],
+    "metadata": {
+      "title": "Спряжение 100 самых частых русских глаголов",
+      "metaTitle": "100 самых частых русских глаголов: спряжение | FluentStellar",
+      "metaDescription": "Сравнивайте формы 100 частых русских глаголов в настоящем, прошедшем и будущем времени, а также в условном и повелительном наклонении."
+    },
+    "hero": {
+      "heading": "Спряжение 100 самых частых русских глаголов",
+      "subtitle": "Сравнивайте формы основных русских глаголов в разных временах и наклонениях.",
+      "introParagraphs": [
+        "На этой странице собраны 100 часто употребляемых русских глаголов, формы которых можно сравнивать в настоящем, прошедшем и будущем времени, а также в условном и повелительном наклонении.",
+        "Переключаясь между временами и наклонениями и сравнивая один и тот же глагол с разными местоимениями, легче заметить повторяющиеся окончания, особенности вида и нерегулярные формы."
+      ]
+    },
+    "overview": {
+      "heading": "Как работает спряжение русских глаголов",
+      "paragraphs": [
+        "В настоящем времени и в простом будущем совершенного вида русские глаголы изменяются по лицам и числам. Конкретные окончания в значительной степени зависят от типа спряжения, хотя у некоторых частотных глаголов встречаются особые и нерегулярные формы.",
+        "Прошедшее время устроено иначе: глагол обычно не изменяется по лицам. В единственном числе форма зависит от рода подлежащего — мужского, женского или среднего, — а во множественном числе используется общая форма.",
+        "Для русского глагола особенно важен вид. Противопоставление несовершенного и совершенного вида влияет и на значение действия, и на образование будущего времени: несовершенный вид обычно использует конструкцию с быть и инфинитивом, а совершенный — простую личную форму."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Выберите время или наклонение",
+      "description": "Выберите форму, чтобы сравнить 100 русских глаголов по лицам, числам и основным грамматическим моделям.",
+      "defaultTense": "present",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Изъявительное наклонение"
+        },
+        {
+          "key": "conditional",
+          "label": "Условное наклонение"
+        },
+        {
+          "key": "imperative",
+          "label": "Повелительное наклонение"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present",
+        "label": "Настоящее время",
+        "group": "indicative",
+        "tableHeading": "100 частых русских глаголов в настоящем времени",
+        "tableDescription": "Сравнивайте формы настоящего времени с разными местоимениями и обращайте внимание на повторяющиеся личные окончания.",
+        "grammar": {
+          "heading": "Как образуется настоящее время",
+          "description": "Настоящее время образуется у глаголов несовершенного вида с помощью личных окончаний. Выбор окончаний в основном зависит от первого или второго спряжения. У глаголов совершенного вида форм с настоящим значением нет: формы, похожие по строению на настоящее время, обычно обозначают завершённое действие в будущем.",
+          "formula": "основа глагола несовершенного вида + личное окончание",
+          "additionalFormula": "Типичная система окончаний: я -у/-ю, ты -ешь/-ишь, он/она/оно -ет/-ит, мы -ем/-им, вы -ете/-ите, они -ут/-ют/-ат/-ят"
+        }
+      },
+      {
+        "key": "past",
+        "label": "Прошедшее время",
+        "group": "indicative",
+        "tableHeading": "100 частых русских глаголов в прошедшем времени",
+        "tableDescription": "Сравнивайте формы прошедшего времени и смотрите, как русский язык выражает род в единственном числе и число во множественном.",
+        "grammar": {
+          "heading": "Как образуется прошедшее время",
+          "description": "Формы прошедшего времени обычно образуются от основы инфинитива с помощью суффикса -л. В единственном числе глагол согласуется с подлежащим в роде: мужская форма часто оканчивается на -л, женская на -ла, средняя на -ло. Во множественном числе обычно используется окончание -ли. По лицам прошедшее время не изменяется.",
+          "formula": "основа глагола + -л / -ла / -ло / -ли",
+          "additionalFormula": "мужской род: -л; женский род: -ла; средний род: -ло; множественное число: -ли"
+        }
+      },
+      {
+        "key": "future",
+        "label": "Будущее время",
+        "group": "indicative",
+        "tableHeading": "100 частых русских глаголов в будущем времени",
+        "tableDescription": "Сравнивайте две основные модели будущего времени у глаголов несовершенного и совершенного вида.",
+        "grammar": {
+          "heading": "Как образуется будущее время",
+          "description": "В русском языке образование будущего зависит от вида глагола. Глаголы несовершенного вида образуют сложное будущее с личной формой быть и инфинитивом. Глаголы совершенного вида образуют простое будущее, изменяясь по лицам и числам без вспомогательного глагола.",
+          "formula": "несовершенный вид: буду / будешь / будет / будем / будете / будут + инфинитив",
+          "additionalFormula": "совершенный вид: основа глагола + личное окончание"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Условное наклонение",
+        "group": "conditional",
+        "tableHeading": "100 частых русских глаголов в условном наклонении",
+        "tableDescription": "Сравнивайте формы, которые используются для гипотетических действий, желаний, возможностей и ситуаций, зависящих от условия.",
+        "grammar": {
+          "heading": "Как образуется условное наклонение",
+          "description": "Условное наклонение обычно образуется с помощью формы прошедшего времени и частицы бы или б. Поскольку глагольная форма сохраняет структуру прошедшего времени, в единственном числе она согласуется с подлежащим в роде, а не изменяется по лицам.",
+          "formula": "форма прошедшего времени + бы",
+          "additionalFormula": "Пример: я сделал бы / я сделала бы"
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Повелительное наклонение",
+        "group": "imperative",
+        "tableHeading": "100 частых русских глаголов в повелительном наклонении",
+        "tableDescription": "Изучайте формы приказа, просьбы и побуждения и сравнивайте формы для ты и вы.",
+        "grammar": {
+          "heading": "Как образуется повелительное наклонение",
+          "description": "Обычные формы повелительного наклонения прежде всего относятся ко второму лицу единственного и множественного числа. Среди распространённых показателей формы для ты встречаются -й, -и и мягкий знак. Форма для вы обычно образуется добавлением -те.",
+          "formula": "основа повелительной формы + окончание единственного числа",
+          "additionalFormula": "форма для вы: форма повелительного наклонения для ты + -те"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Таблица спряжения русских глаголов",
+      "description": "Используйте таблицу, чтобы сравнивать одни и те же частые глаголы в разных временах, наклонениях и формах. Особое внимание обращайте на вид, личные окончания и род в прошедшем времени.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все формы.",
+      "scrollLeftLabel": "Прокрутить таблицу влево",
+      "scrollRightLabel": "Прокрутить таблицу вправо",
+      "notes": [
+        "В настоящем времени окончания зависят от лица и числа, а их конкретный набор определяется типом спряжения глагола.",
+        "В прошедшем времени и условном наклонении важны прежде всего род и число, поэтому разные местоимения могут соответствовать одной и той же форме.",
+        "Обычные формы повелительного наклонения главным образом связаны с ты и вы; побуждение к действию с другими лицами выражается отдельными конструкциями."
+      ]
+    },
+    "rules": {
+      "heading": "Основные правила спряжения русских глаголов",
+      "intro": "Спряжение становится намного понятнее, если изучать не отдельные формы, а повторяющиеся модели окончаний, вида, рода и изменений основы.",
+      "items": [
+        {
+          "heading": "Различайте первое и второе спряжение",
+          "text": "Большинство русских глаголов использует один из двух основных наборов личных окончаний. Знание типа спряжения помогает предсказывать многие формы настоящего и простого будущего времени.",
+          "examples": [
+            "я читаю — ты читаешь — они читают",
+            "я говорю — ты говоришь — они говорят",
+            "мы работаем — вы работаете"
+          ]
+        },
+        {
+          "heading": "Вид определяет способ образования будущего",
+          "text": "Несовершенный вид часто описывает процесс, повторяемость или действие без акцента на результате и использует сложное будущее. Совершенный вид обычно указывает на завершённость или результат и образует простое будущее.",
+          "examples": ["я буду читать", "мы будем работать", "я прочитаю"]
+        },
+        {
+          "heading": "В прошедшем времени важны род и число",
+          "text": "Прошедшее время обычно не различает формы по лицам. В единственном числе форма зависит от рода подлежащего, а во множественном используется единая форма.",
+          "examples": ["он работал", "она работала", "они работали"]
+        },
+        {
+          "heading": "Условное наклонение использует частицу бы",
+          "text": "Условное наклонение сочетает форму прошедшего времени с частицей бы или б. Поэтому глагол сохраняет те же различия по роду и числу, что и в прошедшем времени.",
+          "examples": ["я сделал бы", "я сделала бы", "мы сделали бы"]
+        },
+        {
+          "heading": "Повелительные формы различаются для ты и вы",
+          "text": "При обращении к одному человеку на ты обычно используется форма единственного числа. При обращении к нескольким людям или вежливо к одному человеку обычно используется форма на -те.",
+          "examples": ["читай", "читайте", "говори — говорите"]
+        },
+        {
+          "heading": "Обращайте внимание на изменения основы",
+          "text": "У некоторых частых глаголов при спряжении меняются согласные, гласные или сама основа. Такие чередования лучше запоминать как повторяющиеся модели.",
+          "examples": [
+            "писать — пишу",
+            "хотеть — хочу — хочешь",
+            "идти — иду — идёшь"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Частые ошибки при спряжении русских глаголов",
+      "intro": "Многие ошибки возникают из-за неправильного выбора личного окончания, игнорирования рода или смешения моделей будущего времени.",
+      "items": [
+        {
+          "incorrect": "Он читаю книгу.",
+          "correct": "Он читает книгу.",
+          "explanation": "С подлежащим он в настоящем времени нужна форма третьего лица единственного числа: читает."
+        },
+        {
+          "incorrect": "Она работал вчера.",
+          "correct": "Она работала вчера.",
+          "explanation": "В прошедшем времени единственного числа форма глагола должна согласовываться с женским родом подлежащего: работала."
+        },
+        {
+          "incorrect": "Я буду прочитаю книгу.",
+          "correct": "Я прочитаю книгу.",
+          "explanation": "Совершенный глагол прочитать образует простое будущее, поэтому форму буду перед прочитаю добавлять нельзя."
+        },
+        {
+          "incorrect": "Я буду читаю книгу.",
+          "correct": "Я буду читать книгу.",
+          "explanation": "Сложное будущее несовершенного вида состоит из личной формы быть и инфинитива: буду читать, а не буду читаю."
+        },
+        {
+          "incorrect": "Вы читай текст.",
+          "correct": "Вы читайте текст.",
+          "explanation": "При обращении на вы нужна форма повелительного наклонения множественного числа или вежливого обращения: читайте."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Как изучать спряжение русских глаголов с этой страницей",
+      "steps": [
+        {
+          "heading": "Начните с настоящего времени",
+          "text": "Сравните окончания с я, ты, он / она / оно, мы, вы и они и попробуйте увидеть повторяющиеся модели первого и второго спряжения."
+        },
+        {
+          "heading": "Сравнивайте один глагол в разных формах",
+          "text": "Переключайтесь между настоящим, прошедшим и будущим временем, не меняя глагол. Так легче заметить изменения основы, окончаний и вспомогательных конструкций."
+        },
+        {
+          "heading": "Следите за видом глагола",
+          "text": "При изучении будущего времени определяйте, совершенный глагол или несовершенный. От этого зависит, будет ли использоваться простое или сложное будущее."
+        },
+        {
+          "heading": "Не смешивайте лицо и род",
+          "text": "Прошедшее время и условное наклонение работают не так, как настоящее. Здесь важнее различать мужской, женский, средний род и множественное число."
+        },
+        {
+          "heading": "Отмечайте нерегулярные модели",
+          "text": "Если частый глагол меняет основу или не следует ожидаемой модели, учите несколько его форм вместе, а не только одну форму."
+        },
+        {
+          "heading": "Используйте формы в предложениях",
+          "text": "После изучения формы составьте с ней короткое предложение. Контекст помогает связать спряжение с видом, временем и реальным значением."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Советы по изучению спряжения русских глаголов",
+      "items": [
+        {
+          "heading": "Учите окончания как систему",
+          "text": "Запоминайте наборы личных окончаний вместе, а не каждую форму каждого глагола отдельно."
+        },
+        {
+          "heading": "Учите вид вместе с глаголом",
+          "text": "Вид тесно связан с употреблением времён. По возможности запоминайте глагол несовершенного вида вместе с его частотной парой совершенного вида."
+        },
+        {
+          "heading": "Сначала освоите частые нерегулярные глаголы",
+          "text": "Именно высокочастотные глаголы с нестандартными формами постоянно встречаются в речи и текстах, поэтому их полезно изучать в первую очередь."
+        },
+        {
+          "heading": "Сравнивайте настоящее и будущее",
+          "text": "Формы простого будущего совершенных глаголов внешне напоминают спряжение настоящего времени. Прямое сравнение помогает не путать их значение."
+        },
+        {
+          "heading": "Тренируйте род в прошедшем времени",
+          "text": "Используйте пары вроде он делал и она делала, чтобы согласование по роду стало автоматическим."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Практикуйте самые частые русские глаголы",
+      "description": "Закрепляйте изученные модели спряжения в упражнениях или перейдите к списку самых частых русских глаголов и их значений.",
+      "primaryLabel": "Практиковать русские глаголы",
+      "secondaryLabel": "Посмотреть 100 частых русских глаголов"
+    },
+    "related": {
+      "heading": "Другие материалы для изучения русского",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых частых русских глаголов"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 частых русских глаголов в прошедшем времени"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Русская лексика по уровням CEFR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Тест на уровень русского языка"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о спряжении русских глаголов",
+      "items": [
+        {
+          "question": "Что значит спрягать глагол в русском языке?",
+          "answer": "Спрягать глагол — значит изменять его форму для выражения грамматических значений, например лица, числа, времени или наклонения. В прошедшем времени и условном наклонении в единственном числе также важен род."
+        },
+        {
+          "question": "Сколько основных времён есть в русском языке?",
+          "answer": "Обычно выделяют три основных времени: настоящее, прошедшее и будущее. При этом система времён тесно связана с видом глагола, особенно при образовании настоящего и будущего."
+        },
+        {
+          "question": "Меняются ли русские глаголы с каждым местоимением?",
+          "answer": "В настоящем времени и простом будущем совершенного вида глаголы обычно изменяются по лицам и числам. В прошедшем времени и условном наклонении основными грамматическими различиями становятся род и число."
+        },
+        {
+          "question": "Что такое первое и второе спряжение?",
+          "answer": "Большинство русских глаголов относят к первому или второму спряжению в зависимости от набора личных окончаний. Это различие особенно полезно при образовании форм настоящего времени."
+        },
+        {
+          "question": "Почему вид глагола так важен в русском языке?",
+          "answer": "Вид показывает, как говорящий представляет действие: как процесс, повторение или незавершённость либо как завершённое действие с результатом. Кроме того, вид напрямую влияет на образование будущего времени."
+        },
+        {
+          "question": "Как образуется будущее время в русском языке?",
+          "answer": "Глаголы несовершенного вида обычно используют личную форму быть и инфинитив, например буду читать. Глаголы совершенного вида образуют простую личную форму, например прочитаю."
+        },
+        {
+          "question": "Почему глаголы в прошедшем времени изменяются по родам?",
+          "answer": "В русском прошедшем времени нет системы личных окончаний, аналогичной настоящему времени. В единственном числе глагол согласуется с подлежащим в мужском, женском или среднем роде, а во множественном числе используется общая форма."
+        },
+        {
+          "question": "Как образуется условное наклонение?",
+          "answer": "Условное наклонение обычно образуется с помощью формы прошедшего времени и частицы бы или б. Поэтому в единственном числе форма продолжает различаться по роду."
+        },
+        {
+          "question": "Есть ли в русском повелительное наклонение для всех местоимений?",
+          "answer": "Обычные формы повелительного наклонения в основном относятся ко второму лицу — ты и вы. Побуждение к действию с первым или третьим лицом обычно выражается другими конструкциями."
+        },
+        {
+          "question": "Как лучше запоминать спряжение русских глаголов?",
+          "answer": "Изучайте повторяющиеся окончания, запоминайте частые нерегулярные глаголы как целые модели, обращайте внимание на вид и сравнивайте один и тот же глагол в разных временах и наклонениях. Практика в коротких предложениях обычно полезнее механического запоминания отдельных форм."
+        }
+      ]
+    }
+  }
+]

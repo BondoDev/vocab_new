@@ -27,14 +27,37 @@ interface RawConjugatedVerbTenseGroup {
   verbs: RawConjugatedVerbRow[];
 }
 
+// Standard scientific transliteration for the Cyrillic letters that show up
+// in Russian pronoun labels, applied before the letter/digit collapsing
+// below. Without this, Cyrillic text would either be stripped entirely by
+// an ASCII-only filter (see the comment there) or survive as raw Cyrillic,
+// which still wouldn't match the Latin "ya"/"ty"/"on_ona_ono"/... keys
+// already authored in textContent/russian.json's pronounForms.
+const CYRILLIC_TO_LATIN: Record<string, string> = {
+  \u0430: "a", \u0431: "b", \u0432: "v", \u0433: "g", \u0434: "d", \u0435: "e", \u0451: "e", \u0436: "zh", \u0437: "z",
+  \u0438: "i", \u0439: "i", \u043a: "k", \u043b: "l", \u043c: "m", \u043d: "n", \u043e: "o", \u043f: "p", \u0440: "r",
+  \u0441: "s", \u0442: "t", \u0443: "u", \u0444: "f", \u0445: "kh", \u0446: "ts", \u0447: "ch", \u0448: "sh",
+  \u0449: "shch", \u044a: "", \u044b: "y", \u044c: "", \u044d: "e", \u044e: "yu", \u044f: "ya",
+};
+
+function transliterateCyrillic(value: string): string {
+  return value.replace(/[\u0430-\u044f\u0451]/g, (char) => CYRILLIC_TO_LATIN[char] ?? char);
+}
+
 export function normalizePronounKey(pronoun: string): string {
-  const key = pronoun
+  const lowered = pronoun
     .trim()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
+    .toLowerCase();
+
+  const key = transliterateCyrillic(lowered)
     .replace(/\s*\/\s*/g, "_")
-    .replace(/[^a-z0-9]+/g, "_")
+    // Collapse anything that isn't a letter or digit in *any* script to
+    // "_". A plain /[^a-z0-9]+/ only recognizes ASCII Latin letters, which
+    // silently wipes non-Latin pronoun labels out entirely instead of just
+    // stripping the punctuation/whitespace around them.
+    .replace(/[^\p{L}\p{N}]+/gu, "_")
     .replace(/^_+|_+$/g, "");
 
   switch (key) {
