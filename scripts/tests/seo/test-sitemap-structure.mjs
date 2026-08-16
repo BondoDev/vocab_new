@@ -214,7 +214,7 @@ async function main() {
 
     const verbListsXml = readFile("public/sitemaps/verb-lists.xml");
     const verbListLocs = extractLocs(verbListsXml);
-    test("verb-lists.xml contains exactly 98 verb-list URLs", () => assert.equal(verbListLocs.length, 98));
+    test("verb-lists.xml contains exactly 147 verb-list URLs", () => assert.equal(verbListLocs.length, 147));
     test("verb-lists.xml has no duplicate entries", () => assert.deepEqual(findDuplicates(verbListLocs), []));
     test("verb-lists.xml and sitemap-core.xml do not overlap", () => {
       const overlap = verbListLocs.filter((loc) => coreLocs.includes(loc));
