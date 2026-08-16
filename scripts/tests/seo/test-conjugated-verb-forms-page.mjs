@@ -254,6 +254,45 @@ try {
       ellos_ellas_ustedes: "son",
     });
   });
+
+  test("French ‘je / j’’ elision normalizes to the JSON “je” pronoun column key", () => {
+    // Regression test: the curly apostrophe in the authored "je / j’"
+    // label (and a straight-apostrophe "je / j'") isn't stripped by the
+    // generic diacritic/non-alphanumeric rules, so both fall through to
+    // "je_j" before the je_j -> je special case is applied.
+    assert.equal(formsRowBuilder.normalizePronounKey("je / j’"), "je");
+    assert.equal(formsRowBuilder.normalizePronounKey("je / j'"), "je");
+    assert.equal(formsRowBuilder.normalizePronounKey("il / elle / on"), "il_elle_on");
+
+    const rows = formsRowBuilder.buildConjugatedVerbFormsRows("fixture", "french", [
+      {
+        tense: "present_indicative",
+        targetLanguage: "fr",
+        verbs: [
+          {
+            word_id: "A1-00008",
+            conjugations: [
+              { pronoun: "je / j’", form: "suis" },
+              { pronoun: "tu", form: "es" },
+              { pronoun: "il / elle / on", form: "est" },
+              { pronoun: "nous", form: "sommes" },
+              { pronoun: "vous", form: "êtes" },
+              { pronoun: "ils / elles", form: "sont" },
+            ],
+          },
+        ],
+      },
+    ]);
+
+    assert.deepEqual(rows.get("A1-00008")?.present_indicative, {
+      je: "suis",
+      tu: "es",
+      il_elle_on: "est",
+      nous: "sommes",
+      vous: "êtes",
+      ils_elles: "sont",
+    });
+  });
 } finally {
   registryLoader.cleanup();
   metadataLoader.cleanup();

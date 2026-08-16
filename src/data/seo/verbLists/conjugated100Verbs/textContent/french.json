@@ -1,0 +1,3236 @@
+[
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "en",
+    "urlSlug": "100-most-common-french-verb-conjugations",
+    "entryButtonLabel": "View French conjugations",
+    "tableColumns": {
+      "number": "No.",
+      "infinitive": "Infinitive",
+      "meaning": "Meaning"
+    },
+    "pronounForms": [
+      {
+        "key": "je",
+        "label": "je / j’"
+      },
+      {
+        "key": "tu",
+        "label": "tu"
+      },
+      {
+        "key": "il_elle_on",
+        "label": "il / elle / on"
+      },
+      {
+        "key": "nous",
+        "label": "nous"
+      },
+      {
+        "key": "vous",
+        "label": "vous"
+      },
+      {
+        "key": "ils_elles",
+        "label": "ils / elles"
+      }
+    ],
+    "metadata": {
+      "title": "100 Most Common French Verb Conjugations",
+      "metaTitle": "100 Most Common French Verb Conjugations by Tense",
+      "metaDescription": "Compare 100 common French verbs across major tenses, moods, and subject pronouns, with clear grammar explanations and conjugation patterns."
+    },
+    "hero": {
+      "heading": "100 Most Common French Verb Conjugations",
+      "subtitle": "Compare essential French verbs across tenses, moods, and subject pronouns.",
+      "introParagraphs": [
+        "Explore the conjugations of 100 high-frequency French verbs across the most important indicative, conditional, subjunctive, and imperative forms. Use the table to compare how each verb changes with je, tu, il / elle / on, nous, vous, and ils / elles.",
+        "Switching between tenses makes recurring endings, auxiliary patterns, irregular stems, and participles easier to recognize. Comparing the same verb across several forms can help you understand French conjugation as a system instead of memorizing every form in isolation."
+      ]
+    },
+    "overview": {
+      "heading": "How French verb conjugation works",
+      "paragraphs": [
+        "French verbs usually change according to the subject, tense, and mood. Regular verbs follow recurring ending patterns, especially within the common -er, -ir, and -re families, while many high-frequency verbs use irregular stems or endings.",
+        "Compound tenses such as the passé composé, plus-que-parfait, futur antérieur, conditionnel passé, and passé du subjonctif are formed with an auxiliary verb, usually avoir or être, followed by a past participle. With être, the participle normally agrees with the subject in gender and number.",
+        "French also distinguishes grammatical moods. The indicative presents events as statements or facts, the conditional expresses hypothetical or dependent outcomes, the subjunctive commonly appears after expressions of necessity, emotion, doubt, or desire, and the imperative is used for commands and instructions."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Choose a French tense or mood",
+      "description": "Select a tense to compare the same 100 French verbs across their subject forms and study how their conjugation patterns change.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicative"
+        },
+        {
+          "key": "conditional",
+          "label": "Conditional"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjunctive"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperative"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Present Indicative",
+        "group": "indicative",
+        "tableHeading": "100 Common French Verbs in the Present Indicative",
+        "tableDescription": "Compare how common French verbs are conjugated in the present indicative for each subject pronoun.",
+        "grammar": {
+          "heading": "How to form the French present indicative",
+          "description": "The present indicative is used for current actions, habits, general facts, and many situations that English may express with either a simple or continuous present form. Regular verbs take person-specific endings, while common verbs such as être, avoir, aller, and faire are highly irregular.",
+          "formula": "subject + present-tense verb form"
+        }
+      },
+      {
+        "key": "passe_compose",
+        "label": "Passé Composé",
+        "group": "indicative",
+        "tableHeading": "100 Common French Verbs in the Passé Composé",
+        "tableDescription": "Compare the passé composé forms of common French verbs and see which auxiliary and past participle each verb uses.",
+        "grammar": {
+          "heading": "How to form the passé composé",
+          "description": "The passé composé commonly describes completed past actions and events. It is formed with the present tense of avoir or être plus the past participle. Most verbs use avoir, while certain intransitive and pronominal verbs use être. With être, the past participle normally agrees with the subject.",
+          "formula": "subject + present of avoir or être + past participle",
+          "additionalFormula": "elle est arrivée / ils sont partis"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imperfect",
+        "group": "indicative",
+        "tableHeading": "100 Common French Verbs in the Imperfect",
+        "tableDescription": "Compare imperfect forms used for ongoing, habitual, descriptive, and background situations in the past.",
+        "grammar": {
+          "heading": "How to form the French imperfect",
+          "description": "The imperfect usually describes repeated past actions, ongoing situations, descriptions, states, and background circumstances. For most verbs, take the nous form of the present indicative, remove -ons, and add the imperfect endings. Être is the major exception, using the stem ét-.",
+          "formula": "present nous stem without -ons + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "nous parlons → parl- → je parlais"
+        }
+      },
+      {
+        "key": "plus_que_parfait",
+        "label": "Pluperfect",
+        "group": "indicative",
+        "tableHeading": "100 Common French Verbs in the Pluperfect",
+        "tableDescription": "Compare French pluperfect forms used for actions that had already happened before another past event.",
+        "grammar": {
+          "heading": "How to form the French pluperfect",
+          "description": "The plus-que-parfait expresses an action or state that occurred before another point in the past. It uses the imperfect of avoir or être followed by the past participle. The choice of auxiliary follows the same general pattern as in the passé composé.",
+          "formula": "subject + imperfect of avoir or être + past participle",
+          "additionalFormula": "j’avais fini / elle était partie"
+        }
+      },
+      {
+        "key": "passe_simple",
+        "label": "Passé Simple",
+        "group": "indicative",
+        "tableHeading": "100 Common French Verbs in the Passé Simple",
+        "tableDescription": "Compare passé simple forms of frequent French verbs, especially useful for reading literary and formal narrative texts.",
+        "grammar": {
+          "heading": "How to form the passé simple",
+          "description": "The passé simple expresses completed past events and is mainly encountered in literature, historical narration, and some formal writing. Regular verb families follow characteristic sets of endings, while many common verbs have irregular stems that must be learned separately.",
+          "formula": "verb stem + passé simple person ending"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Simple Future",
+        "group": "indicative",
+        "tableHeading": "100 Common French Verbs in the Simple Future",
+        "tableDescription": "Compare simple future forms used for actions, predictions, and situations expected to occur later.",
+        "grammar": {
+          "heading": "How to form the French simple future",
+          "description": "The futur simple is generally formed by adding future endings to the infinitive. For -re verbs, the final -e is normally removed before the endings are added. Many frequent verbs have irregular future stems but use the same set of endings.",
+          "formula": "future stem + -ai, -as, -a, -ons, -ez, -ont",
+          "additionalFormula": "parler → je parlerai; prendre → je prendrai"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Future Perfect",
+        "group": "indicative",
+        "tableHeading": "100 Common French Verbs in the Future Perfect",
+        "tableDescription": "Compare futur antérieur forms used for actions that will be completed before a future point or event.",
+        "grammar": {
+          "heading": "How to form the French future perfect",
+          "description": "The futur antérieur describes an action that will have been completed before another future event or reference point. It is formed with the simple future of avoir or être followed by the past participle.",
+          "formula": "subject + future of avoir or être + past participle",
+          "additionalFormula": "j’aurai terminé / elle sera arrivée"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Present Conditional",
+        "group": "conditional",
+        "tableHeading": "100 Common French Verbs in the Present Conditional",
+        "tableDescription": "Compare present conditional forms used for hypothetical results, polite requests, wishes, and situations dependent on a condition.",
+        "grammar": {
+          "heading": "How to form the French present conditional",
+          "description": "The conditionnel présent commonly expresses hypothetical actions, polite requests, wishes, and results dependent on a condition. It normally uses the same stem as the simple future together with the endings of the imperfect.",
+          "formula": "future stem + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "je parlerais / nous viendrions"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Past Conditional",
+        "group": "conditional",
+        "tableHeading": "100 Common French Verbs in the Past Conditional",
+        "tableDescription": "Compare past conditional forms used for unreal past results, missed possibilities, and actions that would have occurred under different conditions.",
+        "grammar": {
+          "heading": "How to form the French past conditional",
+          "description": "The conditionnel passé is used for hypothetical or unrealized actions in the past, including results that would have happened if another condition had been fulfilled. It combines the present conditional of avoir or être with the past participle.",
+          "formula": "subject + conditional of avoir or être + past participle",
+          "additionalFormula": "j’aurais accepté / elle serait venue"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Present Subjunctive",
+        "group": "subjunctive",
+        "tableHeading": "100 Common French Verbs in the Present Subjunctive",
+        "tableDescription": "Compare present subjunctive forms used after expressions of necessity, emotion, doubt, desire, possibility, and certain conjunctions.",
+        "grammar": {
+          "heading": "How to form the French present subjunctive",
+          "description": "The subjonctif présent frequently appears in subordinate clauses introduced by que after expressions of desire, necessity, emotion, doubt, judgment, or uncertainty. For many verbs, the stem is based on the ils form of the present indicative, although numerous common verbs have irregular stems.",
+          "formula": "que + subject + subjunctive stem + -e, -es, -e, -ions, -iez, -ent",
+          "additionalFormula": "Il faut que je parte."
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Past Subjunctive",
+        "group": "subjunctive",
+        "tableHeading": "100 Common French Verbs in the Past Subjunctive",
+        "tableDescription": "Compare past subjunctive forms used when a subjunctive-triggering expression refers to a completed action.",
+        "grammar": {
+          "heading": "How to form the French past subjunctive",
+          "description": "The passé du subjonctif is used when the context requires the subjunctive and the subordinate action is viewed as completed. It is formed with the present subjunctive of avoir or être followed by the past participle.",
+          "formula": "que + subject + present subjunctive of avoir or être + past participle",
+          "additionalFormula": "Je suis content que tu aies réussi."
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Present Imperative",
+        "group": "imperative",
+        "tableHeading": "100 Common French Verbs in the Present Imperative",
+        "tableDescription": "Compare imperative forms used for commands, instructions, invitations, and advice.",
+        "grammar": {
+          "heading": "How to form the French present imperative",
+          "description": "The impératif présent is used for commands, instructions, advice, and invitations. It normally has forms only for tu, nous, and vous, and the subject pronoun is omitted. For many -er verbs and aller, the tu form drops the final -s, except in certain combinations before y or en.",
+          "formula": "imperative verb form without subject pronoun: tu-form / nous-form / vous-form",
+          "additionalFormula": "Parle ! / Parlons ! / Parlez !"
+        }
+      }
+    ],
+    "table": {
+      "heading": "French Verb Conjugation Table",
+      "description": "Use the table to compare 100 common French verbs across subject forms, then switch tenses to see how endings, stems, auxiliaries, and participles change.",
+      "scrollHint": "Scroll horizontally to see all subject forms.",
+      "scrollLeftLabel": "Scroll left",
+      "scrollRightLabel": "Scroll right",
+      "notes": [
+        "The pronoun on includes several meanings in modern French and frequently replaces nous in everyday spoken language, but it normally takes the same verb form as il and elle.",
+        "Compound tenses use either avoir or être as an auxiliary. Verbs conjugated with être generally require past-participle agreement with the subject.",
+        "The imperative differs from the other forms on this page because standard French uses only tu, nous, and vous imperative forms and normally omits the subject pronoun."
+      ]
+    },
+    "rules": {
+      "heading": "Key French conjugation rules",
+      "intro": "French conjugation becomes easier when you learn recurring stems, endings, and auxiliary patterns instead of treating every form as unrelated.",
+      "items": [
+        {
+          "heading": "Regular verbs follow recurring ending patterns",
+          "text": "Many French verbs belong to recognizable conjugation families. Regular -er verbs are especially consistent, while regular -ir and certain -re verbs use their own recurring sets of endings.",
+          "examples": [
+            "je parle, tu parles, nous parlons",
+            "je finis, tu finis, nous finissons",
+            "je vends, tu vends, nous vendons"
+          ]
+        },
+        {
+          "heading": "Compound tenses use avoir or être",
+          "text": "Several important French tenses combine a conjugated auxiliary with a past participle. Most verbs use avoir, while a smaller group of verbs and pronominal verbs use être.",
+          "examples": ["j’ai parlé", "elle est partie", "nous avions terminé"]
+        },
+        {
+          "heading": "Past participles may require agreement",
+          "text": "With être, the past participle normally agrees with the subject in gender and number. Past-participle agreement with avoir follows different rules and can depend on the position of a direct object.",
+          "examples": [
+            "elle est arrivée",
+            "ils sont partis",
+            "elles sont venues"
+          ]
+        },
+        {
+          "heading": "Future and conditional often share the same stem",
+          "text": "The simple future and present conditional generally use the same verb stem. What changes is the set of endings: future endings resemble forms of avoir, while conditional endings match imperfect endings.",
+          "examples": [
+            "je viendrai / je viendrais",
+            "tu feras / tu ferais",
+            "nous pourrons / nous pourrions"
+          ]
+        },
+        {
+          "heading": "The subjunctive depends on both grammar and context",
+          "text": "The subjunctive is not simply another time reference. It is a mood selected in many subordinate clauses after expressions involving necessity, desire, emotion, uncertainty, doubt, and certain conjunctions.",
+          "examples": [
+            "Il faut que tu viennes.",
+            "Je veux qu’elle parte.",
+            "Bien qu’il soit fatigué, il continue."
+          ]
+        },
+        {
+          "heading": "High-frequency verbs are often irregular",
+          "text": "Some of the most useful French verbs change their stems or endings across several tenses. Learning these frequent irregular verbs early gives you patterns that reappear in many everyday sentences.",
+          "examples": [
+            "je suis, nous sommes, ils sont",
+            "je vais, nous allons, ils vont",
+            "je peux, nous pouvons, ils peuvent"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Common French conjugation mistakes",
+      "intro": "These errors are especially common when learners transfer patterns from regular verbs or from English.",
+      "items": [
+        {
+          "incorrect": "Il parlent français.",
+          "correct": "Il parle français.",
+          "explanation": "Il is third-person singular, so the present form of parler is parle. Parlent is used with ils or elles."
+        },
+        {
+          "incorrect": "J’ai allé au marché.",
+          "correct": "Je suis allé au marché.",
+          "explanation": "Aller forms compound tenses with être, not avoir. The past participle may also change for gender and number."
+        },
+        {
+          "incorrect": "Nous avons parti tôt.",
+          "correct": "Nous sommes partis tôt.",
+          "explanation": "Partir normally uses être in the passé composé, and partis agrees with a plural subject."
+        },
+        {
+          "incorrect": "Si j’aurais le temps, je viendrais.",
+          "correct": "Si j’avais le temps, je viendrais.",
+          "explanation": "In a standard present hypothetical construction, the si-clause uses the imperfect, while the result clause uses the present conditional."
+        },
+        {
+          "incorrect": "Il faut que tu viens.",
+          "correct": "Il faut que tu viennes.",
+          "explanation": "Il faut que normally requires the subjunctive, so venir becomes viennes with tu."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "How to study French conjugations with this table",
+      "steps": [
+        {
+          "heading": "Start with the present indicative",
+          "text": "Learn how common verbs change across the six subject forms before moving to more complex tenses and moods."
+        },
+        {
+          "heading": "Compare one verb across all subjects",
+          "text": "Read horizontally across a verb to notice which endings change and which parts of the stem remain stable."
+        },
+        {
+          "heading": "Switch the same verb between tenses",
+          "text": "Compare one familiar verb in the present, imperfect, future, conditional, and compound tenses to see how French builds related forms."
+        },
+        {
+          "heading": "Identify the auxiliary in compound tenses",
+          "text": "When studying the passé composé and other compound forms, pay attention to whether the verb uses avoir or être and whether agreement is required."
+        },
+        {
+          "heading": "Mark irregular stems",
+          "text": "Give extra attention to common verbs whose future, conditional, subjunctive, or past forms cannot be predicted from a basic regular pattern."
+        },
+        {
+          "heading": "Use forms in complete sentences",
+          "text": "After reviewing a conjugation, create a short sentence with it. Context helps connect the grammatical form with its actual meaning and use."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tips for learning French verb conjugations",
+      "items": [
+        {
+          "heading": "Learn endings as patterns",
+          "text": "Memorize recurring sets of endings for regular verb families and major tense formations rather than learning every form independently."
+        },
+        {
+          "heading": "Prioritize frequent irregular verbs",
+          "text": "Verbs such as être, avoir, aller, faire, pouvoir, vouloir, devoir, and venir occur constantly and are worth mastering early."
+        },
+        {
+          "heading": "Study related tenses together",
+          "text": "Compare the future with the conditional, and the passé composé with other compound tenses, because they share important structural patterns."
+        },
+        {
+          "heading": "Watch auxiliary choice and agreement",
+          "text": "When practising compound tenses, learn the auxiliary together with the verb and pay attention to situations where the past participle changes."
+        },
+        {
+          "heading": "Practise conjugations in context",
+          "text": "Short sentences and realistic situations help you learn when a tense or mood is appropriate, not just how its form is built."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Practise common French verbs",
+      "description": "Use these conjugation patterns in active practice, or explore the most common French verbs and their meanings before studying more forms.",
+      "primaryLabel": "Practise French verbs",
+      "secondaryLabel": "Explore 100 common French verbs"
+    },
+    "related": {
+      "heading": "Related French learning resources",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 Most Common French Verbs"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 Common French Verbs: Past Forms"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "French Vocabulary by CEFR Level"
+        },
+        {
+          "key": "levelTest",
+          "label": "French Level Test"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "French verb conjugation FAQ",
+      "items": [
+        {
+          "question": "What does it mean to conjugate a verb in French?",
+          "answer": "To conjugate a French verb means changing its form according to grammatical factors such as subject, tense, and mood. For example, parler becomes je parle, nous parlons, and ils parlent in the present indicative."
+        },
+        {
+          "question": "Do French verbs change for every subject pronoun?",
+          "answer": "French verbs normally have person-specific forms, although several forms may sound identical in speech. The written endings often distinguish je, tu, il / elle / on, nous, vous, and ils / elles even when pronunciation does not."
+        },
+        {
+          "question": "What are the most important French tenses for beginners?",
+          "answer": "Learners usually begin with the present indicative, passé composé, imperfect, and simple future because these cover a large share of everyday communication. The conditional and present subjunctive become increasingly important as learners progress."
+        },
+        {
+          "question": "What is the difference between the passé composé and the imperfect?",
+          "answer": "The passé composé typically presents a past action as completed or bounded, while the imperfect commonly describes ongoing situations, repeated actions, background circumstances, and states. Many past narratives use both together."
+        },
+        {
+          "question": "Why do some French verbs use être instead of avoir?",
+          "answer": "Most compound forms use avoir, but certain verbs, especially some intransitive movement or change-of-state verbs, and all pronominal verbs use être. When être is used, the past participle normally agrees with the subject."
+        },
+        {
+          "question": "Are French future and conditional forms related?",
+          "answer": "Yes. The futur simple and conditionnel présent normally use the same stem. The future uses endings such as -ai, -as, and -ont, while the conditional uses the imperfect endings -ais, -ais, -ait, -ions, -iez, and -aient."
+        },
+        {
+          "question": "When is the French subjunctive used?",
+          "answer": "The subjunctive commonly appears in subordinate clauses after expressions of necessity, desire, emotion, doubt, uncertainty, judgment, and certain conjunctions. Its use depends on the grammatical context, not simply on whether an action happens in the present or past."
+        },
+        {
+          "question": "Is the passé simple important in spoken French?",
+          "answer": "The passé simple is uncommon in ordinary modern conversation, where the passé composé is usually preferred for completed past actions. However, the passé simple remains important for reading novels, historical writing, biographies, and formal narrative texts."
+        },
+        {
+          "question": "Why are French verb conjugations difficult to learn?",
+          "answer": "French combines regular ending systems with many frequent irregular verbs, stem changes, compound tenses, auxiliary selection, and mood distinctions. Learning recurring patterns first makes the system much more manageable."
+        },
+        {
+          "question": "What is the best way to memorize French conjugations?",
+          "answer": "Study high-frequency verbs first, group forms by recurring patterns, compare related tenses, and repeatedly use the forms in short sentences. Active recall and contextual practice are usually more effective than repeatedly reading complete conjugation tables."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "es",
+    "urlSlug": "100-verbos-franceses-mas-comunes-conjugados",
+    "entryButtonLabel": "Ver conjugaciones en francés",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "meaning": "Significado"
+    },
+    "pronounForms": [
+      {
+        "key": "je",
+        "label": "je / j’"
+      },
+      {
+        "key": "tu",
+        "label": "tu"
+      },
+      {
+        "key": "il_elle_on",
+        "label": "il / elle / on"
+      },
+      {
+        "key": "nous",
+        "label": "nous"
+      },
+      {
+        "key": "vous",
+        "label": "vous"
+      },
+      {
+        "key": "ils_elles",
+        "label": "ils / elles"
+      }
+    ],
+    "metadata": {
+      "title": "Conjugación de los 100 verbos franceses más comunes",
+      "metaTitle": "100 verbos franceses más comunes conjugados por tiempos",
+      "metaDescription": "Compara 100 verbos franceses frecuentes en distintos tiempos, modos y personas, con explicaciones claras de formación y uso."
+    },
+    "hero": {
+      "heading": "Conjugación de los 100 verbos franceses más comunes",
+      "subtitle": "Compara verbos esenciales del francés en distintos tiempos, modos y personas gramaticales.",
+      "introParagraphs": [
+        "Consulta la conjugación de 100 verbos franceses de uso frecuente en los principales tiempos del indicativo, condicional, subjuntivo e imperativo. La tabla permite comparar las formas correspondientes a je, tu, il / elle / on, nous, vous e ils / elles.",
+        "Cambiar de un tiempo a otro ayuda a reconocer terminaciones recurrentes, auxiliares, participios y raíces irregulares. Comparar un mismo verbo en varias formas permite entender mejor el sistema de conjugación francés en lugar de memorizar cada forma de manera aislada."
+      ]
+    },
+    "overview": {
+      "heading": "Cómo funciona la conjugación de los verbos franceses",
+      "paragraphs": [
+        "Los verbos franceses suelen cambiar según la persona, el número, el tiempo y el modo. Los verbos regulares siguen patrones de terminación recurrentes, especialmente en los grupos frecuentes en -er, -ir y -re, mientras que muchos verbos de uso habitual presentan raíces o terminaciones irregulares.",
+        "Los tiempos compuestos, como el passé composé, el plus-que-parfait, el futur antérieur, el conditionnel passé y el passé du subjonctif, se forman con un verbo auxiliar, normalmente avoir o être, seguido de un participio pasado. Con être, el participio suele concordar en género y número con el sujeto.",
+        "El francés también distingue varios modos verbales. El indicativo se emplea principalmente para presentar hechos y situaciones, el condicional para hipótesis y resultados dependientes de una condición, el subjuntivo aparece con frecuencia tras expresiones de necesidad, emoción, duda o deseo, y el imperativo se utiliza para órdenes, instrucciones y consejos."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Elige un tiempo o modo verbal francés",
+      "description": "Selecciona un tiempo para comparar los mismos 100 verbos franceses entre sus distintas personas y observar cómo cambian sus patrones de conjugación.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "conditional",
+          "label": "Condicional"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Presente de indicativo",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comunes en presente de indicativo",
+        "tableDescription": "Compara cómo se conjugan los verbos franceses más frecuentes en presente de indicativo para cada persona gramatical.",
+        "grammar": {
+          "heading": "Cómo se forma el presente de indicativo en francés",
+          "description": "El présent de l’indicatif se utiliza para acciones actuales, hábitos, hechos generales y muchas situaciones que en español se expresan con el presente. Los verbos regulares toman terminaciones específicas según la persona, mientras que verbos muy frecuentes como être, avoir, aller y faire presentan conjugaciones irregulares.",
+          "formula": "sujeto + forma verbal en presente"
+        }
+      },
+      {
+        "key": "passe_compose",
+        "label": "Passé composé",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comunes en passé composé",
+        "tableDescription": "Compara las formas del passé composé y observa qué auxiliar y participio pasado utiliza cada verbo.",
+        "grammar": {
+          "heading": "Cómo se forma el passé composé",
+          "description": "El passé composé se utiliza principalmente para acciones y acontecimientos pasados considerados terminados. Se forma con el presente de avoir o être más el participio pasado. La mayoría de los verbos utilizan avoir, mientras que ciertos verbos intransitivos y los verbos pronominales utilizan être. Con être, el participio pasado suele concordar con el sujeto.",
+          "formula": "sujeto + presente de avoir o être + participio pasado",
+          "additionalFormula": "elle est arrivée / ils sont partis"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imperfecto",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comunes en imperfecto",
+        "tableDescription": "Compara las formas del imparfait utilizadas para acciones habituales, situaciones en desarrollo, descripciones y contexto en el pasado.",
+        "grammar": {
+          "heading": "Cómo se forma el imperfecto en francés",
+          "description": "El imparfait suele describir acciones repetidas en el pasado, situaciones en desarrollo, estados, descripciones y circunstancias de fondo. Para la mayoría de los verbos se toma la forma de nous del presente, se elimina -ons y se añaden las terminaciones del imperfecto. Être es la principal excepción y utiliza la raíz ét-.",
+          "formula": "raíz de la forma nous sin -ons + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "nous parlons → parl- → je parlais"
+        }
+      },
+      {
+        "key": "plus_que_parfait",
+        "label": "Pluscuamperfecto",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comunes en pluscuamperfecto",
+        "tableDescription": "Compara las formas del plus-que-parfait usadas para acciones que ya habían ocurrido antes de otro momento pasado.",
+        "grammar": {
+          "heading": "Cómo se forma el pluscuamperfecto en francés",
+          "description": "El plus-que-parfait expresa una acción o situación anterior a otro punto de referencia en el pasado. Se construye con el imperfecto de avoir o être seguido del participio pasado. La elección del auxiliar sigue, en términos generales, las mismas reglas que en el passé composé.",
+          "formula": "sujeto + imperfecto de avoir o être + participio pasado",
+          "additionalFormula": "j’avais fini / elle était partie"
+        }
+      },
+      {
+        "key": "passe_simple",
+        "label": "Passé simple",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comunes en passé simple",
+        "tableDescription": "Compara las formas del passé simple, especialmente útiles para leer textos literarios, históricos y narrativos formales.",
+        "grammar": {
+          "heading": "Cómo se forma el passé simple",
+          "description": "El passé simple expresa acontecimientos pasados terminados y aparece principalmente en literatura, narración histórica y ciertos registros formales. Los grupos regulares siguen conjuntos característicos de terminaciones, mientras que muchos verbos frecuentes presentan raíces irregulares que deben aprenderse por separado.",
+          "formula": "raíz verbal + terminación personal del passé simple"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futuro simple",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comunes en futuro simple",
+        "tableDescription": "Compara las formas del futur simple utilizadas para acciones, predicciones y situaciones futuras.",
+        "grammar": {
+          "heading": "Cómo se forma el futuro simple en francés",
+          "description": "El futur simple se forma generalmente añadiendo las terminaciones de futuro al infinitivo. En los verbos terminados en -re suele eliminarse la -e final antes de añadir las terminaciones. Muchos verbos frecuentes tienen raíces irregulares, pero conservan el mismo conjunto de terminaciones.",
+          "formula": "raíz de futuro + -ai, -as, -a, -ons, -ez, -ont",
+          "additionalFormula": "parler → je parlerai; prendre → je prendrai"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futuro anterior",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comunes en futuro anterior",
+        "tableDescription": "Compara las formas del futur antérieur utilizadas para acciones que estarán terminadas antes de otro momento o acontecimiento futuro.",
+        "grammar": {
+          "heading": "Cómo se forma el futuro anterior en francés",
+          "description": "El futur antérieur describe una acción que estará completada antes de otro acontecimiento o punto de referencia futuro. Se forma con el futur simple de avoir o être seguido del participio pasado.",
+          "formula": "sujeto + futuro de avoir o être + participio pasado",
+          "additionalFormula": "j’aurai terminé / elle sera arrivée"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condicional presente",
+        "group": "conditional",
+        "tableHeading": "100 verbos franceses comunes en condicional presente",
+        "tableDescription": "Compara las formas del conditionnel présent utilizadas para hipótesis, peticiones corteses, deseos y resultados sujetos a una condición.",
+        "grammar": {
+          "heading": "Cómo se forma el condicional presente en francés",
+          "description": "El conditionnel présent expresa con frecuencia acciones hipotéticas, peticiones corteses, deseos y consecuencias que dependen de una condición. Normalmente utiliza la misma raíz que el futuro simple junto con las terminaciones del imperfecto.",
+          "formula": "raíz de futuro + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "je parlerais / nous viendrions"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Condicional pasado",
+        "group": "conditional",
+        "tableHeading": "100 verbos franceses comunes en condicional pasado",
+        "tableDescription": "Compara las formas del conditionnel passé utilizadas para resultados irreales en el pasado, posibilidades no realizadas y acciones que habrían ocurrido bajo otras condiciones.",
+        "grammar": {
+          "heading": "Cómo se forma el condicional pasado en francés",
+          "description": "El conditionnel passé se emplea para acciones hipotéticas o no realizadas en el pasado, incluidas consecuencias que habrían ocurrido si se hubiera cumplido otra condición. Se construye con el condicional presente de avoir o être seguido del participio pasado.",
+          "formula": "sujeto + condicional de avoir o être + participio pasado",
+          "additionalFormula": "j’aurais accepté / elle serait venue"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Presente de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos franceses comunes en presente de subjuntivo",
+        "tableDescription": "Compara las formas del subjonctif présent utilizadas tras expresiones de necesidad, emoción, duda, deseo, posibilidad y determinadas conjunciones.",
+        "grammar": {
+          "heading": "Cómo se forma el presente de subjuntivo en francés",
+          "description": "El subjonctif présent aparece con frecuencia en oraciones subordinadas introducidas por que después de expresiones de deseo, necesidad, emoción, duda, valoración o incertidumbre. En muchos verbos, la raíz se basa en la forma de ils del presente de indicativo, aunque numerosos verbos comunes presentan raíces irregulares.",
+          "formula": "que + sujeto + raíz de subjuntivo + -e, -es, -e, -ions, -iez, -ent",
+          "additionalFormula": "Il faut que je parte."
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Pasado de subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos franceses comunes en pasado de subjuntivo",
+        "tableDescription": "Compara las formas del passé du subjonctif cuando una estructura que exige subjuntivo se refiere a una acción ya completada.",
+        "grammar": {
+          "heading": "Cómo se forma el pasado de subjuntivo en francés",
+          "description": "El passé du subjonctif se utiliza cuando el contexto requiere subjuntivo y la acción de la oración subordinada se considera terminada. Se forma con el presente de subjuntivo de avoir o être seguido del participio pasado.",
+          "formula": "que + sujeto + presente de subjuntivo de avoir o être + participio pasado",
+          "additionalFormula": "Je suis content que tu aies réussi."
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo presente",
+        "group": "imperative",
+        "tableHeading": "100 verbos franceses comunes en imperativo presente",
+        "tableDescription": "Compara las formas del impératif présent utilizadas para órdenes, instrucciones, invitaciones y consejos.",
+        "grammar": {
+          "heading": "Cómo se forma el imperativo presente en francés",
+          "description": "El impératif présent se utiliza para órdenes, instrucciones, consejos e invitaciones. Normalmente solo tiene formas correspondientes a tu, nous y vous, y el pronombre sujeto se omite. En muchos verbos en -er y en aller, la forma de tu pierde la -s final, salvo en determinados contextos ante y o en.",
+          "formula": "forma verbal del imperativo sin pronombre sujeto: forma de tu / nous / vous",
+          "additionalFormula": "Parle ! / Parlons ! / Parlez !"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabla de conjugación de verbos franceses",
+      "description": "Utiliza la tabla para comparar 100 verbos franceses comunes entre sus distintas personas y cambia de tiempo para observar cómo varían las terminaciones, raíces, auxiliares y participios.",
+      "scrollHint": "Desplázate horizontalmente para ver todas las personas.",
+      "scrollLeftLabel": "Desplazar a la izquierda",
+      "scrollRightLabel": "Desplazar a la derecha",
+      "notes": [
+        "El pronombre on puede tener varios significados en francés moderno y con frecuencia sustituye a nous en el habla cotidiana, pero normalmente se conjuga igual que il y elle.",
+        "Los tiempos compuestos utilizan avoir o être como auxiliar. Los verbos conjugados con être suelen exigir concordancia del participio pasado con el sujeto.",
+        "El imperativo se diferencia de las demás formas de esta página porque el francés estándar solo utiliza formas de tu, nous y vous y normalmente omite el pronombre sujeto."
+      ]
+    },
+    "rules": {
+      "heading": "Reglas clave de la conjugación francesa",
+      "intro": "La conjugación francesa resulta más fácil cuando se aprenden patrones recurrentes de raíces, terminaciones y auxiliares en lugar de memorizar cada forma como un elemento independiente.",
+      "items": [
+        {
+          "heading": "Los verbos regulares siguen patrones de terminación",
+          "text": "Muchos verbos franceses pertenecen a familias de conjugación reconocibles. Los verbos regulares en -er son especialmente sistemáticos, mientras que los verbos regulares en -ir y determinados verbos en -re siguen sus propios patrones.",
+          "examples": [
+            "je parle, tu parles, nous parlons",
+            "je finis, tu finis, nous finissons",
+            "je vends, tu vends, nous vendons"
+          ]
+        },
+        {
+          "heading": "Los tiempos compuestos utilizan avoir o être",
+          "text": "Varios tiempos importantes del francés combinan un auxiliar conjugado con un participio pasado. La mayoría de los verbos utilizan avoir, mientras que un grupo más reducido y los verbos pronominales utilizan être.",
+          "examples": ["j’ai parlé", "elle est partie", "nous avions terminé"]
+        },
+        {
+          "heading": "El participio pasado puede requerir concordancia",
+          "text": "Con être, el participio pasado normalmente concuerda con el sujeto en género y número. Con avoir, las reglas son diferentes y la concordancia puede depender de la posición de un complemento directo.",
+          "examples": [
+            "elle est arrivée",
+            "ils sont partis",
+            "elles sont venues"
+          ]
+        },
+        {
+          "heading": "El futuro y el condicional suelen compartir raíz",
+          "text": "El futuro simple y el condicional presente utilizan normalmente la misma raíz verbal. Lo que cambia es el conjunto de terminaciones: el futuro emplea terminaciones relacionadas históricamente con avoir y el condicional utiliza las del imperfecto.",
+          "examples": [
+            "je viendrai / je viendrais",
+            "tu feras / tu ferais",
+            "nous pourrons / nous pourrions"
+          ]
+        },
+        {
+          "heading": "El subjuntivo depende del contexto gramatical",
+          "text": "El subjuntivo no es simplemente otro tiempo verbal. Es un modo que aparece en muchas subordinadas después de expresiones de necesidad, deseo, emoción, incertidumbre, duda y determinadas conjunciones.",
+          "examples": [
+            "Il faut que tu viennes.",
+            "Je veux qu’elle parte.",
+            "Bien qu’il soit fatigué, il continue."
+          ]
+        },
+        {
+          "heading": "Muchos verbos de alta frecuencia son irregulares",
+          "text": "Algunos de los verbos franceses más utilizados cambian de raíz o de terminación entre distintos tiempos y personas. Aprender pronto estos verbos ayuda a reconocer formas que aparecen constantemente en el francés cotidiano.",
+          "examples": [
+            "je suis, nous sommes, ils sont",
+            "je vais, nous allons, ils vont",
+            "je peux, nous pouvons, ils peuvent"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Errores frecuentes al conjugar verbos franceses",
+      "intro": "Estos errores aparecen a menudo cuando se aplican patrones regulares a verbos irregulares o se trasladan directamente estructuras del español.",
+      "items": [
+        {
+          "incorrect": "Il parlent français.",
+          "correct": "Il parle français.",
+          "explanation": "Il es tercera persona del singular, por lo que la forma correcta de parler en presente es parle. Parlent corresponde a ils o elles."
+        },
+        {
+          "incorrect": "J’ai allé au marché.",
+          "correct": "Je suis allé au marché.",
+          "explanation": "Aller forma los tiempos compuestos con être, no con avoir. Además, el participio puede variar según el género y el número del sujeto."
+        },
+        {
+          "incorrect": "Nous avons parti tôt.",
+          "correct": "Nous sommes partis tôt.",
+          "explanation": "Partir utiliza normalmente être en el passé composé, y partis concuerda con el sujeto plural."
+        },
+        {
+          "incorrect": "Si j’aurais le temps, je viendrais.",
+          "correct": "Si j’avais le temps, je viendrais.",
+          "explanation": "En una construcción hipotética de este tipo, la oración introducida por si utiliza el imperfecto y la consecuencia utiliza el condicional presente."
+        },
+        {
+          "incorrect": "Il faut que tu viens.",
+          "correct": "Il faut que tu viennes.",
+          "explanation": "La expresión il faut que requiere normalmente subjuntivo, por lo que venir adopta la forma viennes con tu."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Cómo estudiar las conjugaciones francesas con esta tabla",
+      "steps": [
+        {
+          "heading": "Empieza por el presente de indicativo",
+          "text": "Aprende primero cómo cambian los verbos frecuentes entre las seis personas antes de pasar a tiempos compuestos y modos más complejos."
+        },
+        {
+          "heading": "Compara un verbo entre todas las personas",
+          "text": "Lee horizontalmente las formas de un mismo verbo para identificar qué terminaciones cambian y qué partes de la raíz permanecen estables."
+        },
+        {
+          "heading": "Cambia el mismo verbo de tiempo",
+          "text": "Compara un verbo conocido en presente, imperfecto, futuro, condicional y tiempos compuestos para observar cómo se construyen formas relacionadas."
+        },
+        {
+          "heading": "Identifica el auxiliar en los tiempos compuestos",
+          "text": "Al estudiar el passé composé y otros tiempos compuestos, comprueba si el verbo utiliza avoir o être y si el participio necesita concordancia."
+        },
+        {
+          "heading": "Presta atención a las raíces irregulares",
+          "text": "Dedica más práctica a los verbos comunes cuyas formas de futuro, condicional, subjuntivo o pasado no pueden predecirse mediante un patrón regular sencillo."
+        },
+        {
+          "heading": "Utiliza las formas en frases completas",
+          "text": "Después de revisar una conjugación, crea una frase breve con ella. El contexto ayuda a relacionar la forma gramatical con su significado y uso real."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consejos para aprender las conjugaciones francesas",
+      "items": [
+        {
+          "heading": "Aprende patrones de terminaciones",
+          "text": "Memoriza conjuntos recurrentes de terminaciones para los principales grupos de verbos y tiempos en lugar de aprender cada forma de manera independiente."
+        },
+        {
+          "heading": "Prioriza los verbos irregulares frecuentes",
+          "text": "Verbos como être, avoir, aller, faire, pouvoir, vouloir, devoir y venir aparecen constantemente y conviene dominarlos desde etapas tempranas."
+        },
+        {
+          "heading": "Estudia juntos los tiempos relacionados",
+          "text": "Compara el futuro con el condicional y el passé composé con otros tiempos compuestos, ya que comparten patrones estructurales importantes."
+        },
+        {
+          "heading": "Observa el auxiliar y la concordancia",
+          "text": "Cuando practiques tiempos compuestos, aprende qué auxiliar utiliza cada verbo y presta atención a los contextos en los que el participio pasado cambia."
+        },
+        {
+          "heading": "Practica las conjugaciones en contexto",
+          "text": "Las frases breves y las situaciones reales ayudan a aprender no solo cómo se forma un tiempo o modo, sino también cuándo resulta apropiado utilizarlo."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Practica los verbos franceses más comunes",
+      "description": "Pon en práctica estas formas verbales o explora primero los verbos franceses más frecuentes y sus significados.",
+      "primaryLabel": "Practicar verbos franceses",
+      "secondaryLabel": "Ver 100 verbos franceses comunes"
+    },
+    "related": {
+      "heading": "Recursos relacionados para aprender francés",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbos franceses más comunes"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbos franceses comunes: formas del pasado"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulario francés por nivel MCER"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test de nivel de francés"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Preguntas frecuentes sobre la conjugación francesa",
+      "items": [
+        {
+          "question": "¿Qué significa conjugar un verbo en francés?",
+          "answer": "Conjugar un verbo francés significa cambiar su forma según factores gramaticales como la persona, el tiempo y el modo. Por ejemplo, parler se convierte en je parle, nous parlons e ils parlent en presente de indicativo."
+        },
+        {
+          "question": "¿Los verbos franceses cambian con cada pronombre?",
+          "answer": "Normalmente sí. Los verbos franceses tienen formas asociadas a distintas personas, aunque varias pueden pronunciarse igual. En la escritura, las terminaciones suelen distinguir je, tu, il / elle / on, nous, vous e ils / elles."
+        },
+        {
+          "question": "¿Cuáles son los tiempos franceses más importantes para principiantes?",
+          "answer": "Los estudiantes suelen empezar con el presente de indicativo, el passé composé, el imparfait y el futur simple, porque permiten expresar gran parte de las situaciones cotidianas. El condicional y el presente de subjuntivo adquieren más importancia a medida que aumenta el nivel."
+        },
+        {
+          "question": "¿Cuál es la diferencia entre passé composé e imparfait?",
+          "answer": "El passé composé suele presentar una acción pasada como terminada o delimitada, mientras que el imparfait se utiliza con frecuencia para acciones habituales, situaciones en desarrollo, descripciones, estados y circunstancias de fondo. Ambos suelen aparecer juntos en narraciones."
+        },
+        {
+          "question": "¿Por qué algunos verbos franceses utilizan être en lugar de avoir?",
+          "answer": "La mayoría de los tiempos compuestos utilizan avoir, pero ciertos verbos, especialmente algunos verbos intransitivos de movimiento o cambio de estado, además de los verbos pronominales, utilizan être. Con être, el participio pasado suele concordar con el sujeto."
+        },
+        {
+          "question": "¿Están relacionados el futuro y el condicional en francés?",
+          "answer": "Sí. El futur simple y el conditionnel présent utilizan normalmente la misma raíz. El futuro emplea terminaciones como -ai, -as y -ont, mientras que el condicional utiliza las terminaciones del imperfecto: -ais, -ais, -ait, -ions, -iez y -aient."
+        },
+        {
+          "question": "¿Cuándo se utiliza el subjuntivo en francés?",
+          "answer": "El subjuntivo aparece con frecuencia en oraciones subordinadas después de expresiones de necesidad, deseo, emoción, duda, incertidumbre, valoración y determinadas conjunciones. Su uso depende principalmente de la estructura y el significado de la oración."
+        },
+        {
+          "question": "¿Es importante el passé simple en el francés hablado?",
+          "answer": "El passé simple es poco frecuente en la conversación cotidiana moderna, donde normalmente se utiliza el passé composé para acciones pasadas terminadas. Sin embargo, sigue siendo importante para leer novelas, textos históricos, biografías y narraciones formales."
+        },
+        {
+          "question": "¿Por qué resulta difícil aprender las conjugaciones francesas?",
+          "answer": "El francés combina patrones regulares con muchos verbos frecuentes irregulares, cambios de raíz, tiempos compuestos, elección de auxiliares y diferencias de modo. Aprender primero los patrones recurrentes hace que el sistema sea mucho más manejable."
+        },
+        {
+          "question": "¿Cuál es la mejor manera de memorizar las conjugaciones francesas?",
+          "answer": "Conviene empezar por los verbos más frecuentes, agrupar las formas por patrones, comparar tiempos relacionados y utilizar repetidamente las conjugaciones en frases breves. La práctica activa en contexto suele ser más eficaz que limitarse a releer tablas completas."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "fr",
+    "urlSlug": "100-verbes-francais-les-plus-courants-conjugaisons",
+    "entryButtonLabel": "Voir les conjugaisons françaises",
+    "tableColumns": {
+      "number": "N°",
+      "infinitive": "Infinitif",
+      "meaning": "Signification"
+    },
+    "pronounForms": [
+      {
+        "key": "je",
+        "label": "je / j’"
+      },
+      {
+        "key": "tu",
+        "label": "tu"
+      },
+      {
+        "key": "il_elle_on",
+        "label": "il / elle / on"
+      },
+      {
+        "key": "nous",
+        "label": "nous"
+      },
+      {
+        "key": "vous",
+        "label": "vous"
+      },
+      {
+        "key": "ils_elles",
+        "label": "ils / elles"
+      }
+    ],
+    "metadata": {
+      "title": "Conjugaison des 100 verbes français les plus courants",
+      "metaTitle": "100 verbes français les plus courants : conjugaisons",
+      "metaDescription": "Comparez 100 verbes français courants à différents temps, modes et personnes, avec des explications claires sur leur formation et leur emploi."
+    },
+    "hero": {
+      "heading": "Conjugaison des 100 verbes français les plus courants",
+      "subtitle": "Comparez les verbes essentiels du français à différents temps, modes et personnes.",
+      "introParagraphs": [
+        "Consultez la conjugaison de 100 verbes français très fréquents aux principaux temps de l’indicatif, du conditionnel, du subjonctif et de l’impératif. Le tableau permet de comparer les formes avec je, tu, il / elle / on, nous, vous et ils / elles.",
+        "Passer d’un temps à l’autre aide à repérer les terminaisons récurrentes, les auxiliaires, les participes passés et les radicaux irréguliers. Comparer un même verbe dans plusieurs formes permet de mieux comprendre la logique de la conjugaison française plutôt que de mémoriser chaque forme séparément."
+      ]
+    },
+    "overview": {
+      "heading": "Comment fonctionne la conjugaison française",
+      "paragraphs": [
+        "En français, la forme du verbe varie généralement selon la personne, le nombre, le temps et le mode. Les verbes réguliers suivent des modèles de terminaisons récurrents, notamment parmi les verbes en -er, certains verbes en -ir et certains verbes en -re, tandis que de nombreux verbes très fréquents présentent des radicaux ou des formes irrégulières.",
+        "Les temps composés, comme le passé composé, le plus-que-parfait, le futur antérieur, le conditionnel passé et le passé du subjonctif, se construisent avec un auxiliaire, généralement avoir ou être, suivi du participe passé. Avec être, le participe passé s’accorde normalement en genre et en nombre avec le sujet.",
+        "Le français distingue également plusieurs modes. L’indicatif sert principalement à présenter des faits et des situations, le conditionnel à exprimer des hypothèses ou des conséquences dépendantes d’une condition, le subjonctif apparaît notamment après des expressions de nécessité, de volonté, d’émotion ou de doute, et l’impératif sert à donner des ordres, des conseils ou des instructions."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Choisissez un temps ou un mode",
+      "description": "Sélectionnez un temps pour comparer les mêmes 100 verbes français selon les différentes personnes et observer l’évolution de leurs formes.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicatif"
+        },
+        {
+          "key": "conditional",
+          "label": "Conditionnel"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjonctif"
+        },
+        {
+          "key": "imperative",
+          "label": "Impératif"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Présent de l’indicatif",
+        "group": "indicative",
+        "tableHeading": "100 verbes français courants au présent de l’indicatif",
+        "tableDescription": "Comparez la conjugaison des verbes français les plus fréquents au présent de l’indicatif pour chaque personne grammaticale.",
+        "grammar": {
+          "heading": "Comment former le présent de l’indicatif",
+          "description": "Le présent de l’indicatif sert à exprimer une action en cours, une habitude, un fait général ou une situation actuelle. Les verbes réguliers prennent des terminaisons propres à chaque personne, tandis que des verbes très fréquents comme être, avoir, aller et faire possèdent des conjugaisons irrégulières.",
+          "formula": "sujet + forme du verbe au présent"
+        }
+      },
+      {
+        "key": "passe_compose",
+        "label": "Passé composé",
+        "group": "indicative",
+        "tableHeading": "100 verbes français courants au passé composé",
+        "tableDescription": "Comparez les formes au passé composé et repérez l’auxiliaire ainsi que le participe passé utilisés par chaque verbe.",
+        "grammar": {
+          "heading": "Comment former le passé composé",
+          "description": "Le passé composé sert principalement à exprimer des actions ou des événements passés envisagés comme accomplis. Il se forme avec le présent de avoir ou de être suivi du participe passé. La majorité des verbes utilisent avoir, tandis que certains verbes intransitifs et les verbes pronominaux utilisent être. Avec être, le participe passé s’accorde normalement avec le sujet.",
+          "formula": "sujet + présent de avoir ou être + participe passé",
+          "additionalFormula": "elle est arrivée / ils sont partis"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imparfait",
+        "group": "indicative",
+        "tableHeading": "100 verbes français courants à l’imparfait",
+        "tableDescription": "Comparez les formes de l’imparfait utilisées pour les habitudes, les descriptions, les états et les actions en cours dans le passé.",
+        "grammar": {
+          "heading": "Comment former l’imparfait",
+          "description": "L’imparfait sert souvent à décrire des habitudes passées, des situations en cours, des états, des descriptions ou le contexte d’un récit. Pour la plupart des verbes, on part de la forme nous du présent, on retire -ons et on ajoute les terminaisons de l’imparfait. Être constitue la principale exception avec le radical ét-.",
+          "formula": "radical de la forme nous sans -ons + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "nous parlons → parl- → je parlais"
+        }
+      },
+      {
+        "key": "plus_que_parfait",
+        "label": "Plus-que-parfait",
+        "group": "indicative",
+        "tableHeading": "100 verbes français courants au plus-que-parfait",
+        "tableDescription": "Comparez les formes du plus-que-parfait pour exprimer une action déjà accomplie avant un autre moment du passé.",
+        "grammar": {
+          "heading": "Comment former le plus-que-parfait",
+          "description": "Le plus-que-parfait exprime une action ou une situation antérieure à un autre point de référence dans le passé. Il se forme avec l’imparfait de avoir ou de être suivi du participe passé. Le choix de l’auxiliaire suit globalement les mêmes règles qu’au passé composé.",
+          "formula": "sujet + imparfait de avoir ou être + participe passé",
+          "additionalFormula": "j’avais fini / elle était partie"
+        }
+      },
+      {
+        "key": "passe_simple",
+        "label": "Passé simple",
+        "group": "indicative",
+        "tableHeading": "100 verbes français courants au passé simple",
+        "tableDescription": "Comparez les formes du passé simple, particulièrement utiles pour lire des textes littéraires, historiques et narratifs.",
+        "grammar": {
+          "heading": "Comment former le passé simple",
+          "description": "Le passé simple exprime des événements accomplis dans le passé et s’emploie surtout dans la littérature, les récits historiques et certains écrits soutenus. Les verbes réguliers suivent des séries de terminaisons caractéristiques, tandis que de nombreux verbes fréquents utilisent des radicaux irréguliers.",
+          "formula": "radical verbal + terminaison du passé simple"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur simple",
+        "group": "indicative",
+        "tableHeading": "100 verbes français courants au futur simple",
+        "tableDescription": "Comparez les formes du futur simple utilisées pour exprimer des actions, des prévisions et des situations à venir.",
+        "grammar": {
+          "heading": "Comment former le futur simple",
+          "description": "Le futur simple se forme généralement en ajoutant les terminaisons du futur à l’infinitif. Pour les verbes en -re, le -e final est généralement supprimé avant l’ajout des terminaisons. De nombreux verbes fréquents possèdent un radical irrégulier mais conservent les mêmes terminaisons.",
+          "formula": "radical du futur + -ai, -as, -a, -ons, -ez, -ont",
+          "additionalFormula": "parler → je parlerai ; prendre → je prendrai"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futur antérieur",
+        "group": "indicative",
+        "tableHeading": "100 verbes français courants au futur antérieur",
+        "tableDescription": "Comparez les formes du futur antérieur pour exprimer une action qui sera accomplie avant un autre moment futur.",
+        "grammar": {
+          "heading": "Comment former le futur antérieur",
+          "description": "Le futur antérieur exprime une action qui sera achevée avant un autre événement ou point de référence futur. Il se forme avec le futur simple de avoir ou de être suivi du participe passé.",
+          "formula": "sujet + futur de avoir ou être + participe passé",
+          "additionalFormula": "j’aurai terminé / elle sera arrivée"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Conditionnel présent",
+        "group": "conditional",
+        "tableHeading": "100 verbes français courants au conditionnel présent",
+        "tableDescription": "Comparez les formes du conditionnel présent utilisées pour les hypothèses, les demandes polies, les souhaits et les conséquences dépendantes d’une condition.",
+        "grammar": {
+          "heading": "Comment former le conditionnel présent",
+          "description": "Le conditionnel présent sert notamment à exprimer une hypothèse, une demande polie, un souhait ou une conséquence soumise à une condition. Il utilise généralement le même radical que le futur simple, auquel s’ajoutent les terminaisons de l’imparfait.",
+          "formula": "radical du futur + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "je parlerais / nous viendrions"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Conditionnel passé",
+        "group": "conditional",
+        "tableHeading": "100 verbes français courants au conditionnel passé",
+        "tableDescription": "Comparez les formes du conditionnel passé pour exprimer des hypothèses non réalisées, des possibilités manquées ou des conséquences qui auraient pu se produire.",
+        "grammar": {
+          "heading": "Comment former le conditionnel passé",
+          "description": "Le conditionnel passé sert à exprimer une action hypothétique ou non réalisée dans le passé, notamment une conséquence qui se serait produite si une autre condition avait été remplie. Il se forme avec le conditionnel présent de avoir ou de être suivi du participe passé.",
+          "formula": "sujet + conditionnel présent de avoir ou être + participe passé",
+          "additionalFormula": "j’aurais accepté / elle serait venue"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Présent du subjonctif",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes français courants au présent du subjonctif",
+        "tableDescription": "Comparez les formes du présent du subjonctif utilisées après des expressions de nécessité, de volonté, d’émotion, de doute ou d’incertitude.",
+        "grammar": {
+          "heading": "Comment former le présent du subjonctif",
+          "description": "Le présent du subjonctif apparaît souvent dans une proposition subordonnée introduite par que après des expressions de volonté, de nécessité, d’émotion, de doute, de jugement ou d’incertitude. Pour de nombreux verbes, le radical est lié à la forme ils du présent de l’indicatif, mais plusieurs verbes fréquents possèdent des radicaux irréguliers.",
+          "formula": "que + sujet + radical du subjonctif + -e, -es, -e, -ions, -iez, -ent",
+          "additionalFormula": "Il faut que je parte."
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Passé du subjonctif",
+        "group": "subjunctive",
+        "tableHeading": "100 verbes français courants au passé du subjonctif",
+        "tableDescription": "Comparez les formes du passé du subjonctif lorsque le contexte exige le subjonctif et que l’action est déjà accomplie.",
+        "grammar": {
+          "heading": "Comment former le passé du subjonctif",
+          "description": "Le passé du subjonctif s’emploie lorsque le contexte appelle le subjonctif et que l’action de la proposition subordonnée est considérée comme accomplie. Il se forme avec le présent du subjonctif de avoir ou de être suivi du participe passé.",
+          "formula": "que + sujet + présent du subjonctif de avoir ou être + participe passé",
+          "additionalFormula": "Je suis content que tu aies réussi."
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Impératif présent",
+        "group": "imperative",
+        "tableHeading": "100 verbes français courants à l’impératif présent",
+        "tableDescription": "Comparez les formes de l’impératif présent utilisées pour donner des ordres, des conseils, des instructions ou des invitations.",
+        "grammar": {
+          "heading": "Comment former l’impératif présent",
+          "description": "L’impératif présent sert à donner un ordre, une instruction, un conseil ou une invitation. Il possède normalement seulement des formes correspondant à tu, nous et vous, et le pronom sujet n’est pas exprimé. Pour de nombreux verbes en -er ainsi que pour aller, la forme correspondant à tu perd le -s final, sauf dans certains cas devant y ou en.",
+          "formula": "forme verbale à l’impératif sans pronom sujet : forme de tu / nous / vous",
+          "additionalFormula": "Parle ! / Parlons ! / Parlez !"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tableau de conjugaison des verbes français",
+      "description": "Utilisez le tableau pour comparer 100 verbes français courants selon les différentes personnes, puis changez de temps afin d’observer les variations de terminaisons, de radicaux, d’auxiliaires et de participes.",
+      "scrollHint": "Faites défiler horizontalement pour voir toutes les personnes.",
+      "scrollLeftLabel": "Faire défiler vers la gauche",
+      "scrollRightLabel": "Faire défiler vers la droite",
+      "notes": [
+        "Le pronom on peut avoir plusieurs valeurs en français moderne et remplace très souvent nous à l’oral, mais il se conjugue normalement comme il et elle.",
+        "Les temps composés utilisent avoir ou être comme auxiliaire. Avec être, le participe passé s’accorde généralement en genre et en nombre avec le sujet.",
+        "L’impératif se distingue des autres formes présentées ici : le français standard utilise seulement les formes correspondant à tu, nous et vous, sans exprimer le pronom sujet."
+      ]
+    },
+    "rules": {
+      "heading": "Règles essentielles de la conjugaison française",
+      "intro": "La conjugaison française devient plus facile lorsque l’on apprend les modèles récurrents de radicaux, de terminaisons et d’auxiliaires plutôt que chaque forme séparément.",
+      "items": [
+        {
+          "heading": "Les verbes réguliers suivent des modèles récurrents",
+          "text": "De nombreux verbes français appartiennent à des familles de conjugaison reconnaissables. Les verbes réguliers en -er sont particulièrement réguliers, tandis que certains verbes en -ir et en -re suivent leurs propres séries de terminaisons.",
+          "examples": [
+            "je parle, tu parles, nous parlons",
+            "je finis, tu finis, nous finissons",
+            "je vends, tu vends, nous vendons"
+          ]
+        },
+        {
+          "heading": "Les temps composés utilisent avoir ou être",
+          "text": "Plusieurs temps importants combinent un auxiliaire conjugué avec un participe passé. La majorité des verbes utilisent avoir, tandis qu’un groupe plus limité de verbes ainsi que les verbes pronominaux utilisent être.",
+          "examples": ["j’ai parlé", "elle est partie", "nous avions terminé"]
+        },
+        {
+          "heading": "Le participe passé peut s’accorder",
+          "text": "Avec être, le participe passé s’accorde normalement avec le sujet en genre et en nombre. Avec avoir, les règles sont différentes et l’accord peut notamment dépendre de la position d’un complément d’objet direct.",
+          "examples": [
+            "elle est arrivée",
+            "ils sont partis",
+            "elles sont venues"
+          ]
+        },
+        {
+          "heading": "Le futur et le conditionnel partagent souvent le même radical",
+          "text": "Le futur simple et le conditionnel présent utilisent généralement le même radical. Les terminaisons changent : le futur prend -ai, -as, -a, -ons, -ez, -ont, tandis que le conditionnel utilise les terminaisons de l’imparfait.",
+          "examples": [
+            "je viendrai / je viendrais",
+            "tu feras / tu ferais",
+            "nous pourrons / nous pourrions"
+          ]
+        },
+        {
+          "heading": "Le subjonctif dépend du contexte grammatical",
+          "text": "Le subjonctif n’est pas simplement un temps supplémentaire. C’est un mode utilisé dans de nombreuses propositions subordonnées après des expressions de nécessité, de volonté, d’émotion, de doute, d’incertitude ou après certaines conjonctions.",
+          "examples": [
+            "Il faut que tu viennes.",
+            "Je veux qu’elle parte.",
+            "Bien qu’il soit fatigué, il continue."
+          ]
+        },
+        {
+          "heading": "Les verbes les plus fréquents sont souvent irréguliers",
+          "text": "Plusieurs verbes essentiels changent de radical ou de terminaison selon la personne et le temps. Les maîtriser tôt permet de reconnaître rapidement des formes très courantes dans la langue.",
+          "examples": [
+            "je suis, nous sommes, ils sont",
+            "je vais, nous allons, ils vont",
+            "je peux, nous pouvons, ils peuvent"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Erreurs fréquentes de conjugaison en français",
+      "intro": "Ces erreurs apparaissent souvent lorsque l’on applique un modèle régulier à un verbe irrégulier ou lorsque l’on confond le choix de l’auxiliaire, du temps ou du mode.",
+      "items": [
+        {
+          "incorrect": "Il parlent français.",
+          "correct": "Il parle français.",
+          "explanation": "Il est à la troisième personne du singulier. Au présent, parler donne donc il parle, tandis que parlent correspond à ils ou elles."
+        },
+        {
+          "incorrect": "J’ai allé au marché.",
+          "correct": "Je suis allé au marché.",
+          "explanation": "Aller se conjugue avec l’auxiliaire être aux temps composés. Le participe passé peut également varier selon le genre et le nombre du sujet."
+        },
+        {
+          "incorrect": "Nous avons parti tôt.",
+          "correct": "Nous sommes partis tôt.",
+          "explanation": "Partir utilise normalement être au passé composé, et le participe partis s’accorde ici avec un sujet pluriel."
+        },
+        {
+          "incorrect": "Si j’aurais le temps, je viendrais.",
+          "correct": "Si j’avais le temps, je viendrais.",
+          "explanation": "Dans une hypothèse de ce type, la proposition introduite par si se construit à l’imparfait, tandis que la conséquence se met au conditionnel présent."
+        },
+        {
+          "incorrect": "Il faut que tu viens.",
+          "correct": "Il faut que tu viennes.",
+          "explanation": "La structure il faut que appelle normalement le subjonctif. Avec tu, venir prend donc la forme viennes."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Comment utiliser ce tableau de conjugaison",
+      "steps": [
+        {
+          "heading": "Commencez par le présent de l’indicatif",
+          "text": "Observez d’abord comment les verbes les plus fréquents changent selon les six personnes avant de passer aux temps composés et aux autres modes."
+        },
+        {
+          "heading": "Comparez un verbe à toutes les personnes",
+          "text": "Lisez horizontalement les différentes formes d’un même verbe pour repérer les terminaisons qui changent et les parties du radical qui restent stables."
+        },
+        {
+          "heading": "Passez d’un temps à l’autre",
+          "text": "Comparez un même verbe au présent, à l’imparfait, au futur, au conditionnel et aux temps composés afin de comprendre les relations entre ces formes."
+        },
+        {
+          "heading": "Repérez l’auxiliaire des temps composés",
+          "text": "Pour le passé composé et les autres temps composés, vérifiez si le verbe utilise avoir ou être et observez les éventuels accords du participe passé."
+        },
+        {
+          "heading": "Concentrez-vous sur les radicaux irréguliers",
+          "text": "Accordez davantage d’attention aux verbes fréquents dont les formes au futur, au conditionnel, au subjonctif ou au passé ne suivent pas un modèle régulier simple."
+        },
+        {
+          "heading": "Réutilisez les formes dans des phrases",
+          "text": "Après avoir étudié une conjugaison, employez-la dans une phrase courte. Le contexte aide à associer la forme grammaticale à son sens et à son emploi réel."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Conseils pour apprendre les conjugaisons françaises",
+      "items": [
+        {
+          "heading": "Apprenez les terminaisons par séries",
+          "text": "Mémorisez les ensembles de terminaisons récurrents pour les principaux groupes et temps plutôt que d’apprendre chaque forme comme un élément isolé."
+        },
+        {
+          "heading": "Priorisez les verbes irréguliers fréquents",
+          "text": "Être, avoir, aller, faire, pouvoir, vouloir, devoir et venir apparaissent constamment et méritent d’être maîtrisés très tôt."
+        },
+        {
+          "heading": "Étudiez ensemble les temps liés",
+          "text": "Comparez le futur avec le conditionnel, ainsi que le passé composé avec les autres temps composés, car ils partagent des structures importantes."
+        },
+        {
+          "heading": "Surveillez l’auxiliaire et les accords",
+          "text": "Lorsque vous travaillez les temps composés, apprenez quel auxiliaire accompagne chaque verbe et observez les situations où le participe passé s’accorde."
+        },
+        {
+          "heading": "Pratiquez les conjugaisons en contexte",
+          "text": "Des phrases courtes et des situations concrètes permettent d’apprendre non seulement comment une forme se construit, mais aussi quand elle doit être employée."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pratiquez les verbes français les plus courants",
+      "description": "Mettez ces conjugaisons en pratique ou explorez d’abord les verbes français les plus fréquents et leur signification.",
+      "primaryLabel": "Pratiquer les verbes français",
+      "secondaryLabel": "Voir les 100 verbes français les plus courants"
+    },
+    "related": {
+      "heading": "Ressources complémentaires pour apprendre le français",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbes français les plus courants"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbes français courants : formes du passé"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulaire français par niveau CECR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test de niveau de français"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Questions fréquentes sur la conjugaison française",
+      "items": [
+        {
+          "question": "Que signifie conjuguer un verbe en français ?",
+          "answer": "Conjuguer un verbe signifie modifier sa forme selon des éléments grammaticaux comme la personne, le temps et le mode. Par exemple, parler devient je parle, nous parlons et ils parlent au présent de l’indicatif."
+        },
+        {
+          "question": "Les verbes français changent-ils à chaque personne ?",
+          "answer": "En général, oui. Les verbes français possèdent des formes correspondant aux différentes personnes, même si plusieurs formes peuvent avoir la même prononciation. À l’écrit, les terminaisons permettent souvent de distinguer je, tu, il / elle / on, nous, vous et ils / elles."
+        },
+        {
+          "question": "Quels sont les temps français les plus importants pour débuter ?",
+          "answer": "Les apprenants commencent généralement par le présent de l’indicatif, le passé composé, l’imparfait et le futur simple, car ces temps couvrent une grande partie des situations courantes. Le conditionnel et le présent du subjonctif deviennent ensuite de plus en plus importants."
+        },
+        {
+          "question": "Quelle est la différence entre le passé composé et l’imparfait ?",
+          "answer": "Le passé composé présente généralement une action passée comme accomplie ou délimitée, tandis que l’imparfait sert souvent à exprimer des habitudes, des situations en cours, des descriptions, des états ou le contexte d’un récit. Les deux temps sont fréquemment employés ensemble."
+        },
+        {
+          "question": "Pourquoi certains verbes utilisent-ils être au lieu de avoir ?",
+          "answer": "La majorité des temps composés utilisent avoir, mais certains verbes, notamment certains verbes intransitifs de mouvement ou de changement d’état ainsi que les verbes pronominaux, utilisent être. Avec être, le participe passé s’accorde généralement avec le sujet."
+        },
+        {
+          "question": "Le futur et le conditionnel sont-ils liés en français ?",
+          "answer": "Oui. Le futur simple et le conditionnel présent utilisent généralement le même radical. Le futur prend des terminaisons comme -ai, -as et -ont, tandis que le conditionnel reprend les terminaisons de l’imparfait : -ais, -ais, -ait, -ions, -iez et -aient."
+        },
+        {
+          "question": "Quand utilise-t-on le subjonctif en français ?",
+          "answer": "Le subjonctif apparaît fréquemment dans les propositions subordonnées après des expressions de nécessité, de volonté, d’émotion, de doute, d’incertitude ou de jugement, ainsi qu’après certaines conjonctions. Son emploi dépend surtout du contexte grammatical et du sens de la phrase."
+        },
+        {
+          "question": "Le passé simple est-il important à l’oral ?",
+          "answer": "Le passé simple est rare dans la conversation quotidienne moderne, où le passé composé est généralement utilisé pour les actions passées accomplies. Il reste toutefois important pour lire des romans, des textes historiques, des biographies et des récits soutenus."
+        },
+        {
+          "question": "Pourquoi la conjugaison française semble-t-elle difficile ?",
+          "answer": "Le français combine des modèles réguliers avec de nombreux verbes fréquents irréguliers, des changements de radical, des temps composés, le choix entre deux auxiliaires et plusieurs modes. L’apprentissage des modèles récurrents rend l’ensemble beaucoup plus facile à maîtriser."
+        },
+        {
+          "question": "Quelle est la meilleure façon de mémoriser les conjugaisons françaises ?",
+          "answer": "Commencez par les verbes les plus fréquents, regroupez les formes par modèles, comparez les temps liés et réutilisez régulièrement les conjugaisons dans des phrases courtes. La pratique active en contexte est généralement plus efficace que la simple relecture de tableaux."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "de",
+    "urlSlug": "100-haeufigste-franzoesische-verben-konjugationen",
+    "entryButtonLabel": "Französische Konjugationen ansehen",
+    "tableColumns": {
+      "number": "Nr.",
+      "infinitive": "Infinitiv",
+      "meaning": "Bedeutung"
+    },
+    "pronounForms": [
+      {
+        "key": "je",
+        "label": "je / j’"
+      },
+      {
+        "key": "tu",
+        "label": "tu"
+      },
+      {
+        "key": "il_elle_on",
+        "label": "il / elle / on"
+      },
+      {
+        "key": "nous",
+        "label": "nous"
+      },
+      {
+        "key": "vous",
+        "label": "vous"
+      },
+      {
+        "key": "ils_elles",
+        "label": "ils / elles"
+      }
+    ],
+    "metadata": {
+      "title": "Konjugation der 100 häufigsten französischen Verben",
+      "metaTitle": "100 häufigste französische Verben: Konjugationen",
+      "metaDescription": "Vergleiche 100 häufige französische Verben in wichtigen Zeiten, Modi und Personen mit klaren Erklärungen zu Bildung und Gebrauch."
+    },
+    "hero": {
+      "heading": "Konjugation der 100 häufigsten französischen Verben",
+      "subtitle": "Vergleiche wichtige französische Verben in verschiedenen Zeiten, Modi und Personen.",
+      "introParagraphs": [
+        "Hier findest du die Konjugationen von 100 häufig verwendeten französischen Verben in wichtigen Formen des Indikativs, Konditionals, Subjonctifs und Imperativs. In der Tabelle kannst du die Formen für je, tu, il / elle / on, nous, vous und ils / elles direkt vergleichen.",
+        "Durch den Wechsel zwischen verschiedenen Zeiten erkennst du wiederkehrende Endungen, Hilfsverben, Partizipien und unregelmäßige Verbstämme leichter. Wenn du dasselbe Verb in mehreren Formen vergleichst, kannst du die französische Konjugation als System verstehen, statt jede Form einzeln auswendig zu lernen."
+      ]
+    },
+    "overview": {
+      "heading": "Wie die französische Verbkonjugation funktioniert",
+      "paragraphs": [
+        "Französische Verben verändern ihre Form in der Regel nach Person, Numerus, Zeit und Modus. Regelmäßige Verben folgen wiederkehrenden Endungsmustern, besonders bei vielen Verben auf -er sowie bestimmten Verben auf -ir und -re. Viele sehr häufige Verben besitzen dagegen unregelmäßige Stämme oder Formen.",
+        "Zusammengesetzte Zeiten wie Passé composé, Plus-que-parfait, Futur antérieur, Conditionnel passé und Passé du subjonctif werden mit einem Hilfsverb, normalerweise avoir oder être, und einem Partizip Perfekt gebildet. Bei être stimmt das Partizip in der Regel in Genus und Numerus mit dem Subjekt überein.",
+        "Im Französischen werden außerdem verschiedene Modi unterschieden. Der Indikativ beschreibt vor allem Tatsachen und reale Situationen, der Konditional hypothetische oder von einer Bedingung abhängige Sachverhalte, der Subjonctif tritt häufig nach Ausdrücken von Notwendigkeit, Wunsch, Gefühl oder Zweifel auf und der Imperativ dient für Aufforderungen, Anweisungen und Ratschläge."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Zeitform oder Modus auswählen",
+      "description": "Wähle eine Form aus, um dieselben 100 französischen Verben nach Personen zu vergleichen und ihre unterschiedlichen Konjugationsmuster zu erkennen.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indikativ"
+        },
+        {
+          "key": "conditional",
+          "label": "Konditional"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjonctif"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativ"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Présent de l’indicatif",
+        "group": "indicative",
+        "tableHeading": "100 häufige französische Verben im Présent",
+        "tableDescription": "Vergleiche die Formen häufiger französischer Verben im Présent de l’indicatif für alle Personen.",
+        "grammar": {
+          "heading": "Bildung des Présent de l’indicatif",
+          "description": "Das Présent de l’indicatif wird für gegenwärtige Handlungen, Gewohnheiten, allgemeine Aussagen und aktuelle Zustände verwendet. Regelmäßige Verben erhalten je nach Person typische Endungen, während sehr häufige Verben wie être, avoir, aller und faire stark unregelmäßige Formen haben.",
+          "formula": "Subjekt + konjugierte Verbform im Présent"
+        }
+      },
+      {
+        "key": "passe_compose",
+        "label": "Passé composé",
+        "group": "indicative",
+        "tableHeading": "100 häufige französische Verben im Passé composé",
+        "tableDescription": "Vergleiche die Formen im Passé composé und erkenne, welches Hilfsverb und Partizip jedes Verb verwendet.",
+        "grammar": {
+          "heading": "Bildung des Passé composé",
+          "description": "Das Passé composé bezeichnet vor allem abgeschlossene Handlungen und Ereignisse in der Vergangenheit. Es wird mit dem Présent von avoir oder être und dem Partizip Perfekt gebildet. Die meisten Verben verwenden avoir, während bestimmte intransitive und reflexive Verben être verwenden. Bei être stimmt das Partizip normalerweise mit dem Subjekt überein.",
+          "formula": "Subjekt + Présent von avoir oder être + Partizip Perfekt",
+          "additionalFormula": "elle est arrivée / ils sont partis"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imparfait",
+        "group": "indicative",
+        "tableHeading": "100 häufige französische Verben im Imparfait",
+        "tableDescription": "Vergleiche Formen des Imparfait für Gewohnheiten, Beschreibungen, Zustände und andauernde Situationen in der Vergangenheit.",
+        "grammar": {
+          "heading": "Bildung des Imparfait",
+          "description": "Das Imparfait beschreibt häufig wiederholte Handlungen, andauernde Situationen, Zustände, Beschreibungen und Hintergrundinformationen in der Vergangenheit. Bei den meisten Verben nimmt man die nous-Form des Présent, entfernt -ons und fügt die Imparfait-Endungen hinzu. Être ist die wichtigste Ausnahme und verwendet den Stamm ét-.",
+          "formula": "Stamm der nous-Form ohne -ons + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "nous parlons → parl- → je parlais"
+        }
+      },
+      {
+        "key": "plus_que_parfait",
+        "label": "Plus-que-parfait",
+        "group": "indicative",
+        "tableHeading": "100 häufige französische Verben im Plus-que-parfait",
+        "tableDescription": "Vergleiche Formen des Plus-que-parfait für Handlungen, die bereits vor einem anderen Zeitpunkt in der Vergangenheit abgeschlossen waren.",
+        "grammar": {
+          "heading": "Bildung des Plus-que-parfait",
+          "description": "Das Plus-que-parfait drückt eine Handlung oder einen Zustand aus, der vor einem anderen vergangenen Zeitpunkt liegt. Es wird mit dem Imparfait von avoir oder être und dem Partizip Perfekt gebildet. Die Wahl des Hilfsverbs folgt im Wesentlichen denselben Regeln wie beim Passé composé.",
+          "formula": "Subjekt + Imparfait von avoir oder être + Partizip Perfekt",
+          "additionalFormula": "j’avais fini / elle était partie"
+        }
+      },
+      {
+        "key": "passe_simple",
+        "label": "Passé simple",
+        "group": "indicative",
+        "tableHeading": "100 häufige französische Verben im Passé simple",
+        "tableDescription": "Vergleiche Formen des Passé simple, die besonders beim Lesen literarischer, historischer und formeller Erzähltexte wichtig sind.",
+        "grammar": {
+          "heading": "Bildung des Passé simple",
+          "description": "Das Passé simple bezeichnet abgeschlossene Ereignisse in der Vergangenheit und wird hauptsächlich in Literatur, historischen Erzählungen und gehobener Schriftsprache verwendet. Regelmäßige Verbgruppen folgen charakteristischen Endungsmustern, während viele häufige Verben unregelmäßige Stämme besitzen.",
+          "formula": "Verbstamm + Personenendung des Passé simple"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futur simple",
+        "group": "indicative",
+        "tableHeading": "100 häufige französische Verben im Futur simple",
+        "tableDescription": "Vergleiche Formen des Futur simple für zukünftige Handlungen, Vorhersagen und Situationen.",
+        "grammar": {
+          "heading": "Bildung des Futur simple",
+          "description": "Das Futur simple wird normalerweise gebildet, indem die Futur-Endungen an den Infinitiv angefügt werden. Bei Verben auf -re fällt das abschließende -e gewöhnlich weg. Viele häufige Verben besitzen unregelmäßige Futurstämme, verwenden aber dieselben Endungen.",
+          "formula": "Futurstamm + -ai, -as, -a, -ons, -ez, -ont",
+          "additionalFormula": "parler → je parlerai; prendre → je prendrai"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futur antérieur",
+        "group": "indicative",
+        "tableHeading": "100 häufige französische Verben im Futur antérieur",
+        "tableDescription": "Vergleiche Formen des Futur antérieur für Handlungen, die vor einem zukünftigen Zeitpunkt abgeschlossen sein werden.",
+        "grammar": {
+          "heading": "Bildung des Futur antérieur",
+          "description": "Das Futur antérieur beschreibt eine Handlung, die vor einem anderen zukünftigen Ereignis oder Zeitpunkt abgeschlossen sein wird. Es wird mit dem Futur simple von avoir oder être und dem Partizip Perfekt gebildet.",
+          "formula": "Subjekt + Futur simple von avoir oder être + Partizip Perfekt",
+          "additionalFormula": "j’aurai terminé / elle sera arrivée"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Conditionnel présent",
+        "group": "conditional",
+        "tableHeading": "100 häufige französische Verben im Conditionnel présent",
+        "tableDescription": "Vergleiche Formen des Conditionnel présent für hypothetische Situationen, höfliche Bitten, Wünsche und bedingte Folgen.",
+        "grammar": {
+          "heading": "Bildung des Conditionnel présent",
+          "description": "Das Conditionnel présent wird unter anderem für hypothetische Handlungen, höfliche Bitten, Wünsche und von einer Bedingung abhängige Folgen verwendet. Es nutzt normalerweise denselben Stamm wie das Futur simple, kombiniert ihn aber mit den Endungen des Imparfait.",
+          "formula": "Futurstamm + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "je parlerais / nous viendrions"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Conditionnel passé",
+        "group": "conditional",
+        "tableHeading": "100 häufige französische Verben im Conditionnel passé",
+        "tableDescription": "Vergleiche Formen des Conditionnel passé für nicht verwirklichte Möglichkeiten und hypothetische Folgen in der Vergangenheit.",
+        "grammar": {
+          "heading": "Bildung des Conditionnel passé",
+          "description": "Das Conditionnel passé bezeichnet hypothetische oder nicht verwirklichte Handlungen in der Vergangenheit, etwa Folgen, die unter anderen Bedingungen eingetreten wären. Es wird mit dem Conditionnel présent von avoir oder être und dem Partizip Perfekt gebildet.",
+          "formula": "Subjekt + Conditionnel présent von avoir oder être + Partizip Perfekt",
+          "additionalFormula": "j’aurais accepté / elle serait venue"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Présent du subjonctif",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige französische Verben im Présent du subjonctif",
+        "tableDescription": "Vergleiche Formen des Présent du subjonctif nach Ausdrücken von Notwendigkeit, Wunsch, Gefühl, Zweifel oder Unsicherheit.",
+        "grammar": {
+          "heading": "Bildung des Présent du subjonctif",
+          "description": "Das Présent du subjonctif steht häufig in mit que eingeleiteten Nebensätzen nach Ausdrücken von Wunsch, Notwendigkeit, Gefühl, Zweifel, Bewertung oder Unsicherheit. Bei vielen Verben basiert der Stamm auf der ils-Form des Présent de l’indicatif, zahlreiche häufige Verben besitzen jedoch unregelmäßige Stämme.",
+          "formula": "que + Subjekt + Subjonctif-Stamm + -e, -es, -e, -ions, -iez, -ent",
+          "additionalFormula": "Il faut que je parte."
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Passé du subjonctif",
+        "group": "subjunctive",
+        "tableHeading": "100 häufige französische Verben im Passé du subjonctif",
+        "tableDescription": "Vergleiche Formen des Passé du subjonctif, wenn ein Subjonctif-Kontext eine bereits abgeschlossene Handlung betrifft.",
+        "grammar": {
+          "heading": "Bildung des Passé du subjonctif",
+          "description": "Das Passé du subjonctif wird verwendet, wenn der grammatische Kontext den Subjonctif verlangt und die Handlung im Nebensatz als abgeschlossen betrachtet wird. Es wird mit dem Présent du subjonctif von avoir oder être und dem Partizip Perfekt gebildet.",
+          "formula": "que + Subjekt + Présent du subjonctif von avoir oder être + Partizip Perfekt",
+          "additionalFormula": "Je suis content que tu aies réussi."
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Impératif présent",
+        "group": "imperative",
+        "tableHeading": "100 häufige französische Verben im Impératif présent",
+        "tableDescription": "Vergleiche Imperativformen für Aufforderungen, Anweisungen, Einladungen und Ratschläge.",
+        "grammar": {
+          "heading": "Bildung des Impératif présent",
+          "description": "Das Impératif présent wird für Aufforderungen, Anweisungen, Ratschläge und Einladungen verwendet. Es besitzt normalerweise nur Formen für tu, nous und vous, wobei das Subjektpronomen weggelassen wird. Bei vielen Verben auf -er sowie bei aller entfällt in der tu-Form das abschließende -s, außer in bestimmten Verbindungen vor y oder en.",
+          "formula": "Imperativform ohne Subjektpronomen: tu-Form / nous-Form / vous-Form",
+          "additionalFormula": "Parle ! / Parlons ! / Parlez !"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabelle der französischen Verbkonjugationen",
+      "description": "Vergleiche 100 häufige französische Verben nach Personen und wechsle zwischen den Zeiten, um Veränderungen bei Endungen, Stämmen, Hilfsverben und Partizipien zu erkennen.",
+      "scrollHint": "Horizontal scrollen, um alle Personen zu sehen.",
+      "scrollLeftLabel": "Nach links scrollen",
+      "scrollRightLabel": "Nach rechts scrollen",
+      "notes": [
+        "Das Pronomen on kann im modernen Französisch verschiedene Bedeutungen haben und ersetzt in der gesprochenen Sprache sehr häufig nous. Es wird jedoch normalerweise wie il und elle konjugiert.",
+        "Zusammengesetzte Zeiten verwenden avoir oder être als Hilfsverb. Bei être stimmt das Partizip Perfekt in der Regel in Genus und Numerus mit dem Subjekt überein.",
+        "Der Imperativ unterscheidet sich von den anderen Formen auf dieser Seite: Im Standardfranzösischen werden nur die Formen für tu, nous und vous verwendet, normalerweise ohne Subjektpronomen."
+      ]
+    },
+    "rules": {
+      "heading": "Wichtige Regeln der französischen Konjugation",
+      "intro": "Französische Konjugationen lassen sich leichter lernen, wenn du wiederkehrende Stamm-, Endungs- und Hilfsverbmuster erkennst, statt jede einzelne Form isoliert auswendig zu lernen.",
+      "items": [
+        {
+          "heading": "Regelmäßige Verben folgen wiederkehrenden Mustern",
+          "text": "Viele französische Verben gehören zu erkennbaren Konjugationsgruppen. Regelmäßige Verben auf -er sind besonders systematisch, während bestimmte Verben auf -ir und -re jeweils eigene typische Endungsmuster besitzen.",
+          "examples": [
+            "je parle, tu parles, nous parlons",
+            "je finis, tu finis, nous finissons",
+            "je vends, tu vends, nous vendons"
+          ]
+        },
+        {
+          "heading": "Zusammengesetzte Zeiten verwenden avoir oder être",
+          "text": "Mehrere wichtige französische Zeiten kombinieren ein konjugiertes Hilfsverb mit einem Partizip Perfekt. Die meisten Verben verwenden avoir, während eine kleinere Verbgruppe sowie reflexive Verben mit être gebildet werden.",
+          "examples": ["j’ai parlé", "elle est partie", "nous avions terminé"]
+        },
+        {
+          "heading": "Das Partizip Perfekt kann angepasst werden",
+          "text": "Bei être stimmt das Partizip normalerweise in Genus und Numerus mit dem Subjekt überein. Bei avoir gelten andere Regeln; eine Anpassung kann unter anderem von der Stellung eines direkten Objekts abhängen.",
+          "examples": [
+            "elle est arrivée",
+            "ils sont partis",
+            "elles sont venues"
+          ]
+        },
+        {
+          "heading": "Futur und Konditional teilen oft denselben Stamm",
+          "text": "Futur simple und Conditionnel présent verwenden normalerweise denselben Verbstamm. Der Unterschied liegt in den Endungen: Das Futur verwendet -ai, -as, -a, -ons, -ez, -ont, während das Konditional die Imparfait-Endungen verwendet.",
+          "examples": [
+            "je viendrai / je viendrais",
+            "tu feras / tu ferais",
+            "nous pourrons / nous pourrions"
+          ]
+        },
+        {
+          "heading": "Der Subjonctif hängt vom grammatischen Kontext ab",
+          "text": "Der Subjonctif ist nicht einfach eine weitere Zeitform, sondern ein Modus. Er steht häufig in Nebensätzen nach Ausdrücken von Notwendigkeit, Wunsch, Gefühl, Zweifel und Unsicherheit sowie nach bestimmten Konjunktionen.",
+          "examples": [
+            "Il faut que tu viennes.",
+            "Je veux qu’elle parte.",
+            "Bien qu’il soit fatigué, il continue."
+          ]
+        },
+        {
+          "heading": "Häufige Verben sind oft unregelmäßig",
+          "text": "Viele besonders wichtige französische Verben verändern ihren Stamm oder ihre Endungen je nach Person und Zeit. Diese häufigen unregelmäßigen Formen früh zu lernen, erleichtert das Verständnis alltäglicher französischer Sätze deutlich.",
+          "examples": [
+            "je suis, nous sommes, ils sont",
+            "je vais, nous allons, ils vont",
+            "je peux, nous pouvons, ils peuvent"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Häufige Fehler bei französischen Verbkonjugationen",
+      "intro": "Diese Fehler entstehen besonders häufig, wenn regelmäßige Muster auf unregelmäßige Verben übertragen oder Hilfsverb, Zeitform und Modus verwechselt werden.",
+      "items": [
+        {
+          "incorrect": "Il parlent français.",
+          "correct": "Il parle français.",
+          "explanation": "Il steht in der dritten Person Singular. Deshalb lautet die richtige Präsensform von parler il parle. Parlent gehört zu ils oder elles."
+        },
+        {
+          "incorrect": "J’ai allé au marché.",
+          "correct": "Je suis allé au marché.",
+          "explanation": "Aller verwendet in zusammengesetzten Zeiten être statt avoir. Das Partizip kann außerdem an Genus und Numerus des Subjekts angepasst werden."
+        },
+        {
+          "incorrect": "Nous avons parti tôt.",
+          "correct": "Nous sommes partis tôt.",
+          "explanation": "Partir wird im Passé composé normalerweise mit être gebildet. Partis stimmt hier mit dem Subjekt im Plural überein."
+        },
+        {
+          "incorrect": "Si j’aurais le temps, je viendrais.",
+          "correct": "Si j’avais le temps, je viendrais.",
+          "explanation": "Bei einer solchen hypothetischen Konstruktion steht im si-Satz das Imparfait, während der Folgesatz das Conditionnel présent verwendet."
+        },
+        {
+          "incorrect": "Il faut que tu viens.",
+          "correct": "Il faut que tu viennes.",
+          "explanation": "Die Struktur il faut que verlangt normalerweise den Subjonctif. Deshalb lautet die tu-Form von venir hier viennes."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "So nutzt du diese französische Konjugationstabelle",
+      "steps": [
+        {
+          "heading": "Beginne mit dem Présent",
+          "text": "Lerne zuerst, wie sich häufige Verben über die sechs Personen verändern, bevor du zu zusammengesetzten Zeiten und weiteren Modi übergehst."
+        },
+        {
+          "heading": "Vergleiche ein Verb über alle Personen",
+          "text": "Lies die Formen eines Verbs horizontal und achte darauf, welche Endungen wechseln und welche Teile des Stamms gleich bleiben."
+        },
+        {
+          "heading": "Wechsle beim selben Verb zwischen den Zeiten",
+          "text": "Vergleiche ein bekanntes Verb im Présent, Imparfait, Futur, Konditional und in zusammengesetzten Zeiten, um Zusammenhänge zwischen den Formen zu erkennen."
+        },
+        {
+          "heading": "Achte auf das Hilfsverb",
+          "text": "Prüfe beim Passé composé und anderen zusammengesetzten Zeiten, ob das Verb avoir oder être verwendet und ob das Partizip angepasst werden muss."
+        },
+        {
+          "heading": "Markiere unregelmäßige Stämme",
+          "text": "Konzentriere dich besonders auf häufige Verben, deren Futur-, Konditional-, Subjonctif- oder Vergangenheitsformen nicht aus einem einfachen regelmäßigen Muster abgeleitet werden können."
+        },
+        {
+          "heading": "Verwende die Formen in ganzen Sätzen",
+          "text": "Bilde nach dem Lernen einer Konjugation einen kurzen Beispielsatz. So verbindest du die grammatische Form mit ihrer tatsächlichen Bedeutung und Verwendung."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Tipps zum Lernen französischer Verbkonjugationen",
+      "items": [
+        {
+          "heading": "Lerne Endungen als Muster",
+          "text": "Präge dir wiederkehrende Endungsreihen für wichtige Verbgruppen und Zeiten ein, statt jede einzelne Form unabhängig zu lernen."
+        },
+        {
+          "heading": "Priorisiere häufige unregelmäßige Verben",
+          "text": "Verben wie être, avoir, aller, faire, pouvoir, vouloir, devoir und venir kommen ständig vor und sollten früh sicher beherrscht werden."
+        },
+        {
+          "heading": "Lerne verwandte Zeiten gemeinsam",
+          "text": "Vergleiche Futur und Konditional sowie Passé composé und andere zusammengesetzte Zeiten, da sie wichtige strukturelle Gemeinsamkeiten besitzen."
+        },
+        {
+          "heading": "Beachte Hilfsverb und Kongruenz",
+          "text": "Lerne bei zusammengesetzten Zeiten zusammen mit dem Verb, welches Hilfsverb es verwendet, und achte auf Situationen, in denen das Partizip angepasst wird."
+        },
+        {
+          "heading": "Übe Konjugationen im Kontext",
+          "text": "Kurze Sätze und realistische Situationen helfen dir nicht nur zu lernen, wie eine Form gebildet wird, sondern auch, wann sie tatsächlich verwendet wird."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Übe die häufigsten französischen Verben",
+      "description": "Wende diese Konjugationen aktiv an oder entdecke zuerst die häufigsten französischen Verben und ihre Bedeutungen.",
+      "primaryLabel": "Französische Verben üben",
+      "secondaryLabel": "100 häufige französische Verben ansehen"
+    },
+    "related": {
+      "heading": "Weitere Ressourcen zum Französischlernen",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 häufigste französische Verben"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 häufige französische Verben: Vergangenheitsformen"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Französischer Wortschatz nach GER-Niveau"
+        },
+        {
+          "key": "levelTest",
+          "label": "Französisch-Einstufungstest"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zur französischen Verbkonjugation",
+      "items": [
+        {
+          "question": "Was bedeutet es, ein französisches Verb zu konjugieren?",
+          "answer": "Ein französisches Verb zu konjugieren bedeutet, seine Form entsprechend grammatischen Merkmalen wie Person, Zeit und Modus zu verändern. Parler wird im Présent zum Beispiel zu je parle, nous parlons und ils parlent."
+        },
+        {
+          "question": "Verändern sich französische Verben bei jeder Person?",
+          "answer": "Grundsätzlich besitzen französische Verben unterschiedliche Personenformen, auch wenn mehrere davon gleich ausgesprochen werden können. In der Schriftsprache unterscheiden die Endungen häufig zwischen je, tu, il / elle / on, nous, vous und ils / elles."
+        },
+        {
+          "question": "Welche französischen Zeiten sind für Anfänger am wichtigsten?",
+          "answer": "Am Anfang sind besonders Présent de l’indicatif, Passé composé, Imparfait und Futur simple wichtig, da sie einen großen Teil der alltäglichen Kommunikation abdecken. Später werden auch Conditionnel présent und Présent du subjonctif zunehmend relevant."
+        },
+        {
+          "question": "Was ist der Unterschied zwischen Passé composé und Imparfait?",
+          "answer": "Das Passé composé stellt eine vergangene Handlung normalerweise als abgeschlossen oder zeitlich begrenzt dar. Das Imparfait beschreibt dagegen häufig Gewohnheiten, andauernde Situationen, Zustände, Beschreibungen und Hintergrundinformationen. In Erzählungen treten beide Zeiten oft gemeinsam auf."
+        },
+        {
+          "question": "Warum verwenden einige französische Verben être statt avoir?",
+          "answer": "Die meisten zusammengesetzten Zeiten werden mit avoir gebildet. Bestimmte Verben, darunter einige intransitive Bewegungs- oder Zustandsveränderungsverben sowie reflexive Verben, verwenden jedoch être. Bei être stimmt das Partizip normalerweise mit dem Subjekt überein."
+        },
+        {
+          "question": "Sind Futur und Konditional im Französischen miteinander verwandt?",
+          "answer": "Ja. Futur simple und Conditionnel présent verwenden normalerweise denselben Stamm. Das Futur besitzt Endungen wie -ai, -as und -ont, während das Konditional die Imparfait-Endungen -ais, -ais, -ait, -ions, -iez und -aient verwendet."
+        },
+        {
+          "question": "Wann verwendet man den Subjonctif im Französischen?",
+          "answer": "Der Subjonctif steht häufig in Nebensätzen nach Ausdrücken von Notwendigkeit, Wunsch, Gefühl, Zweifel, Unsicherheit oder Bewertung sowie nach bestimmten Konjunktionen. Seine Verwendung hängt hauptsächlich vom grammatischen Kontext und von der Bedeutung des Satzes ab."
+        },
+        {
+          "question": "Ist das Passé simple im gesprochenen Französisch wichtig?",
+          "answer": "Im modernen Alltagsfranzösisch wird das Passé simple nur selten gesprochen. Für abgeschlossene Handlungen verwendet man gewöhnlich das Passé composé. Das Passé simple bleibt jedoch wichtig beim Lesen von Romanen, historischen Texten, Biografien und formellen Erzählungen."
+        },
+        {
+          "question": "Warum wirken französische Konjugationen so schwierig?",
+          "answer": "Französisch verbindet regelmäßige Muster mit vielen häufigen unregelmäßigen Verben, Stammwechseln, zusammengesetzten Zeiten, verschiedenen Hilfsverben und mehreren Modi. Wer zunächst die wiederkehrenden Muster lernt, kann das System deutlich leichter beherrschen."
+        },
+        {
+          "question": "Wie lernt man französische Verbkonjugationen am effektivsten?",
+          "answer": "Beginne mit den häufigsten Verben, gruppiere Formen nach gemeinsamen Mustern, vergleiche verwandte Zeiten und verwende die Konjugationen regelmäßig in kurzen Sätzen. Aktives Abrufen und Üben im Kontext ist meist wirksamer als das bloße wiederholte Lesen vollständiger Konjugationstabellen."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "it",
+    "urlSlug": "100-verbi-francesi-piu-comuni-coniugazioni",
+    "entryButtonLabel": "Vedi le coniugazioni francesi",
+    "tableColumns": {
+      "number": "N.",
+      "infinitive": "Infinito",
+      "meaning": "Significato"
+    },
+    "pronounForms": [
+      {
+        "key": "je",
+        "label": "je / j’"
+      },
+      {
+        "key": "tu",
+        "label": "tu"
+      },
+      {
+        "key": "il_elle_on",
+        "label": "il / elle / on"
+      },
+      {
+        "key": "nous",
+        "label": "nous"
+      },
+      {
+        "key": "vous",
+        "label": "vous"
+      },
+      {
+        "key": "ils_elles",
+        "label": "ils / elles"
+      }
+    ],
+    "metadata": {
+      "title": "Coniugazione dei 100 verbi francesi più comuni",
+      "metaTitle": "100 verbi francesi più comuni: coniugazioni",
+      "metaDescription": "Confronta 100 verbi francesi comuni in diversi tempi, modi e persone, con spiegazioni chiare sulla formazione e sull'uso."
+    },
+    "hero": {
+      "heading": "Coniugazione dei 100 verbi francesi più comuni",
+      "subtitle": "Confronta i verbi francesi essenziali in diversi tempi, modi e persone grammaticali.",
+      "introParagraphs": [
+        "Consulta la coniugazione di 100 verbi francesi di uso frequente nei principali tempi dell'indicativo, del condizionale, del congiuntivo e dell'imperativo. La tabella permette di confrontare direttamente le forme con je, tu, il / elle / on, nous, vous e ils / elles.",
+        "Passare da un tempo all'altro aiuta a riconoscere desinenze ricorrenti, ausiliari, participi passati e radici irregolari. Confrontare lo stesso verbo in più forme permette di comprendere meglio il sistema della coniugazione francese invece di memorizzare ogni forma separatamente."
+      ]
+    },
+    "overview": {
+      "heading": "Come funziona la coniugazione dei verbi francesi",
+      "paragraphs": [
+        "In francese, la forma del verbo varia generalmente in base alla persona, al numero, al tempo e al modo. I verbi regolari seguono schemi ricorrenti di desinenze, in particolare molti verbi in -er e determinati verbi in -ir e -re, mentre numerosi verbi molto frequenti presentano radici o forme irregolari.",
+        "I tempi composti, come il passé composé, il plus-que-parfait, il futur antérieur, il conditionnel passé e il passé du subjonctif, si formano con un verbo ausiliare, normalmente avoir o être, seguito dal participio passato. Con être, il participio passato concorda generalmente in genere e numero con il soggetto.",
+        "Il francese distingue inoltre diversi modi verbali. L'indicativo serve soprattutto a presentare fatti e situazioni, il condizionale esprime ipotesi o conseguenze dipendenti da una condizione, il congiuntivo compare spesso dopo espressioni di necessità, volontà, emozione o dubbio e l'imperativo viene utilizzato per ordini, istruzioni e consigli."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Scegli un tempo o un modo verbale",
+      "description": "Seleziona un tempo per confrontare gli stessi 100 verbi francesi nelle diverse persone e osservare come cambiano i loro schemi di coniugazione.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "conditional",
+          "label": "Condizionale"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Congiuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Presente indicativo",
+        "group": "indicative",
+        "tableHeading": "100 verbi francesi comuni al presente indicativo",
+        "tableDescription": "Confronta la coniugazione dei verbi francesi più frequenti al presente indicativo per ogni persona grammaticale.",
+        "grammar": {
+          "heading": "Come si forma il presente indicativo in francese",
+          "description": "Il présent de l’indicatif viene utilizzato per azioni presenti, abitudini, fatti generali e situazioni attuali. I verbi regolari assumono desinenze specifiche a seconda della persona, mentre verbi molto frequenti come être, avoir, aller e faire hanno forme fortemente irregolari.",
+          "formula": "soggetto + forma verbale al presente"
+        }
+      },
+      {
+        "key": "passe_compose",
+        "label": "Passé composé",
+        "group": "indicative",
+        "tableHeading": "100 verbi francesi comuni al passé composé",
+        "tableDescription": "Confronta le forme del passé composé e osserva quale ausiliare e quale participio passato utilizza ogni verbo.",
+        "grammar": {
+          "heading": "Come si forma il passé composé",
+          "description": "Il passé composé viene usato soprattutto per azioni ed eventi passati considerati conclusi. Si forma con il presente di avoir o être seguito dal participio passato. La maggior parte dei verbi usa avoir, mentre alcuni verbi intransitivi e i verbi pronominali usano être. Con être, il participio passato concorda normalmente con il soggetto.",
+          "formula": "soggetto + presente di avoir o être + participio passato",
+          "additionalFormula": "elle est arrivée / ils sont partis"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imperfetto",
+        "group": "indicative",
+        "tableHeading": "100 verbi francesi comuni all'imperfetto",
+        "tableDescription": "Confronta le forme dell'imparfait usate per abitudini, descrizioni, stati e azioni in corso nel passato.",
+        "grammar": {
+          "heading": "Come si forma l'imperfetto in francese",
+          "description": "L'imparfait descrive spesso azioni abituali nel passato, situazioni in corso, stati, descrizioni e circostanze di sfondo. Per la maggior parte dei verbi si parte dalla forma nous del presente, si elimina -ons e si aggiungono le desinenze dell'imperfetto. Être è la principale eccezione e utilizza la radice ét-.",
+          "formula": "radice della forma nous senza -ons + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "nous parlons → parl- → je parlais"
+        }
+      },
+      {
+        "key": "plus_que_parfait",
+        "label": "Trapassato prossimo",
+        "group": "indicative",
+        "tableHeading": "100 verbi francesi comuni al plus-que-parfait",
+        "tableDescription": "Confronta le forme del plus-que-parfait utilizzate per azioni già avvenute prima di un altro momento nel passato.",
+        "grammar": {
+          "heading": "Come si forma il plus-que-parfait",
+          "description": "Il plus-que-parfait esprime un'azione o uno stato precedente a un altro punto di riferimento nel passato. Si forma con l'imparfait di avoir o être seguito dal participio passato. La scelta dell'ausiliare segue sostanzialmente le stesse regole del passé composé.",
+          "formula": "soggetto + imparfait di avoir o être + participio passato",
+          "additionalFormula": "j’avais fini / elle était partie"
+        }
+      },
+      {
+        "key": "passe_simple",
+        "label": "Passé simple",
+        "group": "indicative",
+        "tableHeading": "100 verbi francesi comuni al passé simple",
+        "tableDescription": "Confronta le forme del passé simple, particolarmente utili per leggere testi letterari, storici e narrativi formali.",
+        "grammar": {
+          "heading": "Come si forma il passé simple",
+          "description": "Il passé simple esprime eventi conclusi nel passato ed è utilizzato soprattutto nella letteratura, nella narrazione storica e in alcuni registri scritti formali. I gruppi verbali regolari seguono serie caratteristiche di desinenze, mentre molti verbi frequenti presentano radici irregolari.",
+          "formula": "radice verbale + desinenza personale del passé simple"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futuro semplice",
+        "group": "indicative",
+        "tableHeading": "100 verbi francesi comuni al futuro semplice",
+        "tableDescription": "Confronta le forme del futur simple utilizzate per azioni, previsioni e situazioni future.",
+        "grammar": {
+          "heading": "Come si forma il futuro semplice in francese",
+          "description": "Il futur simple si forma generalmente aggiungendo le desinenze del futuro all'infinito. Nei verbi in -re, la -e finale viene normalmente eliminata prima di aggiungere le desinenze. Molti verbi frequenti hanno radici irregolari al futuro, ma mantengono lo stesso insieme di desinenze.",
+          "formula": "radice del futuro + -ai, -as, -a, -ons, -ez, -ont",
+          "additionalFormula": "parler → je parlerai; prendre → je prendrai"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futuro anteriore",
+        "group": "indicative",
+        "tableHeading": "100 verbi francesi comuni al futuro anteriore",
+        "tableDescription": "Confronta le forme del futur antérieur utilizzate per azioni che saranno concluse prima di un altro momento futuro.",
+        "grammar": {
+          "heading": "Come si forma il futuro anteriore in francese",
+          "description": "Il futur antérieur descrive un'azione che sarà completata prima di un altro evento o punto di riferimento futuro. Si forma con il futur simple di avoir o être seguito dal participio passato.",
+          "formula": "soggetto + futuro di avoir o être + participio passato",
+          "additionalFormula": "j’aurai terminé / elle sera arrivée"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condizionale presente",
+        "group": "conditional",
+        "tableHeading": "100 verbi francesi comuni al condizionale presente",
+        "tableDescription": "Confronta le forme del conditionnel présent utilizzate per ipotesi, richieste cortesi, desideri e conseguenze dipendenti da una condizione.",
+        "grammar": {
+          "heading": "Come si forma il condizionale presente in francese",
+          "description": "Il conditionnel présent viene utilizzato, tra gli altri usi, per azioni ipotetiche, richieste cortesi, desideri e conseguenze subordinate a una condizione. Usa generalmente la stessa radice del futur simple combinata con le desinenze dell'imparfait.",
+          "formula": "radice del futuro + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "je parlerais / nous viendrions"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Condizionale passato",
+        "group": "conditional",
+        "tableHeading": "100 verbi francesi comuni al condizionale passato",
+        "tableDescription": "Confronta le forme del conditionnel passé per possibilità non realizzate e conseguenze ipotetiche nel passato.",
+        "grammar": {
+          "heading": "Come si forma il condizionale passato in francese",
+          "description": "Il conditionnel passé esprime azioni ipotetiche o non realizzate nel passato, comprese conseguenze che si sarebbero verificate se fosse stata soddisfatta un'altra condizione. Si forma con il conditionnel présent di avoir o être seguito dal participio passato.",
+          "formula": "soggetto + conditionnel présent di avoir o être + participio passato",
+          "additionalFormula": "j’aurais accepté / elle serait venue"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Congiuntivo presente",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi francesi comuni al congiuntivo presente",
+        "tableDescription": "Confronta le forme del subjonctif présent usate dopo espressioni di necessità, volontà, emozione, dubbio o incertezza.",
+        "grammar": {
+          "heading": "Come si forma il congiuntivo presente in francese",
+          "description": "Il subjonctif présent compare spesso nelle proposizioni subordinate introdotte da que dopo espressioni di volontà, necessità, emozione, dubbio, giudizio o incertezza. Per molti verbi la radice è collegata alla forma ils del présent de l’indicatif, ma numerosi verbi frequenti presentano radici irregolari.",
+          "formula": "que + soggetto + radice del congiuntivo + -e, -es, -e, -ions, -iez, -ent",
+          "additionalFormula": "Il faut que je parte."
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Congiuntivo passato",
+        "group": "subjunctive",
+        "tableHeading": "100 verbi francesi comuni al congiuntivo passato",
+        "tableDescription": "Confronta le forme del passé du subjonctif quando il contesto richiede il congiuntivo e l'azione è già conclusa.",
+        "grammar": {
+          "heading": "Come si forma il congiuntivo passato in francese",
+          "description": "Il passé du subjonctif viene utilizzato quando il contesto grammaticale richiede il congiuntivo e l'azione della subordinata è considerata compiuta. Si forma con il présent du subjonctif di avoir o être seguito dal participio passato.",
+          "formula": "que + soggetto + presente congiuntivo di avoir o être + participio passato",
+          "additionalFormula": "Je suis content que tu aies réussi."
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo presente",
+        "group": "imperative",
+        "tableHeading": "100 verbi francesi comuni all'imperativo presente",
+        "tableDescription": "Confronta le forme dell'impératif présent utilizzate per ordini, istruzioni, inviti e consigli.",
+        "grammar": {
+          "heading": "Come si forma l'imperativo presente in francese",
+          "description": "L'impératif présent viene usato per ordini, istruzioni, consigli e inviti. Normalmente presenta solo le forme corrispondenti a tu, nous e vous e il pronome soggetto viene omesso. Per molti verbi in -er e per aller, nella forma corrispondente a tu cade la -s finale, salvo in alcune costruzioni davanti a y o en.",
+          "formula": "forma verbale all'imperativo senza pronome soggetto: forma di tu / nous / vous",
+          "additionalFormula": "Parle ! / Parlons ! / Parlez !"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabella delle coniugazioni dei verbi francesi",
+      "description": "Usa la tabella per confrontare 100 verbi francesi comuni nelle diverse persone e cambia tempo per osservare come variano desinenze, radici, ausiliari e participi.",
+      "scrollHint": "Scorri orizzontalmente per vedere tutte le persone.",
+      "scrollLeftLabel": "Scorri a sinistra",
+      "scrollRightLabel": "Scorri a destra",
+      "notes": [
+        "Il pronome on può avere diversi significati nel francese moderno e nel parlato sostituisce molto spesso nous, ma si coniuga normalmente come il ed elle.",
+        "I tempi composti utilizzano avoir o être come ausiliare. Con être, il participio passato concorda generalmente in genere e numero con il soggetto.",
+        "L'imperativo si distingue dalle altre forme della pagina: nel francese standard si usano solo le forme corrispondenti a tu, nous e vous, normalmente senza pronome soggetto."
+      ]
+    },
+    "rules": {
+      "heading": "Regole fondamentali della coniugazione francese",
+      "intro": "La coniugazione francese diventa più semplice quando si imparano schemi ricorrenti di radici, desinenze e ausiliari invece di memorizzare ogni forma separatamente.",
+      "items": [
+        {
+          "heading": "I verbi regolari seguono schemi ricorrenti",
+          "text": "Molti verbi francesi appartengono a famiglie di coniugazione riconoscibili. I verbi regolari in -er sono particolarmente sistematici, mentre determinati verbi in -ir e -re seguono i propri schemi di desinenze.",
+          "examples": [
+            "je parle, tu parles, nous parlons",
+            "je finis, tu finis, nous finissons",
+            "je vends, tu vends, nous vendons"
+          ]
+        },
+        {
+          "heading": "I tempi composti usano avoir o être",
+          "text": "Diversi tempi importanti del francese combinano un ausiliare coniugato con un participio passato. La maggior parte dei verbi utilizza avoir, mentre un gruppo più limitato di verbi e i verbi pronominali utilizzano être.",
+          "examples": ["j’ai parlé", "elle est partie", "nous avions terminé"]
+        },
+        {
+          "heading": "Il participio passato può concordare",
+          "text": "Con être, il participio passato concorda normalmente con il soggetto in genere e numero. Con avoir si applicano regole diverse e la concordanza può dipendere, tra gli altri fattori, dalla posizione di un complemento oggetto diretto.",
+          "examples": [
+            "elle est arrivée",
+            "ils sont partis",
+            "elles sont venues"
+          ]
+        },
+        {
+          "heading": "Futuro e condizionale condividono spesso la stessa radice",
+          "text": "Il futur simple e il conditionnel présent utilizzano generalmente la stessa radice. Cambiano le desinenze: il futuro usa -ai, -as, -a, -ons, -ez, -ont, mentre il condizionale utilizza le desinenze dell'imparfait.",
+          "examples": [
+            "je viendrai / je viendrais",
+            "tu feras / tu ferais",
+            "nous pourrons / nous pourrions"
+          ]
+        },
+        {
+          "heading": "Il congiuntivo dipende dal contesto grammaticale",
+          "text": "Il subjonctif non è semplicemente un altro tempo verbale, ma un modo. Compare frequentemente nelle subordinate dopo espressioni di necessità, volontà, emozione, dubbio e incertezza, oltre che dopo determinate congiunzioni.",
+          "examples": [
+            "Il faut que tu viennes.",
+            "Je veux qu’elle parte.",
+            "Bien qu’il soit fatigué, il continue."
+          ]
+        },
+        {
+          "heading": "Molti verbi frequenti sono irregolari",
+          "text": "Diversi verbi francesi essenziali cambiano radice o desinenza in base alla persona e al tempo. Imparare presto queste forme irregolari aiuta a riconoscere rapidamente strutture molto comuni nel francese quotidiano.",
+          "examples": [
+            "je suis, nous sommes, ils sont",
+            "je vais, nous allons, ils vont",
+            "je peux, nous pouvons, ils peuvent"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Errori comuni nella coniugazione francese",
+      "intro": "Questi errori sono frequenti quando si applicano schemi regolari a verbi irregolari o si confondono ausiliare, tempo e modo.",
+      "items": [
+        {
+          "incorrect": "Il parlent français.",
+          "correct": "Il parle français.",
+          "explanation": "Il è terza persona singolare. Al presente, quindi, la forma corretta di parler è il parle, mentre parlent corrisponde a ils o elles."
+        },
+        {
+          "incorrect": "J’ai allé au marché.",
+          "correct": "Je suis allé au marché.",
+          "explanation": "Aller utilizza être nei tempi composti, non avoir. Inoltre, il participio passato può variare in base al genere e al numero del soggetto."
+        },
+        {
+          "incorrect": "Nous avons parti tôt.",
+          "correct": "Nous sommes partis tôt.",
+          "explanation": "Partir utilizza normalmente être al passé composé e partis concorda qui con un soggetto plurale."
+        },
+        {
+          "incorrect": "Si j’aurais le temps, je viendrais.",
+          "correct": "Si j’avais le temps, je viendrais.",
+          "explanation": "In una costruzione ipotetica di questo tipo, la proposizione introdotta da si usa l'imparfait, mentre la conseguenza usa il conditionnel présent."
+        },
+        {
+          "incorrect": "Il faut que tu viens.",
+          "correct": "Il faut que tu viennes.",
+          "explanation": "La struttura il faut que richiede normalmente il subjonctif. Con tu, quindi, venir assume la forma viennes."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Come usare questa tabella di coniugazione francese",
+      "steps": [
+        {
+          "heading": "Inizia dal presente indicativo",
+          "text": "Osserva prima come cambiano i verbi più frequenti nelle sei persone, poi passa ai tempi composti e agli altri modi."
+        },
+        {
+          "heading": "Confronta un verbo in tutte le persone",
+          "text": "Leggi orizzontalmente le diverse forme dello stesso verbo per individuare quali desinenze cambiano e quali parti della radice rimangono stabili."
+        },
+        {
+          "heading": "Passa da un tempo all'altro",
+          "text": "Confronta lo stesso verbo al presente, all'imperfetto, al futuro, al condizionale e nei tempi composti per capire le relazioni tra le varie forme."
+        },
+        {
+          "heading": "Individua l'ausiliare nei tempi composti",
+          "text": "Per il passé composé e gli altri tempi composti, controlla se il verbo utilizza avoir o être e osserva gli eventuali accordi del participio passato."
+        },
+        {
+          "heading": "Concentrati sulle radici irregolari",
+          "text": "Dedica maggiore attenzione ai verbi frequenti le cui forme al futuro, al condizionale, al congiuntivo o al passato non possono essere ricavate da un semplice schema regolare."
+        },
+        {
+          "heading": "Usa le forme in frasi complete",
+          "text": "Dopo aver studiato una coniugazione, utilizzala in una frase breve. Il contesto aiuta ad associare la forma grammaticale al suo significato e al suo uso reale."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Consigli per imparare le coniugazioni francesi",
+      "items": [
+        {
+          "heading": "Impara le desinenze come schemi",
+          "text": "Memorizza serie ricorrenti di desinenze per i principali gruppi verbali e tempi invece di imparare ogni forma separatamente."
+        },
+        {
+          "heading": "Dai priorità ai verbi irregolari frequenti",
+          "text": "Verbi come être, avoir, aller, faire, pouvoir, vouloir, devoir e venir compaiono continuamente e vale la pena padroneggiarli presto."
+        },
+        {
+          "heading": "Studia insieme i tempi collegati",
+          "text": "Confronta il futuro con il condizionale e il passé composé con gli altri tempi composti, perché condividono importanti schemi strutturali."
+        },
+        {
+          "heading": "Fai attenzione all'ausiliare e alla concordanza",
+          "text": "Quando studi i tempi composti, impara quale ausiliare accompagna ciascun verbo e osserva i casi in cui il participio passato cambia."
+        },
+        {
+          "heading": "Pratica le coniugazioni nel contesto",
+          "text": "Frasi brevi e situazioni concrete aiutano a imparare non solo come si forma un tempo o un modo, ma anche quando viene effettivamente usato."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Esercitati con i verbi francesi più comuni",
+      "description": "Metti in pratica queste coniugazioni oppure esplora prima i verbi francesi più frequenti e i loro significati.",
+      "primaryLabel": "Esercitati con i verbi francesi",
+      "secondaryLabel": "Vedi i 100 verbi francesi più comuni"
+    },
+    "related": {
+      "heading": "Risorse correlate per imparare il francese",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbi francesi più comuni"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbi francesi comuni: forme del passato"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabolario francese per livello QCER"
+        },
+        {
+          "key": "levelTest",
+          "label": "Test di livello di francese"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Domande frequenti sulla coniugazione francese",
+      "items": [
+        {
+          "question": "Che cosa significa coniugare un verbo in francese?",
+          "answer": "Coniugare un verbo francese significa modificarne la forma in base a elementi grammaticali come persona, tempo e modo. Per esempio, parler diventa je parle, nous parlons e ils parlent al presente indicativo."
+        },
+        {
+          "question": "I verbi francesi cambiano con ogni persona?",
+          "answer": "In generale sì. I verbi francesi hanno forme associate alle diverse persone, anche se alcune possono avere la stessa pronuncia. Nella lingua scritta, le desinenze permettono spesso di distinguere je, tu, il / elle / on, nous, vous e ils / elles."
+        },
+        {
+          "question": "Quali sono i tempi francesi più importanti per i principianti?",
+          "answer": "Di solito si inizia con présent de l’indicatif, passé composé, imparfait e futur simple, perché coprono gran parte delle situazioni comunicative quotidiane. Con il progredire del livello diventano sempre più importanti anche conditionnel présent e présent du subjonctif."
+        },
+        {
+          "question": "Qual è la differenza tra passé composé e imparfait?",
+          "answer": "Il passé composé presenta normalmente un'azione passata come conclusa o delimitata, mentre l'imparfait viene spesso usato per abitudini, situazioni in corso, descrizioni, stati e informazioni di sfondo. Nei racconti i due tempi compaiono frequentemente insieme."
+        },
+        {
+          "question": "Perché alcuni verbi francesi usano être invece di avoir?",
+          "answer": "La maggior parte dei tempi composti usa avoir, ma alcuni verbi, tra cui determinati verbi intransitivi di movimento o cambiamento di stato e i verbi pronominali, usano être. Con être, il participio passato concorda generalmente con il soggetto."
+        },
+        {
+          "question": "Futuro e condizionale sono collegati in francese?",
+          "answer": "Sì. Futur simple e conditionnel présent utilizzano normalmente la stessa radice. Il futuro usa desinenze come -ai, -as e -ont, mentre il condizionale utilizza le desinenze dell'imparfait: -ais, -ais, -ait, -ions, -iez e -aient."
+        },
+        {
+          "question": "Quando si usa il congiuntivo in francese?",
+          "answer": "Il subjonctif compare frequentemente nelle subordinate dopo espressioni di necessità, volontà, emozione, dubbio, incertezza o valutazione e dopo determinate congiunzioni. Il suo uso dipende soprattutto dal contesto grammaticale e dal significato della frase."
+        },
+        {
+          "question": "Il passé simple è importante nel francese parlato?",
+          "answer": "Il passé simple è raro nella conversazione quotidiana moderna, dove per le azioni passate concluse si usa normalmente il passé composé. Rimane però importante per leggere romanzi, testi storici, biografie e narrazioni formali."
+        },
+        {
+          "question": "Perché le coniugazioni francesi sembrano difficili?",
+          "answer": "Il francese combina schemi regolari con molti verbi frequenti irregolari, cambiamenti di radice, tempi composti, scelta dell'ausiliare e diversi modi verbali. Imparare prima gli schemi ricorrenti rende il sistema molto più gestibile."
+        },
+        {
+          "question": "Qual è il modo migliore per memorizzare le coniugazioni francesi?",
+          "answer": "Inizia dai verbi più frequenti, raggruppa le forme in base agli schemi comuni, confronta i tempi collegati e utilizza regolarmente le coniugazioni in frasi brevi. Il richiamo attivo e la pratica nel contesto sono generalmente più efficaci della semplice rilettura delle tabelle."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "pt",
+    "urlSlug": "100-verbos-franceses-mais-comuns-conjugacoes",
+    "entryButtonLabel": "Ver conjugações em francês",
+    "tableColumns": {
+      "number": "N.º",
+      "infinitive": "Infinitivo",
+      "meaning": "Significado"
+    },
+    "pronounForms": [
+      {
+        "key": "je",
+        "label": "je / j’"
+      },
+      {
+        "key": "tu",
+        "label": "tu"
+      },
+      {
+        "key": "il_elle_on",
+        "label": "il / elle / on"
+      },
+      {
+        "key": "nous",
+        "label": "nous"
+      },
+      {
+        "key": "vous",
+        "label": "vous"
+      },
+      {
+        "key": "ils_elles",
+        "label": "ils / elles"
+      }
+    ],
+    "metadata": {
+      "title": "Conjugação dos 100 verbos franceses mais comuns",
+      "metaTitle": "100 verbos franceses mais comuns: conjugações",
+      "metaDescription": "Compare 100 verbos franceses frequentes em diferentes tempos, modos e pessoas, com explicações claras sobre formação e uso."
+    },
+    "hero": {
+      "heading": "Conjugação dos 100 verbos franceses mais comuns",
+      "subtitle": "Compare verbos essenciais do francês em diferentes tempos, modos e pessoas gramaticais.",
+      "introParagraphs": [
+        "Consulte a conjugação de 100 verbos franceses muito frequentes nos principais tempos do indicativo, condicional, subjuntivo e imperativo. A tabela permite comparar diretamente as formas com je, tu, il / elle / on, nous, vous e ils / elles.",
+        "Alternar entre os tempos ajuda a identificar terminações recorrentes, verbos auxiliares, particípios passados e radicais irregulares. Comparar o mesmo verbo em várias formas torna mais fácil compreender o sistema de conjugação francês, em vez de memorizar cada forma isoladamente."
+      ]
+    },
+    "overview": {
+      "heading": "Como funciona a conjugação dos verbos franceses",
+      "paragraphs": [
+        "Em francês, a forma do verbo geralmente varia de acordo com a pessoa, o número, o tempo e o modo. Os verbos regulares seguem padrões recorrentes de terminações, especialmente muitos verbos em -er e determinados verbos em -ir e -re, enquanto vários verbos muito frequentes apresentam radicais ou formas irregulares.",
+        "Os tempos compostos, como o passé composé, o plus-que-parfait, o futur antérieur, o conditionnel passé e o passé du subjonctif, são formados com um verbo auxiliar, normalmente avoir ou être, seguido do particípio passado. Com être, o particípio passado geralmente concorda em género e número com o sujeito.",
+        "O francês também distingue diferentes modos verbais. O indicativo é usado principalmente para apresentar factos e situações, o condicional para hipóteses ou consequências dependentes de uma condição, o subjuntivo aparece frequentemente depois de expressões de necessidade, vontade, emoção ou dúvida, e o imperativo é usado para ordens, instruções e conselhos."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Escolha um tempo ou modo verbal",
+      "description": "Selecione um tempo para comparar os mesmos 100 verbos franceses nas diferentes pessoas e observar como os padrões de conjugação mudam.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Indicativo"
+        },
+        {
+          "key": "conditional",
+          "label": "Condicional"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Subjuntivo"
+        },
+        {
+          "key": "imperative",
+          "label": "Imperativo"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Presente do indicativo",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comuns no presente do indicativo",
+        "tableDescription": "Compare a conjugação dos verbos franceses mais frequentes no presente do indicativo para cada pessoa gramatical.",
+        "grammar": {
+          "heading": "Como formar o presente do indicativo em francês",
+          "description": "O présent de l’indicatif é usado para ações atuais, hábitos, factos gerais e situações presentes. Os verbos regulares recebem terminações específicas de acordo com a pessoa, enquanto verbos muito frequentes como être, avoir, aller e faire têm formas bastante irregulares.",
+          "formula": "sujeito + forma verbal no presente"
+        }
+      },
+      {
+        "key": "passe_compose",
+        "label": "Passé composé",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comuns no passé composé",
+        "tableDescription": "Compare as formas do passé composé e observe qual auxiliar e qual particípio passado cada verbo utiliza.",
+        "grammar": {
+          "heading": "Como formar o passé composé",
+          "description": "O passé composé é usado principalmente para ações e acontecimentos passados vistos como concluídos. Forma-se com o presente de avoir ou être seguido do particípio passado. A maioria dos verbos usa avoir, enquanto determinados verbos intransitivos e os verbos pronominais usam être. Com être, o particípio passado normalmente concorda com o sujeito.",
+          "formula": "sujeito + presente de avoir ou être + particípio passado",
+          "additionalFormula": "elle est arrivée / ils sont partis"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imperfeito",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comuns no imperfeito",
+        "tableDescription": "Compare as formas do imparfait usadas para hábitos, descrições, estados e situações em curso no passado.",
+        "grammar": {
+          "heading": "Como formar o imperfeito em francês",
+          "description": "O imparfait descreve frequentemente ações habituais no passado, situações em curso, estados, descrições e circunstâncias de fundo. Para a maioria dos verbos, parte-se da forma de nous no presente, retira-se -ons e acrescentam-se as terminações do imperfeito. Être é a principal exceção e usa o radical ét-.",
+          "formula": "radical da forma de nous sem -ons + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "nous parlons → parl- → je parlais"
+        }
+      },
+      {
+        "key": "plus_que_parfait",
+        "label": "Mais-que-perfeito",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comuns no plus-que-parfait",
+        "tableDescription": "Compare as formas do plus-que-parfait usadas para ações que já tinham acontecido antes de outro momento no passado.",
+        "grammar": {
+          "heading": "Como formar o plus-que-parfait",
+          "description": "O plus-que-parfait expressa uma ação ou situação anterior a outro ponto de referência no passado. Forma-se com o imparfait de avoir ou être seguido do particípio passado. A escolha do auxiliar segue, em linhas gerais, as mesmas regras do passé composé.",
+          "formula": "sujeito + imparfait de avoir ou être + particípio passado",
+          "additionalFormula": "j’avais fini / elle était partie"
+        }
+      },
+      {
+        "key": "passe_simple",
+        "label": "Passé simple",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comuns no passé simple",
+        "tableDescription": "Compare as formas do passé simple, especialmente úteis para ler textos literários, históricos e narrativos formais.",
+        "grammar": {
+          "heading": "Como formar o passé simple",
+          "description": "O passé simple expressa acontecimentos concluídos no passado e é usado sobretudo na literatura, na narrativa histórica e em certos registos formais escritos. Os grupos verbais regulares seguem conjuntos característicos de terminações, enquanto muitos verbos frequentes apresentam radicais irregulares.",
+          "formula": "radical verbal + terminação pessoal do passé simple"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Futuro simples",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comuns no futuro simples",
+        "tableDescription": "Compare as formas do futur simple usadas para ações, previsões e situações futuras.",
+        "grammar": {
+          "heading": "Como formar o futuro simples em francês",
+          "description": "O futur simple forma-se geralmente acrescentando as terminações de futuro ao infinitivo. Nos verbos terminados em -re, normalmente elimina-se o -e final antes de acrescentar as terminações. Muitos verbos frequentes têm radicais irregulares no futuro, mas mantêm o mesmo conjunto de terminações.",
+          "formula": "radical do futuro + -ai, -as, -a, -ons, -ez, -ont",
+          "additionalFormula": "parler → je parlerai; prendre → je prendrai"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futuro anterior",
+        "group": "indicative",
+        "tableHeading": "100 verbos franceses comuns no futuro anterior",
+        "tableDescription": "Compare as formas do futur antérieur usadas para ações que estarão concluídas antes de outro momento futuro.",
+        "grammar": {
+          "heading": "Como formar o futuro anterior em francês",
+          "description": "O futur antérieur descreve uma ação que estará concluída antes de outro acontecimento ou ponto de referência futuro. Forma-se com o futur simple de avoir ou être seguido do particípio passado.",
+          "formula": "sujeito + futuro de avoir ou être + particípio passado",
+          "additionalFormula": "j’aurai terminé / elle sera arrivée"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Condicional presente",
+        "group": "conditional",
+        "tableHeading": "100 verbos franceses comuns no condicional presente",
+        "tableDescription": "Compare as formas do conditionnel présent usadas para hipóteses, pedidos educados, desejos e consequências dependentes de uma condição.",
+        "grammar": {
+          "heading": "Como formar o condicional presente em francês",
+          "description": "O conditionnel présent é usado, entre outras funções, para ações hipotéticas, pedidos educados, desejos e consequências sujeitas a uma condição. Normalmente utiliza o mesmo radical do futur simple combinado com as terminações do imparfait.",
+          "formula": "radical do futuro + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "je parlerais / nous viendrions"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Condicional passado",
+        "group": "conditional",
+        "tableHeading": "100 verbos franceses comuns no condicional passado",
+        "tableDescription": "Compare as formas do conditionnel passé usadas para possibilidades não realizadas e consequências hipotéticas no passado.",
+        "grammar": {
+          "heading": "Como formar o condicional passado em francês",
+          "description": "O conditionnel passé expressa ações hipotéticas ou não realizadas no passado, incluindo consequências que teriam ocorrido se outra condição tivesse sido cumprida. Forma-se com o conditionnel présent de avoir ou être seguido do particípio passado.",
+          "formula": "sujeito + conditionnel présent de avoir ou être + particípio passado",
+          "additionalFormula": "j’aurais accepté / elle serait venue"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Presente do subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos franceses comuns no presente do subjuntivo",
+        "tableDescription": "Compare as formas do subjonctif présent usadas depois de expressões de necessidade, vontade, emoção, dúvida ou incerteza.",
+        "grammar": {
+          "heading": "Como formar o presente do subjuntivo em francês",
+          "description": "O subjonctif présent aparece frequentemente em orações subordinadas introduzidas por que depois de expressões de vontade, necessidade, emoção, dúvida, avaliação ou incerteza. Para muitos verbos, o radical está relacionado com a forma de ils no présent de l’indicatif, embora vários verbos frequentes tenham radicais irregulares.",
+          "formula": "que + sujeito + radical do subjuntivo + -e, -es, -e, -ions, -iez, -ent",
+          "additionalFormula": "Il faut que je parte."
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Passado do subjuntivo",
+        "group": "subjunctive",
+        "tableHeading": "100 verbos franceses comuns no passado do subjuntivo",
+        "tableDescription": "Compare as formas do passé du subjonctif quando o contexto exige o subjuntivo e a ação já está concluída.",
+        "grammar": {
+          "heading": "Como formar o passado do subjuntivo em francês",
+          "description": "O passé du subjonctif é usado quando o contexto gramatical exige o subjuntivo e a ação da oração subordinada é vista como concluída. Forma-se com o présent du subjonctif de avoir ou être seguido do particípio passado.",
+          "formula": "que + sujeito + presente do subjuntivo de avoir ou être + particípio passado",
+          "additionalFormula": "Je suis content que tu aies réussi."
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Imperativo presente",
+        "group": "imperative",
+        "tableHeading": "100 verbos franceses comuns no imperativo presente",
+        "tableDescription": "Compare as formas do impératif présent usadas para ordens, instruções, convites e conselhos.",
+        "grammar": {
+          "heading": "Como formar o imperativo presente em francês",
+          "description": "O impératif présent é usado para ordens, instruções, conselhos e convites. Normalmente apresenta apenas as formas correspondentes a tu, nous e vous, e o pronome sujeito é omitido. Em muitos verbos em -er e no verbo aller, a forma correspondente a tu perde o -s final, salvo em certas construções antes de y ou en.",
+          "formula": "forma verbal no imperativo sem pronome sujeito: forma de tu / nous / vous",
+          "additionalFormula": "Parle ! / Parlons ! / Parlez !"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Tabela de conjugação dos verbos franceses",
+      "description": "Use a tabela para comparar 100 verbos franceses comuns entre as diferentes pessoas e alterne entre os tempos para observar mudanças nas terminações, radicais, auxiliares e particípios.",
+      "scrollHint": "Desloque horizontalmente para ver todas as pessoas.",
+      "scrollLeftLabel": "Deslocar para a esquerda",
+      "scrollRightLabel": "Deslocar para a direita",
+      "notes": [
+        "O pronome on pode ter vários significados no francês moderno e substitui frequentemente nous na língua falada, mas normalmente é conjugado da mesma forma que il e elle.",
+        "Os tempos compostos utilizam avoir ou être como auxiliar. Com être, o particípio passado geralmente concorda em género e número com o sujeito.",
+        "O imperativo distingue-se das restantes formas desta página: no francês padrão, usam-se apenas as formas correspondentes a tu, nous e vous, normalmente sem pronome sujeito."
+      ]
+    },
+    "rules": {
+      "heading": "Regras essenciais da conjugação francesa",
+      "intro": "A conjugação francesa torna-se mais fácil quando se aprendem padrões recorrentes de radicais, terminações e auxiliares, em vez de memorizar cada forma separadamente.",
+      "items": [
+        {
+          "heading": "Os verbos regulares seguem padrões recorrentes",
+          "text": "Muitos verbos franceses pertencem a famílias de conjugação reconhecíveis. Os verbos regulares em -er são especialmente sistemáticos, enquanto determinados verbos em -ir e -re seguem os seus próprios padrões de terminações.",
+          "examples": [
+            "je parle, tu parles, nous parlons",
+            "je finis, tu finis, nous finissons",
+            "je vends, tu vends, nous vendons"
+          ]
+        },
+        {
+          "heading": "Os tempos compostos usam avoir ou être",
+          "text": "Vários tempos importantes do francês combinam um auxiliar conjugado com um particípio passado. A maioria dos verbos utiliza avoir, enquanto um grupo mais reduzido de verbos e os verbos pronominais utilizam être.",
+          "examples": ["j’ai parlé", "elle est partie", "nous avions terminé"]
+        },
+        {
+          "heading": "O particípio passado pode exigir concordância",
+          "text": "Com être, o particípio passado normalmente concorda com o sujeito em género e número. Com avoir, aplicam-se regras diferentes, e a concordância pode depender, entre outros fatores, da posição de um complemento direto.",
+          "examples": [
+            "elle est arrivée",
+            "ils sont partis",
+            "elles sont venues"
+          ]
+        },
+        {
+          "heading": "O futuro e o condicional partilham frequentemente o mesmo radical",
+          "text": "O futur simple e o conditionnel présent usam normalmente o mesmo radical verbal. O que muda são as terminações: o futuro usa -ai, -as, -a, -ons, -ez, -ont, enquanto o condicional usa as terminações do imparfait.",
+          "examples": [
+            "je viendrai / je viendrais",
+            "tu feras / tu ferais",
+            "nous pourrons / nous pourrions"
+          ]
+        },
+        {
+          "heading": "O subjuntivo depende do contexto gramatical",
+          "text": "O subjonctif não é apenas mais um tempo verbal, mas um modo. Surge frequentemente em orações subordinadas depois de expressões de necessidade, vontade, emoção, dúvida e incerteza, bem como depois de determinadas conjunções.",
+          "examples": [
+            "Il faut que tu viennes.",
+            "Je veux qu’elle parte.",
+            "Bien qu’il soit fatigué, il continue."
+          ]
+        },
+        {
+          "heading": "Muitos verbos frequentes são irregulares",
+          "text": "Vários verbos franceses essenciais mudam de radical ou de terminação conforme a pessoa e o tempo. Aprender cedo estas formas irregulares ajuda a reconhecer rapidamente estruturas muito frequentes no francês do dia a dia.",
+          "examples": [
+            "je suis, nous sommes, ils sont",
+            "je vais, nous allons, ils vont",
+            "je peux, nous pouvons, ils peuvent"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Erros comuns na conjugação francesa",
+      "intro": "Estes erros aparecem frequentemente quando se aplicam padrões regulares a verbos irregulares ou quando se confundem o auxiliar, o tempo e o modo.",
+      "items": [
+        {
+          "incorrect": "Il parlent français.",
+          "correct": "Il parle français.",
+          "explanation": "Il está na terceira pessoa do singular. No presente, a forma correta de parler é il parle, enquanto parlent corresponde a ils ou elles."
+        },
+        {
+          "incorrect": "J’ai allé au marché.",
+          "correct": "Je suis allé au marché.",
+          "explanation": "Aller utiliza être nos tempos compostos, e não avoir. Além disso, o particípio passado pode variar de acordo com o género e o número do sujeito."
+        },
+        {
+          "incorrect": "Nous avons parti tôt.",
+          "correct": "Nous sommes partis tôt.",
+          "explanation": "Partir utiliza normalmente être no passé composé, e partis concorda aqui com um sujeito no plural."
+        },
+        {
+          "incorrect": "Si j’aurais le temps, je viendrais.",
+          "correct": "Si j’avais le temps, je viendrais.",
+          "explanation": "Numa construção hipotética deste tipo, a oração introduzida por si utiliza o imparfait, enquanto a consequência utiliza o conditionnel présent."
+        },
+        {
+          "incorrect": "Il faut que tu viens.",
+          "correct": "Il faut que tu viennes.",
+          "explanation": "A estrutura il faut que exige normalmente o subjonctif. Com tu, portanto, venir assume a forma viennes."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Como usar esta tabela de conjugação francesa",
+      "steps": [
+        {
+          "heading": "Comece pelo presente do indicativo",
+          "text": "Observe primeiro como os verbos mais frequentes mudam entre as seis pessoas antes de avançar para tempos compostos e outros modos."
+        },
+        {
+          "heading": "Compare um verbo em todas as pessoas",
+          "text": "Leia horizontalmente as diferentes formas do mesmo verbo para identificar quais terminações mudam e quais partes do radical permanecem estáveis."
+        },
+        {
+          "heading": "Alterne entre os tempos do mesmo verbo",
+          "text": "Compare um verbo conhecido no presente, imperfeito, futuro, condicional e nos tempos compostos para perceber as relações entre essas formas."
+        },
+        {
+          "heading": "Identifique o auxiliar nos tempos compostos",
+          "text": "Ao estudar o passé composé e outros tempos compostos, verifique se o verbo utiliza avoir ou être e observe quando o particípio passado precisa de concordância."
+        },
+        {
+          "heading": "Dê atenção aos radicais irregulares",
+          "text": "Concentre-se especialmente nos verbos frequentes cujas formas de futuro, condicional, subjuntivo ou passado não podem ser previstas por um padrão regular simples."
+        },
+        {
+          "heading": "Use as formas em frases completas",
+          "text": "Depois de estudar uma conjugação, utilize-a numa frase curta. O contexto ajuda a associar a forma gramatical ao seu significado e uso reais."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Dicas para aprender as conjugações francesas",
+      "items": [
+        {
+          "heading": "Aprenda as terminações como padrões",
+          "text": "Memorize conjuntos recorrentes de terminações para os principais grupos verbais e tempos, em vez de aprender cada forma separadamente."
+        },
+        {
+          "heading": "Priorize os verbos irregulares frequentes",
+          "text": "Verbos como être, avoir, aller, faire, pouvoir, vouloir, devoir e venir aparecem constantemente e vale a pena dominá-los cedo."
+        },
+        {
+          "heading": "Estude juntos os tempos relacionados",
+          "text": "Compare o futuro com o condicional e o passé composé com outros tempos compostos, porque partilham padrões estruturais importantes."
+        },
+        {
+          "heading": "Preste atenção ao auxiliar e à concordância",
+          "text": "Ao praticar tempos compostos, aprenda qual auxiliar acompanha cada verbo e observe as situações em que o particípio passado muda."
+        },
+        {
+          "heading": "Pratique as conjugações em contexto",
+          "text": "Frases curtas e situações concretas ajudam a aprender não apenas como um tempo ou modo é formado, mas também quando deve ser utilizado."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Pratique os verbos franceses mais comuns",
+      "description": "Use estas conjugações em exercícios ou explore primeiro os verbos franceses mais frequentes e os seus significados.",
+      "primaryLabel": "Praticar verbos franceses",
+      "secondaryLabel": "Ver os 100 verbos franceses mais comuns"
+    },
+    "related": {
+      "heading": "Recursos relacionados para aprender francês",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 verbos franceses mais comuns"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 verbos franceses comuns: formas do passado"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Vocabulário francês por nível QECR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Teste de nível de francês"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre a conjugação francesa",
+      "items": [
+        {
+          "question": "O que significa conjugar um verbo em francês?",
+          "answer": "Conjugar um verbo francês significa alterar a sua forma de acordo com elementos gramaticais como pessoa, tempo e modo. Por exemplo, parler torna-se je parle, nous parlons e ils parlent no presente do indicativo."
+        },
+        {
+          "question": "Os verbos franceses mudam com cada pessoa?",
+          "answer": "De modo geral, sim. Os verbos franceses têm formas associadas às diferentes pessoas, embora várias delas possam ter a mesma pronúncia. Na escrita, as terminações permitem muitas vezes distinguir je, tu, il / elle / on, nous, vous e ils / elles."
+        },
+        {
+          "question": "Quais são os tempos franceses mais importantes para iniciantes?",
+          "answer": "Normalmente começa-se pelo présent de l’indicatif, passé composé, imparfait e futur simple, porque estes cobrem grande parte das situações de comunicação do dia a dia. À medida que o nível aumenta, o conditionnel présent e o présent du subjonctif tornam-se também cada vez mais importantes."
+        },
+        {
+          "question": "Qual é a diferença entre passé composé e imparfait?",
+          "answer": "O passé composé geralmente apresenta uma ação passada como concluída ou delimitada, enquanto o imparfait é frequentemente usado para hábitos, situações em curso, descrições, estados e informações de fundo. Em narrativas, os dois tempos aparecem muitas vezes em conjunto."
+        },
+        {
+          "question": "Por que alguns verbos franceses usam être em vez de avoir?",
+          "answer": "A maioria dos tempos compostos utiliza avoir, mas determinados verbos, incluindo alguns verbos intransitivos de movimento ou mudança de estado e os verbos pronominais, utilizam être. Com être, o particípio passado normalmente concorda com o sujeito."
+        },
+        {
+          "question": "O futuro e o condicional estão relacionados em francês?",
+          "answer": "Sim. O futur simple e o conditionnel présent normalmente utilizam o mesmo radical. O futuro usa terminações como -ai, -as e -ont, enquanto o condicional utiliza as terminações do imparfait: -ais, -ais, -ait, -ions, -iez e -aient."
+        },
+        {
+          "question": "Quando se usa o subjuntivo em francês?",
+          "answer": "O subjonctif aparece frequentemente em orações subordinadas depois de expressões de necessidade, vontade, emoção, dúvida, incerteza ou avaliação, bem como depois de determinadas conjunções. O seu uso depende principalmente do contexto gramatical e do significado da frase."
+        },
+        {
+          "question": "O passé simple é importante no francês falado?",
+          "answer": "O passé simple é raro na conversação quotidiana moderna, em que normalmente se usa o passé composé para ações passadas concluídas. No entanto, continua a ser importante para ler romances, textos históricos, biografias e narrativas formais."
+        },
+        {
+          "question": "Por que as conjugações francesas parecem difíceis?",
+          "answer": "O francês combina padrões regulares com muitos verbos frequentes irregulares, mudanças de radical, tempos compostos, escolha de auxiliares e diferentes modos verbais. Aprender primeiro os padrões recorrentes torna o sistema muito mais fácil de dominar."
+        },
+        {
+          "question": "Qual é a melhor forma de memorizar as conjugações francesas?",
+          "answer": "Comece pelos verbos mais frequentes, agrupe as formas por padrões comuns, compare tempos relacionados e use regularmente as conjugações em frases curtas. A prática ativa em contexto costuma ser mais eficaz do que apenas reler tabelas completas."
+        }
+      ]
+    }
+  },
+  {
+    "targetLanguage": "fr",
+    "uiLanguage": "ru",
+    "urlSlug": "100-samyh-upotreblyaemyh-francuzskih-glagolov-spryazhenie",
+    "entryButtonLabel": "Посмотреть спряжение французских глаголов",
+    "tableColumns": {
+      "number": "№",
+      "infinitive": "Инфинитив",
+      "meaning": "Значение"
+    },
+    "pronounForms": [
+      {
+        "key": "je",
+        "label": "je / j’"
+      },
+      {
+        "key": "tu",
+        "label": "tu"
+      },
+      {
+        "key": "il_elle_on",
+        "label": "il / elle / on"
+      },
+      {
+        "key": "nous",
+        "label": "nous"
+      },
+      {
+        "key": "vous",
+        "label": "vous"
+      },
+      {
+        "key": "ils_elles",
+        "label": "ils / elles"
+      }
+    ],
+    "metadata": {
+      "title": "Спряжение 100 самых употребительных французских глаголов",
+      "metaTitle": "100 самых употребительных французских глаголов: спряжение",
+      "metaDescription": "Сравните спряжение 100 частых французских глаголов по временам, наклонениям и лицам с понятными объяснениями образования и употребления."
+    },
+    "hero": {
+      "heading": "Спряжение 100 самых употребительных французских глаголов",
+      "subtitle": "Сравнивайте основные французские глаголы в разных временах, наклонениях и лицах.",
+      "introParagraphs": [
+        "На этой странице собраны спряжения 100 часто употребляемых французских глаголов в основных формах изъявительного, условного, сослагательного и повелительного наклонений. В таблице можно сравнивать формы с je, tu, il / elle / on, nous, vous и ils / elles.",
+        "Переключение между временами помогает замечать повторяющиеся окончания, вспомогательные глаголы, причастия прошедшего времени и неправильные основы. Сравнение одного и того же глагола в разных формах позволяет лучше понять систему французского спряжения, а не заучивать каждую форму отдельно."
+      ]
+    },
+    "overview": {
+      "heading": "Как устроено спряжение французских глаголов",
+      "paragraphs": [
+        "Во французском языке форма глагола обычно меняется в зависимости от лица, числа, времени и наклонения. Регулярные глаголы следуют повторяющимся моделям окончаний, особенно многие глаголы на -er и некоторые глаголы на -ir и -re. При этом многие наиболее частотные глаголы имеют неправильные основы или формы.",
+        "Сложные времена, такие как passé composé, plus-que-parfait, futur antérieur, conditionnel passé и passé du subjonctif, образуются при помощи вспомогательного глагола, обычно avoir или être, и причастия прошедшего времени. С être причастие, как правило, согласуется с подлежащим в роде и числе.",
+        "Во французском также различаются несколько наклонений. Изъявительное используется прежде всего для описания фактов и реальных ситуаций, условное — для гипотетических действий и последствий, зависящих от условия, сослагательное часто употребляется после выражений необходимости, желания, эмоции или сомнения, а повелительное служит для приказов, инструкций и советов."
+      ]
+    },
+    "tenseSelector": {
+      "heading": "Выберите время или наклонение",
+      "description": "Выберите форму, чтобы сравнить одни и те же 100 французских глаголов по лицам и увидеть, как меняются их модели спряжения.",
+      "defaultTense": "present_indicative",
+      "groups": [
+        {
+          "key": "indicative",
+          "label": "Изъявительное наклонение"
+        },
+        {
+          "key": "conditional",
+          "label": "Условное наклонение"
+        },
+        {
+          "key": "subjunctive",
+          "label": "Сослагательное наклонение"
+        },
+        {
+          "key": "imperative",
+          "label": "Повелительное наклонение"
+        }
+      ]
+    },
+    "tenses": [
+      {
+        "key": "present_indicative",
+        "label": "Настоящее время изъявительного наклонения",
+        "group": "indicative",
+        "tableHeading": "100 частых французских глаголов в Présent de l’indicatif",
+        "tableDescription": "Сравните спряжение наиболее употребительных французских глаголов в настоящем времени изъявительного наклонения по всем лицам.",
+        "grammar": {
+          "heading": "Как образуется Présent de l’indicatif",
+          "description": "Présent de l’indicatif употребляется для действий в настоящем, привычек, общих фактов и текущих состояний. Регулярные глаголы получают характерные окончания в зависимости от лица, тогда как очень частые глаголы, такие как être, avoir, aller и faire, имеют неправильные формы.",
+          "formula": "подлежащее + личная форма глагола в настоящем времени"
+        }
+      },
+      {
+        "key": "passe_compose",
+        "label": "Passé composé",
+        "group": "indicative",
+        "tableHeading": "100 частых французских глаголов в Passé composé",
+        "tableDescription": "Сравните формы passé composé и обратите внимание, какой вспомогательный глагол и какое причастие прошедшего времени используется.",
+        "grammar": {
+          "heading": "Как образуется Passé composé",
+          "description": "Passé composé обычно обозначает завершенные действия и события в прошлом. Оно образуется при помощи настоящего времени avoir или être и причастия прошедшего времени. Большинство глаголов используют avoir, а некоторые непереходные и возвратные глаголы — être. С être причастие обычно согласуется с подлежащим.",
+          "formula": "подлежащее + présent глагола avoir или être + participe passé",
+          "additionalFormula": "elle est arrivée / ils sont partis"
+        }
+      },
+      {
+        "key": "imperfect_indicative",
+        "label": "Imparfait",
+        "group": "indicative",
+        "tableHeading": "100 частых французских глаголов в Imparfait",
+        "tableDescription": "Сравните формы imparfait, используемые для привычных действий, описаний, состояний и длительных ситуаций в прошлом.",
+        "grammar": {
+          "heading": "Как образуется Imparfait",
+          "description": "Imparfait часто используется для повторяющихся действий в прошлом, длительных ситуаций, состояний, описаний и фоновых обстоятельств. Для большинства глаголов берут форму nous в настоящем времени, убирают -ons и добавляют окончания imparfait. Главным исключением является être с основой ét-.",
+          "formula": "основа формы nous без -ons + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "nous parlons → parl- → je parlais"
+        }
+      },
+      {
+        "key": "plus_que_parfait",
+        "label": "Plus-que-parfait",
+        "group": "indicative",
+        "tableHeading": "100 частых французских глаголов в Plus-que-parfait",
+        "tableDescription": "Сравните формы plus-que-parfait для действий, которые произошли раньше другого момента или события в прошлом.",
+        "grammar": {
+          "heading": "Как образуется Plus-que-parfait",
+          "description": "Plus-que-parfait обозначает действие или состояние, предшествующее другому моменту в прошлом. Оно образуется при помощи imparfait глагола avoir или être и причастия прошедшего времени. Выбор вспомогательного глагола в целом следует тем же правилам, что и в passé composé.",
+          "formula": "подлежащее + imparfait глагола avoir или être + participe passé",
+          "additionalFormula": "j’avais fini / elle était partie"
+        }
+      },
+      {
+        "key": "passe_simple",
+        "label": "Passé simple",
+        "group": "indicative",
+        "tableHeading": "100 частых французских глаголов в Passé simple",
+        "tableDescription": "Сравните формы passé simple, особенно полезные при чтении художественных, исторических и формальных повествовательных текстов.",
+        "grammar": {
+          "heading": "Как образуется Passé simple",
+          "description": "Passé simple обозначает завершенные события в прошлом и используется главным образом в художественной литературе, историческом повествовании и некоторых формальных письменных стилях. Регулярные группы глаголов имеют характерные наборы окончаний, а многие частотные глаголы используют неправильные основы.",
+          "formula": "основа глагола + личное окончание passé simple"
+        }
+      },
+      {
+        "key": "future_indicative",
+        "label": "Простое будущее время",
+        "group": "indicative",
+        "tableHeading": "100 частых французских глаголов в Futur simple",
+        "tableDescription": "Сравните формы futur simple для будущих действий, прогнозов и ситуаций.",
+        "grammar": {
+          "heading": "Как образуется Futur simple",
+          "description": "Futur simple обычно образуется добавлением окончаний будущего времени к инфинитиву. У глаголов на -re конечная -e обычно отбрасывается. Многие частотные глаголы имеют неправильную основу будущего времени, но используют тот же набор окончаний.",
+          "formula": "основа будущего времени + -ai, -as, -a, -ons, -ez, -ont",
+          "additionalFormula": "parler → je parlerai; prendre → je prendrai"
+        }
+      },
+      {
+        "key": "future_perfect_indicative",
+        "label": "Futur antérieur",
+        "group": "indicative",
+        "tableHeading": "100 частых французских глаголов в Futur antérieur",
+        "tableDescription": "Сравните формы futur antérieur для действий, которые будут завершены до другого момента или события в будущем.",
+        "grammar": {
+          "heading": "Как образуется Futur antérieur",
+          "description": "Futur antérieur обозначает действие, которое будет завершено до другого будущего события или момента. Оно образуется при помощи futur simple глагола avoir или être и причастия прошедшего времени.",
+          "formula": "подлежащее + futur simple глагола avoir или être + participe passé",
+          "additionalFormula": "j’aurai terminé / elle sera arrivée"
+        }
+      },
+      {
+        "key": "conditional",
+        "label": "Настоящее условное наклонение",
+        "group": "conditional",
+        "tableHeading": "100 частых французских глаголов в Conditionnel présent",
+        "tableDescription": "Сравните формы conditionnel présent для гипотетических ситуаций, вежливых просьб, пожеланий и последствий, зависящих от условия.",
+        "grammar": {
+          "heading": "Как образуется Conditionnel présent",
+          "description": "Conditionnel présent используется, в частности, для гипотетических действий, вежливых просьб, пожеланий и последствий, зависящих от условия. Обычно оно использует ту же основу, что и futur simple, но с окончаниями imparfait.",
+          "formula": "основа будущего времени + -ais, -ais, -ait, -ions, -iez, -aient",
+          "additionalFormula": "je parlerais / nous viendrions"
+        }
+      },
+      {
+        "key": "conditional_perfect",
+        "label": "Прошедшее условное наклонение",
+        "group": "conditional",
+        "tableHeading": "100 частых французских глаголов в Conditionnel passé",
+        "tableDescription": "Сравните формы conditionnel passé для нереализованных возможностей и гипотетических последствий в прошлом.",
+        "grammar": {
+          "heading": "Как образуется Conditionnel passé",
+          "description": "Conditionnel passé выражает гипотетические или нереализованные действия в прошлом, включая последствия, которые произошли бы при выполнении другого условия. Оно образуется при помощи conditionnel présent глагола avoir или être и причастия прошедшего времени.",
+          "formula": "подлежащее + conditionnel présent глагола avoir или être + participe passé",
+          "additionalFormula": "j’aurais accepté / elle serait venue"
+        }
+      },
+      {
+        "key": "present_subjunctive",
+        "label": "Настоящее время сослагательного наклонения",
+        "group": "subjunctive",
+        "tableHeading": "100 частых французских глаголов в Présent du subjonctif",
+        "tableDescription": "Сравните формы présent du subjonctif после выражений необходимости, желания, эмоции, сомнения и неопределенности.",
+        "grammar": {
+          "heading": "Как образуется Présent du subjonctif",
+          "description": "Présent du subjonctif часто употребляется в придаточных предложениях с que после выражений желания, необходимости, эмоции, сомнения, оценки или неопределенности. У многих глаголов основа связана с формой ils в présent de l’indicatif, однако у ряда частотных глаголов используются неправильные основы.",
+          "formula": "que + подлежащее + основа subjonctif + -e, -es, -e, -ions, -iez, -ent",
+          "additionalFormula": "Il faut que je parte."
+        }
+      },
+      {
+        "key": "past_subjunctive",
+        "label": "Прошедшее время сослагательного наклонения",
+        "group": "subjunctive",
+        "tableHeading": "100 частых французских глаголов в Passé du subjonctif",
+        "tableDescription": "Сравните формы passé du subjonctif, когда контекст требует сослагательного наклонения и действие уже завершено.",
+        "grammar": {
+          "heading": "Как образуется Passé du subjonctif",
+          "description": "Passé du subjonctif употребляется, когда грамматический контекст требует subjonctif, а действие в придаточном предложении рассматривается как завершенное. Оно образуется при помощи présent du subjonctif глагола avoir или être и причастия прошедшего времени.",
+          "formula": "que + подлежащее + présent du subjonctif глагола avoir или être + participe passé",
+          "additionalFormula": "Je suis content que tu aies réussi."
+        }
+      },
+      {
+        "key": "imperative",
+        "label": "Настоящее повелительное наклонение",
+        "group": "imperative",
+        "tableHeading": "100 частых французских глаголов в Impératif présent",
+        "tableDescription": "Сравните формы impératif présent, используемые для приказов, инструкций, приглашений и советов.",
+        "grammar": {
+          "heading": "Как образуется Impératif présent",
+          "description": "Impératif présent используется для приказов, инструкций, советов и приглашений. Обычно оно имеет только формы, соответствующие tu, nous и vous, при этом местоимение-подлежащее опускается. У многих глаголов на -er и у aller в форме, соответствующей tu, конечная -s исчезает, кроме некоторых сочетаний перед y или en.",
+          "formula": "форма повелительного наклонения без местоимения-подлежащего: форма tu / nous / vous",
+          "additionalFormula": "Parle ! / Parlons ! / Parlez !"
+        }
+      }
+    ],
+    "table": {
+      "heading": "Таблица спряжения французских глаголов",
+      "description": "Используйте таблицу, чтобы сравнивать 100 частых французских глаголов по лицам, а затем переключайтесь между временами и наблюдайте, как меняются окончания, основы, вспомогательные глаголы и причастия.",
+      "scrollHint": "Прокрутите таблицу по горизонтали, чтобы увидеть все лица.",
+      "scrollLeftLabel": "Прокрутить влево",
+      "scrollRightLabel": "Прокрутить вправо",
+      "notes": [
+        "Местоимение on имеет несколько значений в современном французском и в разговорной речи очень часто заменяет nous, но глагол с ним обычно спрягается так же, как с il и elle.",
+        "Сложные времена образуются с avoir или être. При использовании être причастие прошедшего времени обычно согласуется с подлежащим в роде и числе.",
+        "Повелительное наклонение отличается от других форм на этой странице: в стандартном французском используются только формы, соответствующие tu, nous и vous, обычно без местоимения-подлежащего."
+      ]
+    },
+    "rules": {
+      "heading": "Основные правила спряжения французских глаголов",
+      "intro": "Французское спряжение легче изучать через повторяющиеся модели основ, окончаний и вспомогательных глаголов, а не запоминая каждую форму отдельно.",
+      "items": [
+        {
+          "heading": "Регулярные глаголы следуют повторяющимся моделям",
+          "text": "Многие французские глаголы относятся к узнаваемым моделям спряжения. Регулярные глаголы на -er особенно системны, а определенные глаголы на -ir и -re имеют собственные наборы типичных окончаний.",
+          "examples": [
+            "je parle, tu parles, nous parlons",
+            "je finis, tu finis, nous finissons",
+            "je vends, tu vends, nous vendons"
+          ]
+        },
+        {
+          "heading": "Сложные времена используют avoir или être",
+          "text": "Несколько важных французских времен образуются сочетанием спрягаемого вспомогательного глагола и причастия прошедшего времени. Большинство глаголов используют avoir, а меньшая группа глаголов и возвратные глаголы — être.",
+          "examples": ["j’ai parlé", "elle est partie", "nous avions terminé"]
+        },
+        {
+          "heading": "Причастие прошедшего времени может согласовываться",
+          "text": "С être причастие прошедшего времени обычно согласуется с подлежащим в роде и числе. При avoir действуют другие правила, и согласование может зависеть, в частности, от положения прямого дополнения.",
+          "examples": [
+            "elle est arrivée",
+            "ils sont partis",
+            "elles sont venues"
+          ]
+        },
+        {
+          "heading": "Будущее и условное наклонение часто используют одну основу",
+          "text": "Futur simple и conditionnel présent обычно имеют одну и ту же основу. Различаются окончания: в будущем используются -ai, -as, -a, -ons, -ez, -ont, а в условном наклонении — окончания imparfait.",
+          "examples": [
+            "je viendrai / je viendrais",
+            "tu feras / tu ferais",
+            "nous pourrons / nous pourrions"
+          ]
+        },
+        {
+          "heading": "Subjonctif зависит от грамматического контекста",
+          "text": "Subjonctif — это не просто еще одно время, а отдельное наклонение. Оно часто употребляется в придаточных предложениях после выражений необходимости, желания, эмоции, сомнения и неопределенности, а также после определенных союзов.",
+          "examples": [
+            "Il faut que tu viennes.",
+            "Je veux qu’elle parte.",
+            "Bien qu’il soit fatigué, il continue."
+          ]
+        },
+        {
+          "heading": "Частотные глаголы нередко неправильные",
+          "text": "Многие важнейшие французские глаголы меняют основу или окончания в зависимости от лица и времени. Раннее изучение этих неправильных форм помогает быстрее узнавать конструкции, постоянно встречающиеся в повседневном французском.",
+          "examples": [
+            "je suis, nous sommes, ils sont",
+            "je vais, nous allons, ils vont",
+            "je peux, nous pouvons, ils peuvent"
+          ]
+        }
+      ]
+    },
+    "commonMistakes": {
+      "heading": "Частые ошибки при спряжении французских глаголов",
+      "intro": "Такие ошибки особенно часто возникают, когда регулярные модели переносят на неправильные глаголы или путают вспомогательный глагол, время и наклонение.",
+      "items": [
+        {
+          "incorrect": "Il parlent français.",
+          "correct": "Il parle français.",
+          "explanation": "Il — это третье лицо единственного числа. Поэтому правильная форма parler в настоящем времени — il parle, а parlent используется с ils или elles."
+        },
+        {
+          "incorrect": "J’ai allé au marché.",
+          "correct": "Je suis allé au marché.",
+          "explanation": "Aller в сложных временах использует être, а не avoir. Кроме того, причастие прошедшего времени может изменяться в зависимости от рода и числа подлежащего."
+        },
+        {
+          "incorrect": "Nous avons parti tôt.",
+          "correct": "Nous sommes partis tôt.",
+          "explanation": "Partir обычно образует passé composé с être, а partis здесь согласуется с подлежащим во множественном числе."
+        },
+        {
+          "incorrect": "Si j’aurais le temps, je viendrais.",
+          "correct": "Si j’avais le temps, je viendrais.",
+          "explanation": "В гипотетической конструкции такого типа в придаточной части с si используется imparfait, а в главной части — conditionnel présent."
+        },
+        {
+          "incorrect": "Il faut que tu viens.",
+          "correct": "Il faut que tu viennes.",
+          "explanation": "После конструкции il faut que обычно требуется subjonctif, поэтому venir с tu принимает форму viennes."
+        }
+      ]
+    },
+    "howToUse": {
+      "heading": "Как пользоваться таблицей французского спряжения",
+      "steps": [
+        {
+          "heading": "Начните с настоящего времени",
+          "text": "Сначала изучите, как частые глаголы изменяются по шести лицам, а затем переходите к сложным временам и другим наклонениям."
+        },
+        {
+          "heading": "Сравнивайте один глагол по всем лицам",
+          "text": "Просматривайте формы одного глагола по горизонтали и отмечайте, какие окончания меняются, а какие части основы остаются неизменными."
+        },
+        {
+          "heading": "Переключайте времена одного и того же глагола",
+          "text": "Сравнивайте знакомый глагол в présent, imparfait, futur, conditionnel и сложных временах, чтобы увидеть связи между формами."
+        },
+        {
+          "heading": "Обращайте внимание на вспомогательный глагол",
+          "text": "При изучении passé composé и других сложных времен проверяйте, используется ли avoir или être, и требуется ли согласование причастия."
+        },
+        {
+          "heading": "Выделяйте неправильные основы",
+          "text": "Уделяйте особое внимание частым глаголам, формы которых в будущем времени, условном наклонении, subjonctif или прошедших временах нельзя вывести из простой регулярной модели."
+        },
+        {
+          "heading": "Используйте формы в полных предложениях",
+          "text": "После изучения формы составьте с ней короткое предложение. Контекст помогает связать грамматическую форму с ее значением и реальным употреблением."
+        }
+      ]
+    },
+    "tips": {
+      "heading": "Советы по изучению французского спряжения",
+      "items": [
+        {
+          "heading": "Учите окончания как систему",
+          "text": "Запоминайте повторяющиеся наборы окончаний для основных групп глаголов и времен, а не каждую форму по отдельности."
+        },
+        {
+          "heading": "Сначала выучите частые неправильные глаголы",
+          "text": "Такие глаголы, как être, avoir, aller, faire, pouvoir, vouloir, devoir и venir, встречаются постоянно, поэтому их полезно освоить как можно раньше."
+        },
+        {
+          "heading": "Изучайте связанные времена вместе",
+          "text": "Сравнивайте futur с conditionnel, а passé composé — с другими сложными временами, поскольку они имеют важные общие структурные модели."
+        },
+        {
+          "heading": "Следите за вспомогательным глаголом и согласованием",
+          "text": "При изучении сложных времен запоминайте вместе с глаголом, какой вспомогательный глагол он использует, и отмечайте случаи, когда причастие прошедшего времени изменяется."
+        },
+        {
+          "heading": "Практикуйте спряжение в контексте",
+          "text": "Короткие предложения и реальные ситуации помогают запомнить не только образование времени или наклонения, но и условия его употребления."
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Практикуйте самые употребительные французские глаголы",
+      "description": "Используйте эти формы в упражнениях или сначала изучите наиболее частые французские глаголы и их значения.",
+      "primaryLabel": "Практиковать французские глаголы",
+      "secondaryLabel": "Посмотреть 100 частых французских глаголов"
+    },
+    "related": {
+      "heading": "Другие материалы для изучения французского",
+      "items": [
+        {
+          "key": "commonVerbs",
+          "label": "100 самых употребительных французских глаголов"
+        },
+        {
+          "key": "pastForms",
+          "label": "100 частых французских глаголов: формы прошедшего времени"
+        },
+        {
+          "key": "vocabularyLevels",
+          "label": "Французская лексика по уровням CEFR"
+        },
+        {
+          "key": "levelTest",
+          "label": "Тест на уровень французского языка"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Частые вопросы о спряжении французских глаголов",
+      "items": [
+        {
+          "question": "Что значит спрягать французский глагол?",
+          "answer": "Спрягать французский глагол значит изменять его форму в зависимости от грамматических характеристик, таких как лицо, время и наклонение. Например, parler в présent принимает формы je parle, nous parlons и ils parlent."
+        },
+        {
+          "question": "Меняются ли французские глаголы для каждого лица?",
+          "answer": "В целом да. Французские глаголы имеют формы, соответствующие разным лицам, хотя некоторые из них могут одинаково произноситься. На письме окончания часто позволяют различать je, tu, il / elle / on, nous, vous и ils / elles."
+        },
+        {
+          "question": "Какие французские времена наиболее важны для начинающих?",
+          "answer": "Обычно сначала изучают présent de l’indicatif, passé composé, imparfait и futur simple, поскольку они охватывают большую часть повседневных ситуаций. По мере повышения уровня все более важными становятся conditionnel présent и présent du subjonctif."
+        },
+        {
+          "question": "В чем разница между passé composé и imparfait?",
+          "answer": "Passé composé обычно представляет прошлое действие как завершенное или ограниченное во времени, тогда как imparfait часто описывает привычки, длительные ситуации, состояния, описания и фон повествования. В рассказах эти два времени часто используются вместе."
+        },
+        {
+          "question": "Почему некоторые французские глаголы используют être вместо avoir?",
+          "answer": "Большинство сложных времен образуются с avoir, однако некоторые глаголы, в том числе определенные непереходные глаголы движения или изменения состояния, а также возвратные глаголы, используют être. При être причастие прошедшего времени обычно согласуется с подлежащим."
+        },
+        {
+          "question": "Связаны ли будущее время и условное наклонение во французском?",
+          "answer": "Да. Futur simple и conditionnel présent обычно используют одну и ту же основу. В будущем времени употребляются окончания -ai, -as, -a, -ons, -ez, -ont, а в условном — окончания imparfait: -ais, -ais, -ait, -ions, -iez и -aient."
+        },
+        {
+          "question": "Когда во французском используется subjonctif?",
+          "answer": "Subjonctif часто появляется в придаточных предложениях после выражений необходимости, желания, эмоции, сомнения, неопределенности или оценки, а также после определенных союзов. Его употребление зависит прежде всего от грамматического контекста и смысла предложения."
+        },
+        {
+          "question": "Важно ли passé simple в разговорном французском?",
+          "answer": "Passé simple редко используется в современной повседневной речи, где для завершенных действий в прошлом обычно употребляется passé composé. Однако passé simple остается важным для чтения романов, исторических текстов, биографий и формального повествования."
+        },
+        {
+          "question": "Почему спряжение французских глаголов кажется сложным?",
+          "answer": "Во французском сочетаются регулярные модели, большое количество частотных неправильных глаголов, изменения основ, сложные времена, выбор вспомогательного глагола и разные наклонения. Если сначала освоить повторяющиеся модели, система становится значительно понятнее."
+        },
+        {
+          "question": "Как эффективнее всего запоминать французские спряжения?",
+          "answer": "Начните с наиболее частых глаголов, группируйте формы по общим моделям, сравнивайте связанные времена и регулярно используйте спряжения в коротких предложениях. Активное воспроизведение и практика в контексте обычно эффективнее простого перечитывания таблиц."
+        }
+      ]
+    }
+  }
+]

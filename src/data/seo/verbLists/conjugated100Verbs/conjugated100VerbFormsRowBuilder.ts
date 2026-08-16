@@ -42,6 +42,15 @@ export function normalizePronounKey(pronoun: string): string {
       return "nosotros";
     case "vosotros_vosotras":
       return "vosotros";
+    // French "je / j’" (or a straight-apostrophe "je / j'") — the elided
+    // j' form before a vowel sound, not a distinct grammatical person —
+    // normalizes to "je_j" by the generic rules above (the apostrophe has
+    // no dedicated handling, so it falls through to the catch-all
+    // non-alphanumeric replacement like the slash does). Collapse it to
+    // the single "je" column key authored in textContent/french.json's
+    // pronounForms, the same way nosotros/nosotras collapses above.
+    case "je_j":
+      return "je";
     default:
       return key;
   }
