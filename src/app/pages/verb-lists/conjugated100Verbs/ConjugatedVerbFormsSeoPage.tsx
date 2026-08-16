@@ -7,11 +7,11 @@ import {
   getConjugatedVerbFormsPath,
   getConjugatedVerbFormsTableConfig,
   getPastVerbFormsPath,
+  getVerbListItems,
   getVerbListPath,
   getVerbListSpeechLang,
   getVerbListTranslation,
   getVerbListWordLemma,
-  VERB_LIST_ITEMS,
 } from "../../../../data/seo/verbLists";
 import { getLevelTestSeoPath } from "../../../../data/seo/levelTests";
 import { getSeoHubPath } from "../../../../data/seo/shared/hub";
@@ -117,7 +117,7 @@ export function ConjugatedVerbFormsSeoPage({
     }
 
     const result: ConjugatedVerbFormsRow[] = [];
-    for (const item of VERB_LIST_ITEMS) {
+    for (const item of getVerbListItems(targetLanguage)) {
       const tenseForms = formsById.get(item.id)?.[activeTense.key];
       if (!tenseForms) {
         continue;

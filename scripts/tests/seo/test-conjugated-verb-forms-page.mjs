@@ -328,6 +328,19 @@ test("meaning column is hidden when target language and UI language match", () =
   assert.match(PAGE_SOURCE, /showMeaningColumn=\{showMeaningColumn\}/);
 });
 
+test("table rows are sourced per target language, not the hardcoded base English list", () => {
+  // Regression test: French and Spanish each have their own
+  // list_of_100_most_used_verb_{language}.json with ~10 different
+  // concept_ids than the base English list (see common100VerbList.ts).
+  // conjugatedVerbs/{targetLanguage}.json is authored against that
+  // target language's own id list, so iterating the hardcoded
+  // English-only VERB_LIST_ITEMS constant (instead of
+  // getVerbListItems(targetLanguage)) silently dropped ~10 rows per
+  // non-English target language.
+  assert.match(PAGE_SOURCE, /getVerbListItems\(targetLanguage\)/);
+  assert.doesNotMatch(PAGE_SOURCE, /\bVERB_LIST_ITEMS\b/);
+});
+
 test("table pronoun columns remain dynamic and horizontal-scroll compatible", () => {
   assert.match(TABLE_SOURCE, /pronounForms\.map/);
   assert.match(TABLE_SOURCE, /TableScrollControls/);
