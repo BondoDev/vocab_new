@@ -38,7 +38,7 @@ const { fixMojibake } = requireCompiled("src/utils/fixMojibake");
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 const spanishVocabulary = readJson("src/data/vocabulary/spanish/vocabulary.json");
-const englishVerbList = readJson("src/data/seo/verbLists/shared/list_of_100_most_used_verb.json");
+const englishVerbList = readJson("src/data/seo/verbLists/shared/list_of_100_most_used_verb_english.json");
 const normalizedEnglishVerbList = englishVerbList.map((item) => {
   const legacyId = String(item?.id ?? "").trim();
   if (legacyId) {
@@ -547,8 +547,9 @@ assert.ok(
   "browse word links should use canonical concept IDs",
 );
 assert.ok(
-  /VERB_LIST_ITEMS\.map/m.test(verbListPageSource),
-  "shared verb list page should render rows from the imported JSON list",
+  /getVerbListItems\(\s*targetLanguage\s*\)/m.test(verbListPageSource) &&
+    /verbListItems\.map/m.test(verbListPageSource),
+  "shared verb list page should render rows from the target-language JSON list",
 );
 assert.ok(
   /buildWordPath\(\s*uiLang,\s*targetLanguage,\s*wordLemma,\s*item\.id\s*\)/m.test(

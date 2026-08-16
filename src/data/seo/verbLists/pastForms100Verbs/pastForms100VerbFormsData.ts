@@ -1,7 +1,7 @@
 // Loads the linguistic verb-forms dataset for the "100 Most Common Verb
 // Past Forms" table — one hand-authored JSON file per target language under
 // ./pastForms/ (e.g. english.json), keyed by concept_id (the same id space
-// as ../shared/list_of_100_most_used_verb.json and
+// as ../shared/list_of_100_most_used_verb_english.json and
 // ../common100Verbs/common100VerbList.ts). Deliberately separate from
 // pastForms100VerbsContent.json: that file owns localized SEO copy and
 // column headers (per targetLanguage x uiLanguage); this owns the actual

@@ -1,6 +1,9 @@
-import verbListJson from "../shared/list_of_100_most_used_verb.json";
+import englishVerbListJson from "../shared/list_of_100_most_used_verb_english.json";
 import frenchVerbListJson from "../shared/list_of_100_most_used_verb_french.json";
 import germanVerbListJson from "../shared/list_of_100_most_used_verb_german.json";
+import italianVerbListJson from "../shared/list_of_100_most_used_verb_italian.json";
+import portugueseVerbListJson from "../shared/list_of_100_most_used_verb_portuguese.json";
+import russianVerbListJson from "../shared/list_of_100_most_used_verb_russian.json";
 import spanishVerbListJson from "../shared/list_of_100_most_used_verb_spanish.json";
 import { getUiVocabularyLanguage, type TargetLanguageSlug, type UiLanguageCode } from "../../shared/slugs";
 
@@ -67,9 +70,12 @@ function normalizeVerbListItems(items: VerbListJsonItem[]): VerbListItem[] {
   return normalized.filter((item) => item.id.length > 0 && item.verb.length > 0);
 }
 
-export const BASE_VERB_LIST_ITEMS = normalizeVerbListItems(verbListJson as VerbListJsonItem[]);
+export const BASE_VERB_LIST_ITEMS = normalizeVerbListItems(englishVerbListJson as VerbListJsonItem[]);
 export const FRENCH_VERB_LIST_ITEMS = normalizeVerbListItems(frenchVerbListJson as VerbListJsonItem[]);
 export const GERMAN_VERB_LIST_ITEMS = normalizeVerbListItems(germanVerbListJson as VerbListJsonItem[]);
+export const ITALIAN_VERB_LIST_ITEMS = normalizeVerbListItems(italianVerbListJson as VerbListJsonItem[]);
+export const PORTUGUESE_VERB_LIST_ITEMS = normalizeVerbListItems(portugueseVerbListJson as VerbListJsonItem[]);
+export const RUSSIAN_VERB_LIST_ITEMS = normalizeVerbListItems(russianVerbListJson as VerbListJsonItem[]);
 export const SPANISH_VERB_LIST_ITEMS = normalizeVerbListItems(spanishVerbListJson as VerbListJsonItem[]);
 
 export function getVerbListItems(targetLanguage: TargetLanguageSlug): VerbListItem[] {
@@ -79,6 +85,18 @@ export function getVerbListItems(targetLanguage: TargetLanguageSlug): VerbListIt
 
   if (targetLanguage === "german") {
     return GERMAN_VERB_LIST_ITEMS;
+  }
+
+  if (targetLanguage === "italian") {
+    return ITALIAN_VERB_LIST_ITEMS;
+  }
+
+  if (targetLanguage === "portuguese") {
+    return PORTUGUESE_VERB_LIST_ITEMS;
+  }
+
+  if (targetLanguage === "russian") {
+    return RUSSIAN_VERB_LIST_ITEMS;
   }
 
   if (targetLanguage === "spanish") {

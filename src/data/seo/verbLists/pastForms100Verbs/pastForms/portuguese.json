@@ -25,9 +25,9 @@
   },
   {
     "concept_id": "A1-00687",
-    "preterite": "tive de",
-    "imperfect": "tinha de",
-    "pastParticiple": "tido de"
+    "preterite": "devi",
+    "imperfect": "devia",
+    "pastParticiple": "devido"
   },
   {
     "concept_id": "A1-01120",
@@ -36,16 +36,16 @@
     "pastParticiple": "querido"
   },
   {
-    "concept_id": "A2-01787",
-    "preterite": "devia",
-    "imperfect": "devia",
-    "pastParticiple": "devido"
+    "concept_id": "A2-00432",
+    "preterite": "entrei",
+    "imperfect": "entrava",
+    "pastParticiple": "entrado"
   },
   {
-    "concept_id": "A1-00643",
-    "preterite": "pude",
-    "imperfect": "podia",
-    "pastParticiple": "podido"
+    "concept_id": "A2-00870",
+    "preterite": "passei",
+    "imperfect": "passava",
+    "pastParticiple": "passado"
   },
   {
     "concept_id": "A1-00607",
@@ -60,10 +60,10 @@
     "pastParticiple": "feito"
   },
   {
-    "concept_id": "A1-00292",
-    "preterite": "fiz",
-    "imperfect": "fazia",
-    "pastParticiple": "feito"
+    "concept_id": "A1-01204",
+    "preterite": "levei",
+    "imperfect": "levava",
+    "pastParticiple": "levado"
   },
   {
     "concept_id": "A1-00441",
@@ -193,9 +193,9 @@
   },
   {
     "concept_id": "A1-00615",
-    "preterite": "vivi",
-    "imperfect": "vivia",
-    "pastParticiple": "vivido"
+    "preterite": "morei",
+    "imperfect": "morava",
+    "pastParticiple": "morado"
   },
   {
     "concept_id": "A1-00973",
@@ -217,9 +217,9 @@
   },
   {
     "concept_id": "A1-01011",
-    "preterite": "tomei",
-    "imperfect": "tomava",
-    "pastParticiple": "tomado"
+    "preterite": "peguei",
+    "imperfect": "pegava",
+    "pastParticiple": "pegado"
   },
   {
     "concept_id": "A1-00436",
@@ -229,9 +229,9 @@
   },
   {
     "concept_id": "A1-00431",
-    "preterite": "obtive",
-    "imperfect": "obtinha",
-    "pastParticiple": "obtido"
+    "preterite": "consegui",
+    "imperfect": "conseguia",
+    "pastParticiple": "conseguido"
   },
   {
     "concept_id": "A1-00139",
@@ -307,20 +307,20 @@
   },
   {
     "concept_id": "A1-00916",
-    "preterite": "sentei-me",
-    "imperfect": "sentava-me",
+    "preterite": "sentei",
+    "imperfect": "sentava",
     "pastParticiple": "sentado"
   },
   {
-    "concept_id": "A1-00968",
-    "preterite": "fiquei de pé",
-    "imperfect": "ficava de pé",
-    "pastParticiple": "ficado de pé"
+    "concept_id": "B1-00138",
+    "preterite": "pareci",
+    "imperfect": "parecia",
+    "pastParticiple": "parecido"
   },
   {
     "concept_id": "A2-00717",
-    "preterite": "deitei-me",
-    "imperfect": "deitava-me",
+    "preterite": "deitei",
+    "imperfect": "deitava",
     "pastParticiple": "deitado"
   },
   {
@@ -331,21 +331,21 @@
   },
   {
     "concept_id": "A1-00817",
-    "preterite": "pus",
-    "imperfect": "punha",
-    "pastParticiple": "posto"
-  },
-  {
-    "concept_id": "B1-04098",
     "preterite": "coloquei",
     "imperfect": "colocava",
     "pastParticiple": "colocado"
   },
   {
+    "concept_id": "B1-04098",
+    "preterite": "pus",
+    "imperfect": "punha",
+    "pastParticiple": "posto"
+  },
+  {
     "concept_id": "A1-00309",
-    "preterite": "conduzi",
-    "imperfect": "conduzia",
-    "pastParticiple": "conduzido"
+    "preterite": "dirigi",
+    "imperfect": "dirigia",
+    "pastParticiple": "dirigido"
   },
   {
     "concept_id": "A2-01805",
@@ -367,9 +367,9 @@
   },
   {
     "concept_id": "A1-00785",
-    "preterite": "joguei",
-    "imperfect": "jogava",
-    "pastParticiple": "jogado"
+    "preterite": "brinquei",
+    "imperfect": "brincava",
+    "pastParticiple": "brincado"
   },
   {
     "concept_id": "A1-00828",
@@ -402,10 +402,10 @@
     "pastParticiple": "começado"
   },
   {
-    "concept_id": "A1-00088",
-    "preterite": "iniciei",
-    "imperfect": "iniciava",
-    "pastParticiple": "iniciado"
+    "concept_id": "A2-01538",
+    "preterite": "pedi",
+    "imperfect": "pedia",
+    "pastParticiple": "pedido"
   },
   {
     "concept_id": "A2-00284",
@@ -457,9 +457,9 @@
   },
   {
     "concept_id": "A1-01130",
-    "preterite": "usei",
-    "imperfect": "usava",
-    "pastParticiple": "usado"
+    "preterite": "vesti",
+    "imperfect": "vestia",
+    "pastParticiple": "vestido"
   },
   {
     "concept_id": "A1-01088",
@@ -492,10 +492,10 @@
     "pastParticiple": "ligado"
   },
   {
-    "concept_id": "A1-00650",
-    "preterite": "encontrei",
-    "imperfect": "encontrava",
-    "pastParticiple": "encontrado"
+    "concept_id": "A1-00045",
+    "preterite": "cheguei",
+    "imperfect": "chegava",
+    "pastParticiple": "chegado"
   },
   {
     "concept_id": "A1-01111",
@@ -523,7 +523,7 @@
   },
   {
     "concept_id": "A2-01742",
-    "preterite": "aconteceu",
+    "preterite": "aconteci",
     "imperfect": "acontecia",
     "pastParticiple": "acontecido"
   },
@@ -535,9 +535,9 @@
   },
   {
     "concept_id": "A2-01814",
-    "preterite": "ganhei",
-    "imperfect": "ganhava",
-    "pastParticiple": "ganho"
+    "preterite": "venci",
+    "imperfect": "vencia",
+    "pastParticiple": "vencido"
   },
   {
     "concept_id": "B1-01577",
@@ -553,9 +553,9 @@
   },
   {
     "concept_id": "A1-00186",
-    "preterite": "mudei",
-    "imperfect": "mudava",
-    "pastParticiple": "mudado"
+    "preterite": "troquei",
+    "imperfect": "trocava",
+    "pastParticiple": "trocado"
   },
   {
     "concept_id": "A1-01083",
@@ -577,8 +577,8 @@
   },
   {
     "concept_id": "A1-00836",
-    "preterite": "lembrei-me",
-    "imperfect": "lembrava-me",
+    "preterite": "lembrei",
+    "imperfect": "lembrava",
     "pastParticiple": "lembrado"
   },
   {
@@ -595,8 +595,8 @@
   },
   {
     "concept_id": "A1-00596",
-    "preterite": "parti",
-    "imperfect": "partia",
-    "pastParticiple": "partido"
+    "preterite": "saí",
+    "imperfect": "saía",
+    "pastParticiple": "saído"
   }
 ]

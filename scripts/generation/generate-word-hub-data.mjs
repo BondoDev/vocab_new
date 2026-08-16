@@ -26,7 +26,7 @@ const ENGLISH_VERB_LIST_PATH = path.join(
   "seo",
   "verbLists",
   "shared",
-  "list_of_100_most_used_verb.json",
+  "list_of_100_most_used_verb_english.json",
 );
 const TARGET_LANGUAGE_VERB_LIST_PATHS = [
   ENGLISH_VERB_LIST_PATH,
@@ -47,6 +47,33 @@ const TARGET_LANGUAGE_VERB_LIST_PATHS = [
     "verbLists",
     "shared",
     "list_of_100_most_used_verb_german.json",
+  ),
+  path.join(
+    ROOT_DIR,
+    "src",
+    "data",
+    "seo",
+    "verbLists",
+    "shared",
+    "list_of_100_most_used_verb_italian.json",
+  ),
+  path.join(
+    ROOT_DIR,
+    "src",
+    "data",
+    "seo",
+    "verbLists",
+    "shared",
+    "list_of_100_most_used_verb_portuguese.json",
+  ),
+  path.join(
+    ROOT_DIR,
+    "src",
+    "data",
+    "seo",
+    "verbLists",
+    "shared",
+    "list_of_100_most_used_verb_russian.json",
   ),
   path.join(
     ROOT_DIR,

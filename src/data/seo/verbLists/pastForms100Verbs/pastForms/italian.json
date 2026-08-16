@@ -36,20 +36,20 @@
     "auxiliary": "avere"
   },
   {
-    "concept_id": "A2-01787",
-    "imperfect": "dovevo",
-    "pastParticiple": "dovuto",
-    "auxiliary": "avere"
+    "concept_id": "A1-00045",
+    "imperfect": "arrivavo",
+    "pastParticiple": "arrivato",
+    "auxiliary": "essere"
   },
   {
-    "concept_id": "A1-00643",
-    "imperfect": "potevo",
-    "pastParticiple": "potuto",
-    "auxiliary": "avere"
+    "concept_id": "B1-00731",
+    "imperfect": "partivo",
+    "pastParticiple": "partito",
+    "auxiliary": "essere"
   },
   {
     "concept_id": "A1-00607",
-    "imperfect": "mi piaceva",
+    "imperfect": "piacevo",
     "pastParticiple": "piaciuto",
     "auxiliary": "essere"
   },
@@ -60,10 +60,10 @@
     "auxiliary": "avere"
   },
   {
-    "concept_id": "A1-00292",
-    "imperfect": "facevo",
-    "pastParticiple": "fatto",
-    "auxiliary": "avere"
+    "concept_id": "A2-00432",
+    "imperfect": "entravo",
+    "pastParticiple": "entrato",
+    "auxiliary": "essere"
   },
   {
     "concept_id": "A1-00441",
@@ -90,10 +90,10 @@
     "auxiliary": "avere"
   },
   {
-    "concept_id": "A1-01012",
-    "imperfect": "parlavo",
-    "pastParticiple": "parlato",
-    "auxiliary": "avere"
+    "concept_id": "B1-03018",
+    "imperfect": "uscivo",
+    "pastParticiple": "uscito",
+    "auxiliary": "essere"
   },
   {
     "concept_id": "A1-00049",
@@ -199,20 +199,20 @@
   },
   {
     "concept_id": "A1-00973",
-    "imperfect": "rimanevo",
-    "pastParticiple": "rimasto",
+    "imperfect": "restavo",
+    "pastParticiple": "restato",
     "auxiliary": "essere"
   },
   {
     "concept_id": "B1-02233",
-    "imperfect": "mi riposavo",
+    "imperfect": "riposavo",
     "pastParticiple": "riposato",
-    "auxiliary": "essere"
+    "auxiliary": "avere"
   },
   {
-    "concept_id": "A1-00693",
-    "imperfect": "avevo bisogno",
-    "pastParticiple": "avuto bisogno",
+    "concept_id": "A2-01123",
+    "imperfect": "servivo",
+    "pastParticiple": "servito",
     "auxiliary": "avere"
   },
   {
@@ -288,10 +288,10 @@
     "auxiliary": "avere"
   },
   {
-    "concept_id": "A1-01125",
-    "imperfect": "guardavo",
-    "pastParticiple": "guardato",
-    "auxiliary": "avere"
+    "concept_id": "A2-01040",
+    "imperfect": "tornavo",
+    "pastParticiple": "tornato",
+    "auxiliary": "essere"
   },
   {
     "concept_id": "A1-00925",
@@ -312,9 +312,9 @@
     "auxiliary": "essere"
   },
   {
-    "concept_id": "A1-00968",
-    "imperfect": "stavo in piedi",
-    "pastParticiple": "stato in piedi",
+    "concept_id": "B1-03281",
+    "imperfect": "rimanevo",
+    "pastParticiple": "rimasto",
     "auxiliary": "essere"
   },
   {
@@ -336,10 +336,10 @@
     "auxiliary": "avere"
   },
   {
-    "concept_id": "B1-04098",
-    "imperfect": "mettevo",
-    "pastParticiple": "messo",
-    "auxiliary": "avere"
+    "concept_id": "A2-00870",
+    "imperfect": "passavo",
+    "pastParticiple": "passato",
+    "auxiliary": "essere"
   },
   {
     "concept_id": "A1-00309",
@@ -402,9 +402,9 @@
     "auxiliary": "avere"
   },
   {
-    "concept_id": "A1-00088",
-    "imperfect": "iniziavo",
-    "pastParticiple": "iniziato",
+    "concept_id": "A1-00332",
+    "imperfect": "finivo",
+    "pastParticiple": "finito",
     "auxiliary": "avere"
   },
   {
@@ -438,9 +438,9 @@
     "auxiliary": "avere"
   },
   {
-    "concept_id": "A1-01022",
-    "imperfect": "dicevo",
-    "pastParticiple": "detto",
+    "concept_id": "A2-00511",
+    "imperfect": "seguivo",
+    "pastParticiple": "seguito",
     "auxiliary": "avere"
   },
   {
@@ -517,14 +517,14 @@
   },
   {
     "concept_id": "A1-00371",
-    "imperfect": "sentivo",
+    "imperfect": "mi sentivo",
     "pastParticiple": "sentito",
-    "auxiliary": "avere"
+    "auxiliary": "essere"
   },
   {
     "concept_id": "A2-01742",
-    "imperfect": "succedeva",
-    "pastParticiple": "successo",
+    "imperfect": "accadevo",
+    "pastParticiple": "accaduto",
     "auxiliary": "essere"
   },
   {
@@ -546,9 +546,9 @@
     "auxiliary": "avere"
   },
   {
-    "concept_id": "B2-00065",
-    "imperfect": "alteravo",
-    "pastParticiple": "alterato",
+    "concept_id": "A1-00614",
+    "imperfect": "vivevo",
+    "pastParticiple": "vissuto",
     "auxiliary": "avere"
   },
   {
@@ -594,9 +594,9 @@
     "auxiliary": "avere"
   },
   {
-    "concept_id": "A1-00596",
-    "imperfect": "lasciavo",
-    "pastParticiple": "lasciato",
-    "auxiliary": "avere"
+    "concept_id": "B1-01602",
+    "imperfect": "riuscivo",
+    "pastParticiple": "riuscito",
+    "auxiliary": "essere"
   }
 ]
