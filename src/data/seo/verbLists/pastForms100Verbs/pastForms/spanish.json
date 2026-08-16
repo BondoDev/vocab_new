@@ -30,14 +30,14 @@
     "pastParticiple": "querido"
   },
   {
-    "concept_id": "A2-01787",
-    "preterite": "debí",
-    "pastParticiple": "debido"
+    "concept_id": "A1-01139",
+    "preterite": "estuve",
+    "pastParticiple": "estado"
   },
   {
-    "concept_id": "A1-00643",
-    "preterite": "pude",
-    "pastParticiple": "podido"
+    "concept_id": "A2-01538",
+    "preterite": "pedí",
+    "pastParticiple": "pedido"
   },
   {
     "concept_id": "A1-00607",
@@ -50,9 +50,9 @@
     "pastParticiple": "hecho"
   },
   {
-    "concept_id": "A1-00292",
-    "preterite": "hice",
-    "pastParticiple": "hecho"
+    "concept_id": "A1-00045",
+    "preterite": "llegué",
+    "pastParticiple": "llegado"
   },
   {
     "concept_id": "A1-00441",
@@ -75,9 +75,9 @@
     "pastParticiple": "hablado"
   },
   {
-    "concept_id": "A1-01012",
-    "preterite": "hablé",
-    "pastParticiple": "hablado"
+    "concept_id": "B1-00979",
+    "preterite": "salí",
+    "pastParticiple": "salido"
   },
   {
     "concept_id": "A1-00049",
@@ -181,8 +181,8 @@
   },
   {
     "concept_id": "A1-01011",
-    "preterite": "tomé",
-    "pastParticiple": "tomado"
+    "preterite": "cogí",
+    "pastParticiple": "cogido"
   },
   {
     "concept_id": "A1-00436",
@@ -191,8 +191,8 @@
   },
   {
     "concept_id": "A1-00431",
-    "preterite": "obtuve",
-    "pastParticiple": "obtenido"
+    "preterite": "conseguí",
+    "pastParticiple": "conseguido"
   },
   {
     "concept_id": "A1-00139",
@@ -240,9 +240,9 @@
     "pastParticiple": "cocinado"
   },
   {
-    "concept_id": "A1-01125",
-    "preterite": "vi",
-    "pastParticiple": "visto"
+    "concept_id": "A1-01205",
+    "preterite": "tomé",
+    "pastParticiple": "tomado"
   },
   {
     "concept_id": "A1-00925",
@@ -261,8 +261,8 @@
   },
   {
     "concept_id": "A1-00968",
-    "preterite": "estuve de pie",
-    "pastParticiple": "estado de pie"
+    "preterite": "me puse de pie",
+    "pastParticiple": "puesto"
   },
   {
     "concept_id": "A2-00717",
@@ -280,9 +280,9 @@
     "pastParticiple": "puesto"
   },
   {
-    "concept_id": "B1-04098",
-    "preterite": "coloqué",
-    "pastParticiple": "colocado"
+    "concept_id": "C1-00801",
+    "preterite": "volví",
+    "pastParticiple": "vuelto"
   },
   {
     "concept_id": "A1-00309",
@@ -296,7 +296,7 @@
   },
   {
     "concept_id": "A1-00591",
-    "preterite": "me reí",
+    "preterite": "reí",
     "pastParticiple": "reído"
   },
   {
@@ -335,9 +335,9 @@
     "pastParticiple": "empezado"
   },
   {
-    "concept_id": "A1-00088",
-    "preterite": "comencé",
-    "pastParticiple": "comenzado"
+    "concept_id": "A2-00511",
+    "preterite": "seguí",
+    "pastParticiple": "seguido"
   },
   {
     "concept_id": "A2-00284",
@@ -436,8 +436,8 @@
   },
   {
     "concept_id": "A2-01742",
-    "preterite": "sucedí",
-    "pastParticiple": "sucedido"
+    "preterite": "pasé",
+    "pastParticiple": "pasado"
   },
   {
     "concept_id": "A2-00133",
@@ -455,9 +455,9 @@
     "pastParticiple": "perdido"
   },
   {
-    "concept_id": "B2-00065",
-    "preterite": "alteré",
-    "pastParticiple": "alterado"
+    "concept_id": "B1-00138",
+    "preterite": "parecí",
+    "pastParticiple": "parecido"
   },
   {
     "concept_id": "A1-00186",

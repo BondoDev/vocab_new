@@ -39,6 +39,15 @@ const TARGET_LANGUAGE_VERB_LIST_PATHS = [
     "shared",
     "list_of_100_most_used_verb_french.json",
   ),
+  path.join(
+    ROOT_DIR,
+    "src",
+    "data",
+    "seo",
+    "verbLists",
+    "shared",
+    "list_of_100_most_used_verb_spanish.json",
+  ),
 ];
 
 const UTF8_DECODER = new TextDecoder("utf-8", { fatal: false });
