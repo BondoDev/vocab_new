@@ -36,16 +36,16 @@
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "A2-01787",
-    "imperfect": "je devais",
-    "pastParticiple": "dû",
+    "concept_id": "A2-01003",
+    "imperfect": "je recevais",
+    "pastParticiple": "reçu",
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "A1-00643",
-    "imperfect": "je pouvais",
-    "pastParticiple": "pu",
-    "auxiliary": "avoir"
+    "concept_id": "A2-00870",
+    "imperfect": "je passais",
+    "pastParticiple": "passé",
+    "auxiliary": "être"
   },
   {
     "concept_id": "A1-00607",
@@ -60,10 +60,10 @@
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "A1-00292",
-    "imperfect": "je faisais",
-    "pastParticiple": "fait",
-    "auxiliary": "avoir"
+    "concept_id": "A1-00045",
+    "imperfect": "j’arrivais",
+    "pastParticiple": "arrivé",
+    "auxiliary": "être"
   },
   {
     "concept_id": "A1-00441",
@@ -90,9 +90,9 @@
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "A1-01012",
-    "imperfect": "je discutais",
-    "pastParticiple": "discuté",
+    "concept_id": "B1-02155",
+    "imperfect": "je reconnaissais",
+    "pastParticiple": "reconnu",
     "auxiliary": "avoir"
   },
   {
@@ -168,7 +168,7 @@
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "A2-01558",
+    "concept_id": "A1-00987",
     "imperfect": "j’étudiais",
     "pastParticiple": "étudié",
     "auxiliary": "avoir"
@@ -193,8 +193,8 @@
   },
   {
     "concept_id": "A1-00615",
-    "imperfect": "je vivais",
-    "pastParticiple": "vécu",
+    "imperfect": "j’habitais",
+    "pastParticiple": "habité",
     "auxiliary": "avoir"
   },
   {
@@ -288,9 +288,9 @@
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "A1-01125",
-    "imperfect": "je regardais",
-    "pastParticiple": "regardé",
+    "concept_id": "A2-01198",
+    "imperfect": "je semblais",
+    "pastParticiple": "semblé",
     "auxiliary": "avoir"
   },
   {
@@ -336,10 +336,10 @@
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "B1-04098",
-    "imperfect": "je plaçais",
-    "pastParticiple": "placé",
-    "auxiliary": "avoir"
+    "concept_id": "B1-00979",
+    "imperfect": "je sortais",
+    "pastParticiple": "sorti",
+    "auxiliary": "être"
   },
   {
     "concept_id": "A1-00309",
@@ -402,9 +402,9 @@
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "A1-00088",
-    "imperfect": "je débutais",
-    "pastParticiple": "débuté",
+    "concept_id": "A1-00614",
+    "imperfect": "je vivais",
+    "pastParticiple": "vécu",
     "auxiliary": "avoir"
   },
   {
@@ -438,10 +438,10 @@
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "A1-01022",
-    "imperfect": "je racontais",
-    "pastParticiple": "raconté",
-    "auxiliary": "avoir"
+    "concept_id": "A2-00432",
+    "imperfect": "j’entrais",
+    "pastParticiple": "entré",
+    "auxiliary": "être"
   },
   {
     "concept_id": "A1-01104",
@@ -450,9 +450,9 @@
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "B2-02656",
-    "imperfect": "j’employais",
-    "pastParticiple": "employé",
+    "concept_id": "A2-01123",
+    "imperfect": "je servais",
+    "pastParticiple": "servi",
     "auxiliary": "avoir"
   },
   {
@@ -499,31 +499,31 @@
   },
   {
     "concept_id": "A1-01111",
-    "imperfect": "je visitais",
-    "pastParticiple": "visité",
+    "imperfect": "je rendais visite",
+    "pastParticiple": "rendu visite",
     "auxiliary": "avoir"
   },
   {
-    "concept_id": "A1-00623",
-    "imperfect": "j’aimais",
-    "pastParticiple": "aimé",
+    "concept_id": "A2-00511",
+    "imperfect": "je suivais",
+    "pastParticiple": "suivi",
     "auxiliary": "avoir"
   },
   {
     "concept_id": "A1-00679",
-    "imperfect": "je bougeais",
-    "pastParticiple": "bougé",
-    "auxiliary": "avoir"
+    "imperfect": "je me déplaçais",
+    "pastParticiple": "déplacé",
+    "auxiliary": "être"
   },
   {
     "concept_id": "A1-00371",
-    "imperfect": "je ressentais",
-    "pastParticiple": "ressenti",
-    "auxiliary": "avoir"
+    "imperfect": "je me sentais",
+    "pastParticiple": "senti",
+    "auxiliary": "être"
   },
   {
     "concept_id": "A2-01742",
-    "imperfect": "ça se passait",
+    "imperfect": "il se passait",
     "pastParticiple": "passé",
     "auxiliary": "être"
   },
@@ -547,8 +547,8 @@
   },
   {
     "concept_id": "B2-00065",
-    "imperfect": "j’altérais",
-    "pastParticiple": "altéré",
+    "imperfect": "je modifiais",
+    "pastParticiple": "modifié",
     "auxiliary": "avoir"
   },
   {

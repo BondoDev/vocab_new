@@ -1,4 +1,5 @@
 import verbListJson from "../shared/list_of_100_most_used_verb.json";
+import frenchVerbListJson from "../shared/list_of_100_most_used_verb_french.json";
 import { getUiVocabularyLanguage, type TargetLanguageSlug, type UiLanguageCode } from "../../shared/slugs";
 
 export interface VerbListItem {
@@ -65,6 +66,11 @@ function normalizeVerbListItems(items: VerbListJsonItem[]): VerbListItem[] {
 }
 
 export const BASE_VERB_LIST_ITEMS = normalizeVerbListItems(verbListJson as VerbListJsonItem[]);
+export const FRENCH_VERB_LIST_ITEMS = normalizeVerbListItems(frenchVerbListJson as VerbListJsonItem[]);
+
+export function getVerbListItems(targetLanguage: TargetLanguageSlug): VerbListItem[] {
+  return targetLanguage === "french" ? FRENCH_VERB_LIST_ITEMS : BASE_VERB_LIST_ITEMS;
+}
 
 const vocabularyModules = import.meta.glob("../shared/common100VerbLookup/*.json", {
   eager: true,

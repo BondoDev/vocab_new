@@ -69,11 +69,13 @@ is in `scripts/import-boundaries/current/globs.json`. Summary:
 | G8 | `src/app/pages/vocabulary/VocabularyLevelPage.tsx` | `../../../data/vocabulary/*/vocabulary.json` | client-only | lazy | 7 | medium |
 | G9 | `src/data/seo/vocabularyLevels/levelBrowseWords.ts` | `./level-browse-preview/*.json` | client + SSR | lazy | 42 | medium — hand-authored data, no generator script exists |
 | G10 | `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbFormsData.ts` | `./pastForms/*.json` | client + SSR (past-verb-forms table; not the Worker) | eager | grows as languages are authored (1 as of this writing) | medium — hand-authored data, no generator script exists; same risk shape as G9 |
+| G11 | `src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbFormsData.ts` | `./conjugatedVerbs/*.json` | client + SSR (conjugated-verb-forms table; not the Worker) | eager | grows as languages are authored (1 as of this writing) | medium — hand-authored data, no generator script exists; same risk shape as G9/G10. The row-shaping logic lives in the import.meta-free `conjugated100VerbFormsRowBuilder.ts` in the same directory so it stays unit-testable under Node. |
 
-Match counts G1–G9 are asserted by `npm run test:import-boundaries`. G10 is
-intentionally not count-asserted there — its match count is expected to grow
-over time as `pastForms/{targetLanguage}.json` files are added by hand, one
-language at a time (see `docs/generated-data.md`), not a fixed contract.
+Match counts G1–G9 are asserted by `npm run test:import-boundaries`. G10 and
+G11 are intentionally not count-asserted there — their match counts are
+expected to grow over time as `pastForms/{targetLanguage}.json` and
+`conjugatedVerbs/{targetLanguage}.json` files are added by hand, one language
+at a time (see `docs/generated-data.md`), not a fixed contract.
 
 ## Related path-sensitive loaders
 

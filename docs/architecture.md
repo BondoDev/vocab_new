@@ -342,7 +342,7 @@ is the authoritative reference; this section only orients:
   `seo-cefr-content.json`), `src/data/seo/levelTests/seo_level_test_content.json`,
   `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`,
   `src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbsContent.json`,
-  `src/data/seo/verbLists/conjugated100Verbs/conjucated100VerbsList.json`
+  `src/data/seo/verbLists/conjugated100Verbs/conjugatedVerbs/`
   (localized content plus hand-authored verb-list subtype data; see
   [`docs/generated-data.md`](generated-data.md)).
 - Generated, committed mirrors/output (never hand-edited):

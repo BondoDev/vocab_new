@@ -1,402 +1,402 @@
 [
   {
     "concept_id": "A1-00008",
-    "verb": "be"
+    "verb": "être"
   },
   {
     "concept_id": "A1-00487",
-    "verb": "have"
+    "verb": "avoir"
   },
   {
     "concept_id": "A2-01701",
-    "verb": "become"
+    "verb": "devenir"
   },
   {
     "concept_id": "A1-00167",
-    "verb": "can"
+    "verb": "pouvoir"
   },
   {
     "concept_id": "A1-00687",
-    "verb": "must"
+    "verb": "devoir"
   },
   {
     "concept_id": "A1-01120",
-    "verb": "want"
+    "verb": "vouloir"
   },
   {
-    "concept_id": "A2-01787",
-    "verb": "should"
+    "concept_id": "A2-01003",
+    "verb": "recevoir"
   },
   {
-    "concept_id": "A1-00643",
-    "verb": "may"
+    "concept_id": "A2-00870",
+    "verb": "passer"
   },
   {
     "concept_id": "A1-00607",
-    "verb": "like"
+    "verb": "aimer"
   },
   {
     "concept_id": "A1-00633",
-    "verb": "make"
+    "verb": "faire"
   },
   {
-    "concept_id": "A1-00292",
-    "verb": "do"
+    "concept_id": "A1-00045",
+    "verb": "arriver"
   },
   {
     "concept_id": "A1-00441",
-    "verb": "go"
+    "verb": "aller"
   },
   {
     "concept_id": "A1-00231",
-    "verb": "come"
+    "verb": "venir"
   },
   {
     "concept_id": "A1-00871",
-    "verb": "say"
+    "verb": "dire"
   },
   {
     "concept_id": "A1-00956",
-    "verb": "speak"
+    "verb": "parler"
   },
   {
-    "concept_id": "A1-01012",
-    "verb": "talk"
+    "concept_id": "B1-02155",
+    "verb": "reconnaître"
   },
   {
     "concept_id": "A1-00049",
-    "verb": "ask"
+    "verb": "demander"
   },
   {
     "concept_id": "A1-00034",
-    "verb": "answer"
+    "verb": "répondre"
   },
   {
     "concept_id": "A1-00494",
-    "verb": "hear"
+    "verb": "entendre"
   },
   {
     "concept_id": "A1-00879",
-    "verb": "see"
+    "verb": "voir"
   },
   {
     "concept_id": "A1-00621",
-    "verb": "look"
+    "verb": "regarder"
   },
   {
     "concept_id": "A1-00383",
-    "verb": "find"
+    "verb": "trouver"
   },
   {
     "concept_id": "A2-01107",
-    "verb": "search"
+    "verb": "chercher"
   },
   {
     "concept_id": "A1-00584",
-    "verb": "know"
+    "verb": "savoir"
   },
   {
     "concept_id": "A1-01117",
-    "verb": "wake up"
+    "verb": "se réveiller"
   },
   {
     "concept_id": "A1-01043",
-    "verb": "think"
+    "verb": "penser"
   },
   {
     "concept_id": "A2-01482",
-    "verb": "believe"
+    "verb": "croire"
   },
   {
     "concept_id": "A2-01361",
-    "verb": "understand"
+    "verb": "comprendre"
   },
   {
     "concept_id": "A1-00987",
-    "verb": "study"
+    "verb": "étudier"
   },
   {
     "concept_id": "A2-00950",
-    "verb": "prepare"
+    "verb": "préparer"
   },
   {
     "concept_id": "A1-01160",
-    "verb": "work"
+    "verb": "travailler"
   },
   {
     "concept_id": "A1-01118",
-    "verb": "walk"
+    "verb": "marcher"
   },
   {
     "concept_id": "A1-00615",
-    "verb": "live"
+    "verb": "habiter"
   },
   {
     "concept_id": "A1-00973",
-    "verb": "stay"
+    "verb": "rester"
   },
   {
     "concept_id": "B1-02233",
-    "verb": "rest"
+    "verb": "se reposer"
   },
   {
     "concept_id": "A1-00693",
-    "verb": "need"
+    "verb": "avoir besoin"
   },
   {
     "concept_id": "A1-01011",
-    "verb": "take"
+    "verb": "prendre"
   },
   {
     "concept_id": "A1-00436",
-    "verb": "give"
+    "verb": "donner"
   },
   {
     "concept_id": "A1-00431",
-    "verb": "get"
+    "verb": "obtenir"
   },
   {
     "concept_id": "A1-00139",
-    "verb": "bring"
+    "verb": "apporter"
   },
   {
     "concept_id": "A1-00978",
-    "verb": "stop"
+    "verb": "arrêter"
   },
   {
     "concept_id": "A1-00158",
-    "verb": "buy"
+    "verb": "acheter"
   },
   {
     "concept_id": "A1-00881",
-    "verb": "sell"
+    "verb": "vendre"
   },
   {
     "concept_id": "A1-00762",
-    "verb": "pay"
+    "verb": "payer"
   },
   {
     "concept_id": "A2-00296",
-    "verb": "cost"
+    "verb": "coûter"
   },
   {
     "concept_id": "A1-00322",
-    "verb": "eat"
+    "verb": "manger"
   },
   {
     "concept_id": "A1-00308",
-    "verb": "drink"
+    "verb": "boire"
   },
   {
     "concept_id": "A1-00237",
-    "verb": "cook"
+    "verb": "cuisiner"
   },
   {
-    "concept_id": "A1-01125",
-    "verb": "watch"
+    "concept_id": "A2-01198",
+    "verb": "sembler"
   },
   {
     "concept_id": "A1-00925",
-    "verb": "sleep"
+    "verb": "dormir"
   },
   {
     "concept_id": "A1-00021",
-    "verb": "get up"
+    "verb": "se lever"
   },
   {
     "concept_id": "A1-00916",
-    "verb": "sit"
+    "verb": "s'asseoir"
   },
   {
     "concept_id": "A1-00968",
-    "verb": "stand"
+    "verb": "se tenir debout"
   },
   {
     "concept_id": "A2-00717",
-    "verb": "lie"
+    "verb": "s’allonger"
   },
   {
     "concept_id": "A1-00932",
-    "verb": "smile"
+    "verb": "sourire"
   },
   {
     "concept_id": "A1-00817",
-    "verb": "put"
+    "verb": "mettre"
   },
   {
-    "concept_id": "B1-04098",
-    "verb": "set"
+    "concept_id": "B1-00979",
+    "verb": "sortir"
   },
   {
     "concept_id": "A1-00309",
-    "verb": "drive"
+    "verb": "conduire"
   },
   {
     "concept_id": "A2-01805",
-    "verb": "travel"
+    "verb": "voyager"
   },
   {
     "concept_id": "A1-00591",
-    "verb": "laugh"
+    "verb": "rire"
   },
   {
     "concept_id": "A1-00859",
-    "verb": "run"
+    "verb": "courir"
   },
   {
     "concept_id": "A1-00785",
-    "verb": "play"
+    "verb": "jouer"
   },
   {
     "concept_id": "A1-00828",
-    "verb": "read"
+    "verb": "lire"
   },
   {
     "concept_id": "A1-01167",
-    "verb": "write"
+    "verb": "écrire"
   },
   {
     "concept_id": "A1-00731",
-    "verb": "open"
+    "verb": "ouvrir"
   },
   {
     "concept_id": "A1-00210",
-    "verb": "close"
+    "verb": "fermer"
   },
   {
     "concept_id": "A1-00970",
-    "verb": "start"
+    "verb": "commencer"
   },
   {
-    "concept_id": "A1-00088",
-    "verb": "begin"
+    "concept_id": "A1-00614",
+    "verb": "vivre"
   },
   {
     "concept_id": "A2-00284",
-    "verb": "continue"
+    "verb": "continuer"
   },
   {
     "concept_id": "A1-01114",
-    "verb": "wait"
+    "verb": "attendre"
   },
   {
     "concept_id": "A1-00498",
-    "verb": "help"
+    "verb": "aider"
   },
   {
     "concept_id": "A1-00903",
-    "verb": "show"
+    "verb": "montrer"
   },
   {
     "concept_id": "A2-00460",
-    "verb": "explain"
+    "verb": "expliquer"
   },
   {
-    "concept_id": "A1-01022",
-    "verb": "tell"
+    "concept_id": "A2-00432",
+    "verb": "entrer"
   },
   {
     "concept_id": "A1-01104",
-    "verb": "use"
+    "verb": "utiliser"
   },
   {
-    "concept_id": "B2-02656",
-    "verb": "utilize"
+    "concept_id": "A2-01123",
+    "verb": "servir"
   },
   {
     "concept_id": "A1-01130",
-    "verb": "wear"
+    "verb": "porter"
   },
   {
     "concept_id": "A1-01088",
-    "verb": "turn"
+    "verb": "tourner"
   },
   {
     "concept_id": "A1-00595",
-    "verb": "learn"
+    "verb": "apprendre"
   },
   {
     "concept_id": "A2-01117",
-    "verb": "send"
+    "verb": "envoyer"
   },
   {
     "concept_id": "A2-01542",
-    "verb": "plan"
+    "verb": "planifier"
   },
   {
     "concept_id": "A1-00163",
-    "verb": "call"
+    "verb": "appeler"
   },
   {
     "concept_id": "A1-00650",
-    "verb": "meet"
+    "verb": "rencontrer"
   },
   {
     "concept_id": "A1-01111",
-    "verb": "visit"
+    "verb": "rendre visite"
   },
   {
-    "concept_id": "A1-00623",
-    "verb": "love"
+    "concept_id": "A2-00511",
+    "verb": "suivre"
   },
   {
     "concept_id": "A1-00679",
-    "verb": "move"
+    "verb": "se déplacer"
   },
   {
     "concept_id": "A1-00371",
-    "verb": "feel"
+    "verb": "se sentir"
   },
   {
     "concept_id": "A2-01742",
-    "verb": "happen"
+    "verb": "se passer"
   },
   {
     "concept_id": "A2-00133",
-    "verb": "belong"
+    "verb": "appartenir"
   },
   {
     "concept_id": "A2-01814",
-    "verb": "win"
+    "verb": "gagner"
   },
   {
     "concept_id": "B1-01577",
-    "verb": "lose"
+    "verb": "perdre"
   },
   {
     "concept_id": "B2-00065",
-    "verb": "alter"
+    "verb": "modifier"
   },
   {
     "concept_id": "A1-00186",
-    "verb": "change"
+    "verb": "changer"
   },
   {
     "concept_id": "A1-01083",
-    "verb": "try"
+    "verb": "essayer"
   },
   {
     "concept_id": "A1-00257",
-    "verb": "cry"
+    "verb": "pleurer"
   },
   {
     "concept_id": "A1-00406",
-    "verb": "forget"
+    "verb": "oublier"
   },
   {
     "concept_id": "A1-00836",
-    "verb": "remember"
+    "verb": "se souvenir"
   },
   {
     "concept_id": "A1-00600",
-    "verb": "let"
+    "verb": "laisser"
   },
   {
     "concept_id": "A1-00511",
-    "verb": "hold"
+    "verb": "tenir"
   },
   {
     "concept_id": "A1-00596",
-    "verb": "leave"
+    "verb": "partir"
   }
 ]

@@ -151,6 +151,21 @@
       "namingContract": "{targetLanguage}.json (TargetLanguageSlug full name, e.g. english.json), hand-authored one language at a time; each row keyed by concept_id from ../shared/list_of_100_most_used_verb.json",
       "risk": "medium-hand-authored",
       "riskReason": "Same risk shape as G9 — no generator script writes this directory, and its match count is expected to grow (not a fixed contract), so it is intentionally excluded from test-import-boundaries.mjs's exact-count assertions. getPastVerbFormsRowsById() returns null for any target language without a file yet, and pastForms100VerbTableConfig.ts derives isTableReady from that, so a missing file degrades to the table placeholder rather than a runtime error."
+    },
+    {
+      "id": "G11",
+      "consumer": "src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbFormsData.ts",
+      "line": 19,
+      "pattern": "./conjugatedVerbs/*.json",
+      "options": { "eager": true },
+      "resolvesTo": "src/data/seo/verbLists/conjugated100Verbs/conjugatedVerbs/*.json",
+      "runtime": "client + ssr (conjugated-verb-forms table, ConjugatedVerbFormsSeoPage.tsx; not the Worker)",
+      "eager": true,
+      "expectedCount": "grows over time, not fixed",
+      "actualCount": 1,
+      "namingContract": "{targetLanguage}.json (TargetLanguageSlug full name, e.g. english.json), hand-authored one language at a time; each file holds that language's full tense-grouped 100-verb conjugation array, rows keyed by word_id",
+      "risk": "medium-hand-authored",
+      "riskReason": "Same risk shape as G9/G10 — no generator script writes this directory, and its match count is expected to grow (not a fixed contract), so it is intentionally excluded from test-import-boundaries.mjs's exact-count assertions. getConjugatedVerbFormsRowsById() returns null for any target language without a file yet, and conjugated100VerbTableConfig.ts derives isTableReady from that, so a missing file degrades to the table placeholder rather than a runtime error. The row-shaping logic is factored out into the import.meta-free conjugated100VerbFormsRowBuilder.ts in the same directory so it stays unit-testable under Node (see scripts/tests/seo/test-conjugated-verb-forms-page.mjs)."
     }
   ],
   "relatedPathSensitiveLoaders": [

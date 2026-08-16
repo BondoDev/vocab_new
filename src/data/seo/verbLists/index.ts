@@ -3,6 +3,7 @@ import {
   canLinkVerbListItem as canLinkCommonVerbListItem,
   getTargetVerbWordLemma,
   getVerbDefinition,
+  getVerbListItems as getCommonVerbListItems,
   getVerbTranslation,
   type VerbListItem,
 } from "./common100Verbs/common100VerbList";
@@ -59,6 +60,10 @@ export {
 
 export const VERB_LIST_ITEMS = BASE_VERB_LIST_ITEMS;
 export type SharedVerbListItem = VerbListItem;
+
+export function getVerbListItems(targetLanguage: TargetLanguageSlug): VerbListItem[] {
+  return getCommonVerbListItems(targetLanguage);
+}
 
 export function canLinkVerbListItem(targetLanguage: TargetLanguageSlug, id: string): boolean {
   return canLinkCommonVerbListItem(targetLanguage, id);

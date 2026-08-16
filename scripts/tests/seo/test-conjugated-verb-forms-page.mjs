@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadConjugatedVerbFormsRegistry } from "../../lib/load-conjugated-verb-forms-registry.mjs";
-import { compileTsToCommonJs, ROOT_DIR } from "../../lib/compileTs.mjs";
+import { compileTsToCommonJs, readJson, ROOT_DIR } from "../../lib/compileTs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -75,7 +75,13 @@ const metadataLoader = compileTsToCommonJs(".tmp-conjugated-verb-forms-metadata-
     "conjugatedVerbFormsMetadata.ts",
   ),
 ]);
-const formsDataLoader = compileTsToCommonJs(".tmp-conjugated-verb-forms-data-test", [
+// conjugated100VerbFormsData.ts uses import.meta.glob (Vite-only syntax) to
+// discover ./conjugatedVerbs/*.json, which compileTsToCommonJs cannot
+// compile (module: CommonJS rejects import.meta outright). The actual
+// row-shaping logic it delegates to lives in
+// conjugated100VerbFormsRowBuilder.ts, which is import.meta-free and can be
+// compiled/exercised directly here.
+const formsRowBuilderLoader = compileTsToCommonJs(".tmp-conjugated-verb-forms-row-builder-test", [
   path.join(
     ROOT_DIR,
     "src",
@@ -83,7 +89,7 @@ const formsDataLoader = compileTsToCommonJs(".tmp-conjugated-verb-forms-data-tes
     "seo",
     "verbLists",
     "conjugated100Verbs",
-    "conjugated100VerbFormsData.ts",
+    "conjugated100VerbFormsRowBuilder.ts",
   ),
 ]);
 
@@ -92,8 +98,8 @@ try {
   const metadata = metadataLoader.require(
     "src/seo/verbLists/conjugated100Verbs/conjugatedVerbFormsMetadata",
   );
-  const formsData = formsDataLoader.require(
-    "src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbFormsData",
+  const formsRowBuilder = formsRowBuilderLoader.require(
+    "src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbFormsRowBuilder",
   );
 
   const content = registry.getConjugatedVerbFormsContent("english", "en");
@@ -157,8 +163,15 @@ try {
     );
   });
 
-  test("present simple conjugation rows load from the provided tense list", () => {
-    const rows = formsData.getConjugatedVerbFormsRowsById("english");
+  test("present simple conjugation rows load from the authored English JSON file", () => {
+    const englishTenseGroups = readJson(
+      "src/data/seo/verbLists/conjugated100Verbs/conjugatedVerbs/english.json",
+    );
+    const rows = formsRowBuilder.buildConjugatedVerbFormsRows(
+      "conjugatedVerbs/english.json",
+      "english",
+      englishTenseGroups,
+    );
     assert.ok(rows, "expected English conjugation rows");
     assert.equal(rows.size, 100);
     assert.deepEqual(rows.get("A1-00008")?.present_simple, {
@@ -171,7 +184,7 @@ try {
     assert.equal(rows.get("A1-00008")?.past_simple?.i, "was");
   });
 
-  test("conjugation list loader supports per-tense targetLanguage short codes", () => {
+  test("conjugation list loader validates duplicate tenses and targetLanguage mismatches", () => {
     const source = fs.readFileSync(
       path.join(
         ROOT_DIR,
@@ -180,20 +193,58 @@ try {
         "seo",
         "verbLists",
         "conjugated100Verbs",
-        "conjugated100VerbFormsData.ts",
+        "conjugated100VerbFormsRowBuilder.ts",
       ),
       "utf8",
     );
 
     assert.match(source, /targetLanguage\?: string/);
-    assert.match(source, /return "en"/);
-    assert.match(source, /getUiVocabularyLanguage\(targetLanguageCode\)/);
-    assert.match(source, /duplicate tense "\$\{tense\}" for targetLanguage/);
+    assert.match(source, /TARGET_LANGUAGE_TO_UI_LANGUAGE\[targetLanguage\]/);
+    assert.match(source, /has duplicate tense "\$\{tense\}"/);
+
+    assert.throws(
+      () =>
+        formsRowBuilder.buildConjugatedVerbFormsRows("fixture", "english", [
+          { tense: "present_simple", targetLanguage: "en", verbs: [] },
+          { tense: "present_simple", targetLanguage: "en", verbs: [] },
+        ]),
+      /has duplicate tense "present_simple"/,
+    );
+
+    assert.throws(
+      () =>
+        formsRowBuilder.buildConjugatedVerbFormsRows("fixture", "english", [
+          { tense: "present_simple", targetLanguage: "es", verbs: [] },
+        ]),
+      /has targetLanguage "es", expected "en"/,
+    );
   });
 
   test("Spanish pronoun labels normalize to the JSON pronoun column keys", () => {
-    const rows = formsData.getConjugatedVerbFormsRowsById("spanish");
-    assert.ok(rows, "expected Spanish conjugation rows after adding Spanish tense data");
+    assert.equal(formsRowBuilder.normalizePronounKey("Nosotros/Nosotras"), "nosotros");
+    assert.equal(formsRowBuilder.normalizePronounKey("Vosotros/Vosotras"), "vosotros");
+    assert.equal(formsRowBuilder.normalizePronounKey("Él/Ella/Usted"), "el_ella_usted");
+
+    const rows = formsRowBuilder.buildConjugatedVerbFormsRows("fixture", "spanish", [
+      {
+        tense: "present_indicative",
+        targetLanguage: "es",
+        verbs: [
+          {
+            word_id: "A1-00008",
+            conjugations: [
+              { pronoun: "Yo", form: "soy" },
+              { pronoun: "Tú", form: "eres" },
+              { pronoun: "Él/Ella/Usted", form: "es" },
+              { pronoun: "Nosotros/Nosotras", form: "somos" },
+              { pronoun: "Vosotros/Vosotras", form: "sois" },
+              { pronoun: "Ellos/Ellas/Ustedes", form: "son" },
+            ],
+          },
+        ],
+      },
+    ]);
+
     assert.deepEqual(rows.get("A1-00008")?.present_indicative, {
       yo: "soy",
       tu: "eres",
@@ -206,7 +257,7 @@ try {
 } finally {
   registryLoader.cleanup();
   metadataLoader.cleanup();
-  formsDataLoader.cleanup();
+  formsRowBuilderLoader.cleanup();
 }
 
 console.log("\n[conjugated-verb-forms] component source contracts");

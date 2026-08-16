@@ -6,11 +6,11 @@ import {
   getPastVerbFormsContent,
   getPastVerbFormsPath,
   getPastVerbFormsTableConfig,
+  getVerbListItems,
   getVerbListPath,
   getVerbListSpeechLang,
   getVerbListTranslation,
   getVerbListWordLemma,
-  VERB_LIST_ITEMS,
 } from "../../../../data/seo/verbLists";
 import { getLevelTestSeoPath } from "../../../../data/seo/levelTests";
 import { getSeoHubPath } from "../../../../data/seo/shared/hub";
@@ -85,8 +85,8 @@ export function PastVerbFormsSeoPage({
   // Row data reuses the common100Verbs vocabulary lookup (translation,
   // target-language infinitive, word-page linking) instead of duplicating
   // any of it here — only the past-form values themselves are unique to
-  // this family. Canonical order/id set comes from VERB_LIST_ITEMS (the
-  // same shared 100-verb list common100Verbs uses), not from the row
+  // this family. Canonical order/id set follows the target language's
+  // common-verb list, not from the row
   // dataset's own file order.
   const rows = useMemo<PastVerbFormsRow[]>(() => {
     const formsById = getPastVerbFormsRowsById(targetLanguage);
@@ -95,7 +95,7 @@ export function PastVerbFormsSeoPage({
     }
 
     const result: PastVerbFormsRow[] = [];
-    for (const item of VERB_LIST_ITEMS) {
+    for (const item of getVerbListItems(targetLanguage)) {
       const forms = formsById.get(item.id);
       if (!forms) {
         continue;

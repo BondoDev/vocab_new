@@ -4,11 +4,11 @@ import {
   getVerbListConfig,
   getVerbListContent,
   getVerbListDefinition,
+  getVerbListItems,
   getVerbListPath,
   getVerbListSpeechLang,
   getVerbListTranslation,
   getVerbListWordLemma,
-  VERB_LIST_ITEMS,
 } from "../../../../data/seo/verbLists";
 import { buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
 import { type TargetLanguageSlug, type UiLanguageCode } from "../../../../data/seo/shared/slugs";
@@ -33,9 +33,10 @@ export function VerbListSeoPage({
   const siteOrigin = useSeoSiteOrigin();
   const config = getVerbListConfig(targetLanguage);
   const content = getVerbListContent(targetLanguage, uiLang);
+  const verbListItems = getVerbListItems(targetLanguage);
   const rows = useMemo(
     () =>
-      VERB_LIST_ITEMS.map((item, index) => {
+      verbListItems.map((item, index) => {
         const wordLemma = getVerbListWordLemma(targetLanguage, item.id) || item.verb;
         return {
           index: index + 1,
@@ -48,7 +49,7 @@ export function VerbListSeoPage({
             : null,
         };
       }),
-    [targetLanguage, uiLang],
+    [targetLanguage, uiLang, verbListItems],
   );
 
   const seoMetadata = buildVerbListSeoMetadata({
@@ -56,7 +57,7 @@ export function VerbListSeoPage({
     pathname: location.pathname,
     siteOrigin,
     targetLanguage,
-    items: VERB_LIST_ITEMS,
+    items: verbListItems,
     getAllPaths: () => Object.values(config.paths),
     getPath: (lang) => getVerbListPath(targetLanguage, lang),
     getContent: (lang) => getVerbListContent(targetLanguage, lang),

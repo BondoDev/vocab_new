@@ -28,6 +28,18 @@ const ENGLISH_VERB_LIST_PATH = path.join(
   "shared",
   "list_of_100_most_used_verb.json",
 );
+const TARGET_LANGUAGE_VERB_LIST_PATHS = [
+  ENGLISH_VERB_LIST_PATH,
+  path.join(
+    ROOT_DIR,
+    "src",
+    "data",
+    "seo",
+    "verbLists",
+    "shared",
+    "list_of_100_most_used_verb_french.json",
+  ),
+];
 
 const UTF8_DECODER = new TextDecoder("utf-8", { fatal: false });
 const WINDOWS_1251_DECODER = new TextDecoder("windows-1251", { fatal: false });
@@ -277,38 +289,43 @@ async function buildWordBrowseShardFiles(targetLanguage) {
   }
 }
 
-async function buildEnglishVerbLookupFiles() {
-  const rawVerbList = await fs.readFile(ENGLISH_VERB_LIST_PATH, "utf8");
-  const englishVerbList = JSON.parse(rawVerbList.replace(/^\uFEFF/, ""));
-  const normalizedVerbList = englishVerbList
-    .map((item) => {
-      const legacyId = String(item?.id ?? "").trim();
-      if (legacyId) {
-        return {
-          id: legacyId,
-          verb: String(item?.verb ?? "").trim(),
-        };
-      }
+async function buildCommon100VerbLookupFiles() {
+  const normalizedVerbList = [];
+  for (const verbListPath of TARGET_LANGUAGE_VERB_LIST_PATHS) {
+    const rawVerbList = await fs.readFile(verbListPath, "utf8");
+    const verbList = JSON.parse(rawVerbList.replace(/^\uFEFF/, ""));
+    normalizedVerbList.push(
+      ...verbList
+        .map((item) => {
+          const legacyId = String(item?.id ?? "").trim();
+          if (legacyId) {
+            return {
+              id: legacyId,
+              verb: String(item?.verb ?? "").trim(),
+            };
+          }
 
-      const conceptId = String(item?.concept_id ?? "").trim();
-      if (!conceptId) {
-        return null;
-      }
+          const conceptId = String(item?.concept_id ?? "").trim();
+          if (!conceptId) {
+            return null;
+          }
 
-      const verbEntry = Object.entries(item).find(
-        ([key, value]) => key !== "concept_id" && typeof value === "string",
-      );
-      if (!verbEntry) {
-        return null;
-      }
+          const verbEntry = Object.entries(item).find(
+            ([key, value]) => key !== "concept_id" && typeof value === "string",
+          );
+          if (!verbEntry) {
+            return null;
+          }
 
-      const [verbKey, verbValue] = verbEntry;
-      return {
-        id: conceptId,
-        verb: verbKey.trim().toLowerCase() === "verb" ? String(verbValue).trim() : verbKey.trim(),
-      };
-    })
-    .filter(Boolean);
+          const [verbKey, verbValue] = verbEntry;
+          return {
+            id: conceptId,
+            verb: verbKey.trim().toLowerCase() === "verb" ? String(verbValue).trim() : verbKey.trim(),
+          };
+        })
+        .filter(Boolean),
+    );
+  }
   const verbIds = new Set(
     normalizedVerbList
       .map((item) => String(item?.id ?? "").trim())
@@ -378,7 +395,7 @@ async function main() {
     await buildWordBrowseShardFiles(targetLanguage);
   }
 
-  await buildEnglishVerbLookupFiles();
+  await buildCommon100VerbLookupFiles();
 
   console.log(`Generated compact word hub data in ${OUTPUT_DIR}`);
 }
