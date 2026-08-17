@@ -24,8 +24,8 @@ function test(name, fn) {
 
 console.log("\n=== normalizeNewPasswordInput contract ===\n");
 
-test("1. PASSWORD_MIN_LENGTH matches PasswordRecoveryDialog.tsx's own MIN_PASSWORD_LENGTH (reused, not reinvented)", () => {
-  assert.equal(PASSWORD_MIN_LENGTH, 6);
+test("1. PASSWORD_MIN_LENGTH matches PasswordRecoveryDialog.tsx's own imported constant (reused, not reinvented) and reflects the live Supabase minimum (raised from 6 to 8, 2026-08-18)", () => {
+  assert.equal(PASSWORD_MIN_LENGTH, 8);
 });
 
 test("2. Empty input is rejected with reason 'empty'", () => {
@@ -34,11 +34,11 @@ test("2. Empty input is rejected with reason 'empty'", () => {
 
 test("3. A password shorter than the minimum is rejected with reason 'tooShort'", () => {
   assert.deepEqual(normalizeNewPasswordInput("abc"), { ok: false, reason: "tooShort" });
-  assert.deepEqual(normalizeNewPasswordInput("12345"), { ok: false, reason: "tooShort" });
+  assert.deepEqual(normalizeNewPasswordInput("1234567"), { ok: false, reason: "tooShort" });
 });
 
 test("4. A password exactly at the minimum length is accepted — the boundary itself is valid", () => {
-  assert.deepEqual(normalizeNewPasswordInput("abcdef"), { ok: true, value: "abcdef" });
+  assert.deepEqual(normalizeNewPasswordInput("abcdefgh"), { ok: true, value: "abcdefgh" });
 });
 
 test("5. A longer, well-formed password is accepted as-is", () => {

@@ -95,7 +95,12 @@
     "signupError": "Non siamo riusciti a creare il tuo account con questi dati. Controlla le tue informazioni e riprova.",
     "forgotPasswordError": "Non siamo riusciti a inviare l'email per reimpostare la password. Riprova.",
     "googleError": "Non siamo riusciti ad avviare l'accesso con Google. Riprova.",
-    "signupCheckEmail": "Controlla la tua email per continuare. Se hai gia un account, accedi o continua con Google."
+    "signupCheckEmail": "Se questo indirizzo email è nuovo, abbiamo inviato un link di conferma. Se hai già un account, accedi oppure continua con Google.",
+    "passwordRequirementHint": "Almeno 8 caratteri",
+    "passwordRequirementMetSr": "Requisito soddisfatto.",
+    "passwordRequirementNotMetSr": "Requisito non ancora soddisfatto.",
+    "passwordsMatch": "Le password corrispondono",
+    "passwordsDoNotMatch": "Le password non corrispondono"
   },
   "userProfile": {
     "dashboardPage": {
@@ -637,7 +642,7 @@
         "passwordIdentityError": "Impossibile verificare la tua identità.",
         "passwordMismatch": "Le password non coincidono.",
         "passwordSaveError": "Impossibile cambiare la password. Riprova.",
-        "passwordTooShort": "La password deve contenere almeno 6 caratteri.",
+        "passwordTooShort": "La password deve contenere almeno 8 caratteri.",
         "passwordManagedByGoogle": "Hai effettuato l'accesso con Google, quindi non c'è nessuna password FluentStellar da cambiare."
       },
       "languages": {

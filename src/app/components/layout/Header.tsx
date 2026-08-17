@@ -3,8 +3,10 @@ import {
   BookOpen,
   BookOpenText,
   ChartSpline,
+  CheckCircle2,
   ChevronDown,
   ChevronRight,
+  Circle,
   CircleHelp,
   Compass,
   Dumbbell,
@@ -20,6 +22,7 @@ import {
   Target,
   UserRound,
   X,
+  XCircle,
 } from "lucide-react";
 import { UILanguageSwitcher } from "./UILanguageSwitcher";
 import { useLanguage, type UILanguage } from "../../../contexts/LanguageContext";
@@ -55,6 +58,12 @@ import {
   describeSupabaseError,
   resolveSupabaseErrorMessageKey,
 } from "../../../lib/supabaseError";
+// Single source of truth for FluentStellar's live password-length policy —
+// the same constant Settings' password change and PasswordRecoveryDialog.tsx
+// already derive their minimum from (see settingsPassword.ts's own header).
+// Signup previously had no client-side length check at all; it now shares
+// this one value instead of introducing its own literal.
+import { PASSWORD_MIN_LENGTH } from "../../utils/settingsPassword";
 import "./styles/header.scss";
 
 const NAV_HREFS = {
@@ -379,6 +388,30 @@ export function Header({
   const showAuthButton = true;
   const googleLabel =
     authMode === "login" ? "Continue with Google" : "Sign up with Google";
+  // Live signup password-requirement hint (below the field, signup mode
+  // only). Two visual states, not three: "not yet met" covers both an
+  // untouched/empty field and a too-short one typed so far - a persistent
+  // neutral hollow-circle indicator, never a red error, satisfies "clearly
+  // indicate not yet satisfied" without being alarming on a field the user
+  // hasn't finished typing into yet. hasStartedTypingAuthPassword only
+  // controls the screen-reader-only status suffix below (silent before any
+  // typing, since there's nothing to judge yet; explicit once there's a
+  // value to judge) - sighted users see the same icon/text either way.
+  const isSignupPasswordLengthValid = authPassword.length >= PASSWORD_MIN_LENGTH;
+  const hasStartedTypingAuthPassword = authPassword.length > 0;
+  // Live confirm-password match status - a separate concern from the length
+  // check above (a too-short password can still "match" its own repeated
+  // confirmation; the length hint stays independently invalid either way).
+  // Derived directly from the two existing values, no extra state: "neutral"
+  // whenever the confirm field is empty (never judges a value the user
+  // hasn't typed yet, and never lets two empty strings read as a match),
+  // "match" only once both fields are non-empty and exactly equal,
+  // "mismatch" for every other non-empty case.
+  const confirmPasswordMatchState: "neutral" | "mismatch" | "match" = !authConfirmPassword
+    ? "neutral"
+    : authPassword === authConfirmPassword
+      ? "match"
+      : "mismatch";
   const accountDisplayName = accountNickname?.trim() || "Account";
   const nicknameInitial = accountNickname?.trim().charAt(0).toUpperCase() ?? "";
   const accountLanguageLabel = accountPracticeLanguage ? t(`languageNames.${accountPracticeLanguage}`) : "";
@@ -666,6 +699,19 @@ export function Header({
     }
 
     if (authMode === "signup") {
+      // Client-side length gate — mirrors the live Supabase Auth minimum
+      // (PASSWORD_MIN_LENGTH, shared with Settings' password change and
+      // PasswordRecoveryDialog.tsx). Checked before the match check, same
+      // order PasswordRecoveryDialog.tsx uses, and before signUpWithPassword
+      // is ever called below - a signup that's too short never reaches
+      // GoTrue at all. GoTrue itself remains authoritative for anything the
+      // frontend doesn't know to check (see the reused translation key's own
+      // header in settingsSection's locale entry).
+      if (authPassword.length < PASSWORD_MIN_LENGTH) {
+        setAuthError(t("userProfile.settingsSection.account.passwordTooShort"));
+        return;
+      }
+
       if (authPassword !== authConfirmPassword) {
         setAuthError("Passwords do not match.");
         return;
@@ -1234,8 +1280,38 @@ export function Header({
                     placeholder="Enter your password"
                     autoComplete={authMode === "login" ? "current-password" : "new-password"}
                     disabled={isAuthSubmitting}
+                    aria-describedby={authMode === "signup" ? "auth-password-requirement" : undefined}
                     className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
                   />
+                  {authMode === "signup" ? (
+                    // aria-describedby only (no aria-live): read once when the
+                    // field is focused/described, like ordinary help text -
+                    // never re-announced on every keystroke, which would be
+                    // disruptive screen-reader UX for something that changes
+                    // on every character typed. The met/not-met distinction is
+                    // conveyed by icon shape (check vs. hollow circle) plus a
+                    // visually-hidden status word, never by color alone.
+                    <p
+                      id="auth-password-requirement"
+                      className={`flex items-center gap-1.5 text-xs font-medium ${
+                        isSignupPasswordLengthValid ? "text-emerald-600" : "text-[#8b7fb0]"
+                      }`}
+                    >
+                      {isSignupPasswordLengthValid ? (
+                        <CheckCircle2 size={14} aria-hidden="true" />
+                      ) : (
+                        <Circle size={14} aria-hidden="true" />
+                      )}
+                      <span>{t("auth.passwordRequirementHint")}</span>
+                      <span className="sr-only">
+                        {isSignupPasswordLengthValid
+                          ? t("auth.passwordRequirementMetSr")
+                          : hasStartedTypingAuthPassword
+                            ? t("auth.passwordRequirementNotMetSr")
+                            : ""}
+                      </span>
+                    </p>
+                  ) : null}
                 </div>
 
                 {authMode === "login" ? (
@@ -1269,8 +1345,46 @@ export function Header({
                       placeholder="Repeat your password"
                       autoComplete="new-password"
                       disabled={isAuthSubmitting}
-                      className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
+                      aria-describedby={
+                        confirmPasswordMatchState !== "neutral" ? "auth-confirm-password-status" : undefined
+                      }
+                      className={`h-11 rounded-xl px-4 text-[#24163d] placeholder:text-[#8f85a8] ${
+                        confirmPasswordMatchState === "mismatch"
+                          ? "border-red-300 bg-white/90"
+                          : confirmPasswordMatchState === "match"
+                            ? "border-emerald-300 bg-white/90"
+                            : "border-[#ded7ef] bg-white/90"
+                      }`}
                     />
+                    {confirmPasswordMatchState !== "neutral" ? (
+                      // No aria-live here either, same reasoning as the
+                      // password-requirement hint above: aria-describedby is
+                      // read on focus/on demand, not re-announced on every
+                      // keystroke. Unlike that hint, the visible text itself
+                      // changes per state ("Passwords match" vs. "...do not
+                      // match"), so it's fully self-describing to assistive
+                      // tech without a separate visually-hidden status word -
+                      // the icon shape (check vs. X, both circular badges)
+                      // is the sighted-user-only reinforcement, never the
+                      // only signal either way.
+                      <p
+                        id="auth-confirm-password-status"
+                        className={`flex items-center gap-1.5 text-xs font-medium ${
+                          confirmPasswordMatchState === "match" ? "text-emerald-600" : "text-red-600"
+                        }`}
+                      >
+                        {confirmPasswordMatchState === "match" ? (
+                          <CheckCircle2 size={14} aria-hidden="true" />
+                        ) : (
+                          <XCircle size={14} aria-hidden="true" />
+                        )}
+                        <span>
+                          {confirmPasswordMatchState === "match"
+                            ? t("auth.passwordsMatch")
+                            : t("auth.passwordsDoNotMatch")}
+                        </span>
+                      </p>
+                    ) : null}
                   </div>
                 ) : null}
 

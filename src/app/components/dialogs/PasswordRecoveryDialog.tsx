@@ -13,12 +13,13 @@ import {
   updateSupabaseAuthUserPassword,
   type StoredSupabaseSession,
 } from "../../../lib/supabaseAuth";
-
-// Matches Supabase Auth's default minimum password length (verified against
-// the current Supabase Auth documentation/dashboard default; a project can
-// raise this, in which case GoTrue's own rejection message - surfaced via
-// the catch block below - is still the authoritative error).
-const MIN_PASSWORD_LENGTH = 6;
+// Single source of truth for FluentStellar's live password-length policy —
+// see settingsPassword.ts's own header for why this is imported (not
+// re-declared) and how it's kept in sync with the live Supabase minimum. A
+// project can always raise this further live, in which case GoTrue's own
+// rejection message - surfaced via the catch block below - is still the
+// authoritative error regardless of what this constant says.
+import { PASSWORD_MIN_LENGTH } from "../../utils/settingsPassword";
 
 interface PasswordRecoveryDialogProps {
   open: boolean;
@@ -62,8 +63,8 @@ export function PasswordRecoveryDialog({
       return;
     }
 
-    if (newPassword.length < MIN_PASSWORD_LENGTH) {
-      setError(`Password must be at least ${MIN_PASSWORD_LENGTH} characters.`);
+    if (newPassword.length < PASSWORD_MIN_LENGTH) {
+      setError(`Password must be at least ${PASSWORD_MIN_LENGTH} characters.`);
       return;
     }
 

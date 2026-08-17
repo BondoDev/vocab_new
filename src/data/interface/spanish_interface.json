@@ -95,7 +95,12 @@
     "signupError": "No pudimos crear tu cuenta con estos datos. Revisa tu informacion e intentalo de nuevo.",
     "forgotPasswordError": "No pudimos enviar el correo para restablecer la contrasena. Intentalo de nuevo.",
     "googleError": "No pudimos iniciar el acceso con Google. Intentalo de nuevo.",
-    "signupCheckEmail": "Revisa tu correo electronico para continuar. Si ya tienes una cuenta, inicia sesion o continua con Google."
+    "signupCheckEmail": "Si este correo electrónico es nuevo, hemos enviado un enlace de confirmación. Si ya tienes una cuenta, inicia sesión o continúa con Google.",
+    "passwordRequirementHint": "Al menos 8 caracteres",
+    "passwordRequirementMetSr": "Requisito cumplido.",
+    "passwordRequirementNotMetSr": "Requisito aún no cumplido.",
+    "passwordsMatch": "Las contraseñas coinciden",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden"
   },
   "userProfile": {
     "dashboardPage": {
@@ -637,7 +642,7 @@
         "passwordIdentityError": "No se pudo verificar tu identidad.",
         "passwordMismatch": "Las contraseñas no coinciden.",
         "passwordSaveError": "No se pudo cambiar la contraseña. Inténtalo de nuevo.",
-        "passwordTooShort": "La contraseña debe tener al menos 6 caracteres.",
+        "passwordTooShort": "La contraseña debe tener al menos 8 caracteres.",
         "passwordManagedByGoogle": "Iniciaste sesión con Google, por lo que no hay una contraseña de FluentStellar que cambiar."
       },
       "languages": {

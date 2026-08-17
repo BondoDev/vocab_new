@@ -289,12 +289,16 @@ test("17. Mismatched confirmation is rejected before the network call: the equal
   assert.match(body, /if \(newPassword !== confirmPassword\) \{\s*setError\([^)]*\);\s*return;\s*\}/);
 });
 
-test("18. Non-empty validation and a minimum length consistent with Supabase's default password policy both gate submission before the network call", () => {
+test("18. Non-empty validation and a minimum length consistent with FluentStellar's live password policy both gate submission before the network call — sourced from the shared settingsPassword.ts constant, not a locally re-declared one", () => {
   const handlerMatch = recoveryDialog.match(/const handleSubmit = async \([\s\S]*?\n  \};/);
   const body = handlerMatch[0];
   assert.match(body, /if \(!newPassword \|\| !confirmPassword\) \{/);
-  assert.match(recoveryDialog, /const MIN_PASSWORD_LENGTH = 6;/);
-  assert.match(body, /newPassword\.length < MIN_PASSWORD_LENGTH/);
+  assert.match(
+    recoveryDialog,
+    /import \{ PASSWORD_MIN_LENGTH \} from "\.\.\/\.\.\/utils\/settingsPassword";/,
+  );
+  assert.doesNotMatch(recoveryDialog, /const MIN_PASSWORD_LENGTH/, "must not re-declare its own copy of the minimum");
+  assert.match(body, /newPassword\.length < PASSWORD_MIN_LENGTH/);
 });
 
 test("19. Duplicate submission is guarded: an in-flight submit short-circuits before any validation or network call runs again", () => {

@@ -17,7 +17,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -219,6 +218,11 @@ test("13. The new auth.* locale keys (including the neutral no-session copy) exi
     "forgotPasswordError",
     "googleError",
     "signupCheckEmail",
+    "passwordRequirementHint",
+    "passwordRequirementMetSr",
+    "passwordRequirementNotMetSr",
+    "passwordsMatch",
+    "passwordsDoNotMatch",
   ].sort();
   for (const fileName of LOCALE_FILES) {
     const data = JSON.parse(read(`src/data/interface/${fileName}`));
@@ -406,29 +410,196 @@ test("27. The disabled-button protection on the submit/Google/forgot-password co
   assert.ok(disabledCount >= 4, "expected the Google button, email/password inputs, forgot-password link, and submit button to all still disable on isAuthSubmitting");
 });
 
-console.log("\n--- Scope: D-1 recovery and D-2 single-flight refresh are untouched ---\n");
+console.log("\n--- Scope: D-2 single-flight refresh is untouched ---\n");
 
-test("28. PasswordRecoveryDialog.tsx (D-1) is byte-identical to before this batch - not part of this task's diff", () => {
-  const gitDiffNameOnly = (() => {
-    try {
-      return execFileSync("git", ["diff", "--name-only", "HEAD"], { cwd: ROOT_DIR, encoding: "utf8" });
-    } catch {
-      return "";
-    }
-  })();
-  assert.doesNotMatch(
-    gitDiffNameOnly,
-    /PasswordRecoveryDialog\.tsx/,
-    "PasswordRecoveryDialog.tsx must not appear in this batch's working-tree diff",
-  );
-});
-
-test("29. refreshSupabaseSession/refreshSingleFlight (D-2) are untouched - single-flight refresh behavior is unchanged", () => {
+// Test 28 here used to be a diff-based scope guard asserting
+// "PasswordRecoveryDialog.tsx (D-1) is byte-identical to before this batch -
+// not part of this task's diff", checked via `git diff --name-only HEAD`.
+// That was a one-time regression guard for the specific historical D-1..D-8
+// batch this file documents (see the file header above) - it asserted no
+// real property of the code, only that nobody had touched the file *in that
+// one diff*. Once that batch shipped, the assertion had no way to ever pass
+// again for any later, legitimate edit to PasswordRecoveryDialog.tsx (e.g.
+// the 2026-08-18 password-minimum-length change, which centralized its
+// MIN_PASSWORD_LENGTH constant into settingsPassword.ts and correctly
+// touched this exact file) - removed rather than narrowed, since a
+// diff-emptiness check has no meaningful narrower form. The real invariant
+// it was guarding as a side effect - D-1's actual accessibility/validation
+// behavior - is still independently covered by test-password-recovery-
+// completion.mjs, which asserts PasswordRecoveryDialog.tsx's behavior from
+// its source directly rather than from the fact that its diff is empty.
+test("28. refreshSupabaseSession/refreshSingleFlight (D-2) are untouched - single-flight refresh behavior is unchanged", () => {
   assert.match(supabaseAuth, /const refreshSingleFlight = createSingleFlight<StoredSupabaseSession>\(\);/);
   assert.match(
     supabaseAuth,
     /export function refreshSupabaseSession\(\s*session: StoredSupabaseSession,\s*\): Promise<StoredSupabaseSession> \{\s*[\s\S]*?return refreshSingleFlight\.run\(\(\) => performSupabaseSessionRefresh\(session\)\);\s*\}/,
   );
+});
+
+console.log("\n--- Signup password requirements (2026-08-18): shared minimum, live hint, no invented complexity ---\n");
+
+test("29. Signup's length gate imports PASSWORD_MIN_LENGTH from settingsPassword.ts - the same shared constant Settings and Password Recovery use, never a second literal", () => {
+  assert.match(header, /import \{ PASSWORD_MIN_LENGTH \} from "\.\.\/\.\.\/utils\/settingsPassword";/);
+  assert.match(header, /if \(authPassword\.length < PASSWORD_MIN_LENGTH\) \{/);
+});
+
+test("30. The length gate runs strictly before the password-match check and before signUpWithPassword is ever called - an invalid-length signup never reaches GoTrue", () => {
+  const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
+  assert.ok(submitFnMatch, "handlePasswordAuthSubmit must be found");
+  const body = submitFnMatch[0];
+  const lengthIdx = body.search(/if \(authPassword\.length < PASSWORD_MIN_LENGTH\) \{/);
+  const mismatchIdx = body.search(/if \(authPassword !== authConfirmPassword\) \{/);
+  const signUpIdx = body.search(/await signUpWithPassword\(\{/);
+  assert.ok(lengthIdx > -1 && mismatchIdx > -1 && signUpIdx > -1, "expected all three to be found");
+  assert.ok(lengthIdx < mismatchIdx, "length check must run before the match check");
+  assert.ok(mismatchIdx < signUpIdx, "match check must run before signUpWithPassword");
+});
+
+test("31. The length gate is scoped to signup mode only - login keeps its unchanged 'password is required' check with no minimum length applied", () => {
+  const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
+  const body = submitFnMatch[0];
+  const signupBlockMatch = body.match(/if \(authMode === "signup"\) \{([\s\S]*?)\n {4}\}\n/);
+  assert.ok(signupBlockMatch, "expected the authMode === 'signup' block");
+  assert.match(signupBlockMatch[1], /authPassword\.length < PASSWORD_MIN_LENGTH/);
+  const preSignupBlock = body.slice(0, body.indexOf('if (authMode === "signup")'));
+  assert.doesNotMatch(preSignupBlock, /PASSWORD_MIN_LENGTH/, "the shared login/signup 'password is required' check above the signup block must stay length-agnostic");
+});
+
+test("32. The signup length-gate error reuses the existing Settings passwordTooShort translation key rather than a new, duplicate hardcoded string", () => {
+  assert.match(header, /setAuthError\(t\("userProfile\.settingsSection\.account\.passwordTooShort"\)\);/);
+});
+
+test("33. The signup password field renders a live requirement hint (signup mode only), driven by a PASSWORD_MIN_LENGTH-derived boolean, never a second hardcoded minimum", () => {
+  assert.match(header, /const isSignupPasswordLengthValid = authPassword\.length >= PASSWORD_MIN_LENGTH;/);
+  assert.match(header, /id="auth-password-requirement"/);
+  assert.match(header, /t\("auth\.passwordRequirementHint"\)/);
+});
+
+test("34. The password input is described by the requirement hint via aria-describedby (signup mode only) - not an aria-live region, so the status is never re-announced on every keystroke", () => {
+  assert.match(
+    header,
+    /aria-describedby=\{authMode === "signup" \? "auth-password-requirement" : undefined\}/,
+  );
+  const startIdx = header.indexOf('id="auth-password-requirement"');
+  assert.ok(startIdx > -1, "expected the requirement hint paragraph");
+  const endIdx = header.indexOf("</p>", startIdx);
+  const hintBlock = header.slice(startIdx, endIdx);
+  assert.doesNotMatch(hintBlock, /aria-live/);
+});
+
+test("35. The met/not-met distinction is never conveyed by color alone: a different icon shape renders per state (CheckCircle2 vs. Circle), plus a visually-hidden status word", () => {
+  const startIdx = header.indexOf('id="auth-password-requirement"');
+  const endIdx = header.indexOf("</p>", startIdx);
+  const hintBlock = header.slice(startIdx, endIdx);
+  assert.match(hintBlock, /<CheckCircle2 size=\{14\} aria-hidden="true" \/>/);
+  assert.match(hintBlock, /<Circle size=\{14\} aria-hidden="true" \/>/);
+  assert.match(hintBlock, /className="sr-only"/);
+  assert.match(hintBlock, /t\("auth\.passwordRequirementMetSr"\)/);
+  assert.match(hintBlock, /t\("auth\.passwordRequirementNotMetSr"\)/);
+});
+
+test("36. The untouched/empty field never shows the 'not yet met' status to assistive tech - only once the user has actually started typing", () => {
+  const startIdx = header.indexOf('id="auth-password-requirement"');
+  const endIdx = header.indexOf("</p>", startIdx);
+  const hintBlock = header.slice(startIdx, endIdx);
+  assert.match(hintBlock, /hasStartedTypingAuthPassword\s*\n\s*\? t\("auth\.passwordRequirementNotMetSr"\)\s*\n\s*: ""/);
+});
+
+test("37. No invented password-complexity requirements exist in the signup UI copy - only the shared length minimum, matching the live Supabase policy (length-only, no character-class rules)", () => {
+  const startIdx = header.indexOf('id="auth-password-requirement"');
+  const endIdx = header.indexOf("</p>", startIdx);
+  const hintBlock = header.slice(startIdx, endIdx);
+  assert.doesNotMatch(hintBlock, /uppercase|lowercase|number|digit|symbol|special character/i);
+  for (const key of ["passwordRequirementHint", "passwordRequirementMetSr", "passwordRequirementNotMetSr"]) {
+    assert.doesNotMatch(englishLocale.auth[key], /uppercase|lowercase|number|digit|symbol|special character/i);
+  }
+});
+
+test("38. The pre-existing confirm-password field and its mismatch check are untouched by this task", () => {
+  assert.match(header, /id="auth-confirm-password"/);
+  assert.match(header, /setAuthError\("Passwords do not match\."\);/);
+});
+
+console.log("\n--- Live confirm-password match feedback (2026-08-18) ---\n");
+
+function confirmStatusBlock() {
+  const startIdx = header.indexOf('id="auth-confirm-password-status"');
+  assert.ok(startIdx > -1, "expected the confirm-password status paragraph");
+  const endIdx = header.indexOf("</p>", startIdx);
+  return header.slice(startIdx, endIdx);
+}
+
+test("39. confirmPasswordMatchState is derived directly from authPassword/authConfirmPassword - no extra useState introduced for it", () => {
+  assert.match(
+    header,
+    /const confirmPasswordMatchState: "neutral" \| "mismatch" \| "match" = !authConfirmPassword\s*\n\s*\? "neutral"\s*\n\s*: authPassword === authConfirmPassword\s*\n\s*\? "match"\s*\n\s*: "mismatch";/,
+  );
+  assert.doesNotMatch(header, /const \[confirmPasswordMatchState/, "must not be its own useState - derived, not synchronized");
+});
+
+test("40. An empty confirm-password field is neutral: no status paragraph renders and the input keeps its default border - never judged before the user has typed anything", () => {
+  assert.match(header, /\{confirmPasswordMatchState !== "neutral" \? \(/);
+  const inputBlockMatch = header.match(/<Input\s+id="auth-confirm-password"[\s\S]*?\/>/);
+  assert.ok(inputBlockMatch, "expected the confirm-password Input");
+  assert.match(inputBlockMatch[0], /"border-\[#ded7ef\] bg-white\/90"/, "the neutral/default branch must fall back to the field's original border color");
+});
+
+test("41. Two empty values are never read as a successful match: the ternary checks !authConfirmPassword (empty confirm) before the equality check ever runs, so authPassword === authConfirmPassword's own '' === '' case is structurally unreachable", () => {
+  assert.match(
+    header,
+    /const confirmPasswordMatchState: "neutral" \| "mismatch" \| "match" = !authConfirmPassword\s*\n\s*\? "neutral"/,
+  );
+});
+
+test("42. A non-empty mismatch renders a red/error border on the confirm-password input plus a red status row with an XCircle icon and the passwordsDoNotMatch text", () => {
+  const inputBlockMatch = header.match(/<Input\s+id="auth-confirm-password"[\s\S]*?\/>/);
+  assert.match(inputBlockMatch[0], /confirmPasswordMatchState === "mismatch"\s*\n\s*\? "border-red-300 bg-white\/90"/);
+  const statusBlock = confirmStatusBlock();
+  assert.match(statusBlock, /<XCircle size=\{14\} aria-hidden="true" \/>/);
+  assert.match(statusBlock, /t\("auth\.passwordsDoNotMatch"\)/);
+});
+
+test("43. An exact match renders a green/success border on the confirm-password input plus a green status row with a CheckCircle2 icon and the passwordsMatch text", () => {
+  const inputBlockMatch = header.match(/<Input\s+id="auth-confirm-password"[\s\S]*?\/>/);
+  assert.match(inputBlockMatch[0], /confirmPasswordMatchState === "match"\s*\n\s*\? "border-emerald-300 bg-white\/90"/);
+  const statusBlock = confirmStatusBlock();
+  assert.match(statusBlock, /<CheckCircle2 size=\{14\} aria-hidden="true" \/>/);
+  assert.match(statusBlock, /t\("auth\.passwordsMatch"\)/);
+});
+
+test("44. The match/mismatch status is never conveyed by color alone: a different icon renders per state (CheckCircle2 vs. XCircle) and the visible text itself names the state, not just the color", () => {
+  const statusBlock = confirmStatusBlock();
+  assert.match(statusBlock, /confirmPasswordMatchState === "match" \? \(/);
+  assert.match(statusBlock, /<CheckCircle2 size=\{14\} aria-hidden="true" \/>/);
+  assert.match(statusBlock, /<XCircle size=\{14\} aria-hidden="true" \/>/);
+});
+
+test("45. The confirm-password input references its status text via aria-describedby (only once there is a status to describe) - not an aria-live region, matching the password-requirement hint's own established pattern", () => {
+  const inputBlockMatch = header.match(/<Input\s+id="auth-confirm-password"[\s\S]*?\/>/);
+  assert.match(
+    inputBlockMatch[0],
+    /aria-describedby=\{\s*\n\s*confirmPasswordMatchState !== "neutral" \? "auth-confirm-password-status" : undefined\s*\n\s*\}/,
+  );
+  const statusBlock = confirmStatusBlock();
+  assert.doesNotMatch(statusBlock, /aria-live/);
+});
+
+test("46. The submit-time mismatch guard is untouched and still runs independently of the live hint - a mismatched signup is still blocked before any GoTrue call", () => {
+  const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
+  const body = submitFnMatch[0];
+  const mismatchIdx = body.search(/if \(authPassword !== authConfirmPassword\) \{/);
+  const signUpIdx = body.search(/await signUpWithPassword\(\{/);
+  assert.ok(mismatchIdx > -1 && signUpIdx > -1 && mismatchIdx < signUpIdx, "the guard must still exist and still run before signUpWithPassword");
+  assert.doesNotMatch(body, /confirmPasswordMatchState/, "the submit-time guard must keep using the raw values directly, never the display-only derived state, as its source of truth");
+});
+
+test("47. A matching-but-too-short password is not silently accepted: the length gate and the confirm-match state are two independent checks, and the length gate still runs first in the submit handler regardless of what confirmPasswordMatchState would show", () => {
+  const submitFnMatch = header.match(/const handlePasswordAuthSubmit = async[\s\S]*?\n  \};/);
+  const body = submitFnMatch[0];
+  const lengthIdx = body.search(/if \(authPassword\.length < PASSWORD_MIN_LENGTH\) \{/);
+  const mismatchIdx = body.search(/if \(authPassword !== authConfirmPassword\) \{/);
+  assert.ok(lengthIdx > -1 && mismatchIdx > -1 && lengthIdx < mismatchIdx, "the length gate must still run before the match check, unaffected by this task");
+  assert.doesNotMatch(header, /isSignupPasswordLengthValid[\s\S]{0,80}confirmPasswordMatchState|confirmPasswordMatchState[\s\S]{0,80}isSignupPasswordLengthValid/, "the two derived states must never be combined into one merged status");
 });
 
 console.log(`\n─────────────────────────────────────────`);

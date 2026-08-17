@@ -95,7 +95,12 @@
     "signupError": "Wir konnten dein Konto mit diesen Angaben nicht erstellen. Bitte überprüfe deine Angaben und versuche es erneut.",
     "forgotPasswordError": "Wir konnten die E-Mail zum Zurücksetzen des Passworts nicht senden. Bitte versuche es erneut.",
     "googleError": "Die Anmeldung mit Google konnte nicht gestartet werden. Bitte versuche es erneut.",
-    "signupCheckEmail": "Bitte überprüfe deine E-Mails, um fortzufahren. Falls du bereits ein Konto hast, melde dich an oder fahre mit Google fort."
+    "signupCheckEmail": "Wenn diese E-Mail-Adresse neu ist, haben wir einen Bestätigungslink gesendet. Wenn du bereits ein Konto hast, melde dich an oder fahre mit Google fort.",
+    "passwordRequirementHint": "Mindestens 8 Zeichen",
+    "passwordRequirementMetSr": "Anforderung erfüllt.",
+    "passwordRequirementNotMetSr": "Anforderung noch nicht erfüllt.",
+    "passwordsMatch": "Passwörter stimmen überein",
+    "passwordsDoNotMatch": "Passwörter stimmen nicht überein"
   },
   "userProfile": {
     "dashboardPage": {
@@ -637,7 +642,7 @@
         "passwordIdentityError": "Deine Identität konnte nicht bestätigt werden.",
         "passwordMismatch": "Die Passwörter stimmen nicht überein.",
         "passwordSaveError": "Das Passwort konnte nicht geändert werden. Bitte versuche es erneut.",
-        "passwordTooShort": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+        "passwordTooShort": "Das Passwort muss mindestens 8 Zeichen lang sein.",
         "passwordManagedByGoogle": "Du hast dich mit Google angemeldet, daher gibt es kein FluentStellar-Passwort zu ändern."
       },
       "languages": {

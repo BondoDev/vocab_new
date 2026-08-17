@@ -95,7 +95,12 @@
     "signupError": "Nao foi possivel criar sua conta com esses dados. Verifique suas informacoes e tente novamente.",
     "forgotPasswordError": "Nao foi possivel enviar o e-mail de redefinicao de senha. Tente novamente.",
     "googleError": "Nao foi possivel iniciar o login com o Google. Tente novamente.",
-    "signupCheckEmail": "Verifique seu e-mail para continuar. Se voce ja tem uma conta, faca login ou continue com o Google."
+    "signupCheckEmail": "Se este endereço de e-mail for novo, enviámos um link de confirmação. Se já tiver uma conta, inicie sessão ou continue com o Google.",
+    "passwordRequirementHint": "Pelo menos 8 caracteres",
+    "passwordRequirementMetSr": "Requisito cumprido.",
+    "passwordRequirementNotMetSr": "Requisito ainda não cumprido.",
+    "passwordsMatch": "As palavras-passe coincidem",
+    "passwordsDoNotMatch": "As palavras-passe não coincidem"
   },
   "userProfile": {
     "dashboardPage": {
@@ -637,7 +642,7 @@
         "passwordIdentityError": "Não foi possível verificar a sua identidade.",
         "passwordMismatch": "As palavras-passe não coincidem.",
         "passwordSaveError": "Não foi possível alterar a palavra-passe. Tente novamente.",
-        "passwordTooShort": "A palavra-passe deve ter pelo menos 6 caracteres.",
+        "passwordTooShort": "A palavra-passe deve ter pelo menos 8 caracteres.",
         "passwordManagedByGoogle": "Iniciou sessão com a Google, pelo que não existe nenhuma palavra-passe FluentStellar para alterar."
       },
       "languages": {

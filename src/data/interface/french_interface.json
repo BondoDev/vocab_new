@@ -95,7 +95,12 @@
     "signupError": "Nous n'avons pas pu creer votre compte avec ces informations. Verifiez vos informations et reessayez.",
     "forgotPasswordError": "Nous n'avons pas pu envoyer l'e-mail de reinitialisation du mot de passe. Veuillez reessayer.",
     "googleError": "Impossible de demarrer la connexion avec Google. Veuillez reessayer.",
-    "signupCheckEmail": "Verifiez votre e-mail pour continuer. Si vous avez deja un compte, connectez-vous ou continuez avec Google."
+    "signupCheckEmail": "Si cette adresse e-mail est nouvelle, nous avons envoyé un lien de confirmation. Si vous avez déjà un compte, connectez-vous ou continuez avec Google.",
+    "passwordRequirementHint": "Au moins 8 caractères",
+    "passwordRequirementMetSr": "Exigence remplie.",
+    "passwordRequirementNotMetSr": "Exigence pas encore remplie.",
+    "passwordsMatch": "Les mots de passe correspondent",
+    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas"
   },
   "userProfile": {
     "dashboardPage": {
@@ -637,7 +642,7 @@
         "passwordIdentityError": "Impossible de vérifier votre identité.",
         "passwordMismatch": "Les mots de passe ne correspondent pas.",
         "passwordSaveError": "Impossible de modifier le mot de passe. Veuillez réessayer.",
-        "passwordTooShort": "Le mot de passe doit comporter au moins 6 caractères.",
+        "passwordTooShort": "Le mot de passe doit comporter au moins 8 caractères.",
         "passwordManagedByGoogle": "Vous vous êtes connecté avec Google, il n'y a donc aucun mot de passe FluentStellar à modifier."
       },
       "languages": {

@@ -95,7 +95,12 @@
     "signupError": "We could not create your account with these details. Please check your information and try again.",
     "forgotPasswordError": "We could not send the password reset email. Please try again.",
     "googleError": "We could not start Google sign-in. Please try again.",
-    "signupCheckEmail": "Check your email to continue. If you already have an account, log in or continue with Google."
+    "signupCheckEmail": "If this email is new, we sent a confirmation link. If you already have an account, log in or continue with Google.",
+    "passwordRequirementHint": "At least 8 characters",
+    "passwordRequirementMetSr": "Requirement met.",
+    "passwordRequirementNotMetSr": "Requirement not yet met.",
+    "passwordsMatch": "Passwords match",
+    "passwordsDoNotMatch": "Passwords do not match"
   },
   "userProfile": {
     "dashboardPage": {
@@ -637,7 +642,7 @@
         "passwordIdentityError": "Could not verify your identity.",
         "passwordMismatch": "Passwords do not match.",
         "passwordSaveError": "Could not change password. Please try again.",
-        "passwordTooShort": "Password must be at least 6 characters.",
+        "passwordTooShort": "Password must be at least 8 characters.",
         "passwordManagedByGoogle": "You signed in with Google, so there is no FluentStellar password to change."
       },
       "languages": {
