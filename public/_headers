@@ -5,9 +5,23 @@
 #
 # Applies to every Cloudflare Static Assets response (the SPA shell,
 # JS/CSS bundles, prerendered SEO/hub/level-test/verb-list pages).
-# Worker-generated SSR word-page responses carry the same policy from
-# workers/word-ssr/src/index.full.ts instead, since Static Assets'
+# Worker-generated SSR word-page responses carry the same two policies
+# from workers/word-ssr/src/index.full.ts instead, since Static Assets'
 # _headers rules never apply to responses the Worker's own fetch
 # handler generates.
+#
+# Two headers, deliberately different scope (CSP Phase 2C — see
+# src/security/csp.ts for the full rationale):
+#   - Content-Security-Policy-Report-Only carries the FULL policy
+#     (including script-src) for visibility only — never blocks
+#     anything, including Cloudflare's own dynamic bot-management
+#     inline script, which cannot be allow-listed by hash.
+#   - Content-Security-Policy (real enforcement) carries only the
+#     directives already proven safe against production traffic —
+#     no script-src, no default-src (its absence is deliberate: with
+#     script-src omitted, default-src would otherwise fall back to
+#     governing scripts too, silently enforcing exactly what this
+#     header exists to avoid enforcing yet).
 /*
   Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'sha256-Re9krxasKuuFR9srOY0ldjUZQ6ei5cz5/nwx8rimshg=' https://static.cloudflareinsights.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ogovfcmhwqjljawsoiru.supabase.co; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ogovfcmhwqjljawsoiru.supabase.co; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
