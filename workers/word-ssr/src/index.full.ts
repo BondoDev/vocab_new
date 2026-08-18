@@ -236,10 +236,16 @@ function buildFullHtmlDocument(params: {
   interfaceData: unknown;
   pathname: string;
 }): string {
-  const hydrationScript = `\n    <script>window.__WORD_PAGE_DATA__=${escapeJsonForScript(
+  // Inert application/json data blocks, not executable `window.X=...`
+  // assignments (CSP Phase 2A migration) — read on the client via
+  // src/lib/readEmbeddedJson.ts, by id, never as a global. Must keep
+  // emitting the exact same id/shape convention as src/entry-server.tsx's
+  // routeDataScript/interfaceDataScript (SSR/prerender path) so the client
+  // has one consumption format regardless of which path rendered the page.
+  const hydrationScript = `\n    <script type="application/json" id="word-page-data">${escapeJsonForScript(
     JSON.stringify({ pathname: params.pathname, data: params.wordPageData }),
   )}</script>`;
-  const interfaceScript = `\n    <script>window.__INITIAL_INTERFACE_DATA__=${escapeJsonForScript(
+  const interfaceScript = `\n    <script type="application/json" id="initial-interface-data">${escapeJsonForScript(
     JSON.stringify({ lang: params.uiLang, data: params.interfaceData }),
   )}</script>`;
   const scriptTag = clientAssets.scriptSrc

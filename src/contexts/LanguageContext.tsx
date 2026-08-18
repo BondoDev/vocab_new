@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { readEmbeddedJson } from "../lib/readEmbeddedJson";
 
 export type UILanguage = "en" | "es" | "fr" | "pt" | "it" | "de" | "ru";
 
@@ -21,13 +22,15 @@ type LoadedTranslationData = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-declare global {
-  interface Window {
-    __INITIAL_INTERFACE_DATA__?: {
-      lang: UILanguage;
-      data: unknown;
-    };
-  }
+// The id/shape src/entry-server.tsx and workers/word-ssr/src/index.full.ts
+// both emit as an inert `<script type="application/json" id="initial-
+// interface-data">` data block (CSP Phase 2A migration — no longer a
+// `window.__INITIAL_INTERFACE_DATA__` global; see readEmbeddedJson).
+const INITIAL_INTERFACE_DATA_ELEMENT_ID = "initial-interface-data";
+
+interface InitialInterfaceDataPayload {
+  lang: UILanguage;
+  data: unknown;
 }
 
 function normalizeTranslationRoot(source: unknown): Record<string, TranslationNode> {
@@ -169,11 +172,13 @@ function readDocumentUiLanguage(): UILanguage | null {
 
 function getInitialUiLanguage(initialUILanguage?: UILanguage): UILanguage {
   if (initialUILanguage) return initialUILanguage;
-  // On client, the SSR injects window.__INITIAL_INTERFACE_DATA__ with the page's lang.
-  // Prefer that over document.lang / localStorage to prevent a mismatch when the user
-  // has a different language stored locally than the prerendered page's language.
+  // On client, the SSR injects an "initial-interface-data" JSON data block
+  // with the page's lang. Prefer that over document.lang / localStorage to
+  // prevent a mismatch when the user has a different language stored
+  // locally than the prerendered page's language.
   if (typeof window !== "undefined") {
-    const payloadLang = window.__INITIAL_INTERFACE_DATA__?.lang;
+    const payload = readEmbeddedJson<InitialInterfaceDataPayload>(INITIAL_INTERFACE_DATA_ELEMENT_ID);
+    const payloadLang = payload?.lang;
     if (
       payloadLang === "en" || payloadLang === "es" || payloadLang === "fr" ||
       payloadLang === "pt" || payloadLang === "it" || payloadLang === "de" || payloadLang === "ru"
@@ -189,7 +194,7 @@ function readInitialInterfaceData(initialUILanguage?: UILanguage): LoadedTransla
     return null;
   }
 
-  const initialPayload = window.__INITIAL_INTERFACE_DATA__;
+  const initialPayload = readEmbeddedJson<InitialInterfaceDataPayload>(INITIAL_INTERFACE_DATA_ELEMENT_ID);
   const initialLang = getInitialUiLanguage(initialUILanguage);
 
   if (!initialPayload || initialPayload.lang !== initialLang) {

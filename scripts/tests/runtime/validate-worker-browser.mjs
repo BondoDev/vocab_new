@@ -400,7 +400,15 @@ async function collectPageState(client) {
         ogUrl: document.querySelector('meta[property="og:url"]')?.getAttribute("content") ?? null,
         hreflangHrefs: Array.from(document.querySelectorAll('link[rel="alternate"][hreflang]')).map((node) => node.getAttribute("href")).filter(Boolean),
         jsonLdHosts,
-        wordLemma: window.__WORD_PAGE_DATA__?.data?.wordEntry?.wordLemma ?? null,
+        wordLemma: (() => {
+          const el = document.getElementById("word-page-data");
+          if (!el) return null;
+          try {
+            return JSON.parse(el.textContent || "null")?.data?.wordEntry?.wordLemma ?? null;
+          } catch {
+            return null;
+          }
+        })(),
         practiceInputAriaLabel: document.querySelector('input[aria-label]')?.getAttribute("aria-label") ?? null,
         speechEvents: window.__browserValidation?.speechEvents ?? [],
       };

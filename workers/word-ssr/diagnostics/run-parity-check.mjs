@@ -111,9 +111,9 @@ async function compareCanonicalRoute(entryServer, pathname) {
     `  word-page link counts: prod=${prodWordLinkCount}, staging=${stagingWordLinkCount} (differ: prod draws from the full corpus, staging from the 81-word sample — expected)`,
   );
 
-  const hasHydrationScript = stagingHtml.includes("window.__WORD_PAGE_DATA__");
-  assert.ok(hasHydrationScript, "staging HTML missing window.__WORD_PAGE_DATA__");
-  console.log("  compact window.__WORD_PAGE_DATA__ present");
+  const hasHydrationScript = stagingHtml.includes('<script type="application/json" id="word-page-data">');
+  assert.ok(hasHydrationScript, 'staging HTML missing <script type="application/json" id="word-page-data">');
+  console.log('  compact word-page-data JSON block present');
 }
 
 async function compareRedirectRoute(entryServer, label, pathname) {

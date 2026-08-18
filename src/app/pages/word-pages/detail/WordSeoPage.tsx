@@ -18,6 +18,7 @@ import {
   type WordPageVocabEntry,
 } from "../../../../data/seo/wordPages/wordPageData";
 import { WordSeoPageView } from "./WordSeoPageView";
+import { readEmbeddedJson } from "../../../../lib/readEmbeddedJson";
 
 /**
  * Client/production wrapper around the shared, server-safe
@@ -49,11 +50,11 @@ interface WordPageHydrationPayload {
   data: HydrationWordPageData | null;
 }
 
-declare global {
-  interface Window {
-    __WORD_PAGE_DATA__?: WordPageHydrationPayload;
-  }
-}
+// The id/shape src/entry-server.tsx and workers/word-ssr/src/index.full.ts
+// both emit as an inert `<script type="application/json" id="word-page-
+// data">` data block (CSP Phase 2A migration — no longer a
+// `window.__WORD_PAGE_DATA__` global; see readEmbeddedJson).
+const WORD_PAGE_DATA_ELEMENT_ID = "word-page-data";
 
 const wordVocabModules = import.meta.glob(
   "../../../../data/vocabulary/*/vocabulary.json",
@@ -64,7 +65,7 @@ function getHydratedWordPageData(pathname: string): HydrationWordPageData | null
     return null;
   }
 
-  const payload = window.__WORD_PAGE_DATA__;
+  const payload = readEmbeddedJson<WordPageHydrationPayload>(WORD_PAGE_DATA_ELEMENT_ID);
   if (!payload || payload.pathname !== pathname) {
     return null;
   }

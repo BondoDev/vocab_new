@@ -86,9 +86,12 @@ function extractJsonLd(html) {
 }
 
 function extractHydrationPayloadPresence(html) {
+  // Field names stay the same as before the CSP Phase 2A migration (inert
+  // application/json data blocks replaced the executable `window.X=...`
+  // assignments) so this snapshot schema's keys don't read as drift.
   return {
-    wordPageData: html.includes("window.__WORD_PAGE_DATA__"),
-    interfaceData: html.includes("window.__INITIAL_INTERFACE_DATA__"),
+    wordPageData: html.includes('id="word-page-data"'),
+    interfaceData: html.includes('id="initial-interface-data"'),
   };
 }
 

@@ -161,11 +161,24 @@ function buildNotFoundSeoMetadata(): SeoMetadata {
   return buildRouteMetadata("/__invalid__", DEFAULT_SITE_ORIGIN);
 }
 
+// U+2028/U+2029 aren't valid in unescaped JS string literals (why the
+// hydration payload used to need them escaped when it was an executable
+// `window.X=...` assignment); they're harmless inside a JSON text node now,
+// but the escape stays as a defense-in-depth match with
+// workers/word-ssr/src/index.full.ts's escapeJsonForScript, which produces
+// the same data-block shape for the Worker SSR path. JSON.parse decodes
+// the escape sequences back to the original characters either way, so this
+// is not an observable change to the parsed data.
+const LINE_SEPARATOR_RE = new RegExp(String.fromCharCode(0x2028), "g");
+const PARAGRAPH_SEPARATOR_RE = new RegExp(String.fromCharCode(0x2029), "g");
+
 function escapeJsonForHtml(value: unknown): string {
   return JSON.stringify(value)
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
-    .replace(/&/g, "\\u0026");
+    .replace(/&/g, "\\u0026")
+    .replace(LINE_SEPARATOR_RE, "\\u2028")
+    .replace(PARAGRAPH_SEPARATOR_RE, "\\u2029");
 }
 
 export function buildMinimalWordSeoNotFoundResponse(): MinimalWordSeoNotFoundResponse {
@@ -424,10 +437,17 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
     initialWordPageData,
     initialWordBrowsePage,
   );
+  // Inert application/json data blocks, not executable `window.X=...`
+  // assignments (CSP Phase 2A migration) — read on the client via
+  // src/lib/readEmbeddedJson.ts, by id, never as a global. Both this
+  // producer (SSR/prerender) and workers/word-ssr/src/index.full.ts's
+  // buildFullHtmlDocument (Worker SSR) must keep emitting the exact same
+  // id/shape convention so the client has one consumption format regardless
+  // of which path rendered the page.
   const routeDataScript = initialWordPageData
-    ? `\n    <script>window.__WORD_PAGE_DATA__=${escapeJsonForHtml({ pathname: url, data: hydrationWordPageData })}</script>`
+    ? `\n    <script type="application/json" id="word-page-data">${escapeJsonForHtml({ pathname: url, data: hydrationWordPageData })}</script>`
     : "";
-  const interfaceDataScript = `\n    <script>window.__INITIAL_INTERFACE_DATA__=${escapeJsonForHtml({ lang: initialUILanguage, data: initialInterfaceData })}</script>`;
+  const interfaceDataScript = `\n    <script type="application/json" id="initial-interface-data">${escapeJsonForHtml({ lang: initialUILanguage, data: initialInterfaceData })}</script>`;
   const fallbackMetadata =
     shouldUseWordNotFoundMetadata || classifyRouteMetadata(pathname) === "invalid"
       ? buildNotFoundSeoMetadata()

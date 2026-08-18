@@ -276,7 +276,11 @@ function assertWordHtml(response, entry, pathname) {
     `word page must emit <meta name="robots" content="noindex, follow"> for ${pathname}`,
   );
   assert.ok(response.body.includes("application/ld+json"), `missing JSON-LD for ${pathname}`);
-  assert.ok(response.body.includes("window.__WORD_PAGE_DATA__"), `missing word payload for ${pathname}`);
+  assert.ok(
+    response.body.includes('<script type="application/json" id="word-page-data">'),
+    `missing word payload for ${pathname}`,
+  );
+  assert.ok(!response.body.includes("window.__WORD_PAGE_DATA__"), `word payload must not be an executable global for ${pathname}`);
   assert.ok(response.body.includes("hreflang="), `missing hreflang for ${pathname}`);
   assert.ok(countLinks(response.body) > 0, `expected internal links for ${pathname}`);
   assert.ok(
@@ -294,7 +298,11 @@ function assertImmediateWordServerRender(response, pathname) {
     /<h1[^>]*>[^<]*(Meaning of the|Learn the)[^<]*about[^<]*<\/h1>/i,
     `missing word page heading in server render for ${pathname}`,
   );
-  assert.ok(response.body.includes("window.__WORD_PAGE_DATA__"), `missing word payload for ${pathname}`);
+  assert.ok(
+    response.body.includes('<script type="application/json" id="word-page-data">'),
+    `missing word payload for ${pathname}`,
+  );
+  assert.ok(!response.body.includes("window.__WORD_PAGE_DATA__"), `word payload must not be an executable global for ${pathname}`);
   assert.ok(
     !rootHtml.includes("Practice Vocabulary"),
     `homepage headline leaked into server render for ${pathname}`,
@@ -348,7 +356,11 @@ function assertWordHtmlViaInternalApi(response, pathname) {
     "noindex, follow",
     `word page (internal API render path) must emit <meta name="robots" content="noindex, follow"> for ${pathname}`,
   );
-  assert.ok(response.body.includes("window.__WORD_PAGE_DATA__"), `missing word payload for ${pathname}`);
+  assert.ok(
+    response.body.includes('<script type="application/json" id="word-page-data">'),
+    `missing word payload for ${pathname}`,
+  );
+  assert.ok(!response.body.includes("window.__WORD_PAGE_DATA__"), `word payload must not be an executable global for ${pathname}`);
 }
 
 // ── JSON-LD graph assertion helpers ──────────────────────────────────────────

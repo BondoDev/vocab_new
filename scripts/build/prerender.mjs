@@ -76,6 +76,13 @@ function stripManagedHeadTags(template) {
     .replace(/<meta\s+property="og:image:height"[\s\S]*?>/i, "")
     .replace(/<link\s+rel="alternate"[\s\S]*?data-vocab-hreflang="true"[\s\S]*?>/gi, "")
     .replace(/<script\s[^>]*data-managed-jsonld="true"[^>]*>[\s\S]*?<\/script>/gi, "")
+    // Strips a stale hydration data block from a previous render of this
+    // same template (defensive — dist/index.html's own base template is
+    // never rendered with these baked in). Both current-format ids and the
+    // old executable `window.X=...` shape are matched so a fresh build over
+    // a stale intermediate template can't leave either behind.
+    .replace(/<script[^>]*\bid="word-page-data"[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<script[^>]*\bid="initial-interface-data"[^>]*>[\s\S]*?<\/script>/gi, "")
     .replace(/<script>\s*window\.__WORD_PAGE_DATA__=[\s\S]*?<\/script>/gi, "")
     .replace(/<script>\s*window\.__INITIAL_INTERFACE_DATA__=[\s\S]*?<\/script>/gi, "");
 }
