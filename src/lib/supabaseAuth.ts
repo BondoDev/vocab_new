@@ -68,6 +68,19 @@ export function getAuthHeaders() {
   };
 }
 
+// The one place AUTH_SESSION_CHANGED_EVENT is actually dispatched - both
+// storeSession (below, for same-tab writes) and handleCrossTabStorageEvent
+// (further down, for writes made by *other* tabs) funnel through this, so
+// every subscribeToSupabaseSessionChanges listener keeps seeing exactly one
+// notification shape regardless of which tab produced the change.
+function notifySessionChanged(session: StoredSupabaseSession | null) {
+  window.dispatchEvent(
+    new CustomEvent<StoredSupabaseSession | null>(AUTH_SESSION_CHANGED_EVENT, {
+      detail: session,
+    }),
+  );
+}
+
 function storeSession(session: StoredSupabaseSession | null) {
   if (typeof window === "undefined") return;
 
@@ -77,11 +90,7 @@ function storeSession(session: StoredSupabaseSession | null) {
     window.localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(session));
   }
 
-  window.dispatchEvent(
-    new CustomEvent<StoredSupabaseSession | null>(AUTH_SESSION_CHANGED_EVENT, {
-      detail: session,
-    }),
-  );
+  notifySessionChanged(session);
 }
 
 function normalizeSession(payload: AuthResponse): StoredSupabaseSession | null {
@@ -347,6 +356,54 @@ export function subscribeToSupabaseSessionChanges(
   return () => {
     window.removeEventListener(AUTH_SESSION_CHANGED_EVENT, handleSessionChanged);
   };
+}
+
+// Cross-tab sync: the native `storage` event fires in every *other* document
+// sharing this origin's localStorage whenever one of them mutates it - never
+// in the document that performed the write (MDN). That asymmetry is what
+// keeps this free of a write/notify loop: storeSession's own
+// setItem/removeItem calls never trigger this handler in the tab that made
+// them, and this handler itself never writes to localStorage, so it can
+// never cause a `storage` event in any *other* tab either - there is nothing
+// here for another tab's listener to react to in turn.
+//
+// Deliberately re-reads through getStoredSupabaseSession() - the same
+// parse-or-fail-safe helper every other session read in this module already
+// uses - rather than trusting event.newValue directly, so a malformed value
+// written by another tab is handled by the exact same "clear and return
+// null" fallback as any other malformed read, not a second parser with
+// different failure behavior.
+//
+// Only re-reads and notifies via notifySessionChanged (the same
+// AUTH_SESSION_CHANGED_EVENT every subscribeToSupabaseSessionChanges
+// listener already consumes) - it never calls storeSession or
+// refreshSupabaseSession itself. A receiving tab therefore adopts whatever
+// session the writing tab already produced instead of starting its own
+// redundant refresh, which is what keeps this safe from racing D-2's
+// single-flight refresh-token rotation: nothing here ever initiates a
+// refresh just because another tab's storage changed.
+function handleCrossTabStorageEvent(event: StorageEvent) {
+  // Filters out everything except the exact persisted session key -
+  // STORAGE_KEYS.pkceVerifier changes (or any unrelated localStorage key
+  // this app or a browser extension might write) are not session changes
+  // and must not be treated as one. Also ignores storage areas other than
+  // localStorage; the native `storage` event only ever fires for
+  // localStorage, but checking storageArea keeps this scoped defensively
+  // regardless.
+  if (event.key !== STORAGE_KEYS.session) return;
+  if (event.storageArea !== window.localStorage) return;
+
+  notifySessionChanged(getStoredSupabaseSession());
+}
+
+// Registered once at module scope (ES modules are evaluated once per
+// document/realm), matching this module's existing long-lived singleton
+// pattern (see redirectHandledThisLoad below) rather than adding a
+// React-level listener in every component that calls useAuthSession. There
+// is exactly one of these per document for the module's entire lifetime, so
+// no explicit cleanup API is needed here.
+if (typeof window !== "undefined") {
+  window.addEventListener("storage", handleCrossTabStorageEvent);
 }
 
 export async function signInWithPassword(email: string, password: string) {
