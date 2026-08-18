@@ -1,15 +1,22 @@
 /**
  * CSP hash freshness guard.
  *
- * src/security/csp.ts hardcodes three CSP hashes (the language-detection
- * <script>'s hash, and the two distinct inline <style> block hashes) because
- * neither Cloudflare Static Assets' _headers file nor the Worker at request
- * time can run code against source files to compute them. This test
- * re-derives all three straight from current source bytes via
+ * src/security/csp.ts hardcodes LANG_DETECT_SCRIPT_HASH because neither
+ * Cloudflare Static Assets' `_headers` file nor the Worker at request time
+ * can run code against source files to compute it. This test re-derives it
+ * straight from current source bytes via
  * scripts/security/compute-csp-hashes.mjs (never re-typing/estimating a
  * hash itself) and fails if a source edit — e.g. someone tweaks whitespace
- * inside the language-detection script, or edits a keyframes block — ever
- * makes the hardcoded constants in csp.ts stale without updating them.
+ * inside the language-detection script — ever makes the hardcoded constant
+ * in csp.ts stale without updating it.
+ *
+ * The two static inline <style> block hashes computed by compute-csp-
+ * hashes.mjs are checked here too, but only as an informational sanity
+ * check (still exactly 2 distinct blocks, still byte-identical to each
+ * other where expected) — CSP Phase 2B.1 found style-src needs
+ * 'unsafe-inline' instead (see csp.ts's CSP_ALLOWS_UNSAFE_INLINE_STYLES),
+ * so these hashes are no longer part of the active policy and this file
+ * does not assert against any csp.ts constant for them.
  *
  * Run: node scripts/tests/security/test-csp-hash-freshness.mjs
  * No build required — reads repo source files directly.
@@ -55,29 +62,19 @@ async function main() {
       );
     });
 
-    console.log("\n[2] Inline <style> block hashes match current source");
-    test("csp.ts's SHAKE_KEYFRAMES_STYLE_HASH matches a fresh hash of ListeningExercise.tsx's inline style", () => {
-      assert.equal(csp.SHAKE_KEYFRAMES_STYLE_HASH, fresh.style.byOwner.ListeningExercise);
-    });
-    test("ConnectWordsExercise.tsx's inline style is still byte-identical to ListeningExercise.tsx's (one shared hash)", () => {
+    console.log("\n[2] Inline <style> blocks (informational only — not part of the active policy, see file header)");
+    test("ConnectWordsExercise.tsx's inline style is still byte-identical to ListeningExercise.tsx's", () => {
       assert.equal(
         fresh.style.byOwner.ConnectWordsExercise,
         fresh.style.byOwner.ListeningExercise,
-        "The two shakeX keyframe blocks used to be byte-identical (covered by one CSP hash) — one of them " +
-          "changed. Either restore identical content or add a second distinct hash to csp.ts's style-src.",
       );
     });
-    test("csp.ts's PRACTICED_WORDS_CALLOUT_STYLE_HASH matches a fresh hash of PracticeResults.tsx's inline style", () => {
-      assert.equal(csp.PRACTICED_WORDS_CALLOUT_STYLE_HASH, fresh.style.byOwner.PracticeResults);
-    });
-
-    console.log("\n[3] No unexpected extra distinct style content");
-    test("exactly 2 distinct inline <style> hashes exist across the 3 known source files", () => {
+    test("exactly 2 distinct inline <style> blocks exist across the 3 known source files", () => {
       assert.equal(
         fresh.style.unique.length,
         2,
-        "A source file's inline <style> content changed to something not matching either known hash — " +
-          "recompute and update csp.ts's style-src hash list.",
+        "A source file's inline <style> content changed shape — worth knowing about even though style-src " +
+          "no longer hashes these (it uses 'unsafe-inline' instead; see src/security/csp.ts).",
       );
     });
 

@@ -17,15 +17,15 @@
 // is a separate, later, deliberate decision — do not flip this constant as
 // a side effect of an unrelated change.
 //
-// The three hash constants below are hardcoded, not computed at
+// The hash/prefix constants below are hardcoded, not computed at
 // request/build time: Cloudflare Static Assets can't run code to produce
 // `_headers`, and the Worker has no filesystem access to source files at
-// runtime. They were produced by, and can be recomputed from source at any
-// time with, scripts/security/compute-csp-hashes.mjs — never hand-typed or
-// estimated. scripts/tests/security/test-csp-hash-freshness.mjs re-runs
-// that script and fails if these constants ever drift from the actual
-// source bytes (e.g. someone edits the language-detection script or a
-// keyframes block without updating the hash here).
+// runtime. LANG_DETECT_SCRIPT_HASH was produced by, and can be recomputed
+// from source at any time with, scripts/security/compute-csp-hashes.mjs —
+// never hand-typed or estimated. scripts/tests/security/test-csp-hash-
+// freshness.mjs re-runs that script and fails if the constant ever drifts
+// from the actual source bytes (e.g. someone edits the language-detection
+// script without updating the hash here).
 
 export const CSP_HEADER_NAME = "Content-Security-Policy-Report-Only";
 
@@ -35,13 +35,67 @@ export const CSP_HEADER_NAME = "Content-Security-Policy-Report-Only";
 // and server-build/ssr-template.html.
 export const LANG_DETECT_SCRIPT_HASH = "sha256-Re9krxasKuuFR9srOY0ldjUZQ6ei5cz5/nwx8rimshg=";
 
-// The two distinct static inline <style> blocks found in the CSP audit.
-// ListeningExercise.tsx and ConnectWordsExercise.tsx are byte-identical to
-// each other (same shakeX @keyframes + .animate-shake rule), so one hash
-// covers both; PracticeResults.tsx's practicedWordsCalloutFloat block is
-// the second, distinct one.
-export const SHAKE_KEYFRAMES_STYLE_HASH = "sha256-W7c31Hk4gEqMkZnmvf4wBbRcDG/orp5+PyF3H5UofE8=";
-export const PRACTICED_WORDS_CALLOUT_STYLE_HASH = "sha256-yGlMKSofPsmE0+xvaWSrT4JiAECljkPnJoj3217uA88=";
+// CSP Phase 2B.1 (production Report-Only triage) found style-src's earlier
+// two static-hash allowance (ListeningExercise.tsx/ConnectWordsExercise.tsx's
+// shared shakeX block, PracticeResults.tsx's practicedWordsCalloutFloat
+// block) was never sufficient: React's `style={{...}}` prop serializes to a
+// real `style="..."` HTML attribute in server-rendered/prerendered markup
+// (not a CSSOM-only write CSP ignores — that nuance only ever applied to
+// client-side re-renders of an already-mounted node, never to the initial
+// SSR/hydration markup, which is how virtually every page here first
+// loads), and the app has ~100 such call sites across ~30 files, many
+// genuinely dynamic (state/props/computed layout values — exam progress
+// percentages, selection-driven colors, scroll-state widths), not a small
+// fixed set hashing could realistically cover. Confirmed live in
+// production: dozens of distinct "Applying inline style violates..."
+// console warnings, one per distinct style-attribute value.
+//
+// CSP_ALLOWS_UNSAFE_INLINE_STYLES records that decision: style-src carries
+// 'unsafe-inline' instead. This is deliberately NOT combined with a hash
+// list — per the CSP3 spec, a source list containing both a hash/nonce
+// source AND 'unsafe-inline' causes browsers that support hash/nonce
+// matching to ignore 'unsafe-inline' entirely (a backward-compatibility
+// rule for browsers predating hash support), which would silently keep
+// blocking every one of the ~100 non-hashed attribute values while
+// pointlessly still allowing the 2 already-hashed <style> blocks. Sampled
+// every style={{...}} call site's actual values during this triage
+// (starfield/decorative gradients, index-based color/opacity lookups,
+// computed widths/percentages) — none embed user-, database-, or
+// translation-supplied text, so 'unsafe-inline' here does not open a path
+// for attacker-controlled CSS content, unlike the script-src case this
+// project deliberately never weakens the same way (see script-src below).
+export const CSP_ALLOWS_UNSAFE_INLINE_STYLES = true;
+
+// jsDelivr path prefix used for the two remote country-flag <img> sources
+// in src/app/components/LanguageSelector.tsx (confirmed the only
+// jsdelivr/remote-image usage in the codebase). Path-scoped (CSP source
+// lists support a path prefix when it ends in "/") to the exact
+// org/repo/tag/dir LanguageSelector.tsx hardcodes, rather than a bare
+// https://cdn.jsdelivr.net allowance that would permit any content jsDelivr
+// serves. Kept as one exported constant, matched byte-for-byte against
+// LanguageSelector.tsx's own URL template by
+// scripts/tests/security/test-csp-policy-parity.mjs, so a future change to
+// the pinned tag/path there can't silently drift from this allowance.
+export const COUNTRY_FLAGS_IMG_SRC_PREFIX =
+  "https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/";
+
+// Cloudflare Web Analytics' externally-hosted beacon script — confirmed
+// live in production (real headless-Chrome capture, not just static HTML
+// inspection: the Phase 2B repo/live-HTML audit missed this because
+// Cloudflare injects it at the edge into the response Chrome renders, not
+// into the HTML text a plain curl fetch receives). This is "Automatic
+// Injection" per Cloudflare's own Web Analytics documentation — confirmed
+// by there being zero reference to this script anywhere in this
+// repository — under which the beacon's own analytics POST goes to this
+// site's own origin (observed live: POSTs to /cdn-cgi/rum), already
+// covered by 'self' in connect-src, so no connect-src addition is needed
+// for it. Cloudflare's other edge-injected same-origin activity observed
+// during this triage (bot-management/challenge-platform scripts and POSTs,
+// Cloudflare Zaraz's tag-manager script and event POSTs — Zaraz is running
+// a Google Analytics v4 tag, entirely server/edge-side) all proxy through
+// this site's own origin (/cdn-cgi/*), already covered by 'self' in both
+// script-src and connect-src; none of it needs a new CSP allowance.
+export const CLOUDFLARE_INSIGHTS_SCRIPT_ORIGIN = "https://static.cloudflareinsights.com";
 
 // Production Supabase project origin (VITE_SUPABASE_URL) — the sole
 // network origin every Auth/REST/RPC/Edge-Function call in the browser
@@ -57,17 +111,18 @@ export const SUPABASE_ORIGIN = "https://ogovfcmhwqjljawsoiru.supabase.co";
 // generated/emitted value is easy to eyeball.
 export const CSP_DIRECTIVES: readonly (readonly [string, readonly string[]])[] = [
   ["default-src", ["'self'"]],
-  ["script-src", ["'self'", `'${LANG_DETECT_SCRIPT_HASH}'`]],
-  [
-    "style-src",
-    [
-      "'self'",
-      "https://fonts.googleapis.com",
-      `'${SHAKE_KEYFRAMES_STYLE_HASH}'`,
-      `'${PRACTICED_WORDS_CALLOUT_STYLE_HASH}'`,
-    ],
-  ],
-  ["img-src", ["'self'"]],
+  // Cloudflare's own edge-injected bot-management bootstrap script embeds a
+  // fresh random nonce/token on every single response (confirmed by
+  // fetching production twice and diffing the two inline scripts' bytes) —
+  // it can never be pinned by a static hash, and it is not app-owned code
+  // this project controls, so unlike LANG_DETECT_SCRIPT_HASH it is
+  // deliberately NOT allow-listed here. It will keep showing as Report-Only
+  // console noise indefinitely; this is expected, not a bug to keep
+  // chasing. 'unsafe-inline' is NOT added here to silence it — script-src
+  // stays strict.
+  ["script-src", ["'self'", `'${LANG_DETECT_SCRIPT_HASH}'`, CLOUDFLARE_INSIGHTS_SCRIPT_ORIGIN]],
+  ["style-src", ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"]],
+  ["img-src", ["'self'", COUNTRY_FLAGS_IMG_SRC_PREFIX]],
   ["font-src", ["'self'", "https://fonts.gstatic.com"]],
   ["connect-src", ["'self'", SUPABASE_ORIGIN]],
   ["frame-src", ["'none'"]],

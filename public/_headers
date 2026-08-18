@@ -10,4 +10,4 @@
 # _headers rules never apply to responses the Worker's own fetch
 # handler generates.
 /*
-  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'sha256-Re9krxasKuuFR9srOY0ldjUZQ6ei5cz5/nwx8rimshg='; style-src 'self' https://fonts.googleapis.com 'sha256-W7c31Hk4gEqMkZnmvf4wBbRcDG/orp5+PyF3H5UofE8=' 'sha256-yGlMKSofPsmE0+xvaWSrT4JiAECljkPnJoj3217uA88='; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ogovfcmhwqjljawsoiru.supabase.co; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'sha256-Re9krxasKuuFR9srOY0ldjUZQ6ei5cz5/nwx8rimshg=' https://static.cloudflareinsights.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ogovfcmhwqjljawsoiru.supabase.co; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'

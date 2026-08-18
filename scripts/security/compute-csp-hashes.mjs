@@ -1,20 +1,28 @@
-// Deterministically recomputes the CSP hashes for FluentStellar's static
-// executable inline content: the language-detection <script> (index.html)
-// and the static inline <style> blocks (ListeningExercise.tsx,
-// ConnectWordsExercise.tsx, PracticeResults.tsx).
+// Deterministically recomputes the CSP hash for FluentStellar's one
+// remaining static executable inline content: the language-detection
+// <script> (index.html). CSP hashes a script element's exact text content
+// (the literal bytes between the opening and closing tags, as UTF-8) —
+// <script> is an HTML "raw text" element, so the browser does NOT perform
+// character-reference (entity) decoding on its content before hashing;
+// what's between the tags in the served HTML is exactly what gets hashed.
+// This script extracts that same literal text (never a hand-typed/
+// estimated value) and prints `sha256-<base64>`.
 //
-// CSP hashes a script/style element's exact text content (the literal bytes
-// between the opening and closing tags, as UTF-8) — <script> and <style>
-// are HTML "raw text" elements, so the browser does NOT perform character-
-// reference (entity) decoding on their content before hashing; what's
-// between the tags in the served HTML is exactly what gets hashed. This
-// script extracts that same literal text (never a hand-typed/estimated
-// value) and prints `sha256-<base64>` for each, plus a summary noting which
-// blocks are byte-identical (so the CSP doesn't carry duplicate hashes).
+// Also still extracts+hashes the static inline <style> blocks
+// (ListeningExercise.tsx, ConnectWordsExercise.tsx, PracticeResults.tsx) for
+// reference/auditing, but — per CSP Phase 2B.1's production triage —
+// style-src no longer allow-lists them by hash: mixing hash-sources with
+// 'unsafe-inline' in the same directive makes hash-aware browsers ignore
+// 'unsafe-inline' entirely (CSP3 spec), and 'unsafe-inline' is what
+// style-src actually needs to cover the app's much larger set of dynamic
+// `style={{...}}`-driven HTML attributes (see src/security/csp.ts's
+// CSP_ALLOWS_UNSAFE_INLINE_STYLES). The style hashes computed here are
+// therefore informational only, not part of the active policy.
 //
 // Run: node scripts/security/compute-csp-hashes.mjs
 // Also importable — used by scripts/tests/security/test-csp-hash-freshness.mjs
-// to fail if a source edit ever makes the hardcoded CSP hashes stale.
+// to fail if a source edit ever makes the hardcoded LANG_DETECT_SCRIPT_HASH
+// stale.
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";

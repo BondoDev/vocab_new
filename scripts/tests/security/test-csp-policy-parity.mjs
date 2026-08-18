@@ -151,10 +151,20 @@ async function main() {
       assert.ok(!/Content-Security-Policy-Report-Only["']?:\s*["'`]default-src/.test(workerSource), "found a second, hand-written CSP string in index.full.ts");
     });
 
-    console.log("\n[3] No risky allowances in the canonical policy");
+    console.log("\n[3] No risky allowances beyond the deliberate, documented style-src exception");
     const allSources = [...canonicalMap.values()].flatMap((set) => [...set]);
-    test("no 'unsafe-inline'", () => assert.ok(!allSources.includes("'unsafe-inline'")));
-    test("no 'unsafe-eval'", () => assert.ok(!allSources.includes("'unsafe-eval'")));
+    test("'unsafe-inline' appears only in style-src (deliberate — see csp.ts's CSP_ALLOWS_UNSAFE_INLINE_STYLES)", () => {
+      assert.ok(csp.CSP_ALLOWS_UNSAFE_INLINE_STYLES, "expected this decision to be recorded in csp.ts");
+      assert.ok(canonicalMap.get("style-src").has("'unsafe-inline'"), "style-src is missing 'unsafe-inline'");
+      for (const [directive, sources] of canonicalMap) {
+        if (directive === "style-src") continue;
+        assert.ok(!sources.has("'unsafe-inline'"), `'unsafe-inline' must not appear in ${directive}`);
+      }
+    });
+    test("script-src never carries 'unsafe-inline' (stays strict even though style-src doesn't)", () => {
+      assert.ok(!canonicalMap.get("script-src").has("'unsafe-inline'"));
+    });
+    test("no 'unsafe-eval' anywhere", () => assert.ok(!allSources.includes("'unsafe-eval'")));
     test("no bare wildcard '*' source", () => assert.ok(!allSources.includes("*")));
     test("no broad 'https:' scheme source", () => assert.ok(!allSources.includes("https:")));
     test("no 'data:' source", () => assert.ok(!allSources.includes("data:")));
@@ -162,13 +172,29 @@ async function main() {
     test("no broad subdomain wildcard (e.g. '*.example.com') anywhere", () => {
       assert.ok(!allSources.some((source) => source.includes("*.")), `found a subdomain wildcard: ${allSources.filter((s) => s.includes("*."))}`);
     });
-    test("no Cloudflare Web Analytics origin present (confirmed not enabled in production — see report)", () => {
-      assert.ok(!allSources.some((source) => source.includes("cloudflareinsights.com")));
+    test("no bare https://cdn.jsdelivr.net (img-src must stay path-scoped to the exact flags repo, not all of jsDelivr)", () => {
+      assert.ok(!canonicalMap.get("img-src").has("https://cdn.jsdelivr.net"));
+    });
+    test("no broad Cloudflare wildcard (e.g. *.cloudflare.com) — only the exact beacon origin is allowed", () => {
+      assert.ok(!allSources.some((source) => /cloudflare/i.test(source) && source.includes("*")));
     });
 
     console.log("\n[4] Expected required origins are present exactly where needed");
-    test("connect-src allows 'self' and the production Supabase origin, nothing else", () => {
+    test("connect-src allows 'self' and the production Supabase origin, nothing else (Cloudflare RUM/Zaraz/challenge-platform all proxy through this site's own origin, already covered by 'self' — see csp.ts)", () => {
       assert.deepEqual([...canonicalMap.get("connect-src")].sort(), ["'self'", csp.SUPABASE_ORIGIN].sort());
+    });
+    test("script-src allows exactly the Cloudflare Web Analytics beacon origin, confirmed live in production", () => {
+      assert.ok(canonicalMap.get("script-src").has(csp.CLOUDFLARE_INSIGHTS_SCRIPT_ORIGIN));
+      assert.equal(csp.CLOUDFLARE_INSIGHTS_SCRIPT_ORIGIN, "https://static.cloudflareinsights.com");
+    });
+    test("img-src allows exactly the jsDelivr country-flags path prefix used by LanguageSelector.tsx, nothing broader", () => {
+      assert.ok(canonicalMap.get("img-src").has(csp.COUNTRY_FLAGS_IMG_SRC_PREFIX));
+      const languageSelectorSource = readFile("src/app/components/LanguageSelector.tsx");
+      assert.ok(
+        languageSelectorSource.includes(csp.COUNTRY_FLAGS_IMG_SRC_PREFIX),
+        "csp.ts's COUNTRY_FLAGS_IMG_SRC_PREFIX no longer matches the literal URL prefix LanguageSelector.tsx " +
+          "actually uses — recheck the source and update the constant (and the pinned @main tag/path together).",
+      );
     });
     test("style-src allows the Google Fonts stylesheet origin", () => {
       assert.ok(canonicalMap.get("style-src").has("https://fonts.googleapis.com"));
@@ -186,17 +212,16 @@ async function main() {
     });
     test("object-src is 'none'", () => assert.deepEqual([...canonicalMap.get("object-src")], ["'none'"]));
 
-    console.log("\n[5] Static script/style hashes are present");
-    test("script-src contains exactly one sha256 hash (the language-detection script)", () => {
+    console.log("\n[5] Static script hash is present; every allowed inline-script hash maps to a known source");
+    test("script-src contains exactly one sha256 hash (the language-detection script) — no unexplained hash constants", () => {
       const hashes = [...canonicalMap.get("script-src")].filter((s) => s.startsWith("'sha256-"));
       assert.equal(hashes.length, 1);
       assert.equal(hashes[0], `'${csp.LANG_DETECT_SCRIPT_HASH}'`);
     });
-    test("style-src contains exactly two sha256 hashes (the two distinct static inline style blocks)", () => {
-      const hashes = [...canonicalMap.get("style-src")].filter((s) => s.startsWith("'sha256-"));
-      assert.equal(hashes.length, 2);
-      assert.ok(hashes.includes(`'${csp.SHAKE_KEYFRAMES_STYLE_HASH}'`));
-      assert.ok(hashes.includes(`'${csp.PRACTICED_WORDS_CALLOUT_STYLE_HASH}'`));
+    test("the two production-observed Cloudflare bot-management hashes are deliberately absent (dynamic per-request nonce content — see report/csp.ts comment)", () => {
+      const hashes = [...canonicalMap.get("script-src")].filter((s) => s.startsWith("'sha256-"));
+      assert.ok(!hashes.includes("'sha256-+6sxCRtaYxlDFzRKgzgq0KslAhmiGkSgWp9ejhkPrHs='"));
+      assert.ok(!hashes.includes("'sha256-fO0h6nSVSg6QGOtEkqzxNcpe9iJLgXxfCBJTJ4butWU='"));
     });
 
     console.log(`\n─────────────────────────────────────────`);
