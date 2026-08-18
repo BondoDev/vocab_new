@@ -261,7 +261,12 @@ async function main() {
       test(`${label}: no 'unsafe-eval' anywhere`, () => assert.ok(!allSources.includes("'unsafe-eval'")));
       test(`${label}: no bare wildcard '*' source`, () => assert.ok(!allSources.includes("*")));
       test(`${label}: no broad 'https:' scheme source`, () => assert.ok(!allSources.includes("https:")));
-      test(`${label}: no 'data:' source`, () => assert.ok(!allSources.includes("data:")));
+      test(`${label}: 'data:' appears only in img-src (Phase 2C.1 — flag-icons' build-inlined SVG data URIs)`, () => {
+        for (const [directive, sources] of map) {
+          if (directive === "img-src") continue;
+          assert.ok(!sources.has("data:"), `'data:' must not appear in ${label} ${directive}`);
+        }
+      });
       test(`${label}: no 'blob:' source`, () => assert.ok(!allSources.includes("blob:")));
       test(`${label}: no broad subdomain wildcard (e.g. '*.example.com') anywhere`, () => {
         assert.ok(!allSources.some((source) => source.includes("*.")), `found a subdomain wildcard: ${allSources.filter((s) => s.includes("*."))}`);
@@ -299,6 +304,16 @@ async function main() {
       for (const map of [reportOnlyCanonicalMap, enforcingCanonicalMap]) {
         assert.ok(map.get("img-src").has(csp.COUNTRY_FLAGS_IMG_SRC_PREFIX));
       }
+    });
+    test("img-src (both policies) allows 'data:', for the flag-icons package's build-inlined SVG data URIs (Phase 2C.1)", () => {
+      assert.ok(csp.IMG_SRC_ALLOWS_DATA_URIS, "expected this decision to be recorded in csp.ts");
+      for (const map of [reportOnlyCanonicalMap, enforcingCanonicalMap]) {
+        assert.ok(map.get("img-src").has("data:"));
+      }
+    });
+    test("'data:' is not used as a broad fallback/default source — default-src (Report-Only) has no 'data:', and the enforcing policy has no default-src at all to carry one", () => {
+      assert.ok(!reportOnlyCanonicalMap.get("default-src").has("data:"));
+      assert.equal(enforcingCanonicalMap.has("default-src"), false);
     });
     test("style-src (both policies) allows the Google Fonts stylesheet origin", () => {
       for (const map of [reportOnlyCanonicalMap, enforcingCanonicalMap]) {

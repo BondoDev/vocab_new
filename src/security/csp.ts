@@ -125,6 +125,28 @@ export const CSP_ALLOWS_UNSAFE_INLINE_STYLES = true;
 export const COUNTRY_FLAGS_IMG_SRC_PREFIX =
   "https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/";
 
+// CSP Phase 2C.1 (partial-enforcement production validation) found a real
+// enforcing img-src violation on /explore: `data:image/svg+xml,...` flag
+// images being blocked. Traced to the "flag-icons" npm dependency (v7.2.1,
+// MIT-licensed, imported once via `import "flag-icons/css/flag-icons.min.css"`
+// in both src/main.tsx and src/entry-client.tsx) — its stylesheet defines
+// `.fi-<code>` classes (applied via `className={`fi fi-${language.flagCode}`}`
+// in ExplorePage.tsx and UILanguageSwitcher.tsx, `language.flagCode` always
+// coming from this app's own fixed, curated language list, never user/
+// database input) with a `background-image`. Vite's build inlines these
+// small SVG assets as `data:image/svg+xml,...` URIs directly into the
+// compiled CSS bundle (confirmed in dist/assets/*.css — e.g. `.fi-gb{
+// background-image:url("data:image/svg+xml,...id='flag-icons-gb'...")}`,
+// where the `id='flag-icons-gb'` is a literal attribute inside the
+// embedded SVG markup, not a separate template value). Entirely static,
+// fixed at build time by the pinned npm package version — no runtime,
+// user-, or database-supplied content ever reaches these data URIs. A
+// Cloudflare Zaraz frame sometimes appears in the browser's captured call
+// stack for this violation, but Zaraz does not create or own this asset —
+// it's an unrelated async task the browser happened to attribute the
+// image-load evaluation near, not the actual source.
+export const IMG_SRC_ALLOWS_DATA_URIS = true;
+
 // Cloudflare Web Analytics' externally-hosted beacon script — confirmed
 // live in production (real headless-Chrome capture, not just static HTML
 // inspection: the Phase 2B repo/live-HTML audit missed this because
@@ -164,7 +186,7 @@ type DirectiveEntry = readonly [string, readonly string[]];
 // policy is this list and NOTHING else (see CSP_ENFORCING_DIRECTIVES).
 const SAFE_NON_SCRIPT_DIRECTIVES: readonly DirectiveEntry[] = [
   ["style-src", ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"]],
-  ["img-src", ["'self'", COUNTRY_FLAGS_IMG_SRC_PREFIX]],
+  ["img-src", ["'self'", "data:", COUNTRY_FLAGS_IMG_SRC_PREFIX]],
   ["font-src", ["'self'", "https://fonts.gstatic.com"]],
   ["connect-src", ["'self'", SUPABASE_ORIGIN]],
   ["frame-src", ["'none'"]],
