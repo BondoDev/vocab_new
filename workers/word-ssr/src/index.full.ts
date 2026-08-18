@@ -16,6 +16,7 @@ import {
   stripDiacriticsForComparison,
   type ParsedWordRoutePathnameResult,
 } from "../../../src/data/seo/wordPages/wordRouteManifest";
+import { CSP_HEADER_NAME, buildCspHeaderValue } from "../../../src/security/csp";
 import { renderWordPage } from "./render-entry";
 import clientAssets from "../data/client-assets.full.json";
 import { createAssetsShardStore, withInIsolateMemoization, type ShardStore } from "./shard-store";
@@ -144,6 +145,12 @@ function buildCacheControl(status: number): string {
   return "no-store";
 }
 
+// Computed once at module scope (pure function of static source data, no
+// per-request input) rather than per-response — matches this file's own
+// data-loading pattern (manifestStore/conceptStore memoization) of doing
+// work once per isolate instead of once per request.
+const CSP_HEADER_VALUE = buildCspHeaderValue();
+
 function withDataVersionHeaders(
   headers: Record<string, string>,
   dataVersion: string,
@@ -154,6 +161,16 @@ function withDataVersionHeaders(
   const nextHeaders = {
     ...headers,
     "X-Word-Data-Version": dataVersion,
+    // CSP Phase 2B: Report-Only for now (see src/security/csp.ts). Applied
+    // to every response this Worker generates — HTML, JSON, redirects, and
+    // errors alike — via this one shared header-construction point, the
+    // same reasoning public/_headers uses `/*` for on the Static Assets
+    // side: one policy, uniformly applied, no per-response-kind carve-outs
+    // to keep in sync. Report-Only headers are inert on non-document
+    // responses (browsers only evaluate/report against them for
+    // navigations and the resource loads a document itself triggers), so
+    // this is harmless on the JSON browse-shard endpoint too.
+    [CSP_HEADER_NAME]: CSP_HEADER_VALUE,
   };
   const robotsHeader = getGlobalRobotsHeader(runtimeConfig, { status, responseKind });
   if (robotsHeader) {
@@ -544,7 +561,10 @@ export default {
       if (url.pathname === "/records" || url.pathname.startsWith("/records/")) {
         return new Response("Not Found", {
           status: 404,
-          headers: { "Content-Type": "text/plain; charset=utf-8" },
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+            [CSP_HEADER_NAME]: CSP_HEADER_VALUE,
+          },
         });
       }
 

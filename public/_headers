@@ -1,0 +1,13 @@
+# GENERATED FILE — do not hand-edit.
+# Source of truth: src/security/csp.ts
+# Regenerate: node scripts/security/generate-headers-file.mjs
+# Verified fresh by: scripts/tests/security/test-csp-policy-parity.mjs
+#
+# Applies to every Cloudflare Static Assets response (the SPA shell,
+# JS/CSS bundles, prerendered SEO/hub/level-test/verb-list pages).
+# Worker-generated SSR word-page responses carry the same policy from
+# workers/word-ssr/src/index.full.ts instead, since Static Assets'
+# _headers rules never apply to responses the Worker's own fetch
+# handler generates.
+/*
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'sha256-Re9krxasKuuFR9srOY0ldjUZQ6ei5cz5/nwx8rimshg='; style-src 'self' https://fonts.googleapis.com 'sha256-W7c31Hk4gEqMkZnmvf4wBbRcDG/orp5+PyF3H5UofE8=' 'sha256-yGlMKSofPsmE0+xvaWSrT4JiAECljkPnJoj3217uA88='; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ogovfcmhwqjljawsoiru.supabase.co; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
