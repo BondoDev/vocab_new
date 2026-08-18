@@ -109,7 +109,7 @@ test("6. A missing/malformed Authorization header is rejected before any Supabas
   const getUserIndex = fnCodeOnly.indexOf("adminClient.auth.getUser");
   assert.ok(bearerCheckIndex > -1 && getUserIndex > -1, "expected both the bearer check and getUser call to exist");
   assert.ok(bearerCheckIndex < getUserIndex, "the bearer-token check must happen before getUser() is called");
-  assert.match(fnSource, /return jsonResponse\(\{ error: "unauthenticated" \}, 401\)/);
+  assert.match(fnSource, /return jsonResponse\(\{ error: "unauthenticated" \}, 401, corsHeaders\)/);
 });
 
 test("7. A getUser() failure (expired/invalid/already-deleted-user token) is rejected, not treated as success", () => {
@@ -134,7 +134,7 @@ test("10. A failed Auth deletion returns a clear error, never a false success", 
 });
 
 test("11. The success response is minimal — only a deleted flag, no echoed id/email", () => {
-  const successMatch = fnSource.match(/return jsonResponse\(\{([^}]*)\}, 200\);/);
+  const successMatch = fnSource.match(/return jsonResponse\(\{([^}]*)\}, 200, corsHeaders\);/);
   assert.ok(successMatch, "expected a 200 jsonResponse call");
   assert.match(successMatch[1].trim(), /^deleted: true$/);
 });
@@ -185,7 +185,7 @@ test('16. Only the disabled branch responds with account_deletion_disabled, and 
 });
 
 test("17. The disabled response is narrow — a single machine-readable error field, no message/reason/config state", () => {
-  const disabledMatch = fnSource.match(/return jsonResponse\(\{([^}]*)\}, 403\);/);
+  const disabledMatch = fnSource.match(/return jsonResponse\(\{([^}]*)\}, 403, corsHeaders\);/);
   assert.ok(disabledMatch, "expected a 403 jsonResponse call");
   assert.match(disabledMatch[1].trim(), /^error: "account_deletion_disabled"$/);
 });
@@ -360,11 +360,39 @@ test("30. OPTIONS returns a 2xx status with no destructive work performed", () =
   assert.doesNotMatch(optionsBlockMatch[1], /deleteUser|getUser/);
 });
 
-test("31. CORS_HEADERS includes Access-Control-Allow-Origin", () => {
-  assert.match(fnSource, /"Access-Control-Allow-Origin":\s*"\*"/);
+console.log("\n--- Origin allow-list (CORS hardening, 2026-08-18: wildcard removed) ---\n");
+
+test("31. No wildcard Access-Control-Allow-Origin exists anywhere in the file - the literal \"*\" origin is fully gone", () => {
+  assert.doesNotMatch(fnSource, /"Access-Control-Allow-Origin":\s*"\*"/);
+  assert.doesNotMatch(fnCodeOnly, /Access-Control-Allow-Origin["'`]?\s*[,:]\s*["'`]\*/);
 });
 
-test("32. CORS_HEADERS' Access-Control-Allow-Methods includes both POST and OPTIONS", () => {
+test("32. ALLOWED_ORIGINS lists exactly the verified real FluentStellar origins - the canonical production host and the Vite dev-server origin - no bare apex and no wildcard subdomain pattern", () => {
+  const setMatch = fnSource.match(/const ALLOWED_ORIGINS = new Set\(\[([\s\S]*?)\]\);/);
+  assert.ok(setMatch, "expected an ALLOWED_ORIGINS Set literal");
+  const entries = [...setMatch[1].matchAll(/"([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(entries.sort(), ["http://localhost:5173", "https://www.fluentstellar.com"].sort());
+  assert.ok(!entries.includes("https://fluentstellar.com"), "the bare apex must not be listed - it 301-redirects to www at the Cloudflare zone edge before any page JS runs (docs/deployment.md), so no browser fetch can ever legitimately originate from it");
+  assert.ok(!entries.some((o) => o.includes("*")), "no wildcard subdomain pattern may appear in the allow-list");
+});
+
+test("33. isAllowedOrigin does an exact Set membership check, not a prefix/substring/regex match that could accidentally admit a look-alike origin", () => {
+  const fnMatch = fnSource.match(/function isAllowedOrigin\(origin: string \| null\): origin is string \{([\s\S]*?)\n\}/);
+  assert.ok(fnMatch, "expected an isAllowedOrigin helper");
+  assert.match(fnMatch[1], /ALLOWED_ORIGINS\.has\(origin\)/);
+  assert.doesNotMatch(fnMatch[1], /\.startsWith\(|\.includes\(|\.test\(|RegExp/, "must not use prefix/substring/regex matching for origin checks");
+});
+
+test("34. corsHeadersForOrigin returns the EXACT incoming origin (never a joined list, never reconstructed) for an allowed origin, and omits Access-Control-Allow-Origin entirely - never \"*\" - for a disallowed/missing one", () => {
+  const fnMatch = fnSource.match(/function corsHeadersForOrigin\(origin: string \| null\): Record<string, string> \{([\s\S]*?)\n\}/);
+  assert.ok(fnMatch, "expected a corsHeadersForOrigin helper");
+  const body = fnMatch[1];
+  assert.match(body, /if \(isAllowedOrigin\(origin\)\) \{\s*return \{ \.\.\.BASE_CORS_HEADERS, "Access-Control-Allow-Origin": origin \};\s*\}/);
+  assert.match(body, /return \{ \.\.\.BASE_CORS_HEADERS \};/, "the disallowed/missing-origin fallback must return the base headers with no Access-Control-Allow-Origin key at all");
+  assert.doesNotMatch(body, /\.join\(/, "must never build a comma-joined list of allowed origins");
+});
+
+test("35. BASE_CORS_HEADERS' Access-Control-Allow-Methods includes both POST and OPTIONS", () => {
   const methodsMatch = fnSource.match(/"Access-Control-Allow-Methods":\s*"([^"]*)"/);
   assert.ok(methodsMatch, "expected an Access-Control-Allow-Methods entry");
   const methods = methodsMatch[1].split(",").map((m) => m.trim().toUpperCase());
@@ -372,20 +400,22 @@ test("32. CORS_HEADERS' Access-Control-Allow-Methods includes both POST and OPTI
   assert.ok(methods.includes("OPTIONS"));
 });
 
-test("33. CORS_HEADERS' Access-Control-Allow-Headers names exactly the headers the real frontend caller sends — authorization, content-type, apikey — no more, no fewer", () => {
+test("36. BASE_CORS_HEADERS' Access-Control-Allow-Headers names exactly the headers the real frontend caller sends — authorization, content-type, apikey — no more, no fewer", () => {
   const headersMatch = fnSource.match(/"Access-Control-Allow-Headers":\s*"([^"]*)"/);
   assert.ok(headersMatch, "expected an Access-Control-Allow-Headers entry");
   const allowed = headersMatch[1].split(",").map((h) => h.trim().toLowerCase());
   assert.deepEqual(allowed.sort(), ["apikey", "authorization", "content-type"].sort());
 });
 
-test("34. Every jsonResponse(...) call — success, auth failure, feature-gate failure, and internal errors alike — is built from the shared helper that always spreads CORS_HEADERS", () => {
+test("37. jsonResponse takes the per-request corsHeaders as an explicit parameter and spreads it - no module-level CORS_HEADERS constant with a baked-in origin exists anymore", () => {
   const jsonResponseFnMatch = fnSource.match(/function jsonResponse\([\s\S]*?\n\}/);
   assert.ok(jsonResponseFnMatch, "expected a jsonResponse helper function");
-  assert.match(jsonResponseFnMatch[0], /\.\.\.CORS_HEADERS/);
+  assert.match(jsonResponseFnMatch[0], /corsHeaders: Record<string, string>/);
+  assert.match(jsonResponseFnMatch[0], /\.\.\.corsHeaders/);
+  assert.doesNotMatch(fnSource, /\bCORS_HEADERS\b/, "the old fixed, wildcard-origin CORS_HEADERS constant must be fully gone, not just unused");
 
   // Every response in the function goes through this one helper (or the
-  // OPTIONS branch's own explicit CORS_HEADERS) — no response construction
+  // OPTIONS branch's own explicit corsHeaders) — no response construction
   // anywhere bypasses it with a bare `new Response(...)`.
   const bareResponseCalls = [...fnCodeOnly.matchAll(/(?<!return\s)new Response\(/g)];
   const allResponseCalls = [...fnCodeOnly.matchAll(/return new Response\(/g)];
@@ -396,34 +426,46 @@ test("34. Every jsonResponse(...) call — success, auth failure, feature-gate f
   assert.ok(allResponseCalls.length >= 1);
 });
 
-test("35. Every distinct application response (200/401/403/405/500/502) is reachable only via jsonResponse or the OPTIONS branch — never a second ad-hoc CORS-header set", () => {
-  const corsHeaderBlocks = [...fnSource.matchAll(/CORS_HEADERS\s*=\s*\{/g)];
-  assert.equal(corsHeaderBlocks.length, 1, "CORS_HEADERS must be defined exactly once, reused everywhere");
+test("38. Every jsonResponse(...) call site in the handler passes the same request-scoped corsHeaders variable computed once at the top of Deno.serve - no call site recomputes or hardcodes its own CORS headers", () => {
+  const serveFnMatch = fnSource.match(/Deno\.serve\(async \(req: Request\) => \{([\s\S]*)\n\}\);/);
+  assert.ok(serveFnMatch, "expected the Deno.serve handler");
+  const body = serveFnMatch[1];
+  assert.match(body, /const corsHeaders = corsHeadersForOrigin\(req\.headers\.get\("Origin"\)\);/);
+  const corsHeadersComputations = [...body.matchAll(/corsHeadersForOrigin\(/g)];
+  assert.equal(corsHeadersComputations.length, 1, "corsHeadersForOrigin must be called exactly once per request, not re-derived per response branch");
+
+  const jsonResponseCalls = [...body.matchAll(/jsonResponse\(\{[^}]*\},\s*\d+(?:,\s*(\w+))?\)/g)];
+  assert.ok(jsonResponseCalls.length >= 6, `expected every status-code response (405/500/401/403/403/502/200) to call jsonResponse, found ${jsonResponseCalls.length}`);
+  for (const call of jsonResponseCalls) {
+    assert.equal(call[1], "corsHeaders", `every jsonResponse call must pass the shared corsHeaders variable, found: ${call[0]}`);
+  }
+
+  assert.match(body, /return new Response\(null, \{ status: 204, headers: corsHeaders \}\);/, "the OPTIONS branch must reuse the same corsHeaders variable too");
 });
 
-test("36. Unsupported methods (non-OPTIONS, non-POST) return 405 through jsonResponse, so the response still carries CORS headers", () => {
+test("39. Unsupported methods (non-OPTIONS, non-POST) return 405 through jsonResponse, so the response still carries CORS headers", () => {
   const methodBlockMatch = fnSource.match(/if \(req\.method !== "POST"\) \{\s*return ([^;]*);\s*\}/s);
   assert.ok(methodBlockMatch, "expected the non-POST branch");
-  assert.match(methodBlockMatch[1], /jsonResponse\(\{ error: "method_not_allowed" \}, 405\)/);
+  assert.match(methodBlockMatch[1], /jsonResponse\(\{ error: "method_not_allowed" \}, 405, corsHeaders\)/);
 });
 
-test("37. Account deletion still requires bearer authentication — verify_jwt=false does not remove the in-function check", () => {
+test("40. Account deletion still requires bearer authentication — verify_jwt=false does not remove the in-function check", () => {
   assert.match(fnSource, /const authHeader = req\.headers\.get\("Authorization"\)/);
   assert.match(fnSource, /bearerMatch/);
-  assert.match(fnSource, /return jsonResponse\(\{ error: "unauthenticated" \}, 401\)/);
+  assert.match(fnSource, /return jsonResponse\(\{ error: "unauthenticated" \}, 401, corsHeaders\)/);
 });
 
-test("38. Account identity is still derived exclusively from the verified token, never a client-supplied id (re-confirmed after the CORS fix)", () => {
+test("41. Account identity is still derived exclusively from the verified token, never a client-supplied id (re-confirmed after the CORS fix)", () => {
   assert.match(fnSource, /adminClient\.auth\.getUser\(callerToken\)/);
   assert.doesNotMatch(fnCodeOnly, /\buser_id\b/);
 });
 
-test("39. ACCOUNT_DELETION_ENABLED is still read and enforced — the CORS fix does not touch the feature gate", () => {
+test("42. ACCOUNT_DELETION_ENABLED is still read and enforced — the CORS fix does not touch the feature gate", () => {
   assert.match(fnSource, /ACCOUNT_DELETION_ENABLED !== "true"/);
   assert.match(fnSource, /account_deletion_disabled/);
 });
 
-test("40. No service-role credential exists anywhere in frontend code (src/), confirmed again after the CORS fix", () => {
+test("43. No service-role credential exists anywhere in frontend code (src/), confirmed again after the CORS fix", () => {
   const SRC_DIR = path.join(ROOT_DIR, "src");
   const walk = (dir) => {
     const offenders = [];
@@ -443,7 +485,7 @@ test("40. No service-role credential exists anywhere in frontend code (src/), co
   assert.deepEqual(walk(SRC_DIR), []);
 });
 
-test("41. src/lib/accountDeletion.ts never uses fetch's no-cors mode or any other CORS-bypassing option", () => {
+test("44. src/lib/accountDeletion.ts never uses fetch's no-cors mode or any other CORS-bypassing option", () => {
   const ACCOUNT_DELETION_TS_PATH = path.join(ROOT_DIR, "src", "lib", "accountDeletion.ts");
   const source = fs.readFileSync(ACCOUNT_DELETION_TS_PATH, "utf8");
   assert.doesNotMatch(source, /no-cors/);
@@ -464,7 +506,7 @@ console.log("\n=== Recent-authentication requirement (2026-08-13 reauthenticatio
 // client-side half (password reauthentication before the call) is guarded
 // by scripts/tests/account/test-account-reauthentication.mjs.
 
-test("42. hasRecentAuthentication (recentAuth.ts) decodes and checks amr — never iat (iat also advances on a silent background token refresh, which never requires the user to re-enter credentials)", () => {
+test("45. hasRecentAuthentication (recentAuth.ts) decodes and checks amr — never iat (iat also advances on a silent background token refresh, which never requires the user to re-enter credentials)", () => {
   assert.match(recentAuthSource, /export function hasRecentAuthentication\(/);
   assert.match(recentAuthSource, /getMostRecentAuthTimestamp/);
   assert.match(recentAuthSource, /payload\.amr/);
@@ -482,18 +524,18 @@ test("42. hasRecentAuthentication (recentAuth.ts) decodes and checks amr — nev
   assert.doesNotMatch(fnCodeOnly, /function hasRecentAuthentication/);
 });
 
-test("43. The recency window is a fixed constant in the shared module (5 minutes) — never read from the request, never redefined a second time in index.ts", () => {
+test("46. The recency window is a fixed constant in the shared module (5 minutes) — never read from the request, never redefined a second time in index.ts", () => {
   assert.match(recentAuthSource, /export const RECENT_AUTH_WINDOW_SECONDS = 5 \* 60;/);
   assert.doesNotMatch(fnCodeOnly, /req\.[a-zA-Z]+\([^)]*RECENT_AUTH_WINDOW/);
   assert.doesNotMatch(fnCodeOnly, /const RECENT_AUTH_WINDOW_SECONDS/);
 });
 
-test("43b. Only password and oauth are accepted amr methods (explicit allow-list) — token_refresh and any other method are excluded by construction", () => {
+test("46b. Only password and oauth are accepted amr methods (explicit allow-list) — token_refresh and any other method are excluded by construction", () => {
   assert.match(recentAuthSource, /export const RECENT_AUTH_METHODS = new Set\(\["password", "oauth"\]\);/);
   assert.doesNotMatch(recentAuthSource, /RECENT_AUTH_METHODS = new Set\([^)]*token_refresh/);
 });
 
-test("43c. getMostRecentAuthTimestamp filters every amr entry by method against RECENT_AUTH_METHODS before considering its timestamp", () => {
+test("46c. getMostRecentAuthTimestamp filters every amr entry by method against RECENT_AUTH_METHODS before considering its timestamp", () => {
   const fnMatch = recentAuthSource.match(/export function getMostRecentAuthTimestamp\([\s\S]*?\n\}/);
   assert.ok(fnMatch, "expected getMostRecentAuthTimestamp's body");
   assert.match(fnMatch[0], /RECENT_AUTH_METHODS\.has\(method\)/);
@@ -506,7 +548,7 @@ test("43c. getMostRecentAuthTimestamp filters every amr entry by method against 
   assert.ok(methodCheckIndex < timestampReadIndex, "method must be validated before timestamp is read/used");
 });
 
-test("44. decodeJwtPayload reads the SAME callerToken already resolved via bearerMatch — never a second, arbitrary, header/body-supplied token", () => {
+test("47. decodeJwtPayload reads the SAME callerToken already resolved via bearerMatch — never a second, arbitrary, header/body-supplied token", () => {
   // Matches the call site specifically (`if (!isGoogleSession &&
   // !hasRecentAuthentication(...`), never the function's own definition
   // line, which also contains "hasRecentAuthentication(" followed by its
@@ -516,13 +558,13 @@ test("44. decodeJwtPayload reads the SAME callerToken already resolved via beare
   assert.equal(callSiteMatch[1].trim(), "callerToken");
 });
 
-test("45. No client-supplied timestamp or boolean of any kind can satisfy this check — the request body is never parsed anywhere in this file (re-confirms test 3 in this exact context)", () => {
+test("48. No client-supplied timestamp or boolean of any kind can satisfy this check — the request body is never parsed anywhere in this file (re-confirms test 3 in this exact context)", () => {
   assert.doesNotMatch(fnCodeOnly, /req\.json\(\)/);
   assert.doesNotMatch(fnCodeOnly, /reauthenticated\s*[:=]\s*true/i);
   assert.doesNotMatch(fnCodeOnly, /req\.headers\.get\("[Xx]-[Rr]eauth/);
 });
 
-test("46. The recent-auth check runs after identity resolution and the feature gate, and strictly before the destructive deleteUser call", () => {
+test("49. The recent-auth check runs after identity resolution and the feature gate, and strictly before the destructive deleteUser call", () => {
   const getUserIndex = fnCodeOnly.indexOf("adminClient.auth.getUser(callerToken)");
   const gateIndex = fnCodeOnly.indexOf('ACCOUNT_DELETION_ENABLED !== "true"');
   const reauthCheckIndex = fnCodeOnly.indexOf("hasRecentAuthentication(callerToken)");
@@ -536,7 +578,7 @@ test("46. The recent-auth check runs after identity resolution and the feature g
   assert.ok(reauthCheckIndex < deleteCallIndex, "the recent-auth check must run before deleteUser is ever called");
 });
 
-test("47. A failing recent-auth check returns reauthentication_required with 403 and CORS headers, and never reaches deleteUser", () => {
+test("50. A failing recent-auth check returns reauthentication_required with 403 and CORS headers, and never reaches deleteUser", () => {
   // A fixed-size window after the guard condition, rather than lazy brace-
   // matching: the response body itself contains a `}` (the object literal
   // `{ error: "..." }`), which a naive /\{([\s\S]*?)\}/ match would
@@ -544,27 +586,27 @@ test("47. A failing recent-auth check returns reauthentication_required with 403
   const guardIndex = fnSource.indexOf("if (!isGoogleSession && !hasRecentAuthentication(callerToken))");
   assert.ok(guardIndex > -1, "expected the recent-auth guard");
   const window = fnSource.slice(guardIndex, guardIndex + 300);
-  assert.match(window, /jsonResponse\(\{ error: "reauthentication_required" \}, 403\)/);
+  assert.match(window, /jsonResponse\(\{ error: "reauthentication_required" \}, 403, corsHeaders\)/);
   assert.doesNotMatch(window.slice(0, window.indexOf("reauthentication_required")), /deleteUser/);
 });
 
-test("48. decodeJwtPayload (recentAuth.ts) never re-parses/re-fetches the token from an untrusted source — it is a pure, local, non-network function", () => {
+test("51. decodeJwtPayload (recentAuth.ts) never re-parses/re-fetches the token from an untrusted source — it is a pure, local, non-network function", () => {
   const decodeFnMatch = recentAuthSource.match(/export function decodeJwtPayload\([\s\S]*?\n\}/);
   assert.ok(decodeFnMatch, "expected decodeJwtPayload's body");
   assert.doesNotMatch(decodeFnMatch[0], /fetch\(|adminClient/);
 });
 
-test("49. A malformed/undecodable token payload is treated as 'not recently authenticated', never as an implicit pass", () => {
+test("52. A malformed/undecodable token payload is treated as 'not recently authenticated', never as an implicit pass", () => {
   const decodeFnMatch = recentAuthSource.match(/export function decodeJwtPayload\([\s\S]*?\n\}/);
   assert.match(decodeFnMatch[0], /catch \{\s*[\s\S]*?return null;/);
   const hasRecentFnMatch = recentAuthSource.match(/export function hasRecentAuthentication\([\s\S]*?\n\}/);
   assert.match(hasRecentFnMatch[0], /if \(!payload\) return false;/);
 });
 
-test("50. The feature gate and identity checks are unaffected by this phase — still enforced exactly as before (re-confirms tests 6, 13-19 in this exact file)", () => {
+test("53. The feature gate and identity checks are unaffected by this phase — still enforced exactly as before (re-confirms tests 6, 13-19 in this exact file)", () => {
   assert.match(fnSource, /ACCOUNT_DELETION_ENABLED !== "true"/);
   assert.match(fnSource, /account_deletion_disabled/);
-  assert.match(fnSource, /return jsonResponse\(\{ error: "unauthenticated" \}, 401\)/);
+  assert.match(fnSource, /return jsonResponse\(\{ error: "unauthenticated" \}, 401, corsHeaders\)/);
 });
 
 console.log("\n=== Google-OAuth reauthentication exemption (product policy, 2026-08-14) ===\n");
@@ -580,20 +622,20 @@ console.log("\n=== Google-OAuth reauthentication exemption (product policy, 2026
 // the Google-session determination exclusively from data it already
 // independently trusts, never from anything the request body supplies.
 
-test("51. isCurrentSessionGoogleAuthenticated is called with userResult.user (the trusted Admin API response) and the same already-resolved callerToken — never a request-supplied value", () => {
+test("54. isCurrentSessionGoogleAuthenticated is called with userResult.user (the trusted Admin API response) and the same already-resolved callerToken — never a request-supplied value", () => {
   const callSiteMatch = fnCodeOnly.match(/const isGoogleSession = isCurrentSessionGoogleAuthenticated\(([^)]*)\);/);
   assert.ok(callSiteMatch, "expected the isCurrentSessionGoogleAuthenticated(...) call site");
   const args = callSiteMatch[1].split(",").map((a) => a.trim());
   assert.deepEqual(args, ["userResult.user", "callerToken"]);
 });
 
-test("52. No client-suppliable provider/Google flag exists anywhere in executable code — no isGoogleUser/provider/oauthProvider parameter of any kind", () => {
+test("55. No client-suppliable provider/Google flag exists anywhere in executable code — no isGoogleUser/provider/oauthProvider parameter of any kind", () => {
   assert.doesNotMatch(fnCodeOnly, /isGoogleUser/i);
   assert.doesNotMatch(fnCodeOnly, /req\.[a-zA-Z]+\([^)]*[Pp]rovider/);
   assert.doesNotMatch(fnCodeOnly, /headers\.get\("[Xx]-[Pp]rovider/);
 });
 
-test("53. isGoogleSession is computed after the feature gate and BEFORE the recent-auth guard, which is itself strictly before deleteUser — full ordering intact", () => {
+test("56. isGoogleSession is computed after the feature gate and BEFORE the recent-auth guard, which is itself strictly before deleteUser — full ordering intact", () => {
   const gateIndex = fnCodeOnly.indexOf('ACCOUNT_DELETION_ENABLED !== "true"');
   const isGoogleSessionIndex = fnCodeOnly.indexOf("const isGoogleSession = isCurrentSessionGoogleAuthenticated(");
   const reauthGuardIndex = fnCodeOnly.indexOf("if (!isGoogleSession && !hasRecentAuthentication(callerToken))");
@@ -607,14 +649,14 @@ test("53. isGoogleSession is computed after the feature gate and BEFORE the rece
   assert.ok(reauthGuardIndex < deleteCallIndex, "the combined guard must run before deleteUser is ever called");
 });
 
-test("54. The recent-auth guard is skipped ONLY when isGoogleSession is true — a password account (isGoogleSession always false for them) is completely unaffected by this branch", () => {
+test("57. The recent-auth guard is skipped ONLY when isGoogleSession is true — a password account (isGoogleSession always false for them) is completely unaffected by this branch", () => {
   assert.match(fnCodeOnly, /if \(!isGoogleSession && !hasRecentAuthentication\(callerToken\)\)/);
   // Not an OR — a password account must never bypass the recent-auth check
   // merely because some unrelated condition is true.
   assert.doesNotMatch(fnCodeOnly, /if \(!isGoogleSession \|\| !hasRecentAuthentication/);
 });
 
-test("55. userResult.user (passed into isCurrentSessionGoogleAuthenticated) is the SAME object adminClient.auth.getUser(callerToken) returned for callerId — not a second, independently-sourced user lookup", () => {
+test("58. userResult.user (passed into isCurrentSessionGoogleAuthenticated) is the SAME object adminClient.auth.getUser(callerToken) returned for callerId — not a second, independently-sourced user lookup", () => {
   const getUserIndex = fnCodeOnly.indexOf("adminClient.auth.getUser(callerToken)");
   const callerIdIndex = fnCodeOnly.indexOf("const callerId = userResult.user.id;");
   const isGoogleSessionIndex = fnCodeOnly.indexOf("const isGoogleSession = isCurrentSessionGoogleAuthenticated(userResult.user, callerToken)");
@@ -625,13 +667,14 @@ test("55. userResult.user (passed into isCurrentSessionGoogleAuthenticated) is t
   assert.ok(getUserIndex < callerIdIndex && callerIdIndex < isGoogleSessionIndex);
 });
 
-test("56. CORS headers, verify_jwt=false, and the OPTIONS/method/misconfiguration branches are unaffected by the Google exemption (re-confirms tests 28-36 in this exact file)", () => {
+test("59. CORS headers (including the origin allow-list), verify_jwt=false, and the OPTIONS/method/misconfiguration branches are unaffected by the Google exemption (re-confirms tests 28-38 in this exact file)", () => {
   const headersMatch = fnSource.match(/"Access-Control-Allow-Headers":\s*"([^"]*)"/);
   assert.ok(headersMatch);
   assert.deepEqual(
     headersMatch[1].split(",").map((h) => h.trim().toLowerCase()).sort(),
     ["apikey", "authorization", "content-type"].sort(),
   );
+  assert.doesNotMatch(fnSource, /"Access-Control-Allow-Origin":\s*"\*"/, "the Google exemption must not have reintroduced a wildcard origin");
   const sectionMatch = configTomlSource.match(/\[functions\.delete-account\]\s*\n\s*verify_jwt = (\w+)/);
   assert.equal(sectionMatch[1], "false");
 });

@@ -121,16 +121,71 @@ const ACCOUNT_DELETION_ENABLED = Deno.env.get("ACCOUNT_DELETION_ENABLED");
 // @supabase/supabase-js client (which would additionally send
 // x-client-info), so listing that header here would only be unnecessary
 // surface area.
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
+const BASE_CORS_HEADERS = {
   "Access-Control-Allow-Headers": "authorization, content-type, apikey",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-function jsonResponse(body: Record<string, unknown>, status: number): Response {
+// CORS hardening, 2026-08-18: the Auth security audit flagged this
+// function's prior `Access-Control-Allow-Origin: "*"` as unnecessarily
+// permissive for a destructive, authenticated endpoint — not an
+// authentication bypass (adminClient.auth.getUser(callerToken) below
+// remains the actual authorization boundary; CORS is a browser-only
+// control, never a substitute for it), but wildcard access is more surface
+// than this function needs. Replaced with an explicit allow-list of the
+// real FluentStellar browser origins:
+//   * "https://www.fluentstellar.com" — the canonical production host
+//     (docs/deployment.md "Domain, redirects, and status behavior";
+//     src/seo/site.ts's DEFAULT_SITE_ORIGIN).
+//   * "http://localhost:5173" — Vite's default dev-server origin
+//     (`npm run dev`, vite.config.ts), so local development against this
+//     function keeps working.
+// The bare apex, "https://fluentstellar.com", is deliberately NOT listed:
+// docs/deployment.md confirms the apex-to-www redirect is a verified-live
+// Cloudflare zone-edge 301 that fires before any page or Worker JS ever
+// runs, so a browser page is never actually served from the apex origin —
+// there is no legitimate `Origin: https://fluentstellar.com` fetch to
+// allow for. No wildcard subdomain pattern is used; every entry here is an
+// exact string this repo's own deployment/config already commits to.
+const ALLOWED_ORIGINS = new Set([
+  "https://www.fluentstellar.com",
+  "http://localhost:5173",
+]);
+
+function isAllowedOrigin(origin: string | null): origin is string {
+  return origin !== null && ALLOWED_ORIGINS.has(origin);
+}
+
+// Computes the full CORS header set for one request's own Origin. An
+// allowed origin gets back that EXACT incoming value (never a wildcard,
+// never a comma-joined list of every allowed origin — the Fetch/CORS spec
+// only ever permits a single origin or none in this header). A
+// disallowed or missing origin gets the method/header headers with no
+// Access-Control-Allow-Origin at all, rather than reflecting it or falling
+// back to "*" — the browser itself then blocks script access to the
+// response for that origin. This is deliberately NOT a rejection of the
+// request server-side: CORS headers only ever control whether a *browser*
+// lets its own page's script read the response, not whether the server
+// processes it, so a same-origin curl/server-to-server caller (which never
+// sends Origin at all, and never enforces CORS response headers on itself)
+// is completely unaffected — this function's real authorization boundary
+// stays the bearer-token check inside the handler below, unconditionally,
+// regardless of what this header ends up being.
+function corsHeadersForOrigin(origin: string | null): Record<string, string> {
+  if (isAllowedOrigin(origin)) {
+    return { ...BASE_CORS_HEADERS, "Access-Control-Allow-Origin": origin };
+  }
+  return { ...BASE_CORS_HEADERS };
+}
+
+function jsonResponse(
+  body: Record<string, unknown>,
+  status: number,
+  corsHeaders: Record<string, string>,
+): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 }
 
@@ -176,24 +231,32 @@ function jsonResponse(body: Record<string, unknown>, status: number): Response {
 // determination requires.
 
 Deno.serve(async (req: Request) => {
+  // Computed once per request, from this request's own Origin header — see
+  // corsHeadersForOrigin's own comment above for exactly what an
+  // allowed/disallowed/missing origin each get back. Every response below
+  // (OPTIONS and every jsonResponse call alike) reuses this same value, so
+  // there is exactly one CORS decision per request, never a second one that
+  // could drift from it.
+  const corsHeaders = corsHeadersForOrigin(req.headers.get("Origin"));
+
   if (req.method === "OPTIONS") {
-    return new Response(null, { status: 204, headers: CORS_HEADERS });
+    return new Response(null, { status: 204, headers: corsHeaders });
   }
 
   if (req.method !== "POST") {
-    return jsonResponse({ error: "method_not_allowed" }, 405);
+    return jsonResponse({ error: "method_not_allowed" }, 405, corsHeaders);
   }
 
   // Fail closed: without both values this function cannot safely identify
   // or delete anyone, and must never fall back to an unprivileged client.
   if (!SUPABASE_URL || !SERVICE_ROLE_KEY) {
-    return jsonResponse({ error: "server_misconfigured" }, 500);
+    return jsonResponse({ error: "server_misconfigured" }, 500, corsHeaders);
   }
 
   const authHeader = req.headers.get("Authorization") ?? "";
   const bearerMatch = /^Bearer\s+(.+)$/i.exec(authHeader);
   if (!bearerMatch) {
-    return jsonResponse({ error: "unauthenticated" }, 401);
+    return jsonResponse({ error: "unauthenticated" }, 401, corsHeaders);
   }
   const callerToken = bearerMatch[1];
 
@@ -209,7 +272,7 @@ Deno.serve(async (req: Request) => {
   // malformed, or already-deleted-user token is rejected right here.
   const { data: userResult, error: userError } = await adminClient.auth.getUser(callerToken);
   if (userError || !userResult?.user?.id) {
-    return jsonResponse({ error: "unauthenticated" }, 401);
+    return jsonResponse({ error: "unauthenticated" }, 401, corsHeaders);
   }
   const callerId = userResult.user.id;
 
@@ -220,7 +283,7 @@ Deno.serve(async (req: Request) => {
   // — no reason, no configuration state, nothing beyond the machine-
   // readable error code.
   if (ACCOUNT_DELETION_ENABLED !== "true") {
-    return jsonResponse({ error: "account_deletion_disabled" }, 403);
+    return jsonResponse({ error: "account_deletion_disabled" }, 403, corsHeaders);
   }
 
   // Product policy (2026-08-14): Google OAuth accounts may delete using
@@ -245,16 +308,16 @@ Deno.serve(async (req: Request) => {
   // for a client-supplied value of any kind to satisfy this check. Skipped
   // entirely for a confirmed Google session, per the product policy above.
   if (!isGoogleSession && !hasRecentAuthentication(callerToken)) {
-    return jsonResponse({ error: "reauthentication_required" }, 403);
+    return jsonResponse({ error: "reauthentication_required" }, 403, corsHeaders);
   }
 
   const { error: deleteError } = await adminClient.auth.admin.deleteUser(callerId);
   if (deleteError) {
     // Never report success on a failed deletion — the caller must be able
     // to trust a 200 response as ground truth.
-    return jsonResponse({ error: "delete_failed" }, 502);
+    return jsonResponse({ error: "delete_failed" }, 502, corsHeaders);
   }
 
   // Minimal response — no echoed id/email, nothing beyond confirmation.
-  return jsonResponse({ deleted: true }, 200);
+  return jsonResponse({ deleted: true }, 200, corsHeaders);
 });
