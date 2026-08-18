@@ -16,12 +16,7 @@ import {
   stripDiacriticsForComparison,
   type ParsedWordRoutePathnameResult,
 } from "../../../src/data/seo/wordPages/wordRouteManifest";
-import {
-  CSP_REPORT_ONLY_HEADER_NAME,
-  CSP_ENFORCING_HEADER_NAME,
-  buildCspReportOnlyHeaderValue,
-  buildCspEnforcingHeaderValue,
-} from "../../../src/security/csp";
+import { CSP_ENFORCING_HEADER_NAME, buildCspEnforcingHeaderValue } from "../../../src/security/csp";
 import { renderWordPage } from "./render-entry";
 import clientAssets from "../data/client-assets.full.json";
 import { createAssetsShardStore, withInIsolateMemoization, type ShardStore } from "./shard-store";
@@ -154,7 +149,6 @@ function buildCacheControl(status: number): string {
 // per-request input) rather than per-response — matches this file's own
 // data-loading pattern (manifestStore/conceptStore memoization) of doing
 // work once per isolate instead of once per request.
-const CSP_REPORT_ONLY_HEADER_VALUE = buildCspReportOnlyHeaderValue();
 const CSP_ENFORCING_HEADER_VALUE = buildCspEnforcingHeaderValue();
 
 function withDataVersionHeaders(
@@ -167,19 +161,18 @@ function withDataVersionHeaders(
   const nextHeaders = {
     ...headers,
     "X-Word-Data-Version": dataVersion,
-    // CSP Phase 2C: two headers, deliberately different scope (see
-    // src/security/csp.ts for the full rationale). Applied to every
-    // response this Worker generates — HTML, JSON, redirects, and errors
-    // alike — via this one shared header-construction point, the same
-    // reasoning public/_headers uses `/*` for on the Static Assets side:
-    // one pair of policies, uniformly applied, no per-response-kind
-    // carve-outs to keep in sync. Both headers are inert on non-document
-    // responses in the ways that matter here (Report-Only never blocks
-    // anything at all; the enforcing policy carries no script-src/
-    // default-src, so it has nothing to say about a JSON response's
-    // content either), so sending both on the JSON browse-shard endpoint
-    // too is harmless.
-    [CSP_REPORT_ONLY_HEADER_NAME]: CSP_REPORT_ONLY_HEADER_VALUE,
+    // CSP Phase 2C.2: only the enforcing policy is sent in production (see
+    // src/security/csp.ts for the full rationale, including why script
+    // sources are deliberately unenforced and where the retired audit
+    // policy — formerly Content-Security-Policy-Report-Only — still lives
+    // for a future re-enablement). Applied to every response this Worker
+    // generates — HTML, JSON, redirects, and errors alike — via this one
+    // shared header-construction point, the same reasoning public/_headers
+    // uses `/*` for on the Static Assets side: one policy, uniformly
+    // applied, no per-response-kind carve-outs to keep in sync. The
+    // enforcing policy carries no script-src/default-src, so it has
+    // nothing to say about a JSON response's content either — sending it
+    // on the JSON browse-shard endpoint too is harmless.
     [CSP_ENFORCING_HEADER_NAME]: CSP_ENFORCING_HEADER_VALUE,
   };
   const robotsHeader = getGlobalRobotsHeader(runtimeConfig, { status, responseKind });
@@ -573,7 +566,6 @@ export default {
           status: 404,
           headers: {
             "Content-Type": "text/plain; charset=utf-8",
-            [CSP_REPORT_ONLY_HEADER_NAME]: CSP_REPORT_ONLY_HEADER_VALUE,
             [CSP_ENFORCING_HEADER_NAME]: CSP_ENFORCING_HEADER_VALUE,
           },
         });

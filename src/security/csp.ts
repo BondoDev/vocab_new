@@ -5,27 +5,20 @@
 //     prerendered SEO/hub/level-test/verb-list pages) — generated from this
 //     module by scripts/security/generate-headers-file.mjs, never hand-edited.
 //   - workers/word-ssr/src/index.full.ts (Cloudflare Worker: SSR word pages,
-//     redirects, errors) — imports buildCspReportOnlyHeaderValue() and
-//     buildCspEnforcingHeaderValue() directly.
+//     redirects, errors) — imports buildCspEnforcingHeaderValue() directly.
 //
 // scripts/tests/security/test-csp-policy-parity.mjs asserts both surfaces
-// stay semantically identical for EACH policy independently (parsed
+// stay semantically identical to the canonical enforcing policy (parsed
 // directive/value sets, not raw strings — public/_headers has its own file
 // syntax around the value).
 //
-// ── CSP Phase 2C: two policies, sent as two separate headers ──────────────
-//
-// Content-Security-Policy-Report-Only carries the FULL policy, including
-// script-src — this is pure visibility, never blocks anything, and is what
-// lets this project keep watching for Cloudflare JavaScript Detections'
-// edge-injected inline bootstrap script (see script-src's own comment
-// below) without that script's Report-Only noise ever going away.
+// ── CSP Phase 2C.2: only the enforcing policy ships in production ─────────
 //
 // Content-Security-Policy (the real, enforcing header) carries only the
 // subset of directives already proven safe against real production traffic
-// in Phase 2B.1 — style-src, img-src, font-src, connect-src, frame-src,
-// frame-ancestors, object-src, base-uri, form-action. It deliberately
-// OMITS both `script-src` AND `default-src`. This is not an oversight:
+// in Phase 2B.1/2C.1 — style-src, img-src, font-src, connect-src, frame-src,
+// frame-ancestors, object-src, base-uri, form-action. It deliberately OMITS
+// both `script-src` AND `default-src`. This is not an oversight:
 //
 //   - Cloudflare's JavaScript Detections feature (Bot Fight Mode, Free
 //     plan — see the CSP Phase 2B.2 audit) edge-injects an inline
@@ -35,11 +28,11 @@
 //     `script-src 'unsafe-inline'` or route all HTML through a
 //     nonce-generating Worker just to accommodate it (Phase 2B.2 found
 //     that would risk recreating the exact Worker-request-quota exhaustion
-//     this project already hit twice from bot traffic). So an ENFORCING
+//     this project already hit twice from bot traffic, and would
+//     materially complicate Static Assets delivery). So an ENFORCING
 //     script-src would, today, actively block Cloudflare's own script on
-//     every page load — an outcome deliberately avoided by leaving script
-//     enforcement in Report-Only until a real nonce architecture is worth
-//     the cost, which is not yet.
+//     every page load — an outcome deliberately avoided by not enforcing
+//     script sources at all right now.
 //   - If `default-src 'self'` were included in the enforcing policy
 //     WITHOUT an explicit `script-src`, CSP's own fallback rule means
 //     `default-src` governs script loading too — silently re-introducing
@@ -50,15 +43,44 @@
 //     types with no legitimate use anywhere in this app and no dedicated
 //     entry here — e.g. `worker-src`, `manifest-src` — simply aren't
 //     restricted by the enforcing header; this is an accepted, narrow gap,
-//     not a fallback hazard, since nothing in the app uses those features
-//     per the Phase 1 audit.)
+//     not a fallback hazard, since default-src's absence means there is no
+//     implicit coverage to leak through in the first place.)
+//
+// If script-source enforcement is ever revisited, the correct fix is NOT
+// adding Cloudflare's changing per-request hashes (impossible — they're
+// never static) and NOT `script-src 'unsafe-inline'` (defeats the point).
+// It requires either genuine Cloudflare-compatible per-response nonce
+// handling (a real architecture project — see the Phase 2B.2 report for
+// exactly what that costs) or a different future product/architecture
+// decision. Until then, script sources stay unenforced by design.
 //
 // scripts/tests/security/test-csp-policy-parity.mjs's "explicit
 // non-enforcement" checks fail loudly if `script-src`, `script-src-elem`,
 // `script-src-attr`, or `default-src` ever appear in the enforcing policy
-// without a deliberate, documented architecture change (a real per-request
-// nonce implementation — see the Phase 2B.2 report for what that would
-// require).
+// without a deliberate, documented architecture change.
+//
+// ── The audit policy: defined, not deployed ────────────────────────────────
+//
+// CSP_AUDIT_DIRECTIVES / buildCspAuditHeaderValue() / CSP_AUDIT_HEADER_NAME
+// are the full, strict policy this project ran in production as
+// `Content-Security-Policy-Report-Only` through Phase 2C.1 — including
+// script-src (the language-detection hash + the Cloudflare Web Analytics
+// beacon origin, deliberately never Cloudflare's own dynamic bot-management
+// script — see script-src's own comment below). Phase 2C.2 stops emitting
+// it in production (its only remaining signal was the same, permanently-
+// expected Cloudflare JavaScript Detections noise, once every real
+// violation was triaged and fixed in 2B.1/2C.1) but keeps the definition,
+// its hash-freshness test (scripts/tests/security/test-csp-hash-
+// freshness.mjs), and its own policy-integrity assertions in
+// test-csp-policy-parity.mjs — so a future CSP audit (e.g. revisiting
+// script enforcement, or auditing after a dependency change) can re-enable
+// it by wiring buildCspAuditHeaderValue()/CSP_AUDIT_HEADER_NAME back into
+// public/_headers and index.full.ts exactly the way buildCspEnforcingHeaderValue()/
+// CSP_ENFORCING_HEADER_NAME are wired in today, without redesigning
+// anything. Nothing in this file causes the audit policy to be emitted
+// anywhere by itself — only the two delivery surfaces' own code decides
+// what actually gets sent, and (Phase 2C.2) neither of them calls the
+// audit builder anymore.
 //
 // ── Hardcoded hash/prefix constants ────────────────────────────────────────
 // The hash/prefix constants below are hardcoded, not computed at
@@ -69,9 +91,11 @@
 // never hand-typed or estimated. scripts/tests/security/test-csp-hash-
 // freshness.mjs re-runs that script and fails if the constant ever drifts
 // from the actual source bytes (e.g. someone edits the language-detection
-// script without updating the hash here).
+// script without updating the hash here). This test keeps running even
+// though the audit policy isn't deployed — it's what keeps the audit
+// policy honest and ready for the re-enablement path described above.
 
-export const CSP_REPORT_ONLY_HEADER_NAME = "Content-Security-Policy-Report-Only";
+export const CSP_AUDIT_HEADER_NAME = "Content-Security-Policy-Report-Only";
 export const CSP_ENFORCING_HEADER_NAME = "Content-Security-Policy";
 
 // The one legitimate executable inline script remaining after CSP Phase 2A
@@ -108,8 +132,9 @@ export const LANG_DETECT_SCRIPT_HASH = "sha256-Re9krxasKuuFR9srOY0ldjUZQ6ei5cz5/
 // computed widths/percentages) — none embed user-, database-, or
 // translation-supplied text, so 'unsafe-inline' here does not open a path
 // for attacker-controlled CSS content, unlike the script-src case this
-// project deliberately never weakens the same way. Now enforced for real
-// (Phase 2C) as part of the enforcing policy's style-src.
+// project deliberately never weakens the same way. Enforced for real
+// (Phase 2C) as part of the enforcing policy's style-src — this is the
+// production-live behavior, not just audit-policy visibility.
 export const CSP_ALLOWS_UNSAFE_INLINE_STYLES = true;
 
 // jsDelivr path prefix used for the two remote country-flag <img> sources
@@ -149,22 +174,22 @@ export const IMG_SRC_ALLOWS_DATA_URIS = true;
 
 // Cloudflare Web Analytics' externally-hosted beacon script — confirmed
 // live in production (real headless-Chrome capture, not just static HTML
-// inspection: the Phase 2B repo/live-HTML audit missed this because
-// Cloudflare injects it at the edge into the response Chrome renders, not
-// into the HTML text a plain curl fetch receives). This is "Automatic
-// Injection" per Cloudflare's own Web Analytics documentation — confirmed
-// by there being zero reference to this script anywhere in this
-// repository — under which the beacon's own analytics POST goes to this
-// site's own origin (observed live: POSTs to /cdn-cgi/rum), already
-// covered by 'self' in connect-src, so no connect-src addition is needed
-// for it. Cloudflare's other edge-injected same-origin activity observed
-// during this triage (bot-management/challenge-platform scripts and POSTs,
-// Cloudflare Zaraz's tag-manager script and event POSTs — Zaraz is running
-// a Google Analytics v4 tag, entirely server/edge-side) all proxy through
-// this site's own origin (/cdn-cgi/*), already covered by 'self' in both
-// script-src and connect-src; none of it needs a new CSP allowance. This
-// origin is script-src-only (Report-Only policy) — it has no bearing on
-// the enforcing policy, which carries no script-src at all.
+// inspection: a repo/live-HTML-only audit misses this because Cloudflare
+// injects it at the edge into the response Chrome renders, not into the
+// HTML text a plain curl fetch receives). This is "Automatic Injection"
+// per Cloudflare's own Web Analytics documentation — confirmed by there
+// being zero reference to this script anywhere in this repository — under
+// which the beacon's own analytics POST goes to this site's own origin
+// (observed live: POSTs to /cdn-cgi/rum), already covered by 'self' in
+// connect-src, so no connect-src addition is needed for it. Cloudflare's
+// other edge-injected same-origin activity observed during the 2B.1 triage
+// (bot-management/challenge-platform scripts and POSTs, Cloudflare Zaraz's
+// tag-manager script and event POSTs — Zaraz is running a Google Analytics
+// v4 tag, entirely server/edge-side) all proxy through this site's own
+// origin (/cdn-cgi/*), already covered by 'self' in both script-src and
+// connect-src; none of it needs a new CSP allowance. This origin is
+// script-src-only (the audit policy only, not currently deployed) — it has
+// no bearing on the enforcing policy, which carries no script-src at all.
 export const CLOUDFLARE_INSIGHTS_SCRIPT_ORIGIN = "https://static.cloudflareinsights.com";
 
 // Production Supabase project origin (VITE_SUPABASE_URL) — the sole
@@ -179,9 +204,9 @@ export const SUPABASE_ORIGIN = "https://ogovfcmhwqjljawsoiru.supabase.co";
 type DirectiveEntry = readonly [string, readonly string[]];
 
 // The directive entries already proven safe against real production
-// traffic (Phase 2B.1) — every one of these is non-script, and every one
-// is shared, byte-for-byte, by both policies below. Defined exactly once
-// here so the Report-Only and enforcing policies can never accidentally
+// traffic (Phase 2B.1/2C.1) — every one of these is non-script, and every
+// one is shared, byte-for-byte, by both policies below. Defined exactly
+// once here so the audit and enforcing policies can never accidentally
 // drift apart on the directives they're supposed to share; the enforcing
 // policy is this list and NOTHING else (see CSP_ENFORCING_DIRECTIVES).
 const SAFE_NON_SCRIPT_DIRECTIVES: readonly DirectiveEntry[] = [
@@ -196,38 +221,45 @@ const SAFE_NON_SCRIPT_DIRECTIVES: readonly DirectiveEntry[] = [
   ["form-action", ["'self'"]],
 ];
 
-// Full visibility policy — default-src, strict script-src (including the
-// one FluentStellar-owned hash and the Cloudflare Insights beacon origin;
+// Full strict policy — default-src, strict script-src (including the one
+// FluentStellar-owned hash and the Cloudflare Insights beacon origin;
 // deliberately NOT Cloudflare's own dynamic bot-management script — see
 // the file header comment), plus every SAFE_NON_SCRIPT_DIRECTIVES entry.
-// Sent only as Content-Security-Policy-Report-Only — never blocks
-// anything, purely observational.
-export const CSP_REPORT_ONLY_DIRECTIVES: readonly DirectiveEntry[] = [
+// This is the AUDIT policy: kept in source and fully tested (see the file
+// header's "audit policy: defined, not deployed" section), but — as of
+// Phase 2C.2 — neither public/_headers nor index.full.ts calls
+// buildCspAuditHeaderValue() anymore, so it is not sent by production at
+// all. It ran in production as Content-Security-Policy-Report-Only through
+// Phase 2C.1; re-enabling it for a future audit means wiring it back into
+// those two call sites the same way the enforcing policy is wired in now.
+export const CSP_AUDIT_DIRECTIVES: readonly DirectiveEntry[] = [
   ["default-src", ["'self'"]],
   // Cloudflare's own edge-injected bot-management bootstrap script embeds a
   // fresh random nonce/token on every single response (confirmed by
   // fetching production twice and diffing the two inline scripts' bytes) —
   // it can never be pinned by a static hash, and it is not app-owned code
   // this project controls, so unlike LANG_DETECT_SCRIPT_HASH it is
-  // deliberately NOT allow-listed here. It will keep showing as Report-Only
-  // console noise indefinitely; this is expected, not a bug to keep
-  // chasing. 'unsafe-inline' is NOT added here to silence it — script-src
-  // stays strict, and (Phase 2C) exists only in this Report-Only policy,
-  // never in the enforcing one.
+  // deliberately NOT allow-listed here. When this policy was live as
+  // Report-Only (through Phase 2C.1) it showed as permanent, expected
+  // console noise; this is expected, not a bug to keep chasing.
+  // 'unsafe-inline' is NOT added here to silence it — script-src stays
+  // strict, and exists only in this audit policy, never in the enforcing
+  // one that's actually deployed.
   ["script-src", ["'self'", `'${LANG_DETECT_SCRIPT_HASH}'`, CLOUDFLARE_INSIGHTS_SCRIPT_ORIGIN]],
   ...SAFE_NON_SCRIPT_DIRECTIVES,
 ];
 
-// Enforcing policy (Phase 2C) — real Content-Security-Policy, actually
-// blocks violations. Exactly SAFE_NON_SCRIPT_DIRECTIVES: no default-src,
-// no script-src, no script-src-elem, no script-src-attr. See the file
-// header comment for exactly why both omissions are deliberate and
-// security-significant, not oversights. Directive types not listed here
-// and with no legitimate use anywhere in the app (worker-src,
-// manifest-src, etc. — see the Phase 1 CSP audit) are simply unrestricted
-// by this header; this is an accepted, narrow, intentional gap, not a
-// fallback hazard, since default-src's absence means there is no implicit
-// coverage to leak through in the first place.
+// Enforcing policy (Phase 2C, the only policy production emits as of
+// Phase 2C.2) — real Content-Security-Policy, actually blocks violations.
+// Exactly SAFE_NON_SCRIPT_DIRECTIVES: no default-src, no script-src, no
+// script-src-elem, no script-src-attr. See the file header comment for
+// exactly why both omissions are deliberate and security-significant, not
+// oversights. Directive types not listed here and with no legitimate use
+// anywhere in the app (worker-src, manifest-src, etc. — see the Phase 1
+// CSP audit) are simply unrestricted by this header; this is an accepted,
+// narrow, intentional gap, not a fallback hazard, since default-src's
+// absence means there is no implicit coverage to leak through in the
+// first place.
 export const CSP_ENFORCING_DIRECTIVES: readonly DirectiveEntry[] = SAFE_NON_SCRIPT_DIRECTIVES;
 
 function serializeDirectives(directives: readonly DirectiveEntry[]): string {
@@ -238,8 +270,13 @@ function serializeDirectives(directives: readonly DirectiveEntry[]): string {
 // source list, no trailing `;` — an arbitrary but fixed serialization; the
 // parity test only cares about the *parsed* directive/value sets, not this
 // exact formatting.
-export function buildCspReportOnlyHeaderValue(): string {
-  return serializeDirectives(CSP_REPORT_ONLY_DIRECTIVES);
+//
+// Not currently called by either production delivery surface (see the file
+// header) — kept for the audit-policy re-enablement path and exercised by
+// scripts/tests/security/test-csp-hash-freshness.mjs and
+// test-csp-policy-parity.mjs's audit-policy integrity checks.
+export function buildCspAuditHeaderValue(): string {
+  return serializeDirectives(CSP_AUDIT_DIRECTIVES);
 }
 
 export function buildCspEnforcingHeaderValue(): string {
