@@ -184,7 +184,7 @@ export function AccountOnboardingDialog({
                 </div>
               ) : null}
 
-              <div className="grid gap-5 md:grid-cols-2 [&_.language-selector-trigger]:h-12 [&_.language-selector-trigger]:px-4 [&_.language-selector-trigger]:py-3 [&_.language-selector-trigger]:md:px-4 [&_.language-selector-trigger]:md:py-3 [&_.language-selector-trigger]:md:text-base">
+              <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [&_.language-selector-trigger]:h-12 [&_.language-selector-trigger]:px-4 [&_.language-selector-trigger]:py-3 [&_.language-selector-trigger]:md:px-4 [&_.language-selector-trigger]:md:py-3 [&_.language-selector-trigger]:md:text-base">
                 <LanguageSelector
                   label="Native language"
                   value={profile.nativeLanguage}
@@ -216,8 +216,8 @@ export function AccountOnboardingDialog({
                 />
               </div>
 
-              <div className="grid gap-5 md:grid-cols-[1fr_1fr]">
-                <div className="space-y-2">
+              <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                <div className="min-w-0 space-y-2">
                   <Label
                     htmlFor="account-onboarding-nickname"
                     className="text-sm font-semibold text-[#37275b]"
@@ -251,7 +251,7 @@ export function AccountOnboardingDialog({
                         })
                       }
                     >
-                      <SelectTrigger className="h-12 min-h-12 max-h-12 py-0 rounded-2xl border-[#dcd1ff] bg-white px-4 text-base text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 disabled:cursor-not-allowed disabled:opacity-55 [&_svg]:size-5 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
+                      <SelectTrigger className="h-12 min-h-12 max-h-12 min-w-0 rounded-2xl border-[#dcd1ff] bg-white px-4 py-0 text-base text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 disabled:cursor-not-allowed disabled:opacity-55 [&_[data-slot=select-value]]:min-w-0 [&_svg]:size-5 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
                         <SelectValue
                           placeholder={
                             isLanguageLevelDisabled
@@ -280,7 +280,7 @@ export function AccountOnboardingDialog({
                   </div>
                 </div>
 
-                <div className="space-y-3 rounded-[1.5rem] border border-[#dfd5ff] bg-white/85 p-4 shadow-[0_16px_36px_-26px_rgba(74,43,130,0.9)]">
+                <div className="min-w-0 space-y-3 rounded-[1.5rem] border border-[#dfd5ff] bg-white/85 p-4 shadow-[0_16px_36px_-26px_rgba(74,43,130,0.9)]">
                   <Label
                     htmlFor="account-onboarding-age"
                     className="justify-center text-sm font-semibold text-[#37275b]"
@@ -360,14 +360,14 @@ export function AccountOnboardingDialog({
                   <Label className="justify-center text-sm font-semibold text-[#37275b]">
                     Birth Date
                   </Label>
-                  <div className="grid grid-cols-[1.3fr_0.7fr] gap-3">
+                  <div className="grid grid-cols-[minmax(0,1fr)_4.25rem] gap-1.5">
                     <Select
                       value={profile.birthMonth}
                       onValueChange={(value) =>
                         onProfileChange({ birthMonth: value })
                       }
                     >
-                      <SelectTrigger className="h-11 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-[22px] text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 [&_svg]:size-4 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
+                      <SelectTrigger className="h-11 min-w-0 gap-1 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-1.5 text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 [&_svg]:size-4 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
                         <SelectValue placeholder="Month" />
                       </SelectTrigger>
                       <SelectContent
@@ -393,7 +393,7 @@ export function AccountOnboardingDialog({
                         onProfileChange({ birthDay: value })
                       }
                     >
-                      <SelectTrigger className="h-11 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-[22px] text-center text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 [&_svg]:size-4 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
+                      <SelectTrigger className="h-11 min-w-0 gap-1 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-1.5 text-center text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 [&_svg]:size-4 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
                         <SelectValue placeholder="day" />
                       </SelectTrigger>
                       <SelectContent
