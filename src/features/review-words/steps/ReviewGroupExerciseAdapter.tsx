@@ -32,11 +32,11 @@ const INITIAL_STATUS: ExerciseStatus = {
   usedHintForBrokenWord: false,
 };
 
-// Reuses the existing short exercise-type descriptions (practice.exerciseDescription.*)
+// Reuses the existing short exercise-type descriptions (exerciseSelection.exerciseDescription.*)
 // as this adapter's instruction line — no new translation keys needed.
 const INSTRUCTION_KEY: Record<GroupExerciseId, string> = {
-  connectWords: "practice.exerciseDescription.connectWords",
-  listening: "practice.exerciseDescription.listening",
+  connectWords: "exerciseSelection.exerciseDescription.connectWords",
+  listening: "exerciseSelection.exerciseDescription.listening",
 };
 
 // ConnectWordsExercise/ListeningExercise rebuild their whole board (and

@@ -33,6 +33,20 @@ const INSTRUCTION_KEY: Record<TypingExerciseId, string> = {
   wordTyping: "practice.wordTypingInstruction",
 };
 
+function formatWordTypeLabel(typeId: string): string {
+  return typeId
+    .split(/[_-]+/g)
+    .map((part) => (part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part))
+    .join(" ");
+}
+
+function formatCategoryLabel(categoryId: string): string {
+  return categoryId
+    .split(" ")
+    .map((part) => (part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part))
+    .join(" ");
+}
+
 interface ReviewExerciseAdapterProps {
   exerciseId: TypingExerciseId;
   item: ResolvedReviewQueueItem;
@@ -106,11 +120,52 @@ export function ReviewExerciseAdapter({ exerciseId, item, practiceLanguage, onCo
     "--practice-card-bg": "#F8FAFC",
     "--practice-card-border": exerciseCardBorders[exerciseId] ?? "#7A68D8",
   };
+  const grammarTypeLabel = item.grammarType
+    ? (() => {
+        const translated = t(`wordTypes.${item.grammarType}`);
+        return translated === `wordTypes.${item.grammarType}` ? formatWordTypeLabel(item.grammarType!) : translated;
+      })()
+    : "";
+  const categoryLabel = item.category
+    ? (() => {
+        const translated = t(`levelCategory.topicNames.${item.category}`);
+        return translated === `levelCategory.topicNames.${item.category}` ? formatCategoryLabel(item.category!) : translated;
+      })()
+    : "";
 
   return (
     <div className="practice-card-shell review-exercise-shell">
       <div className="practice-card review-exercise-card" style={cardStyle}>
         <p className="review-exercise-instruction">{t(INSTRUCTION_KEY[exerciseId])}</p>
+
+        {(item.level || categoryLabel || grammarTypeLabel) && (
+          <div className="review-exercise-meta w-[95%] mx-auto pt-2 md:pt-3">
+            {(item.level || categoryLabel) && (
+              <div className="exercise-meta-row flex items-center justify-between">
+                {item.level && (
+                  <div
+                    className="exercise-meta-cefr min-w-[2.25rem] h-9 px-2 inline-flex items-center justify-center rounded-full text-sm font-semibold uppercase border-2 text-muted-foreground/70"
+                    style={{
+                      borderColor: "rgba(74, 43, 130, 0.35)",
+                    }}
+                  >
+                    {item.level}
+                  </div>
+                )}
+                {categoryLabel && (
+                  <div className="exercise-meta-category text-sm font-semibold uppercase text-muted-foreground/70 text-right">
+                    {categoryLabel}
+                  </div>
+                )}
+              </div>
+            )}
+            {grammarTypeLabel && (
+              <div className="exercise-meta-word-type mt-4 text-center text-lg font-semibold text-muted-foreground">
+                {grammarTypeLabel}
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="exercise-main-content review-exercise-main-content">
           <div className="exercise-word-area review-exercise-word-area">
