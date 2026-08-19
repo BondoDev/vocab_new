@@ -22,12 +22,22 @@ export class LiveNetworkError extends Error {
   }
 }
 
-function headersFor(config, { accessToken, useServiceRole } = {}) {
+function headersFor(config, { accessToken, useSecretKey } = {}) {
   const headers = { "Content-Type": "application/json" };
 
-  if (useServiceRole) {
-    headers.apikey = config.serviceRoleKey;
-    headers.Authorization = `Bearer ${config.serviceRoleKey}`;
+  // Credential-source migration (2026-08-19): config.secretKey is an
+  // sb_secret_... API key, not a JWT — unlike the legacy service_role JWT
+  // this replaced, it must never be sent as `Authorization: Bearer ...`
+  // (Supabase's Auth gateway would try to decode it as a user JWT and
+  // reject it). The new key model authenticates a privileged server
+  // request through the `apikey` header alone; `Authorization` is reserved
+  // for an actual user access token (see the accessToken branch below),
+  // and a privileged call in this suite never has one of those to send —
+  // every useSecretKey caller (disposableUser.mjs's admin create/delete,
+  // liveCleanupVerify.mjs, and the privileged reads in scenarios/*.mjs) is
+  // a pure server-secret operation with no accompanying user token.
+  if (useSecretKey) {
+    headers.apikey = config.secretKey;
     return headers;
   }
 

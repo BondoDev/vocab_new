@@ -117,13 +117,35 @@ test("7. A getUser() failure (expired/invalid/already-deleted-user token) is rej
 });
 
 test("8. Missing server secrets fail closed (500) rather than falling back to an unprivileged client", () => {
-  assert.match(fnSource, /if \(!SUPABASE_URL \|\| !SERVICE_ROLE_KEY\)/);
+  assert.match(fnSource, /if \(!SUPABASE_URL \|\| !SECRET_KEY\)/);
   assert.match(fnSource, /server_misconfigured/);
 });
 
-test("9. The service_role key is read only from a server-side env var, never a VITE_-prefixed one", () => {
-  assert.match(fnCodeOnly, /Deno\.env\.get\("SUPABASE_SERVICE_ROLE_KEY"\)/);
+test("9. The privileged key is read only from the platform-injected SUPABASE_SECRET_KEYS env var, never a VITE_-prefixed one, and never the legacy SUPABASE_SERVICE_ROLE_KEY var", () => {
+  assert.match(fnCodeOnly, /Deno\.env\.get\("SUPABASE_SECRET_KEYS"\)/);
+  assert.doesNotMatch(fnCodeOnly, /Deno\.env\.get\("SUPABASE_SERVICE_ROLE_KEY"\)/);
   assert.doesNotMatch(fnCodeOnly, /VITE_/);
+});
+
+test("9a. SUPABASE_SECRET_KEYS is JSON-parsed defensively and the \"default\" entry is selected, never the raw string used directly", () => {
+  assert.match(fnCodeOnly, /JSON\.parse\(raw\)/);
+  assert.match(fnCodeOnly, /\.default\b/);
+});
+
+test("9b. A malformed/missing SUPABASE_SECRET_KEYS resolves to null, not a thrown exception — JSON.parse is wrapped in try/catch", () => {
+  const parseCallIndex = fnCodeOnly.indexOf("JSON.parse(raw)");
+  assert.ok(parseCallIndex > -1, "expected a JSON.parse(raw) call");
+  const surrounding = fnCodeOnly.slice(Math.max(0, parseCallIndex - 60), parseCallIndex + 120);
+  assert.match(surrounding, /try\s*\{/);
+  assert.match(surrounding, /catch\s*\{/);
+});
+
+test("9c. resolveSecretKey() never logs the raw env value, the parsed object, or the resolved key", () => {
+  const fnStart = fnSource.indexOf("function resolveSecretKey");
+  const fnEnd = fnSource.indexOf("\n}", fnStart);
+  assert.ok(fnStart > -1 && fnEnd > -1, "expected a resolveSecretKey() function");
+  const body = fnSource.slice(fnStart, fnEnd);
+  assert.doesNotMatch(body, /console\.(log|error|warn|info|debug)/);
 });
 
 test("10. A failed Auth deletion returns a clear error, never a false success", () => {
@@ -465,7 +487,7 @@ test("42. ACCOUNT_DELETION_ENABLED is still read and enforced — the CORS fix d
   assert.match(fnSource, /account_deletion_disabled/);
 });
 
-test("43. No service-role credential exists anywhere in frontend code (src/), confirmed again after the CORS fix", () => {
+test("43. No privileged server credential — legacy service_role or the new secret key — exists anywhere in frontend code (src/), confirmed again after the CORS fix and the secret-key migration", () => {
   const SRC_DIR = path.join(ROOT_DIR, "src");
   const walk = (dir) => {
     const offenders = [];
@@ -475,7 +497,7 @@ test("43. No service-role credential exists anywhere in frontend code (src/), co
         offenders.push(...walk(fullPath));
       } else if (/\.(ts|tsx)$/.test(entry.name)) {
         const content = fs.readFileSync(fullPath, "utf8");
-        if (/SUPABASE_SERVICE_ROLE_KEY|service_role/i.test(content.replace(/\/\/.*$/gm, ""))) {
+        if (/SUPABASE_SERVICE_ROLE_KEY|service_role|SUPABASE_SECRET_KEYS|sb_secret_/i.test(content.replace(/\/\/.*$/gm, ""))) {
           offenders.push(path.relative(ROOT_DIR, fullPath));
         }
       }

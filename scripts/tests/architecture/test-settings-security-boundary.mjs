@@ -70,7 +70,7 @@ test("1. No Settings component issues a direct REST write against user_profiles 
   );
 });
 
-test("2. No Settings component or new lib file references service_role/SUPABASE_SERVICE_ROLE_KEY in executable code (comments documenting the backend's own grant model don't count)", () => {
+test("2. No Settings component or new lib file references service_role/SUPABASE_SERVICE_ROLE_KEY/SUPABASE_SECRET_KEYS/sb_secret_ in executable code (comments documenting the backend's own grant model don't count)", () => {
   const libFiles = [
     { name: "userProfile.ts", content: stripLineComments(fs.readFileSync(USER_PROFILE_LIB, "utf8")) },
     {
@@ -85,7 +85,16 @@ test("2. No Settings component or new lib file references service_role/SUPABASE_
     assert.doesNotMatch(
       file.content,
       /SUPABASE_SERVICE_ROLE_KEY/,
-      `${file.name} must never reference the service-role secret`,
+      `${file.name} must never reference the legacy service-role secret`,
+    );
+    // Credential-source migration (2026-08-19): the same boundary applies to
+    // the new secret-key model — a Settings/lib file has no more business
+    // holding an sb_secret_... key or the platform's SUPABASE_SECRET_KEYS
+    // env var than it ever had holding the legacy service_role JWT.
+    assert.doesNotMatch(
+      file.content,
+      /SUPABASE_SECRET_KEYS|sb_secret_/,
+      `${file.name} must never reference the server-side secret key`,
     );
   }
 });

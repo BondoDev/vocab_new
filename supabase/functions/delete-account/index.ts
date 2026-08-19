@@ -10,9 +10,12 @@
 // authentication state itself on every call, regardless of what the client
 // already did — see "Identity model" and "Reauthentication" below. Runs on
 // Supabase's own Edge Runtime, the only place in this repository that may
-// legitimately hold the Supabase `service_role` key: it is set as an Edge
-// Function secret (`supabase secrets set SUPABASE_SERVICE_ROLE_KEY=...`),
-// never as a `VITE_`-prefixed build-time variable, so it can never end up in
+// legitimately hold a Supabase privileged server credential: as of the
+// 2026-08-19 credential-source migration this is the platform-auto-injected
+// `SUPABASE_SECRET_KEYS` JSON (its `"default"` entry, an `sb_secret_...`
+// key) rather than the legacy `SUPABASE_SERVICE_ROLE_KEY` JWT this function
+// used to read directly — see resolveSecretKey() below. Never set as a
+// `VITE_`-prefixed build-time variable, so it can never end up in
 // a browser bundle. The Cloudflare Worker (workers/word-ssr/) was
 // deliberately NOT used for this: it is a public, unauthenticated word-SSR
 // renderer with its own tight bundle-size budget and no auth/session
@@ -99,7 +102,44 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { hasRecentAuthentication, isCurrentSessionGoogleAuthenticated } from "./recentAuth.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+
+// Credential-source migration (2026-08-19): the legacy `service_role` JWT
+// was exposed to tool/transcript output during a prior audit, so every
+// legitimate consumer is being moved off it. Supabase's own Edge Function
+// runtime auto-injects `SUPABASE_SECRET_KEYS` — a JSON object mapping named
+// server-side secret keys (`sb_secret_...`, the platform's replacement for
+// `service_role`) — into every function's environment already, regardless
+// of this function's code; this reads the `"default"` entry from it instead
+// of the old single-string `SUPABASE_SERVICE_ROLE_KEY` var. Deliberately
+// defensive: a missing var, invalid JSON, a non-object payload, or a
+// missing/empty `"default"` entry all resolve to `null` here rather than
+// throwing, so every failure mode collapses into the same
+// `!SECRET_KEY` fail-closed branch below that the old `!SERVICE_ROLE_KEY`
+// check already used — never a partially-configured or silently-degraded
+// privileged client. Never logs the raw env value, the parsed object, or
+// the resolved key (including no prefix/partial logging) — a parse failure
+// is reported to the caller only as the same generic `server_misconfigured`
+// 500 every other missing-config case already produces.
+function resolveSecretKey(): string | null {
+  const raw = Deno.env.get("SUPABASE_SECRET_KEYS");
+  if (!raw) return null;
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return null;
+  }
+
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return null;
+  }
+
+  const value = (parsed as Record<string, unknown>).default;
+  return typeof value === "string" && value.length > 0 ? value : null;
+}
+
+const SECRET_KEY = resolveSecretKey();
 // Exact-match only — see the header comment above. Deliberately not
 // lower-cased/trimmed/coerced before comparison: normalizing the value
 // would turn "True"/" true "/"TRUE" into accepted spellings, which is
@@ -249,10 +289,14 @@ Deno.serve(async (req: Request) => {
 
   // Fail closed: without both values this function cannot safely identify
   // or delete anyone, and must never fall back to an unprivileged client.
-  if (!SUPABASE_URL || !SERVICE_ROLE_KEY) {
+  if (!SUPABASE_URL || !SECRET_KEY) {
     return jsonResponse({ error: "server_misconfigured" }, 500, corsHeaders);
   }
 
+  // The caller's OWN user access token — always a real Supabase Auth JWT,
+  // completely independent of SECRET_KEY above. Never conflated with the
+  // privileged server credential: this is what identifies the caller,
+  // SECRET_KEY is only ever used to construct adminClient below.
   const authHeader = req.headers.get("Authorization") ?? "";
   const bearerMatch = /^Bearer\s+(.+)$/i.exec(authHeader);
   if (!bearerMatch) {
@@ -260,10 +304,14 @@ Deno.serve(async (req: Request) => {
   }
   const callerToken = bearerMatch[1];
 
-  // service_role client — used only to (a) resolve the token to a live
-  // user via the Admin API and (b) perform the Admin API deletion itself.
-  // Never constructed from or exposed to the request in any other way.
-  const adminClient = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
+  // Privileged admin client — used only to (a) resolve the caller's own
+  // token to a live user via the Admin API and (b) perform the Admin API
+  // deletion itself. Never constructed from or exposed to the request in
+  // any other way. Authenticated with SECRET_KEY (the new sb_secret_...
+  // server credential, resolved above) — @supabase/supabase-js@2 accepts it
+  // here exactly as it did the legacy service_role JWT; no other call in
+  // this function changes shape.
+  const adminClient = createClient(SUPABASE_URL, SECRET_KEY, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 

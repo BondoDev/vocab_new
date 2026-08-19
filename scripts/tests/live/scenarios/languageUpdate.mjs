@@ -65,7 +65,7 @@ export async function run(ctx, t) {
     const response = await restGet(
       ctx.config,
       `/rest/v1/user_profiles?id=eq.${encodeURIComponent(ctx.userB.session.userId)}&select=native_language,learning_language`,
-      { useServiceRole: true },
+      { useSecretKey: true },
     );
     assertOk(response, "privileged read of B's languages after A's update");
     assert.equal(response.json[0].native_language, "de", "Set at B's onboarding, untouched since.");

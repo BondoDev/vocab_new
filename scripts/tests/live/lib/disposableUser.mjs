@@ -47,13 +47,13 @@ export async function createDisposableUser(config, label) {
     "/auth/v1/admin/users",
     "POST",
     { email, password, email_confirm: true },
-    { useServiceRole: true },
+    { useSecretKey: true },
   );
 
   if (!response.ok || typeof response.json?.id !== "string") {
     throw new DisposableUserError(
       `Failed to create disposable "${label}" user via the Admin API (status ${response.status}). ` +
-        "Check that SUPABASE_SERVICE_ROLE_KEY is correct for SUPABASE_URL and that the project allows Admin API user creation.",
+        "Check that SUPABASE_SECRET_KEY is correct for SUPABASE_URL and that the project allows Admin API user creation.",
       response.json ?? response.raw,
     );
   }
@@ -101,7 +101,7 @@ export async function deleteDisposableUser(config, userId) {
     `/auth/v1/admin/users/${encodeURIComponent(userId)}`,
     "DELETE",
     undefined,
-    { useServiceRole: true },
+    { useSecretKey: true },
   );
 
   if (!response.ok) {

@@ -960,14 +960,22 @@ operation:
   There is no other Cloudflare Worker or server route anywhere in this
   repository (`docs/deployment.md`: Cloudflare serves static assets plus
   this one Worker; the SPA itself ships no server code of its own).
-- Supabase Edge Functions run entirely outside the browser, can hold
-  `SUPABASE_SERVICE_ROLE_KEY` as a function secret (`supabase secrets set`),
-  and are the platform's own purpose-built mechanism for exactly this
-  operation.
-- The `service_role` key is set only as an Edge Function secret — never a
-  `VITE_`-prefixed variable, so Vite can never inline it into a browser
-  bundle (every existing `VITE_SUPABASE_*` variable in this repo is the
-  anon key only — confirmed above).
+- Supabase Edge Functions run entirely outside the browser and are the
+  platform's own purpose-built mechanism for exactly this operation.
+  **Credential-source migration (2026-08-19)**: the function used to read
+  `SUPABASE_SERVICE_ROLE_KEY` (a function secret set via `supabase secrets
+  set`) directly. It now reads the `"default"` entry of `SUPABASE_SECRET_KEYS`
+  instead — a JSON object of named `sb_secret_...` keys the platform
+  auto-injects into every Edge Function's environment automatically,
+  regardless of the function's own code. See
+  `supabase/functions/delete-account/index.ts`'s `resolveSecretKey()` for
+  the parsing/fail-closed logic. The legacy `service_role` key remains
+  active on the project (not yet retired — see this migration's own task
+  record) but is no longer read by this function.
+- Whichever key is in use is only ever a server-side Edge Function secret —
+  never a `VITE_`-prefixed variable, so Vite can never inline it into a
+  browser bundle (every existing `VITE_SUPABASE_*` variable in this repo is
+  the anon key only — confirmed above).
 
 **Platform-level JWT verification (CHANGED — CORS incident, 2026-08-13)**:
 `supabase/config.toml` declared `[functions.delete-account]` with
@@ -1004,9 +1012,9 @@ repository already uses (`complete_user_profile_onboarding`,
 `initialize_user_timezone` — none accept a caller-supplied id either).
 Missing/malformed/expired/already-deleted-user tokens are all rejected the
 same way (401 `unauthenticated`); a misconfigured deployment (missing
-`SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY`) fails closed (500
-`server_misconfigured`) rather than silently falling back to an
-unprivileged client.
+`SUPABASE_URL` or an unresolvable `SUPABASE_SECRET_KEYS` — see
+resolveSecretKey() above) fails closed (500 `server_misconfigured`) rather
+than silently falling back to an unprivileged client.
 
 **Cascade**: the function performs exactly one call,
 `adminClient.auth.admin.deleteUser(callerId)` — no manual per-table
@@ -1042,7 +1050,7 @@ request
   ↓
 method check (POST only) → 405 otherwise
   ↓
-server-config check (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY present) → 500 otherwise
+server-config check (SUPABASE_URL / SUPABASE_SECRET_KEYS["default"] resolvable) → 500 otherwise
   ↓
 bearer-token check → 401 otherwise
   ↓
@@ -2450,7 +2458,7 @@ message, if any are missing — never a silent skip or a faked result):
 ```text
 SUPABASE_URL                 # the target project's REST URL, e.g. https://xxxx.supabase.co
 SUPABASE_ANON_KEY             # that project's anon public API key
-SUPABASE_SERVICE_ROLE_KEY     # that project's service_role key — Node test process only, never a VITE_-prefixed variable, never committed
+SUPABASE_SECRET_KEY           # that project's sb_secret_... server key — Node test process only, never a VITE_-prefixed variable, never committed
 ```
 
 Optional:

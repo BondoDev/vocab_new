@@ -60,7 +60,7 @@ export async function run(ctx, t) {
         custom_practice_time_seconds: 0,
         daily_goal: 30,
       },
-      { useServiceRole: true, prefer: "return=representation" },
+      { useSecretKey: true, prefer: "return=representation" },
     );
     assertOk(response, "privileged fixture insert of a historical user_daily_stats row");
   });

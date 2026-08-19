@@ -33,7 +33,7 @@ export async function run(ctx, t) {
     const before = await restGet(
       ctx.config,
       `/rest/v1/user_profiles?id=eq.${encodeURIComponent(ctx.userB.session.userId)}&select=native_language,learning_language,updated_at`,
-      { useServiceRole: true }, // privileged read: A cannot see B's row (confirmed above), so this before/after diff needs service-role
+      { useSecretKey: true }, // privileged read: A cannot see B's row (confirmed above), so this before/after diff needs the secret key
     );
     assertOk(before, "privileged read of B's profile before A's language-update call");
 
@@ -48,7 +48,7 @@ export async function run(ctx, t) {
     const after = await restGet(
       ctx.config,
       `/rest/v1/user_profiles?id=eq.${encodeURIComponent(ctx.userB.session.userId)}&select=native_language,learning_language,updated_at`,
-      { useServiceRole: true },
+      { useSecretKey: true },
     );
     assert.deepEqual(after.json[0], before.json[0], "B's row must be completely unaffected by a call A makes.");
   });

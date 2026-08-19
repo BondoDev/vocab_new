@@ -65,9 +65,19 @@ export function loadLiveConfig() {
     "Set it to the target Supabase project's anon public API key.",
   );
 
-  const serviceRoleKey = requireEnv(
-    "SUPABASE_SERVICE_ROLE_KEY",
-    "This suite needs privileged access to create/confirm/delete disposable test users and to verify cleanup and historical-data fixtures — it is read only by this Node test process, never by any frontend code path. Get it from Supabase dashboard > Project Settings > API > service_role key. Never commit it, never add a VITE_-prefixed copy of it.",
+  // Credential-source migration (2026-08-19): this suite used to require
+  // SUPABASE_SERVICE_ROLE_KEY (the legacy service_role JWT). It now requires
+  // SUPABASE_SECRET_KEY instead — a single developer-provided sb_secret_...
+  // value from the project's newer secret-key model. Deliberately a single
+  // scalar env var here, not a JSON dictionary like the Edge Function's
+  // platform-injected SUPABASE_SECRET_KEYS (supabase/functions/delete-
+  // account/index.ts): this suite has exactly one privileged caller
+  // (liveHttp.mjs's useSecretKey path below), never a multi-key selection
+  // need, so mirroring that JSON-dictionary shape here would only add a
+  // parsing step with no corresponding benefit.
+  const secretKey = requireEnv(
+    "SUPABASE_SECRET_KEY",
+    "This suite needs privileged access to create/confirm/delete disposable test users and to verify cleanup and historical-data fixtures — it is read only by this Node test process, never by any frontend code path. Get an sb_secret_... key from Supabase dashboard > Project Settings > API Keys. Never commit it, never add a VITE_-prefixed copy of it.",
   );
 
   const timeoutMs = (() => {
@@ -76,5 +86,5 @@ export function loadLiveConfig() {
     return Number.isFinite(parsed) && parsed > 0 ? parsed : 15000;
   })();
 
-  return { supabaseUrl, anonKey, serviceRoleKey, timeoutMs };
+  return { supabaseUrl, anonKey, secretKey, timeoutMs };
 }

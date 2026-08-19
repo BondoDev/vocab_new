@@ -24,7 +24,7 @@ export async function verifyNoRemainingRows(config, userId) {
     const response = await restGet(
       config,
       `/rest/v1/${table}?${column}=eq.${encodeURIComponent(userId)}&select=${column}`,
-      { useServiceRole: true },
+      { useSecretKey: true },
     );
 
     if (!response.ok) {

@@ -40,14 +40,14 @@ async function readOwnProfile(ctx, user) {
   return response.json[0];
 }
 
-// Privileged (service_role) row-count reads — used for the cross-table/
+// Privileged (secret-key) row-count reads — used for the cross-table/
 // cross-user assertions below, which must see the true state regardless of
 // which user's token would otherwise be allowed to read it via RLS.
 async function countRows(ctx, table, userId, targetLanguage) {
   const response = await restGet(
     ctx.config,
     `/rest/v1/${table}?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(targetLanguage)}&select=id`,
-    { useServiceRole: true },
+    { useSecretKey: true },
   );
   assertOk(response, `privileged count of ${table} for user=${userId} language=${targetLanguage}`);
   return response.json.length;

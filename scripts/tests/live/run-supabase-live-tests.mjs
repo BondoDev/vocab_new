@@ -2,7 +2,7 @@
 //
 // Run: npm run test:supabase-live
 //
-// Requires SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY (see
+// Requires SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SECRET_KEY (see
 // supabase/README.md's "Live Supabase E2E tests" section for the full
 // list, how to set them, and the safety model). Fails immediately with a
 // clear message if any are missing — never silently skips or fakes a
