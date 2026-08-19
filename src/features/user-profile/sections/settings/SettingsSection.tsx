@@ -18,6 +18,13 @@ import { normalizeNewPasswordInput } from "../../../../app/utils/settingsPasswor
 import { formatTimezoneOffset, getTimezoneCityLabel } from "../../../../app/utils/timezoneOptions";
 import { useLanguage, type UILanguage } from "../../../../contexts/LanguageContext";
 import {
+  clampOnboardingAge,
+  DEFAULT_ONBOARDING_AGE,
+  ONBOARDING_MAX_AGE,
+  ONBOARDING_MIN_AGE,
+  resolveOnboardingAgeDefault,
+} from "../../../../app/utils/accountOnboardingAge";
+import {
   deleteAccount,
   isPasswordAccount,
   reauthenticateForAccountDeletion,
@@ -31,6 +38,7 @@ import { SUPPORTED_LANGUAGE_CODES, SUPPORTED_LEVEL_CODES } from "../../../../lib
 import {
   resetLearningLanguageProgress,
   updateUserNickname,
+  updateUserProfileDemographics,
   updateUserProfileLearningPreferences,
   updateUserTimezone,
   writeStoredUserProfile,
@@ -70,6 +78,13 @@ export interface ProfileTimezoneChange {
   timezoneUpdatedAt: string;
 }
 
+export interface ProfileDemographicsChange {
+  age: number;
+  birthMonth: string;
+  birthDay: string;
+  updatedAt: string;
+}
+
 interface SettingsSectionProps {
   // Same shared-profile prop every other section receives (see
   // UserProfileDashboardPage) — this section reads nickname/languages/level/
@@ -90,6 +105,7 @@ interface SettingsSectionProps {
   // only the sections inside /profile would see the new language until a
   // reload; the same pattern onDailyGoalChange already uses for daily_goal.
   onProfileLanguagesChange?: (change: ProfileLanguagesChange) => void;
+  onProfileDemographicsChange?: (change: ProfileDemographicsChange) => void;
   onTimezoneChange?: (change: ProfileTimezoneChange) => void;
   // Called only after the delete-account Edge Function confirms success —
   // App.tsx wires this to the same session-cleanup path handleProfileSignOut
@@ -128,11 +144,29 @@ const PASSWORD_REAUTHENTICATION_ERROR_MESSAGE_KEYS: Record<ReauthenticationError
   backend_rejected: "userProfile.settingsSection.account.passwordSaveError",
 };
 
+const BIRTH_MONTH_OPTIONS = [
+  { value: "01", labelKey: "userProfile.settingsSection.profileDetails.months.january" },
+  { value: "02", labelKey: "userProfile.settingsSection.profileDetails.months.february" },
+  { value: "03", labelKey: "userProfile.settingsSection.profileDetails.months.march" },
+  { value: "04", labelKey: "userProfile.settingsSection.profileDetails.months.april" },
+  { value: "05", labelKey: "userProfile.settingsSection.profileDetails.months.may" },
+  { value: "06", labelKey: "userProfile.settingsSection.profileDetails.months.june" },
+  { value: "07", labelKey: "userProfile.settingsSection.profileDetails.months.july" },
+  { value: "08", labelKey: "userProfile.settingsSection.profileDetails.months.august" },
+  { value: "09", labelKey: "userProfile.settingsSection.profileDetails.months.september" },
+  { value: "10", labelKey: "userProfile.settingsSection.profileDetails.months.october" },
+  { value: "11", labelKey: "userProfile.settingsSection.profileDetails.months.november" },
+  { value: "12", labelKey: "userProfile.settingsSection.profileDetails.months.december" },
+] as const;
+
+const BIRTH_DAY_OPTIONS = Array.from({ length: 31 }, (_, index) => String(index + 1).padStart(2, "0"));
+
 export function SettingsSection({
   userProfile,
   isProfileLoaded,
   onNicknameChange,
   onProfileLanguagesChange,
+  onProfileDemographicsChange,
   onTimezoneChange,
   onAccountDeleted,
 }: SettingsSectionProps) {
@@ -469,6 +503,98 @@ export function SettingsSection({
         setCurrentPasswordDraft("");
       }
     })();
+  };
+
+  // ---- Profile Details -----------------------------------------------
+  const [ageDraft, setAgeDraft] = useState(() => String(resolveOnboardingAgeDefault(userProfile.age)));
+  const [birthMonthDraft, setBirthMonthDraft] = useState(userProfile.birthMonth);
+  const [birthDayDraft, setBirthDayDraft] = useState(userProfile.birthDay);
+  const [isSavingDemographics, setIsSavingDemographics] = useState(false);
+  const [demographicsError, setDemographicsError] = useState<string | null>(null);
+  const { message: demographicsToast, show: showDemographicsToast } = useAutoDismissMessage();
+
+  useEffect(() => {
+    setAgeDraft(String(resolveOnboardingAgeDefault(userProfile.age)));
+    setBirthMonthDraft(userProfile.birthMonth);
+    setBirthDayDraft(userProfile.birthDay);
+  }, [userProfile.age, userProfile.birthMonth, userProfile.birthDay]);
+
+  const parsedAgeDraft = Number(ageDraft);
+  const isAgeDraftValid =
+    Number.isFinite(parsedAgeDraft) &&
+    Number.isInteger(parsedAgeDraft) &&
+    parsedAgeDraft >= ONBOARDING_MIN_AGE &&
+    parsedAgeDraft <= ONBOARDING_MAX_AGE;
+  const confirmedAge = resolveOnboardingAgeDefault(userProfile.age);
+  const isDemographicsUnchanged =
+    isAgeDraftValid &&
+    parsedAgeDraft === confirmedAge &&
+    birthMonthDraft === userProfile.birthMonth &&
+    birthDayDraft === userProfile.birthDay;
+  const canSaveDemographics =
+    isProfileLoaded &&
+    Boolean(authSession) &&
+    isAgeDraftValid &&
+    Boolean(birthMonthDraft) &&
+    Boolean(birthDayDraft) &&
+    !isDemographicsUnchanged &&
+    !isSavingDemographics;
+
+  const handleCancelDemographics = () => {
+    setAgeDraft(String(confirmedAge));
+    setBirthMonthDraft(userProfile.birthMonth);
+    setBirthDayDraft(userProfile.birthDay);
+    setDemographicsError(null);
+  };
+
+  const handleSaveDemographics = () => {
+    if (!canSaveDemographics || !authSession || !authUserId || !birthMonthDraft || !birthDayDraft) {
+      return;
+    }
+
+    const nextAge = clampOnboardingAge(parsedAgeDraft);
+    setIsSavingDemographics(true);
+    setDemographicsError(null);
+
+    void updateUserProfileDemographics(authSession, {
+      age: nextAge,
+      birthMonth: birthMonthDraft,
+      birthDay: birthDayDraft,
+    })
+      .then((result) => {
+        const nextProfile = writeStoredUserProfile(authUserId, {
+          ...userProfile,
+          age: result.age ?? nextAge,
+          birthMonth: result.birthMonth ?? birthMonthDraft,
+          birthDay: result.birthDay ?? birthDayDraft,
+          updatedAt: result.updatedAt,
+        });
+        onProfileDemographicsChange?.({
+          age: nextProfile.age ?? nextAge,
+          birthMonth: nextProfile.birthMonth || birthMonthDraft,
+          birthDay: nextProfile.birthDay || birthDayDraft,
+          updatedAt: nextProfile.updatedAt ?? result.updatedAt ?? "",
+        });
+        showDemographicsToast(t("userProfile.settingsSection.profileDetails.savedToast"));
+      })
+      .catch((error) => {
+        const diagnostics = describeSupabaseError("updateUserProfileDemographics", error);
+        console.warn("SettingsSection: failed to save profile details.", diagnostics);
+        setDemographicsError(
+          t(
+            resolveSupabaseErrorMessageKey(
+              diagnostics.category,
+              "userProfile.settingsSection.profileDetails.saveError",
+            ),
+          ),
+        );
+        setAgeDraft(String(confirmedAge));
+        setBirthMonthDraft(userProfile.birthMonth);
+        setBirthDayDraft(userProfile.birthDay);
+      })
+      .finally(() => {
+        setIsSavingDemographics(false);
+      });
   };
 
   // ---- Languages -----------------------------------------------------
@@ -1113,6 +1239,123 @@ export function SettingsSection({
         ) : null}
 
         <Toast message={passwordToast} />
+      </section>
+
+      {/* ---- Profile Details ---- */}
+      <section className="settings-surface settings-profile-details" aria-labelledby="settings-profile-details-heading">
+        <h2 id="settings-profile-details-heading" className="settings-surface__heading">
+          {t("userProfile.settingsSection.profileDetails.title")}
+        </h2>
+
+        <div className="settings-row settings-profile-details__age-row">
+          <span className="settings-row__label" id="settings-age-label">
+            {t("userProfile.settingsSection.profileDetails.age")}
+          </span>
+          <div className="settings-profile-details__age-control">
+            <Input
+              id="settings-age-input"
+              type="number"
+              min={ONBOARDING_MIN_AGE}
+              max={ONBOARDING_MAX_AGE}
+              inputMode="numeric"
+              aria-labelledby="settings-age-label"
+              className="settings-row__control settings-profile-details__age-input"
+              value={ageDraft}
+              onChange={(event) => setAgeDraft(event.target.value)}
+              onBlur={() => {
+                if (!ageDraft) {
+                  setAgeDraft(String(DEFAULT_ONBOARDING_AGE));
+                  return;
+                }
+
+                const parsedValue = Number(ageDraft);
+                if (!Number.isFinite(parsedValue)) {
+                  setAgeDraft(String(confirmedAge));
+                  return;
+                }
+
+                setAgeDraft(String(clampOnboardingAge(parsedValue)));
+              }}
+              disabled={isSavingDemographics || !authSession}
+              aria-invalid={!isAgeDraftValid ? true : undefined}
+              aria-describedby={!isAgeDraftValid || demographicsError ? "settings-profile-details-error" : undefined}
+            />
+          </div>
+        </div>
+
+        <div className="settings-row settings-profile-details__birth-row">
+          <span className="settings-row__label" id="settings-birth-date-label">
+            {t("userProfile.settingsSection.profileDetails.birthDate")}
+          </span>
+          <div className="settings-profile-details__birth-controls">
+            <Select
+              value={birthMonthDraft || undefined}
+              onValueChange={(value) => setBirthMonthDraft(value)}
+              disabled={isSavingDemographics || !authSession}
+            >
+              <SelectTrigger
+                aria-labelledby="settings-birth-date-label"
+                className="settings-profile-details__month-trigger"
+              >
+                <SelectValue placeholder={t("userProfile.settingsSection.profileDetails.month")} />
+              </SelectTrigger>
+              <SelectContent>
+                {BIRTH_MONTH_OPTIONS.map((month) => (
+                  <SelectItem key={month.value} value={month.value}>
+                    {t(month.labelKey)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select
+              value={birthDayDraft || undefined}
+              onValueChange={(value) => setBirthDayDraft(value)}
+              disabled={isSavingDemographics || !authSession}
+            >
+              <SelectTrigger
+                aria-labelledby="settings-birth-date-label"
+                className="settings-profile-details__day-trigger"
+              >
+                <SelectValue placeholder={t("userProfile.settingsSection.profileDetails.day")} />
+              </SelectTrigger>
+              <SelectContent>
+                {BIRTH_DAY_OPTIONS.map((day) => (
+                  <SelectItem key={day} value={day}>
+                    {day}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="settings-profile-details__footer">
+          <p className="settings-surface__helper">{t("userProfile.settingsSection.profileDetails.explanation")}</p>
+
+          <div className="settings-surface__actions">
+            {!isDemographicsUnchanged ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleCancelDemographics}
+                disabled={isSavingDemographics}
+              >
+                {t("userProfile.settingsSection.cancel")}
+              </Button>
+            ) : null}
+            <Button type="button" onClick={handleSaveDemographics} disabled={!canSaveDemographics}>
+              {isSavingDemographics ? t("userProfile.settingsSection.saving") : t("userProfile.settingsSection.save")}
+            </Button>
+          </div>
+        </div>
+
+        {!isAgeDraftValid || demographicsError ? (
+          <div role="alert" id="settings-profile-details-error" className="settings-inline-error">
+            {demographicsError ?? t("userProfile.settingsSection.profileDetails.ageInvalid")}
+          </div>
+        ) : null}
+
+        <Toast message={demographicsToast} />
       </section>
 
       {/* ---- Languages ---- */}

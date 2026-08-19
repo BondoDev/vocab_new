@@ -30,6 +30,10 @@ import {
   type UpdateUserProfileLearningPreferencesResult,
 } from "./userProfileLearningPreferences";
 import {
+  parseUpdateUserProfileDemographicsRow,
+  type UpdateUserProfileDemographicsResult,
+} from "./userProfileDemographics";
+import {
   parseUpdateUserNicknameRow,
   type UpdateUserNicknameResult,
 } from "./userProfileNickname";
@@ -569,6 +573,58 @@ export async function updateUserProfileLearningPreferences(
   }
 
   return fromUpdateUserProfileLearningPreferencesResult(parseUpdateUserProfileLearningPreferencesRow(rows));
+}
+
+function fromUpdateUserProfileDemographicsResult(
+  result: UpdateUserProfileDemographicsResult,
+): Partial<UserProfile> {
+  return {
+    age: result.userAge,
+    birthMonth: String(result.birthMonth).padStart(2, "0"),
+    birthDay: String(result.birthDay).padStart(2, "0"),
+    updatedAt: result.updatedAt,
+  };
+}
+
+export interface UpdateUserProfileDemographicsInput {
+  age: number;
+  birthMonth: string;
+  birthDay: string;
+}
+
+export async function updateUserProfileDemographics(
+  session: StoredSupabaseSession,
+  input: UpdateUserProfileDemographicsInput,
+): Promise<Partial<UserProfile>> {
+  const userId = session.user?.id;
+  if (!userId) {
+    throw new Error("Missing authenticated user.");
+  }
+
+  const rows = await supabaseProfileRequest<unknown[] | unknown>(
+    session,
+    "/rest/v1/rpc/update_user_profile_demographics",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        p_user_age: input.age,
+        p_birth_month: Number(input.birthMonth),
+        p_birth_day: Number(input.birthDay),
+      }),
+    },
+  );
+
+  if (Array.isArray(rows)) {
+    if (rows.length !== 1) {
+      throw new ClassifiedSupabaseError(
+        "update_user_profile_demographics returned an unexpected number of rows.",
+        "unexpected_response",
+      );
+    }
+    return fromUpdateUserProfileDemographicsResult(parseUpdateUserProfileDemographicsRow(rows[0]));
+  }
+
+  return fromUpdateUserProfileDemographicsResult(parseUpdateUserProfileDemographicsRow(rows));
 }
 
 // Settings' nickname-editing follow-up — narrow "change my nickname" write,

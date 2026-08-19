@@ -16,6 +16,7 @@ import {
   SettingsSection,
   type ProfileNicknameChange,
   type ProfileLanguagesChange,
+  type ProfileDemographicsChange,
   type ProfileTimezoneChange,
 } from "./settings/SettingsSection";
 import { useProfileSharedProgressData } from "./useProfileSharedProgressData";
@@ -48,6 +49,7 @@ interface UserProfileDashboardPageProps {
   // userProfile alone.
   onNicknameChange?: (change: ProfileNicknameChange) => void;
   onProfileLanguagesChange?: (change: ProfileLanguagesChange) => void;
+  onProfileDemographicsChange?: (change: ProfileDemographicsChange) => void;
   onTimezoneChange?: (change: ProfileTimezoneChange) => void;
   onAccountDeleted?: () => void | Promise<void>;
 }
@@ -87,6 +89,7 @@ export function UserProfileDashboardPage({
   onDailyGoalChange,
   onNicknameChange,
   onProfileLanguagesChange,
+  onProfileDemographicsChange,
   onTimezoneChange,
   onAccountDeleted,
 }: UserProfileDashboardPageProps) {
@@ -261,6 +264,7 @@ export function UserProfileDashboardPage({
                 isProfileLoaded={isProfileLoaded}
                 onNicknameChange={onNicknameChange}
                 onProfileLanguagesChange={onProfileLanguagesChange}
+                onProfileDemographicsChange={onProfileDemographicsChange}
                 onTimezoneChange={onTimezoneChange}
                 onAccountDeleted={onAccountDeleted}
               />

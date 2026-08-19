@@ -229,9 +229,53 @@
   gap: 0.4rem;
 }
 
+.settings-profile-details__age-control {
+  display: flex;
+  justify-content: flex-end;
+  width: min(100%, 16rem);
+}
+
+.settings-profile-details__age-input {
+  max-width: 8rem;
+}
+
+.settings-profile-details__birth-controls {
+  display: grid;
+  width: min(100%, 16rem);
+  grid-template-columns: minmax(0, 10rem) 5rem;
+  gap: 0.5rem;
+}
+
+.settings-profile-details__month-trigger,
+.settings-profile-details__day-trigger {
+  min-width: 0;
+  border-color: color-mix(in srgb, var(--foreground) 28%, var(--border));
+  background: var(--background);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--foreground) 8%, transparent);
+
+  &:focus-visible {
+    border-color: var(--ring);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--ring) 24%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--ring) 28%, transparent);
+  }
+}
+
+.settings-profile-details__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.settings-profile-details__footer .settings-surface__helper {
+  max-width: 34rem;
+}
+
 .settings-nickname-edit__input,
 .settings-email-edit__input,
-.settings-password-edit__input {
+.settings-password-edit__input,
+.settings-profile-details__age-input {
   border-color: color-mix(in srgb, var(--foreground) 28%, var(--border));
   background: var(--background);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--foreground) 8%, transparent);
@@ -415,6 +459,64 @@
   .settings-row__control,
   .settings-timezone-selector__trigger {
     max-width: none;
+  }
+
+  .settings-profile-details__birth-controls {
+    width: min(100%, 15rem);
+  }
+
+  .settings-profile-details__age-control {
+    width: auto;
+  }
+
+  .settings-profile-details__age-input {
+    width: 5rem;
+  }
+
+  .settings-profile-details {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    align-items: start;
+    gap: 1rem 0.75rem;
+  }
+
+  .settings-profile-details > .settings-surface__heading,
+  .settings-profile-details__footer,
+  .settings-profile-details > .settings-inline-error {
+    grid-column: 1 / -1;
+  }
+
+  .settings-profile-details__age-row,
+  .settings-profile-details__birth-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+    border-top: none;
+    padding: 0;
+  }
+
+  .settings-profile-details__age-row {
+    width: 5rem;
+  }
+
+  .settings-profile-details__birth-row {
+    min-width: 0;
+  }
+
+  .settings-profile-details__birth-controls {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) 4.75rem;
+  }
+
+  .settings-profile-details__footer {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .settings-profile-details__footer .settings-surface__actions {
+    width: 100%;
+    justify-content: flex-end;
   }
 
   .settings-nickname-display,

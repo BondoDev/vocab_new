@@ -771,6 +771,21 @@ function AppContent({
     setPracticeLanguage(change.practiceLanguage);
   };
 
+  const handleProfileDemographicsChange = (change: {
+    age: number;
+    birthMonth: string;
+    birthDay: string;
+    updatedAt: string;
+  }) => {
+    setUserProfile((previous) => ({
+      ...previous,
+      age: change.age,
+      birthMonth: change.birthMonth,
+      birthDay: change.birthDay,
+      updatedAt: change.updatedAt,
+    }));
+  };
+
   const handleProfileTimezoneChange = (change: { timezone: string; timezoneUpdatedAt: string }) => {
     setUserProfile((previous) => ({
       ...previous,
@@ -1188,6 +1203,7 @@ function AppContent({
           }
           onNicknameChange={handleProfileNicknameChange}
           onProfileLanguagesChange={handleProfileLanguagesChange}
+          onProfileDemographicsChange={handleProfileDemographicsChange}
           onTimezoneChange={handleProfileTimezoneChange}
           onAccountDeleted={handleAccountDeleted}
         />

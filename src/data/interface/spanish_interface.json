@@ -645,6 +645,31 @@
         "passwordTooShort": "La contraseña debe tener al menos 8 caracteres.",
         "passwordManagedByGoogle": "Iniciaste sesión con Google, por lo que no hay una contraseña de FluentStellar que cambiar."
       },
+      "profileDetails": {
+        "title": "Profile details",
+        "age": "Age",
+        "birthDate": "Birth date",
+        "month": "Month",
+        "day": "Day",
+        "explanation": "These details help keep your profile consistent with the information you entered during signup.",
+        "savedToast": "Profile details updated.",
+        "saveError": "We could not update your profile details. Please try again.",
+        "ageInvalid": "Age must be between 10 and 100.",
+        "months": {
+          "january": "January",
+          "february": "February",
+          "march": "March",
+          "april": "April",
+          "may": "May",
+          "june": "June",
+          "july": "July",
+          "august": "August",
+          "september": "September",
+          "october": "October",
+          "november": "November",
+          "december": "December"
+        }
+      },
       "languages": {
         "title": "Idiomas",
         "native": "Idioma nativo",

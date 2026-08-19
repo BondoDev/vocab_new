@@ -1118,6 +1118,31 @@
         "passwordTooShort": "Пароль должен содержать не менее 8 символов.",
         "passwordManagedByGoogle": "Вы вошли через Google, поэтому пароля FluentStellar для изменения нет."
       },
+      "profileDetails": {
+        "title": "Profile details",
+        "age": "Age",
+        "birthDate": "Birth date",
+        "month": "Month",
+        "day": "Day",
+        "explanation": "These details help keep your profile consistent with the information you entered during signup.",
+        "savedToast": "Profile details updated.",
+        "saveError": "We could not update your profile details. Please try again.",
+        "ageInvalid": "Age must be between 10 and 100.",
+        "months": {
+          "january": "January",
+          "february": "February",
+          "march": "March",
+          "april": "April",
+          "may": "May",
+          "june": "June",
+          "july": "July",
+          "august": "August",
+          "september": "September",
+          "october": "October",
+          "november": "November",
+          "december": "December"
+        }
+      },
       "languages": {
         "title": "Языки",
         "native": "Родной язык",
