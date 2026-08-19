@@ -381,6 +381,45 @@ function AppContent({
     resolvedPage === "profile" ||
     resolvedPage === "newWordStudy" ||
     resolvedPage === "reviewWords";
+  // Centralized authenticated-app-access guard state - feeds the render
+  // guard below AND (combined with isProtectedAccountPage) is the single
+  // source AccountOnboardingDialog's own `open` prop reuses further down.
+  // Sharing this one boolean, rather than each computing its own version,
+  // is what makes the guard and the dialog structurally unable to disagree.
+  // Route-aware by design (2026-08-19 fix): onboarding must block protected
+  // account pages (profile/newWordStudy/reviewWords - isProtectedAccountPage,
+  // above) but must NOT cover public pages just because the signed-in
+  // user's profile happens to be incomplete - see accountOnboardingDialog's
+  // own `open` prop below, which AND's this with isProtectedAccountPage.
+  // Every interactive path that establishes a session (password login,
+  // password signup-with-immediate-session, Google OAuth's redirect
+  // callback) already navigates straight to /profile itself (see Header.tsx's
+  // goToProfile calls and this file's useSupabaseAuthRedirect
+  // onSessionEstablished callback) - so a fresh signup and a later login of
+  // an existing incomplete account both already land on a protected page on
+  // their own, with no separate "just signed up" signal required here: this
+  // one route-scoped condition already produces "onboarding required
+  // immediately after registration" (registration lands on /profile) AND
+  // "returning to browse public pages doesn't trap you" (nothing forces you
+  // onto /profile merely because you're signed in) simultaneously.
+  //
+  // Three completeness states, deliberately never conflated:
+  //   - signed out: the pre-existing !authUserId handling, untouched.
+  //   - loading (authUserId is known but isProfileLoaded is still false -
+  //     the profile fetch is in flight): isOnboardingRequiredForAuthedUser
+  //     stays false here on purpose. "Not loaded yet" must never be treated
+  //     as "incomplete," or a page refresh on /profile would flash the
+  //     onboarding dialog for a user whose profile turns out complete once
+  //     the fetch resolves.
+  //   - loaded + incomplete: true only once isProfileLoaded is true AND
+  //     shouldOpenAccountOnboarding's own result (isAccountOnboardingOpen)
+  //     says so.
+  const isOnboardingRequiredForAuthedUser =
+    Boolean(authUserId) &&
+    isProfileLoaded &&
+    isAccountOnboardingOpen &&
+    !isPasswordRecoveryActive;
+  const isAccountProfileStillLoading = Boolean(authUserId) && !isProfileLoaded;
   const wordRoute = ssrRouteOverride?.wordRoute ?? detectedWordRoute;
   const siteOrigin = useSeoSiteOrigin();
   const routeMetadata = useMemo(() => {
@@ -400,6 +439,21 @@ function AppContent({
     }
   }, [location.pathname, resolvedPage, siteOrigin]);
 
+  // Signed-out-on-a-protected-page redirect only. Deliberately does NOT
+  // also redirect away merely because onboarding is required (a prior
+  // version of this effect did, and it was self-defeating: it bounced the
+  // user off /profile to exerciseSelection before the render guard's
+  // blocking fallback + AccountOnboardingDialog ever had a chance to stick,
+  // and once on exerciseSelection - a public page - the dialog's own
+  // isProtectedAccountPage-scoped `open` condition (see
+  // isOnboardingRequiredForAuthedUser below and the accountOnboardingDialog
+  // definition further down) correctly stopped showing it there at all, so
+  // required onboarding was never actually seen). Staying put on the
+  // protected route with the render guard's fallback + dialog covering it
+  // is the intended "block that protected content" behavior; the only way
+  // off that route is completing onboarding (real content then renders in
+  // place, no navigation involved) or Cancel registration (its own
+  // explicit sign-out + navigate).
   useEffect(() => {
     if (isAuthResolved && !authUserId && isProtectedAccountPage) {
       navigate(ROUTES.exerciseSelection, { replace: true });
@@ -639,6 +693,37 @@ function AppContent({
     }
   };
 
+  // Required onboarding's Cancel registration action - the one deliberate
+  // exit from AccountOnboardingDialog besides successful completion (see
+  // that component's own non-dismissible contract: no close button, and
+  // Escape/outside-click are both blocked). Mirrors handleProfileSignOut's
+  // exact order (flip local auth state first, then best-effort network
+  // sign-out, navigate away in `finally` regardless of outcome) so a signed
+  // out user is never left able to see the still-open dialog or the
+  // authenticated app behind it. Does NOT delete the account - the account
+  // stays registered but incomplete (isUserProfileComplete stays false),
+  // exactly like abandoning signup by closing the tab used to; if this user
+  // logs back in, shouldOpenAccountOnboarding forces them straight back into
+  // this same dialog (see useUserProfileLoad.ts).
+  const handleCancelAccountOnboarding = async () => {
+    const currentSession = authSession;
+
+    setIsAccountOnboardingOpen(false);
+    setAccountOnboardingError(null);
+
+    try {
+      handleAuthSessionChange(null);
+      await signOutSupabase(currentSession);
+    } catch (error) {
+      console.warn(
+        "App: signOutSupabase failed while cancelling account onboarding (local sign-out already completed).",
+        describeSupabaseError("sign out", error),
+      );
+    } finally {
+      navigate(ROUTES.exerciseSelection);
+    }
+  };
+
   // Nickname editing follow-up — mirrors handleProfileLanguagesChange/
   // handleProfileTimezoneChange's own precedent: pushes a successfully
   // saved nickname up into the shared userProfile object so every other
@@ -871,15 +956,22 @@ function AppContent({
     setSwapRotation((prev) => prev + 180);
   };
 
-  // Recovery is the higher-priority modal state: the `open` prop is gated
-  // by !isPasswordRecoveryActive so onboarding can never render open at the
-  // same time as PasswordRecoveryDialog, but isAccountOnboardingOpen itself
-  // (and the profile load feeding it) is untouched - if the profile is
-  // still incomplete once recovery exits, this re-evaluates to open on its
-  // own, no extra wiring needed.
+  // Route-aware visibility (2026-08-19 regression fix): reuses
+  // isOnboardingRequiredForAuthedUser (defined above, alongside
+  // isProtectedAccountPage) rather than the raw isAccountOnboardingOpen -
+  // this is what stops the dialog from covering public pages (e.g. the
+  // Exercises page) for a signed-in user whose profile merely happens to be
+  // incomplete. AND'd with isProtectedAccountPage here (not baked into
+  // isOnboardingRequiredForAuthedUser itself) only because the render guard
+  // below already runs exclusively inside an isProtectedAccountPage branch
+  // and doesn't need the redundant check repeated. Recovery is still the
+  // higher-priority modal state (isOnboardingRequiredForAuthedUser already
+  // includes !isPasswordRecoveryActive) - if the profile is still
+  // incomplete once recovery exits, this re-evaluates to open on its own,
+  // no extra wiring needed.
   const accountOnboardingDialog = authUserId ? (
     <AccountOnboardingDialog
-      open={isAccountOnboardingOpen && !isPasswordRecoveryActive}
+      open={isProtectedAccountPage && isOnboardingRequiredForAuthedUser}
       onOpenChange={setIsAccountOnboardingOpen}
       profile={userProfile}
       languages={languages}
@@ -887,10 +979,26 @@ function AppContent({
       error={accountOnboardingError}
       onProfileChange={handleUserProfileChange}
       onSubmit={handleAccountOnboardingSubmit}
+      onCancelRegistration={() => void handleCancelAccountOnboarding()}
     />
   ) : null;
 
-  if (isProtectedAccountPage && isAuthResolved && !authUserId) {
+  // The one centralized render gate for every isProtectedAccountPage branch
+  // below: signed-out (pre-existing), still-loading, and onboarding-required
+  // all land here instead of ever reaching UserProfileDashboardPage /
+  // NewWordStudyPreparation / ReviewWordsPreparation's real rendering
+  // branches. This is what makes the guard robust to a future mistake -
+  // forgetting to mount {accountOnboardingDialog} on some new protected
+  // page could never, by itself, expose that page's real content, because
+  // this check runs before any of those branches are reached at all.
+  // accountOnboardingDialog (computed above) still renders here exactly as
+  // before when onboarding is required - only its background changes from
+  // the real page to this neutral fallback.
+  if (
+    isProtectedAccountPage &&
+    isAuthResolved &&
+    (!authUserId || isAccountProfileStillLoading || isOnboardingRequiredForAuthedUser)
+  ) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}

@@ -80,6 +80,13 @@ type AccountOnboardingDialogProps = {
   onOpenChange: (open: boolean) => void;
   onProfileChange: (patch: Partial<UserProfile>) => void;
   onSubmit: () => void | Promise<void>;
+  // Required-onboarding exit hatch (distinct from onOpenChange, which this
+  // dialog never lets a user-driven dismissal call - see the non-dismissible
+  // contract below). The only other way out of this dialog besides
+  // successful completion: aborts onboarding, signs the user out, and
+  // returns them to the public app - wired in App.tsx to
+  // handleCancelAccountOnboarding.
+  onCancelRegistration: () => void;
 };
 
 export function AccountOnboardingDialog({
@@ -91,6 +98,7 @@ export function AccountOnboardingDialog({
   onOpenChange,
   onProfileChange,
   onSubmit,
+  onCancelRegistration,
 }: AccountOnboardingDialogProps) {
   const selectedPracticeLanguageLabel = getPracticeLanguageLabel(
     languages,
@@ -131,17 +139,24 @@ export function AccountOnboardingDialog({
   }, [profile.age]);
 
   return (
+    // Required onboarding is non-dismissible: profile completion is
+    // mandatory before the account is usable (see the app-level invariant
+    // this dialog is the sole enforcement point for - it renders on every
+    // route while authUserId exists and the profile is incomplete, per
+    // shouldOpenAccountOnboarding). onOpenChange is still wired for the
+    // (Radix-required) open->closed transition, but nothing below this
+    // point can ever trigger a user-driven "closed" call: no close button
+    // renders, and Escape/outside-click are both preventDefault'd on
+    // DialogContent so Radix never invokes it either. The only paths out
+    // are the Save and continue success branch (calls
+    // setIsAccountOnboardingOpen(false) directly) and Cancel registration
+    // below (signs out entirely - see onCancelRegistration).
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(94vw,38rem)] max-w-none rounded-[2rem] border-white/15 bg-[#fffdfd] p-0 shadow-[0_28px_90px_rgba(21,14,44,0.38)] [&_[data-slot=dialog-close]]:hidden">
-        <button
-          type="button"
-          onClick={() => onOpenChange(false)}
-          aria-label="Close onboarding"
-          className="absolute right-2 top-2 z-20 inline-flex h-[2.45rem] w-[2.45rem] items-center justify-center rounded-[0.8rem] text-[#7c6ca6]"
-        >
-          <span className="text-[1.7rem] leading-none">&times;</span>
-        </button>
-
+      <DialogContent
+        onEscapeKeyDown={(event) => event.preventDefault()}
+        onInteractOutside={(event) => event.preventDefault()}
+        className="w-[min(94vw,38rem)] max-w-none rounded-[2rem] border-white/15 bg-[#fffdfd] p-0 shadow-[0_28px_90px_rgba(21,14,44,0.38)] [&_[data-slot=dialog-close]]:hidden"
+      >
         <div className="overflow-hidden rounded-[2rem]">
           <div className="bg-[radial-gradient(circle_at_top,rgba(120,90,255,0.22),rgba(255,255,255,0)_55%),linear-gradient(135deg,#ffffff_0%,#f7f2ff_58%,#fff8f2_100%)] px-6 pb-6 pt-7 sm:px-8 sm:pb-8">
             <DialogHeader className="gap-4 text-left">
@@ -409,6 +424,19 @@ export function AccountOnboardingDialog({
                 className="h-12 w-full rounded-2xl bg-[linear-gradient(135deg,#6f58ff,#5c49f2)] text-base font-semibold text-white shadow-[0_18px_38px_-18px_rgba(92,73,242,0.9)] transition-transform hover:translate-y-[-1px] hover:opacity-95"
               >
                 {isSubmitting ? "Saving..." : "Save and continue"}
+              </Button>
+              {/* Visually quieter than the primary CTA above (ghost variant,
+                  no gradient/shadow) - matches AccountIntroDialog's own
+                  "Maybe later" secondary-action styling precedent. The only
+                  non-completion exit from required onboarding. */}
+              <Button
+                type="button"
+                variant="ghost"
+                disabled={isSubmitting}
+                onClick={onCancelRegistration}
+                className="h-9 w-full rounded-2xl text-sm font-medium text-[#6f6290] hover:bg-[#f5f1ff] hover:text-[#37275b]"
+              >
+                Cancel registration
               </Button>
             </div>
           </div>
