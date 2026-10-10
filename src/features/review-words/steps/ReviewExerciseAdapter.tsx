@@ -5,6 +5,7 @@ import type { ResolvedReviewQueueItem } from "../loadReviewQueue";
 import { BrokenWordExercise } from "../../practice/exercises/BrokenWordExercise";
 import { HalfWrittenExercise } from "../../practice/exercises/HalfWrittenExercise";
 import { WordTypingExercise } from "../../practice/exercises/WordTypingExercise";
+import { highlightInflectedWords } from "../../practice/utils/highlightInflectedWords";
 import { exerciseCardBorders, type MotionCssVars } from "../../../exercises/exerciseTheme";
 import { speakReviewWord } from "../utils/speakReviewWord";
 import type { TypingExerciseId } from "../reviewSessionPlan";
@@ -85,6 +86,13 @@ export function ReviewExerciseAdapter({ exerciseId, item, practiceLanguage, onCo
   // useEffect keyed on this object by reference (see
   // GuidedExerciseAdapter.tsx's own comment on the same pattern).
   const currentWord = useMemo(() => ({ word_lemma: item.targetWord }), [item.targetWord]);
+  const highlightedExampleSentence = useMemo(() => {
+    if (!item.exampleSentence) return "";
+    const forms = item.exampleSentenceInflectedForms;
+    if (!forms?.length) return item.exampleSentence;
+    const syntheticEntry = Object.fromEntries(forms.map((form, index) => [`word_inflected-${index}`, form]));
+    return highlightInflectedWords(item.exampleSentence, practiceLanguage, [syntheticEntry]);
+  }, [item.exampleSentence, item.exampleSentenceInflectedForms, practiceLanguage]);
 
   const handleStatusChange = useCallback((next: ExerciseStatus) => {
     hadMistakeRef.current = computeHadMistake(hadMistakeRef.current, previousHasTypedAnswerRef.current, next);
@@ -244,7 +252,7 @@ export function ReviewExerciseAdapter({ exerciseId, item, practiceLanguage, onCo
                     <div className="review-exercise-sentence-row">
                       <span className="review-exercise-sentence-text">
                         {'"'}
-                        {item.exampleSentence}
+                        <span dangerouslySetInnerHTML={{ __html: highlightedExampleSentence }} />
                         {'"'}
                       </span>
                       <button

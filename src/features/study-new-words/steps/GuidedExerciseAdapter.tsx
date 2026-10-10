@@ -5,6 +5,7 @@ import type { ResolvedStudyQueueItem } from "../../../data/learning/newWordStudy
 import { BrokenWordExercise } from "../../practice/exercises/BrokenWordExercise";
 import { HalfWrittenExercise } from "../../practice/exercises/HalfWrittenExercise";
 import { WordTypingExercise } from "../../practice/exercises/WordTypingExercise";
+import { highlightInflectedWords } from "../../practice/utils/highlightInflectedWords";
 import { exerciseCardBorders, type MotionCssVars } from "../../../exercises/exerciseTheme";
 import { speakGuidedWord } from "../utils/speakGuidedWord";
 import type { GuidedExerciseStep as GuidedExerciseStepKey, ExerciseOutcome } from "../newWordStudySessionState";
@@ -92,6 +93,13 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
   // handleStatusChange -> setStatus) would make those effects fire on every
   // interaction and immediately wipe out whatever the user just did.
   const currentWord = useMemo(() => ({ word_lemma: item.targetWord }), [item.targetWord]);
+  const highlightedExampleSentence = useMemo(() => {
+    if (!item.exampleSentence) return "";
+    const forms = item.exampleSentenceInflectedForms;
+    if (!forms?.length) return item.exampleSentence;
+    const syntheticEntry = Object.fromEntries(forms.map((form, index) => [`word_inflected-${index}`, form]));
+    return highlightInflectedWords(item.exampleSentence, practiceLanguage, [syntheticEntry]);
+  }, [item.exampleSentence, item.exampleSentenceInflectedForms, practiceLanguage]);
 
   const handleStatusChange = useCallback((next: ExerciseStatus) => {
     setStatus(next);
@@ -219,10 +227,9 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
               sentence" pattern as VocabularyPractice.tsx (same translation
               keys, same collapse behavior), sourced from the queue item's
               already-resolved definition/example (see resolveVocabularyWordData.ts)
-              rather than any new data. The inflected-word highlighting the
-              ordinary flow applies to the sentence needs inflected.json,
-              which Phase 1's resolver deliberately doesn't fetch, so the
-              sentence renders plain here. */}
+              rather than any new data. The sentence uses the same inflected
+              form highlighting as the word-info card and ordinary practice
+              flow. */}
           <div className="exercise-help-sections guided-exercise-help-sections">
             {item.definition && (
               <div className="guided-exercise-collapsible">
@@ -271,7 +278,7 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
                     <div className="guided-exercise-sentence-row">
                       <span className="guided-exercise-sentence-text">
                         {'"'}
-                        {item.exampleSentence}
+                        <span dangerouslySetInnerHTML={{ __html: highlightedExampleSentence }} />
                         {'"'}
                       </span>
                       <button

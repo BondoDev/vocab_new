@@ -31,6 +31,18 @@ const VOCABULARY_IMPORTERS: Record<string, () => Promise<{ default: unknown[] }>
   ru: () => import("../../data/vocabulary/russian/vocabulary.json"),
 };
 
+// Same per-UI-code inflected-form imports used by Study New Words so review
+// sample sentences can bold the studied form, not just show plain text.
+const INFLECTED_IMPORTERS: Record<string, () => Promise<{ default: unknown[] }>> = {
+  en: () => import("../../data/inflected/english/inflected.json"),
+  es: () => import("../../data/inflected/spanish/inflected.json"),
+  fr: () => import("../../data/inflected/french/inflected.json"),
+  de: () => import("../../data/inflected/german/inflected.json"),
+  it: () => import("../../data/inflected/italian/inflected.json"),
+  pt: () => import("../../data/inflected/portuguese/inflected.json"),
+  ru: () => import("../../data/inflected/russian/inflected.json"),
+};
+
 export interface ResolvedReviewQueueItem extends ResolvedConceptWordData {
   progressRowId: string;
   conceptId: string;
@@ -91,14 +103,17 @@ export async function loadReviewQueue({
     return { queue: [], metadata: emptyResult.metadata };
   }
 
-  const [targetModule, nativeModule] = await Promise.all([
+  const [targetModule, nativeModule, targetInflectedModule] = await Promise.all([
     VOCABULARY_IMPORTERS[targetLanguage](),
     VOCABULARY_IMPORTERS[nativeLanguage](),
+    INFLECTED_IMPORTERS[targetLanguage]?.().catch(() => ({ default: [] })) ??
+      Promise.resolve({ default: [] }),
   ]);
 
   const resolveVocabularyConcept = buildVocabularyConceptResolver(
     Array.isArray(targetModule.default) ? targetModule.default : [],
     Array.isArray(nativeModule.default) ? nativeModule.default : [],
+    Array.isArray(targetInflectedModule.default) ? targetInflectedModule.default : [],
   );
 
   const engineRows = progressRows.map(toEngineRow);
