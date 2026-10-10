@@ -220,20 +220,28 @@ export function UILanguageSwitcher({
     <>
       <button
         ref={buttonRef}
-        onMouseDown={handleToggle}
+        onClick={handleToggle}
         className={
           isDrawer
-            ? "ui-language-switcher-trigger ui-language-switcher-trigger--drawer group flex w-full items-center justify-between gap-3 transition"
+            ? "ui-language-switcher-trigger ui-language-switcher-trigger--drawer"
             : "ui-language-switcher-trigger group flex items-center gap-2 px-3 py-2 rounded-full border border-white/20 bg-white/10 text-white/90 shadow-[0_10px_24px_rgba(10,4,30,0.25)] backdrop-blur-sm transition hover:bg-white/15 hover:text-white"
         }
-        aria-label="Change interface language"
+        aria-label={isDrawer ? `${t("header.interfaceLanguage")}: ${currentLanguage.name}` : "Change interface language"}
+        aria-expanded={isOpen}
         type="button"
       >
         {isDrawer ? (
           <>
-            <span className="flex min-w-0 items-center gap-3">
-              <Globe className="ui-language-switcher-trigger__icon w-[1.15rem] h-[1.15rem] shrink-0" aria-hidden="true" />
-              <span suppressHydrationWarning className="ui-lang-name truncate text-[0.92rem] font-semibold normal-case tracking-normal">
+            <span
+              className={`fi fi-${currentLanguage.flagCode} rounded-[2px]`}
+              aria-hidden="true"
+              style={{ width: "20px", height: "15px" }}
+            />
+            <span className="ui-language-switcher-trigger__details">
+              <span suppressHydrationWarning className="header-mobile-lang-label">
+                {t("header.interfaceLanguage")}
+              </span>
+              <span suppressHydrationWarning className="ui-lang-name">
                 {currentLanguage.name}
               </span>
             </span>
@@ -303,7 +311,7 @@ export function UILanguageSwitcher({
                     <button
                       key={lang.code}
                       type="button"
-                      onMouseDown={(e) => {
+                      onClick={(e) => {
                         e.stopPropagation();
                         if (!lang.enabled) return;
                         handleSelect(lang.code);

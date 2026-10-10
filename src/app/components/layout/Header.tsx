@@ -1121,71 +1121,69 @@ export function Header({
         onClick={() => setIsMenuOpen(false)}
       >
         <div
-          className="header-mobile-menu-inner"
+          className="header-mobile-menu-content"
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="header-mobile-nav-list">
-            {mobileNavItems.map((item) => {
-              const Icon = item.icon;
-              const itemIsActive = isActive(...item.activePages);
+          {showAuthButton ? (
+            <div className="header-mobile-account-section">
+              <button
+                type="button"
+                onClick={authSession ? () => goToProfile("dashboard") : openLoginDialog}
+                className={`header-mobile-account ${authSession ? "is-signed-in" : "is-signed-out"} ${isActive("profile") && authSession ? "is-active" : ""}`}
+              >
+                <span className="header-mobile-account__avatar" aria-hidden="true">
+                  {authSession && nicknameInitial ? nicknameInitial : <UserRound size={25} strokeWidth={1.7} />}
+                  {authSession ? <CheckCircle2 className="header-mobile-account__status" size={16} /> : null}
+                </span>
+                <span className="header-mobile-account__details">
+                  <span suppressHydrationWarning className="header-mobile-account__name">
+                    {authSession ? accountDisplayName : t("languageAccountChoice.logIn")}
+                  </span>
+                  {!authSession ? (
+                    <span suppressHydrationWarning className="header-mobile-account__label">
+                      {t("home.stat.noSignup")}
+                    </span>
+                  ) : null}
+                  {authSession && accountMeta ? (
+                    <span suppressHydrationWarning className="header-mobile-account__meta">{accountMeta}</span>
+                  ) : null}
+                </span>
+                <span className="header-mobile-account__arrow" aria-hidden="true">
+                  {authSession ? <ChevronRight size={20} /> : <LogIn size={20} />}
+                </span>
+              </button>
+            </div>
+          ) : null}
+          <div className="header-mobile-menu-inner">
+            <div className="header-mobile-nav-list">
+              {mobileNavItems.map((item) => {
+                const Icon = item.icon;
+                const itemIsActive = isActive(...item.activePages);
 
-              return (
-                <a
-                  key={item.id}
-                  href={item.href}
-                  onClick={createNavClickHandler(item.onClick)}
-                  className={`header-mobile-nav-item ${
-                    item.id === "exam" ? "header-mobile-nav-item--exam" : ""
-                  } ${itemIsActive ? "is-active" : ""}`}
-                >
-                  <span className="header-mobile-nav-item__accent" aria-hidden="true" />
-                  <span className="header-mobile-nav-item__icon" aria-hidden="true">
-                    <Icon size={17} strokeWidth={1.8} />
-                  </span>
-                  <span suppressHydrationWarning className="header-mobile-nav-item__label">{item.label}</span>
-                  <span className="header-mobile-nav-item__chevron" aria-hidden="true">
-                    <ChevronRight size={16} strokeWidth={1.7} />
-                  </span>
-                </a>
-              );
-            })}
-            {showAuthButton ? (
-              authSession ? (
-                <button
-                  type="button"
-                  onClick={() => goToProfile("dashboard")}
-                  className="header-mobile-nav-item header-mobile-nav-item--account text-left"
-                >
-                  <span className="header-mobile-nav-item__accent" aria-hidden="true" />
-                  <span className="header-mobile-nav-item__icon" aria-hidden="true">
-                    <UserRound size={17} strokeWidth={1.8} />
-                  </span>
-                  <span className="header-mobile-nav-item__label">{accountDisplayName}</span>
-                  <span className="header-mobile-nav-item__chevron" aria-hidden="true">
-                    <ChevronRight size={16} strokeWidth={1.7} />
-                  </span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={openLoginDialog}
-                  className="header-mobile-nav-item text-left"
-                >
-                  <span className="header-mobile-nav-item__accent" aria-hidden="true" />
-                  <span className="header-mobile-nav-item__icon" aria-hidden="true">
-                    <LogIn size={17} strokeWidth={1.8} />
-                  </span>
-                  <span className="header-mobile-nav-item__label">{authButtonLabel}</span>
-                  <span className="header-mobile-nav-item__chevron" aria-hidden="true">
-                    <ChevronRight size={16} strokeWidth={1.7} />
-                  </span>
-                </button>
-              )
-            ) : null}
-          </div>
-          <div className="header-mobile-lang-wrap">
-            <div suppressHydrationWarning className="header-mobile-lang-label">{t("header.interfaceLanguage")}</div>
-            <UILanguageSwitcher variant="centered-modal" />
+                return (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    onClick={createNavClickHandler(item.onClick)}
+                    className={`header-mobile-nav-item ${
+                      item.id === "exam" ? "header-mobile-nav-item--exam" : ""
+                    } ${itemIsActive ? "is-active" : ""}`}
+                  >
+                    <span className="header-mobile-nav-item__accent" aria-hidden="true" />
+                    <span className="header-mobile-nav-item__icon" aria-hidden="true">
+                      <Icon size={17} strokeWidth={1.8} />
+                    </span>
+                    <span suppressHydrationWarning className="header-mobile-nav-item__label">{item.label}</span>
+                    <span className="header-mobile-nav-item__chevron" aria-hidden="true">
+                      <ChevronRight size={16} strokeWidth={1.7} />
+                    </span>
+                  </a>
+                );
+              })}
+            </div>
+            <div className="header-mobile-lang-wrap">
+              <UILanguageSwitcher variant="centered-modal" />
+            </div>
           </div>
         </div>
       </div>
