@@ -11,6 +11,42 @@
     "levelTest": "Test de niveau"
   },
   "home": {
+    "dailyWordLabel": "MOT DU JOUR",
+    "dailyWordTranslation": "Traduction",
+    "languageScrollLeft": "Faire défiler les langues vers la gauche",
+    "languageScrollRight": "Faire défiler les langues vers la droite",
+    "supportedLanguages": "LANGUES DISPONIBLES",
+    "highlights": {
+      "label": "Atouts de la plateforme",
+      "vocabulary": {
+        "title": "Plus de 10 000 mots par langue",
+        "description": "Du vocabulaire quotidien au vocabulaire avancé."
+      },
+      "languages": {
+        "title": "Plusieurs langues",
+        "description": "Apprenez du vocabulaire dans différentes langues."
+      },
+      "exercises": {
+        "title": "Exercices interactifs",
+        "description": "Traduction, écoute, quiz et plus encore."
+      },
+      "progress": {
+        "title": "Suivez vos progrès",
+        "description": "Suivez votre apprentissage du vocabulaire."
+      }
+    },
+    "customPractice": {
+      "title": "Pratique personnalisée",
+      "description": "Choisissez quoi pratiquer et comment, avec des exercices de vocabulaire flexibles.",
+      "features": {
+        "language": "Choisissez la langue à apprendre",
+        "vocabulary": "Sélectionnez les niveaux et les catégories de vocabulaire",
+        "exercises": "Choisissez vos exercices préférés",
+        "pace": "Pratiquez à votre rythme",
+        "noAccount": "Aucun compte requis"
+      },
+      "button": "Commencer à pratiquer"
+    },
     "headline": "Apprenez du vocabulaire",
     "subheadline": "Apprenez, pratiquez et retenez.",
     "yourLanguage": "Votre langue",

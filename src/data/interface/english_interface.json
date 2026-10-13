@@ -11,6 +11,42 @@
     "levelTest": "Level Test"
   },
   "home": {
+    "dailyWordLabel": "WORD OF THE DAY",
+    "dailyWordTranslation": "Translation",
+    "languageScrollLeft": "Scroll languages left",
+    "languageScrollRight": "Scroll languages right",
+    "supportedLanguages": "SUPPORTED LANGUAGES",
+    "highlights": {
+      "label": "Platform highlights",
+      "vocabulary": {
+        "title": "10,000+ Words per Language",
+        "description": "From everyday to advanced vocabulary."
+      },
+      "languages": {
+        "title": "Multiple Languages",
+        "description": "Learn vocabulary across languages."
+      },
+      "exercises": {
+        "title": "Interactive Exercises",
+        "description": "Translation, listening, quizzes, and more."
+      },
+      "progress": {
+        "title": "Track Your Progress",
+        "description": "Monitor your vocabulary learning."
+      }
+    },
+    "customPractice": {
+      "title": "Custom Practice",
+      "description": "Choose what and how you want to practice with flexible vocabulary exercises.",
+      "features": {
+        "language": "Choose your learning language",
+        "vocabulary": "Select vocabulary levels and categories",
+        "exercises": "Pick your preferred exercises",
+        "pace": "Practice at your own pace",
+        "noAccount": "No account required"
+      },
+      "button": "Start Practicing"
+    },
     "headline": "Learn Vocabulary",
     "subheadline": "Learn, practice, and remember.",
     "yourLanguage": "Your language",

@@ -19,6 +19,7 @@ import { LanguageAccountChoiceDialog } from "./components/dialogs/LanguageAccoun
 import { PasswordRecoveryDialog } from "./components/dialogs/PasswordRecoveryDialog";
 import { LevelTestLanguageModal } from "./pages/level-test/LevelTestLanguageModal";
 import { HomePage } from "./pages/home/HomePage";
+import { NewHomePage } from "./pages/home/NewHomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
 import { UserProfileDashboardPage } from "../features/user-profile";
@@ -1605,6 +1606,16 @@ function AppContent({
         {passwordRecoveryDialog}
         {accountIntroDialog}
       </div>
+    );
+  }
+
+  if (resolvedPage === "newHomePreview") {
+    return (
+      <>
+        <NewHomePage headerProps={sharedHeaderProps} languages={languages} />
+        {passwordRecoveryDialog}
+        {accountIntroDialog}
+      </>
     );
   }
 

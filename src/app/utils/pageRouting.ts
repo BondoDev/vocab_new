@@ -56,6 +56,7 @@ export interface InteractiveRouteMap {
 export type RouteKey = keyof InteractiveRouteMap;
 export type PageKey =
   | RouteKey
+  | "newHomePreview"
   | "vocabularyLevel"
   | "levelTestSeo"
   | "verbListSeo"
@@ -258,6 +259,11 @@ export const pageFromPath = (
   path: string,
   routes: InteractiveRouteMap,
 ): PageKey => {
+  // Keep the unfinished homepage accessible only through a local preview URL.
+  if (import.meta.env.DEV && path === "/test/homepage") {
+    return "newHomePreview";
+  }
+
   if (parsePracticeRoute(path)) {
     return "practice";
   }

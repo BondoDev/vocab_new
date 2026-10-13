@@ -11,6 +11,42 @@
     "levelTest": "Niveautest"
   },
   "home": {
+    "dailyWordLabel": "WORT DES TAGES",
+    "dailyWordTranslation": "Übersetzung",
+    "languageScrollLeft": "Sprachen nach links scrollen",
+    "languageScrollRight": "Sprachen nach rechts scrollen",
+    "supportedLanguages": "UNTERSTÜTZTE SPRACHEN",
+    "highlights": {
+      "label": "Vorteile der Plattform",
+      "vocabulary": {
+        "title": "Über 10.000 Wörter pro Sprache",
+        "description": "Vom alltäglichen bis zum anspruchsvollen Wortschatz."
+      },
+      "languages": {
+        "title": "Mehrere Sprachen",
+        "description": "Lerne Wortschatz in verschiedenen Sprachen."
+      },
+      "exercises": {
+        "title": "Interaktive Übungen",
+        "description": "Übersetzung, Hörübungen, Quiz und mehr."
+      },
+      "progress": {
+        "title": "Verfolge deinen Fortschritt",
+        "description": "Behalte dein Wortschatzlernen im Blick."
+      }
+    },
+    "customPractice": {
+      "title": "Individuelles Üben",
+      "description": "Wähle mit flexiblen Wortschatzübungen, was und wie du üben möchtest.",
+      "features": {
+        "language": "Wähle die Sprache, die du lernen möchtest",
+        "vocabulary": "Wähle Wortschatzniveaus und Kategorien",
+        "exercises": "Wähle deine bevorzugten Übungen",
+        "pace": "Übe in deinem eigenen Tempo",
+        "noAccount": "Kein Konto erforderlich"
+      },
+      "button": "Jetzt üben"
+    },
     "headline": "Wortschatz lernen",
     "subheadline": "Lernen, üben und behalten.",
     "yourLanguage": "Deine Sprache",
