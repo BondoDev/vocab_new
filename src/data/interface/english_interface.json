@@ -36,6 +36,17 @@
       }
     },
     "customPractice": {
+      "chooseLanguages": "Choose Your Languages",
+      "chooseExercises": "Choose Your Exercises",
+      "filters": {
+        "unrestrictedSummary": "All vocabulary · No restrictions",
+        "title": "Vocabulary Filters",
+        "description": "Choose which words you want to practice.",
+        "allVocabulary": "All Vocabulary",
+        "customize": "Customize Filters",
+        "apply": "Apply Filters",
+        "backToSetup": "Back to Custom Practice"
+      },
       "title": "Custom Practice",
       "description": "Choose what and how you want to practice with flexible vocabulary exercises.",
       "features": {

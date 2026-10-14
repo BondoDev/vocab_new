@@ -20,6 +20,7 @@ import { PasswordRecoveryDialog } from "./components/dialogs/PasswordRecoveryDia
 import { LevelTestLanguageModal } from "./pages/level-test/LevelTestLanguageModal";
 import { HomePage } from "./pages/home/HomePage";
 import { NewHomePage } from "./pages/home/NewHomePage";
+import { CustomPracticePreviewPage } from "./pages/CustomPracticePreviewPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
 import { UserProfileDashboardPage } from "../features/user-profile";
@@ -378,6 +379,10 @@ function AppContent({
     useState(0);
   const [swapRotation, setSwapRotation] = useState(0);
   const resolvedPage = ssrRouteOverride?.page ?? currentPage;
+  // The preview's return context survives a Filters-page refresh without changing its defaults.
+  const isCustomPracticeSetupFilters = import.meta.env.DEV &&
+    resolvedPage === "levelCategory" &&
+    new URLSearchParams(location.search).get("source") === "custom-practice-setup";
   const isProtectedAccountPage =
     resolvedPage === "profile" ||
     resolvedPage === "newWordStudy" ||
@@ -1123,8 +1128,12 @@ function AppContent({
               setSelectedLevels={setSelectedLevels}
               selectedWordTypes={selectedWordTypes}
               setSelectedWordTypes={setSelectedWordTypes}
-              onBack={() => navigate(ROUTES.language)}
-              onContinue={handleContinueToExerciseSelection}
+              onBack={() => navigate(isCustomPracticeSetupFilters ? "/test/custom-practice" : ROUTES.language)}
+              onContinue={isCustomPracticeSetupFilters
+                ? () => navigate("/test/custom-practice")
+                : handleContinueToExerciseSelection}
+              continueLabel={isCustomPracticeSetupFilters ? t("home.customPractice.filters.apply") : undefined}
+              backLabel={isCustomPracticeSetupFilters ? t("home.customPractice.filters.backToSetup") : undefined}
               onTakeLevelTest={handleStartExam}
             />
           </Suspense>
@@ -1609,10 +1618,39 @@ function AppContent({
     );
   }
 
+  if (resolvedPage === "customPracticePreview") {
+    return (
+      <>
+        <CustomPracticePreviewPage
+          headerProps={sharedHeaderProps}
+          languages={languages}
+          yourLanguage={yourLanguage}
+          practiceLanguage={practiceLanguage}
+          onYourLanguageChange={setYourLanguage}
+          onPracticeLanguageChange={setPracticeLanguage}
+          onReverseLanguages={handleReverseLanguages}
+          swapRotation={swapRotation}
+          selectedLevels={selectedLevels}
+          selectedCategories={selectedCategories}
+          selectedWordTypes={selectedWordTypes}
+          onCustomizeFilters={() => navigate(`${ROUTES.levelCategory}?source=custom-practice-setup`)}
+          isCustomizeFiltersDisabled={isContinueDisabled}
+        />
+        {passwordRecoveryDialog}
+        {accountIntroDialog}
+      </>
+    );
+  }
+
   if (resolvedPage === "newHomePreview") {
     return (
       <>
-        <NewHomePage headerProps={sharedHeaderProps} languages={languages} />
+        <NewHomePage
+          headerProps={sharedHeaderProps}
+          languages={languages}
+          onLogin={() => setRequestedHeaderAuthMode("login")}
+          onStartPracticing={() => navigate("/test/custom-practice")}
+        />
         {passwordRecoveryDialog}
         {accountIntroDialog}
       </>

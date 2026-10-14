@@ -21,6 +21,8 @@ interface LevelCategorySelectionProps {
   onBack: () => void;
   onContinue: () => void;
   onTakeLevelTest: () => void;
+  continueLabel?: string;
+  backLabel?: string;
 }
 
 const levels = [
@@ -170,6 +172,8 @@ export function LevelCategorySelection({
   onBack,
   onContinue,
   onTakeLevelTest,
+  continueLabel,
+  backLabel,
 }: LevelCategorySelectionProps) {
   const [isTopicsModalOpen, setIsTopicsModalOpen] = useState(false);
   const [pendingCategories, setPendingCategories] = useState<string[]>([]);
@@ -504,7 +508,7 @@ export function LevelCategorySelection({
         className="absolute top-14 z-50 hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
       >
         <ChevronLeft className="w-5 h-5" />
-        <span>{t("levelCategory.back")}</span>
+        <span>{backLabel ?? t("levelCategory.back")}</span>
       </button>
 
       <main className="flex-1 flex justify-center px-4 pt-4 sm:pt-6 pb-6 sm:pb-8 md:px-[clamp(1rem,2vw,1.5rem)] md:pt-[clamp(1rem,2vw,1.5rem)] md:pb-[clamp(1.5rem,3vw,2rem)] relative">
@@ -1052,9 +1056,9 @@ export function LevelCategorySelection({
                 damping: 17,
               }}
             >
-              {hasAnyFilterSelected
+              {continueLabel ?? (hasAnyFilterSelected
                 ? t("levelCategory.next")
-                : t("levelCategory.skipToNext")}
+                : t("levelCategory.skipToNext"))}
             </motion.button>
           </motion.div>
         </motion.div>

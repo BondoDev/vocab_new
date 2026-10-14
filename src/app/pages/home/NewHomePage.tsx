@@ -36,6 +36,16 @@ interface DailyWord {
   translation: string;
 }
 
+const DAILY_WORD_SPEECH_LOCALES: Record<string, string> = {
+  en: "en-US",
+  es: "es-ES",
+  fr: "fr-FR",
+  de: "de-DE",
+  it: "it-IT",
+  pt: "pt-PT",
+  ru: "ru-RU",
+};
+
 async function loadRandomDailyWord(interfaceLanguage: UILanguage): Promise<DailyWord> {
   const { default: nativeEntries } = await DAILY_WORD_IMPORTERS[interfaceLanguage]();
   const remainingLanguages = Object.keys(DAILY_WORD_IMPORTERS).filter(
@@ -95,16 +105,27 @@ const LANGUAGE_DISPLAY_ORDER: Record<string, number> = {
 interface NewHomePageProps {
   headerProps: ComponentProps<typeof Header>;
   languages: ComponentProps<typeof LanguageSelector>["languages"];
+  onLogin: () => void;
+  onStartPracticing: () => void;
 }
 
-export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
+export function NewHomePage({ headerProps, languages, onLogin, onStartPracticing }: NewHomePageProps) {
   const { t, uiLanguage } = useLanguage();
+  const [isSpeechSupported, setIsSpeechSupported] = useState(false);
   const [dailyWordSelection, setDailyWordSelection] = useState<DailyWord | null>(null);
   const [dailyWordErrorLanguage, setDailyWordErrorLanguage] = useState<UILanguage | null>(null);
   const dailyWord = dailyWordSelection?.interfaceLanguage === uiLanguage ? dailyWordSelection : null;
   const sourceFlagCode = languages.find((language) => language.code === dailyWord?.language)?.flagCode;
   const translationFlagCode = languages.find((language) => language.code === uiLanguage)?.flagCode;
   const dailyWordError = dailyWordErrorLanguage === uiLanguage;
+  const pronounceDailyWord = () => {
+    if (!dailyWord || !isSpeechSupported) return;
+    const utterance = new SpeechSynthesisUtterance(dailyWord.word);
+    utterance.lang = DAILY_WORD_SPEECH_LOCALES[dailyWord.language] ?? dailyWord.language;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  };
+
   const dailyWordRequestRef = useRef<{ language: UILanguage; promise: Promise<DailyWord> } | null>(null);
   const dailyWordHeadingRef = useRef<HTMLDivElement>(null);
   const dailyWordTitleRef = useRef<HTMLHeadingElement>(null);
@@ -122,6 +143,13 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
       (LANGUAGE_DISPLAY_ORDER[first.code] ?? Number.MAX_SAFE_INTEGER) -
       (LANGUAGE_DISPLAY_ORDER[second.code] ?? Number.MAX_SAFE_INTEGER),
   );
+
+  useEffect(() => {
+    // Detect browser-only support after hydration to keep the initial render stable.
+    setIsSpeechSupported(
+      "speechSynthesis" in window && "SpeechSynthesisUtterance" in window,
+    );
+  }, []);
 
   useEffect(() => {
     // Defer randomness until hydration and reuse StrictMode's request. Tag the
@@ -330,7 +358,9 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
                           type="button"
                           className="new-home-page__daily-word-speaker"
                           aria-label={t("practice.listenToPronunciation")}
-                          disabled
+                          title={t("practice.listenToPronunciation")}
+                          onClick={pronounceDailyWord}
+                          disabled={!isSpeechSupported}
                         >
                           <Volume2 aria-hidden="true" />
                         </button>
@@ -417,7 +447,7 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
               </li>
             </ul>
             <div className="new-home-page__card-footer">
-              <button type="button" className="new-home-page__card-button">
+              <button type="button" className="new-home-page__card-button" onClick={onLogin}>
                 <span>Log In to Your Account</span>
                 <ArrowRight aria-hidden="true" />
               </button>
@@ -485,7 +515,7 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
               </li>
             </ul>
             <div className="new-home-page__card-footer">
-              <button type="button" className="new-home-page__card-button">
+              <button type="button" className="new-home-page__card-button" onClick={onStartPracticing}>
                 <span>{t("home.customPractice.button")}</span>
                 <ArrowRight aria-hidden="true" />
               </button>

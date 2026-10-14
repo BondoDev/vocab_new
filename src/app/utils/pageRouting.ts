@@ -57,6 +57,7 @@ export type RouteKey = keyof InteractiveRouteMap;
 export type PageKey =
   | RouteKey
   | "newHomePreview"
+  | "customPracticePreview"
   | "vocabularyLevel"
   | "levelTestSeo"
   | "verbListSeo"
@@ -262,6 +263,10 @@ export const pageFromPath = (
   // Keep the unfinished homepage accessible only through a local preview URL.
   if (import.meta.env.DEV && path === "/test/homepage") {
     return "newHomePreview";
+  }
+
+  if (import.meta.env.DEV && path === "/test/custom-practice") {
+    return "customPracticePreview";
   }
 
   if (parsePracticeRoute(path)) {

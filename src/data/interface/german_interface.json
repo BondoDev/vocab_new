@@ -36,6 +36,17 @@
       }
     },
     "customPractice": {
+      "chooseLanguages": "Wähle deine Sprachen",
+      "chooseExercises": "Wähle deine Übungen",
+      "filters": {
+        "unrestrictedSummary": "Gesamter Wortschatz · Keine Einschränkungen",
+        "title": "Wortschatzfilter",
+        "description": "Wähle die Wörter, die du üben möchtest.",
+        "allVocabulary": "Gesamter Wortschatz",
+        "customize": "Filter anpassen",
+        "apply": "Filter anwenden",
+        "backToSetup": "Zurück zum individuellen Üben"
+      },
       "title": "Individuelles Üben",
       "description": "Wähle mit flexiblen Wortschatzübungen, was und wie du üben möchtest.",
       "features": {
