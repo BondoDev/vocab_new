@@ -1,95 +1,148 @@
 .new-home-page {
+  --homepage-content-width: 68.75rem;
+  --homepage-page-gutter: 1.5rem;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  padding-bottom: calc(var(--language-strip-height, 0px) + 1rem);
-  background-color: var(--background);
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  // The scroll viewport ends above the fixed rail, not behind it.
+  padding-bottom: var(--language-strip-height, 4rem);
+  background-color: #faf8f4;
   color: var(--foreground);
   font-family: var(--font-family-sans);
 
+  > header {
+    flex-shrink: 0;
+  }
+
+  > .header-spacer {
+    height: var(--homepage-header-height, var(--site-header-height, 4.875rem));
+  }
+
   &__main {
+    --muted-foreground: #626a78;
     flex: 1;
-    padding: 2.25rem 1.5rem 1.5rem;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-gutter: stable;
+    scroll-padding-block: 1.25rem;
+    padding: 0 var(--homepage-page-gutter) 1.5rem;
+    background-color: #faf8f4;
   }
 
   &__hero {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    max-width: 75rem;
-    margin: 0 auto;
+    gap: 0.5rem;
+    // Expand the photograph through the page gutters, not the content grid.
+    width: calc(100% + var(--homepage-page-gutter) * 2);
+    margin: 0 calc(var(--homepage-page-gutter) * -1);
+    min-height: 28rem;
+    padding: 1.75rem var(--homepage-page-gutter) 0;
+    background-color: #f2effa;
+    background-image: url("/images/home/homepage-image.png");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
   }
 
   &__hero-copy {
     min-width: 0;
-  }
-
-  &__hero-artwork {
-    position: relative;
-    min-width: 0;
     width: 100%;
-    max-width: 18rem;
-    justify-self: center;
-    align-self: center;
+    max-width: var(--homepage-content-width);
+    margin: 0 auto;
+    padding-inline: 1rem;
   }
 
   &__hero-scene {
+    position: relative;
+    isolation: isolate;
     display: grid;
-    grid-template-columns: minmax(0, 18rem) minmax(0, 28rem);
+    grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
     align-items: center;
-    justify-content: space-between;
-    gap: 3rem;
+    align-content: end;
+    gap: 1.5rem;
     width: 100%;
-    max-width: 52rem;
+    // Reserve the wider composition in the grid instead of translating past its edges.
+    max-width: calc(var(--homepage-content-width) + 7rem);
     margin: 0 auto;
-  }
-
-  &__hero-image {
-    display: block;
-    width: 100%;
-    height: auto;
+    flex: 1;
+    min-height: 18rem;
+    padding: 1rem 0 3.5rem;
   }
 
   &__title {
     font-family: var(--font-family-heading);
-    font-size: 2.625rem;
-    font-weight: var(--font-weight-medium);
+    font-size: 2.75rem;
+    font-weight: 600;
+    color: #293546;
     line-height: 1.2;
     text-align: center;
   }
 
   &__subtitle {
     min-width: 0;
-    max-width: 44rem;
-    margin: 0.5rem auto 0;
+    width: 100%;
+    max-width: 24rem;
+    padding: 1.375rem;
+    margin: 0;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     font-size: 1.125rem;
-    color: var(--muted-foreground);
-    text-align: center;
+    line-height: 1.65;
+    color: #293546;
+    font-weight: 400;
+    text-align: left;
+    transform: translateY(-4rem);
   }
 
   &__daily-word-slot {
+    grid-column: 2;
     container: daily-word / inline-size;
     width: 100%;
-    max-width: 28rem;
+    max-width: 20rem;
     min-width: 0;
-    justify-self: center;
+    justify-self: end;
     align-self: center;
+    transform: translateY(-5rem);
+  }
+
+  @mixin stacked-daily-word {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.375rem;
+
+    .new-home-page__daily-word-translation-panel {
+      margin: 0.375rem 0 0;
+      padding: 0.5rem 0 0;
+      border-top: 1px solid #e6ebf3;
+
+      &::before {
+        display: none;
+      }
+    }
   }
 
   &__daily-word {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: center;
-    gap: 0.375rem 1.125rem;
+    align-items: start;
+    @include stacked-daily-word;
     width: 100%;
-    max-width: 28rem;
+    max-width: 20rem;
     min-width: 0;
     min-height: 0;
-    padding: 1.125rem;
-    border: 1px solid var(--border);
+    padding: 1.25rem;
+    border: 1px solid #dfe5ee;
     border-radius: 8px;
     background-color: var(--card);
-    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 3px 14px rgba(39, 56, 86, 0.07);
+  }
+
+  &__daily-word--stacked {
+    @include stacked-daily-word;
   }
 
   &__daily-word-details {
@@ -108,17 +161,27 @@
     grid-column: 1 / -1;
   }
 
-  &__daily-word-heading {
+  &__daily-word-heading,
+  &__daily-word-translation-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  &__daily-word-flag.fi {
+    display: none;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-size: cover;
   }
 
   &__daily-word-label {
     grid-column: 1 / -1;
     text-align: center;
     color: #4169d2;
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     font-weight: 600;
     line-height: 1.5;
     text-transform: uppercase;
@@ -128,13 +191,13 @@
   &__daily-word-speaker {
     display: grid;
     place-items: center;
-    flex: 0 0 24px;
-    width: 24px;
-    height: 24px;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
     padding: 0;
     border: 0;
     border-radius: 50%;
-    background-color: transparent;
+    background-color: #f0f4fe;
     color: #4169d2;
     cursor: default;
 
@@ -162,7 +225,8 @@
     gap: 0.75rem;
     margin-bottom: 0.25rem;
     color: var(--muted-foreground);
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
     line-height: 1.5;
 
     span + span {
@@ -176,10 +240,10 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
+    justify-content: flex-start;
     align-self: stretch;
     min-width: 0;
-    margin: 0.25rem 0;
+    margin: 0;
     // Keep the divider in the column gap rather than consuming translation width.
     &::before {
       content: "";
@@ -190,47 +254,150 @@
   }
 
   &__daily-word-translation {
+    flex: 1;
+    min-width: 0;
     width: 100%;
     color: var(--foreground);
-    font-size: var(--daily-word-fitted-font-size, 2rem);
+    font-size: var(
+      --daily-word-translation-font-size,
+      min(1.625rem, calc(var(--daily-word-fitted-font-size, 2rem) * 0.875))
+    );
+    font-weight: 500;
     line-height: 1.25;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     word-break: normal;
+    hyphens: none;
   }
 
   @container daily-word (max-width: 25rem) {
     &__daily-word {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 0.375rem;
+      @include stacked-daily-word;
+    }
+  }
+
+  @media (962px <= width < 1200px) {
+    &__hero-scene {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1rem;
     }
 
-    &__daily-word-translation-panel {
-      margin: 0.375rem 0 0;
-      padding: 0.625rem 0 0;
-      border-top: 1px solid #e6ebf3;
+    &__subtitle {
+      max-width: clamp(20rem, 32vw, 24rem);
+    }
 
-      &::before {
-        display: none;
-      }
+    &__daily-word-slot {
+      max-width: clamp(18rem, 28vw, 20rem);
+    }
+  }
+
+  @media (width < 1602px) {
+    &__daily-word-slot {
+      transform: translateY(-3rem);
+    }
+  }
+
+  @media (width < 1348px) {
+    &__daily-word-slot {
+      transform: translateY(-3rem);
+    }
+  }
+
+  @media (width < 1208px) {
+    &__daily-word-slot {
+      transform: translateY(-2rem);
+    }
+
+    &__daily-word-title {
+      font-size: min(1.75rem, var(--daily-word-fitted-font-size, 1.75rem));
+    }
+
+    &__daily-word-translation {
+      font-size: min(1.5rem, var(--daily-word-translation-font-size, 1.5rem));
+    }
+  }
+
+  @media (width < 962px) {
+    &__daily-word-flag.fi {
+      display: block;
+    }
+
+    &__hero-scene {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 1.5rem 0 10rem;
+    }
+
+    &__subtitle {
+      padding: 1.25rem;
+      justify-self: center;
+      transform: none;
+    }
+
+    &__daily-word-slot {
+      grid-column: 1;
+      justify-self: end;
+      transform: none;
+    }
+
+    &__daily-word {
+      padding: 0.875rem 1rem;
+    }
+
+    &__daily-word-title {
+      font-size: min(1.5rem, var(--daily-word-fitted-font-size, 1.5rem));
+    }
+
+    &__daily-word-translation {
+      font-size: min(1.25rem, var(--daily-word-translation-font-size, 1.25rem));
+    }
+
+    &__daily-word-meta {
+      display: none;
+      font-size: 0.75rem;
     }
   }
 
   @media (max-width: 767px) {
-    &__hero-scene {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 1.5rem;
-    }
-
-    &__hero-artwork {
-      max-width: 14rem;
-    }
-
     &__title {
       font-size: 2rem;
     }
 
     &__subtitle {
-      font-size: 1rem;
+      font-size: 1.125rem;
+      justify-self: center;
+      transform: none;
+    }
+  }
+
+  @media (width < 484px) {
+    &__daily-word-title {
+      font-size: min(1.375rem, var(--daily-word-fitted-font-size, 1.375rem));
+    }
+
+    &__daily-word-translation {
+      font-size: min(
+        1.125rem,
+        var(--daily-word-translation-font-size, 1.125rem)
+      );
+    }
+  }
+  @media (width < 484px) {
+    &__daily-word-title {
+      font-size: min(1rem, var(--daily-word-fitted-font-size, 1rem));
+    }
+    &__daily-word-translation {
+      font-size: min(1rem, var(--daily-word-translation-font-size, 1rem));
+    }
+  }
+
+  @media (width < 422px) {
+    &__daily-word-label {
+      display: none;
+    }
+  }
+
+  @media (width < 378px) {
+    &__daily-word-slot {
+      width: 90%;
     }
   }
 
@@ -239,9 +406,9 @@
     inset: auto 0 0;
     z-index: 20;
     margin: 0;
-    padding: 1rem max(1rem, calc((100% - 80rem) / 2))
-      calc(1rem + env(safe-area-inset-bottom, 0px));
-    background-color: var(--background);
+    padding: 0.75rem max(1rem, calc((100% - 64rem) / 2))
+      calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    background-color: var(--card);
     border-top: 1px solid var(--border);
   }
 
@@ -465,12 +632,14 @@
   }
 
   &__cards {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 4rem;
+    column-gap: 2rem;
     row-gap: 0;
-    max-width: 64rem;
-    margin: 1.25rem auto 0;
+    max-width: var(--homepage-content-width);
+    margin: -3rem auto 0;
     align-items: stretch;
 
     @media (max-width: 1023px) {
@@ -482,11 +651,24 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
-    padding: 2rem;
+    padding: 1.25rem 1.5rem;
     background-color: var(--card);
     border: 1px solid var(--border);
     border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 6px rgba(39, 56, 86, 0.025);
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+
+    &:hover,
+    &:focus-within {
+      border-color: color-mix(
+        in srgb,
+        var(--learning-card-accent) 45%,
+        var(--learning-card-border)
+      );
+      box-shadow: 0 3px 10px rgba(39, 56, 86, 0.055);
+    }
   }
 
   &__card-header {
@@ -519,7 +701,7 @@
 
   &__card-title {
     font-family: var(--font-family-heading);
-    font-size: 1.25rem;
+    font-size: 1.375rem;
     font-weight: 600;
     line-height: 1.4;
     overflow-wrap: anywhere;
@@ -534,8 +716,8 @@
 
   &__card-labels {
     display: grid;
-    gap: 0.75rem;
-    margin: 1.5rem 0 0;
+    gap: 0.5rem;
+    margin: 1rem 0 0;
     padding: 0;
     list-style: none;
     line-height: 1.5;
@@ -550,8 +732,8 @@
   &__card-button {
     display: block;
     width: 100%;
-    min-height: 3rem;
-    padding: 0.75rem 1rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1rem;
     border: 0;
     border-radius: 6px;
     background-color: var(--primary);
@@ -563,6 +745,8 @@
     text-align: center;
     overflow-wrap: anywhere;
     cursor: pointer;
+    scroll-margin-block: 1.25rem;
+    transition: background-color 160ms ease;
 
     &:hover {
       background-color: color-mix(in srgb, var(--primary) 90%, black);
@@ -586,26 +770,25 @@
 
     background-color: var(--learning-card-background);
     border-color: var(--learning-card-border);
-    box-shadow: 0 2px 8px rgba(87, 59, 20, 0.04);
 
     .new-home-page__card-header {
-      grid-template-columns: 76px minmax(0, 1fr);
-      align-items: center;
-      gap: 1.25rem;
+      grid-template-columns: 56px minmax(0, 1fr);
+      align-items: start;
+      gap: 1rem;
     }
 
     .new-home-page__card-icon-badge {
       display: grid;
       place-items: center;
-      width: 76px;
-      height: 76px;
+      width: 56px;
+      height: 56px;
       border-radius: 8px;
       background-color: var(--learning-card-badge);
     }
 
     .new-home-page__card-icon {
-      width: 60px;
-      height: 60px;
+      width: 44px;
+      height: 44px;
     }
 
     .new-home-page__card-title {
@@ -614,36 +797,36 @@
     }
 
     .new-home-page__card-description {
-      margin-top: 0.5rem;
+      margin-top: 0.375rem;
       font-size: 0.9375rem;
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
     .new-home-page__card-labels {
-      gap: 0.5rem;
-      margin-top: 1.25rem;
+      gap: 0.25rem;
+      margin-top: 1rem;
       font-size: 0.9375rem;
-      line-height: 1.6;
+      line-height: 1.5;
 
       li {
         display: grid;
-        grid-template-columns: 18px minmax(0, 1fr);
+        grid-template-columns: 16px minmax(0, 1fr);
         align-items: start;
-        gap: 0.75rem;
-        min-height: 1.5rem;
+        gap: 0.625rem;
+        min-height: 1.3125rem;
       }
 
       svg {
-        width: 18px;
-        height: 18px;
-        margin-top: 3px;
+        width: 16px;
+        height: 16px;
+        margin-top: 2px;
         color: var(--learning-card-accent);
-        stroke-width: 2.5;
+        stroke-width: 2;
       }
     }
 
     .new-home-page__card-footer {
-      padding-top: 1.2rem;
+      padding-top: 1rem;
     }
 
     .new-home-page__card-button {
@@ -653,7 +836,7 @@
       gap: 0.75rem;
       background-color: var(--learning-card-button);
       color: #ffffff;
-      font-size: 0.9375rem;
+      font-size: 1rem;
 
       svg {
         flex-shrink: 0;
@@ -672,13 +855,13 @@
   }
 
   &__card--personalized {
-    --learning-card-background: #fff9ed;
-    --learning-card-border: #f3d9a2;
-    --learning-card-badge: #fff0c9;
-    --learning-card-heading: var(--foreground);
-    --learning-card-accent: #e29a12;
-    --learning-card-button: #f2af2d;
-    --learning-card-button-hover: #e7a11a;
+    --learning-card-background: #fff2d9;
+    --learning-card-border: #eedbb7;
+    --learning-card-badge: #fff1d2;
+    --learning-card-heading: #293546;
+    --learning-card-accent: #d48c12;
+    --learning-card-button: #f1b63d;
+    --learning-card-button-hover: #e8a929;
 
     .new-home-page__card-icon {
       stroke: #db8400;
@@ -690,13 +873,13 @@
   }
 
   &__card--custom {
-    --learning-card-background: #f5f8ff;
-    --learning-card-border: #dce5f8;
-    --learning-card-badge: #e8efff;
-    --learning-card-heading: #283b64;
-    --learning-card-accent: #4169d2;
-    --learning-card-button: #4169d2;
-    --learning-card-button-hover: #3455ae;
+    --learning-card-background: #eaf0ff;
+    --learning-card-border: #dce5f5;
+    --learning-card-badge: #eaf0fc;
+    --learning-card-heading: #293546;
+    --learning-card-accent: #3c63c8;
+    --learning-card-button: #3c63c8;
+    --learning-card-button-hover: #3157b6;
 
     .new-home-page__card-icon {
       stroke: var(--learning-card-accent);
@@ -773,36 +956,60 @@
 
   @media (max-width: 767px) {
     &__main {
-      padding: 1rem 1rem;
+      --homepage-page-gutter: 1rem;
+      padding: 0 var(--homepage-page-gutter) 1rem;
+    }
+
+    &__hero {
+      padding-top: 1rem;
+      min-height: 32rem;
+    }
+
+    &__hero-scene {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 1.5rem 0 11rem;
+    }
+
+    &__daily-word-slot {
+      grid-column: 1;
+      justify-self: center;
+      transform: none;
     }
 
     &__cards {
       grid-template-columns: minmax(0, 1fr);
       grid-auto-rows: 1fr;
-      margin-top: 1.25rem;
-      row-gap: 1.5rem;
+      margin-top: -2rem;
+      row-gap: 1rem;
     }
 
     &__card {
-      padding: 1.5rem;
+      padding: 1.25rem;
     }
 
     &__card--personalized,
     &__card--custom {
       .new-home-page__card-header {
-        grid-template-columns: 60px minmax(0, 1fr);
+        grid-template-columns: 48px minmax(0, 1fr);
         gap: 1rem;
       }
 
       .new-home-page__card-icon-badge {
-        width: 60px;
-        height: 60px;
-      }
-
-      .new-home-page__card-icon {
         width: 48px;
         height: 48px;
       }
+
+      .new-home-page__card-icon {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__card,
+    &__card-button {
+      transition: none;
     }
   }
 }

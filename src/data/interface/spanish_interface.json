@@ -11,7 +11,7 @@
     "levelTest": "Prueba de nivel"
   },
   "home": {
-    "dailyWordLabel": "PALABRA DEL DÍA",
+    "dailyWordLabel": "Descubre una palabra",
     "dailyWordTranslation": "Traducción",
     "languageScrollLeft": "Desplazar idiomas a la izquierda",
     "languageScrollRight": "Desplazar idiomas a la derecha",

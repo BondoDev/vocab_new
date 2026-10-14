@@ -56,10 +56,12 @@ async function loadRandomDailyWord(interfaceLanguage: UILanguage): Promise<Daily
         const resolved = resolveConcept(entry.concept_id);
         if (!resolved || (resolved.level !== "A2" && resolved.level !== "B1") || !resolved.grammarType) continue;
         const word = resolved.targetWord.trim().normalize("NFC");
-        const translation = resolved.translation.trim();
-        // Count Unicode characters, including spaces, so the displayed lemma
-        // stays short even for accented words, Cyrillic, and multiword entries.
-        if (!/\p{L}/u.test(word) || Array.from(word).length > 10) continue;
+        const translation = resolved.translation.trim().normalize("NFC");
+        // Count letters in both languages, including accented and Cyrillic
+        // letters, but not spaces, punctuation, or combining marks.
+        const wordLetters = word.match(/\p{L}/gu)?.length ?? 0;
+        const translationLetters = translation.match(/\p{L}/gu)?.length ?? 0;
+        if (wordLetters < 7 || wordLetters > 12 || translationLetters < 7 || translationLetters > 12) continue;
         eligible.push({ interfaceLanguage, language, word, type: resolved.grammarType, translation });
       }
       if (eligible.length > 0) {
@@ -100,6 +102,8 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
   const [dailyWordSelection, setDailyWordSelection] = useState<DailyWord | null>(null);
   const [dailyWordErrorLanguage, setDailyWordErrorLanguage] = useState<UILanguage | null>(null);
   const dailyWord = dailyWordSelection?.interfaceLanguage === uiLanguage ? dailyWordSelection : null;
+  const sourceFlagCode = languages.find((language) => language.code === dailyWord?.language)?.flagCode;
+  const translationFlagCode = languages.find((language) => language.code === uiLanguage)?.flagCode;
   const dailyWordError = dailyWordErrorLanguage === uiLanguage;
   const dailyWordRequestRef = useRef<{ language: UILanguage; promise: Promise<DailyWord> } | null>(null);
   const dailyWordHeadingRef = useRef<HTMLDivElement>(null);
@@ -139,16 +143,18 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
     const title = dailyWordTitleRef.current;
     const speaker = heading?.querySelector<HTMLButtonElement>("button");
     const card = heading?.closest<HTMLElement>(".new-home-page__daily-word");
-    if (!heading || !title || !speaker || !card) return;
+    const translation = card?.querySelector<HTMLElement>(".new-home-page__daily-word-translation");
+    if (!heading || !title || !speaker || !card || !translation) return;
     let cancelled = false;
-    const fitWord = () => {
-      if (cancelled) return;
+    const fitSourceWord = () => {
       // Measure at the SCSS-defined size before fitting, so widening the card
       // restores the original typography instead of retaining a smaller font.
       card.style.removeProperty("--daily-word-fitted-font-size");
       const fontSize = parseFloat(getComputedStyle(title).fontSize);
       const gap = parseFloat(getComputedStyle(heading).columnGap) || 0;
-      const available = heading.clientWidth - speaker.offsetWidth - gap;
+      const flag = heading.querySelector<HTMLElement>(".new-home-page__daily-word-flag");
+      const flagWidth = flag?.offsetWidth ?? 0;
+      const available = heading.clientWidth - speaker.offsetWidth - flagWidth - gap * (flagWidth > 0 ? 2 : 1);
       const naturalWidth = title.scrollWidth;
       if (available > 0 && naturalWidth > available) {
         card.style.setProperty(
@@ -157,15 +163,47 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
         );
       }
     };
+    const fitTranslation = () => {
+      const size = parseFloat(getComputedStyle(translation).fontSize);
+      const available = translation.clientWidth;
+      const naturalWidth = translation.scrollWidth;
+      return naturalWidth > available && available > 0
+        ? size * Math.max(1, available - 1) / naturalWidth
+        : size;
+    };
+    const fitWord = () => {
+      if (cancelled) return;
+      card.classList.remove("new-home-page__daily-word--stacked");
+      card.style.removeProperty("--daily-word-translation-font-size");
+      fitSourceWord();
+      let translationSize = fitTranslation();
+      // Prefer full-width blocks over squeezing either word below comfortable
+      // desktop sizes. This is presentation-only; the connected pair is unchanged.
+      if (parseFloat(getComputedStyle(title).fontSize) < 28 || translationSize < 24) {
+        card.classList.add("new-home-page__daily-word--stacked");
+        fitSourceWord();
+        translationSize = fitTranslation();
+      }
+      card.style.setProperty("--daily-word-translation-font-size", `${translationSize}px`);
+    };
     fitWord();
-    const observer = new ResizeObserver(fitWord);
-    observer.observe(heading);
+    let lastWidth = card.clientWidth;
+    // Ignore height changes caused by stacking/font fitting to avoid resize loops.
+    const observer = new ResizeObserver(() => {
+      if (card.clientWidth === lastWidth) return;
+      lastWidth = card.clientWidth;
+      fitWord();
+    });
+    observer.observe(card);
     void document.fonts.ready.then(fitWord);
     document.fonts.addEventListener("loadingdone", fitWord);
     return () => {
       cancelled = true;
       observer.disconnect();
       document.fonts.removeEventListener("loadingdone", fitWord);
+      card.classList.remove("new-home-page__daily-word--stacked");
+      card.style.removeProperty("--daily-word-fitted-font-size");
+      card.style.removeProperty("--daily-word-translation-font-size");
     };
   }, [dailyWord]);
 
@@ -173,9 +211,16 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
     const page = pageRef.current;
     const strip = languagesRef.current;
     if (!page || !strip) return;
+    const header = page.querySelector<HTMLElement>(".header-shell");
 
-    // Reserve the fixed strip's measured height across viewport and text changes.
+    // Match fixed navigation heights so neither a hero gap nor rail overlap remains.
     const reserveStripHeight = () => {
+      if (header) {
+        page.style.setProperty(
+          "--homepage-header-height",
+          `${header.getBoundingClientRect().height}px`,
+        );
+      }
       page.style.setProperty(
         "--language-strip-height",
         `${strip.getBoundingClientRect().height}px`,
@@ -184,6 +229,7 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
     reserveStripHeight();
     const observer = new ResizeObserver(reserveStripHeight);
     observer.observe(strip);
+    if (header) observer.observe(header);
     return () => observer.disconnect();
   }, []);
 
@@ -242,24 +288,13 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
             <h1 id="homepage-hero-title" className="new-home-page__title">
               Learn Vocabulary Your Way
             </h1>
+          </div>
+          <div className="new-home-page__hero-scene">
             <p className="new-home-page__subtitle">
               Build your vocabulary with interactive exercises. Practice freely
               without signing up, or follow a personalized learning plan to track
               your progress.
             </p>
-          </div>
-          <div className="new-home-page__hero-scene">
-            <div className="new-home-page__hero-artwork">
-              <img
-                className="new-home-page__hero-image"
-                src="/images/home/homepage-language-bookshelf.png"
-                width={1448}
-                height={1086}
-                alt=""
-                loading="eager"
-                decoding="async"
-              />
-            </div>
             <div className="new-home-page__daily-word-slot">
               <article
                 className="new-home-page__daily-word"
@@ -273,9 +308,16 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
                   {dailyWord ? (
                     <>
                       <p className="new-home-page__daily-word-meta">
-                        <span>{t(`languageNames.${dailyWord.language}`)}</span>
+                        {t(`languageNames.${dailyWord.language}`)}
                       </p>
                       <div ref={dailyWordHeadingRef} className="new-home-page__daily-word-heading">
+                        {sourceFlagCode && (
+                          <span
+                            className={`fi fi-${sourceFlagCode} new-home-page__daily-word-flag`}
+                            role="img"
+                            aria-label={t(`languageNames.${dailyWord.language}`)}
+                          />
+                        )}
                         <h2
                           ref={dailyWordTitleRef}
                           id="homepage-daily-word-title"
@@ -303,11 +345,20 @@ export function NewHomePage({ headerProps, languages }: NewHomePageProps) {
                 {dailyWord && (
                   <div className="new-home-page__daily-word-translation-panel">
                     <p className="new-home-page__daily-word-meta">
-                      <span>{t(`languageNames.${uiLanguage}`)}</span>
+                      {t(`languageNames.${uiLanguage}`)}
                     </p>
-                    <p className="new-home-page__daily-word-translation" lang={uiLanguage}>
-                      {dailyWord.translation}
-                    </p>
+                    <div className="new-home-page__daily-word-translation-row">
+                      {translationFlagCode && (
+                        <span
+                          className={`fi fi-${translationFlagCode} new-home-page__daily-word-flag`}
+                          role="img"
+                          aria-label={t(`languageNames.${uiLanguage}`)}
+                        />
+                      )}
+                      <p className="new-home-page__daily-word-translation" lang={uiLanguage}>
+                        {dailyWord.translation}
+                      </p>
+                    </div>
                   </div>
                 )}
               </article>
