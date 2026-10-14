@@ -133,6 +133,17 @@ test("/profile route is still wired to the resolvedPage switch in src/app/App.ts
   );
 });
 
+test("navbar level tests do not send missing languages to Custom Practice", () => {
+  assert.ok(appTsxSource.includes("onLevelTest: () => handleStartExam()"));
+  const start = appTsxSource.indexOf("  const handleStartExam = () => {");
+  const end = appTsxSource.indexOf("\n  };", start);
+  const handler = appTsxSource.slice(start, end);
+  assert.ok(handler.includes("navigate(ROUTES.exam)"));
+  assert.ok(!handler.includes("requireLanguagesBeforeContinue"));
+  const examBranch = appTsxSource.slice(appTsxSource.indexOf('  if (resolvedPage === "exam") {'));
+  assert.match(examBranch, /if \(needsLevelTestLanguages\)[\s\S]*?\{levelTestLanguageModal\}/);
+});
+
 test("src/app/App.tsx does not reintroduce an auth-driven redirect to /profile", () => {
   assert.ok(
     !appTsxSource.includes("previousAuthUserIdRef"),

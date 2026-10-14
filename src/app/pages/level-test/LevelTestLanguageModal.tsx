@@ -15,10 +15,8 @@ interface LevelTestLanguageModalProps {
   initialYourLanguage: string;
   initialPracticeLanguage: string;
   languages: LevelTestLanguageOption[];
-  // Owned by the caller: this rotation counter must survive navigation away
-  // from and back to the level-test SEO page, but this component only
-  // mounts while that page is showing — so it can't own state that needs to
-  // outlive its own mount lifetime.
+  // Owned by the caller so rotation survives navigation between SEO and
+  // direct-test entry points, regardless of this modal's mount lifetime.
   swapRotation: number;
   onReverse: () => void;
   onClose: () => void;

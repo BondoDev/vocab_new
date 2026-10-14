@@ -823,7 +823,7 @@ function AppContent({
   const sharedHeaderProps = {
     onAbout: () => navigate(ROUTES.about),
     onHelp: () => navigate(ROUTES.help),
-    onLevelTest: () => handleRequireLanguages("exam"),
+    onLevelTest: () => handleStartExam(),
     onLanguages: () => navigate(ROUTES.language),
     onFilters: () => handleRequireLanguages("levelCategory"),
     onExercises: () => navigate(ROUTES.exerciseSelection),
@@ -889,7 +889,7 @@ function AppContent({
   );
 
   const handleStartExam = () => {
-    requireLanguagesBeforeContinue(() => navigate(ROUTES.exam));
+    navigate(ROUTES.exam);
   };
 
   const openLevelTestLanguageModal = (targetLanguageCode: UILanguage) => {
@@ -930,6 +930,29 @@ function AppContent({
     setPracticeLanguage(temp);
     setSwapRotation((prev) => prev + 180);
   };
+
+  // Level tests collect missing languages locally rather than entering practice setup.
+  const needsLevelTestLanguages = isContinueDisabled || yourLanguage === practiceLanguage;
+  const levelTestLanguageModal = (
+    <LevelTestLanguageModal
+      open={isLevelTestLanguageModalOpen || (resolvedPage === "exam" && needsLevelTestLanguages)}
+      initialYourLanguage={yourLanguage}
+      initialPracticeLanguage={practiceLanguage || levelTestModalSeedTargetLanguage}
+      languages={languages}
+      swapRotation={levelTestModalSwapRotation}
+      onReverse={() => setLevelTestModalSwapRotation((prev) => prev + 180)}
+      onClose={() => {
+        setIsLevelTestLanguageModalOpen(false);
+        if (resolvedPage === "exam") navigate(ROUTES.language);
+      }}
+      onConfirm={(nextYourLanguage, nextPracticeLanguage) => {
+        setYourLanguage(nextYourLanguage);
+        setPracticeLanguage(nextPracticeLanguage);
+        setIsLevelTestLanguageModalOpen(false);
+        navigate(ROUTES.exam);
+      }}
+    />
+  );
 
   // Route-aware visibility (2026-08-19 regression fix): reuses
   // isOnboardingRequiredForAuthedUser (defined above, alongside
@@ -1072,6 +1095,18 @@ function AppContent({
   }
 
   if (resolvedPage === "exam") {
+    if (needsLevelTestLanguages) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
+          <Header {...sharedHeaderProps} activePage="exam" />
+          {levelTestLanguageModal}
+          {passwordRecoveryDialog}
+          {accountIntroDialog}
+        </div>
+      );
+    }
+
     return (
       <>
         {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
@@ -1261,23 +1296,7 @@ function AppContent({
             }
           />
         </Suspense>
-        <LevelTestLanguageModal
-          open={isLevelTestLanguageModalOpen}
-          initialYourLanguage={yourLanguage}
-          initialPracticeLanguage={
-            practiceLanguage || levelTestModalSeedTargetLanguage
-          }
-          languages={languages}
-          swapRotation={levelTestModalSwapRotation}
-          onReverse={() => setLevelTestModalSwapRotation((prev) => prev + 180)}
-          onClose={() => setIsLevelTestLanguageModalOpen(false)}
-          onConfirm={(nextYourLanguage, nextPracticeLanguage) => {
-            setYourLanguage(nextYourLanguage);
-            setPracticeLanguage(nextPracticeLanguage);
-            setIsLevelTestLanguageModalOpen(false);
-            navigate(ROUTES.exam);
-          }}
-        />
+        {levelTestLanguageModal}
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
         {accountIntroDialog}
