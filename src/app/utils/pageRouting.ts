@@ -56,8 +56,6 @@ export interface InteractiveRouteMap {
 export type RouteKey = keyof InteractiveRouteMap;
 export type PageKey =
   | RouteKey
-  | "newHomePreview"
-  | "customPracticePreview"
   | "vocabularyLevel"
   | "levelTestSeo"
   | "verbListSeo"
@@ -179,9 +177,10 @@ function parseAnyWordRoute(path: string) {
 export function buildPracticeRoute(
   yourLanguage: UILanguage,
   practiceLanguage: UILanguage,
-  routes: Pick<InteractiveRouteMap, "exerciseSelection">,
+  routes: Pick<InteractiveRouteMap, "practice">,
 ): string {
-  return `${routes.exerciseSelection}/${yourLanguage}-${practiceLanguage}/practice`;
+  // Session URLs stay stable even though exercise setup now lives at /custom-practice.
+  return routes.practice.replace(/\/practice$/, `/${yourLanguage}-${practiceLanguage}/practice`);
 }
 
 export function parsePracticeRoute(path: string): ParsedPracticeRoute | null {
@@ -260,13 +259,13 @@ export const pageFromPath = (
   path: string,
   routes: InteractiveRouteMap,
 ): PageKey => {
-  // Keep the unfinished homepage accessible only through a local preview URL.
+  // Keep local review links working after promoting both pages to production.
   if (import.meta.env.DEV && path === "/test/homepage") {
-    return "newHomePreview";
+    return "language";
   }
 
   if (import.meta.env.DEV && path === "/test/custom-practice") {
-    return "customPracticePreview";
+    return "exerciseSelection";
   }
 
   if (parsePracticeRoute(path)) {
@@ -274,7 +273,10 @@ export const pageFromPath = (
   }
 
   switch (path) {
-    case "/":
+    // Retired setup URLs remain compatible with bookmarks and external links.
+    case "/languages":
+    case "/languages/filters/exercises":
+      return "exerciseSelection";
     case routes.language:
       return "language";
     case routes.levelCategory:

@@ -35,52 +35,18 @@ console.log("\n[1] Homepage content visibility");
 {
   const html = await readHtml("index.html");
 
-  // Hero heading must appear in HTML (not just in JSON data inline script)
-  const h2Idx = html.indexOf('<h2');
-  let heroVisible = false;
-  let heroOpacity0 = false;
-  let heroHidden = false;
-  let pos = h2Idx;
-  while (pos >= 0) {
-    const end = html.indexOf('</h2>', pos);
-    if (end < 0) break;
-    const h2 = html.slice(pos, end + 5);
-    if (h2.includes('Practice Vocabulary')) {
-      heroVisible = true;
-      // Check parent div for opacity:0 — look 300 chars before the h2
-      const before = html.slice(Math.max(0, pos - 300), pos);
-      heroOpacity0 = /opacity\s*:\s*0(?:[^.]|$)/.test(before);
-      heroHidden = /visibility\s*:\s*hidden/.test(before) || /display\s*:\s*none/.test(before);
-      break;
-    }
-    pos = html.indexOf('<h2', pos + 1);
-  }
+  const hero = html.match(/<h1\b[^>]*>Learn Vocabulary Your Way<\/h1>/);
+  assert(Boolean(hero), "Centered homepage H1 is present in SSR HTML");
+  const beforeHero = hero ? html.slice(Math.max(0, hero.index - 300), hero.index) : "";
+  assert(!/opacity\s*:\s*0(?:[^.]|$)/.test(beforeHero), "Homepage H1 is not initially transparent");
+  assert(!/visibility\s*:\s*hidden|display\s*:\s*none/.test(beforeHero), "Homepage H1 is not hidden");
+  assert(html.includes("Start Practicing"), "Custom Practice CTA is present in SSR HTML");
+  assert(html.includes("Log In to Your Account"), "Personalized Learning CTA is present in SSR HTML");
 
-  assert(heroVisible, "Hero heading <h2>Practice Vocabulary</h2> is present in SSR HTML");
-  assert(!heroOpacity0, "Hero heading parent does not have opacity:0 in SSR HTML");
-  assert(!heroHidden, "Hero heading parent is not hidden (visibility:hidden / display:none)");
-
-  // Language selectors must be present (labels rendered from translation data)
-  const hasYourLang = html.includes('Your language') || html.includes('yourLanguage');
-  const hasPracticeLang = html.includes('Practice language') || html.includes('practiceLanguage');
-  assert(hasYourLang, "Native-language selector label is in SSR HTML");
-  assert(hasPracticeLang, "Practice-language selector label is in SSR HTML");
-
-  // CTA button text
-  const hasCTA = html.includes('Continue') || html.includes('"next"');
-  assert(hasCTA, "Primary CTA text is present in SSR HTML");
-
-  // No inline opacity:0 on the hero div specifically
-  const heroMatch = html.match(/class="md:hidden w-full max-w-2xl[^"]*"[^>]*style="([^"]*)"/);
-  if (heroMatch) {
-    const style = heroMatch[1];
-    assert(!style.includes('opacity:0'), "Mobile hero div inline style is not opacity:0", `Found: ${style}`);
-    assert(style.includes('opacity:1'), "Mobile hero div inline style shows opacity:1", `Found: ${style}`);
-  } else {
-    // If the class doesn't match exactly, at minimum confirm no opacity:0 on h2 parent
-    assert(true, "Mobile hero div inline style check (structure may vary)");
-    assert(true, "Mobile hero div inline style shows opacity:1 (structure may vary)");
-  }
+  const setupHtml = await readHtml("custom-practice/index.html");
+  assert(setupHtml.includes("Your language"), "Native-language selector is present on the setup page");
+  assert(setupHtml.includes("Practice language"), "Practice-language selector is present on the setup page");
+  assert(setupHtml.includes("Choose Your Exercises"), "Shared exercise selection is present on the setup page");
 }
 
 // ── 2. Font loading ────────────────────────────────────────────────────────────
@@ -232,13 +198,10 @@ console.log("\n[8] opacity:0 audit on homepage");
   const matches = [...html.matchAll(opacity0Regex)];
 
   const heroClasses = [
-    'language-form-stack',
-    'language-selectors-shell',
-    'language-continue-wrap',
-    'language-stats-grid',
-    'language-continue-button',
-    'language-change-note',
-    'language-content-container',
+    'new-home-page__hero',
+    'new-home-page__title',
+    'new-home-page__subtitle',
+    'new-home-page__daily-word',
   ];
 
   const badMatches = matches.filter((m) =>

@@ -15,10 +15,8 @@ import { ExplorePage } from "./pages/explore/ExplorePage";
 import { AccountOnboardingDialog } from "./components/dialogs/AccountOnboardingDialog";
 import { AccountLanguageConfirmDialog } from "./components/dialogs/AccountLanguageConfirmDialog";
 import { AccountIntroDialog } from "./components/dialogs/AccountIntroDialog";
-import { LanguageAccountChoiceDialog } from "./components/dialogs/LanguageAccountChoiceDialog";
 import { PasswordRecoveryDialog } from "./components/dialogs/PasswordRecoveryDialog";
 import { LevelTestLanguageModal } from "./pages/level-test/LevelTestLanguageModal";
-import { HomePage } from "./pages/home/HomePage";
 import { NewHomePage } from "./pages/home/NewHomePage";
 import { CustomPracticePreviewPage } from "./pages/CustomPracticePreviewPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -81,9 +79,7 @@ import { useRouteLanguageSync } from "./hooks/useRouteLanguageSync";
 import { usePracticeRouteLanguageSync } from "./hooks/usePracticeRouteLanguageSync";
 import { useStoredLanguageAutoRedirect } from "./hooks/useStoredLanguageAutoRedirect";
 import { useExploreItems } from "./pages/explore/useExploreItems";
-import { useLanguageContinuePopup } from "./hooks/useLanguageContinuePopup";
 import { useAccountIntroPopup } from "./hooks/useAccountIntroPopup";
-import { useLanguageAccountChoice } from "./hooks/useLanguageAccountChoice";
 import { useAccountIntroSeoEngagement } from "./hooks/useAccountIntroSeoEngagement";
 import { usePracticeListSession } from "./hooks/usePracticeListSession";
 import type { PracticeListStartConfig } from "../features/user-profile/sections/my-lists/MyListsSection";
@@ -91,11 +87,6 @@ import type { PracticeListStartConfig } from "../features/user-profile/sections/
 const LevelCategorySelection = lazy(() =>
   import("../features/learning-setup/LevelCategorySelection").then((module) => ({
     default: module.LevelCategorySelection,
-  })),
-);
-const ExerciseSelection = lazy(() =>
-  import("../features/learning-setup/ExerciseSelection").then((module) => ({
-    default: module.ExerciseSelection,
   })),
 );
 const VocabularyPractice = lazy(() =>
@@ -167,9 +158,10 @@ function RouteLoadingFallback() {
 // live in ./utils/pageRouting and receive this map as a parameter instead of
 // importing App.tsx.
 const ROUTES = {
-  language: "/languages",
+  // Retain internal keys used by shared hooks; these now render home and unified setup.
+  language: "/",
   levelCategory: "/languages/filters",
-  exerciseSelection: "/languages/filters/exercises",
+  exerciseSelection: "/custom-practice",
   practice: "/languages/filters/exercises/practice",
   explore: "/explore",
   exam: "/languages/level-test",
@@ -235,7 +227,6 @@ function AppContent({
     setSelectedExercises,
     isContinueDisabled,
     shouldAutoRedirectFromStoredLanguagesRef,
-    hadCompleteStoredLanguagePairAtLoadRef,
     resetFiltersForLevel,
   } = useStoredAppPreferences({
     storageKeys: STORAGE_KEYS,
@@ -379,10 +370,9 @@ function AppContent({
     useState(0);
   const [swapRotation, setSwapRotation] = useState(0);
   const resolvedPage = ssrRouteOverride?.page ?? currentPage;
-  // The preview's return context survives a Filters-page refresh without changing its defaults.
-  const isCustomPracticeSetupFilters = import.meta.env.DEV &&
-    resolvedPage === "levelCategory" &&
-    new URLSearchParams(location.search).get("source") === "custom-practice-setup";
+  const customPracticeSetupPath = isCustomPracticeSource
+    ? `${ROUTES.exerciseSelection}?source=custom-practice`
+    : ROUTES.exerciseSelection;
   const isProtectedAccountPage =
     resolvedPage === "profile" ||
     resolvedPage === "newWordStudy" ||
@@ -445,6 +435,18 @@ function AppContent({
     }
   }, [location.pathname, resolvedPage, siteOrigin]);
 
+  // Retired setup URLs render the same content on SSR; normalize history after hydration.
+  useEffect(() => {
+    const destination = location.pathname === "/languages" ||
+      location.pathname === "/languages/filters/exercises" ||
+      (import.meta.env.DEV && location.pathname === "/test/custom-practice")
+      ? ROUTES.exerciseSelection
+      : import.meta.env.DEV && location.pathname === "/test/homepage" ? ROUTES.language : null;
+    if (destination) {
+      navigate(`${destination}${location.search}${location.hash}`, { replace: true });
+    }
+  }, [location.pathname, location.search, location.hash, navigate]);
+
   // Signed-out-on-a-protected-page redirect only. Deliberately does NOT
   // also redirect away merely because onboarding is required (a prior
   // version of this effect did, and it was self-defeating: it bounced the
@@ -468,7 +470,7 @@ function AppContent({
 
   const handleStartPracticing = () => {
     if (isContinueDisabled) {
-      popupRef.current?.show({ delayMs: 0 });
+      navigate(ROUTES.exerciseSelection);
       return;
     }
     accountLanguageConfirm.attemptContinue();
@@ -481,8 +483,7 @@ function AppContent({
     resetFiltersForLevel(level);
 
     if (isContinueDisabled) {
-      navigate(ROUTES.language);
-      queueForLanguagePage();
+      navigate(ROUTES.exerciseSelection);
       return;
     }
 
@@ -524,24 +525,20 @@ function AppContent({
     setPracticeLanguage,
     navigate,
     routes: {
-      exerciseSelection: ROUTES.exerciseSelection,
+      practice: ROUTES.practice,
     },
   });
 
   useStoredLanguageAutoRedirect({
     resolvedPage,
     initialPathname: location.pathname,
-    startedOnLanguagePage: pageFromPath(location.pathname, ROUTES) === "language",
+    // Never skip the public homepage just because a language pair is saved.
+    startedOnLanguagePage: false,
     isContinueDisabled,
     shouldAutoRedirectFromStoredLanguagesRef,
     navigate,
     legacyPracticePath: ROUTES.practice,
     exerciseSelectionPath: ROUTES.exerciseSelection,
-  });
-
-  const { popupRef, queueForLanguagePage } = useLanguageContinuePopup({
-    resolvedPage,
-    isContinueDisabled,
   });
 
   const accountIntroPopup = useAccountIntroPopup({
@@ -564,37 +561,11 @@ function AppContent({
     requestAccountIntro: accountIntroPopup.requestAccountIntro,
   });
   // Requests Header's existing login/signup dialog open (see
-  // requestedAuthMode's doc comment in Header.tsx) - set by the account-intro
-  // popup's and the language-account-choice popup's Create account / Log in
-  // actions below, cleared once Header has consumed it.
+  // requestedAuthMode's doc comment in Header.tsx) - set by the homepage and
+  // account-intro actions, cleared once Header has consumed it.
   const [requestedHeaderAuthMode, setRequestedHeaderAuthMode] = useState<
     "login" | "signup" | null
   >(null);
-
-  // Languages page Continue-time gate: for a brand-new anonymous visitor's
-  // first-ever completed language setup, asks Create account / Log in /
-  // Continue as guest before leaving the page - see
-  // useLanguageAccountChoice.ts. This fully replaces the old one-time
-  // router-state intro signal that used to attach to this same navigation
-  // and show AccountIntroDialog after arriving on the Filters page (see
-  // accountIntroPolicy.ts/useAccountIntroPopup.ts) - every path below ends
-  // by navigating to the Filters page exactly once, so choosing Create
-  // account or Log in here still lands the visitor there, just with
-  // Header's auth dialog open on top instead of the old nudge.
-  const languageAccountChoice = useLanguageAccountChoice({
-    isAuthenticated: Boolean(authUserId),
-    hadCompleteStoredLanguagePairBeforeSetup:
-      hadCompleteStoredLanguagePairAtLoadRef.current,
-    onCreateAccount: () => {
-      navigate(ROUTES.levelCategory);
-      setRequestedHeaderAuthMode("signup");
-    },
-    onLogIn: () => {
-      navigate(ROUTES.levelCategory);
-      setRequestedHeaderAuthMode("login");
-    },
-    onContinueAsGuest: () => navigate(ROUTES.levelCategory),
-  });
 
   const accountLanguageConfirm = useAccountLanguageConfirm({
     authSession,
@@ -604,28 +575,17 @@ function AppContent({
     setUserProfile,
     yourLanguage,
     practiceLanguage,
-    proceed: () => languageAccountChoice.attemptProceed(),
+    proceed: () => handleContinueToPractice(),
   });
 
   const handleContinueToExerciseSelection = () => {
-    navigate(ROUTES.exerciseSelection);
+    navigate(customPracticeSetupPath);
   };
 
-  // Shared "languages required" policy: if the user hasn't picked both
-  // languages yet, redirect to the Languages page (optionally queuing the
-  // continue popup there) instead of proceeding. Mechanical consolidation of
-  // what were three near-duplicate implementations (see the App.tsx
-  // architecture audit) — handleRequireLanguages and handleStartExam shared
-  // this branch verbatim; handleStartSeoLevelTest implements a different
-  // policy (inline language collection via LevelTestLanguageModal) and is
-  // deliberately not part of this helper.
+  // Missing languages are collected by the unified setup, never by the homepage.
   const requireLanguagesBeforeContinue = (onReady: () => void) => {
     if (isContinueDisabled) {
-      const suppressPopup = resolvedPage === "about";
-      navigate(ROUTES.language);
-      if (!suppressPopup) {
-        queueForLanguagePage();
-      }
+      navigate(ROUTES.exerciseSelection);
       return;
     }
     onReady();
@@ -635,14 +595,8 @@ function AppContent({
     requireLanguagesBeforeContinue(() => navigate(ROUTES[nextPage]));
   };
 
-  // Same "languages required" gate as handleRequireLanguages("exerciseSelection"),
-  // but tags the destination with ?source=custom-practice so the Exercises
-  // page can show Custom Practice context. Reuses the existing Exercises
-  // route/gate rather than a new one.
   const handleStartCustomPractice = () => {
-    requireLanguagesBeforeContinue(() =>
-      navigate(`${ROUTES.exerciseSelection}?source=custom-practice`),
-    );
+    navigate(`${ROUTES.exerciseSelection}?source=custom-practice`);
   };
 
   // Practice List (My Lists Phase 3): My Lists has already resolved the
@@ -847,7 +801,7 @@ function AppContent({
 
   const handleContinueToPractice = () => {
     if (isContinueDisabled) {
-      popupRef.current?.show({ delayMs: 0 });
+      navigate(ROUTES.exerciseSelection);
       return;
     }
 
@@ -872,7 +826,7 @@ function AppContent({
     onLevelTest: () => handleRequireLanguages("exam"),
     onLanguages: () => navigate(ROUTES.language),
     onFilters: () => handleRequireLanguages("levelCategory"),
-    onExercises: () => handleRequireLanguages("exerciseSelection"),
+    onExercises: () => navigate(ROUTES.exerciseSelection),
     onExplore: () => navigate(ROUTES.explore),
     onProfile: (section?: "dashboard" | "learning" | "vocabulary" | "myLists" | "progress") => {
       navigate(section ? `${ROUTES.profile}?section=${section}` : ROUTES.profile);
@@ -1059,9 +1013,11 @@ function AppContent({
             selectedWordTypes={selectedWordTypes}
             selectedExercises={selectedExercises}
             restrictToConceptIds={activePracticeListSession?.conceptIds ?? null}
-            onBack={activePracticeListSession ? leavePracticeList : () => navigate(ROUTES.exerciseSelection)}
+            onBack={activePracticeListSession ? leavePracticeList : () => navigate(customPracticeSetupPath)}
             onGoFilters={
-              activePracticeListSession ? leavePracticeList : () => navigate(ROUTES.levelCategory)
+              activePracticeListSession ? leavePracticeList : () => navigate(
+                isCustomPracticeSource ? `${ROUTES.levelCategory}?source=custom-practice` : ROUTES.levelCategory,
+              )
             }
             // Trigger 2 (practice-complete): fires exactly when
             // VocabularyPractice's own sessionComplete flips true (words run
@@ -1083,34 +1039,6 @@ function AppContent({
     );
   }
 
-  if (resolvedPage === "exerciseSelection") {
-    return (
-      <div className="min-h-screen flex flex-col bg-background">
-        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
-        <Header {...sharedHeaderProps} activePage="exerciseSelection" />
-        <Suspense fallback={<RouteLoadingFallback />}>
-          <ExerciseSelection
-            selectedExercises={selectedExercises}
-            setSelectedExercises={setSelectedExercises}
-            // A Custom Practice entry bypasses the ordinary
-            // language/filters -> exercises path, so Back returns to the
-            // Learning page it came from instead of the filters step.
-            onBack={() =>
-              isCustomPracticeSource
-                ? navigate(`${ROUTES.profile}?section=learning`)
-                : navigate(ROUTES.levelCategory)
-            }
-            onContinue={handleContinueToPractice}
-            isCustomPracticeContext={isCustomPracticeSource}
-          />
-        </Suspense>
-        {accountOnboardingDialog}
-        {passwordRecoveryDialog}
-        {accountIntroDialog}
-      </div>
-    );
-  }
-
   if (resolvedPage === "levelCategory") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
@@ -1128,12 +1056,10 @@ function AppContent({
               setSelectedLevels={setSelectedLevels}
               selectedWordTypes={selectedWordTypes}
               setSelectedWordTypes={setSelectedWordTypes}
-              onBack={() => navigate(isCustomPracticeSetupFilters ? "/test/custom-practice" : ROUTES.language)}
-              onContinue={isCustomPracticeSetupFilters
-                ? () => navigate("/test/custom-practice")
-                : handleContinueToExerciseSelection}
-              continueLabel={isCustomPracticeSetupFilters ? t("home.customPractice.filters.apply") : undefined}
-              backLabel={isCustomPracticeSetupFilters ? t("home.customPractice.filters.backToSetup") : undefined}
+              onBack={() => navigate(customPracticeSetupPath)}
+              onContinue={handleContinueToExerciseSelection}
+              continueLabel={t("home.customPractice.filters.apply")}
+              backLabel={t("home.customPractice.filters.backToSetup")}
               onTakeLevelTest={handleStartExam}
             />
           </Suspense>
@@ -1618,9 +1544,10 @@ function AppContent({
     );
   }
 
-  if (resolvedPage === "customPracticePreview") {
+  if (resolvedPage === "exerciseSelection") {
     return (
       <>
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <CustomPracticePreviewPage
           headerProps={sharedHeaderProps}
           languages={languages}
@@ -1633,23 +1560,41 @@ function AppContent({
           selectedLevels={selectedLevels}
           selectedCategories={selectedCategories}
           selectedWordTypes={selectedWordTypes}
-          onCustomizeFilters={() => navigate(`${ROUTES.levelCategory}?source=custom-practice-setup`)}
+          onCustomizeFilters={() => navigate(
+            isCustomPracticeSource ? `${ROUTES.levelCategory}?source=custom-practice` : ROUTES.levelCategory,
+          )}
           isCustomizeFiltersDisabled={isContinueDisabled}
+          selectedExercises={selectedExercises}
+          setSelectedExercises={setSelectedExercises}
+          onStartPracticing={handleStartPracticing}
+          isStartPracticingDisabled={isContinueDisabled || selectedExercises.length === 0}
         />
+        {accountOnboardingDialog}
+        {authUserId ? (
+          <AccountLanguageConfirmDialog
+            open={accountLanguageConfirm.isOpen}
+            isSaving={accountLanguageConfirm.isSaving}
+            error={accountLanguageConfirm.saveError}
+            onUseSelectedLanguages={accountLanguageConfirm.handleUseSelectedLanguages}
+            onSaveToAccount={accountLanguageConfirm.handleSaveToAccount}
+            onCancel={accountLanguageConfirm.handleCancel}
+          />
+        ) : null}
         {passwordRecoveryDialog}
         {accountIntroDialog}
       </>
     );
   }
 
-  if (resolvedPage === "newHomePreview") {
+  if (resolvedPage === "language") {
     return (
       <>
+        {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <NewHomePage
           headerProps={sharedHeaderProps}
           languages={languages}
           onLogin={() => setRequestedHeaderAuthMode("login")}
-          onStartPracticing={() => navigate("/test/custom-practice")}
+          onStartPracticing={() => navigate(ROUTES.exerciseSelection)}
         />
         {passwordRecoveryDialog}
         {accountIntroDialog}
@@ -1670,50 +1615,7 @@ function AppContent({
     );
   }
 
-  return (
-    <div className="language-page min-h-[100svh] w-full min-w-0 flex flex-col overflow-x-hidden bg-background">
-      {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
-      <Header {...sharedHeaderProps} activePage="language" />
-
-      <HomePage
-        yourLanguage={yourLanguage}
-        practiceLanguage={practiceLanguage}
-        onYourLanguageChange={setYourLanguage}
-        onPracticeLanguageChange={setPracticeLanguage}
-        languages={languages}
-        isContinueDisabled={isContinueDisabled}
-        swapRotation={swapRotation}
-        onReverseLanguages={handleReverseLanguages}
-        onStartPracticing={handleStartPracticing}
-        popupRef={popupRef}
-      />
-
-      {accountOnboardingDialog}
-      {passwordRecoveryDialog}
-      {accountIntroDialog}
-      <LanguageAccountChoiceDialog
-        open={languageAccountChoice.isOpen}
-        onOpenChange={(open) => {
-          if (!open) {
-            languageAccountChoice.close();
-          }
-        }}
-        onCreateAccount={languageAccountChoice.handleCreateAccount}
-        onLogIn={languageAccountChoice.handleLogIn}
-        onContinueAsGuest={languageAccountChoice.handleContinueAsGuest}
-      />
-      {authUserId ? (
-        <AccountLanguageConfirmDialog
-          open={accountLanguageConfirm.isOpen}
-          isSaving={accountLanguageConfirm.isSaving}
-          error={accountLanguageConfirm.saveError}
-          onUseSelectedLanguages={accountLanguageConfirm.handleUseSelectedLanguages}
-          onSaveToAccount={accountLanguageConfirm.handleSaveToAccount}
-          onCancel={accountLanguageConfirm.handleCancel}
-        />
-      ) : null}
-    </div>
-  );
+  return null;
 }
 
 interface AppProps {

@@ -64,9 +64,9 @@ const appTsxSource = readFile("src/app/App.tsx");
 const headerTsxSource = readFile("src/app/components/layout/Header.tsx");
 
 const EXPECTED_ROUTES = {
-  language: "/languages",
+  language: "/",
   levelCategory: "/languages/filters",
-  exerciseSelection: "/languages/filters/exercises",
+  exerciseSelection: "/custom-practice",
   practice: "/languages/filters/exercises/practice",
   explore: "/explore",
   exam: "/languages/level-test",
@@ -108,6 +108,22 @@ test("src/app/components/layout/Header.tsx NAV_HREFS stays consistent with src/a
     [],
     `route string drift between App.tsx ROUTES and Header.tsx NAV_HREFS: ${mismatches.join("; ")}`,
   );
+});
+
+test("the public homepage and setup replace the separate Languages and Exercises screens", () => {
+  assert.ok(appTsxSource.includes("<NewHomePage"));
+  assert.ok(appTsxSource.includes("<CustomPracticePreviewPage"));
+  assert.ok(!appTsxSource.includes("<HomePage"));
+  assert.ok(!appTsxSource.includes("<ExerciseSelection"));
+  assert.ok(appTsxSource.includes("startedOnLanguagePage: false"), "saved preferences must not skip the homepage");
+  assert.ok(!readFile("src/app/pages/home/NewHomePage.tsx").includes("noindex"), "homepage must not retain preview robots metadata");
+});
+
+test("legacy setup URLs resolve to the unified setup without affecting practice sessions", () => {
+  const routing = readFile("src/app/utils/pageRouting.ts");
+  assert.match(routing, /case "\/languages":[\s\S]*?case "\/languages\/filters\/exercises":[\s\S]*?return "exerciseSelection"/);
+  assert.ok(routing.indexOf("if (parsePracticeRoute(path))") < routing.indexOf("switch (path)"));
+  assert.ok(routing.includes("routes.practice.replace"), "session builder must be independent of the new setup URL");
 });
 
 test("/profile route is still wired to the resolvedPage switch in src/app/App.tsx", () => {

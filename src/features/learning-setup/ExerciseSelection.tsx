@@ -1,32 +1,10 @@
 import { useMemo, useState } from "react";
 import "./styles/exercise-selection.scss";
 import { motion } from "motion/react";
-import {
-  Check,
-  ChevronLeft,
-  Headphones,
-  Keyboard,
-  Puzzle,
-  TextCursorInput,
-  X,
-} from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
-// exerciseTheme.ts lives in src/exercises/, the neutral exercise-domain
-// boundary shared by both sibling features: src/features/practice/VocabularyPractice.tsx
-// also imports from it (exerciseCardBorders, for practice-card color matching).
-// Neither feature owns it — moving it into either one would make practice and
-// learning-setup depend on each other, which they must not do.
-import {
-  exerciseCardBackgrounds,
-  exerciseCardBorders,
-  exerciseCardIconColors,
-  type MotionCssVars,
-} from "../../exercises/exerciseTheme";
-import type { ExerciseId } from "../../exercises/exerciseIds";
-
-type ExerciseCardCssVars = MotionCssVars<
-  "--exercise-card-bg" | "--exercise-card-border" | "--exercise-card-icon"
->;
+import { ExerciseOptionTiles } from "./ExerciseOptionTiles";
+import { exerciseGroups } from "./exerciseOptions";
 
 interface ExerciseSelectionProps {
   selectedExercises: string[];
@@ -37,70 +15,9 @@ interface ExerciseSelectionProps {
   // URL param (see App.tsx) — never inferred here from auth, history, or
   // filter state.
   isCustomPracticeContext?: boolean;
+  embedded?: boolean;
 }
 
-interface ExerciseGroupItem {
-  id: ExerciseId;
-  description: string;
-}
-
-interface ExerciseGroup {
-  id: string;
-  title: string;
-  items: ExerciseGroupItem[];
-}
-
-// Setup-only presentation metadata (grouping, titles, descriptions, display
-// order) — item ids are compile-time checked against the canonical
-// ExerciseId union, but the grouping/order/copy here is not derived from it
-// and is not shared with practice.
-const exerciseGroups: ExerciseGroup[] = [
-  {
-    id: "recall",
-    title: "Recall exercises",
-    items: [
-      {
-        id: "wordTyping",
-        description: "Type the full word from memory.",
-      },
-      {
-        id: "halfWritten",
-        description: "Fill in missing letters.",
-      },
-    ],
-  },
-  {
-    id: "construction",
-    title: "Construction exercises",
-    items: [
-      {
-        id: "brokenWord",
-        description: "Build the word from pieces.",
-      },
-    ],
-  },
-  {
-    id: "association",
-    title: "Association exercises",
-    items: [
-      {
-        id: "connectWords",
-        description: "Match words with translations.",
-      },
-    ],
-  },
-  {
-    id: "listening",
-    title: "Listening",
-    items: [
-      {
-        id: "listening",
-        description: "Select what you hear.",
-      },
-    ],
-  },
-];
-const exerciseItems = exerciseGroups.flatMap((group) => group.items);
 function randomBetween(min: number, max: number): number {
   return Math.random() * (max - min) + min;
 }
@@ -165,6 +82,7 @@ export function ExerciseSelection({
   onBack,
   onContinue,
   isCustomPracticeContext = false,
+  embedded = false,
 }: ExerciseSelectionProps) {
   const { t } = useLanguage();
   const [helpExerciseId, setHelpExerciseId] = useState<string | null>(null);
@@ -177,24 +95,6 @@ export function ExerciseSelection({
     }),
     [],
   );
-
-  const toggleExercise = (exerciseId: string) => {
-    // Prevent deselecting the last exercise
-    if (
-      selectedExercises.includes(exerciseId) &&
-      selectedExercises.length === 1
-    ) {
-      return;
-    }
-
-    if (selectedExercises.includes(exerciseId)) {
-      setSelectedExercises(
-        selectedExercises.filter((id) => id !== exerciseId),
-      );
-    } else {
-      setSelectedExercises([...selectedExercises, exerciseId]);
-    }
-  };
 
   const isButtonDisabled = selectedExercises.length === 0;
   const totalExerciseCount = exerciseGroups.reduce(
@@ -250,6 +150,104 @@ export function ExerciseSelection({
     });
     return items;
   };
+
+  const helpDialog = helpExerciseId && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 px-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("exerciseSelection.helpTitle")}
+          onClick={() => setHelpExerciseId(null)}
+        >
+          <div
+            className="w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-xl border border-border bg-card p-5 shadow-xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <h3 className="text-lg font-semibold text-foreground">
+                {t(`exerciseSelection.exercise.${helpExerciseId}`)}
+              </h3>
+              <button
+                type="button"
+                className="text-muted-foreground hover:text-foreground transition"
+                onClick={() => setHelpExerciseId(null)}
+                aria-label={t("exerciseSelection.helpCloseAria")}
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <p className="mb-3 text-sm text-muted-foreground">
+              {t(
+                `helpPage.types.${getHelpTypeKey(helpExerciseId)}.goal`,
+              )}
+            </p>
+
+            <h4 className="mb-2 text-sm font-semibold text-foreground">
+              {t(
+                `helpPage.types.${getHelpTypeKey(helpExerciseId)}.seeTitle`,
+              )}
+            </h4>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+              {getHelpItems(helpExerciseId).map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+
+            {(helpExerciseId === "connectWords" ||
+              helpExerciseId === "listening") && (
+              <>
+                <h4 className="mb-2 mt-4 text-sm font-semibold text-foreground">
+                  {t(
+                    `helpPage.types.${getHelpTypeKey(helpExerciseId)}.howTitle`,
+                  )}
+                </h4>
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                  <li>
+                    {t(
+                      `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how1`,
+                    )}
+                  </li>
+                  <li>
+                    {t(
+                      `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how2`,
+                    )}
+                  </li>
+                  <li>
+                    {t(
+                      `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how3`,
+                    )}
+                  </li>
+                  {hasTranslation(
+                    `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how4`,
+                  ) && (
+                    <li>
+                      {t(
+                        `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how4`,
+                      )}
+                    </li>
+                  )}
+                </ul>
+              </>
+            )}
+          </div>
+        </div>
+      );
+
+  if (embedded) {
+    return (
+      <div className="exercise-page">
+        <div className="exercise-list">
+          <ExerciseOptionTiles
+            selectedExercises={selectedExercises}
+            setSelectedExercises={setSelectedExercises}
+            onHelp={setHelpExerciseId}
+          />
+        </div>
+        {helpDialog}
+      </div>
+    );
+  }
 
   return (
     <div className="exercise-page flex-1 min-h-0 flex flex-col bg-background">
@@ -332,114 +330,11 @@ export function ExerciseSelection({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {exerciseItems.map((exercise, index) => {
-              const isSelected = selectedExercises.includes(
-                exercise.id,
-              );
-              const isLastSelected =
-                isSelected && selectedExercises.length === 1;
-              const cardStyle: ExerciseCardCssVars = {
-                "--exercise-card-bg": exerciseCardBackgrounds[exercise.id] ?? "#F2F0FF",
-                "--exercise-card-border": exerciseCardBorders[exercise.id] ?? "#7A68D8",
-                "--exercise-card-icon": exerciseCardIconColors[exercise.id] ?? "#6B58C8",
-              };
-
-              return (
-                <motion.button
-                    key={exercise.id}
-                    onClick={() => toggleExercise(exercise.id)}
-                    aria-pressed={isSelected}
-                    style={cardStyle}
-                    className={`exercise-card p-5 rounded-lg border-2 transition-all ${
-                      isSelected
-                        ? "border-primary shadow-md shadow-primary/10"
-                        : "border-border hover:border-primary/50"
-                    } ${isSelected ? "is-selected" : ""} ${isLastSelected ? "cursor-not-allowed opacity-75 is-locked" : ""}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.08 * index,
-                  }}
-                  whileHover={
-                    !isLastSelected
-                      ? { scale: 1.01 }
-                      : undefined
-                  }
-                  whileTap={
-                    !isLastSelected
-                      ? { scale: 0.99 }
-                      : undefined
-                  }
-                  disabled={isLastSelected}
-                  >
-                  <span className="exercise-card-corners">
-                    <span className={`exercise-check ${isSelected ? "is-visible" : ""}`}>
-                      <Check className="w-4 h-4" />
-                    </span>
-                    <span
-                      className="exercise-help-button"
-                      role="button"
-                      tabIndex={0}
-                      aria-label={t("exerciseSelection.helpButtonAria")}
-                      onPointerDown={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                      }}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        setHelpExerciseId(exercise.id);
-                      }}
-                      onKeyDown={(event) => {
-                        if (event.key !== "Enter" && event.key !== " ") return;
-                        event.preventDefault();
-                        event.stopPropagation();
-                        setHelpExerciseId(exercise.id);
-                      }}
-                    >
-                      ?
-                    </span>
-                  </span>
-
-                  <span className="exercise-card-icon" aria-hidden="true">
-                    {exercise.id === "wordTyping" && <Keyboard className="w-7 h-7" />}
-                    {exercise.id === "halfWritten" && <TextCursorInput className="w-7 h-7" />}
-                    {exercise.id === "brokenWord" && <Puzzle className="w-7 h-7" />}
-                    {exercise.id === "connectWords" && (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.43" />
-                        <path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.33-1.33" />
-                      </svg>
-                    )}
-                    {exercise.id === "listening" && <Headphones className="w-7 h-7" />}
-                  </span>
-
-                  <span className="exercise-card-content text-left">
-                    <span className="exercise-card-label block text-base text-foreground">
-                      {t(
-                        `exerciseSelection.exercise.${exercise.id}`,
-                      )}
-                    </span>
-                    <span className="exercise-card-description block text-sm text-muted-foreground">
-                      {t(
-                        `exerciseSelection.exerciseDescription.${exercise.id}`,
-                      )}
-                    </span>
-                  </span>
-                </motion.button>
-              );
-            })}
+            <ExerciseOptionTiles
+              selectedExercises={selectedExercises}
+              setSelectedExercises={setSelectedExercises}
+              onHelp={setHelpExerciseId}
+            />
           </motion.div>
 
           {/* Helper Text */}
@@ -495,88 +390,7 @@ export function ExerciseSelection({
           </motion.div>
         </motion.div>
       </main>
-      {helpExerciseId && (
-        <div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 px-4"
-          role="dialog"
-          aria-modal="true"
-          aria-label={t("exerciseSelection.helpTitle")}
-          onClick={() => setHelpExerciseId(null)}
-        >
-          <div
-            className="w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-xl border border-border bg-card p-5 shadow-xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <h3 className="text-lg font-semibold text-foreground">
-                {t(`exerciseSelection.exercise.${helpExerciseId}`)}
-              </h3>
-              <button
-                type="button"
-                className="text-muted-foreground hover:text-foreground transition"
-                onClick={() => setHelpExerciseId(null)}
-                aria-label={t("exerciseSelection.helpCloseAria")}
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            <p className="mb-3 text-sm text-muted-foreground">
-              {t(
-                `helpPage.types.${getHelpTypeKey(helpExerciseId)}.goal`,
-              )}
-            </p>
-
-            <h4 className="mb-2 text-sm font-semibold text-foreground">
-              {t(
-                `helpPage.types.${getHelpTypeKey(helpExerciseId)}.seeTitle`,
-              )}
-            </h4>
-            <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-              {getHelpItems(helpExerciseId).map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-
-            {(helpExerciseId === "connectWords" ||
-              helpExerciseId === "listening") && (
-              <>
-                <h4 className="mb-2 mt-4 text-sm font-semibold text-foreground">
-                  {t(
-                    `helpPage.types.${getHelpTypeKey(helpExerciseId)}.howTitle`,
-                  )}
-                </h4>
-                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                  <li>
-                    {t(
-                      `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how1`,
-                    )}
-                  </li>
-                  <li>
-                    {t(
-                      `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how2`,
-                    )}
-                  </li>
-                  <li>
-                    {t(
-                      `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how3`,
-                    )}
-                  </li>
-                  {hasTranslation(
-                    `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how4`,
-                  ) && (
-                    <li>
-                      {t(
-                        `helpPage.types.${getHelpTypeKey(helpExerciseId)}.how4`,
-                      )}
-                    </li>
-                  )}
-                </ul>
-              </>
-            )}
-          </div>
-        </div>
-      )}
+      {helpDialog}
     </div>
   );
 }

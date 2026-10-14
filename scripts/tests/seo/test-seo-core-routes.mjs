@@ -122,7 +122,13 @@ async function main() {
       });
     }
 
-    for (const learningPath of ["/learning/new-words", "/learning/review"]) {
+    test("homepage remains indexable with its canonical URL", () => {
+      const metadata = routeMetadataPolicy.buildRouteMetadata("/", "https://www.fluentstellar.com");
+      assert.equal(metadata.canonical, "https://www.fluentstellar.com/");
+      assert.ok(!/noindex/.test(metadata.robots ?? ""));
+    });
+
+    for (const learningPath of ["/custom-practice", "/learning/new-words", "/learning/review"]) {
       test(`${learningPath} is classified public-app, not invalid`, () => {
         assert.equal(routeMetadataPolicy.classifyRouteMetadata(learningPath), "public-app");
       });

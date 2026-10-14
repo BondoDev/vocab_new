@@ -31,7 +31,7 @@ export interface UsePracticeRouteLanguageSyncParams {
   setYourLanguage: Dispatch<SetStateAction<string>>;
   setPracticeLanguage: Dispatch<SetStateAction<string>>;
   navigate: NavigateFunction;
-  routes: Pick<InteractiveRouteMap, "exerciseSelection">;
+  routes: Pick<InteractiveRouteMap, "practice">;
 }
 
 export function usePracticeRouteLanguageSync({

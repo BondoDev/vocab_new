@@ -15,6 +15,8 @@ Practice's responsibility (see "Relationship with Practice" below).
 ```
 learning-setup/
   ExerciseSelection.tsx
+  ExerciseOptionTiles.tsx
+  exerciseOptions.ts
   LevelCategorySelection.tsx
   data/
     categories.json
@@ -23,6 +25,11 @@ learning-setup/
 - `LevelCategorySelection.tsx` — level, category, and word-type
   selection.
 - `ExerciseSelection.tsx` — exercise-type selection.
+- `ExerciseOptionTiles.tsx` — controlled exercise tiles shared by the existing
+  Exercises page and the Custom Practice setup page; owns the unchanged
+  last-selected-exercise guard and the original exercise-card presentation.
+- `exerciseOptions.ts` — the existing setup option metadata, shared by both
+  entry points and checked against the canonical exercise-id contract.
 - `data/categories.json` — feature-owned category configuration (see
   "Feature-owned Data" below).
 
@@ -33,8 +40,13 @@ themselves for exact current behavior.
 
 `ExerciseSelection.tsx` and `LevelCategorySelection.tsx` are independent,
 route-level feature entry components, each composed directly by
-`App.tsx`. Neither is a reusable application component — they are not
-consumed anywhere except through `App.tsx`'s route composition.
+`App.tsx`. They remain feature-owned workflow components rather than
+generic application UI.
+
+`ExerciseSelection` also supports an embedded mode for setup pages. It reuses
+the original cards and help dialogs without rendering the standalone page's
+heading, navigation, or start action. State remains controlled by `App.tsx`;
+the embedding page owns its final practice action.
 
 ## Feature-owned Data
 

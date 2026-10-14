@@ -1,0 +1,395 @@
+.custom-practice-setup {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #faf9fc;
+  color: #29334a;
+
+  &__main {
+    --primary: #604095;
+    --primary-foreground: #fff;
+    --foreground: #29334a;
+    --muted-foreground: #62697a;
+    --background: #faf9fc;
+    --card: #fff;
+    --input-background: #fff;
+    --muted: #f0ecf8;
+    --border: #dfe0e8;
+    flex: 1;
+    min-width: 0;
+    padding: 2rem 1.5rem;
+  }
+
+  &__intro,
+  &__configuration {
+    width: 100%;
+    max-width: 60rem;
+    margin-inline: auto;
+  }
+
+  &__intro {
+    text-align: center;
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-family-heading);
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    p {
+      margin: 0.625rem 0 0;
+      color: var(--muted-foreground);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  }
+
+  &__configuration {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+
+  &__section {
+    min-width: 0;
+    padding: 1.5rem 1.625rem;
+    border: 1px solid #e2dced;
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  &__languages {
+    border-color: #e1d9ef;
+    background: #f1eefa;
+  }
+
+  &__section-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 0 1rem;
+    color: #29334a;
+    font-family: var(--font-family-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5;
+
+    svg {
+      flex: 0 0 20px;
+      width: 20px;
+      height: 20px;
+      color: #604095;
+      stroke-width: 1.8;
+    }
+
+    span {
+      min-width: 0;
+    }
+  }
+
+  &__language-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+    align-items: end;
+    gap: 1.25rem;
+  }
+
+  &__field {
+    min-width: 0;
+
+    label {
+      color: #29334a;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .language-selector-trigger {
+      min-height: 52px;
+      padding: 0.75rem 2.75rem 0.75rem 1rem;
+      border: 1px solid #dfe0e8;
+      border-radius: 6px;
+      background: #fff;
+      color: #29334a;
+      font-size: 1rem;
+      line-height: 1.5;
+      box-shadow: none;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+
+      &:hover {
+        border-color: #bfc1ce;
+        box-shadow: none;
+      }
+
+      &:focus-visible {
+        border-color: #604095;
+        outline: 2px solid #604095;
+        outline-offset: 2px;
+        box-shadow: none;
+      }
+    }
+
+    &:has(.language-selector-search-input) .language-selector-trigger {
+      border-color: #604095;
+    }
+
+    .language-selector-trigger-text {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .language-selector-selected-flag {
+      width: 22px;
+    }
+  }
+
+  &__swap-wrap {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 6px;
+  }
+
+  &__swap {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid #dfe0e8;
+    border-radius: 50%;
+    background: #fff;
+    color: #604095;
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease;
+
+    &:hover {
+      border-color: #604095;
+      background: #f0ecf8;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__filters {
+    border-color: #f0e2c9;
+    background: #fff7e8;
+  }
+
+  &__filter-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__filter-copy {
+    min-width: 0;
+  }
+
+  &__summary {
+    margin: 0 0 0 2rem;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    overflow-wrap: break-word;
+  }
+
+  &__filter-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.625rem 1rem;
+    border: 1px solid #604095;
+    border-radius: 6px;
+    background: #fff;
+    color: #604095;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: border-color 150ms ease, background-color 150ms ease;
+
+    &:enabled:hover {
+      border-color: #604095;
+      background: #f0ecf8;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    svg {
+      flex: 0 0 16px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__exercises .exercise-page .exercise-list {
+    max-width: 100%;
+    margin-bottom: 0;
+  }
+
+  // The original cards need fewer columns inside the narrower setup surface.
+  &__exercises .exercise-page {
+    .exercise-list {
+      width: 100%;
+      max-width: none;
+    }
+
+    .exercise-card-label,
+    .exercise-card-description {
+      display: block;
+      flex-shrink: 0;
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
+      overflow-wrap: break-word;
+      -webkit-line-clamp: unset;
+    }
+
+    @media (min-width: 640px) {
+      .exercise-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .exercise-card {
+        flex: 0 0 calc((100% - 1rem) / 2);
+        width: calc((100% - 1rem) / 2);
+        margin-inline: 0;
+      }
+    }
+
+    @media (min-width: 640px) and (max-width: 1023.98px) {
+      .exercise-card-content {
+        padding-left: 3.9rem !important;
+      }
+    }
+  }
+
+  &__start-wrap {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__start-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 48px;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #604095;
+    border-radius: 6px;
+    background: #604095;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+
+    &:enabled:hover {
+      background: #4e307f;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    svg {
+      flex: 0 0 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__swap:focus-visible,
+  &__filter-button:focus-visible,
+  &__start-button:focus-visible {
+    outline: 2px solid #604095;
+    outline-offset: 3px;
+  }
+
+  // Preserve the shared selector's modal presentation without importing Languages-page styles.
+  .language-selector-mobile-backdrop {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(41, 51, 74, 0.46);
+  }
+
+  .language-selector-mobile-sheet {
+    top: 50%;
+    bottom: auto;
+    max-height: min(78svh, 42rem);
+    transform: translateY(-50%);
+  }
+
+  @media (width < 768px) {
+    &__main {
+      padding: 1.5rem 1rem 2rem;
+    }
+
+    &__intro h1 {
+      font-size: 1.75rem;
+    }
+
+    &__configuration {
+      margin-top: 1.5rem;
+    }
+
+    &__section {
+      padding: 1.25rem;
+    }
+
+    &__language-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+
+    &__swap-wrap {
+      padding-bottom: 0;
+    }
+
+    &__swap svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  @media (width < 640px) {
+    &__filter-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    &__filter-button {
+      width: calc(100% - 2rem);
+      margin-left: 2rem;
+    }
+
+    &__start-button {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__field .language-selector-trigger,
+    &__swap,
+    &__filter-button,
+    &__start-button {
+      transition: none;
+    }
+  }
+}

@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { useLanguage, type UILanguage } from "../../../contexts/LanguageContext";
 import { buildVocabularyConceptResolver } from "../../../data/vocabulary/resolveVocabularyWordData";
-import { SEOHead } from "../../../seo/SeoContext";
 import { Header } from "../../components/layout/Header";
 import type { LanguageSelector } from "../../components/LanguageSelector";
 import "./new-home-page.scss";
@@ -302,14 +301,7 @@ export function NewHomePage({ headerProps, languages, onLogin, onStartPracticing
 
   return (
     <div ref={pageRef} className="new-home-page">
-      <SEOHead
-        metadata={{
-          title: "FluentStellar",
-          description: "Homepage preview.",
-          robots: "noindex, nofollow",
-        }}
-      />
-      <Header {...headerProps} />
+      <Header {...headerProps} activePage="language" />
       <main className="new-home-page__main">
         <section className="new-home-page__hero" aria-labelledby="homepage-hero-title">
           <div className="new-home-page__hero-copy">

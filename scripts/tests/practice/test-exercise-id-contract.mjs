@@ -13,30 +13,18 @@
 // scripts/tests/practice/test-practice-route-sync.mjs — it can be loaded directly here
 // without a bundler or a compile step.
 //
-// The setup-option completeness check (exerciseGroups in
-// src/features/learning-setup/ExerciseSelection.tsx) can't use the same
-// approach: that file imports .scss/motion/lucide-react, which Node's ESM
-// resolver can't follow without a bundler (the same constraint documented in
-// scripts/tests/routing/test-interactive-contracts.mjs's header, which is why that script
-// also never require()s/imports .tsx modules). That one check below uses a
-// narrow source-text regex instead, in the same spirit as
-// scripts/tests/routing/test-interactive-contracts.mjs's extractRouteObject helper.
+// The shared setup option metadata is also import-free at runtime, so its
+// canonical-id completeness is checked directly rather than parsing UI source.
 //
 // Run: node --experimental-strip-types scripts/tests/practice/test-exercise-id-contract.mjs
 import assert from "node:assert/strict";
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { exerciseGroups } from "../../../src/features/learning-setup/exerciseOptions.ts";
 import {
   EXERCISE_IDS,
   TYPING_EXERCISE_IDS,
   FOUR_WORD_EXERCISE_IDS,
   isExerciseId,
 } from "../../../src/exercises/exerciseIds.ts";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 
 let passed = 0;
 let failed = 0;
@@ -109,38 +97,12 @@ test("four-word subset is exactly connectWords/listening (unchanged classificati
   assert.deepEqual([...FOUR_WORD_EXERCISE_IDS].sort(), ["connectWords", "listening"]);
 });
 
-console.log(
-  "\n=== setup option completeness (source-text — ExerciseSelection.tsx imports .scss/motion and can't be require()'d, see header) ===\n",
-);
+console.log("\n=== shared setup option completeness ===\n");
 
-test("ExerciseSelection.tsx's exerciseGroups exposes exactly the canonical exercise-id set", () => {
-  const source = fs.readFileSync(
-    path.join(ROOT_DIR, "src", "features", "learning-setup", "ExerciseSelection.tsx"),
-    "utf8",
-  );
-  const blockMatch = source.match(
-    /const exerciseGroups: ExerciseGroup\[\] = \[([\s\S]*?)\n\];/,
-  );
-  assert.ok(
-    blockMatch,
-    'could not find "const exerciseGroups: ExerciseGroup[] = [ ... ];" block in ExerciseSelection.tsx',
-  );
-  const body = blockMatch[1];
-  // Item entries (not group entries) are the ones immediately followed by a
-  // `description:` field — group entries are followed by `title:` instead.
-  // One item id ("listening") collides with a group id, so filtering by
-  // exclusion would be unsafe; keying off the following field name isn't.
-  const itemIdPattern = /id:\s*"(\w+)",\s*\n\s*description:/g;
-  const foundIds = [];
-  let match;
-  while ((match = itemIdPattern.exec(body)) !== null) {
-    foundIds.push(match[1]);
-  }
-  assert.deepEqual(
-    [...foundIds].sort(),
-    [...EXERCISE_IDS].sort(),
-    `exerciseGroups item ids do not match the canonical set exactly; found: ${foundIds.join(", ")}`,
-  );
+test("shared setup exerciseGroups exposes exactly the canonical exercise-id set", () => {
+  const foundIds = exerciseGroups.flatMap((group) => group.items.map((item) => item.id));
+  assert.deepEqual([...foundIds].sort(), [...EXERCISE_IDS].sort());
+  assert.deepEqual(foundIds, [...EXERCISE_IDS], "Both setup views preserve the canonical display order");
 });
 
 console.log(`\n─────────────────────────────────────────`);

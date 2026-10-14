@@ -44,6 +44,18 @@ stale in the direction of *understating* what exists, either.
 
 ## 1. Feature-status inventory
 
+### Public flow replacement (2026-10-15)
+
+The new homepage is served at `/`. Language and exercise selection now share
+the unified `/custom-practice` setup page, with existing filter editing at
+`/languages/filters` returning to that setup. The former `/languages` and
+`/languages/filters/exercises` pages no longer render independently; client
+navigation replaces those URLs with `/custom-practice`, preserving query
+and hash context. Existing language-pair practice-session URLs remain stable.
+The internal `language` and `exerciseSelection` route keys now mean homepage
+and unified setup respectively. Saved languages must never skip the homepage.
+The historical audit rows below describe the older flow unless superseded here.
+
 | Feature | Route(s) | Auth required? | Data source | Current status | Risk |
 |---|---|---|---|---|---|
 | Language/home selection | `/`, `/languages` | no | `LanguageContext` + `localStorage` (`uiLanguage`, `app.yourLanguage`, `app.practiceLanguage`) | complete | high — entry point for every flow |

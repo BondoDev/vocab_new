@@ -20,6 +20,11 @@ const INDEXABLE_PUBLIC_METADATA: Record<string, { title: string; description: st
 } as const;
 
 const PUBLIC_APP_METADATA: Record<string, { title: string; description: string }> = {
+  "/custom-practice": {
+    title: "Custom Practice | FluentStellar",
+    description:
+      "Choose your languages, vocabulary filters, and exercises to customize your vocabulary practice.",
+  },
   "/languages": {
     title: "Choose Your Language Pair - FluentStellar",
     description:

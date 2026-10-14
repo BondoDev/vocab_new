@@ -11,13 +11,12 @@ import {
   Compass,
   Dumbbell,
   GraduationCap,
+  House,
   Info,
-  Languages,
   LogIn,
   LogOut,
   Menu,
   ListPlus,
-  SlidersHorizontal,
   Settings,
   Target,
   UserRound,
@@ -68,9 +67,9 @@ import "./styles/header.scss";
 
 const NAV_HREFS = {
   about: "/about",
-  language: "/languages",
+  language: "/",
   levelCategory: "/languages/filters",
-  exerciseSelection: "/languages/filters/exercises",
+  exerciseSelection: "/custom-practice",
   explore: "/explore",
   help: "/help",
   exam: "/languages/level-test",
@@ -330,7 +329,6 @@ export function Header({
   onHelp,
   onLevelTest,
   onLanguages,
-  onFilters,
   onExercises,
   onExplore,
   onProfile,
@@ -853,23 +851,15 @@ export function Header({
     {
       id: "language",
       href: NAV_HREFS.language,
-      label: t("header.languages"),
+      label: t("header.home"),
       onClick: onLanguages,
       activePages: ["language"] as const,
-      icon: Languages,
-    },
-    {
-      id: "levelCategory",
-      href: NAV_HREFS.levelCategory,
-      label: t("header.filters"),
-      onClick: onFilters,
-      activePages: ["levelCategory"] as const,
-      icon: SlidersHorizontal,
+      icon: House,
     },
     {
       id: "exerciseSelection",
       href: NAV_HREFS.exerciseSelection,
-      label: t("header.exercises"),
+      label: t("home.customPractice.title"),
       onClick: onExercises,
       activePages: ["exerciseSelection"] as const,
       icon: Dumbbell,
@@ -924,7 +914,7 @@ export function Header({
                 href={NAV_HREFS.language}
                 onClick={createNavClickHandler(onLanguages)}
                 className="hover:text-white transition"
-                aria-label="Go to languages page"
+                aria-label={t("header.home")}
               >
                 FLUENTSTELLAR
               </a>
@@ -939,17 +929,8 @@ export function Header({
                 className={getDesktopNavClassName("language")}
                 suppressHydrationWarning
               >
-                <Languages size={12} strokeWidth={1.8} aria-hidden="true" />
-                {t("header.languages")}
-              </a>
-              <a
-                href={NAV_HREFS.levelCategory}
-                onClick={createNavClickHandler(onFilters)}
-                className={getDesktopNavClassName("levelCategory")}
-                suppressHydrationWarning
-              >
-                <SlidersHorizontal size={12} strokeWidth={1.8} aria-hidden="true" />
-                {t("header.filters")}
+                <House size={12} strokeWidth={1.8} aria-hidden="true" />
+                {t("header.home")}
               </a>
               <a
                 href={NAV_HREFS.exerciseSelection}
@@ -958,7 +939,7 @@ export function Header({
                 suppressHydrationWarning
               >
                 <Dumbbell size={12} strokeWidth={1.8} aria-hidden="true" />
-                {t("header.exercises")}
+                {t("home.customPractice.title")}
               </a>
               <div
                 className="header-desktop-more relative"

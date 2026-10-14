@@ -71,6 +71,7 @@ export interface MinimalWordSeoNotFoundResponse {
 const CORE_PRERENDER_ROUTES = [
   "/",
   "/profile",
+  "/custom-practice",
   "/languages",
   "/languages/filters",
   "/languages/filters/exercises",
