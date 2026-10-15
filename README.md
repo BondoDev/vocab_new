@@ -37,6 +37,21 @@ No conventional unit-test framework is configured. Deterministic guard and
 regression scripts under `scripts/tests/` provide the primary automated
 coverage.
 
+## Browser tests (Chromium)
+
+```bash
+npm ci
+npx playwright install chromium
+npm run test:browser
+```
+
+Linux machines can use `npx playwright install --with-deps chromium` to install
+system dependencies too. Playwright uses its version-matched managed Chromium;
+no system Chrome or production credentials are needed. No CI job is added.
+See [`scripts/tests/browser/README.md`](scripts/tests/browser/README.md) for
+isolation details, reports, and scope. Browser tests run separately from the
+offline Node regression scripts.
+
 ## Linting
 
 `eslint.config.mjs` covers application, Vite configuration, Node SSR/tooling,

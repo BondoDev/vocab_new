@@ -2,6 +2,12 @@ node_modules
 
 node_modules/
 
+# Isolated browser build and Playwright reports, traces, and screenshots.
+.playwright-build/
+playwright-report/
+test-results/
+blob-report/
+
 # No trailing slash on dist/server-build/the workers/word-ssr build-output
 # entries below (deliberately, unlike dist-retry-*//server-build-retry-*/):
 # `git check-ignore` can only confirm a directory-only (trailing-slash)

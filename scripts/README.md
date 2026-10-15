@@ -127,6 +127,7 @@ scripts/
   tests/                  regression tests and architecture guards, by category
     account/
     architecture/
+    browser/
     practice/
     prerender/
     routing/
@@ -184,10 +185,16 @@ scripts/
   the word-page render pipeline (and a Worker cold-start variant). These
   scripts assert nothing and never fail the process; they exist to
   produce comparable timing numbers, not to gate correctness.
-- **`tests/`** — regression tests and architecture guards, each a
-  deterministic, dependency-free Node script that asserts one contract
-  and exits non-zero on failure. Divided into categories by what they
+- **`tests/`** — regression tests and architecture guards. Offline checks use
+  deterministic, dependency-free Node scripts that assert a contract and exit
+  non-zero on failure; browser integration checks use Playwright separately.
+  Divided into categories by what they
   guard, not by which npm script happens to invoke them:
+
+  - **`browser/`** — isolated Playwright integration tests and their dedicated
+    build/preview server and fixtures. Unlike the offline Node scripts below,
+    these require managed Chromium and run only via `npm run test:browser`.
+    See [`tests/browser/README.md`](tests/browser/README.md).
 
   - **`account/`** — signed-in-profile / account-state language sync
     contracts.

@@ -11,6 +11,7 @@
     "build": "vite build && vite build --ssr src/entry-server.tsx --outDir server-build && node scripts/build/copy-ssr-template.mjs && node scripts/build/prerender.mjs && node ./scripts/build/verify-word-ssr-package.mjs",
     "dev": "vite",
     "lint": "eslint .",
+    "test:browser": "node node_modules/@playwright/test/cli.js test",
     "test:react-hook-remediation": "node scripts/tests/runtime/test-react-hook-remediation.mjs",
     "test:eslint-effect-lifecycles": "node scripts/tests/runtime/test-eslint-effect-lifecycles.mjs",
     "test:brand-asset-ownership": "node scripts/tests/architecture/test-brand-asset-ownership.mjs",
@@ -219,6 +220,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260724.1",
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
     "@tailwindcss/vite": "4.1.12",
     "@types/node": "^22.20.1",
     "@types/react": "19.2.13",

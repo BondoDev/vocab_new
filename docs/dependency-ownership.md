@@ -34,6 +34,7 @@ peer or transitive dependency before removing it.
 |---|---|---|---|---|
 | @cloudflare/workers-types | devDependencies | ^5.20260724.1 | ambient `types` entry in `workers/word-ssr/tsconfig.json`; Worker runtime/platform type declarations referenced in `workers/word-ssr/src/global.d.ts` | actively used (types) |
 | @eslint/js | devDependencies | 10.0.1 | recommended correctness rules in `eslint.config.mjs` | actively used (lint config) |
+| @playwright/test | devDependencies | 1.64.1 | `playwright.config.ts`, `scripts/tests/browser/fixtures.ts`, and CLI in `npm run test:browser`; managed Chromium | actively used (browser tests) |
 | @radix-ui/react-alert-dialog | dependencies | 1.1.6 | `src/app/components/ui/alert-dialog.tsx` | actively used |
 | @radix-ui/react-dialog | dependencies | 1.1.6 | `src/app/components/ui/dialog.tsx` | actively used |
 | @radix-ui/react-dropdown-menu | dependencies | 2.1.6 | `src/app/components/ui/dropdown-menu.tsx` | actively used |
@@ -67,7 +68,7 @@ peer or transitive dependency before removing it.
 | typescript-eslint | devDependencies | 8.71.2 | TypeScript parser, core-rule compatibility overrides, and unused-declaration checks in `eslint.config.mjs` | actively used (lint config) |
 | vite | devDependencies | 6.3.5 | build tool, `npm run build`/`dev` | actively used (build) |
 
-**34 direct entries** (19 `dependencies`, 15 `devDependencies`; the
+**35 direct entries** (19 `dependencies`, 16 `devDependencies`; the
 `peerDependencies` block only restates `react`/`react-dom`, already listed).
 
 ## Retired-homepage cleanup removals
