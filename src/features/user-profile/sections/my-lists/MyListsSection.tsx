@@ -25,7 +25,6 @@ import type { MyListsResourceStatus } from "../useProfileSharedMyLists";
 import { CreateListDialog } from "./CreateListDialog";
 import { RenameListDialog } from "./RenameListDialog";
 import { DeleteListDialog } from "./DeleteListDialog";
-import { AddWordsDialog } from "./AddWordsDialog";
 import { ListCard } from "./ListCard";
 import { ListDetailView } from "./ListDetailView";
 import { SortDropdown, type SortDropdownOption } from "./SortDropdown";
@@ -120,7 +119,6 @@ function resolveListMutationErrorMessage(
 // reads already-existing membership, never writes it.
 export function MyListsSection({
   userProfile,
-  isProfileLoaded,
   wordProgressRows,
   wordProgressStatus,
   onRetryWordProgress,

@@ -524,9 +524,7 @@ function AppContent({
     setYourLanguage,
     setPracticeLanguage,
     navigate,
-    routes: {
-      practice: ROUTES.practice,
-    },
+    routes: ROUTES,
   });
 
   useStoredLanguageAutoRedirect({

@@ -86,7 +86,6 @@ export function ReviewWordsPreparation({
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isProfileLoaded, hasRequiredProfileContext, authUserId, practiceLanguage, yourLanguage, retryToken]);
 
   const handleRetry = useCallback(() => setRetryToken((token) => token + 1), []);

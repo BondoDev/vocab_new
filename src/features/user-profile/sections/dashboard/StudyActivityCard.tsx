@@ -27,7 +27,7 @@ const RANGE_LABEL_KEYS: Record<StudyActivityRange, string> = {
 
 // The header's compact "{total} · {period}" summary line reuses the same
 // pre-existing per-range phrasing ("Last 7 days" / ... / "All time") the
-// expanded range selector already uses elsewhere — no new localized string
+// always-visible range selector uses — no new localized string
 // is introduced by this visual redesign.
 const SUMMARY_PERIOD_LABEL_KEYS: Record<StudyActivityRange, string> = {
   "7d": "userProfile.dashboardPage.supportingCards.studyActivity.summaryPeriod.7d",
@@ -79,7 +79,7 @@ function formatBucketPeriodLabel(bucket: StudyActivityBucket, locale: string): s
 
 // Compact X-axis tick text — deliberately shorter than formatBucketPeriodLabel
 // (which is the full, unambiguous tooltip/period heading): a narrow single
-// weekday letter for the default unexpanded 7-day view (each label must sit
+// weekday letter for the default 7-day view (each label must sit
 // directly under its own point without crowding its neighbors), a short
 // "Mon D" date once 30 days of individual points are on screen (a bare
 // weekday letter would be ambiguous once it repeats 4+ times), a short
@@ -108,13 +108,11 @@ interface StudyActivityCardProps {
 // STUDY TIME per learning mode (Study New Words / Review Words / Custom
 // Practice), not quantities — new words/reviews quantities moved entirely
 // to the "Words Learned" card (WordsLearnedCard.tsx), which already owned
-// them on its own. Defaults to a fixed 7-day view; "View all activity"
-// expands the same card in place (no navigation, no modal) to a range
-// selector (7/30/90/All, defaulting to 30 when first expanded) with
-// intelligently-aggregated buckets (daily/daily/weekly/monthly — see
-// studyActivity.ts). Expanding or switching ranges never re-fetches: every
-// range is a different pure aggregation over the one dailyStats array
-// useDashboardSupportingData already loaded.
+// them on its own. Defaults to a 7-day view with always-visible range
+// controls (7/30/90/All) and intelligently aggregated buckets
+// (daily/daily/weekly/monthly; see studyActivity.ts). Switching ranges
+// never re-fetches: every range is a pure aggregation over the shared
+// dailyStats array supplied through useDashboardSupportingData.
 //
 // VISUAL REDESIGN (chart-only, third pass) — a three-series LINE chart
 // replaced the earlier stacked-bar redesign: one smooth monotone-cubic

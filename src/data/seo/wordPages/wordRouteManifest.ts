@@ -1,6 +1,5 @@
 import {
   SUPPORTED_TARGET_LANGUAGES,
-  SUPPORTED_UI_LANGUAGES,
   isSupportedUiLanguage,
   type TargetLanguageSlug,
   type UiLanguageCode,

@@ -12,11 +12,6 @@ export type KeyboardLayout = {
   longPress?: Record<string, string[]>;
 };
 
-const symbolRows = [
-  ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-  [".", ",", "?", "!", ":", ";", "'", "-", "(", ")"],
-];
-
 export const keyboardLayouts: Record<KeyboardLanguage, KeyboardLayout> = {
   en: {
     locale: "en",

@@ -238,6 +238,7 @@ for (const targetLanguage of SUPPORTED_TARGET_LANGUAGES) {
   // accentTestConceptId/otherMeaningsTestConceptIds from the 81-word sample).
   const firstEntry = vocabulary[0];
   const ambiguous = Array.from(bySlugGroup.values()).find((ids) => ids.length > 1);
+  // eslint-disable-next-line no-control-regex -- The negated ASCII range intentionally finds a non-ASCII slug for the accent fixture.
   const accented = vocabulary.find((e) => /[^\x00-\x7f]/.test(wordToSlug(e.word_lemma)));
   testFixtureConceptIds[targetLanguage] = {
     legacyTestConceptId: firstEntry.concept_id,

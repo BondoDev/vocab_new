@@ -11,7 +11,7 @@ export const WORD_META_TITLE: Record<UiLanguageCode, (lang: string, word: string
 };
 
 export const WORD_META_DESC: Record<UiLanguageCode, (lang: string, word: string) => string> = {
-  en: (lang, word) =>
+  en: (_lang, word) =>
     `Learn how to use "${word}" with simple examples, synonyms, CEFR level, and quick practice.`,
   es: (lang, word) =>
     `Aprende el significado de la palabra ${lang} "${word}", ve oraciones de ejemplo y practica este vocabulario con ejercicios interactivos.`,
@@ -40,7 +40,7 @@ WORD_META_DESC.pt = (lang, word) =>
 WORD_META_DESC.ru = (lang, word) =>
   `Узнайте значение слова "${word}" на ${lang} и посмотрите примеры предложений.`;
 
-WORD_META_DESC.en = (lang, word) =>
+WORD_META_DESC.en = (_lang, word) =>
   `Learn "${word}" with examples, synonyms, CEFR level, and practice.`;
 WORD_META_DESC.es = (lang, word) =>
   `Aprende la palabra ${lang} "${word}" y ve ejemplos.`;

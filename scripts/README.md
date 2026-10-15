@@ -75,6 +75,40 @@ under `scripts/`. If it *is* the thing being shipped (or a runtime
 dependency of it), it belongs in `src/`, `workers/`, or `server/`
 instead.
 
+## Focused profile regression contracts
+
+The nickname and My Lists contract scripts use existing TypeScript tooling
+without adding a test framework or runtime dependency:
+
+- `lib/component-contract.mjs` parses TSX, locates declarations/JSX props, and
+  evaluates extracted expressions with explicitly supplied dependencies. Its
+  module evaluator is restricted by convention to repository-owned pure helpers;
+  it omits imports, so callers must supply any runtime imports explicitly. It is
+  not a sandbox or a general application-module loader.
+- `lib/my-lists-contract.mjs` shares the executable member-only search/sort and
+  pagination contract between the corrective and Phase 2B scripts. Test data
+  includes an unstudied member and a matching nonmember, preventing progress-only
+  or full-corpus search from accidentally satisfying membership assertions.
+- The corrective script owns picker filter-value/default/reset behavior and
+  textual labels; Phase 2B owns picker control accessibility and desktop/mobile
+  markup. Phase 2A executes the controlled SortDropdown callback chain and local
+  sorting for all three modes, retaining no-fetch checks.
+- The nickname script executes start/cancel and asynchronous save success/failure
+  handlers against a frozen confirmed/pending-email session and checks that these
+  handlers do not reference email/session mutation APIs.
+- The practice script executes the card-to-detail callback, setup-open wiring,
+  membership-change/empty-selection guards, selection handoff, and Back/completion
+  exit callbacks against mocked navigation/state dependencies.
+
+These checks execute actual extracted production logic, but do **not** mount
+React, render a browser DOM, run React effect scheduling, or exercise Supabase.
+Browser keyboard/focus behavior of the Radix sort menu, visual desktop/mobile
+parity, pending-email rendering during nickname edits, and membership updates
+while an actual modal is open still require browser verification. JSX/AST wiring
+guards and callback simulations do not establish those integration guarantees.
+Live Supabase tests require their dedicated opt-in configuration and are excluded
+from the offline regression baseline.
+
 ## Internal structure
 
 ```
@@ -170,8 +204,8 @@ scripts/
   - **`routing/`** — route resolution, route-manifest/pagination
     contracts, interactive-route/profile-shell wiring, and the
     pre-hydration `<html lang>` init script.
-  - **`runtime/`** — hydration-payload regression coverage (an
-    automated test), plus manual browser-runtime validators that drive
+  - **`runtime/`** — hydration-payload and React lifecycle/callback
+    regression coverage, plus manual browser-runtime validators that drive
     a real headless browser against a live word page. The validators
     are diagnostics an operator runs by hand, not part of any automated
     suite — see [Entry points, helpers, and data](#entry-points-helpers-and-data).
@@ -260,6 +294,23 @@ counterpart doc, not this general dependency direction). Treat the rest
 as conventions to preserve by inspection and review.
 
 ## npm command and execution policy
+
+`npm run test:eslint-effect-lifecycles` executes source-extracted callbacks and
+effect dependency expressions for route/preference/profile synchronization,
+Explore items, question/exercise initialization, practice advancement, and
+chart/list memo inputs. Its deterministic dependency scheduler checks that
+unrelated renders do not refetch, reshuffle, reset exercises, or rebind the
+practice Enter listener. These are isolated source-execution tests, not mounted
+React or live authentication/database verification.
+
+`npm run test:react-hook-remediation` runs source-executed regressions for CEFR
+content transitions and MobileKeyboard's long-press callback/listener chain.
+Append `-- --browser` for an opt-in mounted React check using an installed
+Chrome/Edge (`BROWSER_EXECUTABLE` overrides discovery). It uses the existing
+React development bundles and isolated temporary HTML, with page/data boundary
+fixtures, not a live application/backend. No browser package is required.
+The browser mode checks actual Hook scheduling, popup selection after prop
+updates, disabled insertion, and unmounting; it is not a visual/layout test.
 
 - Routine entry points — anything that's part of the production build,
   a tracked data generator, or a regression/architecture test meant to

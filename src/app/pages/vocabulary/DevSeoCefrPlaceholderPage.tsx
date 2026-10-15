@@ -356,6 +356,28 @@ export function DevSeoCefrPlaceholderPage({
     return <div className="p-6 text-sm text-muted-foreground">Invalid preview page. Try {DEV_CEFR_PREVIEW_PATH}</div>;
   }
 
+  // Resolved content owns its Hook lifecycle independently of fallback transitions.
+  return (
+    <ResolvedSeoCefrPage
+      resolvedItem={resolvedItem}
+      onStartPractice={onStartPractice}
+      pathPrefix={pathPrefix}
+      initialBrowsePreview={initialBrowsePreview}
+    />
+  );
+}
+
+function ResolvedSeoCefrPage({
+  resolvedItem,
+  onStartPractice,
+  pathPrefix,
+  initialBrowsePreview,
+}: {
+  resolvedItem: SeoCefrContentItem;
+  onStartPractice: (targetLanguage: TargetLanguageSlug, level: string) => void;
+  pathPrefix: string;
+  initialBrowsePreview: LevelBrowsePreviewData | null;
+}) {
   const seoMetadata = useMemo(
     () => buildSeoMetadata(resolvedItem, pathPrefix),
     [resolvedItem, pathPrefix],

@@ -1,8 +1,8 @@
 // Behavior/architecture contract for Practice List (My Lists Phase 3):
 // entry points, setup dialog wiring, VocabularyPractice's
 // restrictToConceptIds integration, zero-SRS-effect guarantees, exercise
-// reuse, and App.tsx routing/session handoff. A precise source-text guard
-// (not a behavioral/DOM one) — matching every other My Lists contract
+// reuse, and App.tsx routing/session handoff. Source/AST guards and executed
+// extracted callbacks (not a mounted DOM test) — matching other My Lists contract
 // test's own precedent (see test-my-lists-corrective-contract.mjs's own
 // header for why: VocabularyPractice.tsx and App.tsx transitively read
 // import.meta.env, a Vite-only global).
@@ -12,6 +12,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { evaluateInitializer, evaluate, onlyJsxElement, jsxElements, jsxProp } from "../../lib/component-contract.mjs";
+import { loadListHelper } from "../../lib/my-lists-contract.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,6 +54,7 @@ function test(name, fn) {
 const appSource = fs.readFileSync(path.join(ROOT_DIR, "src", "app", "App.tsx"), "utf8");
 const vocabPracticeSource = fs.readFileSync(path.join(PRACTICE_DIR, "VocabularyPractice.tsx"), "utf8");
 const dialogSource = fs.readFileSync(path.join(MY_LISTS_DIR, "PracticeListSetupDialog.tsx"), "utf8");
+const practiceHeaderSource = fs.readFileSync(path.join(PRACTICE_DIR, "components", "PracticeHeader.tsx"), "utf8");
 const detailSource = fs.readFileSync(path.join(MY_LISTS_DIR, "ListDetailView.tsx"), "utf8");
 const cardSource = fs.readFileSync(path.join(MY_LISTS_DIR, "ListCard.tsx"), "utf8");
 const sectionSource = fs.readFileSync(path.join(MY_LISTS_DIR, "MyListsSection.tsx"), "utf8");
@@ -80,14 +83,140 @@ test("15. A zero-word list never renders the Practice List button (the whole act
   assert.match(detailSource, /\{hasMembers \? \(\s*<div className="my-lists-detail__actions">/);
 });
 
-test("List card: Practice List is an optional overflow-menu item, present only when a callback is supplied", () => {
-  assert.match(cardSource, /onPracticeList\?\: \(\) => void;/);
-  assert.match(cardSource, /\{onPracticeList \? \(\s*<DropdownMenuItem onSelect=\{onPracticeList\}>/);
+test("List card: View List opens the selected detail; Rename/Delete remain, without a card Practice shortcut", () => {
+  const navigations = [];
+  const goToDetail = evaluateInitializer(sectionSource, "goToDetail", {
+    location: { pathname: "/profile" }, navigate: (value) => navigations.push(value),
+  });
+  const card = onlyJsxElement(sectionSource, "ListCard");
+  const viewButton = jsxElements(cardSource, "button").find((element) =>
+    jsxProp(element, "className").text === "my-lists-card__view-button");
+  assert.ok(viewButton);
+  for (const id of ["first-list", "second-list"]) {
+    const onView = evaluate(jsxProp(card, "onView"), { list: { id }, goToDetail });
+    evaluate(jsxProp(viewButton, "onClick"), { onView })();
+    assert.deepEqual(navigations.at(-1), { pathname: "/profile", search: `?section=myLists&listId=${id}` });
+  }
+  assert.deepEqual(jsxElements(cardSource, "DropdownMenuItem").map((element) =>
+    jsxProp(element, "onSelect").getText()), ["onRename", "onDelete"]);
+  assert.doesNotMatch(stripLineComments(cardSource), /onPracticeList|onStartPracticeList/);
 });
 
-test("15b. MyListsSection only supplies ListCard's onPracticeList when the list actually has words (never for a 0-word list)", () => {
-  const propMatch = sectionSource.match(/onPracticeList=\{\s*onStartPracticeList && getListWordCount\(wordCountsByListId, list\.id\) > 0([\s\S]*?)\}/);
-  assert.ok(propMatch, "onPracticeList must be conditioned on a non-zero word count");
+test("15b. Detail Practice opens the existing setup dialog through its controlled owner", () => {
+  const updates = [];
+  const handleOpenPracticeListDialog = evaluateInitializer(sectionSource, "handleOpenPracticeListDialog", {
+    setIsPracticeListDialogOpen: (value) => updates.push(value),
+  });
+  const detail = onlyJsxElement(sectionSource, "ListDetailView");
+  const onOpenPracticeList = evaluate(jsxProp(detail, "onOpenPracticeList"), { handleOpenPracticeListDialog });
+  const practiceButton = jsxElements(detailSource, "Button").find((element) =>
+    element.attributes.properties.some((property) => property.name?.getText() === "className" &&
+      property.initializer?.text === "my-lists-detail__practice-button"));
+  assert.ok(practiceButton);
+  evaluate(jsxProp(practiceButton, "onClick"), { onOpenPracticeList })();
+  assert.deepEqual(updates, [true]);
+  const isPracticeListDialogOpen = updates[0];
+  const detailOpen = evaluate(jsxProp(detail, "isPracticeListDialogOpen"), { isPracticeListDialogOpen });
+  const setup = onlyJsxElement(detailSource, "PracticeListSetupDialog");
+  assert.equal(evaluate(jsxProp(setup, "open"), { isPracticeListDialogOpen: detailOpen }), true);
+});
+
+test("Setup uses current memberships at Start, clamps stale quantities, and rejects empty or invalid selections", () => {
+  const selectListPracticeWords = loadListHelper("practiceListSelection.ts", "selectListPracticeWords");
+  const original = [
+    { wordId: "removed", createdAt: "2026-08-09" },
+    { wordId: "retained", createdAt: "2026-08-10" },
+  ];
+  const changed = [original[1], { wordId: "added", createdAt: "2026-08-11" }];
+  const selectedQuantity = { kind: "all", value: original.length };
+  for (const [memberships, selectedExercises, quantity, expected] of [
+    [original, ["wordTyping"], selectedQuantity, ["removed", "retained"]],
+    [changed, ["wordTyping"], selectedQuantity, ["retained", "added"]],
+    [[original[1]], ["wordTyping"], selectedQuantity, ["retained"]],
+    [[], ["wordTyping"], selectedQuantity, null],
+    [changed, [], selectedQuantity, null],
+    [changed, ["wordTyping"], null, null],
+  ]) {
+    const starts = [];
+    const bindings = { memberships, selectedExercises, selectedQuantity: quantity, order: "listOrder", selectListPracticeWords };
+    const canStart = evaluateInitializer(dialogSource, "canStart", bindings);
+    evaluateInitializer(dialogSource, "handleStart", { ...bindings, canStart, onStart: (config) => starts.push(config) })();
+    assert.deepEqual(starts, expected ? [{ conceptIds: expected, exercises: selectedExercises }] : []);
+  }
+  assert.equal(evaluateInitializer(detailSource, "hasMembers", { memberships: [] }), false);
+  assert.equal(evaluateInitializer(detailSource, "hasMembers", { memberships: changed }), true);
+});
+
+test("Valid setup selections reach App's existing route and engine with the originating list identity", () => {
+  const activeList = { id: "list /one", name: "My list", targetLanguage: "de" };
+  const navigations = [];
+  const state = {};
+  const handleStartPracticeList = evaluateInitializer(appSource, "handleStartPracticeList", {
+    setPracticeLanguage: (value) => { state.language = value; },
+    setSelectedExercises: (value) => { state.exercises = value; },
+    setPracticeListSession: (value) => { state.session = value; },
+    buildPracticeRoute: (ui, target, routes) => {
+      assert.deepEqual([ui, target, routes.practice], ["en", "de", "/practice"]);
+      return routes.practice;
+    },
+    yourLanguage: "en", ROUTES: { practice: "/practice" }, navigate: (value) => navigations.push(value),
+  });
+  const owner = evaluateInitializer(sectionSource, "handleStartPracticeListSetup", {
+    activeList, setIsPracticeListDialogOpen() {}, onStartPracticeList: handleStartPracticeList,
+  });
+  const detailStart = evaluate(jsxProp(onlyJsxElement(sectionSource, "ListDetailView"), "onStartPracticeList"), {
+    handleStartPracticeListSetup: owner,
+  });
+  const onStart = evaluate(jsxProp(onlyJsxElement(detailSource, "PracticeListSetupDialog"), "onStart"), {
+    onStartPracticeList: detailStart,
+  });
+  const config = { conceptIds: ["retained", "added"], exercises: ["wordTyping"] };
+  onStart(config);
+  assert.equal(state.language, "de");
+  assert.deepEqual(state.exercises, config.exercises);
+  assert.deepEqual(state.session, { listId: activeList.id, listName: activeList.name, conceptIds: config.conceptIds });
+  assert.deepEqual(navigations, ["/practice?source=vocabulary-list&listId=list%20%2Fone"]);
+  const practice = onlyJsxElement(appSource, "VocabularyPractice");
+  assert.deepEqual(evaluate(jsxProp(practice, "restrictToConceptIds"), { activePracticeListSession: state.session }), config.conceptIds);
+  assert.equal(evaluate(jsxProp(practice, "restrictToConceptIds"), { activePracticeListSession: null }), null);
+  onStart({ ...config, conceptIds: [] });
+  handleStartPracticeList({ ...config, conceptIds: [] });
+  evaluateInitializer(sectionSource, "handleStartPracticeListSetup", {
+    activeList: null,
+    setIsPracticeListDialogOpen() { assert.fail("missing lists must not start setup"); },
+    onStartPracticeList() { assert.fail("missing lists must not launch practice"); },
+  })(config);
+  assert.equal(navigations.length, 1, "empty selections must not navigate");
+});
+
+test("Back and completion exits return to the originating detail and clear the restricted session", () => {
+  const activePracticeListSession = { listId: "origin-list", conceptIds: ["word"] };
+  const ROUTES = { profile: "/profile", exerciseSelection: "/exercises" };
+  const practiceListBackDestination = evaluateInitializer(appSource, "practiceListBackDestination", { activePracticeListSession, ROUTES });
+  const navigations = [];
+  const cleared = [];
+  const leavePracticeList = evaluateInitializer(appSource, "leavePracticeList", {
+    activePracticeListSession, ROUTES, practiceListBackDestination,
+    setPracticeListSession: (value) => cleared.push(value), navigate: (value) => navigations.push(value),
+  });
+  const practice = onlyJsxElement(appSource, "VocabularyPractice");
+  for (const prop of ["onBack", "onGoFilters"]) {
+    evaluate(jsxProp(practice, prop), { activePracticeListSession, leavePracticeList })();
+  }
+  assert.deepEqual(navigations, ["/profile?section=myLists&listId=origin-list", "/profile?section=myLists&listId=origin-list"]);
+  assert.deepEqual(cleared, [null, null]);
+  const completion = [];
+  const handleFinishTest = evaluateInitializer(vocabPracticeSource, "handleFinishTest", {
+    setSessionComplete: (value) => completion.push(value), onSessionComplete: () => completion.push("complete"),
+  });
+  const header = onlyJsxElement(vocabPracticeSource, "PracticeHeader");
+  evaluate(jsxProp(header, "onFinishTest"), { handleFinishTest })();
+  assert.deepEqual(completion, [true, "complete"], "Finish completes the session before the user exits results");
+  assert.equal(jsxProp(header, "onBack").getText(), "onBack");
+  const exitButtons = jsxElements(practiceHeaderSource, "button").filter((element) =>
+    element.attributes.properties.some((property) => property.name?.getText() === "onClick" &&
+      property.initializer?.expression?.getText() === "onBack"));
+  assert.equal(exitButtons.length, 2, "active Back and completed Home both use the same exit contract");
 });
 
 console.log("\n=== Setup dialog: compact, no forbidden filters, quantity/order/exercises ===\n");
@@ -173,6 +302,10 @@ test("The only persistence call VocabularyPractice makes is completeCustomPracti
   const supabaseWriteImports = [...vocabPracticeSource.matchAll(/import \{[^}]*\} from "\.\.\/\.\.\/lib\/(\w+)"/g)].map(
     (m) => m[0],
   );
+  assert.deepEqual(supabaseWriteImports.map((statement) => statement.replace(/\s+/g, " ").trim()).sort(), [
+    'import { completeCustomPracticeWord } from "../../lib/customPracticeProgress"',
+    'import { getStoredSupabaseSession } from "../../lib/supabaseAuth"',
+  ].sort(), "only the existing practice-time write and session reader may be imported");
   assert.match(vocabPracticeSource, /import \{ completeCustomPracticeWord \} from "\.\.\/\.\.\/lib\/customPracticeProgress"/);
   assert.doesNotMatch(stripLineComments(vocabPracticeSource), /completeNewWordStudy|completeWordReview|updateWordProgressFavorite/);
 });

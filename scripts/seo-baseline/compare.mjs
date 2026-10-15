@@ -45,7 +45,7 @@ function deepEqual(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
-function diffFixture(id, a, b) {
+function diffFixture(a, b) {
   const mismatches = [];
 
   if (a?.skipped && b?.skipped) return mismatches;
@@ -101,7 +101,7 @@ function main() {
       continue;
     }
 
-    const mismatches = diffFixture(id, a, b);
+    const mismatches = diffFixture(a, b);
     if (mismatches.length === 0) continue;
 
     console.log(`\n✗ ${id}`);

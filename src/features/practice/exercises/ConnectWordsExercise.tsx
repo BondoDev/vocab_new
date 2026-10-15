@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { shuffleArray } from "../../../utils/shuffleArray";
-import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface ConnectWordsExerciseProps {
   words: any[];
@@ -29,7 +28,6 @@ export function ConnectWordsExercise({
   onSpeakWord,
   onStatusChange,
 }: ConnectWordsExerciseProps) {
-  const { t } = useLanguage();
   const [connectWords, setConnectWords] = useState<string[]>([]);
   const [connectMeanings, setConnectMeanings] = useState<string[]>([]);
   const [connectPairs, setConnectPairs] = useState<

@@ -1091,8 +1091,8 @@ async function main() {
     assert.ok(onboardingOccurrences > 3, "sanity check: the existing shared dialogs should appear on many pages");
     assert.equal(
       introOccurrences,
-      onboardingOccurrences,
-      `accountIntroDialog must be rendered everywhere accountOnboardingDialog is (found ${introOccurrences} vs ${onboardingOccurrences})`,
+      onboardingOccurrences + 1,
+      `accountIntroDialog must cover the onboarding branches plus the public homepage (found ${introOccurrences} vs ${onboardingOccurrences})`,
     );
   });
 
@@ -1133,75 +1133,43 @@ async function main() {
     }
   });
 
-  // The Languages page's Continue click no longer attaches the router-state
-  // showAccountIntro signal (superseded by the LanguageAccountChoiceDialog
-  // gate below, which decides and acts synchronously, before navigating,
-  // instead of signaling AccountIntroDialog to open after arrival on the
-  // Filters page). useAccountLanguageConfirm's proceed() now simply
-  // delegates to languageAccountChoice.attemptProceed().
-  await test("the Languages-page Continue's proceed() callback delegates to languageAccountChoice.attemptProceed()", () => {
-    const match = appSource.match(/proceed: \(\) => languageAccountChoice\.attemptProceed\(\),/);
-    assert.ok(match, "expected useAccountLanguageConfirm's proceed to delegate to languageAccountChoice.attemptProceed()");
+  console.log("\n[10b] Current homepage and Custom Practice account integration");
+
+  await test("the homepage starts Custom Practice directly and reuses Header's login dialog", () => {
+    const match = appSource.match(/if \(resolvedPage === "language"\) \{([\s\S]*?)\n  \}/);
+    assert.ok(match, "could not locate the homepage branch");
+    assert.match(match[1], /<NewHomePage\s/);
+    assert.match(match[1], /onStartPracticing=\{\(\) => navigate\(ROUTES\.exerciseSelection\)\}/);
+    assert.match(match[1], /onLogin=\{\(\) => setRequestedHeaderAuthMode\("login"\)\}/);
+    assert.match(match[1], /\{accountIntroDialog\}/);
+    assert.doesNotMatch(match[1], /\{accountOnboardingDialog\}/);
   });
 
-  await test("no showAccountIntro router-state signal remains anywhere in App.tsx", () => {
-    assert.doesNotMatch(appSource, /showAccountIntro/);
+  await test("Custom Practice keeps account language confirmation before starting a session", () => {
+    const start = appSource.match(/const handleStartPracticing = \(\) => \{([\s\S]*?)\n  \};/);
+    assert.ok(start, "could not locate handleStartPracticing()");
+    assert.match(start[1], /if \(isContinueDisabled\) \{\s*navigate\(ROUTES\.exerciseSelection\);\s*return;/);
+    assert.match(start[1], /accountLanguageConfirm\.attemptContinue\(\)/);
+    const confirm = appSource.match(/const accountLanguageConfirm = useAccountLanguageConfirm\(\{([\s\S]*?)\n  \}\);/);
+    assert.ok(confirm, "could not locate useAccountLanguageConfirm()");
+    assert.match(confirm[1], /proceed: \(\) => handleContinueToPractice\(\),/);
+    const branch = appSource.match(/if \(resolvedPage === "exerciseSelection"\) \{([\s\S]*?)\n  \}/);
+    assert.ok(branch, "could not locate the Custom Practice branch");
+    assert.match(branch[1], /<CustomPracticePreviewPage\s/);
+    assert.match(branch[1], /onStartPracticing=\{handleStartPracticing\}/);
+    assert.match(branch[1], /authUserId \? \([\s\S]*?<AccountLanguageConfirmDialog\s/);
+    assert.match(branch[1], /\{accountIntroDialog\}/);
   });
 
-  console.log("\n[10b] LanguageAccountChoiceDialog - the Languages-page Continue-time Create account / Log in / Continue as guest gate");
-
-  const languageAccountChoiceHookSource = readFile("src/app/hooks/useLanguageAccountChoice.ts");
-  const languageAccountChoiceDialogSource = readFile(
-    "src/app/components/dialogs/LanguageAccountChoiceDialog.tsx",
-  );
-
-  await test("useLanguageAccountChoice decides eligibility via shouldSignalAccountIntro and the shared cooldown, using the pre-save ref", () => {
-    const match = languageAccountChoiceHookSource.match(/const attemptProceed = \(\) => \{([\s\S]*?)\n  \};/);
-    assert.ok(match, "could not locate attemptProceed()");
-    assert.match(match[1], /shouldSignalAccountIntro\(/);
-    assert.match(match[1], /isWithinAccountIntroCooldown\(/);
-    assert.match(match[1], /readAccountIntroLastShownAtMs\(\)/);
+  await test("practice navigation retains the selected language pair and Custom Practice source", () => {
+    const match = appSource.match(/const handleContinueToPractice = \(\) => \{([\s\S]*?)\n  \};/);
+    assert.ok(match, "could not locate handleContinueToPractice()");
+    assert.match(match[1], /buildPracticeRoute\(\s*yourLanguage as UILanguage,\s*practiceLanguage as UILanguage,\s*ROUTES,/);
+    assert.match(match[1], /isCustomPracticeSource \? \x60\$\{practiceRoute\}\?source=custom-practice\x60 : practiceRoute/);
   });
 
-  await test("App.tsx wires useLanguageAccountChoice with the same isAuthenticated/pre-save-ref inputs the old signal used", () => {
-    const match = appSource.match(/const languageAccountChoice = useLanguageAccountChoice\(\{([\s\S]*?)\n  \}\);/);
-    assert.ok(match, "could not locate the useLanguageAccountChoice(...) call");
-    assert.match(match[1], /isAuthenticated: Boolean\(authUserId\)/);
-    assert.match(match[1], /hadCompleteStoredLanguagePairAtLoadRef\.current/);
-  });
-
-  await test("Create account / Log in / Continue as guest all navigate to the Filters page exactly once; only Create account / Log in also request Header's auth dialog", () => {
-    const match = appSource.match(/const languageAccountChoice = useLanguageAccountChoice\(\{([\s\S]*?)\n  \}\);/);
-    assert.match(match[1], /onCreateAccount: \(\) => \{[\s\S]*?navigate\(ROUTES\.levelCategory\);[\s\S]*?setRequestedHeaderAuthMode\("signup"\);[\s\S]*?\}/);
-    assert.match(match[1], /onLogIn: \(\) => \{[\s\S]*?navigate\(ROUTES\.levelCategory\);[\s\S]*?setRequestedHeaderAuthMode\("login"\);[\s\S]*?\}/);
-    assert.match(match[1], /onContinueAsGuest: \(\) => navigate\(ROUTES\.levelCategory\)/);
-  });
-
-  await test("every one of the three choices starts the shared 24h cooldown (markAccountIntroShown), so no other account-intro trigger re-asks the same visit", () => {
-    assert.match(languageAccountChoiceHookSource, /const handleCreateAccount = \(\) => \{\s*markShown\(\);/);
-    assert.match(languageAccountChoiceHookSource, /const handleLogIn = \(\) => \{\s*markShown\(\);/);
-    assert.match(languageAccountChoiceHookSource, /const handleContinueAsGuest = \(\) => \{\s*markShown\(\);/);
-    assert.match(languageAccountChoiceHookSource, /const markShown = \(\) => markAccountIntroShown\(Date\.now\(\)\);/);
-  });
-
-  await test("dismissing without choosing (close()) does not start the cooldown and does not navigate", () => {
-    const match = languageAccountChoiceHookSource.match(/const close = \(\) => setIsOpen\(false\);/);
-    assert.ok(match, "expected close() to be a plain dialog-close with no cooldown/navigation side effect");
-  });
-
-  await test("LanguageAccountChoiceDialog is rendered on the Languages page, driven by languageAccountChoice state", () => {
-    const match = appSource.match(/<LanguageAccountChoiceDialog\s([\s\S]*?)\/>/);
-    assert.ok(match, "could not locate <LanguageAccountChoiceDialog ... />");
-    assert.match(match[1], /open=\{languageAccountChoice\.isOpen\}/);
-    assert.match(match[1], /onCreateAccount=\{languageAccountChoice\.handleCreateAccount\}/);
-    assert.match(match[1], /onLogIn=\{languageAccountChoice\.handleLogIn\}/);
-    assert.match(match[1], /onContinueAsGuest=\{languageAccountChoice\.handleContinueAsGuest\}/);
-  });
-
-  await test("LanguageAccountChoiceDialog offers all three choices through Header's existing auth dialog (no new auth flow) and a distinct guest action", () => {
-    assert.match(languageAccountChoiceDialogSource, /onClick=\{onCreateAccount\}/);
-    assert.match(languageAccountChoiceDialogSource, /onClick=\{onLogIn\}/);
-    assert.match(languageAccountChoiceDialogSource, /onClick=\{onContinueAsGuest\}/);
+  await test("the retired language account-choice gate and router-state intro signal are absent", () => {
+    assert.doesNotMatch(appSource, /useLanguageAccountChoice|LanguageAccountChoiceDialog|showAccountIntro/);
   });
 
   await test("languageAccountChoice localization - all 7 languages define non-empty title/description/createAccount/logIn/continueAsGuest", () => {

@@ -14,6 +14,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
@@ -203,12 +204,130 @@ test("18. The password is never written to localStorage/sessionStorage anywhere 
   }
 });
 
-test("19. The password is never logged (no console.* call anywhere references the password variable)", () => {
-  for (const source of [accountDeletionSource, settingsSectionSource]) {
-    const consoleCalls = [...source.matchAll(/console\.\w+\([^;]*\)/gs)];
-    for (const call of consoleCalls) {
-      assert.doesNotMatch(call[0], /\bpassword\b/i, `a console call references "password": ${call[0].slice(0, 80)}`);
+function findCredentialLogs(source) {
+  const filename = "credential-logging.tsx";
+  const sourceFile = ts.createSourceFile(filename, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const host = ts.createCompilerHost({});
+  host.getSourceFile = (name) => name === filename ? sourceFile : undefined;
+  const program = ts.createProgram([filename], { noLib: true, noResolve: true, types: [] }, host);
+  const checker = program.getTypeChecker();
+  const tainted = new Set();
+  const loggers = new Set();
+  const sensitiveName = (name) => /password|credential|secret|authorization|session|(?:access|refresh|auth|id)[_-]?token|^token$/i.test(name);
+  const symbol = (node) => checker.getSymbolAtLocation(node);
+  const propertyName = (node) => ts.isIdentifier(node) || ts.isStringLiteralLike(node) ? node.text : "";
+  const isConsoleMethod = (node) =>
+    ((ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) &&
+      ts.isIdentifier(node.expression) && node.expression.text === "console") ||
+    (ts.isIdentifier(node) && loggers.has(symbol(node)));
+
+  function containsCredential(node) {
+    if (!node || ts.isStringLiteralLike(node) || ts.isNumericLiteral(node)) return false;
+    if (ts.isIdentifier(node)) return sensitiveName(node.text) || tainted.has(symbol(node));
+    if (ts.isPropertyAccessExpression(node)) {
+      return sensitiveName(node.name.text) || containsCredential(node.expression);
     }
+    if (ts.isElementAccessExpression(node)) {
+      return sensitiveName(propertyName(node.argumentExpression)) || containsCredential(node.expression) ||
+        containsCredential(node.argumentExpression);
+    }
+    if (ts.isPropertyAssignment(node)) {
+      return sensitiveName(propertyName(node.name)) || containsCredential(node.initializer);
+    }
+    if (ts.isShorthandPropertyAssignment(node)) {
+      return sensitiveName(node.name.text) || tainted.has(checker.getShorthandAssignmentValueSymbol(node));
+    }
+    let found = false;
+    ts.forEachChild(node, (child) => { if (containsCredential(child)) found = true; });
+    return found;
+  }
+
+  function markBinding(node, destination) {
+    if (ts.isIdentifier(node)) {
+      const binding = symbol(node);
+      if (binding) destination.add(binding);
+    } else if (ts.isObjectBindingPattern(node) || ts.isArrayBindingPattern(node)) {
+      for (const element of node.elements) {
+        if (ts.isBindingElement(element)) markBinding(element.name, destination);
+      }
+    } else if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+      markBinding(node.expression, destination);
+    }
+  }
+
+  // Follow aliases to a fixed point; symbols keep unrelated lexical scopes separate.
+  let changed;
+  do {
+    const previousSize = tainted.size + loggers.size;
+    function trace(node) {
+      if (ts.isVariableDeclaration(node) && node.initializer) {
+        if (containsCredential(node.initializer)) markBinding(node.name, tainted);
+        if (isConsoleMethod(node.initializer)) markBinding(node.name, loggers);
+      }
+      if (ts.isBindingElement(node) && node.propertyName && sensitiveName(propertyName(node.propertyName))) {
+        markBinding(node.name, tainted);
+      }
+      if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
+        if (containsCredential(node.right) ||
+            ((ts.isPropertyAccessExpression(node.left) || ts.isElementAccessExpression(node.left)) && containsCredential(node.left))) {
+          markBinding(node.left, tainted);
+        }
+        if (isConsoleMethod(node.right)) markBinding(node.left, loggers);
+      }
+      ts.forEachChild(node, trace);
+    }
+    trace(sourceFile);
+    changed = previousSize !== tainted.size + loggers.size;
+  } while (changed);
+
+  const violations = [];
+  function visit(node) {
+    if (ts.isCallExpression(node) && isConsoleMethod(node.expression) && node.arguments.some(containsCredential)) {
+      violations.push(sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1);
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(sourceFile);
+  return violations;
+}
+
+test("19. Credential values never reach console calls in the account flow", () => {
+  for (const [name, source] of Object.entries({ accountDeletionSource, settingsSectionSource, deleteDialogSource, supabaseAuthSource })) {
+    assert.deepEqual(findCredentialLogs(source), [], `${name}: credential logging detected`);
+  }
+});
+
+test("19a. Static password messages and non-sensitive diagnostic objects are allowed", () => {
+  for (const fixture of [
+    'console.warn("password change failed", { reason: error.reason });',
+    'console.warn(`Password recovery failed`, { status: 403 });',
+    'const details = { reason: "invalid_credentials" }; console.warn(details);',
+    'const details = { password: input.value }; function report() { const details = { reason: "network" }; console.warn(details); }',
+  ]) {
+    assert.deepEqual(findCredentialLogs(fixture), [], fixture);
+  }
+});
+
+test("19b. Direct, interpolated, nested, aliased and serialized credentials are rejected", () => {
+  for (const fixture of [
+    'console.warn(password);',
+    'console.warn(deletePassword);',
+    'console.warn(authSession);',
+    'console.warn(token);',
+    'console.warn(`failed: ${newPasswordDraft}`);',
+    'console.warn({ nested: { password: input.value } });',
+    'console.warn({ credentials });',
+    'console.warn(form.password);',
+    'console.warn(form["password"]);',
+    'const value = deletePassword; const details = { value }; console.warn(details);',
+    'let details; details = { access_token: sessionValue }; console.warn(details);',
+    'const details = {}; details.password = input.value; console.warn(details);',
+    'const { password: value } = form; console.warn(value);',
+    'console.warn(JSON.stringify({ ...credentials }));',
+    'const log = console.warn; log(refreshToken);',
+    'console["warn"]({ authorization: headers });',
+  ]) {
+    assert.ok(findCredentialLogs(fixture).length > 0, fixture);
   }
 });
 

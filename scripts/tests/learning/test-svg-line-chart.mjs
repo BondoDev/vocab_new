@@ -36,10 +36,6 @@ function evaluateCubicBezier(p0, c1, c2, p1, t) {
 // exactly the "M x y C c1x c1y, c2x c2y, ex ey ..." format the module
 // emits.
 function parsePath(d) {
-  const tokens = d.split(/\s+M\s+|\s+C\s+/).filter(Boolean);
-  // First token is actually "M x y" with the leading "M " already split
-  // off by the regex above only for subsequent occurrences; handle the
-  // very first manually instead.
   const parts = d.trim().split(/(?=[MC])/).map((s) => s.trim());
   let start = null;
   const segments = [];

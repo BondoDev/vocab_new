@@ -151,7 +151,6 @@ test("10. BrokenWordExercise fallback: hasTypedAnswer regressing to false (witho
   // Full-but-wrong guess auto-clears back to empty after ~800ms.
   next = status({ hasTypedAnswer: false, isCorrect: false });
   hadMistake = computeHadMistake(hadMistake, previousHasTypedAnswer, next);
-  previousHasTypedAnswer = next.hasTypedAnswer;
   assert.equal(hadMistake, true);
 });
 

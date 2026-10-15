@@ -138,7 +138,7 @@ export function VocabularyGrowthSection({
 
   const isLoading = state.status === "loading";
   const isError = state.status === "error";
-  const fullHistory = state.status === "ready" ? state.history : [];
+  const fullHistory = useMemo(() => state.status === "ready" ? state.history : [], [state]);
   const chartTodayISO = state.status === "ready" ? state.todayISO : "";
   const isEmpty = state.status === "ready" && fullHistory.length === 0;
 

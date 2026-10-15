@@ -2,7 +2,7 @@
 // ListDetailView, MyListsSection, vocabularyLists.ts). Transitively imports
 // src/lib/supabaseAuth.ts (reads import.meta.env, a Vite-only global) so —
 // matching test-my-lists-phase2a-contract.mjs's own precedent — this is a
-// precise source-text guard rather than a behavioral/DOM one. Covers test
+// mixed source/AST guard with executable extracted pipelines, not a DOM test. Covers test
 // items 13-25 (UI) and 27-31 (regression) from the Phase 2B brief.
 //
 // Run: node scripts/tests/vocabulary/test-my-lists-phase2b-contract.mjs
@@ -10,6 +10,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertDetailMembershipSearch } from "../../lib/my-lists-contract.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -126,11 +127,8 @@ test("Card/detail counts are computed via computeListWordCountsByListId (superse
 
 console.log("\n=== 18-19. Search by word / translation ===\n");
 
-test("18-19. The detail view's search filters via filterListWordRowsBySearch, which matches both targetWord and translation (superseded module: listWordFiltering.ts, since rows now carry an optional notStudied status — see supabase/README.md's 'My Lists Corrective Phase' section)", () => {
-  assert.match(detailSource, /import \{ filterListWordRowsByStatus, filterListWordRowsBySearch, type ListWordStatusFilterId \} from "\.\/listWordFiltering"/);
-  assert.match(detailSource, /filterListWordRowsBySearch\(byStatus, searchQuery\)/);
-  const listWordFilteringSource = fs.readFileSync(path.join(MY_LISTS_DIR, "listWordFiltering.ts"), "utf8");
-  assert.match(listWordFilteringSource, /word\.includes\(normalizedQuery\) \|\| translation\.includes\(normalizedQuery\)/);
+test("18-19. The shared detail contract protects member-only word/translation search, including unstudied words", () => {
+  assertDetailMembershipSearch(detailSource);
 });
 
 test("The Add Words picker's search is client-side over already-loaded resolved rows — no Supabase request on keystroke", () => {
@@ -139,13 +137,14 @@ test("The Add Words picker's search is client-side over already-loaded resolved 
   assert.doesNotMatch(searchBlockMatch[1], /supabase|fetch\(|await /i);
 });
 
-console.log("\n=== 20-22. Not studied/Learning/Known/Mastered filters ===\n");
+console.log("\n=== 20-22. Picker status controls (not list-detail controls) ===\n");
 
-test("20-22. Both the picker and the detail view offer all/notStudied/learning/known/mastered via ListWordStatusFilterId, filtered with filterListWordRowsByStatus (superseded: Phase 2B had no 'Not studied' filter at all — see test-my-lists-corrective-contract.mjs)", () => {
-  assert.match(pickerSource, /const STATUS_FILTERS: ListWordStatusFilterId\[\] = \["all", "notStudied", "learning", "known", "mastered"\];/);
-  assert.match(detailSource, /const STATUS_FILTERS: ListWordStatusFilterId\[\] = \["all", "notStudied", "learning", "known", "mastered"\];/);
-  assert.match(pickerSource, /filterListWordRowsByStatus\(availableRows, statusFilter\)/);
-  assert.match(detailSource, /filterListWordRowsByStatus\(listRows, statusFilter\)/);
+test("20-22. Picker status controls expose their selected state, labels, and change handler accessibly", () => {
+  assert.match(pickerSource, /role="group" aria-label=\{t\("userProfile\.myListsSection\.statusAll"\)\}/);
+  assert.match(pickerSource, /STATUS_FILTERS\.map\(\(id\) => \(/);
+  assert.match(pickerSource, /aria-pressed=\{statusFilter === id\}/);
+  assert.match(pickerSource, /onClick=\{\(\) => setStatusFilter\(id\)\}/);
+  assert.match(pickerSource, /\{filterLabel\(id\)\}/);
 });
 
 console.log("\n=== 23. Zero-list-word empty state ===\n");
@@ -195,8 +194,7 @@ test("Row actions (View word details / Remove from list) use the shared keyboard
   assert.match(detailSource, /function RowActionsMenu/);
 });
 
-test("Status is never communicated by color alone — every status badge still renders its own text label (superseded field: row.status, now inclusive of notStudied — see listWordStatus.ts)", () => {
-  assert.match(detailSource, /\{statusLabel\(row\.status\)\}/);
+test("Picker status is never communicated by color alone — its badges render text labels, including notStudied", () => {
   assert.match(pickerSource, /\{statusLabel\(row\.status\)\}/);
 });
 

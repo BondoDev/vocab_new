@@ -39,7 +39,7 @@
 //
 // Re-login-forces-onboarding coverage (shouldOpenAccountOnboarding, and
 // useUserProfileLoad.ts's setIsAccountOnboardingOpen(...) call keyed on
-// [authUserId]) already exists in test-profile-load-and-onboarding.mjs
+// account identity plus stable setters) already exists in test-profile-load-and-onboarding.mjs
 // (sections [1] and [5]) and is reused here, not duplicated - see [4]
 // below, which only pins that the dialog's `open` prop and the guard both
 // still depend on that exact state.
@@ -49,6 +49,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { effectCalls } from "../../lib/component-contract.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
@@ -220,7 +221,12 @@ test("15. isAccountOnboardingOpen's reopen-on-login decision (shouldOpenAccountO
     useUserProfileLoad,
     /setIsAccountOnboardingOpen\(\s*\n\s*shouldOpenAccountOnboarding\(hasSupabaseProfileRow, nextProfile\),\s*\n\s*\);/,
   );
-  assert.match(useUserProfileLoad, /\}, \[authUserId\]\);/);
+  const loadEffect = effectCalls(useUserProfileLoad).find((call) =>
+    call.arguments[0].getText().includes("readSupabaseUserProfile("));
+  assert.ok(loadEffect, "the profile-loading effect must exist");
+  assert.deepEqual(loadEffect.arguments[1].elements.map((element) => element.getText()), [
+    "authUserId", "setAccountOnboardingError", "setIsAccountOnboardingOpen", "setPracticeLanguage", "setYourLanguage",
+  ]);
 });
 
 test("16. The render guard blocks isProtectedAccountPage content for signed-out, still-loading, and onboarding-required alike, and precedes every real per-page branch (profile/newWordStudy/reviewWords) in file order - so none of them can be reached without passing this check first", () => {

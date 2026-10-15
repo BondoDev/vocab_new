@@ -54,14 +54,13 @@ machine-enforced rule.
 
 ```
 home/
-  HomePage.tsx
-  FloatingWords.tsx
-  LanguageContinuePopup.tsx
+  NewHomePage.tsx
+  new-home-page.scss
 ```
 
-`FloatingWords.tsx`/`LanguageContinuePopup.tsx` stay beside `HomePage.tsx`
-because they have no consumers outside the homepage. General shape: one
-route entry plus one supporting file with the same ownership.
+`new-home-page.scss` stays beside `NewHomePage.tsx` because the homepage
+exclusively owns those styles. The retired homepage and its exclusive
+subcomponents have been removed.
 
 `explore/` is the same pattern with a hook instead of a component:
 `useExploreItems.ts` has no consumer besides `ExplorePage.tsx`, so it moved
@@ -82,8 +81,7 @@ presentational views, render variants, page-specific layouts,
 page-specific dialogs/modals, loaders/wrappers, and route-family-local
 config/lookup code all qualify.
 
-**Examples:** `FloatingWords.tsx`, `LanguageContinuePopup.tsx`,
-`RichVerbListSeoPage.tsx`, `VerbListSeoTableOnlyPage.tsx`,
+**Examples:** `RichVerbListSeoPage.tsx`, `VerbListSeoTableOnlyPage.tsx`,
 `LevelTestLanguageModal.tsx`, `WordPageLayout.tsx`, `WordSeoPageView.tsx`,
 `devSeoCefrPreviewData.ts`.
 

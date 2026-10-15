@@ -8,7 +8,7 @@
  *
  * Verifies (against src/entry-server.tsx `handleWordSsrPathname` /
  * `resolveWordSeoRequest`, and src/seo/metadata.ts `buildWordSeoMetadata`):
- *   - page 1 (no suffix) is indexable (no robots meta), self-canonical
+ *   - page 1 (no suffix) is "noindex, follow", self-canonical
  *   - page 2+ is "noindex, follow", self-canonical (NOT canonicalized to page 1)
  *   - hreflang alternates on every browse page point at the page-1 (base) URL
  *   - title gets " - Browse Page N" suffix; description gets a page-N prefix
@@ -121,8 +121,8 @@ async function main() {
       test("page 1 returns 200", () => assert.equal(response.status, 200));
       test("page 1 canonical is the base path", () =>
         assert.equal(extractCanonical(response.body), `${siteOrigin}${basePath}`));
-      test("page 1 has no robots meta tag (default indexable)", () =>
-        assert.equal(extractMetaRobots(response.body), null));
+      test("page 1 retains the individual-word noindex, follow policy", () =>
+        assert.equal(extractMetaRobots(response.body), "noindex, follow"));
       test("page 1 title has no 'Browse Page' suffix", () =>
         assert.ok(!/Browse Page/i.test(extractTagContent(response.body, "title") ?? "")));
     }

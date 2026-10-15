@@ -133,7 +133,7 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, word?.wordId, targetLanguage]);
 
-  const lists = state.status === "ready" ? state.lists : [];
+  const lists = useMemo(() => state.status === "ready" ? state.lists : [], [state]);
   const visibleLists = useMemo(() => filterListsBySearchQuery(lists, searchQuery), [lists, searchQuery]);
 
   // Optimistic add/remove toggle — the row's checkmark flips immediately,

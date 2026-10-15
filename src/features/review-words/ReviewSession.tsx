@@ -71,7 +71,6 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
     // Runs once per mount only — ReviewWordsPreparation mounts this
     // component fresh each time Begin Review is pressed, reusing the
     // already-prepared queue rather than rebuilding it.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Stops accumulation and detaches the visibility listener on unmount/

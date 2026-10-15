@@ -81,7 +81,7 @@ export function useExploreItems(
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
       ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
-  }, [englishExploreTopics, uiLanguage]);
+  }, [englishExploreTopics, uiLanguage, t, examPath]);
   const spanishExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("spanish", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("spanish", uiLanguage);
@@ -104,7 +104,7 @@ export function useExploreItems(
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
       ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
-  }, [spanishExploreTopics, uiLanguage]);
+  }, [spanishExploreTopics, uiLanguage, t, examPath]);
   const frenchExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("french", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("french", uiLanguage);
@@ -127,7 +127,7 @@ export function useExploreItems(
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
       ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
-  }, [frenchExploreTopics, uiLanguage]);
+  }, [frenchExploreTopics, uiLanguage, t, examPath]);
   const germanExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("german", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("german", uiLanguage);
@@ -150,7 +150,7 @@ export function useExploreItems(
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
       ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
-  }, [germanExploreTopics, uiLanguage]);
+  }, [germanExploreTopics, uiLanguage, t, examPath]);
   const italianExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("italian", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("italian", uiLanguage);
@@ -173,7 +173,7 @@ export function useExploreItems(
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
       ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
-  }, [italianExploreTopics, uiLanguage]);
+  }, [italianExploreTopics, uiLanguage, t, examPath]);
   const portugueseExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("portuguese", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("portuguese", uiLanguage);
@@ -196,7 +196,7 @@ export function useExploreItems(
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
       ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
-  }, [portugueseExploreTopics, uiLanguage]);
+  }, [portugueseExploreTopics, uiLanguage, t, examPath]);
   const russianExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("russian", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("russian", uiLanguage);
@@ -219,7 +219,7 @@ export function useExploreItems(
       ...(pastVerbFormsTopic ? [pastVerbFormsTopic] : []),
       ...(conjugatedVerbFormsTopic ? [conjugatedVerbFormsTopic] : []),
     ];
-  }, [russianExploreTopics, uiLanguage]);
+  }, [russianExploreTopics, uiLanguage, t, examPath]);
 
   return {
     en: englishExploreItems,

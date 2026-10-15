@@ -497,7 +497,7 @@ export function VocabularyPractice({
     };
   }, []);
 
-  const runNextStep = (wasExplicitSkip = false) => {
+  const runNextStep = useCallback((wasExplicitSkip = false) => {
     let result: "correct" | "incorrect" | "skipped";
     const wasTyped = exerciseStatus.hasTypedAnswer;
     const wasRevealed = exerciseStatus.usedShowWord;
@@ -667,7 +667,7 @@ export function VocabularyPractice({
 
       let resolvedNextIndex = nextIndex;
       let nextExercise = selectRandomExercise();
-      let nextWord = words[resolvedNextIndex];
+      const nextWord = words[resolvedNextIndex];
 
       if (isFourWordExercise(nextExercise)) {
         if (resolvedNextIndex + 4 > words.length) {
@@ -678,7 +678,6 @@ export function VocabularyPractice({
           const checkIndex = (resolvedNextIndex + i) % words.length;
           if (isWordEligibleForExercise(words[checkIndex], nextExercise)) {
             resolvedNextIndex = checkIndex;
-            nextWord = words[checkIndex];
             break;
           }
         }
@@ -735,9 +734,40 @@ export function VocabularyPractice({
     }
 
     moveToNextCollectionTyping();
-  };
+  }, [
+    clearPendingResumeIndex,
+    currentExerciseType,
+    currentIndex,
+    currentReinforcementWords,
+    currentWord,
+    cycleStage,
+    cycleWords,
+    exerciseStatus,
+    getNextCollectionIndex,
+    getNextLinearIndex,
+    getNonFourWordFallback,
+    getRandomRepeatDelay,
+    isCycleModeEnabled,
+    isFourWordExercise,
+    isWordEligibleForExercise,
+    onSessionComplete,
+    pickRandomExercise,
+    practiceLanguage,
+    reinforcementExerciseTypes,
+    selectRandomExercise,
+    selectTypingExerciseForWord,
+    words,
+  ]);
 
-  const handleNext = () => {
+  const isNextActionAvailable =
+    isFourWordExercise(currentExerciseType) ||
+    currentExerciseType === "brokenWord"
+      ? exerciseStatus.isCorrect
+      : exerciseStatus.isCorrect ||
+        exerciseStatus.usedShowWord ||
+        exerciseStatus.usedHintForBrokenWord;
+
+  const handleNext = useCallback(() => {
     if (isCardSwitching) return;
     // Moving to the next exercise is a genuine interaction — refreshes the
     // active-time idle deadline (see activeWordTimer.ts's own header).
@@ -757,7 +787,7 @@ export function VocabularyPractice({
       setIsCardSwitching(false);
       cardSwitchTimeoutRef.current = null;
     }, 180);
-  };
+  }, [isCardSwitching, isNextActionAvailable, runNextStep]);
 
   const handleSwitchListeningToConnectWords = () => {
     if (currentExerciseType !== "listening" || isCardSwitching) return;
@@ -771,14 +801,6 @@ export function VocabularyPractice({
     });
     setCurrentExerciseType("connectWords");
   };
-
-  const isNextActionAvailable =
-    isFourWordExercise(currentExerciseType) ||
-    currentExerciseType === "brokenWord"
-      ? exerciseStatus.isCorrect
-      : exerciseStatus.isCorrect ||
-        exerciseStatus.usedShowWord ||
-        exerciseStatus.usedHintForBrokenWord;
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -851,21 +873,21 @@ export function VocabularyPractice({
     return { levels, types, matrix };
   };
 
-  const formatWordTypeLabel = (typeId: string) =>
+  const formatWordTypeLabel = useCallback((typeId: string) =>
     typeId
       .split(/[_-]+/g)
       .map((part) =>
         part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
       )
-      .join(" ");
+      .join(" "), []);
 
-  const getWordTypeLabel = (typeId: string) => {
+  const getWordTypeLabel = useCallback((typeId: string) => {
     const translated = t(`wordTypes.${typeId}`);
     if (!translated || translated === `wordTypes.${typeId}`) {
       return formatWordTypeLabel(typeId);
     }
     return translated;
-  };
+  }, [formatWordTypeLabel, t]);
 
   const sessionWords = useMemo(() => {
     const wordsByConceptId = new Map(

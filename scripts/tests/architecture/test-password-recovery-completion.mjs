@@ -17,6 +17,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
@@ -217,15 +218,47 @@ test("14. AppContent calls useSupabaseAuthRedirect unconditionally (every route,
   );
 });
 
-test("15. The recovery dialog is rendered on every route AppContent can return, including headerless ones (practice/exam) - same fan-out as accountOnboardingDialog", () => {
-  const onboardingUsages = (appTsx.match(/\{accountOnboardingDialog\}/g) ?? []).length;
-  const recoveryUsages = (appTsx.match(/\{passwordRecoveryDialog\}/g) ?? []).length;
-  assert.ok(onboardingUsages >= 20, "sanity check: accountOnboardingDialog's own fan-out must still be wide");
-  assert.equal(
-    recoveryUsages,
-    onboardingUsages,
-    "passwordRecoveryDialog must be appended everywhere accountOnboardingDialog is, so headerless routes (practice/exam) render it too",
-  );
+function recoveryRouteCoverage(source) {
+  const parsed = ts.createSourceFile("App.tsx", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const app = parsed.statements.find((node) => ts.isFunctionDeclaration(node) && node.name?.text === "AppContent");
+  assert.ok(app, "AppContent must exist");
+  const branches = [];
+  function visit(node) {
+    if (ts.isFunctionLike(node) && node !== app) return;
+    if (ts.isReturnStatement(node)) {
+      let expression = node.expression;
+      while (expression && ts.isParenthesizedExpression(expression)) expression = expression.expression;
+      if (expression?.kind === ts.SyntaxKind.NullKeyword) {
+        assert.equal(node, app.body.statements.at(-1), "only the final unreachable fallback may return null");
+      } else {
+        assert.ok(expression && (ts.isJsxElement(expression) || ts.isJsxFragment(expression) || ts.isJsxSelfClosingElement(expression)), "route returns must be inspectable JSX");
+        let recoveryMounted = false;
+        function inspect(child) {
+          if (ts.isJsxExpression(child)) {
+            if (child.expression && ts.isIdentifier(child.expression) && child.expression.text === "passwordRecoveryDialog") recoveryMounted = true;
+            return;
+          }
+          ts.forEachChild(child, inspect);
+        }
+        inspect(expression);
+        branches.push({ line: parsed.getLineAndCharacterOfPosition(node.getStart(parsed)).line + 1, recoveryMounted });
+      }
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(app);
+  return branches;
+}
+
+test("15. Every JSX route return mounts recovery independently of onboarding or Header", () => {
+  const branches = recoveryRouteCoverage(appTsx);
+  assert.ok(branches.length >= 20, "route coverage must include the complete AppContent render tree");
+  assert.deepEqual(branches.filter((branch) => !branch.recoveryMounted), [], "a route return omits passwordRecoveryDialog");
+});
+
+test("15a. Route coverage catches a missing dialog even when comments mention it", () => {
+  const branches = recoveryRouteCoverage('function AppContent() { if (ready) return <main>{passwordRecoveryDialog}</main>; if (hidden) return <section>{enabled && passwordRecoveryDialog}</section>; /* {passwordRecoveryDialog} */ return <aside />; }');
+  assert.deepEqual(branches.map((branch) => branch.recoveryMounted), [true, false, false]);
 });
 
 test("16. Recovery-active state is in-memory React state only (useState), not persisted - so a page refresh can never reopen it independent of the (already-cleared) URL", () => {
@@ -234,45 +267,80 @@ test("16. Recovery-active state is in-memory React state only (useState), not pe
   assert.doesNotMatch(recoveryDialog, /localStorage/);
 });
 
-test("16b. AccountOnboardingDialog and PasswordRecoveryDialog can never both be interactively open: onboarding's `open` prop is gated by !isPasswordRecoveryActive, recovery stays the higher-priority modal", () => {
-  const onboardingBlockMatch = appTsx.match(
-    /const accountOnboardingDialog = authUserId \? \(([\s\S]*?)\n  \) : null;/,
-  );
-  assert.ok(onboardingBlockMatch, "accountOnboardingDialog definition must be found");
-  assert.match(
-    onboardingBlockMatch[1],
-    /open=\{isAccountOnboardingOpen && !isPasswordRecoveryActive\}/,
-    "AccountOnboardingDialog's open prop must be gated off isPasswordRecoveryActive",
-  );
-  // PasswordRecoveryDialog's own `open` prop must stay driven purely by
-  // isPasswordRecoveryActive - recovery must never be gated by onboarding
-  // state (recovery is the higher-priority state, not a peer).
-  const recoveryOpenMatch = appTsx.match(/<PasswordRecoveryDialog\s+open=\{([^}]*)\}/);
-  assert.ok(recoveryOpenMatch, "passwordRecoveryDialog's PasswordRecoveryDialog element must be found");
-  assert.equal(
-    recoveryOpenMatch[1].trim(),
-    "isPasswordRecoveryActive",
-    "PasswordRecoveryDialog's open prop must be exactly isPasswordRecoveryActive - not further conditioned on onboarding state",
-  );
+const appSyntax = ts.createSourceFile("App.tsx", appTsx, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+function findNodes(root, predicate) {
+  const matches = [];
+  function visit(node) {
+    if (predicate(node)) matches.push(node);
+    ts.forEachChild(node, visit);
+  }
+  visit(root);
+  return matches;
+}
+function variableInitializer(name) {
+  const matches = findNodes(appSyntax, (node) => ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name);
+  assert.equal(matches.length, 1, name + " must have one owner");
+  assert.ok(matches[0].initializer);
+  return matches[0].initializer;
+}
+function dialogOpenExpression(tagName) {
+  const tags = findNodes(appSyntax, (node) => (ts.isJsxSelfClosingElement(node) || ts.isJsxOpeningElement(node)) && node.tagName.getText(appSyntax) === tagName);
+  assert.equal(tags.length, 1, tagName + " must have one shared instance");
+  const attribute = tags[0].attributes.properties.find((node) => ts.isJsxAttribute(node) && node.name.text === "open");
+  assert.ok(attribute?.initializer && ts.isJsxExpression(attribute.initializer));
+  return attribute.initializer.expression;
+}
+function evaluateGuard(node, values) {
+  if (ts.isParenthesizedExpression(node)) return evaluateGuard(node.expression, values);
+  if (ts.isIdentifier(node)) {
+    assert.ok(Object.hasOwn(values, node.text), "unknown guard input: " + node.text);
+    return values[node.text];
+  }
+  if (ts.isPrefixUnaryExpression(node) && node.operator === ts.SyntaxKind.ExclamationToken) return !evaluateGuard(node.operand, values);
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken) return evaluateGuard(node.left, values) && evaluateGuard(node.right, values);
+  if (ts.isCallExpression(node) && node.expression.getText(appSyntax) === "Boolean" && node.arguments.length === 1) return Boolean(evaluateGuard(node.arguments[0], values));
+  assert.fail("unexpected operation in onboarding visibility guard: " + node.getText(appSyntax));
+}
+
+test("16b. Recovery has priority, while onboarding still requires a loaded incomplete protected account", () => {
+  const required = variableInitializer("isOnboardingRequiredForAuthedUser");
+  const onboardingOpen = dialogOpenExpression("AccountOnboardingDialog");
+  for (const authUserId of [null, "user"]) {
+    for (const isProfileLoaded of [false, true]) {
+      for (const isAccountOnboardingOpen of [false, true]) {
+        for (const isPasswordRecoveryActive of [false, true]) {
+          for (const isProtectedAccountPage of [false, true]) {
+            const values = { authUserId, isProfileLoaded, isAccountOnboardingOpen, isPasswordRecoveryActive, isProtectedAccountPage };
+            const expectedRequired = Boolean(authUserId) && isProfileLoaded && isAccountOnboardingOpen && !isPasswordRecoveryActive;
+            const actualRequired = evaluateGuard(required, values);
+            assert.equal(actualRequired, expectedRequired, JSON.stringify(values));
+            assert.equal(evaluateGuard(onboardingOpen, { ...values, isOnboardingRequiredForAuthedUser: actualRequired }), isProtectedAccountPage && expectedRequired, JSON.stringify(values));
+          }
+        }
+      }
+    }
+  }
+  assert.equal(dialogOpenExpression("PasswordRecoveryDialog").getText(appSyntax), "isPasswordRecoveryActive");
 });
 
-test("16c. The gate only affects rendering/visibility, never the underlying isAccountOnboardingOpen state or the profile load feeding it: App.tsx never calls setIsAccountOnboardingOpen(...) itself (only passes it through as onOpenChange), and useUserProfileLoad's own open-decision logic stays unaware of recovery", () => {
-  assert.doesNotMatch(
-    appTsx,
-    /setIsAccountOnboardingOpen\(/,
-    "App.tsx must never itself invoke setIsAccountOnboardingOpen - it may only pass the setter through (onOpenChange={setIsAccountOnboardingOpen}), so recovery can't clear/lose the flag",
-  );
+test("16c. Recovery preserves onboarding requirements; only Cancel registration may explicitly clear them", () => {
+  const cancel = variableInitializer("handleCancelAccountOnboarding");
+  const setterCalls = findNodes(appSyntax, (node) => ts.isCallExpression(node) && node.expression.getText(appSyntax) === "setIsAccountOnboardingOpen");
+  assert.equal(setterCalls.length, 1, "only the intentional cancellation handler may set onboarding state directly");
+  for (const call of setterCalls) {
+    assert.ok(call.pos >= cancel.pos && call.end <= cancel.end, "a non-cancellation handler mutates onboarding state");
+    assert.equal(call.arguments.length, 1);
+    assert.equal(call.arguments[0].kind, ts.SyntaxKind.FalseKeyword);
+  }
+  assert.match(cancel.getText(appSyntax), /handleAuthSessionChange\(null\)/);
+  assert.match(cancel.getText(appSyntax), /await signOutSupabase\(currentSession\)/);
+  assert.match(appTsx, /onCancelRegistration=\{\(\) => void handleCancelAccountOnboarding\(\)\}/);
+  assert.doesNotMatch(redirectHook, /setIsAccountOnboardingOpen/);
+  assert.doesNotMatch(recoveryDialog, /setIsAccountOnboardingOpen/);
   const useUserProfileLoad = read("src/app/hooks/useUserProfileLoad.ts");
-  assert.doesNotMatch(
-    useUserProfileLoad,
-    /isPasswordRecoveryActive|PasswordRecovery/,
-    "useUserProfileLoad must stay unaware of recovery mode - profile loading and onboarding-completeness rules are untouched, only the rendered dialog is gated",
-  );
-  assert.match(
-    useUserProfileLoad,
-    /setIsAccountOnboardingOpen\(\s*shouldOpenAccountOnboarding\(/,
-    "onboarding-completeness rules (shouldOpenAccountOnboarding) must still be the sole decider of isAccountOnboardingOpen - unchanged by this fix",
-  );
+  assert.doesNotMatch(useUserProfileLoad, /isPasswordRecoveryActive|PasswordRecovery/);
+  assert.match(useUserProfileLoad, /setIsAccountOnboardingOpen\(\s*shouldOpenAccountOnboarding\(/);
+  assert.match(appTsx, /onSuccess=\{\(\) => \{\s*exitPasswordRecovery\(\);\s*navigate\(ROUTES\.profile\);\s*\}\}/);
 });
 
 console.log("\n--- Dialog: validation, submission, and lifecycle ---\n");

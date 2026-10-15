@@ -33,6 +33,7 @@ peer or transitive dependency before removing it.
 | Package | Section | Declared version | Evidence of use | Classification |
 |---|---|---|---|---|
 | @cloudflare/workers-types | devDependencies | ^5.20260724.1 | ambient `types` entry in `workers/word-ssr/tsconfig.json`; Worker runtime/platform type declarations referenced in `workers/word-ssr/src/global.d.ts` | actively used (types) |
+| @eslint/js | devDependencies | 10.0.1 | recommended correctness rules in `eslint.config.mjs` | actively used (lint config) |
 | @radix-ui/react-alert-dialog | dependencies | 1.1.6 | `src/app/components/ui/alert-dialog.tsx` | actively used |
 | @radix-ui/react-dialog | dependencies | 1.1.6 | `src/app/components/ui/dialog.tsx` | actively used |
 | @radix-ui/react-dropdown-menu | dependencies | 2.1.6 | `src/app/components/ui/dropdown-menu.tsx` | actively used |
@@ -47,27 +48,41 @@ peer or transitive dependency before removing it.
 | @vitejs/plugin-react | devDependencies | 4.7.0 | `vite.config.ts` plugin | actively used (config) |
 | class-variance-authority | dependencies | 0.7.1 | `ui/button.tsx`, `ui/select.tsx`, `ui/dropdown-menu.tsx`, `ui/utils.ts` and others | actively used |
 | clsx | dependencies | 2.1.1 | `ui/utils.ts` (`cn` helper) | actively used |
-| date-fns | dependencies | 3.6.0 | `AccountOnboardingDialog.tsx` and others | actively used |
+| eslint | devDependencies | 10.12.0 | `npm run lint` invokes its CLI | actively used (lint) |
+| eslint-plugin-react-hooks | devDependencies | 7.1.1 | rules-of-hooks and exhaustive-deps in `eslint.config.mjs` | actively used (lint config) |
 | fast-xml-parser | dependencies | ^5.9.3 | `scripts/operations/google-index.mjs` (operational script, Search Console indexing) | actively used (script) |
 | flag-icons | dependencies | 7.2.1 | `UILanguageSwitcher.tsx`, `LanguageSelector.tsx` and others | actively used |
 | googleapis | dependencies | ^173.0.0 | `scripts/operations/google-index.mjs` | actively used (script) |
+| globals | devDependencies | 17.13.0 | browser, Node, Worker, and Deno environments in `eslint.config.mjs` | actively used (lint config) |
 | lucide-react | dependencies | 0.487.0 | icons throughout `src/app/components/` | actively used |
 | motion | dependencies | 12.23.24 | animation usage throughout `src/app/components/` | actively used |
 | react | dependencies + peerDependencies | 18.3.1 | core framework | actively used |
-| react-dnd | dependencies | 16.0.1 | drag-and-drop exercises | actively used |
-| react-dnd-html5-backend | dependencies | 16.0.1 | paired with `react-dnd` | actively used |
 | react-dom | dependencies + peerDependencies | 18.3.1 | core framework | actively used |
-| react-responsive-masonry | dependencies | 2.7.1 | layout usage in `src/app/components/` | actively used |
 | react-router-dom | dependencies | 6.26.2 | routing throughout `src/app/` | actively used |
 | sass | devDependencies | ^1.84.0 | `.scss` module compilation (Vite) | actively used (build) |
 | tailwind-merge | dependencies | 3.2.0 | `ui/utils.ts` (`cn` helper) | actively used |
 | tailwindcss | devDependencies | 4.1.12 | `vite.config.ts` plugin, `src/styles/tailwind.css` | actively used (config+CSS) |
 | tw-animate-css | dependencies | 1.3.8 | `src/styles/tailwind.css` `@import` | actively used (CSS) |
 | typescript | devDependencies | 5.6.3 | `npx tsc --noEmit`, Vite build | actively used (build) |
+| typescript-eslint | devDependencies | 8.71.2 | TypeScript parser, core-rule compatibility overrides, and unused-declaration checks in `eslint.config.mjs` | actively used (lint config) |
 | vite | devDependencies | 6.3.5 | build tool, `npm run build`/`dev` | actively used (build) |
 
-**33 direct entries** (23 `dependencies`, 10 `devDependencies`; the
+**34 direct entries** (19 `dependencies`, 15 `devDependencies`; the
 `peerDependencies` block only restates `react`/`react-dom`, already listed).
+
+## Retired-homepage cleanup removals
+
+The following packages have no source, dynamic-import, CSS, script, or
+configuration consumers. `npm explain` confirms each was required only by
+the root package, with no retained package depending on it. The dependency
+ownership guard prevents all four from being reintroduced.
+
+| Package | Classification |
+|---|---|
+| date-fns | removed: no current date utility consumer |
+| react-dnd | removed: no current drag-and-drop consumer |
+| react-dnd-html5-backend | removed: no current backend initialization |
+| react-responsive-masonry | removed: no current masonry layout consumer |
 
 ## Previously removed (2026-07-15) — must not silently reappear
 

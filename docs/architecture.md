@@ -93,7 +93,7 @@ flowchart TD
 | Word Worker | `workers/word-ssr/src/` | `worker-dist-full/`, `assets-full/`, `data/full-corpus/` (all gitignored) | `test:word-worker:production-safety` |
 | Vocabulary data | `src/data/vocabulary/`, `src/data/seo/vocabularyLevels/` (incl. `level-browse-preview/`, `seo-cefr-content.json`), `src/data/seo/levelTests/` | `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/shared/common100VerbLookup/` | [`docs/generated-data.md`](generated-data.md), `test:generated-data-ownership` |
 | UI components | `src/app/components/ui/` (9 retained files: 8 UI primitives/wrappers plus the shared `cn()` class-name utility, `utils.ts`) | none | [`docs/ui-component-ownership.md`](ui-component-ownership.md), `test:ui-component-ownership` |
-| Dependencies | `package.json` (33 direct entries: 23 `dependencies`, 10 `devDependencies`) | none | [`docs/dependency-ownership.md`](dependency-ownership.md), `test:dependency-ownership` |
+| Dependencies | `package.json` (29 direct entries: 19 `dependencies`, 10 `devDependencies`) | none | [`docs/dependency-ownership.md`](dependency-ownership.md), `test:dependency-ownership` |
 | AI-assistant guidance | `guidelines/Guidelines.md` (Markdown-only) | none | `test:guidelines-ownership` |
 | Brand assets | `src/assets/brand/favicon-master.png` (not shipped) | `public/favicon.png`, `favicon.ico`, `apple-touch-icon.png`, `og-image.png` | [`docs/brand-asset-ownership.md`](brand-asset-ownership.md), `test:brand-asset-ownership` |
 | Operational scripts | `scripts/operations/` | `scripts/operations/state/indexed-progress.json` (gitignored) | [`docs/google-indexing-operations.md`](google-indexing-operations.md), `test:operational-security` |
@@ -145,11 +145,14 @@ scroll-to-top control (`Header.tsx`, `UILanguageSwitcher.tsx`,
 `ScrollToTopButton.tsx`) — reusable shell UI consumed across routes, as
 distinct from pages, feature-owned components, SEO page renderers, dialogs,
 and the `ui/` primitive library. `src/app/pages/home/` owns the homepage
-route and homepage-specific components — `HomePage.tsx` plus its two
-homepage-exclusive subcomponents, `FloatingWords.tsx` (decorative animation)
-and `LanguageContinuePopup.tsx` (the "select languages" nudge). Components
-still shared across pages (`LanguageSelector.tsx`, used by the homepage,
-account onboarding, and the level-test language modal) remain outside this
+route and its stylesheet, `NewHomePage.tsx` and `new-home-page.scss`.
+The retired homepage, its decorative animation and language popup, and
+the unused language account-choice gate have been removed. The homepage
+starts `/custom-practice`; the retired `/languages` and
+`/languages/filters/exercises` URLs retain their compatibility handling.
+Components still shared across pages (`LanguageSelector.tsx`, used by
+Custom Practice, account onboarding, and the level-test language modal)
+remain outside this
 folder in `src/app/components/`. `src/app/components/dialogs/` owns shared
 application/account dialogs — `AccountOnboardingDialog.tsx` and
 `AccountLanguageConfirmDialog.tsx`, both rendered from the app shell across
@@ -231,6 +234,33 @@ ownership) and [`docs/import-boundaries.md`](import-boundaries.md) (the
 `import.meta.glob` boundaries that make several of these directories
 path-sensitive).
 
+## Profile interaction contracts
+
+The simplified My Lists detail page provides membership-based word/translation
+search, local sorting, and pagination. It does not expose status filters or
+status badges. The Add Words picker still exposes exactly All, Not studied,
+Learning, Known, and Mastered, defaults/resets to All, and renders textual status
+labels. Membership and practice eligibility never require a progress row.
+
+Practice entry is exclusively **My Lists → View List → Practice → Setup Dialog
+→ existing Practice route/engine**. List cards retain View List, Rename, and
+Delete, without a Practice shortcut. Empty lists/selections cannot launch
+practice; setup reads current memberships when Start is clicked. Back returns
+to the originating list and clears the restricted session. Finish first shows
+the existing completion state; exiting that state uses the same return path.
+No new route or practice engine is involved.
+
+Settings nickname handlers are isolated from the independent email-change
+flow. Email remains Supabase Auth-owned, with password-account eligibility,
+shared session adoption, and pending confirmation under
+`supabase/config.toml`'s `double_confirm_changes = true` configuration.
+
+These current contracts supersede the historical phase-specific expectations
+of detail status controls, card Practice callbacks, or read-only Settings email.
+The five focused nickname/My Lists/practice regression scripts combine existing
+source guards with AST-extracted callbacks and data pipelines; their browser
+coverage limitations are documented in [`scripts/README.md`](../scripts/README.md).
+
 ## Routing
 
 `src/app/App.tsx` defines a small `ROUTES` map (`language`, `levelCategory`,
@@ -306,7 +336,7 @@ discrepancy:
   policy gate defaults to `false` (2026-07-24 sitemap-policy reconciliation),
   to focus sitemap discovery on the core/CEFR/verb-list families. This is a
   sitemap-*discovery* decision only — word pages remain fully live, routable,
-  and indexable under their own metadata policy
+  and crawlable, but individual word pages are non-indexable under their metadata policy
   (`src/seo/wordPages/wordMetadata.ts`); they simply aren't submitted via XML
   sitemap. Being a source-level default rather than a one-off file deletion,
   the exclusion holds across `npm run sitemap`, `npm run build`, CI, and
@@ -427,7 +457,7 @@ deployment described above.
 
 ## Architecture guards
 
-`npm run test:architecture-guards` chains **26 guard groups**, each a
+`npm run test:architecture-guards` chains **33 guard groups**, each a
 deterministic, network-free Node script asserting one repository contract:
 
 | Guard | Script | Protects |
@@ -455,6 +485,9 @@ deterministic, network-free Node script asserting one repository contract:
 | `test:vocabulary-profile-data-flow` | `scripts/tests/architecture/test-vocabulary-profile-data-flow.mjs` | the Vocabulary dashboard section reuses the Learning dashboard's single App.tsx profile load instead of fetching its own copy on every mount, and (Phase 1) resolves the shared active-language `user_word_progress` rows passed in from `useProfileSharedProgressData` instead of fetching its own copy via `readUserWordProgress` |
 | `test:supabase-error-handling` | `scripts/tests/architecture/test-supabase-error-handling.mjs` | Study New Words/Review Words/favorite/profile-save all classify Supabase/PostgREST failures through the shared `src/lib/supabaseError.ts` module instead of duplicated message-regex checks, and never render raw Supabase error text |
 | `test:password-recovery-completion` | `scripts/tests/architecture/test-password-recovery-completion.mjs` | `handleSupabaseAuthRedirect` distinguishes a password-recovery redirect from an ordinary login/OAuth one and cleans up its URL params, `updateSupabaseAuthUserPassword` updates only the access-token-authenticated user (never a caller-supplied ID), AppContent is the sole redirect-handling owner (Header no longer runs its own copy), and the Set-new-password dialog validates, guards duplicate submission, and preserves recovery/session state on failure |
+| `test:cross-tab-session-sync` | `scripts/tests/architecture/test-cross-tab-session-sync.mjs` | authentication session changes remain synchronized across tabs |
+| `test:my-lists-shared-ownership` | `scripts/tests/architecture/test-my-lists-shared-ownership.mjs` | My Lists resources have a single shared profile owner |
+| `test:my-lists-in-flight-result-application` | `scripts/tests/architecture/test-my-lists-in-flight-result-application.mjs` | stale or cross-context My Lists responses cannot replace current shared data |
 | `test:timezone-profile-boundary` | `scripts/tests/architecture/test-timezone-profile-boundary.mjs` | timezone writes stay isolated to `initialize_user_timezone`, neither narrow profile RPC (`complete_user_profile_onboarding`, `update_user_profile_languages`) can modify timezone, no Settings UI is introduced yet, and authoritative learning reads/writes use the server-derived learning date |
 | `test:daily-goal-narrow-write-boundary` | `scripts/tests/architecture/test-daily-goal-narrow-write-boundary.mjs` | Streak Phase 1: `DailyGoalSelector` saves only through the narrow `update_daily_goal` RPC (no other file calls it), onboarding/language-confirm use their own narrow RPCs (Profile Phase 1) rather than the removed broad upsert, the streak read path selects each row's own `daily_goal` snapshot, the snapshot migration never bulk-rewrites existing rows, and (Streak Phase 1 corrective fix) the pure streak model resolves each row's own goal or a fixed `LEGACY_DAILY_GOAL` constant — never the live current profile goal, which `computeDailyStreakSummary` no longer even accepts as a parameter — and `DailyStreakCard` never receives or forwards a `dailyGoal` prop |
 | `test:user-profiles-narrow-write-boundary` | `scripts/tests/architecture/test-user-profiles-narrow-write-boundary.mjs` | Profile Phase 1: no frontend file constructs a direct `user_profiles` table mutation or references the removed `writeSupabaseUserProfile`, onboarding calls only `completeUserProfileOnboarding` and language-confirm calls only `updateUserProfileLanguages`, neither RPC's request body can include `daily_goal`/timezone fields, and both RPC response parsers reject malformed rows |

@@ -203,7 +203,7 @@ export function HalfWrittenExercise({
     }
 
     setIsCorrect(correct);
-  }, [userInput, currentWord, currentPrompt, visibleLetterCount]);
+  }, [userInput, currentWord, currentPrompt, normalizedWord, visibleLetterCount]);
 
   useEffect(() => {
     onStatusChange({
@@ -368,7 +368,7 @@ export function HalfWrittenExercise({
                             : null;
 
                         let displayChar;
-                        let charStyle = "text-foreground";
+                        let charStyle: string;
 
                         if (isVisiblePortion) {
                           displayChar = letter;

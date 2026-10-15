@@ -27,6 +27,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -355,17 +356,49 @@ test("24b. Study Activity no longer charts New Words/Reviews quantities — it c
   assert.match(studyActivityCard, /"userProfile\.learningSection\.modeCards\.modes\.customPractice\.title"/);
 });
 
-test("25. Expanding/collapsing Study Activity or switching its range never triggers a fetch — both are local UI state only", () => {
-  assert.match(studyActivityCard, /const \[isExpanded, setIsExpanded\] = useState/);
+test("25. Activity range controls only change local state and reuse shared data", () => {
   assert.match(studyActivityCard, /const \[range, setRange\] = useState/);
   // The card imports DashboardSupportingDataStatus as a *type only* (for
   // its `status` prop) but never calls the hook itself, and has no
   // session/supabase import anywhere — computeStudyActivityBuckets (a
-  // pure function) is the only thing driven by isExpanded/range.
+  // pure function) is the only data transformation driven by range.
   assert.match(studyActivityCard, /import type \{ DashboardSupportingDataStatus \} from "\.\/useDashboardSupportingData"/);
   assert.doesNotMatch(studyActivityCard, /useDashboardSupportingData\(/);
   assert.doesNotMatch(studyActivityCard, /getStoredSupabaseSession|supabaseRequest/);
   assert.match(studyActivityCard, /computeStudyActivityBuckets\(/);
+  const parsed = ts.createSourceFile("StudyActivityCard.tsx", studyActivityCard, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const rangeArrays = [];
+  const handlers = [];
+  const effects = [];
+  function visit(node) {
+    if (ts.isVariableDeclaration(node) && node.name.getText(parsed) === "EXPANDED_RANGES") rangeArrays.push(node.initializer);
+    if (ts.isCallExpression(node) && node.expression.getText(parsed) === "useEffect") effects.push(node);
+    if (ts.isJsxAttribute(node) && node.name.text === "onClick" && node.initializer && ts.isJsxExpression(node.initializer)) {
+      const handler = node.initializer.expression;
+      if (handler && ts.isArrowFunction(handler) && handler.body.getText(parsed).includes("setRange")) handlers.push(handler);
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(parsed);
+  assert.equal(rangeArrays.length, 1);
+  assert.ok(ts.isArrayLiteralExpression(rangeArrays[0]));
+  assert.deepEqual(rangeArrays[0].elements.map((element) => element.text), ["7d", "30d", "90d", "all"]);
+  assert.equal(handlers.length, 1, "one mapped handler must serve every range control");
+  assert.ok(ts.isCallExpression(handlers[0].body), "range clicks must only set local state");
+  assert.equal(handlers[0].body.expression.getText(parsed), "setRange");
+  assert.deepEqual(handlers[0].body.arguments.map((argument) => argument.getText(parsed)), ["rangeOption"]);
+  assert.match(studyActivityCard, /useState<StudyActivityRange>\("7d"\)/);
+  assert.match(studyActivityCard, /EXPANDED_RANGES\.map\(\(rangeOption\) =>/);
+  assert.match(studyActivityCard, /aria-pressed=\{range === rangeOption\}/);
+  assert.match(studyActivityCard, /computeStudyActivityBuckets\(activityStats, effectiveTodayISO, range\)/);
+  assert.equal(effects.length, 1, "the card must not add a range-driven fetch effect");
+  const effect = effects[0];
+  assert.equal(effect.arguments[1].getText(parsed), "[range]");
+  assert.ok(ts.isArrowFunction(effect.arguments[0]) && ts.isBlock(effect.arguments[0].body));
+  const statements = effect.arguments[0].body.statements;
+  assert.equal(statements.length, 1, "range changes only clear the local tooltip");
+  assert.equal(statements[0].getText(parsed), "setActiveIndex(null);");
+  assert.doesNotMatch(studyActivityCard, /\bfetch\s*\(/);
 });
 
 console.log("\n=== No new Supabase write introduced (Phase 3 is read-only) ===\n");

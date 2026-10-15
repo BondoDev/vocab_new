@@ -259,7 +259,7 @@ const slugOnlyWordPageData = wordPageData.buildResolvedWordPageData({
 assert.equal(slugOnlyWordPageData.wordEntry, null);
 
 // Word pages are intentionally excluded from XML sitemap discovery (they
-// remain live, routable, and indexable — see src/seo/wordPages/wordMetadata.ts
+// remain live, routable, and crawlable but non-indexable — see src/seo/wordPages/wordMetadata.ts
 // and scripts/generation/generate-sitemap.mjs's INCLUDE_WORD_SITEMAPS gate),
 // so there is no generated sitemap-words-*.xml to spot-check here. The
 // canonical double-hyphen/legacy-format/slug-only invariants this loop used

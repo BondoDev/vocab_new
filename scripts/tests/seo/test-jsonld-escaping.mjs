@@ -942,8 +942,8 @@ if (distExists) {
         assert.ok(wordHtml.includes("hreflang"));
       });
 
-      test("Prerendered word page is indexable (no noindex)", () => {
-        assert.ok(!wordHtml.includes("noindex"));
+      test("Prerendered word page retains noindex, follow", () => {
+        assert.match(wordHtml, /<meta\b[^>]*name=["']robots["'][^>]*content=["']noindex, follow["']/i);
       });
     } else {
       console.log(

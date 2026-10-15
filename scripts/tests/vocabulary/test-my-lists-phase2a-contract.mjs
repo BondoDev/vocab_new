@@ -3,13 +3,15 @@
 // vocabularyLists.ts). Transitively imports src/lib/supabaseAuth.ts (reads
 // import.meta.env, a Vite-only global) so — matching
 // test-my-lists-contract.mjs's own precedent — this is a precise
-// source-text guard rather than a behavioral/DOM one.
+// mixed source/AST guard with executable extracted sorting callbacks, not a DOM test.
 //
 // Run: node scripts/tests/vocabulary/test-my-lists-phase2a-contract.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { evaluateInitializer, evaluate, onlyJsxElement, jsxProp, effectCalls, nodesMatching, ts } from "../../lib/component-contract.mjs";
+import { loadListHelper } from "../../lib/my-lists-contract.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,6 +35,7 @@ function test(name, fn) {
 const sectionSource = fs.readFileSync(path.join(MY_LISTS_DIR, "MyListsSection.tsx"), "utf8");
 const cardSource = fs.readFileSync(path.join(MY_LISTS_DIR, "ListCard.tsx"), "utf8");
 const detailSource = fs.readFileSync(path.join(MY_LISTS_DIR, "ListDetailView.tsx"), "utf8");
+const sortSource = fs.readFileSync(path.join(MY_LISTS_DIR, "SortDropdown.tsx"), "utf8");
 const renameDialogSource = fs.readFileSync(path.join(MY_LISTS_DIR, "RenameListDialog.tsx"), "utf8");
 const deleteDialogSource = fs.readFileSync(path.join(MY_LISTS_DIR, "DeleteListDialog.tsx"), "utf8");
 const libSource = fs.readFileSync(path.join(ROOT_DIR, "src", "lib", "vocabularyLists.ts"), "utf8");
@@ -67,11 +70,53 @@ test("21. A search input is wired to local state and filters via filterListsBySe
 });
 
 test("22. A sort control is wired to local state and sorts via sortLists, offering all three required modes", () => {
-  assert.match(sectionSource, /const \[sortMode, setSortMode\] = useState<ListSortMode>\("recentlyUpdated"\)/);
-  assert.match(sectionSource, /sortLists\(filterListsBySearchQuery\(lists, searchQuery\), sortMode\)/);
-  assert.match(sectionSource, /<option value="recentlyUpdated">/);
-  assert.match(sectionSource, /<option value="nameAsc">/);
-  assert.match(sectionSource, /<option value="nameDesc">/);
+  const useMemo = (callback) => callback();
+  const options = evaluateInitializer(sectionSource, "sortOptions", { useMemo, t: (key) => key });
+  assert.deepEqual(options.map((option) => option.value), ["recentlyUpdated", "nameAsc", "nameDesc"]);
+  assert.ok(options.every((option) => option.label.length > 0));
+  let sortMode = evaluateInitializer(sectionSource, "sortMode", { useState: (value) => value });
+  assert.equal(sortMode, "recentlyUpdated");
+  const dropdown = onlyJsxElement(sectionSource, "SortDropdown");
+  assert.equal(evaluate(jsxProp(dropdown, "options"), { sortOptions: options }), options);
+  const radioGroup = onlyJsxElement(sortSource, "DropdownMenuRadioGroup");
+  const lists = [
+    { name: "Zebra", updatedAt: "2026-08-10" },
+    { name: "Apple", updatedAt: "2026-08-09" },
+    { name: "Middle", updatedAt: "2026-08-12" },
+  ];
+  const expectedOrders = {
+    recentlyUpdated: ["Middle", "Zebra", "Apple"],
+    nameAsc: ["Apple", "Middle", "Zebra"],
+    nameDesc: ["Zebra", "Middle", "Apple"],
+  };
+  for (const option of options) {
+    const onChange = evaluate(jsxProp(dropdown, "onChange"), { setSortMode: (value) => { sortMode = value; } });
+    evaluate(jsxProp(radioGroup, "onValueChange"), { onChange })(option.value);
+    assert.equal(sortMode, option.value);
+    const value = evaluate(jsxProp(dropdown, "value"), { sortMode });
+    assert.equal(evaluate(jsxProp(radioGroup, "value"), { value }), sortMode);
+    assert.equal(evaluateInitializer(sortSource, "selectedOption", { value, options }).label, option.label);
+    const visibleLists = evaluateInitializer(sectionSource, "visibleLists", {
+      useMemo, lists, searchQuery: "", sortMode,
+      filterListsBySearchQuery: loadListHelper("listSearchSort.ts", "filterListsBySearchQuery"),
+      sortLists: loadListHelper("listSearchSort.ts", "sortLists"),
+      fetch() { assert.fail("sorting must not fetch data"); },
+    });
+    assert.deepEqual(visibleLists.map((list) => list.name), expectedOrders[option.value]);
+  }
+  assert.deepEqual(lists.map((list) => list.name), ["Zebra", "Apple", "Middle"]);
+});
+
+test("SortDropdown uses the shared accessible radio menu with a labeled button and option values", () => {
+  const dropdown = onlyJsxElement(sectionSource, "SortDropdown");
+  assert.equal(evaluate(jsxProp(dropdown, "ariaLabel"), { t: (key) => key }), "userProfile.myListsSection.sort.ariaLabel");
+  const button = onlyJsxElement(sortSource, "button");
+  assert.equal(evaluate(jsxProp(button, "type")), "button");
+  assert.equal(evaluate(jsxProp(button, "aria-label"), { ariaLabel: "Sort lists" }), "Sort lists");
+  assert.ok(onlyJsxElement(sortSource, "DropdownMenuTrigger").attributes.properties.some((property) =>
+    property.name?.getText() === "asChild" && !property.initializer));
+  assert.equal(evaluate(jsxProp(onlyJsxElement(sortSource, "DropdownMenuRadioItem"), "value"), { option: { value: "nameAsc" } }), "nameAsc");
+  assert.match(sortSource, /\{option\.label\}/);
 });
 
 test("Search/sort operate on already-loaded lists only — no new Supabase call is made when typing/sorting", () => {
@@ -80,6 +125,13 @@ test("Search/sort operate on already-loaded lists only — no new Supabase call 
   assert.ok(toolbarStart > -1 && cardGridStart > toolbarStart, "toolbar JSX must exist before the card grid");
   const toolbarBlock = sectionSource.slice(toolbarStart, cardGridStart);
   assert.doesNotMatch(toolbarBlock, /readUserVocabularyLists|supabase/i);
+  for (const effect of effectCalls(sectionSource)) {
+    const dependencies = effect.arguments[1];
+    assert.ok(dependencies, "effects must have explicit dependencies");
+    assert.equal(nodesMatching(dependencies, (node) => ts.isIdentifier(node) &&
+      ["searchQuery", "sortMode", "visibleLists"].includes(node.text)).length, 0,
+    "local sorting/search must not retrigger data effects");
+  }
 });
 
 console.log("\n=== 24. List detail empty state ===\n");

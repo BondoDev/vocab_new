@@ -100,7 +100,6 @@ export function NewWordStudySession({
     // Runs once per mount only — NewWordStudyPreparation mounts this
     // component fresh each time the user clicks Begin Session, so a single
     // BEGIN dispatch on mount is the session's entire startup.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Stops the timer's active-time accumulation and detaches its visibility

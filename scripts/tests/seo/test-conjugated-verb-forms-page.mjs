@@ -1,12 +1,8 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { loadConjugatedVerbFormsRegistry } from "../../lib/load-conjugated-verb-forms-registry.mjs";
 import { compileTsToCommonJs, readJson, ROOT_DIR } from "../../lib/compileTs.mjs";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const PAGE_SOURCE = fs.readFileSync(
   path.join(

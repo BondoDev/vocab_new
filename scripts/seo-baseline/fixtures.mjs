@@ -122,6 +122,7 @@ function findSimpleAsciiEntry(vocabulary, wordToSlug) {
 function findDiacriticEntry(vocabulary, wordToSlug) {
   return vocabulary.find((entry) => {
     const slug = wordToSlug(entry.word_lemma);
+    // eslint-disable-next-line no-control-regex -- The negated ASCII range intentionally selects accent-preserving Unicode slugs.
     return /[^\x00-\x7f]/.test(slug);
   });
 }

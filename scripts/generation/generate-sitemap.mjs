@@ -21,8 +21,8 @@ const WORD_SITEMAP_ALL_LEVELS = WORD_SITEMAP_LEVEL === "ALL";
 const WORD_SITEMAP_UI_LANG = (process.env.WORD_SITEMAP_UI_LANG || "ALL").trim().toLowerCase();
 const SITEMAP_CHUNK_SIZE = Number.parseInt(process.env.SITEMAP_CHUNK_SIZE || "50000", 10);
 
-// Word SEO pages stay live, routable, and indexable under their own metadata
-// policy (src/seo/wordPages/wordMetadata.ts) — this flag is an XML-sitemap
+// Individual word pages stay live and routable, with noindex, follow set by
+// src/seo/wordPages/wordMetadata.ts — this flag is an XML-sitemap
 // discovery decision only. Deleting generated sitemap-words-*.xml alone is
 // not enough: prebuild regenerates public/sitemaps/ from source on every
 // build, so exclusion has to live here.
@@ -57,7 +57,6 @@ const UI_LANGUAGE_NAMES = {
 };
 
 const WORD_SITEMAP_PAIR_LIMITS = {};
-const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "portuguese", "russian"];
 
 async function collectWordRoutes(wordRouteManifest) {
   const { WORD_SITEMAP_DEFINITIONS, buildCanonicalWordPathFromSlug, buildWordRouteLookupKey, wordToSlug } =

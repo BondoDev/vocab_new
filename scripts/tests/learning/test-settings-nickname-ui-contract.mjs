@@ -1,9 +1,7 @@
 // Contract guard for Settings' inline nickname edit row (SettingsSection.tsx)
-// — a source-text guard, like test-daily-goal-selector-contract.mjs/
-// test-settings-security-boundary.mjs: SettingsSection.tsx is a React
-// component and this repo has no component renderer in its test suite, so
-// its behavioral shape is verified from source text instead of by mounting
-// it. normalizeNicknameInput's own logic is covered independently and more
+// — source/AST guards plus executed isolated nickname handlers:
+// SettingsSection.tsx is not mounted because this repository has no
+// component renderer. normalizeNicknameInput's own logic is covered independently and more
 // thoroughly by test-settings-nickname.mjs.
 //
 // Run: node scripts/tests/learning/test-settings-nickname-ui-contract.mjs
@@ -11,6 +9,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { evaluateInitializer, initializer, nodesMatching, ts } from "../../lib/component-contract.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
@@ -39,7 +38,17 @@ let passed = 0;
 let failed = 0;
 function test(name, fn) {
   try {
-    fn();
+    const result = fn();
+    if (result instanceof Promise) {
+      return result.then(() => {
+        console.log(`  ✓  ${name}`);
+        passed++;
+      }, (err) => {
+        console.error(`  ✗  ${name}`);
+        console.error(`       ${err.message}`);
+        failed++;
+      });
+    }
     console.log(`  ✓  ${name}`);
     passed++;
   } catch (err) {
@@ -165,13 +174,59 @@ test("16. No automatic retry loop exists around the nickname save (a single .cat
   assert.doesNotMatch(saveFnMatch[0], /retry/i);
 });
 
-console.log("\n=== Email stays untouched; no page reload is used anywhere in this flow ===\n");
+console.log("\n=== Nickname handlers leave the independent email-change flow untouched ===\n");
 
-test("17. The Email row is still a plain read-only value — no edit affordance, no onChange/input, no email-change RPC reference anywhere in this file", () => {
-  const emailRowMatch = source.match(/<span className="settings-row__label">\{t\("userProfile\.settingsSection\.account\.email"\)\}<\/span>\s*\n\s*<span className="settings-row__value">\{email \|\| "—"\}<\/span>/);
-  assert.ok(emailRowMatch, "the Email row must remain a plain label/value pair");
-  assert.doesNotMatch(source, /change.?email/i);
-  assert.doesNotMatch(source, /update_user_email/i);
+await test("17. Starting, cancelling, and saving a nickname never mutate the independent confirmed/pending email state", async () => {
+  const handlers = ["handleStartEditNickname", "handleCancelEditNickname", "handleSaveNickname"];
+  for (const name of handlers) {
+    const emailReferences = nodesMatching(initializer(source, name), (node) =>
+      ts.isIdentifier(node) && /email|adoptSupabaseSession|updateSupabaseAuthUser/i.test(node.text));
+    assert.equal(emailReferences.length, 0, `${name} must not access or mutate email/session state`);
+  }
+  for (const outcome of ["success", "failure"]) {
+    const user = Object.freeze({ email: "confirmed@example.test", new_email: "pending@example.test" });
+    const authSession = Object.freeze({ user });
+    const calls = [];
+    const pending = [];
+    const bindings = {
+      authSession, authUserId: "user", userProfile: { nickname: "Before" },
+      canSaveNickname: true, nicknameValidation: { ok: true, value: "After" }, isSavingNickname: false,
+      setIsEditingNickname: (value) => calls.push(["editing", value]),
+      setNicknameDraft: (value) => calls.push(["draft", value]),
+      setNicknameSaveError: (value) => calls.push(["error", value]),
+      setIsSavingNickname: (value) => calls.push(["saving", value]),
+      nicknameEditButtonRef: { current: { focus() {} } },
+      updateUserNickname(session, nickname) {
+        assert.equal(session, authSession);
+        assert.equal(nickname, "After");
+        const request = outcome === "success"
+          ? Promise.resolve({ nickname, updatedAt: "2026-08-19" })
+          : Promise.reject(new Error("sanitized test failure"));
+        pending.push(request);
+        return request;
+      },
+      writeStoredUserProfile: (_userId, profile) => profile,
+      onNicknameChange: (value) => calls.push(["profile", value.nickname]),
+      showNicknameToast() {}, t: (key) => key,
+      describeSupabaseError: () => ({ category: "unknown" }),
+      resolveSupabaseErrorMessageKey: (_category, fallback) => fallback,
+      console: { warn() {} },
+    };
+    evaluateInitializer(source, "handleStartEditNickname", bindings)();
+    evaluateInitializer(source, "handleCancelEditNickname", bindings)();
+    assert.ok(calls.some(([name, value]) => name === "draft" && value === "Before"));
+    calls.length = 0;
+    evaluateInitializer(source, "handleSaveNickname", bindings)();
+    await Promise.allSettled(pending);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.deepEqual(user, { email: "confirmed@example.test", new_email: "pending@example.test" });
+    assert.equal(calls.some(([name]) => name === "profile"), outcome === "success");
+    assert.ok(calls.some(([name, value]) => name === "saving" && value === false));
+    if (outcome === "failure") {
+      assert.ok(calls.some(([name, value]) => name === "error" && typeof value === "string"));
+      assert.ok(!calls.some(([name, value]) => name === "editing" && value === false));
+    }
+  }
 });
 
 test("18. Nothing in this component ever forces a page reload/navigation as part of the nickname flow", () => {

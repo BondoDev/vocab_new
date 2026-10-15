@@ -75,7 +75,8 @@ Current owner-local examples:
 - `src/app/components/layout/styles/header.scss` — owned by `Header.tsx`.
 - `src/app/pages/about-help.scss` — jointly owned by `About.tsx` and
   `Help.tsx`.
-- `src/app/pages/home/language-page.scss` — owned by `HomePage.tsx`.
+- `src/app/pages/home/new-home-page.scss` — owned by `NewHomePage.tsx`.
+  The retired homepage's `language-page.scss` has been removed.
 - `src/features/learning-setup/styles/exercise-selection.scss` — owned by
   `ExerciseSelection.tsx`.
 - `src/features/learning-setup/styles/level-category-selection.scss` —

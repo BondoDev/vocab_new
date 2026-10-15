@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  BookOpen,
   BookOpenText,
   ChartSpline,
   CheckCircle2,
@@ -44,7 +43,6 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import {
-  getStoredSupabaseSession,
   sendPasswordRecoveryEmail,
   signInWithGoogleOAuth,
   signInWithPassword,
@@ -519,7 +517,6 @@ export function Header({
       setIsAuthDialogOpen(false);
       resetAuthForm();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [controlledAuthSession]);
 
   // Surfaces a redirect-time failure (e.g. a denied Google OAuth consent,

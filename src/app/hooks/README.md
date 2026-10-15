@@ -57,10 +57,6 @@ routes its effects touch), not where it happens to be called.
 - `useStoredAppPreferences` — language pair and exercise-filter selections,
   read/written across most interactive routes.
 
-**Cross-page orchestration**
-- `useLanguageContinuePopup` — see §9; triggered from unrelated page
-  families, rendered on the home page.
-
 This is not meant to be a line-by-line API reference — read each file's
 own header comment for exact inputs/outputs.
 
@@ -184,12 +180,9 @@ adjacency alone:
   [`../../features/user-profile/README.md`](../../features/user-profile/README.md)).
 - Intentionally remains here, not beside the dialog or inside a feature.
 
-**`useLanguageContinuePopup`**
-- Its popup renders through the home page.
-- But it can be *triggered* from multiple unrelated route families
-  (vocabulary and SEO pages navigating toward the language page), not just
-  the home page itself.
-- It therefore remains cross-page orchestration, not homepage-owned.
+The retired homepage popup hook and language account-choice hook were
+removed after their application consumers were replaced. Current account
+intro and language-confirmation hooks remain app-shell infrastructure.
 
 ## 10. Anti-patterns
 

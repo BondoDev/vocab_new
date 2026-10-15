@@ -22,7 +22,7 @@ const wordRouteManifest = compiled.require("src/data/seo/wordPages/wordRouteMani
 const slugsModule = compiled.require("src/data/seo/shared/slugs");
 
 const { SUPPORTED_TARGET_LANGUAGES, SUPPORTED_UI_LANGUAGES, SUPPORTED_LEVELS } = slugsModule;
-const { WORD_SITEMAP_DEFINITIONS, CRAWLABLE_WORD_TARGET_LANGUAGES, wordToSlug } = wordRouteManifest;
+const { WORD_SITEMAP_DEFINITIONS, CRAWLABLE_WORD_TARGET_LANGUAGES } = wordRouteManifest;
 
 const BROWSE_PAGE_SIZE = 54;
 

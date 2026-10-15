@@ -39,6 +39,10 @@ const migrationSource = fs.readFileSync(
   "utf8",
 );
 
+test("The vocabulary-list migration remains readable and non-empty", () => {
+  assert.ok(migrationSource.trim().length > 0);
+});
+
 console.log("\n=== 1-2. Empty state and absence of search/sort/filters while empty ===\n");
 
 test("1. Zero lists renders the empty-state block (icon + title + description + Create List)", () => {

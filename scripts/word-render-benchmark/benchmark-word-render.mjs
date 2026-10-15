@@ -59,7 +59,7 @@ function runColdSample() {
       }
       try {
         resolve(JSON.parse(stdout));
-      } catch (error) {
+      } catch {
         reject(new Error(`cold benchmark worker produced non-JSON output: ${stdout}\n${stderr}`));
       }
     });

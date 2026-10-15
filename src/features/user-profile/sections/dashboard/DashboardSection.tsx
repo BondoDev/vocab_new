@@ -85,7 +85,6 @@ export function DashboardSection({
   vocabularyGrowthEvents,
   onRequestVocabularyGrowthEvents,
   onRetryVocabularyGrowthEvents,
-  onStartReviewWords,
   onNavigateToSection,
 }: DashboardSectionProps) {
   const { t } = useLanguage();

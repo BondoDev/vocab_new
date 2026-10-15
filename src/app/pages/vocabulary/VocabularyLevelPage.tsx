@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { buildLocalizedVocabularyPath } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
@@ -266,14 +266,6 @@ function resolveTargetLanguageDisplayName(
   }
 
   return TARGET_LANGUAGE_DISPLAY_FALLBACKS[targetLanguage];
-}
-
-function resolveHeroSuffixLanguageName(
-  uiLang: UiLanguageCode,
-  targetLanguage: TargetLanguageSlug,
-  displayName: string,
-): string {
-  return HERO_SUFFIX_LANGUAGE_NAMES[uiLang]?.[targetLanguage] ?? displayName;
 }
 
 const SAMPLE_TABLE_HEADERS_BY_UI_LANG: Record<

@@ -186,17 +186,26 @@ export function useStoredAppPreferences({
     shouldAutoRedirectFromStoredLanguagesRef.current =
       restoreStoredLanguage &&
       Boolean(persistedYourLanguage && persistedPracticeLanguage);
-  }, [supportedLanguageCodes, hasInitialCanonicalPracticeRoute]);
+  }, [
+    supportedLanguageCodes,
+    hasInitialCanonicalPracticeRoute,
+    storageKeys.yourLanguage,
+    storageKeys.practiceLanguage,
+    storageKeys.selectedLevel,
+    storageKeys.selectedCategories,
+    storageKeys.selectedLevels,
+    storageKeys.selectedWordTypes,
+    storageKeys.selectedExercises,
+  ]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {
       return;
     }
     window.localStorage.setItem(storageKeys.yourLanguage, yourLanguage);
-    // storageKeys is App.tsx's module-level STORAGE_KEYS constant, passed
-    // straight through and referentially stable — omitted from deps to
-    // match the pre-extraction effect's dependency array exactly.
-  }, [yourLanguage]);
+    // Key strings come from App.tsx's module-level STORAGE_KEYS constant;
+    // tracking them does not reload preferences when selections change.
+  }, [yourLanguage, storageKeys.yourLanguage]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {
@@ -206,14 +215,14 @@ export function useStoredAppPreferences({
       storageKeys.practiceLanguage,
       practiceLanguage,
     );
-  }, [practiceLanguage]);
+  }, [practiceLanguage, storageKeys.practiceLanguage]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {
       return;
     }
     window.localStorage.setItem(storageKeys.selectedLevel, selectedLevel);
-  }, [selectedLevel]);
+  }, [selectedLevel, storageKeys.selectedLevel]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {
@@ -223,7 +232,7 @@ export function useStoredAppPreferences({
       storageKeys.selectedCategories,
       JSON.stringify(selectedCategories),
     );
-  }, [selectedCategories]);
+  }, [selectedCategories, storageKeys.selectedCategories]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {
@@ -233,7 +242,7 @@ export function useStoredAppPreferences({
       storageKeys.selectedLevels,
       JSON.stringify(selectedLevels),
     );
-  }, [selectedLevels]);
+  }, [selectedLevels, storageKeys.selectedLevels]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {
@@ -243,7 +252,7 @@ export function useStoredAppPreferences({
       storageKeys.selectedWordTypes,
       JSON.stringify(selectedWordTypes),
     );
-  }, [selectedWordTypes]);
+  }, [selectedWordTypes, storageKeys.selectedWordTypes]);
 
   useEffect(() => {
     if (!canUseLocalStorage()) {
@@ -253,7 +262,7 @@ export function useStoredAppPreferences({
       storageKeys.selectedExercises,
       JSON.stringify(selectedExercises),
     );
-  }, [selectedExercises]);
+  }, [selectedExercises, storageKeys.selectedExercises]);
 
   const resetFiltersForLevel = (level: string) => {
     setSelectedLevel(level.toUpperCase());

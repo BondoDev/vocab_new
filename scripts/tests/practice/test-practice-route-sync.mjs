@@ -204,23 +204,25 @@ test("3. canonical URL, no stored pair: URL stays authoritative, no behavior cha
 console.log("\n=== ordinary routes keep restoring stored preferences ===\n");
 
 test("4. no canonical route, complete stored pair: stored values restore normally", () => {
+  const storedPair = { yourLanguage: "ru", practiceLanguage: "pt" };
   const result = simulate({
     urlPair: null,
-    storedPair: { yourLanguage: "ru", practiceLanguage: "pt" },
+    storedPair,
   });
   assert.equal(result.converged, true);
   assert.deepEqual(result.finalState, { yourLanguage: "ru", practiceLanguage: "pt" });
   assert.equal(
-    shouldRestoreStoredLanguagePreference(false) && Boolean("ru" && "pt"),
+    shouldRestoreStoredLanguagePreference(false) && Boolean(storedPair.yourLanguage && storedPair.practiceLanguage),
     true,
     "shouldAutoRedirectFromStoredLanguagesRef must remain eligible on ordinary routes with a complete stored pair",
   );
 });
 
 test("5. no canonical route, incomplete stored pair: only the valid partial restoration occurs, no auto-redirect eligibility", () => {
+  const storedPair = { yourLanguage: "ru", practiceLanguage: null };
   const result = simulate({
     urlPair: null,
-    storedPair: { yourLanguage: "ru", practiceLanguage: null },
+    storedPair,
   });
   assert.equal(result.converged, true);
   assert.deepEqual(
@@ -229,15 +231,16 @@ test("5. no canonical route, incomplete stored pair: only the valid partial rest
     "only the persisted value that actually validated should apply",
   );
   assert.equal(
-    shouldRestoreStoredLanguagePreference(false) && Boolean("ru" && null),
+    shouldRestoreStoredLanguagePreference(false) && Boolean(storedPair.yourLanguage && storedPair.practiceLanguage),
     false,
     "an incomplete stored pair must never make the /languages auto-redirect eligible",
   );
 });
 
 test("canonical-practice mount never marks auto-redirect eligible, even with a complete stored pair", () => {
+  const storedPair = { yourLanguage: "fr", practiceLanguage: "de" };
   assert.equal(
-    shouldRestoreStoredLanguagePreference(true) && Boolean("fr" && "de"),
+    shouldRestoreStoredLanguagePreference(true) && Boolean(storedPair.yourLanguage && storedPair.practiceLanguage),
     false,
     "shouldAutoRedirectFromStoredLanguagesRef.current must be false for a canonical-practice mount regardless of what is stored",
   );

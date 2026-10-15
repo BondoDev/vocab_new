@@ -23,7 +23,6 @@ src/app/utils/
   languageProfileSyncPolicy.ts
   pageRouting.ts
   practiceRouteCanonicalizationPolicy.ts
-  starField.ts
   storage.ts
   storedLanguageAutoRedirectPolicy.ts
   storedLanguagePreferencePolicy.ts
@@ -70,11 +69,6 @@ duplicates another's decision.
 
 **Storage adapter** — `storage.ts` provides SSR-guarded localStorage read
 helpers, safe to call from any environment.
-
-**App-shell visual support** — `starField.ts` is a deterministic (seeded,
-not `Math.random`) background-image generator, kept here because it was
-extracted as shared app-shell logic rather than a single component's
-private helper.
 
 ## 4. What Does NOT Belong Here
 

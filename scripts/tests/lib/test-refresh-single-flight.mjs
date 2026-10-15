@@ -155,6 +155,7 @@ await test("5. After an in-flight attempt settles (success), a later call starts
   const first = coordinator.run(firstStart);
   firstDeferred.resolve("session-1");
   await first;
+  assert.equal(firstCalls, 1, "the first attempt must invoke its request exactly once");
 
   let secondCalls = 0;
   const secondDeferred = createDeferred();
@@ -164,6 +165,7 @@ await test("5. After an in-flight attempt settles (success), a later call starts
   assert.equal(secondCalls, 1, "a call made after the prior attempt fully settled must start a real new request");
   secondDeferred.resolve("session-2");
   assert.equal(await second, "session-2");
+  assert.equal(firstCalls, 1, "a later attempt must not restart the first request");
 });
 
 await test("6. After a permanent rejection settles, a later retry starts a new attempt rather than reusing the failed Promise", async () => {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -177,16 +177,7 @@ export function VocabularyLevelExam({
     loadWords();
   }, [practiceLanguage, yourLanguage]);
 
-  // Generate new question when level or question number changes
-  useEffect(() => {
-    if (allWords.length === 0 || Object.keys(translationMap).length === 0)
-      return;
-    if (examComplete) return;
-
-    generateQuestion();
-  }, [currentLevel, currentQuestionInLevel, allWords, translationMap]);
-
-  const generateQuestion = () => {
+  const generateQuestion = useCallback(() => {
     const levelName = LEVELS[currentLevel];
     const isChunkMode = currentLevel >= 2;
 
@@ -264,7 +255,17 @@ export function VocabularyLevelExam({
 
     setSelectedAnswer(null);
     setShowFeedback(false);
-  };
+  }, [allWords, currentLevel, translationMap]);
+
+  // Only question/level/data transitions generate a question; answer and
+  // feedback renders retain the same callback and cannot reshuffle it.
+  useEffect(() => {
+    if (allWords.length === 0 || Object.keys(translationMap).length === 0)
+      return;
+    if (examComplete) return;
+
+    generateQuestion();
+  }, [currentLevel, currentQuestionInLevel, allWords, translationMap, examComplete, generateQuestion]);
 
   const resolveQuestionResult = (isCorrect: boolean) => {
     setShowFeedback(true);

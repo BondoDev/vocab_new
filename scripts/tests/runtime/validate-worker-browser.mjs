@@ -261,11 +261,6 @@ function analyzeRequests(requests, pageUrl) {
   return { unexpected, hydrationForbidden };
 }
 
-function matchesStatus(message, keywords) {
-  const normalized = String(message ?? "").toLowerCase();
-  return keywords.some((keyword) => normalized.includes(keyword));
-}
-
 function hasHydrationIssue(consoleMessages, exceptions) {
   return (
     consoleMessages.some((entry) =>

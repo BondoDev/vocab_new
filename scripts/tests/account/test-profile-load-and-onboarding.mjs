@@ -33,6 +33,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { effectCalls } from "../../lib/component-contract.mjs";
 import {
   normalizeUserProfile,
   buildStoredUserProfile,
@@ -506,11 +507,16 @@ async function main() {
   });
 
   const loadHookSource = read("src/app/hooks/useUserProfileLoad.ts");
-  const effectBodyMatch = loadHookSource.match(
-    /useEffect\(\(\) => \{([\s\S]*?)\n {2}\}, \[authUserId\]\);/,
-  );
-  assert.ok(effectBodyMatch, "could not locate useUserProfileLoad's authUserId effect body");
-  const effectBody = effectBodyMatch[1];
+  const loadEffect = effectCalls(loadHookSource).find((call) =>
+    call.arguments[0].getText().includes("readSupabaseUserProfile("));
+  assert.ok(loadEffect, "could not locate useUserProfileLoad's authUserId effect body");
+  const effectBody = loadEffect.arguments[0].body.getText();
+
+  test("profile loading depends only on account identity and stable React state setters, never live language selections", () => {
+    assert.deepEqual(loadEffect.arguments[1].elements.map((element) => element.getText()), [
+      "authUserId", "setAccountOnboardingError", "setIsAccountOnboardingOpen", "setPracticeLanguage", "setYourLanguage",
+    ]);
+  });
 
   test("no authUserId: resolves without ever calling readSupabaseUserProfile", () => {
     const guardMatch = effectBody.match(/if \(!authUserId\) \{([\s\S]*?)\n {4}\}/);

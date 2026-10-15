@@ -1,5 +1,6 @@
 import {
   type PointerEvent as ReactPointerEvent,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -88,7 +89,7 @@ export function MobileKeyboard({
   })();
   const extraToggleLabel = "#+";
 
-  const toUpperWithLanguage = (key: string): string => {
+  const toUpperWithLanguage = useCallback((key: string): string => {
     if (key === "\u00df") return "\u1e9e";
     const localeMap: Record<KeyboardLanguage, string> = {
       en: "en-US",
@@ -100,7 +101,7 @@ export function MobileKeyboard({
       it: "it-IT",
     };
     return key.toLocaleUpperCase(localeMap[language]);
-  };
+  }, [language]);
 
   const clearLongPressTimer = () => {
     if (longPressTimerRef.current !== null) {
@@ -109,17 +110,17 @@ export function MobileKeyboard({
     }
   };
 
-  const closeLongPressPopup = () => {
+  const closeLongPressPopup = useCallback(() => {
     setLongPressPopup(null);
     setActivePopupIndex(0);
-  };
+  }, []);
 
-  const applyTextKey = (key: string) => {
+  const applyTextKey = useCallback((key: string) => {
     if (disabled) return;
     const output = isShiftActive ? toUpperWithLanguage(key) : key;
     onChange(`${value}${output}`);
     if (isShiftActive) setIsShiftActive(false);
-  };
+  }, [disabled, isShiftActive, onChange, toUpperWithLanguage, value]);
 
   const handleBackspace = () => {
     if (disabled || value.length === 0) return;
@@ -165,10 +166,10 @@ export function MobileKeyboard({
     }
   };
 
-  const handleLongPressSelect = (key: string) => {
+  const handleLongPressSelect = useCallback((key: string) => {
     applyTextKey(key);
     closeLongPressPopup();
-  };
+  }, [applyTextKey, closeLongPressPopup]);
 
   const handleTextKeyPointerDown = (
     event: ReactPointerEvent<HTMLButtonElement>,
@@ -251,7 +252,7 @@ export function MobileKeyboard({
       document.removeEventListener("pointerup", handlePointerUp, true);
       document.removeEventListener("pointerdown", handlePointerDownOutside, true);
     };
-  }, [activePopupIndex, longPressPopup]);
+  }, [activePopupIndex, closeLongPressPopup, handleLongPressSelect, longPressPopup]);
 
   useEffect(
     () => () => {

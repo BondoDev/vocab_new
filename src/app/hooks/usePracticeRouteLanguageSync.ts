@@ -1,7 +1,7 @@
 // Owns the canonical practice-route <-> language-state synchronization
 // lifecycle extracted from App.tsx: the live practiceRoute parse plus the
 // route->state and state->URL effects. Mechanical extraction only — neither
-// effect's behavior, guard, or dependency array changes here.
+// effect's behavior or guard changes here.
 //
 // Deliberately narrow scope: this hook does NOT own initialPracticeRouteRef
 // (App.tsx must compute that before calling useStoredAppPreferences, which
@@ -61,7 +61,7 @@ export function usePracticeRouteLanguageSync({
     if (practiceLanguage !== practiceRoute.practiceLanguage) {
       setPracticeLanguage(practiceRoute.practiceLanguage);
     }
-  }, [practiceLanguage, practiceRoute, resolvedPage, yourLanguage]);
+  }, [practiceLanguage, practiceRoute, resolvedPage, setPracticeLanguage, setYourLanguage, yourLanguage]);
 
   useEffect(() => {
     if (
@@ -89,6 +89,7 @@ export function usePracticeRouteLanguageSync({
     practiceLanguage,
     practiceRoute,
     resolvedPage,
+    routes,
     yourLanguage,
   ]);
 }

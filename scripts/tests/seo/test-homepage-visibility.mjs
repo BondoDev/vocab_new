@@ -154,8 +154,8 @@ console.log("\n[6] Canonical word-page SSR completeness");
     assert(html.includes('rel="canonical"'), "Word page has canonical tag");
     assert(html.includes('hreflang'), "Word page has hreflang");
     assert(
-      !html.includes('noindex'),
-      "Canonical word page is indexable (no noindex)",
+      /<meta\b[^>]*name=["']robots["'][^>]*content=["']noindex, follow["']/i.test(html),
+      "Canonical word page retains noindex, follow",
     );
   } else {
     assert(true, "Word pages checked (none prerendered in this build — WORD_PRERENDER_LIMIT=0)");

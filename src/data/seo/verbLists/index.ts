@@ -8,16 +8,6 @@ import {
   type VerbListItem,
 } from "./common100Verbs/common100VerbList";
 import { type TargetLanguageSlug, type UiLanguageCode } from "../shared/slugs";
-import {
-  getAllVerbListPaths,
-  getVerbListConfig,
-  getVerbListContent,
-  getVerbListPath,
-  getVerbListSpeechLang,
-  getVerbListTitle,
-  resolveVerbListRoute,
-} from "./common100Verbs/common100VerbRegistry";
-
 export {
   getAllVerbListPaths,
   getVerbListConfig,

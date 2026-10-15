@@ -32,7 +32,7 @@ A component may live directly under `src/app/components/` when it:
 - is reused by multiple unrelated page or feature owners;
 - does not fit `dialogs/`, `layout/`, or `ui/`.
 
-**Current example:** `LanguageSelector.tsx` is consumed by the homepage,
+**Current example:** `LanguageSelector.tsx` is consumed by Custom Practice,
 account onboarding (`dialogs/AccountOnboardingDialog.tsx`), and the
 level-test page family (`src/app/pages/level-test/LevelTestLanguageModal.tsx`)
 — three unrelated owners. It is not a generic `ui/` primitive because it

@@ -17,7 +17,6 @@ const SETTINGS_DIR = path.join(ROOT_DIR, "src", "features", "user-profile", "sec
 const USER_PROFILE_LIB = path.join(ROOT_DIR, "src", "lib", "userProfile.ts");
 const LEARNING_PROGRESS_RESET_LIB = path.join(ROOT_DIR, "src", "lib", "learningProgressReset.ts");
 const ACCOUNT_DELETION_LIB = path.join(ROOT_DIR, "src", "lib", "accountDeletion.ts");
-const APP_TSX = path.join(ROOT_DIR, "src", "app", "App.tsx");
 const MIGRATIONS_DIR = path.join(ROOT_DIR, "supabase", "migrations");
 
 let passed = 0;

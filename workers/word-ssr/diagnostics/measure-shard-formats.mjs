@@ -73,7 +73,7 @@ for (const lang of languages) {
 // ── B. Fixed-size concept groups (~1000 records/shard), per language ────────
 const FIXED_GROUP_SIZE = 1000;
 const schemeB = [];
-for (const [lang, records] of Object.entries(allRecordsByLanguage)) {
+for (const records of Object.values(allRecordsByLanguage)) {
   const ids = Object.keys(records);
   for (let i = 0; i < ids.length; i += FIXED_GROUP_SIZE) {
     const group = {};
@@ -86,7 +86,7 @@ for (const [lang, records] of Object.entries(allRecordsByLanguage)) {
 
 // ── C. First canonical-slug character, per language ──────────────────────────
 const schemeC = [];
-for (const [lang, records] of Object.entries(allRecordsByLanguage)) {
+for (const records of Object.values(allRecordsByLanguage)) {
   const buckets = new Map();
   for (const [id, record] of Object.entries(records)) {
     const firstChar = (record.canonicalSlug?.[0] ?? "#").toLowerCase();

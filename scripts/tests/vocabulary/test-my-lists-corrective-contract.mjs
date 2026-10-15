@@ -3,7 +3,7 @@
 // vocabularyLists.ts, loadFullVocabulary.ts). Transitively imports
 // src/lib/supabaseAuth.ts (reads import.meta.env, a Vite-only global) so —
 // matching test-my-lists-phase2b-contract.mjs's own precedent — this is a
-// precise source-text guard rather than a behavioral/DOM one. Covers the
+// mixed source/AST guard with executable extracted pipelines, not a DOM test. Covers the
 // corrective brief's test items 6-28 (Add/Remove/Picker/Detail/Cards) and
 // 30-34 (regression).
 //
@@ -12,6 +12,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertDetailMembershipSearch, assertDetailPagination, loadListHelper } from "../../lib/my-lists-contract.mjs";
+import { evaluateInitializer, evaluate, effectCalls, nodesMatching, ts } from "../../lib/component-contract.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -120,9 +122,8 @@ test("17. Already-added words are excluded from the picker's available rows via 
 
 console.log("\n=== 18-19. Search matches target word / translation ===\n");
 
-test("18/19. Both the detail view and the picker filter search via filterListWordRowsBySearch, matching targetWord or translation", () => {
-  assert.match(detailSource, /filterListWordRowsBySearch\(byStatus, searchQuery\)/);
-  assert.match(pickerSource, /filterListWordRowsBySearch\(byStatus, searchQuery\)/);
+test("18/19. Detail search includes unstudied members, excludes nonmembers, and matches word or translation", () => {
+  assertDetailMembershipSearch(detailSource);
 });
 
 test("The picker's search/filter/pagination are pure client-side derivations over already-loaded rows — no Supabase call on keystroke", () => {
@@ -131,18 +132,41 @@ test("The picker's search/filter/pagination are pure client-side derivations ove
   assert.doesNotMatch(visibleBlock[1], /supabase|fetch\(|await /i);
 });
 
-console.log("\n=== 20-22. Not studied / Learning / Known / Mastered filters ===\n");
+console.log("\n=== 20-22. Picker-only status filters; simplified list detail ===\n");
 
-test("20-22. Both the picker and the detail view offer all/notStudied/learning/known/mastered via ListWordStatusFilterId, filtered with filterListWordRowsByStatus", () => {
-  assert.match(pickerSource, /const STATUS_FILTERS: ListWordStatusFilterId\[\] = \["all", "notStudied", "learning", "known", "mastered"\];/);
-  assert.match(detailSource, /const STATUS_FILTERS: ListWordStatusFilterId\[\] = \["all", "notStudied", "learning", "known", "mastered"\];/);
-  assert.match(pickerSource, /filterListWordRowsByStatus\(availableRows, statusFilter\)/);
-  assert.match(detailSource, /filterListWordRowsByStatus\(listRows, statusFilter\)/);
+test("20-22. The picker retains exactly five filters and applies each to available rows before searching", () => {
+  const filters = evaluateInitializer(pickerSource, "STATUS_FILTERS");
+  assert.deepEqual(filters, ["all", "notStudied", "learning", "known", "mastered"]);
+  const allRows = filters.slice(1).map((status) => ({ conceptId: status, status, targetWord: "Pear", translation: "Birne" }));
+  allRows.push({ conceptId: "alreadyAdded", status: "known", targetWord: "Pear", translation: "Birne" });
+  const useMemo = (callback) => callback();
+  const availableRows = evaluateInitializer(pickerSource, "availableRows", {
+    useMemo, allRows, alreadyAddedIds: new Set(["alreadyAdded"]),
+  });
+  const bindings = {
+    useMemo, availableRows,
+    filterListWordRowsByStatus: loadListHelper("listWordFiltering.ts", "filterListWordRowsByStatus"),
+    filterListWordRowsBySearch: loadListHelper("listWordFiltering.ts", "filterListWordRowsBySearch"),
+  };
+  for (const statusFilter of filters) {
+    const rows = evaluateInitializer(pickerSource, "visibleRows", { ...bindings, statusFilter, searchQuery: " BIRNE " });
+    assert.deepEqual(rows.map((row) => row.conceptId), statusFilter === "all" ? filters.slice(1) : [statusFilter]);
+    assert.deepEqual(evaluateInitializer(pickerSource, "visibleRows", { ...bindings, statusFilter, searchQuery: "missing" }), []);
+  }
 });
 
-test("'All' remains the default filter in both the picker and the detail view — status is never forced", () => {
-  assert.match(pickerSource, /useState<ListWordStatusFilterId>\("all"\)/);
-  assert.match(detailSource, /useState<ListWordStatusFilterId>\("all"\)/);
+test("The picker defaults to All and resets to All when closed", () => {
+  assert.equal(evaluateInitializer(pickerSource, "statusFilter", { useState: (value) => value }), "all");
+  const closeEffect = effectCalls(pickerSource).find((call) => call.arguments[1]?.getText() === "[open]");
+  assert.ok(closeEffect);
+  for (const open of [true, false]) {
+    const updates = [];
+    evaluate(closeEffect.arguments[0], {
+      open, setStatusFilter: (value) => updates.push(value),
+      setSearchQuery() {}, setSelectedIds() {}, setPage() {},
+    })();
+    assert.deepEqual(updates, open ? [] : ["all"]);
+  }
 });
 
 console.log("\n=== 23. Already-added handling ===\n");
@@ -168,9 +192,11 @@ test("Vocabulary resolution happens exactly once per ListDetailView mount (full 
 
 console.log("\n=== 24-26. Detail view: unstudied + studied rows render, count independent of progress ===\n");
 
-test("24/25. Detail rows render whether or not they have progress — status badge always renders a text label, notStudied included", () => {
-  assert.match(detailSource, /my-lists-status-badge my-lists-status-badge--\$\{row\.status\}/);
-  assert.match(detailSource, /statusLabel\(row\.status\)/);
+test("24/25. Detail pagination slices and clamps current search results and resets on search/sort changes", () => {
+  assertDetailPagination(detailSource);
+  const statusControls = nodesMatching(detailSource, (node) => ts.isJsxAttribute(node) &&
+    node.name.getText() === "className" && /my-lists-status-badge|status-filter/.test(node.initializer?.getText() ?? ""));
+  assert.equal(statusControls.length, 0, "the approved detail view has no status controls or badges");
 });
 
 test("26. The header's word count comes from memberships.length — a direct membership count, never derived from resolved/progress rows", () => {
@@ -211,6 +237,14 @@ test("Picker rows use a semantic <label>+checkbox pairing, and status is always 
   assert.match(pickerSource, /<label key=\{row\.conceptId\} className=\{`my-lists-picker__row/);
   assert.match(pickerSource, /<input\s+type="checkbox"/);
   assert.match(pickerSource, /\{statusLabel\(row\.status\)\}/);
+  const statusLabel = evaluateInitializer(pickerSource, "statusLabel", { t: (key) => key });
+  const filterLabel = evaluateInitializer(pickerSource, "filterLabel", { t: (key) => key, statusLabel });
+  assert.equal(filterLabel("all"), "userProfile.myListsSection.statusAll");
+  assert.equal(statusLabel("notStudied"), "userProfile.myListsSection.notStudied");
+  for (const status of ["learning", "known", "mastered"]) {
+    assert.equal(statusLabel(status), `userProfile.vocabularySection.table.statuses.${status}`);
+    assert.equal(filterLabel(status), statusLabel(status));
+  }
 });
 
 console.log("\n=== 30-33. Create/rename/delete/duplicate-name regression — unchanged ===\n");

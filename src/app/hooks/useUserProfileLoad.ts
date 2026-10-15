@@ -209,7 +209,7 @@ export function useUserProfileLoad({
     return () => {
       cancelled = true;
     };
-  }, [authUserId]);
+  }, [authUserId, setAccountOnboardingError, setIsAccountOnboardingOpen, setPracticeLanguage, setYourLanguage]);
 
   return { userProfile, setUserProfile, isProfileLoaded };
 }

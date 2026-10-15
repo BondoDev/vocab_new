@@ -18,6 +18,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { effectCalls } from "../../lib/component-contract.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
@@ -194,11 +195,12 @@ test("12. No-session signup never establishes a session or notifies the parent -
   assert.doesNotMatch(body, /setAuthSession\(/, "must not set a session for a no-session signup result");
   assert.doesNotMatch(body, /onAuthSessionChange/, "must not notify the parent of a session change - there is no session");
   const useUserProfileLoad = read("src/app/hooks/useUserProfileLoad.ts");
-  assert.match(
-    useUserProfileLoad,
-    /\}, \[authUserId\]\);/,
-    "onboarding's own open-decision effect must still be keyed solely on authUserId, unaffected by this fix",
-  );
+  const loadEffect = effectCalls(useUserProfileLoad).find((call) =>
+    call.arguments[0].getText().includes("readSupabaseUserProfile("));
+  assert.ok(loadEffect, "the profile-loading effect must exist");
+  assert.deepEqual(loadEffect.arguments[1].elements.map((element) => element.getText()), [
+    "authUserId", "setAccountOnboardingError", "setIsAccountOnboardingOpen", "setPracticeLanguage", "setYourLanguage",
+  ], "only account identity and stable React state setters may drive onboarding's profile load");
 });
 
 test("13. The new auth.* locale keys (including the neutral no-session copy) exist, are non-empty, and never reveal whether the submitted email already exists - defined consistently across all 7 locales", () => {

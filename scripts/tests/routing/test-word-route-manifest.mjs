@@ -82,6 +82,7 @@ try {
   const spanishAccented = spanishVocabulary.find((entry) => entry.concept_id === "C1-00035");
   assert.ok(spanishAccented, "expected accented Spanish sample");
   const accentedSlug = manifest.wordToSlug(spanishAccented.word_lemma);
+  // eslint-disable-next-line no-control-regex -- The negated ASCII range verifies that Unicode accents survive slug generation.
   assert.ok(/[^\u0000-\u007f]/.test(accentedSlug), "accented slug should preserve non-ASCII characters");
   const accentedRoute = manifest.parseWordRoutePathname(
     manifest.buildCanonicalWordPathFromSlug("en", "spanish", accentedSlug, spanishAccented.concept_id),

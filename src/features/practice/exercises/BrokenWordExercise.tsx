@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { shuffleArray } from "../../../utils/shuffleArray";
 import { UniversalExerciseInput } from "./UniversalExerciseInput";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
@@ -75,7 +75,7 @@ export function BrokenWordExercise({
     return chunks;
   };
 
-  const initializeBrokenWord = () => {
+  const initializeBrokenWord = useCallback(() => {
     const chunks = splitWordIntoChunks(currentWord.word_lemma);
     const shuffled = shuffleArray([...chunks]);
 
@@ -92,7 +92,7 @@ export function BrokenWordExercise({
     setLineCount(1);
     hasAutoPlayedCorrectAudioRef.current = false;
     charSlotRefs.current = [];
-  };
+  }, [currentWord]);
 
   useEffect(() => {
     if (!currentWord) return;
@@ -103,7 +103,7 @@ export function BrokenWordExercise({
       usedShowWord: false,
       usedHintForBrokenWord: false,
     });
-  }, [currentWord, onStatusChange]);
+  }, [currentWord, initializeBrokenWord, onStatusChange]);
 
   useEffect(() => {
     onStatusChange({

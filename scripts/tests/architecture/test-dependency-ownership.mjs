@@ -32,8 +32,12 @@ function test(name, fn) {
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, "package.json"), "utf8"));
 const auditDoc = fs.readFileSync(path.join(ROOT_DIR, "docs", "dependency-ownership.md"), "utf8");
 
-// The 36 direct dependencies proven unused and removed by the 2026-07-15 audit.
+// Direct dependencies proven unused by the initial and retired-homepage audits.
 const REMOVED_PACKAGES = [
+  "date-fns",
+  "react-dnd",
+  "react-dnd-html5-backend",
+  "react-responsive-masonry",
   "@radix-ui/react-accordion",
   "@radix-ui/react-aspect-ratio",
   "@radix-ui/react-avatar",
@@ -119,8 +123,8 @@ test("docs/dependency-ownership.md documents every removed package with a concre
   assert.deepEqual(undocumented, [], `removed package(s) missing a table row: ${undocumented.join(", ")}`);
 });
 
-test("package manifest direct-dependency total matches the audit's documented total (33)", () => {
-  assert.equal(directDepNames.length, 33, `expected 33 direct dependencies, found ${directDepNames.length}`);
+test("package manifest direct-dependency total matches the audit's documented total (34)", () => {
+  assert.equal(directDepNames.length, 34, `expected 34 direct dependencies, found ${directDepNames.length}`);
 });
 
 console.log("\n=== script/binary ownership guards ===\n");

@@ -107,19 +107,6 @@ function formatKeyLabel(value: string): string {
     .join(" ");
 }
 
-function slugToDisplayWord(slug: string): string {
-  let decoded = slug;
-  try {
-    decoded = decodeURIComponent(slug);
-  } catch {
-    // Keep original slug when malformed escape sequences are present.
-  }
-
-  return decoded
-    .replace(/-/g, " ")
-    .trim();
-}
-
 function highlightWord(sentence: string, word: string): React.ReactNode {
   const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const regex = new RegExp(`(${escaped})`, "i");
@@ -626,7 +613,6 @@ export function WordSeoPageView({
     displayDefinition,
     displayWordType,
     wordEntry,
-    wordSlug,
     uiLang,
     targetLanguage,
     targetLangName,

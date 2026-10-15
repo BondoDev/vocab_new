@@ -373,7 +373,7 @@ export function WordTypingExercise({
                     const userTypedChar = userInput[index];
 
                     let displayChar;
-                    let charStyle = "text-foreground";
+                    let charStyle: string;
 
                     if (
                       userTypedChar !== undefined &&

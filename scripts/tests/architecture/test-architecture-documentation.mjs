@@ -136,22 +136,29 @@ test("every `npm run <script>` referenced in docs/architecture.md is a real pack
   assert.deepEqual([...missing], [], `unknown package script(s): ${[...missing].join(", ")}`);
 });
 
-test("architecture-guard table row count matches the real test:architecture-guards chain", () => {
+test("architecture-guard documentation matches the exact configured script set", () => {
   const pkg = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, "package.json"), "utf8"));
   const chain = pkg.scripts["test:architecture-guards"];
   assert.ok(chain, "package.json is missing the test:architecture-guards script");
-  const realGuardCount = chain.split("&&").filter((part) => /npm run -s test:/.test(part)).length;
+  const configuredGuards = [...chain.matchAll(/npm run -s (test:[\w:-]+)/g)].map((match) => match[1]);
 
   const sectionMatch = architectureContent.match(
     /## Architecture guards\n[\s\S]*?\n\n(?=## )/,
   );
   assert.ok(sectionMatch, "docs/architecture.md is missing an '## Architecture guards' section");
-  const documentedGuardCount = (sectionMatch[0].match(/^\| `test:/gm) || []).length;
+  const documentedGuards = [...sectionMatch[0].matchAll(/^\| `(test:[^`]+)`/gm)].map((match) => match[1]);
+  assert.equal(new Set(configuredGuards).size, configuredGuards.length, "configured guards must not contain duplicates");
+  assert.equal(new Set(documentedGuards).size, documentedGuards.length, "documented guards must not contain duplicates");
+  assert.deepEqual(
+    [...documentedGuards].sort(),
+    [...configuredGuards].sort(),
+    "architecture guard table must document every configured guard and no extra scripts",
+  );
 
   assert.equal(
-    documentedGuardCount,
-    realGuardCount,
-    `docs/architecture.md documents ${documentedGuardCount} guard(s) but test:architecture-guards chains ${realGuardCount}`,
+    Number(sectionMatch[0].match(/chains \*\*(\d+) guard groups\*\*/)?.[1]),
+    configuredGuards.length,
+    "architecture guard prose count must match the configured script set",
   );
 });
 

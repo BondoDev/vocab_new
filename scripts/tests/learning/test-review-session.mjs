@@ -16,7 +16,6 @@ import {
   buildBalancedSequence,
   buildReviewSessionPlan,
   GROUP_EXERCISE_POOL,
-  REVIEW_BLOCK_SIZE,
   TYPING_EXERCISE_POOL,
 } from "../../../src/features/review-words/reviewSessionPlan.ts";
 import {
