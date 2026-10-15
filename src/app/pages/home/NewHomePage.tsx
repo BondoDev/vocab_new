@@ -306,14 +306,12 @@ export function NewHomePage({ headerProps, languages, onLogin, onStartPracticing
         <section className="new-home-page__hero" aria-labelledby="homepage-hero-title">
           <div className="new-home-page__hero-copy">
             <h1 id="homepage-hero-title" className="new-home-page__title">
-              Learn Vocabulary Your Way
+              {t("home.heroTitle")}
             </h1>
           </div>
           <div className="new-home-page__hero-scene">
             <p className="new-home-page__subtitle">
-              Build your vocabulary with interactive exercises. Practice freely
-              without signing up, or follow a personalized learning plan to track
-              your progress.
+              {t("home.heroSubtitle")}
             </p>
             <div className="new-home-page__daily-word-slot">
               <article
@@ -410,37 +408,37 @@ export function NewHomePage({ headerProps, languages, onLogin, onStartPracticing
                 </svg>
               </span>
               <div className="new-home-page__card-copy">
-                <h2 className="new-home-page__card-title">Personalized Learning</h2>
+                <h2 className="new-home-page__card-title">{t("home.personalizedLearning.title")}</h2>
                 <p className="new-home-page__card-description">
-                  Create an account and build your vocabulary step by step.
+                  {t("home.personalizedLearning.description")}
                 </p>
               </div>
             </div>
             <ul className="new-home-page__card-labels">
               <li>
                 <Check aria-hidden="true" />
-                <span>Study new words daily</span>
+                <span>{t("home.personalizedLearning.features.study")}</span>
               </li>
               <li>
                 <Check aria-hidden="true" />
-                <span>Review learned vocabulary</span>
+                <span>{t("home.personalizedLearning.features.review")}</span>
               </li>
               <li>
                 <Check aria-hidden="true" />
-                <span>Track your progress</span>
+                <span>{t("home.personalizedLearning.features.progress")}</span>
               </li>
               <li>
                 <Check aria-hidden="true" />
-                <span>Save your favorite words and lists</span>
+                <span>{t("home.personalizedLearning.features.favorites")}</span>
               </li>
               <li>
                 <Check aria-hidden="true" />
-                <span>Access your learning statistics</span>
+                <span>{t("home.personalizedLearning.features.statistics")}</span>
               </li>
             </ul>
             <div className="new-home-page__card-footer">
               <button type="button" className="new-home-page__card-button" onClick={onLogin}>
-                <span>Log In to Your Account</span>
+                <span>{t("home.personalizedLearning.button")}</span>
                 <ArrowRight aria-hidden="true" />
               </button>
             </div>

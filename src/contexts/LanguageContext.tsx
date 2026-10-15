@@ -148,7 +148,7 @@ interface LanguageProviderProps {
   initialTranslationData?: unknown;
 }
 
-function readStoredUiLanguage(): UILanguage | null {
+export function readStoredUiLanguage(): UILanguage | null {
   if (typeof window === "undefined" || typeof window.localStorage === "undefined") {
     return null;
   }

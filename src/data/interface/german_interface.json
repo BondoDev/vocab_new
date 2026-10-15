@@ -12,6 +12,20 @@
     "levelTest": "Niveautest"
   },
   "home": {
+    "personalizedLearning": {
+      "title": "Personalisiertes Lernen",
+      "description": "Erstelle ein Konto und erweitere deinen Wortschatz Schritt für Schritt.",
+      "features": {
+        "study": "Lerne täglich neue Wörter",
+        "review": "Wiederhole bereits gelernte Wörter",
+        "progress": "Verfolge deine Fortschritte",
+        "favorites": "Speichere deine Lieblingswörter und -listen",
+        "statistics": "Sieh dir deine Lernstatistiken an"
+      },
+      "button": "Jetzt starten"
+    },
+    "heroTitle": "Lerne Vokabeln auf deine Art",
+    "heroSubtitle": "Erweitere deinen Wortschatz mit interaktiven Übungen. Übe frei und ohne Anmeldung oder folge einem personalisierten Lernplan, um deine Fortschritte zu verfolgen.",
     "dailyWordLabel": "Entdecke ein Wort",
     "dailyWordTranslation": "Übersetzung",
     "languageScrollLeft": "Sprachen nach links scrollen",

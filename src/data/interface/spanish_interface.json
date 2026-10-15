@@ -12,6 +12,20 @@
     "levelTest": "Prueba de nivel"
   },
   "home": {
+    "personalizedLearning": {
+      "title": "Aprendizaje personalizado",
+      "description": "Crea una cuenta y amplía tu vocabulario paso a paso.",
+      "features": {
+        "study": "Aprende nuevas palabras cada día",
+        "review": "Repasa el vocabulario aprendido",
+        "progress": "Sigue tu progreso",
+        "favorites": "Guarda tus palabras y listas favoritas",
+        "statistics": "Consulta tus estadísticas de aprendizaje"
+      },
+      "button": "Empezar"
+    },
+    "heroTitle": "Aprende vocabulario a tu manera",
+    "heroSubtitle": "Amplía tu vocabulario con ejercicios interactivos. Practica libremente sin registrarte o sigue un plan de aprendizaje personalizado para hacer un seguimiento de tu progreso.",
     "dailyWordLabel": "Descubre una palabra",
     "dailyWordTranslation": "Traducción",
     "languageScrollLeft": "Desplazar idiomas a la izquierda",

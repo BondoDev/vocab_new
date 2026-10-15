@@ -12,6 +12,20 @@
     "levelTest": "Level Test"
   },
   "home": {
+    "personalizedLearning": {
+      "title": "Personalized Learning",
+      "description": "Create an account and build your vocabulary step by step.",
+      "features": {
+        "study": "Study new words daily",
+        "review": "Review learned vocabulary",
+        "progress": "Track your progress",
+        "favorites": "Save your favorite words and lists",
+        "statistics": "Access your learning statistics"
+      },
+      "button": "Get Started"
+    },
+    "heroTitle": "Learn Vocabulary Your Way",
+    "heroSubtitle": "Build your vocabulary with interactive exercises. Practice freely without signing up, or follow a personalized learning plan to track your progress.",
     "dailyWordLabel": "Discover a Word",
     "dailyWordTranslation": "Translation",
     "languageScrollLeft": "Scroll languages left",

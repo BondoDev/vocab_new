@@ -1610,7 +1610,9 @@ function AppContent({
         <NewHomePage
           headerProps={sharedHeaderProps}
           languages={languages}
-          onLogin={() => setRequestedHeaderAuthMode("login")}
+          onLogin={() =>
+            authSession ? navigate(ROUTES.profile) : setRequestedHeaderAuthMode("login")
+          }
           onStartPracticing={() => navigate(ROUTES.exerciseSelection)}
         />
         {passwordRecoveryDialog}
