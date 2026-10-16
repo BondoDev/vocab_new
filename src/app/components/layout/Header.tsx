@@ -379,7 +379,7 @@ export function Header({
   );
   const { t } = useLanguage();
   const moreLabel = t("header.more") === "header.more" ? "More" : t("header.more");
-  const loginLabel = "Log in";
+  const loginLabel = t("header.logIn") === "header.logIn" ? "Log In" : t("header.logIn");
   const signupLabel = "Sign up";
   const showAuthButton = true;
   const googleLabel =
@@ -856,7 +856,7 @@ export function Header({
     {
       id: "exerciseSelection",
       href: NAV_HREFS.exerciseSelection,
-      label: t("home.customPractice.title"),
+      label: t("header.practice"),
       onClick: onExercises,
       activePages: ["exerciseSelection"] as const,
       icon: Dumbbell,
@@ -936,7 +936,7 @@ export function Header({
                 suppressHydrationWarning
               >
                 <Dumbbell size={12} strokeWidth={1.8} aria-hidden="true" />
-                {t("home.customPractice.title")}
+                {t("header.practice")}
               </a>
               <div
                 className="header-desktop-more relative"

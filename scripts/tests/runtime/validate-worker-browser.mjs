@@ -382,7 +382,7 @@ async function collectPageState(client) {
         title: document.title,
         headerExists: Boolean(document.querySelector(".header-shell")),
         desktopNavVisible: Boolean(document.querySelector(".header-desktop-nav")),
-        loginButtonVisible: Array.from(document.querySelectorAll("button")).some((btn) => (btn.textContent || "").includes("Log in")),
+        loginButtonVisible: Array.from(document.querySelectorAll("button")).some((btn) => (btn.textContent || "").includes("Log In")),
         loginDialogOpen: Boolean(document.querySelector('[data-slot="dialog-content"]')),
         mobileMenuToggle: Boolean(document.querySelector(".header-menu-toggle")),
         mobileMenuOpen: document.querySelector(".header-mobile-menu")?.classList.contains("is-open") ?? false,
@@ -577,7 +577,7 @@ async function runWordScenario(client, recorder, scenario) {
     } else {
       await click(client, ".ui-language-switcher-trigger");
       await delay(400);
-      const loginClicked = await clickByText(client, "button", "Log in");
+      const loginClicked = await clickByText(client, "button", "Log In");
       if (loginClicked) {
         await delay(400);
       }

@@ -19,7 +19,7 @@ for (const width of [375, 390]) {
       await menu.focus();
       await page.keyboard.press('Enter');
       await expect(page.getByRole('button', { name: 'Close navigation menu', exact: true })).toHaveAttribute('aria-expanded', 'true');
-      await expect(page.getByRole('link', { name: 'Custom Practice', exact: true })).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Practice', exact: true })).toBeVisible();
       await page.getByRole('button', { name: 'Close navigation menu', exact: true }).tap();
       await expect(menu).toHaveAttribute('aria-expanded', 'false');
       await page.getByRole('button', { name: 'Start Practicing', exact: true }).tap();
