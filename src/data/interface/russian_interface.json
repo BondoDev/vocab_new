@@ -8,6 +8,7 @@
     "more": "Ещё",
     "logIn": "Войти",
     "practice": "Практика",
+    "signUp": "Зарегистрироваться",
     "help": "Помощь",
     "levelTest": "Тест уровня",
     "filters": "Фильтры",
@@ -624,7 +625,45 @@
     }
   },
   "accountOnboarding": {
-    "saveError": "Не удалось сохранить ваш профиль. Пожалуйста, попробуйте снова."
+    "saveError": "Не удалось сохранить ваш профиль. Пожалуйста, попробуйте снова.",
+    "title": "Завершите настройку профиля",
+    "subtitle": "Вы можете изменить эти данные в любое время.",
+    "nativeLanguage": "Родной язык",
+    "practiceLanguage": "Изучаемый язык",
+    "nativeLanguagePlaceholder": "Выберите язык",
+    "practiceLanguagePlaceholder": "Выберите язык",
+    "nickname": "Никнейм",
+    "nicknamePlaceholder": "Ваш никнейм",
+    "levelPlaceholder": "Выберите уровень",
+    "levelDisabledPlaceholder": "Сначала выберите язык",
+    "age": "Ваш возраст",
+    "increaseAge": "Увеличить возраст",
+    "decreaseAge": "Уменьшить возраст",
+    "birthDate": "Дата рождения",
+    "month": "Месяц",
+    "day": "День",
+    "save": "Сохранить и продолжить",
+    "saving": "Сохранение...",
+    "cancel": "Отменить регистрацию",
+    "levelLabel": {
+      "en": "Ваш уровень английского",
+      "es": "Ваш уровень испанского",
+      "fr": "Ваш уровень французского",
+      "de": "Ваш уровень немецкого",
+      "it": "Ваш уровень итальянского",
+      "pt": "Ваш уровень португальского",
+      "ru": "Ваш уровень русского"
+    },
+    "levelLabelGeneric": "Ваш уровень",
+    "errors": {
+      "signInAgain": "Войдите снова, чтобы завершить настройку профиля.",
+      "nicknameRequired": "Пожалуйста, выберите никнейм.",
+      "nicknameStartsWithLetter": "Никнейм должен начинаться с буквы.",
+      "levelRequired": "Пожалуйста, выберите уровень языка.",
+      "ageRequired": "Пожалуйста, укажите возраст.",
+      "birthDateRequired": "Пожалуйста, выберите месяц и день рождения.",
+      "languagesRequired": "Пожалуйста, выберите оба языка."
+    }
   },
   "auth": {
     "loginError": "Неверный адрес электронной почты или пароль. Пожалуйста, попробуйте снова.",
@@ -637,7 +676,24 @@
     "passwordRequirementMetSr": "Требование выполнено.",
     "passwordRequirementNotMetSr": "Требование пока не выполнено.",
     "passwordsMatch": "Пароли совпадают",
-    "passwordsDoNotMatch": "Пароли не совпадают"
+    "passwordsDoNotMatch": "Пароли не совпадают",
+    "loginTitle": "С возвращением!",
+    "continueWithGoogle": "Продолжить с Google",
+    "or": "ИЛИ",
+    "emailLabel": "Электронная почта",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Пароль",
+    "passwordPlaceholder": "Введите пароль",
+    "forgotPassword": "Забыли пароль?",
+    "noAccountYet": "Ещё нет аккаунта?",
+    "signupTitle": "Создайте аккаунт FluentStellar",
+    "signupWithGoogle": "Зарегистрироваться через Google",
+    "confirmPasswordLabel": "Подтвердите пароль",
+    "confirmPasswordPlaceholder": "Повторите пароль",
+    "haveAccount": "Уже есть аккаунт?",
+    "pleaseWait": "Пожалуйста, подождите...",
+    "signupDescription": "Создайте аккаунт FluentStellar с помощью Google или адреса электронной почты и пароля.",
+    "loginDescription": "Войдите в аккаунт FluentStellar с помощью Google или адреса электронной почты и пароля."
   },
   "userProfile": {
     "dashboardPage": {

@@ -147,13 +147,13 @@ test("6. AccountOnboardingDialog accepts and renders an onCancelRegistration pro
 
 test("7. The Cancel registration button exists, is visually quieter (ghost variant, no gradient) than the primary Save and continue button, and sits after it", () => {
   const cleaned = stripComments(onboardingDialog);
-  const saveIdx = cleaned.indexOf('"Saving..." : "Save and continue"');
-  const cancelIdx = cleaned.indexOf("Cancel registration");
+  const saveIdx = cleaned.indexOf('t("accountOnboarding.saving") : t("accountOnboarding.save")');
+  const cancelIdx = cleaned.indexOf('t("accountOnboarding.cancel")');
   assert.ok(saveIdx > -1 && cancelIdx > -1, "expected both buttons to be found");
   assert.ok(cancelIdx > saveIdx, "Cancel registration must render after Save and continue");
 
   const buttonMatch = onboardingDialog.match(
-    /<Button\s+type="button"\s+variant="ghost"\s+disabled=\{isSubmitting\}\s+onClick=\{onCancelRegistration\}[\s\S]*?>\s*Cancel registration\s*<\/Button>/,
+    /<Button\s+type="button"\s+variant="ghost"\s+disabled=\{isSubmitting\}\s+onClick=\{onCancelRegistration\}[\s\S]*?>\s*\{t\("accountOnboarding\.cancel"\)\}\s*<\/Button>/,
   );
   assert.ok(buttonMatch, "expected a ghost-variant Cancel registration Button");
   assert.doesNotMatch(

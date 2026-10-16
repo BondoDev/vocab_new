@@ -10,6 +10,7 @@
     "more": "Mas",
     "logIn": "Iniciar sesión",
     "practice": "Práctica",
+    "signUp": "Registrarse",
     "help": "Ayuda",
     "levelTest": "Prueba de nivel"
   },
@@ -151,7 +152,45 @@
     }
   },
   "accountOnboarding": {
-    "saveError": "No pudimos guardar tu perfil. Intentalo de nuevo."
+    "saveError": "No pudimos guardar tu perfil. Intentalo de nuevo.",
+    "title": "Completa tu perfil",
+    "subtitle": "Puedes actualizar estos datos cuando quieras.",
+    "nativeLanguage": "Idioma nativo",
+    "practiceLanguage": "Idioma de aprendizaje",
+    "nativeLanguagePlaceholder": "Elegir idioma",
+    "practiceLanguagePlaceholder": "Elegir idioma",
+    "nickname": "Apodo",
+    "nicknamePlaceholder": "Tu apodo",
+    "levelPlaceholder": "Elegir nivel",
+    "levelDisabledPlaceholder": "Primero elige idioma",
+    "age": "Tu edad",
+    "increaseAge": "Aumentar edad",
+    "decreaseAge": "Disminuir edad",
+    "birthDate": "Fecha de nacimiento",
+    "month": "Mes",
+    "day": "Día",
+    "save": "Guardar y continuar",
+    "saving": "Guardando...",
+    "cancel": "Cancelar registro",
+    "levelLabel": {
+      "en": "Tu nivel de inglés",
+      "es": "Tu nivel de español",
+      "fr": "Tu nivel de francés",
+      "de": "Tu nivel de alemán",
+      "it": "Tu nivel de italiano",
+      "pt": "Tu nivel de portugués",
+      "ru": "Tu nivel de ruso"
+    },
+    "levelLabelGeneric": "Tu nivel",
+    "errors": {
+      "signInAgain": "Vuelve a iniciar sesión para completar tu perfil.",
+      "nicknameRequired": "Elige un apodo.",
+      "nicknameStartsWithLetter": "El apodo debe empezar con una letra.",
+      "levelRequired": "Elige tu nivel de idioma.",
+      "ageRequired": "Indica tu edad.",
+      "birthDateRequired": "Elige el mes y el día de tu nacimiento.",
+      "languagesRequired": "Elige ambos idiomas."
+    }
   },
   "auth": {
     "loginError": "Correo electronico o contrasena incorrectos. Intentalo de nuevo.",
@@ -164,7 +203,24 @@
     "passwordRequirementMetSr": "Requisito cumplido.",
     "passwordRequirementNotMetSr": "Requisito aún no cumplido.",
     "passwordsMatch": "Las contraseñas coinciden",
-    "passwordsDoNotMatch": "Las contraseñas no coinciden"
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "loginTitle": "¡Qué bueno verte de nuevo!",
+    "continueWithGoogle": "Continuar con Google",
+    "or": "O",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Introduce tu contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccountYet": "¿Todavía no tienes una cuenta?",
+    "signupTitle": "Crea tu cuenta de FluentStellar",
+    "signupWithGoogle": "Regístrate con Google",
+    "confirmPasswordLabel": "Confirmar contraseña",
+    "confirmPasswordPlaceholder": "Repite tu contraseña",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "pleaseWait": "Espera un momento...",
+    "signupDescription": "Crea una cuenta de FluentStellar con Google o con tu correo electrónico y contraseña.",
+    "loginDescription": "Inicia sesión en tu cuenta de FluentStellar con Google o con tu correo electrónico y contraseña."
   },
   "userProfile": {
     "dashboardPage": {

@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronUp, UserRound } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { LanguageSelector } from "../LanguageSelector";
 import { Button } from "../ui/button";
@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import type { UserProfile } from "../../../lib/userProfile";
 import {
   clampOnboardingAge,
@@ -28,44 +29,31 @@ import {
   resolveOnboardingAgeDefault,
 } from "../../utils/accountOnboardingAge";
 
-const LANGUAGE_LEVEL_OPTIONS = [
-  { value: "A1", label: "Beginner", detail: "A1" },
-  { value: "A2", label: "Elementary", detail: "A2" },
-  { value: "B1", label: "Intermediate", detail: "B1" },
-  { value: "B2", label: "Upper-intermediate", detail: "B2" },
-  { value: "C1", label: "Advanced", detail: "C1" },
-  { value: "C2", label: "Proficient", detail: "C2" },
+// CEFR codes stay identical in every UI language; only the level names
+// (shared levels.<code>.name copy) are localized.
+const LANGUAGE_LEVEL_CODES = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
+
+const BIRTH_MONTH_VALUES = [
+  "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
 ] as const;
 
-const BIRTH_MONTH_OPTIONS = [
-  { value: "01", label: "January" },
-  { value: "02", label: "February" },
-  { value: "03", label: "March" },
-  { value: "04", label: "April" },
-  { value: "05", label: "May" },
-  { value: "06", label: "June" },
-  { value: "07", label: "July" },
-  { value: "08", label: "August" },
-  { value: "09", label: "September" },
-  { value: "10", label: "October" },
-  { value: "11", label: "November" },
-  { value: "12", label: "December" },
-] as const;
+// Month names come from Intl rather than locale JSON. A standalone
+// { month: "long" } format yields the nominative form (e.g. Russian
+// "январь", not the genitive "января"), which is what a dropdown needs.
+// Some locales lowercase month names, so the first letter is capitalized
+// for list display.
+function getBirthMonthOptions(uiLanguage: string) {
+  const formatter = new Intl.DateTimeFormat(uiLanguage, { month: "long", timeZone: "UTC" });
+  return BIRTH_MONTH_VALUES.map((value) => {
+    const name = formatter.format(new Date(Date.UTC(2000, Number(value) - 1, 1)));
+    return { value, label: name.charAt(0).toLocaleUpperCase(uiLanguage) + name.slice(1) };
+  });
+}
 
 const BIRTH_DAY_OPTIONS = Array.from({ length: 31 }, (_, index) => {
   const value = String(index + 1).padStart(2, "0");
   return { value, label: value };
 });
-
-function getPracticeLanguageLabel(
-  languages: AccountOnboardingDialogProps["languages"],
-  code: UserProfile["practiceLanguage"],
-) {
-  return (
-    languages.find((language) => language.code === code)?.name ??
-    "practice language"
-  );
-}
 
 type AccountOnboardingDialogProps = {
   open: boolean;
@@ -100,10 +88,15 @@ export function AccountOnboardingDialog({
   onSubmit,
   onCancelRegistration,
 }: AccountOnboardingDialogProps) {
-  const selectedPracticeLanguageLabel = getPracticeLanguageLabel(
-    languages,
-    profile.practiceLanguage,
-  );
+  const { uiLanguage, t } = useLanguage();
+  // One whole sentence per practice language (accountOnboarding.levelLabel.<code>)
+  // instead of splicing a language name into a template, because the
+  // grammar differs per UI language (German compounds "Deutschniveau",
+  // Russian declines "немецкого", French elides "d'allemand").
+  const languageLevelLabel = profile.practiceLanguage
+    ? t(`accountOnboarding.levelLabel.${profile.practiceLanguage}`)
+    : t("accountOnboarding.levelLabelGeneric");
+  const birthMonthOptions = useMemo(() => getBirthMonthOptions(uiLanguage), [uiLanguage]);
   const isLanguageLevelDisabled = !profile.practiceLanguage;
   const [ageInputValue, setAgeInputValue] = useState(() =>
     String(resolveOnboardingAgeDefault(profile.age)),
@@ -162,14 +155,14 @@ export function AccountOnboardingDialog({
             <DialogHeader className="gap-4 text-left">
               <div className="space-y-2 pr-16 sm:pr-20">
                 <DialogTitle className="text-[1.9rem] font-semibold leading-tight tracking-tight text-[#261943]">
-                  Finish your profile
+                  {t("accountOnboarding.title")}
                 </DialogTitle>
                 {/* F-3: this already-visible blurb doubles as the dialog's
                     accessible description (wires up aria-describedby) - no
                     visual change, just the proper Radix element instead of
                     a plain <p>. */}
                 <DialogDescription className="max-w-[24rem] text-sm leading-6 text-[#6f6290]">
-                  You can update these details anytime.
+                  {t("accountOnboarding.subtitle")}
                 </DialogDescription>
               </div>
             </DialogHeader>
@@ -184,23 +177,23 @@ export function AccountOnboardingDialog({
                 </div>
               ) : null}
 
-              <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [&_.language-selector-trigger]:h-12 [&_.language-selector-trigger]:px-4 [&_.language-selector-trigger]:py-3 [&_.language-selector-trigger]:md:px-4 [&_.language-selector-trigger]:md:py-3 [&_.language-selector-trigger]:md:text-base">
+              <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [&_.language-selector-trigger]:h-12 [&_.language-selector-trigger]:pl-4 [&_.language-selector-trigger]:pr-10 [&_.language-selector-trigger]:py-3 [&_.language-selector-trigger]:md:pl-4 [&_.language-selector-trigger]:md:pr-10 [&_.language-selector-trigger]:md:py-3 [&_.language-selector-trigger]:md:text-base">
                 <LanguageSelector
-                  label="Native language"
+                  label={t("accountOnboarding.nativeLanguage")}
                   value={profile.nativeLanguage}
                   onChange={(value) =>
                     onProfileChange({
                       nativeLanguage: value as UserProfile["nativeLanguage"],
                     })
                   }
-                  placeholder="Select your native language"
+                  placeholder={t("accountOnboarding.nativeLanguagePlaceholder")}
                   languages={languages}
                   disabledLanguages={
                     profile.practiceLanguage ? [profile.practiceLanguage] : []
                   }
                 />
                 <LanguageSelector
-                  label="Practice language"
+                  label={t("accountOnboarding.practiceLanguage")}
                   value={profile.practiceLanguage}
                   onChange={(value) =>
                     onProfileChange({
@@ -208,7 +201,7 @@ export function AccountOnboardingDialog({
                         value as UserProfile["practiceLanguage"],
                     })
                   }
-                  placeholder="Select the language you want to practice"
+                  placeholder={t("accountOnboarding.practiceLanguagePlaceholder")}
                   languages={languages}
                   disabledLanguages={
                     profile.nativeLanguage ? [profile.nativeLanguage] : []
@@ -222,7 +215,7 @@ export function AccountOnboardingDialog({
                     htmlFor="account-onboarding-nickname"
                     className="text-sm font-semibold text-[#37275b]"
                   >
-                    Nickname
+                    {t("accountOnboarding.nickname")}
                   </Label>
                   <div className="relative">
                     <UserRound className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8d7cb6]" />
@@ -234,13 +227,13 @@ export function AccountOnboardingDialog({
                           nickname: event.target.value.slice(0, 40),
                         })
                       }
-                      placeholder="Your nickname"
+                      placeholder={t("accountOnboarding.nicknamePlaceholder")}
                       className="h-12 rounded-2xl border-[#dcd1ff] bg-white pl-11 text-base text-[#261943] placeholder:text-[#8d7cb6] [&::placeholder]:text-[0.8rem] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35"
                     />
                   </div>
                   <div className="space-y-2 pt-1">
                     <Label className="text-sm font-semibold text-[#37275b]">
-                      {`Your ${selectedPracticeLanguageLabel} Level`}
+                      {languageLevelLabel}
                     </Label>
                     <Select
                       value={profile.languageLevel}
@@ -251,27 +244,27 @@ export function AccountOnboardingDialog({
                         })
                       }
                     >
-                      <SelectTrigger className="h-12 min-h-12 max-h-12 min-w-0 rounded-2xl border-[#dcd1ff] bg-white px-4 py-0 text-base text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 disabled:cursor-not-allowed disabled:opacity-55 [&_[data-slot=select-value]]:min-w-0 [&_svg]:size-5 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
+                      <SelectTrigger className="h-12 min-h-12 max-h-12 min-w-0 rounded-2xl border-[#dcd1ff] bg-white px-4 py-0 text-base text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 disabled:cursor-not-allowed disabled:opacity-55 [&_[data-slot=select-value]]:min-w-0 [&_[data-slot=select-value]]:block [&_[data-slot=select-value]]:truncate [&_svg]:size-5 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
                         <SelectValue
                           placeholder={
                             isLanguageLevelDisabled
-                              ? "Select a practice language first"
-                              : "Choose your level"
+                              ? t("accountOnboarding.levelDisabledPlaceholder")
+                              : t("accountOnboarding.levelPlaceholder")
                           }
                         />
                       </SelectTrigger>
                       <SelectContent className="rounded-2xl border-[#dcd1ff] bg-white">
-                        {LANGUAGE_LEVEL_OPTIONS.map((option) => (
+                        {LANGUAGE_LEVEL_CODES.map((code) => (
                           <SelectItem
-                            key={option.value}
-                            value={option.value}
+                            key={code}
+                            value={code}
                             className="rounded-xl px-3 py-3 text-sm text-[#261943]"
                           >
                             <span className="flex w-full items-center justify-between gap-3">
                               <span className="text-xs font-semibold text-[#8d7cb6]">
-                                {option.detail}
+                                {code}
                               </span>
-                              <span className="flex-1">{option.label}</span>
+                              <span className="flex-1">{t(`levels.${code}.name`)}</span>
                             </span>
                           </SelectItem>
                         ))}
@@ -285,7 +278,7 @@ export function AccountOnboardingDialog({
                     htmlFor="account-onboarding-age"
                     className="justify-center text-sm font-semibold text-[#37275b]"
                   >
-                    Your Age
+                    {t("accountOnboarding.age")}
                   </Label>
                   <div className="relative">
                     <Input
@@ -339,7 +332,7 @@ export function AccountOnboardingDialog({
                           handleAgeChange(nextValue);
                         }}
                         className="inline-flex h-4 w-4 items-center justify-center rounded text-[#6f6290]"
-                        aria-label="Increase age"
+                        aria-label={t("accountOnboarding.increaseAge")}
                       >
                         <ChevronUp className="h-2.5 w-2.5" />
                       </button>
@@ -351,14 +344,14 @@ export function AccountOnboardingDialog({
                           handleAgeChange(nextValue);
                         }}
                         className="inline-flex h-4 w-4 items-center justify-center rounded text-[#6f6290]"
-                        aria-label="Decrease age"
+                        aria-label={t("accountOnboarding.decreaseAge")}
                       >
                         <ChevronDown className="h-2.5 w-2.5" />
                       </button>
                     </div>
                   </div>
                   <Label className="justify-center text-sm font-semibold text-[#37275b]">
-                    Birth Date
+                    {t("accountOnboarding.birthDate")}
                   </Label>
                   <div className="grid grid-cols-[minmax(0,1fr)_4.25rem] gap-1.5">
                     <Select
@@ -368,7 +361,7 @@ export function AccountOnboardingDialog({
                       }
                     >
                       <SelectTrigger className="h-11 min-w-0 gap-1 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-1.5 text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 [&_svg]:size-4 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
-                        <SelectValue placeholder="Month" />
+                        <SelectValue placeholder={t("accountOnboarding.month")} />
                       </SelectTrigger>
                       <SelectContent
                         position="popper"
@@ -376,7 +369,7 @@ export function AccountOnboardingDialog({
                         sideOffset={6}
                         className="w-[var(--radix-select-trigger-width)] rounded-2xl border-[#dcd1ff] bg-white p-1 shadow-[0_16px_36px_-24px_rgba(74,43,130,0.9)]"
                       >
-                        {BIRTH_MONTH_OPTIONS.map((month) => (
+                        {birthMonthOptions.map((month) => (
                           <SelectItem
                             key={month.value}
                             value={month.value}
@@ -394,7 +387,7 @@ export function AccountOnboardingDialog({
                       }
                     >
                       <SelectTrigger className="h-11 min-w-0 gap-1 rounded-2xl border-[#dcd1ff] bg-[#fcfbff] pl-3 pr-1.5 text-center text-sm text-[#261943] shadow-[0_12px_30px_-24px_rgba(74,43,130,0.9)] focus-visible:ring-[#8f7dff]/35 [&_svg]:size-4 [&_svg]:text-[#6f6290] [&_svg]:opacity-100">
-                        <SelectValue placeholder="day" />
+                        <SelectValue placeholder={t("accountOnboarding.day")} />
                       </SelectTrigger>
                       <SelectContent
                         position="popper"
@@ -423,7 +416,7 @@ export function AccountOnboardingDialog({
                 onClick={() => void onSubmit()}
                 className="h-12 w-full rounded-2xl bg-[linear-gradient(135deg,#6f58ff,#5c49f2)] text-base font-semibold text-white shadow-[0_18px_38px_-18px_rgba(92,73,242,0.9)] transition-transform hover:translate-y-[-1px] hover:opacity-95"
               >
-                {isSubmitting ? "Saving..." : "Save and continue"}
+                {isSubmitting ? t("accountOnboarding.saving") : t("accountOnboarding.save")}
               </Button>
               {/* Visually quieter than the primary CTA above (ghost variant,
                   no gradient/shadow) - matches AccountIntroDialog's own
@@ -436,7 +429,7 @@ export function AccountOnboardingDialog({
                 onClick={onCancelRegistration}
                 className="h-9 w-full rounded-2xl text-sm font-medium text-[#6f6290] hover:bg-[#f5f1ff] hover:text-[#37275b]"
               >
-                Cancel registration
+                {t("accountOnboarding.cancel")}
               </Button>
             </div>
           </div>

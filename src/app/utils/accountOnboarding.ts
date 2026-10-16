@@ -13,7 +13,9 @@ interface PrepareAccountOnboardingSubmitParams {
 type AccountOnboardingSubmitPreparation =
   | {
       ok: false;
-      error: string;
+      // An interface-locale key under accountOnboarding.errors; the caller
+      // resolves it with t() so this pure helper stays locale-agnostic.
+      errorKey: string;
     }
   | {
       ok: true;
@@ -39,34 +41,31 @@ export function prepareAccountOnboardingSubmit({
     practiceLanguage) as UserProfile["practiceLanguage"];
 
   if (!authUserId) {
-    return { ok: false, error: "Sign in again to finish your profile." };
+    return { ok: false, errorKey: "accountOnboarding.errors.signInAgain" };
   }
 
   if (!nickname) {
-    return { ok: false, error: "Please choose a nickname." };
+    return { ok: false, errorKey: "accountOnboarding.errors.nicknameRequired" };
   }
 
   if (!startsWithLetter(nickname)) {
-    return { ok: false, error: "Nickname must start with a letter." };
+    return { ok: false, errorKey: "accountOnboarding.errors.nicknameStartsWithLetter" };
   }
 
   if (!userProfile.languageLevel) {
-    return { ok: false, error: "Please choose your language level." };
+    return { ok: false, errorKey: "accountOnboarding.errors.levelRequired" };
   }
 
   if (age === null) {
-    return { ok: false, error: "Please set your age." };
+    return { ok: false, errorKey: "accountOnboarding.errors.ageRequired" };
   }
 
   if (!birthMonth || !birthDay) {
-    return {
-      ok: false,
-      error: "Please choose your birth month and day.",
-    };
+    return { ok: false, errorKey: "accountOnboarding.errors.birthDateRequired" };
   }
 
   if (!nativeLanguage || !nextPracticeLanguage) {
-    return { ok: false, error: "Please choose both languages." };
+    return { ok: false, errorKey: "accountOnboarding.errors.languagesRequired" };
   }
 
   return {

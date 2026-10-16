@@ -152,7 +152,7 @@ export function LanguageSelector({
           onClick={() => setIsOpen(!isOpen)}
           className="language-selector-trigger w-full bg-input-background border border-border rounded-lg px-4 py-3 md:px-6 md:py-5 md:text-lg pr-10 cursor-pointer hover:border-primary/40 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-left"
         >
-          <span className="inline-flex items-center gap-2">
+          <span className="flex min-w-0 items-center gap-2">
             {selectedLanguage?.flagCode && (
               <div className="flex-shrink-0 flex items-center justify-center">
                 <img
@@ -165,8 +165,8 @@ export function LanguageSelector({
             <span
               className={
                 selectedLanguage
-                  ? "language-selector-trigger-text"
-                  : "language-selector-trigger-text text-sm text-muted-foreground/70"
+                  ? "language-selector-trigger-text truncate"
+                  : "language-selector-trigger-text truncate text-sm text-muted-foreground/70"
               }
             >
               {selectedLanguage?.name || placeholder || "Select..."}

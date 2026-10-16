@@ -79,7 +79,7 @@ export function useAccountOnboarding({
     });
 
     if (submitPreparation.ok === false) {
-      setAccountOnboardingError(submitPreparation.error);
+      setAccountOnboardingError(t(submitPreparation.errorKey));
       return;
     }
 

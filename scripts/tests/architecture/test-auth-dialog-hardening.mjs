@@ -225,6 +225,23 @@ test("13. The new auth.* locale keys (including the neutral no-session copy) exi
     "passwordRequirementNotMetSr",
     "passwordsMatch",
     "passwordsDoNotMatch",
+    "loginTitle",
+    "continueWithGoogle",
+    "or",
+    "emailLabel",
+    "emailPlaceholder",
+    "passwordLabel",
+    "passwordPlaceholder",
+    "forgotPassword",
+    "noAccountYet",
+    "signupTitle",
+    "signupWithGoogle",
+    "confirmPasswordLabel",
+    "confirmPasswordPlaceholder",
+    "haveAccount",
+    "pleaseWait",
+    "signupDescription",
+    "loginDescription",
   ].sort();
   for (const fileName of LOCALE_FILES) {
     const data = JSON.parse(read(`src/data/interface/${fileName}`));

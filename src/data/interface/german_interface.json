@@ -10,6 +10,7 @@
     "more": "Mehr",
     "logIn": "Anmelden",
     "practice": "Üben",
+    "signUp": "Registrieren",
     "help": "Hilfe",
     "levelTest": "Niveautest"
   },
@@ -151,7 +152,45 @@
     }
   },
   "accountOnboarding": {
-    "saveError": "Dein Profil konnte nicht gespeichert werden. Bitte versuche es erneut."
+    "saveError": "Dein Profil konnte nicht gespeichert werden. Bitte versuche es erneut.",
+    "title": "Vervollständige dein Profil",
+    "subtitle": "Du kannst diese Angaben jederzeit ändern.",
+    "nativeLanguage": "Muttersprache",
+    "practiceLanguage": "Lernsprache",
+    "nativeLanguagePlaceholder": "Sprache wählen",
+    "practiceLanguagePlaceholder": "Sprache wählen",
+    "nickname": "Spitzname",
+    "nicknamePlaceholder": "Dein Spitzname",
+    "levelPlaceholder": "Niveau wählen",
+    "levelDisabledPlaceholder": "Erst Sprache wählen",
+    "age": "Dein Alter",
+    "increaseAge": "Alter erhöhen",
+    "decreaseAge": "Alter verringern",
+    "birthDate": "Geburtsdatum",
+    "month": "Monat",
+    "day": "Tag",
+    "save": "Speichern und fortfahren",
+    "saving": "Wird gespeichert...",
+    "cancel": "Registrierung abbrechen",
+    "levelLabel": {
+      "en": "Dein Englischniveau",
+      "es": "Dein Spanischniveau",
+      "fr": "Dein Französischniveau",
+      "de": "Dein Deutschniveau",
+      "it": "Dein Italienischniveau",
+      "pt": "Dein Portugiesischniveau",
+      "ru": "Dein Russischniveau"
+    },
+    "levelLabelGeneric": "Dein Niveau",
+    "errors": {
+      "signInAgain": "Melde dich erneut an, um dein Profil zu vervollständigen.",
+      "nicknameRequired": "Bitte wähle einen Spitznamen.",
+      "nicknameStartsWithLetter": "Der Spitzname muss mit einem Buchstaben beginnen.",
+      "levelRequired": "Bitte wähle dein Sprachniveau.",
+      "ageRequired": "Bitte gib dein Alter an.",
+      "birthDateRequired": "Bitte wähle deinen Geburtsmonat und -tag.",
+      "languagesRequired": "Bitte wähle beide Sprachen."
+    }
   },
   "auth": {
     "loginError": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuche es erneut.",
@@ -164,7 +203,24 @@
     "passwordRequirementMetSr": "Anforderung erfüllt.",
     "passwordRequirementNotMetSr": "Anforderung noch nicht erfüllt.",
     "passwordsMatch": "Passwörter stimmen überein",
-    "passwordsDoNotMatch": "Passwörter stimmen nicht überein"
+    "passwordsDoNotMatch": "Passwörter stimmen nicht überein",
+    "loginTitle": "Willkommen zurück",
+    "continueWithGoogle": "Mit Google fortfahren",
+    "or": "ODER",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "du@beispiel.de",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "Gib dein Passwort ein",
+    "forgotPassword": "Passwort vergessen?",
+    "noAccountYet": "Du hast noch kein Konto?",
+    "signupTitle": "Erstelle dein FluentStellar-Konto",
+    "signupWithGoogle": "Mit Google registrieren",
+    "confirmPasswordLabel": "Passwort bestätigen",
+    "confirmPasswordPlaceholder": "Wiederhole dein Passwort",
+    "haveAccount": "Du hast bereits ein Konto?",
+    "pleaseWait": "Bitte warten...",
+    "signupDescription": "Erstelle ein FluentStellar-Konto mit Google oder deiner E-Mail-Adresse und einem Passwort.",
+    "loginDescription": "Melde dich mit Google oder deiner E-Mail-Adresse und deinem Passwort bei deinem FluentStellar-Konto an."
   },
   "userProfile": {
     "dashboardPage": {

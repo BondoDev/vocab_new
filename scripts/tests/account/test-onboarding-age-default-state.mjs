@@ -139,10 +139,10 @@ async function main() {
 
   const validationSource = read("src/app/utils/accountOnboarding.ts");
 
-  test("3a. the null-age check still exists with its exact pre-existing error text - the same check the bug report's failure came from", () => {
+  test("3a. the null-age check still exists with its ageRequired error key - the same check the bug report's failure came from", () => {
     assert.match(
       validationSource,
-      /if \(age === null\) \{\s*return \{ ok: false, error: "Please set your age\." \};\s*\}/,
+      /if \(age === null\) \{\s*return \{ ok: false, errorKey: "accountOnboarding\.errors\.ageRequired" \};\s*\}/,
     );
   });
 

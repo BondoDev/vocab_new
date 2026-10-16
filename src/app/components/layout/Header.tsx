@@ -380,10 +380,10 @@ export function Header({
   const { t } = useLanguage();
   const moreLabel = t("header.more") === "header.more" ? "More" : t("header.more");
   const loginLabel = t("header.logIn") === "header.logIn" ? "Log In" : t("header.logIn");
-  const signupLabel = "Sign up";
+  const signupLabel = t("header.signUp") === "header.signUp" ? "Sign Up" : t("header.signUp");
   const showAuthButton = true;
   const googleLabel =
-    authMode === "login" ? "Continue with Google" : "Sign up with Google";
+    authMode === "login" ? t("auth.continueWithGoogle") : t("auth.signupWithGoogle");
   // Live signup password-requirement hint (below the field, signup mode
   // only). Two visual states, not three: "not yet met" covers both an
   // untouched/empty field and a too-short one typed so far - a persistent
@@ -1173,13 +1173,13 @@ export function Header({
               <DialogHeader className="gap-2 text-left">
                 <DialogTitle className="text-2xl font-semibold tracking-tight text-[#261943]">
                   {authMode === "login"
-                    ? "Welcome back"
-                    : "Create your FluentStellar account"}
+                    ? t("auth.loginTitle")
+                    : t("auth.signupTitle")}
                 </DialogTitle>
                 <DialogDescription className="sr-only">
                   {authMode === "login"
-                    ? "Log in to your FluentStellar account with Google or email and password."
-                    : "Create a FluentStellar account with Google or email and password."}
+                    ? t("auth.loginDescription")
+                    : t("auth.signupDescription")}
                 </DialogDescription>
               </DialogHeader>
 
@@ -1189,7 +1189,7 @@ export function Header({
                   variant="outline"
                   disabled={isAuthSubmitting}
                   onClick={() => void handleGoogleAuth()}
-                  className="h-11 w-full rounded-xl border-[#d9cffd] bg-white font-semibold text-[#2c2344] hover:bg-[#f8f4ff]"
+                  className="h-auto min-h-11 w-full whitespace-normal rounded-xl py-2 text-center border-[#d9cffd] bg-white font-semibold text-[#2c2344] hover:bg-[#f8f4ff]"
                 >
                   <GoogleMark />
                   {googleLabel}
@@ -1198,7 +1198,7 @@ export function Header({
                 <div className="flex items-center gap-3 py-1">
                   <div className="h-px flex-1 bg-[#ddd4fb]" />
                   <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8b7fb0]">
-                    Or
+                    {t("auth.or")}
                   </span>
                   <div className="h-px flex-1 bg-[#ddd4fb]" />
                 </div>
@@ -1227,14 +1227,14 @@ export function Header({
                     htmlFor="auth-email"
                     className="text-sm font-medium text-[#342456]"
                   >
-                    Email
+                    {t("auth.emailLabel")}
                   </label>
                   <Input
                     id="auth-email"
                     type="email"
                     value={authEmail}
                     onChange={(event) => setAuthEmail(event.target.value)}
-                    placeholder="you@example.com"
+                    placeholder={t("auth.emailPlaceholder")}
                     autoComplete="email"
                     disabled={isAuthSubmitting}
                     className="h-11 rounded-xl border-[#ded7ef] bg-white/90 px-4 text-[#24163d] placeholder:text-[#8f85a8]"
@@ -1246,14 +1246,14 @@ export function Header({
                     htmlFor="auth-password"
                     className="text-sm font-medium text-[#342456]"
                   >
-                    Password
+                    {t("auth.passwordLabel")}
                   </label>
                   <Input
                     id="auth-password"
                     type="password"
                     value={authPassword}
                     onChange={(event) => setAuthPassword(event.target.value)}
-                    placeholder="Enter your password"
+                    placeholder={t("auth.passwordPlaceholder")}
                     autoComplete={authMode === "login" ? "current-password" : "new-password"}
                     disabled={isAuthSubmitting}
                     aria-describedby={authMode === "signup" ? "auth-password-requirement" : undefined}
@@ -1298,7 +1298,7 @@ export function Header({
                       disabled={isAuthSubmitting}
                       className="text-sm font-medium text-[#5a4ad1] transition hover:text-[#4938c8] hover:underline"
                     >
-                      Forgot password?
+                      {t("auth.forgotPassword")}
                     </button>
                   </div>
                 ) : null}
@@ -1309,7 +1309,7 @@ export function Header({
                       htmlFor="auth-confirm-password"
                       className="text-sm font-medium text-[#342456]"
                     >
-                      Confirm password
+                      {t("auth.confirmPasswordLabel")}
                     </label>
                     <Input
                       id="auth-confirm-password"
@@ -1318,7 +1318,7 @@ export function Header({
                       onChange={(event) =>
                         setAuthConfirmPassword(event.target.value)
                       }
-                      placeholder="Repeat your password"
+                      placeholder={t("auth.confirmPasswordPlaceholder")}
                       autoComplete="new-password"
                       disabled={isAuthSubmitting}
                       aria-describedby={
@@ -1370,7 +1370,7 @@ export function Header({
                   className="mt-2 h-11 w-full rounded-xl bg-[#6558f5] text-base font-semibold text-white hover:bg-[#5647f0]"
                 >
                   {isAuthSubmitting
-                    ? "Please wait..."
+                    ? t("auth.pleaseWait")
                     : authMode === "login"
                       ? loginLabel
                       : signupLabel}
@@ -1382,7 +1382,7 @@ export function Header({
               {authMode === "login" ? (
                 <div className="space-y-3 text-center">
                   <p className="text-sm text-[#70658b]">
-                    Don&apos;t have an account yet?
+                    {t("auth.noAccountYet")}
                   </p>
                   <Button
                     type="button"
@@ -1396,7 +1396,7 @@ export function Header({
               ) : (
                 <div className="space-y-3 text-center">
                   <p className="text-sm text-[#70658b]">
-                    Already have an account?
+                    {t("auth.haveAccount")}
                   </p>
                   <Button
                     type="button"

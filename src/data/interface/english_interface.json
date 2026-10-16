@@ -10,6 +10,7 @@
     "more": "More",
     "logIn": "Log In",
     "practice": "Practice",
+    "signUp": "Sign Up",
     "help": "Help",
     "levelTest": "Level Test"
   },
@@ -151,7 +152,45 @@
     }
   },
   "accountOnboarding": {
-    "saveError": "We could not save your profile. Please try again."
+    "saveError": "We could not save your profile. Please try again.",
+    "title": "Finish your profile",
+    "subtitle": "You can update these details anytime.",
+    "nativeLanguage": "Native language",
+    "practiceLanguage": "Practice language",
+    "nativeLanguagePlaceholder": "Select language",
+    "practiceLanguagePlaceholder": "Select language",
+    "nickname": "Nickname",
+    "nicknamePlaceholder": "Your nickname",
+    "levelPlaceholder": "Select level",
+    "levelDisabledPlaceholder": "Select language first",
+    "age": "Your Age",
+    "increaseAge": "Increase age",
+    "decreaseAge": "Decrease age",
+    "birthDate": "Birth Date",
+    "month": "Month",
+    "day": "Day",
+    "save": "Save and continue",
+    "saving": "Saving...",
+    "cancel": "Cancel registration",
+    "levelLabel": {
+      "en": "Your English Level",
+      "es": "Your Spanish Level",
+      "fr": "Your French Level",
+      "de": "Your German Level",
+      "it": "Your Italian Level",
+      "pt": "Your Portuguese Level",
+      "ru": "Your Russian Level"
+    },
+    "levelLabelGeneric": "Your Level",
+    "errors": {
+      "signInAgain": "Sign in again to finish your profile.",
+      "nicknameRequired": "Please choose a nickname.",
+      "nicknameStartsWithLetter": "Nickname must start with a letter.",
+      "levelRequired": "Please choose your language level.",
+      "ageRequired": "Please set your age.",
+      "birthDateRequired": "Please choose your birth month and day.",
+      "languagesRequired": "Please choose both languages."
+    }
   },
   "auth": {
     "loginError": "Incorrect email or password. Please try again.",
@@ -164,7 +203,24 @@
     "passwordRequirementMetSr": "Requirement met.",
     "passwordRequirementNotMetSr": "Requirement not yet met.",
     "passwordsMatch": "Passwords match",
-    "passwordsDoNotMatch": "Passwords do not match"
+    "passwordsDoNotMatch": "Passwords do not match",
+    "loginTitle": "Welcome back",
+    "continueWithGoogle": "Continue with Google",
+    "or": "OR",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "forgotPassword": "Forgot password?",
+    "noAccountYet": "Don't have an account yet?",
+    "signupTitle": "Create your FluentStellar account",
+    "signupWithGoogle": "Sign up with Google",
+    "confirmPasswordLabel": "Confirm password",
+    "confirmPasswordPlaceholder": "Repeat your password",
+    "haveAccount": "Already have an account?",
+    "pleaseWait": "Please wait...",
+    "signupDescription": "Create a FluentStellar account using Google or your email address and password.",
+    "loginDescription": "Log in to your FluentStellar account using Google or your email address and password."
   },
   "userProfile": {
     "dashboardPage": {

@@ -10,6 +10,7 @@
     "more": "Altro",
     "logIn": "Accedi",
     "practice": "Pratica",
+    "signUp": "Registrati",
     "help": "Aiuto",
     "levelTest": "Test livello"
   },
@@ -151,7 +152,45 @@
     }
   },
   "accountOnboarding": {
-    "saveError": "Non siamo riusciti a salvare il tuo profilo. Riprova."
+    "saveError": "Non siamo riusciti a salvare il tuo profilo. Riprova.",
+    "title": "Completa il tuo profilo",
+    "subtitle": "Puoi modificare questi dati in qualsiasi momento.",
+    "nativeLanguage": "Lingua madre",
+    "practiceLanguage": "Lingua di apprendimento",
+    "nativeLanguagePlaceholder": "Scegli lingua",
+    "practiceLanguagePlaceholder": "Scegli lingua",
+    "nickname": "Soprannome",
+    "nicknamePlaceholder": "Il tuo soprannome",
+    "levelPlaceholder": "Scegli livello",
+    "levelDisabledPlaceholder": "Prima scegli la lingua",
+    "age": "La tua età",
+    "increaseAge": "Aumenta età",
+    "decreaseAge": "Diminuisci età",
+    "birthDate": "Data di nascita",
+    "month": "Mese",
+    "day": "Giorno",
+    "save": "Salva e continua",
+    "saving": "Salvataggio...",
+    "cancel": "Annulla la registrazione",
+    "levelLabel": {
+      "en": "Il tuo livello di inglese",
+      "es": "Il tuo livello di spagnolo",
+      "fr": "Il tuo livello di francese",
+      "de": "Il tuo livello di tedesco",
+      "it": "Il tuo livello di italiano",
+      "pt": "Il tuo livello di portoghese",
+      "ru": "Il tuo livello di russo"
+    },
+    "levelLabelGeneric": "Il tuo livello",
+    "errors": {
+      "signInAgain": "Accedi di nuovo per completare il tuo profilo.",
+      "nicknameRequired": "Scegli un soprannome.",
+      "nicknameStartsWithLetter": "Il soprannome deve iniziare con una lettera.",
+      "levelRequired": "Scegli il tuo livello di lingua.",
+      "ageRequired": "Indica la tua età.",
+      "birthDateRequired": "Scegli il mese e il giorno di nascita.",
+      "languagesRequired": "Scegli entrambe le lingue."
+    }
   },
   "auth": {
     "loginError": "Email o password non corretti. Riprova.",
@@ -164,7 +203,24 @@
     "passwordRequirementMetSr": "Requisito soddisfatto.",
     "passwordRequirementNotMetSr": "Requisito non ancora soddisfatto.",
     "passwordsMatch": "Le password corrispondono",
-    "passwordsDoNotMatch": "Le password non corrispondono"
+    "passwordsDoNotMatch": "Le password non corrispondono",
+    "loginTitle": "Bentornato!",
+    "continueWithGoogle": "Continua con Google",
+    "or": "O",
+    "emailLabel": "Email",
+    "emailPlaceholder": "tu@esempio.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Inserisci la tua password",
+    "forgotPassword": "Password dimenticata?",
+    "noAccountYet": "Non hai ancora un account?",
+    "signupTitle": "Crea il tuo account FluentStellar",
+    "signupWithGoogle": "Registrati con Google",
+    "confirmPasswordLabel": "Conferma password",
+    "confirmPasswordPlaceholder": "Ripeti la password",
+    "haveAccount": "Hai già un account?",
+    "pleaseWait": "Attendi...",
+    "signupDescription": "Crea un account FluentStellar con Google oppure con il tuo indirizzo email e una password.",
+    "loginDescription": "Accedi al tuo account FluentStellar con Google oppure con il tuo indirizzo email e la tua password."
   },
   "userProfile": {
     "dashboardPage": {

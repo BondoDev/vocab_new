@@ -10,6 +10,7 @@
     "more": "Plus",
     "logIn": "Se connecter",
     "practice": "Pratique",
+    "signUp": "S'inscrire",
     "help": "Aide",
     "levelTest": "Test de niveau"
   },
@@ -151,7 +152,45 @@
     }
   },
   "accountOnboarding": {
-    "saveError": "Nous n'avons pas pu enregistrer votre profil. Veuillez reessayer."
+    "saveError": "Nous n'avons pas pu enregistrer votre profil. Veuillez reessayer.",
+    "title": "Complétez votre profil",
+    "subtitle": "Vous pouvez modifier ces informations à tout moment.",
+    "nativeLanguage": "Langue maternelle",
+    "practiceLanguage": "Langue d'apprentissage",
+    "nativeLanguagePlaceholder": "Choisir une langue",
+    "practiceLanguagePlaceholder": "Choisir une langue",
+    "nickname": "Pseudonyme",
+    "nicknamePlaceholder": "Votre pseudonyme",
+    "levelPlaceholder": "Choisir un niveau",
+    "levelDisabledPlaceholder": "Choisir la langue d'abord",
+    "age": "Votre âge",
+    "increaseAge": "Augmenter l'âge",
+    "decreaseAge": "Diminuer l'âge",
+    "birthDate": "Date de naissance",
+    "month": "Mois",
+    "day": "Jour",
+    "save": "Enregistrer et continuer",
+    "saving": "Enregistrement...",
+    "cancel": "Annuler l'inscription",
+    "levelLabel": {
+      "en": "Votre niveau d'anglais",
+      "es": "Votre niveau d'espagnol",
+      "fr": "Votre niveau de français",
+      "de": "Votre niveau d'allemand",
+      "it": "Votre niveau d'italien",
+      "pt": "Votre niveau de portugais",
+      "ru": "Votre niveau de russe"
+    },
+    "levelLabelGeneric": "Votre niveau",
+    "errors": {
+      "signInAgain": "Reconnectez-vous pour compléter votre profil.",
+      "nicknameRequired": "Veuillez choisir un pseudonyme.",
+      "nicknameStartsWithLetter": "Le pseudonyme doit commencer par une lettre.",
+      "levelRequired": "Veuillez choisir votre niveau de langue.",
+      "ageRequired": "Veuillez indiquer votre âge.",
+      "birthDateRequired": "Veuillez choisir votre mois et votre jour de naissance.",
+      "languagesRequired": "Veuillez choisir les deux langues."
+    }
   },
   "auth": {
     "loginError": "E-mail ou mot de passe incorrect. Veuillez reessayer.",
@@ -164,7 +203,24 @@
     "passwordRequirementMetSr": "Exigence remplie.",
     "passwordRequirementNotMetSr": "Exigence pas encore remplie.",
     "passwordsMatch": "Les mots de passe correspondent",
-    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas"
+    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+    "loginTitle": "Bon retour !",
+    "continueWithGoogle": "Continuer avec Google",
+    "or": "OU",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Saisissez votre mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccountYet": "Vous n'avez pas encore de compte ?",
+    "signupTitle": "Créez votre compte FluentStellar",
+    "signupWithGoogle": "S'inscrire avec Google",
+    "confirmPasswordLabel": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Saisissez à nouveau votre mot de passe",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "pleaseWait": "Veuillez patienter...",
+    "signupDescription": "Créez un compte FluentStellar avec Google ou votre adresse e-mail et un mot de passe.",
+    "loginDescription": "Connectez-vous à votre compte FluentStellar avec Google ou votre adresse e-mail et votre mot de passe."
   },
   "userProfile": {
     "dashboardPage": {
