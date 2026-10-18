@@ -74,7 +74,9 @@ the repository has adopted a dedicated folder for that owner.
 `shared/` currently owns `seoAlternates.ts`, the one file with no
 single page-family owner. `wordPages/` groups the individual word-page
 page family. `hubPages/` groups the SEO hub and word-SEO-hub page
-family. `levelTests/` groups the level-test SEO page family, and
+family. `levelTests/` groups the level-test SEO page family,
+`fullVocabularyList/` groups the full A1–C2 vocabulary list page family
+(metadata builder plus its launch-status flag), and
 `verbLists/` is the umbrella for verb-list SEO page families. Its
 `common100Verbs/` folder owns the current "100 most common verbs"
 runtime metadata implementation; future verb-list families such as

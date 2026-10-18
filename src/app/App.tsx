@@ -27,6 +27,7 @@ import { SeoHubPage } from "./pages/SeoHubPage";
 import { VerbListSeoPage } from "./pages/verb-lists/common100Verbs/VerbListSeoPage";
 import { PastVerbFormsSeoPage } from "./pages/verb-lists/pastForms100Verbs/PastVerbFormsSeoPage";
 import { ConjugatedVerbFormsSeoPage } from "./pages/verb-lists/conjugated100Verbs/ConjugatedVerbFormsSeoPage";
+import { FullVocabularyListSeoPage } from "./pages/full-vocabulary-list/FullVocabularyListSeoPage";
 import { WordSeoPage } from "./pages/word-pages/detail/WordSeoPage";
 import { WordPageLayout } from "./pages/word-pages/detail/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./pages/vocabulary/DevSeoCefrPlaceholderPage";
@@ -50,6 +51,7 @@ import { findSeoCefrPreviewItem } from "./pages/vocabulary/devSeoCefrPreviewData
 import type { ResolvedWordPageData } from "../data/seo/wordPages/wordPageData";
 import { clearStoredUserProfile, type LanguageLevelCode, type UserProfile } from "../lib/userProfile";
 import { clearLocalSupabaseSession, signOutSupabase } from "../lib/supabaseAuth";
+import { consumeStayOnPageAfterOAuth } from "../lib/authStayOnPage";
 import { describeSupabaseError } from "../lib/supabaseError";
 import {
   TARGET_LANGUAGE_TO_UI_CODE,
@@ -58,6 +60,7 @@ import {
   pageFromPath,
   parseConjugatedVerbFormsSeoRoute,
   parseDevSeoCefrPlaceholderRoute,
+  parseFullVocabularyListSeoRoute,
   parseLevelTestSeoRoute,
   parsePastVerbFormsSeoRoute,
   parsePracticeRoute,
@@ -251,7 +254,9 @@ function AppContent({
   } = useSupabaseAuthRedirect({
     onSessionEstablished: (session, context) => {
       handleAuthSessionChange(session);
-      if (!context.recovery) {
+      // A Google login started from a stay-on-page request (e.g. the full
+      // vocabulary list's "Add to list") returns to that page and stays.
+      if (!context.recovery && !consumeStayOnPageAfterOAuth(window.location.pathname)) {
         navigate(`${ROUTES.profile}?section=dashboard`, { replace: true });
       }
     },
@@ -301,6 +306,10 @@ function AppContent({
   );
   const conjugatedVerbFormsSeoRoute = useMemo(
     () => parseConjugatedVerbFormsSeoRoute(location.pathname),
+    [location.pathname],
+  );
+  const fullVocabularyListSeoRoute = useMemo(
+    () => parseFullVocabularyListSeoRoute(location.pathname),
     [location.pathname],
   );
   const seoHubRoute = useMemo(
@@ -426,6 +435,7 @@ function AppContent({
       case "verbListSeo":
       case "pastVerbFormsSeo":
       case "conjugatedVerbFormsSeo":
+      case "fullVocabularyListSeo":
       case "seoHub":
       case "wordSeoHub":
       case "devSeoCefrPlaceholder":
@@ -498,6 +508,7 @@ function AppContent({
         verbListSeoRoute,
         pastVerbFormsSeoRoute,
         conjugatedVerbFormsSeoRoute,
+        fullVocabularyListSeoRoute,
         seoHubRoute,
         wordSeoHubRoute,
         wordRoute,
@@ -509,6 +520,7 @@ function AppContent({
       verbListSeoRoute,
       pastVerbFormsSeoRoute,
       conjugatedVerbFormsSeoRoute,
+      fullVocabularyListSeoRoute,
       seoHubRoute,
       wordSeoHubRoute,
       wordRoute,
@@ -564,6 +576,12 @@ function AppContent({
   const [requestedHeaderAuthMode, setRequestedHeaderAuthMode] = useState<
     "login" | "signup" | null
   >(null);
+  // Paired with requestedHeaderAuthMode; see Header's requestedAuthStayOnPage.
+  const [requestedHeaderAuthStayOnPage, setRequestedHeaderAuthStayOnPage] = useState(false);
+  const requestLoginStayingOnPage = () => {
+    setRequestedHeaderAuthStayOnPage(true);
+    setRequestedHeaderAuthMode("login");
+  };
 
   const accountLanguageConfirm = useAccountLanguageConfirm({
     authSession,
@@ -838,7 +856,11 @@ function AppContent({
     authRedirectError,
     onAuthRedirectErrorHandled: clearAuthRedirectError,
     requestedAuthMode: requestedHeaderAuthMode,
-    onAuthActionRequestHandled: () => setRequestedHeaderAuthMode(null),
+    requestedAuthStayOnPage: requestedHeaderAuthStayOnPage,
+    onAuthActionRequestHandled: () => {
+      setRequestedHeaderAuthMode(null);
+      setRequestedHeaderAuthStayOnPage(false);
+    },
   };
 
   const handleAccountIntroCreateAccount = () => {
@@ -1383,6 +1405,40 @@ function AppContent({
             uiLang={conjugatedVerbFormsSeoRoute.uiLang}
             targetLanguage={conjugatedVerbFormsSeoRoute.targetLanguage}
             onStartPractice={handleStartVocabularyPractice}
+          />
+        </Suspense>
+        {accountOnboardingDialog}
+        {passwordRecoveryDialog}
+        {accountIntroDialog}
+      </div>
+    );
+  }
+
+  if (resolvedPage === "fullVocabularyListSeo") {
+    if (!fullVocabularyListSeoRoute) {
+      return (
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header {...sharedHeaderProps} activePage="notFound" />
+          <NotFoundPage message="Invalid vocabulary list page." />
+          {accountOnboardingDialog}
+          {passwordRecoveryDialog}
+          {accountIntroDialog}
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header {...sharedHeaderProps} activePage="vocabularyLevel" />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          {/* Keyed by language pair so client-side navigation between two
+              list pages starts with fresh accordion and loaded-row state. */}
+          <FullVocabularyListSeoPage
+            key={`${fullVocabularyListSeoRoute.targetLanguage}-${fullVocabularyListSeoRoute.uiLang}`}
+            uiLang={fullVocabularyListSeoRoute.uiLang}
+            targetLanguage={fullVocabularyListSeoRoute.targetLanguage}
+            authSession={authSession}
+            onRequestLogin={requestLoginStayingOnPage}
           />
         </Suspense>
         {accountOnboardingDialog}

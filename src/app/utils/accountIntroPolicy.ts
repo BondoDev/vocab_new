@@ -148,6 +148,7 @@ export function shouldShowAccountIntro(
 //   - "verbListSeo"       common-100-verbs list pages
 //   - "pastVerbFormsSeo"  verb past-forms pages
 //   - "conjugatedVerbFormsSeo"  verb conjugation-by-pronoun pages
+//   - "fullVocabularyListSeo"   full A1–C2 vocabulary list pages
 //   - "seoHub"            the SEO hub/index page
 //   - "wordSeoHub"        the word-page hub/index
 //   - "wordPage"          individual word detail pages
@@ -159,6 +160,7 @@ const ACCOUNT_INTRO_SEO_ELIGIBLE_PAGE_KEYS: ReadonlySet<PageKey> = new Set([
   "verbListSeo",
   "pastVerbFormsSeo",
   "conjugatedVerbFormsSeo",
+  "fullVocabularyListSeo",
   "seoHub",
   "wordSeoHub",
   "wordPage",

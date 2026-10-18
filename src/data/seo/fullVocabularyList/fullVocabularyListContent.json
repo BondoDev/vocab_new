@@ -1,0 +1,765 @@
+[
+  {
+    "targetLanguage": "english",
+    "uiLanguage": "en",
+    "urlSlug": "english-vocabulary-list",
+    "entryButtonLabel": "Full English Vocabulary List (A1–C2)",
+    "metadata": {
+      "metaTitle": "English Vocabulary List (A1–C2) with Definitions & Examples",
+      "metaDescription": "Explore English vocabulary from A1 to C2. Browse words by CEFR level, search by grammar category, and learn with definitions and example sentences.",
+      "breadcrumbHomeLabel": "Home"
+    },
+    "hero": {
+      "heading": "English Vocabulary List by CEFR Level",
+      "intro": "Explore English vocabulary from A1 to C2, with clear definitions and example sentences. Search for words, filter by grammar category, and build your vocabulary at your own pace."
+    },
+    "globalFilters": {
+      "searchLabel": "Search words",
+      "searchPlaceholder": "Search all English words...",
+      "categoryLabel": "Parts of speech",
+      "categoryAllOption": "All",
+      "categoryDoneLabel": "Done",
+      "resetLabel": "Reset filters",
+      "resultsLabel": "{count} matching words across all levels"
+    },
+    "levelsSection": {
+      "heading": "Vocabulary by CEFR Level"
+    },
+    "levels": [
+      {
+        "level": "a1",
+        "name": "Beginner",
+        "description": "Everyday words for simple conversations and familiar situations."
+      },
+      {
+        "level": "a2",
+        "name": "Elementary",
+        "description": "Vocabulary for common activities, experiences, and daily life."
+      },
+      {
+        "level": "b1",
+        "name": "Intermediate",
+        "description": "Words for describing experiences, ideas, and familiar topics in greater detail."
+      },
+      {
+        "level": "b2",
+        "name": "Upper Intermediate",
+        "description": "A broader vocabulary for discussing more complex topics and opinions."
+      },
+      {
+        "level": "c1",
+        "name": "Advanced",
+        "description": "Advanced words for expressing detailed ideas with precision."
+      },
+      {
+        "level": "c2",
+        "name": "Proficiency",
+        "description": "Sophisticated vocabulary for highly precise and nuanced communication."
+      }
+    ],
+    "levelPanel": {
+      "filtersLabel": "Filter {level} vocabulary",
+      "searchLabel": "Search {level} vocabulary",
+      "searchPlaceholder": "Search {level} vocabulary...",
+      "categoryLabel": "Parts of speech",
+      "categoryAllOption": "All",
+      "categoryDoneLabel": "Done",
+      "resetLabel": "Reset",
+      "tableLabel": "{level} vocabulary list",
+      "tableColumns": {
+        "number": "N",
+        "word": "Word",
+        "translation": "Translation",
+        "definition": "Definition",
+        "sentence": "Example sentence",
+        "grammarType": "Grammar type",
+        "actions": "Actions"
+      },
+      "pronounceLabel": "Listen to “{word}”",
+      "rowActionsLabel": "More options for “{word}”",
+      "addToListLabel": "Add to list",
+      "loadingLabel": "Loading {level} words...",
+      "loadErrorLabel": "The vocabulary list could not be loaded.",
+      "retryLabel": "Try again",
+      "emptyLabel": "No words are available for this level yet.",
+      "noMatchesLabel": "No words match your filters.",
+      "headerCountLabel": "{total} words",
+      "headerFilteredCountLabel": "{shown} of {total} words",
+      "shownCountLabel": "Showing {shown} of {total} words",
+      "loadMoreLabel": "Load {count} More Words",
+      "detailsLabel": "Details",
+      "hideLabel": "Hide"
+    },
+    "grammarTypes": {
+      "noun": "Noun",
+      "verb": "Verb",
+      "adjective": "Adjective",
+      "adverb": "Adverb",
+      "preposition": "Preposition",
+      "pronoun": "Pronoun",
+      "determiner": "Determiner",
+      "conjunction": "Conjunction",
+      "exclamation": "Exclamation",
+      "interjection": "Interjection",
+      "expression": "Expression"
+    },
+    "howToUse": {
+      "heading": "How to Use This Vocabulary List",
+      "paragraph": "Choose a CEFR level, search for words, or filter by grammatical category. Read each word's definition and example sentence to understand its meaning and usage. You can also practice vocabulary through FluentStellar's interactive exercises."
+    }
+  },
+  {
+    "targetLanguage": "english",
+    "uiLanguage": "es",
+    "urlSlug": "lista-vocabulario-ingles",
+    "entryButtonLabel": "Lista completa de vocabulario inglés (A1–C2)",
+    "metadata": {
+      "metaTitle": "Lista de vocabulario inglés (A1–C2) con definiciones y ejemplos",
+      "metaDescription": "Explora el vocabulario inglés de A1 a C2. Consulta palabras por nivel MCER, filtra por categoría gramatical y aprende con definiciones y frases de ejemplo.",
+      "breadcrumbHomeLabel": "Inicio"
+    },
+    "hero": {
+      "heading": "Lista de vocabulario inglés por nivel MCER",
+      "intro": "Explora el vocabulario inglés de A1 a C2, con definiciones claras y frases de ejemplo. Busca palabras, filtra por categoría gramatical y amplía tu vocabulario a tu propio ritmo."
+    },
+    "globalFilters": {
+      "searchLabel": "Buscar palabras",
+      "searchPlaceholder": "Buscar en todas las palabras en inglés...",
+      "categoryLabel": "Categorías gramaticales",
+      "categoryAllOption": "Todas",
+      "categoryDoneLabel": "Listo",
+      "resetLabel": "Restablecer filtros",
+      "resultsLabel": "Palabras encontradas en todos los niveles: {count}"
+    },
+    "levelsSection": {
+      "heading": "Vocabulario por nivel MCER"
+    },
+    "levels": [
+      {
+        "level": "a1",
+        "name": "Principiante",
+        "description": "Palabras cotidianas para conversaciones sencillas y situaciones conocidas."
+      },
+      {
+        "level": "a2",
+        "name": "Elemental",
+        "description": "Vocabulario para actividades habituales, experiencias y la vida diaria."
+      },
+      {
+        "level": "b1",
+        "name": "Intermedio",
+        "description": "Palabras para describir experiencias, ideas y temas conocidos con más detalle."
+      },
+      {
+        "level": "b2",
+        "name": "Intermedio alto",
+        "description": "Un vocabulario más amplio para hablar de temas complejos y expresar opiniones."
+      },
+      {
+        "level": "c1",
+        "name": "Avanzado",
+        "description": "Palabras avanzadas para expresar ideas detalladas con precisión."
+      },
+      {
+        "level": "c2",
+        "name": "Maestría",
+        "description": "Vocabulario sofisticado para una comunicación muy precisa y llena de matices."
+      }
+    ],
+    "levelPanel": {
+      "filtersLabel": "Filtrar vocabulario {level}",
+      "searchLabel": "Buscar vocabulario {level}",
+      "searchPlaceholder": "Buscar vocabulario {level}...",
+      "categoryLabel": "Categorías gramaticales",
+      "categoryAllOption": "Todas",
+      "categoryDoneLabel": "Listo",
+      "resetLabel": "Restablecer",
+      "tableLabel": "Lista de vocabulario {level}",
+      "tableColumns": {
+        "number": "N.º",
+        "word": "Palabra",
+        "translation": "Traducción",
+        "definition": "Definición",
+        "sentence": "Frase de ejemplo",
+        "grammarType": "Tipo gramatical",
+        "actions": "Acciones"
+      },
+      "pronounceLabel": "Escuchar «{word}»",
+      "rowActionsLabel": "Más opciones para «{word}»",
+      "addToListLabel": "Añadir a una lista",
+      "loadingLabel": "Cargando palabras de {level}...",
+      "loadErrorLabel": "No se pudo cargar la lista de vocabulario.",
+      "retryLabel": "Intentar de nuevo",
+      "emptyLabel": "Todavía no hay palabras para este nivel.",
+      "noMatchesLabel": "Ninguna palabra coincide con tus filtros.",
+      "headerCountLabel": "{total} palabras",
+      "headerFilteredCountLabel": "{shown} de {total} palabras",
+      "shownCountLabel": "Mostrando {shown} de {total} palabras",
+      "loadMoreLabel": "Cargar {count} palabras más",
+      "detailsLabel": "Detalles",
+      "hideLabel": "Ocultar"
+    },
+    "grammarTypes": {
+      "noun": "Sustantivo",
+      "verb": "Verbo",
+      "adjective": "Adjetivo",
+      "adverb": "Adverbio",
+      "preposition": "Preposición",
+      "pronoun": "Pronombre",
+      "determiner": "Determinante",
+      "conjunction": "Conjunción",
+      "exclamation": "Exclamación",
+      "interjection": "Interjección",
+      "expression": "Expresión"
+    },
+    "howToUse": {
+      "heading": "Cómo usar esta lista de vocabulario",
+      "paragraph": "Elige un nivel MCER, busca palabras o filtra por categoría gramatical. Lee la definición y la frase de ejemplo de cada palabra para entender su significado y su uso. También puedes practicar vocabulario con los ejercicios interactivos de FluentStellar."
+    }
+  },
+  {
+    "targetLanguage": "english",
+    "uiLanguage": "fr",
+    "urlSlug": "liste-vocabulaire-anglais",
+    "entryButtonLabel": "Liste complète du vocabulaire anglais (A1–C2)",
+    "metadata": {
+      "metaTitle": "Liste de vocabulaire anglais (A1–C2) avec définitions et exemples",
+      "metaDescription": "Explorez le vocabulaire anglais de A1 à C2. Parcourez les mots par niveau CECRL, filtrez par catégorie grammaticale et apprenez grâce aux définitions et aux phrases d’exemple.",
+      "breadcrumbHomeLabel": "Accueil"
+    },
+    "hero": {
+      "heading": "Liste de vocabulaire anglais par niveau CECRL",
+      "intro": "Explorez le vocabulaire anglais de A1 à C2, avec des définitions claires et des phrases d’exemple. Recherchez des mots, filtrez par catégorie grammaticale et enrichissez votre vocabulaire à votre rythme."
+    },
+    "globalFilters": {
+      "searchLabel": "Rechercher des mots",
+      "searchPlaceholder": "Rechercher parmi tous les mots anglais...",
+      "categoryLabel": "Classes grammaticales",
+      "categoryAllOption": "Toutes",
+      "categoryDoneLabel": "Terminé",
+      "resetLabel": "Réinitialiser les filtres",
+      "resultsLabel": "Mots trouvés dans tous les niveaux : {count}"
+    },
+    "levelsSection": {
+      "heading": "Vocabulaire par niveau CECRL"
+    },
+    "levels": [
+      {
+        "level": "a1",
+        "name": "Débutant",
+        "description": "Des mots du quotidien pour des conversations simples et des situations familières."
+      },
+      {
+        "level": "a2",
+        "name": "Élémentaire",
+        "description": "Du vocabulaire pour les activités courantes, les expériences et la vie de tous les jours."
+      },
+      {
+        "level": "b1",
+        "name": "Intermédiaire",
+        "description": "Des mots pour décrire plus en détail des expériences, des idées et des sujets familiers."
+      },
+      {
+        "level": "b2",
+        "name": "Intermédiaire avancé",
+        "description": "Un vocabulaire plus riche pour aborder des sujets complexes et exprimer des opinions."
+      },
+      {
+        "level": "c1",
+        "name": "Avancé",
+        "description": "Des mots avancés pour exprimer des idées détaillées avec précision."
+      },
+      {
+        "level": "c2",
+        "name": "Maîtrise",
+        "description": "Un vocabulaire raffiné pour une communication très précise et nuancée."
+      }
+    ],
+    "levelPanel": {
+      "filtersLabel": "Filtrer le vocabulaire {level}",
+      "searchLabel": "Rechercher dans le vocabulaire {level}",
+      "searchPlaceholder": "Rechercher dans le vocabulaire {level}...",
+      "categoryLabel": "Classes grammaticales",
+      "categoryAllOption": "Toutes",
+      "categoryDoneLabel": "Terminé",
+      "resetLabel": "Réinitialiser",
+      "tableLabel": "Liste de vocabulaire {level}",
+      "tableColumns": {
+        "number": "N°",
+        "word": "Mot",
+        "translation": "Traduction",
+        "definition": "Définition",
+        "sentence": "Phrase d’exemple",
+        "grammarType": "Catégorie",
+        "actions": "Actions"
+      },
+      "pronounceLabel": "Écouter « {word} »",
+      "rowActionsLabel": "Plus d’options pour « {word} »",
+      "addToListLabel": "Ajouter à une liste",
+      "loadingLabel": "Chargement des mots {level}...",
+      "loadErrorLabel": "Impossible de charger la liste de vocabulaire.",
+      "retryLabel": "Réessayer",
+      "emptyLabel": "Aucun mot n’est encore disponible pour ce niveau.",
+      "noMatchesLabel": "Aucun mot ne correspond à vos filtres.",
+      "headerCountLabel": "{total} mots",
+      "headerFilteredCountLabel": "{shown} sur {total} mots",
+      "shownCountLabel": "{shown} mots affichés sur {total}",
+      "loadMoreLabel": "Charger {count} mots de plus",
+      "detailsLabel": "Détails",
+      "hideLabel": "Masquer"
+    },
+    "grammarTypes": {
+      "noun": "Nom",
+      "verb": "Verbe",
+      "adjective": "Adjectif",
+      "adverb": "Adverbe",
+      "preposition": "Préposition",
+      "pronoun": "Pronom",
+      "determiner": "Déterminant",
+      "conjunction": "Conjonction",
+      "exclamation": "Exclamation",
+      "interjection": "Interjection",
+      "expression": "Expression"
+    },
+    "howToUse": {
+      "heading": "Comment utiliser cette liste de vocabulaire",
+      "paragraph": "Choisissez un niveau CECRL, recherchez des mots ou filtrez par catégorie grammaticale. Lisez la définition et la phrase d’exemple de chaque mot pour comprendre son sens et son emploi. Vous pouvez aussi pratiquer le vocabulaire grâce aux exercices interactifs de FluentStellar."
+    }
+  },
+  {
+    "targetLanguage": "english",
+    "uiLanguage": "de",
+    "urlSlug": "englisch-wortschatz-liste",
+    "entryButtonLabel": "Vollständige englische Wortschatzliste (A1–C2)",
+    "metadata": {
+      "metaTitle": "Englische Wortschatzliste (A1–C2) mit Definitionen und Beispielen",
+      "metaDescription": "Entdecke englischen Wortschatz von A1 bis C2. Durchsuche Wörter nach GER-Niveau, filtere nach Wortart und lerne mit Definitionen und Beispielsätzen.",
+      "breadcrumbHomeLabel": "Startseite"
+    },
+    "hero": {
+      "heading": "Englische Wortschatzliste nach GER-Niveau",
+      "intro": "Entdecke englischen Wortschatz von A1 bis C2 mit klaren Definitionen und Beispielsätzen. Suche nach Wörtern, filtere nach Wortart und erweitere deinen Wortschatz in deinem eigenen Tempo."
+    },
+    "globalFilters": {
+      "searchLabel": "Wörter suchen",
+      "searchPlaceholder": "Alle englischen Wörter durchsuchen...",
+      "categoryLabel": "Wortarten",
+      "categoryAllOption": "Alle",
+      "categoryDoneLabel": "Fertig",
+      "resetLabel": "Filter zurücksetzen",
+      "resultsLabel": "Treffer auf allen Niveaus: {count}"
+    },
+    "levelsSection": {
+      "heading": "Wortschatz nach GER-Niveau"
+    },
+    "levels": [
+      {
+        "level": "a1",
+        "name": "Anfänger",
+        "description": "Alltagswörter für einfache Gespräche und vertraute Situationen."
+      },
+      {
+        "level": "a2",
+        "name": "Grundkenntnisse",
+        "description": "Wortschatz für alltägliche Aktivitäten, Erlebnisse und das tägliche Leben."
+      },
+      {
+        "level": "b1",
+        "name": "Mittelstufe",
+        "description": "Wörter, um Erfahrungen, Ideen und vertraute Themen ausführlicher zu beschreiben."
+      },
+      {
+        "level": "b2",
+        "name": "Obere Mittelstufe",
+        "description": "Ein breiterer Wortschatz, um komplexere Themen und Meinungen zu besprechen."
+      },
+      {
+        "level": "c1",
+        "name": "Fortgeschritten",
+        "description": "Anspruchsvolle Wörter, um detaillierte Gedanken präzise auszudrücken."
+      },
+      {
+        "level": "c2",
+        "name": "Annähernd muttersprachlich",
+        "description": "Gehobener Wortschatz für äußerst präzise und nuancierte Kommunikation."
+      }
+    ],
+    "levelPanel": {
+      "filtersLabel": "{level}-Wortschatz filtern",
+      "searchLabel": "{level}-Wortschatz durchsuchen",
+      "searchPlaceholder": "{level}-Wortschatz durchsuchen...",
+      "categoryLabel": "Wortarten",
+      "categoryAllOption": "Alle",
+      "categoryDoneLabel": "Fertig",
+      "resetLabel": "Zurücksetzen",
+      "tableLabel": "{level}-Wortschatzliste",
+      "tableColumns": {
+        "number": "Nr.",
+        "word": "Wort",
+        "translation": "Übersetzung",
+        "definition": "Definition",
+        "sentence": "Beispielsatz",
+        "grammarType": "Wortart",
+        "actions": "Aktionen"
+      },
+      "pronounceLabel": "„{word}“ anhören",
+      "rowActionsLabel": "Weitere Optionen für „{word}“",
+      "addToListLabel": "Zu einer Liste hinzufügen",
+      "loadingLabel": "{level}-Wörter werden geladen...",
+      "loadErrorLabel": "Die Wortschatzliste konnte nicht geladen werden.",
+      "retryLabel": "Erneut versuchen",
+      "emptyLabel": "Für dieses Niveau sind noch keine Wörter verfügbar.",
+      "noMatchesLabel": "Keine Wörter passen zu deinen Filtern.",
+      "headerCountLabel": "{total} Wörter",
+      "headerFilteredCountLabel": "{shown} von {total} Wörtern",
+      "shownCountLabel": "{shown} von {total} Wörtern angezeigt",
+      "loadMoreLabel": "{count} weitere Wörter laden",
+      "detailsLabel": "Details",
+      "hideLabel": "Weniger"
+    },
+    "grammarTypes": {
+      "noun": "Nomen",
+      "verb": "Verb",
+      "adjective": "Adjektiv",
+      "adverb": "Adverb",
+      "preposition": "Präposition",
+      "pronoun": "Pronomen",
+      "determiner": "Determinativ",
+      "conjunction": "Konjunktion",
+      "exclamation": "Ausruf",
+      "interjection": "Interjektion",
+      "expression": "Redewendung"
+    },
+    "howToUse": {
+      "heading": "So nutzt du diese Wortschatzliste",
+      "paragraph": "Wähle ein GER-Niveau, suche nach Wörtern oder filtere nach Wortart. Lies die Definition und den Beispielsatz jedes Wortes, um seine Bedeutung und Verwendung zu verstehen. Du kannst den Wortschatz auch mit den interaktiven Übungen von FluentStellar trainieren."
+    }
+  },
+  {
+    "targetLanguage": "english",
+    "uiLanguage": "it",
+    "urlSlug": "lista-vocabolario-inglese",
+    "entryButtonLabel": "Lista completa del vocabolario inglese (A1–C2)",
+    "metadata": {
+      "metaTitle": "Lista di vocaboli inglesi (A1–C2) con definizioni ed esempi",
+      "metaDescription": "Esplora il vocabolario inglese dal livello A1 al C2. Sfoglia le parole per livello QCER, filtra per categoria grammaticale e impara con definizioni e frasi di esempio.",
+      "breadcrumbHomeLabel": "Home"
+    },
+    "hero": {
+      "heading": "Lista di vocaboli inglesi per livello QCER",
+      "intro": "Esplora il vocabolario inglese dal livello A1 al C2, con definizioni chiare e frasi di esempio. Cerca parole, filtra per categoria grammaticale e arricchisci il tuo vocabolario al tuo ritmo."
+    },
+    "globalFilters": {
+      "searchLabel": "Cerca parole",
+      "searchPlaceholder": "Cerca tra tutte le parole inglesi...",
+      "categoryLabel": "Parti del discorso",
+      "categoryAllOption": "Tutte",
+      "categoryDoneLabel": "Fatto",
+      "resetLabel": "Reimposta filtri",
+      "resultsLabel": "Parole trovate in tutti i livelli: {count}"
+    },
+    "levelsSection": {
+      "heading": "Vocabolario per livello QCER"
+    },
+    "levels": [
+      {
+        "level": "a1",
+        "name": "Principiante",
+        "description": "Parole di tutti i giorni per conversazioni semplici e situazioni familiari."
+      },
+      {
+        "level": "a2",
+        "name": "Elementare",
+        "description": "Vocabolario per attività comuni, esperienze e vita quotidiana."
+      },
+      {
+        "level": "b1",
+        "name": "Intermedio",
+        "description": "Parole per descrivere esperienze, idee e argomenti familiari in modo più dettagliato."
+      },
+      {
+        "level": "b2",
+        "name": "Intermedio superiore",
+        "description": "Un vocabolario più ampio per discutere argomenti complessi ed esprimere opinioni."
+      },
+      {
+        "level": "c1",
+        "name": "Avanzato",
+        "description": "Parole avanzate per esprimere idee dettagliate con precisione."
+      },
+      {
+        "level": "c2",
+        "name": "Padronanza",
+        "description": "Vocabolario raffinato per una comunicazione molto precisa e ricca di sfumature."
+      }
+    ],
+    "levelPanel": {
+      "filtersLabel": "Filtra il vocabolario {level}",
+      "searchLabel": "Cerca nel vocabolario {level}",
+      "searchPlaceholder": "Cerca nel vocabolario {level}...",
+      "categoryLabel": "Parti del discorso",
+      "categoryAllOption": "Tutte",
+      "categoryDoneLabel": "Fatto",
+      "resetLabel": "Reimposta",
+      "tableLabel": "Lista di vocaboli {level}",
+      "tableColumns": {
+        "number": "N.",
+        "word": "Parola",
+        "translation": "Traduzione",
+        "definition": "Definizione",
+        "sentence": "Frase di esempio",
+        "grammarType": "Categoria",
+        "actions": "Azioni"
+      },
+      "pronounceLabel": "Ascolta “{word}”",
+      "rowActionsLabel": "Altre opzioni per “{word}”",
+      "addToListLabel": "Aggiungi a una lista",
+      "loadingLabel": "Caricamento delle parole {level}...",
+      "loadErrorLabel": "Impossibile caricare la lista di vocaboli.",
+      "retryLabel": "Riprova",
+      "emptyLabel": "Non ci sono ancora parole per questo livello.",
+      "noMatchesLabel": "Nessuna parola corrisponde ai tuoi filtri.",
+      "headerCountLabel": "{total} parole",
+      "headerFilteredCountLabel": "{shown} di {total} parole",
+      "shownCountLabel": "{shown} di {total} parole visualizzate",
+      "loadMoreLabel": "Carica altre {count} parole",
+      "detailsLabel": "Dettagli",
+      "hideLabel": "Nascondi"
+    },
+    "grammarTypes": {
+      "noun": "Sostantivo",
+      "verb": "Verbo",
+      "adjective": "Aggettivo",
+      "adverb": "Avverbio",
+      "preposition": "Preposizione",
+      "pronoun": "Pronome",
+      "determiner": "Determinante",
+      "conjunction": "Congiunzione",
+      "exclamation": "Esclamazione",
+      "interjection": "Interiezione",
+      "expression": "Espressione"
+    },
+    "howToUse": {
+      "heading": "Come usare questa lista di vocaboli",
+      "paragraph": "Scegli un livello QCER, cerca parole o filtra per categoria grammaticale. Leggi la definizione e la frase di esempio di ogni parola per capirne il significato e l’uso. Puoi anche esercitarti con il vocabolario grazie agli esercizi interattivi di FluentStellar."
+    }
+  },
+  {
+    "targetLanguage": "english",
+    "uiLanguage": "pt",
+    "urlSlug": "lista-vocabulario-ingles",
+    "entryButtonLabel": "Lista completa de vocabulário em inglês (A1–C2)",
+    "metadata": {
+      "metaTitle": "Lista de vocabulário em inglês (A1–C2) com definições e exemplos",
+      "metaDescription": "Explore o vocabulário em inglês do A1 ao C2. Veja palavras por nível do QECR, filtre por categoria gramatical e aprenda com definições e frases de exemplo.",
+      "breadcrumbHomeLabel": "Início"
+    },
+    "hero": {
+      "heading": "Lista de vocabulário em inglês por nível do QECR",
+      "intro": "Explore o vocabulário em inglês do A1 ao C2, com definições claras e frases de exemplo. Pesquise palavras, filtre por categoria gramatical e amplie seu vocabulário no seu ritmo."
+    },
+    "globalFilters": {
+      "searchLabel": "Pesquisar palavras",
+      "searchPlaceholder": "Pesquisar todas as palavras em inglês...",
+      "categoryLabel": "Classes gramaticais",
+      "categoryAllOption": "Todas",
+      "categoryDoneLabel": "Concluído",
+      "resetLabel": "Redefinir filtros",
+      "resultsLabel": "Palavras encontradas em todos os níveis: {count}"
+    },
+    "levelsSection": {
+      "heading": "Vocabulário por nível do QECR"
+    },
+    "levels": [
+      {
+        "level": "a1",
+        "name": "Iniciante",
+        "description": "Palavras do dia a dia para conversas simples e situações conhecidas."
+      },
+      {
+        "level": "a2",
+        "name": "Básico",
+        "description": "Vocabulário para atividades comuns, experiências e a vida cotidiana."
+      },
+      {
+        "level": "b1",
+        "name": "Intermediário",
+        "description": "Palavras para descrever experiências, ideias e temas conhecidos com mais detalhes."
+      },
+      {
+        "level": "b2",
+        "name": "Intermediário superior",
+        "description": "Um vocabulário mais amplo para discutir temas complexos e expressar opiniões."
+      },
+      {
+        "level": "c1",
+        "name": "Avançado",
+        "description": "Palavras avançadas para expressar ideias detalhadas com precisão."
+      },
+      {
+        "level": "c2",
+        "name": "Proficiente",
+        "description": "Vocabulário sofisticado para uma comunicação muito precisa e cheia de nuances."
+      }
+    ],
+    "levelPanel": {
+      "filtersLabel": "Filtrar vocabulário {level}",
+      "searchLabel": "Pesquisar vocabulário {level}",
+      "searchPlaceholder": "Pesquisar vocabulário {level}...",
+      "categoryLabel": "Classes gramaticais",
+      "categoryAllOption": "Todas",
+      "categoryDoneLabel": "Concluído",
+      "resetLabel": "Redefinir",
+      "tableLabel": "Lista de vocabulário {level}",
+      "tableColumns": {
+        "number": "N.º",
+        "word": "Palavra",
+        "translation": "Tradução",
+        "definition": "Definição",
+        "sentence": "Frase de exemplo",
+        "grammarType": "Classe gramatical",
+        "actions": "Ações"
+      },
+      "pronounceLabel": "Ouvir “{word}”",
+      "rowActionsLabel": "Mais opções para “{word}”",
+      "addToListLabel": "Adicionar a uma lista",
+      "loadingLabel": "Carregando palavras do nível {level}...",
+      "loadErrorLabel": "Não foi possível carregar a lista de vocabulário.",
+      "retryLabel": "Tentar novamente",
+      "emptyLabel": "Ainda não há palavras disponíveis para este nível.",
+      "noMatchesLabel": "Nenhuma palavra corresponde aos seus filtros.",
+      "headerCountLabel": "{total} palavras",
+      "headerFilteredCountLabel": "{shown} de {total} palavras",
+      "shownCountLabel": "Mostrando {shown} de {total} palavras",
+      "loadMoreLabel": "Carregar mais {count} palavras",
+      "detailsLabel": "Detalhes",
+      "hideLabel": "Ocultar"
+    },
+    "grammarTypes": {
+      "noun": "Substantivo",
+      "verb": "Verbo",
+      "adjective": "Adjetivo",
+      "adverb": "Advérbio",
+      "preposition": "Preposição",
+      "pronoun": "Pronome",
+      "determiner": "Determinante",
+      "conjunction": "Conjunção",
+      "exclamation": "Exclamação",
+      "interjection": "Interjeição",
+      "expression": "Expressão"
+    },
+    "howToUse": {
+      "heading": "Como usar esta lista de vocabulário",
+      "paragraph": "Escolha um nível do QECR, pesquise palavras ou filtre por categoria gramatical. Leia a definição e a frase de exemplo de cada palavra para entender seu significado e uso. Você também pode praticar vocabulário com os exercícios interativos da FluentStellar."
+    }
+  },
+  {
+    "targetLanguage": "english",
+    "uiLanguage": "ru",
+    "urlSlug": "slovar-angliiskii-spisok",
+    "entryButtonLabel": "Полный список английских слов (A1–C2)",
+    "metadata": {
+      "metaTitle": "Список английских слов (A1–C2) с определениями и примерами",
+      "metaDescription": "Изучайте английскую лексику от A1 до C2. Просматривайте слова по уровням CEFR, фильтруйте по частям речи и учитесь с помощью определений и примеров предложений.",
+      "breadcrumbHomeLabel": "Главная"
+    },
+    "hero": {
+      "heading": "Список английских слов по уровням CEFR",
+      "intro": "Изучайте английскую лексику от A1 до C2 с понятными определениями и примерами предложений. Ищите слова, фильтруйте их по частям речи и расширяйте словарный запас в своём темпе."
+    },
+    "globalFilters": {
+      "searchLabel": "Поиск слов",
+      "searchPlaceholder": "Искать среди всех английских слов...",
+      "categoryLabel": "Части речи",
+      "categoryAllOption": "Все",
+      "categoryDoneLabel": "Готово",
+      "resetLabel": "Сбросить фильтры",
+      "resultsLabel": "Найдено слов на всех уровнях: {count}"
+    },
+    "levelsSection": {
+      "heading": "Лексика по уровням CEFR"
+    },
+    "levels": [
+      {
+        "level": "a1",
+        "name": "Начальный",
+        "description": "Повседневные слова для простых разговоров и знакомых ситуаций."
+      },
+      {
+        "level": "a2",
+        "name": "Элементарный",
+        "description": "Лексика для обычных дел, личного опыта и повседневной жизни."
+      },
+      {
+        "level": "b1",
+        "name": "Средний",
+        "description": "Слова, чтобы подробнее описывать опыт, идеи и знакомые темы."
+      },
+      {
+        "level": "b2",
+        "name": "Выше среднего",
+        "description": "Более широкий словарный запас для обсуждения сложных тем и выражения мнений."
+      },
+      {
+        "level": "c1",
+        "name": "Продвинутый",
+        "description": "Продвинутая лексика для точного выражения развёрнутых мыслей."
+      },
+      {
+        "level": "c2",
+        "name": "Владение в совершенстве",
+        "description": "Изысканная лексика для предельно точного и тонкого общения."
+      }
+    ],
+    "levelPanel": {
+      "filtersLabel": "Фильтры уровня {level}",
+      "searchLabel": "Поиск по уровню {level}",
+      "searchPlaceholder": "Искать слова уровня {level}...",
+      "categoryLabel": "Части речи",
+      "categoryAllOption": "Все",
+      "categoryDoneLabel": "Готово",
+      "resetLabel": "Сбросить",
+      "tableLabel": "Список слов уровня {level}",
+      "tableColumns": {
+        "number": "№",
+        "word": "Слово",
+        "translation": "Перевод",
+        "definition": "Определение",
+        "sentence": "Пример предложения",
+        "grammarType": "Часть речи",
+        "actions": "Действия"
+      },
+      "pronounceLabel": "Прослушать «{word}»",
+      "rowActionsLabel": "Другие действия для «{word}»",
+      "addToListLabel": "Добавить в список",
+      "loadingLabel": "Загрузка слов уровня {level}...",
+      "loadErrorLabel": "Не удалось загрузить список слов.",
+      "retryLabel": "Повторить попытку",
+      "emptyLabel": "Для этого уровня пока нет слов.",
+      "noMatchesLabel": "Нет слов, подходящих под фильтры.",
+      "headerCountLabel": "Слов: {total}",
+      "headerFilteredCountLabel": "Слов: {shown} из {total}",
+      "shownCountLabel": "Показано: {shown} из {total}",
+      "loadMoreLabel": "Показать ещё: {count}",
+      "detailsLabel": "Подробнее",
+      "hideLabel": "Скрыть"
+    },
+    "grammarTypes": {
+      "noun": "Существительное",
+      "verb": "Глагол",
+      "adjective": "Прилагательное",
+      "adverb": "Наречие",
+      "preposition": "Предлог",
+      "pronoun": "Местоимение",
+      "determiner": "Определитель",
+      "conjunction": "Союз",
+      "exclamation": "Восклицание",
+      "interjection": "Междометие",
+      "expression": "Выражение"
+    },
+    "howToUse": {
+      "heading": "Как пользоваться этим списком слов",
+      "paragraph": "Выберите уровень CEFR, ищите слова или фильтруйте их по частям речи. Читайте определение и пример предложения для каждого слова, чтобы понять его значение и употребление. Вы также можете тренировать лексику с помощью интерактивных упражнений FluentStellar."
+    }
+  }
+]

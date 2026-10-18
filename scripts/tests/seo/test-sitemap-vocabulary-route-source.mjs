@@ -18,6 +18,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadVocabularyLevelRoutes } from "../../lib/load-vocabulary-level-routes.mjs";
+import { loadFullVocabularyListRegistry } from "../../lib/load-full-vocabulary-list-registry.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
@@ -84,12 +85,30 @@ const expectedLevelTestPaths = new Set(
     .filter(Boolean),
 );
 
-test("sitemap-cefr.xml contains exactly the vocabulary-level routes plus the level-test routes, no more", () => {
-  const expectedTotal = new Set(expectedVocabularyPaths).size + expectedLevelTestPaths.size;
+// Full A1–C2 vocabulary list pages also live in sitemap-cefr.xml, but only
+// while FULL_VOCABULARY_LIST_LAUNCHED is true (same gate the generator uses).
+const fullVocabularyListLoader = loadFullVocabularyListRegistry(".tmp-test-sitemap-full-vocabulary-list");
+let expectedFullVocabularyListPaths;
+try {
+  expectedFullVocabularyListPaths = fullVocabularyListLoader.launchStatus.FULL_VOCABULARY_LIST_LAUNCHED
+    ? new Set(fullVocabularyListLoader.registry.getAllFullVocabularyListPaths())
+    : new Set();
+} finally {
+  fullVocabularyListLoader.cleanup();
+}
+
+test("every launched full-vocabulary-list path appears in sitemap-cefr.xml", () => {
+  const missing = [...expectedFullVocabularyListPaths].filter((p) => !cefrLocs.has(`${SITE_URL}${p}`));
+  assert.deepEqual(missing, [], "full-vocabulary-list route(s) missing from sitemap-cefr.xml");
+});
+
+test("sitemap-cefr.xml contains exactly the vocabulary-level, level-test, and full-vocabulary-list routes, no more", () => {
+  const expectedTotal =
+    new Set(expectedVocabularyPaths).size + expectedLevelTestPaths.size + expectedFullVocabularyListPaths.size;
   assert.equal(
     cefrLocs.size,
     expectedTotal,
-    `sitemap-cefr.xml has ${cefrLocs.size} URLs; expected ${expectedTotal} (${new Set(expectedVocabularyPaths).size} vocabulary-level + ${expectedLevelTestPaths.size} level-test)`,
+    `sitemap-cefr.xml has ${cefrLocs.size} URLs; expected ${expectedTotal} (${new Set(expectedVocabularyPaths).size} vocabulary-level + ${expectedLevelTestPaths.size} level-test + ${expectedFullVocabularyListPaths.size} full-vocabulary-list)`,
   );
 });
 

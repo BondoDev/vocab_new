@@ -196,6 +196,25 @@ subtype genuinely reuses another's implementation, not preemptively.
 `DevSeoCefrPlaceholderPage`, backed by `devSeoCefrPreviewData.ts`'s
 full-coverage content lookup (see `docs/generated-data.md`); this legacy
 naming was preserved as-is, not treated as dev-only.
+`src/app/pages/full-vocabulary-list/` owns the Full Vocabulary List page
+family — one A1–C2 vocabulary directory per target language, separate from
+the per-level `vocabularyLevel` pages: `FullVocabularyListSeoPage.tsx`
+(route entry), `FullVocabularyLevelSection.tsx` (one CEFR accordion item
+with its own Load More progress), `FullVocabularyTable.tsx` (the per-level
+word table), and `VocabularyFilterBar.tsx` (the global/local filter
+controls). Its route/content registry is `src/data/seo/fullVocabularyList/`
+and its metadata builder and `FULL_VOCABULARY_LIST_LAUNCHED` flag live in
+`src/seo/fullVocabularyList/`. Table rows come straight from
+`src/data/vocabulary/{target}/vocabulary.json` via
+`fullVocabularyListEntries.ts` (dynamic import on first expand, client only
+— no copy of the word data exists), shown 300 at a time per level. A
+page-wide filter (word search + grammar type) combines with each level's
+own filter; both run against the level's full row list, not just rendered
+rows (`filterFullVocabularyRows()` in that same module). When the UI
+language differs from the table's language, the UI language's own
+`vocabulary.json` is loaded too and joined by `concept_id` into a
+Translation column (also searchable); same-language pages load one file
+and show no Translation column.
 `src/app/pages/word-pages/detail/` owns individual word-detail-page
 rendering — `WordSeoPage.tsx` (the client/production data-acquisition
 wrapper), `WordSeoPageView.tsx` (the SSR-safe presentational core), and
@@ -372,7 +391,8 @@ is the authoritative reference; this section only orients:
   `seo-cefr-content.json`), `src/data/seo/levelTests/seo_level_test_content.json`,
   `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`,
   `src/data/seo/verbLists/conjugated100Verbs/textContent/`,
-  `src/data/seo/verbLists/conjugated100Verbs/conjugatedVerbs/`
+  `src/data/seo/verbLists/conjugated100Verbs/conjugatedVerbs/`,
+  `src/data/seo/fullVocabularyList/fullVocabularyListContent.json`
   (localized content plus hand-authored verb-list subtype data; see
   [`docs/generated-data.md`](generated-data.md)).
 - Generated, committed mirrors/output (never hand-edited):

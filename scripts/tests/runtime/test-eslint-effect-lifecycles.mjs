@@ -108,7 +108,8 @@ function effectProbe(source, marker) {
     const params = { uiLanguage: "en", t: translate, examPath: "/exam", [`${language}ExploreTopics`]: [],
       withLevelTestExploreTopic: (topics, target, ui, translateTopic, examPath) => [...topics, { target, ui, label: translateTopic("exam"), path: examPath }],
       getVerbListTitle: () => "Verbs", getVerbListPath: () => "/verbs",
-      buildPastVerbFormsExploreTopic: () => null, buildConjugatedVerbFormsExploreTopic: () => null };
+      buildPastVerbFormsExploreTopic: () => null, buildConjugatedVerbFormsExploreTopic: () => null,
+      buildFullVocabularyListExploreTopic: () => null };
     const name = `${language}ExploreItems`;
     const initial = memo(name, params);
     assert.equal(memo(name, { ...params }), initial);

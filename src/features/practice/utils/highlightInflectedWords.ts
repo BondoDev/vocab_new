@@ -26,7 +26,7 @@ const isWholeWordMatch = (
   return true;
 };
 
-const extractInflectedForms = (entry: InflectedEntry): string[] => {
+export const extractInflectedForms = (entry: InflectedEntry): string[] => {
   const forms: string[] = [];
 
   Object.entries(entry).forEach(([key, value]) => {
@@ -40,25 +40,27 @@ const extractInflectedForms = (entry: InflectedEntry): string[] => {
   return forms;
 };
 
-export const highlightInflectedWords = (
+export interface InflectedWordRange {
+  start: number;
+  end: number;
+}
+
+// Whole-word, case-insensitive occurrences of any of `forms` in `sentence`,
+// sorted and non-overlapping (at an overlap the longer, earlier match wins).
+// Shared by highlightInflectedWords (HTML string for the practice flow) and
+// callers that render React nodes instead of injecting HTML (e.g. the full
+// vocabulary list tables).
+export const findInflectedWordRanges = (
   sentence: string,
   languageCode: string,
-  inflectedEntries: InflectedEntry[],
-): string => {
-  if (!sentence || !inflectedEntries?.length) return sentence;
+  forms: Iterable<string>,
+): InflectedWordRange[] => {
+  if (!sentence) return [];
 
   const sentenceLower = sentence.toLocaleLowerCase(languageCode);
-  const uniqueForms = new Set<string>();
+  const matches: InflectedWordRange[] = [];
 
-  inflectedEntries.forEach((entry) => {
-    extractInflectedForms(entry).forEach((form) => {
-      uniqueForms.add(form);
-    });
-  });
-
-  const matches: Array<{ start: number; end: number }> = [];
-
-  uniqueForms.forEach((form) => {
+  new Set(forms).forEach((form) => {
     const formLower = form.toLocaleLowerCase(languageCode);
     if (!formLower) return;
 
@@ -84,14 +86,12 @@ export const highlightInflectedWords = (
     }
   });
 
-  if (matches.length === 0) return sentence;
-
   matches.sort((a, b) => {
     if (a.start !== b.start) return a.start - b.start;
     return b.end - b.start - (a.end - a.start);
   });
 
-  const merged: Array<{ start: number; end: number }> = [];
+  const merged: InflectedWordRange[] = [];
   let lastEnd = -1;
 
   matches.forEach((match) => {
@@ -99,6 +99,20 @@ export const highlightInflectedWords = (
     merged.push(match);
     lastEnd = match.end;
   });
+
+  return merged;
+};
+
+export const highlightInflectedWords = (
+  sentence: string,
+  languageCode: string,
+  inflectedEntries: InflectedEntry[],
+): string => {
+  if (!sentence || !inflectedEntries?.length) return sentence;
+
+  const forms = inflectedEntries.flatMap((entry) => extractInflectedForms(entry));
+  const merged = findInflectedWordRanges(sentence, languageCode, forms);
+  if (merged.length === 0) return sentence;
 
   let result = "";
   let lastIndex = 0;

@@ -445,6 +445,7 @@ async function main() {
     "verbListSeo",
     "pastVerbFormsSeo",
     "conjugatedVerbFormsSeo",
+    "fullVocabularyListSeo",
     "seoHub",
     "wordSeoHub",
     "wordPage",
@@ -1096,13 +1097,14 @@ async function main() {
     );
   });
 
-  await test("all 8 SEO PageKey page blocks specifically render {accountIntroDialog} (vocabularyLevel, levelTestSeo, verbListSeo, pastVerbFormsSeo, conjugatedVerbFormsSeo, seoHub, wordSeoHub, wordPage)", () => {
+  await test("all 9 SEO PageKey page blocks specifically render {accountIntroDialog} (vocabularyLevel, levelTestSeo, verbListSeo, pastVerbFormsSeo, conjugatedVerbFormsSeo, fullVocabularyListSeo, seoHub, wordSeoHub, wordPage)", () => {
     const seoPageKeys = [
       "vocabularyLevel",
       "levelTestSeo",
       "verbListSeo",
       "pastVerbFormsSeo",
       "conjugatedVerbFormsSeo",
+      "fullVocabularyListSeo",
       "seoHub",
       "wordSeoHub",
       "wordPage",
@@ -1135,12 +1137,15 @@ async function main() {
 
   console.log("\n[10b] Current homepage and Custom Practice account integration");
 
-  await test("the homepage starts Custom Practice directly and reuses Header's login dialog", () => {
+  await test("the homepage starts Custom Practice directly and reuses Header's login dialog only when signed out", () => {
     const match = appSource.match(/if \(resolvedPage === "language"\) \{([\s\S]*?)\n  \}/);
     assert.ok(match, "could not locate the homepage branch");
     assert.match(match[1], /<NewHomePage\s/);
     assert.match(match[1], /onStartPracticing=\{\(\) => navigate\(ROUTES\.exerciseSelection\)\}/);
-    assert.match(match[1], /onLogin=\{\(\) => setRequestedHeaderAuthMode\("login"\)\}/);
+    assert.match(
+      match[1],
+      /onLogin=\{\(\) =>\s*authSession \? navigate\(ROUTES\.profile\) : setRequestedHeaderAuthMode\("login"\)\s*\}/,
+    );
     assert.match(match[1], /\{accountIntroDialog\}/);
     assert.doesNotMatch(match[1], /\{accountOnboardingDialog\}/);
   });

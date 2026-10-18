@@ -61,7 +61,8 @@ src/data/seo/
     common100Verbs/   100-most-common-verb pages
     shared/           Data shared only by verb-list subtypes
   wordPages/          Word detail/hub pages
-  shared/             Cross-family data contracts (not a fifth family)
+  fullVocabularyList/ Full A1–C2 vocabulary list pages (one per target language)
+  shared/             Cross-family data contracts (not a page family)
 ```
 
 Each page-family folder owns its own route helpers, data shaping, and
@@ -143,7 +144,8 @@ to preserve by inspection and review.
 ## Checklist for adding a new SEO page family or data module
 
 1. Does this data belong to exactly one existing family
-   (`vocabularyLevels/`, `levelTests/`, `verbLists/`, `wordPages/`)? Put
+   (`vocabularyLevels/`, `levelTests/`, `verbLists/`, `wordPages/`,
+   `fullVocabularyList/`)? Put
    it there.
 2. Is it genuinely needed by two or more families, with no single owner?
    Only then consider `shared/`.

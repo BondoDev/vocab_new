@@ -21,6 +21,7 @@ src/app/pages/
   NotFoundPage.tsx, SeoHubPage.tsx, VocabularyLevelExam.tsx
 
   explore/              # page family: explore route + its exclusive hook
+  full-vocabulary-list/ # page family: full A1–C2 vocabulary list SEO page
   home/                 # page family: homepage + its exclusive components
   level-test/           # page family: level-test SEO page + its modal
   verb-lists/

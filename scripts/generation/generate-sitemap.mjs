@@ -5,6 +5,7 @@ import { loadWordRouteManifest } from "../lib/load-word-route-manifest.mjs";
 import { loadVerbListRegistry } from "../lib/load-verb-list-registry.mjs";
 import { loadPastVerbFormsRegistry } from "../lib/load-past-verb-forms-registry.mjs";
 import { loadConjugatedVerbFormsRegistry } from "../lib/load-conjugated-verb-forms-registry.mjs";
+import { loadFullVocabularyListRegistry } from "../lib/load-full-vocabulary-list-registry.mjs";
 import { loadVocabularyLevelRoutes } from "../lib/load-vocabulary-level-routes.mjs";
 import { createLastmodLedger } from "../lib/sitemap-lastmod.mjs";
 
@@ -279,6 +280,7 @@ async function main() {
   const pastVerbFormsRegistryLoader = loadPastVerbFormsRegistry(".tmp-past-verb-forms-registry-sitemap");
   const conjugatedVerbFormsRegistryLoader = loadConjugatedVerbFormsRegistry(".tmp-conjugated-verb-forms-registry-sitemap");
   const vocabularyLevelRoutesLoader = loadVocabularyLevelRoutes(".tmp-vocabulary-level-routes-sitemap");
+  const fullVocabularyListRegistryLoader = loadFullVocabularyListRegistry(".tmp-full-vocabulary-list-registry-sitemap");
   const publicDir = path.join(ROOT_DIR, "public");
   const sitemapsDir = path.join(publicDir, "sitemaps");
 
@@ -300,6 +302,12 @@ async function main() {
 
     const vocabularyRoutes = collectVocabularyRoutes(vocabularyLevelRoutesLoader.routes);
     const levelTestRoutes = await collectLevelTestRoutes();
+    // Full A1–C2 vocabulary list pages join sitemap-cefr.xml alongside the
+    // per-level vocabulary and level-test pages, gated on
+    // FULL_VOCABULARY_LIST_LAUNCHED (src/seo/fullVocabularyList/fullVocabularyListLaunchStatus.ts).
+    const fullVocabularyListRoutes = fullVocabularyListRegistryLoader.launchStatus.FULL_VOCABULARY_LIST_LAUNCHED
+      ? Array.from(new Set(fullVocabularyListRegistryLoader.registry.getAllFullVocabularyListPaths())).sort()
+      : [];
     // Past-verb-forms routes only join the verb-lists sitemap once
     // PAST_VERB_FORMS_LAUNCHED flips to true (src/seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus.ts).
     // Before launch, records are authored incrementally and any record
@@ -359,7 +367,7 @@ async function main() {
     }
 
     const cefrRoutes = Array.from(
-      new Set([...vocabularyRoutes, ...levelTestRoutes]),
+      new Set([...vocabularyRoutes, ...levelTestRoutes, ...fullVocabularyListRoutes]),
     );
     if (cefrRoutes.length > 0) {
       const cefrName = "sitemap-cefr.xml";
@@ -427,6 +435,7 @@ async function main() {
     pastVerbFormsRegistryLoader.cleanup();
     manifestLoader.cleanup();
     vocabularyLevelRoutesLoader.cleanup();
+    fullVocabularyListRegistryLoader.cleanup();
   }
 }
 

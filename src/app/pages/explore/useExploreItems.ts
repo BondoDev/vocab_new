@@ -5,6 +5,7 @@ import {
   buildEnglishExploreTopics,
   buildConjugatedVerbFormsExploreTopic,
   buildFrenchExploreTopics,
+  buildFullVocabularyListExploreTopic,
   buildGermanExploreTopics,
   buildItalianExploreTopics,
   buildPastVerbFormsExploreTopic,
@@ -62,6 +63,7 @@ export function useExploreItems(
   const englishExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("english", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("english", uiLanguage);
+    const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("english", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         englishExploreTopics,
@@ -70,6 +72,7 @@ export function useExploreItems(
         t,
         examPath,
       ),
+      ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,

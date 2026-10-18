@@ -28,6 +28,7 @@ import { notifyVocabularyListsChanged } from "../../../../lib/sharedProgressInva
 import { filterListsBySearchQuery } from "../my-lists/listSearchSort";
 import { normalizeListNameForComparison, validateListName } from "../my-lists/listNameValidation";
 import { CreateListDialog } from "../my-lists/CreateListDialog";
+import "./add-word-to-list-dialog.scss";
 
 export interface AddToListWord {
   // Vocabulary concept id (ResolvedVocabularyRow.conceptId) — the same id

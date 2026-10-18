@@ -1,0 +1,14 @@
+// Radix Select (the category dropdowns) locks page scroll while open: it sets
+// `overflow: hidden` on <body>, which removes the window scrollbar, and adds a
+// matching `margin-right` to compensate. That compensation doesn't line up on
+// this page, so content shifted sideways each time a dropdown opened.
+// Reserving the scrollbar's space permanently keeps the layout width constant,
+// so the compensation must be cancelled or it would push content the other
+// way. Scoped via :has() to pages rendering this family's root element.
+:root:has(.full-vocabulary-list-page) {
+  scrollbar-gutter: stable;
+
+  body[data-scroll-locked] {
+    margin-right: 0 !important;
+  }
+}

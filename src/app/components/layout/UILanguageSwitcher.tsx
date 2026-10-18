@@ -6,6 +6,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../../data/seo/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../../data/seo/shared/hub";
+import { getFullVocabularyListPath, resolveFullVocabularyListRoute } from "../../../data/seo/fullVocabularyList";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../../data/seo/wordPages/wordSlugs";
 import {
   getConjugatedVerbFormsPath,
@@ -179,6 +180,17 @@ export function UILanguageSwitcher({
       const pastVerbFormsRoute = resolvePastVerbFormsRoute(location.pathname);
       if (pastVerbFormsRoute) {
         const nextPath = getPastVerbFormsPath(pastVerbFormsRoute.targetLanguage, code);
+        if (nextPath && nextPath !== location.pathname) {
+          navigate(nextPath);
+        }
+        setUILanguage(code);
+        setIsOpen(false);
+        return;
+      }
+
+      const fullVocabularyListRoute = resolveFullVocabularyListRoute(location.pathname);
+      if (fullVocabularyListRoute) {
+        const nextPath = getFullVocabularyListPath(fullVocabularyListRoute.targetLanguage, code);
         if (nextPath && nextPath !== location.pathname) {
           navigate(nextPath);
         }

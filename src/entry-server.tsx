@@ -17,6 +17,10 @@ import {
   resolvePastVerbFormsRoute,
   resolveVerbListRoute,
 } from "./data/seo/verbLists";
+import {
+  getAllFullVocabularyListPaths,
+  resolveFullVocabularyListRoute,
+} from "./data/seo/fullVocabularyList";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
@@ -209,6 +213,7 @@ export function getPrerenderRoutes(): string[] {
     ...getAllVerbListPaths(),
     ...getAllPastVerbFormsPaths(),
     ...getAllConjugatedVerbFormsPaths(),
+    ...getAllFullVocabularyListPaths(),
   ])];
 }
 
@@ -339,6 +344,11 @@ function getInitialUiLanguage(url: string): UiLanguageCode {
   const conjugatedVerbFormsRoute = resolveConjugatedVerbFormsRoute(url);
   if (conjugatedVerbFormsRoute) {
     return conjugatedVerbFormsRoute.uiLang;
+  }
+
+  const fullVocabularyListRoute = resolveFullVocabularyListRoute(url);
+  if (fullVocabularyListRoute) {
+    return fullVocabularyListRoute.uiLang;
   }
 
   const seoHubRoute = resolveSeoHubRoute(url);

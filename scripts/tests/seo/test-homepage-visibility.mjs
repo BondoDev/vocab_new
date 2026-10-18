@@ -41,7 +41,7 @@ console.log("\n[1] Homepage content visibility");
   assert(!/opacity\s*:\s*0(?:[^.]|$)/.test(beforeHero), "Homepage H1 is not initially transparent");
   assert(!/visibility\s*:\s*hidden|display\s*:\s*none/.test(beforeHero), "Homepage H1 is not hidden");
   assert(html.includes("Start Practicing"), "Custom Practice CTA is present in SSR HTML");
-  assert(html.includes("Log In to Your Account"), "Personalized Learning CTA is present in SSR HTML");
+  assert(html.includes("Get Started"), "Personalized Learning CTA is present in SSR HTML");
 
   const setupHtml = await readHtml("custom-practice/index.html");
   assert(setupHtml.includes("Your language"), "Native-language selector is present on the setup page");

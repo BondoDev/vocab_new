@@ -26,13 +26,17 @@ import {
   getPastVerbFormsContent,
   getPastVerbFormsPath,
 } from "../../../data/seo/verbLists";
+import {
+  getFullVocabularyListContent,
+  getFullVocabularyListPath,
+} from "../../../data/seo/fullVocabularyList";
 import { TARGET_LANGUAGE_TO_UI_CODE } from "../../utils/pageRouting";
 
 export type TranslateFn = (key: string) => string;
 
 export interface ExploreTopic {
   id: string;
-  level: CefrLevelCode | "test" | "verbs" | "pastVerbForms" | "conjugatedVerbForms";
+  level: CefrLevelCode | "test" | "verbs" | "pastVerbForms" | "conjugatedVerbForms" | "fullVocabularyList";
   label: string;
   path: string;
   kind: "level" | "test" | "custom";
@@ -148,6 +152,30 @@ export function buildConjugatedVerbFormsExploreTopic(
   return {
     id: "conjugated-verb-forms",
     level: "conjugatedVerbForms",
+    label: content.entryButtonLabel,
+    path,
+    kind: "custom",
+    targetLanguage,
+  };
+}
+
+// Entry-point topic for the full A1–C2 vocabulary list page family
+// (src/data/seo/fullVocabularyList/). Returns null for any (targetLanguage,
+// uiLanguage) combination without an authored page, so the dropdown omits it.
+export function buildFullVocabularyListExploreTopic(
+  targetLanguage: TargetLanguageSlug,
+  uiLanguage: UILanguage,
+): ExploreTopic | null {
+  const content = getFullVocabularyListContent(targetLanguage, uiLanguage);
+  const path = getFullVocabularyListPath(targetLanguage, uiLanguage);
+
+  if (!content || !path) {
+    return null;
+  }
+
+  return {
+    id: "full-vocabulary-list",
+    level: "fullVocabularyList",
     label: content.entryButtonLabel,
     path,
     kind: "custom",

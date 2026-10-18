@@ -61,6 +61,7 @@ import {
 // Signup previously had no client-side length check at all; it now shares
 // this one value instead of introducing its own literal.
 import { PASSWORD_MIN_LENGTH } from "../../utils/settingsPassword";
+import { markStayOnPageAfterOAuth } from "../../../lib/authStayOnPage";
 import "./styles/header.scss";
 
 const NAV_HREFS = {
@@ -320,6 +321,11 @@ interface HeaderProps {
   // once" shape.
   requestedAuthMode?: "login" | "signup" | null;
   onAuthActionRequestHandled?: () => void;
+  // Read together with requestedAuthMode: when true, a login/signup started
+  // from that request ends on the current page instead of the profile
+  // dashboard (used by in-page actions such as "Add to list" that resume
+  // once signed in). See src/lib/authStayOnPage.ts for the OAuth case.
+  requestedAuthStayOnPage?: boolean;
 }
 
 export function Header({
@@ -341,6 +347,7 @@ export function Header({
   onAuthRedirectErrorHandled,
   requestedAuthMode,
   onAuthActionRequestHandled,
+  requestedAuthStayOnPage = false,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktopMoreOpen, setIsDesktopMoreOpen] = useState(false);
@@ -357,6 +364,10 @@ export function Header({
   // controlledAuthSession prop after AppContent's mount useEffect runs.
   const [authSession, setAuthSession] = useState<StoredSupabaseSession | null>(null);
   const lastScrollYRef = useRef(0);
+  // True only while the dialog was opened by a stay-on-page request; reset
+  // whenever the dialog closes or is reopened by Header's own buttons, so a
+  // later ordinary login still ends on the dashboard.
+  const stayOnPageAfterAuthRef = useRef(false);
   const [starSeeds, setStarSeeds] = useState<{ sparkle: number; dots: number } | null>(null);
   useEffect(() => {
     setStarSeeds({
@@ -415,6 +426,16 @@ export function Header({
   const authButtonLabel = authSession
     ? nicknameInitial || "Account"
     : loginLabel;
+  // After a successful in-dialog login/signup: the dashboard, unless this
+  // dialog came from a stay-on-page request (then just close it).
+  const finishAuthNavigation = () => {
+    if (stayOnPageAfterAuthRef.current) {
+      stayOnPageAfterAuthRef.current = false;
+      return;
+    }
+    goToProfile("dashboard");
+  };
+
   const goToProfile = (section?: AccountProfileSection) => {
     setIsMenuOpen(false);
     setIsDesktopMoreOpen(false);
@@ -461,6 +482,7 @@ export function Header({
 
   const openLoginDialog = () => {
     switchAuthMode("login");
+    stayOnPageAfterAuthRef.current = false;
     setAuthEmail("");
     setIsMenuOpen(false);
     setIsDesktopMoreOpen(false);
@@ -469,6 +491,7 @@ export function Header({
 
   const openSignupDialog = () => {
     switchAuthMode("signup");
+    stayOnPageAfterAuthRef.current = false;
     setIsAuthDialogOpen(true);
   };
 
@@ -553,6 +576,8 @@ export function Header({
     } else {
       openLoginDialog();
     }
+    // After opening (which resets it) so the request's own flag sticks.
+    stayOnPageAfterAuthRef.current = requestedAuthStayOnPage;
     onAuthActionRequestHandled?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestedAuthMode]);
@@ -660,6 +685,9 @@ export function Header({
       setAuthInfo(null);
       setIsAuthSubmitting(true);
       const redirectTo = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+      if (stayOnPageAfterAuthRef.current) {
+        markStayOnPageAfterOAuth(window.location.pathname);
+      }
       await signInWithGoogleOAuth(redirectTo);
     } catch (error) {
       // D-4/E-2: never error.message - Google-initiation failures are
@@ -722,7 +750,7 @@ export function Header({
         onAuthSessionChange?.(session);
         setIsAuthDialogOpen(false);
         resetAuthForm();
-        goToProfile("dashboard");
+        finishAuthNavigation();
         return;
       }
 
@@ -736,7 +764,7 @@ export function Header({
         onAuthSessionChange?.(result.session);
         setIsAuthDialogOpen(false);
         resetAuthForm();
-        goToProfile("dashboard");
+        finishAuthNavigation();
         return;
       }
 
@@ -1166,7 +1194,15 @@ export function Header({
         </div>
       </div>
 
-      <Dialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen}>
+      <Dialog
+        open={isAuthDialogOpen}
+        onOpenChange={(open) => {
+          setIsAuthDialogOpen(open);
+          if (!open) {
+            stayOnPageAfterAuthRef.current = false;
+          }
+        }}
+      >
         <DialogContent className="w-[min(92vw,28rem)] max-w-none rounded-3xl border-white/15 bg-[#fffdfd] p-0 shadow-[0_24px_80px_rgba(18,12,38,0.32)] sm:w-[26rem]">
           <div className="overflow-hidden rounded-3xl">
             <div className="bg-[radial-gradient(circle_at_top,rgba(120,90,255,0.18),rgba(255,255,255,0)_58%),linear-gradient(135deg,#ffffff_0%,#f7f2ff_100%)] px-6 pb-6 pt-7">
