@@ -44,6 +44,8 @@ interface FullVocabularyLevelSectionProps {
   levelWordCount: number | null;
   // Width, in characters, of the desktop count slot shared by all levels.
   countSlotChars: number;
+  // Optional "{level} English Vocabulary — {name}" heading template.
+  levelHeadingTemplate?: string;
 }
 
 function filterKey(filters: FullVocabularyFilter[]): string {
@@ -73,6 +75,7 @@ export function FullVocabularyLevelSection({
   onAddToList,
   levelWordCount,
   countSlotChars,
+  levelHeadingTemplate,
 }: FullVocabularyLevelSectionProps) {
   // "{total} words" puts the number first; "Слов: {total}" puts text first.
   const countNumberFirst = panelCopy.headerCountLabel.trimStart().startsWith("{");
@@ -130,6 +133,19 @@ export function FullVocabularyLevelSection({
   // tint, so where one level's content ends and the next header begins
   // stays obvious while scrolling a long table. Inset shadow rather than a
   // border keeps the row widths identical whether open or closed.
+  // When the record authors a heading template, the <h3>'s text is that
+  // descriptive heading ("A1 English Vocabulary — Beginner"), carried by a
+  // visually hidden span so the visible header is unchanged. The visible
+  // badge/name/description/count are then aria-hidden (they'd otherwise
+  // repeat the level and name) and the description + count are attached as
+  // the button's accessible description instead.
+  const headingText = levelHeadingTemplate
+    ? formatContentTemplate(levelHeadingTemplate, { level: levelCode, name: level.name })
+    : null;
+  const visualOnly = headingText ? true : undefined;
+  const descriptionId = `${panelId}-description`;
+  const countId = `${panelId}-count`;
+
   return (
     <div className={isOpen ? "bg-muted/20 shadow-[inset_3px_0_0_0_var(--primary)]" : undefined}>
       <h3>
@@ -138,17 +154,24 @@ export function FullVocabularyLevelSection({
           type="button"
           aria-expanded={isOpen}
           aria-controls={panelId}
+          aria-describedby={headingText ? (countLabel ? `${descriptionId} ${countId}` : descriptionId) : undefined}
           onClick={onToggle}
           className={`group flex w-full cursor-pointer items-center gap-4 px-4 py-4 text-left transition-colors hover:bg-primary/[0.07] focus-visible:bg-primary/[0.07] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/40 sm:px-5 ${
             isOpen ? "border-b border-foreground/10" : ""
           }`}
         >
-          <span className="inline-flex h-10 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold tracking-wide text-primary transition-colors group-hover:bg-primary/15">
+          {headingText ? <span className="sr-only">{headingText}</span> : null}
+          <span
+            aria-hidden={visualOnly}
+            className="inline-flex h-10 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold tracking-wide text-primary transition-colors group-hover:bg-primary/15"
+          >
             {levelCode}
           </span>
-          <span className="min-w-0 flex-1">
+          <span aria-hidden={visualOnly} className="min-w-0 flex-1">
             <span className="block text-base font-semibold text-foreground">{level.name}</span>
-            <span className="mt-0.5 block text-sm text-muted-foreground">{level.description}</span>
+            <span id={descriptionId} className="mt-0.5 block text-sm text-muted-foreground">
+              {level.description}
+            </span>
             {countLabel ? (
               <span className={`mt-1.5 inline-flex sm:hidden ${countBadgeClass}`}>{countLabel}</span>
             ) : null}
@@ -160,10 +183,13 @@ export function FullVocabularyLevelSection({
               left edge when it starts with text ("Слов: 962"). */}
           {countLabel ? (
             <span
+              aria-hidden={visualOnly}
               className={`hidden shrink-0 text-xs sm:flex ${countNumberFirst ? "justify-end" : "justify-start"}`}
               style={{ minWidth: `calc(${(countSlotChars * 0.85).toFixed(2)}ch + 1.25rem)` }}
             >
-              <span className={`inline-flex ${countBadgeClass}`}>{countLabel}</span>
+              <span id={countId} className={`inline-flex ${countBadgeClass}`}>
+                {countLabel}
+              </span>
             </span>
           ) : null}
           <span
@@ -202,7 +228,8 @@ export function FullVocabularyLevelSection({
                 searchPlaceholder={formatContentTemplate(panelCopy.searchPlaceholder, { level: levelCode })}
                 categoryLabel={panelCopy.categoryLabel}
                 categoryAllOption={panelCopy.categoryAllOption}
-                categoryDoneLabel={panelCopy.categoryDoneLabel}
+                categoryApplyLabel={panelCopy.categoryApplyLabel}
+                categoryCloseLabel={panelCopy.categoryCloseLabel}
                 resetLabel={panelCopy.resetLabel}
                 value={localFilter}
                 onChange={setLocalFilter}

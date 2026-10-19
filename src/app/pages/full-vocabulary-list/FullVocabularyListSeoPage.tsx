@@ -37,6 +37,12 @@ import { NotFoundPage } from "../NotFoundPage";
 import { FullVocabularyLevelSection, type FullVocabularyLoadStatus } from "./FullVocabularyLevelSection";
 import { VocabularyFilterBar } from "./VocabularyFilterBar";
 import { useAddToListAfterLogin } from "./useAddToListAfterLogin";
+import {
+  FullVocabularyCefrGuide,
+  FullVocabularyFaq,
+  FullVocabularyLearningGuide,
+  FullVocabularyLearningOptions,
+} from "./FullVocabularyListGuide";
 import "./full-vocabulary-list.scss";
 
 interface FullVocabularyListSeoPageProps {
@@ -45,6 +51,14 @@ interface FullVocabularyListSeoPageProps {
   authSession: StoredSupabaseSession | null;
   // Opens the header login dialog in stay-on-page mode (App owns it).
   onRequestLogin: () => void;
+  // App routes (ROUTES lives in App.tsx): the custom-practice setup and the
+  // signed-in learning dashboard.
+  practicePath: string;
+  profilePath: string;
+  // Opens the header's existing sign-up dialog.
+  onRequestSignup: () => void;
+  // Pre-selects this page's target language for the practice setup.
+  onPreparePractice: () => void;
 }
 
 const GLOBAL_RESULTS_ID = "full-vocabulary-global-results";
@@ -54,6 +68,10 @@ export function FullVocabularyListSeoPage({
   targetLanguage,
   authSession,
   onRequestLogin,
+  practicePath,
+  profilePath,
+  onRequestSignup,
+  onPreparePractice,
 }: FullVocabularyListSeoPageProps) {
   const siteOrigin = useSeoSiteOrigin();
   const { pathname } = useLocation();
@@ -240,9 +258,14 @@ export function FullVocabularyListSeoPage({
         </header>
 
         <section aria-labelledby="full-vocabulary-levels-heading" className="space-y-3">
-          <h2 id="full-vocabulary-levels-heading" className="text-xl text-foreground">
-            {content.levelsSection.heading}
-          </h2>
+          <div className="space-y-1">
+            <h2 id="full-vocabulary-levels-heading" className="text-xl text-foreground">
+              {content.levelsSection.heading}
+            </h2>
+            {content.levelsSection.description ? (
+              <p className="max-w-3xl text-sm text-muted-foreground">{content.levelsSection.description}</p>
+            ) : null}
+          </div>
           {/* Global filters span all six levels, so they sit between the
               section heading and the accordion list they will filter. */}
           <div role="search" aria-label={content.globalFilters.searchLabel}>
@@ -253,7 +276,8 @@ export function FullVocabularyListSeoPage({
               searchPlaceholder={content.globalFilters.searchPlaceholder}
               categoryLabel={content.globalFilters.categoryLabel}
               categoryAllOption={content.globalFilters.categoryAllOption}
-              categoryDoneLabel={content.globalFilters.categoryDoneLabel}
+              categoryApplyLabel={content.globalFilters.categoryApplyLabel}
+              categoryCloseLabel={content.globalFilters.categoryCloseLabel}
               resetLabel={content.globalFilters.resetLabel}
               value={globalFilter}
               onChange={handleGlobalFilterChange}
@@ -283,6 +307,7 @@ export function FullVocabularyListSeoPage({
                 rows={rowsByLevel ? rowsByLevel[level.level] : null}
                 levelWordCount={levelWordCounts ? levelWordCounts[level.level] : null}
                 countSlotChars={countSlotChars}
+                levelHeadingTemplate={content.levelsSection.levelHeadingTemplate}
                 globalFilter={deferredGlobalFilter}
                 onRetry={retryLoad}
                 onAddToList={(row) => addToList.requestAddToList({ wordId: row.conceptId, targetWord: row.word })}
@@ -291,12 +316,30 @@ export function FullVocabularyListSeoPage({
           </div>
         </section>
 
-        <section aria-labelledby="full-vocabulary-how-to-heading" className="border-t border-border pt-6">
-          <h2 id="full-vocabulary-how-to-heading" className="text-lg font-semibold text-foreground">
-            {content.howToUse.heading}
-          </h2>
-          <p className="mt-2 max-w-3xl text-sm text-muted-foreground">{content.howToUse.paragraph}</p>
-        </section>
+        {/* Educational sections follow the directory so they never push the
+            vocabulary further down; each renders only if this record has it. */}
+        {content.cefrSection ? <FullVocabularyCefrGuide section={content.cefrSection} levels={content.levels} /> : null}
+        {content.learningSection ? (
+          <FullVocabularyLearningGuide section={content.learningSection} />
+        ) : content.howToUse ? (
+          <section aria-labelledby="full-vocabulary-how-to-heading" className="border-t border-border pt-6">
+            <h2 id="full-vocabulary-how-to-heading" className="text-lg font-semibold text-foreground">
+              {content.howToUse.heading}
+            </h2>
+            <p className="mt-2 max-w-3xl text-sm text-muted-foreground">{content.howToUse.paragraph}</p>
+          </section>
+        ) : null}
+        {content.learningOptions ? (
+          <FullVocabularyLearningOptions
+            section={content.learningOptions}
+            isSignedIn={Boolean(authSession)}
+            profilePath={profilePath}
+            practicePath={practicePath}
+            onRequestSignup={onRequestSignup}
+            onPreparePractice={onPreparePractice}
+          />
+        ) : null}
+        {content.faq ? <FullVocabularyFaq faq={content.faq} /> : null}
       </div>
       {/* The profile Vocabulary section's own "Add to list" popup, reused as
           is: it loads the user's lists for this target language (short UI

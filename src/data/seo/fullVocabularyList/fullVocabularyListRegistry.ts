@@ -19,7 +19,7 @@
 import fullVocabularyListContentJson from "./fullVocabularyListContent.json";
 import {
   SUPPORTED_LEVELS,
-  SUPPORTED_TARGET_LANGUAGES,
+  getUiVocabularyLanguage,
   SUPPORTED_UI_LANGUAGES,
   type Level,
   type TargetLanguageSlug,
@@ -30,6 +30,12 @@ export interface FullVocabularyListLevelContent {
   level: Level;
   name: string;
   description: string;
+}
+
+export interface LearningOptionContent {
+  heading: string;
+  description: string;
+  buttonLabel: string;
 }
 
 export interface FullVocabularyListContentEntry {
@@ -52,13 +58,21 @@ export interface FullVocabularyListContentEntry {
     searchPlaceholder: string;
     categoryLabel: string;
     categoryAllOption: string;
-    // Closes the category popup shown instead of the dropdown below 582px.
-    categoryDoneLabel: string;
+    // The category popup shown instead of the dropdown below 582px: its
+    // commit button and its ✕ button's accessible name.
+    categoryApplyLabel: string;
+    categoryCloseLabel: string;
     resetLabel: string;
     resultsLabel: string;
   };
   levelsSection: {
     heading: string;
+    // Optional supporting line under the heading.
+    description?: string;
+    // Optional accordion-header heading text ({level}, {name} tokens), e.g.
+    // "{level} English Vocabulary — {name}". When absent the header's
+    // visible text serves as its heading.
+    levelHeadingTemplate?: string;
   };
   // Always exactly the six CEFR levels in A1→C2 order (validated below).
   levels: FullVocabularyListLevelContent[];
@@ -70,7 +84,8 @@ export interface FullVocabularyListContentEntry {
     searchPlaceholder: string;
     categoryLabel: string;
     categoryAllOption: string;
-    categoryDoneLabel: string;
+    categoryApplyLabel: string;
+    categoryCloseLabel: string;
     resetLabel: string;
     tableLabel: string;
     tableColumns: {
@@ -106,7 +121,38 @@ export interface FullVocabularyListContentEntry {
   };
   // Display labels for the vocabulary data's `type` values.
   grammarTypes: Record<GrammarTypeKey, string>;
-  howToUse: {
+  // The educational sections below the vocabulary directory are optional per
+  // record: a UI language shows them only once its own copy is authored, so
+  // no record ever renders invented or untranslated text. Each is validated
+  // in full when present.
+  cefrSection?: {
+    heading: string;
+    paragraph: string;
+    // "{level} — {name}" (level names come from `levels`).
+    levelLabelTemplate: string;
+    levelSummaries: Record<Level, string>;
+  };
+  learningSection?: {
+    heading: string;
+    intro: string;
+    tips: Array<{ heading: string; text: string }>;
+  };
+  // "Start learning" section: two entry points into the app, each a heading,
+  // one line, and one action (sign-up for personalized learning, the
+  // custom-practice setup for free practice).
+  learningOptions?: {
+    heading: string;
+    description: string;
+    personalized: LearningOptionContent;
+    freePractice: LearningOptionContent;
+  };
+  faq?: {
+    heading: string;
+    items: Array<{ question: string; answer: string }>;
+  };
+  // Older single "how to use" paragraph, kept for records that don't have
+  // learningSection yet (rendered only when learningSection is absent).
+  howToUse?: {
     heading: string;
     paragraph: string;
   };
@@ -143,7 +189,8 @@ const REQUIRED_SECTION_FIELDS = {
     "searchPlaceholder",
     "categoryLabel",
     "categoryAllOption",
-    "categoryDoneLabel",
+    "categoryApplyLabel",
+    "categoryCloseLabel",
     "resetLabel",
     "resultsLabel",
   ],
@@ -154,7 +201,8 @@ const REQUIRED_SECTION_FIELDS = {
     "searchPlaceholder",
     "categoryLabel",
     "categoryAllOption",
-    "categoryDoneLabel",
+    "categoryApplyLabel",
+    "categoryCloseLabel",
     "resetLabel",
     "tableLabel",
     "pronounceLabel",
@@ -172,8 +220,33 @@ const REQUIRED_SECTION_FIELDS = {
     "detailsLabel",
     "hideLabel",
   ],
+} as const;
+
+// Optional sections: when present, every listed string must be non-empty.
+const OPTIONAL_SECTION_FIELDS = {
+  cefrSection: ["heading", "paragraph", "levelLabelTemplate"],
+  learningSection: ["heading", "intro"],
+  learningOptions: ["heading", "description"],
+  faq: ["heading"],
   howToUse: ["heading", "paragraph"],
 } as const;
+
+function assertItemList(
+  value: unknown,
+  fieldPath: string,
+  fields: readonly string[],
+  entryLabel: string,
+): void {
+  if (!Array.isArray(value) || value.length === 0) {
+    fail(entryLabel, `field "${fieldPath}" must be a non-empty array.`);
+  }
+  value.forEach((item, itemIndex) => {
+    const itemRecord = assertObject(item, `${fieldPath}[${itemIndex}]`, entryLabel);
+    for (const field of fields) {
+      assertNonEmptyString(itemRecord[field], `${fieldPath}[${itemIndex}].${field}`, entryLabel);
+    }
+  });
+}
 
 function fail(entryLabel: string, message: string): never {
   throw new Error(`Invalid full-vocabulary-list content: ${entryLabel} ${message}`);
@@ -196,8 +269,11 @@ function validateEntry(value: unknown, index: number): FullVocabularyListContent
   const entryLabel = `entry #${index}`;
   const record = assertObject(value, "$", entryLabel);
 
-  if (!(SUPPORTED_TARGET_LANGUAGES as readonly unknown[]).includes(record.targetLanguage)) {
-    fail(entryLabel, `has unsupported targetLanguage ${JSON.stringify(record.targetLanguage)}.`);
+  // The JSON names both languages by short code ("en"), like the verb-list
+  // content files; the rest of the app uses full target-language slugs
+  // ("english"), so the code is converted once here (see the return below).
+  if (!(SUPPORTED_UI_LANGUAGES as readonly unknown[]).includes(record.targetLanguage)) {
+    fail(entryLabel, `has unsupported targetLanguage ${JSON.stringify(record.targetLanguage)} (expected a short code such as "en").`);
   }
   if (!(SUPPORTED_UI_LANGUAGES as readonly unknown[]).includes(record.uiLanguage)) {
     fail(entryLabel, `has unsupported uiLanguage ${JSON.stringify(record.uiLanguage)}.`);
@@ -212,6 +288,47 @@ function validateEntry(value: unknown, index: number): FullVocabularyListContent
     const sectionValue = assertObject(record[section], section, entryLabel);
     for (const field of fields) {
       assertNonEmptyString(sectionValue[field], `${section}.${field}`, entryLabel);
+    }
+  }
+
+  for (const [section, fields] of Object.entries(OPTIONAL_SECTION_FIELDS)) {
+    if (record[section] === undefined) {
+      continue;
+    }
+    const sectionValue = assertObject(record[section], section, entryLabel);
+    for (const field of fields) {
+      assertNonEmptyString(sectionValue[field], `${section}.${field}`, entryLabel);
+    }
+  }
+  if (record.cefrSection !== undefined) {
+    const summaries = assertObject(
+      (record.cefrSection as Record<string, unknown>).levelSummaries,
+      "cefrSection.levelSummaries",
+      entryLabel,
+    );
+    for (const level of SUPPORTED_LEVELS) {
+      assertNonEmptyString(summaries[level], `cefrSection.levelSummaries.${level}`, entryLabel);
+    }
+  }
+  if (record.learningSection !== undefined) {
+    assertItemList((record.learningSection as Record<string, unknown>).tips, "learningSection.tips", ["heading", "text"], entryLabel);
+  }
+  if (record.learningOptions !== undefined) {
+    const options = record.learningOptions as Record<string, unknown>;
+    for (const option of ["personalized", "freePractice"]) {
+      const optionRecord = assertObject(options[option], `learningOptions.${option}`, entryLabel);
+      for (const field of ["heading", "description", "buttonLabel"]) {
+        assertNonEmptyString(optionRecord[field], `learningOptions.${option}.${field}`, entryLabel);
+      }
+    }
+  }
+  if (record.faq !== undefined) {
+    assertItemList((record.faq as Record<string, unknown>).items, "faq.items", ["question", "answer"], entryLabel);
+  }
+  const levelsSection = record.levelsSection as Record<string, unknown>;
+  for (const optionalField of ["description", "levelHeadingTemplate"]) {
+    if (levelsSection[optionalField] !== undefined) {
+      assertNonEmptyString(levelsSection[optionalField], `levelsSection.${optionalField}`, entryLabel);
     }
   }
 
@@ -242,7 +359,10 @@ function validateEntry(value: unknown, index: number): FullVocabularyListContent
     assertNonEmptyString(levelRecord.description, `levels[${levelIndex}].description`, entryLabel);
   });
 
-  return record as unknown as FullVocabularyListContentEntry;
+  return {
+    ...record,
+    targetLanguage: getUiVocabularyLanguage(record.targetLanguage as UiLanguageCode),
+  } as unknown as FullVocabularyListContentEntry;
 }
 
 function lookupKey(targetLanguage: string, uiLanguage: string): string {

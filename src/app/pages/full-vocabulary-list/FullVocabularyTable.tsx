@@ -78,6 +78,8 @@ const STICKY_WORD_CELL = "sticky left-0 z-10 max-[582px]:static";
 // detail row toggled per entry. One table serves both layouts — these
 // classes hide the cells that don't belong to the current width.
 const DESKTOP_ONLY = "max-[582px]:hidden";
+// Same breakpoint as the classes above, for the row-click handler.
+const COMPACT_TABLE_QUERY = "(max-width: 581px)";
 const MOBILE_ONLY = "min-[582px]:hidden";
 
 export function FullVocabularyTable({
@@ -106,6 +108,14 @@ export function FullVocabularyTable({
   // hidden desktop columns too would make the fixed-layout table invent
   // phantom columns that take width away from Word and Translation.
   const mobileColumnCount = showTranslations ? 5 : 4;
+  // Compact layout: the number column fits the widest row number shown
+  // ("962" vs "1053" after Load More), so 4-digit numbers never spill into
+  // the word cell. Sized in rem from the body cells' text-sm tabular digits
+  // (~0.55rem each) — not ch, which would be measured in this header cell's
+  // smaller text-xs font and come out too narrow — plus the cell's padding.
+  const numberColumnStyle = {
+    "--number-col": `${(String(rows.length).length * 0.55 + 0.5).toFixed(2)}rem`,
+  } as CSSProperties;
   // Below 582px the table uses fixed layout: the number and Details columns
   // get set widths and Word/Translation split the rest, so long words wrap
   // inside their own column instead of squeezing neighbours. The Details
@@ -148,7 +158,11 @@ export function FullVocabularyTable({
       >
         <thead>
           <tr className="border-b border-border bg-muted text-xs uppercase tracking-wide text-muted-foreground max-[582px]:normal-case max-[582px]:tracking-normal">
-            <th scope="col" className="w-12 px-3 py-2.5 text-right font-semibold max-[582px]:w-6 max-[582px]:px-1">
+            <th
+              scope="col"
+              style={numberColumnStyle}
+              className="w-12 px-3 py-2.5 text-right font-semibold tabular-nums max-[582px]:w-(--number-col) max-[582px]:px-1"
+            >
               {columns.number}
             </th>
             <th
@@ -190,7 +204,28 @@ export function FullVocabularyTable({
             const detailsId = `full-vocabulary-details-${row.conceptId}`;
             return (
               <Fragment key={row.conceptId}>
-                <tr className={`align-top ${isExpanded ? "max-[582px]:border-b-0 max-[582px]:bg-muted/40" : ""}`}>
+                {/* Below 582px a tap anywhere on the row toggles its details
+                    (a bigger target than the chevron), except on the row's
+                    own buttons — audio, Details, ⋮ — which keep their action.
+                    The Details button stays the accessible/keyboard control;
+                    this is a pointer convenience only, so no role is added.
+                    The DOM-containment check matters: React bubbles clicks
+                    from portals (the ⋮ menu's items) up to this row too. */}
+                <tr
+                  onClick={(event) => {
+                    const target = event.target as HTMLElement;
+                    if (
+                      window.matchMedia(COMPACT_TABLE_QUERY).matches &&
+                      event.currentTarget.contains(target) &&
+                      !target.closest("button, a")
+                    ) {
+                      toggleDetails(row.conceptId);
+                    }
+                  }}
+                  className={`align-top max-[582px]:cursor-pointer ${
+                    isExpanded ? "max-[582px]:border-b-0 max-[582px]:bg-muted/40" : ""
+                  }`}
+                >
                   <td className="px-3 py-2.5 text-right tabular-nums text-muted-foreground max-[582px]:px-1">
                     {index + 1}
                   </td>
@@ -204,7 +239,7 @@ export function FullVocabularyTable({
                           type="button"
                           aria-label={formatContentTemplate(pronounceLabel, { word: row.word })}
                           onClick={() => speakWord(row.word, speechLang)}
-                          className="-ml-1 inline-flex size-7 shrink-0 items-center max-[582px]:size-6 justify-center rounded-full text-primary/80 transition hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                          className="-ml-1 inline-flex size-7 shrink-0 items-center max-[582px]:ml-0 max-[582px]:size-6 justify-center rounded-full text-primary/80 transition hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                         >
                           <Volume2 aria-hidden="true" className="size-4" />
                         </button>

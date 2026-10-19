@@ -1439,6 +1439,18 @@ function AppContent({
             targetLanguage={fullVocabularyListSeoRoute.targetLanguage}
             authSession={authSession}
             onRequestLogin={requestLoginStayingOnPage}
+            practicePath={ROUTES.exerciseSelection}
+            profilePath={ROUTES.profile}
+            onRequestSignup={() => setRequestedHeaderAuthMode("signup")}
+            onPreparePractice={() => {
+              // Like handleStartPracticeList: preset the practice language
+              // before navigating, unless it equals the visitor's own
+              // language (the setup requires the two to differ).
+              const targetCode = TARGET_LANGUAGE_TO_UI_CODE[fullVocabularyListSeoRoute.targetLanguage];
+              if (yourLanguage !== targetCode) {
+                setPracticeLanguage(targetCode);
+              }
+            }}
           />
         </Suspense>
         {accountOnboardingDialog}

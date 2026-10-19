@@ -1,6 +1,6 @@
 import { useState, useSyncExternalStore, type ReactNode } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { Check, ChevronDown, RotateCcw, Search } from "lucide-react";
+import { Check, ChevronDown, RotateCcw, Search, X } from "lucide-react";
 import type { FullVocabularyFilter } from "../../../data/seo/fullVocabularyList/fullVocabularyListEntries";
 import {
   Dialog,
@@ -73,8 +73,10 @@ interface VocabularyFilterBarProps {
   searchPlaceholder: string;
   categoryLabel: string;
   categoryAllOption: string;
-  // Closes the popup used instead of the dropdown below 582px.
-  categoryDoneLabel: string;
+  // The popup used instead of the dropdown below 582px: its commit button
+  // and its ✕ button's accessible name.
+  categoryApplyLabel: string;
+  categoryCloseLabel: string;
   resetLabel: string;
   // Controlled by the owner (the page for global, the level section for
   // local); this component holds no filter state of its own.
@@ -121,7 +123,8 @@ export function VocabularyFilterBar({
   searchPlaceholder,
   categoryLabel,
   categoryAllOption,
-  categoryDoneLabel,
+  categoryApplyLabel,
+  categoryCloseLabel,
   resetLabel,
   value,
   onChange,
@@ -147,17 +150,20 @@ export function VocabularyFilterBar({
           .join(", ") || categoryLabel;
 
   const isCompact = useCompactViewport();
-  const [sheetOpen, setSheetOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
+  // The compact popup edits a draft that only takes effect on Apply; closing
+  // it any other way (✕, outside tap, Escape) discards the draft.
+  const [draftTypes, setDraftTypes] = useState<ReadonlySet<string>>(() => new Set());
+
+  // Keeps the list's own order regardless of click order.
+  const toggledTypes = (base: ReadonlySet<string>, type: string, checked: boolean) =>
+    categoryOptions
+      .map((option) => option.value)
+      .filter((candidate) => (candidate === type ? checked : base.has(candidate)));
 
   const clearTypes = () => onChange({ ...value, types: [] });
   const setType = (type: string, checked: boolean) =>
-    onChange({
-      ...value,
-      // Keep the list's own order regardless of click order.
-      types: categoryOptions
-        .map((option) => option.value)
-        .filter((candidate) => (candidate === type ? checked : selectedTypes.has(candidate))),
-    });
+    onChange({ ...value, types: toggledTypes(selectedTypes, type, checked) });
 
   // One trigger for both the dropdown and the popup, so the toolbar renders
   // identically on the server and in either mode.
@@ -220,15 +226,16 @@ export function VocabularyFilterBar({
         <label htmlFor={categoryId} className="sr-only">
           {categoryLabel}
         </label>
-        {/* Below 582px the categories open in a bottom-sheet popup (easier
-            to tap than a small anchored list); wider screens get the
-            dropdown. Both share the trigger, labels, and setType/clearTypes. */}
+        {/* Below 582px the categories open in a centered popup (easier to
+            tap than a small anchored list); wider screens get the dropdown,
+            which applies each tick immediately. */}
         {isCompact ? (
           <Dialog
-            open={sheetOpen}
+            open={popupOpen}
             onOpenChange={(open) => {
-              setSheetOpen(open);
+              setPopupOpen(open);
               if (open) {
+                setDraftTypes(new Set(value.types));
                 onInteract?.();
               }
             }}
@@ -238,23 +245,29 @@ export function VocabularyFilterBar({
               <DialogOverlay />
               {/* Built from the dialog primitives rather than the shared
                   DialogContent, whose built-in close button carries a
-                  hard-coded English label; Done (localized) closes instead. */}
+                  hard-coded English label; the ✕ here is localized. */}
               <DialogPrimitive.Content
                 aria-describedby={undefined}
-                className="fixed inset-x-0 bottom-0 z-50 flex max-h-[85dvh] flex-col rounded-t-2xl border-t border-foreground/10 bg-card shadow-2xl outline-none data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-200"
+                className="fixed left-1/2 top-1/2 z-50 flex max-h-[85dvh] w-[min(92vw,22rem)] -translate-x-1/2 -translate-y-1/2 flex-col rounded-2xl border border-foreground/10 bg-card shadow-2xl outline-none duration-200 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95"
               >
-                <div className="flex justify-center pt-2.5" aria-hidden="true">
-                  <span className="h-1 w-10 rounded-full bg-foreground/15" />
+                <div className="flex items-center justify-between gap-2 border-b border-foreground/10 py-2 pl-5 pr-2">
+                  <DialogTitle className="text-base font-semibold text-foreground">{categoryLabel}</DialogTitle>
+                  <DialogClose asChild>
+                    <button
+                      type="button"
+                      aria-label={categoryCloseLabel}
+                      className="inline-flex size-9 shrink-0 items-center justify-center rounded-full text-foreground/60 transition hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                    >
+                      <X aria-hidden="true" className="size-5" />
+                    </button>
+                  </DialogClose>
                 </div>
-                <DialogTitle className="px-5 pb-2 pt-3 text-base font-semibold text-foreground">
-                  {categoryLabel}
-                </DialogTitle>
-                <div className="min-h-0 flex-1 overflow-y-auto px-3">
+                <div className="min-h-0 flex-1 overflow-y-auto px-3 py-1.5">
                   <label className={SHEET_ROW_CLASS}>
                     <input
                       type="checkbox"
-                      checked={selectedTypes.size === 0}
-                      onChange={clearTypes}
+                      checked={draftTypes.size === 0}
+                      onChange={() => setDraftTypes(new Set())}
                       className={SHEET_CHECKBOX_CLASS}
                     />
                     {categoryAllOption}
@@ -264,23 +277,30 @@ export function VocabularyFilterBar({
                     <label key={option.value} className={SHEET_ROW_CLASS}>
                       <input
                         type="checkbox"
-                        checked={selectedTypes.has(option.value)}
-                        onChange={(event) => setType(option.value, event.target.checked)}
+                        checked={draftTypes.has(option.value)}
+                        onChange={(event) =>
+                          setDraftTypes(new Set(toggledTypes(draftTypes, option.value, event.target.checked)))
+                        }
                         className={SHEET_CHECKBOX_CLASS}
                       />
                       {option.label}
                     </label>
                   ))}
                 </div>
-                <div className="border-t border-foreground/10 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
-                  <DialogClose asChild>
-                    <button
-                      type="button"
-                      className="h-11 w-full rounded-xl bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
-                    >
-                      {categoryDoneLabel}
-                    </button>
-                  </DialogClose>
+                <div className="border-t border-foreground/10 p-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onChange({
+                        ...value,
+                        types: categoryOptions.map((option) => option.value).filter((type) => draftTypes.has(type)),
+                      });
+                      setPopupOpen(false);
+                    }}
+                    className="h-11 w-full rounded-xl bg-primary text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
+                  >
+                    {categoryApplyLabel}
+                  </button>
                 </div>
               </DialogPrimitive.Content>
             </DialogPortal>

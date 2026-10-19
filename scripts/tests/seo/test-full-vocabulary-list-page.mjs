@@ -40,25 +40,36 @@ try {
 
   console.log("\n=== full vocabulary list: routes ===\n");
 
-  // The English list in all seven UI languages, each at its own localized
-  // URL (the UI-language switcher navigates between these).
+  // The English list in all seven UI languages (the UI-language switcher
+  // navigates between these). Slugs are authored per record in the JSON.
   const ENGLISH_LIST_PATHS = {
     en: "/en/english-vocabulary-list",
-    es: "/es/lista-vocabulario-ingles",
-    fr: "/fr/liste-vocabulaire-anglais",
-    de: "/de/englisch-wortschatz-liste",
-    it: "/it/lista-vocabolario-inglese",
-    pt: "/pt/lista-vocabulario-ingles",
-    ru: "/ru/slovar-angliiskii-spisok",
+    es: "/es/english-vocabulary-list",
+    fr: "/fr/english-vocabulary-list",
+    de: "/de/english-vocabulary-list",
+    it: "/it/english-vocabulary-list",
+    pt: "/pt/english-vocabulary-list",
+    ru: "/ru/english-vocabulary-list",
   };
 
+  // Pages are generated from whatever (targetLanguage, uiLanguage) records
+  // the content JSON holds (up to 7 x 7), so these checks hold for any set.
   test("the English list is published in all seven UI languages", () => {
-    assert.deepEqual(
-      [...registry.getAllFullVocabularyListPaths()].sort(),
-      Object.values(ENGLISH_LIST_PATHS).sort(),
-    );
+    const allPaths = registry.getAllFullVocabularyListPaths();
     for (const [uiLang, path] of Object.entries(ENGLISH_LIST_PATHS)) {
       assert.equal(registry.getFullVocabularyListPath("english", uiLang), path, `${uiLang} path`);
+      assert.ok(allPaths.includes(path), `${path} is enumerated for prerender/sitemap`);
+    }
+  });
+
+  test("every record gets a unique path that resolves back to it", () => {
+    const allPaths = registry.getAllFullVocabularyListPaths();
+    assert.equal(new Set(allPaths).size, allPaths.length, "duplicate paths");
+    for (const path of allPaths) {
+      const route = registry.resolveFullVocabularyListRoute(path);
+      assert.ok(route, `${path} resolves`);
+      assert.equal(registry.getFullVocabularyListPath(route.targetLanguage, route.uiLang), path);
+      assert.ok(path.startsWith(`/${route.uiLang}/`), `${path} sits under its UI language`);
     }
   });
 
@@ -66,9 +77,8 @@ try {
     for (const [uiLang, path] of Object.entries(ENGLISH_LIST_PATHS)) {
       assert.deepEqual(registry.resolveFullVocabularyListRoute(path), { uiLang, targetLanguage: "english" });
     }
-    // A slug only exists under its own UI-language prefix.
-    assert.equal(registry.resolveFullVocabularyListRoute("/es/english-vocabulary-list"), null);
-    assert.equal(registry.getFullVocabularyListPath("spanish", "en"), null);
+    // Paths are only those authored: an unknown slug resolves to nothing.
+    assert.equal(registry.resolveFullVocabularyListRoute("/es/no-such-vocabulary-list"), null);
   });
 
   console.log("\n=== full vocabulary list: content ===\n");
@@ -128,9 +138,25 @@ try {
     assert.equal(incomplete.length, 0, "rows missing word/definition/sentence");
   });
 
+  test("with a locale, each level is sorted by its own word in that language's order", () => {
+    const sorted = groupFullVocabularyRows([
+      { concept_id: "c1", word_lemma: "Zug", definiton: "d", sentence: "s", type: "noun", level: "A1" },
+      { concept_id: "c2", word_lemma: "Äpfel", definiton: "d", sentence: "s", type: "noun", level: "A1" },
+      { concept_id: "c3", word_lemma: "Apfel", definiton: "d", sentence: "s", type: "noun", level: "A1" },
+      { concept_id: "c4", word_lemma: "Bahn", definiton: "d", sentence: "s", type: "noun", level: "A1" },
+    ], "de").a1;
+    // German collation keeps Ä with A rather than after Z.
+    assert.deepEqual(sorted.map((row) => row.word), ["Apfel", "Äpfel", "Bahn", "Zug"]);
+    // Real data: the German A1 table is no longer in English concept order.
+    const germanA1 = groupFullVocabularyRows(readVocabulary("german"), "de").a1.map((row) => row.word);
+    const collator = new Intl.Collator("de", { numeric: true });
+    assert.ok(germanA1.every((word, i) => i === 0 || collator.compare(germanA1[i - 1], word) <= 0), "German A1 sorted");
+  });
+
   test("unusable lemmas and repeated concept ids are skipped", () => {
     const rows = groupFullVocabularyRows([
       { concept_id: "x1", word_lemma: "-", definiton: "d", sentence: "s", type: "noun", level: "A1" },
+      { concept_id: "x3", word_lemma: "—", definiton: "d", sentence: "s", type: "noun", level: "A1" },
       { concept_id: "x2", word_lemma: "cat", definiton: "d", sentence: "s", type: "Noun", level: "A1" },
       { concept_id: "x2", word_lemma: "dog", definiton: "d", sentence: "s", type: "noun", level: "A1" },
     ]);
@@ -279,6 +305,51 @@ try {
     assert.deepEqual([...index], [["v1", ["steht", "auf"]]]);
   });
 
+  console.log("\n=== full vocabulary list: educational sections ===\n");
+
+  // The page copy is hand-authored and edited over time, so these check
+  // structure (every educational section present and complete, the agreed
+  // counts) rather than pinning sentences.
+  test("English record has the full educational structure", () => {
+    for (const field of ["heading", "description", "levelHeadingTemplate"]) {
+      assert.ok(content.levelsSection[field], `levelsSection.${field}`);
+    }
+    assert.match(
+      registry.formatContentTemplate(content.levelsSection.levelHeadingTemplate, { level: "B2", name: content.levels[3].name }),
+      /^B2 .+ Upper Intermediate$/,
+    );
+    assert.deepEqual(Object.keys(content.cefrSection.levelSummaries), ["a1", "a2", "b1", "b2", "c1", "c2"]);
+    assert.equal(content.learningSection.tips.length, 3);
+    // The standalone practice link was replaced by the learning-options section.
+    assert.equal(content.learningSection.practiceLinkLabel, undefined);
+    for (const option of ["personalized", "freePractice"]) {
+      for (const field of ["heading", "description", "buttonLabel"]) {
+        assert.ok(content.learningOptions[option][field], `learningOptions.${option}.${field}`);
+      }
+    }
+    assert.equal(content.faq.items.length, 4);
+  });
+
+  test("no record carries both the old how-to paragraph and the learning section", () => {
+    assert.equal(content.howToUse, undefined, "howToUse would duplicate learningSection");
+    for (const path of registry.getAllFullVocabularyListPaths()) {
+      const route = registry.resolveFullVocabularyListRoute(path);
+      const record = registry.getFullVocabularyListContent(route.targetLanguage, route.uiLang);
+      assert.ok(!(record.howToUse && record.learningSection), `${path} would render two "how to" sections`);
+    }
+  });
+
+  test("no FAQPage structured data is emitted", () => {
+    const pageMetadata = buildFullVocabularyListSeoMetadata({
+      uiLang: "en",
+      siteOrigin: ORIGIN,
+      content,
+      getPath: (lang) => registry.getFullVocabularyListPath("english", lang),
+    });
+    const types = JSON.parse(pageMetadata.jsonLd)["@graph"].map((node) => node["@type"]);
+    assert.ok(!types.includes("FAQPage"));
+  });
+
   console.log("\n=== full vocabulary list: metadata ===\n");
 
   const metadata = buildFullVocabularyListSeoMetadata({
@@ -289,8 +360,8 @@ try {
   });
 
   test("title, description, and canonical come from authored content", () => {
-    assert.equal(metadata.title, "English Vocabulary List (A1–C2) with Definitions & Examples");
-    assert.ok(metadata.description.startsWith("Explore English vocabulary from A1 to C2."));
+    assert.equal(metadata.title, content.metadata.metaTitle);
+    assert.equal(metadata.description, content.metadata.metaDescription);
     assert.equal(metadata.canonical, `${ORIGIN}/en/english-vocabulary-list`);
   });
 

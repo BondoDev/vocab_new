@@ -8,7 +8,7 @@
 // chunk, shared with the homepage's daily-word loader, so it is fetched at
 // most once. Deliberately kept out of fullVocabularyListRegistry.ts and the
 // index.ts barrel, which the Node sitemap tooling compiles.
-import type { Level, TargetLanguageSlug } from "../shared/slugs";
+import { TARGET_LANGUAGE_TO_UI_LANGUAGE, type Level, type TargetLanguageSlug } from "../shared/slugs";
 
 export interface FullVocabularyRow {
   conceptId: string;
@@ -156,12 +156,27 @@ function readText(value: unknown): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
 }
 
-// Groups rows by CEFR level in source-file order. Skips entries without a
-// usable lemma ("-" marks a concept with no word in this language) and
-// repeated concept ids (first occurrence wins), matching the practice flow's
-// rules in resolveVocabularyWordData.ts. Note the source field is spelled
+// A concept with no word in a language is marked with a dash-only lemma:
+// "-" in most files, but some (es/fr/de/it/pt/ru) use an em dash "—".
+const MISSING_LEMMA = new RegExp("^[-–—]+$");
+
+function isUsableLemma(word: string): boolean {
+  return word.length > 0 && !MISSING_LEMMA.test(word);
+}
+
+// Groups rows by CEFR level. Skips entries without a usable lemma (see
+// isUsableLemma) and repeated concept ids
+// (first occurrence wins), matching the practice flow's rules in
+// resolveVocabularyWordData.ts. Note the source field is spelled
 // "definiton"; "definition" is accepted too in case it is ever corrected.
-export function groupFullVocabularyRows(entries: unknown): FullVocabularyRowsByLevel {
+//
+// With `sortLocale` (the table language's code, e.g. "de"), each level is
+// sorted alphabetically by its own word using that language's collation
+// (ä beside a in German, ñ after n in Spanish, Cyrillic order in Russian).
+// Source files are ordered by concept id, i.e. by the English word, so
+// without this every non-English table would follow English order.
+// Array.prototype.sort is stable, so equal words keep source order.
+export function groupFullVocabularyRows(entries: unknown, sortLocale?: string): FullVocabularyRowsByLevel {
   const grouped: FullVocabularyRowsByLevel = { a1: [], a2: [], b1: [], b2: [], c1: [], c2: [] };
   if (!Array.isArray(entries)) {
     return grouped;
@@ -173,7 +188,7 @@ export function groupFullVocabularyRows(entries: unknown): FullVocabularyRowsByL
     const conceptId = readText(entry.concept_id);
     const word = readText(entry.word_lemma);
     const level = LEVEL_BY_SOURCE_CODE[readText(entry.level).toUpperCase()];
-    if (!conceptId || !word || word === "-" || !level || seenConceptIds.has(conceptId)) {
+    if (!conceptId || !isUsableLemma(word) || !level || seenConceptIds.has(conceptId)) {
       continue;
     }
     seenConceptIds.add(conceptId);
@@ -185,6 +200,13 @@ export function groupFullVocabularyRows(entries: unknown): FullVocabularyRowsByL
       sentence: readText(entry.sentence),
       type: readText(entry.type).toLowerCase(),
     });
+  }
+
+  if (sortLocale) {
+    const collator = new Intl.Collator(sortLocale, { numeric: true });
+    for (const rows of Object.values(grouped)) {
+      rows.sort((a, b) => collator.compare(a.word, b.word));
+    }
   }
 
   return grouped;
@@ -218,7 +240,9 @@ export function isFullVocabularyLoadStarted(language: TargetLanguageSlug): boole
 }
 
 export function loadFullVocabularyRows(targetLanguage: TargetLanguageSlug): Promise<FullVocabularyRowsByLevel> {
-  return loadVocabularyEntries(targetLanguage).then(groupFullVocabularyRows);
+  return loadVocabularyEntries(targetLanguage).then((entries) =>
+    groupFullVocabularyRows(entries, TARGET_LANGUAGE_TO_UI_LANGUAGE[targetLanguage]),
+  );
 }
 
 export interface FullVocabularyTranslation {
@@ -240,7 +264,7 @@ export function buildTranslationIndex(entries: unknown): Map<string, FullVocabul
     const entry = (raw ?? {}) as Record<string, unknown>;
     const conceptId = readText(entry.concept_id);
     const word = readText(entry.word_lemma);
-    if (conceptId && word && word !== "-" && !index.has(conceptId)) {
+    if (conceptId && isUsableLemma(word) && !index.has(conceptId)) {
       index.set(conceptId, { word, definition: readText(entry.definiton) || readText(entry.definition) });
     }
   }

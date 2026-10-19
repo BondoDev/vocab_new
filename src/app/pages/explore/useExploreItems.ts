@@ -88,6 +88,7 @@ export function useExploreItems(
   const spanishExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("spanish", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("spanish", uiLanguage);
+    const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("spanish", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         spanishExploreTopics,
@@ -96,6 +97,7 @@ export function useExploreItems(
         t,
         examPath,
       ),
+      ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -111,6 +113,7 @@ export function useExploreItems(
   const frenchExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("french", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("french", uiLanguage);
+    const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("french", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         frenchExploreTopics,
@@ -119,6 +122,7 @@ export function useExploreItems(
         t,
         examPath,
       ),
+      ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -134,6 +138,7 @@ export function useExploreItems(
   const germanExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("german", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("german", uiLanguage);
+    const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("german", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         germanExploreTopics,
@@ -142,6 +147,7 @@ export function useExploreItems(
         t,
         examPath,
       ),
+      ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -157,6 +163,7 @@ export function useExploreItems(
   const italianExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("italian", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("italian", uiLanguage);
+    const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("italian", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         italianExploreTopics,
@@ -165,6 +172,7 @@ export function useExploreItems(
         t,
         examPath,
       ),
+      ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -180,6 +188,7 @@ export function useExploreItems(
   const portugueseExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("portuguese", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("portuguese", uiLanguage);
+    const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("portuguese", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         portugueseExploreTopics,
@@ -188,6 +197,7 @@ export function useExploreItems(
         t,
         examPath,
       ),
+      ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
@@ -203,6 +213,7 @@ export function useExploreItems(
   const russianExploreItems = useMemo(() => {
     const pastVerbFormsTopic = buildPastVerbFormsExploreTopic("russian", uiLanguage);
     const conjugatedVerbFormsTopic = buildConjugatedVerbFormsExploreTopic("russian", uiLanguage);
+    const fullVocabularyListTopic = buildFullVocabularyListExploreTopic("russian", uiLanguage);
     return [
       ...withLevelTestExploreTopic(
         russianExploreTopics,
@@ -211,6 +222,7 @@ export function useExploreItems(
         t,
         examPath,
       ),
+      ...(fullVocabularyListTopic ? [fullVocabularyListTopic] : []),
       {
         id: "verbs",
         level: "verbs" as const,
