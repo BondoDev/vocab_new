@@ -87,11 +87,11 @@ flowchart TD
 |---|---|---|---|
 | React application | `src/app/`, `src/contexts/`, `src/features/`, `src/lib/` | `dist/`, `server-build/` (gitignored) | `npx tsc --noEmit`, `npm run build` |
 | Routes | `src/app/App.tsx` (`ROUTES`), `src/app/utils/pageRouting.ts` (`PageKey`, parsers), `src/data/seo/*Slugs.ts`, `vocabularyLevels/vocabularyLevelRoutes.ts`/`shared/hub.ts` | `getPrerenderRoutes()` output (prerendered set) | `test:interactive-contracts`, `test:word-seo` |
-| SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPages/wordPageData.ts`, `src/seo/metadata.ts` (compatibility facade re-exporting `src/seo/hubPages/hubMetadata.ts`, `src/seo/levelTests/levelTestMetadata.ts`, `src/seo/verbLists/common100Verbs/common100VerbsMetadata.ts`, `src/seo/wordPages/wordMetadata.ts`, `src/seo/vocabularyLevels/{seoFaq,seoSchema,seoTemplates}.ts` — `hubTemplates.ts`, `wordTemplates.ts`, and `shared/seoAlternates.ts` are lower-level helpers those modules import internally, not re-exported by the facade itself) | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
+| SEO metadata | `src/seo/routeMetadataPolicy.ts`, `src/seo/site.ts`, `src/seo/SeoContext.tsx`, `src/data/seo/wordPages/wordPageData.ts`, `src/seo/metadata.ts` (compatibility facade re-exporting `src/seo/hubPages/hubMetadata.ts`, `src/seo/levelTests/levelTestMetadata.ts`, `src/seo/listPages/verbLists/common100Verbs/common100VerbsMetadata.ts`, `src/seo/wordPages/wordMetadata.ts`, `src/seo/vocabularyLevels/{seoFaq,seoSchema,seoTemplates}.ts` — `hubTemplates.ts`, `wordTemplates.ts`, and `shared/seoAlternates.ts` are lower-level helpers those modules import internally, not re-exported by the facade itself) | rendered `<head>` tags (prerendered + Worker HTML) | `test:seo-output` (chained suite) |
 | Prerendered pages | `src/entry-server.tsx` (`render`, `getPrerenderRoutes`) | `dist/**/index.html` (2,670 files) | `test:prerender-parity` |
 | Sitemap | `scripts/generation/generate-sitemap.mjs` + vocabulary/route data | `public/sitemap.xml`, `public/sitemaps/*.xml` (core/CEFR/verb-list families; word pages intentionally excluded — see "Prerendering vs. sitemap") | `test:sitemap-structure`, `test:sitemap-vocabulary-route-source`, `test:sitemap-lastmod` |
 | Word Worker | `workers/word-ssr/src/` | `worker-dist-full/`, `assets-full/`, `data/full-corpus/` (all gitignored) | `test:word-worker:production-safety` |
-| Vocabulary data | `src/data/vocabulary/`, `src/data/seo/vocabularyLevels/` (incl. `level-browse-preview/`, `seo-cefr-content.json`), `src/data/seo/levelTests/` | `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `verbLists/shared/common100VerbLookup/` | [`docs/generated-data.md`](generated-data.md), `test:generated-data-ownership` |
+| Vocabulary data | `src/data/vocabulary/`, `src/data/seo/vocabularyLevels/` (incl. `level-browse-preview/`, `seo-cefr-content.json`), `src/data/seo/levelTests/` | `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`, `listPages/verbLists/shared/common100VerbLookup/` | [`docs/generated-data.md`](generated-data.md), `test:generated-data-ownership` |
 | UI components | `src/app/components/ui/` (9 retained files: 8 UI primitives/wrappers plus the shared `cn()` class-name utility, `utils.ts`) | none | [`docs/ui-component-ownership.md`](ui-component-ownership.md), `test:ui-component-ownership` |
 | Dependencies | `package.json` (29 direct entries: 19 `dependencies`, 10 `devDependencies`) | none | [`docs/dependency-ownership.md`](dependency-ownership.md), `test:dependency-ownership` |
 | AI-assistant guidance | `guidelines/Guidelines.md` (Markdown-only) | none | `test:guidelines-ownership` |
@@ -166,9 +166,9 @@ beside the page that owns it. `NotFoundPage.tsx` (the shared 404 fallback, rende
 route branches in `App.tsx`) and `SeoHubPage.tsx` (the SEO page index) have
 moved to `src/app/pages/` alongside the Phase 1 pages above — both are
 standalone route-level pages with a single `App.tsx` consumer and no
-membership in a larger page family. `src/app/pages/verb-lists/` owns
+membership in a larger page family. `src/app/pages/list-pages/verb-lists/` owns
 verb-list route pages as a general category, split into per-subtype folders
-mirroring `src/data/seo/verbLists/` and `src/seo/verbLists/`; `common100Verbs/`
+mirroring `src/data/seo/listPages/verbLists/` and `src/seo/listPages/verbLists/`; `common100Verbs/`
 holds `VerbListSeoPage.tsx` (route entry), `RichVerbListSeoPage.tsx`
 (rich-content view), and `VerbListSeoTableOnlyPage.tsx` (fallback view,
 runtime-coupled to common100Verbs fallback copy). `pastForms100Verbs/` is a
@@ -179,10 +179,10 @@ for the "Past Forms of the 100 Most Common {Target Language} Verbs" family.
 for the "100 Most Common {Target Language} Verbs Conjugated in the Present
 Tense" family. Each subtype's registry and metadata builder own that
 subtype's routing and SEO policy;
-the `PAST_VERB_FORMS_LAUNCHED` flag (`src/seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus.ts`)
+the `PAST_VERB_FORMS_LAUNCHED` flag (`src/seo/listPages/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus.ts`)
 keeps the current 49 authored canonical pages indexable and included in
 `verb-lists.xml`, while the `CONJUGATED_VERB_FORMS_LAUNCHED` flag
-(`src/seo/verbLists/conjugated100Verbs/conjugatedVerbFormsLaunchStatus.ts`)
+(`src/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbFormsLaunchStatus.ts`)
 keeps the conjugation placeholder routes out of the XML sitemap until launch.
 Future verb-list families (e.g. irregular, modal, or separable verbs) would
 live as further sibling subtype folders under `verb-lists/`; shared
@@ -196,15 +196,15 @@ subtype genuinely reuses another's implementation, not preemptively.
 `DevSeoCefrPlaceholderPage`, backed by `devSeoCefrPreviewData.ts`'s
 full-coverage content lookup (see `docs/generated-data.md`); this legacy
 naming was preserved as-is, not treated as dev-only.
-`src/app/pages/full-vocabulary-list/` owns the Full Vocabulary List page
+`src/app/pages/list-pages/full-vocabulary-list/` owns the Full Vocabulary List page
 family — one A1–C2 vocabulary directory per target language, separate from
 the per-level `vocabularyLevel` pages: `FullVocabularyListSeoPage.tsx`
 (route entry), `FullVocabularyLevelSection.tsx` (one CEFR accordion item
 with its own Load More progress), `FullVocabularyTable.tsx` (the per-level
 word table), and `VocabularyFilterBar.tsx` (the global/local filter
-controls). Its route/content registry is `src/data/seo/fullVocabularyList/`
+controls). Its route/content registry is `src/data/seo/listPages/fullVocabularyList/`
 and its metadata builder and `FULL_VOCABULARY_LIST_LAUNCHED` flag live in
-`src/seo/fullVocabularyList/`. Table rows come straight from
+`src/seo/listPages/fullVocabularyList/`. Table rows come straight from
 `src/data/vocabulary/{target}/vocabulary.json` via
 `fullVocabularyListEntries.ts` (dynamic import on first expand, client only
 — no copy of the word data exists), shown 300 at a time per level. A
@@ -239,7 +239,7 @@ Distinguishing source vs. output:
   `src/data/seo/levelTests/*.json`, `workers/word-ssr/src/`, `scripts/`.
 - **Generated, committed files** — never hand-edited, regenerated by a
   script: `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`,
-  `src/data/seo/verbLists/shared/common100VerbLookup/`, `public/sitemap.xml` + `public/sitemaps/`.
+  `src/data/seo/listPages/verbLists/shared/common100VerbLookup/`, `public/sitemap.xml` + `public/sitemaps/`.
 - **Ignored build output** — regenerated by `npm run build`, never
   committed: `dist/`, `server-build/`.
 - **Ignored Worker build output** — regenerated by
@@ -389,15 +389,15 @@ is the authoritative reference; this section only orients:
 - Hand-maintained sources (no generator; edit directly): `src/data/vocabulary/`,
   `src/data/seo/vocabularyLevels/` (incl. `level-browse-preview/`,
   `seo-cefr-content.json`), `src/data/seo/levelTests/seo_level_test_content.json`,
-  `src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`,
-  `src/data/seo/verbLists/conjugated100Verbs/textContent/`,
-  `src/data/seo/verbLists/conjugated100Verbs/conjugatedVerbs/`,
-  `src/data/seo/fullVocabularyList/fullVocabularyListContent.json`
+  `src/data/seo/listPages/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`,
+  `src/data/seo/listPages/verbLists/conjugated100Verbs/textContent/`,
+  `src/data/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbs/`,
+  `src/data/seo/listPages/fullVocabularyList/fullVocabularyListContent.json`
   (localized content plus hand-authored verb-list subtype data; see
   [`docs/generated-data.md`](generated-data.md)).
 - Generated, committed mirrors/output (never hand-edited):
   `src/data/seo/wordPages/word-hub-pages/`, `wordPages/word-browse-shards/`,
-  `src/data/seo/verbLists/shared/common100VerbLookup/` (via `npm run generate:word-hub-data`);
+  `src/data/seo/listPages/verbLists/shared/common100VerbLookup/` (via `npm run generate:word-hub-data`);
   `public/sitemap.xml`/`public/sitemaps/` (via `npm run sitemap`, which
   enumerates CEFR vocabulary-level routes from `getAllLocalizedVocabularyRoutes()`).
 - After editing a hand-maintained source, run its regeneration/sync command

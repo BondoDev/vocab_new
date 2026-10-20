@@ -1,0 +1,272 @@
+// ---------------------------------------------------------------------------
+// VocabularyTable body rows (VocabularyTable.tsx).
+//
+// Plain short classes instead of per-cell Tailwind strings: consumers
+// server-render hundreds of rows per page for SEO, so per-row markup size is
+// multiplied many times over. Values mirror the Tailwind utilities they
+// replaced (same theme variables); the compact block matches the table's
+// 582px breakpoint (max-[582px]: in Tailwind v4 means width < 582px).
+// ---------------------------------------------------------------------------
+$vt-primary-10: color-mix(in oklab, var(--primary) 10%, transparent);
+$vt-focus-ring: 0 0 0 2px color-mix(in oklab, var(--primary) 40%, transparent);
+
+.vt-row {
+  vertical-align: top;
+}
+
+.vt-num {
+  padding: 0.625rem 0.75rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+}
+
+.vt-word {
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  background-color: var(--card);
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.vt-word-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+}
+
+.vt-word-text {
+  min-width: 0;
+  padding-top: 0.125rem;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.vt-speak,
+.vt-more {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition: color 150ms, background-color 150ms;
+
+  &:hover,
+  &[data-state="open"] {
+    background-color: $vt-primary-10;
+    color: var(--primary);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: $vt-focus-ring;
+  }
+}
+
+.vt-speak {
+  margin-left: -0.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  color: color-mix(in oklab, var(--primary) 80%, transparent);
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+// Configured columns: primary (always shown) and detail (desktop cells).
+.vt-p,
+.vt-d {
+  padding: 0.625rem 0.75rem;
+}
+
+.vt-p {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.vt-strong {
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.vt-muted {
+  color: var(--muted-foreground);
+}
+
+.vt-sent {
+  font-style: italic;
+  color: color-mix(in oklab, var(--foreground) 80%, transparent);
+}
+
+.vt-missing {
+  color: var(--muted-foreground);
+}
+
+// Emphasised fragment inside a sentence (e.g. the table word in its example,
+// in both the desktop cell and the compact details panel).
+.vt-hl {
+  font-weight: 600;
+  font-style: normal;
+  color: var(--foreground);
+}
+
+.vt-badge {
+  display: inline-flex;
+  border-radius: 0.375rem;
+  background-color: $vt-primary-10;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  color: var(--primary);
+}
+
+// Smaller outlined badge for the compact details panel.
+.vt-badge--compact {
+  border: 1px solid color-mix(in oklab, var(--primary) 25%, transparent);
+  border-radius: 0.25rem;
+  padding: 0 0.375rem;
+  font-size: 11px;
+  line-height: 1.125rem;
+}
+
+.vt-toggle-cell {
+  display: none;
+  padding: 0.375rem 0.375rem 0.375rem 0.125rem;
+  text-align: right;
+}
+
+.vt-toggle {
+  display: inline-flex;
+  min-height: 2.25rem;
+  align-items: center;
+  gap: 0.25rem;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  padding: 0 0.375rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--foreground) 80%, transparent);
+  transition: color 150ms, background-color 150ms;
+
+  &:hover {
+    background-color: $vt-primary-10;
+    color: var(--primary);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: $vt-focus-ring;
+  }
+}
+
+// CSS-drawn chevron (an inline SVG per row would add ~300 bytes each).
+.vt-chevron {
+  width: 0.4rem;
+  height: 0.4rem;
+  margin: 0 0.25rem 0.2rem;
+  border-right: 2px solid var(--primary);
+  border-bottom: 2px solid var(--primary);
+  transform: rotate(45deg);
+  transition: transform 150ms;
+
+  [aria-expanded="true"] > & {
+    margin: 0.2rem 0.25rem 0;
+    transform: rotate(225deg);
+  }
+}
+
+.vt-actions {
+  padding: 0.375rem 0.25rem;
+  text-align: center;
+}
+
+.vt-more {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.125rem;
+  line-height: 1;
+  font-weight: 700;
+  color: color-mix(in oklab, var(--foreground) 60%, transparent);
+}
+
+@media (max-width: 581px) {
+  // Rows with details toggle on tap (see the row's onClick).
+  .vt-expandable .vt-row {
+    cursor: pointer;
+  }
+
+  .vt-row.is-open {
+    border-bottom-width: 0;
+    background-color: color-mix(in oklab, var(--muted) 40%, transparent);
+  }
+
+  .vt-num {
+    padding-inline: 0.25rem;
+  }
+
+  .vt-word {
+    position: static;
+    background-color: transparent;
+    padding-inline: 0.5rem;
+  }
+
+  .vt-word-inner {
+    gap: 0.25rem;
+  }
+
+  .vt-word-text {
+    padding-top: 1px;
+  }
+
+  .vt-speak {
+    margin-left: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .vt-p {
+    padding-inline: 0.5rem;
+  }
+
+  .vt-d {
+    display: none;
+  }
+
+  .vt-toggle-cell {
+    display: table-cell;
+  }
+
+  .vt-actions {
+    padding-inline: 0;
+  }
+
+  .vt-more {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+// Chevron-only Details toggle below 480px (label kept for screen readers).
+@media (max-width: 479px) {
+  .vt-toggle-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 359px) {
+  .vt-word,
+  .vt-p {
+    padding-inline: 0.25rem;
+  }
+}

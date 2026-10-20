@@ -364,6 +364,7 @@ console.log("\n[4] Source-level: forbidden schema types not present");
       rootDir,
       "src",
       "seo",
+      "listPages",
       "verbLists",
       "common100Verbs",
       "common100VerbsMetadata.ts",

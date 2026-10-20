@@ -19,6 +19,7 @@ const compiled = compileTsToCommonJs(".tmp-word-seo-test", [
     "src",
     "data",
     "seo",
+    "listPages",
     "verbLists",
     "common100Verbs",
     "common100VerbRegistry.ts",
@@ -31,14 +32,14 @@ const wordSlugs = requireCompiled("src/data/seo/wordPages/wordSlugs");
 const wordPageData = requireCompiled("src/data/seo/wordPages/wordPageData");
 const wordHubRoutes = requireCompiled("src/data/seo/wordPages/wordHubRoutes");
 const verbListRegistry = requireCompiled(
-  "src/data/seo/verbLists/common100Verbs/common100VerbRegistry",
+  "src/data/seo/listPages/verbLists/common100Verbs/common100VerbRegistry",
 );
 const { fixMojibake } = requireCompiled("src/utils/fixMojibake");
 
 const englishVocabulary = readJson("src/data/vocabulary/english/vocabulary.json");
 const russianVocabulary = readJson("src/data/vocabulary/russian/vocabulary.json");
 const spanishVocabulary = readJson("src/data/vocabulary/spanish/vocabulary.json");
-const englishVerbList = readJson("src/data/seo/verbLists/shared/list_of_100_most_used_verb_english.json");
+const englishVerbList = readJson("src/data/seo/listPages/verbLists/shared/list_of_100_most_used_verb_english.json");
 const normalizedEnglishVerbList = englishVerbList.map((item) => {
   const legacyId = String(item?.id ?? "").trim();
   if (legacyId) {
@@ -366,7 +367,7 @@ const wordSeoPageSource = fs.readFileSync(
   "utf8",
 );
 const verbListPageSource = fs.readFileSync(
-  path.join(rootDir, "src", "app", "pages", "verb-lists", "common100Verbs", "VerbListSeoPage.tsx"),
+  path.join(rootDir, "src", "app", "pages", "list-pages", "verb-lists", "common100Verbs", "VerbListSeoPage.tsx"),
   "utf8",
 );
 // src/seo/metadata.ts was split (Issue 15) into a compatibility facade plus
@@ -377,7 +378,7 @@ const wordMetadataSource = fs.readFileSync(
   "utf8",
 );
 const verbListMetadataSource = fs.readFileSync(
-  path.join(rootDir, "src", "seo", "verbLists", "common100Verbs", "common100VerbsMetadata.ts"),
+  path.join(rootDir, "src", "seo", "listPages", "verbLists", "common100Verbs", "common100VerbsMetadata.ts"),
   "utf8",
 );
 const wordHubDataSource = fs.readFileSync(
@@ -385,15 +386,15 @@ const wordHubDataSource = fs.readFileSync(
   "utf8",
 );
 const verbListRegistrySource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "seo", "verbLists", "common100Verbs", "common100VerbRegistry.ts"),
+  path.join(rootDir, "src", "data", "seo", "listPages", "verbLists", "common100Verbs", "common100VerbRegistry.ts"),
   "utf8",
 );
 const commonVerbListSource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "seo", "verbLists", "common100Verbs", "common100VerbList.ts"),
+  path.join(rootDir, "src", "data", "seo", "listPages", "verbLists", "common100Verbs", "common100VerbList.ts"),
   "utf8",
 );
 const verbListsSource = fs.readFileSync(
-  path.join(rootDir, "src", "data", "seo", "verbLists", "index.ts"),
+  path.join(rootDir, "src", "data", "seo", "listPages", "verbLists", "index.ts"),
   "utf8",
 );
 const generateWordHubDataSource = fs.readFileSync(
@@ -476,7 +477,7 @@ assert.ok(
 );
 assert.ok(
   /["']shared["'][\s\S]*["']common100VerbLookup["']/.test(generateWordHubDataSource),
-  "word hub generator should write common-100 verb lookup JSON files to src/data/seo/verbLists/shared/common100VerbLookup",
+  "word hub generator should write common-100 verb lookup JSON files to src/data/seo/listPages/verbLists/shared/common100VerbLookup",
 );
 assert.ok(
   !/englishVerbList["'],\s*["']lookup/.test(generateWordHubDataSource),

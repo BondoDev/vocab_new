@@ -29,7 +29,7 @@ const compiled = compileTsToCommonJs(".tmp-jsonld-escape-test", [
   path.join(rootDir, "src", "seo", "site.ts"),
   path.join(rootDir, "src", "seo", "vocabularyLevels", "seoSchema.ts"),
   path.join(rootDir, "src", "seo", "wordPages", "wordMetadata.ts"),
-  path.join(rootDir, "src", "seo", "verbLists", "common100Verbs", "common100VerbsMetadata.ts"),
+  path.join(rootDir, "src", "seo", "listPages", "verbLists", "common100Verbs", "common100VerbsMetadata.ts"),
 ]);
 const { require: requireCompiled, cleanup } = compiled;
 
@@ -667,7 +667,7 @@ console.log("\n[10] Real JSON-LD builder output for vocabularyLevels/seoSchema.t
   const { buildVocabularyJsonLdGraph } = requireCompiled("src/seo/vocabularyLevels/seoSchema");
   const { buildWordSeoMetadata } = requireCompiled("src/seo/wordPages/wordMetadata");
   const { buildVerbListSeoMetadata } = requireCompiled(
-    "src/seo/verbLists/common100Verbs/common100VerbsMetadata",
+    "src/seo/listPages/verbLists/common100Verbs/common100VerbsMetadata",
   );
 
   const FORBIDDEN_TYPES = ["Course", "EducationalOccupationalProgram"];

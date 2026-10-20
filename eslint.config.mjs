@@ -38,7 +38,7 @@ export default [
       "workers/word-ssr/data/full-corpus/**",
       "src/data/seo/wordPages/word-hub-pages/**",
       "src/data/seo/wordPages/word-browse-shards/**",
-      "src/data/seo/verbLists/shared/common100VerbLookup/**",
+      "src/data/seo/listPages/verbLists/shared/common100VerbLookup/**",
     ],
   },
   {

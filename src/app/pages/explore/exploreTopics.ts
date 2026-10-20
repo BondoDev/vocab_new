@@ -25,11 +25,11 @@ import {
   getConjugatedVerbFormsPath,
   getPastVerbFormsContent,
   getPastVerbFormsPath,
-} from "../../../data/seo/verbLists";
+} from "../../../data/seo/listPages/verbLists";
 import {
   getFullVocabularyListContent,
   getFullVocabularyListPath,
-} from "../../../data/seo/fullVocabularyList";
+} from "../../../data/seo/listPages/fullVocabularyList";
 import { TARGET_LANGUAGE_TO_UI_CODE } from "../../utils/pageRouting";
 
 export type TranslateFn = (key: string) => string;
@@ -113,7 +113,7 @@ export function withLevelTestExploreTopic(
 }
 
 // Entry-point topic for the "100 Most Common Verb Past Forms" page family
-// (src/data/seo/verbLists/pastForms100Verbs/). Returns null while that
+// (src/data/seo/listPages/verbLists/pastForms100Verbs/). Returns null while that
 // (targetLanguage, uiLanguage) combination has no entryButtonLabel or
 // urlSlug authored yet, so a dropdown simply omits the entry until its
 // past-forms page is published — no code change needed at that point.
@@ -160,7 +160,7 @@ export function buildConjugatedVerbFormsExploreTopic(
 }
 
 // Entry-point topic for the full A1–C2 vocabulary list page family
-// (src/data/seo/fullVocabularyList/). Returns null for any (targetLanguage,
+// (src/data/seo/listPages/fullVocabularyList/). Returns null for any (targetLanguage,
 // uiLanguage) combination without an authored page, so the dropdown omits it.
 export function buildFullVocabularyListExploreTopic(
   targetLanguage: TargetLanguageSlug,

@@ -6,7 +6,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../../data/seo/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../../data/seo/shared/hub";
-import { getFullVocabularyListPath, resolveFullVocabularyListRoute } from "../../../data/seo/fullVocabularyList";
+import { getFullVocabularyListPath, resolveFullVocabularyListRoute } from "../../../data/seo/listPages/fullVocabularyList";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../../data/seo/wordPages/wordSlugs";
 import {
   getConjugatedVerbFormsPath,
@@ -15,7 +15,7 @@ import {
   resolveConjugatedVerbFormsRoute,
   resolvePastVerbFormsRoute,
   resolveVerbListRoute,
-} from "../../../data/seo/verbLists";
+} from "../../../data/seo/listPages/verbLists";
 import {
   resolveWordSeoHubRoute,
   getWordSeoHubSummaryPath,

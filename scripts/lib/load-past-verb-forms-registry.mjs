@@ -13,6 +13,7 @@ export function loadPastVerbFormsRegistry(tempDirName = ".tmp-past-verb-forms-re
       "src",
       "data",
       "seo",
+      "listPages",
       "verbLists",
       "pastForms100Verbs",
       "pastForms100VerbRegistry.ts",
@@ -21,6 +22,7 @@ export function loadPastVerbFormsRegistry(tempDirName = ".tmp-past-verb-forms-re
       ROOT_DIR,
       "src",
       "seo",
+      "listPages",
       "verbLists",
       "pastForms100Verbs",
       "pastVerbFormsLaunchStatus.ts",
@@ -30,10 +32,10 @@ export function loadPastVerbFormsRegistry(tempDirName = ".tmp-past-verb-forms-re
   return {
     ...compiled,
     registry: compiled.require(
-      "src/data/seo/verbLists/pastForms100Verbs/pastForms100VerbRegistry",
+      "src/data/seo/listPages/verbLists/pastForms100Verbs/pastForms100VerbRegistry",
     ),
     launchStatus: compiled.require(
-      "src/seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus",
+      "src/seo/listPages/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus",
     ),
   };
 }

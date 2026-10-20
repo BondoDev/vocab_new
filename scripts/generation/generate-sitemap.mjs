@@ -304,12 +304,12 @@ async function main() {
     const levelTestRoutes = await collectLevelTestRoutes();
     // Full A1–C2 vocabulary list pages join sitemap-cefr.xml alongside the
     // per-level vocabulary and level-test pages, gated on
-    // FULL_VOCABULARY_LIST_LAUNCHED (src/seo/fullVocabularyList/fullVocabularyListLaunchStatus.ts).
+    // FULL_VOCABULARY_LIST_LAUNCHED (src/seo/listPages/fullVocabularyList/fullVocabularyListLaunchStatus.ts).
     const fullVocabularyListRoutes = fullVocabularyListRegistryLoader.launchStatus.FULL_VOCABULARY_LIST_LAUNCHED
       ? Array.from(new Set(fullVocabularyListRegistryLoader.registry.getAllFullVocabularyListPaths())).sort()
       : [];
     // Past-verb-forms routes only join the verb-lists sitemap once
-    // PAST_VERB_FORMS_LAUNCHED flips to true (src/seo/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus.ts).
+    // PAST_VERB_FORMS_LAUNCHED flips to true (src/seo/listPages/verbLists/pastForms100Verbs/pastVerbFormsLaunchStatus.ts).
     // Before launch, records are authored incrementally and any record
     // without a urlSlug yet is skipped by getAllPastVerbFormsPaths() — this
     // flag check makes the exclusion an explicit, centralized decision

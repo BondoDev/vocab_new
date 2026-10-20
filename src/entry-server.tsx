@@ -16,16 +16,16 @@ import {
   resolveConjugatedVerbFormsRoute,
   resolvePastVerbFormsRoute,
   resolveVerbListRoute,
-} from "./data/seo/verbLists";
+} from "./data/seo/listPages/verbLists";
 import {
   getAllFullVocabularyListPaths,
   resolveFullVocabularyListRoute,
-} from "./data/seo/fullVocabularyList";
+} from "./data/seo/listPages/fullVocabularyList";
 import {
   buildFullVocabularyInitialData,
   FULL_VOCABULARY_INITIAL_DATA_ELEMENT_ID,
   type FullVocabularyInitialData,
-} from "./data/seo/fullVocabularyList/fullVocabularyListEntries";
+} from "./data/seo/listPages/fullVocabularyList/fullVocabularyListEntries";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";

@@ -57,11 +57,12 @@ of its fields as a title/description source. A metadata builder
 src/data/seo/
   vocabularyLevels/   CEFR vocabulary-level pages
   levelTests/         Level-test pages
-  verbLists/          Verb-list page-family umbrella
-    common100Verbs/   100-most-common-verb pages
-    shared/           Data shared only by verb-list subtypes
+  listPages/          Grouping folder for list-style SEO page families (not a family)
+    verbLists/          Verb-list page-family umbrella
+      common100Verbs/   100-most-common-verb pages
+      shared/           Data shared only by verb-list subtypes
+    fullVocabularyList/ Full A1–C2 vocabulary list pages (one per target language)
   wordPages/          Word detail/hub pages
-  fullVocabularyList/ Full A1–C2 vocabulary list pages (one per target language)
   shared/             Cross-family data contracts (not a page family)
 ```
 
@@ -69,11 +70,18 @@ Each page-family folder owns its own route helpers, data shaping, and
 lookup data. A file inside one family folder should not be the
 canonical home for another family's data.
 
-`verbLists/shared/` is narrower than the top-level `shared/` folder. It
+`listPages/` only groups the families whose pages are browsable lists
+(the same grouping exists in `src/seo/listPages/` and
+`src/app/pages/list-pages/`). It owns no data itself; each subfolder is
+an ordinary page family with the rules above, and a new list page family
+goes there as a sibling. Pages that merely contain a list but are about
+something else (e.g. `vocabularyLevels/`) stay outside it.
+
+`listPages/verbLists/shared/` is narrower than the top-level `shared/` folder. It
 holds data shared by multiple verb-list subtypes, but not by unrelated SEO
-families. For example, `verbLists/shared/list_of_100_most_used_verb.json`
+families. For example, `listPages/verbLists/shared/list_of_100_most_used_verb.json`
 is the base 100-verb list, and
-`verbLists/shared/common100VerbLookup/` is the generated compact
+`listPages/verbLists/shared/common100VerbLookup/` is the generated compact
 vocabulary lookup for those concept IDs; both can be reused by
 common-verb, past-form, or other 100-verb page subtypes.
 
@@ -98,7 +106,7 @@ If a new helper is only used by one family, put it in that family's
 folder, not in `shared/`.
 
 **Red flag:** a page-family folder importing a general-purpose symbol
-from a *sibling* page-family folder (e.g. `verbLists/` importing from
+from a *sibling* page-family folder (e.g. `listPages/verbLists/` importing from
 `wordPages/`) is a sign of misplaced ownership, not a fine cross-family
 dependency. When you see one, check whether the symbol belongs in
 `shared/` instead of accepting the sideways import.
@@ -144,9 +152,9 @@ to preserve by inspection and review.
 ## Checklist for adding a new SEO page family or data module
 
 1. Does this data belong to exactly one existing family
-   (`vocabularyLevels/`, `levelTests/`, `verbLists/`, `wordPages/`,
-   `fullVocabularyList/`)? Put
-   it there.
+   (`vocabularyLevels/`, `levelTests/`, `wordPages/`, or a list family
+   under `listPages/`: `verbLists/`, `fullVocabularyList/`)? Put it there.
+   A new list page family gets its own folder under `listPages/`.
 2. Is it genuinely needed by two or more families, with no single owner?
    Only then consider `shared/`.
 3. Does it build `<title>`, canonical URLs, hreflang, robots, or JSON-LD?

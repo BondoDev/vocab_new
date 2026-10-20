@@ -35,8 +35,8 @@ import {
   resolveConjugatedVerbFormsRoute,
   resolvePastVerbFormsRoute,
   resolveVerbListRoute,
-} from "../../data/seo/verbLists";
-import { resolveFullVocabularyListRoute } from "../../data/seo/fullVocabularyList";
+} from "../../data/seo/listPages/verbLists";
+import { resolveFullVocabularyListRoute } from "../../data/seo/listPages/fullVocabularyList";
 
 // Shape of App.tsx's ROUTES map. The keys here must stay in sync with the
 // literal block in App.tsx (guarded by scripts/tests/routing/test-interactive-contracts.mjs).

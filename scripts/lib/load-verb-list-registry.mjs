@@ -8,6 +8,7 @@ export function loadVerbListRegistry(tempDirName = ".tmp-verb-list-registry") {
       "src",
       "data",
       "seo",
+      "listPages",
       "verbLists",
       "common100Verbs",
       "common100VerbRegistry.ts",
@@ -16,6 +17,6 @@ export function loadVerbListRegistry(tempDirName = ".tmp-verb-list-registry") {
 
   return {
     ...compiled,
-    registry: compiled.require("src/data/seo/verbLists/common100Verbs/common100VerbRegistry"),
+    registry: compiled.require("src/data/seo/listPages/verbLists/common100Verbs/common100VerbRegistry"),
   };
 }

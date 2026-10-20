@@ -21,11 +21,12 @@ src/app/pages/
   NotFoundPage.tsx, SeoHubPage.tsx, VocabularyLevelExam.tsx
 
   explore/              # page family: explore route + its exclusive hook
-  full-vocabulary-list/ # page family: full A1–C2 vocabulary list SEO page
   home/                 # page family: homepage + its exclusive components
   level-test/           # page family: level-test SEO page + its modal
-  verb-lists/
-    common100Verbs/     # domain (verb-lists) + concrete subtype
+  list-pages/           # grouping of list-style SEO page families (not a family)
+    full-vocabulary-list/ # page family: full A1–C2 vocabulary list SEO page
+    verb-lists/
+      common100Verbs/     # domain (verb-lists) + concrete subtype
   vocabulary/           # page family + local production runtime config
   word-pages/
     detail/             # route subfamily: single word-detail pages
@@ -114,7 +115,12 @@ the Worker rendering/bundle details this README omits.
 
 ## Nested domain/subtype and route-subfamily folders
 
-Nesting is justified only by a real ownership taxonomy. `verb-lists/` is
+`list-pages/` groups the page families whose pages are browsable lists,
+mirroring `src/data/seo/listPages/` and `src/seo/listPages/`. It owns no
+files itself; each subfolder is an ordinary page family, and a new list
+page family goes there as a sibling.
+
+Nesting is justified only by a real ownership taxonomy. `list-pages/verb-lists/` is
 the general domain, `common100Verbs/` is one concrete list family, and its
 supporting views (`RichVerbListSeoPage.tsx`, `VerbListSeoTableOnlyPage.tsx`)
 are specific to that subtype. Future sibling subtypes should only appear

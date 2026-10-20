@@ -10,6 +10,7 @@ const PAGE_SOURCE = fs.readFileSync(
     "src",
     "app",
     "pages",
+    "list-pages",
     "verb-lists",
     "conjugated100Verbs",
     "ConjugatedVerbFormsSeoPage.tsx",
@@ -23,6 +24,7 @@ const TABLE_SOURCE = fs.readFileSync(
     "src",
     "app",
     "pages",
+    "list-pages",
     "verb-lists",
     "conjugated100Verbs",
     "ConjugatedVerbFormsTableSection.tsx",
@@ -66,6 +68,7 @@ const metadataLoader = compileTsToCommonJs(".tmp-conjugated-verb-forms-metadata-
     ROOT_DIR,
     "src",
     "seo",
+    "listPages",
     "verbLists",
     "conjugated100Verbs",
     "conjugatedVerbFormsMetadata.ts",
@@ -83,6 +86,7 @@ const formsRowBuilderLoader = compileTsToCommonJs(".tmp-conjugated-verb-forms-ro
     "src",
     "data",
     "seo",
+    "listPages",
     "verbLists",
     "conjugated100Verbs",
     "conjugated100VerbFormsRowBuilder.ts",
@@ -92,10 +96,10 @@ const formsRowBuilderLoader = compileTsToCommonJs(".tmp-conjugated-verb-forms-ro
 try {
   const registry = registryLoader.registry;
   const metadata = metadataLoader.require(
-    "src/seo/verbLists/conjugated100Verbs/conjugatedVerbFormsMetadata",
+    "src/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbFormsMetadata",
   );
   const formsRowBuilder = formsRowBuilderLoader.require(
-    "src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbFormsRowBuilder",
+    "src/data/seo/listPages/verbLists/conjugated100Verbs/conjugated100VerbFormsRowBuilder",
   );
 
   const content = registry.getConjugatedVerbFormsContent("english", "en");
@@ -161,7 +165,7 @@ try {
 
   test("present simple conjugation rows load from the authored English JSON file", () => {
     const englishTenseGroups = readJson(
-      "src/data/seo/verbLists/conjugated100Verbs/conjugatedVerbs/english.json",
+      "src/data/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbs/english.json",
     );
     const rows = formsRowBuilder.buildConjugatedVerbFormsRows(
       "conjugatedVerbs/english.json",
@@ -187,6 +191,7 @@ try {
         "src",
         "data",
         "seo",
+        "listPages",
         "verbLists",
         "conjugated100Verbs",
         "conjugated100VerbFormsRowBuilder.ts",

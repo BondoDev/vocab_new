@@ -8,7 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { compileTsToCommonJs, ROOT_DIR } from "../../lib/compileTs.mjs";
 
-const PAGE_DIR = path.join(ROOT_DIR, "src", "app", "pages", "full-vocabulary-list");
+const PAGE_DIR = path.join(ROOT_DIR, "src", "app", "pages", "list-pages", "full-vocabulary-list");
 const ORIGIN = "https://example.test";
 
 let passed = 0;
@@ -26,16 +26,16 @@ function test(name, fn) {
 }
 
 const compiled = compileTsToCommonJs(".tmp-full-vocabulary-list-test", [
-  path.join(ROOT_DIR, "src", "data", "seo", "fullVocabularyList", "fullVocabularyListRegistry.ts"),
-  path.join(ROOT_DIR, "src", "seo", "fullVocabularyList", "fullVocabularyListMetadata.ts"),
-  path.join(ROOT_DIR, "src", "data", "seo", "fullVocabularyList", "fullVocabularyListEntries.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "listPages", "fullVocabularyList", "fullVocabularyListRegistry.ts"),
+  path.join(ROOT_DIR, "src", "seo", "listPages", "fullVocabularyList", "fullVocabularyListMetadata.ts"),
+  path.join(ROOT_DIR, "src", "data", "seo", "listPages", "fullVocabularyList", "fullVocabularyListEntries.ts"),
   path.join(ROOT_DIR, "src", "features", "practice", "utils", "highlightInflectedWords.ts"),
 ]);
 
 try {
-  const registry = compiled.require("src/data/seo/fullVocabularyList/fullVocabularyListRegistry");
+  const registry = compiled.require("src/data/seo/listPages/fullVocabularyList/fullVocabularyListRegistry");
   const { buildFullVocabularyListSeoMetadata } = compiled.require(
-    "src/seo/fullVocabularyList/fullVocabularyListMetadata",
+    "src/seo/listPages/fullVocabularyList/fullVocabularyListMetadata",
   );
 
   console.log("\n=== full vocabulary list: routes ===\n");
@@ -110,7 +110,7 @@ try {
   console.log("\n=== full vocabulary list: vocabulary rows ===\n");
 
   const { groupFullVocabularyRows } = compiled.require(
-    "src/data/seo/fullVocabularyList/fullVocabularyListEntries",
+    "src/data/seo/listPages/fullVocabularyList/fullVocabularyListEntries",
   );
   const vocabularyDir = path.join(ROOT_DIR, "src", "data", "vocabulary");
   const readVocabulary = (language) =>
@@ -177,7 +177,7 @@ try {
     filterFullVocabularyRows,
     collectGrammarTypes,
     isFullVocabularyFilterActive,
-  } = compiled.require("src/data/seo/fullVocabularyList/fullVocabularyListEntries");
+  } = compiled.require("src/data/seo/listPages/fullVocabularyList/fullVocabularyListEntries");
   const sampleRows = groupFullVocabularyRows([
     { concept_id: "c1", word_lemma: "Café", definiton: "d", sentence: "s", type: "noun", level: "A1" },
     { concept_id: "c2", word_lemma: "decaf", definiton: "d", sentence: "s", type: "noun", level: "A1" },
@@ -231,7 +231,7 @@ try {
   console.log("\n=== full vocabulary list: translations ===\n");
 
   const { buildTranslationIndex, attachFullVocabularyTranslations } = compiled.require(
-    "src/data/seo/fullVocabularyList/fullVocabularyListEntries",
+    "src/data/seo/listPages/fullVocabularyList/fullVocabularyListEntries",
   );
 
   test("translation index maps concept_id to the first usable lemma and its definition", () => {
@@ -279,7 +279,7 @@ try {
   const { findInflectedWordRanges, highlightInflectedWords } = compiled.require(
     "src/features/practice/utils/highlightInflectedWords",
   );
-  const { buildInflectedFormsIndex } = compiled.require("src/data/seo/fullVocabularyList/fullVocabularyListEntries");
+  const { buildInflectedFormsIndex } = compiled.require("src/data/seo/listPages/fullVocabularyList/fullVocabularyListEntries");
 
   test("inflected forms are found as whole words, case-insensitively", () => {
     const sentence = "Green beans are my favourite vegetable.";

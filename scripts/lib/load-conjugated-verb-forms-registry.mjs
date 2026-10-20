@@ -7,6 +7,7 @@ const TEXT_CONTENT_DIR = path.join(
   "src",
   "data",
   "seo",
+  "listPages",
   "verbLists",
   "conjugated100Verbs",
   "textContent",
@@ -40,6 +41,7 @@ export function loadConjugatedVerbFormsRegistry(tempDirName = ".tmp-conjugated-v
       "src",
       "data",
       "seo",
+      "listPages",
       "verbLists",
       "conjugated100Verbs",
       "conjugated100VerbRouteHelpers.ts",
@@ -48,6 +50,7 @@ export function loadConjugatedVerbFormsRegistry(tempDirName = ".tmp-conjugated-v
       ROOT_DIR,
       "src",
       "seo",
+      "listPages",
       "verbLists",
       "conjugated100Verbs",
       "conjugatedVerbFormsLaunchStatus.ts",
@@ -55,7 +58,7 @@ export function loadConjugatedVerbFormsRegistry(tempDirName = ".tmp-conjugated-v
   ]);
 
   const routeHelpers = compiled.require(
-    "src/data/seo/verbLists/conjugated100Verbs/conjugated100VerbRouteHelpers",
+    "src/data/seo/listPages/verbLists/conjugated100Verbs/conjugated100VerbRouteHelpers",
   );
 
   const lookup = routeHelpers.buildConjugatedVerbFormsContentLookup(
@@ -66,7 +69,7 @@ export function loadConjugatedVerbFormsRegistry(tempDirName = ".tmp-conjugated-v
     ...compiled,
     registry: routeHelpers.createConjugatedVerbFormsRegistry(lookup),
     launchStatus: compiled.require(
-      "src/seo/verbLists/conjugated100Verbs/conjugatedVerbFormsLaunchStatus",
+      "src/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbFormsLaunchStatus",
     ),
   };
 }

@@ -20,6 +20,7 @@ src/app/components/
   dialogs/            # app-shell-orchestrated global dialogs
   layout/             # global navigation and application chrome
   ui/                 # domain-agnostic UI primitives (Radix/shadcn-style)
+  vocabulary-table/   # reusable word-list table for vocabulary SEO pages
   LanguageSelector.tsx # app-specific component shared by unrelated owners
   Toast.tsx           # generic auto-dismissing confirmation, shared by unrelated owners
 ```
@@ -87,6 +88,24 @@ Placement is based on global ownership and breadth of use, not on the word
 is owned exclusively by the word-detail page family. Being rendered through
 multiple internal rendering paths within that one family is not, by itself,
 a reason to treat it as global layout.
+
+## vocabulary-table/
+
+`VocabularyTable.tsx` and its stylesheet `vocabulary-table.scss`: the
+word-list table (row number, pinned word with browser speech, configurable
+primary/detail columns, compact expandable rows below 582px, per-row actions
+menu) for vocabulary SEO pages. Consumers own data, copy, and column choice
+through a thin page-local adapter — first consumer:
+`src/app/pages/list-pages/full-vocabulary-list/FullVocabularyTable.tsx`.
+
+This folder was created ahead of a second consumer at the owner's request:
+several further vocabulary-list page families are planned to reuse the same
+table. It stays free of page and feature imports (see "Dependency
+direction"); page-specific rendering such as sentence highlighting stays in
+the adapter. Body rows use short `vt-*` classes instead of Tailwind strings
+because consumers server-render hundreds of rows per page — keep new per-row
+markup equally compact. Render coverage:
+`npm run test:vocabulary-table-render`.
 
 ## ui/
 

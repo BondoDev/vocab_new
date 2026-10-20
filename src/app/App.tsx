@@ -24,10 +24,10 @@ import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
 import { UserProfileDashboardPage } from "../features/user-profile";
 import { LevelTestSeoPage } from "./pages/level-test/LevelTestSeoPage";
 import { SeoHubPage } from "./pages/SeoHubPage";
-import { VerbListSeoPage } from "./pages/verb-lists/common100Verbs/VerbListSeoPage";
-import { PastVerbFormsSeoPage } from "./pages/verb-lists/pastForms100Verbs/PastVerbFormsSeoPage";
-import { ConjugatedVerbFormsSeoPage } from "./pages/verb-lists/conjugated100Verbs/ConjugatedVerbFormsSeoPage";
-import { FullVocabularyListSeoPage } from "./pages/full-vocabulary-list/FullVocabularyListSeoPage";
+import { VerbListSeoPage } from "./pages/list-pages/verb-lists/common100Verbs/VerbListSeoPage";
+import { PastVerbFormsSeoPage } from "./pages/list-pages/verb-lists/pastForms100Verbs/PastVerbFormsSeoPage";
+import { ConjugatedVerbFormsSeoPage } from "./pages/list-pages/verb-lists/conjugated100Verbs/ConjugatedVerbFormsSeoPage";
+import { FullVocabularyListSeoPage } from "./pages/list-pages/full-vocabulary-list/FullVocabularyListSeoPage";
 import { WordSeoPage } from "./pages/word-pages/detail/WordSeoPage";
 import { WordPageLayout } from "./pages/word-pages/detail/WordPageLayout";
 import { DevSeoCefrPlaceholderPage } from "./pages/vocabulary/DevSeoCefrPlaceholderPage";
@@ -39,7 +39,7 @@ import {
 import type { TargetLanguageSlug } from "../data/seo/shared/slugs";
 import type { CanonicalWordPageRouteMatch } from "../data/seo/wordPages/wordSlugs";
 import type { LevelBrowsePreviewData } from "../data/seo/vocabularyLevels/levelBrowseWords";
-import type { FullVocabularyInitialData } from "../data/seo/fullVocabularyList/fullVocabularyListEntries";
+import type { FullVocabularyInitialData } from "../data/seo/listPages/fullVocabularyList/fullVocabularyListEntries";
 import {
   SEOHead,
   SeoProvider,
