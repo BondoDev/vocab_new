@@ -357,3 +357,98 @@ export function attachFullVocabularySentenceForms(
     c2: withForms(rowsByLevel.c2),
   };
 }
+
+// The page's complete row pipeline: target-language rows (sorted), bolded
+// sentence forms, and — when the UI language differs — that language's
+// translations and definitions. Shared by the browser (full lists) and SSR
+// (the first rows of each level, see buildFullVocabularyInitialData), so both
+// produce identical rows. `translationLanguage` is null on same-language pages.
+export function loadFullVocabularyPageRows(
+  targetLanguage: TargetLanguageSlug,
+  translationLanguage: TargetLanguageSlug | null,
+): Promise<FullVocabularyRowsByLevel> {
+  return Promise.all([
+    loadFullVocabularyRows(targetLanguage),
+    translationLanguage ? loadFullVocabularyTranslations(translationLanguage) : null,
+    loadFullVocabularyInflectedForms(targetLanguage),
+  ]).then(([rows, translations, inflectedForms]) => {
+    const withForms = attachFullVocabularySentenceForms(rows, inflectedForms);
+    return translations ? attachFullVocabularyTranslations(withForms, translations) : withForms;
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Server-rendered first rows (SEO).
+//
+// Prerendering puts the first FULL_VOCABULARY_INITIAL_ROWS rows of every level
+// into each page's HTML (inside the collapsed level panels) so search engines
+// see real vocabulary, and embeds the same rows as an inert JSON block so the
+// browser's first render — and therefore hydration — matches exactly. The
+// browser then loads the complete lists as before; until they arrive, search
+// and Load More wait for them. Search keys are left out of the payload (they
+// are derived from word/translation) to keep the HTML smaller.
+// ---------------------------------------------------------------------------
+
+export const FULL_VOCABULARY_INITIAL_ROWS = 100;
+export const FULL_VOCABULARY_INITIAL_DATA_ELEMENT_ID = "full-vocabulary-initial-data";
+
+export interface FullVocabularyInitialData {
+  pathname: string;
+  // Totals of the complete lists, for the level header counts.
+  levelWordCounts: Record<Level, number>;
+  // The first FULL_VOCABULARY_INITIAL_ROWS rows of each level.
+  rowsByLevel: FullVocabularyRowsByLevel;
+}
+
+function mapLevels(
+  rowsByLevel: FullVocabularyRowsByLevel,
+  mapRows: (rows: FullVocabularyRow[]) => FullVocabularyRow[],
+): FullVocabularyRowsByLevel {
+  return {
+    a1: mapRows(rowsByLevel.a1),
+    a2: mapRows(rowsByLevel.a2),
+    b1: mapRows(rowsByLevel.b1),
+    b2: mapRows(rowsByLevel.b2),
+    c1: mapRows(rowsByLevel.c1),
+    c2: mapRows(rowsByLevel.c2),
+  };
+}
+
+export async function buildFullVocabularyInitialData(
+  pathname: string,
+  targetLanguage: TargetLanguageSlug,
+  translationLanguage: TargetLanguageSlug | null,
+): Promise<FullVocabularyInitialData> {
+  const rows = await loadFullVocabularyPageRows(targetLanguage, translationLanguage);
+  return {
+    pathname,
+    levelWordCounts: {
+      a1: rows.a1.length,
+      a2: rows.a2.length,
+      b1: rows.b1.length,
+      b2: rows.b2.length,
+      c1: rows.c1.length,
+      c2: rows.c2.length,
+    },
+    rowsByLevel: mapLevels(rows, (levelRows) =>
+      levelRows.slice(0, FULL_VOCABULARY_INITIAL_ROWS).map(({ searchKey: _searchKey, translationSearchKey: _t, ...row }) => ({
+        ...row,
+        searchKey: "",
+      })),
+    ),
+  };
+}
+
+// Restores the search keys dropped from the embedded payload.
+export function hydrateFullVocabularyInitialData(data: FullVocabularyInitialData): FullVocabularyInitialData {
+  return {
+    ...data,
+    rowsByLevel: mapLevels(data.rowsByLevel, (rows) =>
+      rows.map((row) => ({
+        ...row,
+        searchKey: normalizeVocabularySearchText(row.word),
+        ...(row.translation ? { translationSearchKey: normalizeVocabularySearchText(row.translation) } : {}),
+      })),
+    ),
+  };
+}

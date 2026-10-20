@@ -130,6 +130,11 @@ Local development
   Worker; `ENABLE_CANONICAL_HOST_REDIRECT` stays `"false"`).
   `scripts/tests/seo/test-seo-core-routes.mjs` asserts this paragraph stays present;
   if the dashboard rule ever changes, re-probe and update both.
+- Static path redirects: `public/_redirects` (Cloudflare Static Assets
+  `_redirects` format, deployed alongside `_headers`), applied before asset
+  matching — currently `301`s from the full vocabulary list's retired
+  localized English-list URLs to their current `{language}-vocabulary-list`
+  URLs.
 - Legacy word-URL redirects (single-hyphen and legacy slug formats):
   `308` computed by the Worker (`classifyAndRespondNonCanonical` in
   `src/index.full.ts`), including accent-insensitive slug recovery.

@@ -39,6 +39,7 @@ import {
 import type { TargetLanguageSlug } from "../data/seo/shared/slugs";
 import type { CanonicalWordPageRouteMatch } from "../data/seo/wordPages/wordSlugs";
 import type { LevelBrowsePreviewData } from "../data/seo/vocabularyLevels/levelBrowseWords";
+import type { FullVocabularyInitialData } from "../data/seo/fullVocabularyList/fullVocabularyListEntries";
 import {
   SEOHead,
   SeoProvider,
@@ -178,10 +179,12 @@ const ROUTES = {
 function AppContent({
   initialWordPageData,
   initialBrowsePreviewData,
+  initialFullVocabularyData,
   ssrRouteOverride,
 }: {
   initialWordPageData?: ResolvedWordPageData | null;
   initialBrowsePreviewData?: LevelBrowsePreviewData | null;
+  initialFullVocabularyData?: FullVocabularyInitialData | null;
   ssrRouteOverride?: {
     page: "wordPage" | "notFound";
     wordRoute?: CanonicalWordPageRouteMatch | null;
@@ -1439,6 +1442,7 @@ function AppContent({
             targetLanguage={fullVocabularyListSeoRoute.targetLanguage}
             authSession={authSession}
             onRequestLogin={requestLoginStayingOnPage}
+            initialData={initialFullVocabularyData}
             practicePath={ROUTES.exerciseSelection}
             profilePath={ROUTES.profile}
             onRequestSignup={() => setRequestedHeaderAuthMode("signup")}
@@ -1712,6 +1716,8 @@ interface AppProps {
   siteOrigin?: string;
   initialWordPageData?: ResolvedWordPageData | null;
   initialBrowsePreviewData?: LevelBrowsePreviewData | null;
+  // SSR only; the browser reads the same rows from the page's embedded JSON.
+  initialFullVocabularyData?: FullVocabularyInitialData | null;
   ssrRouteOverride?: {
     page: "wordPage" | "notFound";
     wordRoute?: CanonicalWordPageRouteMatch | null;
@@ -1725,6 +1731,7 @@ export default function App({
   siteOrigin = DEFAULT_SITE_ORIGIN,
   initialWordPageData,
   initialBrowsePreviewData,
+  initialFullVocabularyData,
   ssrRouteOverride,
 }: AppProps) {
   return (
@@ -1737,6 +1744,7 @@ export default function App({
           <AppContent
             initialWordPageData={initialWordPageData}
             initialBrowsePreviewData={initialBrowsePreviewData}
+            initialFullVocabularyData={initialFullVocabularyData}
             ssrRouteOverride={ssrRouteOverride}
           />
           <ScrollToTopButton />

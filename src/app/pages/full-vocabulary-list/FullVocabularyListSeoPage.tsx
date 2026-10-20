@@ -7,20 +7,21 @@ import {
   GRAMMAR_TYPE_KEYS,
 } from "../../../data/seo/fullVocabularyList";
 import {
-  attachFullVocabularySentenceForms,
-  attachFullVocabularyTranslations,
   collectGrammarTypes,
   EMPTY_FULL_VOCABULARY_FILTER,
   filterFullVocabularyRows,
+  FULL_VOCABULARY_INITIAL_DATA_ELEMENT_ID,
   FULL_VOCABULARY_SPEECH_LANG,
+  hydrateFullVocabularyInitialData,
   isFullVocabularyFilterActive,
   isFullVocabularyLoadStarted,
-  loadFullVocabularyInflectedForms,
+  loadFullVocabularyPageRows,
   loadFullVocabularyRows,
-  loadFullVocabularyTranslations,
   type FullVocabularyFilter,
+  type FullVocabularyInitialData,
   type FullVocabularyRowsByLevel,
 } from "../../../data/seo/fullVocabularyList/fullVocabularyListEntries";
+import { readEmbeddedJson } from "../../../lib/readEmbeddedJson";
 import {
   getUiVocabularyLanguage,
   TARGET_LANGUAGE_TO_UI_LANGUAGE,
@@ -59,6 +60,21 @@ interface FullVocabularyListSeoPageProps {
   onRequestSignup: () => void;
   // Pre-selects this page's target language for the practice setup.
   onPreparePractice: () => void;
+  // SSR: the first rows of each level, rendered into the HTML. In the
+  // browser this is absent and the same data is read from the page.
+  initialData?: FullVocabularyInitialData | null;
+}
+
+// The server-rendered first rows for this exact page, from the prop (SSR) or
+// the embedded JSON block (browser). Must yield the same rows in both so the
+// first browser render matches the HTML. Client-side navigation into the page
+// finds no matching block and starts empty, as before.
+function readInitialData(
+  pathname: string,
+  fromProps: FullVocabularyInitialData | null | undefined,
+): FullVocabularyInitialData | null {
+  const data = fromProps ?? readEmbeddedJson<FullVocabularyInitialData>(FULL_VOCABULARY_INITIAL_DATA_ELEMENT_ID);
+  return data && data.pathname === pathname ? hydrateFullVocabularyInitialData(data) : null;
 }
 
 const GLOBAL_RESULTS_ID = "full-vocabulary-global-results";
@@ -72,9 +88,11 @@ export function FullVocabularyListSeoPage({
   profilePath,
   onRequestSignup,
   onPreparePractice,
+  initialData: initialDataProp,
 }: FullVocabularyListSeoPageProps) {
   const siteOrigin = useSeoSiteOrigin();
   const { pathname } = useLocation();
+  const [initialData] = useState(() => readInitialData(pathname, initialDataProp));
   const addToList = useAddToListAfterLogin({ authSession, onRequestLogin, pathname });
   const { message: toastMessage, show: showToast } = useAutoDismissMessage();
   // Independent open state per level: any combination may be expanded at
@@ -90,12 +108,20 @@ export function FullVocabularyListSeoPage({
   // page loads (and SSR) still start false, keeping hydration identical.
   const [rowsRequested, setRowsRequested] = useState(() => isFullVocabularyLoadStarted(targetLanguage));
   const [loadAttempt, setLoadAttempt] = useState(0);
-  const [rowsByLevel, setRowsByLevel] = useState<FullVocabularyRowsByLevel | null>(null);
+  // Starts with the server-rendered first rows (if any); replaced by the
+  // complete lists once loaded. `rowsComplete` tells search, filters, and
+  // Load More whether they are looking at every word yet.
+  const [rowsByLevel, setRowsByLevel] = useState<FullVocabularyRowsByLevel | null>(
+    () => initialData?.rowsByLevel ?? null,
+  );
+  const [rowsComplete, setRowsComplete] = useState(false);
   // Per-level word totals, known as soon as the target-language file is in
   // (instant when cached, e.g. after a UI-language switch). Kept apart from
   // rowsByLevel, which also waits for translations/inflected forms, so the
   // header counts — identical in every UI language — never wait on them.
-  const [levelWordCounts, setLevelWordCounts] = useState<Record<Level, number> | null>(null);
+  const [levelWordCounts, setLevelWordCounts] = useState<Record<Level, number> | null>(
+    () => initialData?.levelWordCounts ?? null,
+  );
   const [loadFailed, setLoadFailed] = useState(false);
   const content = getFullVocabularyListContent(targetLanguage, uiLang);
   // Page-owned because it applies to every level. Levels receive the
@@ -148,15 +174,11 @@ export function FullVocabularyListSeoPage({
       },
       () => {},
     );
-    Promise.all([
-      loadFullVocabularyRows(targetLanguage),
-      showTranslations ? loadFullVocabularyTranslations(uiVocabularyLanguage) : null,
-      loadFullVocabularyInflectedForms(targetLanguage),
-    ]).then(
-      ([rows, translations, inflectedForms]) => {
+    loadFullVocabularyPageRows(targetLanguage, showTranslations ? uiVocabularyLanguage : null).then(
+      (rows) => {
         if (!cancelled) {
-          const withForms = attachFullVocabularySentenceForms(rows, inflectedForms);
-          setRowsByLevel(translations ? attachFullVocabularyTranslations(withForms, translations) : withForms);
+          setRowsByLevel(rows);
+          setRowsComplete(true);
         }
       },
       () => {
@@ -205,14 +227,14 @@ export function FullVocabularyListSeoPage({
 
   const isGlobalFilterActive = isFullVocabularyFilterActive(deferredGlobalFilter);
   const globalMatchCount = useMemo(() => {
-    if (!rowsByLevel || !isGlobalFilterActive) {
+    if (!rowsByLevel || !rowsComplete || !isGlobalFilterActive) {
       return null;
     }
     return Object.values(rowsByLevel).reduce(
       (sum, rows) => sum + filterFullVocabularyRows(rows, [deferredGlobalFilter]).length,
       0,
     );
-  }, [deferredGlobalFilter, isGlobalFilterActive, rowsByLevel]);
+  }, [deferredGlobalFilter, isGlobalFilterActive, rowsByLevel, rowsComplete]);
 
   if (!content) {
     return <NotFoundPage />;
@@ -305,6 +327,8 @@ export function FullVocabularyListSeoPage({
                 onToggle={() => toggleLevel(level.level)}
                 status={loadStatus}
                 rows={rowsByLevel ? rowsByLevel[level.level] : null}
+                rowsComplete={rowsComplete}
+                fullLoadFailed={loadFailed}
                 levelWordCount={levelWordCounts ? levelWordCounts[level.level] : null}
                 countSlotChars={countSlotChars}
                 levelHeadingTemplate={content.levelsSection.levelHeadingTemplate}

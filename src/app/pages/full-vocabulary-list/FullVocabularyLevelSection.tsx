@@ -8,6 +8,7 @@ import {
 } from "../../../data/seo/fullVocabularyList";
 import {
   collectGrammarTypes,
+  FULL_VOCABULARY_INITIAL_ROWS,
   EMPTY_FULL_VOCABULARY_FILTER,
   filterFullVocabularyRows,
   isFullVocabularyFilterActive,
@@ -36,6 +37,11 @@ interface FullVocabularyLevelSectionProps {
   status: FullVocabularyLoadStatus;
   // This level's complete row list (null until loaded).
   rows: FullVocabularyRow[] | null;
+  // False while `rows` are only the server-rendered first rows; filtering
+  // and filtered counts wait for the complete list (see the page).
+  rowsComplete: boolean;
+  // The complete list failed to load (only matters while rows are partial).
+  fullLoadFailed: boolean;
   // The page-wide filter, already deferred by the page.
   globalFilter: FullVocabularyFilter;
   onRetry: () => void;
@@ -57,8 +63,9 @@ function filterKey(filters: FullVocabularyFilter[]): string {
 // One CEFR accordion item (WAI-ARIA accordion pattern: a heading wrapping a
 // disclosure button that controls a labelled region). The section itself
 // never unmounts, so its local filters and Load More progress survive
-// collapsing and stay independent of every other level; only the panel body
-// is skipped while collapsed, keeping up to six large tables out of the DOM.
+// collapsing and stay independent of every other level. Collapsed panels keep
+// their table in the (hidden) DOM once rows exist — that is how the
+// server-rendered first rows reach search engines.
 export function FullVocabularyLevelSection({
   uiLang,
   speechLang,
@@ -70,6 +77,8 @@ export function FullVocabularyLevelSection({
   onToggle,
   status,
   rows,
+  rowsComplete,
+  fullLoadFailed,
   globalFilter,
   onRetry,
   onAddToList,
@@ -105,13 +114,16 @@ export function FullVocabularyLevelSection({
   const levelTotal = rows?.length ?? 0;
   const matchTotal = filteredRows.length;
   const shown = Math.min(visibleCount, matchTotal);
+  // A collapsed level keeps only its server-rendered first rows in the
+  // (hidden) DOM, so loading the complete lists doesn't add hundreds of
+  // invisible rows per level; opening it shows the full batch again.
   const nextBatch = Math.min(FULL_VOCABULARY_BATCH_SIZE, matchTotal - shown);
   const isFiltered = activeFilters.some(isFullVocabularyFilterActive);
   // Shown in the header (beside the chevron on wide screens, under the
   // description on phones) so a global search reveals which levels match
   // without opening each one.
   const countLabel =
-    isFiltered && status === "ready"
+    isFiltered && status === "ready" && rowsComplete
       ? formatContentTemplate(panelCopy.headerFilteredCountLabel, { shown: matchTotal, total: levelTotal }, uiLang)
       : levelWordCount !== null
         ? formatContentTemplate(panelCopy.headerCountLabel, { total: levelWordCount }, uiLang)
@@ -133,6 +145,12 @@ export function FullVocabularyLevelSection({
   // tint, so where one level's content ends and the next header begins
   // stays obvious while scrolling a long table. Inset shadow rather than a
   // border keeps the row widths identical whether open or closed.
+  // A filter over only the server-rendered first rows would give wrong
+  // results, so until the complete list is in, a filtered level shows the
+  // loading (or load-error) state instead.
+  const bodyStatus: FullVocabularyLoadStatus =
+    isFiltered && !rowsComplete ? (fullLoadFailed ? "error" : "loading") : status;
+
   // When the record authors a heading template, the <h3>'s text is that
   // descriptive heading ("A1 English Vocabulary — Beginner"), carried by a
   // visually hidden span so the visible header is unchanged. The visible
@@ -214,7 +232,10 @@ export function FullVocabularyLevelSection({
         hidden={!isOpen}
         className="space-y-4 px-4 pb-5 pt-4 sm:px-5"
       >
-        {isOpen ? (
+        {/* Rendered while collapsed too once rows exist, so the
+            server-rendered first rows are in the HTML for search engines
+            (the panel itself stays `hidden`). */}
+        {isOpen || (bodyStatus === "ready" && rows) ? (
           <>
             <div
               role="search"
@@ -237,11 +258,11 @@ export function FullVocabularyLevelSection({
               />
             </div>
 
-            {status === "ready" && rows ? (
+            {bodyStatus === "ready" && rows ? (
               matchTotal > 0 ? (
                 <>
                   <FullVocabularyTable
-                    rows={filteredRows.slice(0, shown)}
+                    rows={filteredRows.slice(0, isOpen ? shown : Math.min(shown, FULL_VOCABULARY_INITIAL_ROWS))}
                     label={formatContentTemplate(panelCopy.tableLabel, { level: levelCode })}
                     columns={panelCopy.tableColumns}
                     grammarTypes={grammarTypes}
@@ -279,7 +300,7 @@ export function FullVocabularyLevelSection({
                   {levelTotal > 0 ? panelCopy.noMatchesLabel : panelCopy.emptyLabel}
                 </p>
               )
-            ) : status === "error" ? (
+            ) : bodyStatus === "error" ? (
               <div
                 role="alert"
                 className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border px-4 py-8 text-center"

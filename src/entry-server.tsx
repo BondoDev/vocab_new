@@ -21,6 +21,11 @@ import {
   getAllFullVocabularyListPaths,
   resolveFullVocabularyListRoute,
 } from "./data/seo/fullVocabularyList";
+import {
+  buildFullVocabularyInitialData,
+  FULL_VOCABULARY_INITIAL_DATA_ELEMENT_ID,
+  type FullVocabularyInitialData,
+} from "./data/seo/fullVocabularyList/fullVocabularyListEntries";
 import { renderSeoTags, type SeoManager } from "./seo/SeoContext";
 import { buildRouteMetadata, classifyRouteMetadata } from "./seo/routeMetadataPolicy";
 import { DEFAULT_SITE_ORIGIN } from "./seo/site";
@@ -160,6 +165,22 @@ async function getInitialBrowsePreviewData(url: string): Promise<LevelBrowsePrev
   }
 
   return getLevelBrowsePreviewData(vocabularyRoute.targetLanguage, vocabularyRoute.level);
+}
+
+// Full vocabulary list pages: the first rows of each level, rendered into the
+// HTML and embedded for hydration (see fullVocabularyListEntries.ts).
+async function getInitialFullVocabularyData(url: string): Promise<FullVocabularyInitialData | null> {
+  const pathname = url.split(/[?#]/, 1)[0] || "/";
+  const route = resolveFullVocabularyListRoute(pathname);
+  if (!route) {
+    return null;
+  }
+  const uiVocabularyLanguage = getUiVocabularyLanguage(route.uiLang);
+  return buildFullVocabularyInitialData(
+    pathname,
+    route.targetLanguage,
+    uiVocabularyLanguage === route.targetLanguage ? null : uiVocabularyLanguage,
+  );
 }
 
 function buildNotFoundSeoMetadata(): SeoMetadata {
@@ -390,6 +411,7 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
     wordSeoResolution.kind === "canonical" ? wordSeoResolution.initialWordPageData : null;
   const initialWordBrowsePage = getInitialWordBrowsePage(wordSeoResolution);
   const initialBrowsePreviewData = await getInitialBrowsePreviewData(url);
+  const initialFullVocabularyData = await getInitialFullVocabularyData(url);
   const ssrWordRouteMatch = (() => {
     return resolveWordPageRoute(pathname);
   })();
@@ -417,6 +439,7 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
           initialUILanguage={initialUILanguage}
           initialTranslationData={initialInterfaceData}
           initialBrowsePreviewData={initialBrowsePreviewData}
+          initialFullVocabularyData={initialFullVocabularyData}
           initialWordPageData={initialWordPageData}
           ssrRouteOverride={ssrRouteOverride}
           seoManager={seoManager}
@@ -458,6 +481,9 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
   const routeDataScript = initialWordPageData
     ? `\n    <script type="application/json" id="word-page-data">${escapeJsonForHtml({ pathname: url, data: hydrationWordPageData })}</script>`
     : "";
+  const fullVocabularyDataScript = initialFullVocabularyData
+    ? `\n    <script type="application/json" id="${FULL_VOCABULARY_INITIAL_DATA_ELEMENT_ID}">${escapeJsonForHtml(initialFullVocabularyData)}</script>`
+    : "";
   const interfaceDataScript = `\n    <script type="application/json" id="initial-interface-data">${escapeJsonForHtml({ lang: initialUILanguage, data: initialInterfaceData })}</script>`;
   const fallbackMetadata =
     shouldUseWordNotFoundMetadata || classifyRouteMetadata(pathname) === "invalid"
@@ -469,7 +495,7 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
     headTags:
       renderSeoTags(
         seoManager.metadata ?? fallbackMetadata,
-      ) + routeDataScript + interfaceDataScript,
+      ) + routeDataScript + fullVocabularyDataScript + interfaceDataScript,
     htmlLang: initialUILanguage,
   };
 }

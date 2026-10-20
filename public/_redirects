@@ -1,0 +1,14 @@
+# Cloudflare Static Assets redirects (copied to dist/ by the build and from
+# there into the Worker's assets-full/ by publish-shards.mjs, like _headers).
+# Static assets apply these before serving files, so no Worker change is
+# needed. Hand-maintained; see docs/deployment.md "Domain, redirects, and
+# status behavior".
+
+# Full vocabulary list: the English list's localized URLs (briefly live
+# before the slugs became {language}-vocabulary-list) -> current URLs.
+/es/lista-vocabulario-ingles      /es/english-vocabulary-list  301
+/fr/liste-vocabulaire-anglais     /fr/english-vocabulary-list  301
+/de/englisch-wortschatz-liste     /de/english-vocabulary-list  301
+/it/lista-vocabolario-inglese     /it/english-vocabulary-list  301
+/pt/lista-vocabulario-ingles      /pt/english-vocabulary-list  301
+/ru/slovar-angliiskii-spisok      /ru/english-vocabulary-list  301

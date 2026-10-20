@@ -1,5 +1,5 @@
-import { Fragment, useState, type CSSProperties, type ReactNode } from "react";
-import { ChevronDown, ListPlus, Volume2 } from "lucide-react";
+import { Fragment, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
+import { ListPlus, Volume2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,7 +48,7 @@ function renderSentence(sentence: string, forms: string[] | undefined, languageT
   for (const range of ranges) {
     parts.push(sentence.slice(lastIndex, range.start));
     parts.push(
-      <strong key={range.start} className="font-semibold not-italic text-foreground">
+      <strong key={range.start} className="fvl-hl">
         {sentence.slice(range.start, range.end)}
       </strong>,
     );
@@ -57,6 +57,9 @@ function renderSentence(sentence: string, forms: string[] | undefined, languageT
   parts.push(sentence.slice(lastIndex));
   return parts;
 }
+
+// Speech support never changes during a page's life.
+const subscribeToNothing = () => () => {};
 
 // Uses the browser's built-in speech synthesis, like the verb-list tables;
 // cancel() first so rapid clicks don't queue up a backlog of words.
@@ -96,10 +99,24 @@ export function FullVocabularyTable({
   addToListLabel,
   onAddToList,
 }: FullVocabularyTableProps) {
-  // This table only ever renders in the browser (rows load client-side), so
-  // reading window here can't cause an SSR/hydration mismatch. Browsers
-  // without speech synthesis get no button rather than a dead one.
-  const canSpeak = typeof window !== "undefined" && "speechSynthesis" in window;
+  // The first rows are server-rendered, so speech support (unknowable on the
+  // server) is read after hydration: false on the server and the first
+  // client render, then true where supported. Browsers without speech
+  // synthesis get no button rather than a dead one.
+  const canSpeak = useSyncExternalStore(
+    subscribeToNothing,
+    () => "speechSynthesis" in window,
+    () => false,
+  );
+  // Same technique for the per-row Details toggle and ⋮ menu: interactive
+  // controls carry no indexable content, so they're left out of the
+  // server-rendered rows (keeping the HTML small) and appear right after
+  // hydration. Their cells are still rendered, so the layout doesn't shift.
+  const isHydrated = useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false,
+  );
   // Keyed by concept_id, never by row position, so filtering or Load More
   // can't move an open detail panel onto a different word.
   const [expandedIds, setExpandedIds] = useState<ReadonlySet<string>>(() => new Set());
@@ -138,12 +155,6 @@ export function FullVocabularyTable({
     });
   };
 
-  const grammarBadge = (row: FullVocabularyRow) => (
-    <span className="inline-flex rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-      {grammarTypes[row.type as keyof typeof grammarTypes] ?? row.type}
-    </span>
-  );
-
   return (
     <div
       role="region"
@@ -172,7 +183,10 @@ export function FullVocabularyTable({
               {columns.word}
             </th>
             {showTranslations ? (
-              <th scope="col" className="w-40 px-3 py-2.5 font-semibold max-[582px]:w-auto max-[582px]:px-2 max-[582px]:break-words max-[582px]:hyphens-auto">
+              <th
+                scope="col"
+                className="w-40 px-3 py-2.5 font-semibold max-[582px]:w-auto max-[582px]:px-2 max-[582px]:break-words max-[582px]:hyphens-auto"
+              >
                 {columns.translation}
               </th>
             ) : null}
@@ -222,79 +236,80 @@ export function FullVocabularyTable({
                       toggleDetails(row.conceptId);
                     }
                   }}
-                  className={`align-top max-[582px]:cursor-pointer ${
-                    isExpanded ? "max-[582px]:border-b-0 max-[582px]:bg-muted/40" : ""
-                  }`}
+                  className={isExpanded ? "fvl-row is-open" : "fvl-row"}
                 >
-                  <td className="px-3 py-2.5 text-right tabular-nums text-muted-foreground max-[582px]:px-1">
-                    {index + 1}
-                  </td>
-                  <th
-                    scope="row"
-                    className={`${STICKY_WORD_CELL} bg-card px-3 py-2 font-semibold text-foreground max-[582px]:bg-transparent max-[582px]:px-2 max-[359px]:px-1`}
-                  >
-                    <span className="flex items-start gap-1.5 max-[582px]:gap-1">
+                  {/* Row cells use the short fvl-* classes from
+                      full-vocabulary-list.scss rather than Tailwind strings:
+                      these rows are server-rendered in bulk for SEO. */}
+                  <td className="fvl-num">{index + 1}</td>
+                  <th scope="row" className="fvl-word">
+                    <span className="fvl-word-inner">
                       {canSpeak ? (
                         <button
                           type="button"
-                          aria-label={formatContentTemplate(pronounceLabel, { word: row.word })}
+                          aria-label={formatContentTemplate(pronounceLabel, {
+                            word: row.word,
+                          })}
                           onClick={() => speakWord(row.word, speechLang)}
-                          className="-ml-1 inline-flex size-7 shrink-0 items-center max-[582px]:ml-0 max-[582px]:size-6 justify-center rounded-full text-primary/80 transition hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                          className="fvl-speak"
                         >
-                          <Volume2 aria-hidden="true" className="size-4" />
+                          <Volume2 aria-hidden="true" />
                         </button>
                       ) : null}
-                      <span lang={speechLang} className="min-w-0 break-words pt-0.5 hyphens-auto max-[582px]:pt-px">{row.word}</span>
+                      <span lang={speechLang} className="fvl-word-text">
+                        {row.word}
+                      </span>
                     </span>
                   </th>
                   {showTranslations ? (
-                    <td className="break-words px-3 py-2.5 font-medium text-foreground hyphens-auto max-[582px]:px-2 max-[359px]:px-1">
-                      {row.translation ?? <span className="text-muted-foreground">—</span>}
-                    </td>
+                    <td className="fvl-tr">{row.translation ?? <span className="fvl-missing">—</span>}</td>
                   ) : null}
-                  <td className={`px-3 py-2.5 text-muted-foreground ${DESKTOP_ONLY}`}>{row.definition}</td>
-                  <td className={`px-3 py-2.5 italic text-foreground/80 ${DESKTOP_ONLY}`}>
-                    {renderSentence(row.sentence, row.sentenceForms, speechLang)}
+                  <td className="fvl-def">{row.definition}</td>
+                  <td className="fvl-sent">{renderSentence(row.sentence, row.sentenceForms, speechLang)}</td>
+                  <td className="fvl-type">
+                    <span className="fvl-badge">{grammarTypes[row.type as keyof typeof grammarTypes] ?? row.type}</span>
                   </td>
-                  <td className={`px-3 py-2.5 ${DESKTOP_ONLY}`}>{grammarBadge(row)}</td>
-                  <td className={`py-1.5 pl-0.5 pr-1.5 text-right ${MOBILE_ONLY}`}>
-                    <button
-                      type="button"
-                      aria-expanded={isExpanded}
-                      aria-controls={detailsId}
-                      onClick={() => toggleDetails(row.conceptId)}
-                      className="inline-flex min-h-9 items-center gap-0.5 whitespace-nowrap rounded-lg px-1.5 text-xs font-medium text-foreground/80 transition hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                    >
-                      <span className="max-[479px]:sr-only">{isExpanded ? hideLabel : detailsLabel}</span>
-                      <ChevronDown
-                        aria-hidden="true"
-                        className={`size-4 text-primary transition-transform ${isExpanded ? "rotate-180" : ""}`}
-                      />
-                    </button>
+                  <td className="fvl-toggle-cell">
+                    {isHydrated ? (
+                      <button
+                        type="button"
+                        aria-expanded={isExpanded}
+                        aria-controls={detailsId}
+                        onClick={() => toggleDetails(row.conceptId)}
+                        className="fvl-toggle"
+                      >
+                        <span className="fvl-toggle-label">{isExpanded ? hideLabel : detailsLabel}</span>
+                        <span aria-hidden="true" className="fvl-chevron" />
+                      </button>
+                    ) : null}
                   </td>
                   {/* Row actions menu ("⋮" as a text glyph). Non-modal so
                       opening it never locks scroll or shifts the page. */}
-                  <td className="px-1 py-1.5 text-center max-[582px]:px-0">
-                    <DropdownMenu modal={false}>
-                      <DropdownMenuTrigger asChild>
-                        <button
-                          type="button"
-                          aria-label={formatContentTemplate(rowActionsLabel, { word: row.word })}
-                          className="inline-flex size-8 items-center justify-center rounded-full text-lg font-bold leading-none text-foreground/60 transition hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 data-[state=open]:bg-primary/10 data-[state=open]:text-primary max-[582px]:size-7"
+                  <td className="fvl-actions">
+                    {isHydrated ? (
+                      <DropdownMenu modal={false}>
+                        <DropdownMenuTrigger asChild>
+                          <button
+                            type="button"
+                            aria-label={formatContentTemplate(rowActionsLabel, {
+                              word: row.word,
+                            })}
+                            className="fvl-more"
+                          >
+                            <span aria-hidden="true">⋮</span>
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                          align="end"
+                          className="min-w-0 rounded-xl border-foreground/10 p-1 shadow-lg"
                         >
-                          <span aria-hidden="true">⋮</span>
-                        </button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        align="end"
-                        className="min-w-0 rounded-xl border-foreground/10 p-1 shadow-lg"
-                      >
-                        <DropdownMenuItem className={ROW_MENU_ITEM_CLASS} onSelect={() => onAddToList(row)}>
-                          <ListPlus aria-hidden="true" />
-                          {addToListLabel}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                          <DropdownMenuItem className={ROW_MENU_ITEM_CLASS} onSelect={() => onAddToList(row)}>
+                            <ListPlus aria-hidden="true" />
+                            {addToListLabel}
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    ) : null}
                   </td>
                 </tr>
                 {/* Rendered only while open (the toggle exists only below
