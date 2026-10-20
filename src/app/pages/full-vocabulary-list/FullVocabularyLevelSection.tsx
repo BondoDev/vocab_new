@@ -277,7 +277,15 @@ export function FullVocabularyLevelSection({
                   />
                   <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
                     <p className="text-xs text-muted-foreground" aria-live="polite">
-                      {formatContentTemplate(panelCopy.shownCountLabel, { shown, total: matchTotal }, uiLang)}
+                      {/* Until the complete list arrives, `rows` holds only the
+                          server-rendered first rows; the real total is the
+                          level's word count (as in the header), so the
+                          prerendered HTML reads "100 of 962", not "100 of 100". */}
+                      {formatContentTemplate(
+                        panelCopy.shownCountLabel,
+                        { shown, total: rowsComplete ? matchTotal : (levelWordCount ?? matchTotal) },
+                        uiLang,
+                      )}
                     </p>
                     {nextBatch > 0 ? (
                       <button
