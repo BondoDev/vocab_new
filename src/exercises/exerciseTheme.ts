@@ -13,17 +13,18 @@ export const exerciseIcons: Record<ExerciseId, LucideIcon> = {
 };
 
 // --- Practice card surface colors -------------------------------------------
-// Each practice card gets a generated, softly saturated background. Hue is the
-// only free variable: successive cards advance by the golden angle, so colors
-// never repeat and neighbouring cards always differ clearly. Lightness is then
-// pushed as high as possible while white text keeps >= 4.6:1 contrast, which
-// is why the color is computed (OKLCH -> sRGB) instead of picked from a list.
+// generatePracticeCardSurface() returns a random, softly saturated card color.
+// Boundaries: hue is random but skips mustard/olive (70-140), chroma stays in
+// a muted range, and lightness is the highest value at which white text still
+// has >= 4.6:1 contrast (so the color is as light as readability allows).
 
-const SURFACE_CHROMA = 0.115;
+const SURFACE_CHROMA_MIN = 0.08;
+const SURFACE_CHROMA_MAX = 0.12;
 const SURFACE_MAX_LIGHTNESS = 0.66;
 // White (luminance 1) against Y: (1 + 0.05) / (Y + 0.05) >= 4.6.
 const SURFACE_MAX_LUMINANCE = 1.05 / 4.6 - 0.05;
-const GOLDEN_ANGLE = 137.508;
+const EXCLUDED_HUE_START = 70;
+const EXCLUDED_HUE_SPAN = 70;
 
 function oklchToLinearSrgb(l: number, c: number, hueDeg: number): [number, number, number] {
   const h = (hueDeg * Math.PI) / 180;
@@ -50,20 +51,17 @@ function linearToHex(channels: [number, number, number]): string {
     .join("")}`;
 }
 
-// Mustard/olive tones read as "dirty" at this lightness; remap them into the
-// blue/violet range, which the golden-angle walk otherwise visits less often
-// than the greens.
-function softenHue(hue: number): number {
-  const h = ((hue % 360) + 360) % 360;
-  return h >= 70 && h < 140 ? h + 150 : h;
-}
+export function generatePracticeCardSurface(): string {
+  // Uniform over the allowed 290 degrees, skipping the excluded olive band.
+  const raw = Math.random() * (360 - EXCLUDED_HUE_SPAN);
+  const hue = raw < EXCLUDED_HUE_START ? raw : raw + EXCLUDED_HUE_SPAN;
+  const chroma =
+    SURFACE_CHROMA_MIN + Math.random() * (SURFACE_CHROMA_MAX - SURFACE_CHROMA_MIN);
 
-export function getPracticeCardSurface(startHue: number, cardIndex: number): string {
-  const hue = softenHue(startHue + cardIndex * GOLDEN_ANGLE);
   for (let l = SURFACE_MAX_LIGHTNESS; l > 0.3; l -= 0.005) {
     // Some hues (teal/cyan) leave the sRGB gamut at this chroma, so chroma
     // backs off before lightness does.
-    for (let c = SURFACE_CHROMA; c >= 0.05; c -= 0.01) {
+    for (let c = chroma; c >= 0.04; c -= 0.01) {
       const rgb = oklchToLinearSrgb(l, c, hue);
       if (!rgb.every((v) => v >= 0 && v <= 1)) continue;
       const luminance = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];

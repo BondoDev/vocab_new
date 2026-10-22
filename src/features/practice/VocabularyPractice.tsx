@@ -26,7 +26,7 @@ import {
   exerciseCardBorders,
   exerciseCardIconColors,
   getExerciseIcon,
-  getPracticeCardSurface,
+  generatePracticeCardSurface,
   type MotionCssVars,
 } from "../../exercises/exerciseTheme";
 import { FOUR_WORD_EXERCISE_IDS } from "../../exercises/exerciseIds";
@@ -144,10 +144,6 @@ export function VocabularyPractice({
   const [sessionComplete, setSessionComplete] = useState(false);
   const [currentExerciseType, setCurrentExerciseType] =
     useState<string>("wordTyping");
-  // Random starting hue per session; each card then advances by the golden
-  // angle (see getPracticeCardSurface). The card is never server-rendered (it
-  // waits for words to load), so this cannot cause a hydration mismatch.
-  const [cardSurfaceStartHue] = useState(() => Math.random() * 360);
   // The exercise-type icon explains the exercise in a popover (hover with a
   // mouse, tap/click otherwise). Closed whenever the card or exercise changes
   // so an explanation never lingers over the next card.
@@ -163,6 +159,20 @@ export function VocabularyPractice({
     usedHintForBrokenWord: false,
   });
   const [cardBlinkKey, setCardBlinkKey] = useState(0);
+  // A fresh random color every time a new exercise card appears. The key
+  // mirrors the practice card's remount key; regenerating during render
+  // ("adjust state when inputs change") paints the new card in its new color
+  // with no frame of the previous one. The card is never server-rendered (it
+  // waits for words to load), so the random value can't cause a hydration
+  // mismatch.
+  const practiceCardKey = `${currentIndex}-${currentExerciseType}-${cardBlinkKey}`;
+  const [cardSurface, setCardSurface] = useState(() => ({
+    key: practiceCardKey,
+    color: generatePracticeCardSurface(),
+  }));
+  if (cardSurface.key !== practiceCardKey) {
+    setCardSurface({ key: practiceCardKey, color: generatePracticeCardSurface() });
+  }
   const [isCardSwitching, setIsCardSwitching] = useState(false);
   const [cycleWords, setCycleWords] = useState<any[]>([]);
   const [reinforcementWords, setReinforcementWords] = useState<any[]>([]);
@@ -1136,9 +1146,7 @@ export function VocabularyPractice({
     // tag and the controls inside the card; see exercises.scss.
     "--practice-card-accent": exerciseCardIconColors[currentExerciseType] ?? "#6B58C8",
     "--practice-card-tint": exerciseCardBackgrounds[currentExerciseType] ?? "#F2F0FF",
-    // Keyed to the card index, so the color is stable across re-renders and
-    // across an exercise switch on the same card.
-    "--pc-surface": getPracticeCardSurface(cardSurfaceStartHue, currentIndex),
+    "--pc-surface": cardSurface.color,
   };
   const ExerciseTypeIcon = getExerciseIcon(currentExerciseType);
 
@@ -1173,7 +1181,7 @@ export function VocabularyPractice({
               {/* Practice Card */}
               {currentWord && (
                 <motion.div
-                    key={`${currentIndex}-${currentExerciseType}-${cardBlinkKey}`}
+                    key={practiceCardKey}
                     className={`practice-card practice-card--surface bg-card border border-border rounded-2xl p-3 md:p-5 shadow-sm transition-all duration-300 ease-in-out flex flex-col relative ${
                       isCardSwitching ? "practice-card-switching" : ""
                     }`}
