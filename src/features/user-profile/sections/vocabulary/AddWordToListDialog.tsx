@@ -260,6 +260,22 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
       )}`.replace(/\s+/g, " ").trim()
     : t("userProfile.vocabularySection.table.menu.addToList");
 
+  // With zero lists there is nothing to search or pick, so the popup swaps
+  // its search/list/footer layout for a centered empty state whose only
+  // action is Create List (the dialog's own close button still dismisses
+  // it). Gated on "ready" so the regular layout stays put while lists are
+  // loading or failed to load, and only swaps once emptiness is known.
+  const hasNoLists = state.status === "ready" && lists.length === 0;
+
+  // Opens CreateListDialog as a second, stacked popup (see the render below)
+  // rather than expanding an inline form here — this popup itself is never
+  // closed underneath it, so it's visible again the instant the create popup
+  // closes.
+  const openCreateDialog = () => {
+    setCreateError(null);
+    setIsCreateDialogOpen(true);
+  };
+
   return (
     <>
     <Dialog
@@ -274,7 +290,17 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
           <DialogDescription className="sr-only">{dialogTitle}</DialogDescription>
         </DialogHeader>
 
-        {word ? (
+        {word && hasNoLists ? (
+          <div className="vocabulary-add-to-list__empty">
+            <p className="vocabulary-add-to-list__empty-message">
+              {t("userProfile.vocabularySection.addToListDialog.emptyState")}
+            </p>
+            <Button type="button" onClick={openCreateDialog}>
+              <Plus size={15} strokeWidth={2} aria-hidden="true" />
+              {t("userProfile.myListsSection.createButton")}
+            </Button>
+          </div>
+        ) : word ? (
           <div className="vocabulary-add-to-list">
             <div className="vocabulary-add-to-list__search">
               <Search size={15} strokeWidth={2} aria-hidden="true" className="vocabulary-add-to-list__search-icon" />
@@ -302,10 +328,6 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
                 </div>
               ) : state.status === "error" ? (
                 <p className="vocabulary-add-to-list__message">{t("userProfile.myListsSection.loadError")}</p>
-              ) : lists.length === 0 ? (
-                <p className="vocabulary-add-to-list__message">
-                  {t("userProfile.vocabularySection.addToListDialog.emptyState")}
-                </p>
               ) : visibleLists.length === 0 ? (
                 <p className="vocabulary-add-to-list__message">
                   {t("userProfile.vocabularySection.addToListDialog.noMatch")}
@@ -342,18 +364,7 @@ export function AddWordToListDialog({ word, targetLanguage, onOpenChange, onShow
             </div>
 
             <div className="vocabulary-add-to-list__footer">
-              {/* Opens CreateListDialog as a second, stacked popup (see the
-                  render below) rather than expanding an inline form here —
-                  this popup itself is never closed underneath it, so it's
-                  visible again the instant the create popup closes. */}
-              <button
-                type="button"
-                className="vocabulary-add-to-list__create-trigger"
-                onClick={() => {
-                  setCreateError(null);
-                  setIsCreateDialogOpen(true);
-                }}
-              >
+              <button type="button" className="vocabulary-add-to-list__create-trigger" onClick={openCreateDialog}>
                 <Plus size={15} strokeWidth={2} aria-hidden="true" />
                 {t("userProfile.myListsSection.createButton")}
               </button>

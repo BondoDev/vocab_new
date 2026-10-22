@@ -81,7 +81,6 @@ export function CreateListDialog({ open, isSubmitting, error, onOpenChange, onSu
               id={nameInputId}
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder={t("userProfile.myListsSection.modal.placeholder")}
               maxLength={LIST_NAME_MAX_LENGTH}
               disabled={isSubmitting}
               autoFocus

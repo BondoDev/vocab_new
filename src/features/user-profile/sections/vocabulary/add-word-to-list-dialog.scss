@@ -165,6 +165,23 @@
   text-align: center;
 }
 
+// Zero-lists state: replaces the search/list/footer layout entirely (see
+// AddWordToListDialog.tsx's hasNoLists).
+.vocabulary-add-to-list__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0 0.5rem;
+}
+
+.vocabulary-add-to-list__empty-message {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 .vocabulary-add-to-list__footer {
   display: flex;
   align-items: center;
