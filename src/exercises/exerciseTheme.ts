@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { Headphones, Keyboard, Link, Puzzle, TextCursorInput, type LucideIcon } from "lucide-react";
 import type { ExerciseId } from "./exerciseIds";
 
@@ -70,6 +70,24 @@ export function generatePracticeCardSurface(): string {
     }
   }
   return "#4338ca";
+}
+
+// A fresh random surface color every time `cardKey` changes, i.e. every time
+// a new exercise card appears. Regenerating during render ("adjust state when
+// inputs change") paints the new card in its new color on its first frame.
+// Exercise cards render only on the client (they wait for loaded words), so
+// the random value can't cause a hydration mismatch.
+export function useRandomCardSurface(cardKey: string): string {
+  const [surface, setSurface] = useState(() => ({
+    key: cardKey,
+    color: generatePracticeCardSurface(),
+  }));
+  if (surface.key !== cardKey) {
+    const next = { key: cardKey, color: generatePracticeCardSurface() };
+    setSurface(next);
+    return next.color;
+  }
+  return surface.color;
 }
 
 // Practice state stores the exercise type as a plain string; fall back to the

@@ -6,7 +6,12 @@ import { BrokenWordExercise } from "../../practice/exercises/BrokenWordExercise"
 import { HalfWrittenExercise } from "../../practice/exercises/HalfWrittenExercise";
 import { WordTypingExercise } from "../../practice/exercises/WordTypingExercise";
 import { highlightInflectedWords } from "../../practice/utils/highlightInflectedWords";
-import { exerciseCardBorders, type MotionCssVars } from "../../../exercises/exerciseTheme";
+import { ExerciseCardHeader } from "../../practice/exercises/ExerciseCardHeader";
+import {
+  exerciseCardBorders,
+  useRandomCardSurface,
+  type MotionCssVars,
+} from "../../../exercises/exerciseTheme";
 import { speakReviewWord } from "../utils/speakReviewWord";
 import type { TypingExerciseId } from "../reviewSessionPlan";
 import { determineReviewOutcome, type ReviewOutcome } from "../../../data/learning/reviewOutcomeTransition";
@@ -26,7 +31,9 @@ import { computeHadMistake, INITIAL_EXERCISE_STATUS, type ExerciseStatus } from 
 // ./reviewExerciseStatus.ts, not here — see that file's own header for why
 // (this file has JSX, which the pure-test harness can't parse).
 
-type PracticeCardCssVars = MotionCssVars<"--practice-card-bg" | "--practice-card-border">;
+type PracticeCardCssVars = MotionCssVars<
+  "--practice-card-bg" | "--practice-card-border" | "--pc-surface"
+>;
 
 const INSTRUCTION_KEY: Record<TypingExerciseId, string> = {
   brokenWord: "practice.brokenWordInstruction",
@@ -124,9 +131,13 @@ export function ReviewExerciseAdapter({ exerciseId, item, practiceLanguage, onCo
     onComplete("skipped");
   };
 
+  // Same random colored surface as ordinary practice: a new color for every
+  // review card shown.
+  const cardSurfaceColor = useRandomCardSurface(`${item.targetWord}-${exerciseId}`);
   const cardStyle: PracticeCardCssVars = {
     "--practice-card-bg": "#F8FAFC",
     "--practice-card-border": exerciseCardBorders[exerciseId] ?? "#7A68D8",
+    "--pc-surface": cardSurfaceColor,
   };
   const grammarTypeLabel = item.grammarType
     ? (() => {
@@ -143,43 +154,22 @@ export function ReviewExerciseAdapter({ exerciseId, item, practiceLanguage, onCo
 
   return (
     <div className="practice-card-shell review-exercise-shell">
-      <div className="practice-card review-exercise-card" style={cardStyle}>
-        <p className="review-exercise-instruction">{t(INSTRUCTION_KEY[exerciseId])}</p>
-
-        {(item.level || categoryLabel || grammarTypeLabel) && (
-          <div className="review-exercise-meta w-[95%] mx-auto pt-2 md:pt-3">
-            {(item.level || categoryLabel) && (
-              <div className="exercise-meta-row flex items-center justify-between">
-                {item.level && (
-                  <div
-                    className="exercise-meta-cefr min-w-[2.25rem] h-9 px-2 inline-flex items-center justify-center rounded-full text-sm font-semibold uppercase border-2 text-muted-foreground/70"
-                    style={{
-                      borderColor: "rgba(74, 43, 130, 0.35)",
-                    }}
-                  >
-                    {item.level}
-                  </div>
-                )}
-                {categoryLabel && (
-                  <div className="exercise-meta-category text-sm font-semibold uppercase text-muted-foreground/70 text-right">
-                    {categoryLabel}
-                  </div>
-                )}
-              </div>
-            )}
-            {grammarTypeLabel && (
-              <div className="exercise-meta-word-type mt-4 text-center text-lg font-semibold text-muted-foreground">
-                {grammarTypeLabel}
-              </div>
-            )}
-          </div>
+      <div className="practice-card practice-card--surface review-exercise-card" style={cardStyle}>
+        <ExerciseCardHeader
+          exerciseId={exerciseId}
+          instruction={t(INSTRUCTION_KEY[exerciseId])}
+          level={item.level}
+          categoryLabel={categoryLabel}
+        />
+        {grammarTypeLabel && (
+          <div className="practice-card-word-type">{grammarTypeLabel}</div>
         )}
 
         <div className="exercise-main-content review-exercise-main-content">
           <div className="exercise-word-area review-exercise-word-area">
             <div className="exercise-guess-word-container review-exercise-guess-word-container">
               <div className="review-exercise-guess-word-inner">
-                <h2 className="exercise-guess-word review-exercise-guess-word">{item.translation}</h2>
+                <h2 className="exercise-guess-word practice-card-word review-exercise-guess-word">{item.translation}</h2>
               </div>
             </div>
 
@@ -206,9 +196,9 @@ export function ReviewExerciseAdapter({ exerciseId, item, practiceLanguage, onCo
             )}
           </div>
 
-          <div className="exercise-help-sections review-exercise-help-sections">
+          <div className="exercise-help-sections practice-card-disclosures review-exercise-help-sections">
             {item.definition && (
-              <div className="review-exercise-collapsible">
+              <div className="practice-card-disclosure review-exercise-collapsible">
                 <button
                   type="button"
                   onClick={() => setShowDefinition(!showDefinition)}
@@ -231,7 +221,7 @@ export function ReviewExerciseAdapter({ exerciseId, item, practiceLanguage, onCo
             )}
 
             {item.exampleSentence && (status.isCorrect || status.usedShowWord) && (
-              <div className="review-exercise-collapsible">
+              <div className="practice-card-disclosure review-exercise-collapsible">
                 <button
                   type="button"
                   onClick={() => setShowSentence(!showSentence)}
@@ -271,17 +261,19 @@ export function ReviewExerciseAdapter({ exerciseId, item, practiceLanguage, onCo
           </div>
         </div>
 
-        <div className="review-exercise-footer">
-          {!isComplete && (
-            <button type="button" onClick={handleSkip} className="review-exercise-skip-button">
+        <div className="practice-card-footer flex items-center justify-between">
+          {!isComplete ? (
+            <button type="button" onClick={handleSkip} className="practice-card-footer__secondary">
               {t("practice.skipAction")}
             </button>
+          ) : (
+            <span />
           )}
           <button
             type="button"
             onClick={handleContinue}
             disabled={!isComplete}
-            className={`practice-next-button review-exercise-next-button ${isComplete ? "is-complete" : ""}`}
+            className={`practice-next-button practice-card-footer__primary ${isComplete ? "is-next" : "is-skip"}`}
           >
             {t("reviewWords.nextWordButton")}
           </button>

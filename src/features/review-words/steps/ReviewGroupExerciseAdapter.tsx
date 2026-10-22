@@ -3,7 +3,12 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import type { ResolvedReviewQueueItem } from "../loadReviewQueue";
 import { ConnectWordsExercise } from "../../practice/exercises/ConnectWordsExercise";
 import { ListeningExercise } from "../../practice/exercises/ListeningExercise";
-import { exerciseCardBorders, type MotionCssVars } from "../../../exercises/exerciseTheme";
+import { ExerciseCardHeader } from "../../practice/exercises/ExerciseCardHeader";
+import {
+  exerciseCardBorders,
+  useRandomCardSurface,
+  type MotionCssVars,
+} from "../../../exercises/exerciseTheme";
 import { speakReviewWord } from "../utils/speakReviewWord";
 import type { GroupExerciseId } from "../reviewSessionPlan";
 
@@ -16,7 +21,9 @@ import type { GroupExerciseId } from "../reviewSessionPlan";
 // placeholder values are enough. This is the only place that knows that
 // mapping, matching ReviewExerciseAdapter.tsx's role for the typing pool.
 
-type GroupCardCssVars = MotionCssVars<"--practice-card-bg" | "--practice-card-border">;
+type GroupCardCssVars = MotionCssVars<
+  "--practice-card-bg" | "--practice-card-border" | "--pc-surface"
+>;
 
 interface ExerciseStatus {
   isCorrect: boolean;
@@ -96,15 +103,22 @@ export function ReviewGroupExerciseAdapter({
 
   const isComplete = status.isCorrect;
 
+  // Same random colored surface as ordinary practice: a new color for every
+  // group card shown.
+  const cardSurfaceColor = useRandomCardSurface(`${groupExerciseId}-${itemsKey}`);
   const cardStyle: GroupCardCssVars = {
     "--practice-card-bg": "#F8FAFC",
     "--practice-card-border": exerciseCardBorders[groupExerciseId] ?? "#7A68D8",
+    "--pc-surface": cardSurfaceColor,
   };
 
   return (
     <div className="practice-card-shell review-exercise-shell">
-      <div className="practice-card review-exercise-card" style={cardStyle}>
-        <p className="review-exercise-instruction">{t(INSTRUCTION_KEY[groupExerciseId])}</p>
+      <div className="practice-card practice-card--surface review-exercise-card" style={cardStyle}>
+        <ExerciseCardHeader
+          exerciseId={groupExerciseId}
+          instruction={t(INSTRUCTION_KEY[groupExerciseId])}
+        />
 
         <div className="exercise-main-content review-exercise-main-content review-group-exercise-main-content">
           {groupExerciseId === "connectWords" ? (
@@ -132,12 +146,12 @@ export function ReviewGroupExerciseAdapter({
           )}
         </div>
 
-        <div className="review-exercise-footer">
+        <div className="practice-card-footer flex items-center justify-end">
           <button
             type="button"
             onClick={() => onComplete(true)}
             disabled={!isComplete}
-            className={`practice-next-button review-exercise-next-button ${isComplete ? "is-complete" : ""}`}
+            className={`practice-next-button practice-card-footer__primary ${isComplete ? "is-next" : "is-skip"}`}
           >
             {t("reviewWords.continueButton")}
           </button>

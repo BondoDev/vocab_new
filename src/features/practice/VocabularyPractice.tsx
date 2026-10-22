@@ -25,16 +25,11 @@ import {
   exerciseCardBackgrounds,
   exerciseCardBorders,
   exerciseCardIconColors,
-  getExerciseIcon,
-  generatePracticeCardSurface,
+  useRandomCardSurface,
   type MotionCssVars,
 } from "../../exercises/exerciseTheme";
 import { FOUR_WORD_EXERCISE_IDS } from "../../exercises/exerciseIds";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../../app/components/ui/popover";
+import { ExerciseCardHeader } from "./exercises/ExerciseCardHeader";
 import { createActiveWordTimer, type ActiveWordTimer } from "../../data/learning/activeWordTimer";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeCustomPracticeWord } from "../../lib/customPracticeProgress";
@@ -144,13 +139,6 @@ export function VocabularyPractice({
   const [sessionComplete, setSessionComplete] = useState(false);
   const [currentExerciseType, setCurrentExerciseType] =
     useState<string>("wordTyping");
-  // The exercise-type icon explains the exercise in a popover (hover with a
-  // mouse, tap/click otherwise). Closed whenever the card or exercise changes
-  // so an explanation never lingers over the next card.
-  const [isExerciseInfoOpen, setIsExerciseInfoOpen] = useState(false);
-  useEffect(() => {
-    setIsExerciseInfoOpen(false);
-  }, [currentIndex, currentExerciseType]);
   const [inflectedEntries, setInflectedEntries] = useState<any[]>([]);
   const [exerciseStatus, setExerciseStatus] = useState({
     isCorrect: false,
@@ -159,20 +147,9 @@ export function VocabularyPractice({
     usedHintForBrokenWord: false,
   });
   const [cardBlinkKey, setCardBlinkKey] = useState(0);
-  // A fresh random color every time a new exercise card appears. The key
-  // mirrors the practice card's remount key; regenerating during render
-  // ("adjust state when inputs change") paints the new card in its new color
-  // with no frame of the previous one. The card is never server-rendered (it
-  // waits for words to load), so the random value can't cause a hydration
-  // mismatch.
+  // Mirrors the practice card's remount key: one value per on-screen card.
   const practiceCardKey = `${currentIndex}-${currentExerciseType}-${cardBlinkKey}`;
-  const [cardSurface, setCardSurface] = useState(() => ({
-    key: practiceCardKey,
-    color: generatePracticeCardSurface(),
-  }));
-  if (cardSurface.key !== practiceCardKey) {
-    setCardSurface({ key: practiceCardKey, color: generatePracticeCardSurface() });
-  }
+  const cardSurfaceColor = useRandomCardSurface(practiceCardKey);
   const [isCardSwitching, setIsCardSwitching] = useState(false);
   const [cycleWords, setCycleWords] = useState<any[]>([]);
   const [reinforcementWords, setReinforcementWords] = useState<any[]>([]);
@@ -1146,9 +1123,8 @@ export function VocabularyPractice({
     // tag and the controls inside the card; see exercises.scss.
     "--practice-card-accent": exerciseCardIconColors[currentExerciseType] ?? "#6B58C8",
     "--practice-card-tint": exerciseCardBackgrounds[currentExerciseType] ?? "#F2F0FF",
-    "--pc-surface": cardSurface.color,
+    "--pc-surface": cardSurfaceColor,
   };
-  const ExerciseTypeIcon = getExerciseIcon(currentExerciseType);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -1187,58 +1163,16 @@ export function VocabularyPractice({
                     }`}
                     style={practiceCardStyle}
                 >
-                  <div className="practice-card-top">
-                    <Popover
-                      open={isExerciseInfoOpen}
-                      onOpenChange={setIsExerciseInfoOpen}
-                    >
-                      <PopoverTrigger asChild>
-                        <button
-                          type="button"
-                          className="practice-type-trigger"
-                          aria-label={t(`exerciseSelection.exercise.${currentExerciseType}`)}
-                          // Hover opens only for mouse; touch relies on the
-                          // trigger's own tap toggle so a tap doesn't
-                          // open-then-close.
-                          onPointerEnter={(event) => {
-                            if (event.pointerType === "mouse") setIsExerciseInfoOpen(true);
-                          }}
-                          onPointerLeave={(event) => {
-                            if (event.pointerType === "mouse") setIsExerciseInfoOpen(false);
-                          }}
-                        >
-                          <ExerciseTypeIcon className="h-[1.1rem] w-[1.1rem]" strokeWidth={2.2} />
-                        </button>
-                      </PopoverTrigger>
-                      <PopoverContent
-                        side="bottom"
-                        align="start"
-                        sideOffset={8}
-                        className="practice-type-info"
-                        onOpenAutoFocus={(event) => event.preventDefault()}
-                      >
-                        <p className="practice-type-info__title">
-                          {t(`exerciseSelection.exercise.${currentExerciseType}`)}
-                        </p>
-                        <p className="practice-type-info__text">
-                          {getExerciseInstruction()}
-                        </p>
-                      </PopoverContent>
-                    </Popover>
-                    {!isFourWordExercise(currentExerciseType) && (
-                      <span className="practice-card-meta">
-                        <span className="practice-card-meta__level">
-                          {currentWord?.level ?? ""}
-                        </span>
-                        {currentWord?.category && (
-                          <> · {getCategoryLabel(currentWord.category)}</>
-                        )}
-                      </span>
-                    )}
-                  </div>
-                  {/* The instruction is visually redundant with the type tag
-                      and the layout, so it is kept for screen readers only. */}
-                  <p className="sr-only">{getExerciseInstruction()}</p>
+                  <ExerciseCardHeader
+                    exerciseId={currentExerciseType}
+                    instruction={getExerciseInstruction()}
+                    level={isFourWordExercise(currentExerciseType) ? null : currentWord?.level}
+                    categoryLabel={
+                      !isFourWordExercise(currentExerciseType) && currentWord?.category
+                        ? getCategoryLabel(currentWord.category)
+                        : null
+                    }
+                  />
                   {currentExerciseType === "listening" && (
                     <button
                       type="button"

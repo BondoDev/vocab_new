@@ -6,11 +6,18 @@ import { BrokenWordExercise } from "../../practice/exercises/BrokenWordExercise"
 import { HalfWrittenExercise } from "../../practice/exercises/HalfWrittenExercise";
 import { WordTypingExercise } from "../../practice/exercises/WordTypingExercise";
 import { highlightInflectedWords } from "../../practice/utils/highlightInflectedWords";
-import { exerciseCardBorders, type MotionCssVars } from "../../../exercises/exerciseTheme";
+import { ExerciseCardHeader } from "../../practice/exercises/ExerciseCardHeader";
+import {
+  exerciseCardBorders,
+  useRandomCardSurface,
+  type MotionCssVars,
+} from "../../../exercises/exerciseTheme";
 import { speakGuidedWord } from "../utils/speakGuidedWord";
 import type { GuidedExerciseStep as GuidedExerciseStepKey, ExerciseOutcome } from "../newWordStudySessionState";
 
-type PracticeCardCssVars = MotionCssVars<"--practice-card-bg" | "--practice-card-border">;
+type PracticeCardCssVars = MotionCssVars<
+  "--practice-card-bg" | "--practice-card-border" | "--pc-surface"
+>;
 
 interface ExerciseStatus {
   isCorrect: boolean;
@@ -134,9 +141,13 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
   };
 
   const exerciseId = STEP_TO_EXERCISE_ID[step];
+  // Same random colored surface as ordinary practice: a new color for every
+  // word/step card shown.
+  const cardSurfaceColor = useRandomCardSurface(`${item.targetWord}-${step}`);
   const practiceCardStyle: PracticeCardCssVars = {
     "--practice-card-bg": "#F8FAFC",
     "--practice-card-border": exerciseCardBorders[exerciseId] ?? "#7A68D8",
+    "--pc-surface": cardSurfaceColor,
   };
   const grammarTypeLabel = item.grammarType
     ? (() => {
@@ -157,36 +168,15 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
 
   return (
     <div className="practice-card-shell guided-exercise-shell">
-      <div className="practice-card guided-exercise-card" style={practiceCardStyle}>
-        <p className="guided-exercise-instruction">{t(INSTRUCTION_KEY[step])}</p>
-
-        {(item.level || categoryLabel || grammarTypeLabel) && (
-          <div className="guided-exercise-meta w-[95%] mx-auto pt-2 md:pt-3">
-            {(item.level || categoryLabel) && (
-              <div className="exercise-meta-row flex items-center justify-between">
-                {item.level && (
-                  <div
-                    className="exercise-meta-cefr min-w-[2.25rem] h-9 px-2 inline-flex items-center justify-center rounded-full text-sm font-semibold uppercase border-2 text-muted-foreground/70"
-                    style={{
-                      borderColor: "rgba(74, 43, 130, 0.35)",
-                    }}
-                  >
-                    {item.level}
-                  </div>
-                )}
-                {categoryLabel && (
-                  <div className="exercise-meta-category text-sm font-semibold uppercase text-muted-foreground/70 text-right">
-                    {categoryLabel}
-                  </div>
-                )}
-              </div>
-            )}
-            {grammarTypeLabel && (
-              <div className="exercise-meta-word-type mt-4 text-center text-lg font-semibold text-muted-foreground">
-                {grammarTypeLabel}
-              </div>
-            )}
-          </div>
+      <div className="practice-card practice-card--surface guided-exercise-card" style={practiceCardStyle}>
+        <ExerciseCardHeader
+          exerciseId={exerciseId}
+          instruction={t(INSTRUCTION_KEY[step])}
+          level={item.level}
+          categoryLabel={categoryLabel}
+        />
+        {grammarTypeLabel && (
+          <div className="practice-card-word-type">{grammarTypeLabel}</div>
         )}
 
         <div className="exercise-main-content guided-exercise-main-content">
@@ -196,7 +186,7 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
           <div className="exercise-word-area guided-exercise-word-area">
             <div className="exercise-guess-word-container guided-exercise-guess-word-container">
               <div className="guided-exercise-guess-word-inner">
-                <h2 className="exercise-guess-word guided-exercise-guess-word">{item.translation}</h2>
+                <h2 className="exercise-guess-word practice-card-word guided-exercise-guess-word">{item.translation}</h2>
               </div>
             </div>
 
@@ -230,9 +220,9 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
               rather than any new data. The sentence uses the same inflected
               form highlighting as the word-info card and ordinary practice
               flow. */}
-          <div className="exercise-help-sections guided-exercise-help-sections">
+          <div className="exercise-help-sections practice-card-disclosures guided-exercise-help-sections">
             {item.definition && (
-              <div className="guided-exercise-collapsible">
+              <div className="practice-card-disclosure guided-exercise-collapsible">
                 <button
                   type="button"
                   onClick={() => setShowDefinition(!showDefinition)}
@@ -257,7 +247,7 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
             )}
 
             {item.exampleSentence && (status.isCorrect || status.usedShowWord) && (
-              <div className="guided-exercise-collapsible">
+              <div className="practice-card-disclosure guided-exercise-collapsible">
                 <button
                   type="button"
                   onClick={() => setShowSentence(!showSentence)}
@@ -297,12 +287,12 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
           </div>
         </div>
 
-        <div className="guided-exercise-footer">
+        <div className="practice-card-footer flex items-center justify-end">
           <button
             type="button"
             onClick={handleContinue}
             disabled={!isStepComplete}
-            className={`practice-next-button guided-exercise-next-button ${isStepComplete ? "is-complete" : ""}`}
+            className={`practice-next-button practice-card-footer__primary ${isStepComplete ? "is-next" : "is-skip"}`}
           >
             {t("practice.nextAction")}
           </button>

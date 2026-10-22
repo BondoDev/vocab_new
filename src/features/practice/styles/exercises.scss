@@ -1460,3 +1460,29 @@
   color: #334155;
   box-shadow: none;
 }
+
+// SHARED CARD ACROSS PRACTICE / REVIEW / NEW-WORD STUDY
+// The review and guided adapters keep their own layout classes
+// (review-exercise-*, guided-exercise-*) next to the shared ones. These
+// neutralize the few adapter rules that would otherwise fight the shared
+// card look: bordered collapsible boxes, sibling margins on top of the
+// disclosure gap, the gray sentence speaker hover, and a Next button that is
+// disabled until the answer is correct.
+.practice-card .practice-card-disclosure {
+  border: 0;
+  border-radius: 0.875rem;
+  overflow: hidden;
+}
+
+.practice-card .practice-card-disclosures > * + * {
+  margin-top: 0;
+}
+
+.practice-card .exercise-sentence-content button:hover {
+  background-color: transparent !important;
+}
+
+.practice-card-footer__primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
