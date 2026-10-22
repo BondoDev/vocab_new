@@ -92,6 +92,41 @@ reports while coding.
 - Use focused verification proportional to the change and do not broaden scope
   without user approval.
 
+## Graphify knowledge graph
+
+A local, gitignored structure graph of `src/` lives in `src/graphify-out/`
+(`graph.json`, `GRAPH_REPORT.md`, `graph.html`). Generated `*.json` data is
+excluded via `src/graphify-out/.graphify_build.json`. Never commit it.
+
+- **Use it first, with focused commands**, for architecture, dependency,
+  ownership, or cross-module questions. All take
+  `--graph src/graphify-out/graph.json`:
+  - `graphify explain "Symbol()"` — one node and its direct connections.
+  - `graphify path "A()" "B()"` — how two symbols connect.
+  - `graphify query "<question>" --budget 1500` — broader context; keep the
+    budget small and narrow the question rather than raising it.
+  Never read `graph.json` or `graph.html`, and read only the needed section of
+  `GRAPH_REPORT.md`. Routine edits to known files need no graph lookup at all.
+- **Verify against source before acting.** The graph uses graphify's legacy
+  node-ID scheme, so same-named symbols in different files can collide; an
+  ambiguous name lists its candidates (re-query with the listed `path::symbol`
+  or node id). Treat INFERRED/AMBIGUOUS edges as leads, not facts, and never
+  justify a refactor by centrality alone.
+- **Refresh once, at the end, only when structure changed.** If a task added,
+  removed, renamed, or moved files under `src/`, or changed imports/exports or
+  component, hook, or module boundaries, run `graphify update src` once after
+  the last edit — not after each edit. It is incremental, code-only, uses no
+  LLM or tokens, and keeps the saved community names and `*.json` exclusion.
+  Skip it for copy, styling, comment, test-only, or logic changes inside
+  existing functions. If others' changes were pulled since the last refresh,
+  run it once before relying on the graph.
+- **README changes under `src/`** need the token-costing semantic pass
+  (`/graphify src --update`); run it only when a README's ownership or
+  architecture rules changed, and mention it in the report.
+- If `src/graphify-out/` is missing, do not rebuild it automatically; ask the
+  user before running a full `/graphify src` build.
+- Report a refresh (or why one was skipped) in one line.
+
 ## Quick reference
 
 | Command | Purpose |
