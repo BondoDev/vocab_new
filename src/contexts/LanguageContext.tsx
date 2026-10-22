@@ -1,7 +1,10 @@
-import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { isSupportedUiLanguage, type UiLanguageCode } from "../data/seo/shared/slugs";
 import { readEmbeddedJson } from "../lib/readEmbeddedJson";
 
-export type UILanguage = "en" | "es" | "fr" | "pt" | "it" | "de" | "ru";
+// SUPPORTED_UI_LANGUAGES in data/seo/shared/slugs.ts is the canonical
+// interface-language list; this name is kept for the provider's consumers.
+export type UILanguage = UiLanguageCode;
 
 interface LanguageContextType {
   uiLanguage: UILanguage;
@@ -154,9 +157,13 @@ export function readStoredUiLanguage(): UILanguage | null {
   }
 
   const saved = window.localStorage.getItem("uiLanguage");
-  return saved === "en" || saved === "es" || saved === "fr" || saved === "pt" || saved === "it" || saved === "de" || saved === "ru"
-    ? saved
-    : null;
+  return saved !== null && isSupportedUiLanguage(saved) ? saved : null;
+}
+
+function persistUiLanguage(lang: UILanguage): void {
+  if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
+    window.localStorage.setItem("uiLanguage", lang);
+  }
 }
 
 function readDocumentUiLanguage(): UILanguage | null {
@@ -165,9 +172,7 @@ function readDocumentUiLanguage(): UILanguage | null {
   }
 
   const lang = document.documentElement.lang?.trim().toLowerCase();
-  return lang === "en" || lang === "es" || lang === "fr" || lang === "pt" || lang === "it" || lang === "de" || lang === "ru"
-    ? lang
-    : null;
+  return lang && isSupportedUiLanguage(lang) ? lang : null;
 }
 
 function getInitialUiLanguage(initialUILanguage?: UILanguage): UILanguage {
@@ -178,11 +183,9 @@ function getInitialUiLanguage(initialUILanguage?: UILanguage): UILanguage {
   // locally than the prerendered page's language.
   if (typeof window !== "undefined") {
     const payload = readEmbeddedJson<InitialInterfaceDataPayload>(INITIAL_INTERFACE_DATA_ELEMENT_ID);
-    const payloadLang = payload?.lang;
-    if (
-      payloadLang === "en" || payloadLang === "es" || payloadLang === "fr" ||
-      payloadLang === "pt" || payloadLang === "it" || payloadLang === "de" || payloadLang === "ru"
-    ) {
+    // The payload is untrusted page JSON, so check the runtime type too.
+    const payloadLang: unknown = payload?.lang;
+    if (typeof payloadLang === "string" && isSupportedUiLanguage(payloadLang)) {
       return payloadLang;
     }
   }
@@ -271,26 +274,39 @@ export function LanguageProvider({
     };
   }, [loadedLanguages, uiLanguage]);
 
-  const handleSetUILanguage = (lang: UILanguage) => {
-    if (loadedLanguages[lang]) {
-      setUILanguage(lang);
-      if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
-        window.localStorage.setItem("uiLanguage", lang);
-      }
-      return;
-    }
+  // Every selection takes a new id, including selections served from the
+  // cache, so a slower load for an earlier selection can never switch the
+  // language back (or persist it) after a newer choice. The stale load still
+  // populates the cache - its data is valid, only the selection is outdated.
+  const latestSelectionIdRef = useRef(0);
 
-    void loadLanguageData(lang).then((data) => {
-      setLoadedLanguages((current) => ({
-        ...current,
-        [lang]: current[lang] ?? data,
-      }));
-      setUILanguage(lang);
-      if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
-        window.localStorage.setItem("uiLanguage", lang);
+  // Depends on loadedLanguages so the cache check never reads a stale map;
+  // the identity therefore changes only when a translation file finishes
+  // loading, not on unrelated provider renders.
+  const handleSetUILanguage = useCallback(
+    (lang: UILanguage) => {
+      const selectionId = ++latestSelectionIdRef.current;
+
+      if (loadedLanguages[lang]) {
+        setUILanguage(lang);
+        persistUiLanguage(lang);
+        return;
       }
-    });
-  };
+
+      void loadLanguageData(lang).then((data) => {
+        setLoadedLanguages((current) => ({
+          ...current,
+          [lang]: current[lang] ?? data,
+        }));
+        if (selectionId !== latestSelectionIdRef.current) {
+          return;
+        }
+        setUILanguage(lang);
+        persistUiLanguage(lang);
+      });
+    },
+    [loadedLanguages],
+  );
 
   const currentLanguageData = loadedLanguages[uiLanguage];
 
@@ -310,8 +326,13 @@ export function LanguageProvider({
     };
   }, [currentLanguageData]);
 
+  const contextValue = useMemo<LanguageContextType>(
+    () => ({ uiLanguage, setUILanguage: handleSetUILanguage, t }),
+    [uiLanguage, handleSetUILanguage, t],
+  );
+
   return (
-    <LanguageContext.Provider value={{ uiLanguage, setUILanguage: handleSetUILanguage, t }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );

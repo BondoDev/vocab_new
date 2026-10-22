@@ -6,6 +6,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { buildLocalizedVocabularyPath, resolveVocabularyRoute } from "../../../data/seo/vocabularyLevels/vocabularyLevelRoutes";
 import { getLevelTestSeoPath, resolveLevelTestSeoRoute } from "../../../data/seo/levelTests";
 import { getSeoHubPath, resolveSeoHubRoute } from "../../../data/seo/shared/hub";
+import { isSupportedUiLanguage } from "../../../data/seo/shared/slugs";
 import { getFullVocabularyListPath, resolveFullVocabularyListRoute } from "../../../data/seo/listPages/fullVocabularyList";
 import { resolveWordRoute, buildWordPathFromSlug } from "../../../data/seo/wordPages/wordSlugs";
 import {
@@ -94,7 +95,7 @@ export function UILanguageSwitcher({
   }, [isOpen]);
 
   const handleSelect = (code: LanguageCode) => {
-    if (code === "en" || code === "es" || code === "fr" || code === "pt" || code === "it" || code === "de" || code === "ru") {
+    if (isSupportedUiLanguage(code)) {
       const seoHubRoute = resolveSeoHubRoute(location.pathname);
       if (seoHubRoute) {
         const nextPath = getSeoHubPath(code);

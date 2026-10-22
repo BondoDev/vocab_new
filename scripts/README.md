@@ -319,6 +319,13 @@ fixtures, not a live application/backend. No browser package is required.
 The browser mode checks actual Hook scheduling, popup selection after prop
 updates, disabled insertion, and unmounting; it is not a visual/layout test.
 
+`npm run test:language-selection-race` source-executes `LanguageProvider`
+with deferred translation loads to check that the latest UI-language selection
+wins regardless of load completion order, that stale loads still populate the
+cache without switching or persisting, and that the context value and setter
+stay referentially stable. It is not a mounted React test. It is chained into
+`test:feature-contracts` next to the other UI-language behavior contracts.
+
 - Routine entry points — anything that's part of the production build,
   a tracked data generator, or a regression/architecture test meant to
   run automatically — should normally be exposed through `package.json`

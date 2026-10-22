@@ -326,32 +326,72 @@ test("22. No redirect loop: the redirect effect's own guard (isAuthResolved && !
 console.log("\n--- [5] New-signup flow: still lands on /profile on its own, no separate signal needed ---\n");
 
 // The task's key finding: no "just signed up" transient flag was needed.
-// Every interactive session-establishing flow already navigates straight to
-// /profile (a protected page) on success, so isOnboardingRequiredForAuthedUser
-// combined with isProtectedAccountPage already reopens the dialog immediately
-// after registration - without also trapping a *returning* incomplete user
-// on public pages they merely browse to (no navigation happens for that
-// case at all).
+// Every interactive session-establishing flow navigates straight to
+// /profile (a protected page) on success by default, so
+// isOnboardingRequiredForAuthedUser combined with isProtectedAccountPage
+// already reopens the dialog immediately after registration - without also
+// trapping a *returning* incomplete user on public pages they merely browse
+// to (no navigation happens for that case at all).
+//
+// Sole exception (bff0331d, full vocabulary list "Add to list"): a page may
+// explicitly request that login keep the user where they are. That request
+// is opt-in per dialog opening (Header's requestedAuthStayOnPage prop) and,
+// for Google OAuth, single-use and scoped to the requesting pathname
+// (src/lib/authStayOnPage.ts). Onboarding still applies the moment such a
+// user opens a protected page. Checks 23-25 pin both halves: the dashboard
+// default and the narrowness of the exception.
 
 const header = read("src/app/components/layout/Header.tsx");
+const authStayOnPage = read("src/lib/authStayOnPage.ts");
 
-test("23. Password login success navigates to /profile via goToProfile('dashboard') - so logging into an existing incomplete account lands on a protected page, where the guard/dialog correctly apply, without any extra signal", () => {
+test("23. Password login success ends via finishAuthNavigation(), which navigates to /profile via goToProfile('dashboard') unless an explicit stay-on-page request is pending - so logging into an existing incomplete account lands on a protected page by default, where the guard/dialog correctly apply", () => {
   const loginBranch = header.match(/if \(authMode === "login"\) \{([\s\S]*?)\n {6}\}/);
   assert.ok(loginBranch, "expected the login branch in handlePasswordAuthSubmit");
-  assert.match(loginBranch[1], /goToProfile\("dashboard"\);/);
+  assert.match(loginBranch[1], /finishAuthNavigation\(\);/);
+
+  const finish = header.match(/const finishAuthNavigation = \(\) => \{([\s\S]*?)\n {2}\};/);
+  assert.ok(finish, "expected finishAuthNavigation in Header");
+  assert.match(
+    finish[1],
+    /^\s*if \(stayOnPageAfterAuthRef\.current\) \{\s*stayOnPageAfterAuthRef\.current = false;\s*return;\s*\}\s*goToProfile\("dashboard"\);\s*$/,
+  );
+
+  // The exception is opt-in only: the ref starts false, the prop defaults to
+  // false, and nothing but that prop can ever set it to anything else.
+  const liveHeader = stripComments(header);
+  assert.match(liveHeader, /const stayOnPageAfterAuthRef = useRef\(false\);/);
+  assert.match(liveHeader, /requestedAuthStayOnPage = false,/);
+  const assignedValues = [...liveHeader.matchAll(/stayOnPageAfterAuthRef\.current = ([^;]+);/g)].map((match) => match[1]);
+  assert.ok(assignedValues.length > 0, "expected stayOnPageAfterAuthRef assignments");
+  for (const value of assignedValues) {
+    assert.ok(
+      value === "false" || value === "requestedAuthStayOnPage",
+      `stayOnPageAfterAuthRef may only be reset or copied from requestedAuthStayOnPage, found: ${value}`,
+    );
+  }
 });
 
-test("24. Password signup-with-immediate-session success also navigates to /profile via goToProfile('dashboard') - this is what already delivers 'onboarding required immediately after registration' with no separate just-signed-up flag", () => {
+test("24. Password signup-with-immediate-session success also ends via finishAuthNavigation() - this is what delivers 'onboarding required immediately after registration' by default, with no separate just-signed-up flag", () => {
   const signupSessionBranch = header.match(/if \(result\.session\) \{([\s\S]*?)\n {6}\}/);
   assert.ok(signupSessionBranch, "expected the result.session branch in handlePasswordAuthSubmit");
-  assert.match(signupSessionBranch[1], /goToProfile\("dashboard"\);/);
+  assert.match(signupSessionBranch[1], /finishAuthNavigation\(\);/);
 });
 
-test("25. Google OAuth's redirect completion also navigates to /profile (unless a password-recovery redirect) - the third and last interactive session-establishing path, completing the same pattern", () => {
+test("25. Google OAuth's redirect completion also navigates to /profile unless a password-recovery redirect or a single-use, same-pathname stay-on-page request - the third and last interactive session-establishing path, completing the same pattern", () => {
   assert.match(
     app,
-    /onSessionEstablished: \(session, context\) => \{\s*\n\s*handleAuthSessionChange\(session\);\s*\n\s*if \(!context\.recovery\) \{\s*\n\s*navigate\(`\$\{ROUTES\.profile\}\?section=dashboard`, \{ replace: true \}\);/,
+    /onSessionEstablished: \(session, context\) => \{\s*\n\s*handleAuthSessionChange\(session\);\s*\n(?:\s*\/\/[^\n]*\n)*\s*if \(!context\.recovery && !consumeStayOnPageAfterOAuth\(window\.location\.pathname\)\) \{\s*\n\s*navigate\(`\$\{ROUTES\.profile\}\?section=dashboard`, \{ replace: true \}\);/,
   );
+
+  // The OAuth exception must stay narrow: consumed (removed) on first read,
+  // honored only for the exact requesting pathname, and expiring.
+  const consume = authStayOnPage.match(/export function consumeStayOnPageAfterOAuth\(pathname: string\): boolean \{([\s\S]*?)\n\}/);
+  assert.ok(consume, "expected consumeStayOnPageAfterOAuth");
+  const removeAt = consume[1].indexOf("window.sessionStorage.removeItem(STORAGE_KEY);");
+  const parseAt = consume[1].indexOf("JSON.parse(raw)");
+  assert.ok(removeAt >= 0 && removeAt < parseAt, "the stay-on-page record must be removed before it is evaluated");
+  assert.match(consume[1], /record\.pathname === pathname/);
+  assert.match(consume[1], /Date\.now\(\) - record\.savedAt < MAX_AGE_MS/);
 });
 
 console.log(`\n─────────────────────────────────────────`);

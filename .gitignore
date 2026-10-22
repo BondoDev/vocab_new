@@ -45,3 +45,8 @@ workers/word-ssr/data/full-corpus
 .agents/
 .claude/
 .codex/
+
+# Local graphify knowledge-graph output and caches (machine-specific paths;
+# regenerated on demand). Unanchored, so it also covers a nested
+# src/graphify-out/ cache created when a subfolder is graphed.
+graphify-out/

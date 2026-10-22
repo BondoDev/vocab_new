@@ -401,9 +401,12 @@ function AppContent({
   // own `open` prop below, which AND's this with isProtectedAccountPage.
   // Every interactive path that establishes a session (password login,
   // password signup-with-immediate-session, Google OAuth's redirect
-  // callback) already navigates straight to /profile itself (see Header.tsx's
-  // goToProfile calls and this file's useSupabaseAuthRedirect
-  // onSessionEstablished callback) - so a fresh signup and a later login of
+  // callback) navigates straight to /profile itself by default (see
+  // Header.tsx's finishAuthNavigation and this file's useSupabaseAuthRedirect
+  // onSessionEstablished callback). The one exception is an explicit
+  // stay-on-page login request (src/lib/authStayOnPage.ts), which leaves the
+  // user on the public page; onboarding then applies as soon as they open a
+  // protected page. By default, then, a fresh signup and a later login of
   // an existing incomplete account both already land on a protected page on
   // their own, with no separate "just signed up" signal required here: this
   // one route-scoped condition already produces "onboarding required
