@@ -22,15 +22,30 @@ import { PracticeLoading } from "./components/PracticeLoading";
 import { PracticeEmptyState } from "./components/PracticeEmptyState";
 import { PracticeResults } from "./components/PracticeResults";
 import {
+  exerciseCardBackgrounds,
   exerciseCardBorders,
+  exerciseCardIconColors,
+  getExerciseIcon,
+  getPracticeCardSurface,
   type MotionCssVars,
 } from "../../exercises/exerciseTheme";
 import { FOUR_WORD_EXERCISE_IDS } from "../../exercises/exerciseIds";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../app/components/ui/popover";
 import { createActiveWordTimer, type ActiveWordTimer } from "../../data/learning/activeWordTimer";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeCustomPracticeWord } from "../../lib/customPracticeProgress";
 
-type PracticeCardCssVars = MotionCssVars<"--practice-card-bg" | "--practice-card-border">;
+type PracticeCardCssVars = MotionCssVars<
+  | "--practice-card-bg"
+  | "--practice-card-border"
+  | "--practice-card-accent"
+  | "--practice-card-tint"
+  | "--pc-surface"
+>;
 
 const FOUR_WORD_EXERCISE_ID_SET = new Set<string>(FOUR_WORD_EXERCISE_IDS);
 
@@ -129,6 +144,17 @@ export function VocabularyPractice({
   const [sessionComplete, setSessionComplete] = useState(false);
   const [currentExerciseType, setCurrentExerciseType] =
     useState<string>("wordTyping");
+  // Random starting hue per session; each card then advances by the golden
+  // angle (see getPracticeCardSurface). The card is never server-rendered (it
+  // waits for words to load), so this cannot cause a hydration mismatch.
+  const [cardSurfaceStartHue] = useState(() => Math.random() * 360);
+  // The exercise-type icon explains the exercise in a popover (hover with a
+  // mouse, tap/click otherwise). Closed whenever the card or exercise changes
+  // so an explanation never lingers over the next card.
+  const [isExerciseInfoOpen, setIsExerciseInfoOpen] = useState(false);
+  useEffect(() => {
+    setIsExerciseInfoOpen(false);
+  }, [currentIndex, currentExerciseType]);
   const [inflectedEntries, setInflectedEntries] = useState<any[]>([]);
   const [exerciseStatus, setExerciseStatus] = useState({
     isCorrect: false,
@@ -1106,7 +1132,15 @@ export function VocabularyPractice({
   const practiceCardStyle: PracticeCardCssVars = {
     "--practice-card-bg": "#F8FAFC",
     "--practice-card-border": exerciseCardBorders[currentExerciseType] ?? "#7A68D8",
+    // Accent (text/icons/focus) and tint (icon tile) for the exercise-type
+    // tag and the controls inside the card; see exercises.scss.
+    "--practice-card-accent": exerciseCardIconColors[currentExerciseType] ?? "#6B58C8",
+    "--practice-card-tint": exerciseCardBackgrounds[currentExerciseType] ?? "#F2F0FF",
+    // Keyed to the card index, so the color is stable across re-renders and
+    // across an exercise switch on the same card.
+    "--pc-surface": getPracticeCardSurface(cardSurfaceStartHue, currentIndex),
   };
+  const ExerciseTypeIcon = getExerciseIcon(currentExerciseType);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -1140,18 +1174,63 @@ export function VocabularyPractice({
               {currentWord && (
                 <motion.div
                     key={`${currentIndex}-${currentExerciseType}-${cardBlinkKey}`}
-                    className={`practice-card bg-card border border-border rounded-2xl p-3 md:p-5 shadow-sm transition-all duration-300 ease-in-out flex flex-col relative ${
+                    className={`practice-card practice-card--surface bg-card border border-border rounded-2xl p-3 md:p-5 shadow-sm transition-all duration-300 ease-in-out flex flex-col relative ${
                       isCardSwitching ? "practice-card-switching" : ""
                     }`}
                     style={practiceCardStyle}
                 >
-                  <p
-                    className={`mx-auto max-w-[34rem] text-center text-sm text-gray-500 leading-relaxed font-medium ${
-                      isFourWordExercise(currentExerciseType) ? "mb-4" : "mb-0"
-                    }`}
-                  >
-                    {getExerciseInstruction()}
-                  </p>
+                  <div className="practice-card-top">
+                    <Popover
+                      open={isExerciseInfoOpen}
+                      onOpenChange={setIsExerciseInfoOpen}
+                    >
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className="practice-type-trigger"
+                          aria-label={t(`exerciseSelection.exercise.${currentExerciseType}`)}
+                          // Hover opens only for mouse; touch relies on the
+                          // trigger's own tap toggle so a tap doesn't
+                          // open-then-close.
+                          onPointerEnter={(event) => {
+                            if (event.pointerType === "mouse") setIsExerciseInfoOpen(true);
+                          }}
+                          onPointerLeave={(event) => {
+                            if (event.pointerType === "mouse") setIsExerciseInfoOpen(false);
+                          }}
+                        >
+                          <ExerciseTypeIcon className="h-[1.1rem] w-[1.1rem]" strokeWidth={2.2} />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        side="bottom"
+                        align="start"
+                        sideOffset={8}
+                        className="practice-type-info"
+                        onOpenAutoFocus={(event) => event.preventDefault()}
+                      >
+                        <p className="practice-type-info__title">
+                          {t(`exerciseSelection.exercise.${currentExerciseType}`)}
+                        </p>
+                        <p className="practice-type-info__text">
+                          {getExerciseInstruction()}
+                        </p>
+                      </PopoverContent>
+                    </Popover>
+                    {!isFourWordExercise(currentExerciseType) && (
+                      <span className="practice-card-meta">
+                        <span className="practice-card-meta__level">
+                          {currentWord?.level ?? ""}
+                        </span>
+                        {currentWord?.category && (
+                          <> · {getCategoryLabel(currentWord.category)}</>
+                        )}
+                      </span>
+                    )}
+                  </div>
+                  {/* The instruction is visually redundant with the type tag
+                      and the layout, so it is kept for screen readers only. */}
+                  <p className="sr-only">{getExerciseInstruction()}</p>
                   {currentExerciseType === "listening" && (
                     <button
                       type="button"
@@ -1163,27 +1242,10 @@ export function VocabularyPractice({
                     </button>
                   )}
                   {!isFourWordExercise(currentExerciseType) && (
-                    <div className="w-[95%] mx-auto pt-2 md:pt-3">
-                      <div className="exercise-meta-row flex items-center justify-between">
-                        <div
-                          className="exercise-meta-cefr min-w-[2.25rem] h-9 px-2 inline-flex items-center justify-center rounded-full text-sm font-semibold uppercase border-2 text-muted-foreground/70"
-                          style={{
-                            borderColor: "rgba(74, 43, 130, 0.35)",
-                          }}
-                        >
-                          {currentWord?.level ?? ""}
-                        </div>
-                        <div className="exercise-meta-category text-sm font-semibold uppercase text-muted-foreground/70 text-right">
-                          {currentWord?.category
-                            ? getCategoryLabel(currentWord.category)
-                            : ""}
-                        </div>
-                      </div>
-                      <div className="exercise-meta-word-type mt-4 text-center text-lg font-semibold text-muted-foreground">
-                        {currentWord?.type
-                          ? getWordTypeLabel(currentWord.type)
-                          : ""}
-                      </div>
+                    <div className="practice-card-word-type">
+                      {currentWord?.type
+                        ? getWordTypeLabel(currentWord.type)
+                        : ""}
                     </div>
                   )}
 
@@ -1206,7 +1268,7 @@ export function VocabularyPractice({
                       {!isFourWordExercise(currentExerciseType) && (
                         <div className="exercise-guess-word-container min-h-[60px] flex items-center justify-center">
                           <div className="text-center">
-                            <h2 className="exercise-guess-word text-4xl md:text-5xl font-bold text-foreground">
+                            <h2 className="exercise-guess-word practice-card-word text-4xl md:text-5xl font-bold">
                               {currentPrompt}
                             </h2>
                           </div>
@@ -1263,9 +1325,9 @@ export function VocabularyPractice({
 
                     {/* Expandable Help Sections - Hide for pairing exercises */}
                     {!isFourWordExercise(currentExerciseType) && (
-                      <div className="exercise-help-sections space-y-2 mb-4 sm:mb-6 md:mb-8">
+                      <div className="exercise-help-sections practice-card-disclosures">
                         {/* See Definition */}
-                        <div className="border border-border rounded-lg overflow-hidden">
+                        <div className="practice-card-disclosure overflow-hidden">
                           <button
                             onClick={() => setShowDefinition(!showDefinition)}
                             className="exercise-see-definition-button w-full flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm hover:bg-muted active:bg-muted/80 transition-colors text-left"
@@ -1296,7 +1358,7 @@ export function VocabularyPractice({
 
                         {(exerciseStatus.isCorrect ||
                           exerciseStatus.usedShowWord) && (
-                          <div className="border border-border rounded-lg overflow-hidden">
+                          <div className="practice-card-disclosure overflow-hidden">
                             <button
                               onClick={() => setShowSentence(!showSentence)}
                               className="exercise-see-sentence-button w-full flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm hover:bg-muted active:bg-muted/80 transition-colors text-left"
@@ -1343,7 +1405,7 @@ export function VocabularyPractice({
                                         window.speechSynthesis.speak(utterance);
                                       }
                                     }}
-                                    className="absolute top-1/2 -translate-y-1/2 right-0 p-1.5 sm:p-2 hover:bg-muted rounded-lg text-muted-foreground transition-colors"
+                                    className="absolute top-1/2 -translate-y-1/2 right-0 p-1.5 sm:p-2 rounded-lg text-muted-foreground"
                                     aria-label={t("practice.listenToSentence")}
                                   >
                                     <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -1358,10 +1420,10 @@ export function VocabularyPractice({
                   </div>
 
                                     {/* Progress & Navigation */}
-                  <div className="flex items-center justify-between pt-4 border-t border-border">
+                  <div className="practice-card-footer flex items-center justify-between">
                     <button
                       onClick={onGoFilters}
-                      className="px-4 py-2.5 rounded-lg font-medium transition-all bg-muted text-muted-foreground hover:bg-muted/80"
+                      className="practice-card-footer__secondary"
                     >
                       {/* Practice List (My Lists Phase 3): this button
                           leaves to that list's own detail view, not a
@@ -1380,10 +1442,8 @@ export function VocabularyPractice({
                       <button
                         onClick={handleNext}
                         disabled={isCardSwitching}
-                        className={`practice-next-button px-6 py-2.5 rounded-lg font-medium transition-all ${
-                          isNextActionAvailable
-                            ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                            : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
+                        className={`practice-next-button practice-card-footer__primary ${
+                          isNextActionAvailable ? "is-next" : "is-skip"
                         }`}
                       >
                         {isNextActionAvailable
@@ -1394,10 +1454,8 @@ export function VocabularyPractice({
                       <button
                         onClick={handleNext}
                         disabled={isCardSwitching}
-                        className={`practice-next-button px-6 py-2.5 rounded-lg font-medium transition-all ${
-                          isNextActionAvailable
-                            ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                            : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
+                        className={`practice-next-button practice-card-footer__primary ${
+                          isNextActionAvailable ? "is-next" : "is-skip"
                         }`}
                       >
                         {isNextActionAvailable

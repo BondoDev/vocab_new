@@ -1,11 +1,12 @@
 import { motion } from "motion/react";
-import { Check, Headphones, Keyboard, Link, Puzzle, TextCursorInput, type LucideIcon } from "lucide-react";
+import { Check } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import type { ExerciseId } from "../../exercises/exerciseIds";
 import {
   exerciseCardBackgrounds,
   exerciseCardBorders,
   exerciseCardIconColors,
+  exerciseIcons,
   type MotionCssVars,
 } from "../../exercises/exerciseTheme";
 import { exerciseItems } from "./exerciseOptions";
@@ -13,14 +14,6 @@ import { exerciseItems } from "./exerciseOptions";
 type ExerciseCardCssVars = MotionCssVars<
   "--exercise-card-bg" | "--exercise-card-border" | "--exercise-card-icon"
 >;
-
-const exerciseIcons: Record<ExerciseId, LucideIcon> = {
-  wordTyping: Keyboard,
-  halfWritten: TextCursorInput,
-  brokenWord: Puzzle,
-  connectWords: Link,
-  listening: Headphones,
-};
 
 function ExerciseOptionIcon({ id }: { id: ExerciseId }) {
   const Icon = exerciseIcons[id];

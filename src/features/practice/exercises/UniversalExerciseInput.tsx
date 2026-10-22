@@ -212,7 +212,7 @@ export function UniversalExerciseInput({
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center">
         <motion.button
           onClick={onSpeakWord}
-          className="p-2 bg-[#6b53a3] hover:bg-[#5d4691] text-white border border-[#4a3870]/45 shadow-sm rounded-full transition-colors"
+          className="exercise-speak-button p-2 rounded-full transition-colors"
           aria-label={t("practice.listenToPronunciation")}
           animate={{
             opacity: isCorrect ? 1 : 0,

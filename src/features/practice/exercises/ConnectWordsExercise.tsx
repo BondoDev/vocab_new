@@ -200,10 +200,10 @@ export function ConnectWordsExercise({
         }
       `}</style>
         <div className="exercise-connect-grid grid grid-cols-2 gap-x-8 w-full mx-auto items-center">
-          <h4 className="text-[0.72rem] sm:text-xs uppercase tracking-[0.14em] text-gray-500 text-center font-semibold bg-white/70 border border-purple-200/70 rounded-full py-1 px-3">
+          <h4 className="exercise-pair-column-label">
             {sourceLabel}
           </h4>
-          <h4 className="text-[0.72rem] sm:text-xs uppercase tracking-[0.14em] text-gray-500 text-center font-semibold bg-white/70 border border-purple-200/70 rounded-full py-1 px-3">
+          <h4 className="exercise-pair-column-label">
             {targetLabel}
           </h4>
         </div>
@@ -217,7 +217,7 @@ export function ConnectWordsExercise({
                 : { duration: 0.3, ease: "easeInOut" }
             }
           >
-            <div className="grid gap-y-8">
+            <div className="grid gap-y-3">
               {pairedRows.map((pair, index) => (
                 <motion.div
                   key={`${pair.word}-${pair.meaning}-row`}
@@ -228,7 +228,7 @@ export function ConnectWordsExercise({
                 >
                   <button
                     disabled
-                    className="exercise-connect-button w-full min-w-0 self-center px-4 py-2 text-base md:text-lg font-medium rounded-lg border border-green-200 bg-green-100 text-green-700 cursor-default text-left shadow-sm"
+                    className="exercise-connect-button w-full min-w-0 self-center px-4 py-2 text-base md:text-lg font-medium rounded-xl border border-green-200 bg-green-50 text-green-700 cursor-default text-left"
                   >
                     <span className="flex min-w-0 items-center justify-start gap-2">
                       <span className="block min-w-0 whitespace-normal [overflow-wrap:anywhere]">
@@ -239,7 +239,7 @@ export function ConnectWordsExercise({
                   <span className="text-green-500 text-sm font-semibold">-&gt;</span>
                   <button
                     disabled
-                    className="exercise-connect-button w-full min-w-0 self-center px-4 py-2 text-base md:text-lg font-medium rounded-lg border border-green-200 bg-green-100 text-green-700 cursor-default text-left shadow-sm"
+                    className="exercise-connect-button w-full min-w-0 self-center px-4 py-2 text-base md:text-lg font-medium rounded-xl border border-green-200 bg-green-50 text-green-700 cursor-default text-left"
                   >
                     <span className="flex min-w-0 items-center justify-start gap-2">
                       <span className="block min-w-0 whitespace-normal [overflow-wrap:anywhere]">
@@ -252,7 +252,7 @@ export function ConnectWordsExercise({
             </div>
           </motion.div>
         ) : (
-        <div className="exercise-connect-grid grid grid-cols-2 gap-x-8 gap-y-8 w-full mx-auto items-center">
+        <div className="exercise-connect-grid grid grid-cols-2 gap-x-3 gap-y-3 w-full mx-auto items-center">
             {connectWords.map((_, wordIndex) => {
               const meaningIndex = wordIndex;
               const word = connectWords[wordIndex];
@@ -275,18 +275,18 @@ export function ConnectWordsExercise({
                     <motion.button
                       onClick={() => handleWordSelect(wordIndex)}
                       disabled={isPaired}
-                      className={`exercise-connect-button w-full self-center px-4 py-2 text-base md:text-lg font-medium rounded-lg border transition-all text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-300 ${
+                      className={`exercise-connect-button exercise-pair-tile w-full self-center px-4 py-2.5 text-base md:text-lg font-semibold rounded-xl border transition-all text-left focus:outline-none ${
                         isPaired
                           ? isFlashing
-                            ? "border-green-300 bg-green-100 text-green-700 cursor-default"
+                            ? "border-green-300 bg-green-50 text-green-700 cursor-default"
                             : "invisible pointer-events-none"
                           : isIncorrect
-                          ? "animate-shake border-red-400 bg-red-100 text-red-700"
+                          ? "animate-shake border-red-400 bg-red-50 text-red-700"
                           : isSelected
-                            ? "border-purple-400 bg-purple-200 text-slate-900 ring-2 ring-purple-300"
+                            ? "is-selected bg-white text-slate-900"
                             : shouldFade
-                              ? "border-purple-200 bg-purple-100 text-slate-900/75 opacity-80"
-                              : "border-purple-200 bg-purple-100 text-slate-900 hover:bg-purple-200 hover:border-purple-300"
+                              ? "bg-white text-slate-900/70 opacity-80"
+                              : "bg-white text-slate-900"
                       }`}
                       whileTap={{ scale: 0.99 }}
                       transition={{ duration: 0.15, ease: "easeOut" }}
@@ -300,14 +300,14 @@ export function ConnectWordsExercise({
                     <motion.button
                       onClick={() => handleMeaningSelect(meaningIndex)}
                       disabled={selectedWord === null || isMeaningPaired}
-                      className={`exercise-connect-button w-full self-center px-4 py-2 text-base md:text-lg font-medium rounded-lg border transition-all text-left focus:outline-none focus:ring-2 focus:ring-purple-300 ${
+                      className={`exercise-connect-button exercise-pair-tile w-full self-center px-4 py-2.5 text-base md:text-lg font-semibold rounded-xl border transition-all text-left focus:outline-none ${
                         isMeaningPaired
                           ? isMeaningFlashing
-                            ? "border-green-300 bg-green-100 text-green-700 cursor-default"
+                            ? "border-green-300 bg-green-50 text-green-700 cursor-default"
                             : "invisible pointer-events-none"
                           : isMeaningIncorrect
-                          ? "animate-shake border-red-400 bg-red-100 text-red-700"
-                          : "bg-white border-purple-200 text-slate-900 hover:border-purple-400 disabled:opacity-60 disabled:cursor-not-allowed"
+                          ? "animate-shake border-red-400 bg-red-50 text-red-700"
+                          : "bg-white text-slate-900 disabled:opacity-60 disabled:cursor-not-allowed"
                       }`}
                       whileTap={{ scale: 0.99 }}
                       transition={{ duration: 0.15, ease: "easeOut" }}

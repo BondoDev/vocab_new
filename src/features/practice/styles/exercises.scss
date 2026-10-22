@@ -61,17 +61,35 @@
 }
 
 // GLOBAL TYPING INPUT VISIBILITY
+// Answer fields are a softly tinted, evenly rounded slot with a full accent
+// border, so the field is the second most prominent thing on the card after
+// the word.
+// --practice-card-accent is set by VocabularyPractice; the review and guided
+// adapters only set --practice-card-border, hence the nested fallback.
 .exercise-answer-input {
-  border-width: 3px !important;
-  border-color: rgba(74, 43, 130, 0.45) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 0 1px rgba(74, 43, 130, 0.12) !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-radius: 14px !important;
+  border-color: color-mix(
+    in srgb,
+    var(--practice-card-accent, var(--practice-card-border, #6b58c8)) 60%,
+    #ffffff
+  ) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--practice-card-tint, #f2f0ff) 75%,
+    #ffffff
+  ) !important;
+  box-shadow: none !important;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
 }
 
 .exercise-answer-input:focus {
-  border-color: rgba(74, 43, 130, 0.85) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 0 3px rgba(74, 43, 130, 0.18) !important;
+  border-color: var(--practice-card-accent, var(--practice-card-border, #6b58c8)) !important;
+  background-color: var(--practice-card-tint, #f2f0ff) !important;
+  box-shadow: none !important;
 }
 
 .practice-card {
@@ -144,20 +162,364 @@
   }
 }
 
-/* Practice card tint (20% primary/navbar color) */
+/* Practice card ("Focus" direction): a plain white card that sizes to its
+   content. The exercise type is carried by the header tag and the accent on
+   inputs, chunks, and tile selection, not by a colored card border. */
 .practice-card {
   position: relative;
   z-index: 1;
   color: #1f2937 !important;
-  background: var(--practice-card-bg, #f8fafc) !important;
+  background: #ffffff !important;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border-radius: 28px !important;
-  border: 2.5px solid var(--practice-card-border, #e5e7eb) !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
   box-shadow:
-    0 12px 28px rgba(15, 23, 42, 0.08),
-    0 1px 0 rgba(255, 255, 255, 0.7) inset;
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 18px 40px -18px rgba(47, 39, 85, 0.2) !important;
   overflow: hidden;
+}
+
+.practice-card {
+  // A floor so short exercises don't collapse into a cramped strip; the
+  // main content below is centered in whatever extra height this creates.
+  min-height: min(36rem, 80dvh);
+  --pc-accent: var(--practice-card-accent, var(--practice-card-border, #6b58c8));
+  --pc-tint: var(--practice-card-tint, #f2f0ff);
+  // Text-safe accent: the raw accents (e.g. listening's gold) fall below 4.5:1
+  // on white, so colored text uses this darkened mix instead.
+  --pc-ink: color-mix(in srgb, var(--pc-accent) 70%, #1f2937);
+}
+
+.practice-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+// The exercise type is shown as an icon-only button; its name and the
+// exercise instructions open in a popover (VocabularyPractice). The popover
+// is portaled outside the card, so its styles below are not card-scoped.
+.practice-type-trigger {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--pc-tint);
+  color: var(--pc-accent);
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+
+  &:hover,
+  &[data-state="open"] {
+    transform: scale(1.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--pc-accent);
+    outline-offset: 2px;
+  }
+}
+
+// The inflected target word in the example sentence (a <strong> emitted by
+// highlightInflectedWords) is set extra-bold and upright against the
+// regular-weight italic sentence so it stands out without a container.
+// Sora is used because index.html loads Manrope only up to 700, so an 800
+// Manrope weight would render no heavier than the default bold.
+.practice-card-disclosure .exercise-sentence-content strong {
+  color: var(--pc-ink, #2f2755);
+  font-family: var(--font-family-heading);
+  font-style: normal;
+  font-weight: 800;
+}
+
+// Tailwind's preflight resets buttons to the default arrow; every enabled
+// control on the card shows a pointer. Disabled buttons keep whatever
+// cursor their own classes set (not-allowed / default).
+.practice-card button:not(:disabled),
+.practice-card [role="button"] {
+  cursor: pointer;
+}
+
+.practice-type-info {
+  width: min(18rem, calc(100vw - 2rem)) !important;
+  padding: 0.75rem 0.9rem !important;
+  border-radius: 0.875rem !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 12px 32px -12px rgba(15, 23, 42, 0.28) !important;
+}
+
+.practice-type-info__title {
+  margin: 0 0 0.2rem;
+  color: #2f2755;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.practice-type-info__text {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.practice-card-meta {
+  flex: none;
+  color: #9ca3af;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.practice-card-meta__level {
+  color: var(--muted-foreground);
+  font-weight: 700;
+}
+
+.practice-card-word-type {
+  margin-top: 0;
+  color: #9ca3af;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.practice-card-word {
+  color: #2f2755;
+  letter-spacing: -0.015em;
+}
+
+// Outranks the per-breakpoint .exercise-guess-word sizes (shared with the
+// review/guided flows) so the prompt word stays the dominant element here.
+.practice-card .practice-card-word {
+  font-size: 2.4rem !important;
+  line-height: 1.1 !important;
+}
+
+@media (min-width: 1024px) {
+  .practice-card .practice-card-word {
+    font-size: 2.9rem !important;
+  }
+}
+
+.practice-card .exercise-word-area {
+  margin-top: 0.25rem;
+}
+
+// Auto margins center the study group (part-of-speech label + word + answer
+// + disclosures) as one block between the header and the footer; the label
+// takes the top auto margin when present so it never drifts off its word.
+.practice-card .exercise-main-content {
+  flex: 0 0 auto !important;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.practice-card .practice-card-word-type {
+  margin-top: auto;
+}
+
+.practice-card .practice-card-word-type + .exercise-main-content {
+  margin-top: 0;
+}
+
+@media (max-width: 1023.98px) {
+  .practice-card {
+    min-height: 72svh;
+  }
+}
+
+// Definition / sentence disclosures read as quiet rows separated by a
+// hairline instead of bordered boxes.
+.practice-card-disclosures {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0 !important;
+}
+
+.practice-card-disclosure {
+  border-radius: 0.875rem;
+  background: #f5f6f8;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background: #eef0f3;
+  }
+}
+
+// The hover/focus selectors are listed explicitly: the generic
+// "keep dropdown buttons white" rule further down targets :hover and
+// :focus-visible with equal specificity and would otherwise paint the button
+// white over the colored bar (white text on white).
+.practice-card-disclosure .exercise-see-definition-button,
+.practice-card-disclosure .exercise-see-sentence-button,
+.practice-card-disclosure .exercise-see-definition-button:hover,
+.practice-card-disclosure .exercise-see-sentence-button:hover,
+.practice-card-disclosure .exercise-see-definition-button:focus-visible,
+.practice-card-disclosure .exercise-see-sentence-button:focus-visible {
+  padding: 0.7rem 1rem !important;
+  background-color: transparent !important;
+  color: #374151;
+  font-size: 0.9rem !important;
+  font-weight: 600;
+
+  &:focus-visible {
+    outline: 2px solid var(--pc-accent);
+    outline-offset: 2px;
+    border-radius: 0.875rem;
+  }
+}
+
+.practice-card-disclosure .exercise-definition-content,
+.practice-card-disclosure .exercise-sentence-content {
+  border-top: 0;
+  padding: 0 1rem 0.8rem !important;
+  background: transparent !important;
+  color: var(--muted-foreground);
+}
+
+.practice-card-footer {
+  margin-top: 1.75rem;
+  padding-top: 0.25rem;
+}
+
+.practice-card-footer__secondary {
+  padding: 0.55rem 0.25rem;
+  border: 0;
+  background: none;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+}
+
+.practice-card-footer__primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.15rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+
+  &::after {
+    content: "→";
+    font-weight: 500;
+  }
+
+  &.is-skip {
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    background: #ffffff;
+    color: #2f2755;
+
+    &:hover {
+      border-color: rgba(15, 23, 42, 0.24);
+    }
+  }
+
+  // Once the answer is in, "Next" becomes the one filled control on the card.
+  &.is-next {
+    border: 1px solid transparent;
+    background: color-mix(in srgb, var(--pc-accent) 88%, #000);
+    color: #ffffff;
+
+    &:hover {
+      background: color-mix(in srgb, var(--pc-accent) 75%, #000);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--pc-accent);
+    outline-offset: 2px;
+  }
+}
+
+// Helper links share one small size inside the practice card regardless of
+// the breakpoint sizes the shared class carries for other flows.
+.practice-card .exercise-action-button,
+.practice-card .exercise-special-chars-trigger {
+  font-size: 0.82rem !important;
+  line-height: 1.2 !important;
+}
+
+// The breakpoint rules size the shared .practice-next-button for the review
+// and guided flows; the practice card footer keeps one compact size.
+.practice-card-footer .practice-next-button {
+  font-size: 0.95rem !important;
+  line-height: 1.25 !important;
+}
+
+// Shared tile look for connect-words and listening pairs. State colors for
+// matched (green) and wrong (red) stay as Tailwind classes in the components;
+// only the neutral, hover, focus, and selected states are owned here.
+.exercise-pair-column-label {
+  color: var(--muted-foreground);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.exercise-pair-tile {
+  border-color: rgba(15, 23, 42, 0.1);
+
+  &:not(:disabled):hover {
+    border-color: rgba(15, 23, 42, 0.22);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--pc-accent, #6b58c8) 30%, transparent);
+  }
+
+  &.is-selected {
+    border-color: var(--pc-accent, #6b58c8);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--pc-accent, #6b58c8) 16%, transparent);
+  }
+}
+
+.exercise-listening-mic-button:not(.border-green-300):not(.border-red-400) .exercise-listening-mic-icon {
+  color: var(--pc-accent, #6b58c8);
+}
+
+.exercise-chunk-available {
+  border-color: color-mix(in srgb, var(--pc-accent, #6b58c8) 30%, #ffffff);
+  background: #ffffff;
+  color: var(--pc-ink, #5a4aa8);
+  font-weight: 700;
+
+  &:hover {
+    border-color: var(--pc-accent, #6b58c8);
+    background: var(--pc-tint, #f2f0ff);
+  }
+}
+
+.exercise-speak-button {
+  border: 1px solid transparent;
+  background: color-mix(in srgb, var(--pc-accent, #6b58c8) 88%, #000);
+  color: #ffffff;
+
+  &:hover {
+    background: color-mix(in srgb, var(--pc-accent, #6b58c8) 75%, #000);
+  }
 }
 
 .practice-card::before {
@@ -185,20 +547,66 @@
   z-index: 1;
 }
 
-/* Keep action/dropdown helper buttons white regardless of card tint */
-.exercise-action-button,
+/* Keep dropdown helper buttons white regardless of card tint */
 .exercise-see-definition-button,
 .exercise-see-sentence-button {
   background-color: #ffffff !important;
 }
 
-.exercise-action-button:hover,
-.exercise-action-button:focus-visible,
 .exercise-see-definition-button:hover,
 .exercise-see-definition-button:focus-visible,
 .exercise-see-sentence-button:hover,
 .exercise-see-sentence-button:focus-visible {
   background-color: #ffffff !important;
+}
+
+// Special-characters trigger: a quiet muted link that sits under the answer
+// field without competing with "Show me word" / "Hint".
+.exercise-special-chars-trigger {
+  border: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+
+  &:not(:disabled):hover {
+    background: #f3f4f6;
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--pc-accent, #6b58c8);
+    outline-offset: 1px;
+  }
+}
+
+// Hints used / available, shown as a small badge inside the Hint pill.
+.exercise-hint-count {
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.07);
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+
+/* "Show me word" / "Hint": quiet outlined pills (secondary to the answer). */
+.exercise-action-button {
+  border-color: rgba(15, 23, 42, 0.16) !important;
+  border-radius: 999px !important;
+  background-color: transparent !important;
+  color: var(--muted-foreground);
+  font-weight: 500;
+  padding: 0.4rem 0.95rem !important;
+
+  &:not(:disabled):hover {
+    background-color: var(--pc-tint, #f2f0ff) !important;
+    color: var(--pc-ink, #5a4aa8);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--pc-accent, #6b58c8);
+    outline-offset: 1px;
+  }
 }
 
 .mobile-keyboard-v2 {
@@ -443,10 +851,6 @@
     margin-right: auto;
   }
 
-  .practice-card {
-    min-height: 80svh;
-  }
-
   .exercise-connect-button {
     width: 100% !important;
     justify-self: stretch !important;
@@ -503,10 +907,6 @@
     margin-right: auto;
   }
 
-  .practice-card {
-    min-height: 80svh;
-  }
-
   .exercise-connect-button {
     width: 100% !important;
     justify-self: stretch !important;
@@ -546,10 +946,6 @@
 
 // SMALL TABLET SCREEN
 @media (min-width: 767px) and (max-width: 1023.98px) and (orientation: portrait) {
-  .practice-card {
-    min-height: 60dvh !important;
-  }
-
   .practice-next-button {
     font-size: 1.2rem !important;
     line-height: 1.25 !important;
@@ -575,7 +971,6 @@
   }
 
   .practice-card {
-    min-height: 60dvh !important;
     max-width: 80% !important;
     margin-left: auto;
     margin-right: auto;
@@ -668,7 +1063,6 @@
     width: 34rem !important;
     margin-left: auto;
     margin-right: auto;
-    min-height: 80dvh !important;
   }
 
   .exercise-meta-cefr {
@@ -737,7 +1131,6 @@
     width: 36rem !important;
     margin-left: auto;
     margin-right: auto;
-    min-height: 80dvh !important;
   }
 
   .exercise-meta-cefr {
@@ -797,10 +1190,6 @@
 
 // PC SCREEN
 @media (min-width: 1536px) and (orientation: landscape) {
-  .practice-card {
-    min-height: 60dvh !important;
-  }
-
   .exercise-meta-cefr {
     font-size: 0.9rem !important;
   }
@@ -854,4 +1243,220 @@
     font-size: 1rem !important;
     line-height: 1.4 !important;
   }
+}
+
+// COLORED CARD SURFACE (practice session only)
+// VocabularyPractice adds `.practice-card--surface` and a per-card
+// --pc-surface from getPracticeCardSurface(), which picks the lightest color
+// that keeps white text >= 4.6:1. Because that margin is thin, all text on
+// the surface is solid white, and raised controls are *darker* than the
+// surface (so their white text gains contrast rather than losing it). Interactive
+// objects (answer slot, chunks, tiles, Next) are solid white so they read as
+// the things to touch. Review/guided flows don't add the class and keep the
+// white card.
+.practice-card.practice-card--surface {
+  --s: var(--pc-surface, #4338ca);
+  --s-deep: color-mix(in srgb, var(--s) 78%, #000);
+  --s-soft-text: #fff;
+  --s-raise: color-mix(in srgb, #000 10%, var(--s));
+  --s-raise-hover: color-mix(in srgb, #000 16%, var(--s));
+  --pc-accent: var(--s);
+  --pc-ink: var(--s-deep);
+  --pc-tint: #fff;
+
+  color: #fff !important;
+  // Only ever darkens from the base color: any lightening (e.g. a corner
+  // highlight) would drop white text below the 4.5:1 floor.
+  background: linear-gradient(
+    165deg,
+    var(--s) 0%,
+    color-mix(in srgb, var(--s) 90%, #000) 100%
+  ) !important;
+  border-color: transparent !important;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.08),
+    0 26px 50px -22px color-mix(in srgb, var(--s) 70%, transparent) !important;
+
+  // Any per-control outline keyed to the accent would vanish on the surface.
+  *:focus-visible {
+    outline-color: #fff !important;
+  }
+
+  .practice-type-trigger {
+    background: #fff;
+    color: var(--s-deep);
+    box-shadow: 0 0 0 4px var(--s-raise);
+  }
+
+  .practice-card-meta {
+    color: var(--s-soft-text);
+  }
+
+  .practice-card-meta__level {
+    color: #fff;
+  }
+
+  .practice-card-word-type {
+    color: var(--s-soft-text);
+  }
+
+  .practice-card-word {
+    color: #fff;
+  }
+
+  // Answer slot: solid white so the field is the brightest object on the card.
+  // A border a few steps darker than the card frames the white slot without
+  // reading as a separate color.
+  .exercise-answer-input {
+    background-color: #fff !important;
+    border-color: color-mix(in srgb, #000 22%, var(--s)) !important;
+  }
+
+  .exercise-answer-input:focus {
+    background-color: #fff !important;
+    border-color: #fbbf24 !important;
+    box-shadow: 0 0 0 4px color-mix(in srgb, #fff 35%, transparent) !important;
+  }
+
+  .exercise-action-button,
+  .exercise-special-chars-trigger {
+    color: var(--s-soft-text) !important;
+  }
+
+  .exercise-hint-count {
+    background: var(--s-raise);
+    color: #fff;
+  }
+
+  // Same outline language as the Skip pill.
+  .exercise-action-button {
+    border-color: color-mix(in srgb, #fff 55%, var(--s)) !important;
+  }
+
+  .exercise-action-button:not(:disabled):hover {
+    border-color: #fff !important;
+  }
+
+  .exercise-action-button:not(:disabled):hover,
+  .exercise-special-chars-trigger:not(:disabled):hover {
+    background-color: var(--s-raise) !important;
+    color: #fff !important;
+  }
+
+  .exercise-action-button:disabled {
+    opacity: 0.55;
+  }
+
+  .exercise-speak-button {
+    background: #fff;
+    color: var(--s-deep);
+
+    &:hover {
+      background: #f3f4f6;
+    }
+  }
+
+  .exercise-chunk-available {
+    border-color: transparent;
+    background: #fff;
+    color: var(--s-deep);
+    box-shadow: 0 3px 0 color-mix(in srgb, var(--s) 55%, #000);
+
+    &:hover {
+      background: #fff;
+      border-color: transparent;
+      transform: translateY(-1px);
+    }
+  }
+
+  .practice-card-disclosure {
+    background: var(--s-raise);
+
+    &:hover {
+      background: var(--s-raise-hover);
+    }
+  }
+
+  .practice-card-disclosure .exercise-see-definition-button,
+  .practice-card-disclosure .exercise-see-sentence-button {
+    color: #fff;
+  }
+
+  .practice-card-disclosure .exercise-definition-content,
+  .practice-card-disclosure .exercise-sentence-content,
+  .practice-card-disclosure .exercise-sentence-content button {
+    color: #fff;
+  }
+
+  .practice-card-disclosure .exercise-sentence-content strong {
+    color: #fff;
+  }
+
+  // Connect / listening tiles: white "cards on the card"; selection is warm
+  // amber so it reads apart from the green matched and red wrong states.
+  .exercise-pair-column-label {
+    color: var(--s-soft-text);
+  }
+
+  .exercise-pair-tile {
+    border-color: transparent;
+    box-shadow: 0 3px 0 color-mix(in srgb, var(--s) 55%, #000);
+
+    &:not(:disabled):hover {
+      border-color: transparent;
+    }
+
+    &:focus-visible {
+      box-shadow:
+        0 3px 0 color-mix(in srgb, var(--s) 55%, #000),
+        0 0 0 3px #fff;
+    }
+
+    &.is-selected {
+      border-color: #f59e0b;
+      background: #fff7db;
+      box-shadow:
+        0 3px 0 #d97706,
+        0 0 0 3px color-mix(in srgb, #fff 45%, transparent);
+    }
+  }
+
+  .practice-card-footer__secondary {
+    color: var(--s-soft-text);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .practice-card-footer__primary.is-skip {
+    border-color: color-mix(in srgb, #fff 55%, var(--s));
+    background: transparent;
+    color: #fff;
+
+    &:hover {
+      border-color: #fff;
+      background: var(--s-raise);
+    }
+  }
+
+  .practice-card-footer__primary.is-next {
+    background: #fff;
+    color: var(--s-deep);
+
+    &:hover {
+      background: #f3f4f6;
+    }
+  }
+}
+
+// Meaning tiles are disabled until a word is picked; Tailwind's
+// disabled:opacity-60 turns white tiles murky on a colored surface, so the
+// waiting state is a solid soft white instead (matched green tiles excluded).
+.practice-card.practice-card--surface
+  .exercise-pair-tile:disabled:not(.border-green-300):not(.invisible) {
+  opacity: 1;
+  background: color-mix(in srgb, #fff 80%, var(--s));
+  color: #334155;
+  box-shadow: none;
 }

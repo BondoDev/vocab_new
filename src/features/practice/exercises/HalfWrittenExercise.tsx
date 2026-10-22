@@ -531,7 +531,7 @@ export function HalfWrittenExercise({
       )}
 
       <div
-        className={`mt-6 flex items-start justify-center ${
+        className={`mt-3 flex items-start justify-center ${
           isCorrect ? "min-h-[0.75rem]" : "min-h-[3.25rem]"
         }`}
       >

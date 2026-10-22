@@ -530,7 +530,7 @@ export function WordTypingExercise({
       )}
 
       <div
-        className={`mt-6 flex items-start justify-center ${
+        className={`mt-3 flex items-start justify-center ${
           isCorrect ? "min-h-[0.75rem]" : "min-h-[3.25rem]"
         }`}
       >
@@ -543,20 +543,18 @@ export function WordTypingExercise({
             >
               {t("practice.showMeWord")}
             </button>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleHint}
-                disabled={!areHintsAvailable() || usedShowWord || isCorrect}
-                className="exercise-action-button exercise-hint-button px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {t("practice.hint")}
-              </button>
+            <button
+              onClick={handleHint}
+              disabled={!areHintsAvailable() || usedShowWord || isCorrect}
+              className="exercise-action-button exercise-hint-button inline-flex items-center gap-1.5 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {t("practice.hint")}
               {getMaxHints() > 0 && (
-                <span className="text-xs text-muted-foreground font-medium">
-                  {revealedHintIndices.length} / {getMaxHints()}
+                <span className="exercise-hint-count">
+                  {revealedHintIndices.length}/{getMaxHints()}
                 </span>
               )}
-            </div>
+            </button>
           </div>
         )}
       </div>

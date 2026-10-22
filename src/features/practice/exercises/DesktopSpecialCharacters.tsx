@@ -37,18 +37,18 @@ export function DesktopSpecialCharacters({
   }
 
   return (
-    <div className="mt-3 flex justify-center">
+    <div className="mt-2 flex justify-center">
       <Popover open={disabled ? false : isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <button
             type="button"
             onMouseDown={(event) => event.preventDefault()}
             disabled={disabled}
-            className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+            className="exercise-special-chars-trigger inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Languages className="h-4 w-4" />
+            <Languages className="h-3.5 w-3.5" />
             <span>{t("practice.keyboard.specialCharacters")}</span>
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-3.5 w-3.5" />
           </button>
         </PopoverTrigger>
         <PopoverContent

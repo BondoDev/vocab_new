@@ -199,22 +199,22 @@ export function ListeningExercise({
         }
       `}</style>
         <div className="exercise-listening-grid w-full grid grid-cols-2 gap-x-8 max-w-2xl mx-auto items-center mt-1">
-          <h4 className="justify-self-center w-[clamp(7.1rem,24vw,11rem)] text-[0.72rem] sm:text-xs uppercase tracking-[0.14em] text-gray-500 text-center font-semibold bg-white/70 border border-purple-200/70 rounded-full py-1 px-3">
+          <h4 className="exercise-pair-column-label">
             {sourceLabel}
           </h4>
-          <h4 className="justify-self-center w-[clamp(7.1rem,24vw,11rem)] text-[0.72rem] sm:text-xs uppercase tracking-[0.14em] text-gray-500 text-center font-semibold bg-white/70 border border-purple-200/70 rounded-full py-1 px-3">
+          <h4 className="exercise-pair-column-label">
             {targetLabel}
           </h4>
         </div>
         {isComplete ? (
           <div className="relative w-full max-w-2xl mx-auto"
           >
-            <div className="grid gap-y-8">
+            <div className="grid gap-y-3">
               {pairedRows.map((pair) => (
                 <div key={`${pair.word}-${pair.meaning}-row`} className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-x-4">
                   <button
                     disabled
-                    className="exercise-connect-button w-full min-w-0 self-center px-4 py-2 text-base md:text-lg font-medium rounded-lg border border-green-200 bg-green-100 text-green-700 cursor-default text-left shadow-sm"
+                    className="exercise-connect-button w-full min-w-0 self-center px-4 py-2 text-base md:text-lg font-medium rounded-xl border border-green-200 bg-green-50 text-green-700 cursor-default text-left"
                   >
                     <span className="flex min-w-0 items-center justify-start gap-2">
                       <span className="block min-w-0 whitespace-normal [overflow-wrap:anywhere]">
@@ -225,7 +225,7 @@ export function ListeningExercise({
                   <span className="text-green-500 text-sm font-semibold">-&gt;</span>
                   <button
                     disabled
-                    className="exercise-connect-button w-full min-w-0 self-center px-4 py-2 text-base md:text-lg font-medium rounded-lg border border-green-200 bg-green-100 text-green-700 cursor-default text-left shadow-sm"
+                    className="exercise-connect-button w-full min-w-0 self-center px-4 py-2 text-base md:text-lg font-medium rounded-xl border border-green-200 bg-green-50 text-green-700 cursor-default text-left"
                   >
                     <span className="flex min-w-0 items-center justify-start gap-2">
                       <span className="block min-w-0 whitespace-normal [overflow-wrap:anywhere]">
@@ -238,7 +238,7 @@ export function ListeningExercise({
             </div>
           </div>
         ) : (
-        <div className="exercise-listening-grid w-full grid grid-cols-2 gap-x-6 gap-y-8 max-w-2xl mx-auto items-center">
+        <div className="exercise-listening-grid w-full grid grid-cols-2 gap-x-3 gap-y-3 max-w-2xl mx-auto items-center">
             {leftItems.map((leftItem, rowIndex) => {
               const rightIndex = rowIndex;
               const rightItem = rightItems[rowIndex];
@@ -265,18 +265,18 @@ export function ListeningExercise({
                   <button
                     onClick={() => handleMicSelect(rowIndex)}
                     disabled={isLeftPaired}
-                    className={`exercise-listening-mic-button w-full px-4 py-2 rounded-lg border transition-all text-center shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-300 ${
+                    className={`exercise-listening-mic-button exercise-pair-tile w-full px-4 py-2.5 rounded-xl border transition-all text-center focus:outline-none ${
                       isLeftPaired
                         ? isLeftFlashing
-                          ? "border-green-300 bg-green-100 text-green-700 cursor-default"
+                          ? "border-green-300 bg-green-50 text-green-700 cursor-default"
                           : "invisible pointer-events-none"
                         : isLeftIncorrect
-                        ? "animate-shake border-red-400 bg-red-100 text-red-700"
+                        ? "animate-shake border-red-400 bg-red-50 text-red-700"
                         : isLeftSelected
-                          ? "border-purple-400 bg-purple-200 text-slate-900 ring-2 ring-purple-300"
+                          ? "is-selected bg-white text-slate-900"
                           : shouldFade
-                            ? "border-purple-200 bg-purple-100 text-slate-900/75 opacity-80"
-                            : "border-purple-200 bg-purple-100 text-slate-900 hover:bg-purple-200 hover:border-purple-300"
+                            ? "bg-white text-slate-900/70 opacity-80"
+                            : "bg-white text-slate-900"
                     }`}
                     aria-label={t("practice.playWordAudio")}
                   >
@@ -286,14 +286,14 @@ export function ListeningExercise({
                   <button
                     onClick={() => handleWordSelect(rightIndex)}
                     disabled={selectedLeft === null || isRightPaired}
-                    className={`exercise-listening-word-button w-full self-center px-4 py-2 text-base md:text-lg font-medium rounded-lg border transition-all text-left focus:outline-none focus:ring-2 focus:ring-purple-300 ${
+                    className={`exercise-listening-word-button exercise-pair-tile w-full self-center px-4 py-2.5 text-base md:text-lg font-semibold rounded-xl border transition-all text-left focus:outline-none ${
                       isRightPaired
                         ? isRightFlashing
-                          ? "border-green-300 bg-green-100 text-green-700 cursor-default"
+                          ? "border-green-300 bg-green-50 text-green-700 cursor-default"
                           : "invisible pointer-events-none"
                         : isRightIncorrect
-                        ? "animate-shake border-red-400 bg-red-100 text-red-700"
-                        : "bg-white border-purple-200 text-slate-900 hover:border-purple-400 disabled:opacity-60 disabled:cursor-not-allowed"
+                        ? "animate-shake border-red-400 bg-red-50 text-red-700"
+                        : "bg-white text-slate-900 disabled:opacity-60 disabled:cursor-not-allowed"
                     }`}
                   >
                     <span className="flex min-w-0 items-center justify-start gap-2">
