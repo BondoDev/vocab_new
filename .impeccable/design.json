@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-22T00:00:00Z",
+  "title": "Design System: FluentStellar",
+  "extensions": {
+    "colorMeta": {
+      "stellar-indigo": {
+        "role": "primary",
+        "displayName": "Stellar Indigo",
+        "canonical": "#6366f1",
+        "tonalRamp": [
+          "#1e1b4b",
+          "#312e81",
+          "#3730a3",
+          "#4f46e5",
+          "#6366f1",
+          "#818cf8",
+          "#c7d2fe",
+          "#eef2ff"
+        ]
+      },
+      "stellar-indigo-hover": {
+        "role": "primary",
+        "displayName": "Stellar Indigo Hover",
+        "canonical": "#7375f2"
+      },
+      "night-ink": {
+        "role": "secondary",
+        "displayName": "Night Ink",
+        "canonical": "#261943",
+        "tonalRamp": [
+          "#120b22",
+          "#261943",
+          "#3d2a68",
+          "#55408c",
+          "#7462ab",
+          "#9a8cc6",
+          "#c9c1e3",
+          "#f1eef8"
+        ]
+      },
+      "night-violet": {
+        "role": "secondary",
+        "displayName": "Night Violet",
+        "canonical": "#2f2755"
+      },
+      "dusk-violet": {
+        "role": "secondary",
+        "displayName": "Dusk Violet",
+        "canonical": "#45326f"
+      },
+      "nebula-purple": {
+        "role": "secondary",
+        "displayName": "Nebula Purple",
+        "canonical": "#604095",
+        "tonalRamp": [
+          "#1f1333",
+          "#3a2560",
+          "#4b2d7b",
+          "#604095",
+          "#7850ad",
+          "#9a7ec9",
+          "#c8b8e4",
+          "#f0ecf8"
+        ]
+      },
+      "aurora-violet": {
+        "role": "secondary",
+        "displayName": "Aurora Violet",
+        "canonical": "#7850ad"
+      },
+      "lavender-haze": {
+        "role": "secondary",
+        "displayName": "Lavender Haze",
+        "canonical": "#f0ecf8"
+      },
+      "lavender-rule": {
+        "role": "secondary",
+        "displayName": "Lavender Rule",
+        "canonical": "#d9cdef"
+      },
+      "atlas-blue": {
+        "role": "tertiary",
+        "displayName": "Atlas Blue",
+        "canonical": "#4169d2",
+        "tonalRamp": [
+          "#14254f",
+          "#1f3a7d",
+          "#2854bd",
+          "#4169d2",
+          "#6b8ce0",
+          "#9fb5ec",
+          "#e4edff",
+          "#f0f4fe"
+        ]
+      },
+      "starlight-mist": {
+        "role": "neutral",
+        "displayName": "Starlight Mist",
+        "canonical": "#f8f9fb"
+      },
+      "parchment": {
+        "role": "neutral",
+        "displayName": "Parchment",
+        "canonical": "#faf8f4"
+      },
+      "card-white": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "#ffffff"
+      },
+      "slate-body": {
+        "role": "neutral",
+        "displayName": "Slate Body",
+        "canonical": "#4a5568",
+        "tonalRamp": [
+          "#1a202c",
+          "#293546",
+          "#4a5568",
+          "#6b7280",
+          "#a0aec0",
+          "#cbd5e0",
+          "#e8eaed",
+          "#f8f9fb"
+        ]
+      },
+      "deep-slate": {
+        "role": "neutral",
+        "displayName": "Deep Slate",
+        "canonical": "#293546"
+      },
+      "muted-slate": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "canonical": "#6b7280"
+      },
+      "muted-surface": {
+        "role": "neutral",
+        "displayName": "Muted Surface",
+        "canonical": "#e8eaed"
+      },
+      "secondary-surface": {
+        "role": "neutral",
+        "displayName": "Secondary Surface",
+        "canonical": "#f1f1f5"
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgba(0, 0, 0, 0.08)"
+      },
+      "focus-ring": {
+        "role": "neutral",
+        "displayName": "Focus Ring",
+        "canonical": "#a0aec0"
+      },
+      "signal-red": {
+        "role": "semantic",
+        "displayName": "Signal Red",
+        "canonical": "#d4183d"
+      },
+      "progress-green": {
+        "role": "semantic",
+        "displayName": "Progress Green",
+        "canonical": "#22c55e"
+      },
+      "ember-amber": {
+        "role": "semantic",
+        "displayName": "Ember Amber",
+        "canonical": "#f59e0b"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Homepage hero title only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page h1."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section h3; h2 sits between at 1.25rem."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, inputs, table cells."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, form labels, compact UI text."
+      },
+      "nav-label": {
+        "displayName": "Nav Label",
+        "purpose": "Uppercase mobile navigation items."
+      }
+    },
+    "shadows": [
+      {
+        "name": "hairline-lift",
+        "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "purpose": "Resting cards and inputs."
+      },
+      {
+        "name": "focus-ring",
+        "value": "0 0 0 2px var(--ring)",
+        "purpose": "Keyboard focus on custom controls."
+      },
+      {
+        "name": "overlay-panel",
+        "value": "inset 0 1px 0 rgba(255, 255, 255, 0.82), 0 14px 30px rgba(22, 12, 46, 0.08)",
+        "purpose": "Mobile menu panel only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "ease",
+        "purpose": "Color, background, and shadow transitions at 160–220ms."
+      },
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Mobile menu open transform (260ms)."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "nav",
+        "value": "1024px"
+      },
+      {
+        "name": "container",
+        "value": "80rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main action in a section.",
+      "html": "<button class=\"ds-btn-primary\">Start practice</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 8px 16px; border: none; border-radius: 8px; background: #6366f1; color: #fff; font-family: Manrope, 'Segoe UI', Arial, sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background 150ms ease, box-shadow 150ms ease; } .ds-btn-primary:hover { background: #7375f2; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(160, 174, 192, 0.5); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action next to a primary.",
+      "html": "<button class=\"ds-btn-outline\">Browse words</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; height: 36px; padding: 8px 16px; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 8px; background: #f8f9fb; color: #4a5568; font-family: Manrope, 'Segoe UI', Arial, sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background 150ms ease; } .ds-btn-outline:hover { background: #e9ebef; } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(160, 174, 192, 0.5); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Default single-line field.",
+      "html": "<input class=\"ds-input\" placeholder=\"Search a word\" />",
+      "css": ".ds-input { height: 36px; width: 240px; padding: 4px 12px; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 8px; background: #fff; color: #4a5568; font-family: Manrope, 'Segoe UI', Arial, sans-serif; font-size: 0.875rem; transition: box-shadow 150ms ease, border-color 150ms ease; } .ds-input::placeholder { color: #6b7280; } .ds-input:focus-visible { outline: none; border-color: #a0aec0; box-shadow: 0 0 0 3px rgba(160, 174, 192, 0.5); }"
+    },
+    {
+      "name": "Level Chip",
+      "kind": "chip",
+      "description": "Pill tag for levels and filters; selected state deepens the tint.",
+      "html": "<span class=\"ds-chip\">A1</span> <span class=\"ds-chip is-selected\">B2</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 999px; background: rgba(99, 102, 241, 0.1); color: #6366f1; font-family: Manrope, 'Segoe UI', Arial, sans-serif; font-size: 0.8125rem; font-weight: 600; cursor: pointer; transition: background 150ms ease, box-shadow 150ms ease; } .ds-chip:hover { background: rgba(99, 102, 241, 0.16); } .ds-chip.is-selected { background: rgba(99, 102, 241, 0.18); box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.4); }"
+    },
+    {
+      "name": "Mobile Nav Item",
+      "kind": "nav",
+      "refersTo": "nav-item-mobile",
+      "description": "Row in the mobile overlay menu; active state is a flat lavender chip.",
+      "html": "<a class=\"ds-nav-item\" href=\"#\">Explore</a><a class=\"ds-nav-item is-active\" href=\"#\">Help</a>",
+      "css": ".ds-nav-item { display: flex; align-items: center; min-height: 48px; padding: 0 14px; margin-bottom: 6px; border-radius: 14px; color: #45326f; background: rgba(255, 255, 255, 0.72); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06); font-family: Manrope, 'Segoe UI', Arial, sans-serif; font-size: 0.79rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; transition: color 160ms ease, background-color 180ms ease, transform 180ms ease; } .ds-nav-item:hover { color: #352758; background: rgba(124, 104, 217, 0.08); transform: translateX(2px); } .ds-nav-item:focus-visible { outline: none; box-shadow: inset 0 0 0 1px rgba(124, 104, 217, 0.16), 0 0 0 1px rgba(124, 104, 217, 0.18); } .ds-nav-item.is-active { color: #261943; font-weight: 800; background: linear-gradient(180deg, rgba(124, 104, 217, 0.22), rgba(124, 104, 217, 0.14)), rgba(241, 233, 255, 0.6); box-shadow: inset 0 0 0 1px rgba(123, 103, 219, 0.36); }"
+    },
+    {
+      "name": "Content Card",
+      "kind": "card",
+      "description": "White card on the misty background, flat with a hairline border.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">B1 vocabulary</h3><p class=\"ds-card-body\">1,248 words in this level.</p></div>",
+      "css": ".ds-card { width: 280px; padding: 20px; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 10px; background: #fff; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); } .ds-card-title { margin: 0 0 6px; font-family: Sora, Manrope, sans-serif; font-size: 1.125rem; font-weight: 600; color: #2f2755; } .ds-card-body { margin: 0; font-family: Manrope, sans-serif; font-size: 1rem; color: #4a5568; }"
+    },
+    {
+      "name": "Exercise Card",
+      "kind": "custom",
+      "description": "Signature practice card tinted with its exercise type's color pair (word typing shown).",
+      "html": "<div class=\"ds-exercise-card\"><span class=\"ds-exercise-icon\">Aa</span><p class=\"ds-exercise-label\">Type the word</p></div>",
+      "css": ".ds-exercise-card { width: 280px; padding: 24px; border: 1px solid #7A68D8; border-radius: 14px; background: #F2F0FF; text-align: center; } .ds-exercise-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; color: #6B58C8; font-family: Sora, sans-serif; font-weight: 700; } .ds-exercise-label { margin: 12px 0 0; font-family: Manrope, sans-serif; font-weight: 600; color: #2f2755; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night-Sky Atlas",
+    "overview": "\"The Night-Sky Atlas\" describes the current look. It is an optional source of inspiration, not a required visual direction: new pages and features may take a different direction when that serves learners better.\n\nFluentStellar is a visually engaging language-learning platform. Every word has a place in its CEFR level, and the interface helps learners see where they are, what is nearby, and how much remains. Hierarchy is clear and the feel is precise and structured, while color is used generously and with purpose: to identify sections, learning modes, and exercises, to signal state, and to make practice feel lively.\n\nToday the palette pairs a deep violet range (night ink through nebula purple) for navigation, account surfaces, and dashboard figures with pale backgrounds, a bright indigo for many actions, and a distinct color pair for each exercise type. This palette is a starting point, not a closed set.\n\nDensity is moderate: reference pages (word pages, level lists, vocabulary tables) favor scannable rows and tight data, while practice screens give one card room to breathe. The system is light-only today.\n\nEverything below describes the current implementation and offers flexible guidelines. Use judgment over rules when a different choice clearly improves the interface.",
+    "keyCharacteristics": [
+      "Pale, cool backgrounds with white cards, mostly separated by hairline borders.",
+      "A multi-color palette: violets, indigo, blue, green, amber, and per-exercise pastels.",
+      "Sora headings over Manrope body text: geometric and confident.",
+      "Pill-shaped chips and indicators, with modest 6–10px corners on most other elements.",
+      "Each exercise type has its own color pair, used consistently wherever that type appears."
+    ],
+    "rules": [
+      {
+        "name": "The Constellation Guideline",
+        "body": "An exercise type's color pair identifies that type, so keep it consistent across its card, icon, selector, and result. New exercise types or learning modes can get their own new color pair.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Voice Guideline",
+        "body": "By default, Sora is for headings and Manrope is for everything else. Body text, buttons, and dense data read best in Manrope.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-At-Rest Guideline",
+        "body": "Surfaces are mostly flat at rest, and stronger elevation usually belongs to overlays (menus, dialogs, popovers) and state feedback. Use more depth where it clearly helps a surface.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use color expressively: different accents for buttons, learning modes, exercises, interactive elements, and section identities.",
+      "Do introduce new complementary colors when they improve the interface, ideally as reusable theme tokens.",
+      "Do keep each exercise type's color pair tied to that type wherever it appears.",
+      "Do check that text and essential UI meet WCAG AA contrast, and pair color with text or icons for state.",
+      "Do reuse existing theme tokens (var(--primary), var(--border), var(--radius)) when one fits.",
+      "Do prefer hairline borders (rgba(0, 0, 0, 0.08)) and tonal fills for separating resting surfaces.",
+      "Do use pill shapes (999px) for chips, badges, and progress tracks, and 8–10px corners for buttons, inputs, and cards, unless a component needs otherwise.",
+      "Do default to Sora for headings and Manrope for everything else."
+    ],
+    "donts": [
+      "Don't use one accent color for conflicting meanings on the same screen.",
+      "Don't let the active navigation item look like a CTA button.",
+      "Don't assume the inactive dark tokens are a finished dark theme; the site is light-only today."
+    ]
+  }
+}

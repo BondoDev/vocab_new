@@ -37,6 +37,23 @@ working in that folder.
 
 Suggested warning: `This may require a broader scan/build and use more tokens. Proceed?`
 
+## UI/UX design workflow
+
+For new pages or significant visual design changes:
+
+1. **UI UX Pro Max** — Use by default for design planning, including layouts, typography, colors, spacing, and UX.
+2. **Frontend Design** — Use for implementing new interfaces or significant redesigns.
+3. **Impeccable** — Use for final visual review and polishing when beneficial.
+
+Rules:
+- Select only the skills relevant to the task; don't automatically run all three.
+- For small CSS fixes, text changes, or minor adjustments, no design skill is necessary.
+- Preserve FluentStellar's existing visual identity, functionality, and styling conventions.
+- Prefer existing components and styles over introducing new dependencies.
+- Avoid generic SaaS layouts, excessive whitespace, and repetitive card designs.
+- Keep skill usage token-efficient.
+- Verify responsive layouts and functionality after meaningful UI changes.
+
 ## Git control
 
 - Perform Git actions only after explicit user instruction.
