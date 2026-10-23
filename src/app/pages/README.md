@@ -235,7 +235,10 @@ multi-file ownership evidence, which no current family has.
 known and documented, not a bug. Do not rename them during unrelated
 cleanup.
 
-`SeoHubPage.tsx` is the general SEO hub; `word-pages/hub/WordSeoHubPage.tsx`
+`SeoHubPage.tsx` is the public Learning Resources directory
+(`/{ui}/learning-resources`; its resource registry lives in
+`src/app/components/learning-resources/` because CEFR, list, and verb pages
+consume it too); `word-pages/hub/WordSeoHubPage.tsx`
 is the word-specific hub page — similar names, genuinely distinct route
 families. Neither is a rename candidate.
 

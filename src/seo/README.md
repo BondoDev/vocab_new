@@ -104,7 +104,7 @@ to preserve by inspection and review.
 | File | Why it's behavior, not data |
 |---|---|
 | `wordPages/wordMetadata.ts` | Builds word-page `<title>`/description/canonical from word data — output behavior |
-| `hubPages/hubMetadata.ts` | Builds SEO hub and word-SEO-hub metadata |
+| `hubPages/hubMetadata.ts` | Builds Learning Resources directory (incl. its CollectionPage JSON-LD) and word-index metadata |
 | `levelTests/levelTestMetadata.ts` | Builds level-test-page metadata |
 | `listPages/verbLists/common100Verbs/common100VerbsMetadata.ts` | Builds 100-most-common-verb-list-page metadata |
 | `vocabularyLevels/seoSchema.ts` | Builds the vocabulary-level-page JSON-LD structured-data graph |

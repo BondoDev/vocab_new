@@ -34,6 +34,7 @@ import { SEOHead, useSeoSiteOrigin } from "../../../../seo/SeoContext";
 import { AddWordToListDialog } from "../../../../features/user-profile";
 import type { StoredSupabaseSession } from "../../../../lib/supabaseAuth";
 import { Toast, useAutoDismissMessage } from "../../../components/Toast";
+import { RelatedLearningResources } from "../../../components/learning-resources/RelatedLearningResources";
 import { NotFoundPage } from "../../NotFoundPage";
 import { FullVocabularyLevelSection, type FullVocabularyLoadStatus } from "./FullVocabularyLevelSection";
 import { VocabularyFilterBar } from "./VocabularyFilterBar";
@@ -364,6 +365,7 @@ export function FullVocabularyListSeoPage({
           />
         ) : null}
         {content.faq ? <FullVocabularyFaq faq={content.faq} /> : null}
+        <RelatedLearningResources uiLang={uiLang} targetLanguage={targetLanguage} currentPath={pathname} />
       </div>
       {/* The profile Vocabulary section's own "Add to list" popup, reused as
           is: it loads the user's lists for this target language (short UI

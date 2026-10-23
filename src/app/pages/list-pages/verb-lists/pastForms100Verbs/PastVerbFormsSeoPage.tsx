@@ -14,6 +14,8 @@ import {
 } from "../../../../../data/seo/listPages/verbLists";
 import { getLevelTestSeoPath } from "../../../../../data/seo/levelTests";
 import { getSeoHubPath } from "../../../../../data/seo/shared/hub";
+import { useLanguage } from "../../../../../contexts/LanguageContext";
+import { getRelatedLearningResources } from "../../../../components/learning-resources/learningResourcesRegistry";
 import {
   getUiVocabularyLanguage,
   type TargetLanguageSlug,
@@ -77,6 +79,7 @@ export function PastVerbFormsSeoPage({
 }: PastVerbFormsSeoPageProps) {
   const location = useLocation();
   const siteOrigin = useSeoSiteOrigin();
+  const { t } = useLanguage();
 
   const content = getPastVerbFormsContent(targetLanguage, uiLang);
   const tableConfig = getPastVerbFormsTableConfig(targetLanguage);
@@ -170,13 +173,20 @@ export function PastVerbFormsSeoPage({
       return [];
     }
 
-    return content.related.items
+    const authoredLinks = content.related.items
       .map((item) => {
         const href = buildRelatedLinkHref(item.key, uiLang, targetLanguage);
         return href && item.label ? { href, label: item.label } : null;
       })
       .filter((item): item is { href: string; label: string } => Boolean(item));
-  }, [content, targetLanguage, uiLang]);
+    // Authored links first, then any same-language resource they don't
+    // already cover (e.g. conjugations, the full vocabulary list).
+    const registryLinks = getRelatedLearningResources(uiLang, targetLanguage, [
+      location.pathname,
+      ...authoredLinks.map((link) => link.href),
+    ]);
+    return [...authoredLinks, ...registryLinks];
+  }, [content, location.pathname, targetLanguage, uiLang]);
 
   const seoHubHref = getSeoHubPath(uiLang);
 
@@ -188,13 +198,13 @@ export function PastVerbFormsSeoPage({
           <ol className="flex flex-wrap items-center gap-1.5">
             <li>
               <Link className="hover:text-foreground hover:underline" to="/">
-                Home
+                {t("header.home")}
               </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
               <Link className="hover:text-foreground hover:underline" to={seoHubHref}>
-                Verb Lists
+                {t("learningResources.label")}
               </Link>
             </li>
             <li aria-hidden="true">/</li>

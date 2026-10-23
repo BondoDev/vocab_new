@@ -314,13 +314,17 @@ const levelTestDirs = fs.existsSync(enDir)
   ? fs.readdirSync(enDir).filter((d) => /^test-your/.test(d) || /english-level/.test(d))
   : [];
 
+// The Learning Resources directory (src/data/seo/shared/hub.ts) is the one
+// page family here that does emit JSON-LD: a CollectionPage + BreadcrumbList
+// graph from buildSeoHubMetadata. Its legacy /en/seo-pages directory now
+// only holds the word-index subtree, so it is deliberately not matched.
 const seoHubDirs = fs.existsSync(enDir)
-  ? fs.readdirSync(enDir).filter((d) => /seo-hub/.test(d) || /seo-pages/.test(d))
+  ? fs.readdirSync(enDir).filter((d) => d === "learning-resources")
   : [];
 
 if (levelTestDirs.length === 0 && seoHubDirs.length === 0) {
   skip("LevelTest page has no JSON-LD");
-  skip("SeoHub page has no JSON-LD");
+  skip("Learning Resources page has a CollectionPage + BreadcrumbList graph");
 } else {
   if (levelTestDirs.length > 0) {
     const ltHtml = fs.readFileSync(
@@ -339,10 +343,15 @@ if (levelTestDirs.length === 0 && seoHubDirs.length === 0) {
       path.join(distDir, "en", seoHubDirs[0], "index.html"),
       "utf8",
     );
-    test("SeoHub page has no JSON-LD", () => {
+    test("Learning Resources page has a CollectionPage + BreadcrumbList graph", () => {
       const scripts = parseScriptElements(hubHtml);
       const jsonLdScripts = scripts.filter((s) => s.openTag.includes("application/ld+json"));
-      assert.equal(jsonLdScripts.length, 0, `Found ${jsonLdScripts.length} JSON-LD scripts`);
+      assert.equal(jsonLdScripts.length, 1, `Found ${jsonLdScripts.length} JSON-LD scripts`);
+      const graph = JSON.parse(jsonLdScripts[0].content)["@graph"] ?? [];
+      const types = graph.map((node) => node["@type"]);
+      assert.ok(types.includes("CollectionPage"), `Missing CollectionPage: ${types.join(", ")}`);
+      assert.ok(types.includes("BreadcrumbList"), `Missing BreadcrumbList: ${types.join(", ")}`);
+      assert.ok(!/\bSEO\b/.test(jsonLdScripts[0].content), "JSON-LD exposes the word SEO");
     });
   }
 }

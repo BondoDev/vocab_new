@@ -22,7 +22,7 @@ invoking the Worker's `fetch` handler for any matching path.
 | About | `/about` | 200 (see `html_handling` note below) |
 | Help | `/help` | 200 |
 | CEFR vocabulary pages | `/en/english-a1-vocabulary-practice` | 200 |
-| SEO hubs | `/en/seo-pages` | 200 (prerendered, per earlier build) |
+| Learning Resources directory | `/en/learning-resources` | 200 (prerendered; the retired `/en/seo-pages`-style roots 301 here via `public/_redirects`, not verified against `wrangler dev`) |
 | Word hubs | `/en/seo-pages/english-word-pages` | 200 (prerendered) |
 | Level tests | `/en/english-level-test` | 200 (prerendered) |
 | Verb lists | `/en/100-most-common-english-verbs` | 200 (prerendered) |

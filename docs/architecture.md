@@ -163,7 +163,7 @@ rendered only alongside this page). Despite its modal implementation,
 `LevelTestLanguageModal.tsx` is not part of the shared dialog system in
 `src/app/components/dialogs/` and is not globally reusable — it stays
 beside the page that owns it. `NotFoundPage.tsx` (the shared 404 fallback, rendered from several
-route branches in `App.tsx`) and `SeoHubPage.tsx` (the SEO page index) have
+route branches in `App.tsx`) and `SeoHubPage.tsx` (the public Learning Resources directory at `/{ui}/learning-resources`) have
 moved to `src/app/pages/` alongside the Phase 1 pages above — both are
 standalone route-level pages with a single `App.tsx` consumer and no
 membership in a larger page family. `src/app/pages/list-pages/verb-lists/` owns
@@ -291,7 +291,7 @@ helpers in `src/data/seo/`:
 - `vocabularyLevel` — CEFR level pages (`resolveVocabularyRoute`)
 - `levelTestSeo` — per-language level-test SEO pages
 - `verbListSeo` — "100 most common verbs" pages
-- `seoHub` / `wordSeoHub` — SEO hub/index pages
+- `seoHub` / `wordSeoHub` — the Learning Resources directory (`/{ui}/learning-resources`; retired `/{ui}/seo-pages`-style roots 301 there via `public/_redirects`) and the word-index pages, which keep their legacy `/{ui}/seo-pages/...` URLs
 - `wordPage` — canonical word pages (Worker-rendered only)
 - `devSeoCefrPlaceholder` — dev-only preview route, `import.meta.env.DEV`-gated
 - `notFound`

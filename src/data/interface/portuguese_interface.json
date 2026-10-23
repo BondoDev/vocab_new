@@ -1321,5 +1321,11 @@
     "forbidden": "Esta acao nao e permitida.",
     "temporarilyUnavailable": "Este recurso esta temporariamente indisponivel. Tente novamente em breve.",
     "network": "Problema de conexao. Verifique sua conexao a internet e tente novamente."
+  },
+  "learningResources": {
+    "label": "Recursos de aprendizagem",
+    "browse": "Ver todos os recursos de aprendizagem",
+    "back": "Voltar aos recursos de aprendizagem",
+    "homeDescription": "Listas de vocabulário por nível, verbos comuns, conjugações e testes de nível para sete idiomas."
   }
 }

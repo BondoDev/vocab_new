@@ -7,8 +7,10 @@ import {
 } from "../../data/seo/wordPages/wordHubRoutes";
 import type { SeoMetadata } from "../SeoContext";
 import { buildHreflangAlternates, normalizeOrigin, sanitizeMetadataText } from "../shared/seoAlternates";
-import { GENERIC_WORD_SEO_HUB_METADATA, SEO_HUB_METADATA, WORD_SEO_HUB_METADATA } from "./hubTemplates";
+import { GENERIC_WORD_SEO_HUB_METADATA, SEO_HUB_METADATA } from "./hubTemplates";
 
+// Learning Resources directory. Canonical is always the route's own path;
+// x-default is the English-UI directory (getAllSeoHubPaths()[0]).
 export function buildSeoHubMetadata({
   uiLang,
   pathname,
@@ -21,19 +23,43 @@ export function buildSeoHubMetadata({
   const origin = normalizeOrigin(siteOrigin);
   const canonical = `${origin}${pathname}`;
   const copy = SEO_HUB_METADATA[uiLang] ?? SEO_HUB_METADATA.en;
+  const title = sanitizeMetadataText(copy.title);
+  const description = sanitizeMetadataText(copy.description);
 
   return {
-    title: sanitizeMetadataText(copy.title),
-    description: sanitizeMetadataText(copy.description),
+    title,
+    description,
     canonical,
     alternates: buildHreflangAlternates(
       (lang) => `${origin}${getSeoHubPath(lang)}`,
       `${origin}${getAllSeoHubPaths()[0]}`,
     ),
+    jsonLd: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": `${canonical}#webpage`,
+          url: canonical,
+          name: title,
+          description,
+          inLanguage: uiLang,
+          breadcrumb: { "@id": `${canonical}#breadcrumb` },
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": `${canonical}#breadcrumb`,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: sanitizeMetadataText(copy.homeLabel), item: `${origin}/` },
+            { "@type": "ListItem", position: 2, name: sanitizeMetadataText(copy.pageName), item: canonical },
+          ],
+        },
+      ],
+    }),
   };
 }
 
-// ─── Word SEO page metadata ───────────────────────────────────────────────────
+// ─── Word index (alphabetical word list) metadata ─────────────────────────────
 
 export function buildWordSeoHubMetadata({
   uiLang,
@@ -50,18 +76,12 @@ export function buildWordSeoHubMetadata({
 }): SeoMetadata {
   const origin = normalizeOrigin(siteOrigin);
   const canonical = `${origin}${pathname}`;
-  const isEnglishTarget = route.targetLanguage === "english";
-  const englishCopy = WORD_SEO_HUB_METADATA[uiLang] ?? WORD_SEO_HUB_METADATA.en;
-  const genericCopy = GENERIC_WORD_SEO_HUB_METADATA[uiLang] ?? GENERIC_WORD_SEO_HUB_METADATA.en;
+  const copy = GENERIC_WORD_SEO_HUB_METADATA[uiLang] ?? GENERIC_WORD_SEO_HUB_METADATA.en;
 
   if (route.kind === "summary") {
     return {
-      title: sanitizeMetadataText(
-        isEnglishTarget ? englishCopy.summaryTitle : genericCopy.summaryTitle(languageName),
-      ),
-      description: sanitizeMetadataText(
-        isEnglishTarget ? englishCopy.summaryDescription : genericCopy.summaryDescription(languageName),
-      ),
+      title: sanitizeMetadataText(copy.summaryTitle(languageName)),
+      description: sanitizeMetadataText(copy.summaryDescription(languageName)),
       canonical,
       alternates: buildHreflangAlternates(
         (lang) => `${origin}${getWordSeoHubSummaryPath(lang, route.targetLanguage)}`,
@@ -72,16 +92,8 @@ export function buildWordSeoHubMetadata({
 
   const levelLabel = route.level.toUpperCase();
   return {
-    title: sanitizeMetadataText(
-      isEnglishTarget
-        ? englishCopy.levelTitle(levelLabel, route.page)
-        : genericCopy.levelTitle(languageName, levelLabel, route.page),
-    ),
-    description: sanitizeMetadataText(
-      isEnglishTarget
-        ? englishCopy.levelDescription(levelLabel, route.page)
-        : genericCopy.levelDescription(languageName, levelLabel, route.page),
-    ),
+    title: sanitizeMetadataText(copy.levelTitle(languageName, levelLabel, route.page)),
+    description: sanitizeMetadataText(copy.levelDescription(languageName, levelLabel, route.page)),
     canonical,
     alternates: buildHreflangAlternates(
       (lang) => `${origin}${getWordSeoHubLevelPath(lang, route.targetLanguage, route.level, route.page)}`,

@@ -408,13 +408,13 @@ export function buildFixtureMatrix(ctx) {
     },
   );
 
-  // ── SEO-hub index page (buildSeoHubMetadata) ───────────────────────────────
+  // ── Learning Resources directory (buildSeoHubMetadata) ─────────────────────
   // Single fixture is sufficient: the builder has no other branch — it only
   // looks up one per-uiLang template record (SEO_HUB_METADATA) and builds
   // alternates from SUPPORTED_UI_LANGUAGES, a pattern already exercised
-  // broadly elsewhere in this matrix. No JSON-LD, no robots override (always
-  // indexable), confirmed by reading src/seo/metadata.ts's
-  // buildSeoHubMetadata directly — not inferred.
+  // broadly elsewhere in this matrix. Emits a CollectionPage + BreadcrumbList
+  // JSON-LD graph and no robots override (always indexable); see
+  // src/seo/hubPages/hubMetadata.ts.
   const seoHubPathEn = hub.getSeoHubPath("en");
   fixtures.push({
     id: "seo-hub-en",
@@ -428,17 +428,15 @@ export function buildFixtureMatrix(ctx) {
   });
 
   // ── Word-hub index pages (buildWordSeoHubMetadata) ─────────────────────────
-  // uiLang "de" and target "spanish" (rather than English/English) are chosen
-  // to exercise buildWordSeoHubMetadata's `route.targetLanguage === "english"`
-  // branch on its generic-copy side: WORD_SEO_HUB_METADATA (English copy) vs.
-  // GENERIC_WORD_SEO_HUB_METADATA (generic copy, with `.toLowerCase()`
-  // transforms) — the generic branch is the more complex of the two, so a
-  // non-English target is the more valuable single sample.
+  // uiLang "de" and target "spanish" (rather than English/English) exercise
+  // GENERIC_WORD_SEO_HUB_METADATA's lower-casing/adjective templates, the
+  // most inflection-sensitive copy path (every target language now shares
+  // those templates; the former English-only table was removed).
   //
   // (A word-hub URL under uiLang=en was considered and specifically checked
   // against the word-page URL parser for a "-word-" substring collision,
   // since getWordSeoHubSummaryPath nests the word-hub segment under the
-  // seo-hub prefix, e.g. "/en/seo-pages/english-word-pages" — three path
+  // legacy directory prefix, e.g. "/en/seo-pages/english-word-pages" — three path
   // segments. parseWordRoutePathname only inspects the *second* segment
   // ("seo-pages"), never the third, so no collision occurs; confirmed by
   // calling resolveWordSeoRequest()/render() directly against the built

@@ -1321,5 +1321,11 @@
     "forbidden": "Diese Aktion ist nicht erlaubt.",
     "temporarilyUnavailable": "Diese Funktion ist vorübergehend nicht verfügbar. Bitte versuche es in Kürze erneut.",
     "network": "Verbindungsproblem. Überprüfe deine Internetverbindung und versuche es erneut."
+  },
+  "learningResources": {
+    "label": "Lernmaterialien",
+    "browse": "Alle Lernmaterialien ansehen",
+    "back": "Zurück zu den Lernmaterialien",
+    "homeDescription": "Vokabellisten nach Niveau, häufige Verben, Konjugationen und Niveautests für sieben Sprachen."
   }
 }

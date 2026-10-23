@@ -99,8 +99,12 @@ Current contents and why they qualify:
   constants and types every family's data layer is built on.
 - `shared/browseWordValidation.ts` — a domain-neutral lemma validator
   consumed by both `vocabularyLevels/` and `wordPages/` code.
-- `shared/hub.ts` — the site-wide `/seo-pages` hub route, consumed across
-  all four page families plus app/SSR routing.
+- `shared/hub.ts` — the site-wide Learning Resources directory route
+  (`/{ui}/learning-resources`) plus the retired `/{ui}/seo-pages`-style
+  prefixes, consumed across all four page families plus app/SSR routing.
+  The retired roots 301 to the new route via `public/_redirects`; the
+  word-index hub pages (`wordPages/wordHubRoutes.ts`) still live under the
+  legacy prefixes by design.
 
 If a new helper is only used by one family, put it in that family's
 folder, not in `shared/`.

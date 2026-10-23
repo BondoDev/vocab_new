@@ -1326,5 +1326,11 @@
     "forbidden": "Cette action n'est pas autorisee.",
     "temporarilyUnavailable": "Cette fonctionnalite est temporairement indisponible. Veuillez reessayer dans quelques instants.",
     "network": "Probleme de connexion. Verifiez votre connexion internet et reessayez."
+  },
+  "learningResources": {
+    "label": "Ressources d’apprentissage",
+    "browse": "Voir toutes les ressources d’apprentissage",
+    "back": "Retour aux ressources d’apprentissage",
+    "homeDescription": "Listes de vocabulaire par niveau, verbes courants, conjugaisons et tests de niveau pour sept langues."
   }
 }

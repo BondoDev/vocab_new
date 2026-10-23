@@ -38,7 +38,6 @@ const COPY: Record<
     openLevelLabel: string;
     levelTitle: (level: string, page: number) => string;
     levelIntro: (level: string, totalWords: number, page: number, totalPages: number) => string;
-    backToSeoHub: string;
     backToWordIndex: string;
     paginationLabel: string;
     notFound: string;
@@ -55,7 +54,6 @@ const COPY: Record<
       page > 1 ? `English ${level} Word Pages - Page ${page}` : `English ${level} Word Pages`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `This index lists canonical English ${level} word pages. Page ${page} of ${totalPages}, ${totalWords.toLocaleString("en-US")} total URLs.`,
-    backToSeoHub: "Back to pages",
     backToWordIndex: "Back to English words",
     paginationLabel: "More word index pages",
     notFound: "Word index page not found.",
@@ -71,7 +69,6 @@ const COPY: Record<
       page > 1 ? `Páginas de palabras en inglés ${level} - Página ${page}` : `Páginas de palabras en inglés ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Este índice muestra páginas canónicas de palabras en inglés ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("es-ES")} URLs en total.`,
-    backToSeoHub: "Volver a páginas",
     backToWordIndex: "Volver a palabras en inglés",
     paginationLabel: "Más páginas del índice",
     notFound: "No se encontró la página del índice.",
@@ -87,7 +84,6 @@ const COPY: Record<
       page > 1 ? `Pages de mots anglais ${level} - Page ${page}` : `Pages de mots anglais ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Cet index liste les pages canoniques des mots anglais ${level}. Page ${page} sur ${totalPages}, ${totalWords.toLocaleString("fr-FR")} URL au total.`,
-    backToSeoHub: "Retour aux pages",
     backToWordIndex: "Retour aux mots anglais",
     paginationLabel: "Autres pages d'index",
     notFound: "Page d'index introuvable.",
@@ -103,7 +99,6 @@ const COPY: Record<
       page > 1 ? `Wortseiten für englische Wörter ${level} - Seite ${page}` : `Wortseiten für englische Wörter ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Dieser Index listet kanonische englische Wortseiten für ${level}. Seite ${page} von ${totalPages}, insgesamt ${totalWords.toLocaleString("de-DE")} URLs.`,
-    backToSeoHub: "Zurück zu Seiten",
     backToWordIndex: "Zurück zu englischen Wörtern",
     paginationLabel: "Weitere Indexseiten",
     notFound: "Indexseite nicht gefunden.",
@@ -119,7 +114,6 @@ const COPY: Record<
       page > 1 ? `Pagine delle parole inglesi ${level} - Pagina ${page}` : `Pagine delle parole inglesi ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Questo indice elenca le pagine canoniche delle parole inglesi ${level}. Pagina ${page} di ${totalPages}, ${totalWords.toLocaleString("it-IT")} URL totali.`,
-    backToSeoHub: "Torna alle pagine",
     backToWordIndex: "Torna alle parole inglesi",
     paginationLabel: "Altre pagine dell'indice",
     notFound: "Pagina indice non trovata.",
@@ -135,7 +129,6 @@ const COPY: Record<
       page > 1 ? `Páginas de palavras em inglês ${level} - Página ${page}` : `Páginas de palavras em inglês ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Este índice lista páginas canônicas de palavras em inglês ${level}. Página ${page} de ${totalPages}, ${totalWords.toLocaleString("pt-BR")} URLs no total.`,
-    backToSeoHub: "Voltar para páginas",
     backToWordIndex: "Voltar para palavras em inglês",
     paginationLabel: "Mais páginas do índice",
     notFound: "Página de índice não encontrada.",
@@ -151,7 +144,6 @@ const COPY: Record<
       page > 1 ? `Страницы английских слов ${level} - страница ${page}` : `Страницы английских слов ${level}`,
     levelIntro: (level, totalWords, page, totalPages) =>
       `Этот индекс содержит канонические страницы английских слов уровня ${level}. Страница ${page} из ${totalPages}, всего ${totalWords.toLocaleString("ru-RU")} URL.`,
-    backToSeoHub: "Назад к страницам",
     backToWordIndex: "Назад к английским словам",
     paginationLabel: "Другие страницы индекса",
     notFound: "Страница индекса не найдена.",
@@ -307,7 +299,7 @@ export function WordSeoHubPage({ route, uiLang }: WordSeoHubPageProps) {
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
             <div className="mb-5">
               <Link className="text-sm text-primary transition hover:underline" to={getSeoHubPath(uiLang)}>
-                {copy.backToSeoHub}
+                {t("learningResources.back")}
               </Link>
             </div>
 
@@ -363,7 +355,7 @@ export function WordSeoHubPage({ route, uiLang }: WordSeoHubPageProps) {
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
           <div className="flex flex-wrap gap-4 text-sm">
             <Link className="text-primary transition hover:underline" to={getSeoHubPath(uiLang)}>
-              {copy.backToSeoHub}
+              {t("learningResources.back")}
             </Link>
             <Link className="text-primary transition hover:underline" to={data.summaryPath}>
               {copy.backToWordIndex}

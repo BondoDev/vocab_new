@@ -134,7 +134,10 @@ Local development
   `_redirects` format, deployed alongside `_headers`), applied before asset
   matching — currently `301`s from the full vocabulary list's retired
   localized English-list URLs to their current `{language}-vocabulary-list`
-  URLs.
+  URLs, and from the retired directory roots (`/en/seo-pages`,
+  `/es/paginas-seo`, … with and without a trailing slash) to
+  `/{ui}/learning-resources`. These directory redirects have not yet been
+  probed against production.
 - Legacy word-URL redirects (single-hyphen and legacy slug formats):
   `308` computed by the Worker (`classifyAndRespondNonCanonical` in
   `src/index.full.ts`), including accent-insensitive slug recovery.

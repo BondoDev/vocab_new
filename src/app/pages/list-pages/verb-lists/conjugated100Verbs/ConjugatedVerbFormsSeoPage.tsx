@@ -15,6 +15,7 @@ import {
 } from "../../../../../data/seo/listPages/verbLists";
 import { getLevelTestSeoPath } from "../../../../../data/seo/levelTests";
 import { getSeoHubPath } from "../../../../../data/seo/shared/hub";
+import { getRelatedLearningResources } from "../../../../components/learning-resources/learningResourcesRegistry";
 import {
   TARGET_LANGUAGE_TO_UI_LANGUAGE,
   type TargetLanguageSlug,
@@ -169,13 +170,20 @@ export function ConjugatedVerbFormsSeoPage({
       return [];
     }
 
-    return content.related.items
+    const authoredLinks = content.related.items
       .map((item) => {
         const href = buildRelatedLinkHref(item.key, uiLang, targetLanguage);
         return href && item.label ? { href, label: item.label } : null;
       })
       .filter((item): item is { href: string; label: string } => Boolean(item));
-  }, [content, targetLanguage, uiLang]);
+    // Authored links first, then any same-language resource they don't
+    // already cover (e.g. the full vocabulary list).
+    const registryLinks = getRelatedLearningResources(uiLang, targetLanguage, [
+      location.pathname,
+      ...authoredLinks.map((link) => link.href),
+    ]);
+    return [...authoredLinks, ...registryLinks];
+  }, [content, location.pathname, targetLanguage, uiLang]);
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10">

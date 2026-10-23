@@ -36,13 +36,16 @@ const CORE_ROUTES = [
   // src/seo/routeMetadataPolicy.ts classifies them "public-app" and always
   // emits `robots: noindex, follow` for them. They stay live, 200-status,
   // navigable app routes — they just must not be submitted for indexing.
-  "/en/seo-pages",
-  "/es/paginas-seo",
-  "/fr/pages-seo",
-  "/de/seo-seiten",
-  "/it/pagine-seo",
-  "/pt/paginas-seo",
-  "/ru/seo-stranicy",
+  // Learning Resources directory (src/data/seo/shared/hub.ts). The retired
+  // /{ui}/seo-pages-style roots 301 here via public/_redirects and must
+  // never be listed: sitemaps only carry final, 200-status canonical URLs.
+  "/en/learning-resources",
+  "/es/learning-resources",
+  "/fr/learning-resources",
+  "/de/learning-resources",
+  "/it/learning-resources",
+  "/pt/learning-resources",
+  "/ru/learning-resources",
   "/about",
   "/help",
 ];

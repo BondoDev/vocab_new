@@ -1,6 +1,6 @@
 import type { Level, TargetLanguageSlug, UiLanguageCode } from "../shared/slugs";
 import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES, SUPPORTED_UI_LANGUAGES, TARGET_NAME_SLUGS } from "../shared/slugs";
-import { getSeoHubPath } from "../shared/hub";
+import { getLegacySeoHubPath } from "../shared/hub";
 
 export const WORD_HUB_PAGE_SIZE = 250;
 
@@ -54,7 +54,9 @@ export function getWordSeoHubSummaryPath(
   uiLang: UiLanguageCode,
   targetLanguage: TargetLanguageSlug,
 ): string {
-  return `${getSeoHubPath(uiLang)}/${getWordHubSegment(uiLang, targetLanguage)}`;
+  // Deliberately the legacy directory prefix, not getSeoHubPath(): word-index
+  // URLs are unchanged by the Learning Resources migration (see hub.ts).
+  return `${getLegacySeoHubPath(uiLang)}/${getWordHubSegment(uiLang, targetLanguage)}`;
 }
 
 export function getWordSeoHubLevelPath(

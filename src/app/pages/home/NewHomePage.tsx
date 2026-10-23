@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ComponentProps } from "react";
+import { Link } from "react-router-dom";
 import {
   ArrowRight,
   BookOpen,
@@ -11,6 +12,7 @@ import {
   Volume2,
 } from "lucide-react";
 import { useLanguage, type UILanguage } from "../../../contexts/LanguageContext";
+import { getSeoHubPath } from "../../../data/seo/shared/hub";
 import { buildVocabularyConceptResolver } from "../../../data/vocabulary/resolveVocabularyWordData";
 import { Header } from "../../components/layout/Header";
 import type { LanguageSelector } from "../../components/LanguageSelector";
@@ -533,6 +535,29 @@ export function NewHomePage({ headerProps, languages, onLogin, onStartPracticing
               </li>
             ))}
           </ul>
+        </section>
+        {/* Secondary entry point into the public resource pages. A real
+            anchor in the prerendered HTML: it is the homepage's only
+            crawlable path into the CEFR, list, verb, and level-test pages. */}
+        <section
+          className="new-home-page__resources"
+          aria-labelledby="homepage-resources-title"
+        >
+          <span className="new-home-page__highlight-icon" aria-hidden="true">
+            <BookOpen />
+          </span>
+          <div className="new-home-page__resources-copy">
+            <h2 id="homepage-resources-title" className="new-home-page__highlight-title">
+              {t("learningResources.label")}
+            </h2>
+            <p className="new-home-page__highlight-description">
+              {t("learningResources.homeDescription")}
+            </p>
+          </div>
+          <Link className="new-home-page__resources-link" to={getSeoHubPath(uiLanguage)}>
+            {t("learningResources.browse")}
+            <ArrowRight aria-hidden="true" />
+          </Link>
         </section>
         <section
           ref={languagesRef}

@@ -199,7 +199,7 @@ async function main() {
     // Scope note: routeMetadataPolicy.ts only governs the general app-shell
     // routes (homepage/public-seo/public-app/private-account/practice-session
     // — see its RouteMetadataClass union). SEO hub landing pages such as
-    // /en/seo-pages are deliberately excluded from it (src/app/App.tsx's
+    // /en/learning-resources are deliberately excluded from it (src/app/App.tsx's
     // routeMetadata switch returns null for resolvedPage "seoHub" and
     // siblings, and those pages get their metadata from src/seo/hubPages/hubMetadata.ts
     // instead). classifyRouteMetadata() falls back to "invalid" for anything

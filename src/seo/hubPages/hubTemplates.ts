@@ -1,228 +1,145 @@
 import type { UiLanguageCode } from "../../data/seo/shared/slugs";
 
+// Learning Resources directory metadata (route: /{ui}/learning-resources).
+// `pageName` doubles as the breadcrumb label and the CollectionPage name in
+// JSON-LD; `homeLabel` names the breadcrumb root.
 export const SEO_HUB_METADATA: Record<
   UiLanguageCode,
   {
     title: string;
     description: string;
+    pageName: string;
+    homeLabel: string;
   }
 > = {
   en: {
-    title: "SEO Pages - Vocabulary Practice and Level Tests",
-    description: "Browse all vocabulary practice pages and available language level tests in one place.",
+    title: "Vocabulary & Language Learning Resources",
+    description:
+      "Explore vocabulary lists, common verbs, conjugations, and language tests. Find resources for your level and practice what you learn.",
+    pageName: "Learning resources",
+    homeLabel: "Home",
   },
   es: {
-    title: "Páginas SEO - Práctica de vocabulario y tests de nivel",
-    description: "Consulta todas las páginas de práctica de vocabulario y los tests de nivel disponibles en un solo lugar.",
+    title: "Recursos de vocabulario y aprendizaje de idiomas",
+    description:
+      "Explora listas de vocabulario, verbos comunes, conjugaciones y pruebas de nivel. Encuentra recursos para tu nivel y practica lo que aprendes.",
+    pageName: "Recursos de aprendizaje",
+    homeLabel: "Inicio",
   },
   fr: {
-    title: "Pages SEO - Pratique du vocabulaire et tests de niveau",
-    description: "Consultez toutes les pages de pratique du vocabulaire et les tests de niveau disponibles au même endroit.",
+    title: "Ressources de vocabulaire et d’apprentissage des langues",
+    description:
+      "Découvrez des listes de vocabulaire, des verbes courants, des conjugaisons et des tests de niveau. Trouvez des ressources adaptées à votre niveau.",
+    pageName: "Ressources d’apprentissage",
+    homeLabel: "Accueil",
   },
   de: {
-    title: "SEO-Seiten - Wortschatz und Niveau-Tests",
-    description: "Finden Sie alle Wortschatzseiten und verfügbaren Niveau-Tests an einem Ort.",
+    title: "Wortschatz- und Sprachlernmaterialien",
+    description:
+      "Entdecke Vokabellisten, häufige Verben, Konjugationen und Sprachtests. Finde Materialien für dein Niveau und übe, was du lernst.",
+    pageName: "Lernmaterialien",
+    homeLabel: "Startseite",
   },
   it: {
-    title: "Pagine SEO - Pratica del vocabolario e test di livello",
-    description: "Consulta tutte le pagine di pratica del vocabolario e i test di livello disponibili in un unico posto.",
+    title: "Risorse di vocabolario e apprendimento delle lingue",
+    description:
+      "Esplora liste di vocabolario, verbi comuni, coniugazioni e test di livello. Trova risorse adatte al tuo livello e metti in pratica ciò che impari.",
+    pageName: "Risorse di apprendimento",
+    homeLabel: "Home",
   },
   pt: {
-    title: "Páginas SEO - Prática de vocabulário e testes de nível",
-    description: "Consulte todas as páginas de prática de vocabulário e os testes de nível disponíveis em um só lugar.",
+    title: "Recursos de vocabulário e aprendizagem de idiomas",
+    description:
+      "Explore listas de vocabulário, verbos comuns, conjugações e testes de nível. Encontre recursos para o seu nível e pratique o que aprende.",
+    pageName: "Recursos de aprendizagem",
+    homeLabel: "Início",
   },
   ru: {
-    title: "SEO-страницы - Практика словарного запаса и тесты уровня",
-    description: "Здесь собраны все страницы для практики словарного запаса и доступные тесты уровня.",
+    title: "Материалы для изучения лексики и языков",
+    description:
+      "Списки слов, частотные глаголы, спряжения и тесты уровня. Подберите материалы для своего уровня и закрепляйте выученное на практике.",
+    pageName: "Учебные материалы",
+    homeLabel: "Главная",
   },
 };
 
-export const WORD_SEO_HUB_METADATA: Record<
-  UiLanguageCode,
-  {
-    summaryTitle: string;
-    summaryDescription: string;
-    levelTitle: (level: string, page: number) => string;
-    levelDescription: (level: string, page: number) => string;
-  }
-> = {
-  en: {
-    summaryTitle: "English Word SEO Pages - Browse Canonical Word URLs",
-    summaryDescription:
-      "Browse paginated index pages that link to all canonical English word SEO URLs on FluentStellar.",
-    levelTitle: (level, page) =>
-      page > 1 ? `English ${level} Word SEO Pages - Page ${page}` : `English ${level} Word SEO Pages`,
-    levelDescription: (level, page) =>
-      page > 1
-        ? `Browse page ${page} of the canonical English ${level} word SEO URL index.`
-        : `Browse the canonical English ${level} word SEO URL index.`,
-  },
-  es: {
-    summaryTitle: "Páginas SEO de palabras en inglés",
-    summaryDescription:
-      "Consulta páginas indexadas y paginadas que enlazan a todas las URLs canónicas de palabras en inglés en FluentStellar.",
-    levelTitle: (level, page) =>
-      page > 1 ? `Páginas SEO de palabras en inglés ${level} - Página ${page}` : `Páginas SEO de palabras en inglés ${level}`,
-    levelDescription: (level, page) =>
-      page > 1
-        ? `Consulta la página ${page} del índice canónico de URLs de palabras en inglés ${level}.`
-        : `Consulta el índice canónico de URLs de palabras en inglés ${level}.`,
-  },
-  fr: {
-    summaryTitle: "Pages SEO des mots anglais",
-    summaryDescription:
-      "Consultez des pages d'index paginées qui relient à toutes les URL canoniques des mots anglais sur FluentStellar.",
-    levelTitle: (level, page) =>
-      page > 1 ? `Pages SEO des mots anglais ${level} - Page ${page}` : `Pages SEO des mots anglais ${level}`,
-    levelDescription: (level, page) =>
-      page > 1
-        ? `Consultez la page ${page} de l'index canonique des URL de mots anglais ${level}.`
-        : `Consultez l'index canonique des URL de mots anglais ${level}.`,
-  },
-  de: {
-    summaryTitle: "SEO-Seiten für englische Wörter",
-    summaryDescription:
-      "Durchsuchen Sie paginierte Indexseiten mit Links zu allen kanonischen englischen Wort-SEO-URLs auf FluentStellar.",
-    levelTitle: (level, page) =>
-      page > 1 ? `SEO-Seiten für englische Wörter ${level} - Seite ${page}` : `SEO-Seiten für englische Wörter ${level}`,
-    levelDescription: (level, page) =>
-      page > 1
-        ? `Durchsuchen Sie Seite ${page} des kanonischen URL-Index für englische Wortseiten ${level}.`
-        : `Durchsuchen Sie den kanonischen URL-Index für englische Wortseiten ${level}.`,
-  },
-  it: {
-    summaryTitle: "Pagine SEO delle parole inglesi",
-    summaryDescription:
-      "Consulta pagine indice paginate che collegano a tutti gli URL canonici delle parole inglesi su FluentStellar.",
-    levelTitle: (level, page) =>
-      page > 1 ? `Pagine SEO delle parole inglesi ${level} - Pagina ${page}` : `Pagine SEO delle parole inglesi ${level}`,
-    levelDescription: (level, page) =>
-      page > 1
-        ? `Consulta la pagina ${page} dell'indice canonico degli URL delle parole inglesi ${level}.`
-        : `Consulta l'indice canonico degli URL delle parole inglesi ${level}.`,
-  },
-  pt: {
-    summaryTitle: "Páginas SEO de palavras em inglês",
-    summaryDescription:
-      "Consulte páginas de índice paginadas que ligam para todas as URLs canônicas de palavras em inglês no FluentStellar.",
-    levelTitle: (level, page) =>
-      page > 1 ? `Páginas SEO de palavras em inglês ${level} - Página ${page}` : `Páginas SEO de palavras em inglês ${level}`,
-    levelDescription: (level, page) =>
-      page > 1
-        ? `Consulte a página ${page} do índice canônico de URLs de palavras em inglês ${level}.`
-        : `Consulte o índice canônico de URLs de palavras em inglês ${level}.`,
-  },
-  ru: {
-    summaryTitle: "SEO-страницы английских слов",
-    summaryDescription:
-      "Просматривайте постраничные индексные страницы со ссылками на все канонические URL английских слов на FluentStellar.",
-    levelTitle: (level, page) =>
-      page > 1 ? `SEO-страницы английских слов ${level} - страница ${page}` : `SEO-страницы английских слов ${level}`,
-    levelDescription: (level, page) =>
-      page > 1
-        ? `Просматривайте страницу ${page} канонического индекса URL английских слов уровня ${level}.`
-        : `Просматривайте канонический индекс URL английских слов уровня ${level}.`,
-  },
-};
+interface WordIndexMetadataCopy {
+  summaryTitle: (languageName: string) => string;
+  summaryDescription: (languageName: string) => string;
+  levelTitle: (languageName: string, level: string, page: number) => string;
+  levelDescription: (languageName: string, level: string, page: number) => string;
+}
 
-// Generic templates for target languages other than English. Simple concatenation,
-// no per-language grammatical inflection (kept consistent with the rest of the app).
-export const GENERIC_WORD_SEO_HUB_METADATA: Record<
-  UiLanguageCode,
-  {
-    summaryTitle: (languageName: string) => string;
-    summaryDescription: (languageName: string) => string;
-    levelTitle: (languageName: string, level: string, page: number) => string;
-    levelDescription: (languageName: string, level: string, page: number) => string;
-  }
-> = {
+// Word-index (alphabetical word list) metadata, one template per UI language
+// for every learning language. `languageName` is the learning language's
+// name as the UI language writes it (interface `languageNames.*`,
+// capitalized nominative). Phrasings are chosen so that form reads
+// correctly without per-language inflection tables ("palabras en inglés",
+// "mots en anglais", "Englisch" -> "englische Wörter", ...).
+export const GENERIC_WORD_SEO_HUB_METADATA: Record<UiLanguageCode, WordIndexMetadataCopy> = {
   en: {
-    summaryTitle: (languageName) => `${languageName} Word SEO Pages - Browse Canonical Word URLs`,
-    summaryDescription: (languageName) =>
-      `Browse paginated index pages that link to all canonical ${languageName} word SEO URLs on FluentStellar.`,
-    levelTitle: (languageName, level, page) =>
-      page > 1 ? `${languageName} ${level} Word SEO Pages - Page ${page}` : `${languageName} ${level} Word SEO Pages`,
-    levelDescription: (languageName, level, page) =>
+    summaryTitle: (name) => `${name} Word Index by CEFR Level`,
+    summaryDescription: (name) =>
+      `Browse ${name} words on FluentStellar in alphabetical order, grouped by CEFR level from A1 to C2.`,
+    levelTitle: (name, level, page) =>
       page > 1
-        ? `Browse page ${page} of the canonical ${languageName} ${level} word SEO URL index.`
-        : `Browse the canonical ${languageName} ${level} word SEO URL index.`,
+        ? `${name} ${level} Words in Alphabetical Order – Page ${page}`
+        : `${name} ${level} Words in Alphabetical Order`,
+    levelDescription: (name, level, page) =>
+      `${page > 1 ? `Page ${page} of the alphabetical list` : "Alphabetical list"} of ${name} ${level} words. Open a word to see its meaning, examples, and practice.`,
   },
   es: {
-    summaryTitle: (languageName) => `Páginas SEO de palabras en ${languageName.toLowerCase()}`,
-    summaryDescription: (languageName) =>
-      `Consulta páginas indexadas y paginadas que enlazan a todas las URLs canónicas de palabras en ${languageName.toLowerCase()} en FluentStellar.`,
-    levelTitle: (languageName, level, page) =>
-      page > 1
-        ? `Páginas SEO de palabras en ${languageName.toLowerCase()} ${level} - Página ${page}`
-        : `Páginas SEO de palabras en ${languageName.toLowerCase()} ${level}`,
-    levelDescription: (languageName, level, page) =>
-      page > 1
-        ? `Consulta la página ${page} del índice canónico de URLs de palabras en ${languageName.toLowerCase()} ${level}.`
-        : `Consulta el índice canónico de URLs de palabras en ${languageName.toLowerCase()} ${level}.`,
+    summaryTitle: (name) => `Índice de palabras en ${name.toLowerCase()} por nivel MCER`,
+    summaryDescription: (name) =>
+      `Consulta las palabras en ${name.toLowerCase()} de FluentStellar en orden alfabético, agrupadas por nivel MCER de A1 a C2.`,
+    levelTitle: (name, level, page) =>
+      `Palabras en ${name.toLowerCase()} ${level} en orden alfabético${page > 1 ? ` – Página ${page}` : ""}`,
+    levelDescription: (name, level, page) =>
+      `Lista alfabética de palabras en ${name.toLowerCase()} ${level}${page > 1 ? `, página ${page}` : ""}. Abre una palabra para ver su significado, ejemplos y práctica.`,
   },
   fr: {
-    summaryTitle: (languageName) => `Pages SEO des mots ${languageName.toLowerCase()}`,
-    summaryDescription: (languageName) =>
-      `Consultez des pages d'index paginées qui relient à toutes les URL canoniques des mots ${languageName.toLowerCase()} sur FluentStellar.`,
-    levelTitle: (languageName, level, page) =>
-      page > 1
-        ? `Pages SEO des mots ${languageName.toLowerCase()} ${level} - Page ${page}`
-        : `Pages SEO des mots ${languageName.toLowerCase()} ${level}`,
-    levelDescription: (languageName, level, page) =>
-      page > 1
-        ? `Consultez la page ${page} de l'index canonique des URL de mots ${languageName.toLowerCase()} ${level}.`
-        : `Consultez l'index canonique des URL de mots ${languageName.toLowerCase()} ${level}.`,
+    summaryTitle: (name) => `Index des mots en ${name.toLowerCase()} par niveau CECRL`,
+    summaryDescription: (name) =>
+      `Parcourez les mots en ${name.toLowerCase()} de FluentStellar par ordre alphabétique, classés par niveau CECRL de A1 à C2.`,
+    levelTitle: (name, level, page) =>
+      `Mots en ${name.toLowerCase()} ${level} par ordre alphabétique${page > 1 ? ` – Page ${page}` : ""}`,
+    levelDescription: (name, level, page) =>
+      `Liste alphabétique des mots en ${name.toLowerCase()} ${level}${page > 1 ? `, page ${page}` : ""}. Ouvrez un mot pour voir sa signification, des exemples et des exercices.`,
   },
   de: {
-    summaryTitle: (languageName) => `SEO-Seiten für ${languageName.toLowerCase()}e Wörter`,
-    summaryDescription: (languageName) =>
-      `Durchsuchen Sie paginierte Indexseiten mit Links zu allen kanonischen ${languageName.toLowerCase()}en Wort-SEO-URLs auf FluentStellar.`,
-    levelTitle: (languageName, level, page) =>
-      page > 1
-        ? `SEO-Seiten für ${languageName.toLowerCase()}e Wörter ${level} - Seite ${page}`
-        : `SEO-Seiten für ${languageName.toLowerCase()}e Wörter ${level}`,
-    levelDescription: (languageName, level, page) =>
-      page > 1
-        ? `Durchsuchen Sie Seite ${page} des kanonischen URL-Index für ${languageName.toLowerCase()}e Wortseiten ${level}.`
-        : `Durchsuchen Sie den kanonischen URL-Index für ${languageName.toLowerCase()}e Wortseiten ${level}.`,
+    summaryTitle: (name) => `Wortindex: ${name.toLowerCase()}e Wörter nach GER-Niveau`,
+    summaryDescription: (name) =>
+      `Durchsuche die ${name.toLowerCase()}en Wörter auf FluentStellar in alphabetischer Reihenfolge, geordnet nach GER-Niveau von A1 bis C2.`,
+    levelTitle: (name, level, page) =>
+      `${name}e Wörter ${level} in alphabetischer Reihenfolge${page > 1 ? ` – Seite ${page}` : ""}`,
+    levelDescription: (name, level, page) =>
+      `Alphabetische Liste ${name.toLowerCase()}er Wörter ${level}${page > 1 ? `, Seite ${page}` : ""}. Öffne ein Wort, um Bedeutung, Beispiele und Übungen zu sehen.`,
   },
   it: {
-    summaryTitle: (languageName) => `Pagine SEO delle parole ${languageName.toLowerCase()}`,
-    summaryDescription: (languageName) =>
-      `Consulta pagine indice paginate che collegano a tutti gli URL canonici delle parole ${languageName.toLowerCase()} su FluentStellar.`,
-    levelTitle: (languageName, level, page) =>
-      page > 1
-        ? `Pagine SEO delle parole ${languageName.toLowerCase()} ${level} - Pagina ${page}`
-        : `Pagine SEO delle parole ${languageName.toLowerCase()} ${level}`,
-    levelDescription: (languageName, level, page) =>
-      page > 1
-        ? `Consulta la pagina ${page} dell'indice canonico degli URL delle parole ${languageName.toLowerCase()} ${level}.`
-        : `Consulta l'indice canonico degli URL delle parole ${languageName.toLowerCase()} ${level}.`,
+    summaryTitle: (name) => `Indice delle parole in ${name.toLowerCase()} per livello QCER`,
+    summaryDescription: (name) =>
+      `Consulta le parole in ${name.toLowerCase()} su FluentStellar in ordine alfabetico, raggruppate per livello QCER da A1 a C2.`,
+    levelTitle: (name, level, page) =>
+      `Parole in ${name.toLowerCase()} ${level} in ordine alfabetico${page > 1 ? ` – Pagina ${page}` : ""}`,
+    levelDescription: (name, level, page) =>
+      `Elenco alfabetico delle parole in ${name.toLowerCase()} ${level}${page > 1 ? `, pagina ${page}` : ""}. Apri una parola per vederne significato, esempi ed esercizi.`,
   },
   pt: {
-    summaryTitle: (languageName) => `Páginas SEO de palavras em ${languageName.toLowerCase()}`,
-    summaryDescription: (languageName) =>
-      `Consulte páginas de índice paginadas que ligam para todas as URLs canônicas de palavras em ${languageName.toLowerCase()} no FluentStellar.`,
-    levelTitle: (languageName, level, page) =>
-      page > 1
-        ? `Páginas SEO de palavras em ${languageName.toLowerCase()} ${level} - Página ${page}`
-        : `Páginas SEO de palavras em ${languageName.toLowerCase()} ${level}`,
-    levelDescription: (languageName, level, page) =>
-      page > 1
-        ? `Consulte a página ${page} do índice canônico de URLs de palavras em ${languageName.toLowerCase()} ${level}.`
-        : `Consulte o índice canônico de URLs de palavras em ${languageName.toLowerCase()} ${level}.`,
+    summaryTitle: (name) => `Índice de palavras em ${name.toLowerCase()} por nível QECR`,
+    summaryDescription: (name) =>
+      `Consulte as palavras em ${name.toLowerCase()} do FluentStellar em ordem alfabética, agrupadas por nível QECR de A1 a C2.`,
+    levelTitle: (name, level, page) =>
+      `Palavras em ${name.toLowerCase()} ${level} em ordem alfabética${page > 1 ? ` – Página ${page}` : ""}`,
+    levelDescription: (name, level, page) =>
+      `Lista alfabética de palavras em ${name.toLowerCase()} ${level}${page > 1 ? `, página ${page}` : ""}. Abra uma palavra para ver o significado, exemplos e prática.`,
   },
   ru: {
-    summaryTitle: (languageName) => `SEO-страницы слов: ${languageName.toLowerCase()}`,
-    summaryDescription: (languageName) =>
-      `Просматривайте постраничные индексные страницы со ссылками на все канонические URL слов (${languageName.toLowerCase()}) на FluentStellar.`,
-    levelTitle: (languageName, level, page) =>
-      page > 1
-        ? `SEO-страницы слов: ${languageName.toLowerCase()} ${level} - страница ${page}`
-        : `SEO-страницы слов: ${languageName.toLowerCase()} ${level}`,
-    levelDescription: (languageName, level, page) =>
-      page > 1
-        ? `Просматривайте страницу ${page} канонического индекса URL слов (${languageName.toLowerCase()}) уровня ${level}.`
-        : `Просматривайте канонический индекс URL слов (${languageName.toLowerCase()}) уровня ${level}.`,
+    summaryTitle: (name) => `${name} язык: указатель слов по уровням CEFR`,
+    summaryDescription: (name) =>
+      `Слова (${name.toLowerCase()} язык) на FluentStellar в алфавитном порядке, сгруппированные по уровням CEFR от A1 до C2.`,
+    levelTitle: (name, level, page) =>
+      `${name} язык, ${level}: слова в алфавитном порядке${page > 1 ? `, страница ${page}` : ""}`,
+    levelDescription: (name, level, page) =>
+      `Алфавитный список слов уровня ${level} (${name.toLowerCase()} язык)${page > 1 ? `, страница ${page}` : ""}. Откройте слово, чтобы увидеть значение, примеры и упражнения.`,
   },
 };

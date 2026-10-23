@@ -191,7 +191,7 @@ async function main() {
     "/languages",
     "/explore",
     allPrerenderRoutes.find((r) => /-vocabulary-practice$/.test(r)), // one CEFR vocabulary hub page
-    allPrerenderRoutes.find((r) => /\/seo-pages$|\/paginas-seo$|\/pages-seo$/.test(r)), // localized SEO hub
+    allPrerenderRoutes.find((r) => /\/learning-resources$/.test(r)), // Learning Resources directory
     allPrerenderRoutes.find((r) => /word-pages$/.test(r)), // word SEO hub summary
     allPrerenderRoutes.find((r) => /level-test$/.test(r)), // level-test page
     allPrerenderRoutes.find((r) => /most-common-.*-verbs$|glagolov$/.test(r)), // English verb list

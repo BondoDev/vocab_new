@@ -5,6 +5,7 @@ import { buildLocalizedVocabularyPath } from "../../../data/seo/vocabularyLevels
 import { SUPPORTED_LEVELS, SUPPORTED_TARGET_LANGUAGES } from "../../../data/seo/shared/slugs";
 import { getLevelTestSeoPath } from "../../../data/seo/levelTests";
 import { getSeoHubPath } from "../../../data/seo/shared/hub";
+import { getRelatedLearningResources } from "../../components/learning-resources/learningResourcesRegistry";
 import {
   type CefrLevelCode,
   type TargetLanguageSlug,
@@ -378,37 +379,37 @@ const RELATED_LINKS_COPY: Record<
 > = {
   en: {
     heading: "Related pages",
-    seoHubLabel: "Browse all pages",
+    seoHubLabel: "Browse all learning resources",
     levelTestLabel: (languageName) => `Take the ${languageName} level test`,
   },
   es: {
     heading: "Páginas relacionadas",
-    seoHubLabel: "Ver todas las páginas",
+    seoHubLabel: "Ver todos los recursos de aprendizaje",
     levelTestLabel: (languageName) => `Haz el test de nivel de ${languageName}`,
   },
   fr: {
     heading: "Pages associées",
-    seoHubLabel: "Voir toutes les pages",
+    seoHubLabel: "Voir toutes les ressources d’apprentissage",
     levelTestLabel: (languageName) => `Passez le test de niveau de ${languageName}`,
   },
   de: {
     heading: "Verwandte Seiten",
-    seoHubLabel: "Alle Seiten ansehen",
+    seoHubLabel: "Alle Lernmaterialien ansehen",
     levelTestLabel: (languageName) => `${languageName} Niveau-Test machen`,
   },
   it: {
     heading: "Pagine correlate",
-    seoHubLabel: "Vedi tutte le pagine",
+    seoHubLabel: "Vedi tutte le risorse di apprendimento",
     levelTestLabel: (languageName) => `Fai il test di livello di ${languageName}`,
   },
   pt: {
     heading: "Páginas relacionadas",
-    seoHubLabel: "Ver todas as páginas",
+    seoHubLabel: "Ver todos os recursos de aprendizagem",
     levelTestLabel: (languageName) => `Faça o teste de nível de ${languageName}`,
   },
   ru: {
     heading: "Связанные страницы",
-    seoHubLabel: "Посмотреть все страницы",
+    seoHubLabel: "Все учебные материалы",
     levelTestLabel: (languageName) => `Тест уровня ${languageName}`,
   },
 };
@@ -556,6 +557,8 @@ export function VocabularyLevelPage({
   );
   const levelTestHref = getLevelTestSeoPath(uiLang, targetLanguage);
   const seoHubHref = getSeoHubPath(uiLang);
+  // Same-language list and verb pages (the level test is already linked).
+  const relatedResourceLinks = getRelatedLearningResources(uiLang, targetLanguage, [levelTestHref]);
   const crossLangCopy = CROSS_LANGUAGE_COPY[uiLang] ?? CROSS_LANGUAGE_COPY.en;
   const browseWordsCopy = BROWSE_WORDS_COPY[uiLang] ?? BROWSE_WORDS_COPY.en;
   const crossLanguageLinks = SUPPORTED_TARGET_LANGUAGES.filter((lang) => lang !== targetLanguage)
@@ -873,6 +876,13 @@ export function VocabularyLevelPage({
                 </Link>
               </li>
             ) : null}
+            {relatedResourceLinks.map((link) => (
+              <li key={link.kind}>
+                <Link className="text-primary transition hover:underline" to={link.href}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
             <li>
               <Link className="text-primary transition hover:underline" to={seoHubHref}>
                 {relatedCopy.seoHubLabel}

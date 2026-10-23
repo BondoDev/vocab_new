@@ -12,3 +12,23 @@
 /it/lista-vocabolario-inglese     /it/english-vocabulary-list  301
 /pt/lista-vocabulario-ingles      /pt/english-vocabulary-list  301
 /ru/slovar-angliiskii-spisok      /ru/english-vocabulary-list  301
+
+# Learning Resources directory: the retired localized directory roots ->
+# /{ui}/learning-resources (src/data/seo/shared/hub.ts). Exact-path rules
+# only: the word-index pages beneath these prefixes keep their URLs. The
+# trailing-slash variants are listed so they reach the target in one hop
+# instead of first taking the assets layer's 307 slash redirect.
+/en/seo-pages       /en/learning-resources  301
+/en/seo-pages/      /en/learning-resources  301
+/es/paginas-seo     /es/learning-resources  301
+/es/paginas-seo/    /es/learning-resources  301
+/fr/pages-seo       /fr/learning-resources  301
+/fr/pages-seo/      /fr/learning-resources  301
+/de/seo-seiten      /de/learning-resources  301
+/de/seo-seiten/     /de/learning-resources  301
+/it/pagine-seo      /it/learning-resources  301
+/it/pagine-seo/     /it/learning-resources  301
+/pt/paginas-seo     /pt/learning-resources  301
+/pt/paginas-seo/    /pt/learning-resources  301
+/ru/seo-stranicy    /ru/learning-resources  301
+/ru/seo-stranicy/   /ru/learning-resources  301

@@ -20,6 +20,7 @@ src/app/components/
   dialogs/            # app-shell-orchestrated global dialogs
   layout/             # global navigation and application chrome
   ui/                 # domain-agnostic UI primitives (Radix/shadcn-style)
+  learning-resources/ # resource registry + related-links block for public learning pages
   vocabulary-table/   # reusable word-list table for vocabulary SEO pages
   LanguageSelector.tsx # app-specific component shared by unrelated owners
   Toast.tsx           # generic auto-dismissing confirmation, shared by unrelated owners
@@ -106,6 +107,18 @@ the adapter. Body rows use short `vt-*` classes instead of Tailwind strings
 because consumers server-render hundreds of rows per page — keep new per-row
 markup equally compact. Render coverage:
 `npm run test:vocabulary-table-render`.
+
+## learning-resources/
+
+`learningResourcesRegistry.ts` lists the launched, indexable educational
+pages for one (UI language, learning language) pair by calling each page
+family's own route builder and launch flag; it stores no URLs itself.
+`RelatedLearningResources.tsx` renders those links as a "related" block.
+Consumers are unrelated page families: the Learning Resources directory
+(`src/app/pages/SeoHubPage.tsx`), CEFR level pages, the full vocabulary
+list, and the three verb-list subtypes. It sits in `src/app/` rather than
+`src/data/seo/` because it reads launch flags owned by `src/seo/`, which
+`src/data/seo/` must not import.
 
 ## ui/
 

@@ -12,6 +12,7 @@ import {
 import type { VerbListContent } from "../../../../../data/seo/listPages/verbLists/common100Verbs/common100VerbRouteHelpers";
 import { SEOHead, type SeoMetadata } from "../../../../../seo/SeoContext";
 import { useLanguage } from "../../../../../contexts/LanguageContext";
+import { getRelatedLearningResources } from "../../../../components/learning-resources/learningResourcesRegistry";
 import { rowMatchesSearch } from "../shared/rowSearch";
 import { VerbListTableSection } from "./VerbListTableSection";
 
@@ -92,7 +93,13 @@ export function RichVerbListSeoPage({
           label: content.relatedLinks.englishB1,
         }
       : null,
-    { href: getSeoHubPath(uiLang), label: content.relatedLinks.seoHub },
+    // Same-language list/verb resources (conjugations, past forms, full
+    // list) from the shared registry; the authored links above stay first.
+    ...getRelatedLearningResources(uiLang, targetLanguage, [location.pathname, levelTestHref]),
+    // Label comes from the shared interface copy, not the authored
+    // `relatedLinks.seoHub` JSON field, whose wording predates the
+    // Learning Resources rename.
+    { href: getSeoHubPath(uiLang), label: t("learningResources.browse") },
   ].filter((item): item is { href: string; label: string } => Boolean(item));
 
   const normalizedSearch = searchValue.trim().toLowerCase();

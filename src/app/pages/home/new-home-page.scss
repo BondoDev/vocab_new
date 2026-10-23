@@ -644,6 +644,69 @@
     }
   }
 
+  // Compact secondary row under the highlights; reuses the highlight icon
+  // and type styles so it reads as part of the same band, not a new card.
+  &__resources {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    max-width: 80rem;
+    margin: 2.5rem auto 0;
+    padding: 1.25rem 1rem 0;
+    border-top: 1px solid rgba(65, 105, 210, 0.14);
+  }
+
+  &__resources-copy {
+    min-width: 0;
+  }
+
+  &__resources-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: 6px;
+    color: #4169d2;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #4169d2;
+      outline-offset: 3px;
+    }
+  }
+
+  @media (max-width: 1199px) {
+    &__resources {
+      max-width: 64rem;
+      padding-inline: 0;
+    }
+  }
+
+  @media (max-width: 639px) {
+    &__resources {
+      grid-template-columns: 40px minmax(0, 1fr);
+      margin-top: 2rem;
+    }
+
+    &__resources-link {
+      grid-column: 2;
+      white-space: normal;
+    }
+  }
+
   &__cards {
     position: relative;
     z-index: 1;

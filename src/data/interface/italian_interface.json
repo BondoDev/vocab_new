@@ -1321,5 +1321,11 @@
     "forbidden": "Questa azione non e consentita.",
     "temporarilyUnavailable": "Questa funzione non e disponibile temporaneamente. Riprova tra poco.",
     "network": "Problema di connessione. Controlla la tua connessione a internet e riprova."
+  },
+  "learningResources": {
+    "label": "Risorse di apprendimento",
+    "browse": "Vedi tutte le risorse di apprendimento",
+    "back": "Torna alle risorse di apprendimento",
+    "homeDescription": "Liste di vocabolario per livello, verbi comuni, coniugazioni e test di livello per sette lingue."
   }
 }

@@ -545,8 +545,8 @@ const levelTestMetadata = {
 };
 
 const seoHubMetadata = {
-  title: "SEO Pages - Vocabulary Practice and Level Tests",
-  description: "Browse all vocabulary practice pages and language level tests.",
+  title: "Vocabulary & Language Learning Resources",
+  description: "Explore vocabulary lists, common verbs, conjugations, and language tests.",
   canonical: "https://www.fluentstellar.com/en/seo-hub",
   alternates: [
     { hreflang: "en", href: "https://www.fluentstellar.com/en/seo-hub" },
