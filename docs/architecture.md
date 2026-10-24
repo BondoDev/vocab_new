@@ -291,7 +291,7 @@ helpers in `src/data/seo/`:
 - `vocabularyLevel` — CEFR level pages (`resolveVocabularyRoute`)
 - `levelTestSeo` — per-language level-test SEO pages
 - `verbListSeo` — "100 most common verbs" pages
-- `seoHub` / `wordSeoHub` — the Learning Resources directory (`/{ui}/learning-resources`; retired `/{ui}/seo-pages`-style roots 301 there via `public/_redirects`) and the word-index pages, which keep their legacy `/{ui}/seo-pages/...` URLs
+- `seoHub` / `wordSeoHub` — the Learning Resources directory (`/{ui}/learning-resources`; retired `/{ui}/seo-pages`-style roots 301 there via `public/_redirects`) and the word-index pages, which keep their legacy `/{ui}/seo-pages/...` URLs and are `noindex, follow` (set in `src/seo/hubPages/hubMetadata.ts`; prerendered, 200, self-canonical, not in XML sitemaps)
 - `wordPage` — canonical word pages (Worker-rendered only)
 - `devSeoCefrPlaceholder` — dev-only preview route, `import.meta.env.DEV`-gated
 - `notFound`

@@ -769,20 +769,41 @@ async function main() {
       "homepage must not inherit the individual word-page noindex policy",
     );
 
-    // Negative guard: the word-page-specific noindex policy (added above)
-    // must not leak into curated, valuable SEO pages that live under a
-    // superficially similar prefix. The word SEO hub is the most directly
-    // adjacent case — a curated *index of* word pages, one path segment away
-    // from the word pages it links to — so it's the sharpest test of route-
-    // family isolation between buildWordSeoMetadata() (word pages only) and
-    // the hub's own, separate metadata builder (src/seo/hubPages/hubMetadata.ts).
-    const wordSeoHubResponse = await request(baseUrl, "/en/seo-pages/english-word-pages");
-    assert.equal(wordSeoHubResponse.status, 200, "word SEO hub page must stay reachable");
-    assert.notEqual(
-      extractMetaContent(wordSeoHubResponse.body, "robots"),
-      "noindex, follow",
-      "word SEO hub (a curated index page, not an individual word page) must not inherit the word-page noindex policy",
-    );
+    // Word-index pages (summary, level, and pagination routes) carry their
+    // own `noindex, follow` from buildWordSeoHubMetadata() — a separate
+    // builder from buildWordSeoMetadata() — while staying 200 and
+    // self-canonical. Exactly one robots tag must be rendered.
+    for (const wordIndexPath of [
+      "/en/seo-pages/english-word-pages",
+      "/en/seo-pages/english-word-pages/a1",
+      "/es/paginas-seo/paginas-palabras-aleman/b1/page/2",
+    ]) {
+      const wordIndexResponse = await request(baseUrl, wordIndexPath);
+      assert.equal(wordIndexResponse.status, 200, `${wordIndexPath} must stay reachable`);
+      assert.equal(extractMetaContent(wordIndexResponse.body, "robots"), "noindex, follow", `${wordIndexPath} robots`);
+      assert.equal(
+        (wordIndexResponse.body.match(/<meta name="robots"/g) || []).length,
+        1,
+        `${wordIndexPath} must render exactly one robots meta tag`,
+      );
+      assert.ok(
+        wordIndexResponse.body.includes(`<link rel="canonical" href="${siteOrigin}${wordIndexPath}">`),
+        `${wordIndexPath} must keep its self-referencing canonical`,
+      );
+    }
+
+    // Negative guard: neither noindex policy may leak into the indexable
+    // pages adjacent to the word-index family — the Learning Resources
+    // directory that links to it and a CEFR level page.
+    for (const indexablePath of ["/en/learning-resources", "/en/english-a1-vocabulary-practice"]) {
+      const indexableResponse = await request(baseUrl, indexablePath);
+      assert.equal(indexableResponse.status, 200, `${indexablePath} must stay reachable`);
+      assert.equal(
+        extractMetaContent(indexableResponse.body, "robots"),
+        null,
+        `${indexablePath} must not carry a robots directive`,
+      );
+    }
 
     const profileResponse = await request(baseUrl, "/profile");
     assertRouteMetadata(profileResponse, "/profile", {

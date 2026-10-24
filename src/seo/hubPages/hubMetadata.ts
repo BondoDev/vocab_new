@@ -61,6 +61,14 @@ export function buildSeoHubMetadata({
 
 // ─── Word index (alphabetical word list) metadata ─────────────────────────────
 
+// Every word-index page (summary, level, and pagination routes) is
+// non-indexable: they are thin link lists whose targets (individual word
+// pages) are themselves noindex. `follow` keeps them working as a crawl path
+// into the word mesh. They stay 200, prerendered, self-canonical, and out of
+// the XML sitemaps; this builder is the family's only metadata source, so
+// no other page family inherits the directive.
+const WORD_INDEX_ROBOTS = "noindex, follow";
+
 export function buildWordSeoHubMetadata({
   uiLang,
   route,
@@ -83,6 +91,7 @@ export function buildWordSeoHubMetadata({
       title: sanitizeMetadataText(copy.summaryTitle(languageName)),
       description: sanitizeMetadataText(copy.summaryDescription(languageName)),
       canonical,
+      robots: WORD_INDEX_ROBOTS,
       alternates: buildHreflangAlternates(
         (lang) => `${origin}${getWordSeoHubSummaryPath(lang, route.targetLanguage)}`,
         `${origin}${getWordSeoHubSummaryPath("en", route.targetLanguage)}`,
@@ -95,6 +104,7 @@ export function buildWordSeoHubMetadata({
     title: sanitizeMetadataText(copy.levelTitle(languageName, levelLabel, route.page)),
     description: sanitizeMetadataText(copy.levelDescription(languageName, levelLabel, route.page)),
     canonical,
+    robots: WORD_INDEX_ROBOTS,
     alternates: buildHreflangAlternates(
       (lang) => `${origin}${getWordSeoHubLevelPath(lang, route.targetLanguage, route.level, route.page)}`,
       `${origin}${getWordSeoHubLevelPath("en", route.targetLanguage, route.level, route.page)}`,

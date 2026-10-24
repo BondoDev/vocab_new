@@ -462,7 +462,7 @@ export function buildFixtureMatrix(ctx) {
       url: wordHubSummaryPath,
       expectedStatus: 200,
       expectedCanonical: `${siteOrigin}${wordHubSummaryPath}`,
-      expectedRobots: undefined,
+      expectedRobots: "noindex, follow",
       reason:
         "buildWordSeoHubMetadata's 'summary' branch (route.kind === \"summary\"), generic (non-English) target-language copy path.",
     },
@@ -472,10 +472,10 @@ export function buildFixtureMatrix(ctx) {
       url: wordHubLevelPath,
       expectedStatus: 200,
       expectedCanonical: `${siteOrigin}${wordHubLevelPath}`,
-      expectedRobots: undefined,
+      expectedRobots: "noindex, follow",
       reason:
         "buildWordSeoHubMetadata's 'level' branch, page 1 (getWordSeoHubLevelPath omits the /page/N suffix for page <= 1). " +
-        "No separate pagination fixture added: neither branch sets a robots field regardless of page number, and canonical " +
+        "No separate pagination fixture added: both branches set the same robots value (noindex, follow) regardless of page number, and canonical " +
         "is always self-referential ({origin}{pathname}) for every page — confirmed by reading the builder source — so " +
         "page > 1 does not exercise a materially different metadata code path, only different template copy text.",
     },
