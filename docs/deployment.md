@@ -138,9 +138,14 @@ Local development
   `/es/paginas-seo`, … with and without a trailing slash) to
   `/{ui}/learning-resources`. These directory redirects have not yet been
   probed against production.
-- Legacy word-URL redirects (single-hyphen and legacy slug formats):
-  `308` computed by the Worker (`classifyAndRespondNonCanonical` in
-  `src/index.full.ts`), including accent-insensitive slug recovery.
+- Word-URL redirects: `308` computed by the Worker for existing legacy URL
+  formats (`classifyAndRespondNonCanonical` in `src/index.full.ts`) and for
+  the 92 English historical routes with a unique exact-identity mapping in
+  `src/data/seo/wordPages/verifiedHistoricalWordRouteRedirects.ts`.
+  Historical mappings preserve only browse pages within the destination
+  word's valid range and fail closed if the current record no longer matches
+  its stored identity fingerprint. Other slug/ID mismatches return `410`;
+  concept ID alone never authorizes a redirect.
 - Removed/invalid word URLs: `410 Gone` (text/plain) from the Worker.
 - Unknown non-word paths that miss the asset directory also fall through to
   the Worker and currently return `410 Gone` (verified live 2026-07-13).

@@ -99,6 +99,93 @@ assert.match(canonicalHtml, /<meta property="og:url" content="https:\/\/www\.flu
 assert.match(canonicalHtml, /"@id":"https:\/\/www\.fluentstellar\.com\/ru\/english-word-wisdom--B2-04096#webpage"/i);
 assert.ok(!canonicalHtml.includes("fluentstellar-word-staging"), "production HTML must not reference staging hostname");
 
+const historicalResponse = await render("/en/english-word-tame--B2-02435");
+assert.equal(historicalResponse.status, 308, "verified historical word URL should redirect permanently");
+assert.equal(
+  historicalResponse.headers.get("location"),
+  "/en/english-word-tame--B2-04040",
+  "verified historical URL should redirect to the uniquely matched current concept",
+);
+const historicalDestination = await render(historicalResponse.headers.get("location"));
+assert.equal(historicalDestination.status, 200, "verified historical redirect destination should render directly");
+assert.match(
+  await historicalDestination.text(),
+  /<link rel="canonical" href="https:\/\/www\.fluentstellar\.com\/en\/english-word-tame--B2-04040"/i,
+  "verified historical redirect destination should be the expected canonical concept",
+);
+
+const historicalBrowseResponse = await render("/en/english-word-tame--B2-02435/browse/page/2");
+assert.equal(historicalBrowseResponse.status, 308, "verified historical browse URL should redirect permanently");
+assert.equal(
+  historicalBrowseResponse.headers.get("location"),
+  "/en/english-word-tame--B2-04040/browse/page/2",
+  "verified historical browse redirect should preserve a valid page suffix",
+);
+assert.equal(
+  (await render(historicalBrowseResponse.headers.get("location"))).status,
+  200,
+  "verified historical browse redirect destination should render directly",
+);
+
+const localizedHistoricalResponse = await render("/es/english-word-tame--B2-02435");
+assert.equal(localizedHistoricalResponse.status, 308, "verified historical route should work in another UI language");
+assert.equal(
+  localizedHistoricalResponse.headers.get("location"),
+  "/es/english-word-tame--B2-04040",
+  "historical redirect should preserve the requested UI language and target language",
+);
+assert.equal(
+  (await render(localizedHistoricalResponse.headers.get("location"))).status,
+  200,
+  "localized historical redirect destination should render directly",
+);
+
+for (const [oldSlug, conceptId] of [
+  ["address", "A1-00008"],
+  ["almost", "A1-00021"],
+  ["russian", "A1-01210"],
+  ["zoology", "C2-01048"],
+]) {
+  const response = await render(`/en/english-word-${oldSlug}--${conceptId}`);
+  assert.equal(
+    response.status,
+    410,
+    `reassigned historical ID must not redirect ${oldSlug} to an unrelated current word`,
+  );
+}
+
+assert.equal(
+  (await render("/en/english-word-address--A1-00008")).status,
+  410,
+  "ambiguous historical address URL must not be guessed from its repeated lemma",
+);
+
+for (const pathname of [
+  "/en/english-word-fabricated--A1-00001",
+  "/en/english-word-able--B1-00002",
+  "/en/english-word-about",
+  "/en/english-word-unknown--Z9-99999",
+  "/en/english-word-!!!--A1-00001",
+]) {
+  assert.equal((await render(pathname)).status, 410, `unverified or invalid route must remain gone: ${pathname}`);
+}
+
+const currentBrowseResponse = await render("/ru/english-word-wisdom--B2-04096/browse/page/2");
+assert.equal(currentBrowseResponse.status, 200, "current canonical browse route should continue rendering");
+
+const legacyPathResponse = await render("/en/english-word-about-A1-00001");
+assert.equal(legacyPathResponse.status, 308, "verified legacy URL format should retain its permanent redirect");
+assert.equal(
+  legacyPathResponse.headers.get("location"),
+  "/en/english-word-about--A1-00001",
+  "verified legacy redirect should normalize to the current canonical route format",
+);
+assert.equal(
+  (await render(legacyPathResponse.headers.get("location"))).status,
+  200,
+  "verified legacy redirect destination should render directly",
+);
+
 const goneResponse = await render("/en/english-word-about--A1-00001/browse/page/99");
 assert.equal(goneResponse.status, 410, "out-of-range production browse page should return 410");
 assert.equal(goneResponse.headers.get("x-robots-tag"), "noindex, nofollow", "production 410 should retain noindex behavior");

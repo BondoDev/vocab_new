@@ -51,9 +51,10 @@ codes.
 
 | Route family | Example | Why the Worker must run |
 |---|---|---|
-| Canonical word pages | `/en/english-word-about--A1-00001` | Requires a data lookup (concept shard fetch) + React SSR — not a static file (Phase 3 explicitly rules out one physical HTML file per URL) |
+| Canonical word pages | `/en/english-word-about--A1-00001` | Requires a data lookup (concept shard fetch) + React SSR — not a static file (Phase 3 explicitly rules out one physical HTML file per URL); an unverified slug/ID mismatch returns 410 |
 | Word browse pages | `/en/english-word-about--A1-00001/browse/page/2` | Same as above, plus pagination-boundary logic |
 | Legacy/alias word URLs | `/en/english-word-about-A1-00001` | 308 redirect computed from the concept record's canonical slug |
+| Verified historical word URLs | `/en/english-word-tame--B2-02435` | 308 redirect only for a unique historical identity match; the destination record is fingerprint-checked and browse suffixes are range-checked |
 | Malformed/invalid word-shaped URLs | `/en/english-word-about--Z9-99999` | 410, computed after a shard lookup miss |
 | Worker browse-shard JSON | `/staging-assets/browse-shard/english/a1.json` | Not a static file — served from the same shard store as word pages; no current in-repository HTTP consumer is known (see note below) |
 | Direct record-shard access | `/records`, `/records/latest/manifest.json`, `/records/{version}/concepts/english/a1.json` | Deliberately routed to the Worker via a selective `assets.run_worker_first = ["/records/*"]` (unlike every other row in this table, which reaches the Worker because no static file matches). The Worker's `fetch` handler returns a minimal `404` for any `/records` or `/records/*` request without calling `env.ASSETS.fetch()` for it — see `docs/deployment.md` for the full rationale. This is a separate mechanism from Worker-internal shard reads: `env.ASSETS.fetch()` calls made by the Worker's own code (manifest/shard loading) go directly to the `ASSETS` binding and are not routed through this denial branch. |

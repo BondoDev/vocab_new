@@ -13,9 +13,9 @@
 import {
   parseWordRoutePathname,
   buildWordBrowsePagePathFromSlug,
-  stripDiacriticsForComparison,
   type ParsedWordRoutePathnameResult,
 } from "../../../src/data/seo/wordPages/wordRouteManifest";
+import { VERIFIED_HISTORICAL_WORD_ROUTE_REDIRECTS } from "../../../src/data/seo/wordPages/verifiedHistoricalWordRouteRedirects";
 import { CSP_ENFORCING_HEADER_NAME, buildCspEnforcingHeaderValue } from "../../../src/security/csp";
 import { renderWordPage } from "./render-entry";
 import clientAssets from "../data/client-assets.full.json";
@@ -118,6 +118,18 @@ function resolveConceptShardPath(entry: ConceptShardIndexEntry, conceptId: strin
   const numericId = getConceptNumericId(conceptId);
   const match = entry.find((range) => numericId >= range.rangeStart && numericId <= range.rangeEnd);
   return match?.path ?? null;
+}
+
+async function getConceptIdentitySha256(record: ConceptRecord): Promise<string> {
+  const identity = JSON.stringify([
+    record.lemma,
+    record.definition,
+    record.grammarType,
+    record.category,
+    record.level,
+  ]);
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(identity));
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
 function getConceptStore(assets: Fetcher, assetOrigin: string): ShardStore {
@@ -340,13 +352,18 @@ async function handleWordPageRequest(
   }
 
   const canonical = parsed as Extract<ParsedWordRoutePathnameResult, { kind: "canonical" }>;
-  const level = getConceptLevel(canonical.conceptId);
+  const historicalRedirect =
+    canonical.targetLanguage === "english"
+      ? VERIFIED_HISTORICAL_WORD_ROUTE_REDIRECTS.get(`${canonical.conceptId}:${canonical.wordSlug}`)
+      : undefined;
+  const conceptId = historicalRedirect?.currentConceptId ?? canonical.conceptId;
+  const level = getConceptLevel(conceptId);
   const conceptShardIndex = manifest.shards.concepts[canonical.targetLanguage]?.[level];
   if (!conceptShardIndex) {
     return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "missing-shard" }, dataVersion);
   }
 
-  const conceptShardPath = resolveConceptShardPath(conceptShardIndex, canonical.conceptId);
+  const conceptShardPath = resolveConceptShardPath(conceptShardIndex, conceptId);
   if (!conceptShardPath) {
     return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "missing-shard-range" }, dataVersion);
   }
@@ -355,22 +372,20 @@ async function handleWordPageRequest(
   const conceptShard = await store.getShard<Record<string, ConceptRecord>>(
     `records/${dataVersion}/${conceptShardPath}`,
   );
-  const record = conceptShard?.[canonical.conceptId];
+  const record = conceptShard?.[conceptId];
   if (!record) {
     return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "missing-record" }, dataVersion);
   }
 
-  if (record.canonicalSlug !== canonical.wordSlug) {
-    if (stripDiacriticsForComparison(record.canonicalSlug) === stripDiacriticsForComparison(canonical.wordSlug)) {
-      const location = buildWordBrowsePagePathFromSlug(
-        canonical.uiLang,
-        canonical.targetLanguage,
-        record.canonicalSlug,
-        canonical.conceptId,
-        canonical.browsePage,
-      );
-      return redirectResponse(location, runtimeConfig, dataVersion);
+  if (historicalRedirect) {
+    const identitySha256 = await getConceptIdentitySha256(record);
+    if (
+      record.canonicalSlug !== historicalRedirect.currentCanonicalSlug ||
+      identitySha256 !== historicalRedirect.currentIdentitySha256
+    ) {
+      return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "historical-target-mismatch" }, dataVersion);
     }
+  } else if (record.canonicalSlug !== canonical.wordSlug) {
     return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "slug-mismatch" }, dataVersion);
   }
 
@@ -385,6 +400,17 @@ async function handleWordPageRequest(
   const totalBrowsePages = Math.max(1, Math.ceil(browseShard.totalCount / BROWSE_PAGE_SIZE));
   if (canonical.browsePage > totalBrowsePages) {
     return textResponse("410 Gone", 410, runtimeConfig, { "X-Staging-Reason": "browse-page-out-of-range" }, dataVersion);
+  }
+
+  if (historicalRedirect) {
+    const location = buildWordBrowsePagePathFromSlug(
+      canonical.uiLang,
+      canonical.targetLanguage,
+      record.canonicalSlug,
+      conceptId,
+      canonical.browsePage,
+    );
+    return redirectResponse(location, runtimeConfig, dataVersion);
   }
 
   // UI overlay: only consulted when the UI language's own vocabulary
