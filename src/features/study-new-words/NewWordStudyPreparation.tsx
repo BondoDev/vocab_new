@@ -1,13 +1,5 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import {
-  CheckCircle2,
-  ChevronLeft,
-  GraduationCap,
-  Languages,
-  ListChecks,
-  Play,
-  Target,
-} from "lucide-react";
+import { BookOpen, ChevronLeft, Languages, PencilLine, Play, Repeat, Sparkles, StepForward } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { loadNewWordStudyQueue } from "./loadNewWordStudyQueue";
@@ -17,7 +9,7 @@ import { GUIDED_EXERCISE_COUNT } from "./newWordStudySessionState";
 import type { NewWordStudyQueueResult } from "../../data/learning/newWordStudyQueue";
 import type { LanguageLevelCode } from "../../lib/userProfile";
 // Visual styling for this component (and its LoadingBlock/MessageBlock/
-// ResultBlock/InfoItem/SessionExplainItem helpers below) lives in
+// ResultBlock/SessionSteps helpers below) lives in
 // ./styles/study-new-words.scss — this file only assigns the semantic class
 // names. NewWordStudySession.tsx also imports that stylesheet, but this
 // component is its own entry point (rendered before a session starts), so it
@@ -60,7 +52,7 @@ export function NewWordStudyPreparation({
   currentLevel,
   onBack,
 }: NewWordStudyPreparationProps) {
-  const { t } = useLanguage();
+  const { t, uiLanguage } = useLanguage();
   const [state, setState] = useState<LoadState>({ status: "loading" });
   const [retryToken, setRetryToken] = useState(0);
   // "session" replaces the whole preparation view with NewWordStudySession;
@@ -129,7 +121,10 @@ export function NewWordStudyPreparation({
 
   const handleRetry = useCallback(() => setRetryToken((token) => token + 1), []);
 
-  const title = t("userProfile.learningSection.modeCards.modes.studyNewWords.title");
+  // Own key rather than the Learning page's mode-card title
+  // (userProfile.learningSection.modeCards.modes.studyNewWords.title), so this
+  // screen's heading wording can differ from the card/dashboard label.
+  const title = t("studyNewWords.title");
 
   // Begin Session replaces this whole screen with the guided session — it
   // never navigates to the ordinary Exercises page and never starts Custom
@@ -165,11 +160,10 @@ export function NewWordStudyPreparation({
         </button>
 
         <div className="study-new-words-panel">
-          <div className="study-new-words-header-icon" aria-hidden="true">
-            <GraduationCap className="study-new-words-header-icon-svg" />
-          </div>
-
-          <h1 className="study-new-words-title">{title}</h1>
+          <header className="study-new-words-header">
+            <h1 className="study-new-words-title">{title}</h1>
+            <p className="study-new-words-subtitle">{t("studyNewWords.subtitle")}</p>
+          </header>
 
           {state.status === "loading" && <LoadingBlock message={t("studyNewWords.loading")} />}
 
@@ -189,6 +183,7 @@ export function NewWordStudyPreparation({
             <ResultBlock
               result={state.result}
               practiceLanguage={practiceLanguage}
+              uiLanguage={uiLanguage}
               t={t}
               onBeginSession={() => setIsSessionActive(true)}
             />
@@ -217,21 +212,41 @@ function MessageBlock({ message, children }: { message: string; children?: React
   );
 }
 
+// Picks `${baseKey}_${category}` (CLDR plural category for the UI language:
+// one/few/many/other) and substitutes {count}. Each locale defines only the
+// categories its grammar needs — Russian adds `_few`/`_many` ("3 упражнения",
+// "5 упражнений"), most others just `_one`/`_other` — and any undefined
+// category (e.g. French/Portuguese "many" for millions) falls back to
+// `_other`. t() returns the key itself on a miss, which is how a gap is
+// detected.
+function formatCount(
+  t: (key: string) => string,
+  uiLanguage: string,
+  baseKey: string,
+  count: number,
+): string {
+  const categoryKey = `${baseKey}_${new Intl.PluralRules(uiLanguage).select(count)}`;
+  const template = t(categoryKey);
+  return (template === categoryKey ? t(`${baseKey}_other`) : template).replace("{count}", String(count));
+}
+
 // Deliberately shows only what a learner needs to decide "am I ready to
-// start": a friendly summary, the language/goal it's for, and what the
-// session consists of. Internal queue details (completed/remaining counts,
-// exact word count, learning-order range, which words were selected) stay
-// on `result` and are still used to gate empty/exhausted states below —
-// they're just never rendered, so a future phase can keep computing them
-// without this page needing to change.
+// start": the language, how many words, how much work per word, and how the
+// session runs (SessionSteps). No vocabulary from the queue is shown — the first word is introduced by
+// NewWordInfoStep once the session starts. Internal queue details (completed/remaining
+// counts, learning-order range) stay on `result` and only gate the
+// empty/exhausted states below — they're never rendered, so a future phase
+// can keep computing them without this page needing to change.
 function ResultBlock({
   result,
   practiceLanguage,
+  uiLanguage,
   t,
   onBeginSession,
 }: {
   result: NewWordStudyQueueResult;
   practiceLanguage: string;
+  uiLanguage: string;
   t: (key: string) => string;
   onBeginSession: () => void;
 }) {
@@ -248,43 +263,22 @@ function ResultBlock({
 
   return (
     <div className="study-new-words-preview">
-      {/* Only the dynamic values (word count, language) are emphasized —
-          the rest of the sentence stays regular weight so it doesn't read
-          as "everything purple". */}
-      <p className="study-new-words-summary">
-        {t("studyNewWords.aboutToLearnPrefix")}{" "}
-        <span className="study-new-words-summary-value">{result.selectedQueueLength}</span>
-        {t("studyNewWords.aboutToLearnSuffix")}{" "}
-        <span className="study-new-words-summary-value">{languageName}</span>.
-      </p>
+      <ul className="study-new-words-facts">
+        <li className="study-new-words-fact">
+          <Languages className="study-new-words-fact-icon" aria-hidden="true" />
+          <span>{languageName}</span>
+        </li>
+        <li className="study-new-words-fact">
+          <BookOpen className="study-new-words-fact-icon" aria-hidden="true" />
+          <span>{formatCount(t, uiLanguage, "studyNewWords.newWordsCount", result.selectedQueueLength)}</span>
+        </li>
+        <li className="study-new-words-fact">
+          <Repeat className="study-new-words-fact-icon" aria-hidden="true" />
+          <span>{formatCount(t, uiLanguage, "studyNewWords.exercisesPerWordCount", GUIDED_EXERCISE_COUNT)}</span>
+        </li>
+      </ul>
 
-      <div className="study-new-words-info-grid">
-        <InfoItem
-          icon={<Languages className="study-new-words-info-item-icon-svg" aria-hidden="true" />}
-          label={t("studyNewWords.targetLanguageLabel")}
-          value={languageName}
-        />
-        <InfoItem
-          icon={<Target className="study-new-words-info-item-icon-svg" aria-hidden="true" />}
-          label={t("studyNewWords.dailyGoalLabel")}
-          value={`${result.dailyGoal} ${t("userProfile.learningSection.dailyGoal.wordsPerDay")}`}
-        />
-      </div>
-
-      <div className="study-new-words-checklist">
-        <div className="study-new-words-checklist-header">
-          <ListChecks className="study-new-words-checklist-header-icon" aria-hidden="true" />
-          <h2 className="study-new-words-checklist-heading">{t("studyNewWords.sessionExplainHeading")}</h2>
-        </div>
-        <ul className="study-new-words-checklist-list">
-          <SessionExplainItem>{t("studyNewWords.sessionExplainBullet1")}</SessionExplainItem>
-          <SessionExplainItem>
-            {t("studyNewWords.sessionExplainExercisesPrefix")} {GUIDED_EXERCISE_COUNT}
-            {t("studyNewWords.sessionExplainExercisesSuffix")}
-          </SessionExplainItem>
-          <SessionExplainItem>{t("studyNewWords.sessionExplainBullet3")}</SessionExplainItem>
-        </ul>
-      </div>
+      <SessionSteps uiLanguage={uiLanguage} t={t} />
 
       <button
         type="button"
@@ -294,31 +288,55 @@ function ResultBlock({
         className="study-new-words-begin-button"
       >
         <Play className="study-new-words-begin-button-icon" aria-hidden="true" />
-        <span>{t("studyNewWords.beginSessionButton")}</span>
+        <span>{t("studyNewWords.startLearningButton")}</span>
       </button>
     </div>
   );
 }
 
-function InfoItem({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
-  return (
-    <div className="study-new-words-info-item">
-      <span className="study-new-words-info-item-icon" aria-hidden="true">
-        {icon}
-      </span>
-      <span className="study-new-words-info-item-body">
-        <span className="study-new-words-info-item-label">{label}</span>
-        <span className="study-new-words-info-item-value">{value}</span>
-      </span>
-    </div>
-  );
-}
+// Explains what happens after Start Learning, mirroring
+// newWordStudySessionState's real order: NewWordInfoStep, then the
+// GUIDED_EXERCISE_COUNT guided exercises (broken → half → full typing) on that
+// same word, then the next word until the queue is done. Keep this copy in
+// sync if that progression ever changes. Static and non-interactive: an <ol>
+// because the steps are a genuine sequence.
+function SessionSteps({ uiLanguage, t }: { uiLanguage: string; t: (key: string) => string }) {
+  const steps = [
+    {
+      icon: Sparkles,
+      title: t("studyNewWords.howItWorks.meetTitle"),
+      description: t("studyNewWords.howItWorks.meetDescription"),
+    },
+    {
+      icon: PencilLine,
+      title: formatCount(t, uiLanguage, "studyNewWords.howItWorks.practiceTitle", GUIDED_EXERCISE_COUNT),
+      description: formatCount(t, uiLanguage, "studyNewWords.howItWorks.practiceDescription", GUIDED_EXERCISE_COUNT),
+    },
+    {
+      icon: StepForward,
+      title: t("studyNewWords.howItWorks.nextTitle"),
+      description: t("studyNewWords.howItWorks.nextDescription"),
+    },
+  ];
 
-function SessionExplainItem({ children }: { children: ReactNode }) {
   return (
-    <li className="study-new-words-checklist-item">
-      <CheckCircle2 className="study-new-words-checklist-item-icon" aria-hidden="true" />
-      <span className="study-new-words-checklist-item-text">{children}</span>
-    </li>
+    <section className="study-new-words-steps" aria-labelledby="study-new-words-steps-heading">
+      <h2 id="study-new-words-steps-heading" className="study-new-words-steps-heading">
+        {t("studyNewWords.howItWorks.heading")}
+      </h2>
+      <ol className="study-new-words-steps-list">
+        {steps.map(({ icon: Icon, title, description }) => (
+          <li key={title} className="study-new-words-step">
+            <span className="study-new-words-step-icon" aria-hidden="true">
+              <Icon className="study-new-words-step-icon-svg" />
+            </span>
+            <span className="study-new-words-step-body">
+              <span className="study-new-words-step-title">{title}</span>
+              <span className="study-new-words-step-description">{description}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }

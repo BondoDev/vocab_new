@@ -806,28 +806,23 @@
   display: flex;
   flex-direction: column;
   background-color: var(--background);
-  padding: 1.5rem 1rem 2.5rem;
+  padding: 1rem 1rem calc(2rem + env(safe-area-inset-bottom, 0px));
+
+  @media (min-width: 640px) {
+    padding-top: 1.5rem;
+  }
 
   @media (min-width: 768px) {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  @media (max-width: 368px) {
-    padding-top: 0;
-    padding-bottom: 0;
   }
 }
 
 .study-new-words-page-body {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  // .study-new-words-panel is width:100% of this container, so its rendered
-  // width is set here — kept narrower than a generic content column so the
-  // panel reads as one focused, comfortably-proportioned card rather than a
-  // wide form. Also keeps the back button aligned to the same left edge as
-  // the panel below it.
+  // Kept narrower than a generic content column so the panel reads as one
+  // focused unit; also aligns the back button with the panel's left edge.
   max-width: 34rem;
   width: 100%;
   margin-left: auto;
@@ -839,10 +834,11 @@
   align-items: center;
   gap: 0.5rem;
   align-self: flex-start;
-  // Comfortable mobile tap target without visually growing into a button —
-  // the extra height is invisible padding, not a background/border.
+  // Comfortable tap target without visually growing into a button — the
+  // extra height is invisible padding, not a background/border.
+  min-height: 2.75rem;
   padding: 0.375rem 0.25rem;
-  margin: -0.375rem -0.25rem 1rem;
+  margin: -0.375rem -0.25rem 0.75rem;
   border-radius: calc(var(--radius) - 4px);
   color: var(--muted-foreground);
   font-size: 0.9rem;
@@ -863,58 +859,56 @@
   height: 1.15rem;
 }
 
+// Phones: no panel chrome at all — the content sits directly on the page so
+// the header, facts and button use the full width instead of a card inset
+// inside a card. From 640px the same content gets the Learning page's card
+// treatment (--radius-based corners, the soft "0 1px 2px + faint
+// primary-tinted glow" shadow used by .learning-kpi-card/.learning-mode-card).
 .study-new-words-panel {
   width: 100%;
-  border: 1px solid color-mix(in srgb, var(--primary) 10%, var(--border));
-  border-radius: calc(var(--radius) + 6px);
-  background: var(--card);
-  box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.04),
-    0 12px 28px -18px color-mix(in srgb, var(--primary) 40%, transparent);
-  padding: 1.75rem 1.25rem 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // Every block in the panel is centered (header, facts, steps); the back
+  // button sits outside the panel and stays left-aligned.
   text-align: center;
 
   @media (min-width: 640px) {
-    padding: 2.25rem 2rem 2.5rem;
+    border: 1px solid color-mix(in srgb, var(--primary) 10%, var(--border));
+    border-radius: calc(var(--radius) + 6px);
+    background: var(--card);
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 12px 28px -18px color-mix(in srgb, var(--primary) 40%, transparent);
+    padding: 2rem 2rem 2.25rem;
   }
 
   @media (min-width: 768px) {
-    padding: 2.5rem 3rem 3rem;
+    padding: 2.25rem 2.5rem 2.5rem;
   }
-}
-
-.study-new-words-header-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 4.25rem;
-  height: 4.25rem;
-  flex-shrink: 0;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--primary) 12%, transparent);
-  color: var(--primary);
-  margin-bottom: 1rem;
-}
-
-.study-new-words-header-icon-svg {
-  width: 2.125rem;
-  height: 2.125rem;
-  stroke-width: 1.75;
 }
 
 .study-new-words-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.625rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
   color: var(--foreground);
-  margin-bottom: 0.625rem;
   overflow-wrap: break-word;
+  text-wrap: balance;
 
   @media (min-width: 768px) {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
+}
+
+.study-new-words-subtitle {
+  margin-top: 0.375rem;
+  color: var(--muted-foreground);
+  max-width: 40ch;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+  overflow-wrap: break-word;
 }
 
 .study-new-words-retry-button {
@@ -943,7 +937,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 1.5rem;
+  padding-top: 2rem;
   padding-bottom: 1rem;
 }
 
@@ -977,7 +971,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 1rem;
+  padding-top: 1.75rem;
   padding-bottom: 0.5rem;
   gap: 1rem;
 }
@@ -991,147 +985,44 @@
 .study-new-words-preview {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
 }
 
-// Only the dynamic values inside get the accent treatment (see
-// .study-new-words-summary-value) — the sentence itself stays regular
-// foreground/weight so it doesn't read as "everything purple".
-.study-new-words-summary {
-  font-size: 1rem;
-  color: var(--muted-foreground);
-  max-width: 42ch;
-  overflow-wrap: break-word;
-  line-height: 1.5;
-
-  @media (min-width: 768px) {
-    font-size: 1.0625rem;
-  }
-}
-
-.study-new-words-summary-value {
-  color: var(--foreground);
-  font-weight: 700;
-}
-
-.study-new-words-info-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.625rem;
-  width: 100%;
-  margin-top: 1.5rem;
-  text-align: left;
-
-  @media (min-width: 480px) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.study-new-words-info-item {
+// Session facts read as a line of quiet tags under the subtitle, not as
+// dashboard stat tiles: no labels, no big numbers, one tinted pill each.
+// They wrap as whole pills on narrow screens (white-space: nowrap inside a
+// pill only while it still fits; overflow-wrap lets a very long translation
+// break instead of overflowing).
+.study-new-words-facts {
   display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  min-width: 0;
-  padding: 0.625rem 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) - 2px);
-  background: var(--background);
-}
-
-.study-new-words-info-item-icon {
-  display: flex;
-  align-items: center;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
   justify-content: center;
-  width: 2.125rem;
-  height: 2.125rem;
-  flex-shrink: 0;
-  border-radius: calc(var(--radius) - 4px);
-  background: color-mix(in srgb, var(--primary) 10%, transparent);
-  color: var(--primary);
-}
-
-.study-new-words-info-item-icon-svg {
-  width: 1.05rem;
-  height: 1.05rem;
-}
-
-.study-new-words-info-item-body {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.study-new-words-info-item-label {
-  font-size: 0.75rem;
-  color: var(--muted-foreground);
-}
-
-.study-new-words-info-item-value {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--foreground);
-  overflow-wrap: break-word;
-}
-
-// Softly tinted lavender panel — deliberately not another bordered white
-// card, so it reads as one distinct "what happens next" zone rather than a
-// third nested card competing with .study-new-words-panel itself.
-.study-new-words-checklist {
-  width: 100%;
-  margin-top: 1.5rem;
-  padding: 1.125rem 1.25rem;
-  border-radius: calc(var(--radius) + 2px);
-  background: color-mix(in srgb, var(--primary) 6%, var(--background));
-  text-align: left;
-}
-
-.study-new-words-checklist-header {
-  display: flex;
-  align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin-top: 1.25rem;
 }
 
-.study-new-words-checklist-header-icon {
-  width: 1.125rem;
-  height: 1.125rem;
-  flex-shrink: 0;
-  color: var(--primary);
-}
-
-.study-new-words-checklist-heading {
-  font-size: 0.9rem;
-  font-weight: 600;
+.study-new-words-fact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 100%;
+  padding: 0.375rem 0.75rem 0.375rem 0.625rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 8%, var(--background));
   color: var(--foreground);
-}
-
-.study-new-words-checklist-list {
-  & > * + * {
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid color-mix(in srgb, var(--primary) 10%, transparent);
-  }
-}
-
-.study-new-words-checklist-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.625rem;
   font-size: 0.875rem;
-  color: var(--foreground);
+  font-weight: 500;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
-.study-new-words-checklist-item-icon {
-  width: 1.05rem;
-  height: 1.05rem;
-  margin-top: 0.15rem;
+.study-new-words-fact-icon {
+  width: 1rem;
+  height: 1rem;
   flex-shrink: 0;
   color: var(--primary);
-}
-
-.study-new-words-checklist-item-text {
-  overflow-wrap: break-word;
 }
 
 .study-new-words-begin-button {
@@ -1140,25 +1031,30 @@
   justify-content: center;
   gap: 0.5rem;
   width: 100%;
+  min-height: 3rem;
   margin-top: 1.75rem;
-  padding: 0.9rem 1.5rem;
+  padding: 0.875rem 1.5rem;
   border-radius: calc(var(--radius) - 2px);
   background-color: var(--primary);
   color: var(--primary-foreground);
   font-size: 1rem;
   font-weight: 600;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  touch-action: manipulation;
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.05),
+    0 10px 22px -14px color-mix(in srgb, var(--primary) 70%, transparent);
   transition:
     background-color 150ms ease,
+    box-shadow 150ms ease,
     transform 150ms ease;
 
   &:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--primary) 90%, transparent);
+    background-color: color-mix(in srgb, var(--primary) 90%, #000);
   }
 
   &:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--primary) 95%, transparent);
     transform: translateY(1px);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
 
   &:disabled {
@@ -1171,7 +1067,7 @@
   &:focus-visible {
     outline: none;
     box-shadow:
-      0 0 0 2px var(--card),
+      0 0 0 2px var(--background),
       0 0 0 4px var(--ring);
   }
 }
@@ -1180,4 +1076,185 @@
   width: 1.1rem;
   height: 1.1rem;
   flex-shrink: 0;
+}
+
+// SessionSteps: "How your session works". One connected component, not three
+// cards — no step backgrounds or borders, only tinted icon discs joined by a
+// thin connector. Phones get a vertical stepper (icon column on the left, a
+// line running between the discs); from 640px the steps sit side by side,
+// centered, with a line + arrowhead between neighbouring discs.
+//
+// Each step has its own accent so the three read as distinct stages: indigo
+// (the light theme's --primary, fixed because --primary turns near-white in
+// dark mode), amber for the practice step, teal for moving on. Discs are
+// translucent tints so they work on both the card and the dark background;
+// each icon color keeps >= 3:1 against its tint.
+.study-new-words-steps {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.study-new-words-steps-heading {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.study-new-words-steps-list {
+  --step-disc: 2.25rem;
+  --step-gap: 0.875rem;
+
+  list-style: none;
+  padding: 0;
+  // Phone stepper: the block is centered in the panel, but its text stays
+  // left-aligned beside the icon column so the connector line still reads.
+  width: fit-content;
+  max-width: 100%;
+  margin: 0.875rem auto 0;
+  text-align: left;
+  display: grid;
+  gap: 1rem;
+
+  @media (min-width: 640px) {
+    --step-disc: 2.75rem;
+
+    width: 100%;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 1.125rem;
+  }
+}
+
+.study-new-words-step {
+  --step-accent: #4f46e5;
+
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--step-disc) minmax(0, 1fr);
+  column-gap: var(--step-gap);
+  align-items: start;
+  // Side by side, every step is stretched to the tallest one; without this
+  // the extra height is shared between the disc and text rows, pushing the
+  // titles of shorter steps out of line with a wrapped neighbour.
+  align-content: start;
+
+  &:nth-child(2) {
+    --step-accent: #b45309;
+  }
+
+  &:nth-child(3) {
+    --step-accent: #0f766e;
+  }
+
+  // Lighter accents on the dark theme so icons keep >= 3:1 on #1a1a1a.
+  .dark & {
+    --step-accent: #a5b4fc;
+
+    &:nth-child(2) {
+      --step-accent: #fbbf24;
+    }
+
+    &:nth-child(3) {
+      --step-accent: #5eead4;
+    }
+  }
+
+  // Vertical connector (phones): from just under this disc to just above the
+  // next one; the list's 1rem row gap is bridged by the negative bottom.
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--step-disc) / 2 - 0.75px);
+    top: calc(var(--step-disc) + 0.25rem);
+    bottom: -0.75rem;
+    width: 1.5px;
+    border-radius: 999px;
+    background: color-mix(in srgb, #6366f1 25%, transparent);
+  }
+
+  @media (min-width: 640px) {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    row-gap: 0.625rem;
+    padding: 0 0.375rem;
+    text-align: center;
+
+    // Horizontal connector: from the right of this disc to the left of the
+    // next one (each column is the same width, so the next disc's center is
+    // one column-width to the right).
+    &:not(:last-child)::after {
+      left: calc(50% + var(--step-disc) / 2 + 0.5rem);
+      right: calc(-50% + var(--step-disc) / 2 + 0.5rem);
+      top: calc(var(--step-disc) / 2 - 0.75px);
+      bottom: auto;
+      width: auto;
+      height: 1.5px;
+    }
+
+    // Arrowhead at the connector's right end.
+    &:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      right: calc(-50% + var(--step-disc) / 2 + 0.5rem);
+      top: calc(var(--step-disc) / 2 - 3.5px);
+      width: 7px;
+      height: 7px;
+      border-top: 1.5px solid color-mix(in srgb, #6366f1 40%, transparent);
+      border-right: 1.5px solid color-mix(in srgb, #6366f1 40%, transparent);
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.study-new-words-step-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--step-disc);
+  height: var(--step-disc);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--step-accent) 13%, transparent);
+  color: var(--step-accent);
+}
+
+.study-new-words-step-icon-svg {
+  width: 1.125rem;
+  height: 1.125rem;
+
+  @media (min-width: 640px) {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+}
+
+.study-new-words-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+  // Aligns the title's first line with the disc center on the phone layout.
+  padding-top: 0.375rem;
+
+  @media (min-width: 640px) {
+    padding-top: 0;
+  }
+}
+
+.study-new-words-step-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.study-new-words-step-description {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+  overflow-wrap: break-word;
+  text-wrap: pretty;
 }

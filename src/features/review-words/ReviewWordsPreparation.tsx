@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import { BrainCircuit, ChevronLeft, Languages, ListChecks, Play } from "lucide-react";
+import { ChevronLeft, Languages, Layers, Play } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { loadReviewQueue } from "./loadReviewQueue";
@@ -35,7 +35,7 @@ export function ReviewWordsPreparation({
   onBack,
   onStartNewWordStudy,
 }: ReviewWordsPreparationProps) {
-  const { t } = useLanguage();
+  const { t, uiLanguage } = useLanguage();
   const [state, setState] = useState<LoadState>({ status: "loading" });
   const [retryToken, setRetryToken] = useState(0);
   // "session" replaces the whole preparation view with ReviewSession;
@@ -115,12 +115,10 @@ export function ReviewWordsPreparation({
         </button>
 
         <div className="review-words-panel">
-          <div className="review-words-header-icon" aria-hidden="true">
-            <BrainCircuit className="review-words-header-icon-svg" />
-          </div>
-
-          <h1 className="review-words-title">{title}</h1>
-          <p className="review-words-subtitle">{t("reviewWords.subtitle")}</p>
+          <header className="review-words-header">
+            <h1 className="review-words-title">{title}</h1>
+            <p className="review-words-subtitle">{t("reviewWords.subtitle")}</p>
+          </header>
 
           {state.status === "loading" && <LoadingBlock message={t("reviewWords.loading")} />}
 
@@ -138,6 +136,7 @@ export function ReviewWordsPreparation({
             <ResultBlock
               result={state.result}
               practiceLanguage={practiceLanguage}
+              uiLanguage={uiLanguage}
               t={t}
               onStartNewWordStudy={onStartNewWordStudy}
               onBeginReview={() => setIsSessionActive(true)}
@@ -167,21 +166,42 @@ function MessageBlock({ message, children }: { message: string; children?: React
   );
 }
 
+// Same plural-aware {count} formatting as NewWordStudyPreparation.tsx's
+// helper (duplicated rather than imported to keep the two features
+// independent, matching speakReviewWord/speakGuidedWord): picks the CLDR
+// plural form `${baseKey}_${category}` for the UI language and falls back to
+// `_other` for categories a locale doesn't define (only `_one`/`_other` exist,
+// since this guard-checked key set must match English).
+function formatCount(
+  t: (key: string) => string,
+  uiLanguage: string,
+  baseKey: string,
+  count: number,
+): string {
+  const categoryKey = `${baseKey}_${new Intl.PluralRules(uiLanguage).select(count)}`;
+  const template = t(categoryKey);
+  return (template === categoryKey ? t(`${baseKey}_other`) : template).replace("{count}", String(count));
+}
+
 // Deliberately shows only what a learner needs to decide "am I ready to
-// start": a friendly summary, the language it's for, and the word count.
-// Internal selection details (overdue counts, weights, priorities) stay on
-// `result.metadata` and are only used here to choose which state to render,
-// never surfaced in the markup — matching this phase's "read-only,
-// no-internals-in-production-UI" requirement.
+// start": the language and how many words are due. Unlike the new-word
+// screen there is no word preview — showing a due word (or its translation)
+// right before recalling it would give the answer away. Internal selection
+// details (overdue counts, weights, priorities) stay on `result.metadata` and
+// are only used here to choose which state to render, never surfaced in the
+// markup — matching this phase's "read-only, no-internals-in-production-UI"
+// requirement.
 function ResultBlock({
   result,
   practiceLanguage,
+  uiLanguage,
   t,
   onStartNewWordStudy,
   onBeginReview,
 }: {
   result: LoadReviewQueueResult;
   practiceLanguage: string;
+  uiLanguage: string;
   t: (key: string) => string;
   onStartNewWordStudy?: () => void;
   onBeginReview: () => void;
@@ -206,43 +226,21 @@ function ResultBlock({
 
   return (
     <div className="review-words-preview">
-      <p className="review-words-summary">
-        {t("reviewWords.aboutToReviewPrefix")}{" "}
-        <span className="review-words-summary-value">{result.queue.length}</span>{" "}
-        {t("reviewWords.aboutToReviewSuffix")} <span className="review-words-summary-value">{languageName}</span>.
-      </p>
-
-      <div className="review-words-info-grid">
-        <InfoItem
-          icon={<Languages className="review-words-info-item-icon-svg" aria-hidden="true" />}
-          label={t("reviewWords.targetLanguageLabel")}
-          value={languageName}
-        />
-        <InfoItem
-          icon={<ListChecks className="review-words-info-item-icon-svg" aria-hidden="true" />}
-          label={t("reviewWords.wordsPreparedLabel")}
-          value={String(result.queue.length)}
-        />
-      </div>
+      <ul className="review-words-facts">
+        <li className="review-words-fact">
+          <Languages className="review-words-fact-icon" aria-hidden="true" />
+          <span>{languageName}</span>
+        </li>
+        <li className="review-words-fact">
+          <Layers className="review-words-fact-icon" aria-hidden="true" />
+          <span>{formatCount(t, uiLanguage, "reviewWords.wordsToReviewCount", result.queue.length)}</span>
+        </li>
+      </ul>
 
       <button type="button" onClick={onBeginReview} className="review-words-begin-button">
         <Play className="review-words-begin-button-icon" aria-hidden="true" />
-        <span>{t("reviewWords.beginReviewButton")}</span>
+        <span>{t("reviewWords.startReviewButton")}</span>
       </button>
-    </div>
-  );
-}
-
-function InfoItem({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
-  return (
-    <div className="review-words-info-item">
-      <span className="review-words-info-item-icon" aria-hidden="true">
-        {icon}
-      </span>
-      <span className="review-words-info-item-body">
-        <span className="review-words-info-item-label">{label}</span>
-        <span className="review-words-info-item-value">{value}</span>
-      </span>
     </div>
   );
 }
