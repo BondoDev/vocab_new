@@ -4,7 +4,11 @@
 // Read-only — this module performs no Supabase writes.
 import type { StoredSupabaseSession } from "../../lib/supabaseAuth";
 import type { LanguageLevelCode } from "../../lib/userProfile";
-import { readStudiedConceptIds, readTodayNewWordsCompleted } from "../../lib/newWordProgress";
+import {
+  readStudiedConceptIds,
+  readTodayNewWordsCompleted,
+  readTodayStudiedWordProgress,
+} from "../../lib/newWordProgress";
 import { getCurrentLearningDate } from "../../lib/learningDate";
 import {
   computeRemainingDailyTarget,
@@ -13,6 +17,7 @@ import {
   selectNewWordStudyQueue,
   type ArrangedVocabularyEntry,
   type NewWordStudyQueueResult,
+  type ResolvedStudyQueueItem,
 } from "../../data/learning/newWordStudyQueue";
 import { buildVocabularyConceptResolver } from "../../data/vocabulary/resolveVocabularyWordData";
 import arrangedVocabularyRaw from "../../data/learning/vocabulary_aranged.json";
@@ -142,4 +147,69 @@ export async function loadNewWordStudyQueue({
       );
     },
   });
+}
+
+// What the session-complete screen shows per studied word. The progress
+// fields come only from today's progress read (loadTodayStudiedWords); a
+// word known only from the in-memory session lacks them, and its favorite
+// action is then unavailable.
+export type StudiedWordSummary = Pick<ResolvedStudyQueueItem, "conceptId" | "targetWord" | "translation" | "grammarType"> & {
+  progressRowId?: string;
+  isFavorite?: boolean;
+};
+
+export interface LoadTodayStudiedWordsParams {
+  session: StoredSupabaseSession;
+  targetLanguage: string;
+  nativeLanguage: string;
+}
+
+// Every word studied today in this language (all of today's sessions, oldest
+// first), resolved for display: the same server learning date and the same
+// rows user_daily_stats.new_words_completed counts (see
+// readTodayStudiedWordProgress). Read-only. Concepts the bundled vocabulary
+// can't resolve are skipped rather than shown as raw ids.
+export async function loadTodayStudiedWords({
+  session,
+  targetLanguage,
+  nativeLanguage,
+}: LoadTodayStudiedWordsParams): Promise<StudiedWordSummary[]> {
+  if (!VOCABULARY_IMPORTERS[targetLanguage] || !VOCABULARY_IMPORTERS[nativeLanguage]) {
+    throw new Error(`loadTodayStudiedWords: unsupported language pair "${targetLanguage}"/"${nativeLanguage}".`);
+  }
+
+  const statDateISO = await getCurrentLearningDate(session);
+  const progressRows = await readTodayStudiedWordProgress(session, targetLanguage, statDateISO);
+  if (progressRows.length === 0) {
+    return [];
+  }
+
+  // Already loaded by this session's queue preparation, so these dynamic
+  // imports resolve from the module cache.
+  const [targetModule, nativeModule] = await Promise.all([
+    VOCABULARY_IMPORTERS[targetLanguage](),
+    VOCABULARY_IMPORTERS[nativeLanguage](),
+  ]);
+  const resolveConcept = buildVocabularyConceptResolver(
+    Array.isArray(targetModule.default) ? targetModule.default : [],
+    Array.isArray(nativeModule.default) ? nativeModule.default : [],
+  );
+
+  const words: StudiedWordSummary[] = [];
+  const seen = new Set<string>();
+  for (const { conceptId, progressRowId, isFavorite } of progressRows) {
+    if (seen.has(conceptId)) continue;
+    seen.add(conceptId);
+    const resolved = resolveConcept(conceptId);
+    if (!resolved) continue;
+    words.push({
+      conceptId,
+      targetWord: resolved.targetWord,
+      translation: resolved.translation,
+      grammarType: resolved.grammarType,
+      progressRowId,
+      isFavorite,
+    });
+  }
+  return words;
 }

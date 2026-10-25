@@ -31,6 +31,8 @@ interface NewWordStudyPreparationProps {
   // implies a valid current_level exists for this profile.
   currentLevel: LanguageLevelCode | "";
   onBack: () => void;
+  // Forwarded to the session-complete screen's Start Reviewing action.
+  onStartReviewWords?: () => void;
 }
 
 type LoadState =
@@ -51,6 +53,7 @@ export function NewWordStudyPreparation({
   dailyGoal,
   currentLevel,
   onBack,
+  onStartReviewWords,
 }: NewWordStudyPreparationProps) {
   const { t, uiLanguage } = useLanguage();
   const [state, setState] = useState<LoadState>({ status: "loading" });
@@ -147,6 +150,7 @@ export function NewWordStudyPreparation({
         // loaded `result` (remainingToday, selectedQueueLength, etc.) is no
         // longer accurate by the time the user exits or finishes.
         onExit={onBack}
+        onStartReviewWords={onStartReviewWords}
       />
     );
   }

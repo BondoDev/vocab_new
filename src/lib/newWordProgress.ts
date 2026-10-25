@@ -95,6 +95,48 @@ export async function readStudiedConceptIds(
   return new Set(rows.map((row) => row.word_id).filter((id): id is string => typeof id === "string"));
 }
 
+export interface TodayStudiedWordProgress {
+  progressRowId: string;
+  conceptId: string;
+  isFavorite: boolean;
+}
+
+interface TodayStudiedWordProgressRawRow {
+  id?: unknown;
+  word_id?: unknown;
+  is_favorite?: unknown;
+}
+
+// Every word first studied (via Study New Words) on the given server
+// learning date, oldest first, with the progress row id and favorite flag
+// the session-complete screen's row menu needs. first_studied_stat_date is
+// set only by complete_new_word_study when it inserts the progress row, so
+// this is the same set user_daily_stats.new_words_completed counts for that
+// date. Read-only.
+export async function readTodayStudiedWordProgress(
+  session: StoredSupabaseSession,
+  targetLanguage: string,
+  statDateISO: string,
+): Promise<TodayStudiedWordProgress[]> {
+  const userId = session.user?.id;
+  if (!userId || !targetLanguage || !statDateISO) {
+    return [];
+  }
+
+  const rows = await supabaseProgressRequest<TodayStudiedWordProgressRawRow[]>(
+    session,
+    `/rest/v1/user_word_progress?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(
+      targetLanguage,
+    )}&first_studied_stat_date=eq.${encodeURIComponent(statDateISO)}&select=id,word_id,is_favorite&order=created_at.asc`,
+  );
+
+  return rows.flatMap((row) =>
+    typeof row.id === "string" && typeof row.word_id === "string"
+      ? [{ progressRowId: row.id, conceptId: row.word_id, isFavorite: row.is_favorite === true }]
+      : [],
+  );
+}
+
 // No daily-stat row yet is a normal state (first study session of the day,
 // or ever) — treat it as 0 completed rather than an error, and never create
 // the row here; this phase is read-only.

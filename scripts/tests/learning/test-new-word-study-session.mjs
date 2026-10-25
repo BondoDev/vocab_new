@@ -387,6 +387,18 @@ test("21. The completed-session count (getSessionProgress) reflects only persist
   assert.equal(getSessionProgress(saved).completedWords, 1);
 });
 
+test("21b. Finish session mid-exercise shows completion with only the saved words; ignored while a save is in flight", () => {
+  const { queue, state } = reachSavingWord(3);
+  // A save is in flight: finishing must not switch away and orphan it.
+  assert.equal(reduceSessionState(state, { type: "FINISH_SESSION" }), state);
+  let next = reduceSessionState(state, { type: "SAVE_SUCCEEDED" });
+  next = reduceSessionState(next, { type: "START_EXERCISES" });
+  next = reduceSessionState(next, { type: "COMPLETE_EXERCISE", step: "broken_word", outcome: OUTCOME });
+  const finished = reduceSessionState(next, { type: "FINISH_SESSION" });
+  assert.equal(finished.currentStep, "session_complete");
+  assert.deepEqual(finished.completedConceptIds, [queue[0].conceptId]);
+});
+
 console.log("\n=== exit copy (source-text) ===\n");
 
 test("22. Exit confirmation copy is honest: already-completed words are saved, the current word is not", () => {

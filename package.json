@@ -59,6 +59,7 @@
     "test:complete-word-review-contract": "node --experimental-strip-types scripts/tests/learning/test-complete-word-review-contract.mjs",
     "test:review-mistake-detection": "node --experimental-strip-types scripts/tests/learning/test-review-mistake-detection.mjs",
     "test:review-words-localization": "node scripts/tests/learning/test-review-words-localization.mjs",
+    "test:new-word-study-complete-localization": "node scripts/tests/learning/test-new-word-study-complete-localization.mjs",
     "test:complete-new-word-study-contract": "node --experimental-strip-types scripts/tests/learning/test-complete-new-word-study-contract.mjs",
     "test:daily-streak": "node --experimental-strip-types scripts/tests/learning/test-daily-streak.mjs",
     "test:daily-streak-data-contract": "node --experimental-strip-types scripts/tests/learning/test-daily-streak-data-contract.mjs",

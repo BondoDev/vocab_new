@@ -1225,6 +1225,7 @@ function AppContent({
             dailyGoal={userProfile.dailyGoal}
             currentLevel={userProfile.languageLevel}
             onBack={() => navigate(`${ROUTES.profile}?section=learning`)}
+            onStartReviewWords={handleStartReviewWords}
           />
         </Suspense>
         {accountOnboardingDialog}

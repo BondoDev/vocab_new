@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import { LogOut } from "lucide-react";
+import { Flag } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Toast, useAutoDismissMessage } from "../../app/components/Toast";
 import {
@@ -19,6 +19,7 @@ import { completeNewWordStudy, NewWordStudyPersistenceError } from "../../lib/ne
 import { resolveSupabaseErrorMessageKey, type SupabaseErrorCategory } from "../../lib/supabaseError";
 import {
   createInitialSessionState,
+  getCompletedSessionWords,
   getCurrentQueueItem,
   getExerciseStepNumber,
   getSessionProgress,
@@ -52,9 +53,14 @@ interface NewWordStudySessionProps {
   // later the same day. See newWordStudySessionState.ts's getSessionProgress.
   dailyGoal: number;
   wordsCompletedToday: number;
-  // Used both for "Exit" (with confirmation) and "Return to Learning" on the
-  // completion screen — both ultimately return to the same place.
+  // Navigates back to the Learning page: the completion screen's "Return to
+  // Learning" and the no-current-word error's back button. (The header's
+  // "Finish session" no longer leaves directly — it shows the completion
+  // screen first.)
   onExit: () => void;
+  // Opens the existing Review Words route (App's handleStartReviewWords).
+  // Optional: without it the completion screen never offers Start Reviewing.
+  onStartReviewWords?: () => void;
 }
 
 export function NewWordStudySession({
@@ -64,6 +70,7 @@ export function NewWordStudySession({
   dailyGoal,
   wordsCompletedToday,
   onExit,
+  onStartReviewWords,
 }: NewWordStudySessionProps) {
   const { t } = useLanguage();
   const [state, dispatch] = useReducer(
@@ -223,13 +230,23 @@ export function NewWordStudySession({
       ? state.currentStep
       : null;
 
-  const handleExitClick = () => {
+  // "Finish session" ends the session early and shows the completion screen
+  // for the words saved so far (FINISH_SESSION). On a word's intro nothing is
+  // in progress, so it finishes at once; mid-exercises (or after a failed
+  // save) it confirms first, because the current word won't be saved.
+  // Disabled while a save is in flight (the reducer ignores it then too).
+  const isFinishDisabled = state.currentStep === "saving_word";
+  const handleFinishClick = () => {
+    if (state.currentStep === "word_intro") {
+      dispatch({ type: "FINISH_SESSION" });
+      return;
+    }
     setIsExitConfirmOpen(true);
   };
 
-  const handleConfirmExit = () => {
+  const handleConfirmFinish = () => {
     setIsExitConfirmOpen(false);
-    onExit();
+    dispatch({ type: "FINISH_SESSION" });
   };
 
   const handleRetrySave = () => {
@@ -244,12 +261,12 @@ export function NewWordStudySession({
             <div className="new-word-study-session-header-row">
               <button
                 type="button"
-                onClick={handleExitClick}
-                aria-label={t("studyNewWords.exitSessionAria")}
+                onClick={handleFinishClick}
+                disabled={isFinishDisabled}
                 className="new-word-study-exit-button"
               >
-                <LogOut className="new-word-study-exit-icon" aria-hidden="true" />
-                <span className="new-word-study-exit-label">{t("studyNewWords.exitSessionAria")}</span>
+                <Flag className="new-word-study-exit-icon" aria-hidden="true" />
+                <span className="new-word-study-exit-label">{t("studyNewWords.finishSessionButton")}</span>
               </button>
 
               <p className="new-word-study-progress-text">
@@ -367,14 +384,14 @@ export function NewWordStudySession({
 
           {isSessionComplete && (
             <NewWordStudyComplete
-              // Today's full count (words completed before this session +
-              // words completed in it), not just this session's queue —
-              // matches the screen's own "Today's new words completed"
-              // title and the Word X of Y label's same convention. A
-              // learner who finishes 4 earlier and 6 now must see 10, not 6.
-              wordsCompleted={progress.completedWords}
+              // The screen lists every word studied today (it reads them
+              // itself); this session's own saved words are passed as the
+              // fallback and to make sure a just-saved word is never missing.
+              sessionWords={getCompletedSessionWords(state)}
               practiceLanguage={practiceLanguage}
+              yourLanguage={yourLanguage}
               onReturnToLearning={onExit}
+              onStartReviewWords={onStartReviewWords}
             />
           )}
         </div>
@@ -390,7 +407,7 @@ export function NewWordStudySession({
             <AlertDialogCancel className="new-word-study-exit-dialog-button">
               {t("studyNewWords.leaveSessionStay")}
             </AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmExit} className="new-word-study-exit-dialog-button">
+            <AlertDialogAction onClick={handleConfirmFinish} className="new-word-study-exit-dialog-button">
               {t("studyNewWords.leaveSessionConfirm")}
             </AlertDialogAction>
           </AlertDialogFooter>

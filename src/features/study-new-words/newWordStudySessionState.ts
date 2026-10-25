@@ -147,7 +147,11 @@ export type SessionAction =
   // Dispatched by the Retry action in the save_error UI. The component reads
   // currentStep === "saving_word" (again) as its cue to re-issue the exact
   // same idempotent RPC request.
-  | { type: "RETRY_SAVE" };
+  | { type: "RETRY_SAVE" }
+  // The learner's "Finish session" action: ends the session early and shows
+  // the completion screen for the words saved so far. Never saves the word in
+  // progress (it hasn't finished its exercises) — see the reducer case.
+  | { type: "FINISH_SESSION" };
 
 export function reduceSessionState(state: SessionState, action: SessionAction): SessionState {
   switch (action.type) {
@@ -242,6 +246,17 @@ export function reduceSessionState(state: SessionState, action: SessionAction): 
       return { ...state, currentStep: "save_error" };
     }
 
+    case "FINISH_SESSION": {
+      // Ignored while a save is in flight: switching away from saving_word
+      // cancels that request's handling, so a word could be persisted without
+      // ever reaching completedConceptIds (and the summary). The button is
+      // disabled for that step too; this is the reducer-level guarantee.
+      if (!state.hasStarted || state.currentStep === "saving_word" || state.currentStep === "session_complete") {
+        return state;
+      }
+      return { ...state, currentStep: "session_complete", isComplete: true };
+    }
+
     case "RETRY_SAVE": {
       if (state.currentStep !== "save_error") {
         return state;
@@ -284,6 +299,25 @@ export function getSessionProgress(state: SessionState): SessionProgress {
     totalWords,
     completedWords: state.wordsCompletedBeforeSession + state.completedConceptIds.length,
   };
+}
+
+// The words this session actually finished, in the order they were
+// finished, for the session-complete summary. Built from completedConceptIds,
+// so a word only appears once all three exercises were completed *and* its
+// save succeeded (see SAVE_SUCCEEDED) — never from the planned queue alone,
+// and never including words finished in earlier sessions today. Deduplicated
+// by concept id in case the queue ever carries a repeat.
+export function getCompletedSessionWords(state: SessionState): ResolvedStudyQueueItem[] {
+  const byConceptId = new Map(state.queue.map((item) => [item.conceptId, item] as const));
+  const seen = new Set<string>();
+  const words: ResolvedStudyQueueItem[] = [];
+  for (const conceptId of state.completedConceptIds) {
+    const item = byConceptId.get(conceptId);
+    if (!item || seen.has(conceptId)) continue;
+    seen.add(conceptId);
+    words.push(item);
+  }
+  return words;
 }
 
 // Returns 1/2/3 during an exercise step, null otherwise (word_intro and

@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { Volume2 } from "lucide-react";
+import { ArrowRight, CornerDownRight, Volume2 } from "lucide-react";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import type { ResolvedStudyQueueItem } from "../../../data/learning/newWordStudyQueue";
+import { useRandomCardSurface, type MotionCssVars } from "../../../exercises/exerciseTheme";
 import { speakGuidedWord } from "../utils/speakGuidedWord";
-import { GUIDED_EXERCISE_COUNT } from "../newWordStudySessionState";
 // Same word-highlighting utility VocabularyPractice.tsx already uses to bold
 // a concept's conjugated/separated forms inside its example sentence —
 // reused here rather than re-implemented so both flows highlight identically.
@@ -20,6 +20,8 @@ interface NewWordInfoStepProps {
   onContinue: () => void;
 }
 
+type WordCardCssVars = MotionCssVars<"--pc-surface">;
+
 // Same fallback used by PracticeResults.tsx/VocabularyPractice.tsx for an
 // untranslated wordTypes.* id: title-case the raw value instead of showing a
 // raw translation key. The grammar label always comes from item.grammarType
@@ -31,30 +33,34 @@ function formatWordTypeLabel(typeId: string): string {
     .join(" ");
 }
 
-// Small uppercase muted label shared across the card (language names,
-// translation/definition/example section titles) so every label reads as
-// part of one consistent system rather than one-off styling per section.
-function SectionLabel({ children }: { children: string }) {
-  return <p className="new-word-info-section-label">{children}</p>;
-}
-
 // Merely viewing this card must not complete the word — completion only
 // happens once the guided exercises (broken/half/full) are done, so this
 // step has exactly one action: hand off to the exercise sequence.
 //
-// Single centered column at every width: the target-language block
-// (language label, word, audio, CEFR/grammar badges) sits on top, with the
-// translation-language block (language label, translation, definition)
-// directly below it, separated by a divider. That top-to-bottom order
-// mirrors reading a word and then its meaning, and keeping everything
-// centered keeps the card feeling like one focused unit rather than a
-// form with columns.
+// Laid out as one two-sided flashcard rather than stacked, separately styled
+// blocks:
+// - Front (colored head): the word in the target language — language name,
+//   the word with its audio button beside it, and one combined CEFR + grammar
+//   chip directly under it, so the metadata reads as a property of the word.
+//   The head uses the practice card's random surface (useRandomCardSurface),
+//   the same treatment the three exercise cards that follow use, so this card
+//   reads as the first card of that word's deck.
+// - Bridge: the translation, in a band tinted with a light version of the
+//   head's color directly under it, so it reads as the word's continuation
+//   rather than a new section. A small "↳" cue beside the native-language
+//   label marks the "translates to" relationship.
+// - Back (card body): three labelled groups spaced by relationship —
+//   definition, then example (sentence + listen control), then the action.
 //
-// Visual styling for this component lives in
-// ../styles/study-new-words.scss (imported once by NewWordStudySession.tsx)
-// — this file only assigns the semantic class names.
+// Visual styling lives in ../styles/study-new-words.scss (imported by
+// NewWordStudySession.tsx) — this file only assigns the semantic class names.
 export function NewWordInfoStep({ item, practiceLanguage, yourLanguage, onContinue }: NewWordInfoStepProps) {
   const { t } = useLanguage();
+  // Keyed per word, so every new word gets a fresh color; this step only
+  // renders client-side inside an active session, so the random value can't
+  // cause a hydration mismatch.
+  const surfaceColor = useRandomCardSurface(`${item.conceptId}-intro`);
+  const cardStyle: WordCardCssVars = { "--pc-surface": surfaceColor };
 
   const grammarTypeLabel = item.grammarType
     ? (() => {
@@ -82,70 +88,62 @@ export function NewWordInfoStep({ item, practiceLanguage, yourLanguage, onContin
 
   return (
     <div className="new-word-info-step">
-      <div className="new-word-info-card">
-        <div className="new-word-info-grid">
-          {/* Target-language block: identity + audio + metadata, centered on top. */}
-          <div className="new-word-info-col--target">
-            <SectionLabel>{targetLanguageName}</SectionLabel>
-            <div className="new-word-info-word-row">
-              <h2 className="new-word-info-word">{item.targetWord}</h2>
-              <button
-                type="button"
-                onClick={() => speakGuidedWord(item.targetWord, practiceLanguage)}
-                aria-label={t("practice.pronounceWord")}
-                className="new-word-info-action-button new-word-info-audio-button"
-              >
-                <Volume2 className="new-word-info-audio-icon" aria-hidden="true" />
-              </button>
-            </div>
-
-            {/* Badges sit directly under the word they describe, inside the
-                same column — attached, not floating in leftover space. */}
-            {(item.level || grammarTypeLabel) && (
-              <div className="new-word-info-badges">
-                {item.level && (
-                  <span className="new-word-info-badge new-word-info-badge--level">{item.level}</span>
-                )}
-                {grammarTypeLabel && (
-                  <span className="new-word-info-badge new-word-info-badge--grammar">{grammarTypeLabel}</span>
-                )}
-              </div>
-            )}
+      <article className="new-word-info-card" style={cardStyle} aria-labelledby="new-word-info-word">
+        <header className="new-word-info-head">
+          <p className="new-word-info-language">{targetLanguageName}</p>
+          <div className="new-word-info-word-row">
+            <h2 id="new-word-info-word" className="new-word-info-word" lang={practiceLanguage}>
+              {item.targetWord}
+            </h2>
+            <button
+              type="button"
+              onClick={() => speakGuidedWord(item.targetWord, practiceLanguage)}
+              aria-label={t("practice.pronounceWord")}
+              className="new-word-info-audio-button"
+            >
+              <Volume2 className="new-word-info-audio-icon" aria-hidden="true" />
+            </button>
           </div>
 
-          {/* Translation-language block: everything here belongs to the
-              user's native language, mirroring the block above it
-              (language label first, then the strongest text, then
-              supporting detail), placed directly below with a divider. */}
-          <div className="new-word-info-col--translation">
-            <SectionLabel>{nativeLanguageName}</SectionLabel>
-            <p className="new-word-info-translation">{item.translation}</p>
+          {/* One chip, two segments: level (stronger) then part of speech.
+              Either segment is omitted when its data is missing; the chip
+              wraps as a unit under long words and long localized labels. */}
+          {(item.level || grammarTypeLabel) && (
+            <p className="new-word-info-meta">
+              {item.level && <span className="new-word-info-meta-level">{item.level}</span>}
+              {grammarTypeLabel && <span className="new-word-info-meta-grammar">{grammarTypeLabel}</span>}
+            </p>
+          )}
+        </header>
 
-            {item.definition && <p className="new-word-info-definition">{item.definition}</p>}
-          </div>
+        <div className="new-word-info-bridge">
+          <p className="new-word-info-bridge-label">
+            <CornerDownRight className="new-word-info-bridge-icon" aria-hidden="true" />
+            <span>{nativeLanguageName}</span>
+          </p>
+          <p className="new-word-info-translation" lang={yourLanguage}>
+            {item.translation}
+          </p>
         </div>
 
-        {/* Example: full width below the two blocks, soft tinted "card"
-            treatment (not an input-like bordered box) so it reads as a
-            learning aid. The conjugated/separable word forms are bolded via
-            highlightedExampleSentence, and the native-language translation
-            — read from the same concept's own vocabulary.json entry, never
-            generated — renders directly under the target sentence when
-            present. The speak button on the right reuses speakGuidedWord
-            (same TTS call already wired to the word-audio button above and
-            to GuidedExerciseAdapter's own sentence-speak button) so pressing
-            it reads item.exampleSentence aloud in practiceLanguage. */}
-        {item.exampleSentence && (
-          <div className="new-word-info-example">
-            <SectionLabel>{t("studyNewWords.exampleSentenceLabel")}</SectionLabel>
-            <div className="new-word-info-example-box">
-              <div className="new-word-info-example-row">
-                <div className="new-word-info-example-content">
-                  <p
-                    className="new-word-info-example-text"
-                    dangerouslySetInnerHTML={{ __html: highlightedExampleSentence }}
-                  />
-                </div>
+        <div className="new-word-info-body">
+          {item.definition && (
+            <section className="new-word-info-definition-group">
+              <p className="new-word-info-label">{t("studyNewWords.definitionLabel")}</p>
+              <p className="new-word-info-definition">{item.definition}</p>
+            </section>
+          )}
+
+          {/* Example in context: label + listen control on one row, then the
+              sentence (beside a thin accent rule) with the concept's
+              conjugated/separable forms highlighted (highlightedExampleSentence). The listen button
+              reuses speakGuidedWord — the same TTS call as the word audio
+              button and GuidedExerciseAdapter's sentence speaker. Only the
+              target-language sentence is shown. */}
+          {item.exampleSentence && (
+            <section className="new-word-info-example">
+              <div className="new-word-info-example-header">
+                <p className="new-word-info-label">{t("studyNewWords.exampleSentenceLabel")}</p>
                 <button
                   type="button"
                   onClick={() => speakGuidedWord(item.exampleSentence!, practiceLanguage)}
@@ -155,28 +153,20 @@ export function NewWordInfoStep({ item, practiceLanguage, yourLanguage, onContin
                   <Volume2 className="new-word-info-example-speak-icon" aria-hidden="true" />
                 </button>
               </div>
-            </div>
-          </div>
-        )}
+              <p
+                className="new-word-info-example-text"
+                lang={practiceLanguage}
+                dangerouslySetInnerHTML={{ __html: highlightedExampleSentence }}
+              />
+            </section>
+          )}
 
-        {/* Footer: exercise-count context (dynamic, never hardcoded — reads
-            GUIDED_EXERCISE_COUNT from the session state module) + primary
-            action, full width below everything else. */}
-        <div className="new-word-info-footer">
-          <p className="new-word-info-helper">
-            {t("studyNewWords.exercisesHelperPrefix")}{" "}
-            <span className="new-word-info-helper-count">{GUIDED_EXERCISE_COUNT}</span>{" "}
-            {t("studyNewWords.exercisesHelperSuffix")}
-          </p>
-          <button
-            type="button"
-            onClick={onContinue}
-            className="new-word-info-action-button new-word-info-continue-button"
-          >
-            {t("studyNewWords.startExercisesButton")}
+          <button type="button" onClick={onContinue} className="new-word-info-continue-button">
+            <span>{t("studyNewWords.startExercisesButton")}</span>
+            <ArrowRight className="new-word-info-continue-icon" aria-hidden="true" />
           </button>
         </div>
-      </div>
+      </article>
     </div>
   );
 }
