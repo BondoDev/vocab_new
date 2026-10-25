@@ -21,19 +21,34 @@ working in that folder.
   change could plausibly break something that check would catch, and run
   the lightest one that covers that risk:
   - Copy, styling, layout tweaks, reordering, renames, docs: no checks.
+  - Locale/translation JSON edits: no checks, unless an existing
+    localization test guards that exact namespace — then that one test,
+    once.
   - TypeScript logic or type changes: `npx tsc --noEmit`, plus the one
     focused test for that area if one exists.
   - Routing, SSR/prerender, sitemap, or SEO output changes: the relevant
     focused test; run `npm run build` or `npm run test:seo-output` only
     when the change actually affects what they verify.
-- Do not start a dev server, run browser/Playwright passes, or take
-  screenshots unless the user asks or a behavior cannot be confirmed any
-  other way. Do not add new tests for small changes unless asked.
+- Hard limits, not suggestions:
+  - At most one focused test script per area of code actually modified.
+    Never run tests for areas the change did not touch (e.g. dashboard,
+    practice, or routing tests for a learning-screen change).
+  - ESLint only on files that changed TypeScript logic, once at the end.
+  - Run each check once, after the last edit of the task — not after every
+    intermediate edit, and not again after follow-up edits that don't touch
+    what it covers.
+- Do not start a dev server, run browser/Playwright passes, render static
+  HTML mock pages, or take screenshots unless the user explicitly asks for
+  visual verification. Reason about layout from the CSS instead. Do not add
+  new tests for small changes unless asked.
 - Do not repeat a check that already passed unless the code it covers has
   changed since. Never run tests or audits "just in case"; it inflates task
   time without reducing real risk.
 - When checks are skipped, say so in one line in the final report so the
   user can request them.
+- Keep final reports proportional to the task: a few lines for small
+  changes; longer structured reports only for large features or when the
+  user asks for one.
 
 Suggested warning: `This may require a broader scan/build and use more tokens. Proceed?`
 
@@ -52,7 +67,9 @@ Rules:
 - Prefer existing components and styles over introducing new dependencies.
 - Avoid generic SaaS layouts, excessive whitespace, and repetitive card designs.
 - Keep skill usage token-efficient.
-- Verify responsive layouts and functionality after meaningful UI changes.
+- Design responsive behavior deliberately in the CSS; visual verification
+  (screenshots, browser runs, mock renders) follows the Cheap-first rules
+  above — only when the user asks for it.
 
 ## Git control
 
