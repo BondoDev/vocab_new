@@ -52,7 +52,7 @@ codes.
 | Route family | Example | Why the Worker must run |
 |---|---|---|
 | Canonical word pages | `/en/english-word-about--A1-00001` | Requires a data lookup (concept shard fetch) + React SSR — not a static file (Phase 3 explicitly rules out one physical HTML file per URL); an unverified slug/ID mismatch returns 410 |
-| Word browse pages | `/en/english-word-about--A1-00001/browse/page/2` | Same as above, plus pagination-boundary logic |
+| Word browse pages | `/en/english-word-about--A1-00001/browse/page/2` | Same as above, plus pagination-boundary logic. Legacy-only: word pages no longer link these URLs (grid pagination is client-side buttons), but valid ones still render 200 with their own grid page |
 | Legacy/alias word URLs | `/en/english-word-about-A1-00001` | 308 redirect computed from the concept record's canonical slug |
 | Verified historical word URLs | `/en/english-word-tame--B2-02435` | 308 redirect only for a unique historical identity match; the destination record is fingerprint-checked and browse suffixes are range-checked |
 | Malformed/invalid word-shaped URLs | `/en/english-word-about--Z9-99999` | 410, computed after a shard lookup miss |

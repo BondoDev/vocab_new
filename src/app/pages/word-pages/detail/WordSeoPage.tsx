@@ -176,13 +176,13 @@ export function WordSeoPage({
     try {
       const data = await getWordBrowseSearchData(targetLanguage, wordEntry.level);
       if (!data || data.words.length === 0) {
-        setBrowseSearchError("Search is temporarily unavailable. Browse links still work.");
+        setBrowseSearchError("Search is temporarily unavailable.");
         return;
       }
       setBrowseSearchWords(data.words);
       setLoadedBrowseSearchShardKey(browseSearchShardKey);
     } catch {
-      setBrowseSearchError("Search is temporarily unavailable. Browse links still work.");
+      setBrowseSearchError("Search is temporarily unavailable.");
     } finally {
       setIsBrowseSearchLoading(false);
     }

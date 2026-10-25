@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { Volume2 } from "lucide-react";
 import { useLanguage } from "../../../../contexts/LanguageContext";
@@ -7,7 +7,7 @@ import {
   type TargetLanguageSlug,
   type UiLanguageCode,
 } from "../../../../data/seo/shared/slugs";
-import { buildWordBrowsePagePathFromSlug, buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
+import { buildWordPath } from "../../../../data/seo/wordPages/wordSlugs";
 import {
   getWordBrowseSearchShardKey,
   type WordBrowseSearchWordEntry,
@@ -58,6 +58,14 @@ function getPaginationRange(current: number, total: number): (number | "...")[] 
   return result;
 }
 
+// `#browse-page-N` → zero-based page index, or null when absent/out of range.
+function parseBrowsePageHash(hash: string, totalPages: number): number | null {
+  const match = /^#browse-page-(\d+)$/.exec(hash);
+  if (!match) return null;
+  const page = Number.parseInt(match[1], 10);
+  return page >= 1 && page <= totalPages ? page - 1 : null;
+}
+
 function sanitizeCopy(value: string): string {
   return fixMojibake(value);
 }
@@ -89,6 +97,11 @@ function sanitizeWordPageTranslations(copy: WordPageT): WordPageT {
     levelQuestion: (word) => sanitizeCopy(copy.levelQuestion(word)),
     grammarQuestion: (word) => sanitizeCopy(copy.grammarQuestion(word)),
     topicQuestion: (word) => sanitizeCopy(copy.topicQuestion(word)),
+    browsePaginationLabel: sanitizeCopy(copy.browsePaginationLabel),
+    browsePageLabel: (page) => sanitizeCopy(copy.browsePageLabel(page)),
+    browsePageStatus: (page, total) => sanitizeCopy(copy.browsePageStatus(page, total)),
+    browsePageLoading: sanitizeCopy(copy.browsePageLoading),
+    browsePageLoadError: sanitizeCopy(copy.browsePageLoadError),
     notFoundTitle: sanitizeCopy(copy.notFoundTitle),
     notFoundBody: sanitizeCopy(copy.notFoundBody),
   };
@@ -158,6 +171,11 @@ interface WordPageT {
   levelQuestion: (word: string) => string;
   grammarQuestion: (word: string) => string;
   topicQuestion: (word: string) => string;
+  browsePaginationLabel: string;
+  browsePageLabel: (page: number) => string;
+  browsePageStatus: (page: number, total: number) => string;
+  browsePageLoading: string;
+  browsePageLoadError: string;
   notFoundTitle: string;
   notFoundBody: string;
 }
@@ -187,6 +205,11 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelQuestion: (w) => `What is the CEFR level of the word "${w}"?`,
     grammarQuestion: (w) => `What grammatical category does "${w}" have?`,
     topicQuestion: (w) => `Which vocabulary topic does "${w}" belong to?`,
+    browsePaginationLabel: "Word list pages",
+    browsePageLabel: (page) => `Page ${page}`,
+    browsePageStatus: (page, total) => `Page ${page} of ${total}`,
+    browsePageLoading: "Loading words…",
+    browsePageLoadError: "Couldn’t load these words. Please try again.",
     notFoundTitle: "Word not found",
     notFoundBody:
       "The requested word could not be found in our vocabulary database.",
@@ -218,6 +241,11 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelQuestion: (w) => `¿Qué nivel MCER tiene la palabra "${w}"?`,
     grammarQuestion: (w) => `¿Qué categoría gramatical tiene "${w}"?`,
     topicQuestion: (w) => `¿A qué tema de vocabulario pertenece "${w}"?`,
+    browsePaginationLabel: "Páginas de la lista de palabras",
+    browsePageLabel: (page) => `Página ${page}`,
+    browsePageStatus: (page, total) => `Página ${page} de ${total}`,
+    browsePageLoading: "Cargando palabras…",
+    browsePageLoadError: "No se pudieron cargar estas palabras. Inténtalo de nuevo.",
     notFoundTitle: "Palabra no encontrada",
     notFoundBody:
       "La palabra solicitada no se encontró en nuestra base de datos de vocabulario.",
@@ -249,6 +277,11 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelQuestion: (w) => `Quel est le niveau CECRL du mot « ${w} » ?`,
     grammarQuestion: (w) => `Quelle est la nature grammaticale de « ${w} » ?`,
     topicQuestion: (w) => `À quel thème de vocabulaire appartient « ${w} » ?`,
+    browsePaginationLabel: "Pages de la liste de mots",
+    browsePageLabel: (page) => `Page ${page}`,
+    browsePageStatus: (page, total) => `Page ${page} sur ${total}`,
+    browsePageLoading: "Chargement des mots…",
+    browsePageLoadError: "Impossible de charger ces mots. Veuillez réessayer.",
     notFoundTitle: "Mot introuvable",
     notFoundBody:
       "Le mot demandé n'a pas été trouvé dans notre base de données de vocabulaire.",
@@ -279,6 +312,11 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelQuestion: (w) => `Welches GER-Niveau hat das Wort „${w}„?`,
     grammarQuestion: (w) => `Welche Wortart ist „${w}“?`,
     topicQuestion: (w) => `Zu welchem Wortschatzthema gehört „${w}“?`,
+    browsePaginationLabel: "Seiten der Wortliste",
+    browsePageLabel: (page) => `Seite ${page}`,
+    browsePageStatus: (page, total) => `Seite ${page} von ${total}`,
+    browsePageLoading: "Wörter werden geladen…",
+    browsePageLoadError: "Diese Wörter konnten nicht geladen werden. Bitte versuche es erneut.",
     notFoundTitle: "Wort nicht gefunden",
     notFoundBody:
       "Das angeforderte Wort wurde in unserer Vokabeldatenbank nicht gefunden.",
@@ -310,6 +348,11 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelQuestion: (w) => `Qual è il livello QCER della parola "${w}"?`,
     grammarQuestion: (w) => `Quale parte del discorso è "${w}"?`,
     topicQuestion: (w) => `A quale argomento di vocabolario appartiene "${w}"?`,
+    browsePaginationLabel: "Pagine dell’elenco di parole",
+    browsePageLabel: (page) => `Pagina ${page}`,
+    browsePageStatus: (page, total) => `Pagina ${page} di ${total}`,
+    browsePageLoading: "Caricamento delle parole…",
+    browsePageLoadError: "Impossibile caricare queste parole. Riprova.",
     notFoundTitle: "Parola non trovata",
     notFoundBody:
       "La parola richiesta non è stata trovata nel nostro database di vocabolario.",
@@ -340,6 +383,11 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelQuestion: (w) => `Qual é o nível QECR da palavra "${w}"?`,
     grammarQuestion: (w) => `Qual é a classe gramatical de "${w}"?`,
     topicQuestion: (w) => `A que tema de vocabulário pertence "${w}"?`,
+    browsePaginationLabel: "Páginas da lista de palavras",
+    browsePageLabel: (page) => `Página ${page}`,
+    browsePageStatus: (page, total) => `Página ${page} de ${total}`,
+    browsePageLoading: "Carregando palavras…",
+    browsePageLoadError: "Não foi possível carregar estas palavras. Tente novamente.",
     notFoundTitle: "Palavra não encontrada",
     notFoundBody:
       "A palavra solicitada não foi encontrada em nosso banco de dados de vocabulário.",
@@ -370,6 +418,11 @@ const TRANSLATIONS: Record<UiLanguageCode, WordPageT> = {
     levelQuestion: (w) => `Какой уровень CEFR у слова «${w}»?`,
     grammarQuestion: (w) => `Какая часть речи у слова «${w}»?`,
     topicQuestion: (w) => `К какой теме словарного запаса относится слово «${w}»?`,
+    browsePaginationLabel: "Страницы списка слов",
+    browsePageLabel: (page) => `Страница ${page}`,
+    browsePageStatus: (page, total) => `Страница ${page} из ${total}`,
+    browsePageLoading: "Загрузка слов…",
+    browsePageLoadError: "Не удалось загрузить эти слова. Попробуйте ещё раз.",
     notFoundTitle: "Слово не найдено",
     notFoundBody:
       "Запрошенное слово не найдено в нашей базе данных словарного запаса.",
@@ -455,12 +508,18 @@ const TARGET_LANG_NAMES: Record<
   },
 };
 
+// `browseWords` is the single server-rendered grid page (the Worker's slice
+// for the route's browse page). `levelBrowseWords` is the full level list
+// from the client-loaded word-browse shard — the same ordered list the Worker
+// slices — once it has loaded for this word's level, else null. Browse mode
+// paginates it in place; until it loads, only the server page is shown.
 export function getWordSeoBrowsePresentationState({
   browseWords,
   browseWordsTotalCount,
   browsePageIndex,
   browseSearch,
   browseSearchWords,
+  levelBrowseWords = null,
   canUseBrowseSearchResults,
 }: {
   browseWords: HydrationWordPageData["browseWords"];
@@ -468,6 +527,7 @@ export function getWordSeoBrowsePresentationState({
   browsePageIndex: number;
   browseSearch: string;
   browseSearchWords: WordBrowseSearchWordEntry[] | null;
+  levelBrowseWords?: WordBrowseSearchWordEntry[] | null;
   canUseBrowseSearchResults: boolean;
 }) {
   const normalizedBrowseSearch = browseSearch.trim().toLowerCase();
@@ -475,9 +535,12 @@ export function getWordSeoBrowsePresentationState({
     ? (browseSearchWords ?? []).filter((browseWord) =>
         browseWord.wordLemma.toLowerCase().includes(normalizedBrowseSearch),
       )
-    : browseWords;
+    : levelBrowseWords ?? browseWords;
   const hasFullBrowseWordList =
-    canUseBrowseSearchResults || browseWordsTotalCount === 0 || browseWords.length >= browseWordsTotalCount;
+    canUseBrowseSearchResults ||
+    levelBrowseWords !== null ||
+    browseWordsTotalCount === 0 ||
+    browseWords.length >= browseWordsTotalCount;
   const browseWordCountForPagination = canUseBrowseSearchResults
     ? filteredBrowseWords.length
     : Math.max(browseWordsTotalCount, filteredBrowseWords.length);
@@ -539,6 +602,7 @@ export function WordSeoPageView({
   onRequestBrowseSearchData = () => {},
 }: WordSeoPageViewProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const siteOrigin = useSeoSiteOrigin();
   const { t: translateInterface } = useLanguage();
   const t = sanitizeWordPageTranslations(TRANSLATIONS[uiLang] ?? TRANSLATIONS.en);
@@ -547,9 +611,19 @@ export function WordSeoPageView({
   );
 
   const exerciseInputRef = useRef<HTMLInputElement>(null);
-  const [browsePageIndex, setBrowsePageIndex] = useState(
-    Math.max((pageData?.browsePage ?? browsePage) - 1, 0),
-  );
+  // Grid page the route itself renders (1 for a base word URL, N for a legacy
+  // /browse/page/N URL): the server output and the first client render both
+  // show this page, so hydration stays exact.
+  const routeBrowsePageIndex = Math.max((pageData?.browsePage ?? browsePage) - 1, 0);
+  const [browsePageIndex, setBrowsePageIndex] = useState(routeBrowsePageIndex);
+  // Search results paginate separately so typing in, or clearing, the search
+  // box never moves the browse grid's page.
+  const [searchPageIndex, setSearchPageIndex] = useState(0);
+  // A page the user picked before the level's word-browse shard finished
+  // loading; applied once it arrives.
+  const [pendingBrowsePageIndex, setPendingBrowsePageIndex] = useState<number | null>(null);
+  const [browsePageLoadFailed, setBrowsePageLoadFailed] = useState(false);
+  const [browsePageAnnouncement, setBrowsePageAnnouncement] = useState("");
   const [browseSearch, setBrowseSearch] = useState("");
   const [practiceInput, setPracticeInput] = useState("");
   const [practiceResult, setPracticeResult] = useState<
@@ -564,6 +638,10 @@ export function WordSeoPageView({
     setPracticeInput("");
     setPracticeResult(null);
     setBrowsePageIndex(Math.max((pageData?.browsePage ?? browsePage) - 1, 0));
+    setSearchPageIndex(0);
+    setPendingBrowsePageIndex(null);
+    setBrowsePageLoadFailed(false);
+    setBrowsePageAnnouncement("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [browsePage, conceptId, targetLanguage, uiLang, wordSlug]);
 
@@ -619,6 +697,72 @@ export function WordSeoPageView({
     location.pathname,
     siteOrigin,
   ]);
+
+  // Word-grid pagination is client-side: page buttons swap the grid in place
+  // instead of linking to /browse/page/N. Every word used to link its own copy
+  // of each level page (~20M redundant crawlable URLs); legacy /browse/page/N
+  // routes still render their page server-side. Grid pages beyond the route's
+  // own come from the level's word-browse shard (the list search already
+  // loads, ≤200 KB, cached per level by the wrapper) — never the full
+  // vocabulary. The chosen page lives in a `#browse-page-N` fragment, so
+  // Back/Forward step through grid pages without creating crawlable routes.
+  const levelBrowseWords =
+    browseSearchWords && browseSearchShardKey && loadedBrowseSearchShardKey === browseSearchShardKey
+      ? browseSearchWords
+      : null;
+  const routeTotalBrowsePages = Math.max(1, Math.ceil(browseWordsTotalCount / WORDS_PER_PAGE));
+  const hashBrowsePageIndex = parseBrowsePageHash(location.hash, routeTotalBrowsePages);
+  const requestedBrowsePageIndex = hashBrowsePageIndex ?? routeBrowsePageIndex;
+
+  useEffect(() => {
+    if (!wordEntry || requestedBrowsePageIndex === browsePageIndex) {
+      setPendingBrowsePageIndex(null);
+      return;
+    }
+    // The route's own page is already in browseWords; any other page needs
+    // the level shard first.
+    if (levelBrowseWords || requestedBrowsePageIndex === routeBrowsePageIndex) {
+      setPendingBrowsePageIndex(null);
+      setBrowsePageIndex(requestedBrowsePageIndex);
+      return;
+    }
+    setBrowsePageLoadFailed(false);
+    setPendingBrowsePageIndex(requestedBrowsePageIndex);
+    onRequestBrowseSearchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestedBrowsePageIndex, Boolean(levelBrowseWords), Boolean(wordEntry)]);
+
+  useEffect(() => {
+    if (pendingBrowsePageIndex === null || levelBrowseWords || isBrowseSearchLoading || !browseSearchError) {
+      return;
+    }
+    // Shard load failed: stay on the visible page and say so.
+    setPendingBrowsePageIndex(null);
+    setBrowsePageLoadFailed(true);
+  }, [pendingBrowsePageIndex, levelBrowseWords, isBrowseSearchLoading, browseSearchError]);
+
+  useEffect(() => {
+    if (browsePageAnnouncement === "" && browsePageIndex === routeBrowsePageIndex) {
+      return;
+    }
+    setBrowsePageAnnouncement(t.browsePageStatus(browsePageIndex + 1, routeTotalBrowsePages));
+    // Announce only page changes, not the initial render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [browsePageIndex]);
+
+  function selectBrowsePage(pageIndex: number) {
+    setBrowsePageLoadFailed(false);
+    const nextHash = pageIndex === routeBrowsePageIndex ? "" : `#browse-page-${pageIndex + 1}`;
+    if (nextHash !== location.hash) {
+      navigate({ pathname: location.pathname, search: location.search, hash: nextHash });
+      return;
+    }
+    // Same fragment (e.g. retrying after a failed load): request directly.
+    if (pageIndex !== browsePageIndex && !levelBrowseWords) {
+      setPendingBrowsePageIndex(pageIndex);
+      onRequestBrowseSearchData();
+    }
+  }
 
   if (wordEntry === undefined) {
     return (
@@ -698,11 +842,13 @@ export function WordSeoPageView({
     getWordSeoBrowsePresentationState({
       browseWords,
       browseWordsTotalCount,
-      browsePageIndex,
+      browsePageIndex: canUseBrowseSearchResults ? searchPageIndex : browsePageIndex,
       browseSearch,
       browseSearchWords,
+      levelBrowseWords,
       canUseBrowseSearchResults,
     });
+  const isBrowsePagePending = pendingBrowsePageIndex !== null && !canUseBrowseSearchResults;
 
   function checkAnswer() {
     const correct = practiceInput.trim().toLowerCase() === word.toLowerCase();
@@ -984,7 +1130,7 @@ export function WordSeoPageView({
             }}
             onChange={(e) => {
               setBrowseSearch(e.target.value);
-              setBrowsePageIndex(0);
+              setSearchPageIndex(0);
               if (e.target.value.trim()) {
                 onRequestBrowseSearchData();
               }
@@ -1013,7 +1159,10 @@ export function WordSeoPageView({
             </div>
           ) : pageWords.length > 0 ? (
             <>
-              <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              <div
+                aria-busy={isBrowsePagePending || undefined}
+                className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+              >
                 {pageWords.map((browseWord) => (
                   <Link
                     key={browseWord.conceptId}
@@ -1025,52 +1174,57 @@ export function WordSeoPageView({
                 ))}
               </div>
               {totalBrowsePages > 1 && (
-                <div className="mt-5 flex flex-wrap justify-center gap-1.5">
+                <nav
+                  aria-label={t.browsePaginationLabel}
+                  className="mt-5 flex flex-wrap justify-center gap-1.5"
+                >
                   {getPaginationRange(safeBrowsePage, totalBrowsePages).map((item, idx) =>
                     item === "..." ? (
                       <span
                         key={`ellipsis-${idx}`}
+                        aria-hidden="true"
                         className="px-2 py-1 text-sm text-muted-foreground"
                       >
                         ...
                       </span>
                     ) : (
-                      canUseBrowseSearchResults ? (
-                        <button
-                          key={item}
-                          type="button"
-                          onClick={() => setBrowsePageIndex(item)}
-                          className={
-                            item === safeBrowsePage
-                              ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
-                              : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
-                          }
-                        >
-                          {item + 1}
-                        </button>
-                      ) : (
-                        <Link
-                          key={item}
-                          to={buildWordBrowsePagePathFromSlug(
-                            uiLang,
-                            targetLanguage,
-                            wordSlug,
-                            conceptId ?? "",
-                            item + 1,
-                          )}
-                          className={
-                            item === safeBrowsePage
-                              ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
-                              : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
-                          }
-                        >
-                          {item + 1}
-                        </Link>
-                      )
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() =>
+                          canUseBrowseSearchResults ? setSearchPageIndex(item) : selectBrowsePage(item)
+                        }
+                        aria-label={t.browsePageLabel(item + 1)}
+                        aria-current={item === safeBrowsePage ? "page" : undefined}
+                        className={
+                          item === safeBrowsePage
+                            ? "min-w-8 rounded-lg border border-primary bg-primary/10 px-2 py-1 text-sm text-primary"
+                            : "min-w-8 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
+                        }
+                      >
+                        {item + 1}
+                      </button>
                     ),
                   )}
-                </div>
+                </nav>
               )}
+              {/* Persistent live region: visible only while loading or after a
+                  failed load; otherwise it silently announces page changes. */}
+              <div
+                role="status"
+                aria-live="polite"
+                className={
+                  isBrowsePagePending || browsePageLoadFailed
+                    ? "mt-3 text-center text-sm text-muted-foreground"
+                    : "sr-only"
+                }
+              >
+                {isBrowsePagePending
+                  ? t.browsePageLoading
+                  : browsePageLoadFailed
+                    ? t.browsePageLoadError
+                    : browsePageAnnouncement}
+              </div>
             </>
           ) : (
             <div className="mt-5 rounded-lg border border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground">

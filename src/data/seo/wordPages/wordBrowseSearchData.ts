@@ -47,6 +47,9 @@ export function getWordBrowseSearchData(
 
   const loadModule = browseSearchModules[browseSearchModulePath(targetLanguage, level)];
   const pending = loadModule ? loadModule().then((module) => module.default) : Promise.resolve(null);
+  // Forget a failed chunk load so the next search or grid-page request
+  // retries it instead of replaying the cached rejection.
+  pending.catch(() => browseSearchDataCache.delete(cacheKey));
   browseSearchDataCache.set(cacheKey, pending);
   return pending;
 }

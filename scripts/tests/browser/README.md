@@ -115,6 +115,14 @@ Round 3 adds focused journeys:
   preserving unrelated parameters, non-dismissible recovery, incomplete-profile
   onboarding suppression, failed password update/retry, and onboarding after
   recovery completes. No real account or email is created.
+- `word-pagination.spec.ts`: word-page "Browse More" grid pagination is
+  client-side buttons. Checks there are no `/browse/page/N` links, exact
+  54-word slices in all seven learning languages (including the shorter final
+  page), a single level-shard fetch and no full-vocabulary download,
+  `#browse-page-N` Back/Forward and deep links, keyboard activation and
+  focus, legacy `/browse/page/N` URLs, separate search pagination, and
+  failed-load messaging with retry. The preview is client-only, so
+  server-rendered markup is covered by `test:word-browse-pagination`.
 
 Remaining limitations: live Supabase/database permissions, actual speech and
 OS keyboards, natural exhaustion of the entire corpus, visual parity,

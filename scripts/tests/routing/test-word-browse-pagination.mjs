@@ -14,6 +14,9 @@
  *   - title gets " - Browse Page N" suffix; description gets a page-N prefix
  *   - the last valid page is 200; one page past it is 410
  *   - page 0 is 410 (invalid, not just "out of range")
+ *   - rendered word pages link no /browse/page/N URL: the grid pagination is
+ *     a labelled nav of buttons (client-side), and each route still renders
+ *     its own 54-word grid slice
  *
  * Run: node scripts/tests/routing/test-word-browse-pagination.mjs
  * No build required — compiles TS sources on the fly (same pattern as the
@@ -177,6 +180,41 @@ async function main() {
     {
       const response = await handleWordSsrPathname(`${basePath}/browse/page/0`);
       test("page 0 returns 410 (not treated as page 1)", () => assert.equal(response.status, 410));
+    }
+
+    // Grid pagination is client-side buttons (WordSeoPageView): word pages
+    // must not link /browse/page/N — every word used to link its own copy of
+    // each level page (~20M redundant crawlable URLs). Legacy routes above
+    // still render their own grid page server-side.
+    console.log("\n[6] Server-rendered grid and pagination markup");
+    const pageSize = wordPageData.WORD_PAGE_BROWSE_WORDS_PER_PAGE;
+    for (const pageNumber of [1, 2, totalPages]) {
+      const routePath = pageNumber === 1 ? basePath : `${basePath}/browse/page/${pageNumber}`;
+      const response = await handleWordSsrPathname(routePath);
+      const anchors = [...response.body.matchAll(/<a\b[^>]*?\bhref="([^"]*)"/g)].map((m) => decodeURIComponent(m[1]));
+      const expectedGrid = resolved.browseWords
+        .slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
+        .map((word) => wordSlugs.buildWordPath("en", "english", word.word_lemma, word.concept_id));
+      test(`page ${pageNumber}: no /browse/page/ anchor links`, () =>
+        assert.deepEqual(anchors.filter((href) => href.includes("/browse/page/")), []));
+      test(`page ${pageNumber}: grid shows exactly its ${expectedGrid.length}-word slice in order`, () => {
+        // The browse grid is the section holding the pagination nav; other
+        // sections (related/discovery) may link some of the same words.
+        const navIndex = response.body.indexOf('<nav aria-label="Word list pages"');
+        assert.ok(navIndex > 0, "pagination nav not found");
+        const gridHtml = response.body.slice(response.body.lastIndexOf("<section", navIndex), navIndex);
+        const gridAnchors = [...gridHtml.matchAll(/<a\b[^>]*?\bhref="([^"]*)"/g)].map((m) => decodeURIComponent(m[1]));
+        assert.deepEqual(gridAnchors, expectedGrid);
+      });
+      test(`page ${pageNumber}: pagination is a labelled nav of buttons with page ${pageNumber} current`, () => {
+        const nav = response.body.match(/<nav aria-label="Word list pages"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+        assert.ok(nav, "pagination nav not found");
+        assert.ok(!/<a\b/.test(nav), "pagination nav contains anchors");
+        assert.match(nav, new RegExp(`<button type="button" aria-label="Page ${pageNumber}" aria-current="page"`));
+        assert.match(nav, new RegExp(`aria-label="Page ${totalPages}"`));
+      });
+      test(`page ${pageNumber}: related/discovery word links are still rendered`, () =>
+        assert.ok(anchors.filter((href) => href.includes("-word-")).length > expectedGrid.length));
     }
   } finally {
     ctx.cleanup();
