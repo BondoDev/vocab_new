@@ -401,8 +401,9 @@
           },
           "reviewWords": {
             "title": "Ripassa parole",
-            "description": "Ripassa le parole gia studiate secondo il loro programma di ripetizione dilazionata.",
-            "metaLine": "Nessun ripasso programmato",
+            "description": "Rafforza il tuo vocabolario con la ripetizione dilazionata.",
+            "metaLine": "Ripassa al tuo ritmo",
+            "emptyMetaLine": "Impara nuove parole per iniziare a ripassare",
             "buttonLabel": "Inizia ripasso"
           },
           "customPractice": {
@@ -1214,8 +1215,21 @@
     "sessionErrorMessage": "Si e verificato un problema con la sessione di studio."
   },
   "reviewWords": {
-    "wordsToReviewCount_one": "{count} parola da ripassare",
-    "wordsToReviewCount_other": "{count} parole da ripassare",
+    "continuous": {
+      "ownPace": "Ripassa al tuo ritmo",
+      "introHint": "Ripassa tutte le parole che vuoi. Termina quando vuoi.",
+      "finishButton": "Termina il ripasso",
+      "reviewedCount_one": "{count} ripassata",
+      "reviewedCount_other": "{count} ripassate",
+      "loadingMore": "Preparazione di altre parole…",
+      "loadMoreError": "Impossibile caricare altre parole. Controlla la connessione e riprova.",
+      "caughtUpTitle": "Tutto ripassato!",
+      "caughtUpDescription": "Hai ripassato tutte le parole disponibili per ora.",
+      "finishedTitle": "Ripasso completato!",
+      "finishedSubtitle_one": "Hai ripassato {count} parola in {languageLower}.",
+      "finishedSubtitle_other": "Hai ripassato {count} parole in {languageLower}.",
+      "finishedNone": "Hai terminato prima di ripassare una parola."
+    },
     "startReviewButton": "Inizia il ripasso",
     "title": "Ripassa parole",
     "subtitle": "Rafforza le parole che hai gia imparato.",
@@ -1232,8 +1246,6 @@
     "continueButton": "Continua",
     "blockCompleteHeading": "Gruppo completato",
     "exerciseErrorMessage": "Si e verificato un errore con questo esercizio.",
-    "reviewCompleteTitle": "Ripasso completato",
-    "wordsReviewedLabel": "parole ripassate",
     "savingReview": "Salvataggio in corso...",
     "saveErrorMessage": "Non siamo riusciti a salvare questo ripasso. Controlla la tua connessione e riprova.",
     "sessionExpiredMessage": "La tua sessione e scaduta. Accedi di nuovo."

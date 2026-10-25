@@ -67,15 +67,83 @@ for (const fileName of LOCALE_FILES) {
   });
 }
 
+// reviewWords.continuous (continuous reviewing) is the one nested group: it
+// holds count strings whose plural categories differ by language (Russian
+// adds _few/_many), which a flat English-parity key set can't express.
+const NESTED_GROUPS = new Set(["continuous"]);
+
 for (const fileName of LOCALE_FILES) {
   test(`${fileName} reviewWords values are all non-empty strings`, () => {
     const data = parsed.get(fileName);
     for (const [key, value] of Object.entries(data.reviewWords)) {
-      assert.equal(typeof value, "string", `${fileName}: reviewWords.${key} is not a string`);
-      assert.ok(value.trim().length > 0, `${fileName}: reviewWords.${key} is empty`);
+      const entries = NESTED_GROUPS.has(key) ? Object.entries(value ?? {}).map(([k, v]) => [`${key}.${k}`, v]) : [[key, value]];
+      for (const [path, text] of entries) {
+        assert.equal(typeof text, "string", `${fileName}: reviewWords.${path} is not a string`);
+        assert.ok(text.trim().length > 0, `${fileName}: reviewWords.${path} is empty`);
+      }
     }
   });
 }
+
+// Every reviewWords key the review screens actually render must resolve in
+// every language (the lookup shows the raw key path on a miss). Plain keys
+// are read from the components' source; plural bases (formatCount calls)
+// must resolve for the category Intl.PluralRules picks, falling back to
+// _other exactly as utils/formatCount.ts does.
+const REVIEW_DIR = path.join(ROOT_DIR, "src", "features", "review-words");
+const REVIEW_SOURCES = ["ReviewWordsPreparation.tsx", "ReviewSession.tsx", "ReviewSessionComplete.tsx"].map((name) =>
+  fs.readFileSync(path.join(REVIEW_DIR, name), "utf8"),
+).join("\n");
+const reviewPluralBases = [
+  ...new Set([...REVIEW_SOURCES.matchAll(/formatCount\(\s*t,\s*uiLanguage,\s*"(reviewWords\.[A-Za-z0-9_.]+)"/g)].map((m) => m[1])),
+];
+const reviewPlainKeys = [
+  ...new Set(
+    [...REVIEW_SOURCES.matchAll(/"(reviewWords\.[A-Za-z0-9_.]+)"/g)]
+      .map((m) => m[1])
+      .filter((key) => !reviewPluralBases.includes(key)),
+  ),
+];
+const LOCALE_CODES = {
+  "english_interface.json": "en",
+  "german_interface.json": "de",
+  "spanish_interface.json": "es",
+  "french_interface.json": "fr",
+  "italian_interface.json": "it",
+  "portuguese_interface.json": "pt",
+  "russian_interface.json": "ru",
+};
+const lookup = (root, key) => key.split(".").reduce((node, part) => (node && typeof node === "object" ? node[part] : undefined), root);
+
+test("review screens reference continuous-review keys (sanity check of the source scan)", () => {
+  assert.ok(reviewPlainKeys.includes("reviewWords.continuous.finishButton"));
+  assert.ok(reviewPluralBases.includes("reviewWords.continuous.finishedSubtitle"));
+});
+
+for (const fileName of LOCALE_FILES) {
+  test(`${fileName}: every reviewWords key used by the review screens resolves (incl. plural forms)`, () => {
+    const data = parsed.get(fileName);
+    for (const key of reviewPlainKeys) {
+      const value = lookup(data, key);
+      assert.ok(typeof value === "string" && value.trim().length > 0, `missing "${key}"`);
+    }
+    const rules = new Intl.PluralRules(LOCALE_CODES[fileName]);
+    for (const base of reviewPluralBases) {
+      assert.ok(lookup(data, `${base}_other`), `missing "${base}_other"`);
+      for (const count of [0, 1, 2, 3, 5, 11, 21, 22, 25, 101]) {
+        const template = lookup(data, `${base}_${rules.select(count)}`) ?? lookup(data, `${base}_other`);
+        assert.ok(template.includes("{count}"), `"${base}" form for ${count} lacks {count}`);
+      }
+    }
+  });
+}
+
+test("russian_interface.json has few/many forms for the review summary sentence", () => {
+  const data = parsed.get("russian_interface.json");
+  for (const category of ["one", "few", "many"]) {
+    assert.ok(lookup(data, `reviewWords.continuous.finishedSubtitle_${category}`), `missing _${category}`);
+  }
+});
 
 test("english_interface.json reuses the existing modeCards Review Words button label", () => {
   const data = parsed.get("english_interface.json");

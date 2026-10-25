@@ -15,6 +15,7 @@ import { fileURLToPath } from "node:url";
 import {
   buildBalancedSequence,
   buildReviewSessionPlan,
+  extendReviewSessionPlan,
   GROUP_EXERCISE_POOL,
   TYPING_EXERCISE_POOL,
 } from "../../../src/features/review-words/reviewSessionPlan.ts";
@@ -272,7 +273,7 @@ test("20. CONTINUE_AFTER_BLOCK is stale after a group exercise auto-continues", 
   assert.equal(getCurrentWordAssignment(state).queueIndex, 4);
 });
 
-test("21. A full 20-word session walks through five blocks to session_complete, with exactly 20 saved review events (not 25)", () => {
+test("21. A full 20-word batch walks through five blocks to awaiting_more (no automatic completion), with exactly 20 saved review events (not 25)", () => {
   let { state } = beginSession(20);
   let saveCount = 0;
   for (let block = 0; block < 5; block++) {
@@ -289,15 +290,17 @@ test("21. A full 20-word session walks through five blocks to session_complete, 
       assert.equal(getCurrentWordAssignment(state).queueIndex, (block + 1) * 4);
     }
   }
-  assert.equal(state.currentStep, "session_complete");
-  assert.equal(state.isComplete, true);
+  // Continuous reviewing: the end of a batch waits for more words instead
+  // of ending the session — 20 is a batch size, not a session length.
+  assert.equal(state.currentStep, "awaiting_more");
+  assert.equal(state.isComplete, false);
   assert.equal(saveCount, 20, "exactly 20 individual word saves, not 25 (5 blocks x 4 typing + 5 group)");
   assert.equal(getReviewSessionProgress(state).wordsReviewed, 20);
   assert.equal(getReviewSessionProgress(state).totalWords, 20);
   assert.equal(state.groupResults.length, 5);
 });
 
-test("22. A 17-word session's trailing remainder skips group_exercise/block_complete and completes the session", () => {
+test("22. A 17-word batch's trailing remainder skips group_exercise/block_complete and waits for more", () => {
   let { state } = beginSession(17);
   for (let block = 0; block < 4; block++) {
     for (let word = 0; word < 4; word++) {
@@ -309,7 +312,7 @@ test("22. A 17-word session's trailing remainder skips group_exercise/block_comp
   }
   assert.equal(state.currentStep, "word_exercise");
   state = completeCurrentWord(state, "incorrect");
-  assert.equal(state.currentStep, "session_complete");
+  assert.equal(state.currentStep, "awaiting_more");
   assert.equal(getReviewSessionProgress(state).wordsReviewed, 17);
   // The remainder word's outcome is recorded faithfully, not silently
   // upgraded to a better one.
@@ -331,8 +334,96 @@ test("23. No word is ever skipped over: every wordResults entry ends saved acros
       }
     }
   }
-  assert.equal(state.currentStep, "session_complete");
+  assert.equal(state.currentStep, "awaiting_more");
   assert.ok(state.wordResults.every((r) => r.saved === true));
+});
+
+console.log("\n=== continuous reviewing (batches, finish, exhaustion) ===\n");
+
+function makeItems(from, count) {
+  return Array.from({ length: count }, (_, index) => ({
+    conceptId: `C-${String(from + index + 1).padStart(4, "0")}`,
+    progressRowId: `P-${String(from + index + 1).padStart(4, "0")}`,
+  }));
+}
+
+// Reviews every word of the plan from the current position until the
+// session waits for more (group exercises included).
+function reviewUntilAwaiting(state) {
+  let guard = 0;
+  while (state.currentStep !== "awaiting_more" && guard++ < 1000) {
+    if (state.currentStep === "word_exercise") state = completeCurrentWord(state);
+    else if (state.currentStep === "group_exercise") {
+      state = reduceReviewSessionState(state, { type: "GROUP_EXERCISE_COMPLETE", success: true });
+    } else throw new Error(`unexpected step ${state.currentStep}`);
+  }
+  return state;
+}
+
+test("33. extendReviewSessionPlan continues queue indexes after the existing plan", () => {
+  const plan = buildReviewSessionPlan(6, sequenceRandom([0.1, 0.5, 0.9]), () => "e");
+  const extended = extendReviewSessionPlan(plan, 5, sequenceRandom([0.2, 0.7]), () => "f");
+  assert.equal(extended.totalWords, 11);
+  const indexes = extended.blocks.flatMap((block) => block.words.map((word) => word.queueIndex));
+  assert.deepEqual(indexes, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  assert.equal(extended.blocks.length, plan.blocks.length + 2, "5 new words -> one full block + a remainder of 1");
+  assert.equal(extendReviewSessionPlan(plan, 0), plan);
+});
+
+test("34. Reviewing continues past 20 words: APPEND_QUEUE at awaiting_more resumes with the next batch", () => {
+  let { state } = beginSession(20);
+  state = reviewUntilAwaiting(state);
+  state = reduceReviewSessionState(state, { type: "APPEND_QUEUE", items: makeItems(20, 20) });
+  assert.equal(state.currentStep, "word_exercise");
+  assert.equal(getCurrentWordAssignment(state).queueIndex, 20);
+  state = reviewUntilAwaiting(state);
+  state = reduceReviewSessionState(state, { type: "APPEND_QUEUE", items: makeItems(40, 15) });
+  state = reviewUntilAwaiting(state);
+  assert.equal(getReviewSessionProgress(state).wordsReviewed, 55);
+  assert.equal(state.isComplete, false);
+  // Every word in the session is a distinct concept, saved exactly once.
+  const ids = state.wordResults.map((r) => r.conceptId);
+  assert.equal(new Set(ids).size, ids.length);
+  assert.ok(state.wordResults.every((r) => r.saved));
+});
+
+test("35. A batch appended mid-batch extends the plan without moving the learner", () => {
+  let { state } = beginSession(8);
+  state = completeCurrentWord(state);
+  const before = getCurrentWordAssignment(state).queueIndex;
+  state = reduceReviewSessionState(state, { type: "APPEND_QUEUE", items: makeItems(8, 6) });
+  assert.equal(state.currentStep, "word_exercise");
+  assert.equal(getCurrentWordAssignment(state).queueIndex, before);
+  assert.equal(state.wordResults.length, 14);
+  assert.equal(state.wordResults[13].conceptId, "C-0014");
+});
+
+test("36. FINISH_REVIEW ends at any point with only saved words counted; ignored while a save is in flight", () => {
+  let { state } = beginSession(20);
+  state = completeCurrentWord(state);
+  // Mid-exercise: the word on screen is not counted.
+  const saving = reduceReviewSessionState(state, { type: "WORD_OUTCOME_DETERMINED", outcome: "correct" });
+  assert.equal(reduceReviewSessionState(saving, { type: "FINISH_REVIEW" }), saving, "no finish during saving_review");
+  const finished = reduceReviewSessionState(state, { type: "FINISH_REVIEW" });
+  assert.equal(finished.currentStep, "session_complete");
+  assert.equal(finished.isComplete, true);
+  assert.equal(getReviewSessionProgress(finished).wordsReviewed, 1);
+  assert.equal(finished.wordResults.filter((r) => r.outcome !== null).length, 1, "the unfinished word has no outcome");
+  // A late batch can never reopen a finished session.
+  assert.equal(reduceReviewSessionState(finished, { type: "APPEND_QUEUE", items: makeItems(20, 5) }), finished);
+});
+
+test("37. QUEUE_EXHAUSTED at awaiting_more shows all_caught_up; it is a no-op mid-batch", () => {
+  let { state } = beginSession(5);
+  assert.equal(reduceReviewSessionState(state, { type: "QUEUE_EXHAUSTED" }), state);
+  state = reviewUntilAwaiting(state);
+  state = reduceReviewSessionState(state, { type: "QUEUE_EXHAUSTED" });
+  assert.equal(state.currentStep, "all_caught_up");
+  assert.equal(state.isComplete, false);
+  const finished = reduceReviewSessionState(state, { type: "FINISH_REVIEW" });
+  assert.equal(finished.currentStep, "session_complete");
+  assert.equal(getReviewSessionProgress(finished).wordsReviewed, 5);
+  assert.equal(reduceReviewSessionState(state, { type: "APPEND_QUEUE", items: makeItems(5, 3) }), state);
 });
 
 console.log("\n=== reviewSessionState: saving/error/retry ===\n");

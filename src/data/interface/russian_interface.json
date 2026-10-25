@@ -343,8 +343,23 @@
     "sessionErrorMessage": "Что-то пошло не так с вашей учебной сессией."
   },
   "reviewWords": {
-    "wordsToReviewCount_one": "Слов для повторения: {count}",
-    "wordsToReviewCount_other": "Слов для повторения: {count}",
+    "continuous": {
+      "ownPace": "Повторяй в своём темпе",
+      "introHint": "Повторяй столько слов, сколько хочешь. Заверши в любой момент.",
+      "finishButton": "Завершить повторение",
+      "reviewedCount_one": "Повторено: {count}",
+      "reviewedCount_other": "Повторено: {count}",
+      "loadingMore": "Готовим ещё слова…",
+      "loadMoreError": "Не удалось загрузить новые слова. Проверь подключение и попробуй снова.",
+      "caughtUpTitle": "Всё повторено!",
+      "caughtUpDescription": "Все доступные слова пока повторены.",
+      "finishedTitle": "Повторение завершено!",
+      "finishedSubtitle_one": "Повторено {count} слово.",
+      "finishedSubtitle_few": "Повторено {count} слова.",
+      "finishedSubtitle_many": "Повторено {count} слов.",
+      "finishedSubtitle_other": "Повторено {count} слова.",
+      "finishedNone": "Ни одно слово ещё не повторено."
+    },
     "startReviewButton": "Начать повторение",
     "title": "Повторить слова",
     "subtitle": "Закрепите слова, которые вы уже изучили.",
@@ -361,8 +376,6 @@
     "continueButton": "Продолжить",
     "blockCompleteHeading": "Группа завершена",
     "exerciseErrorMessage": "Что-то пошло не так с этим упражнением.",
-    "reviewCompleteTitle": "Повторение завершено",
-    "wordsReviewedLabel": "слов повторено",
     "savingReview": "Сохранение...",
     "saveErrorMessage": "Не удалось сохранить это повторение. Проверьте подключение и попробуйте снова.",
     "sessionExpiredMessage": "Ваша сессия истекла. Пожалуйста, войдите снова."
@@ -912,8 +925,9 @@
           },
           "reviewWords": {
             "title": "Повторить слова",
-            "description": "Повторяйте ранее изученные слова по расписанию интервального повторения.",
-            "metaLine": "Повторений не запланировано",
+            "description": "Закрепляй словарный запас с помощью интервального повторения.",
+            "metaLine": "Повторяй в своём темпе",
+            "emptyMetaLine": "Изучи новые слова, чтобы начать повторение",
             "buttonLabel": "Начать повторение"
           },
           "customPractice": {

@@ -8,3 +8,10 @@ export { UserProfileDashboardPage } from "./sections/UserProfileDashboardPage";
 // vocabulary list SEO pages (src/app/pages/list-pages/full-vocabulary-list/). It owns
 // its own data fetching and styles, so it works outside the profile page.
 export { AddWordToListDialog, type AddToListWord } from "./sections/vocabulary/AddWordToListDialog";
+// Add to list / favorites row actions for the Study New Words and Review
+// Words completion screens' word lists (src/app/components/session-word-list/).
+export {
+  useSessionWordActions,
+  type SessionWordActionLabels,
+  type SessionWordForActions,
+} from "./sections/vocabulary/useSessionWordActions";

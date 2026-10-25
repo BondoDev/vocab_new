@@ -551,6 +551,7 @@ interface UserWordProgressReviewRawRow {
   last_practiced_at?: unknown;
   next_review_at?: unknown;
   created_at?: unknown;
+  is_favorite?: unknown;
 }
 
 export interface UserWordProgressReviewRow {
@@ -561,6 +562,9 @@ export interface UserWordProgressReviewRow {
   lastPracticedAt: string | null;
   nextReviewAt: string | null;
   createdAt: string | null;
+  // Not used by review selection; carried so the Review Words completion
+  // screen's favorite toggle knows each reviewed word's current state.
+  isFavorite: boolean;
 }
 
 // Read-only: no insert/update/upsert/RPC call anywhere in this function —
@@ -578,7 +582,7 @@ export async function readUserWordProgressForReview(
     session,
     `/rest/v1/user_word_progress?user_id=eq.${encodeURIComponent(userId)}&target_language=eq.${encodeURIComponent(
       targetLanguage,
-    )}&select=id,word_id,word_state,correct_streak,last_practiced_at,next_review_at,created_at`,
+    )}&select=id,word_id,word_state,correct_streak,last_practiced_at,next_review_at,created_at,is_favorite`,
   );
 
   const rows: UserWordProgressReviewRow[] = [];
@@ -598,6 +602,7 @@ export async function readUserWordProgressForReview(
       lastPracticedAt: typeof raw.last_practiced_at === "string" ? raw.last_practiced_at : null,
       nextReviewAt: typeof raw.next_review_at === "string" ? raw.next_review_at : null,
       createdAt: typeof raw.created_at === "string" ? raw.created_at : null,
+      isFavorite: raw.is_favorite === true,
     });
   }
 

@@ -45,6 +45,8 @@ const INFLECTED_IMPORTERS: Record<string, () => Promise<{ default: unknown[] }>>
 
 export interface ResolvedReviewQueueItem extends ResolvedConceptWordData {
   progressRowId: string;
+  // Display-only (completion screen's favorite toggle); never used by selection.
+  isFavorite: boolean;
   conceptId: string;
   wordState: WordState;
   correctStreak: number;
@@ -57,7 +59,12 @@ export interface LoadReviewQueueParams {
   session: StoredSupabaseSession;
   targetLanguage: string;
   nativeLanguage: string;
+  // Batch size: how many words to prepare now. Continuous reviewing calls
+  // this repeatedly, so it is no longer the session length.
   sessionSize?: number;
+  // Continuous reviewing: concept ids already queued or reviewed in this
+  // session, never selected again within it (see selectReviewQueue).
+  excludeConceptIds?: ReadonlySet<string>;
   // Injectable for tests; defaults to the real current time.
   now?: Date;
 }
@@ -79,11 +86,40 @@ function toEngineRow(row: UserWordProgressReviewRow): ReviewQueueProgressRow {
   };
 }
 
+// Continuous reviewing loads a batch every ~20 words, so the vocabulary
+// resolver (an index over the whole vocabulary/inflected data) is built
+// once per language pair and reused; the progress rows are still read fresh
+// for every batch so selection always sees the latest states/deadlines.
+const conceptResolverCache = new Map<string, Promise<ReturnType<typeof buildVocabularyConceptResolver>>>();
+
+function getConceptResolver(targetLanguage: string, nativeLanguage: string) {
+  const cacheKey = `${targetLanguage}|${nativeLanguage}`;
+  let pending = conceptResolverCache.get(cacheKey);
+  if (!pending) {
+    pending = Promise.all([
+      VOCABULARY_IMPORTERS[targetLanguage](),
+      VOCABULARY_IMPORTERS[nativeLanguage](),
+      INFLECTED_IMPORTERS[targetLanguage]?.().catch(() => ({ default: [] })) ?? Promise.resolve({ default: [] }),
+    ]).then(([targetModule, nativeModule, targetInflectedModule]) =>
+      buildVocabularyConceptResolver(
+        Array.isArray(targetModule.default) ? targetModule.default : [],
+        Array.isArray(nativeModule.default) ? nativeModule.default : [],
+        Array.isArray(targetInflectedModule.default) ? targetInflectedModule.default : [],
+      ),
+    );
+    // A failed import must not poison the cache for the next attempt.
+    pending.catch(() => conceptResolverCache.delete(cacheKey));
+    conceptResolverCache.set(cacheKey, pending);
+  }
+  return pending;
+}
+
 export async function loadReviewQueue({
   session,
   targetLanguage,
   nativeLanguage,
   sessionSize = REVIEW_SESSION_SIZE_DEFAULT,
+  excludeConceptIds,
   now,
 }: LoadReviewQueueParams): Promise<LoadReviewQueueResult> {
   if (!VOCABULARY_IMPORTERS[targetLanguage] || !VOCABULARY_IMPORTERS[nativeLanguage]) {
@@ -103,18 +139,7 @@ export async function loadReviewQueue({
     return { queue: [], metadata: emptyResult.metadata };
   }
 
-  const [targetModule, nativeModule, targetInflectedModule] = await Promise.all([
-    VOCABULARY_IMPORTERS[targetLanguage](),
-    VOCABULARY_IMPORTERS[nativeLanguage](),
-    INFLECTED_IMPORTERS[targetLanguage]?.().catch(() => ({ default: [] })) ??
-      Promise.resolve({ default: [] }),
-  ]);
-
-  const resolveVocabularyConcept = buildVocabularyConceptResolver(
-    Array.isArray(targetModule.default) ? targetModule.default : [],
-    Array.isArray(nativeModule.default) ? nativeModule.default : [],
-    Array.isArray(targetInflectedModule.default) ? targetInflectedModule.default : [],
-  );
+  const resolveVocabularyConcept = await getConceptResolver(targetLanguage, nativeLanguage);
 
   const engineRows = progressRows.map(toEngineRow);
 
@@ -123,6 +148,7 @@ export async function loadReviewQueue({
     sessionSize,
     now: effectiveNow,
     resolveConcept: resolveVocabularyConcept,
+    excludeWordIds: excludeConceptIds,
     onUnresolvedRow: (row) => {
       console.warn(
         `loadReviewQueue: skipped unresolved concept for progress row "${row.id}" (word "${row.wordId}", target language "${targetLanguage}").`,
@@ -130,6 +156,7 @@ export async function loadReviewQueue({
     },
   });
 
+  const isFavoriteByRowId = new Map(progressRows.map((row) => [row.id, row.isFavorite]));
   const queue: ResolvedReviewQueueItem[] = items.map(({ row, source, resolved }) => ({
     ...resolved,
     progressRowId: row.id,
@@ -139,6 +166,7 @@ export async function loadReviewQueue({
     lastPracticedAt: row.lastPracticedAt,
     nextReviewAt: row.nextReviewAt,
     selectionSource: source,
+    isFavorite: isFavoriteByRowId.get(row.id) ?? false,
   }));
 
   return { queue, metadata };

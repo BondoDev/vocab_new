@@ -95,6 +95,39 @@ function defaultGenerateEventId(): string {
   return crypto.randomUUID();
 }
 
+// Blocks for queue indexes [startIndex, startIndex + count): full 4-word
+// blocks get a group exercise, a trailing 1-3 word remainder does not.
+// `previousTypingExerciseId` is the last typing exercise already planned
+// (when extending a plan), so the first new word doesn't repeat it.
+function buildBlocks(
+  startIndex: number,
+  count: number,
+  randomFn: () => number,
+  generateEventId: () => string,
+  previousTypingExerciseId?: TypingExerciseId,
+): ReviewBlockPlan[] {
+  const typingSequence = buildBalancedSequence(count, TYPING_EXERCISE_POOL, randomFn);
+  if (previousTypingExerciseId !== undefined && typingSequence.length > 1 && typingSequence[0] === previousTypingExerciseId) {
+    [typingSequence[0], typingSequence[1]] = [typingSequence[1], typingSequence[0]];
+  }
+
+  const blocks: ReviewBlockPlan[] = [];
+  for (let offset = 0; offset < count; offset += REVIEW_BLOCK_SIZE) {
+    const end = Math.min(offset + REVIEW_BLOCK_SIZE, count);
+    const words: ReviewWordAssignment[] = [];
+    for (let i = offset; i < end; i++) {
+      words.push({ queueIndex: startIndex + i, typingExerciseId: typingSequence[i], eventId: generateEventId() });
+    }
+
+    const isFullBlock = words.length === REVIEW_BLOCK_SIZE;
+    blocks.push({
+      words,
+      groupExerciseId: isFullBlock ? pickRandom(GROUP_EXERCISE_POOL, randomFn) : null,
+    });
+  }
+  return blocks;
+}
+
 // The main entrypoint. `queueLength` is the count of already-selected,
 // already-resolved review-queue items (see loadReviewQueue.ts) — this
 // function has no opinion on which words those are, only how many.
@@ -108,22 +141,29 @@ export function buildReviewSessionPlan(
   }
 
   const totalWords = Math.floor(queueLength);
-  const typingSequence = buildBalancedSequence(totalWords, TYPING_EXERCISE_POOL, randomFn);
+  return { blocks: buildBlocks(0, totalWords, randomFn, generateEventId), totalWords };
+}
 
-  const blocks: ReviewBlockPlan[] = [];
-  for (let start = 0; start < totalWords; start += REVIEW_BLOCK_SIZE) {
-    const end = Math.min(start + REVIEW_BLOCK_SIZE, totalWords);
-    const words: ReviewWordAssignment[] = [];
-    for (let queueIndex = start; queueIndex < end; queueIndex++) {
-      words.push({ queueIndex, typingExerciseId: typingSequence[queueIndex], eventId: generateEventId() });
-    }
-
-    const isFullBlock = words.length === REVIEW_BLOCK_SIZE;
-    blocks.push({
-      words,
-      groupExerciseId: isFullBlock ? pickRandom(GROUP_EXERCISE_POOL, randomFn) : null,
-    });
+// Continuous reviewing: appends blocks for `additionalCount` more queue
+// items (the next batch, already appended to the session's queue) after the
+// existing plan, continuing its queue indexes. Existing blocks — including a
+// short remainder block that used to be the plan's last — are kept as-is; a
+// remainder block simply no longer ends the session (see
+// reviewSessionState.ts's advance logic).
+export function extendReviewSessionPlan(
+  plan: ReviewSessionPlan,
+  additionalCount: number,
+  randomFn: () => number = Math.random,
+  generateEventId: () => string = defaultGenerateEventId,
+): ReviewSessionPlan {
+  if (!Number.isFinite(additionalCount) || additionalCount <= 0) {
+    return plan;
   }
-
-  return { blocks, totalWords };
+  const count = Math.floor(additionalCount);
+  const lastBlock = plan.blocks[plan.blocks.length - 1];
+  const previousTypingExerciseId = lastBlock?.words[lastBlock.words.length - 1]?.typingExerciseId;
+  return {
+    blocks: [...plan.blocks, ...buildBlocks(plan.totalWords, count, randomFn, generateEventId, previousTypingExerciseId)],
+    totalWords: plan.totalWords + count,
+  };
 }

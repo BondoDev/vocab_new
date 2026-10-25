@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, Check, ChevronDown, Layers, ListPlus, MoreVertical, Star, Volume2 } from "lucide-react";
+import { ArrowRight, Check, Layers } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
-import { describeSupabaseError, resolveSupabaseErrorMessageKey } from "../../lib/supabaseError";
-import { updateWordProgressFavorite, VocabularyFavoriteUpdateError } from "../../lib/newWordProgress";
-import { Toast, useAutoDismissMessage } from "../../app/components/Toast";
-// Same Radix dropdown the shared VocabularyTable uses for its row "⋮" menu.
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../app/components/ui/dropdown-menu";
-// My Lists' own add-to-list dialog via the user-profile feature's public
-// barrel — the same reuse FullVocabularyListSeoPage already does, so list
-// membership logic stays in one place.
-import { AddWordToListDialog, type AddToListWord } from "../user-profile";
-import { buildWordPath } from "../../data/seo/wordPages/wordSlugs";
-import { getUiVocabularyLanguage, isSupportedUiLanguage } from "../../data/seo/shared/slugs";
+import { describeSupabaseError } from "../../lib/supabaseError";
+// The word list and its row actions are shared with Review Words' completion
+// screen: the list is an app-level presentational component, the Add to
+// list / favorites actions come from the user-profile feature's barrel.
+import { SessionWordList } from "../../app/components/session-word-list/SessionWordList";
+import { useSessionWordActions } from "../user-profile";
 import { loadDueReviewCount } from "./loadDueReviewCount";
 import { loadTodayStudiedWords, type StudiedWordSummary } from "./loadNewWordStudyQueue";
 import { speakGuidedWord } from "./utils/speakGuidedWord";
@@ -34,23 +29,6 @@ interface NewWordStudyCompleteProps {
 
 type ReviewState = { status: "loading" } | { status: "error" } | { status: "ready"; dueCount: number };
 type TodayWordsState = { status: "loading" } | { status: "error" } | { status: "ready"; words: StudiedWordSummary[] };
-
-// Same item styling as the shared VocabularyTable's row menu.
-const ROW_MENU_ITEM_CLASS =
-  "cursor-pointer gap-2.5 rounded-lg py-2 pl-2.5 pr-3 focus:bg-primary/10 focus:text-primary [&_svg]:!text-primary";
-
-// Longer lists collapse to the first rows with a Show all toggle; at or
-// under the threshold the whole list is shown (no toggle for 1–2 hidden rows).
-const COLLAPSE_THRESHOLD = 12;
-const COLLAPSED_ROW_COUNT = 10;
-
-// Same fallback as NewWordInfoStep for an untranslated wordTypes.* id.
-function formatWordTypeLabel(typeId: string): string {
-  return typeId
-    .split(/[_-]+/g)
-    .map((part) => (part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part))
-    .join(" ");
-}
 
 // Same plural-aware {count} formatting as NewWordStudyPreparation.tsx's
 // helper (picks `${baseKey}_${CLDR category}`, falling back to `_other`),
@@ -103,13 +81,16 @@ export function NewWordStudyComplete({
   const { t, uiLanguage } = useLanguage();
   const [reviewState, setReviewState] = useState<ReviewState>({ status: "loading" });
   const [todayWordsState, setTodayWordsState] = useState<TodayWordsState>({ status: "loading" });
-  const [isListExpanded, setIsListExpanded] = useState(false);
-  const [addToListWord, setAddToListWord] = useState<AddToListWord | null>(null);
-  // Favorite flags changed on this screen, keyed by concept id, layered over
-  // the values today's read returned (optimistic, reverted on failure).
-  const [favoriteOverrides, setFavoriteOverrides] = useState<Readonly<Record<string, boolean>>>({});
-  const [togglingFavoriteIds, setTogglingFavoriteIds] = useState<ReadonlySet<string>>(new Set());
-  const { message: toastMessage, show: showToast } = useAutoDismissMessage();
+  const { getRowActions, overlay } = useSessionWordActions({
+    targetLanguage: practiceLanguage,
+    labels: {
+      addToList: t("studyNewWords.complete.addToListButton"),
+      addToFavorites: t("studyNewWords.complete.addToFavorites"),
+      removeFromFavorites: t("studyNewWords.complete.removeFromFavorites"),
+      favoriteAddedSuffix: t("studyNewWords.complete.favoriteAddedSuffix"),
+      favoriteRemovedSuffix: t("studyNewWords.complete.favoriteRemovedSuffix"),
+    },
+  });
 
   // Both read once on mount. This screen only renders once the last save in
   // flight has finished (Finish session is disabled during a save), so the
@@ -151,16 +132,11 @@ export function NewWordStudyComplete({
     };
   }, [practiceLanguage, yourLanguage]);
 
-  // Speech synthesis is browser-dependent; without it the audio buttons
-  // would silently do nothing, so they're omitted instead.
-  const canSpeak = typeof window !== "undefined" && "speechSynthesis" in window;
-
   const languageName = t(`languageNames.${practiceLanguage}`);
   // Language names are capitalized standalone (column captions, badges) but
   // lowercase mid-sentence in es/fr/it/pt/ru ("en allemand"); templates pick
   // {language} or {languageLower} accordingly.
   const languageNameLower = languageName.toLocaleLowerCase(uiLanguage);
-  const nativeLanguageName = t(`languageNames.${yourLanguage}`);
 
   // While today's list loads, the summary waits (a brief loading line)
   // rather than showing this session's count and then jumping to today's.
@@ -169,68 +145,9 @@ export function NewWordStudyComplete({
     todayWordsState.status === "ready" ? mergeStudiedWords(todayWordsState.words, sessionWords) : sessionWords;
   const wordCount = studiedWords.length;
 
-  const isCollapsible = wordCount > COLLAPSE_THRESHOLD;
-  const visibleWords = isCollapsible && !isListExpanded ? studiedWords.slice(0, COLLAPSED_ROW_COUNT) : studiedWords;
-
   const dueCount = reviewState.status === "ready" ? reviewState.dueCount : 0;
   const canStartReview = Boolean(onStartReviewWords) && reviewState.status === "ready" && dueCount > 0;
   const isNothingDue = reviewState.status === "ready" && dueCount === 0;
-
-  const isWordFavorite = (word: StudiedWordSummary) => favoriteOverrides[word.conceptId] ?? word.isFavorite ?? false;
-
-  // Same RPC and optimistic pattern as the Vocabulary page's star toggle
-  // (VocabularySection.handleToggleFavorite). Needs the word's progress row
-  // id, which only today's progress read provides — see StudiedWordSummary.
-  const handleToggleFavorite = (word: StudiedWordSummary) => {
-    const progressRowId = word.progressRowId;
-    if (!progressRowId || togglingFavoriteIds.has(word.conceptId)) return;
-    const session = getStoredSupabaseSession();
-    if (!session) {
-      showToast(t("supabaseErrors.sessionExpired"));
-      return;
-    }
-    const previous = isWordFavorite(word);
-    const next = !previous;
-    setFavoriteOverrides((current) => ({ ...current, [word.conceptId]: next }));
-    setTogglingFavoriteIds((current) => new Set(current).add(word.conceptId));
-    void updateWordProgressFavorite(session, progressRowId, next)
-      .then(() => {
-        showToast(
-          `"${word.targetWord}" ${t(
-            next ? "studyNewWords.complete.favoriteAddedSuffix" : "studyNewWords.complete.favoriteRemovedSuffix",
-          )}`,
-        );
-      })
-      .catch((error) => {
-        // Structured diagnostics are logged inside updateWordProgressFavorite.
-        console.warn("NewWordStudyComplete: failed to update favorite.", error);
-        setFavoriteOverrides((current) => ({ ...current, [word.conceptId]: previous }));
-        const category = error instanceof VocabularyFavoriteUpdateError ? error.category : "unknown";
-        showToast(t(resolveSupabaseErrorMessageKey(category, "userProfile.vocabularySection.favoriteError")));
-      })
-      .finally(() => {
-        setTogglingFavoriteIds((current) => {
-          const remaining = new Set(current);
-          remaining.delete(word.conceptId);
-          return remaining;
-        });
-      });
-  };
-
-  // Each word links to its own word page (same URL builder the Vocabulary
-  // page's "View details" action uses), opened in a new tab so this summary
-  // stays put. The page's UI language is the current one; the vocabulary
-  // language is the one being studied. Plain text if either is unsupported.
-  const wordPagePath = (word: StudiedWordSummary): string | null =>
-    isSupportedUiLanguage(uiLanguage) && isSupportedUiLanguage(practiceLanguage)
-      ? buildWordPath(uiLanguage, getUiVocabularyLanguage(practiceLanguage), word.targetWord, word.conceptId)
-      : null;
-
-  const grammarLabel = (grammarType?: string) => {
-    if (!grammarType) return null;
-    const translated = t(`wordTypes.${grammarType}`);
-    return translated === `wordTypes.${grammarType}` ? formatWordTypeLabel(grammarType) : translated;
-  };
 
   return (
     <div className="new-word-study-complete">
@@ -262,118 +179,24 @@ export function NewWordStudyComplete({
         )}
       </header>
 
-      {!isWordsLoading && wordCount > 0 && (
-        <section className="new-word-study-complete-words" aria-labelledby="new-word-study-complete-words-heading">
-          <h2 id="new-word-study-complete-words-heading" className="new-word-study-complete-section-heading">
-            {t("studyNewWords.complete.wordsHeading")}
-          </h2>
-          {/* Column captions double as the language key for every row; hidden
-              from assistive tech because each row's cells carry lang. */}
-          <div className="new-word-study-complete-columns" aria-hidden="true">
-            <span>{languageName}</span>
-            <span>{nativeLanguageName}</span>
-            <span>{t("studyNewWords.complete.typeColumn")}</span>
-            <span />
-          </div>
-          <ul id="new-word-study-complete-word-list" className="new-word-study-complete-list">
-            {visibleWords.map((word) => {
-              const grammar = grammarLabel(word.grammarType);
-              const isFavorite = isWordFavorite(word);
-              const wordPath = wordPagePath(word);
-              return (
-                <li key={word.conceptId} className="new-word-study-complete-row">
-                  <span className="new-word-study-complete-row-word">
-                    {canSpeak && (
-                      <button
-                        type="button"
-                        onClick={() => speakGuidedWord(word.targetWord, practiceLanguage)}
-                        aria-label={`${t("practice.pronounceWord")}: ${word.targetWord}`}
-                        className="new-word-study-complete-row-audio"
-                      >
-                        <Volume2 className="new-word-study-complete-row-audio-icon" aria-hidden="true" />
-                      </button>
-                    )}
-                    {wordPath ? (
-                      <a
-                        href={wordPath}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="new-word-study-complete-row-term new-word-study-complete-row-link"
-                        lang={practiceLanguage}
-                      >
-                        {word.targetWord}
-                      </a>
-                    ) : (
-                      <span className="new-word-study-complete-row-term" lang={practiceLanguage}>
-                        {word.targetWord}
-                      </span>
-                    )}
-                  </span>
-                  <span className="new-word-study-complete-row-translation" lang={yourLanguage}>
-                    {word.translation}
-                  </span>
-                  <span className="new-word-study-complete-row-type">{grammar}</span>
-                  {/* Row actions ("⋮"). Non-modal, like the shared
-                      VocabularyTable's menu, so opening it never locks
-                      scroll. The favorite item is disabled while its save
-                      is in flight, or when the word has no progress row id
-                      (only possible if today's read failed). */}
-                  <DropdownMenu modal={false}>
-                    <DropdownMenuTrigger asChild>
-                      <button
-                        type="button"
-                        aria-label={`${t("studyNewWords.complete.moreActionsAriaLabel")}: ${word.targetWord}`}
-                        className="new-word-study-complete-row-more"
-                      >
-                        <MoreVertical className="new-word-study-complete-row-more-icon" aria-hidden="true" />
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="min-w-0 rounded-xl border-foreground/10 p-1 shadow-lg">
-                      <DropdownMenuItem
-                        className={ROW_MENU_ITEM_CLASS}
-                        onSelect={() => setAddToListWord({ wordId: word.conceptId, targetWord: word.targetWord })}
-                      >
-                        <ListPlus aria-hidden="true" />
-                        {t("studyNewWords.complete.addToListButton")}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className={ROW_MENU_ITEM_CLASS}
-                        disabled={!word.progressRowId || togglingFavoriteIds.has(word.conceptId)}
-                        onSelect={() => handleToggleFavorite(word)}
-                      >
-                        <Star aria-hidden="true" fill={isFavorite ? "currentColor" : "none"} />
-                        {t(
-                          isFavorite
-                            ? "studyNewWords.complete.removeFromFavorites"
-                            : "studyNewWords.complete.addToFavorites",
-                        )}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </li>
-              );
-            })}
-          </ul>
-          {isCollapsible && (
-            <button
-              type="button"
-              onClick={() => setIsListExpanded((expanded) => !expanded)}
-              aria-expanded={isListExpanded}
-              aria-controls="new-word-study-complete-word-list"
-              className="new-word-study-complete-toggle"
-            >
-              <span>
-                {isListExpanded
-                  ? t("studyNewWords.complete.showFewer")
-                  : formatCount(t, uiLanguage, "studyNewWords.complete.showAll", wordCount)}
-              </span>
-              <ChevronDown
-                className={`new-word-study-complete-toggle-icon${isListExpanded ? " is-expanded" : ""}`}
-                aria-hidden="true"
-              />
-            </button>
-          )}
-        </section>
+      {!isWordsLoading && (
+        <SessionWordList
+          words={studiedWords}
+          practiceLanguage={practiceLanguage}
+          yourLanguage={yourLanguage}
+          idPrefix="new-word-study-complete-words"
+          labels={{
+            heading: t("studyNewWords.complete.wordsHeading"),
+            typeColumn: t("studyNewWords.complete.typeColumn"),
+            moreActions: t("studyNewWords.complete.moreActionsAriaLabel"),
+            showFewer: t("studyNewWords.complete.showFewer"),
+            showAll: (count) => formatCount(t, uiLanguage, "studyNewWords.complete.showAll", count),
+          }}
+          onSpeakWord={(word) => speakGuidedWord(word.targetWord, practiceLanguage)}
+          // The favorite item is disabled for a word without a progress row
+          // id (only possible if today's read failed).
+          getRowActions={getRowActions}
+        />
       )}
 
       {/* What next. Three honest states: words due → offer Start Reviewing
@@ -418,15 +241,7 @@ export function NewWordStudyComplete({
         </div>
       </div>
 
-      <AddWordToListDialog
-        word={addToListWord}
-        targetLanguage={practiceLanguage}
-        onOpenChange={(open) => {
-          if (!open) setAddToListWord(null);
-        }}
-        onShowToast={showToast}
-      />
-      <Toast message={toastMessage} />
+      {overlay}
     </div>
   );
 }

@@ -11,6 +11,7 @@
 // scripts/tests/learning/test-review-session.mjs.
 import {
   buildReviewSessionPlan,
+  extendReviewSessionPlan,
   type GroupExerciseId,
   type ReviewSessionPlan,
   type TypingExerciseId,
@@ -35,6 +36,16 @@ export type ReviewSessionStep =
   | "review_save_error"
   | "group_exercise"
   | "block_complete"
+  // Continuous reviewing: every prepared word is done and the next batch
+  // hasn't arrived yet. APPEND_QUEUE resumes from here; QUEUE_EXHAUSTED
+  // (the next batch came back empty under the selection rules) moves to
+  // all_caught_up. The component shows loading / retry while waiting.
+  | "awaiting_more"
+  // No eligible word is left for this session — distinct from a failed
+  // batch request, which keeps the session in awaiting_more with a retry.
+  | "all_caught_up"
+  // The summary: reached only through FINISH_REVIEW (the learner decides
+  // when to stop), or BEGIN with an empty queue.
   | "session_complete"
   | "error";
 
@@ -144,6 +155,13 @@ export interface SavedReviewResult {
 
 export type ReviewSessionAction =
   | { type: "BEGIN" }
+  // Next batch prepared by the component (already deduplicated against
+  // every concept in the session) — extends the plan and wordResults.
+  | { type: "APPEND_QUEUE"; items: ReviewQueueItemLike[] }
+  | { type: "QUEUE_EXHAUSTED" }
+  // "Finish Review": end the session now and show the summary. Saved
+  // reviews stay saved; the word on screen (unsaved) simply isn't counted.
+  | { type: "FINISH_REVIEW" }
   | { type: "WORD_OUTCOME_DETERMINED"; outcome: ReviewOutcome }
   | { type: "SAVE_REVIEW_SUCCEEDED"; result: SavedReviewResult }
   | { type: "SAVE_REVIEW_FAILED" }
@@ -189,10 +207,27 @@ function updateWordResult(
   return wordResults.map((result, index) => (index === queueIndex ? { ...result, ...patch } : result));
 }
 
-// Shared by SAVE_REVIEW_SUCCEEDED and (for a block with no group exercise)
-// the tail end of a session: decides whether to move to the next word in
-// this block, into this block's group exercise, or straight to
-// session_complete.
+// Moves to the first word of the next block, or — at the end of everything
+// prepared so far — waits for the next batch. Reaching the end of the plan
+// never completes the session by itself: the session length is the
+// learner's choice (FINISH_REVIEW), not the batch size.
+function moveToNextBlockOrAwait(state: ReviewSessionState, patch: Partial<ReviewSessionState>): ReviewSessionState {
+  const hasNextBlock = state.currentBlockIndex + 1 < state.plan.blocks.length;
+  if (hasNextBlock) {
+    return {
+      ...state,
+      ...patch,
+      currentBlockIndex: state.currentBlockIndex + 1,
+      currentWordIndexInBlock: 0,
+      currentStep: "word_exercise",
+    };
+  }
+  return { ...state, ...patch, currentStep: "awaiting_more" };
+}
+
+// Shared by SAVE_REVIEW_SUCCEEDED: decides whether to move to the next word
+// in this block, into this block's group exercise, or on to the next block
+// (or awaiting_more).
 function advanceAfterWordSaved(state: ReviewSessionState, wordResults: ReviewWordResult[]): ReviewSessionState {
   const block = getCurrentBlock(state);
   if (!block) {
@@ -210,13 +245,12 @@ function advanceAfterWordSaved(state: ReviewSessionState, wordResults: ReviewWor
   }
 
   // Finished every word in this block. A full block moves into its group
-  // exercise; a trailing remainder block (no group exercise) is — by
-  // construction — always the last block, so it finishes the whole session
-  // instead.
+  // exercise; a short remainder block (no group exercise — a batch whose
+  // size isn't a multiple of 4) moves straight on.
   if (block.groupExerciseId) {
     return { ...state, wordResults, currentStep: "group_exercise" };
   }
-  return { ...state, wordResults, currentStep: "session_complete", isComplete: true };
+  return moveToNextBlockOrAwait(state, { wordResults });
 }
 
 export function reduceReviewSessionState(
@@ -306,18 +340,59 @@ export function reduceReviewSessionState(
         },
       ];
 
-      const hasNextBlock = state.currentBlockIndex + 1 < state.plan.blocks.length;
-      if (hasNextBlock) {
+      return moveToNextBlockOrAwait(state, { wordResults, groupResults });
+    }
+
+    case "APPEND_QUEUE": {
+      // Ignored once the session has ended (a late batch must never reopen
+      // a finished session) or when there's nothing to add.
+      if (state.isComplete || state.currentStep === "all_caught_up" || action.items.length === 0) {
+        return state;
+      }
+      const plan = extendReviewSessionPlan(state.plan, action.items.length);
+      const appendedAssignments = plan.blocks.slice(state.plan.blocks.length).flatMap((block) => block.words);
+      const appendedResults: ReviewWordResult[] = appendedAssignments.map((assignment) => {
+        const item = action.items[assignment.queueIndex - state.plan.totalWords];
         return {
-          ...state,
-          wordResults,
-          groupResults,
-          currentBlockIndex: state.currentBlockIndex + 1,
+          conceptId: item?.conceptId ?? "",
+          progressRowId: item?.progressRowId ?? "",
+          eventId: assignment.eventId,
+          typingExerciseId: assignment.typingExerciseId,
+          outcome: null,
+          saved: false,
+          resultingState: null,
+          resultingStreak: null,
+          groupExerciseParticipated: false,
+          groupExerciseSuccess: null,
+        };
+      });
+      const extended = { ...state, plan, wordResults: [...state.wordResults, ...appendedResults] };
+      // Waiting at the end of the old plan: continue with the first new block.
+      if (state.currentStep === "awaiting_more") {
+        return {
+          ...extended,
+          currentBlockIndex: state.plan.blocks.length,
           currentWordIndexInBlock: 0,
           currentStep: "word_exercise",
         };
       }
-      return { ...state, wordResults, groupResults, currentStep: "session_complete", isComplete: true };
+      return extended;
+    }
+
+    case "QUEUE_EXHAUSTED": {
+      if (state.currentStep !== "awaiting_more") {
+        return state;
+      }
+      return { ...state, currentStep: "all_caught_up" };
+    }
+
+    case "FINISH_REVIEW": {
+      // Not while a save is in flight (its result would be dropped and the
+      // word left out of the summary); a no-op once already finished.
+      if (state.currentStep === "saving_review" || state.isComplete) {
+        return state;
+      }
+      return { ...state, currentStep: "session_complete", isComplete: true };
     }
 
     case "CONTINUE_AFTER_BLOCK": {

@@ -14,6 +14,9 @@ interface LearningModeConfig {
   titleKey: string;
   descriptionKey: string;
   metaLineKey: string;
+  // Shown instead of metaLineKey when the learner has nothing to work with
+  // yet (see LearningModeCardsProps.hasStudiedWords).
+  emptyMetaLineKey?: string;
   icon: LucideIcon;
   variant: LearningModeVariant;
   buttonLabelKey: string;
@@ -39,6 +42,7 @@ const LEARNING_MODES: LearningModeConfig[] = [
     titleKey: "userProfile.learningSection.modeCards.modes.reviewWords.title",
     descriptionKey: "userProfile.learningSection.modeCards.modes.reviewWords.description",
     metaLineKey: "userProfile.learningSection.modeCards.modes.reviewWords.metaLine",
+    emptyMetaLineKey: "userProfile.learningSection.modeCards.modes.reviewWords.emptyMetaLine",
     icon: BrainCircuit,
     variant: "blue",
     buttonLabelKey: "userProfile.learningSection.modeCards.modes.reviewWords.buttonLabel",
@@ -55,6 +59,13 @@ const LEARNING_MODES: LearningModeConfig[] = [
 ];
 
 interface LearningModeCardsProps {
+  // Whether the learner has studied any word in the current target language
+  // — the condition Review Words needs (it reviews previously studied words,
+  // due or not; continuous reviewing doesn't depend on anything being due).
+  // false shows the Review Words card's empty-state line; true or null
+  // (not known yet) shows the normal line, so the card never claims a state
+  // it can't confirm.
+  hasStudiedWords?: boolean | null;
   onStartCustomPractice?: () => void;
   onStartNewWordStudy?: () => void;
   onStartReviewWords?: () => void;
@@ -63,6 +74,7 @@ interface LearningModeCardsProps {
 // Styled by learning-section.scss (imported by LearningSection.tsx, the
 // only place this component is rendered) rather than its own stylesheet.
 export function LearningModeCards({
+  hasStudiedWords = null,
   onStartCustomPractice,
   onStartNewWordStudy,
   onStartReviewWords,
@@ -89,7 +101,12 @@ export function LearningModeCards({
 
       <div className="learning-mode-cards__list">
         {LEARNING_MODES.map((mode) => (
-          <LearningModeCard key={mode.id} mode={mode} onClick={getOnClick(mode.id)} />
+          <LearningModeCard
+            key={mode.id}
+            mode={mode}
+            metaLineKey={hasStudiedWords === false && mode.emptyMetaLineKey ? mode.emptyMetaLineKey : mode.metaLineKey}
+            onClick={getOnClick(mode.id)}
+          />
         ))}
       </div>
     </section>
@@ -98,9 +115,11 @@ export function LearningModeCards({
 
 function LearningModeCard({
   mode,
+  metaLineKey,
   onClick,
 }: {
   mode: LearningModeConfig;
+  metaLineKey: string;
   onClick?: () => void;
 }) {
   const { t } = useLanguage();
@@ -116,7 +135,7 @@ function LearningModeCard({
         <div className="learning-mode-card__content">
           <h3 className="learning-mode-card__title">{t(mode.titleKey)}</h3>
           <p className="learning-mode-card__description">{t(mode.descriptionKey)}</p>
-          <p className="learning-mode-card__meta">{t(mode.metaLineKey)}</p>
+          <p className="learning-mode-card__meta">{t(metaLineKey)}</p>
         </div>
       </div>
 

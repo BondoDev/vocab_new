@@ -401,8 +401,9 @@
           },
           "reviewWords": {
             "title": "Review Words",
-            "description": "Review previously studied words according to their spaced-repetition schedule.",
-            "metaLine": "No reviews scheduled",
+            "description": "Strengthen your vocabulary with spaced repetition.",
+            "metaLine": "Review at your own pace",
+            "emptyMetaLine": "Study new words to start reviewing",
             "buttonLabel": "Start Review"
           },
           "customPractice": {
@@ -1219,9 +1220,22 @@
     "sessionErrorMessage": "Something went wrong with your study session."
   },
   "reviewWords": {
-    "wordsToReviewCount_one": "{count} word to review",
-    "wordsToReviewCount_other": "{count} words to review",
-    "startReviewButton": "Start Review",
+    "continuous": {
+      "ownPace": "Review at your own pace",
+      "introHint": "Review as many words as you like. Finish whenever you're ready.",
+      "finishButton": "Finish Review",
+      "reviewedCount_one": "{count} reviewed",
+      "reviewedCount_other": "{count} reviewed",
+      "loadingMore": "Preparing more words…",
+      "loadMoreError": "Couldn't load more words. Check your connection and try again.",
+      "caughtUpTitle": "You're All Caught Up!",
+      "caughtUpDescription": "You've reviewed all available words for now.",
+      "finishedTitle": "Review Finished!",
+      "finishedSubtitle_one": "You reviewed {count} {language} word.",
+      "finishedSubtitle_other": "You reviewed {count} {language} words.",
+      "finishedNone": "You finished before reviewing a word."
+    },
+    "startReviewButton": "Start Reviewing",
     "title": "Review Words",
     "subtitle": "Strengthen words you've already learned.",
     "backButton": "Back to Learning",
@@ -1237,8 +1251,6 @@
     "continueButton": "Continue",
     "blockCompleteHeading": "Group complete",
     "exerciseErrorMessage": "Something went wrong with this exercise.",
-    "reviewCompleteTitle": "Review Complete",
-    "wordsReviewedLabel": "words reviewed",
     "savingReview": "Saving...",
     "saveErrorMessage": "We couldn't save this review. Check your connection and try again.",
     "sessionExpiredMessage": "Your session has expired. Please sign in again."

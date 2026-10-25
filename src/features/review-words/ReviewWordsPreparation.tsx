@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import { ChevronLeft, Languages, Layers, Play } from "lucide-react";
+import { ArrowRight, ChevronLeft, Clock, Languages } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { loadReviewQueue } from "./loadReviewQueue";
@@ -35,7 +35,7 @@ export function ReviewWordsPreparation({
   onBack,
   onStartNewWordStudy,
 }: ReviewWordsPreparationProps) {
-  const { t, uiLanguage } = useLanguage();
+  const { t } = useLanguage();
   const [state, setState] = useState<LoadState>({ status: "loading" });
   const [retryToken, setRetryToken] = useState(0);
   // "session" replaces the whole preparation view with ReviewSession;
@@ -98,7 +98,7 @@ export function ReviewWordsPreparation({
   if (isSessionActive && state.status === "result" && state.result.queue.length > 0) {
     return (
       <ReviewSession
-        queue={state.result.queue}
+        initialQueue={state.result.queue}
         practiceLanguage={practiceLanguage}
         yourLanguage={yourLanguage}
         onExit={onBack}
@@ -136,7 +136,6 @@ export function ReviewWordsPreparation({
             <ResultBlock
               result={state.result}
               practiceLanguage={practiceLanguage}
-              uiLanguage={uiLanguage}
               t={t}
               onStartNewWordStudy={onStartNewWordStudy}
               onBeginReview={() => setIsSessionActive(true)}
@@ -166,25 +165,10 @@ function MessageBlock({ message, children }: { message: string; children?: React
   );
 }
 
-// Same plural-aware {count} formatting as NewWordStudyPreparation.tsx's
-// helper (duplicated rather than imported to keep the two features
-// independent, matching speakReviewWord/speakGuidedWord): picks the CLDR
-// plural form `${baseKey}_${category}` for the UI language and falls back to
-// `_other` for categories a locale doesn't define (only `_one`/`_other` exist,
-// since this guard-checked key set must match English).
-function formatCount(
-  t: (key: string) => string,
-  uiLanguage: string,
-  baseKey: string,
-  count: number,
-): string {
-  const categoryKey = `${baseKey}_${new Intl.PluralRules(uiLanguage).select(count)}`;
-  const template = t(categoryKey);
-  return (template === categoryKey ? t(`${baseKey}_other`) : template).replace("{count}", String(count));
-}
-
 // Deliberately shows only what a learner needs to decide "am I ready to
-// start": the language and how many words are due. Unlike the new-word
+// start": the language, and that reviewing is open-ended. No word count —
+// the prepared queue is only the first batch (see ReviewSession), so its
+// size would wrongly read as a fixed session length. Unlike the new-word
 // screen there is no word preview — showing a due word (or its translation)
 // right before recalling it would give the answer away. Internal selection
 // details (overdue counts, weights, priorities) stay on `result.metadata` and
@@ -194,14 +178,12 @@ function formatCount(
 function ResultBlock({
   result,
   practiceLanguage,
-  uiLanguage,
   t,
   onStartNewWordStudy,
   onBeginReview,
 }: {
   result: LoadReviewQueueResult;
   practiceLanguage: string;
-  uiLanguage: string;
   t: (key: string) => string;
   onStartNewWordStudy?: () => void;
   onBeginReview: () => void;
@@ -232,14 +214,16 @@ function ResultBlock({
           <span>{languageName}</span>
         </li>
         <li className="review-words-fact">
-          <Layers className="review-words-fact-icon" aria-hidden="true" />
-          <span>{formatCount(t, uiLanguage, "reviewWords.wordsToReviewCount", result.queue.length)}</span>
+          <Clock className="review-words-fact-icon" aria-hidden="true" />
+          <span>{t("reviewWords.continuous.ownPace")}</span>
         </li>
       </ul>
 
+      <p className="review-words-intro-hint">{t("reviewWords.continuous.introHint")}</p>
+
       <button type="button" onClick={onBeginReview} className="review-words-begin-button">
-        <Play className="review-words-begin-button-icon" aria-hidden="true" />
         <span>{t("reviewWords.startReviewButton")}</span>
+        <ArrowRight className="review-words-begin-button-icon" aria-hidden="true" />
       </button>
     </div>
   );

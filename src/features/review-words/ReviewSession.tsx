@@ -1,7 +1,8 @@
-import { useEffect, useReducer, useRef, useState } from "react";
-import { LogOut, PartyPopper } from "lucide-react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { Flag, PartyPopper } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
-import type { ResolvedReviewQueueItem } from "./loadReviewQueue";
+import { loadReviewQueue, type ResolvedReviewQueueItem } from "./loadReviewQueue";
+import { formatCount } from "./utils/formatCount";
 import {
   createInitialReviewSessionState,
   getCurrentBlock,
@@ -25,17 +26,23 @@ import "../practice/styles/exercises.scss";
 import "./styles/review-words.scss";
 
 interface ReviewSessionProps {
-  queue: ResolvedReviewQueueItem[];
+  // The first batch, already prepared by ReviewWordsPreparation.
+  initialQueue: ResolvedReviewQueueItem[];
   practiceLanguage: string;
   yourLanguage: string;
-  // Used both for the header's Back action and the completion screen's
-  // Return to Learning action — both return to the same place. Leaving
-  // mid-session never loses anything: every word already reached a
-  // successful complete_word_review call before the session advanced past
-  // it (see the saving_review effect below), and nothing else in this
-  // session is persisted, so there is no exit-confirmation dialog.
+  // Return to Learning (summary and all-caught-up screens). Finishing never
+  // loses anything: every word already reached a successful
+  // complete_word_review call before the session advanced past it (see the
+  // saving_review effect below), so there is no exit-confirmation dialog.
   onExit: () => void;
 }
+
+// Continuous reviewing: the next batch is requested once this many (or
+// fewer) prepared words are still unplayed, so it normally arrives before
+// the learner reaches the end and words keep coming without a pause.
+const REPLENISH_THRESHOLD = 5;
+
+type BatchStatus = "idle" | "loading" | "exhausted" | "error";
 
 // Phase 2/3 orchestrator: consumes the already-prepared, already-resolved
 // review queue (built by loadReviewQueue.ts, unmodified by this phase) and
@@ -45,11 +52,31 @@ interface ReviewSessionProps {
 // exercises are reinforcement-only and are never persisted (see
 // reviewSessionState.ts's GROUP_EXERCISE_COMPLETE case and
 // ReviewGroupExerciseAdapter — neither calls completeWordReview).
-export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }: ReviewSessionProps) {
-  const { t } = useLanguage();
-  const [state, dispatch] = useReducer(reduceReviewSessionState, queue, (initialQueue) =>
-    createInitialReviewSessionState(initialQueue),
+//
+// Continuous reviewing: there is no session length. The session starts with
+// the prepared batch, fetches the next batch (same selection engine, every
+// concept already in this session excluded) whenever few words remain, and
+// runs until the learner presses Finish Review — or until a batch comes
+// back empty under the selection rules (all_caught_up). The 20-word figure
+// is only loadReviewQueue's batch size.
+export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, onExit }: ReviewSessionProps) {
+  const { t, uiLanguage } = useLanguage();
+  const [state, dispatch] = useReducer(reduceReviewSessionState, initialQueue, (firstBatch) =>
+    createInitialReviewSessionState(firstBatch),
   );
+  // Every word queued in this session, in queue-index order (wordResults[i]
+  // is queue[i]). The ref mirrors it for the async batch handler, which must
+  // dedupe against the latest queue, not the one from its render.
+  const [queue, setQueue] = useState<ResolvedReviewQueueItem[]>(initialQueue);
+  const queueRef = useRef(initialQueue);
+  const [batchStatus, setBatchStatus] = useState<BatchStatus>("idle");
+  // Guards against overlapping batch requests (an effect re-run while one
+  // is in flight) and against applying a batch after the session ended or
+  // the component unmounted.
+  const isBatchInFlightRef = useRef(false);
+  const isMountedRef = useRef(true);
+  const hasEndedRef = useRef(false);
+  hasEndedRef.current = state.isComplete || state.currentStep === "all_caught_up";
   const stepContainerRef = useRef<HTMLDivElement | null>(null);
   // Only meaningful while currentStep === "review_save_error": the
   // classified category (src/lib/supabaseError.ts) picks which safe
@@ -76,10 +103,80 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
   // Stops accumulation and detaches the visibility listener on unmount/
   // navigation — same precedent as NewWordStudySession.tsx.
   useEffect(() => {
+    isMountedRef.current = true;
     return () => {
+      isMountedRef.current = false;
       wordTimerRef.current?.dispose();
     };
   }, []);
+
+  // Fetches the next batch, excluding every concept already in this session
+  // (reviewed or still waiting), so no word repeats within it. Read-only;
+  // reviews are only ever written by the saving_review effect below.
+  const fetchNextBatch = useCallback(() => {
+    if (isBatchInFlightRef.current || hasEndedRef.current) return;
+    const session = getStoredSupabaseSession();
+    if (!session) {
+      setBatchStatus("error");
+      return;
+    }
+    isBatchInFlightRef.current = true;
+    setBatchStatus("loading");
+    void loadReviewQueue({
+      session,
+      targetLanguage: practiceLanguage,
+      nativeLanguage: yourLanguage,
+      excludeConceptIds: new Set(queueRef.current.map((item) => item.conceptId)),
+    })
+      .then((result) => {
+        isBatchInFlightRef.current = false;
+        if (!isMountedRef.current || hasEndedRef.current) return;
+        // Defensive dedupe (the engine already excludes these): by stable
+        // concept id, against the whole session and within the batch.
+        const known = new Set(queueRef.current.map((item) => item.conceptId));
+        const fresh = result.queue.filter((item) => {
+          if (known.has(item.conceptId)) return false;
+          known.add(item.conceptId);
+          return true;
+        });
+        if (fresh.length === 0) {
+          // Nothing eligible is left under the selection rules — never retry
+          // or recycle words; the session ends at all_caught_up once the
+          // learner reaches the end of what's prepared.
+          setBatchStatus("exhausted");
+          return;
+        }
+        queueRef.current = [...queueRef.current, ...fresh];
+        setQueue(queueRef.current);
+        dispatch({ type: "APPEND_QUEUE", items: fresh });
+        setBatchStatus("idle");
+      })
+      .catch((error) => {
+        isBatchInFlightRef.current = false;
+        if (!isMountedRef.current) return;
+        // A failed request is not exhaustion: keep reviewing what's
+        // prepared; at the end, offer a retry (see awaiting_more below).
+        console.warn("ReviewSession: failed to load the next review batch.", error);
+        setBatchStatus("error");
+      });
+  }, [practiceLanguage, yourLanguage]);
+
+  // Unplayed = prepared words with no outcome yet (includes the one on
+  // screen). Requests the next batch at the threshold, once at a time.
+  const unplayedCount = state.wordResults.filter((result) => result.outcome === null).length;
+  useEffect(() => {
+    if (state.currentStep === "loading" || hasEndedRef.current) return;
+    if (batchStatus !== "idle" || unplayedCount > REPLENISH_THRESHOLD) return;
+    fetchNextBatch();
+  }, [state.currentStep, unplayedCount, batchStatus, fetchNextBatch]);
+
+  // Exhaustion is only shown once the learner has actually reached the end
+  // of the words already prepared.
+  useEffect(() => {
+    if (batchStatus === "exhausted" && state.currentStep === "awaiting_more") {
+      dispatch({ type: "QUEUE_EXHAUSTED" });
+    }
+  }, [batchStatus, state.currentStep]);
 
   // Starts a fresh per-word timer exactly once per word_exercise entry —
   // never during group_exercise (four-word group exercises are
@@ -193,7 +290,8 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
   const hasUnresolvableGroupExercise =
     state.currentStep === "group_exercise" && (currentGroupItems.length !== 4 || !currentBlock?.groupExerciseId);
 
-  const handleBack = () => onExit();
+  const handleFinish = () => dispatch({ type: "FINISH_REVIEW" });
+  const handleRetryBatch = () => setBatchStatus("idle");
   const handleRetry = () => dispatch({ type: "RETRY" });
   const handleRetrySave = () => dispatch({ type: "RETRY_SAVE_REVIEW" });
   const handleBoundaryError = () => dispatch({ type: "EXERCISE_ERROR" });
@@ -203,36 +301,24 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
       <div className="review-session-body">
         {!isSessionComplete && (
           <div className="review-session-header">
+            {/* No "x / total" and no progress bar: the session has no fixed
+                length. Finish Review is always here; it's disabled only
+                while a word's save is in flight (the reducer ignores it
+                then too), so a save can't be dropped from the summary. */}
             <div className="review-session-header-row">
               <button
                 type="button"
-                onClick={handleBack}
-                aria-label={t("reviewWords.backButton")}
+                onClick={handleFinish}
+                disabled={state.currentStep === "saving_review"}
                 className="review-session-back-button"
               >
-                <LogOut className="review-session-back-icon" aria-hidden="true" />
-                <span>{t("reviewWords.backButton")}</span>
+                <Flag className="review-session-back-icon" aria-hidden="true" />
+                <span>{t("reviewWords.continuous.finishButton")}</span>
               </button>
 
-              <p className="review-session-progress-text">
-                {progress.wordsReviewed} / {progress.totalWords}
+              <p className="review-session-progress-text" aria-live="polite">
+                {formatCount(t, uiLanguage, "reviewWords.continuous.reviewedCount", progress.wordsReviewed)}
               </p>
-            </div>
-
-            <div
-              role="progressbar"
-              aria-valuenow={progress.wordsReviewed}
-              aria-valuemin={0}
-              aria-valuemax={progress.totalWords}
-              aria-label={`${progress.wordsReviewed} / ${progress.totalWords}`}
-              className="review-session-progress-track"
-            >
-              <div
-                className="review-session-progress-fill"
-                style={{
-                  width: progress.totalWords > 0 ? `${(progress.wordsReviewed / progress.totalWords) * 100}%` : "0%",
-                }}
-              />
             </div>
           </div>
         )}
@@ -340,8 +426,46 @@ export function ReviewSession({ queue, practiceLanguage, yourLanguage, onExit }:
             </div>
           )}
 
+          {/* End of everything prepared so far: the next batch is loading
+              (normally it already arrived — this only shows on a slow
+              network), or its request failed and can be retried. */}
+          {state.currentStep === "awaiting_more" && batchStatus !== "error" && (
+            <div className="review-words-loading-block" role="status" aria-live="polite" aria-busy="true">
+              <div className="review-words-spinner" aria-hidden="true" />
+              <p className="review-words-loading-message">{t("reviewWords.continuous.loadingMore")}</p>
+            </div>
+          )}
+
+          {state.currentStep === "awaiting_more" && batchStatus === "error" && (
+            <div className="review-session-error-block">
+              <p className="review-session-error-message">{t("reviewWords.continuous.loadMoreError")}</p>
+              <button type="button" onClick={handleRetryBatch} className="review-session-error-retry-button">
+                {t("reviewWords.retryButton")}
+              </button>
+            </div>
+          )}
+
+          {state.currentStep === "all_caught_up" && (
+            <div className="review-session-caught-up" role="status">
+              <h2 className="review-session-caught-up-title">{t("reviewWords.continuous.caughtUpTitle")}</h2>
+              <p className="review-session-caught-up-text">{t("reviewWords.continuous.caughtUpDescription")}</p>
+              <div className="review-session-caught-up-actions">
+                <button type="button" onClick={handleFinish} className="review-session-caught-up-primary">
+                  {t("reviewWords.continuous.finishButton")}
+                </button>
+                <button type="button" onClick={onExit} className="review-session-caught-up-secondary">
+                  {t("studyNewWords.returnToLearningButton")}
+                </button>
+              </div>
+            </div>
+          )}
+
           {isSessionComplete && (
-            <ReviewSessionComplete wordsReviewed={progress.wordsReviewed} onReturnToLearning={onExit} />
+            <ReviewSessionComplete
+              wordsReviewed={progress.wordsReviewed}
+              practiceLanguage={practiceLanguage}
+              onReturnToLearning={onExit}
+            />
           )}
         </div>
       </div>

@@ -401,8 +401,9 @@
           },
           "reviewWords": {
             "title": "Revisar palavras",
-            "description": "Revise palavras ja estudadas de acordo com o cronograma de repeticao espaciada.",
-            "metaLine": "Nenhuma revisao programada",
+            "description": "Reforça o teu vocabulário com a repetição espaçada.",
+            "metaLine": "Revê ao teu ritmo",
+            "emptyMetaLine": "Aprende novas palavras para começares a rever",
             "buttonLabel": "Comecar revisao"
           },
           "customPractice": {
@@ -1214,9 +1215,22 @@
     "sessionErrorMessage": "Algo deu errado com sua sessao de estudo."
   },
   "reviewWords": {
-    "wordsToReviewCount_one": "{count} palavra para rever",
-    "wordsToReviewCount_other": "{count} palavras para rever",
-    "startReviewButton": "Começar revisão",
+    "continuous": {
+      "ownPace": "Revê ao teu ritmo",
+      "introHint": "Revê quantas palavras quiseres. Termina quando quiseres.",
+      "finishButton": "Terminar revisão",
+      "reviewedCount_one": "{count} revista",
+      "reviewedCount_other": "{count} revistas",
+      "loadingMore": "A preparar mais palavras…",
+      "loadMoreError": "Não foi possível carregar mais palavras. Verifica a tua ligação e tenta novamente.",
+      "caughtUpTitle": "Está tudo revisto!",
+      "caughtUpDescription": "Reviste todas as palavras disponíveis por agora.",
+      "finishedTitle": "Revisão terminada!",
+      "finishedSubtitle_one": "Reviste {count} palavra em {languageLower}.",
+      "finishedSubtitle_other": "Reviste {count} palavras em {languageLower}.",
+      "finishedNone": "Terminaste antes de rever uma palavra."
+    },
+    "startReviewButton": "Começar a rever",
     "title": "Revisar palavras",
     "subtitle": "Fortaleca as palavras que voce ja aprendeu.",
     "backButton": "Voltar para Aprendizado",
@@ -1232,8 +1246,6 @@
     "continueButton": "Continuar",
     "blockCompleteHeading": "Grupo concluido",
     "exerciseErrorMessage": "Algo deu errado com este exercicio.",
-    "reviewCompleteTitle": "Revisao concluida",
-    "wordsReviewedLabel": "palavras revisadas",
     "savingReview": "Salvando...",
     "saveErrorMessage": "Nao conseguimos salvar esta revisao. Verifique sua conexao e tente novamente.",
     "sessionExpiredMessage": "Sua sessao expirou. Faca login novamente."

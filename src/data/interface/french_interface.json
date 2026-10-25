@@ -401,8 +401,9 @@
           },
           "reviewWords": {
             "title": "Reviser les mots",
-            "description": "Revisez les mots deja etudies selon leur calendrier de repetition espacee.",
-            "metaLine": "Aucune revision prevue",
+            "description": "Renforce ton vocabulaire grâce à la répétition espacée.",
+            "metaLine": "Révise à ton rythme",
+            "emptyMetaLine": "Apprends de nouveaux mots pour commencer à réviser",
             "buttonLabel": "Commencer la revision"
           },
           "customPractice": {
@@ -1219,8 +1220,21 @@
     "sessionErrorMessage": "Un probleme est survenu avec votre session d'etude."
   },
   "reviewWords": {
-    "wordsToReviewCount_one": "{count} mot à réviser",
-    "wordsToReviewCount_other": "{count} mots à réviser",
+    "continuous": {
+      "ownPace": "Révise à ton rythme",
+      "introHint": "Révise autant de mots que tu veux. Termine quand tu veux.",
+      "finishButton": "Terminer la révision",
+      "reviewedCount_one": "{count} révisé",
+      "reviewedCount_other": "{count} révisés",
+      "loadingMore": "Préparation d’autres mots…",
+      "loadMoreError": "Impossible de charger d’autres mots. Vérifie ta connexion et réessaie.",
+      "caughtUpTitle": "Tout est révisé !",
+      "caughtUpDescription": "Tu as révisé tous les mots disponibles pour l’instant.",
+      "finishedTitle": "Révision terminée !",
+      "finishedSubtitle_one": "Tu as révisé {count} mot en {languageLower}.",
+      "finishedSubtitle_other": "Tu as révisé {count} mots en {languageLower}.",
+      "finishedNone": "Tu as terminé avant de réviser un mot."
+    },
     "startReviewButton": "Commencer la révision",
     "title": "Reviser les mots",
     "subtitle": "Renforcez les mots que vous avez deja appris.",
@@ -1237,8 +1251,6 @@
     "continueButton": "Continuer",
     "blockCompleteHeading": "Groupe termine",
     "exerciseErrorMessage": "Un probleme est survenu avec cet exercice.",
-    "reviewCompleteTitle": "Revision terminee",
-    "wordsReviewedLabel": "mots revises",
     "savingReview": "Enregistrement en cours...",
     "saveErrorMessage": "Nous n'avons pas pu enregistrer cette revision. Verifiez votre connexion et reessayez.",
     "sessionExpiredMessage": "Votre session a expire. Veuillez vous reconnecter."

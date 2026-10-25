@@ -401,8 +401,9 @@
           },
           "reviewWords": {
             "title": "Woerter wiederholen",
-            "description": "Wiederhole bereits gelernte Woerter nach ihrem Spaced-Repetition-Plan.",
-            "metaLine": "Keine Wiederholungen geplant",
+            "description": "Festige deinen Wortschatz durch verteilte Wiederholung.",
+            "metaLine": "Wiederhole in deinem eigenen Tempo",
+            "emptyMetaLine": "Lerne neue Wörter, um mit dem Wiederholen zu beginnen",
             "buttonLabel": "Wiederholung starten"
           },
           "customPractice": {
@@ -1214,8 +1215,21 @@
     "sessionErrorMessage": "Bei deiner Lernsitzung ist ein Fehler aufgetreten."
   },
   "reviewWords": {
-    "wordsToReviewCount_one": "{count} Wort zum Wiederholen",
-    "wordsToReviewCount_other": "{count} Wörter zum Wiederholen",
+    "continuous": {
+      "ownPace": "In deinem eigenen Tempo wiederholen",
+      "introHint": "Wiederhole so viele Wörter, wie du möchtest. Beende, wann immer du willst.",
+      "finishButton": "Wiederholung beenden",
+      "reviewedCount_one": "{count} wiederholt",
+      "reviewedCount_other": "{count} wiederholt",
+      "loadingMore": "Weitere Wörter werden vorbereitet …",
+      "loadMoreError": "Weitere Wörter konnten nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.",
+      "caughtUpTitle": "Alles wiederholt!",
+      "caughtUpDescription": "Du hast vorerst alle verfügbaren Wörter wiederholt.",
+      "finishedTitle": "Wiederholung abgeschlossen!",
+      "finishedSubtitle_one": "Du hast {count} Wort auf {language} wiederholt.",
+      "finishedSubtitle_other": "Du hast {count} Wörter auf {language} wiederholt.",
+      "finishedNone": "Du hast beendet, bevor du ein Wort wiederholt hast."
+    },
     "startReviewButton": "Wiederholung starten",
     "title": "Wörter wiederholen",
     "subtitle": "Festige Wörter, die du bereits gelernt hast.",
@@ -1232,8 +1246,6 @@
     "continueButton": "Weiter",
     "blockCompleteHeading": "Gruppe abgeschlossen",
     "exerciseErrorMessage": "Bei dieser Übung ist ein Fehler aufgetreten.",
-    "reviewCompleteTitle": "Wiederholung abgeschlossen",
-    "wordsReviewedLabel": "Wörter wiederholt",
     "savingReview": "Wird gespeichert...",
     "saveErrorMessage": "Wir konnten diese Wiederholung nicht speichern. Überprüfe deine Verbindung und versuche es erneut.",
     "sessionExpiredMessage": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an."

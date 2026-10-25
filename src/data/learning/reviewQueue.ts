@@ -79,6 +79,12 @@ export interface SelectReviewQueueParams {
   sessionSize?: number;
   now?: Date;
   randomFn?: () => number;
+  // Continuous Review Words: word ids already queued or reviewed in the
+  // current session. They are removed from both candidate pools only — the
+  // library size (and so the small-library cooldown bypass) still counts
+  // every row, so excluding words mid-session never changes how the
+  // remaining words are weighted. Session-scoped; nothing is persisted.
+  excludeWordIds?: ReadonlySet<string>;
 }
 
 function isValidProgressRow(row: ReviewQueueProgressRow): boolean {
@@ -264,6 +270,10 @@ export function selectReviewQueue(params: SelectReviewQueueParams): SelectReview
     return { selections: [], metadata: emptyMetadata(requestedSessionSize, true) };
   }
 
+  const excludeWordIds = params.excludeWordIds;
+  const candidateRows =
+    excludeWordIds && excludeWordIds.size > 0 ? validRows.filter((row) => !excludeWordIds.has(row.wordId)) : validRows;
+
   // See REVIEW_SMALL_LIBRARY_WORD_COUNT_THRESHOLD's own comment: a small
   // enough library means the learner is very likely reviewing right after
   // an early study session, so the two-hour "just practiced" cooldown is
@@ -272,7 +282,7 @@ export function selectReviewQueue(params: SelectReviewQueueParams): SelectReview
 
   // --- Overdue pool -----------------------------------------------------
   const overdueCandidates: OverdueCandidate[] = [];
-  for (const row of validRows) {
+  for (const row of candidateRows) {
     const overduePriority = computeOverduePriority(row, nowMs);
     if (!overduePriority) continue;
     overdueCandidates.push({
@@ -294,7 +304,7 @@ export function selectReviewQueue(params: SelectReviewQueueParams): SelectReview
   const remainingAfterOverdue = requestedSessionSize - initiallySelectedOverdue.length;
 
   const randomPool: RandomCandidate[] = [];
-  for (const row of validRows) {
+  for (const row of candidateRows) {
     if (selectedRowIds.has(row.id)) continue;
     randomPool.push(buildRandomCandidate(row, nowMs, bypassVeryRecentCooldown));
   }
@@ -374,6 +384,8 @@ export interface SelectReviewQueueWithResolutionParams<TResolved> {
   // target/native language pair.
   resolveConcept: (wordId: string) => TResolved | null;
   onUnresolvedRow?: (row: ReviewQueueProgressRow) => void;
+  // Passed through to selectReviewQueue (see its SelectReviewQueueParams).
+  excludeWordIds?: ReadonlySet<string>;
   // Bounds the "try more candidates" loop below — each round re-runs
   // selectReviewQueue against only the not-yet-tried rows, requesting
   // exactly the still-missing count. Capped so a pathological data set
@@ -408,6 +420,7 @@ export function selectReviewQueueWithResolution<TResolved>(
     randomFn = Math.random,
     resolveConcept,
     onUnresolvedRow,
+    excludeWordIds,
     maxResolutionRounds = DEFAULT_MAX_RESOLUTION_ROUNDS,
   } = params;
 
@@ -428,6 +441,7 @@ export function selectReviewQueueWithResolution<TResolved>(
       sessionSize: stillNeeded,
       now,
       randomFn,
+      excludeWordIds,
     });
     if (round === 0) {
       representativeMetadata = roundResult.metadata;

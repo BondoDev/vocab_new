@@ -491,6 +491,72 @@ test("20. The pure engine files never import Supabase, React, or a .tsx componen
   }
 });
 
+console.log("\n=== continuous reviewing: session exclusions ===\n");
+
+test("21. excludeWordIds: excluded words are never selected, in either pool", () => {
+  const rows = [
+    ...Array.from({ length: 6 }, () => eligibleRow({ nextReviewAt: isoDaysAgo(3) })), // overdue
+    ...Array.from({ length: 30 }, () => eligibleRow()),
+  ];
+  const excluded = new Set(rows.filter((_, index) => index % 2 === 0).map((row) => row.wordId));
+  const { selections } = selectReviewQueue({ progressRows: rows, sessionSize: 20, now: NOW, excludeWordIds: excluded });
+  assert.equal(selections.length, 18, "only the 18 non-excluded rows are candidates");
+  assert.ok(selections.every((s) => !excluded.has(s.row.wordId)));
+});
+
+test("22. excludeWordIds never changes the library size (small-library cooldown bypass stays as without exclusions)", () => {
+  // 100 rows => at the threshold, so the 2-hour cooldown applies. Excluding
+  // words must not shrink the counted library below 100 and suddenly make
+  // just-practiced words selectable.
+  const justPracticed = makeRow({ lastPracticedAt: isoHoursAgo(1) });
+  const rows = [justPracticed, ...Array.from({ length: 99 }, () => eligibleRow())];
+  const excluded = new Set(rows.slice(1, 60).map((row) => row.wordId));
+  const { selections, metadata } = selectReviewQueue({
+    progressRows: rows,
+    sessionSize: 100,
+    now: NOW,
+    excludeWordIds: excluded,
+  });
+  assert.equal(metadata.totalLearnedWordsConsidered, 100);
+  assert.ok(!selections.some((s) => s.row.wordId === justPracticed.wordId), "cooldown still applies");
+  assert.equal(selections.length, 40);
+});
+
+test("23. Exhaustion: excluding every eligible word yields an empty batch (not 'no vocabulary')", () => {
+  const rows = Array.from({ length: 8 }, () => eligibleRow());
+  const all = new Set(rows.map((row) => row.wordId));
+  const { selections, metadata } = selectReviewQueue({ progressRows: rows, sessionSize: 20, now: NOW, excludeWordIds: all });
+  assert.equal(selections.length, 0);
+  assert.equal(metadata.hasNoReviewableVocabulary, false);
+  const resolved = selectReviewQueueWithResolution({
+    progressRows: rows,
+    sessionSize: 20,
+    now: NOW,
+    excludeWordIds: all,
+    resolveConcept: (wordId) => ({ wordId }),
+  });
+  assert.equal(resolved.items.length, 0);
+});
+
+test("24. Successive batches with growing exclusions never repeat a word", () => {
+  const rows = Array.from({ length: 50 }, () => eligibleRow());
+  const seen = new Set();
+  for (let batch = 0; batch < 3; batch++) {
+    const { items } = selectReviewQueueWithResolution({
+      progressRows: rows,
+      sessionSize: 20,
+      now: NOW,
+      excludeWordIds: seen,
+      resolveConcept: (wordId) => ({ wordId }),
+    });
+    for (const item of items) {
+      assert.ok(!seen.has(item.row.wordId), `word ${item.row.wordId} repeated in batch ${batch + 1}`);
+      seen.add(item.row.wordId);
+    }
+  }
+  assert.equal(seen.size, 50, "20 + 20 + 10: every eligible word exactly once");
+});
+
 console.log(`\n─────────────────────────────────────────`);
 console.log(`  ${passed} passed, ${failed} failed`);
 console.log(`─────────────────────────────────────────\n`);

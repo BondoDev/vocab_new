@@ -92,6 +92,16 @@ export function LearningSection({
 
   const isDateError = todayISOStatus === "error";
 
+  // Review Words eligibility for its card line, from the daily-stats rows
+  // already loaded above (no extra query). These rows are all-time and
+  // scoped to the current target language; new_words_completed counts every
+  // word first studied through Study New Words (the only path that creates
+  // the user_word_progress rows Review Words selects from), and a
+  // learning-progress reset deletes both together. null until loaded (or on
+  // error), so the card falls back to its normal line rather than guessing.
+  const hasStudiedWords =
+    dailyStatsStatus === "ready" ? dailyStatsRows.some((row) => row.newWordsCompleted > 0) : null;
+
   return (
     <>
       <header className="learning-section__header">
@@ -141,6 +151,7 @@ export function LearningSection({
         />
       </div>
       <LearningModeCards
+        hasStudiedWords={hasStudiedWords}
         onStartCustomPractice={onStartCustomPractice}
         onStartNewWordStudy={onStartNewWordStudy}
         onStartReviewWords={onStartReviewWords}

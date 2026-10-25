@@ -401,8 +401,9 @@
           },
           "reviewWords": {
             "title": "Repasar palabras",
-            "description": "Repasa palabras ya estudiadas segun su calendario de repeticion espaciada.",
-            "metaLine": "No hay repasos programados",
+            "description": "Refuerza tu vocabulario con la repetición espaciada.",
+            "metaLine": "Repasa a tu ritmo",
+            "emptyMetaLine": "Aprende palabras nuevas para empezar a repasar",
             "buttonLabel": "Empezar repaso"
           },
           "customPractice": {
@@ -1214,9 +1215,22 @@
     "sessionErrorMessage": "Algo salio mal con tu sesion de estudio."
   },
   "reviewWords": {
-    "wordsToReviewCount_one": "{count} palabra por repasar",
-    "wordsToReviewCount_other": "{count} palabras por repasar",
-    "startReviewButton": "Empezar repaso",
+    "continuous": {
+      "ownPace": "Repasa a tu ritmo",
+      "introHint": "Repasa tantas palabras como quieras. Termina cuando quieras.",
+      "finishButton": "Terminar repaso",
+      "reviewedCount_one": "{count} repasada",
+      "reviewedCount_other": "{count} repasadas",
+      "loadingMore": "Preparando más palabras…",
+      "loadMoreError": "No se pudieron cargar más palabras. Revisa tu conexión e inténtalo de nuevo.",
+      "caughtUpTitle": "¡Estás al día!",
+      "caughtUpDescription": "Has repasado todas las palabras disponibles por ahora.",
+      "finishedTitle": "¡Repaso terminado!",
+      "finishedSubtitle_one": "Has repasado {count} palabra en {languageLower}.",
+      "finishedSubtitle_other": "Has repasado {count} palabras en {languageLower}.",
+      "finishedNone": "Terminaste antes de repasar una palabra."
+    },
+    "startReviewButton": "Empezar a repasar",
     "title": "Repasar palabras",
     "subtitle": "Refuerza las palabras que ya has aprendido.",
     "backButton": "Volver a Aprendizaje",
@@ -1232,8 +1246,6 @@
     "continueButton": "Continuar",
     "blockCompleteHeading": "Grupo completado",
     "exerciseErrorMessage": "Algo salio mal con este ejercicio.",
-    "reviewCompleteTitle": "Repaso completado",
-    "wordsReviewedLabel": "palabras repasadas",
     "savingReview": "Guardando...",
     "saveErrorMessage": "No pudimos guardar este repaso. Revisa tu conexion e intentalo de nuevo.",
     "sessionExpiredMessage": "Tu sesion ha expirado. Por favor, inicia sesion de nuevo."

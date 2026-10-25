@@ -73,6 +73,9 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  // Centered like the Study New Words intro panel; the back button sits
+  // outside the panel and stays left-aligned.
+  text-align: center;
 
   @media (min-width: 640px) {
     border: 1px solid color-mix(in srgb, var(--primary) 10%, var(--border));
@@ -107,6 +110,8 @@
   margin-top: 0.375rem;
   color: var(--muted-foreground);
   max-width: 40ch;
+  margin-left: auto;
+  margin-right: auto;
   line-height: 1.5;
   overflow-wrap: break-word;
 }
@@ -198,6 +203,7 @@
   list-style: none;
   padding: 0;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.5rem;
   margin-top: 1.25rem;
 }
@@ -222,6 +228,15 @@
   height: 1rem;
   flex-shrink: 0;
   color: var(--primary);
+}
+
+// One short line saying reviewing is open-ended.
+.review-words-intro-hint {
+  margin-top: 0.875rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  text-wrap: balance;
 }
 
 .review-words-begin-button {
@@ -323,16 +338,24 @@
   gap: 0.75rem;
 }
 
+// Header "Finish Review" control (formerly Back).
 .review-session-back-button {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  min-height: 2.25rem;
   color: var(--muted-foreground);
   font-size: 0.875rem;
   transition: color 150ms ease;
 
-  &:hover {
+  &:hover:not(:disabled) {
     color: var(--foreground);
+  }
+
+  // Briefly disabled while a review's save is in flight.
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   &:focus-visible {
@@ -352,20 +375,6 @@
   font-size: 0.875rem;
   color: var(--muted-foreground);
   white-space: nowrap;
-}
-
-.review-session-progress-track {
-  height: 0.375rem;
-  width: 100%;
-  background-color: var(--muted);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.review-session-progress-fill {
-  height: 100%;
-  background-color: var(--primary);
-  transition: width 200ms ease;
 }
 
 .review-session-step-container {
@@ -709,7 +718,91 @@
 }
 
 // =====================================================================
-// ReviewSessionComplete
+// All caught up (continuous reviewing ran out of eligible words)
+// =====================================================================
+
+.review-session-caught-up {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 3rem 0 2rem;
+}
+
+.review-session-caught-up-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--foreground);
+  text-wrap: balance;
+
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+.review-session-caught-up-text {
+  max-width: 36ch;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.review-session-caught-up-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: 20rem;
+  margin-top: 1rem;
+}
+
+.review-session-caught-up-primary,
+.review-session-complete-button {
+  min-height: 3rem;
+  padding: 0.75rem 2rem;
+  border-radius: calc(var(--radius) - 2px);
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--primary) 90%, #000);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--background),
+      0 0 0 4px var(--ring);
+  }
+}
+
+.review-session-caught-up-secondary {
+  min-height: 2.75rem;
+  border-radius: calc(var(--radius) - 2px);
+  color: var(--muted-foreground);
+  font-weight: 500;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+    background-color: color-mix(in srgb, var(--foreground) 5%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+}
+
+// =====================================================================
+// ReviewSessionComplete — same compact header as Study New Words' finish
+// screen: small success check on the heading line, one sentence, one action.
 // =====================================================================
 
 .review-session-complete {
@@ -717,66 +810,61 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.75rem;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
-
-.review-session-complete-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--primary) 12%, transparent);
-  color: var(--primary);
-  margin-bottom: 0.5rem;
-}
-
-.review-session-complete-icon-svg {
-  width: 1.875rem;
-  height: 1.875rem;
+  gap: 0.5rem;
+  padding: 3rem 0 2rem;
 }
 
 .review-session-complete-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 1.625rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
   color: var(--foreground);
-  overflow-wrap: break-word;
+  text-wrap: balance;
 
   @media (min-width: 768px) {
-    font-size: 1.875rem;
+    font-size: 2rem;
   }
 }
 
-.review-session-complete-count {
+.review-session-complete-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, #16a34a 15%, transparent);
+  color: #15803d;
+
+  @media (min-width: 768px) {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .dark & {
+    color: #4ade80;
+  }
+}
+
+.review-session-complete-mark-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  stroke-width: 2.75;
+}
+
+.review-session-complete-text {
+  max-width: 40ch;
+  line-height: 1.5;
   color: var(--muted-foreground);
 }
 
-.review-session-complete-count-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--foreground);
-}
-
 .review-session-complete-button {
-  margin-top: 0.5rem;
-  padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-  font-weight: 500;
-  transition: background-color 150ms ease;
-
-  &:hover {
-    background-color: color-mix(in oklab, var(--primary) 90%, transparent);
-  }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 2px var(--card),
-      0 0 0 4px var(--ring);
-  }
+  width: 100%;
+  max-width: 20rem;
+  margin-top: 1rem;
 }
