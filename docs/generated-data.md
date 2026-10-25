@@ -25,7 +25,7 @@ Guard script: `npm run test:generated-data-ownership`
 
 | Directory | Classification | Source of truth | Producer | Consumers | Committed? | Risk |
 |---|---|---|---|---|---|---|
-| `src/data/seo/vocabularyLevels/` | route/type ownership (routing + browse-preview data; the 49-file legacy matrix was removed Phase 7) | itself | manual (no generator) | `scripts/generation/generate-sitemap.mjs` (CEFR route enumeration, via `getAllLocalizedVocabularyRoutes()`); `vocabularyLevelRoutes.ts` consumers app-wide | yes | low |
+| `src/data/seo/vocabularyLevels/` | route/type ownership (routing + the generated `level-browse-preview/` data, see its own row; the 49-file legacy matrix was removed Phase 7) | itself | manual (no generator), except `level-browse-preview/` | `scripts/generation/generate-sitemap.mjs` (CEFR route enumeration, via `getAllLocalizedVocabularyRoutes()`); `vocabularyLevelRoutes.ts` consumers app-wide | yes | low |
 | `src/data/seo/levelTests/seo_level_test_content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/data/seo/levelTests/index.ts`, `scripts/generation/generate-sitemap.mjs` (`collectLevelTestRoutes`), transitively `LevelTestSeoPage.tsx`, `src/seo/levelTests/levelTestMetadata.ts` (via the `src/seo/metadata.ts` facade), `src/entry-server.tsx` (SSR/prerender) | yes | low |
 | `src/data/seo/vocabularyLevels/seo-cefr-content.json` | handwritten source (moved from `guidelines/` 2026-07-15) | itself | manual (no generator) | `src/app/pages/vocabulary/devSeoCefrPreviewData.ts` — see corrected finding below; despite the module's "dev preview" name, this is production content for every `vocabularyLevel` route | yes | medium — see split-content finding below |
 | ~~`public/vocabularyLevels/*.json` (49 files)~~ | *(removed Phase 6, 2026-07-25)* | — | — | none — the browser-fetch consumer was removed in an earlier phase, confirmed dead, and the mirror deleted | — | resolved |
@@ -33,7 +33,7 @@ Guard script: `npm run test:generated-data-ownership`
 | ~~`src/data/seo/vocabularyLevels/{ui}/{target}.json` (49-file source matrix)~~ | *(removed Phase 7, 2026-07-25)* | — | — | none — superseded by `seo-cefr-content.json` since Phase 2/3 of this cleanup; sitemap migrated off it in Phase 5; confirmed dead by full-repo audit | — | resolved |
 | `src/data/seo/wordPages/word-hub-pages/` | generated committed source | `src/data/vocabulary/{lang}/vocabulary.json` | `scripts/generation/generate-word-hub-data.mjs` | client + SSR (`wordHubData.ts`, eager glob G4); not the Worker | yes | low |
 | `src/data/seo/wordPages/word-browse-shards/` | generated committed source | same vocabulary.json | `scripts/generation/generate-word-hub-data.mjs` | client + SSR + **transitively Worker-reachable** (G5); guarded by Worker bundle-size test | yes | medium |
-| `src/data/seo/vocabularyLevels/level-browse-preview/` | generated committed source, **no generator exists** | itself (hand-authored/one-time-generated) | none found | client + SSR (`levelBrowseWords.ts`, lazy glob G9) | yes | medium — must be hand-edited until a generator is written |
+| `src/data/seo/vocabularyLevels/level-browse-preview/` | generated committed source | same vocabulary.json (first browse page of each level, same list as `word-browse-shards/`) | `scripts/generation/generate-word-hub-data.mjs` | client + SSR (`levelBrowseWords.ts`, lazy glob G9) | yes | low — freshness and Worker route resolution guarded by `test:level-browse-preview` |
 | `src/data/seo/listPages/verbLists/conjugated100Verbs/textContent/` | handwritten source, **no generator exists** | itself (hand-authored) | none found | client + SSR (`conjugated100VerbRegistry.ts`, eager glob), transitively `ConjugatedVerbFormsSeoPage.tsx`, `src/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbFormsMetadata.ts`, `src/entry-server.tsx` (prerender); `scripts/generation/generate-sitemap.mjs` reads it directly off disk (see `scripts/lib/load-conjugated-verb-forms-registry.mjs`), not through the glob | yes | medium — one file per target language (`{targetLanguage}.json`, e.g. `english.json`), each holding all `uiLanguage` variants of that target language's SEO copy; authored per target/UI-language combination |
 | `src/data/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbs/` | handwritten source, **no generator exists** | itself (hand-authored) | none found | client + SSR (`conjugated100VerbFormsData.ts`, eager glob), transitively `ConjugatedVerbFormsTableSection.tsx` | yes | medium — one file per target language (`{targetLanguage}.json`, e.g. `english.json`), each holding that language's tense-grouped 100-verb conjugation rows; added by hand over time — a target language with no file simply renders the table placeholder (`getConjugatedVerbFormsRowsById` returns `null`) |
 | ~~`public/seo/level-browse-preview/`~~ | *(removed 2026-07-15; obsolete duplicate)* | `src/data/seo/vocabularyLevels/level-browse-preview/` remains authoritative | manual copy, added in the same historical commit as the `public/vocabularyLevels/` duplication | none found — no fetch, import, glob, sitemap, SSR, Worker, or service-worker consumer required the public URL | no | resolved |
@@ -145,8 +145,11 @@ they maintained had no remaining consumer.
 
 `src/data/seo/vocabularyLevels/level-browse-preview/` is authoritative. It contains 42
 committed JSON files, one for every supported target-language x CEFR-level
-combination. No generator is currently known, so manual content preservation
-is required until a generator exists. The active loader is
+combination, generated by `scripts/generation/generate-word-hub-data.mjs`
+(`prebuild`) as the first 54-word browse page of each level's current
+vocabulary list. The files were hand-maintained until 2026-10-26, drifted
+from `vocabulary.json`, and prerendered CEFR links to 410 word URLs; never
+hand-edit them. The active loader is
 `src/data/seo/vocabularyLevels/levelBrowseWords.ts`, which uses the lazy G9
 `import.meta.glob("./level-browse-preview/*.json")` source-tree import.
 
@@ -194,25 +197,25 @@ context is accurate.
 
 | Directory | Command |
 |---|---|
-| `src/data/seo/wordPages/word-hub-pages/`, `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/listPages/verbLists/shared/common100VerbLookup/` | `npm run generate:word-hub-data` |
+| `src/data/seo/wordPages/word-hub-pages/`, `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/listPages/verbLists/shared/common100VerbLookup/` | `npm run generate:word-hub-data` |
 | `public/sitemaps/` | `npm run sitemap` |
 | `workers/word-ssr/data/full-corpus/`, `assets-full/`, `worker-dist-full/`, `workers/word-ssr/data/client-assets.full.json`, `workers/word-ssr/data/publish-manifest.json` | `npm run build:word-worker:full` |
 | `dist/`, `server-build/` | `npm run build` |
 | `workers/word-ssr/data/full-corpus-census.json` | `node workers/word-ssr/diagnostics/census-full-corpus.mjs` (manual, no package script) |
 | `workers/word-ssr/data/sharding-measurement.json` | `node workers/word-ssr/diagnostics/measure-shard-formats.mjs` (manual, no package script; requires `data/full-corpus/` already generated) |
-| `src/data/seo/vocabularyLevels/level-browse-preview/`, `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json`, `src/data/seo/listPages/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`, `src/data/seo/listPages/verbLists/pastForms100Verbs/pastForms/`, `src/data/seo/listPages/verbLists/conjugated100Verbs/textContent/`, `src/data/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbs/`, `src/data/seo/listPages/fullVocabularyList/fullVocabularyListContent.json` | none — hand-maintained, no generator |
+| `src/data/seo/levelTests/seo_level_test_content.json`, `src/data/seo/vocabularyLevels/seo-cefr-content.json`, `src/data/seo/listPages/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`, `src/data/seo/listPages/verbLists/pastForms100Verbs/pastForms/`, `src/data/seo/listPages/verbLists/conjugated100Verbs/textContent/`, `src/data/seo/listPages/verbLists/conjugated100Verbs/conjugatedVerbs/`, `src/data/seo/listPages/fullVocabularyList/fullVocabularyListContent.json` | none — hand-maintained, no generator |
 
 ## Manual-edit policy
 
-- **Allowed and expected:** `src/data/seo/vocabularyLevels/level-browse-preview/`,
-  `src/data/seo/levelTests/seo_level_test_content.json`,
+- **Allowed and expected:** `src/data/seo/levelTests/seo_level_test_content.json`,
   `src/data/seo/vocabularyLevels/seo-cefr-content.json`,
   `src/data/seo/listPages/verbLists/pastForms100Verbs/pastForms100VerbsContent.json`,
   `src/data/seo/listPages/verbLists/pastForms100Verbs/pastForms/`,
   `src/data/seo/listPages/fullVocabularyList/fullVocabularyListContent.json` (no
   generator exists for any of these).
 - **Not allowed — will be overwritten:** `src/data/seo/wordPages/word-hub-pages/`,
-  `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/listPages/verbLists/shared/common100VerbLookup/`,
+  `src/data/seo/wordPages/word-browse-shards/`, `src/data/seo/vocabularyLevels/level-browse-preview/`,
+  `src/data/seo/listPages/verbLists/shared/common100VerbLookup/`,
   `public/sitemaps/`, `workers/word-ssr/data/client-assets.full.json`,
   `workers/word-ssr/data/publish-manifest.json`,
   `workers/word-ssr/data/full-corpus-census.json`,
@@ -244,7 +247,10 @@ context is accurate.
 - `npm run test:level-browse-preview` (runs
   `scripts/tests/routing/test-level-browse-preview-completeness.mjs`) —
   asserts the exact 42-key match set for
-  `src/data/seo/vocabularyLevels/level-browse-preview/*.json`.
+  `src/data/seo/vocabularyLevels/level-browse-preview/*.json`, that every file
+  equals a fresh derivation from `vocabulary.json`, and that every preview link
+  in all seven UI languages resolves through the Worker's word-route rules to a
+  200 canonical page (no stale concept ID, slug mismatch, or 308).
 - `workers/word-ssr/tests/test-worker-bundle-size.mjs` — asserts
   `word-browse-shards`' heavy export never reaches the Worker bundle.
 

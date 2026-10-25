@@ -10,6 +10,16 @@ const TARGET_LANGUAGES = ["english", "german", "spanish", "french", "italian", "
 const SUPPORTED_LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"];
 const OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "word-hub-pages");
 const BROWSE_SHARD_OUTPUT_DIR = path.join(ROOT_DIR, "src", "data", "seo", "wordPages", "word-browse-shards");
+const LEVEL_BROWSE_PREVIEW_OUTPUT_DIR = path.join(
+  ROOT_DIR,
+  "src",
+  "data",
+  "seo",
+  "vocabularyLevels",
+  "level-browse-preview",
+);
+// Matches the CEFR page's WORDS_PER_PAGE and the Worker's BROWSE_PAGE_SIZE.
+const BROWSE_PAGE_SIZE = 54;
 const VERB_LIST_LOOKUP_OUTPUT_DIR = path.join(
   ROOT_DIR,
   "src",
@@ -328,15 +338,41 @@ async function buildWordBrowseShardFiles(targetLanguage) {
 
   for (const level of SUPPORTED_LEVELS) {
     const words = levels[level];
+    const totalPages = Math.max(1, Math.ceil(words.length / BROWSE_PAGE_SIZE));
     await fs.writeFile(
       path.join(BROWSE_SHARD_OUTPUT_DIR, `${targetLanguage}-${level}.json`),
       `${JSON.stringify({
         targetLanguage,
         level,
         totalWords: words.length,
-        totalPages: Math.max(1, Math.ceil(words.length / 54)),
+        totalPages,
         words,
       })}\n`,
+      "utf8",
+    );
+
+    // The CEFR page's SSR browse grid is the first page of this same list:
+    // after hydration the client rebuilds it from vocabulary.json with the
+    // identical level/isValidBrowseWordLemma/concept-id filter. Deriving the
+    // preview here keeps prerendered links on current concept IDs; the
+    // previous hand-maintained copies went stale and linked to 410 URLs.
+    // `level` stays upper-case because the page compares it to "A1"…"C2".
+    await fs.writeFile(
+      path.join(LEVEL_BROWSE_PREVIEW_OUTPUT_DIR, `${targetLanguage}-${level}.json`),
+      `${JSON.stringify(
+        {
+          targetLanguage,
+          level: level.toUpperCase(),
+          totalWords: words.length,
+          totalPages,
+          words: words.slice(0, BROWSE_PAGE_SIZE).map((word) => ({
+            concept_id: word.conceptId,
+            word_lemma: word.wordLemma,
+          })),
+        },
+        null,
+        2,
+      )}\n`,
       "utf8",
     );
   }
@@ -429,6 +465,7 @@ async function buildCommon100VerbLookupFiles() {
 async function main() {
   await fs.mkdir(OUTPUT_DIR, { recursive: true });
   await fs.mkdir(BROWSE_SHARD_OUTPUT_DIR, { recursive: true });
+  await fs.mkdir(LEVEL_BROWSE_PREVIEW_OUTPUT_DIR, { recursive: true });
 
   const existingFiles = await fs.readdir(OUTPUT_DIR);
   await Promise.all(
