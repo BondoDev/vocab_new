@@ -1,5 +1,12 @@
-import { renderToPipeableStream } from "react-dom/server";
-import { Writable } from "node:stream";
+// The Web Streams renderer, not Node's renderToPipeableStream: React 18.3.1's
+// Node writer (writeStringChunk) flushes its whole 2 KB view when a multibyte
+// character does not fit in the remaining space, emitting the unused zero
+// padding as NUL bytes inside text and attributes (hundreds per build across
+// accented/Cyrillic pages). The browser build encodes each string before
+// copying it, so it has no such path. It is the same Fizz renderer with the
+// same markup and Suspense/lazy handling, and it is what the word Worker
+// already uses (workers/word-ssr/src/render-entry.tsx).
+import { renderToReadableStream } from "react-dom/server.browser";
 import { StaticRouter } from "react-router-dom/server";
 import App from "./app/App";
 import {
@@ -431,9 +438,17 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
             page: "notFound",
           }
         : undefined;
-  const appHtml = await new Promise<string>((resolve, reject) => {
-    const chunks: Buffer[] = [];
-    const { pipe, abort } = renderToPipeableStream(
+  // Errors are collected rather than thrown from onError so that, exactly as
+  // with the previous onError -> reject, any error reported anywhere in the
+  // tree (including inside a Suspense boundary) fails the render instead of
+  // shipping client-rendered fallback markup. The abort timer mirrors the
+  // previous 30s cap.
+  let renderError: unknown = null;
+  const abortController = new AbortController();
+  const abortTimer = setTimeout(() => abortController.abort(), 30_000);
+  let appHtml: string;
+  try {
+    const stream = await renderToReadableStream(
       <StaticRouter location={url}>
         <App
           initialUILanguage={initialUILanguage}
@@ -447,26 +462,22 @@ export async function render(url: string, siteOrigin = DEFAULT_SITE_ORIGIN) {
         />
       </StaticRouter>,
       {
-        onAllReady() {
-          const writable = new Writable({
-            write(chunk, _enc, cb) {
-              chunks.push(chunk as Buffer);
-              cb();
-            },
-            final(cb) {
-              cb();
-              resolve(Buffer.concat(chunks).toString("utf8"));
-            },
-          });
-          pipe(writable);
-        },
+        signal: abortController.signal,
         onError(err) {
-          reject(err);
+          renderError ??= err;
         },
       },
     );
-    setTimeout(abort, 30_000);
-  });
+    // allReady resolves once every Suspense/lazy boundary has completed
+    // (the onAllReady equivalent), so the collected HTML is fully resolved.
+    await stream.allReady;
+    appHtml = await new Response(stream).text();
+  } finally {
+    clearTimeout(abortTimer);
+  }
+  if (renderError) {
+    throw renderError;
+  }
   const hydrationWordPageData = buildHydrationWordPageData(
     initialWordPageData,
     initialWordBrowsePage,

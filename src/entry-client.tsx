@@ -5,7 +5,7 @@ import "flag-icons/css/flag-icons.min.css";
 import "./styles/index.css";
 
 // Fire a route-specific chunk preload as early as possible.
-// renderToPipeableStream marks resolved lazy boundaries with <!--$-->, but
+// Streaming SSR (renderToReadableStream) marks resolved lazy boundaries with <!--$-->, but
 // React.lazy on the client needs to load the chunk before hydration or it
 // throws #421. Starting the import here gives the module a head-start so
 // it is often already cached by the time hydrateRoot encounters the boundary.
@@ -57,7 +57,7 @@ function startApp() {
           console.error("Recoverable hydration error:", error);
         }
         // In production, React #421 (Suspense boundary update before hydration
-        // finished) is a known recoverable race between renderToPipeableStream's
+        // finished) is a known recoverable race between streaming SSR's
         // <!--$--> markers and client-side React.lazy loading. React recovers by
         // client-rendering the boundary. Suppress the console noise; the page
         // renders correctly.

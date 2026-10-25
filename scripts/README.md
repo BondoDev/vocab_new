@@ -207,7 +207,8 @@ scripts/
   - **`practice/`** — practice-route and exercise-identifier contracts
     specific to the practice/exercise feature.
   - **`prerender/`** — parity between build-time prerendered output and
-    a fresh request-time `render()` call, for the same route.
+    a fresh request-time `render()` call, for the same route, and byte-level
+    integrity of every generated `dist/` page (encoding, NUL bytes, link URLs).
   - **`routing/`** — route resolution, route-manifest/pagination
     contracts, interactive-route/profile-shell wiring, and the
     pre-hydration `<html lang>` init script.
