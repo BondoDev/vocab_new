@@ -1254,6 +1254,7 @@
     "backToFilters": "Volver a filtros",
     "home": "Inicio",
     "finish": "Finalizar",
+    "practicedCount": "Practicadas: {count}",
     "menu": "Menu",
     "showMeWord": "Mostrar palabra",
     "hint": "Pista",

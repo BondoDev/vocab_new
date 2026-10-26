@@ -1,0 +1,122 @@
+// Viewport-locked app shell for learning sessions on phones (see
+// ImmersiveSessionFrame.tsx and src/app/utils/immersiveSession.ts).
+// `html.immersive-session` is only ever set on phones while a session frame
+// is mounted, so nothing here affects desktop/tablet layouts or other routes;
+// removing the class restores normal document scrolling.
+//
+// Geometry, outermost first:
+//   html / body / #root  -> scroll locked (no document-level scrolling)
+//   .immersive-session-frame (fixed shell) -> exactly the visible viewport,
+//                           owns the safe-area padding (applied once, here)
+//   frame > session root   -> THE single vertical scroll container
+//     .immersive-session-header -> sticky at the top of that scroller
+//     exercise content           -> natural height; scrolls only if it
+//                                   genuinely exceeds the remaining space
+
+// Outside an immersive session the frame must not change layout at all.
+.immersive-session-frame {
+  display: contents;
+}
+
+html.immersive-session {
+  // The global base rule makes html/body/#root `overflow: auto` scroll
+  // containers; during a session none of them may scroll, otherwise any
+  // stray overflow (or the old min-height stack) shows up as blank space.
+  &,
+  body,
+  #root {
+    overflow: hidden;
+    // Pull-to-refresh would reload mid-session and drop unsaved progress;
+    // system back/home gestures are unaffected.
+    overscroll-behavior: none;
+  }
+
+  // Site chrome is hidden, not covered: the session header keeps a
+  // Finish/Home control, and leaving the session restores everything.
+  .header-shell,
+  .header-spacer,
+  .scroll-top-button {
+    display: none !important;
+  }
+
+  .immersive-session-frame {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    // vh for browsers without dynamic units; dvh tracks the toolbar.
+    height: 100vh;
+    height: 100dvh;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+      env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+    background: var(--background);
+    // The shell itself never scrolls; its single child does.
+    overflow: hidden;
+
+    // The session root (practice page, Study New Words, Review Words, or
+    // the lazy-load fallback) fills the shell and is the only vertical
+    // scroller. min-height: 0 lets it be shorter than its content (so it
+    // scrolls instead of growing the shell); its own flex-column layout
+    // keeps short content centered without stretching the card.
+    > * {
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+      // Keeps keyboard-focused inputs clear of the sticky header when the
+      // browser scrolls them into view.
+      scroll-padding-top: 4.5rem;
+
+      // The scroller's own sections (header, main/body) may grow to fill
+      // short screens but never shrink below their content: otherwise a
+      // `flex: 1 1 0%; min-height: 0` section (e.g. .practice-main) is
+      // squeezed to the leftover height and its content is clipped instead
+      // of overflowing into this scroller.
+      > * {
+        flex-shrink: 0;
+        min-height: auto;
+      }
+    }
+  }
+
+  // Measured visual viewport (set by immersiveSession.ts): follows the
+  // on-screen keyboard and iOS Safari's visual-viewport panning, which
+  // dvh does not.
+  &.immersive-session--measured .immersive-session-frame {
+    top: var(--immersive-viewport-top, 0px);
+    height: var(--immersive-viewport-height);
+  }
+
+  // Persistent session header: sticks to the top of the scroller instead
+  // of scrolling away. Its backdrop is a full-bleed pseudo-element (the
+  // header box may be narrower than the scroller; the scroller's
+  // overflow-x clips the bleed) that is translucent + blurred, so it blends
+  // with the session background at rest yet hides content passing under it.
+  .immersive-session-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+
+    &::before {
+      content: "";
+      position: absolute;
+      // Also extends 1.5rem upward: sticky pins to the scroller's content
+      // box, and the Study/Review session roots have 1.5rem top padding, so
+      // the strip above the stuck header must be covered too (the overflow
+      // is clipped where there is no such padding).
+      inset: -1.5rem -100vmax 0;
+      z-index: -1;
+      background: color-mix(in srgb, var(--background) 80%, transparent);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      pointer-events: none;
+    }
+  }
+}

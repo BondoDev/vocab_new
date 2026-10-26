@@ -68,7 +68,7 @@ export function ScrollToTopButton() {
       onClick={() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }}
-      className="fixed bottom-3 right-0 z-[60] inline-flex h-10 w-10 translate-x-1/2 items-center justify-center rounded-full border border-white/70 bg-primary/90 text-white shadow-[0_10px_24px_rgba(15,23,42,0.25)] transition hover:bg-primary md:bottom-5 md:h-11 md:w-11 md:translate-x-0 md:right-[var(--nav-right-edge)]"
+      className="scroll-top-button fixed bottom-3 right-0 z-[60] inline-flex h-10 w-10 translate-x-1/2 items-center justify-center rounded-full border border-white/70 bg-primary/90 text-white shadow-[0_10px_24px_rgba(15,23,42,0.25)] transition hover:bg-primary md:bottom-5 md:h-11 md:w-11 md:translate-x-0 md:right-[var(--nav-right-edge)]"
     >
       <ChevronUp className="h-5 w-5" />
     </button>

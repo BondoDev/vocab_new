@@ -79,7 +79,9 @@ modal UI.
 app.
 
 **Current examples:** `Header.tsx`, `ScrollToTopButton.tsx`,
-`UILanguageSwitcher.tsx`.
+`UILanguageSwitcher.tsx`, and `ImmersiveSessionFrame.tsx` (hides this chrome
+on phones while any learning session — Custom Practice, Study New Words,
+Review Words — is running).
 
 Placement is based on global ownership and breadth of use, not on the word
 "Layout" in a filename.

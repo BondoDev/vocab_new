@@ -14,6 +14,7 @@ import { ReviewExerciseAdapter } from "./steps/ReviewExerciseAdapter";
 import { ReviewGroupExerciseAdapter } from "./steps/ReviewGroupExerciseAdapter";
 import { ReviewExerciseErrorBoundary } from "./ReviewExerciseErrorBoundary";
 import { ReviewSessionComplete } from "./ReviewSessionComplete";
+import { SessionCountChip, SessionHeader } from "../practice/components/SessionHeader";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeWordReview, ReviewPersistenceError } from "../../lib/newWordProgress";
 import { resolveSupabaseErrorMessageKey, type SupabaseErrorCategory } from "../../lib/supabaseError";
@@ -300,27 +301,35 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
     <div className="review-session">
       <div className="review-session-body">
         {!isSessionComplete && (
-          <div className="review-session-header">
-            {/* No "x / total" and no progress bar: the session has no fixed
-                length. Finish Review is always here; it's disabled only
-                while a word's save is in flight (the reducer ignores it
-                then too), so a save can't be dropped from the summary. */}
-            <div className="review-session-header-row">
+          // Shared session header (same rail as Custom Practice). No
+          // "x / total" and no progress bar: the session has no fixed
+          // length. Finish is always here; it's disabled only while a word's
+          // save is in flight (the reducer ignores it then too), so a save
+          // can't be dropped from the summary.
+          <SessionHeader
+            inset
+            fromLanguageName={t(`languageNames.${yourLanguage}`)}
+            toLanguageName={t(`languageNames.${practiceLanguage}`)}
+            fromLanguageCode={yourLanguage}
+            toLanguageCode={practiceLanguage}
+            start={
+              <SessionCountChip
+                label={formatCount(t, uiLanguage, "reviewWords.continuous.reviewedCount", progress.wordsReviewed)}
+                count={progress.wordsReviewed}
+              />
+            }
+            end={
               <button
                 type="button"
                 onClick={handleFinish}
                 disabled={state.currentStep === "saving_review"}
-                className="review-session-back-button"
+                className="practice-header-button practice-header-button--finish"
               >
-                <Flag className="review-session-back-icon" aria-hidden="true" />
-                <span>{t("reviewWords.continuous.finishButton")}</span>
+                <Flag className="practice-header-button__icon" aria-hidden="true" />
+                <span>{t("practice.finish")}</span>
               </button>
-
-              <p className="review-session-progress-text" aria-live="polite">
-                {formatCount(t, uiLanguage, "reviewWords.continuous.reviewedCount", progress.wordsReviewed)}
-              </p>
-            </div>
-          </div>
+            }
+          />
         )}
 
         <div ref={stepContainerRef} tabIndex={-1} aria-live="polite" className="review-session-step-container">

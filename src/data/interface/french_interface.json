@@ -1259,6 +1259,7 @@
     "backToFilters": "Retour aux filtres",
     "home": "Accueil",
     "finish": "Terminer",
+    "practicedCount": "Pratiqués : {count}",
     "menu": "Menu",
     "showMeWord": "Afficher le mot",
     "hint": "Indice",

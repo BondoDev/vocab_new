@@ -384,6 +384,7 @@
     "backToFilters": "Назад к фильтрам",
     "home": "Главная",
     "finish": "Завершить",
+    "practicedCount": "Отработано: {count}",
     "menu": "Меню",
     "showMeWord": "Показать слово",
     "hint": "Подсказка",

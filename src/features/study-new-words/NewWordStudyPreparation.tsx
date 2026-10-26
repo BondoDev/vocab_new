@@ -5,6 +5,8 @@ import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { loadNewWordStudyQueue } from "./loadNewWordStudyQueue";
 import { describeSupabaseError } from "../../lib/supabaseError";
 import { NewWordStudySession } from "./NewWordStudySession";
+import { ImmersiveSessionFrame } from "../../app/components/layout/ImmersiveSessionFrame";
+import { requestSessionFullscreen } from "../../app/utils/immersiveSession";
 import { GUIDED_EXERCISE_COUNT } from "./newWordStudySessionState";
 import type { NewWordStudyQueueResult } from "../../data/learning/newWordStudyQueue";
 import type { LanguageLevelCode } from "../../lib/userProfile";
@@ -135,23 +137,25 @@ export function NewWordStudyPreparation({
   // using the exact queue Phase 1 already prepared (in the same order).
   if (isSessionActive && state.status === "result") {
     return (
-      <NewWordStudySession
-        queue={state.result.selectedQueue}
-        practiceLanguage={practiceLanguage}
-        yourLanguage={yourLanguage}
-        dailyGoal={state.result.dailyGoal}
-        wordsCompletedToday={state.result.wordsCompletedToday}
-        // Both the mid-session Exit confirmation and the session-complete
-        // screen's "Return to Learning" button use this — it must navigate
-        // to the real Learning page (same as the Back button above), not
-        // just flip back to this component's own queue-preview screen.
-        // Flipping back would also show a stale queue result: Phase 3 now
-        // writes real persistence during the session, so the previously
-        // loaded `result` (remainingToday, selectedQueueLength, etc.) is no
-        // longer accurate by the time the user exits or finishes.
-        onExit={onBack}
-        onStartReviewWords={onStartReviewWords}
-      />
+      <ImmersiveSessionFrame>
+        <NewWordStudySession
+          queue={state.result.selectedQueue}
+          practiceLanguage={practiceLanguage}
+          yourLanguage={yourLanguage}
+          dailyGoal={state.result.dailyGoal}
+          wordsCompletedToday={state.result.wordsCompletedToday}
+          // Both the mid-session Exit confirmation and the session-complete
+          // screen's "Return to Learning" button use this — it must navigate
+          // to the real Learning page (same as the Back button above), not
+          // just flip back to this component's own queue-preview screen.
+          // Flipping back would also show a stale queue result: Phase 3 now
+          // writes real persistence during the session, so the previously
+          // loaded `result` (remainingToday, selectedQueueLength, etc.) is no
+          // longer accurate by the time the user exits or finishes.
+          onExit={onBack}
+          onStartReviewWords={onStartReviewWords}
+        />
+      </ImmersiveSessionFrame>
     );
   }
 
@@ -189,7 +193,11 @@ export function NewWordStudyPreparation({
               practiceLanguage={practiceLanguage}
               uiLanguage={uiLanguage}
               t={t}
-              onBeginSession={() => setIsSessionActive(true)}
+              onBeginSession={() => {
+                // Inside the click: fullscreen needs this user activation.
+                void requestSessionFullscreen();
+                setIsSessionActive(true);
+              }}
             />
           )}
         </div>

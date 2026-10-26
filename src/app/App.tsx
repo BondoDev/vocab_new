@@ -21,6 +21,8 @@ import { NewHomePage } from "./pages/home/NewHomePage";
 import { CustomPracticePreviewPage } from "./pages/CustomPracticePreviewPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ScrollToTopButton } from "./components/layout/ScrollToTopButton";
+import { ImmersiveSessionFrame } from "./components/layout/ImmersiveSessionFrame";
+import { exitSessionFullscreen, requestSessionFullscreen } from "./utils/immersiveSession";
 import { UserProfileDashboardPage } from "../features/user-profile";
 import { LevelTestSeoPage } from "./pages/level-test/LevelTestSeoPage";
 import { SeoHubPage } from "./pages/SeoHubPage";
@@ -382,6 +384,19 @@ function AppContent({
     useState(0);
   const [swapRotation, setSwapRotation] = useState(0);
   const resolvedPage = ssrRouteOverride?.page ?? currentPage;
+  // Session fullscreen never outlives the learning-session routes: covers a
+  // Start click whose session never mounted (redirect, guard) in addition
+  // to ImmersiveSessionFrame's own release on unmount. A no-op unless a
+  // session entered fullscreen.
+  useEffect(() => {
+    if (
+      resolvedPage !== "practice" &&
+      resolvedPage !== "newWordStudy" &&
+      resolvedPage !== "reviewWords"
+    ) {
+      exitSessionFullscreen();
+    }
+  }, [resolvedPage]);
   const customPracticeSetupPath = isCustomPracticeSource
     ? `${ROUTES.exerciseSelection}?source=custom-practice`
     : ROUTES.exerciseSelection;
@@ -636,6 +651,8 @@ function AppContent({
   // construction Custom Practice already has.
   const handleStartPracticeList = (config: PracticeListStartConfig) => {
     if (config.conceptIds.length === 0) return;
+    // Still inside the Start click: fullscreen needs this user activation.
+    void requestSessionFullscreen();
     setPracticeLanguage(config.targetLanguage);
     setSelectedExercises(config.exercises);
     setPracticeListSession({
@@ -827,6 +844,9 @@ function AppContent({
       return;
     }
 
+    // Called from the Start click (directly, or from the account-language
+    // confirmation's click), so the fullscreen request has user activation.
+    void requestSessionFullscreen();
     const practiceRoute = buildPracticeRoute(
       yourLanguage as UILanguage,
       practiceLanguage as UILanguage,
@@ -1052,35 +1072,37 @@ function AppContent({
     return (
       <>
         {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
-        <Suspense fallback={<RouteLoadingFallback />}>
-          <VocabularyPractice
-            practiceLanguage={practiceLanguage}
-            yourLanguage={yourLanguage}
-            selectedLevel={selectedLevel}
-            selectedLevels={selectedLevels}
-            selectedCategories={selectedCategories}
-            selectedWordTypes={selectedWordTypes}
-            selectedExercises={selectedExercises}
-            restrictToConceptIds={activePracticeListSession?.conceptIds ?? null}
-            onBack={activePracticeListSession ? leavePracticeList : () => navigate(customPracticeSetupPath)}
-            onGoFilters={
-              activePracticeListSession ? leavePracticeList : () => navigate(
-                isCustomPracticeSource ? `${ROUTES.levelCategory}?source=custom-practice` : ROUTES.levelCategory,
-              )
-            }
-            // Trigger 2 (practice-complete): fires exactly when
-            // VocabularyPractice's own sessionComplete flips true (words run
-            // out, or "Finish Test") - never on open/exercise-selection/a
-            // single answer/exit. Routed through the same shared
-            // accountIntroPopup policy as every other trigger, so it is a
-            // no-op unless this visitor is anonymous, this trigger has never
-            // fired before on this browser, and no account-intro popup has
-            // already shown this session.
-            onSessionComplete={() =>
-              accountIntroPopup.requestAccountIntro("practice-complete")
-            }
-          />
-        </Suspense>
+        <ImmersiveSessionFrame>
+          <Suspense fallback={<RouteLoadingFallback />}>
+            <VocabularyPractice
+              practiceLanguage={practiceLanguage}
+              yourLanguage={yourLanguage}
+              selectedLevel={selectedLevel}
+              selectedLevels={selectedLevels}
+              selectedCategories={selectedCategories}
+              selectedWordTypes={selectedWordTypes}
+              selectedExercises={selectedExercises}
+              restrictToConceptIds={activePracticeListSession?.conceptIds ?? null}
+              onBack={activePracticeListSession ? leavePracticeList : () => navigate(customPracticeSetupPath)}
+              onGoFilters={
+                activePracticeListSession ? leavePracticeList : () => navigate(
+                  isCustomPracticeSource ? `${ROUTES.levelCategory}?source=custom-practice` : ROUTES.levelCategory,
+                )
+              }
+              // Trigger 2 (practice-complete): fires exactly when
+              // VocabularyPractice's own sessionComplete flips true (words run
+              // out, or "Finish Test") - never on open/exercise-selection/a
+              // single answer/exit. Routed through the same shared
+              // accountIntroPopup policy as every other trigger, so it is a
+              // no-op unless this visitor is anonymous, this trigger has never
+              // fired before on this browser, and no account-intro popup has
+              // already shown this session.
+              onSessionComplete={() =>
+                accountIntroPopup.requestAccountIntro("practice-complete")
+              }
+            />
+          </Suspense>
+        </ImmersiveSessionFrame>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
         {accountIntroDialog}

@@ -20,6 +20,7 @@ src/app/utils/
   accountLanguageSave.ts
   accountOnboarding.ts
   accountProfile.ts
+  immersiveSession.ts
   languageProfileSyncPolicy.ts
   pageRouting.ts
   practiceRouteCanonicalizationPolicy.ts
@@ -69,6 +70,12 @@ duplicates another's decision.
 
 **Storage adapter** — `storage.ts` provides SSR-guarded localStorage read
 helpers, safe to call from any environment.
+
+**Immersive sessions** — `immersiveSession.ts` owns mobile fullscreen entry/
+exit and the document-level immersive-layout state for the three learning
+modes (Custom Practice, Study New Words, Review Words). Its consumers are
+`App.tsx`, two features' start handlers, and
+`components/layout/ImmersiveSessionFrame.tsx`, so no single feature owns it.
 
 ## 4. What Does NOT Belong Here
 

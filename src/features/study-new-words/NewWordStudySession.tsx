@@ -257,7 +257,7 @@ export function NewWordStudySession({
     <div className="new-word-study-session">
       <div className="new-word-study-session-body">
         {!isSessionComplete && (
-          <div className="new-word-study-session-header">
+          <div className="new-word-study-session-header immersive-session-header">
             <div className="new-word-study-session-header-row">
               <button
                 type="button"

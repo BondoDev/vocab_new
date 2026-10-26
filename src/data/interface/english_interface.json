@@ -1259,6 +1259,7 @@
     "backToFilters": "Back to filters",
     "home": "Home",
     "finish": "Finish",
+    "practicedCount": "{count} practiced",
     "menu": "Menu",
     "showMeWord": "Show me word",
     "hint": "Hint",

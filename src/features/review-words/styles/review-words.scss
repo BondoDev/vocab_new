@@ -324,57 +324,10 @@
   flex-direction: column;
 }
 
-.review-session-header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+// Spacing for the shared session header (SessionHeader, styled in
+// ../practice/styles/exercises.scss) inside the review content column.
+.review-session-body > .practice-session-header {
   margin-bottom: 1.5rem;
-}
-
-.review-session-header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-// Header "Finish Review" control (formerly Back).
-.review-session-back-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 2.25rem;
-  color: var(--muted-foreground);
-  font-size: 0.875rem;
-  transition: color 150ms ease;
-
-  &:hover:not(:disabled) {
-    color: var(--foreground);
-  }
-
-  // Briefly disabled while a review's save is in flight.
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 2px var(--background),
-      0 0 0 4px color-mix(in oklab, var(--primary) 50%, transparent);
-  }
-}
-
-.review-session-back-icon {
-  width: 1rem;
-  height: 1rem;
-}
-
-.review-session-progress-text {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-  white-space: nowrap;
 }
 
 .review-session-step-container {

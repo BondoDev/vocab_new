@@ -6,6 +6,8 @@ import { loadReviewQueue } from "./loadReviewQueue";
 import type { LoadReviewQueueResult } from "./loadReviewQueue";
 import { describeSupabaseError } from "../../lib/supabaseError";
 import { ReviewSession } from "./ReviewSession";
+import { ImmersiveSessionFrame } from "../../app/components/layout/ImmersiveSessionFrame";
+import { requestSessionFullscreen } from "../../app/utils/immersiveSession";
 import "./styles/review-words.scss";
 
 interface ReviewWordsPreparationProps {
@@ -97,12 +99,14 @@ export function ReviewWordsPreparation({
   // never rebuilding or re-fetching it.
   if (isSessionActive && state.status === "result" && state.result.queue.length > 0) {
     return (
-      <ReviewSession
-        initialQueue={state.result.queue}
-        practiceLanguage={practiceLanguage}
-        yourLanguage={yourLanguage}
-        onExit={onBack}
-      />
+      <ImmersiveSessionFrame>
+        <ReviewSession
+          initialQueue={state.result.queue}
+          practiceLanguage={practiceLanguage}
+          yourLanguage={yourLanguage}
+          onExit={onBack}
+        />
+      </ImmersiveSessionFrame>
     );
   }
 
@@ -138,7 +142,11 @@ export function ReviewWordsPreparation({
               practiceLanguage={practiceLanguage}
               t={t}
               onStartNewWordStudy={onStartNewWordStudy}
-              onBeginReview={() => setIsSessionActive(true)}
+              onBeginReview={() => {
+                // Inside the click: fullscreen needs this user activation.
+                void requestSessionFullscreen();
+                setIsSessionActive(true);
+              }}
             />
           )}
         </div>

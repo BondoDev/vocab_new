@@ -13,6 +13,10 @@ import { HalfWrittenExercise } from "./exercises/HalfWrittenExercise";
 import { shuffleArray } from "../../utils/shuffleArray";
 import { highlightInflectedWords } from "./utils/highlightInflectedWords";
 import {
+  classifyExerciseResult,
+  countPracticedWords,
+} from "./utils/practicedWordCount";
+import {
   advanceTypingRepeatQueue,
   getEligibleTypingExercisesForWord,
   type TypingRepeatEntry,
@@ -511,7 +515,6 @@ export function VocabularyPractice({
   }, []);
 
   const runNextStep = useCallback((wasExplicitSkip = false) => {
-    let result: "correct" | "incorrect" | "skipped";
     const wasTyped = exerciseStatus.hasTypedAnswer;
     const wasRevealed = exerciseStatus.usedShowWord;
 
@@ -545,20 +548,11 @@ export function VocabularyPractice({
       }
     }
 
-    if (isFourWordExercise(currentExerciseType)) {
-      result = exerciseStatus.isCorrect ? "correct" : "skipped";
-    } else if (
-      exerciseStatus.usedShowWord ||
-      exerciseStatus.usedHintForBrokenWord
-    ) {
-      result = "incorrect";
-    } else if (currentExerciseType === "brokenWord") {
-      result = exerciseStatus.isCorrect ? "correct" : "skipped";
-    } else if (exerciseStatus.hasTypedAnswer) {
-      result = exerciseStatus.isCorrect ? "correct" : "incorrect";
-    } else {
-      result = "skipped";
-    }
+    const result = classifyExerciseResult(
+      exerciseStatus,
+      currentExerciseType,
+      isFourWordExercise(currentExerciseType),
+    );
 
     if (isFourWordExercise(currentExerciseType)) {
       const fourWords =
@@ -902,6 +896,35 @@ export function VocabularyPractice({
     return translated;
   }, [formatWordTypeLabel, t]);
 
+  // Counts the on-screen card as soon as it is answered correctly; the same
+  // words are recorded into attemptHistory on Next (see runNextStep), and the
+  // Set in countPracticedWords keeps that hand-off from double-counting.
+  const practicedCount = useMemo(() => {
+    const isFourWord = isFourWordExercise(currentExerciseType);
+    const currentCardIsCorrect =
+      classifyExerciseResult(exerciseStatus, currentExerciseType, isFourWord) ===
+      "correct";
+    let pendingConceptIds: string[] = [];
+    if (currentCardIsCorrect) {
+      const cardWords = isFourWord
+        ? (currentReinforcementWords ?? words.slice(currentIndex, currentIndex + 4)).slice(0, 4)
+        : currentWord
+          ? [currentWord]
+          : [];
+      pendingConceptIds = cardWords.map((word) => String(word.concept_id));
+    }
+    return countPracticedWords(attemptHistory, pendingConceptIds);
+  }, [
+    attemptHistory,
+    exerciseStatus,
+    currentExerciseType,
+    isFourWordExercise,
+    currentReinforcementWords,
+    words,
+    currentIndex,
+    currentWord,
+  ]);
+
   const sessionWords = useMemo(() => {
     const wordsByConceptId = new Map(
       words.map((word) => [String(word?.concept_id ?? ""), word]),
@@ -1127,7 +1150,7 @@ export function VocabularyPractice({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="practice-page min-h-screen flex flex-col">
       <PracticeHeader
         onBack={onBack}
         onStartAgain={handleStartAgain}
@@ -1136,6 +1159,7 @@ export function VocabularyPractice({
         getLanguageName={getLanguageName}
         yourLanguage={yourLanguage}
         practiceLanguage={practiceLanguage}
+        practicedCount={practicedCount}
       />
 
       {/* Main Content */}
