@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import { BookOpen, Flag, PenLine } from "lucide-react";
+import { Flag, Layers, PenLine } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Toast, useAutoDismissMessage } from "../../app/components/Toast";
 import {
@@ -381,7 +381,7 @@ export function NewWordStudySession({
         {!isSessionComplete && (
           <SessionCountFooter>
             <SessionCountChip
-              icon={BookOpen}
+              icon={Layers}
               label={`${t("studyNewWords.wordPositionPrefix")} ${progress.currentPosition} ${t(
                 "studyNewWords.ofConnector",
               )} ${progress.totalWords}`}

@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Languages,
+  Library,
   ListChecks,
   Volume2,
 } from "lucide-react";
@@ -543,8 +544,8 @@ export function NewHomePage({ headerProps, languages, onLogin, onStartPracticing
           className="new-home-page__resources"
           aria-labelledby="homepage-resources-title"
         >
-          <span className="new-home-page__highlight-icon" aria-hidden="true">
-            <BookOpen />
+          <span className="new-home-page__resources-icon" aria-hidden="true">
+            <Library />
           </span>
           <div className="new-home-page__resources-copy">
             <h2 id="homepage-resources-title" className="new-home-page__highlight-title">

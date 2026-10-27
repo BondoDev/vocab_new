@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { shuffleArray } from "../../../utils/shuffleArray";
 import { UniversalExerciseInput } from "./UniversalExerciseInput";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
+import { ExerciseRetryButton } from "./ExerciseRetryButton";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface BrokenWordExerciseProps {
@@ -14,6 +15,8 @@ interface BrokenWordExerciseProps {
     usedHintForBrokenWord: boolean;
   }) => void;
 }
+
+type ExerciseStatus = Parameters<BrokenWordExerciseProps["onStatusChange"]>[0];
 
 export function BrokenWordExercise({
   currentWord,
@@ -32,6 +35,9 @@ export function BrokenWordExercise({
   const [usedShowWord, setUsedShowWord] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [lineCount, setLineCount] = useState(1);
+  // First solved status, frozen by Practice again; see ExerciseRetryButton.
+  const [retryLockedStatus, setRetryLockedStatus] = useState<ExerciseStatus | null>(null);
+  const lastReportedStatusRef = useRef<ExerciseStatus | null>(null);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hasAutoPlayedCorrectAudioRef = useRef(false);
   const rawWord: string = currentWord?.word_lemma ?? "";
@@ -97,6 +103,7 @@ export function BrokenWordExercise({
   useEffect(() => {
     if (!currentWord) return;
     initializeBrokenWord();
+    setRetryLockedStatus(null);
     onStatusChange({
       isCorrect: false,
       hasTypedAnswer: false,
@@ -106,19 +113,28 @@ export function BrokenWordExercise({
   }, [currentWord, initializeBrokenWord, onStatusChange]);
 
   useEffect(() => {
-    onStatusChange({
+    const status = retryLockedStatus ?? {
       isCorrect,
       hasTypedAnswer: placedChunks.length > 0,
       usedShowWord,
       usedHintForBrokenWord,
-    });
+    };
+    lastReportedStatusRef.current = status;
+    onStatusChange(status);
   }, [
     isCorrect,
     placedChunks.length,
     usedShowWord,
     usedHintForBrokenWord,
+    retryLockedStatus,
     onStatusChange,
   ]);
+
+  // Reshuffles the same word's chunks for another attempt.
+  const handleRetry = () => {
+    setRetryLockedStatus((locked) => locked ?? lastReportedStatusRef.current);
+    initializeBrokenWord();
+  };
 
   useEffect(() => {
     const raf = window.requestAnimationFrame(() => {
@@ -291,7 +307,7 @@ export function BrokenWordExercise({
   };
 
   return (
-    <div className={`space-y-6 ${isCorrect ? "pb-12" : ""}`}>
+    <div className="space-y-6">
       <UniversalExerciseInput
         isCorrect={isCorrect}
         onSpeakWord={speakWord}
@@ -398,6 +414,12 @@ export function BrokenWordExercise({
           pointerEvents: "none",
         }}
       />
+
+      {isCorrect && (
+        <div className="flex justify-center mb-2">
+          <ExerciseRetryButton onRetry={handleRetry} />
+        </div>
+      )}
 
       {!isCorrect && (
         <>

@@ -23,6 +23,7 @@ import {
 } from "./utils/typingRepeatQueue";
 import { PracticeHeader } from "./components/PracticeHeader";
 import { SessionCountChip, SessionCountFooter } from "./components/SessionHeader";
+import { useEnterToAdvance } from "./utils/useEnterToAdvance";
 import { PracticeLoading } from "./components/PracticeLoading";
 import { PracticeEmptyState } from "./components/PracticeEmptyState";
 import { PracticeResults } from "./components/PracticeResults";
@@ -810,28 +811,7 @@ export function VocabularyPractice({
     setCurrentExerciseType("connectWords");
   };
 
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key !== "Enter" ||
-        event.repeat ||
-        event.shiftKey ||
-        event.ctrlKey ||
-        event.altKey ||
-        event.metaKey
-      ) {
-        return;
-      }
-      if (!isNextActionAvailable || isCardSwitching) {
-        return;
-      }
-      event.preventDefault();
-      handleNext();
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [isNextActionAvailable, isCardSwitching, handleNext]);
+  useEnterToAdvance(isNextActionAvailable && !isCardSwitching, handleNext);
 
   const handleFinishTest = () => {
     setSessionComplete(true);

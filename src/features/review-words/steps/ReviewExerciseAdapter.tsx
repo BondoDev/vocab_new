@@ -6,6 +6,7 @@ import { BrokenWordExercise } from "../../practice/exercises/BrokenWordExercise"
 import { HalfWrittenExercise } from "../../practice/exercises/HalfWrittenExercise";
 import { WordTypingExercise } from "../../practice/exercises/WordTypingExercise";
 import { highlightInflectedWords } from "../../practice/utils/highlightInflectedWords";
+import { useEnterToAdvance } from "../../practice/utils/useEnterToAdvance";
 import { ExerciseCardHeader } from "../../practice/exercises/ExerciseCardHeader";
 import {
   exerciseCardBorders,
@@ -123,6 +124,8 @@ export function ReviewExerciseAdapter({ exerciseId, item, practiceLanguage, onCo
       }),
     );
   };
+
+  useEnterToAdvance(isComplete, handleContinue);
 
   // Skip always resolves to "skipped" regardless of any prior mistake —
   // matches determineReviewOutcome's own Show-Word-or-Skip-first priority,

@@ -1261,6 +1261,7 @@
     "finish": "Terminer",
     "enterFullscreen": "Plein écran",
     "exitFullscreen": "Quitter le plein écran",
+    "practiceAgain": "Recommencer",
     "practicedCount": "Pratiqués : {count}",
     "menu": "Menu",
     "showMeWord": "Afficher le mot",

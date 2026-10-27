@@ -6,6 +6,7 @@ import { BrokenWordExercise } from "../../practice/exercises/BrokenWordExercise"
 import { HalfWrittenExercise } from "../../practice/exercises/HalfWrittenExercise";
 import { WordTypingExercise } from "../../practice/exercises/WordTypingExercise";
 import { highlightInflectedWords } from "../../practice/utils/highlightInflectedWords";
+import { useEnterToAdvance } from "../../practice/utils/useEnterToAdvance";
 import { ExerciseCardHeader } from "../../practice/exercises/ExerciseCardHeader";
 import {
   exerciseCardBorders,
@@ -139,6 +140,8 @@ export function GuidedExerciseAdapter({ step, item, practiceLanguage, onComplete
       attempts: attemptsRef.current,
     });
   };
+
+  useEnterToAdvance(isStepComplete, handleContinue);
 
   const exerciseId = STEP_TO_EXERCISE_ID[step];
   // Same random colored surface as ordinary practice: a new color for every

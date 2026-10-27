@@ -8,6 +8,7 @@ import { MobileKeyboard } from "./MobileKeyboard";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { type KeyboardLanguage } from "./layouts";
 import { isCompletedWrongAttempt } from "./completedWrongAttempt";
+import { ExerciseRetryButton } from "./ExerciseRetryButton";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface HalfWrittenExerciseProps {
@@ -29,6 +30,8 @@ interface HalfWrittenExerciseProps {
     hasCompletedWrongAttempt?: boolean;
   }) => void;
 }
+
+type ExerciseStatus = Parameters<HalfWrittenExerciseProps["onStatusChange"]>[0];
 
 type WordSegment = {
   text: string;
@@ -56,6 +59,9 @@ export function HalfWrittenExercise({
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [visibleLetterCount, setVisibleLetterCount] = useState(0);
   const [lineCount, setLineCount] = useState(1);
+  // First solved status, frozen by Practice again; see ExerciseRetryButton.
+  const [retryLockedStatus, setRetryLockedStatus] = useState<ExerciseStatus | null>(null);
+  const lastReportedStatusRef = useRef<ExerciseStatus | null>(null);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const inputAnchorRef = useRef<HTMLDivElement | null>(null);
@@ -113,8 +119,9 @@ export function HalfWrittenExercise({
     return Math.floor(wordLength * randomPercent);
   };
 
-  useEffect(() => {
-    if (!currentWord) return;
+  // Clears the typed attempt; the visible prefix (visibleLetterCount) is
+  // chosen per word, so a retry keeps the same letters shown.
+  const resetAttempt = () => {
     setUserInput("");
     setIsCorrect(false);
     setHasTypedAnswer(false);
@@ -125,6 +132,12 @@ export function HalfWrittenExercise({
     setLineCount(1);
     hasAutoPlayedCorrectAudioRef.current = false;
     charSlotRefs.current = [];
+  };
+
+  useEffect(() => {
+    if (!currentWord) return;
+    resetAttempt();
+    setRetryLockedStatus(null);
     setVisibleLetterCount(calculateVisiblePortion(normalizedWord.length));
   }, [currentWord, normalizedWord]);
 
@@ -206,14 +219,22 @@ export function HalfWrittenExercise({
   }, [userInput, currentWord, currentPrompt, normalizedWord, visibleLetterCount]);
 
   useEffect(() => {
-    onStatusChange({
+    const status = retryLockedStatus ?? {
       isCorrect,
       hasTypedAnswer,
       usedShowWord,
       usedHintForBrokenWord: false,
       hasCompletedWrongAttempt,
-    });
-  }, [isCorrect, hasTypedAnswer, usedShowWord, hasCompletedWrongAttempt, onStatusChange]);
+    };
+    lastReportedStatusRef.current = status;
+    onStatusChange(status);
+  }, [isCorrect, hasTypedAnswer, usedShowWord, hasCompletedWrongAttempt, retryLockedStatus, onStatusChange]);
+
+  const handleRetry = () => {
+    setRetryLockedStatus((locked) => locked ?? lastReportedStatusRef.current);
+    resetAttempt();
+    inputRef.current?.focus();
+  };
 
   useEffect(() => {
     if (!isCorrect || window.innerWidth >= 1024) return;
@@ -530,11 +551,8 @@ export function HalfWrittenExercise({
         />
       )}
 
-      <div
-        className={`mt-3 flex items-start justify-center ${
-          isCorrect ? "min-h-[0.75rem]" : "min-h-[3.25rem]"
-        }`}
-      >
+      <div className="mt-3 flex items-start justify-center min-h-[3.25rem]">
+        {isCorrect && <ExerciseRetryButton onRetry={handleRetry} />}
         {!isCorrect && (
           <div className="flex justify-center gap-3">
             <button

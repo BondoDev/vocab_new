@@ -8,6 +8,7 @@ import { speakGuidedWord } from "../utils/speakGuidedWord";
 // a concept's conjugated/separated forms inside its example sentence —
 // reused here rather than re-implemented so both flows highlight identically.
 import { highlightInflectedWords } from "../../practice/utils/highlightInflectedWords";
+import { useEnterToAdvance } from "../../practice/utils/useEnterToAdvance";
 
 interface NewWordInfoStepProps {
   item: ResolvedStudyQueueItem;
@@ -56,6 +57,8 @@ function formatWordTypeLabel(typeId: string): string {
 // NewWordStudySession.tsx) — this file only assigns the semantic class names.
 export function NewWordInfoStep({ item, practiceLanguage, yourLanguage, onContinue }: NewWordInfoStepProps) {
   const { t } = useLanguage();
+  // Enter = Start Exercises, like Next on the exercise cards.
+  useEnterToAdvance(true, onContinue);
   // Keyed per word, so every new word gets a fresh color; this step only
   // renders client-side inside an active session, so the random value can't
   // cause a hydration mismatch.

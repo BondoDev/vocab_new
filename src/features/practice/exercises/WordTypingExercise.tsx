@@ -8,6 +8,7 @@ import { MobileKeyboard } from "./MobileKeyboard";
 import { getSharedExerciseFieldSizing } from "./sharedFieldSizing";
 import { type KeyboardLanguage } from "./layouts";
 import { isCompletedWrongAttempt } from "./completedWrongAttempt";
+import { ExerciseRetryButton } from "./ExerciseRetryButton";
 import { useLanguage } from "../../../contexts/LanguageContext";
 
 interface WordTypingExerciseProps {
@@ -33,6 +34,8 @@ interface WordTypingExerciseProps {
   }) => void;
 }
 
+type ExerciseStatus = Parameters<WordTypingExerciseProps["onStatusChange"]>[0];
+
 type WordSegment = {
   text: string;
   startIndex: number;
@@ -56,6 +59,9 @@ export function WordTypingExercise({
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [lineCount, setLineCount] = useState(1);
+  // First solved status, frozen by Practice again; see ExerciseRetryButton.
+  const [retryLockedStatus, setRetryLockedStatus] = useState<ExerciseStatus | null>(null);
+  const lastReportedStatusRef = useRef<ExerciseStatus | null>(null);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const inputAnchorRef = useRef<HTMLDivElement | null>(null);
@@ -97,7 +103,7 @@ export function WordTypingExercise({
     return "en";
   };
 
-  useEffect(() => {
+  const resetAttempt = () => {
     setUserInput("");
     setIsCorrect(false);
     setRevealedHintIndices([]);
@@ -109,6 +115,11 @@ export function WordTypingExercise({
     setLineCount(1);
     hasAutoPlayedCorrectAudioRef.current = false;
     charSlotRefs.current = [];
+  };
+
+  useEffect(() => {
+    resetAttempt();
+    setRetryLockedStatus(null);
   }, [currentWord]);
 
   useEffect(() => {
@@ -188,15 +199,23 @@ export function WordTypingExercise({
   }, [userInput, currentWord, currentPrompt]);
 
   useEffect(() => {
-    onStatusChange({
+    const status = retryLockedStatus ?? {
       isCorrect,
       hasTypedAnswer,
       usedShowWord,
       usedHintForBrokenWord: false,
       hasCompletedWrongAttempt,
       usedHint: revealedHintIndices.length > 0,
-    });
-  }, [isCorrect, hasTypedAnswer, usedShowWord, hasCompletedWrongAttempt, revealedHintIndices, onStatusChange]);
+    };
+    lastReportedStatusRef.current = status;
+    onStatusChange(status);
+  }, [isCorrect, hasTypedAnswer, usedShowWord, hasCompletedWrongAttempt, revealedHintIndices, retryLockedStatus, onStatusChange]);
+
+  const handleRetry = () => {
+    setRetryLockedStatus((locked) => locked ?? lastReportedStatusRef.current);
+    resetAttempt();
+    inputRef.current?.focus();
+  };
 
   useEffect(() => {
     if (!isCorrect) return;
@@ -529,11 +548,8 @@ export function WordTypingExercise({
         />
       )}
 
-      <div
-        className={`mt-3 flex items-start justify-center ${
-          isCorrect ? "min-h-[0.75rem]" : "min-h-[3.25rem]"
-        }`}
-      >
+      <div className="mt-3 flex items-start justify-center min-h-[3.25rem]">
+        {isCorrect && <ExerciseRetryButton onRetry={handleRetry} />}
         {!isCorrect && (
           <div className="flex justify-center gap-3">
             <button
