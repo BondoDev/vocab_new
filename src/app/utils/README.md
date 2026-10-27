@@ -74,8 +74,9 @@ helpers, safe to call from any environment.
 **Immersive sessions** — `immersiveSession.ts` owns mobile fullscreen entry/
 exit and the document-level immersive-layout state for the three learning
 modes (Custom Practice, Study New Words, Review Words). Its consumers are
-`App.tsx`, two features' start handlers, and
-`components/layout/ImmersiveSessionFrame.tsx`, so no single feature owns it.
+`App.tsx`, two features' start handlers, the shared session header's
+desktop fullscreen toggle (`features/practice/components/SessionHeader.tsx`),
+and `components/layout/ImmersiveSessionFrame.tsx`, so no single feature owns it.
 
 ## 4. What Does NOT Belong Here
 

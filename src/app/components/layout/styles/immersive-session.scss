@@ -1,7 +1,8 @@
 // Viewport-locked app shell for learning sessions on phones (see
 // ImmersiveSessionFrame.tsx and src/app/utils/immersiveSession.ts).
-// `html.immersive-session` is only ever set on phones while a session frame
-// is mounted, so nothing here affects desktop/tablet layouts or other routes;
+// `html.immersive-session` is only ever set while a session frame is mounted
+// and the session is expanded (the default on phones; the header's fullscreen
+// toggle switches it on any device). Other routes are never affected;
 // removing the class restores normal document scrolling.
 //
 // Geometry, outermost first:

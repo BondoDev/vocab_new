@@ -170,18 +170,29 @@
    viewport-centered; they may shrink (min-width: 0) so long localized labels
    never push it off-center or overlap it. Not sticky: without a background,
    content scrolling underneath would show through. */
-.practice-session-header {
+.practice-session-header,
+.practice-session-count {
   --psh-height: 2.25rem;
   --psh-ink: #2f2755; /* Night Violet */
   --psh-muted: #6b7280; /* Muted Slate */
   --psh-surface: #ffffff;
   --psh-hairline: rgba(0, 0, 0, 0.08);
   --psh-success: #16a34a;
+}
 
+.practice-session-header {
   position: relative;
   z-index: 2;
   width: 100%;
   padding: 0.875rem 1rem 0.25rem;
+}
+
+/* Session counter row under the exercise card (Custom Practice, Review
+   Words); shares the rail's chip tokens above. */
+.practice-session-count {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 /* Doubled class so it wins over the breakpoint padding rules below. */
@@ -358,6 +369,31 @@
   }
 }
 
+/* Bare icon variant (fullscreen toggle): no surface or hairline, just the
+   glyph; keeps the rail height and the focus ring for keyboard users. */
+.practice-header-button.practice-header-button--icon {
+  width: var(--psh-height);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--psh-muted);
+
+  &:hover,
+  &:active {
+    background: transparent;
+    color: var(--psh-ink);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 40%, transparent);
+  }
+
+  .practice-header-button__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
 .practice-header-button__icon {
   flex-shrink: 0;
   width: 1rem;
@@ -432,14 +468,6 @@
   .practice-header-button {
     padding: 0 0.75rem 0 0.625rem;
     gap: 0.3125rem;
-  }
-}
-
-/* Narrowest phones: drop the counter's word (the number, check icon, title
-   tooltip, and screen-reader label remain). */
-@media (max-width: 359.98px) {
-  .practice-practiced-count__word {
-    display: none;
   }
 }
 

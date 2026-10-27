@@ -14,7 +14,12 @@ import { ReviewExerciseAdapter } from "./steps/ReviewExerciseAdapter";
 import { ReviewGroupExerciseAdapter } from "./steps/ReviewGroupExerciseAdapter";
 import { ReviewExerciseErrorBoundary } from "./ReviewExerciseErrorBoundary";
 import { ReviewSessionComplete } from "./ReviewSessionComplete";
-import { SessionCountChip, SessionHeader } from "../practice/components/SessionHeader";
+import {
+  SessionCountBelowCard,
+  SessionCountChip,
+  SessionFullscreenToggle,
+  SessionHeader,
+} from "../practice/components/SessionHeader";
 import { getStoredSupabaseSession } from "../../lib/supabaseAuth";
 import { completeWordReview, ReviewPersistenceError } from "../../lib/newWordProgress";
 import { resolveSupabaseErrorMessageKey, type SupabaseErrorCategory } from "../../lib/supabaseError";
@@ -313,12 +318,6 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
             fromLanguageCode={yourLanguage}
             toLanguageCode={practiceLanguage}
             start={
-              <SessionCountChip
-                label={formatCount(t, uiLanguage, "reviewWords.continuous.reviewedCount", progress.wordsReviewed)}
-                count={progress.wordsReviewed}
-              />
-            }
-            end={
               <button
                 type="button"
                 onClick={handleFinish}
@@ -329,6 +328,7 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
                 <span>{t("practice.finish")}</span>
               </button>
             }
+            end={<SessionFullscreenToggle />}
           />
         )}
 
@@ -477,6 +477,15 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
             />
           )}
         </div>
+
+        {!isSessionComplete && (
+          <SessionCountBelowCard>
+            <SessionCountChip
+              label={formatCount(t, uiLanguage, "reviewWords.continuous.reviewedCount", progress.wordsReviewed)}
+              count={progress.wordsReviewed}
+            />
+          </SessionCountBelowCard>
+        )}
       </div>
     </div>
   );

@@ -1254,6 +1254,8 @@
     "backToFilters": "Zurück zu Filtern",
     "home": "Startseite",
     "finish": "Beenden",
+    "enterFullscreen": "Vollbild",
+    "exitFullscreen": "Vollbild beenden",
     "practicedCount": "{count} geübt",
     "menu": "Menü",
     "showMeWord": "Wort anzeigen",

@@ -22,6 +22,7 @@ import {
   type TypingRepeatEntry,
 } from "./utils/typingRepeatQueue";
 import { PracticeHeader } from "./components/PracticeHeader";
+import { SessionCountBelowCard, SessionCountChip } from "./components/SessionHeader";
 import { PracticeLoading } from "./components/PracticeLoading";
 import { PracticeEmptyState } from "./components/PracticeEmptyState";
 import { PracticeResults } from "./components/PracticeResults";
@@ -1159,7 +1160,6 @@ export function VocabularyPractice({
         getLanguageName={getLanguageName}
         yourLanguage={yourLanguage}
         practiceLanguage={practiceLanguage}
-        practicedCount={practicedCount}
       />
 
       {/* Main Content */}
@@ -1432,6 +1432,12 @@ export function VocabularyPractice({
                   </div>
                 </motion.div>
               )}
+              <SessionCountBelowCard>
+                <SessionCountChip
+                  label={t("practice.practicedCount").replace("{count}", String(practicedCount))}
+                  count={practicedCount}
+                />
+              </SessionCountBelowCard>
             </>
           )}
         </div>

@@ -1,17 +1,25 @@
-import type { ReactNode } from "react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { useSyncExternalStore, type ReactNode } from "react";
+import { ArrowRight, CheckCircle2, Expand, Shrink } from "lucide-react";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import {
+  isSessionExpanded,
+  subscribeSessionExpanded,
+  toggleSessionExpanded,
+} from "../../../app/utils/immersiveSession";
 
 // Shared session header rail, used by Custom Practice (PracticeHeader) and
 // Review Words (ReviewSession). Styles live in ../styles/exercises.scss under
-// .practice-session-header. All three slots share one 36px rail: the count and
-// language chips are quiet white surfaces, and the end-slot action (Finish)
-// uses .practice-header-button(--finish) as the only tinted element. The
+// .practice-session-header. All three slots share one 36px rail: the language
+// chip is a quiet white surface, and the start-slot action (Finish) uses
+// .practice-header-button(--finish) as the only tinted element. The
 // 1fr/auto/1fr grid keeps the language chip centered in the viewport regardless
 // of how wide the side slots render in a given UI language.
 
 interface SessionHeaderProps {
-  start: ReactNode;
-  end: ReactNode;
+  // Either slot may be empty; both still render so the language chip stays
+  // centered.
+  start?: ReactNode;
+  end?: ReactNode;
   fromLanguageName: string;
   toLanguageName: string;
   fromLanguageCode: string;
@@ -68,6 +76,38 @@ export function SessionHeader({
       </div>
     </header>
   );
+}
+
+// Expand/collapse control for the running session on any device (sessions
+// start expanded on phones, normal elsewhere). Must sit inside an
+// ImmersiveSessionFrame, whose mount sets the initial mode.
+export function SessionFullscreenToggle() {
+  const { t } = useLanguage();
+  const isExpanded = useSyncExternalStore(subscribeSessionExpanded, isSessionExpanded, () => false);
+
+  const label = t(isExpanded ? "practice.exitFullscreen" : "practice.enterFullscreen");
+  // Four diagonal arrows: outward to expand, inward to shrink back.
+  const Icon = isExpanded ? Shrink : Expand;
+
+  return (
+    <button
+      type="button"
+      onClick={toggleSessionExpanded}
+      aria-pressed={isExpanded}
+      aria-label={label}
+      title={label}
+      className="practice-header-button practice-header-button--icon"
+    >
+      <Icon className="practice-header-button__icon" aria-hidden="true" />
+    </button>
+  );
+}
+
+// Centered row under the exercise card that holds the session counter in
+// Custom Practice and Review Words. Carries the rail's chip tokens itself,
+// since it renders outside .practice-session-header.
+export function SessionCountBelowCard({ children }: { children: ReactNode }) {
+  return <div className="practice-session-count">{children}</div>;
 }
 
 interface SessionCountChipProps {

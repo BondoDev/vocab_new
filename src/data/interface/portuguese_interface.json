@@ -1254,6 +1254,8 @@
     "backToFilters": "Voltar para filtros",
     "home": "Inicio",
     "finish": "Finalizar",
+    "enterFullscreen": "Tela cheia",
+    "exitFullscreen": "Sair da tela cheia",
     "practicedCount": "Praticadas: {count}",
     "menu": "Menu",
     "showMeWord": "Mostrar palavra",

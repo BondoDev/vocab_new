@@ -1259,6 +1259,8 @@
     "backToFilters": "Back to filters",
     "home": "Home",
     "finish": "Finish",
+    "enterFullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen",
     "practicedCount": "{count} practiced",
     "menu": "Menu",
     "showMeWord": "Show me word",
