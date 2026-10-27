@@ -35,6 +35,9 @@ interface NewWordStudyPreparationProps {
   onBack: () => void;
   // Forwarded to the session-complete screen's Start Reviewing action.
   onStartReviewWords?: () => void;
+  // Lets the route hide the site navbar while the session itself runs (the
+  // preparation view keeps it). Must be a stable callback.
+  onSessionActiveChange?: (active: boolean) => void;
 }
 
 type LoadState =
@@ -56,6 +59,7 @@ export function NewWordStudyPreparation({
   currentLevel,
   onBack,
   onStartReviewWords,
+  onSessionActiveChange,
 }: NewWordStudyPreparationProps) {
   const { t, uiLanguage } = useLanguage();
   const [state, setState] = useState<LoadState>({ status: "loading" });
@@ -64,6 +68,14 @@ export function NewWordStudyPreparation({
   // exiting just flips back — nothing here needs to reload, since Phase 2
   // never writes anything that would change what Phase 1 already loaded.
   const [isSessionActive, setIsSessionActive] = useState(false);
+
+  // The Begin click also reports `true` synchronously (same render as the
+  // session, so the navbar never flashes); this keeps the route in sync
+  // otherwise and always reports `false` on unmount.
+  useEffect(() => {
+    onSessionActiveChange?.(isSessionActive);
+  }, [isSessionActive, onSessionActiveChange]);
+  useEffect(() => () => onSessionActiveChange?.(false), [onSessionActiveChange]);
 
   const hasRequiredProfileContext = Boolean(authUserId && practiceLanguage && yourLanguage && dailyGoal > 0);
 
@@ -197,6 +209,7 @@ export function NewWordStudyPreparation({
                 // Inside the click: fullscreen needs this user activation.
                 void requestSessionFullscreen();
                 setIsSessionActive(true);
+                onSessionActiveChange?.(true);
               }}
             />
           )}

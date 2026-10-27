@@ -22,7 +22,7 @@ import {
   type TypingRepeatEntry,
 } from "./utils/typingRepeatQueue";
 import { PracticeHeader } from "./components/PracticeHeader";
-import { SessionCountBelowCard, SessionCountChip } from "./components/SessionHeader";
+import { SessionCountChip, SessionCountFooter } from "./components/SessionHeader";
 import { PracticeLoading } from "./components/PracticeLoading";
 import { PracticeEmptyState } from "./components/PracticeEmptyState";
 import { PracticeResults } from "./components/PracticeResults";
@@ -1432,16 +1432,21 @@ export function VocabularyPractice({
                   </div>
                 </motion.div>
               )}
-              <SessionCountBelowCard>
-                <SessionCountChip
-                  label={t("practice.practicedCount").replace("{count}", String(practicedCount))}
-                  count={practicedCount}
-                />
-              </SessionCountBelowCard>
             </>
           )}
         </div>
       </main>
+
+      {/* Sibling of <main>, not inside the card shell: main's flex-1 centering
+          then places the card midway between the header and this footer. */}
+      {!sessionComplete && (
+        <SessionCountFooter>
+          <SessionCountChip
+            label={t("practice.practicedCount").replace("{count}", String(practicedCount))}
+            count={practicedCount}
+          />
+        </SessionCountFooter>
+      )}
     </div>
   );
 }

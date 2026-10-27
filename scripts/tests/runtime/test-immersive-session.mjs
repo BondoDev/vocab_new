@@ -424,7 +424,9 @@ await test("fullscreen is requested synchronously from each Start/Begin handler"
 
 await test("all three session headers opt into the shared sticky header", () => {
   assert.match(read("src/features/practice/components/SessionHeader.tsx"), /immersive-session-header/);
-  assert.match(read("src/features/study-new-words/NewWordStudySession.tsx"), /new-word-study-session-header immersive-session-header/);
+  assert.match(read("src/features/practice/components/PracticeHeader.tsx"), /<SessionHeader\b/);
+  assert.match(read("src/features/review-words/ReviewSession.tsx"), /<SessionHeader\b/);
+  assert.match(read("src/features/study-new-words/NewWordStudySession.tsx"), /<SessionHeader\b/);
 });
 
 await test("App exits session fullscreen on non-session routes", () => {

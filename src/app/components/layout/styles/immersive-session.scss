@@ -119,5 +119,30 @@ html.immersive-session {
       backdrop-filter: blur(12px);
       pointer-events: none;
     }
+
+    // At rest the tint reads as a lighter band over the session's own
+    // gradient background. Where scroll-driven animations exist, keep it
+    // invisible at the top and fade it in over the first 24px of scrolling
+    // (nearest scroller = the session root); elsewhere it stays always on.
+    // Base opacity is 0 because a non-overflowing scroller makes the
+    // timeline inactive, and then nothing can pass under the header anyway.
+    @supports (animation-timeline: scroll()) {
+      &::before {
+        opacity: 0;
+        animation: immersive-header-backdrop linear both;
+        animation-timeline: scroll(nearest block);
+        animation-range: 0 24px;
+      }
+    }
+  }
+}
+
+@keyframes immersive-header-backdrop {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

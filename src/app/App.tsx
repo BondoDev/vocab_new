@@ -383,6 +383,10 @@ function AppContent({
   const [levelTestModalSwapRotation, setLevelTestModalSwapRotation] =
     useState(0);
   const [swapRotation, setSwapRotation] = useState(0);
+  // Reported by ReviewWordsPreparation / NewWordStudyPreparation: the site
+  // navbar is dropped while their session runs, like Custom Practice (which
+  // never renders it). The two routes never mount together, so one flag.
+  const [isLearningSessionActive, setIsLearningSessionActive] = useState(false);
   const resolvedPage = ssrRouteOverride?.page ?? currentPage;
   // Session fullscreen never outlives the learning-session routes: covers a
   // Start click whose session never mounted (redirect, guard) in addition
@@ -1237,7 +1241,7 @@ function AppContent({
     return (
       <div className="min-h-screen flex flex-col bg-background">
         {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
-        <Header {...sharedHeaderProps} activePage="profile" />
+        {!isLearningSessionActive && <Header {...sharedHeaderProps} activePage="profile" />}
         <Suspense fallback={<RouteLoadingFallback />}>
           <NewWordStudyPreparation
             authUserId={authUserId}
@@ -1248,6 +1252,7 @@ function AppContent({
             currentLevel={userProfile.languageLevel}
             onBack={() => navigate(`${ROUTES.profile}?section=learning`)}
             onStartReviewWords={handleStartReviewWords}
+            onSessionActiveChange={setIsLearningSessionActive}
           />
         </Suspense>
         {accountOnboardingDialog}
@@ -1261,7 +1266,7 @@ function AppContent({
     return (
       <div className="min-h-screen flex flex-col bg-background">
         {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
-        <Header {...sharedHeaderProps} activePage="profile" />
+        {!isLearningSessionActive && <Header {...sharedHeaderProps} activePage="profile" />}
         <Suspense fallback={<RouteLoadingFallback />}>
           <ReviewWordsPreparation
             authUserId={authUserId}
@@ -1270,6 +1275,7 @@ function AppContent({
             yourLanguage={yourLanguage}
             onBack={() => navigate(`${ROUTES.profile}?section=learning`)}
             onStartNewWordStudy={handleStartNewWordStudy}
+            onSessionActiveChange={setIsLearningSessionActive}
           />
         </Suspense>
         {accountOnboardingDialog}

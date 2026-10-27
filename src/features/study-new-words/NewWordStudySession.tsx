@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import { Flag } from "lucide-react";
+import { BookOpen, Flag, PenLine } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Toast, useAutoDismissMessage } from "../../app/components/Toast";
 import {
@@ -28,6 +28,12 @@ import {
 import { NewWordInfoStep } from "./steps/NewWordInfoStep";
 import { GuidedExerciseAdapter } from "./steps/GuidedExerciseAdapter";
 import { NewWordStudyComplete } from "./NewWordStudyComplete";
+import {
+  SessionCountChip,
+  SessionCountFooter,
+  SessionFullscreenToggle,
+  SessionHeader,
+} from "../practice/components/SessionHeader";
 // Required by BrokenWordExercise/HalfWrittenExercise/WordTypingExercise for
 // their .exercise-answer-char/.exercise-broken-chunk-button/etc. classes —
 // VocabularyPractice.tsx imports this same stylesheet for the same reason.
@@ -257,51 +263,27 @@ export function NewWordStudySession({
     <div className="new-word-study-session">
       <div className="new-word-study-session-body">
         {!isSessionComplete && (
-          <div className="new-word-study-session-header immersive-session-header">
-            <div className="new-word-study-session-header-row">
+          // Shared session header (same rail as Custom Practice and Review
+          // Words); the word/exercise position moved to the footer below.
+          <SessionHeader
+            inset
+            fromLanguageName={t(`languageNames.${yourLanguage}`)}
+            toLanguageName={t(`languageNames.${practiceLanguage}`)}
+            fromLanguageCode={yourLanguage}
+            toLanguageCode={practiceLanguage}
+            start={
               <button
                 type="button"
                 onClick={handleFinishClick}
                 disabled={isFinishDisabled}
-                className="new-word-study-exit-button"
+                className="practice-header-button practice-header-button--finish"
               >
-                <Flag className="new-word-study-exit-icon" aria-hidden="true" />
-                <span className="new-word-study-exit-label">{t("studyNewWords.finishSessionButton")}</span>
+                <Flag className="practice-header-button__icon" aria-hidden="true" />
+                <span>{t("practice.finish")}</span>
               </button>
-
-              <p className="new-word-study-progress-text">
-                {t("studyNewWords.wordPositionPrefix")} {progress.currentPosition}{" "}
-                {t("studyNewWords.ofConnector")} {progress.totalWords}
-                {exerciseStepNumber !== null && (
-                  <>
-                    {" "}
-                    · {t("studyNewWords.exercisePrefix")} {exerciseStepNumber} {t("studyNewWords.ofConnector")} 3
-                  </>
-                )}
-              </p>
-            </div>
-
-            <div
-              role="progressbar"
-              aria-valuenow={progress.completedWords}
-              aria-valuemin={0}
-              aria-valuemax={progress.totalWords}
-              aria-label={`${t("studyNewWords.wordPositionPrefix")} ${progress.currentPosition} ${t(
-                "studyNewWords.ofConnector",
-              )} ${progress.totalWords}`}
-              className="new-word-study-progress-track"
-            >
-              <div
-                className="new-word-study-progress-fill"
-                style={{
-                  width:
-                    progress.totalWords > 0
-                      ? `${(progress.completedWords / progress.totalWords) * 100}%`
-                      : "0%",
-                }}
-              />
-            </div>
-          </div>
+            }
+            end={<SessionFullscreenToggle />}
+          />
         )}
 
         {/* aria-live announces step changes (e.g. moving to the next word) for
@@ -395,6 +377,28 @@ export function NewWordStudySession({
             />
           )}
         </div>
+
+        {!isSessionComplete && (
+          <SessionCountFooter>
+            <SessionCountChip
+              icon={BookOpen}
+              label={`${t("studyNewWords.wordPositionPrefix")} ${progress.currentPosition} ${t(
+                "studyNewWords.ofConnector",
+              )} ${progress.totalWords}`}
+              count={progress.currentPosition}
+            />
+            {/* Only during the three guided exercises, not the word intro. */}
+            {exerciseStepNumber !== null && (
+              <SessionCountChip
+                icon={PenLine}
+                label={`${t("studyNewWords.exercisePrefix")} ${exerciseStepNumber} ${t(
+                  "studyNewWords.ofConnector",
+                )} 3`}
+                count={exerciseStepNumber}
+              />
+            )}
+          </SessionCountFooter>
+        )}
       </div>
 
       <AlertDialog open={isExitConfirmOpen} onOpenChange={setIsExitConfirmOpen}>

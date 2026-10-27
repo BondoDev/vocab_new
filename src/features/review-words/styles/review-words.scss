@@ -302,7 +302,10 @@
 
 .review-session {
   flex: 1 1 0%;
-  min-height: 0;
+  // Fills the screen in the normal layout so the counter footer sits at the
+  // bottom (the immersive shell overrides this and sizes the root itself).
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background-color: var(--background);
@@ -330,9 +333,21 @@
   margin-bottom: 1.5rem;
 }
 
+// Grows between the header and the counter footer and centers the step
+// (exercise card, loading/error blocks) vertically in that space.
 .review-session-step-container {
   outline: none;
   flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// The session column already pads its edges; the footer's top gap mirrors
+// the header's 1.5rem bottom margin so the card sits exactly midway.
+.review-session-body > .practice-session-count {
+  margin-top: 1.5rem;
+  padding: 0;
 }
 
 .review-session-error-block {

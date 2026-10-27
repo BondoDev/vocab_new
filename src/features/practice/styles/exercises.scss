@@ -187,12 +187,18 @@
   padding: 0.875rem 1rem 0.25rem;
 }
 
-/* Session counter row under the exercise card (Custom Practice, Review
-   Words); shares the rail's chip tokens above. */
+/* Session counter footer (Custom Practice, Review Words); shares the rail's
+   chip tokens above. Sticky so it stays at the bottom of the screen when the
+   card is taller than the viewport; transparent, only the chip is painted. */
 .practice-session-count {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  margin-top: 1rem;
+  gap: 0.5rem;
+  padding: 0.25rem 1rem 1rem;
 }
 
 /* Doubled class so it wins over the breakpoint padding rules below. */
@@ -282,6 +288,10 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* The chip's line-height: 1 box is shorter than the glyphs, and the
+     ellipsis overflow clip would cut descenders ("g", "y"); the fixed chip
+     height and centering keep the rail unchanged. */
+  line-height: 1.375;
 }
 
 .practice-language-pill__name--from {

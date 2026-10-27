@@ -1,5 +1,5 @@
 import { useSyncExternalStore, type ReactNode } from "react";
-import { ArrowRight, CheckCircle2, Expand, Shrink } from "lucide-react";
+import { ArrowRight, CheckCircle2, Expand, Shrink, type LucideIcon } from "lucide-react";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import {
   isSessionExpanded,
@@ -7,8 +7,8 @@ import {
   toggleSessionExpanded,
 } from "../../../app/utils/immersiveSession";
 
-// Shared session header rail, used by Custom Practice (PracticeHeader) and
-// Review Words (ReviewSession). Styles live in ../styles/exercises.scss under
+// Shared session header rail, used by Custom Practice (PracticeHeader),
+// Review Words (ReviewSession), and Study New Words (NewWordStudySession). Styles live in ../styles/exercises.scss under
 // .practice-session-header. All three slots share one 36px rail: the language
 // chip is a quiet white surface, and the start-slot action (Finish) uses
 // .practice-header-button(--finish) as the only tinted element. The
@@ -103,10 +103,12 @@ export function SessionFullscreenToggle() {
   );
 }
 
-// Centered row under the exercise card that holds the session counter in
-// Custom Practice and Review Words. Carries the rail's chip tokens itself,
-// since it renders outside .practice-session-header.
-export function SessionCountBelowCard({ children }: { children: ReactNode }) {
+// Session counter footer for Custom Practice and Review Words: sticky to the
+// bottom of the viewport (or the immersive scroller), and the last flex item
+// of the session column, so the card centers between header and footer.
+// Carries the rail's chip tokens itself, since it renders outside
+// .practice-session-header.
+export function SessionCountFooter({ children }: { children: ReactNode }) {
   return <div className="practice-session-count">{children}</div>;
 }
 
@@ -115,11 +117,13 @@ interface SessionCountChipProps {
   // "Повторено: 12"; announced as a whole to screen readers.
   label: string;
   count: number;
+  // Defaults to the check mark used by the practiced/reviewed counters.
+  icon?: LucideIcon;
 }
 
 // Splits the localized label at the number so it can be set apart
 // typographically while each locale keeps its own word order.
-export function SessionCountChip({ label, count }: SessionCountChipProps) {
+export function SessionCountChip({ label, count, icon: Icon = CheckCircle2 }: SessionCountChipProps) {
   const countText = String(count);
   const countIndex = label.indexOf(countText);
   const before = countIndex >= 0 ? label.slice(0, countIndex).trim() : "";
@@ -127,7 +131,7 @@ export function SessionCountChip({ label, count }: SessionCountChipProps) {
 
   return (
     <span className="practice-header-chip practice-practiced-count" title={label}>
-      <CheckCircle2 className="practice-practiced-count__icon" aria-hidden="true" />
+      <Icon className="practice-practiced-count__icon" aria-hidden="true" />
       <span className="practice-practiced-count__text" aria-hidden="true">
         {before && <span className="practice-practiced-count__word">{before}</span>}
         <span className="practice-practiced-count__value">{countText}</span>

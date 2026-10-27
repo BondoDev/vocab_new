@@ -15,8 +15,8 @@ import { ReviewGroupExerciseAdapter } from "./steps/ReviewGroupExerciseAdapter";
 import { ReviewExerciseErrorBoundary } from "./ReviewExerciseErrorBoundary";
 import { ReviewSessionComplete } from "./ReviewSessionComplete";
 import {
-  SessionCountBelowCard,
   SessionCountChip,
+  SessionCountFooter,
   SessionFullscreenToggle,
   SessionHeader,
 } from "../practice/components/SessionHeader";
@@ -479,12 +479,12 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
         </div>
 
         {!isSessionComplete && (
-          <SessionCountBelowCard>
+          <SessionCountFooter>
             <SessionCountChip
               label={formatCount(t, uiLanguage, "reviewWords.continuous.reviewedCount", progress.wordsReviewed)}
               count={progress.wordsReviewed}
             />
-          </SessionCountBelowCard>
+          </SessionCountFooter>
         )}
       </div>
     </div>
