@@ -26,7 +26,7 @@ import { SessionCountChip, SessionCountFooter } from "./components/SessionHeader
 import { useEnterToAdvance } from "./utils/useEnterToAdvance";
 import { PracticeLoading } from "./components/PracticeLoading";
 import { PracticeEmptyState } from "./components/PracticeEmptyState";
-import { PracticeResults } from "./components/PracticeResults";
+import { PracticeResults, type PracticedWordItem } from "./components/PracticeResults";
 import {
   exerciseCardBackgrounds,
   exerciseCardBorders,
@@ -68,6 +68,10 @@ interface VocabularyPracticeProps {
   // the anonymous account-intro popup - see accountIntroPolicy.ts). This
   // component owns no auth/anonymous-detection logic itself.
   onSessionComplete?: () => void;
+  // Finish-screen sign-up CTA. App passes it only for a confirmed guest
+  // (auth resolved, no user) and drops it once signed in, so the CTA never
+  // flashes while auth loads and disappears after sign-up/login.
+  onCreateAccount?: () => void;
   // Practice List (My Lists Phase 3): when provided (non-empty), this exact
   // ordered set of concept ids is practiced instead of the level/category/
   // word-type-filtered vocabulary set below — selectedLevels/
@@ -129,6 +133,7 @@ export function VocabularyPractice({
   onGoFilters,
   restrictToConceptIds,
   onSessionComplete,
+  onCreateAccount,
 }: VocabularyPracticeProps) {
   const { t } = useLanguage();
   const [words, setWords] = useState<any[]>([]);
@@ -146,7 +151,15 @@ export function VocabularyPractice({
   const [currentExerciseType, setCurrentExerciseType] =
     useState<string>("wordTyping");
   const [inflectedEntries, setInflectedEntries] = useState<any[]>([]);
-  const [exerciseStatus, setExerciseStatus] = useState({
+  const [exerciseStatus, setExerciseStatus] = useState<{
+    isCorrect: boolean;
+    hasTypedAnswer: boolean;
+    usedShowWord: boolean;
+    usedHintForBrokenWord: boolean;
+    // Reported by the typing exercises after Practice again (see their
+    // onStatusChange type); feeds only the finish screen's practiced list.
+    writtenAfterRetry?: boolean;
+  }>({
     isCorrect: false,
     hasTypedAnswer: false,
     usedShowWord: false,
@@ -233,6 +246,11 @@ export function VocabularyPractice({
       result: "correct" | "incorrect" | "skipped";
       wasTyped: boolean;
       wasRevealed: boolean;
+      // connectWords/listening: matched, never written by the learner.
+      isGroupExercise: boolean;
+      // Wrote the word themselves after Practice again (e.g. after Show me
+      // word); result/wasRevealed still describe the first attempt.
+      writtenAfterRetry: boolean;
     }>
   >([]);
 
@@ -577,6 +595,8 @@ export function VocabularyPractice({
         result,
         wasTyped: false,
         wasRevealed: false,
+        isGroupExercise: true,
+        writtenAfterRetry: false,
       }));
       setAttemptHistory((prev) => [...prev, ...newAttempts]);
     } else if (currentWord) {
@@ -589,6 +609,8 @@ export function VocabularyPractice({
           result,
           wasTyped,
           wasRevealed,
+          isGroupExercise: false,
+          writtenAfterRetry: exerciseStatus.writtenAfterRetry === true,
         },
       ]);
     }
@@ -918,58 +940,36 @@ export function VocabularyPractice({
     currentWord,
   ]);
 
-  const sessionWords = useMemo(() => {
+  // Finish-screen word list: words the learner wrote themselves at least
+  // once, right or wrong (accuracy is shown separately) — a single-word
+  // attempt with a typed answer (or a solved one, for chunk-based
+  // brokenWord) that was not revealed via Show me word — or one written
+  // after Practice again, even if Show me word was used first. Skips and
+  // group-exercise matches don't count: nothing was written. In order of
+  // first such attempt, each word once.
+  const practicedWords = useMemo(() => {
     const wordsByConceptId = new Map(
       words.map((word) => [String(word?.concept_id ?? ""), word]),
     );
-    const sessionWordMap = new Map<
-      string,
-      {
-        conceptId: string;
-        nativeWord: string;
-        targetWord: string;
-        wordType: string;
-        wordTopic: string;
-        status: "guessed" | "viewed" | "skipped";
-      }
-    >();
-
+    const practiced = new Map<string, PracticedWordItem>();
     attemptHistory.forEach((attempt) => {
+      const wasWritten =
+        ((attempt.wasTyped || attempt.result === "correct") && !attempt.wasRevealed) ||
+        attempt.writtenAfterRetry;
+      if (!wasWritten || attempt.isGroupExercise || practiced.has(attempt.conceptId)) {
+        return;
+      }
       const matchedWord = wordsByConceptId.get(attempt.conceptId);
-      if (!matchedWord) {
-        return;
-      }
-
-      const previousEntry = sessionWordMap.get(attempt.conceptId);
-      const nextStatus = attempt.wasTyped
-        ? "guessed"
-        : attempt.wasRevealed
-          ? "viewed"
-          : attempt.result === "skipped"
-            ? "skipped"
-            : null;
-
-      if (!nextStatus && !previousEntry) {
-        return;
-      }
-
-      sessionWordMap.set(attempt.conceptId, {
+      if (!matchedWord) return;
+      practiced.set(attempt.conceptId, {
         conceptId: attempt.conceptId,
-        nativeWord: translations[attempt.conceptId] ?? "",
         targetWord: matchedWord.word_lemma ?? "",
-        wordType: matchedWord.type ? getWordTypeLabel(matchedWord.type) : "",
-        wordTopic: matchedWord.category ?? "",
-        status:
-          previousEntry?.status === "guessed" || nextStatus === "guessed"
-            ? "guessed"
-            : previousEntry?.status === "viewed" || nextStatus === "viewed"
-              ? "viewed"
-              : "skipped",
+        translation: translations[attempt.conceptId] ?? "",
+        grammarType: matchedWord.type ?? undefined,
       });
     });
-
-    return Array.from(sessionWordMap.values());
-  }, [attemptHistory, getWordTypeLabel, translations, words]);
+    return Array.from(practiced.values());
+  }, [attemptHistory, translations, words]);
 
   const handleStartAgain = () => {
     // Shuffle words for a new random order
@@ -1164,9 +1164,11 @@ export function VocabularyPractice({
             <PracticeResults
               attemptHistory={attemptHistory}
               stats={calculateStatistics()}
-              sessionWords={sessionWords}
-              yourLanguageLabel={getLanguageName(yourLanguage)}
-              practiceLanguageLabel={getLanguageName(practiceLanguage)}
+              practicedWords={practicedWords}
+              practiceLanguage={practiceLanguage}
+              yourLanguage={yourLanguage}
+              onSpeakWord={speakSpecificWord}
+              onCreateAccount={onCreateAccount}
             />
           ) : (
             <>

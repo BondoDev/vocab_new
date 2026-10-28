@@ -1299,6 +1299,13 @@
     "skipped": "omitidas sin intentar",
     "word": "palabra",
     "practicedWords": "Palabras practicadas",
+    "noPracticedWords": "Ninguna palabra escrita en esta sesión: aquí aparecen las palabras que escribes tú mismo, sin «Mostrar palabra».",
+    "signupCta": {
+      "heading": "Haz que cada palabra cuente",
+      "description": "Crea una cuenta gratuita para seguir tu progreso, aprender vocabulario nuevo con un plan de estudio personalizado y repasar las palabras cuando necesites practicarlas.",
+      "button": "Crear cuenta gratis",
+      "supportingText": "Empieza gratis"
+    },
     "wordsInThisSession": "palabras en esta sesion",
     "closePracticedWords": "Cerrar palabras practicadas",
     "yourLanguageHeader": "Tu idioma",

@@ -1299,6 +1299,13 @@
     "skipped": "ohne Versuch übersprungen",
     "word": "Wort",
     "practicedWords": "Geubte Worter",
+    "noPracticedWords": "In dieser Sitzung wurde kein Wort geschrieben — Wörter, die du selbst schreibst, ohne „Wort anzeigen“, erscheinen hier.",
+    "signupCta": {
+      "heading": "Jedes Wort zählt",
+      "description": "Erstelle ein kostenloses Konto, um deinen Lernfortschritt zu verfolgen, mit einem personalisierten Lernplan neue Vokabeln zu lernen und Wörter bei Bedarf zu wiederholen.",
+      "button": "Kostenloses Konto erstellen",
+      "supportingText": "Kostenlos starten"
+    },
     "wordsInThisSession": "Worter in dieser Sitzung",
     "closePracticedWords": "Geubte Worter schliessen",
     "yourLanguageHeader": "Deine Sprache",

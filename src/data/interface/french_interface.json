@@ -1304,6 +1304,13 @@
     "skipped": "passes sans tentative",
     "word": "mot",
     "practicedWords": "Mots pratiques",
+    "noPracticedWords": "Aucun mot écrit pendant cette session — les mots que tu écris toi-même, sans « Afficher le mot », apparaissent ici.",
+    "signupCta": {
+      "heading": "Chaque mot compte",
+      "description": "Créez un compte gratuit pour suivre vos progrès, apprendre du nouveau vocabulaire grâce à un programme d'apprentissage personnalisé et réviser les mots lorsque vous avez besoin de vous entraîner.",
+      "button": "Créer un compte gratuit",
+      "supportingText": "Commencez gratuitement"
+    },
     "wordsInThisSession": "mots dans cette session",
     "closePracticedWords": "Fermer les mots pratiques",
     "yourLanguageHeader": "Votre langue",

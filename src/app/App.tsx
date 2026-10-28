@@ -1104,9 +1104,26 @@ function AppContent({
               onSessionComplete={() =>
                 accountIntroPopup.requestAccountIntro("practice-complete")
               }
+              // Guest-only finish-screen CTA: withheld until the stored
+              // session has been read (no signed-out flash for a signed-in
+              // user) and dropped as soon as a session exists. Opens
+              // Header's existing sign-up dialog, same as the account-intro
+              // popup's Create account.
+              onCreateAccount={
+                isAuthResolved && !authUserId
+                  ? () => setRequestedHeaderAuthMode("signup")
+                  : undefined
+              }
             />
           </Suspense>
         </ImmersiveSessionFrame>
+        {/* The session has its own header, so the site bar stays hidden -
+            but Header owns the login/sign-up dialog that
+            setRequestedHeaderAuthMode opens (finish-screen CTA, account-intro
+            popup). The dialog portals to <body>, outside this hidden box. */}
+        <div hidden>
+          <Header {...sharedHeaderProps} />
+        </div>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}
         {accountIntroDialog}

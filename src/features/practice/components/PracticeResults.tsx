@@ -1,6 +1,18 @@
-import { useMemo, useState } from "react";
-import { BadgeCheck, X } from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 import { useLanguage } from "../../../contexts/LanguageContext";
+// Same word list and row actions as the Study New Words / Review Words
+// finish screens: app-level presentational list, actions from the
+// user-profile feature's barrel.
+import {
+  SessionWordList,
+  type SessionWordListItem,
+} from "../../../app/components/session-word-list/SessionWordList";
+import { useSessionWordActions } from "../../user-profile";
+import { PracticeSignupCta } from "./PracticeSignupCta";
+
+// A word the learner wrote correctly themselves this session (see
+// VocabularyPractice's practicedWords for the exact rule).
+export type PracticedWordItem = SessionWordListItem;
 
 interface PracticeResultsProps {
   attemptHistory: Array<{
@@ -11,14 +23,7 @@ interface PracticeResultsProps {
     wasTyped: boolean;
     wasRevealed: boolean;
   }>;
-  sessionWords: Array<{
-    conceptId: string;
-    nativeWord: string;
-    targetWord: string;
-    wordType: string;
-    wordTopic: string;
-    status: "guessed" | "viewed" | "skipped";
-  }>;
+  practicedWords: PracticedWordItem[];
   stats: {
     levels: string[];
     types: string[];
@@ -31,20 +36,38 @@ interface PracticeResultsProps {
       };
     };
   };
-  yourLanguageLabel: string;
-  practiceLanguageLabel: string;
+  // Language codes (the list captions its columns with languageNames.*).
+  practiceLanguage: string;
+  yourLanguage: string;
+  onSpeakWord?: (word: string) => void;
+  // Set only for a confirmed guest (auth resolved, no user); omitted while
+  // auth is loading or once signed in, which hides the sign-up CTA.
+  onCreateAccount?: () => void;
 }
 
 export function PracticeResults({
   attemptHistory,
-  sessionWords,
+  practicedWords,
   stats,
-  yourLanguageLabel,
-  practiceLanguageLabel,
+  practiceLanguage,
+  yourLanguage,
+  onSpeakWord,
+  onCreateAccount,
 }: PracticeResultsProps) {
-  const { t } = useLanguage();
-  const [isStudiedWordsOpen, setIsStudiedWordsOpen] = useState(false);
+  const { t, uiLanguage } = useLanguage();
   const { levels, types, matrix } = stats;
+  // Favorites stay disabled here: Custom Practice words carry no progress
+  // row id; Add to list works for any word.
+  const { getRowActions, overlay } = useSessionWordActions({
+    targetLanguage: practiceLanguage,
+    labels: {
+      addToList: t("studyNewWords.complete.addToListButton"),
+      addToFavorites: t("studyNewWords.complete.addToFavorites"),
+      removeFromFavorites: t("studyNewWords.complete.removeFromFavorites"),
+      favoriteAddedSuffix: t("studyNewWords.complete.favoriteAddedSuffix"),
+      favoriteRemovedSuffix: t("studyNewWords.complete.favoriteRemovedSuffix"),
+    },
+  });
 
   const formatWordTypeLabel = (typeId: string) =>
     typeId
@@ -58,22 +81,6 @@ export function PracticeResults({
     const translated = t(`wordTypes.${typeId}`);
     if (!translated || translated === `wordTypes.${typeId}`) {
       return formatWordTypeLabel(typeId);
-    }
-    return translated;
-  };
-
-  const formatTopicLabel = (topicId: string) =>
-    topicId
-      .split(/[_-]+/g)
-      .map((part) =>
-        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
-      )
-      .join(" ");
-
-  const getTopicLabel = (topicId: string) => {
-    const translated = t(`levelCategory.topicNames.${topicId}`);
-    if (!translated || translated === `levelCategory.topicNames.${topicId}`) {
-      return formatTopicLabel(topicId);
     }
     return translated;
   };
@@ -103,97 +110,22 @@ export function PracticeResults({
   const accuracy =
     totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0;
 
-  const sortedSessionWords = useMemo(
-    () =>
-      [...sessionWords].sort((a, b) =>
-        a.nativeWord.localeCompare(b.nativeWord, undefined, {
-          sensitivity: "base",
-        }),
-      ),
-    [sessionWords],
-  );
-
-  const guessedWords = useMemo(
-    () => sortedSessionWords.filter((word) => word.status === "guessed"),
-    [sortedSessionWords],
-  );
-  const viewedWords = useMemo(
-    () => sortedSessionWords.filter((word) => word.status === "viewed"),
-    [sortedSessionWords],
-  );
-  const skippedWords = useMemo(
-    () => sortedSessionWords.filter((word) => word.status === "skipped"),
-    [sortedSessionWords],
-  );
-
-  const guessedWordsLabel = (() => {
-    const translated = t("practice.guessedWords");
-    return !translated || translated === "practice.guessedWords"
-      ? "Guessed words"
-      : translated;
-  })();
-  const practicedWordsButtonLabel = (() => {
+  const practicedWordsLabel = (() => {
     const translated = t("practice.practicedWords");
     return !translated || translated === "practice.practicedWords"
       ? "Practiced words"
       : translated;
   })();
 
-  const viewedWordsLabel = (() => {
-    const translated = t("practice.viewedWords");
-    return !translated || translated === "practice.viewedWords"
-      ? "Viewed words"
-      : translated;
-  })();
-
-  const skippedWordsLabel = (() => {
-    const translated = t("practice.skippedWords");
-    return !translated || translated === "practice.skippedWords"
-      ? "Skipped words"
-      : translated;
-  })();
-
-  const topicHeaderLabel = (() => {
-    const translated = t("practice.topicHeader");
-    return !translated || translated === "practice.topicHeader"
-      ? "Topic"
-      : translated;
-  })();
-
-  const renderWordRow = (word: {
-    conceptId: string;
-    nativeWord: string;
-    targetWord: string;
-    wordType: string;
-    wordTopic: string;
-  }) => (
-    <tr
-      key={word.conceptId}
-      className="border-b border-border/70 last:border-b-0"
-    >
-      <td className="px-4 py-3 text-foreground">{word.nativeWord || "-"}</td>
-      <td className="px-4 py-3 text-foreground">{word.targetWord || "-"}</td>
-      <td className="px-4 py-3 text-muted-foreground">{word.wordType || "-"}</td>
-      <td className="px-4 py-3 text-muted-foreground">
-        {word.wordTopic ? getTopicLabel(word.wordTopic) : "-"}
-      </td>
-    </tr>
-  );
+  // Plural-aware "Show all {count} words" (falls back to _other).
+  const showAllLabel = (count: number) => {
+    const key = `studyNewWords.complete.showAll_${new Intl.PluralRules(uiLanguage).select(count)}`;
+    const template = t(key);
+    return (template === key ? t("studyNewWords.complete.showAll_other") : template).replace("{count}", String(count));
+  };
 
   return (
     <div className="space-y-8 py-4 lg:space-y-6 lg:py-1">
-      <style>
-        {`
-          @keyframes practicedWordsCalloutFloat {
-            0%, 100% {
-              transform: translateY(0);
-            }
-            50% {
-              transform: translateY(-4px);
-            }
-          }
-        `}
-      </style>
       <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
         <div className="text-center rounded-lg border border-border bg-muted/20 px-4 py-3">
           <div className="text-xl font-bold text-primary">{totalAttempts}</div>
@@ -321,120 +253,37 @@ export function PracticeResults({
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-4">
-        <button
-          type="button"
-          onClick={() => setIsStudiedWordsOpen(true)}
-          className="inline-flex items-center rounded-xl border border-primary/25 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/15"
-        >
-          {practicedWordsButtonLabel}
-        </button>
-        <div
-          className="relative mt-1 max-w-xs rounded-[1.35rem] border border-primary/30 bg-white px-4 py-3 text-center text-xs leading-relaxed text-foreground shadow-sm"
-          style={{ animation: "practicedWordsCalloutFloat 2.4s ease-in-out infinite" }}
-        >
-          <div
-            aria-hidden="true"
-            className="absolute left-1/2 top-[-8px] h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-primary/30 bg-white"
-          />
-          <span className="relative block">
-            Click this button to see guessed, viewed, and skipped words from this session.
-          </span>
-        </div>
-      </div>
+      {onCreateAccount ? <PracticeSignupCta onCreateAccount={onCreateAccount} /> : null}
 
-      {isStudiedWordsOpen ? (
-        <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/45 px-4 py-6 backdrop-blur-[2px]"
-          onMouseDown={() => setIsStudiedWordsOpen(false)}
-        >
-          <div
-            className="w-full max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
-            onMouseDown={(event) => event.stopPropagation()}
-          >
-            <div className="flex items-center justify-between border-b border-border px-4 py-3 sm:px-5">
-              <div>
-                <h3 className="text-base font-semibold text-foreground">
-                  {practicedWordsButtonLabel}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {sortedSessionWords.length} {t("practice.wordsInThisSession")}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsStudiedWordsOpen(false)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                aria-label={t("practice.closePracticedWords")}
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-
-            <div className="max-h-[70vh] overflow-auto">
-              <table className="w-full text-left text-sm">
-                <thead className="sticky top-0 z-10 bg-card">
-                  <tr className="border-b border-border">
-                    <th className="px-4 py-3 font-semibold text-foreground">
-                      {yourLanguageLabel}
-                    </th>
-                    <th className="px-4 py-3 font-semibold text-foreground">
-                      {practiceLanguageLabel}
-                    </th>
-                    <th className="px-4 py-3 font-semibold text-foreground">
-                      {t("practice.wordTypeHeader")}
-                    </th>
-                    <th className="px-4 py-3 font-semibold text-foreground">
-                      {topicHeaderLabel}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {guessedWords.length > 0 ? (
-                    <>
-                      <tr className="border-b border-border bg-muted/20">
-                        <td
-                          colSpan={4}
-                          className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground"
-                        >
-                          {guessedWordsLabel} ({guessedWords.length})
-                        </td>
-                      </tr>
-                      {guessedWords.map(renderWordRow)}
-                    </>
-                  ) : null}
-                  {viewedWords.length > 0 ? (
-                    <>
-                      <tr className="border-b border-border bg-muted/20">
-                        <td
-                          colSpan={4}
-                          className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground"
-                        >
-                          {viewedWordsLabel} ({viewedWords.length})
-                        </td>
-                      </tr>
-                      {viewedWords.map(renderWordRow)}
-                    </>
-                  ) : null}
-                  {skippedWords.length > 0 ? (
-                    <>
-                      <tr className="border-b border-border bg-muted/20">
-                        <td
-                          colSpan={4}
-                          className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground"
-                        >
-                          {skippedWordsLabel} ({skippedWords.length})
-                        </td>
-                      </tr>
-                      {skippedWords.map(renderWordRow)}
-                    </>
-                  ) : null}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+      {/* SessionWordList renders nothing for an empty list, so a session
+          with no self-written word keeps the section with a short note. */}
+      {practicedWords.length === 0 ? (
+        <section className="session-word-list" aria-labelledby="practice-results-words-heading">
+          <h2 id="practice-results-words-heading" className="session-word-list__heading">
+            {practicedWordsLabel}
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">{t("practice.noPracticedWords")}</p>
+        </section>
       ) : null}
+
+      <SessionWordList
+        words={practicedWords}
+        practiceLanguage={practiceLanguage}
+        yourLanguage={yourLanguage}
+        idPrefix="practice-results-words"
+        labels={{
+          heading: practicedWordsLabel,
+          typeColumn: t("studyNewWords.complete.typeColumn"),
+          moreActions: t("studyNewWords.complete.moreActionsAriaLabel"),
+          showFewer: t("studyNewWords.complete.showFewer"),
+          showAll: (count) =>
+            showAllLabel(count),
+        }}
+        onSpeakWord={onSpeakWord ? (word) => onSpeakWord(word.targetWord) : undefined}
+        getRowActions={getRowActions}
+      />
+
+      {overlay}
     </div>
   );
 }

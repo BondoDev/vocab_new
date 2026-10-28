@@ -1299,6 +1299,13 @@
     "skipped": "saltate senza tentativo",
     "word": "parola",
     "practicedWords": "Parole praticate",
+    "noPracticedWords": "Nessuna parola scritta in questa sessione: qui compaiono le parole che scrivi da solo, senza «Mostrami parola».",
+    "signupCta": {
+      "heading": "Ogni parola conta",
+      "description": "Crea un account gratuito per monitorare i tuoi progressi, imparare nuovi vocaboli con un piano di studio personalizzato e ripassare le parole quando hai bisogno di esercitarti.",
+      "button": "Crea un account gratuito",
+      "supportingText": "Inizia gratis"
+    },
     "wordsInThisSession": "parole in questa sessione",
     "closePracticedWords": "Chiudi parole praticate",
     "yourLanguageHeader": "La tua lingua",

@@ -1299,6 +1299,13 @@
     "skipped": "puladas sem tentativa",
     "word": "palavra",
     "practicedWords": "Palavras praticadas",
+    "noPracticedWords": "Nenhuma palavra escrita nesta sessão — as palavras que escreves sozinho, sem «Mostrar palavra», aparecem aqui.",
+    "signupCta": {
+      "heading": "Faça cada palavra valer a pena",
+      "description": "Crie uma conta gratuita para acompanhar seu progresso, aprender novas palavras com um plano de estudos personalizado e revisar o vocabulário quando precisar praticar.",
+      "button": "Criar conta grátis",
+      "supportingText": "Comece grátis"
+    },
     "wordsInThisSession": "palavras nesta sessao",
     "closePracticedWords": "Fechar palavras praticadas",
     "yourLanguageHeader": "Seu idioma",

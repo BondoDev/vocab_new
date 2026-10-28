@@ -13,6 +13,10 @@ interface BrokenWordExerciseProps {
     hasTypedAnswer: boolean;
     usedShowWord: boolean;
     usedHintForBrokenWord: boolean;
+    // Set only after Practice again: the learner then wrote the word
+    // themselves (Custom Practice lists it as practiced) while the frozen
+    // first-attempt status above still drives grading/accuracy.
+    writtenAfterRetry?: boolean;
   }) => void;
 }
 
@@ -38,6 +42,8 @@ export function BrokenWordExercise({
   // First solved status, frozen by Practice again; see ExerciseRetryButton.
   const [retryLockedStatus, setRetryLockedStatus] = useState<ExerciseStatus | null>(null);
   const lastReportedStatusRef = useRef<ExerciseStatus | null>(null);
+  // Latched across repeated retries of the same word; reset with the lock.
+  const writtenAfterRetryRef = useRef(false);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hasAutoPlayedCorrectAudioRef = useRef(false);
   const rawWord: string = currentWord?.word_lemma ?? "";
@@ -104,6 +110,7 @@ export function BrokenWordExercise({
     if (!currentWord) return;
     initializeBrokenWord();
     setRetryLockedStatus(null);
+    writtenAfterRetryRef.current = false;
     onStatusChange({
       isCorrect: false,
       hasTypedAnswer: false,
@@ -113,7 +120,12 @@ export function BrokenWordExercise({
   }, [currentWord, initializeBrokenWord, onStatusChange]);
 
   useEffect(() => {
-    const status = retryLockedStatus ?? {
+    if (retryLockedStatus && isCorrect && !usedShowWord) {
+      writtenAfterRetryRef.current = true;
+    }
+    const status = retryLockedStatus
+      ? { ...retryLockedStatus, writtenAfterRetry: writtenAfterRetryRef.current }
+      : {
       isCorrect,
       hasTypedAnswer: placedChunks.length > 0,
       usedShowWord,

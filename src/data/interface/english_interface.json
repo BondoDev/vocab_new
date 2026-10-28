@@ -1304,6 +1304,13 @@
     "skipped": "skipped without attempting",
     "word": "word",
     "practicedWords": "Practiced words",
+    "noPracticedWords": "No words written this session — words you type yourself, without Show me word, appear here.",
+    "signupCta": {
+      "heading": "Make every word count",
+      "description": "Create a free account to track your progress, learn new vocabulary with a personalized study plan, and review words when they need practice.",
+      "button": "Create Free Account",
+      "supportingText": "Free to get started"
+    },
     "wordsInThisSession": "words in this session",
     "closePracticedWords": "Close practiced words",
     "yourLanguageHeader": "Your language",
