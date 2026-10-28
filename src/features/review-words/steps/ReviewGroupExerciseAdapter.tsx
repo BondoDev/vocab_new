@@ -62,6 +62,9 @@ interface ReviewGroupExerciseAdapterProps {
   practiceLanguage: string;
   yourLanguage: string;
   onComplete: (success: boolean) => void;
+  // Fired when the learner switches listening to connectWords, so the
+  // session can stop showing listening for its remaining blocks.
+  onSwitchToConnectWords?: () => void;
 }
 
 export function ReviewGroupExerciseAdapter({
@@ -70,18 +73,20 @@ export function ReviewGroupExerciseAdapter({
   practiceLanguage,
   yourLanguage,
   onComplete,
+  onSwitchToConnectWords,
 }: ReviewGroupExerciseAdapterProps) {
   const { t } = useLanguage();
   const [status, setStatus] = useState<ExerciseStatus>(INITIAL_STATUS);
   // Mirrors practice mode's "Switch to Connect words" escape hatch for
-  // listening. Local-only: ReviewSession keys this adapter per block, so the
-  // override resets on the next block and the planned exercise id is untouched.
+  // listening. The local flag switches this block immediately; ReviewSession
+  // (via onSwitchToConnectWords) remaps listening on later blocks.
   const [switchedToConnectWords, setSwitchedToConnectWords] = useState(false);
   const activeExerciseId: GroupExerciseId = switchedToConnectWords ? "connectWords" : groupExerciseId;
 
   const handleSwitchToConnectWords = () => {
     setStatus(INITIAL_STATUS);
     setSwitchedToConnectWords(true);
+    onSwitchToConnectWords?.();
   };
 
   const handleStatusChange = useCallback((next: ExerciseStatus) => setStatus(next), []);

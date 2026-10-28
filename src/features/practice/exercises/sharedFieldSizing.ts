@@ -20,7 +20,12 @@ export function getSharedExerciseFieldSizing(
           : `calc(${widthCharCount}ch + ${
               (widthCharCount - 1) * 0.5
             }em + 2rem)`,
-      maxWidth: "100%",
+      // Never under the listen button pinned at the row's left edge
+      // (UniversalExerciseInput: 2.5rem + breathing room, mirrored on the
+      // right since the field is centered). Longer answers wrap and grow in
+      // height instead. Phone breakpoints override this with a !important
+      // percentage in exercises.scss.
+      maxWidth: "calc(100% - 6rem)",
     },
     enableOverlayAutoFit: segmentCount > 1,
   };

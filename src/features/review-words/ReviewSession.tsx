@@ -76,6 +76,10 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
   const [queue, setQueue] = useState<ResolvedReviewQueueItem[]>(initialQueue);
   const queueRef = useRef(initialQueue);
   const [batchStatus, setBatchStatus] = useState<BatchStatus>("idle");
+  // Set once the learner uses "Switch to Connect words": every later block
+  // planned as listening is shown as connectWords instead. Display-only —
+  // the plan itself (and its group-exercise bookkeeping) is left unchanged.
+  const [isListeningSwitchedOff, setIsListeningSwitchedOff] = useState(false);
   // Guards against overlapping batch requests (an effect re-run while one
   // is in flight) and against applying a batch after the session ended or
   // the component unmounted.
@@ -420,11 +424,16 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
               >
                 <ReviewGroupExerciseAdapter
                   key={`${state.currentBlockIndex}-group`}
-                  groupExerciseId={currentBlock.groupExerciseId}
+                  groupExerciseId={
+                    isListeningSwitchedOff && currentBlock.groupExerciseId === "listening"
+                      ? "connectWords"
+                      : currentBlock.groupExerciseId
+                  }
                   items={currentGroupItems}
                   practiceLanguage={practiceLanguage}
                   yourLanguage={yourLanguage}
                   onComplete={(success) => dispatch({ type: "GROUP_EXERCISE_COMPLETE", success })}
+                  onSwitchToConnectWords={() => setIsListeningSwitchedOff(true)}
                 />
               </ReviewExerciseErrorBoundary>
             )}

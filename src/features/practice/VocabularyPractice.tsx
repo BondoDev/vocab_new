@@ -190,20 +190,31 @@ export function VocabularyPractice({
     (exerciseType: string) => FOUR_WORD_EXERCISE_ID_SET.has(exerciseType),
     [],
   );
+  // Set once the learner uses "Switch to Connect words": listening is then
+  // swapped for connectWords for the rest of this session (mapped, not just
+  // filtered, so a listening-only selection still has a group exercise).
+  const [isListeningSwitchedOff, setIsListeningSwitchedOff] = useState(false);
+  const sessionExercises = useMemo(
+    () =>
+      isListeningSwitchedOff
+        ? [...new Set(selectedExercises.map((exercise) => (exercise === "listening" ? "connectWords" : exercise)))]
+        : selectedExercises,
+    [isListeningSwitchedOff, selectedExercises],
+  );
   const typingExerciseTypes = useMemo(
-    () => selectedExercises.filter((exercise) => !isFourWordExercise(exercise)),
-    [isFourWordExercise, selectedExercises],
+    () => sessionExercises.filter((exercise) => !isFourWordExercise(exercise)),
+    [isFourWordExercise, sessionExercises],
   );
   const reinforcementExerciseTypes = useMemo(
-    () => selectedExercises.filter((exercise) => isFourWordExercise(exercise)),
-    [isFourWordExercise, selectedExercises],
+    () => sessionExercises.filter((exercise) => isFourWordExercise(exercise)),
+    [isFourWordExercise, sessionExercises],
   );
   const isCycleModeEnabled = typingExerciseTypes.length > 0;
   const getNonFourWordFallback = useCallback(
     () =>
-      selectedExercises.find((exercise) => !isFourWordExercise(exercise)) ||
+      sessionExercises.find((exercise) => !isFourWordExercise(exercise)) ||
       "wordTyping",
-    [isFourWordExercise, selectedExercises],
+    [isFourWordExercise, sessionExercises],
   );
   const pickRandomExercise = useCallback((exerciseTypes: string[]) => {
     if (exerciseTypes.length === 0) {
@@ -227,8 +238,8 @@ export function VocabularyPractice({
 
   // Helper function to randomly select next exercise type from enabled exercises
   const selectRandomExercise = useCallback(() => {
-    return pickRandomExercise(selectedExercises) ?? "wordTyping";
-  }, [pickRandomExercise, selectedExercises]);
+    return pickRandomExercise(sessionExercises) ?? "wordTyping";
+  }, [pickRandomExercise, sessionExercises]);
 
   // Helper function to check if word is eligible for current exercise type
   const isWordEligibleForExercise = useCallback(
@@ -809,6 +820,7 @@ export function VocabularyPractice({
       usedHintForBrokenWord: false,
     });
     setCurrentExerciseType("connectWords");
+    setIsListeningSwitchedOff(true);
   };
 
   useEnterToAdvance(isNextActionAvailable && !isCardSwitching, handleNext);

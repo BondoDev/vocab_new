@@ -368,14 +368,18 @@ export function WordTypingExercise({
         enableOverlayAutoFit={enableOverlayAutoFit}
         overlay={
           <div className="absolute inset-0 flex items-center justify-start pointer-events-none px-4 py-2">
-            <div className="flex flex-wrap content-center gap-y-1">
+            <div className="flex flex-wrap content-center gap-y-1 min-w-0 max-w-full">
+              {/* Segments of a multi-word answer may wrap internally too:
+                  a word longer than the (max-width-capped) field would
+                  otherwise spill past its right edge. Wrapped rows are
+                  picked up by lineCount, which grows the field's height. */}
               {wordSegments.map((segment, segmentIndex) => (
                 <div
                   key={`segment-${segment.startIndex}`}
                   className={
                     shouldWrapSingleWord
                       ? "inline-flex flex-wrap"
-                      : "inline-flex"
+                      : "inline-flex flex-wrap max-w-full"
                   }
                   data-compound-segment="true"
                   style={{

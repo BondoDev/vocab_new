@@ -360,14 +360,14 @@ export function HalfWrittenExercise({
           enableOverlayAutoFit={enableOverlayAutoFit}
           overlay={
             <div className="absolute inset-0 flex items-center justify-start pointer-events-none px-4 py-2">
-              <div className="flex flex-wrap content-center gap-y-1">
+              <div className="flex flex-wrap content-center gap-y-1 min-w-0 max-w-full">
                 {wordSegments.map((segment, segmentIndex) => (
                   <div
                     key={`segment-${segment.startIndex}`}
                     className={
                       shouldWrapSingleWord
                         ? "inline-flex flex-wrap"
-                        : "inline-flex"
+                        : "inline-flex flex-wrap max-w-full"
                     }
                     data-compound-segment="true"
                     style={{
