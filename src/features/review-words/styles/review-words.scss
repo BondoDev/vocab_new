@@ -770,16 +770,30 @@
 
 // =====================================================================
 // ReviewSessionComplete — same compact header as Study New Words' finish
-// screen: small success check on the heading line, one sentence, one action.
+// screen: small success check on the heading line, one sentence, the
+// reviewed-word list (shared SessionWordList), one action.
 // =====================================================================
 
 .review-session-complete {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 3rem 0 2rem;
+
+  .session-word-list {
+    align-self: stretch;
+  }
+}
+
+.review-session-complete-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   gap: 0.5rem;
-  padding: 3rem 0 2rem;
 }
 
 .review-session-complete-title {

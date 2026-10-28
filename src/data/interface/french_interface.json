@@ -1233,7 +1233,8 @@
       "finishedTitle": "Révision terminée !",
       "finishedSubtitle_one": "Tu as révisé {count} mot en {languageLower}.",
       "finishedSubtitle_other": "Tu as révisé {count} mots en {languageLower}.",
-      "finishedNone": "Tu as terminé avant de réviser un mot."
+      "finishedNone": "Tu as terminé avant de réviser un mot.",
+      "finishedWordsHeading": "Mots révisés"
     },
     "startReviewButton": "Commencer la révision",
     "title": "Reviser les mots",

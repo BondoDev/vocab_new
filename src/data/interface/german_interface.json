@@ -1228,7 +1228,8 @@
       "finishedTitle": "Wiederholung abgeschlossen!",
       "finishedSubtitle_one": "Du hast {count} Wort auf {language} wiederholt.",
       "finishedSubtitle_other": "Du hast {count} Wörter auf {language} wiederholt.",
-      "finishedNone": "Du hast beendet, bevor du ein Wort wiederholt hast."
+      "finishedNone": "Du hast beendet, bevor du ein Wort wiederholt hast.",
+      "finishedWordsHeading": "Wiederholte Wörter"
     },
     "startReviewButton": "Wiederholung starten",
     "title": "Wörter wiederholen",

@@ -1228,7 +1228,8 @@
       "finishedTitle": "¡Repaso terminado!",
       "finishedSubtitle_one": "Has repasado {count} palabra en {languageLower}.",
       "finishedSubtitle_other": "Has repasado {count} palabras en {languageLower}.",
-      "finishedNone": "Terminaste antes de repasar una palabra."
+      "finishedNone": "Terminaste antes de repasar una palabra.",
+      "finishedWordsHeading": "Palabras repasadas"
     },
     "startReviewButton": "Empezar a repasar",
     "title": "Repasar palabras",

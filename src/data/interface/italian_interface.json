@@ -1228,7 +1228,8 @@
       "finishedTitle": "Ripasso completato!",
       "finishedSubtitle_one": "Hai ripassato {count} parola in {languageLower}.",
       "finishedSubtitle_other": "Hai ripassato {count} parole in {languageLower}.",
-      "finishedNone": "Hai terminato prima di ripassare una parola."
+      "finishedNone": "Hai terminato prima di ripassare una parola.",
+      "finishedWordsHeading": "Parole ripassate"
     },
     "startReviewButton": "Inizia il ripasso",
     "title": "Ripassa parole",

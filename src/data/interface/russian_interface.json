@@ -358,7 +358,8 @@
       "finishedSubtitle_few": "Повторено {count} слова.",
       "finishedSubtitle_many": "Повторено {count} слов.",
       "finishedSubtitle_other": "Повторено {count} слова.",
-      "finishedNone": "Ни одно слово ещё не повторено."
+      "finishedNone": "Ни одно слово ещё не повторено.",
+      "finishedWordsHeading": "Повторённые слова"
     },
     "startReviewButton": "Начать повторение",
     "title": "Повторить слова",

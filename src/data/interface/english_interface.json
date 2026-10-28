@@ -1233,7 +1233,8 @@
       "finishedTitle": "Review Finished!",
       "finishedSubtitle_one": "You reviewed {count} {language} word.",
       "finishedSubtitle_other": "You reviewed {count} {language} words.",
-      "finishedNone": "You finished before reviewing a word."
+      "finishedNone": "You finished before reviewing a word.",
+      "finishedWordsHeading": "Words You Reviewed"
     },
     "startReviewButton": "Start Reviewing",
     "title": "Review Words",

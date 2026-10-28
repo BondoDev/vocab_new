@@ -1228,7 +1228,8 @@
       "finishedTitle": "Revisão terminada!",
       "finishedSubtitle_one": "Reviste {count} palavra em {languageLower}.",
       "finishedSubtitle_other": "Reviste {count} palavras em {languageLower}.",
-      "finishedNone": "Terminaste antes de rever uma palavra."
+      "finishedNone": "Terminaste antes de rever uma palavra.",
+      "finishedWordsHeading": "Palavras revistas"
     },
     "startReviewButton": "Começar a rever",
     "title": "Revisar palavras",

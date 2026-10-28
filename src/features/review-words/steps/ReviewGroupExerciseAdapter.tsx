@@ -73,6 +73,16 @@ export function ReviewGroupExerciseAdapter({
 }: ReviewGroupExerciseAdapterProps) {
   const { t } = useLanguage();
   const [status, setStatus] = useState<ExerciseStatus>(INITIAL_STATUS);
+  // Mirrors practice mode's "Switch to Connect words" escape hatch for
+  // listening. Local-only: ReviewSession keys this adapter per block, so the
+  // override resets on the next block and the planned exercise id is untouched.
+  const [switchedToConnectWords, setSwitchedToConnectWords] = useState(false);
+  const activeExerciseId: GroupExerciseId = switchedToConnectWords ? "connectWords" : groupExerciseId;
+
+  const handleSwitchToConnectWords = () => {
+    setStatus(INITIAL_STATUS);
+    setSwitchedToConnectWords(true);
+  };
 
   const handleStatusChange = useCallback((next: ExerciseStatus) => setStatus(next), []);
 
@@ -108,7 +118,7 @@ export function ReviewGroupExerciseAdapter({
   const cardSurfaceColor = useRandomCardSurface(`${groupExerciseId}-${itemsKey}`);
   const cardStyle: GroupCardCssVars = {
     "--practice-card-bg": "#F8FAFC",
-    "--practice-card-border": exerciseCardBorders[groupExerciseId] ?? "#7A68D8",
+    "--practice-card-border": exerciseCardBorders[activeExerciseId] ?? "#7A68D8",
     "--pc-surface": cardSurfaceColor,
   };
 
@@ -116,12 +126,21 @@ export function ReviewGroupExerciseAdapter({
     <div className="practice-card-shell review-exercise-shell">
       <div className="practice-card practice-card--surface review-exercise-card" style={cardStyle}>
         <ExerciseCardHeader
-          exerciseId={groupExerciseId}
-          instruction={t(INSTRUCTION_KEY[groupExerciseId])}
+          exerciseId={activeExerciseId}
+          instruction={t(INSTRUCTION_KEY[activeExerciseId])}
         />
+        {activeExerciseId === "listening" && (
+          <button
+            type="button"
+            onClick={handleSwitchToConnectWords}
+            className="exercise-switch-listening-button"
+          >
+            {t("practice.switchToConnectWords")}
+          </button>
+        )}
 
         <div className="exercise-main-content review-exercise-main-content review-group-exercise-main-content">
-          {groupExerciseId === "connectWords" ? (
+          {activeExerciseId === "connectWords" ? (
             <ConnectWordsExercise
               words={EMPTY_WORDS}
               currentIndex={0}

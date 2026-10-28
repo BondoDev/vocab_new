@@ -276,6 +276,14 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
 
   const progress = getReviewSessionProgress(state);
   const isSessionComplete = state.currentStep === "session_complete";
+  // Same "saved" filter as progress.wordsReviewed, resolved to their queue
+  // items in review order, so the finish screen's count and list agree.
+  const reviewedWords = isSessionComplete
+    ? state.wordResults
+        .filter((result) => result.saved)
+        .map((result) => queue.find((item) => item.conceptId === result.conceptId))
+        .filter((item): item is ResolvedReviewQueueItem => Boolean(item))
+    : [];
   const currentBlock = getCurrentBlock(state);
   const currentAssignment = getCurrentWordAssignment(state);
   const currentWordItem = currentAssignment ? queue[currentAssignment.queueIndex] ?? null : null;
@@ -471,8 +479,9 @@ export function ReviewSession({ initialQueue, practiceLanguage, yourLanguage, on
 
           {isSessionComplete && (
             <ReviewSessionComplete
-              wordsReviewed={progress.wordsReviewed}
+              reviewedWords={reviewedWords}
               practiceLanguage={practiceLanguage}
+              yourLanguage={yourLanguage}
               onReturnToLearning={onExit}
             />
           )}
