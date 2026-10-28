@@ -162,13 +162,23 @@ export function exitSessionFullscreen(): void {
 // phones the session keeps running in the non-fullscreen immersive layout
 // (system back is too easy to hit to also undo the layout); on desktop/tablet
 // Esc also collapses the expanded session, matching what the user asked for.
+// On phones the lost fullscreen is recorded instead (fullscreenLost), so the
+// header toggle shows "enter fullscreen" again and its tap re-requests it.
 const handleFullscreenChange = () => {
   if (getFullscreenElement() === null) {
     const wasOwned = ownsFullscreen;
     ownsFullscreen = false;
-    if (wasOwned && sessionExpanded && !isImmersiveSessionDevice()) {
-      collapseSession();
+    if (wasOwned && sessionExpanded) {
+      if (isImmersiveSessionDevice()) {
+        fullscreenLost = true;
+        notifySessionExpanded();
+      } else {
+        collapseSession();
+      }
     }
+  } else if (fullscreenLost) {
+    fullscreenLost = false;
+    notifySessionExpanded();
   }
 };
 
@@ -179,6 +189,10 @@ const handleFullscreenChange = () => {
 // any device. If the Fullscreen API is missing or refuses, the layout alone
 // still applies.
 let sessionExpanded = false;
+// Phones only: the session is still expanded (layout kept), but the browser
+// dropped the fullscreen we had entered (app switch, system back). The toggle
+// then reads as collapsed so it matches what the user actually sees.
+let fullscreenLost = false;
 const sessionExpandedListeners = new Set<() => void>();
 
 const notifySessionExpanded = () => {
@@ -187,6 +201,11 @@ const notifySessionExpanded = () => {
 
 export function isSessionExpanded(): boolean {
   return sessionExpanded;
+}
+
+// What the header toggle shows: expanded, minus a lost fullscreen.
+export function isSessionToggleExpanded(): boolean {
+  return sessionExpanded && !fullscreenLost;
 }
 
 export function subscribeSessionExpanded(listener: () => void): () => void {
@@ -198,6 +217,7 @@ export function subscribeSessionExpanded(listener: () => void): () => void {
 
 function collapseSession() {
   sessionExpanded = false;
+  fullscreenLost = false;
   const doc = getDocument();
   if (doc && isLayoutApplied) {
     removeImmersiveLayout(doc);
@@ -230,6 +250,13 @@ function requestRootFullscreen(doc: FullscreenCapableDocument) {
 export function toggleSessionExpanded(): void {
   const doc = getDocument();
   if (!doc || activeSessionCount === 0) return;
+
+  // Layout is still expanded; only fullscreen went away. Re-enter it rather
+  // than collapsing (handleFullscreenChange clears fullscreenLost on entry).
+  if (sessionExpanded && fullscreenLost) {
+    requestRootFullscreen(doc);
+    return;
+  }
 
   if (sessionExpanded) {
     // Clears ownership first, so the resulting fullscreenchange doesn't
@@ -364,6 +391,7 @@ export function activateImmersiveSession(): () => void {
   if (!isSessionLive) {
     isSessionLive = true;
     sessionExpanded = isImmersiveSessionDevice();
+    fullscreenLost = false;
     if (doc && sessionExpanded && !isLayoutApplied) {
       applyImmersiveLayout(doc);
     }
@@ -383,6 +411,7 @@ export function activateImmersiveSession(): () => void {
         removeImmersiveLayout(currentDoc);
       }
       isSessionLive = false;
+      fullscreenLost = false;
       if (sessionExpanded) {
         sessionExpanded = false;
         notifySessionExpanded();

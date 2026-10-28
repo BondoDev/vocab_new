@@ -1156,7 +1156,7 @@ export function VocabularyPractice({
 
       {/* Main Content */}
       <main
-        className="practice-main flex-1 flex items-center justify-center px-4 py-8 md:py-12
+        className="practice-main flex-1 flex items-center justify-center px-4 py-4 sm:py-8 md:py-12
              transition-[padding,margin] duration-300 ease-in-out"
       >
         <div className="practice-card-shell w-full max-w-2xl">

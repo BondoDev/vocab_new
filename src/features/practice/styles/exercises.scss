@@ -104,13 +104,29 @@
 
 /* The session backdrop lives on the page wrapper (not .practice-main) so the
    background-less session header sits on the same surface as the card. */
+$practice-page-backdrop: radial-gradient(
+  circle at 30% 30%,
+  #f7f8fc,
+  #edf0f7 52%,
+  #e4e8f1 100%
+);
+
 .practice-page {
-  background: radial-gradient(
-    circle at 30% 30%,
-    #f7f8fc,
-    #edf0f7 52%,
-    #e4e8f1 100%
-  );
+  background: $practice-page-backdrop;
+}
+
+/* Immersive (phone) sessions: the fixed shell's safe-area padding (status
+   bar / gesture bar strips) sits outside .practice-page and would otherwise
+   paint the plain --background. The shell takes over the backdrop so it runs
+   edge to edge; gated on :has() so browsers without it keep the page's own. */
+@supports selector(:has(*)) {
+  html.immersive-session .immersive-session-frame:has(> .practice-page) {
+    background: $practice-page-backdrop;
+
+    > .practice-page {
+      background: transparent;
+    }
+  }
 }
 
 .practice-main {

@@ -2,7 +2,7 @@ import { useSyncExternalStore, type ReactNode } from "react";
 import { ArrowRight, CheckCircle2, Expand, Shrink, type LucideIcon } from "lucide-react";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import {
-  isSessionExpanded,
+  isSessionToggleExpanded,
   subscribeSessionExpanded,
   toggleSessionExpanded,
 } from "../../../app/utils/immersiveSession";
@@ -83,7 +83,7 @@ export function SessionHeader({
 // ImmersiveSessionFrame, whose mount sets the initial mode.
 export function SessionFullscreenToggle() {
   const { t } = useLanguage();
-  const isExpanded = useSyncExternalStore(subscribeSessionExpanded, isSessionExpanded, () => false);
+  const isExpanded = useSyncExternalStore(subscribeSessionExpanded, isSessionToggleExpanded, () => false);
 
   const label = t(isExpanded ? "practice.exitFullscreen" : "practice.enterFullscreen");
   // Four diagonal arrows: outward to expand, inward to shrink back.
