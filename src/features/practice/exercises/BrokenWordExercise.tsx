@@ -13,10 +13,11 @@ interface BrokenWordExerciseProps {
     hasTypedAnswer: boolean;
     usedShowWord: boolean;
     usedHintForBrokenWord: boolean;
-    // Set only after Practice again: the learner then wrote the word
-    // themselves (Custom Practice lists it as practiced) while the frozen
-    // first-attempt status above still drives grading/accuracy.
-    writtenAfterRetry?: boolean;
+    // True once the learner wrote this word themselves in any attempt on
+    // this card (without Show me word), including after Practice again, so
+    // earlier reveals never matter. Drives Custom Practice's "practiced"
+    // counter and list; grading still follows the fields above.
+    wroteWord?: boolean;
   }) => void;
 }
 
@@ -42,8 +43,9 @@ export function BrokenWordExercise({
   // First solved status, frozen by Practice again; see ExerciseRetryButton.
   const [retryLockedStatus, setRetryLockedStatus] = useState<ExerciseStatus | null>(null);
   const lastReportedStatusRef = useRef<ExerciseStatus | null>(null);
-  // Latched across repeated retries of the same word; reset with the lock.
-  const writtenAfterRetryRef = useRef(false);
+  // Set when a written attempt is retried, so a later reveal can't undo it;
+  // reset per word.
+  const wroteWordRef = useRef(false);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hasAutoPlayedCorrectAudioRef = useRef(false);
   const rawWord: string = currentWord?.word_lemma ?? "";
@@ -110,7 +112,7 @@ export function BrokenWordExercise({
     if (!currentWord) return;
     initializeBrokenWord();
     setRetryLockedStatus(null);
-    writtenAfterRetryRef.current = false;
+    wroteWordRef.current = false;
     onStatusChange({
       isCorrect: false,
       hasTypedAnswer: false,
@@ -120,16 +122,15 @@ export function BrokenWordExercise({
   }, [currentWord, initializeBrokenWord, onStatusChange]);
 
   useEffect(() => {
-    if (retryLockedStatus && isCorrect && !usedShowWord) {
-      writtenAfterRetryRef.current = true;
-    }
+    const wroteWord = wroteWordRef.current || (isCorrect && !usedShowWord);
     const status = retryLockedStatus
-      ? { ...retryLockedStatus, writtenAfterRetry: writtenAfterRetryRef.current }
+      ? { ...retryLockedStatus, wroteWord }
       : {
       isCorrect,
       hasTypedAnswer: placedChunks.length > 0,
       usedShowWord,
       usedHintForBrokenWord,
+      wroteWord,
     };
     lastReportedStatusRef.current = status;
     onStatusChange(status);
@@ -144,6 +145,7 @@ export function BrokenWordExercise({
 
   // Reshuffles the same word's chunks for another attempt.
   const handleRetry = () => {
+    if (isCorrect && !usedShowWord) wroteWordRef.current = true;
     setRetryLockedStatus((locked) => locked ?? lastReportedStatusRef.current);
     initializeBrokenWord();
   };

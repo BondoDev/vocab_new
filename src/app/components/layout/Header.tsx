@@ -1036,7 +1036,9 @@ export function Header({
           <div className="header-desktop-actions hidden md:flex order-3 items-center md:justify-self-end">
             {showAuthButton ? (
               authSession ? (
-                <DropdownMenu>
+                // Non-modal: a modal menu locks scroll and removes the page
+                // scrollbar, shifting centered page content sideways.
+                <DropdownMenu modal={false}>
                   <DropdownMenuTrigger asChild>
                     <button
                       type="button"

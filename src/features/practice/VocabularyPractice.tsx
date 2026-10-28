@@ -15,6 +15,8 @@ import { highlightInflectedWords } from "./utils/highlightInflectedWords";
 import {
   classifyExerciseResult,
   countPracticedWords,
+  isPracticedAttempt,
+  isWrittenWordAttempt,
 } from "./utils/practicedWordCount";
 import {
   advanceTypingRepeatQueue,
@@ -135,7 +137,7 @@ export function VocabularyPractice({
   onSessionComplete,
   onCreateAccount,
 }: VocabularyPracticeProps) {
-  const { t } = useLanguage();
+  const { t, uiLanguage } = useLanguage();
   const [words, setWords] = useState<any[]>([]);
   const [translations, setTranslations] = useState<{
     [key: string]: string;
@@ -156,9 +158,9 @@ export function VocabularyPractice({
     hasTypedAnswer: boolean;
     usedShowWord: boolean;
     usedHintForBrokenWord: boolean;
-    // Reported by the typing exercises after Practice again (see their
-    // onStatusChange type); feeds only the finish screen's practiced list.
-    writtenAfterRetry?: boolean;
+    // Reported by the typing exercises (see their onStatusChange type);
+    // feeds the practiced counter and the finish screen's list.
+    wroteWord?: boolean;
   }>({
     isCorrect: false,
     hasTypedAnswer: false,
@@ -248,9 +250,10 @@ export function VocabularyPractice({
       wasRevealed: boolean;
       // connectWords/listening: matched, never written by the learner.
       isGroupExercise: boolean;
-      // Wrote the word themselves after Practice again (e.g. after Show me
-      // word); result/wasRevealed still describe the first attempt.
-      writtenAfterRetry: boolean;
+      // Wrote the word themselves in any attempt on the card (even after
+      // Show me word + Practice again); result/wasRevealed still describe
+      // the graded first attempt.
+      wroteWord: boolean;
     }>
   >([]);
 
@@ -596,7 +599,7 @@ export function VocabularyPractice({
         wasTyped: false,
         wasRevealed: false,
         isGroupExercise: true,
-        writtenAfterRetry: false,
+        wroteWord: false,
       }));
       setAttemptHistory((prev) => [...prev, ...newAttempts]);
     } else if (currentWord) {
@@ -610,7 +613,7 @@ export function VocabularyPractice({
           wasTyped,
           wasRevealed,
           isGroupExercise: false,
-          writtenAfterRetry: exerciseStatus.writtenAfterRetry === true,
+          wroteWord: exerciseStatus.wroteWord === true,
         },
       ]);
     }
@@ -911,16 +914,19 @@ export function VocabularyPractice({
     return translated;
   }, [formatWordTypeLabel, t]);
 
-  // Counts the on-screen card as soon as it is answered correctly; the same
-  // words are recorded into attemptHistory on Next (see runNextStep), and the
-  // Set in countPracticedWords keeps that hand-off from double-counting.
+  // Counts the on-screen card as soon as it qualifies (same rule as a
+  // recorded attempt); the same words are recorded into attemptHistory on
+  // Next (see runNextStep), and the Set in countPracticedWords keeps that
+  // hand-off from double-counting.
   const practicedCount = useMemo(() => {
     const isFourWord = isFourWordExercise(currentExerciseType);
-    const currentCardIsCorrect =
-      classifyExerciseResult(exerciseStatus, currentExerciseType, isFourWord) ===
-      "correct";
+    const currentCardIsPracticed = isPracticedAttempt({
+      result: classifyExerciseResult(exerciseStatus, currentExerciseType, isFourWord),
+      isGroupExercise: isFourWord,
+      wroteWord: exerciseStatus.wroteWord === true,
+    });
     let pendingConceptIds: string[] = [];
-    if (currentCardIsCorrect) {
+    if (currentCardIsPracticed) {
       const cardWords = isFourWord
         ? (currentReinforcementWords ?? words.slice(currentIndex, currentIndex + 4)).slice(0, 4)
         : currentWord
@@ -940,23 +946,27 @@ export function VocabularyPractice({
     currentWord,
   ]);
 
+  // "{count} words practiced": plural-aware (practicedCount_one/_few/_many/
+  // _other, falling back to _other) and number-first, so the chip reads
+  // icon → number → text in every locale.
+  const practicedCountKey = `practice.practicedCount_${new Intl.PluralRules(uiLanguage).select(practicedCount)}`;
+  const practicedCountTemplate = t(practicedCountKey);
+  const practicedCountLabel = (
+    practicedCountTemplate === practicedCountKey
+      ? t("practice.practicedCount_other")
+      : practicedCountTemplate
+  ).replace("{count}", String(practicedCount));
+
   // Finish-screen word list: words the learner wrote themselves at least
-  // once, right or wrong (accuracy is shown separately) — a single-word
-  // attempt with a typed answer (or a solved one, for chunk-based
-  // brokenWord) that was not revealed via Show me word — or one written
-  // after Practice again, even if Show me word was used first. Skips and
-  // group-exercise matches don't count: nothing was written. In order of
-  // first such attempt, each word once.
+  // once (isWrittenWordAttempt — the counter's rule minus group matches),
+  // in order of first such attempt, each word once.
   const practicedWords = useMemo(() => {
     const wordsByConceptId = new Map(
       words.map((word) => [String(word?.concept_id ?? ""), word]),
     );
     const practiced = new Map<string, PracticedWordItem>();
     attemptHistory.forEach((attempt) => {
-      const wasWritten =
-        ((attempt.wasTyped || attempt.result === "correct") && !attempt.wasRevealed) ||
-        attempt.writtenAfterRetry;
-      if (!wasWritten || attempt.isGroupExercise || practiced.has(attempt.conceptId)) {
+      if (!isWrittenWordAttempt(attempt) || practiced.has(attempt.conceptId)) {
         return;
       }
       const matchedWord = wordsByConceptId.get(attempt.conceptId);
@@ -1436,7 +1446,7 @@ export function VocabularyPractice({
       {!sessionComplete && (
         <SessionCountFooter>
           <SessionCountChip
-            label={t("practice.practicedCount").replace("{count}", String(practicedCount))}
+            label={practicedCountLabel}
             count={practicedCount}
           />
         </SessionCountFooter>

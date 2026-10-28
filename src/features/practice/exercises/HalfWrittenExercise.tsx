@@ -28,10 +28,11 @@ interface HalfWrittenExerciseProps {
     // for the rest of this word's lifetime once set, even if the input is
     // later corrected.
     hasCompletedWrongAttempt?: boolean;
-    // Set only after Practice again: the learner then wrote the word
-    // themselves (Custom Practice lists it as practiced) while the frozen
-    // first-attempt status above still drives grading/accuracy.
-    writtenAfterRetry?: boolean;
+    // True once the learner wrote this word themselves in any attempt on
+    // this card (without Show me word), including after Practice again, so
+    // earlier reveals never matter. Drives Custom Practice's "practiced"
+    // counter and list; grading still follows the fields above.
+    wroteWord?: boolean;
   }) => void;
 }
 
@@ -66,8 +67,9 @@ export function HalfWrittenExercise({
   // First solved status, frozen by Practice again; see ExerciseRetryButton.
   const [retryLockedStatus, setRetryLockedStatus] = useState<ExerciseStatus | null>(null);
   const lastReportedStatusRef = useRef<ExerciseStatus | null>(null);
-  // Latched across repeated retries of the same word; reset with the lock.
-  const writtenAfterRetryRef = useRef(false);
+  // Set when a written attempt is retried, so a later reveal can't undo it;
+  // reset per word.
+  const wroteWordRef = useRef(false);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const inputAnchorRef = useRef<HTMLDivElement | null>(null);
@@ -144,7 +146,7 @@ export function HalfWrittenExercise({
     if (!currentWord) return;
     resetAttempt();
     setRetryLockedStatus(null);
-    writtenAfterRetryRef.current = false;
+    wroteWordRef.current = false;
     setVisibleLetterCount(calculateVisiblePortion(normalizedWord.length));
   }, [currentWord, normalizedWord]);
 
@@ -226,16 +228,15 @@ export function HalfWrittenExercise({
   }, [userInput, currentWord, currentPrompt, normalizedWord, visibleLetterCount]);
 
   useEffect(() => {
-    if (retryLockedStatus && hasTypedAnswer && !usedShowWord) {
-      writtenAfterRetryRef.current = true;
-    }
+    const wroteWord = wroteWordRef.current || (hasTypedAnswer && !usedShowWord);
     const status = retryLockedStatus
-      ? { ...retryLockedStatus, writtenAfterRetry: writtenAfterRetryRef.current }
+      ? { ...retryLockedStatus, wroteWord }
       : {
       isCorrect,
       hasTypedAnswer,
       usedShowWord,
       usedHintForBrokenWord: false,
+      wroteWord,
       hasCompletedWrongAttempt,
     };
     lastReportedStatusRef.current = status;
@@ -243,6 +244,7 @@ export function HalfWrittenExercise({
   }, [isCorrect, hasTypedAnswer, usedShowWord, hasCompletedWrongAttempt, retryLockedStatus, onStatusChange]);
 
   const handleRetry = () => {
+    if (hasTypedAnswer && !usedShowWord) wroteWordRef.current = true;
     setRetryLockedStatus((locked) => locked ?? lastReportedStatusRef.current);
     resetAttempt();
     inputRef.current?.focus();

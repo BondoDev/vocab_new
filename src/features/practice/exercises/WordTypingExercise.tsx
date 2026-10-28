@@ -31,10 +31,11 @@ interface WordTypingExerciseProps {
     // previously not reported at all.
     hasCompletedWrongAttempt?: boolean;
     usedHint?: boolean;
-    // Set only after Practice again: the learner then wrote the word
-    // themselves (Custom Practice lists it as practiced) while the frozen
-    // first-attempt status above still drives grading/accuracy.
-    writtenAfterRetry?: boolean;
+    // True once the learner wrote this word themselves in any attempt on
+    // this card (without Show me word), including after Practice again, so
+    // earlier reveals never matter. Drives Custom Practice's "practiced"
+    // counter and list; grading still follows the fields above.
+    wroteWord?: boolean;
   }) => void;
 }
 
@@ -66,8 +67,9 @@ export function WordTypingExercise({
   // First solved status, frozen by Practice again; see ExerciseRetryButton.
   const [retryLockedStatus, setRetryLockedStatus] = useState<ExerciseStatus | null>(null);
   const lastReportedStatusRef = useRef<ExerciseStatus | null>(null);
-  // Latched across repeated retries of the same word; reset with the lock.
-  const writtenAfterRetryRef = useRef(false);
+  // Set when a written attempt is retried, so a later reveal can't undo it;
+  // reset per word.
+  const wroteWordRef = useRef(false);
   const charSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const inputAnchorRef = useRef<HTMLDivElement | null>(null);
@@ -126,7 +128,7 @@ export function WordTypingExercise({
   useEffect(() => {
     resetAttempt();
     setRetryLockedStatus(null);
-    writtenAfterRetryRef.current = false;
+    wroteWordRef.current = false;
   }, [currentWord]);
 
   useEffect(() => {
@@ -206,16 +208,15 @@ export function WordTypingExercise({
   }, [userInput, currentWord, currentPrompt]);
 
   useEffect(() => {
-    if (retryLockedStatus && hasTypedAnswer && !usedShowWord) {
-      writtenAfterRetryRef.current = true;
-    }
+    const wroteWord = wroteWordRef.current || (hasTypedAnswer && !usedShowWord);
     const status = retryLockedStatus
-      ? { ...retryLockedStatus, writtenAfterRetry: writtenAfterRetryRef.current }
+      ? { ...retryLockedStatus, wroteWord }
       : {
       isCorrect,
       hasTypedAnswer,
       usedShowWord,
       usedHintForBrokenWord: false,
+      wroteWord,
       hasCompletedWrongAttempt,
       usedHint: revealedHintIndices.length > 0,
     };
@@ -224,6 +225,7 @@ export function WordTypingExercise({
   }, [isCorrect, hasTypedAnswer, usedShowWord, hasCompletedWrongAttempt, revealedHintIndices, retryLockedStatus, onStatusChange]);
 
   const handleRetry = () => {
+    if (hasTypedAnswer && !usedShowWord) wroteWordRef.current = true;
     setRetryLockedStatus((locked) => locked ?? lastReportedStatusRef.current);
     resetAttempt();
     inputRef.current?.focus();

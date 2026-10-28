@@ -2,10 +2,10 @@
 // counter and its header contract.
 //
 // Behavioral for the counter: imports the real classifyExerciseResult/
-// countPracticedWords from src/features/practice/utils/practicedWordCount.ts
+// countPracticedWords/isPracticedAttempt/isWrittenWordAttempt from src/features/practice/utils/practicedWordCount.ts
 // (import-free by design) via Node's native TypeScript stripping. Source-text
 // for the header wiring/markup, which cannot be rendered without a bundler,
-// plus a 7-locale check for the new `practice.practicedCount` key.
+// plus a 7-locale check for the plural `practice.practicedCount_*` keys.
 //
 // Run: node --experimental-strip-types scripts/tests/practice/test-practiced-word-counter.mjs
 import assert from "node:assert/strict";
@@ -15,6 +15,8 @@ import { fileURLToPath } from "node:url";
 import {
   classifyExerciseResult,
   countPracticedWords,
+  isPracticedAttempt,
+  isWrittenWordAttempt,
 } from "../../../src/features/practice/utils/practicedWordCount.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -60,47 +62,57 @@ test("starts at 0 for an empty session", () => {
   assert.equal(countPracticedWords([]), 0);
 });
 
-test("counts only correct attempts (skipped/incorrect never count)", () => {
+const single = (conceptId, wroteWord, result = "incorrect") => ({
+  conceptId,
+  result,
+  isGroupExercise: false,
+  wroteWord,
+});
+const group = (conceptId, result) => ({
+  conceptId,
+  result,
+  isGroupExercise: true,
+  wroteWord: false,
+});
+
+test("a single word counts once the learner wrote it, right or wrong", () => {
   assert.equal(
     countPracticedWords([
-      { conceptId: "1", result: "correct" },
-      { conceptId: "2", result: "skipped" },
-      { conceptId: "3", result: "incorrect" },
+      single("1", true, "correct"),
+      single("2", true, "incorrect"),
+      single("3", false, "skipped"),
+      single("4", false, "incorrect"),
     ]),
-    1,
+    2,
   );
+});
+
+test("Show me word earlier never matters once the word is written later", () => {
+  // Revealed first (graded incorrect), then written after Practice again.
+  assert.equal(isWrittenWordAttempt(single("1", true, "incorrect")), true);
+  // Revealed on one card, written on a later repeat of the same word.
+  assert.equal(countPracticedWords([single("1", false), single("1", true)]), 1);
+});
+
+test("group matches count only when correct and never as written words", () => {
+  assert.equal(countPracticedWords([group("1", "correct"), group("2", "skipped")]), 1);
+  assert.equal(isWrittenWordAttempt(group("1", "correct")), false);
+  assert.equal(isPracticedAttempt(group("1", "correct")), true);
 });
 
 test("counts each word once across repeats", () => {
   assert.equal(
-    countPracticedWords([
-      { conceptId: "1", result: "correct" },
-      { conceptId: "1", result: "correct" },
-      { conceptId: "1", result: "incorrect" },
-    ]),
+    countPracticedWords([single("1", true, "correct"), single("1", true), single("1", false)]),
     1,
   );
 });
 
-test("a word answered wrong earlier counts once it is later correct", () => {
-  assert.equal(
-    countPracticedWords([
-      { conceptId: "1", result: "incorrect" },
-      { conceptId: "1", result: "correct" },
-    ]),
-    1,
-  );
-});
-
-test("pending correct card counts immediately and is not double-counted on Next", () => {
-  const before = countPracticedWords([{ conceptId: "1", result: "correct" }], ["2"]);
-  const after = countPracticedWords([
-    { conceptId: "1", result: "correct" },
-    { conceptId: "2", result: "correct" },
-  ]);
+test("pending card counts immediately and is not double-counted on Next", () => {
+  const before = countPracticedWords([single("1", true)], ["2"]);
+  const after = countPracticedWords([single("1", true), single("2", true)]);
   assert.equal(before, 2);
   assert.equal(after, 2);
-  assert.equal(countPracticedWords([{ conceptId: "1", result: "correct" }], ["1"]), 1);
+  assert.equal(countPracticedWords([single("1", true)], ["1"]), 1);
 });
 
 test("classification: typed correct answer is correct", () => {
@@ -160,14 +172,16 @@ test("header renders the language direction with an arrow, not uppercase", () =>
   assert.doesNotMatch(header, /\buppercase\b/);
 });
 
-test("header keeps Finish wired and reads the localized counter label", () => {
+test("header keeps Finish wired", () => {
   assert.match(header, /onClick=\{onFinishTest\}/);
-  assert.match(header, /t\("practice\.practicedCount"\)/);
 });
 
 test("session derives the counter from attemptHistory and passes it down", () => {
   assert.match(session, /countPracticedWords\(attemptHistory/);
-  assert.match(session, /practicedCount=\{practicedCount\}/);
+  // The counter chip sits below the card (SessionCountFooter) with a
+  // plural-aware, number-first label.
+  assert.match(session, /count=\{practicedCount\}/);
+  assert.match(session, /practice\.practicedCount_\$\{new Intl\.PluralRules\(uiLanguage\)/);
   assert.match(session, /const result = classifyExerciseResult\(/);
 });
 
@@ -176,14 +190,16 @@ test("Start Again resets attemptHistory (and so the counter)", () => {
   assert.match(startAgain.slice(0, 1200), /setAttemptHistory\(\[\]\)/);
 });
 
-console.log("\n=== practice.practicedCount localization ===\n");
+console.log("\n=== practice.practicedCount_* localization ===\n");
 
 for (const fileName of LOCALE_FILES) {
-  test(`${fileName} defines practice.practicedCount with {count}`, () => {
+  test(`${fileName} defines number-first practice.practicedCount_one/_other`, () => {
     const parsed = JSON.parse(read(path.join("src", "data", "interface", fileName)));
-    const value = parsed.practice?.practicedCount;
-    assert.equal(typeof value, "string");
-    assert.match(value, /\{count\}/);
+    for (const form of ["one", "other"]) {
+      const value = parsed.practice?.[`practicedCount_${form}`];
+      assert.equal(typeof value, "string");
+      assert.match(value, /^\{count\} /);
+    }
   });
 }
 
