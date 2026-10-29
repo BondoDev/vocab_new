@@ -46,7 +46,16 @@ const LEVEL_TINTS: Record<Level, string> = {
   c2: "bg-[#45326f] text-white",
 };
 
-const GROUP_ORDER: LearningResourceGroup[] = ["wordLists", "verbs", "levelCheck"];
+// The directory shows two columns only: level tests, and every other
+// resource type in one list. New SEO page types join that list through the
+// registry without needing their own heading here.
+const STUDY_GROUP_ORDER: LearningResourceGroup[] = ["wordLists", "verbs"];
+
+// Unknown groups sort last, keeping their registry order (sort is stable).
+function groupRank(group: LearningResourceGroup): number {
+  const index = STUDY_GROUP_ORDER.indexOf(group);
+  return index === -1 ? STUDY_GROUP_ORDER.length : index;
+}
 
 // Endonyms, so each language is recognisable whatever the current UI
 // language is.
@@ -65,7 +74,8 @@ const PAGE_COPY: Record<
   {
     jumpLabel: string;
     levelsLabel: string;
-    groups: Record<LearningResourceGroup, string>;
+    studyLabel: string;
+    levelCheckLabel: string;
     wordIndexLabel: string;
     otherLanguagesLabel: string;
   }
@@ -73,49 +83,56 @@ const PAGE_COPY: Record<
   en: {
     jumpLabel: "Jump to a language",
     levelsLabel: "Vocabulary by CEFR level",
-    groups: { wordLists: "Word lists", verbs: "Verbs", levelCheck: "Check your level" },
+    studyLabel: "Study materials",
+    levelCheckLabel: "Check your level",
     wordIndexLabel: "Alphabetical word index",
     otherLanguagesLabel: "This page in other languages",
   },
   es: {
     jumpLabel: "Ir a un idioma",
     levelsLabel: "Vocabulario por nivel MCER",
-    groups: { wordLists: "Listas de palabras", verbs: "Verbos", levelCheck: "Comprueba tu nivel" },
+    studyLabel: "Materiales de estudio",
+    levelCheckLabel: "Comprueba tu nivel",
     wordIndexLabel: "Índice alfabético de palabras",
     otherLanguagesLabel: "Esta página en otros idiomas",
   },
   fr: {
     jumpLabel: "Aller à une langue",
     levelsLabel: "Vocabulaire par niveau CECRL",
-    groups: { wordLists: "Listes de mots", verbs: "Verbes", levelCheck: "Évaluez votre niveau" },
+    studyLabel: "Ressources d’apprentissage",
+    levelCheckLabel: "Évaluez votre niveau",
     wordIndexLabel: "Index alphabétique des mots",
     otherLanguagesLabel: "Cette page dans d’autres langues",
   },
   de: {
     jumpLabel: "Zu einer Sprache springen",
     levelsLabel: "Wortschatz nach GER-Niveau",
-    groups: { wordLists: "Wortlisten", verbs: "Verben", levelCheck: "Niveau prüfen" },
+    studyLabel: "Lernmaterialien",
+    levelCheckLabel: "Niveau prüfen",
     wordIndexLabel: "Alphabetischer Wortindex",
     otherLanguagesLabel: "Diese Seite in anderen Sprachen",
   },
   it: {
     jumpLabel: "Vai a una lingua",
     levelsLabel: "Vocabolario per livello QCER",
-    groups: { wordLists: "Liste di parole", verbs: "Verbi", levelCheck: "Verifica il tuo livello" },
+    studyLabel: "Materiali di studio",
+    levelCheckLabel: "Verifica il tuo livello",
     wordIndexLabel: "Indice alfabetico delle parole",
     otherLanguagesLabel: "Questa pagina in altre lingue",
   },
   pt: {
     jumpLabel: "Ir para um idioma",
     levelsLabel: "Vocabulário por nível QECR",
-    groups: { wordLists: "Listas de palavras", verbs: "Verbos", levelCheck: "Verifique o seu nível" },
+    studyLabel: "Materiais de estudo",
+    levelCheckLabel: "Verifique o seu nível",
     wordIndexLabel: "Índice alfabético de palavras",
     otherLanguagesLabel: "Esta página em outros idiomas",
   },
   ru: {
     jumpLabel: "Перейти к языку",
     levelsLabel: "Лексика по уровням CEFR",
-    groups: { wordLists: "Списки слов", verbs: "Глаголы", levelCheck: "Проверьте свой уровень" },
+    studyLabel: "Учебные материалы",
+    levelCheckLabel: "Проверьте свой уровень",
     wordIndexLabel: "Алфавитный указатель слов",
     otherLanguagesLabel: "Эта страница на других языках",
   },
@@ -123,6 +140,16 @@ const PAGE_COPY: Record<
 
 const LINK_CLASS =
   "rounded-sm text-sm text-primary underline-offset-4 transition hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+
+function renderStudyLink(link: { kind: string; href: string; label: string }) {
+  return (
+    <li key={link.kind} className="mb-1.5 break-inside-avoid">
+      <Link className={LINK_CLASS} to={link.href}>
+        {link.label}
+      </Link>
+    </li>
+  );
+}
 
 export function SeoHubPage({ uiLang }: SeoHubPageProps) {
   const location = useLocation();
@@ -183,10 +210,13 @@ export function SeoHubPage({ uiLang }: SeoHubPageProps) {
         <div className="mt-8 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card">
           {languages.map((language) => {
             const headingId = `${language.sectionId}-heading`;
-            const groups = GROUP_ORDER.map((group) => ({
-              group,
-              links: language.resources.filter((link) => link.group === group),
-            }));
+            const studyLinks = [...language.resources]
+              .filter((link) => link.group !== "levelCheck")
+              .sort((a, b) => groupRank(a.group) - groupRank(b.group));
+            const levelCheckLinks = language.resources.filter((link) => link.group === "levelCheck");
+            // The word index is not a registry resource; it sits right after
+            // the word lists it belongs with.
+            const wordIndexAt = studyLinks.filter((link) => link.group === "wordLists").length;
 
             return (
               <section
@@ -220,36 +250,34 @@ export function SeoHubPage({ uiLang }: SeoHubPageProps) {
                     </div>
                   ) : null}
 
-                  <div className="mt-5 grid gap-5 sm:grid-cols-3">
-                    {groups.map(({ group, links }) => {
-                      const showWordIndex = group === "wordLists";
-                      if (links.length === 0 && !showWordIndex) {
-                        return null;
-                      }
-
-                      return (
-                        <div key={group}>
-                          <h3 className="text-sm font-medium text-muted-foreground">{copy.groups[group]}</h3>
-                          <ul className="mt-2 space-y-1.5">
-                            {links.map((link) => (
-                              <li key={link.kind}>
-                                <Link className={LINK_CLASS} to={link.href}>
-                                  {link.label}
-                                </Link>
-                              </li>
-                            ))}
-                            {showWordIndex ? (
-                              <li>
-                                <Link className={LINK_CLASS} to={language.wordIndexHref}>
-                                  <span className="sr-only">{language.languageName}: </span>
-                                  {copy.wordIndexLabel}
-                                </Link>
-                              </li>
-                            ) : null}
-                          </ul>
-                        </div>
-                      );
-                    })}
+                  <div className="mt-5 grid gap-5 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+                    <div>
+                      <h3 className="text-sm font-medium text-muted-foreground">{copy.studyLabel}</h3>
+                      <ul className="mt-2 gap-x-5 sm:columns-2">
+                        {studyLinks.slice(0, wordIndexAt).map(renderStudyLink)}
+                        <li className="mb-1.5 break-inside-avoid">
+                          <Link className={LINK_CLASS} to={language.wordIndexHref}>
+                            <span className="sr-only">{language.languageName}: </span>
+                            {copy.wordIndexLabel}
+                          </Link>
+                        </li>
+                        {studyLinks.slice(wordIndexAt).map(renderStudyLink)}
+                      </ul>
+                    </div>
+                    {levelCheckLinks.length > 0 ? (
+                      <div>
+                        <h3 className="text-sm font-medium text-muted-foreground">{copy.levelCheckLabel}</h3>
+                        <ul className="mt-2 space-y-1.5">
+                          {levelCheckLinks.map((link) => (
+                            <li key={link.kind}>
+                              <Link className={LINK_CLASS} to={link.href}>
+                                {link.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </section>
