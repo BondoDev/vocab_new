@@ -18,12 +18,31 @@ learning-setup/
   ExerciseOptionTiles.tsx
   exerciseOptions.ts
   LevelCategorySelection.tsx
+  CefrLevelTiles.tsx
+  filterSelection.ts
+  filterLabels.ts
+  useFilterVocabulary.ts
   data/
     categories.json
+  styles/
 ```
 
 - `LevelCategorySelection.tsx` — level, category, and word-type
   selection.
+- `CefrLevelTiles.tsx` — controlled CEFR level tiles shared by the
+  filters page and the Custom Practice setup page. Both write the same
+  `App.tsx`-owned level list, so the pages cannot drift apart.
+- `filterSelection.ts` — import-free selection helpers for the vocabulary
+  filters: selection state and summaries (one / several / all /
+  unrestricted), toggles, and plural-aware count copy. It documents why
+  levels keep an explicit list while topics and word types use `[]` for
+  "all".
+- `filterLabels.ts` — filter option lists (levels, topics from
+  `data/categories.json`) and their localized labels and summaries, shared
+  by both pages.
+- `useFilterVocabulary.ts` — loads the practice language's vocabulary
+  metadata and answers "does this filter combination still match words?",
+  the guard both pages apply before changing a filter.
 - `ExerciseSelection.tsx` — exercise-type selection.
 - `ExerciseOptionTiles.tsx` — controlled exercise tiles shared by the existing
   Exercises page and the Custom Practice setup page; owns the unchanged
@@ -52,8 +71,9 @@ the embedding page owns its final practice action.
 
 `data/categories.json` is feature-owned configuration:
 
-- it is consumed only by `LevelCategorySelection.tsx`, within this
-  feature;
+- it is read only through `filterLabels.ts`, within this feature (the
+  Custom Practice setup page reaches topic labels through that module,
+  not the file);
 - it is intentionally colocated with its owner rather than centralized;
 - it holds a static list of topic labels for this feature's category
   filter, not a shared vocabulary dataset.
@@ -61,8 +81,7 @@ the embedding page owns its final practice action.
 Contrast this with `src/data/`, which owns shared vocabulary and
 metadata datasets consumed across the app (including, separately, by
 this feature's dynamic per-language metadata loading). `categories.json`
-does not belong there — it has exactly one consumer, and that consumer
-is inside this feature.
+does not belong there — its only reader is inside this feature.
 
 ## Relationship with Practice
 

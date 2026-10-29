@@ -1,12 +1,31 @@
-﻿import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
 import "./styles/level-category-selection.scss";
-import { ChevronLeft, ChevronDown, Check, X } from "lucide-react";
-// categories.json is exclusive to this component and moved with it (see
-// docs/generated-data.md — unlike vocabularyMetadata/*.json below, which
-// stays shared under src/data/ and is loaded by relative path, not moved).
-import categoriesData from "./data/categories.json";
+import {
+  ChevronLeft,
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  Check,
+} from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { CefrLevelTiles } from "./CefrLevelTiles";
+import {
+  FILTERS_PAGE_KEY,
+  FILTER_CATEGORY_IDS,
+  FILTER_LEVEL_CODES,
+  getCategoryLabel as getCategoryLabelFor,
+  getSelectionCountLabel,
+  getSelectionSummary,
+  getWordTypeLabel as getWordTypeLabelFor,
+} from "./filterLabels";
+import {
+  abbreviateList,
+  fillTemplate,
+  getSelectionState,
+  toggleSelection,
+  type SelectionState,
+} from "./filterSelection";
+import { useFilterVocabulary } from "./useFilterVocabulary";
 
 interface LevelCategorySelectionProps {
   selectedLevel: string;
@@ -25,141 +44,19 @@ interface LevelCategorySelectionProps {
   backLabel?: string;
 }
 
-const levels = [
-  { code: "A1" },
-  { code: "A2" },
-  { code: "B1" },
-  { code: "B2" },
-  { code: "C1" },
-  { code: "C2" },
-];
+const allLevelCodes = FILTER_LEVEL_CODES;
+const categoryIds = FILTER_CATEGORY_IDS;
 
-const categories = (Array.isArray(categoriesData) ? categoriesData : []).map(
-  (cat: any) => ({
-    id: cat.category,
-  }),
-);
+// Collapsed topic list size. Collapsing only hides chips: selection counts
+// and summaries always use the full topic list.
+const TOPICS_COLLAPSED_MOBILE = 8;
+const TOPICS_COLLAPSED_DESKTOP = 15;
+// Labels listed in a group's "Selected: …" line before "+N more".
+const VALUES_SHOWN_IN_GROUP = 3;
+// Setup-summary rows list names up to this many, then switch to "N of total".
+const VALUES_LISTED_IN_SUMMARY = 3;
 
-const DEFAULT_WORD_TYPES: string[] = [
-  "preposition",
-  "noun",
-  "verb",
-  "adjective",
-  "adverb",
-  "determiner",
-  "conjunction",
-  "pronoun",
-  "exclamation",
-  "expression",
-];
-type FilterCount = {
-  type: string;
-  level: string;
-  category: string;
-  count: number;
-};
-type VocabularyMetadata = {
-  wordTypes: string[];
-  counts: FilterCount[];
-};
-
-const navbarColorRgb = "74, 43, 130";
-const levelOpacities = [0.05, 0.15, 0.3, 0.5, 0.65, 0.75];
-const levelTextColors = [
-  "rgba(2, 6, 23, 1)",
-  "rgba(2, 6, 23, 0.98)",
-  "rgba(2, 6, 23, 0.95)",
-  "rgba(255, 255, 255, 0.92)",
-  "rgba(255, 255, 255, 0.97)",
-  "rgba(255, 255, 255, 1)",
-];
-const levelSubTextColors = [
-  "rgba(2, 6, 23, 0.82)",
-  "rgba(2, 6, 23, 0.78)",
-  "rgba(2, 6, 23, 0.72)",
-  "rgba(255, 255, 255, 0.78)",
-  "rgba(255, 255, 255, 0.88)",
-  "rgba(255, 255, 255, 0.95)",
-];
-
-const allLevelCodes = levels.map((level) => level.code);
-
-async function loadVocabularyMetadata(
-  practiceLanguage: string,
-): Promise<VocabularyMetadata | null> {
-  switch (practiceLanguage) {
-    case "en":
-      return (await import("../../data/vocabularyMetadata/english.json"))
-        .default as VocabularyMetadata;
-    case "es":
-      return (await import("../../data/vocabularyMetadata/spanish.json"))
-        .default as VocabularyMetadata;
-    case "fr":
-      return (await import("../../data/vocabularyMetadata/french.json"))
-        .default as VocabularyMetadata;
-    case "de":
-      return (await import("../../data/vocabularyMetadata/german.json"))
-        .default as VocabularyMetadata;
-    case "it":
-      return (await import("../../data/vocabularyMetadata/italian.json"))
-        .default as VocabularyMetadata;
-    case "pt":
-      return (await import("../../data/vocabularyMetadata/portuguese.json"))
-        .default as VocabularyMetadata;
-    case "ru":
-      return (await import("../../data/vocabularyMetadata/russian.json"))
-        .default as VocabularyMetadata;
-    default:
-      return null;
-  }
-}
-
-function randomBetween(min: number, max: number): number {
-  return Math.random() * (max - min) + min;
-}
-
-function createDistributedStarFieldImage(starCount: number): string {
-  const cols = Math.ceil(Math.sqrt(starCount));
-  const rows = Math.ceil(starCount / cols);
-  const sparkleScaleOptions = [0.8, 1, 1.2, 1.4];
-  const colorOptions = [
-    "#fff",
-    "#fff",
-    "#fff",
-    "#f3f3f3",
-    "rgba(255,255,255,0.9)",
-  ];
-  const layers: string[] = [];
-
-  for (let i = 0; i < starCount; i++) {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-    const cellWidth = 100 / cols;
-    const cellHeight = 100 / rows;
-    const xMin = col * cellWidth + 10;
-    const xMax = (col + 1) * cellWidth - 10;
-    const yMin = row * cellHeight + 14;
-    const yMax = (row + 1) * cellHeight - 14;
-    const x = randomBetween(Math.max(5, xMin), Math.min(95, xMax)).toFixed(1);
-    const y = randomBetween(Math.max(8, yMin), Math.min(92, yMax)).toFixed(1);
-    const sparkleScale =
-      sparkleScaleOptions[
-        Math.floor(Math.random() * sparkleScaleOptions.length)
-      ];
-    const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-    const longArm = (randomBetween(4.8, 6.6) * sparkleScale).toFixed(1);
-    const shortArm = (randomBetween(1.05, 1.45) * sparkleScale).toFixed(2);
-    const core = (randomBetween(0.9, 1.3) * sparkleScale).toFixed(2);
-
-    layers.push(
-      `radial-gradient(ellipse ${longArm}px ${shortArm}px at ${x}% ${y}%, ${color}, rgba(0,0,0,0) 72%)`,
-      `radial-gradient(ellipse ${shortArm}px ${longArm}px at ${x}% ${y}%, ${color}, rgba(0,0,0,0) 72%)`,
-      `radial-gradient(${core}px ${core}px at ${x}% ${y}%, rgba(255,255,255,0.98), rgba(0,0,0,0))`,
-    );
-  }
-
-  return layers.join(",\n    ");
-}
+const PAGE_KEY = FILTERS_PAGE_KEY;
 
 export function LevelCategorySelection({
   practiceLanguage,
@@ -175,276 +72,58 @@ export function LevelCategorySelection({
   continueLabel,
   backLabel,
 }: LevelCategorySelectionProps) {
-  const [isTopicsModalOpen, setIsTopicsModalOpen] = useState(false);
-  const [pendingCategories, setPendingCategories] = useState<string[]>([]);
-  const [isWordTypesModalOpen, setIsWordTypesModalOpen] = useState(false);
-  const [pendingWordTypes, setPendingWordTypes] = useState<string[]>([]);
-  const [allWordTypes, setAllWordTypes] =
-    useState<string[]>(DEFAULT_WORD_TYPES);
-  const [filterCounts, setFilterCounts] = useState<FilterCount[]>([]);
-  const [isVocabularyMetadataReady, setIsVocabularyMetadataReady] =
-    useState(false);
-  const { t } = useLanguage();
-  const lastTouchRef = useRef<{
-    time: number;
-    level: string | null;
-  }>({
-    time: 0,
-    level: null,
-  });
-  const suppressClickUntilRef = useRef(0);
-  const filteredCountCacheRef = useRef<Map<string, number>>(new Map());
-  const nextButtonStarFieldStyle = useMemo(
-    () => ({
-      backgroundColor: "#4a2b82",
-      backgroundImage: createDistributedStarFieldImage(3),
-      backgroundSize: "100% 100%",
-      backgroundRepeat: "no-repeat",
-    }),
-    [],
-  );
-
-  // Extra small mobile: 6 topics, 376-430.98px: 6 topics, small mobile: 9 topics, mobile: 12 topics, desktop: ~15 topics
-  const TOPICS_EXTRA_SMALL_LIMIT = 6;
-  const TOPICS_SMALL_NARROW_LIMIT = 9;
-  const TOPICS_SMALL_MOBILE_LIMIT = 9;
-  const TOPICS_MOBILE_LIMIT = 12;
-  const TOPICS_DESKTOP_LIMIT = 15;
-
-  const [isMobile, setIsMobile] = useState(false);
-  const [isSmallMobile, setIsSmallMobile] = useState(false);
-  const [isExtraSmallMobile, setIsExtraSmallMobile] = useState(false);
-  const [isSmallNarrowMobile, setIsSmallNarrowMobile] = useState(false);
-  const [isPhoneMobile, setIsPhoneMobile] = useState(false);
-  const [isLaptopFilterRange, setIsLaptopFilterRange] = useState(false);
+  const [areTopicsExpanded, setAreTopicsExpanded] = useState(false);
+  const [isNarrowViewport, setIsNarrowViewport] = useState(false);
+  const { t, uiLanguage } = useLanguage();
+  const { wordTypes: prioritizedWordTypes, getFilteredWordCount } =
+    useFilterVocabulary(practiceLanguage);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const mobileMedia = window.matchMedia("(max-width: 767px)");
-    const smallMobileMedia = window.matchMedia("(max-width: 639.98px)");
-    const extraSmallMobileMedia = window.matchMedia("(max-width: 375.98px)");
-    const smallNarrowMobileMedia = window.matchMedia(
-      "(min-width: 376px) and (max-width: 430.98px)",
-    );
-    const phoneMobileMedia = window.matchMedia("(max-width: 430.98px)");
-    const laptopFilterMedia = window.matchMedia(
-      "(min-width: 1024px) and (max-width: 1535.98px)",
-    );
-    const update = () => {
-      setIsMobile(mobileMedia.matches);
-      setIsSmallMobile(smallMobileMedia.matches);
-      setIsExtraSmallMobile(extraSmallMobileMedia.matches);
-      setIsSmallNarrowMobile(smallNarrowMobileMedia.matches);
-      setIsPhoneMobile(phoneMobileMedia.matches);
-      setIsLaptopFilterRange(laptopFilterMedia.matches);
-    };
+    const narrowMedia = window.matchMedia("(max-width: 639.98px)");
+    const update = () => setIsNarrowViewport(narrowMedia.matches);
     update();
-    mobileMedia.addEventListener("change", update);
-    smallMobileMedia.addEventListener("change", update);
-    extraSmallMobileMedia.addEventListener("change", update);
-    smallNarrowMobileMedia.addEventListener("change", update);
-    phoneMobileMedia.addEventListener("change", update);
-    laptopFilterMedia.addEventListener("change", update);
-    return () => {
-      mobileMedia.removeEventListener("change", update);
-      smallMobileMedia.removeEventListener("change", update);
-      extraSmallMobileMedia.removeEventListener("change", update);
-      smallNarrowMobileMedia.removeEventListener("change", update);
-      phoneMobileMedia.removeEventListener("change", update);
-      laptopFilterMedia.removeEventListener("change", update);
-    };
+    narrowMedia.addEventListener("change", update);
+    return () => narrowMedia.removeEventListener("change", update);
   }, []);
 
-  const visibleLimit = isMobile
-    ? isExtraSmallMobile
-      ? TOPICS_EXTRA_SMALL_LIMIT
-      : isSmallNarrowMobile
-        ? TOPICS_SMALL_NARROW_LIMIT
-        : isSmallMobile
-          ? TOPICS_SMALL_MOBILE_LIMIT
-          : TOPICS_MOBILE_LIMIT
-    : TOPICS_DESKTOP_LIMIT;
-  const visibleCategories = categories.slice(0, visibleLimit);
+  const pageText = (key: string) => t(`${PAGE_KEY}.${key}`);
+  const getCategoryLabel = (categoryId: string) =>
+    getCategoryLabelFor(t, categoryId);
+  const getWordTypeLabel = (typeId: string) => getWordTypeLabelFor(t, typeId);
 
-  const hiddenTopicsCount = Math.max(0, categories.length - visibleLimit);
+  // Every change is checked against the vocabulary metadata first: an option
+  // whose toggle would leave zero matching words is disabled rather than
+  // allowed to produce an empty practice session.
+  const canApplyLevels = (levels: string[]) =>
+    getFilteredWordCount(levels, selectedCategories, selectedWordTypes) > 0;
 
-  const prioritizedWordTypes = useMemo(() => {
-    const priority = DEFAULT_WORD_TYPES;
-    const prioritySet = new Set(priority);
-    const normalized = Array.from(new Set(allWordTypes))
-      .map((type) => type?.trim())
-      .filter((type): type is string => Boolean(type));
-    const prioritized = priority.filter((type) => normalized.includes(type));
-    const rest = normalized
-      .filter((type) => !prioritySet.has(type))
-      .sort((a, b) => a.localeCompare(b));
-    return [...prioritized, ...rest];
-  }, [allWordTypes]);
-
-  const visibleWordTypes = prioritizedWordTypes.slice(0, 4);
-  const hiddenWordTypesCount = Math.max(0, prioritizedWordTypes.length - 4);
-
-  const formatWordTypeLabel = (typeId: string) =>
-    typeId
-      .split(/[_-]+/g)
-      .map((part) =>
-        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
-      )
-      .join(" ");
-
-  const getWordTypeLabel = (typeId: string) => {
-    const translated = t(`wordTypes.${typeId}`);
-    if (!translated || translated === `wordTypes.${typeId}`) {
-      return formatWordTypeLabel(typeId);
-    }
-    return translated;
-  };
-
-  const formatCategoryLabel = (categoryId: string) =>
-    categoryId
-      .split(" ")
-      .map((part) =>
-        part.length ? part.charAt(0).toUpperCase() + part.slice(1) : part,
-      )
-      .join(" ");
-
-  const getCategoryLabel = (categoryId: string) => {
-    const translated = t(`levelCategory.topicNames.${categoryId}`);
-    if (
-      !translated ||
-      translated === `levelCategory.topicNames.${categoryId}`
-    ) {
-      return formatCategoryLabel(categoryId);
-    }
-    return translated;
-  };
-
-  const getFilteredWordCount = (
-    levelsToUse: string[],
-    categoriesToUse: string[],
-    wordTypesToUse: string[],
-  ) => {
-    if (!isVocabularyMetadataReady) {
-      return 1;
-    }
-    const key = [
-      [...levelsToUse].sort().join("|"),
-      [...categoriesToUse].sort().join("|"),
-      [...wordTypesToUse].sort().join("|"),
-    ].join("::");
-    const cached = filteredCountCacheRef.current.get(key);
-    if (typeof cached === "number") {
-      return cached;
-    }
-    const count = filterCounts.reduce((total, word) => {
-      if (levelsToUse.length > 0 && !levelsToUse.includes(word.level)) {
-        return total;
-      }
-      if (
-        categoriesToUse.length > 0 &&
-        !categoriesToUse.includes(word.category)
-      ) {
-        return total;
-      }
-      if (wordTypesToUse.length > 0 && !wordTypesToUse.includes(word.type)) {
-        return total;
-      }
-      return total + word.count;
-    }, 0);
-    filteredCountCacheRef.current.set(key, count);
-    return count;
-  };
-
-  const resolveToggledLevels = (levelCode: string): string[] => {
-    const nextLevels = selectedLevels.includes(levelCode)
-      ? selectedLevels.filter((code) => code !== levelCode)
-      : [...selectedLevels, levelCode];
-    return nextLevels.length === 0 ? allLevelCodes : nextLevels;
-  };
-
-  const resolveToggledCategory = (
-    categoryId: string,
-    sourceCategories: string[],
-  ): string[] =>
-    sourceCategories.includes(categoryId)
-      ? sourceCategories.filter((id) => id !== categoryId)
-      : [...sourceCategories, categoryId];
-
-  const resolveToggledWordType = (typeId: string, sourceTypes: string[]) =>
-    sourceTypes.includes(typeId)
-      ? sourceTypes.filter((id) => id !== typeId)
-      : [...sourceTypes, typeId];
-
-  const hasWordsAfterLevelToggle = (levelCode: string) =>
+  const hasWordsAfterCategoryToggle = (categoryId: string) =>
     getFilteredWordCount(
-      resolveToggledLevels(levelCode),
-      selectedCategories,
+      selectedLevels,
+      toggleSelection(selectedCategories, categoryId),
       selectedWordTypes,
     ) > 0;
 
-  const hasWordsAfterCategoryToggle = (
-    categoryId: string,
-    sourceCategories: string[] = selectedCategories,
-  ) =>
-    getFilteredWordCount(
-      selectedLevels,
-      resolveToggledCategory(categoryId, sourceCategories),
-      selectedWordTypes,
-    ) > 0;
-
-  const hasWordsAfterWordTypeToggle = (
-    typeId: string,
-    sourceTypes: string[] = selectedWordTypes,
-  ) =>
+  const hasWordsAfterWordTypeToggle = (typeId: string) =>
     getFilteredWordCount(
       selectedLevels,
       selectedCategories,
-      resolveToggledWordType(typeId, sourceTypes),
+      toggleSelection(selectedWordTypes, typeId),
     ) > 0;
 
   const toggleCategory = (categoryId: string) => {
     if (!hasWordsAfterCategoryToggle(categoryId)) {
       return;
     }
-    setSelectedCategories(resolveToggledCategory(categoryId, selectedCategories));
-  };
-
-  const togglePendingCategory = (categoryId: string) => {
-    if (!hasWordsAfterCategoryToggle(categoryId, pendingCategories)) {
-      return;
-    }
-    setPendingCategories(resolveToggledCategory(categoryId, pendingCategories));
-  };
-
-  const togglePendingWordType = (typeId: string) => {
-    if (!hasWordsAfterWordTypeToggle(typeId, pendingWordTypes)) {
-      return;
-    }
-    setPendingWordTypes(resolveToggledWordType(typeId, pendingWordTypes));
-  };
-
-  const toggleLevel = (levelCode: string) => {
-    if (!hasWordsAfterLevelToggle(levelCode)) {
-      return;
-    }
-    setSelectedLevels(resolveToggledLevels(levelCode));
+    setSelectedCategories(toggleSelection(selectedCategories, categoryId));
   };
 
   const toggleWordType = (typeId: string) => {
     if (!hasWordsAfterWordTypeToggle(typeId)) {
       return;
     }
-    setSelectedWordTypes(resolveToggledWordType(typeId, selectedWordTypes));
-  };
-
-  const handleSelectOnlyLevel = (levelCode: string) => {
-    if (
-      getFilteredWordCount([levelCode], selectedCategories, selectedWordTypes) ===
-      0
-    ) {
-      return;
-    }
-    setSelectedLevels([levelCode]);
+    setSelectedWordTypes(toggleSelection(selectedWordTypes, typeId));
   };
 
   useEffect(() => {
@@ -453,617 +132,334 @@ export function LevelCategorySelection({
     }
   }, [selectedLevels.length, setSelectedLevels]);
 
-  useEffect(() => {
-    filteredCountCacheRef.current.clear();
-  }, [filterCounts]);
-
-  useEffect(() => {
-    let isMounted = true;
-    setIsVocabularyMetadataReady(false);
-
-    const loadWordTypes = async () => {
-      try {
-        const metadata = await loadVocabularyMetadata(practiceLanguage);
-        if (!metadata) {
-          if (isMounted) setAllWordTypes(DEFAULT_WORD_TYPES);
-          return;
-        }
-
-        if (!isMounted) return;
-        const nextWordTypes: string[] =
-          metadata.wordTypes.length > 0
-            ? [...metadata.wordTypes]
-            : [...DEFAULT_WORD_TYPES];
-        setAllWordTypes(nextWordTypes);
-        setFilterCounts(Array.isArray(metadata.counts) ? metadata.counts : []);
-        setIsVocabularyMetadataReady(true);
-      } catch {
-        if (isMounted) {
-          setAllWordTypes(DEFAULT_WORD_TYPES);
-          setFilterCounts([]);
-          setIsVocabularyMetadataReady(true);
-        }
-      }
-    };
-
-    loadWordTypes();
-    return () => {
-      isMounted = false;
-    };
-  }, [practiceLanguage]);
+  const levelState = getSelectionState(selectedLevels, allLevelCodes, {
+    emptyMeansAll: true,
+  });
+  const topicState = getSelectionState(selectedCategories, categoryIds, {
+    emptyMeansAll: true,
+  });
+  const wordTypeState = getSelectionState(
+    selectedWordTypes,
+    prioritizedWordTypes,
+    { emptyMeansAll: true },
+  );
 
   const hasAnyFilterSelected =
     selectedCategories.length > 0 ||
     selectedWordTypes.length > 0 ||
-    selectedLevels.length !== allLevelCodes.length;
+    levelState.kind === "some";
   const hasWordsForCurrentFilters =
     getFilteredWordCount(selectedLevels, selectedCategories, selectedWordTypes) >
     0;
 
+  const collapsedTopicLimit = isNarrowViewport
+    ? TOPICS_COLLAPSED_MOBILE
+    : TOPICS_COLLAPSED_DESKTOP;
+  const hiddenTopicsCount = Math.max(0, categoryIds.length - collapsedTopicLimit);
+  const visibleCategoryIds = areTopicsExpanded
+    ? categoryIds
+    : categoryIds.slice(0, collapsedTopicLimit);
+
+  const getCountBadge = (state: SelectionState, allLabelKey: string) =>
+    getSelectionCountLabel(t, uiLanguage, state, allLabelKey);
+
+  // Group "Selected: …" line; omitted when everything is included.
+  const getSelectedValuesLine = (
+    state: SelectionState,
+    getLabel: (value: string) => string,
+  ) => {
+    if (state.kind !== "some") return null;
+    const { shown, rest } = abbreviateList(
+      state.selected.map(getLabel),
+      VALUES_SHOWN_IN_GROUP,
+    );
+    const values = rest
+      ? `${shown.join(", ")} ${fillTemplate(pageText("moreValues"), { count: rest })}`
+      : shown.join(", ");
+    return fillTemplate(pageText("selectedValues"), { values });
+  };
+
+  const levelSummary = getSelectionSummary(
+    t,
+    levelState,
+    "allLevels",
+    (code) => code,
+    allLevelCodes.length,
+  );
+  const topicSummary = getSelectionSummary(
+    t,
+    topicState,
+    "allTopics",
+    getCategoryLabel,
+    VALUES_LISTED_IN_SUMMARY,
+  );
+  const wordTypeSummary = getSelectionSummary(
+    t,
+    wordTypeState,
+    "allWordTypes",
+    getWordTypeLabel,
+    VALUES_LISTED_IN_SUMMARY,
+  );
+
+  const levelValuesLine = getSelectedValuesLine(levelState, (code) => code);
+  const topicValuesLine = getSelectedValuesLine(topicState, getCategoryLabel);
+  const wordTypeValuesLine = getSelectedValuesLine(
+    wordTypeState,
+    getWordTypeLabel,
+  );
+  const unavailableHint = pageText("unavailable");
+
   return (
-    <div className="filters-page flex flex-col flex-1 bg-background">
-      {/* Fixed back button */}
-      <button
-        onClick={onBack}
-        className="absolute top-14 z-50 hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <ChevronLeft className="w-5 h-5" />
-        <span>{backLabel ?? t("levelCategory.back")}</span>
-      </button>
+    <div className="filters-page">
+      {/* Outside the centered column so desktop can align it with the logo. */}
+      <div className="filters-page__back-row">
+        <button type="button" onClick={onBack} className="filters-page__back">
+          <ChevronLeft aria-hidden="true" />
+          <span>{backLabel ?? t("levelCategory.back")}</span>
+        </button>
+      </div>
+      <div className="filters-page__inner">
+        <header className="filters-page__header">
+          <h1 className="filters-page__title">{pageText("title")}</h1>
+          <p className="filters-page__subtitle">{pageText("subtitle")}</p>
+        </header>
 
-      <main className="flex-1 flex justify-center px-4 pt-4 sm:pt-6 pb-6 sm:pb-8 md:px-[clamp(1rem,2vw,1.5rem)] md:pt-[clamp(1rem,2vw,1.5rem)] md:pb-[clamp(1.5rem,3vw,2rem)] relative">
-        {/* Decorative background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            className="absolute top-20 left-10 w-48 h-48 md:w-64 md:h-64 rounded-full blur-3xl"
-            style={{
-              backgroundColor: "rgba(74, 43, 130, 0.13)",
-            }}
-            animate={{
-              scale: [1, 1.08, 1],
-              opacity: [0.16, 0.26, 0.16],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          ></motion.div>
-          <motion.div
-            className="absolute bottom-20 right-10 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl"
-            style={{
-              backgroundColor: "rgba(118, 90, 184, 0.10)",
-            }}
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.16, 0.26, 0.16],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          ></motion.div>
-        </div>
-
-        <motion.div
-          className="filters-elements-container w-full max-w-[900px] flex flex-col flex-1 min-h-0 justify-start md:justify-start lg:justify-start relative z-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+        {/* Vocabulary levels — explicit list, never empty */}
+        <section
+          className="filter-group filter-group--levels"
+          aria-labelledby="filters-levels-title"
         >
-          {/* Headline */}
-          <motion.div
-            className="text-center space-y-1.5 sm:space-y-2 lg:space-y-3"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h2 className="text-3xl md:text-[clamp(2.25rem,3.5vw,3rem)] text-foreground leading-tight">
-              {t("levelCategory.titleWithSkipAhead")}
-            </h2>
-          </motion.div>
-
-          {/* Level Selection */}
-          <motion.div
-            className="space-y-2.5 sm:space-y-3 lg:space-y-2.5"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h3 className="text-xl md:text-[clamp(1.25rem,2vw,1.5rem)] text-foreground text-center">
-              {t("levelCategory.vocabularyLevel")}
-            </h3>
-            <p className="!mt-0 text-sm md:text-[clamp(0.9rem,1.2vw,1rem)] text-center text-muted-foreground">
-              {selectedLevels.length === allLevelCodes.length
-                ? t("levelCategory.allLevelsSelected")
-                : `${selectedLevels.length} ${selectedLevels.length > 1 ? t("levelCategory.levelsSelectedPlural") : t("levelCategory.levelsSelected")}`}
-            </p>
-            <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-[clamp(0.75rem,1.6vw,1rem)] lg:gap-[clamp(0.65rem,1vw,0.625rem)]">
-              {levels.map((level, index) => {
-                const isSelected = selectedLevels.includes(level.code);
-                const isDisabled = !hasWordsAfterLevelToggle(level.code);
-                return (
-                  <motion.button
-                    key={level.code}
-                    disabled={isDisabled}
-                    onClick={() => {
-                      if (isDisabled) return;
-                      if (suppressClickUntilRef.current > Date.now()) return;
-                      toggleLevel(level.code);
-                    }}
-                    onPointerUp={(event) => {
-                      if (event.pointerType !== "touch") return;
-                      const now = Date.now();
-                      const isDoubleTap =
-                        lastTouchRef.current.level === level.code &&
-                        now - lastTouchRef.current.time < 320;
-                      if (isDoubleTap) {
-                        suppressClickUntilRef.current = now + 400;
-                        handleSelectOnlyLevel(level.code);
-                        lastTouchRef.current = {
-                          time: 0,
-                          level: null,
-                        };
-                        return;
-                      }
-                      lastTouchRef.current = {
-                        time: now,
-                        level: level.code,
-                      };
-                    }}
-                    onDoubleClick={() => handleSelectOnlyLevel(level.code)}
-                    title={t("levelCategory.levelSingleSelectHint")}
-                    className={`relative p-2 sm:p-2.5 md:p-[clamp(0.62rem,1.05vw,0.68rem)] rounded-xl sm:rounded-lg border-2 transition-all ${
-                      isSelected
-                        ? "border-primary shadow-lg shadow-primary/20"
-                        : "border-primary/60 hover:border-primary bg-transparent"
-                    } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
-                    whileHover={isDisabled ? undefined : { scale: 1.05 }}
-                    whileTap={isDisabled ? undefined : { scale: 0.95 }}
-                    style={{
-                      backgroundColor: isSelected
-                        ? `rgba(${navbarColorRgb}, ${levelOpacities[index] ?? 0.1})`
-                        : "transparent",
-                    }}
-                  >
-                    {isSelected && (
-                      <span
-                        className="absolute top-1 right-1 sm:top-2 sm:right-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
-                        style={{
-                          color: `rgb(${navbarColorRgb})`,
-                        }}
-                      >
-                        <Check className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </span>
-                    )}
-                    <div
-                      className="text-sm sm:text-base md:text-[clamp(0.95rem,1.3vw,1rem)] font-medium"
-                      style={{
-                        color: isSelected
-                          ? (levelTextColors[index] ?? "rgba(2, 6, 23, 1)")
-                          : "rgba(15, 23, 42, 0.95)",
-                      }}
-                    >
-                      {level.code}
-                    </div>
-                    <div
-                      className="text-[10px] sm:text-xs md:text-[clamp(0.7rem,1vw,0.75rem)] mt-0 hidden sm:block"
-                      style={{
-                        color: isSelected
-                          ? (levelSubTextColors[index] ??
-                            "rgba(2, 6, 23, 0.82)")
-                          : "rgba(30, 41, 59, 0.75)",
-                      }}
-                    >
-                      {t(`level.${level.code}.name`)}
-                    </div>
-                  </motion.button>
-                );
-              })}
+          <div className="filter-group__head">
+            <div className="filter-group__heading">
+              <h2 id="filters-levels-title" className="filter-group__title">
+                {pageText("levels.title")}
+              </h2>
+              <p className="filter-group__hint">{pageText("levels.hint")}</p>
             </div>
-
-            {/* Helper text and level test button */}
-            <div className="flex flex-col items-center gap-2 sm:gap-3 md:gap-[clamp(0.5rem,1vw,0.75rem)] pt-1">
-              <p className="text-sm sm:text-base md:text-[clamp(0.95rem,1.2vw,1rem)] text-center text-muted-foreground">
-                <span className="md:hidden">Not sure? Take a level test.</span>
-                <span className="hidden md:inline">
-                  {t("levelCategory.notSureLevel")}
-                </span>
-              </p>
-              <motion.button
-                className="px-5 py-2 sm:px-6 sm:py-2.5 md:px-[clamp(1.4rem,2vw,1.5rem)] md:py-[clamp(0.6rem,1vw,0.625rem)] bg-card border-2 text-primary hover:bg-primary/5 rounded-xl sm:rounded-lg transition-all shadow-sm text-sm sm:text-base md:text-[clamp(0.95rem,1.2vw,1rem)]"
-                style={{ borderColor: "#6366f14d" }}
-                whileHover={{
-                  scale: 1.03,
-                  borderColor: "#6366f180",
-                }}
-                whileTap={{ scale: 0.98 }}
-                onClick={onTakeLevelTest}
-              >
-                {t("levelCategory.takeLevelTest")}
-              </motion.button>
-            </div>
-          </motion.div>
-
-          {/* Category Selection */}
-          <motion.div
-            className="space-y-2.5 sm:space-y-3 lg:space-y-2.5"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h3 className="text-xl md:text-[clamp(1.25rem,2vw,1.5rem)] text-foreground text-center mb-1">
-              {t("levelCategory.topicsToPractice")}
-            </h3>
-            <p className="!mt-0 text-sm md:text-[clamp(0.9rem,1.2vw,1rem)] text-center text-muted-foreground">
-              {t("levelCategory.allTopicsSelected")}
-            </p>
-            {isPhoneMobile ? (
-              <motion.button
+            <div className="filter-group__status">
+              <span className="filter-group__count" aria-live="polite">
+                {getCountBadge(levelState, "summary.allLevels")}
+              </span>
+              <button
                 type="button"
-                onClick={() => {
-                  setPendingCategories(selectedCategories);
-                  setIsTopicsModalOpen(true);
-                }}
-                className="filters-topics-open-button w-full rounded-xl border-2 border-primary/35 bg-card px-4 py-3 text-center text-primary font-semibold transition-all hover:bg-primary/5"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
+                className="filter-group__action"
+                disabled={levelState.kind !== "some"}
+                onClick={() => setSelectedLevels([...allLevelCodes])}
               >
-                {t("levelCategory.topics.filterButton")}
-              </motion.button>
-            ) : (
-              <div className="flex flex-wrap justify-center gap-2 md:gap-[clamp(0.6rem,1.2vw,0.75rem)] lg:gap-[clamp(0.55rem,1vw,0.625rem)] max-h-[110px] md:max-h-[180px] lg:max-h-none">
-                {visibleCategories.map((category) => {
-                  const isSelected = selectedCategories.includes(category.id);
-                  const isDisabled = !hasWordsAfterCategoryToggle(category.id);
-                  return (
-                    <motion.button
-                      key={category.id}
-                      disabled={isDisabled}
-                      onClick={() => toggleCategory(category.id)}
-                      className={`px-3 py-1.5 sm:px-3 sm:py-2 md:px-[clamp(0.85rem,1.3vw,0.75rem)] md:py-[clamp(0.45rem,0.8vw,0.5rem)] rounded-xl sm:rounded-lg border-2 transition-all flex items-center gap-1.5 sm:gap-2 md:gap-[clamp(0.4rem,0.8vw,0.5rem)] ${
-                        isSelected
-                          ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-                          : "border-border bg-card hover:border-primary/50"
-                      } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
-                      whileHover={isDisabled ? undefined : { scale: 1.05 }}
-                      whileTap={isDisabled ? undefined : { scale: 0.95 }}
-                    >
-                      <span className="text-sm sm:text-sm md:text-[clamp(0.85rem,1.1vw,0.875rem)] text-foreground">
-                        {getCategoryLabel(category.id)}
-                      </span>
-                    </motion.button>
-                  );
-                })}
-                {hiddenTopicsCount > 0 && (
-                  <button
-                    className="px-3 py-1.5 md:px-[clamp(0.85rem,1.3vw,0.75rem)] md:py-[clamp(0.45rem,0.8vw,0.5rem)] flex items-center gap-1.5 md:gap-[clamp(0.4rem,0.8vw,0.5rem)] text-sm sm:text-sm md:text-[clamp(0.85rem,1.1vw,0.875rem)] text-primary hover:underline transition-all"
-                    onClick={() => {
-                      setPendingCategories(selectedCategories);
-                      setIsTopicsModalOpen(true);
-                    }}
-                  >
-                    <>
-                      <span className="hidden md:inline">
-                        {t("levelCategory.showAllTopics")} (+
-                        {hiddenTopicsCount} {t("levelCategory.moreTopics")})
-                      </span>
-                      <span className="md:hidden">
-                        {t("levelCategory.topics.showAllShort")}
-                      </span>
-                      <ChevronDown className="w-4 h-4 sm:w-4 sm:h-4" />
-                    </>
-                  </button>
-                )}
-              </div>
-            )}
-            {isTopicsModalOpen && (
-              <div
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
-                role="dialog"
-                aria-modal="true"
-                aria-label={t("levelCategory.topicsToPractice")}
-                onClick={() => setIsTopicsModalOpen(false)}
-              >
-                <div
-                  className="w-full max-w-2xl max-h-[80vh] bg-card border border-border rounded-xl shadow-xl p-5"
-                  onClick={(event) => event.stopPropagation()}
+                {pageText("selectAll")}
+              </button>
+            </div>
+          </div>
+          {levelValuesLine && (
+            <p className="filter-group__values">{levelValuesLine}</p>
+          )}
+
+          <CefrLevelTiles
+            selectedLevels={selectedLevels}
+            onChange={setSelectedLevels}
+            canApply={canApplyLevels}
+            labelledBy="filters-levels-title"
+            unavailableHint={unavailableHint}
+          />
+
+          <p className="filter-group__test">
+            <span>{pageText("levelTest.prompt")}</span>{" "}
+            <button type="button" onClick={onTakeLevelTest}>
+              <span>{pageText("levelTest.action")}</span>
+              <ChevronRight aria-hidden="true" />
+            </button>
+          </p>
+        </section>
+
+        {/* Topics — [] means every topic */}
+        <section
+          className="filter-group filter-group--topics"
+          aria-labelledby="filters-topics-title"
+        >
+          <div className="filter-group__head">
+            <div className="filter-group__heading">
+              <h2 id="filters-topics-title" className="filter-group__title">
+                {pageText("topics.title")}
+              </h2>
+              <p className="filter-group__hint">{pageText("topics.hint")}</p>
+            </div>
+            <div className="filter-group__status">
+              <span className="filter-group__count" aria-live="polite">
+                {getCountBadge(topicState, "summary.allTopics")}
+              </span>
+            </div>
+          </div>
+          {topicValuesLine && (
+            <p className="filter-group__values">{topicValuesLine}</p>
+          )}
+
+          <div
+            id="filters-topic-options"
+            className="filter-group__chips"
+            role="group"
+            aria-labelledby="filters-topics-title"
+          >
+            <button
+              type="button"
+              aria-pressed={topicState.kind === "unrestricted"}
+              className={`filter-chip filter-chip--all${
+                topicState.kind === "unrestricted" ? " is-selected" : ""
+              }`}
+              onClick={() => setSelectedCategories([])}
+            >
+              <span className="filter-check" aria-hidden="true">
+                <Check />
+              </span>
+              <span>{pageText("summary.allTopics")}</span>
+            </button>
+            {visibleCategoryIds.map((categoryId) => {
+              const isSelected = topicState.selected.includes(categoryId);
+              const isDisabled = !hasWordsAfterCategoryToggle(categoryId);
+              return (
+                <button
+                  key={categoryId}
+                  type="button"
+                  aria-pressed={isSelected}
+                  disabled={isDisabled}
+                  title={isDisabled ? unavailableHint : undefined}
+                  className={`filter-chip${isSelected ? " is-selected" : ""}`}
+                  onClick={() => toggleCategory(categoryId)}
                 >
-                  <div className="flex items-center justify-between gap-4 mb-4">
-                    <h4 className="text-lg font-semibold text-foreground">
-                      {t("levelCategory.topicsToPractice")}
-                    </h4>
-                    <button
-                      className="text-3xl -mt-2 leading-none text-muted-foreground hover:text-foreground transition"
-                      onClick={() => setIsTopicsModalOpen(false)}
-                      aria-label={t("levelCategory.actions.close")}
-                    >
-                      ×
-                    </button>
-                  </div>
-                  <div className="flex flex-wrap gap-2 overflow-y-auto max-h-[60vh] pr-1">
-                    {categories.map((category) => {
-                      const isSelected = pendingCategories.includes(category.id);
-                      const isDisabled = !hasWordsAfterCategoryToggle(
-                        category.id,
-                        pendingCategories,
-                      );
-                      return (
-                        <motion.button
-                          key={category.id}
-                          disabled={isDisabled}
-                          onClick={() => togglePendingCategory(category.id)}
-                          className={`px-3 py-2 rounded-lg border-2 transition-all flex items-center gap-2 ${
-                            isSelected
-                              ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-                              : "border-border bg-card hover:border-primary/50"
-                          } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
-                          whileHover={{ scale: 1 }}
-                          whileTap={{ scale: 1 }}
-                        >
-                          <span className="text-sm text-foreground">
-                            {getCategoryLabel(category.id)}
-                          </span>
-                        </motion.button>
-                      );
+                  <span className="filter-check" aria-hidden="true">
+                    <Check />
+                  </span>
+                  <span>{getCategoryLabel(categoryId)}</span>
+                </button>
+              );
+            })}
+          </div>
+          {hiddenTopicsCount > 0 && (
+            <button
+              type="button"
+              className="filter-group__toggle"
+              aria-expanded={areTopicsExpanded}
+              aria-controls="filters-topic-options"
+              onClick={() => setAreTopicsExpanded((expanded) => !expanded)}
+            >
+              <span>
+                {areTopicsExpanded
+                  ? t("levelCategory.topics.showFewer")
+                  : fillTemplate(pageText("topics.showAll"), {
+                      count: hiddenTopicsCount,
                     })}
-                  </div>
-                  <div className="mt-4 flex items-center justify-between">
-                    <button
-                      className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition"
-                      onClick={() => setPendingCategories([])}
-                    >
-                      {t("levelCategory.actions.clear")}
-                    </button>
-                    <button
-                      className="px-5 py-2 bg-card border-2 text-primary hover:bg-primary/5 rounded-lg transition-all shadow-sm"
-                      style={{ borderColor: "#6366f14d" }}
-                      disabled={
-                        getFilteredWordCount(
-                          selectedLevels,
-                          pendingCategories,
-                          selectedWordTypes,
-                        ) === 0
-                      }
-                      onClick={() => {
-                        setSelectedCategories(pendingCategories);
-                        setIsTopicsModalOpen(false);
-                      }}
-                    >
-                      {t("levelCategory.actions.apply")}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </motion.div>
-
-          {/* Word Type Selection */}
-          <motion.div
-            className="space-y-2.5 mb-0 sm:space-y-3 lg:space-y-2.5"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <h3 className="text-xl md:text-[clamp(1.25rem,2vw,1.5rem)] text-foreground text-center">
-              {t("levelCategory.wordTypes")}
-            </h3>
-            <p className="!mt-0 text-sm md:text-[clamp(0.9rem,1.2vw,1rem)] text-center text-muted-foreground">
-              {t("levelCategory.allGrammarTypesSelected")}
-            </p>
-            {isPhoneMobile ? (
-              <motion.button
-                type="button"
-                onClick={() => {
-                  setPendingWordTypes(selectedWordTypes);
-                  setIsWordTypesModalOpen(true);
-                }}
-                className="filters-topics-open-button w-full rounded-xl border-2 border-primary/35 bg-card px-4 py-3 text-center text-primary font-semibold transition-all hover:bg-primary/5"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-              >
-                {t("levelCategory.types.filterButton")}
-              </motion.button>
-            ) : (
-              <div
-                className={
-                  isLaptopFilterRange ? "relative w-fit mx-auto" : undefined
-                }
-              >
-                <div className="flex flex-wrap justify-center gap-2 pb-0 mb-0 md:gap-[clamp(0.6rem,1.2vw,0.75rem)] lg:gap-[clamp(0.55rem,1vw,0.625rem)]">
-                  {visibleWordTypes.map((typeId) => {
-                    const isSelected = selectedWordTypes.includes(typeId);
-                    const isDisabled = !hasWordsAfterWordTypeToggle(typeId);
-                    return (
-                      <motion.button
-                        key={typeId}
-                        disabled={isDisabled}
-                        onClick={() => toggleWordType(typeId)}
-                        className={`px-4 py-2 sm:px-6 sm:py-3 md:px-[clamp(1rem,1.8vw,1.5rem)] md:py-[clamp(0.55rem,1vw,0.75rem)] rounded-full border transition-all ${
-                          isSelected
-                            ? "border-primary bg-primary/5 text-primary shadow-md"
-                            : "border-muted-foreground/20 bg-background text-foreground hover:border-primary/40"
-                        } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
-                        whileHover={isDisabled ? undefined : { scale: 1.05 }}
-                        whileTap={isDisabled ? undefined : { scale: 0.95 }}
-                      >
-                        <span className="text-sm md:text-[clamp(0.95rem,1.2vw,1rem)] font-medium">
-                          {getWordTypeLabel(typeId)}
-                        </span>
-                      </motion.button>
-                    );
-                  })}
-                </div>
-                {isLaptopFilterRange && prioritizedWordTypes.length > 0 && (
-                  <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2">
-                    <button
-                      className="inline-flex items-center gap-1.5 md:gap-[clamp(0.4rem,0.8vw,0.5rem)] px-2 py-1 text-sm md:text-[clamp(0.95rem,1.2vw,1rem)] text-primary hover:underline transition-all whitespace-nowrap"
-                      onClick={() => {
-                        setPendingWordTypes(selectedWordTypes);
-                        setIsWordTypesModalOpen(true);
-                      }}
-                    >
-                      <span>{t("levelCategory.types.showMore")}</span>
-                      <ChevronDown className="w-4 h-4 sm:w-4 sm:h-4" />
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-            {!isPhoneMobile &&
-              !isLaptopFilterRange &&
-              prioritizedWordTypes.length > 0 && (
-                <div
-                  className={`flex mt-0 mb-0 sm:mt-1 ${
-                    isLaptopFilterRange ? "justify-end" : "justify-center"
-                  }`}
-                >
-                    <button
-                      className="flex items-center gap-1.5 md:gap-[clamp(0.4rem,0.8vw,0.5rem)] text-sm md:text-[clamp(0.95rem,1.2vw,1rem)] text-primary hover:underline transition-all"
-                      onClick={() => {
-                        setPendingWordTypes(selectedWordTypes);
-                        setIsWordTypesModalOpen(true);
-                      }}
-                    >
-                      <>
-                        <span className="hidden md:inline">
-                          {isLaptopFilterRange
-                            ? t("levelCategory.types.showMore")
-                            : hiddenWordTypesCount > 0
-                              ? `${t("levelCategory.types.showMoreWithCountPrefix")} (+${hiddenWordTypesCount})`
-                              : t("levelCategory.types.showAll")}
-                        </span>
-                        <span className="md:hidden">
-                          {t("levelCategory.types.showAllShort")}
-                        </span>
-                      <ChevronDown className="w-4 h-4 sm:w-4 sm:h-4" />
-                    </>
-                  </button>
-                </div>
+              </span>
+              {areTopicsExpanded ? (
+                <ChevronUp aria-hidden="true" />
+              ) : (
+                <ChevronDown aria-hidden="true" />
               )}
+            </button>
+          )}
+        </section>
 
-            {isWordTypesModalOpen && (
-              <div
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
-                role="dialog"
-                aria-modal="true"
-                aria-label={t("levelCategory.wordTypes")}
-                onClick={() => setIsWordTypesModalOpen(false)}
-              >
-                <div
-                  className="w-full max-w-2xl max-h-[80vh] bg-card border border-border rounded-xl shadow-xl p-5"
-                  onClick={(event) => event.stopPropagation()}
-                >
-                  <div className="flex items-center justify-between gap-4 mb-4">
-                    <h4 className="text-lg font-semibold text-foreground">
-                      {t("levelCategory.wordTypes")}
-                    </h4>
-                    <button
-                      className="text-muted-foreground hover:text-foreground transition"
-                      onClick={() => setIsWordTypesModalOpen(false)}
-                      aria-label={t("levelCategory.actions.close")}
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
-                  <div className="flex flex-wrap gap-2 overflow-y-auto max-h-[60vh] pr-1">
-                    {prioritizedWordTypes.map((typeId) => {
-                      const isSelected = pendingWordTypes.includes(typeId);
-                      const isDisabled = !hasWordsAfterWordTypeToggle(
-                        typeId,
-                        pendingWordTypes,
-                      );
-                      return (
-                        <motion.button
-                          key={typeId}
-                          disabled={isDisabled}
-                          onClick={() => togglePendingWordType(typeId)}
-                          className={`px-3 py-2 rounded-lg border-2 transition-all flex items-center gap-2 ${
-                            isSelected
-                              ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-                              : "border-border bg-card hover:border-primary/50"
-                          } ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`}
-                          whileHover={{ scale: 1 }}
-                          whileTap={{ scale: 1 }}
-                        >
-                          <span className="text-sm text-foreground">
-                            {getWordTypeLabel(typeId)}
-                          </span>
-                        </motion.button>
-                      );
-                    })}
-                  </div>
-                  <div className="mt-4 flex items-center justify-between">
-                    <button
-                      className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition"
-                      onClick={() => setPendingWordTypes([])}
-                    >
-                      {t("levelCategory.actions.clear")}
-                    </button>
-                    <button
-                      className="px-5 py-2 bg-card border-2 text-primary hover:bg-primary/5 rounded-lg transition-all shadow-sm"
-                      style={{ borderColor: "#6366f14d" }}
-                      disabled={
-                        getFilteredWordCount(
-                          selectedLevels,
-                          selectedCategories,
-                          pendingWordTypes,
-                        ) === 0
-                      }
-                      onClick={() => {
-                        setSelectedWordTypes(pendingWordTypes);
-                        setIsWordTypesModalOpen(false);
-                      }}
-                    >
-                      {t("levelCategory.actions.apply")}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </motion.div>
+        {/* Word types — [] means every word type */}
+        <section
+          className="filter-group filter-group--types"
+          aria-labelledby="filters-types-title"
+        >
+          <div className="filter-group__head">
+            <div className="filter-group__heading">
+              <h2 id="filters-types-title" className="filter-group__title">
+                {pageText("wordTypes.title")}
+              </h2>
+              <p className="filter-group__hint">{pageText("wordTypes.hint")}</p>
+            </div>
+            <div className="filter-group__status">
+              <span className="filter-group__count" aria-live="polite">
+                {getCountBadge(wordTypeState, "summary.allWordTypes")}
+              </span>
+            </div>
+          </div>
+          {wordTypeValuesLine && (
+            <p className="filter-group__values">{wordTypeValuesLine}</p>
+          )}
 
-          {/* Continue Button */}
-          <motion.div
-            className="mt-auto pb-0 sm:mt-4 flex justify-center items-center"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+          <div
+            className="filter-group__chips"
+            role="group"
+            aria-labelledby="filters-types-title"
           >
-            <motion.button
+            <button
+              type="button"
+              aria-pressed={wordTypeState.kind === "unrestricted"}
+              className={`filter-chip filter-chip--all${
+                wordTypeState.kind === "unrestricted" ? " is-selected" : ""
+              }`}
+              onClick={() => setSelectedWordTypes([])}
+            >
+              <span className="filter-check" aria-hidden="true">
+                <Check />
+              </span>
+              <span>{pageText("summary.allWordTypes")}</span>
+            </button>
+            {prioritizedWordTypes.map((typeId) => {
+              const isSelected = wordTypeState.selected.includes(typeId);
+              const isDisabled = !hasWordsAfterWordTypeToggle(typeId);
+              return (
+                <button
+                  key={typeId}
+                  type="button"
+                  aria-pressed={isSelected}
+                  disabled={isDisabled}
+                  title={isDisabled ? unavailableHint : undefined}
+                  className={`filter-chip${isSelected ? " is-selected" : ""}`}
+                  onClick={() => toggleWordType(typeId)}
+                >
+                  <span className="filter-check" aria-hidden="true">
+                    <Check />
+                  </span>
+                  <span>{getWordTypeLabel(typeId)}</span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Live setup summary + primary action. The wrapper is
+            `display: contents` on phones so the action bar stays a direct
+            child of the page column and its sticky range spans the page. */}
+        <div className="filters-review">
+          <section
+            className="filters-summary"
+            aria-labelledby="filters-summary-title"
+          >
+            <h2 id="filters-summary-title" className="filters-summary__title">
+              {pageText("summary.title")}
+            </h2>
+            <dl className="filters-summary__rows">
+              {[
+                ["levels", levelSummary],
+                ["topics", topicSummary],
+                ["wordTypes", wordTypeSummary],
+              ].map(([key, value]) => (
+                <div key={key}>
+                  <dt>{pageText(`summary.${key}`)}</dt>
+                  <dd title={value}>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
+          <div className="filters-page__action-bar">
+            <button
+              type="button"
               onClick={onContinue}
               disabled={!hasWordsForCurrentFilters}
-              style={{
-                ...nextButtonStarFieldStyle,
-                boxShadow:
-                  "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-              }}
-              className="filters-continue-button text-white px-12 py-4 text-lg rounded-xl sm:rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
-              whileHover={
-                hasWordsForCurrentFilters
-                  ? {
-                      scale: 1.05,
-                      boxShadow: "0 20px 40px #6366f14d",
-                    }
-                  : undefined
-              }
-              whileTap={hasWordsForCurrentFilters ? { scale: 0.95 } : undefined}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 17,
-              }}
+              className="filters-page__continue"
             >
-              {continueLabel ?? (hasAnyFilterSelected
-                ? t("levelCategory.next")
-                : t("levelCategory.skipToNext"))}
-            </motion.button>
-          </motion.div>
-        </motion.div>
-      </main>
+              {continueLabel ??
+                (hasAnyFilterSelected
+                  ? t("levelCategory.next")
+                  : t("levelCategory.skipToNext"))}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
-

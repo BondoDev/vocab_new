@@ -63,7 +63,9 @@
         "allVocabulary": "All Vocabulary",
         "customize": "Customize Filters",
         "apply": "Apply Filters",
-        "backToSetup": "Back to Custom Practice"
+        "backToSetup": "Back to Custom Practice",
+        "moreFilters": "More detailed filters",
+        "levelsHeading": "Choose the levels to practice"
       },
       "title": "Custom Practice",
       "description": "Choose what and how you want to practice with flexible vocabulary exercises.",
@@ -1350,7 +1352,45 @@
       "apply": "Apply",
       "close": "Close"
     },
-    "titleWithSkipAhead": "Customize Your Practice or Skip Ahead"
+    "titleWithSkipAhead": "Customize Your Practice or Skip Ahead",
+    "filtersPage": {
+      "title": "Choose What to Practice",
+      "subtitle": "Select the vocabulary you want to focus on, or keep the current settings.",
+      "levels": {
+        "title": "Vocabulary Levels",
+        "hint": "Choose one or more levels. Double-click a level to keep only that one."
+      },
+      "topics": {
+        "title": "Topics",
+        "hint": "Choose one or more topics, or keep all topics.",
+        "showAll": "Show all topics (+{count})"
+      },
+      "wordTypes": {
+        "title": "Word Types",
+        "hint": "Choose one or more word types, or keep all of them."
+      },
+      "selectedCount_one": "{count} selected",
+      "selectedCount_other": "{count} selected",
+      "allCount": "All {count} selected",
+      "selectedValues": "Selected: {values}",
+      "moreValues": "+{count} more",
+      "selectAll": "Select all",
+      "levelTest": {
+        "prompt": "Not sure about your level?",
+        "action": "Take a quick test"
+      },
+      "unavailable": "No words match this combination of filters",
+      "summary": {
+        "title": "Your Practice Setup",
+        "levels": "Levels",
+        "topics": "Topics",
+        "wordTypes": "Word types",
+        "allLevels": "All levels",
+        "allTopics": "All topics",
+        "allWordTypes": "All word types",
+        "ofTotal": "{selected} of {total}"
+      }
+    }
   },
   "levels": {
     "A1": {

@@ -1,0 +1,138 @@
+// CEFR level tiles (CefrLevelTiles), used on the Custom Practice setup page
+// and the detailed filters page. Indigo is the levels accent on both. A
+// selected tile is never color-only: heavier border, darker text and a check
+// mark (aria-pressed for assistive tech).
+//
+// The grid uses a container query, so it adapts to the panel it sits in
+// rather than the viewport: three columns (two rows) in narrow panels, one
+// row of six once each tile can fit its longest translated description.
+
+.cefr-level-tiles {
+  --cl-accent: #6366f1;
+  --cl-ink: #3730a3;
+  --cl-tint: #eef0ff;
+  --cl-code: #1e1b3a;
+  --cl-text: #4a5568;
+  --cl-border: rgba(15, 23, 42, 0.16);
+  --cl-surface: #ffffff;
+
+  container-type: inline-size;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+
+    @container (min-width: 38rem) {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.625rem;
+    }
+  }
+}
+
+.cefr-level-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  min-height: 4.25rem;
+  padding: 0.625rem 0.375rem;
+  border: 1px solid var(--cl-border);
+  border-radius: 0.625rem;
+  background: var(--cl-surface);
+  color: var(--cl-text);
+  text-align: center;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &__code {
+    color: var(--cl-code);
+    font-family: var(--font-family-heading);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  &__name {
+    font-size: 0.75rem;
+    line-height: 1.25;
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
+
+  &__check {
+    position: absolute;
+    top: 0.375rem;
+    right: 0.375rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 999px;
+    background: var(--cl-accent);
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+
+    svg {
+      width: 70%;
+      height: 70%;
+      stroke-width: 3;
+    }
+  }
+
+  &:hover:not(:disabled):not(.is-selected) {
+    border-color: color-mix(in srgb, var(--cl-accent) 60%, transparent);
+    background: color-mix(in srgb, var(--cl-tint) 45%, white);
+  }
+
+  &.is-selected {
+    border-color: var(--cl-accent);
+    background: var(--cl-tint);
+    color: var(--cl-ink);
+    box-shadow: inset 0 0 0 1px var(--cl-accent);
+
+    .cefr-level-tile__code {
+      color: var(--cl-ink);
+    }
+
+    .cefr-level-tile__check {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cl-accent);
+    outline-offset: 2px;
+  }
+
+  // Narrow three-column tiles: keep the mark in the corner, clear of the code.
+  @container (max-width: 26rem) {
+    &__check {
+      top: 0.25rem;
+      right: 0.25rem;
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    &__check {
+      transition: none;
+    }
+  }
+}

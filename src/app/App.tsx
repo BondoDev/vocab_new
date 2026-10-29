@@ -1713,6 +1713,7 @@ function AppContent({
           onReverseLanguages={handleReverseLanguages}
           swapRotation={swapRotation}
           selectedLevels={selectedLevels}
+          setSelectedLevels={setSelectedLevels}
           selectedCategories={selectedCategories}
           selectedWordTypes={selectedWordTypes}
           onCustomizeFilters={() => navigate(

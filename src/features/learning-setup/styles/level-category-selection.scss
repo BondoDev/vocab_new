@@ -1,577 +1,629 @@
+// Custom Practice filters page (LevelCategorySelection).
+//
+// Each filter group carries one accent through its options, check marks and
+// count label: levels indigo, topics teal, word types amber; the setup summary
+// bar is neutral lavender. Selected options never rely on color alone: they also get a
+// heavier border, darker text and a visible check mark (aria-pressed for AT).
+
 .filters-page {
-  @media (max-width: 1023.98px) {
-    > button {
-      display: none !important;
+  --fp-ink: #1e1b3a;
+  --fp-text: #4a5568;
+  --fp-muted: #6b7280;
+  --fp-hairline: rgba(15, 23, 42, 0.1);
+  --fp-option-border: rgba(15, 23, 42, 0.16);
+  --fp-surface: #ffffff;
+  --fp-indigo: #6366f1;
+  --fp-indigo-ink: #3730a3;
+  --fp-indigo-tint: #eef0ff;
+  --fp-teal: #14b8a6;
+  --fp-teal-ink: #115e59;
+  --fp-teal-tint: #e7f8f5;
+  --fp-amber: #f59e0b;
+  --fp-amber-ink: #92400e;
+  --fp-amber-tint: #fff6e0;
+  --fp-indigo-strong: #4f46e5;
+  --fp-lavender: #f6f4fd;
+  --fp-lavender-rule: #e3dcf5;
+  --fp-radius: 0.875rem;
+
+  flex: 1;
+  background:
+    radial-gradient(60rem 22rem at 50% -6rem, rgba(99, 102, 241, 0.09), transparent 70%),
+    var(--background, #f8f9fb);
+  color: var(--fp-text);
+
+  &__inner {
+    width: 100%;
+    max-width: 60rem;
+    margin-inline: auto;
+    padding: 0.25rem 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      padding: 0.25rem 1.5rem 2.5rem;
+      gap: 1.25rem;
     }
   }
 
-  > button {
-    position: absolute !important;
-    left: var(--nav-left-edge) !important;
-  }
+  // Below 1024px the back link lines up with the content column. From 1024px
+  // (desktop header) it lines up with the FLUENTSTELLAR logo, whose left edge
+  // is the header's max-w-7xl (80rem) column in a nav with 2rem minimum
+  // inset. `100%` is this page's width, i.e. the viewport without its
+  // scrollbar, which is what the header centers in; 100vw would be off by
+  // half the scrollbar width.
+  &__back-row {
+    width: 100%;
+    max-width: 60rem;
+    margin-inline: auto;
+    padding: 1rem 1rem 0;
 
-  .filters-elements-container > :not([hidden]) ~ :not([hidden]) {
-    margin-top: 0.75rem !important;
-  }
-
-  .filters-elements-container > :nth-child(2) h3 {
-    margin-bottom: 0 !important;
-  }
-
-  .filters-elements-container > :nth-child(4) h3 {
-    margin-bottom: 0 !important;
-  }
-
-  .filters-elements-container > :nth-child(2) > p,
-  .filters-elements-container > :nth-child(3) > p,
-  .filters-elements-container > :nth-child(4) > p {
-    margin-top: 0 !important;
-  }
-
-  // Keep first/last CEFR buttons from being clipped when hover scale is applied.
-  .filters-elements-container > :nth-child(2) > div:nth-child(3) {
-    padding-inline: clamp(0.18rem, 0.45vw, 0.35rem);
-  }
-
-  // SMALL MOBILE SCREEN
-  @media (max-width: 375.98px) {
-    > button {
-      display: none !important;
+    @media (min-width: 768px) {
+      padding: 1.5rem 1.5rem 0;
     }
 
-    .filters-elements-container {
-      height: 85dvh !important;
-      justify-content: flex-start !important;
+    @media (min-width: 1024px) {
+      max-width: none;
+      padding-left: max(2rem, calc((100% - 80rem) / 2));
+    }
+  }
+
+  // ── Header ────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+
+    @media (min-width: 768px) {
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    // Negative margin cancels the button padding and the chevron glyph's own
+    // inset (~6px of its 18px box) so the visible chevron sits on the edge.
+    margin-left: -0.65rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+    border-radius: 0.5rem;
+    color: var(--fp-muted);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    transition: color 0.15s ease, background-color 0.15s ease;
+
+    svg {
+      width: 1.125rem;
+      height: 1.125rem;
+      flex: none;
     }
 
-    // Reduce the main page header size on extra-small screens.
-    .filters-elements-container > :first-child h2 {
-      font-size: 1.18rem !important;
-      line-height: 1.2 !important;
+    &:hover {
+      color: var(--fp-ink);
+      background: rgba(99, 102, 241, 0.08);
     }
 
-    // Reduce the subtitle text under the main header on extra-small screens.
-    .filters-elements-container > :first-child p {
-      font-size: 0.84rem !important;
-      line-height: 1.25 !important;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--fp-ink);
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.125rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  &__subtitle {
+    margin: 0;
+    max-width: 36rem;
+    color: var(--fp-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  // ── Action bar ────────────────────────────────────────────
+  &__action-bar {
+    display: flex;
+  }
+
+  &__continue {
+    flex: 1;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.5rem;
+    background: var(--fp-indigo-strong);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px -6px rgba(79, 70, 229, 0.6);
+    transition: background-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+
+    &:hover:not(:disabled) {
+      background: var(--fp-indigo-ink);
+      box-shadow: 0 8px 18px -8px rgba(79, 70, 229, 0.7);
     }
 
-    .filters-elements-container > :nth-child(2) > p,
-    .filters-elements-container > :nth-child(3) > p,
-    .filters-elements-container > :nth-child(4) > p {
-      font-size: 0.78rem !important;
-      line-height: 1.2 !important;
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  // Phones: the summary stays in flow and the button sticks to the bottom of
+  // the screen. The bar is in normal flow at the end of the page, so once
+  // scrolled to the bottom it sits below the summary instead of covering it.
+  // Short landscape screens keep it static.
+  @media (max-width: 767.98px) and (min-height: 30rem) {
+    &__action-bar {
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      margin-inline: -1rem;
+      margin-block: -0.5rem -1.5rem;
+      padding: 0.625rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+      background: rgba(255, 255, 255, 0.94);
+      border-top: 1px solid var(--fp-hairline);
+      box-shadow: 0 -8px 20px -14px rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(8px);
+    }
+  }
+
+  @media (min-width: 768px) {
+    &__continue {
+      flex: none;
+      min-width: 11rem;
+    }
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--fp-indigo);
+    outline-offset: 2px;
+  }
+}
+
+// ── Filter groups ───────────────────────────────────────────
+.filter-group {
+  --fg-accent: var(--fp-indigo);
+  --fg-ink: var(--fp-indigo-ink);
+  --fg-tint: var(--fp-indigo-tint);
+
+  position: relative;
+  padding: 1rem;
+  background: var(--fp-surface);
+  border: 1px solid var(--fp-hairline);
+  border-radius: var(--fp-radius);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+
+  // Accent rule along the top edge identifies the group.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: var(--fg-accent);
+  }
+
+  @media (min-width: 768px) {
+    padding: 1.25rem 1.5rem 1.375rem;
+  }
+
+  &--topics {
+    --fg-accent: var(--fp-teal);
+    --fg-ink: var(--fp-teal-ink);
+    --fg-tint: var(--fp-teal-tint);
+  }
+
+  &--types {
+    --fg-accent: var(--fp-amber);
+    --fg-ink: var(--fp-amber-ink);
+    --fg-tint: var(--fp-amber-tint);
+  }
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+  }
+
+  &__heading {
+    flex: 1 1 14rem;
+    min-width: 0;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--fp-ink);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  &__hint {
+    margin: 0.125rem 0 0;
+    color: var(--fp-muted);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  // Status text, deliberately not pill-shaped: a bordered pill here read as a
+  // button, while the real "Select all" action looked like plain text.
+  &__count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--fg-ink);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+
+    &::before {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: var(--fg-accent);
+      flex: none;
+    }
+  }
+
+  &__action {
+    min-height: 2rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--fg-accent) 55%, transparent);
+    border-radius: 0.5rem;
+    background: var(--fp-surface);
+    color: var(--fg-ink);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+
+    &:hover:not(:disabled) {
+      border-color: var(--fg-accent);
+      background: var(--fg-tint);
     }
 
-    .filters-elements-container h3 {
-      font-size: 1rem !important;
+    &:disabled {
+      border-color: var(--fp-hairline);
+      color: var(--fp-muted);
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
+
+  &__values {
+    margin: 0.5rem 0 0;
+    color: var(--fg-ink);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  // Level tiles are the shared CefrLevelTiles component (own stylesheet).
+  .cefr-level-tiles {
+    margin-top: 0.875rem;
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.875rem;
+  }
+
+  &__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.75rem;
+    padding: 0.25rem 0.5rem 0.25rem 0;
+    color: var(--fg-ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      flex: none;
     }
 
-    // Prevent flex children (topics + word types sections) from causing overflow.
-    .filters-elements-container > :nth-child(3),
-    .filters-elements-container > :nth-child(4) {
+    &:hover span {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+  // Level-test callout: a soft indigo strip (the levels accent) with the
+  // prompt on the left and the action on the right. Same footprint as the
+  // old divider row: its 0.75rem top padding became the strip's own padding.
+  &__test {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.125rem 0.75rem;
+    margin: 0.875rem 0 0;
+    padding: 0.25rem 0.25rem 0.25rem 0.875rem;
+    background: var(--fp-indigo-tint);
+    border: 1px solid rgba(99, 102, 241, 0.18);
+    border-radius: 0.625rem;
+    color: var(--fp-ink);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.125rem;
+      margin-left: auto;
+      padding: 0.125rem 0.375rem 0.125rem 0.625rem;
+      border-radius: 0.4375rem;
+      color: var(--fp-indigo-ink);
+      font-size: inherit;
+      font-weight: 700;
+      line-height: inherit;
+      white-space: nowrap;
+      transition: background-color 0.15s ease;
+
+      svg {
+        width: 1rem;
+        height: 1rem;
+        flex: none;
+        transition: transform 0.15s ease;
+      }
+
+      &:hover {
+        background: rgba(99, 102, 241, 0.12);
+
+        svg {
+          transform: translateX(2px);
+        }
+      }
+    }
+  }
+}
+
+// ── Options ─────────────────────────────────────────────────
+.filter-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: 999px;
+  background: var(--fg-accent);
+  color: #fff;
+
+  svg {
+    width: 70%;
+    height: 70%;
+    stroke-width: 3;
+  }
+}
+
+.filter-chip {
+  border: 1px solid var(--fp-option-border);
+  background: var(--fp-surface);
+  color: var(--fp-text);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover:not(:disabled):not(.is-selected) {
+    border-color: color-mix(in srgb, var(--fg-accent) 60%, transparent);
+    background: color-mix(in srgb, var(--fg-tint) 45%, white);
+  }
+
+  &.is-selected {
+    border-color: var(--fg-accent);
+    background: var(--fg-tint);
+    color: var(--fg-ink);
+    box-shadow: inset 0 0 0 1px var(--fg-accent);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  max-width: 100%;
+  min-height: 2.25rem;
+  padding: 0.375rem 0.875rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: left;
+  overflow-wrap: anywhere;
+
+  // The check takes no space until the chip is selected, so unselected chips
+  // stay compact and selecting one visibly adds the mark.
+  .filter-check {
+    width: 0;
+    height: 1rem;
+    margin-right: -0.375rem;
+    opacity: 0;
+    transition: width 0.15s ease, margin 0.15s ease, opacity 0.15s ease;
+  }
+
+  &.is-selected {
+    font-weight: 600;
+    padding-left: 0.625rem;
+
+    .filter-check {
+      width: 1rem;
+      margin-right: 0;
+      opacity: 1;
+    }
+  }
+
+  &--all {
+    font-weight: 600;
+  }
+}
+
+// ── Setup summary + action ──────────────────────────────────
+// Phones: `display: contents` keeps the sticky action bar a direct child of
+// the page column. From 768px it is one compact bar: summaries grouped on the
+// left, the button on the right, wrapping below them only when space runs out.
+.filters-review {
+  display: contents;
+
+  @media (min-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem 1.5rem;
+    padding: 0.875rem 1.25rem;
+    background: var(--fp-lavender);
+    border: 1px solid var(--fp-lavender-rule);
+    border-radius: var(--fp-radius);
+  }
+}
+
+.filters-summary {
+  padding: 0.75rem 1rem;
+  background: var(--fp-lavender);
+  border: 1px solid var(--fp-lavender-rule);
+  border-radius: var(--fp-radius);
+
+  @media (min-width: 768px) {
+    flex: 1 1 24rem;
+    min-width: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  &__title {
+    margin: 0 0 0.5rem;
+    color: var(--fp-ink);
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.3;
+
+    @media (min-width: 768px) {
+      margin-bottom: 0.375rem;
+    }
+  }
+
+  &__rows {
+    display: grid;
+    gap: 0.375rem;
+    margin: 0;
+
+    @media (min-width: 768px) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem 2rem;
+    }
+
+    // Phones: label left, value right-aligned across the full row; a long
+    // value wraps under its own right edge instead of being cut off.
+    > div {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.25rem 1rem;
       min-width: 0;
+
+      @media (min-width: 768px) {
+        display: block;
+        max-width: 15rem;
+      }
     }
 
-    // Remove the topics list max-height so wrapped chips are not clipped.
-    .filters-elements-container > :nth-child(3) > div[class*="max-h-[110px]"] {
-      max-height: none !important;
+    dt {
+      flex: none;
+      max-width: 45%;
+      color: var(--fp-muted);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      line-height: 1.4;
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+
+      @media (min-width: 768px) {
+        max-width: none;
+      }
     }
 
-    // Allow chip labels to wrap instead of breaking layout on small widths.
-    .filters-elements-container > :nth-child(3) button,
-    .filters-elements-container > :nth-child(4) button {
-      max-width: 100%;
-      white-space: normal;
-      line-height: 1;
-    }
-
-    // Keep only 6 topic buttons visible on extra-small screens.
-    .filters-elements-container > :nth-child(3) > div {
-      display: flex !important;
-      flex-wrap: wrap !important;
-      justify-content: center !important;
-      gap: 0.5rem !important;
-    }
-
-    .filters-elements-container
-      > :nth-child(3)
-      > div
-      > button:nth-of-type(n + 7):not(:last-child) {
-      display: none !important;
-    }
-
-    .filters-elements-container > :nth-child(3) > div > button:last-child {
-      display: inline-flex !important;
-    }
-
-    .filters-elements-container > :nth-child(3) button {
-      padding: 0.32rem 0.48rem !important;
-    }
-
-    .filters-elements-container > :nth-child(4) button {
-      padding: 0.36rem 0.62rem !important;
-    }
-
-    .filters-elements-container > :nth-child(3) button > span {
-      font-size: 0.68rem !important;
-    }
-
-    button[title="Double-click to select only this level"] {
-      padding: 0.45rem 0.55rem !important;
-    }
-
-    button[title="Double-click to select only this level"] > div:first-of-type {
-      font-size: 0.78rem !important;
-    }
-
-    button[title="Double-click to select only this level"] > div:last-of-type {
-      font-size: 0.6rem !important;
-      line-height: 1.05 !important;
-    }
-
-    .filters-elements-container > :nth-child(2) > div:last-child > button {
-      padding: 0.26rem 0.62rem !important;
-      font-size: 0.68rem !important;
-      line-height: 1.1 !important;
-    }
-
-    .filters-continue-button {
-      font-size: 1.1rem !important;
-      line-height: 1.3 !important;
-      padding: 1rem 3rem !important;
-    }
-
-    .filters-topics-open-button {
-      min-height: 3rem !important;
-      font-size: 0.95rem !important;
-      line-height: 1.2 !important;
-      border-radius: 0.9rem !important;
-    }
-
-    .filters-elements-container > :last-child {
-      margin-top: 0 !important;
-    }
-
-    .filters-elements-container > :nth-child(4) button > span {
-      font-size: 0.68rem !important;
-    }
-  }
-
-  // BIG MOBILE SCREEN
-  @media (min-width: 376px) and (max-width: 430.98px) {
-    > button {
-      display: none !important;
-    }
-
-    .filters-elements-container {
-      height: 85dvh !important;
-      justify-content: space-between !important;
-    }
-
-    .filters-elements-container > :last-child {
-      margin-top: 0 !important;
-    }
-
-    // Prevent flex children (topics + word types sections) from causing overflow.
-    .filters-elements-container > :nth-child(3),
-    .filters-elements-container > :nth-child(4) {
+    dd {
+      flex: 1 1 auto;
       min-width: 0;
-    }
+      margin: 0;
+      color: var(--fp-ink);
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1.35;
+      text-align: right;
+      overflow-wrap: anywhere;
 
-    // Remove the topics list max-height so wrapped chips are not clipped.
-    .filters-elements-container > :nth-child(3) > div[class*="max-h-[110px]"] {
-      max-height: none !important;
-    }
-
-    // Allow chip labels to wrap instead of breaking layout on small widths.
-    .filters-elements-container > :nth-child(3) button,
-    .filters-elements-container > :nth-child(4) button {
-      max-width: 100%;
-      white-space: normal;
-      line-height: 1;
-    }
-
-    // Make topic chips slightly more compact in this range.
-    .filters-elements-container > :nth-child(3) button {
-      padding: 0.35rem 0.5rem !important;
-    }
-
-    // Keep word-type chips compact to reduce crowding.
-    .filters-elements-container > :nth-child(4) button {
-      padding: 0.45rem 0.75rem !important;
-    }
-
-    // Slightly reduce main level-code text size on small mobile.
-    button[title="Double-click to select only this level"] > div:first-of-type {
-      font-size: 0.9rem !important;
-    }
-
-    // Force level subtitle line visible and tight under the code.
-    button[title="Double-click to select only this level"] > div:last-of-type {
-      display: block !important;
-      font-size: 0.65rem !important;
-      line-height: 1.1 !important;
-      margin-top: 0.1rem !important;
-    }
-
-    // Reduce the main page header size on extra-small screens.
-    .filters-elements-container > :first-child h2 {
-      font-size: 1.6rem !important;
-      line-height: 1.2 !important;
-    }
-
-    // Reduce the subtitle text under the main header on extra-small screens.
-    .filters-elements-container > :first-child p {
-      font-size: 0.9rem !important;
-      line-height: 1.25 !important;
-    }
-
-    .filters-continue-button {
-      font-size: 1.1rem !important;
-      line-height: 1.3 !important;
-      padding: 1rem 3rem !important;
-    }
-
-    .filters-topics-open-button {
-      min-height: 3.2rem !important;
-      font-size: 1.05rem !important;
-      line-height: 1.2 !important;
-      border-radius: 0.95rem !important;
+      // Desktop: values are already count-summarized ("8 of 33") past three
+      // names, so a two-line clamp only guards unusually long translated
+      // names (the full value is in the title tooltip).
+      @media (min-width: 768px) {
+        text-align: left;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
     }
   }
+}
 
-  // SMALL TABLET SCREEN - PORTRAIT
-  @media (min-width: 767px) and (max-width: 1023.98px) and (orientation: portrait) and (pointer: coarse) and (hover: none) {
-    width: 90vw !important;
-    max-width: 90vw !important;
-    margin-inline: auto !important;
+// theme.css gives html, body and #root `overflow: auto`. The window is what
+// actually scrolls, so body/#root become scroll containers that never move,
+// and the sticky phone action bar could never stick. Restore `visible` only
+// while this page is mounted (same approach as the Help Center sidebar).
+@media (max-width: 767.98px) {
+  html:has(.filters-page) body,
+  html:has(.filters-page) #root {
+    overflow: visible;
+  }
+}
 
-    > button {
-      top: 5rem !important;
-      left: var(--nav-left-edge) !important;
-      max-width: calc(100vw - 1.5rem) !important;
-    }
-
-    main {
-      box-sizing: border-box !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-    }
-
-    .filters-elements-container {
-      width: 100% !important;
-      max-width: 100% !important;
-      height: 80dvh !important;
-      max-height: 100% !important;
-      min-height: 0 !important;
-      min-width: 0 !important;
-      justify-content: space-between !important;
-    }
-
-    .filters-elements-container > * {
-      min-width: 0 !important;
-    }
-
-    .filters-elements-container button {
-      max-width: 100% !important;
-    }
-
-    .filters-elements-container button > span,
-    .filters-elements-container button > div {
-      overflow-wrap: anywhere !important;
-      word-break: break-word !important;
-    }
-
-    // Slightly increase typography for better readability on small tablets.
-    .filters-elements-container h2 {
-      font-size: clamp(2.4rem, 4vw, 3.2rem) !important;
-    }
-
-    .filters-elements-container h3 {
-      font-size: clamp(1.35rem, 2.3vw, 1.65rem) !important;
-    }
-
-    .filters-elements-container p {
-      font-size: 1.02rem !important;
-    }
-
-    .filters-elements-container button > span,
-    .filters-elements-container button > div {
-      font-size: 1.02rem !important;
-    }
-
-    .filters-continue-button {
-      font-size: 1.15rem !important;
-    }
+@media (prefers-reduced-motion: reduce) {
+  .filters-page *,
+  .filter-group *,
+  .filter-chip {
+    transition: none !important;
   }
 
-  // BIG TABLET SCREEN - PORTRAIT (touch devices)
-  @media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
-    > button {
-      top: 7rem !important;
-      left: var(--nav-left-edge) !important;
-      font-size: 1.05rem !important;
-      gap: 0.6rem !important;
-    }
-
-    > button svg {
-      width: 1.4rem !important;
-      height: 1.4rem !important;
-    }
-
-    .filters-elements-container {
-      width: 100% !important;
-      max-width: 100% !important;
-      height: 80dvh !important;
-      max-height: 100% !important;
-      justify-content: space-between !important;
-    }
-
-    // Slightly increase typography for big tablets.
-    .filters-elements-container h2 {
-      font-size: clamp(3rem, 4.6vw, 3.9rem) !important;
-    }
-
-    .filters-elements-container h3 {
-      font-size: clamp(1.8rem, 2.7vw, 2.2rem) !important;
-    }
-
-    .filters-elements-container p {
-      font-size: 1.28rem !important;
-    }
-
-    .filters-elements-container button > span,
-    .filters-elements-container button > div {
-      font-size: 1.28rem !important;
-    }
-
-    .filters-continue-button {
-      font-size: 1.5rem !important;
-    }
-
-    // Force CEFR grid to 3 columns so 6 buttons render as 2 rows.
-    .filters-elements-container > :nth-child(2) > div[class*="grid-cols-3"] {
-      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    }
-  }
-
-  // SMALL LAPTOP SCREEN
-  @media (min-width: 1024px) and (max-width: 1279.98px) {
-    > button {
-      top: 6rem !important;
-      left: var(--nav-left-edge) !important;
-      font-size: 0.88rem !important;
-      gap: 0.38rem !important;
-    }
-
-    > button svg {
-      width: 1.05rem !important;
-      height: 1.05rem !important;
-    }
-
-    .filters-elements-container {
-      height: 100% !important;
-      min-height: 80dvh !important;
-      justify-content: space-between !important;
-    }
-
-    .filters-elements-container h2 {
-      font-size: clamp(1.82rem, 1.8vw, 2.2rem) !important;
-    }
-
-    .filters-elements-container h3 {
-      font-size: clamp(1.08rem, 1.45vw, 1.28rem) !important;
-    }
-
-    .filters-elements-container p {
-      font-size: 0.82rem !important;
-    }
-
-    .filters-elements-container button > span,
-    .filters-elements-container button > div {
-      font-size: 0.9rem !important;
-    }
-
-    .filters-elements-container > :nth-child(3) button > span {
-      font-size: 0.78rem !important;
-    }
-
-    .filters-elements-container > :nth-child(4) button > span {
-      font-size: 0.78rem !important;
-    }
-
-    .filters-elements-container > :nth-child(4) button {
-      padding: 0.4rem 0.8rem !important;
-    }
-
-    .filters-elements-container > :nth-child(2) > div:last-child > button {
-      padding: 0.3rem 0.68rem !important;
-      font-size: 0.74rem !important;
-    }
-
-    .filters-continue-button {
-      font-size: 0.98rem !important;
-      background-image: none !important;
-      color: #ffffff !important;
-    }
-
-    button[title="Double-click to select only this level"] > div:first-of-type {
-      font-size: 0.82rem !important;
-    }
-
-    button[title="Double-click to select only this level"] > div:last-of-type {
-      font-size: 0.8rem !important;
-      line-height: 1.05 !important;
-    }
-  }
-
-  // BIG LAPTOP SCREEN
-  @media (min-width: 1280px) and (max-width: 1535.98px) and (orientation: landscape) {
-    overflow: hidden !important;
-
-    > button {
-      top: 6rem !important;
-      left: var(--nav-left-edge) !important;
-      font-size: 0.92rem !important;
-      gap: 0.42rem !important;
-    }
-
-    > button svg {
-      width: 1.1rem !important;
-      height: 1.1rem !important;
-    }
-
-    .filters-elements-container {
-      height: 100% !important;
-      min-height: 80dvh !important;
-      justify-content: space-between !important;
-      overflow: hidden !important;
-    }
-
-    .filters-elements-container h2 {
-      font-size: clamp(1.65rem, 1.52vw, 1.95rem) !important;
-    }
-
-    .filters-elements-container h3 {
-      font-size: clamp(1rem, 1.2vw, 1.4rem) !important;
-    }
-
-    .filters-elements-container
-      > :first-child
-      > :not([hidden])
-      ~ :not([hidden]) {
-      margin-top: 0.2rem !important;
-    }
-
-    .filters-elements-container
-      > :nth-child(2)
-      > :not([hidden])
-      ~ :not([hidden]),
-    .filters-elements-container
-      > :nth-child(3)
-      > :not([hidden])
-      ~ :not([hidden]),
-    .filters-elements-container
-      > :nth-child(4)
-      > :not([hidden])
-      ~ :not([hidden]) {
-      margin-top: 0.35rem !important;
-    }
-
-    .filters-elements-container > :nth-child(2) > p,
-    .filters-elements-container > :nth-child(3) > p,
-    .filters-elements-container > :nth-child(4) > p {
-      margin-top: 0 !important;
-    }
-
-    .filters-elements-container > :nth-child(2) > div:last-child {
-      padding-top: 0 !important;
-    }
-
-    .filters-elements-container > :nth-child(3) h3 {
-      margin-bottom: 0 !important;
-    }
-
-    .filters-elements-container > :nth-child(2) > p {
-      font-size: 0.78rem !important;
-    }
-
-    .filters-elements-container > :nth-child(3) > p,
-    .filters-elements-container > :nth-child(4) > p {
-      font-size: 0.78rem !important;
-    }
-
-    .filters-elements-container > :nth-child(2) > div:last-child > p {
-      font-size: 0.72rem !important;
-    }
-
-    .filters-elements-container > :nth-child(2) > div:last-child > button {
-      padding: 0.28rem 0.9rem !important;
-      font-size: 0.76rem !important;
-    }
-
-    button[title="Double-click to select only this level"] > div:first-of-type {
-      font-size: 0.74rem !important;
-    }
-
-    .filters-elements-container > :nth-child(4) button > span {
-      font-size: 0.74rem !important;
-    }
-
-    .filters-elements-container > :nth-child(4) button {
-      padding: 0.3rem 0.68rem !important;
-    }
-
-    .filters-elements-container > :nth-child(3) button > span {
-      font-size: 0.74rem !important;
-    }
-
-    .filters-continue-button {
-      font-size: 0.9rem !important;
-      padding: 0.55rem 1.2rem !important;
-    }
-  }
-
-  // PC SCREEN
-  @media (min-width: 1536px) {
-    > button {
-      top: 6rem !important;
-      left: var(--nav-left-edge) !important;
-    }
-
-    .filters-elements-container {
-      height: 100% !important;
-      min-height: 80dvh !important;
-      justify-content: space-between !important;
-    }
-
-    .filters-elements-container h2 {
-      font-size: clamp(1.78rem, 1.48vw, 2.1rem) !important;
-    }
-
-    .filters-elements-container h3 {
-      font-size: clamp(0.9rem, 1.02vw, 1.12rem) !important;
-    }
-
-    .filters-elements-container > :nth-child(2) > p,
-    .filters-elements-container > :nth-child(3) > p,
-    .filters-elements-container > :nth-child(4) > p {
-      font-size: 0.76rem !important;
-    }
-
-    .filters-elements-container > :nth-child(4) button > span {
-      font-size: 0.85rem !important;
-    }
-
-    .filters-elements-container > :nth-child(4) button {
-      padding: 0.4rem 0.9rem !important;
-    }
-
-    .filters-continue-button {
-      font-size: 1.125rem !important;
-      padding: 1rem 3rem !important;
-    }
+  .filters-page__continue:hover:not(:disabled) {
+    transform: none;
   }
 }

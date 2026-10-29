@@ -63,7 +63,9 @@
         "allVocabulary": "Gesamter Wortschatz",
         "customize": "Filter anpassen",
         "apply": "Filter anwenden",
-        "backToSetup": "Zurück zum individuellen Üben"
+        "backToSetup": "Zurück zum individuellen Üben",
+        "moreFilters": "Weitere Filter",
+        "levelsHeading": "Wähle die Niveaus, die du üben möchtest"
       },
       "title": "Individuelles Üben",
       "description": "Wähle mit flexiblen Wortschatzübungen, was und wie du üben möchtest.",
@@ -1345,7 +1347,45 @@
       "clear": "Löschen",
       "apply": "Anwenden"
     },
-    "titleWithSkipAhead": "Übung anpassen oder überspringen"
+    "titleWithSkipAhead": "Übung anpassen oder überspringen",
+    "filtersPage": {
+      "title": "Wähle, was du üben möchtest",
+      "subtitle": "Wähle den Wortschatz, auf den du dich konzentrieren möchtest, oder behalte die aktuellen Einstellungen.",
+      "levels": {
+        "title": "Wortschatzniveaus",
+        "hint": "Wähle ein oder mehrere Niveaus. Doppelklicke auf ein Niveau, um nur dieses zu behalten."
+      },
+      "topics": {
+        "title": "Themen",
+        "hint": "Wähle ein oder mehrere Themen oder behalte alle.",
+        "showAll": "Alle Themen anzeigen (+{count})"
+      },
+      "wordTypes": {
+        "title": "Wortarten",
+        "hint": "Wähle eine oder mehrere Wortarten oder behalte alle."
+      },
+      "selectedCount_one": "{count} ausgewählt",
+      "selectedCount_other": "{count} ausgewählt",
+      "allCount": "Alle {count} ausgewählt",
+      "selectedValues": "Ausgewählt: {values}",
+      "moreValues": "+{count} weitere",
+      "selectAll": "Alle auswählen",
+      "levelTest": {
+        "prompt": "Unsicher, welches Niveau du hast?",
+        "action": "Mach einen kurzen Test"
+      },
+      "unavailable": "Für diese Filterkombination gibt es keine Wörter",
+      "summary": {
+        "title": "Deine Übungseinstellungen",
+        "levels": "Niveaus",
+        "topics": "Themen",
+        "wordTypes": "Wortarten",
+        "allLevels": "Alle Niveaus",
+        "allTopics": "Alle Themen",
+        "allWordTypes": "Alle Wortarten",
+        "ofTotal": "{selected} von {total}"
+      }
+    }
   },
   "levels": {
     "A1": {

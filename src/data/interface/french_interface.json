@@ -63,7 +63,9 @@
         "allVocabulary": "Tout le vocabulaire",
         "customize": "Personnaliser les filtres",
         "apply": "Appliquer les filtres",
-        "backToSetup": "Retour à la pratique libre"
+        "backToSetup": "Retour à la pratique libre",
+        "moreFilters": "Filtres plus détaillés",
+        "levelsHeading": "Choisissez les niveaux à pratiquer"
       },
       "title": "Pratique personnalisée",
       "description": "Choisissez quoi pratiquer et comment, avec des exercices de vocabulaire flexibles.",
@@ -1350,7 +1352,45 @@
       "apply": "Appliquer",
       "close": "Fermer"
     },
-    "titleWithSkipAhead": "Personnalisez votre pratique ou passez directement"
+    "titleWithSkipAhead": "Personnalisez votre pratique ou passez directement",
+    "filtersPage": {
+      "title": "Choisissez quoi pratiquer",
+      "subtitle": "Sélectionnez le vocabulaire sur lequel vous souhaitez vous concentrer, ou conservez les réglages actuels.",
+      "levels": {
+        "title": "Niveaux de vocabulaire",
+        "hint": "Choisissez un ou plusieurs niveaux. Double-cliquez sur un niveau pour ne garder que celui-ci."
+      },
+      "topics": {
+        "title": "Thèmes",
+        "hint": "Choisissez un ou plusieurs thèmes, ou gardez-les tous.",
+        "showAll": "Afficher tous les thèmes (+{count})"
+      },
+      "wordTypes": {
+        "title": "Types de mots",
+        "hint": "Choisissez un ou plusieurs types de mots, ou gardez-les tous."
+      },
+      "selectedCount_one": "{count} sélectionné",
+      "selectedCount_other": "{count} sélectionnés",
+      "allCount": "Tous sélectionnés ({count})",
+      "selectedValues": "Sélection : {values}",
+      "moreValues": "+{count} de plus",
+      "selectAll": "Tout sélectionner",
+      "levelTest": {
+        "prompt": "Vous ne connaissez pas votre niveau ?",
+        "action": "Faire un test rapide"
+      },
+      "unavailable": "Aucun mot ne correspond à cette combinaison de filtres",
+      "summary": {
+        "title": "Votre configuration",
+        "levels": "Niveaux",
+        "topics": "Thèmes",
+        "wordTypes": "Types de mots",
+        "allLevels": "Tous les niveaux",
+        "allTopics": "Tous les thèmes",
+        "allWordTypes": "Tous les types de mots",
+        "ofTotal": "{selected} sur {total}"
+      }
+    }
   },
   "levels": {
     "A1": {

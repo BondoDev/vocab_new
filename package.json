@@ -52,6 +52,7 @@
     "test:profile-load-and-onboarding": "node --experimental-strip-types scripts/tests/account/test-profile-load-and-onboarding.mjs",
     "test:exercise-id-contract": "node --experimental-strip-types scripts/tests/practice/test-exercise-id-contract.mjs",
     "test:practiced-word-counter": "node --experimental-strip-types scripts/tests/practice/test-practiced-word-counter.mjs",
+    "test:filter-selection-summary": "node --experimental-strip-types scripts/tests/practice/test-filter-selection-summary.mjs",
     "test:immersive-session": "node --experimental-strip-types scripts/tests/runtime/test-immersive-session.mjs",
     "test:new-word-study-queue": "node --experimental-strip-types scripts/tests/learning/test-new-word-study-queue.mjs",
     "test:new-word-study-session": "node --experimental-strip-types scripts/tests/learning/test-new-word-study-session.mjs",

@@ -4,8 +4,19 @@ import { ArrowLeftRight, ArrowRight, Languages, ListChecks, SlidersHorizontal, t
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Header } from "../components/layout/Header";
 import { LanguageSelector } from "../components/LanguageSelector";
-import { VALID_LEVEL_CODES } from "../utils/pageRouting";
 import { ExerciseSelection } from "../../features/learning-setup/ExerciseSelection";
+import { CefrLevelTiles } from "../../features/learning-setup/CefrLevelTiles";
+import {
+  FILTERS_PAGE_KEY,
+  FILTER_CATEGORY_IDS,
+  FILTER_LEVEL_CODES,
+  getCategoryLabel,
+  getSelectionCountLabel,
+  getSelectionSummary,
+  getWordTypeLabel,
+} from "../../features/learning-setup/filterLabels";
+import { getSelectionState } from "../../features/learning-setup/filterSelection";
+import { useFilterVocabulary } from "../../features/learning-setup/useFilterVocabulary";
 import "./custom-practice-preview.scss";
 
 function PracticeSectionHeading({ id, icon: Icon, children }: {
@@ -31,6 +42,7 @@ interface CustomPracticePreviewPageProps {
   onReverseLanguages: () => void;
   swapRotation: number;
   selectedLevels: string[];
+  setSelectedLevels: (levels: string[]) => void;
   selectedCategories: string[];
   selectedWordTypes: string[];
   onCustomizeFilters: () => void;
@@ -51,6 +63,7 @@ export function CustomPracticePreviewPage({
   onReverseLanguages,
   swapRotation,
   selectedLevels,
+  setSelectedLevels,
   selectedCategories,
   selectedWordTypes,
   onCustomizeFilters,
@@ -60,33 +73,30 @@ export function CustomPracticePreviewPage({
   onStartPracticing,
   isStartPracticingDisabled,
 }: CustomPracticePreviewPageProps) {
-  const { t } = useLanguage();
+  const { t, uiLanguage } = useLanguage();
   const shouldReduceMotion = useReducedMotion();
-  const allLevels = selectedLevels.length === 0 ||
-    [...VALID_LEVEL_CODES].every((level) => selectedLevels.includes(level));
-  const allVocabulary = allLevels && selectedCategories.length === 0 && selectedWordTypes.length === 0;
-  const translatedLabel = (key: string, fallback: string) => {
-    const label = t(key);
-    return label && label !== key ? label : fallback;
-  };
-  const filterSummary = [
+  // Same metadata guard as the detailed filters page: a level change that
+  // would leave no words for the current topic/word-type filters is blocked.
+  const { wordTypes, getFilteredWordCount } = useFilterVocabulary(practiceLanguage);
+  // An empty persisted level list means every level (as the tiles show it),
+  // so count it as "All 6 selected" like the detailed filters page does.
+  const levelState = getSelectionState(
+    selectedLevels.length > 0 ? selectedLevels : FILTER_LEVEL_CODES,
+    FILTER_LEVEL_CODES,
+    { emptyMeansAll: true },
+  );
+  const topicState = getSelectionState(selectedCategories, FILTER_CATEGORY_IDS, { emptyMeansAll: true });
+  const wordTypeState = getSelectionState(selectedWordTypes, wordTypes, { emptyMeansAll: true });
+  const otherFilters = [
     {
-      label: t("levelCategory.levels"),
-      values: allLevels
-        ? [t("levelCategory.selection.allLevelsSelected")]
-        : [...VALID_LEVEL_CODES].filter((level) => selectedLevels.includes(level)),
+      key: "topics",
+      label: t(`${FILTERS_PAGE_KEY}.summary.topics`),
+      value: getSelectionSummary(t, topicState, "allTopics", (id) => getCategoryLabel(t, id), 3),
     },
     {
-      label: t("levelCategory.categories"),
-      values: selectedCategories.length
-        ? selectedCategories.map((category) => translatedLabel(`levelCategory.topicNames.${category}`, category))
-        : [t("levelCategory.allTopicsSelected")],
-    },
-    {
-      label: t("levelCategory.wordTypes"),
-      values: selectedWordTypes.length
-        ? selectedWordTypes.map((type) => translatedLabel(`wordTypes.${type}`, type))
-        : [t("levelCategory.allGrammarTypesSelected")],
+      key: "wordTypes",
+      label: t(`${FILTERS_PAGE_KEY}.summary.wordTypes`),
+      value: getSelectionSummary(t, wordTypeState, "allWordTypes", (id) => getWordTypeLabel(t, id), 3),
     },
   ];
 
@@ -152,34 +162,58 @@ export function CustomPracticePreviewPage({
               </div>
             </div>
           </section>
+          {/* Levels are edited here directly; topics and word types stay on
+              the detailed filters page. Both pages write the same App-owned
+              filter state, so neither keeps its own copy to drift. */}
           <section className="custom-practice-setup__section custom-practice-setup__filters" aria-labelledby="custom-practice-filters-heading">
-            <div className="custom-practice-setup__filter-row">
-              <div className="custom-practice-setup__filter-copy">
-                <PracticeSectionHeading id="custom-practice-filters-heading" icon={SlidersHorizontal}>
-                  {t("home.customPractice.filters.title")}
-                </PracticeSectionHeading>
-                {allVocabulary ? (
-                  <p className="custom-practice-setup__summary">
-                    {t("home.customPractice.filters.unrestrictedSummary")}
-                  </p>
-                ) : (
-                  <p className="custom-practice-setup__summary">
-                    {filterSummary.map(({ label, values }, index) => (
-                      <span key={label} title={values.join(", ")}>
-                        {index > 0 && <span aria-hidden="true"> &middot; </span>}
-                        {label}: {values.slice(0, 3).join(", ")}{values.length > 3 ? ` +${values.length - 3}` : ""}
-                      </span>
-                    ))}
-                  </p>
-                )}
+            <PracticeSectionHeading id="custom-practice-filters-heading" icon={SlidersHorizontal}>
+              {t("home.customPractice.filters.title")}
+            </PracticeSectionHeading>
+            <div className="custom-practice-setup__levels-head">
+              <h3 id="custom-practice-levels-heading">
+                {t("home.customPractice.filters.levelsHeading")}
+              </h3>
+              <div className="custom-practice-setup__levels-status">
+                <span className="custom-practice-setup__levels-count" aria-live="polite">
+                  {getSelectionCountLabel(t, uiLanguage, levelState, "summary.allLevels")}
+                </span>
+                {/* No "Deselect all": an empty level list is not a valid
+                    selection (it reverts to all levels), same as on the
+                    detailed filters page. Selecting every level can never
+                    remove matching words, so it needs no metadata check. */}
+                <button
+                  type="button"
+                  className="custom-practice-setup__select-all"
+                  disabled={levelState.kind !== "some"}
+                  onClick={() => setSelectedLevels([...FILTER_LEVEL_CODES])}
+                >
+                  {t(`${FILTERS_PAGE_KEY}.selectAll`)}
+                </button>
               </div>
+            </div>
+            <CefrLevelTiles
+              selectedLevels={selectedLevels}
+              onChange={setSelectedLevels}
+              canApply={(levels) => getFilteredWordCount(levels, selectedCategories, selectedWordTypes) > 0}
+              labelledBy="custom-practice-levels-heading"
+              unavailableHint={t(`${FILTERS_PAGE_KEY}.unavailable`)}
+            />
+            <div className="custom-practice-setup__filter-footer">
+              <dl className="custom-practice-setup__other-filters">
+                {otherFilters.map(({ key, label, value }) => (
+                  <div key={key}>
+                    <dt>{label}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
               <button
                 type="button"
                 onClick={onCustomizeFilters}
                 disabled={isCustomizeFiltersDisabled}
                 className="custom-practice-setup__filter-button"
               >
-                {t("home.customPractice.filters.customize")}
+                {t("home.customPractice.filters.moreFilters")}
                 <ArrowRight aria-hidden="true" />
               </button>
             </div>
