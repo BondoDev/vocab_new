@@ -73,8 +73,9 @@ This order is deliberate and should not be casually changed.
 Current owner-local examples:
 
 - `src/app/components/layout/styles/header.scss` — owned by `Header.tsx`.
-- `src/app/pages/about-help.scss` — jointly owned by `About.tsx` and
-  `Help.tsx`.
+- `src/app/pages/about-help.scss` — owned by `About.tsx` (name kept from
+  when Help shared it).
+- `src/app/pages/help/help-center.scss` — owned by `help/Help.tsx`.
 - `src/app/pages/home/new-home-page.scss` — owned by `NewHomePage.tsx`.
   The retired homepage's `language-page.scss` has been removed.
 - `src/features/learning-setup/styles/exercise-selection.scss` — owned by
@@ -117,8 +118,7 @@ feature entry component, or component boundary — not from:
 - `src/App.tsx`;
 - `src/styles/index.css`.
 
-Jointly owned styles may be imported explicitly by each owner, as with
-`src/app/pages/about-help.scss`, imported by both `About.tsx` and `Help.tsx`.
+Jointly owned styles may be imported explicitly by each owner.
 
 ## Tailwind cascade-layer relationship
 

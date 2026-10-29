@@ -394,7 +394,7 @@
         "description": "Choisissez comment poursuivre votre apprentissage du vocabulaire aujourd'hui.",
         "modes": {
           "studyNewWords": {
-            "title": "Etudier de nouveaux mots",
+            "title": "Apprendre de nouveaux mots",
             "description": "Continuez votre sequence structuree de vocabulaire et apprenez les nouveaux mots du jour.",
             "metaLine": "15 mots restants - Environ 12-15 min",
             "buttonLabel": "Commencer"
@@ -407,7 +407,7 @@
             "buttonLabel": "Commencer la revision"
           },
           "customPractice": {
-            "title": "Pratique personnalisee",
+            "title": "Pratique personnalisée",
             "description": "Choisissez vos propres mots, listes, filtres, niveaux et exercices.",
             "metaLine": "Niveau actuel A2 - Toutes les categories",
             "buttonLabel": "Commencer la pratique"
@@ -970,6 +970,237 @@
       "p1": "Chaque exercice comprend un bouton Passer.",
       "p2": "Vous pouvez terminer la session a tout moment.",
       "p3": "Les mots ne sont comptes que si vous les rappelez correctement (afficher un mot ne compte pas comme rappel reussi)."
+    }
+  },
+  "helpCenter": {
+    "page": {
+      "title": "Centre d'aide",
+      "subtitle": "Découvrez comment pratiquer le vocabulaire, apprendre de nouveaux mots, réviser vos acquis et suivre votre progression avec FluentStellar."
+    },
+    "navigation": {
+      "label": "Sur cette page",
+      "jumpTo": "Aller à la section",
+      "gettingStarted": "Premiers pas",
+      "customPractice": "Pratique personnalisée",
+      "personalizedLearning": "Apprentissage personnalisé",
+      "myLists": "Mes listes",
+      "vocabularyProgress": "Vocabulaire et progression",
+      "resources": "Explorer et ressources",
+      "accountSettings": "Compte et paramètres",
+      "faq": "Questions fréquentes"
+    },
+    "sections": {
+      "gettingStarted": {
+        "title": "Premiers pas",
+        "intro": "FluentStellar propose deux façons d'enrichir votre vocabulaire : pratiquer librement sans compte ou créer un compte pour suivre un programme d'apprentissage personnalisé.",
+        "choosePath": {
+          "title": "Choisir comment apprendre",
+          "body": "Choisissez Pratique personnalisée si vous souhaitez travailler votre vocabulaire à votre rythme, avec les langues, les exercices et les filtres de votre choix.\n\nChoisissez Apprentissage personnalisé si vous préférez suivre un programme structuré pour apprendre de nouveaux mots, réviser le vocabulaire déjà étudié et suivre votre progression."
+        },
+        "withoutAccount": {
+          "title": "Pratiquer sans compte",
+          "body": "Vous pouvez commencer immédiatement, sans inscription. Sélectionnez vos langues, personnalisez le vocabulaire et les exercices si vous le souhaitez, puis commencez. Les séances n'ont pas de limite de mots : vous pouvez les terminer quand vous le souhaitez.\n\nVos préférences de pratique sont mémorisées dans votre navigateur, mais les séances et les résultats des visiteurs non connectés ne sont pas enregistrés dans un compte."
+        },
+        "withAccount": {
+          "title": "Créer un compte pour un apprentissage personnalisé",
+          "body": "Créez un compte gratuit avec Google ou votre adresse e-mail. Après votre connexion, complétez votre profil en renseignant les informations demandées, vos langues et votre niveau actuel.\n\nVotre compte vous donne accès aux modes Apprendre de nouveaux mots et Reviser les mots, aux listes personnelles de vocabulaire et aux statistiques d'apprentissage. Votre progression est enregistrée automatiquement au fil de vos études et de vos révisions."
+        }
+      },
+      "customPractice": {
+        "title": "Pratique personnalisée",
+        "intro": "La Pratique personnalisée vous permet de travailler le vocabulaire dans chacune des sept langues proposées, avec les exercices et les catégories de mots de votre choix. Aucun compte n'est nécessaire.",
+        "languages": {
+          "title": "Choisir les langues",
+          "body": "Dans Votre langue, choisissez la langue dans laquelle vous souhaitez voir les traductions et les significations. Dans Langue a pratiquer, choisissez celle dont vous voulez apprendre le vocabulaire. Les deux langues doivent être différentes.\n\nVous pouvez inverser les langues à l'aide du bouton prévu à cet effet. Vos choix sont mémorisés dans votre navigateur."
+        },
+        "filters": {
+          "title": "Filtres de vocabulaire",
+          "body": "Utilisez Personnaliser les filtres pour sélectionner des niveaux du CECR (A1 à C2), des thèmes ou des types de mots, comme les noms, les verbes et les adjectifs. Vous pouvez sélectionner plusieurs options dans chaque catégorie.\n\nTous les filtres sont facultatifs. Si vous ne sélectionnez aucune option dans une catégorie, toutes ses options sont prises en compte. Appliquez les filtres pour revenir à la configuration de votre séance."
+        },
+        "exerciseSelection": {
+          "title": "Choisir les exercices",
+          "body": "Choisissez les exercices que vous souhaitez utiliser parmi les cinq types disponibles. Ils sont tous sélectionnés par défaut, et au moins un exercice doit rester activé.\n\nVous pouvez combiner la saisie, la construction de mots, les associations et l'écoute. Pendant la séance, FluentStellar utilise automatiquement les exercices sélectionnés qui conviennent aux mots disponibles."
+        },
+        "sessions": {
+          "title": "Déroulement et fin des séances",
+          "body": "Sélectionnez Commencer à pratiquer pour démarrer. Il n'y a ni durée fixe ni limite de mots : continuez aussi longtemps que vous le souhaitez, puis sélectionnez Terminer. Certains mots peuvent réapparaître au cours de la séance.\n\nVous pouvez utiliser Passer, demander de l'aide lorsqu'elle est disponible ou sélectionner Afficher le mot si vous ne trouvez pas la réponse. À la fin, un récapitulatif présente vos tentatives, votre taux de réussite, vos résultats par niveau et type de mot, ainsi que les mots pratiqués.\n\nLa Pratique personnalisée ne modifie ni le niveau de maîtrise des mots ni leur calendrier de révision. Si vous êtes connecté, votre temps de pratique active est pris en compte dans Activité d’apprentissage, mais vos résultats ne contribuent pas à votre Objectif quotidien de nouveaux mots."
+        },
+        "exerciseTypes": {
+          "title": "Types d'exercices",
+          "intro": "FluentStellar propose cinq types d'exercices interactifs. Vous pouvez sélectionner ceux que vous préférez avant de commencer votre séance de Pratique personnalisée.",
+          "wordTyping": {
+            "title": "Saisie de mot",
+            "body": "Lisez la signification du mot dans votre langue, puis saisissez le mot complet dans la langue que vous pratiquez. Vous pouvez écouter sa prononciation et consulter des informations complémentaires.\n\nUtilisez Indice pour révéler quelques lettres ou Afficher le mot pour voir la réponse. Les accents et les caractères spéciaux doivent être saisis correctement."
+          },
+          "halfWritten": {
+            "title": "Completion de mot a moitie ecrit",
+            "body": "Une partie du mot est déjà affichée. Saisissez les lettres manquantes pour le compléter correctement.\n\nCet exercice vous aide à retrouver l'orthographe d'un mot à partir des lettres fournies. Il ne comporte pas de bouton Indice, car une partie de la réponse est déjà visible."
+          },
+          "brokenWord": {
+            "title": "Assemblage de mot casse",
+            "body": "Le mot est divisé en plusieurs fragments mélangés. Sélectionnez-les dans le bon ordre pour reconstituer le mot complet.\n\nVous pouvez utiliser Indice pour obtenir de l'aide ou Afficher le mot pour découvrir la réponse lorsque vous en avez besoin."
+          },
+          "connectWords": {
+            "title": "Associer des mots",
+            "body": "Associez quatre mots de la langue que vous pratiquez à leurs significations dans votre langue. Sélectionnez un mot, puis la signification correspondante.\n\nLes associations correctes restent reliées. Si une association est incorrecte, vous pouvez réessayer."
+          },
+          "listening": {
+            "title": "Ecoute",
+            "body": "Écoutez les mots prononcés et associez chacun à sa signification dans votre langue. Utilisez les boutons audio pour entendre les mots avant de choisir leurs correspondances.\n\nL'audio utilise la synthèse vocale de votre navigateur. La disponibilité des voix et la qualité de la prononciation peuvent donc varier selon votre appareil. Si l'écoute ne fonctionne pas, vous pouvez utiliser Passer a Associer des mots pendant la séance."
+          }
+        }
+      },
+      "personalizedLearning": {
+        "title": "Apprentissage personnalisé",
+        "intro": "Avec un compte FluentStellar, vous pouvez suivre un programme structuré qui introduit de nouveaux mots, propose des révisions du vocabulaire déjà étudié et enregistre votre progression.",
+        "studyNewWords": {
+          "title": "Apprendre de nouveaux mots",
+          "body": "Ouvrez Apprentissage et choisissez Apprendre de nouveaux mots. FluentStellar sélectionne les mots dans une progression pédagogique organisée, à partir du niveau CECR que vous avez choisi, sans reprendre les mots déjà étudiés.\n\nChaque mot est présenté avec sa signification, sa définition, une phrase d'exemple et sa prononciation. Vous le travaillez ensuite à travers trois exercices : Assemblage de mot casse, Completion de mot a moitie ecrit et Saisie de mot.\n\nLe mot est ajouté à votre vocabulaire une fois les trois exercices terminés. Vous pouvez arrêter la séance plus tôt : les mots déjà terminés restent enregistrés, mais le mot que vous êtes encore en train d'étudier ne l'est pas."
+        },
+        "reviewWords": {
+          "title": "Reviser les mots",
+          "body": "Le mode Reviser les mots vous aide à renforcer le vocabulaire que vous avez déjà étudié. FluentStellar utilise la répétition espacée pour faire revenir les mots au fil du temps, tout en proposant aussi des mots étudiés dont la prochaine révision n'est pas encore arrivée.\n\nLes réponses correctes renforcent votre maîtrise, tandis que les réponses incorrectes indiquent qu'un mot nécessite davantage de pratique. Chaque réponse est enregistrée automatiquement.\n\nLes séances de révision n'ont pas de limite fixe de mots. Vous pouvez continuer tant que des mots sont disponibles et terminer quand vous le souhaitez."
+        },
+        "dailyGoal": {
+          "title": "Objectif quotidien",
+          "body": "Votre Objectif quotidien détermine le nombre de nouveaux mots que vous souhaitez apprendre chaque jour. Dans la section Apprentissage, vous pouvez choisir 10, 15, 20, 30 ou 50 mots. La valeur par défaut est de 15 mots.\n\nSeuls les nouveaux mots entièrement étudiés comptent pour cet objectif. Les révisions et la Pratique personnalisée n'augmentent pas ce total. Atteindre votre objectif contribue à votre Serie quotidienne.\n\nUne fois l'objectif atteint, vous pouvez continuer à réviser. Si vous souhaitez apprendre davantage de nouveaux mots le même jour, vous pouvez augmenter votre Objectif quotidien."
+        },
+        "learningProgress": {
+          "title": "Comment fonctionne la progression du vocabulaire",
+          "body": "Les mots terminés dans Apprendre de nouveaux mots sont automatiquement ajoutés à votre vocabulaire personnel. Lorsque vous les révisez, FluentStellar enregistre vos réponses et ajuste la date de leur prochaine révision.\n\nUne série de bonnes réponses permet aux mots de progresser vers une meilleure maîtrise. Les réponses incorrectes peuvent les faire reculer d'un niveau pour qu'ils soient davantage travaillés.\n\nVotre progression est conservée séparément pour chaque langue d'apprentissage. La Pratique personnalisée et les séances de Mes listes ne modifient ni la maîtrise des mots ni leur calendrier de révision."
+        }
+      },
+      "myLists": {
+        "title": "Mes listes",
+        "intro": "Regroupez les mots que vous souhaitez pratiquer dans des listes personnelles. Créez des collections par thème, rassemblez les mots difficiles ou organisez librement votre vocabulaire.",
+        "manageLists": {
+          "title": "Créer et gérer des listes",
+          "body": "Ouvrez Mes listes depuis votre profil et sélectionnez Créer une liste. Donnez un nom à votre collection, puis enregistrez-la. Vous pouvez créer plusieurs listes, les rechercher, les renommer ou les supprimer lorsqu'elles ne vous sont plus utiles.\n\nChaque liste appartient à une langue d'apprentissage. Lorsque vous changez de langue, vous retrouvez les listes associées à celle-ci. Supprimer une liste ne supprime pas la progression des mots qu'elle contenait."
+        },
+        "addWords": {
+          "title": "Ajouter et retirer des mots",
+          "body": "Ouvrez une liste et sélectionnez Ajouter des mots pour rechercher et choisir les mots à inclure. Vous pouvez ajouter aussi bien des mots déjà étudiés que des mots nouveaux.\n\nVous pouvez également ajouter des mots depuis la section Vocabulaire, les écrans de fin de séance et les listes complètes de vocabulaire disponibles dans les ressources publiques.\n\nUn même mot peut appartenir à plusieurs listes, mais il ne peut apparaître qu'une seule fois dans une liste donnée. Retirer un mot d'une liste n'affecte pas votre progression."
+        },
+        "practiceList": {
+          "title": "Pratiquer une liste",
+          "body": "Ouvrez une liste contenant des mots et sélectionnez Pratiquer la liste. Choisissez le nombre de mots à inclure, leur ordre de présentation et les types d'exercices souhaités.\n\nLa séance utilise les exercices de la Pratique personnalisée, mais uniquement avec les mots sélectionnés dans votre liste. Vous pouvez poursuivre les exercices et terminer quand vous le souhaitez.\n\nPratiquer une liste ne modifie ni le niveau de maîtrise des mots ni leur calendrier de révision."
+        }
+      },
+      "vocabularyProgress": {
+        "title": "Vocabulaire et progression",
+        "intro": "Retrouvez les mots déjà étudiés, organisez vos Favoris et découvrez comment votre vocabulaire évolue au fil du temps.",
+        "vocabulary": {
+          "title": "Votre collection de vocabulaire",
+          "body": "La section Vocabulaire de votre profil rassemble les mots terminés dans Apprendre de nouveaux mots. Vous pouvez rechercher des mots, les filtrer par niveau, type ou état d'apprentissage, et consulter la date de leur dernière pratique.\n\nPour chaque mot, vous pouvez ouvrir ses détails, l'ajouter à une liste personnelle ou le marquer comme favori."
+        },
+        "statuses": {
+          "title": "En apprentissage, Connus et Maitrises",
+          "body": "FluentStellar classe les mots étudiés dans trois catégories selon votre progression.\n\nEn apprentissage : les mots que vous avez commencé à étudier et qui ont encore besoin d'entraînement.\n\nConnus : les mots que vous connaissez bien et que vous avez renforcés grâce aux révisions.\n\nMaitrises : les mots que vous avez montré pouvoir retenir à long terme.\n\nCes catégories peuvent évoluer en fonction de vos réponses pendant les révisions. Vous n'avez pas besoin de les modifier manuellement."
+        },
+        "favorites": {
+          "title": "Favoris",
+          "body": "Marquez des mots comme favoris pour les retrouver plus facilement. Vous pouvez consulter et gérer vos mots favoris dans l'onglet Favoris de la section Vocabulaire, ainsi que depuis les autres écrans proposant cette fonction.\n\nAjouter un mot aux Favoris ne modifie ni son état d'apprentissage ni la fréquence de ses révisions."
+        },
+        "dashboard": {
+          "title": "Tableau de bord et statistiques",
+          "body": "Le Tableau de bord de votre profil présente un résumé de votre activité : nouveaux mots appris, progression vers votre Objectif quotidien, Serie quotidienne et Aperçu du vocabulaire.\n\nVous pouvez également consulter Activité d’apprentissage, qui indique le temps passé dans les différents modes, y compris la Pratique personnalisée lorsque vous êtes connecté, ainsi que les mots appris au cours des derniers jours."
+        },
+        "milestones": {
+          "title": "Jalons et évolution du vocabulaire",
+          "body": "La section Progression présente vos Jalons dans différents domaines, notamment le vocabulaire étudié, les mots Connus, la Maîtrise, les révisions et la Régularité.\n\nLe graphique Évolution du vocabulaire vous permet de visualiser la croissance de votre collection de mots sur différentes périodes.\n\nLa Serie quotidienne nécessite d'atteindre votre objectif de nouveaux mots. En revanche, la Régularité des Jalons peut prendre en compte les jours où vous avez étudié de nouveaux mots ou effectué des révisions."
+        }
+      },
+      "resources": {
+        "title": "Explorer et ressources d'apprentissage",
+        "intro": "En plus des exercices, FluentStellar propose des ressources gratuites pour consulter des mots, explorer le vocabulaire par niveau et mieux comprendre les langues que vous apprenez.",
+        "explore": {
+          "title": "Explorer le vocabulaire",
+          "body": "Ouvrez Explorer pour choisir l'une des sept langues disponibles et découvrir ses ressources de vocabulaire. Vous y trouverez des listes par niveau, des tests de vocabulaire et des ressources de référence sur les verbes.\n\nCes ressources sont accessibles sans connexion et peuvent vous servir de point de départ pour vos séances de pratique."
+        },
+        "cefr": {
+          "title": "Ressources de vocabulaire par niveau",
+          "body": "Explorez le vocabulaire organisé selon les niveaux A1, A2, B1, B2, C1 et C2 du Cadre européen commun de référence pour les langues (CECR).\n\nLes pages consacrées à un niveau permettent de consulter des mots de difficulté correspondante et de commencer une séance de Pratique personnalisée avec ce niveau présélectionné. Vous trouverez également des listes complètes regroupant plusieurs niveaux."
+        },
+        "wordDetails": {
+          "title": "Fiches de mots et prononciation",
+          "body": "Les fiches de mots présentent des informations utiles : traductions, définitions, exemples d'utilisation, prononciation, catégorie grammaticale et niveau de vocabulaire.\n\nVous pouvez aussi effectuer un court exercice avec le mot ou continuer à pratiquer du vocabulaire du même niveau. La lecture audio dépend des fonctionnalités et des voix disponibles dans votre navigateur."
+        },
+        "verbs": {
+          "title": "Ressources sur les verbes",
+          "body": "Consultez des listes de verbes fréquents ainsi que des ressources sur leurs formes et leurs conjugaisons. Ces outils vous permettent de découvrir comment les verbes changent selon leur utilisation et d'enrichir votre vocabulaire.\n\nCertains types de ressources peuvent varier selon la langue. Retrouvez-les dans Explorer ou Ressources d’apprentissage."
+        },
+        "levelTest": {
+          "title": "Test de niveau de vocabulaire",
+          "body": "Le Test de niveau de vocabulaire est gratuit et vous aide à estimer vos connaissances lexicales. Il commence au niveau A1 et progresse vers le niveau C2.\n\nAux niveaux A1 et A2, vous choisissez la bonne traduction parmi six propositions. Des niveaux B1 à C2, vous reconstituez les mots à partir de fragments. Le test s'arrête après trois erreurs au sein d'un même niveau ou lorsque tous les niveaux ont été terminés.\n\nLe résultat est une estimation indicative, pas une certification officielle du CECR. Vous pouvez repasser le test et utiliser le niveau obtenu pour configurer une séance de Pratique personnalisée. Le résultat ne modifie pas automatiquement le niveau enregistré dans votre compte."
+        }
+      },
+      "accountSettings": {
+        "title": "Compte et paramètres",
+        "intro": "Gérez votre profil, vos préférences d'apprentissage et les données associées à votre compte dans Parametres.",
+        "registration": {
+          "title": "Inscription et connexion",
+          "body": "Vous pouvez créer un compte avec Google ou avec une adresse e-mail et un mot de passe. Si vous vous inscrivez par e-mail, vous devez confirmer votre adresse en utilisant le lien reçu.\n\nSi vous avez déjà un compte, sélectionnez Se connecter. Si vous avez oublié votre mot de passe, vous pouvez demander un lien pour le réinitialiser."
+        },
+        "profileSetup": {
+          "title": "Configurer votre profil",
+          "body": "Lors de votre première connexion, vous devez compléter votre profil avant de commencer l'Apprentissage personnalisé.\n\nLe formulaire demande un Pseudonyme, votre Langue maternelle, votre Langue d'apprentissage, votre niveau actuel, votre âge ainsi que le jour et le mois de votre naissance.\n\nL'Objectif quotidien est initialement fixé à 15 nouveaux mots et peut être modifié ensuite dans Apprentissage. Le Test de niveau est facultatif et ne fait pas partie de l'inscription."
+        },
+        "languages": {
+          "title": "Changer de langue et de niveau",
+          "body": "Ouvrez Parametres, puis Langues pour modifier votre Langue maternelle, votre Langue apprise ou votre Niveau actuel. Enregistrez vos changements pour les appliquer.\n\nLe Niveau actuel détermine le point de départ de la sélection des nouveaux mots. Changer de langue d'apprentissage n'efface pas vos progrès dans les autres langues : chaque langue conserve son vocabulaire étudié, ses listes et ses statistiques.\n\nLa langue de l'interface se choisit séparément à l'aide du sélecteur de langue du site."
+        },
+        "timezone": {
+          "title": "Fuseau horaire",
+          "body": "Dans Parametres, vous pouvez choisir votre Fuseau horaire ou sélectionner Utiliser le fuseau horaire actuel.\n\nCe réglage détermine quand commence une nouvelle journée d'apprentissage pour les objectifs quotidiens, les séries et les statistiques. Il ne modifie pas la durée des intervalles de révision."
+        },
+        "resetProgress": {
+          "title": "Réinitialiser la progression",
+          "body": "Si vous souhaitez recommencer l'apprentissage d'une langue, ouvrez Parametres et choisissez Réinitialiser la progression pour cette langue. Vous devrez saisir RESET pour confirmer.\n\nCette action supprime définitivement la progression des mots, les Favoris, l'historique des révisions, les statistiques et l'historique de Pratique personnalisée de la langue sélectionnée. Votre compte et les progrès réalisés dans les autres langues ne sont pas supprimés.\n\nCette opération est irréversible."
+        },
+        "deleteAccount": {
+          "title": "Supprimer votre compte",
+          "body": "Vous pouvez supprimer définitivement votre compte depuis Parametres, dans la section Données et compte.\n\nPour confirmer, vous devez saisir DELETE. Si vous utilisez un compte avec mot de passe, vous devrez également fournir votre mot de passe actuel.\n\nLa suppression efface définitivement votre compte et les données associées. Cette opération est irréversible."
+        }
+      },
+      "faq": {
+        "title": "Questions fréquentes",
+        "items": {
+          "accountRequired": {
+            "question": "Ai-je besoin d'un compte ?",
+            "answer": "Non. Vous pouvez utiliser la Pratique personnalisée, passer le Test de niveau et explorer les ressources de vocabulaire sans vous inscrire.\n\nUn compte est nécessaire pour accéder à l'apprentissage structuré de nouveaux mots, aux révisions avec suivi de progression, aux listes personnelles et aux statistiques d'apprentissage."
+          },
+          "practiceProgress": {
+            "question": "La Pratique personnalisée enregistre-t-elle ma progression ?",
+            "answer": "La Pratique personnalisée ne modifie ni la maîtrise des mots ni leurs révisions programmées.\n\nSi vous n'êtes pas connecté, les résultats de vos séances ne sont pas enregistrés dans un compte. Si vous êtes connecté, votre temps de pratique active est enregistré dans Activité d’apprentissage, mais votre progression en vocabulaire et votre Objectif quotidien ne sont pas modifiés."
+          },
+          "reviewSystem": {
+            "question": "Comment fonctionne Reviser les mots ?",
+            "answer": "FluentStellar utilise la répétition espacée pour vous aider à retenir les mots étudiés. Les bonnes réponses renforcent votre maîtrise, tandis que les erreurs indiquent qu'un mot nécessite davantage de pratique.\n\nLes révisions comprennent des mots qui ont besoin d'être revus et d'autres mots déjà étudiés, même si leur prochaine révision n'est pas encore arrivée. Vous pouvez continuer à réviser et terminer la séance quand vous le souhaitez."
+          },
+          "changeLanguage": {
+            "question": "Puis-je changer de langue d'apprentissage ?",
+            "answer": "Oui. Ouvrez Parametres et modifiez la Langue apprise dans la section Langues.\n\nVotre progression est conservée séparément pour chaque langue. Si vous revenez à une langue précédente, vous retrouverez les mots et les listes que vous aviez déjà."
+          },
+          "audio": {
+            "question": "Pourquoi le son ne fonctionne-t-il pas ?",
+            "answer": "FluentStellar utilise la synthèse vocale de votre navigateur. Certaines voix ou certaines langues peuvent ne pas être disponibles sur tous les appareils.\n\nVérifiez que le son est activé, essayez de recharger la page et assurez-vous que votre navigateur dispose d'une voix compatible avec la langue choisie. Si l'exercice Ecoute ne fonctionne pas, vous pouvez sélectionner Passer a Associer des mots."
+          },
+          "finishSession": {
+            "question": "Puis-je terminer une séance quand je le souhaite ?",
+            "answer": "Oui. Vous pouvez terminer la Pratique personnalisée et les séances de révision à tout moment. Ces modes n'imposent pas de limite fixe de mots.\n\nVous pouvez également terminer plus tôt une séance Apprendre de nouveaux mots. Les mots déjà terminés restent enregistrés, mais le mot en cours ne sera pas sauvegardé si vous n'avez pas encore terminé ses exercices."
+          }
+        }
+      }
+    },
+    "actions": {
+      "startPractice": "Commencer à pratiquer",
+      "createAccount": "Créer un compte",
+      "openLearning": "Apprentissage",
+      "openMyLists": "Mes listes",
+      "exploreVocabulary": "Explorer",
+      "learningResources": "Voir toutes les ressources d’apprentissage",
+      "takeLevelTest": "Faire un test de niveau rapide",
+      "openSettings": "Parametres"
     }
   },
   "languageNames": {

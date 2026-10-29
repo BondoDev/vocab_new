@@ -972,6 +972,237 @@
       "p3": "Words are counted only when you recall them correctly (revealing a word does not count as a successful recall)."
     }
   },
+  "helpCenter": {
+    "page": {
+      "title": "Help Center",
+      "subtitle": "Learn how to practice vocabulary, study new words, review what you've learned, and track your progress with FluentStellar."
+    },
+    "navigation": {
+      "label": "On this page",
+      "jumpTo": "Jump to section",
+      "gettingStarted": "Getting Started",
+      "customPractice": "Custom Practice",
+      "personalizedLearning": "Personalized Learning",
+      "myLists": "My Lists",
+      "vocabularyProgress": "Vocabulary & Progress",
+      "resources": "Explore & Learning Resources",
+      "accountSettings": "Account & Settings",
+      "faq": "Common Questions"
+    },
+    "sections": {
+      "gettingStarted": {
+        "title": "Getting Started",
+        "intro": "FluentStellar offers two ways to build your vocabulary: practice freely without an account, or create an account to follow a personalized learning system.",
+        "choosePath": {
+          "title": "Choosing how to learn",
+          "body": "Choose Custom Practice if you want to work on vocabulary at your own pace, with your preferred languages, exercises, and word filters.\n\nChoose Personalized Learning if you want a structured way to study new words, review previously studied vocabulary, and track your progress over time."
+        },
+        "withoutAccount": {
+          "title": "Practicing without an account",
+          "body": "You can start practicing immediately without signing up. Select your languages, customize the vocabulary and exercises if you wish, and begin. Practice sessions have no word limit, so you can finish whenever you choose.\n\nYour practice settings are remembered in your browser, but guest sessions and results are not saved to your account."
+        },
+        "withAccount": {
+          "title": "Creating an account for personalized learning",
+          "body": "Create a free account using Google or your email address. After signing in, complete your profile by choosing your languages and current vocabulary level.\n\nYour account gives you access to Study New Words, Review Words, personal vocabulary lists, and learning statistics. Your progress is saved automatically as you study and review."
+        }
+      },
+      "customPractice": {
+        "title": "Custom Practice",
+        "intro": "Custom Practice lets you practice vocabulary in any of the supported languages, using the exercises and word categories you choose. No account is required.",
+        "languages": {
+          "title": "Choosing languages",
+          "body": "Choose Your language for the meanings and translations you will see, then choose Practice language for the words you want to learn. The two languages must be different.\n\nYou can swap the languages using the switch button. Your choices are remembered in your browser."
+        },
+        "filters": {
+          "title": "Vocabulary filters",
+          "body": "Use Customize Filters to select CEFR levels (A1–C2), vocabulary topics, or word types such as nouns, verbs, and adjectives. You can select several options in each category.\n\nAll filters are optional. If you leave a category unselected, vocabulary from every option in that category is included. Apply your filters to return to the practice setup."
+        },
+        "exerciseSelection": {
+          "title": "Choosing exercises",
+          "body": "Choose which of the five exercise types you want to use. All five are selected by default, and you must keep at least one selected.\n\nYou can combine typing, word assembly, matching, and listening exercises. During practice, FluentStellar automatically uses the selected exercises that are suitable for the available words."
+        },
+        "sessions": {
+          "title": "Practice sessions and finishing",
+          "body": "Press Start Practicing to begin. There is no fixed session length or word limit: you can continue as long as you like and press Finish whenever you are ready. Words may appear again as you continue practicing.\n\nYou can use Skip, request help where available, or choose Show me word when you cannot recall an answer. The finish screen summarizes your attempts, accuracy, performance by level and word type, and practiced words.\n\nCustom Practice does not update your learned-word status or spaced-repetition schedule. If you are signed in, your active practice time contributes to Study Activity, but practice results do not count toward your daily new-word goal."
+        },
+        "exerciseTypes": {
+          "title": "Exercise types",
+          "intro": "FluentStellar offers five interactive exercise types. You can select the ones you prefer before starting Custom Practice.",
+          "wordTyping": {
+            "title": "Word typing",
+            "body": "Read the meaning in your language and type the complete word in the language you are practicing. You can listen to the pronunciation and view additional word information.\n\nUse Hint to reveal some letters if you need help, or Show me word to see the answer. Accents and special characters must be entered correctly."
+          },
+          "halfWritten": {
+            "title": "Half-written word completion",
+            "body": "Part of the word is already provided. Type the missing letters to complete it correctly.\n\nThis exercise helps you recall spelling with some letters given as a starting point. There is no Hint button because part of the answer is already visible."
+          },
+          "brokenWord": {
+            "title": "Broken word assembling",
+            "body": "The target word is divided into shuffled parts. Select the parts in the correct order to assemble the complete word.\n\nYou can use Hint for assistance or Show me word to reveal the answer when needed."
+          },
+          "connectWords": {
+            "title": "Connect words",
+            "body": "Match four words in your practice language with their meanings in your own language. Select a word, then select its matching meaning.\n\nCorrect matches stay connected. If a pair is incorrect, you can try again."
+          },
+          "listening": {
+            "title": "Listening",
+            "body": "Listen to the spoken words and match each one with the correct meaning in your language. Use the audio buttons to hear the words before choosing their matches.\n\nAudio uses your browser's speech feature, so pronunciation and voice availability may vary by device. If listening is unavailable, you can switch to Connect words during the session."
+          }
+        }
+      },
+      "personalizedLearning": {
+        "title": "Personalized Learning",
+        "intro": "With a FluentStellar account, you can follow a structured vocabulary-learning system that introduces new words, brings previously studied words back for review, and tracks your progress.",
+        "studyNewWords": {
+          "title": "Study New Words",
+          "body": "Open Learning and select Study New Words. FluentStellar chooses new vocabulary from its organized learning sequence, starting at your selected CEFR level and excluding words you have already studied.\n\nEach word begins with its meaning, definition, example sentence, and pronunciation. You then practice it through three exercises: Broken word, Half-written word completion, and Word typing.\n\nA word is saved to your vocabulary after you complete all three exercises. You can finish the session early; words already completed remain saved, while an unfinished word is not saved."
+        },
+        "reviewWords": {
+          "title": "Review Words",
+          "body": "Review Words helps you strengthen vocabulary you have already studied. FluentStellar uses spaced repetition to bring words back over time, while also including additional studied words that may not yet be due for review.\n\nCorrect answers help words progress toward mastery, while incorrect answers indicate that more practice is needed. Reviews are saved automatically after each word.\n\nReview sessions have no fixed word limit. You can continue reviewing as long as words are available and finish whenever you choose."
+        },
+        "dailyGoal": {
+          "title": "Daily Learning Goal",
+          "body": "Your daily learning goal determines how many new words you aim to study each day. You can choose a goal of 10, 15, 20, 30, or 50 words from the Learning section. The default is 15.\n\nOnly completed new words count toward this goal. Reviewing words and using Custom Practice do not increase your daily new-word count. Reaching your goal contributes to your Daily Streak.\n\nAfter completing your goal, you can continue reviewing vocabulary. To study additional new words on the same day, you can increase your daily goal."
+        },
+        "learningProgress": {
+          "title": "How Vocabulary Progress Works",
+          "body": "Your studied words move through Learning, Known, and Mastered as you answer reviews over time. A correct review can strengthen a word; an incorrect answer can move it back. New words first enter Learning, even when you needed help during their introduction. You can see these categories in Vocabulary. Your learning progress is saved automatically and kept separately for each learning language."
+        }
+      },
+      "myLists": {
+        "title": "My Lists",
+        "intro": "Create personal collections of vocabulary you want to keep together, whether you have studied those words already or not.",
+        "manageLists": {
+          "title": "Creating and managing lists",
+          "body": "Open My Lists in your profile and select Create List. Give your list a name, then open it to see or manage its words. You can search, sort, rename, or delete lists. Each learning language has its own lists, so changing languages shows the lists for that language."
+        },
+        "addWords": {
+          "title": "Adding and removing words",
+          "body": "Inside a list, choose Add Words to search the vocabulary collection and select words to include. You can also add words from your Vocabulary collection, supported session-finish screens, or public full vocabulary lists after signing in. Remove a word from a list whenever you like; this does not delete your learning progress. A word can belong to several lists."
+        },
+        "practiceList": {
+          "title": "Practicing a list",
+          "body": "Open a list and select Practice List. Choose how many words to draw from that list, whether to use random or list order, and which exercises to include. The selected words run in a flexible practice session that continues until you finish. List practice uses Custom Practice, so it does not change your spaced-repetition progress or daily new-word goal."
+        }
+      },
+      "vocabularyProgress": {
+        "title": "Vocabulary & Progress",
+        "intro": "Your profile brings together the words you have studied, their current learning status, and an overview of your activity.",
+        "vocabulary": {
+          "title": "Vocabulary collection",
+          "body": "Open Vocabulary to browse the words you have completed in Study New Words. Search for a word or filter the collection by level, word type, or learning status. You can open word details, add words to a personal list, and see when a word was last practiced. Words practiced only in Custom Practice do not automatically enter this collection."
+        },
+        "statuses": {
+          "title": "Learning, Known, and Mastered",
+          "body": "Learning contains words you have recently started or are still strengthening. Known contains words you have recalled successfully through further reviews. Mastered contains words you have retained through more advanced review stages. These statuses can change as you continue reviewing. In My Lists, Not studied identifies words you have saved to a list but have not yet learned through Study New Words."
+        },
+        "favorites": {
+          "title": "Favorites",
+          "body": "Use the star in Vocabulary or supported learning-session word lists to mark words as Favorites. Open the Favorites tab in Vocabulary to find them again. Favorites organize your studied words; they do not change review schedules."
+        },
+        "dashboard": {
+          "title": "Dashboard and statistics",
+          "body": "Dashboard shows today’s new-word progress, your daily goal, streak, vocabulary overview, study activity, and recent learning. Study Activity includes active Custom Practice time for signed-in users. Use the Learning section to start a new-word or review session."
+        },
+        "milestones": {
+          "title": "Milestones and vocabulary growth",
+          "body": "Open Progress to see milestones for learning, known words, mastery, reviews, and consistency. The Vocabulary Growth chart shows how your studied vocabulary has developed over time. The Consistency milestone counts days with new-word study or reviews; it is different from the Daily Streak, which depends on meeting your daily new-word goal."
+        }
+      },
+      "resources": {
+        "title": "Explore & Learning Resources",
+        "intro": "Explore vocabulary and language references freely, with no account required. These resources can help you find words to practice or add to personal lists.",
+        "explore": {
+          "title": "Vocabulary Explorer",
+          "body": "Open Explore to choose one of the seven languages and browse its available vocabulary pages, tests, and verb resources. Explore is a directory of learning materials; it is not the same as your personal Vocabulary collection in your profile."
+        },
+        "cefr": {
+          "title": "CEFR vocabulary resources",
+          "body": "Browse vocabulary by CEFR level, from A1 to C2, to focus on words appropriate to different stages of learning. You can also browse full vocabulary lists across levels. On supported level pages, the practice link opens Custom Practice with that level already selected."
+        },
+        "wordDetails": {
+          "title": "Word details and pronunciation",
+          "body": "Open a word to see its translation, definition, example sentence, pronunciation, and available grammar information, including word type and CEFR level. Some word pages also include a short typing check and related vocabulary. Audio uses the speech voices available in your browser or device."
+        },
+        "verbs": {
+          "title": "Verb reference resources",
+          "body": "Learning Resources includes collections of common verbs, and where available, past forms and conjugation references. Use these pages to look up verb forms and discover vocabulary you want to practice."
+        },
+        "levelTest": {
+          "title": "Vocabulary Level Test",
+          "body": "Take the free Vocabulary Level Test to get an approximate indication of your vocabulary level. It starts with easier levels and progresses toward harder ones. Early questions ask you to recognize a translation; later questions ask you to assemble a word from parts. The test stops when you make too many mistakes at a level.\n\nThe result is an estimate, not a certified CEFR assessment. Choosing Start Practicing at This Level applies the level to Custom Practice filters; it does not automatically change your account’s current level. You can change that separately in Settings."
+        }
+      },
+      "accountSettings": {
+        "title": "Account & Settings",
+        "intro": "Manage your account details, learning preferences, and personal data from Settings in your profile.",
+        "registration": {
+          "title": "Registration and sign-in",
+          "body": "Select Log In, then choose the option to create an account. You can sign up with Google or with an email address and password. Email registrations require you to confirm your address before signing in. If you forget your password, use Forgot password? on the login form."
+        },
+        "profileSetup": {
+          "title": "Profile setup",
+          "body": "At your first sign-in, complete the required profile information: nickname, native language, learning language, current CEFR level, age, and birth month and day. Your daily new-word goal starts at 15 words and can be changed later in Learning. The Vocabulary Level Test is optional and is not part of registration."
+        },
+        "languages": {
+          "title": "Changing learning languages and level",
+          "body": "Go to Settings → Languages to change your native language, learning language, or current level. Your current level controls the starting point for Study New Words; changing it does not erase words you have already studied. Progress and lists are kept separately for each learning language. Your daily goal and current level are shared account settings, so check them when switching languages."
+        },
+        "timezone": {
+          "title": "Time zone",
+          "body": "Choose your time zone under Settings → Time & Region. It determines when a new learning day starts for daily goals, streaks, and statistics. If you travel or move, update it to keep your learning day aligned with your local time."
+        },
+        "resetProgress": {
+          "title": "Resetting learning progress",
+          "body": "In Settings → Data & Account, you can permanently reset learning progress for the currently selected learning language. This removes that language’s studied-word progress, favorites, review history, streaks, daily statistics, and Custom Practice history. Other learning languages and your account remain. The action requires you to type RESET and cannot be undone."
+        },
+        "deleteAccount": {
+          "title": "Deleting an account",
+          "body": "In Settings → Data & Account, you can permanently delete your account and its associated data. This is different from resetting the progress of one language. You must confirm by typing DELETE; email-and-password accounts must also enter their password. Account deletion cannot be undone."
+        }
+      },
+      "faq": {
+        "title": "Common Questions",
+        "items": {
+          "accountRequired": {
+            "question": "Do I need an account?",
+            "answer": "No. You can use Custom Practice, the Vocabulary Level Test, Explore, and public Learning Resources without signing in. An account is required for Study New Words, Review Words, personal lists, and saved learning progress."
+          },
+          "practiceProgress": {
+            "question": "Does Custom Practice save my progress?",
+            "answer": "Custom Practice does not save individual words as learned or update their review schedules. Guests do not have account-saved results. When you are signed in, active Custom Practice time contributes to your Study Activity statistics, but the words do not count toward your daily new-word goal or mastery."
+          },
+          "reviewSystem": {
+            "question": "How does Review Words work?",
+            "answer": "After you study new words, Review Words brings them back for practice. Your answers affect their learning status and when they are scheduled again. The session can include both overdue words and other previously studied words, and you can finish whenever you want."
+          },
+          "changeLanguage": {
+            "question": "Can I change my learning language?",
+            "answer": "Yes. Open Settings → Languages to choose another learning language. Vocabulary progress and personal lists are kept separately for each language, so changing languages does not erase your previous work. Check your current level after switching, because it is an account-wide setting."
+          },
+          "audio": {
+            "question": "Why isn't audio playing?",
+            "answer": "FluentStellar uses the speech voices provided by your browser and device. Check that your sound is on, try the pronunciation button again, and confirm that your browser supports speech synthesis. If a voice for your practice language is unavailable, try another browser or device. In a Listening exercise, you can switch to Connect words."
+          },
+          "finishSession": {
+            "question": "Can I finish a session at any time?",
+            "answer": "Yes. Custom Practice and Review Words allow you to finish whenever you choose. Study New Words also lets you finish early; words you already completed are saved, but the current unfinished word is not. Practice List sessions can also be ended whenever you want."
+          }
+        }
+      }
+    },
+    "actions": {
+      "startPractice": "Start Practicing",
+      "createAccount": "Create account",
+      "openLearning": "Learning",
+      "openMyLists": "My Lists",
+      "exploreVocabulary": "Explore",
+      "learningResources": "Browse all learning resources",
+      "takeLevelTest": "Take a quick level test",
+      "openSettings": "Settings"
+    }
+  },
   "languageNames": {
     "en": "English",
     "es": "Spanish",

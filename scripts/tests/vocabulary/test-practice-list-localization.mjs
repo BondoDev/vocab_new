@@ -94,7 +94,7 @@ const EXPECTED = {
   portuguese_interface: {
     practiceList: "Praticar lista",
     title: 'Praticar "{name}"',
-    description: "Escolha como pretende praticar esta lista.",
+    description: "Escolha como você quer praticar esta lista.",
     numberOfWords: "Número de palavras",
     wordOrder: "Ordem das palavras",
     random: "Aleatória",
@@ -103,9 +103,9 @@ const EXPECTED = {
     noWords: "Esta lista não contém palavras para praticar.",
   },
   russian_interface: {
-    practiceList: "Практиковать список",
-    title: "Практиковать «{name}»",
-    description: "Выберите, как вы хотите практиковать этот список.",
+    practiceList: "Практика по списку",
+    title: "Практика по списку «{name}»",
+    description: "Выберите параметры практики по этому списку.",
     numberOfWords: "Количество слов",
     wordOrder: "Порядок слов",
     random: "Случайный",

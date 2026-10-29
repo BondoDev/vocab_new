@@ -12,7 +12,7 @@
     "practice": "Pratica",
     "signUp": "Registrati",
     "help": "Aiuto",
-    "levelTest": "Test livello"
+    "levelTest": "Test di livello"
   },
   "home": {
     "personalizedLearning": {
@@ -93,7 +93,7 @@
   },
   "languageSelector": {
     "search": "Cerca lingue...",
-    "alreadySelected": "(Gia selezionata)",
+    "alreadySelected": "(Già selezionata)",
     "noResults": "Nessuna lingua trovata",
     "selectLanguage": "Seleziona una lingua"
   },
@@ -330,7 +330,7 @@
     "learningSection": {
       "ariaLabel": "Sezione apprendimento",
       "title": "Apprendimento",
-      "description": "Completa gli obiettivi di apprendimento di oggi e rafforza le parole che hai gia studiato.",
+      "description": "Completa gli obiettivi di apprendimento di oggi e rafforza le parole che hai già studiato.",
       "dateLoadError": "Impossibile caricare la data di apprendimento di oggi. Riprova.",
       "dateRetryButton": "Riprova",
       "dailyGoal": {
@@ -365,7 +365,7 @@
         "chip": "Questa settimana",
         "daysUnit": "giorni",
         "bestPrefix": "Migliore:",
-        "weekAriaLabel": "Attivita di questa settimana",
+        "weekAriaLabel": "Attività di questa settimana",
         "status": {
           "completed": "Completato",
           "failed": "Obiettivo non raggiunto",
@@ -380,11 +380,11 @@
           "friShort": "V",
           "satShort": "S",
           "sunShort": "D",
-          "monday": "Lunedi",
-          "tuesday": "Martedi",
-          "wednesday": "Mercoledi",
-          "thursday": "Giovedi",
-          "friday": "Venerdi",
+          "monday": "Lunedì",
+          "tuesday": "Martedì",
+          "wednesday": "Mercoledì",
+          "thursday": "Giovedì",
+          "friday": "Venerdì",
           "saturday": "Sabato",
           "sunday": "Domenica"
         }
@@ -394,17 +394,17 @@
         "description": "Scegli come vuoi continuare oggi il tuo apprendimento del vocabolario.",
         "modes": {
           "studyNewWords": {
-            "title": "Studia parole nuove",
+            "title": "Impara nuove parole",
             "description": "Continua la tua sequenza strutturata di vocabolario e impara le parole nuove di oggi.",
             "metaLine": "15 parole rimanenti - Circa 12-15 min",
-            "buttonLabel": "Inizia apprendimento"
+            "buttonLabel": "Inizia a imparare"
           },
           "reviewWords": {
             "title": "Ripassa parole",
             "description": "Rafforza il tuo vocabolario con la ripetizione dilazionata.",
             "metaLine": "Ripassa al tuo ritmo",
             "emptyMetaLine": "Impara nuove parole per iniziare a ripassare",
-            "buttonLabel": "Inizia ripasso"
+            "buttonLabel": "Inizia il ripasso"
           },
           "customPractice": {
             "title": "Pratica personalizzata",
@@ -427,7 +427,7 @@
         "label": "Aggiungi parola",
         "toast": "Aggiungi parola e per ora un'azione di anteprima."
       },
-      "loadError": "Si e verificato un errore durante il caricamento del tuo vocabolario.",
+      "loadError": "Si è verificato un errore durante il caricamento del tuo vocabolario.",
       "retryButton": "Riprova",
       "favoriteError": "Impossibile aggiornare il preferito. Riprova.",
       "emptyStates": {
@@ -736,13 +736,13 @@
       "change": "Cambia",
       "account": {
         "title": "Account",
-        "nickname": "Nickname",
-        "editNickname": "Modifica nickname",
-        "nicknameSavedToast": "Nickname aggiornato.",
-        "nicknameSaveError": "Impossibile aggiornare il nickname. Riprova.",
-        "nicknameRequired": "Il nickname è obbligatorio.",
-        "nicknameInvalid": "Il nickname deve iniziare con una lettera.",
-        "nicknameTooLong": "Il nickname deve contenere al massimo 40 caratteri.",
+        "nickname": "Soprannome",
+        "editNickname": "Modifica soprannome",
+        "nicknameSavedToast": "Soprannome aggiornato.",
+        "nicknameSaveError": "Impossibile aggiornare il soprannome. Riprova.",
+        "nicknameRequired": "Il soprannome è obbligatorio.",
+        "nicknameInvalid": "Il soprannome deve iniziare con una lettera.",
+        "nicknameTooLong": "Il soprannome deve contenere al massimo 40 caratteri.",
         "email": "Email",
         "changeEmail": "Cambia email",
         "emailUpdatedToast": "Email aggiornata.",
@@ -767,28 +767,28 @@
         "passwordManagedByGoogle": "Hai effettuato l'accesso con Google, quindi non c'è nessuna password FluentStellar da cambiare."
       },
       "profileDetails": {
-        "title": "Profile details",
-        "age": "Age",
-        "birthDate": "Birth date",
-        "month": "Month",
-        "day": "Day",
-        "explanation": "These details help keep your profile consistent with the information you entered during signup.",
-        "savedToast": "Profile details updated.",
-        "saveError": "We could not update your profile details. Please try again.",
-        "ageInvalid": "Age must be between 10 and 100.",
+        "title": "Dettagli del profilo",
+        "age": "Età",
+        "birthDate": "Data di nascita",
+        "month": "Mese",
+        "day": "Giorno",
+        "explanation": "Questi dati aiutano a mantenere il tuo profilo coerente con le informazioni che hai inserito durante la registrazione.",
+        "savedToast": "Dettagli del profilo aggiornati.",
+        "saveError": "Non è stato possibile aggiornare i dettagli del profilo. Riprova.",
+        "ageInvalid": "L'età deve essere compresa tra 10 e 100 anni.",
         "months": {
-          "january": "January",
-          "february": "February",
-          "march": "March",
-          "april": "April",
-          "may": "May",
-          "june": "June",
-          "july": "July",
-          "august": "August",
-          "september": "September",
-          "october": "October",
-          "november": "November",
-          "december": "December"
+          "january": "Gennaio",
+          "february": "Febbraio",
+          "march": "Marzo",
+          "april": "Aprile",
+          "may": "Maggio",
+          "june": "Giugno",
+          "july": "Luglio",
+          "august": "Agosto",
+          "september": "Settembre",
+          "october": "Ottobre",
+          "november": "Novembre",
+          "december": "Dicembre"
         }
       },
       "languages": {
@@ -846,9 +846,9 @@
   },
   "aboutPage": {
     "back": "Indietro",
-    "p1": "FLUENTSTELLAR e pensato per la pratica attiva del vocabolario, non per la consultazione passiva.",
+    "p1": "FLUENTSTELLAR è pensato per la pratica attiva del vocabolario, non per la consultazione passiva.",
     "p2": "Non scorri liste di parole e non memorizzi definizioni. Pratichi le parole usandole, con esercizi progettati con cura che allenano richiamo, ortografia e riconoscimento.",
-    "p3": "Non ci sono registrazione ne login. Scegli la tua lingua madre, la lingua che vuoi praticare e il tuo livello CEFR. Se non conosci il tuo livello, un test breve ti aiuta a determinarlo.",
+    "p3": "Non ci sono registrazione né login. Scegli la tua lingua madre, la lingua che vuoi praticare e il tuo livello CEFR. Se non conosci il tuo livello, un test breve ti aiuta a determinarlo.",
     "filtersTitle": "Puoi filtrare facoltativamente:",
     "filters": {
       "topics": "argomenti di pratica",
@@ -856,7 +856,7 @@
       "exerciseTypes": "tipi di esercizio"
     },
     "p4": "Poi avvii una sessione di pratica.",
-    "p5": "Tutto l apprendimento avviene nella sessione. Le parole vengono introdotte, testate, ripetute e rinforzate con esercizi diversi, non mostrate come liste.",
+    "p5": "Tutto l'apprendimento avviene nella sessione. Le parole vengono introdotte, testate, ripetute e rinforzate con esercizi diversi, non mostrate come liste.",
     "howTitle": "Come funziona la pratica",
     "howSubtitle": "Il sistema usa vari tipi di esercizi, ad esempio:",
     "howList": {
@@ -867,9 +867,9 @@
       "listening": "ascolto (quando attivo)"
     },
     "p6": "Alcuni esercizi allenano il richiamo attivo, altri danno un rinforzo leggero. Le parole contano solo quando le ricordi correttamente; mostrare una risposta non conta come apprendimento.",
-    "p7": "Questo approccio punta all acquisizione reale del vocabolario, non alle scorciatoie.",
-    "accountTitle": "Perche senza account?",
-    "accountSubtitle": "FLUENTSTELLAR e intenzionalmente basato su sessioni.",
+    "p7": "Questo approccio punta all'acquisizione reale del vocabolario, non alle scorciatoie.",
+    "accountTitle": "Perché senza account?",
+    "accountSubtitle": "FLUENTSTELLAR è intenzionalmente basato su sessioni.",
     "p8": "Puoi iniziare subito a praticare, senza creare un account o condividere dati personali. Nulla viene salvato quando lasci la sessione.",
     "goalTitle": "L obiettivo e semplice:",
     "goalText": "praticare le parole in modo efficace, con il minimo attrito possibile."
@@ -898,7 +898,7 @@
       "intro": "Vai alla pagina di selezione esercizi e scegli quali tipi vuoi praticare.",
       "listTitle": "Ci sono 5 tipi di esercizi:",
       "item1": "Digitazione parola completa",
-      "item2": "Completamento parola a meta",
+      "item2": "Completamento parola a metà",
       "item3": "Assemblaggio parola spezzata",
       "item4": "Collegamento parole",
       "item5": "Ascolto",
@@ -908,7 +908,7 @@
       "title": "Passo 4: Scegli dimensione sessione (opzionale)",
       "intro": "Puoi scegliere quante parole praticare nella sessione.",
       "optionalTitle": "Questo e opzionale:",
-      "item1": "Puoi impostare una quantita di parole",
+      "item1": "Puoi impostare una quantità di parole",
       "item2": "Oppure iniziare senza limite e terminare la sessione in qualsiasi momento"
     },
     "types": {
@@ -920,16 +920,16 @@
         "seeInput": "Un campo di input dove digitare la risposta"
       },
       "halfWritten": {
-        "title": "2) Completamento parola a meta",
+        "title": "2) Completamento parola a metà",
         "goal": "Obiettivo: Completare una parola parzialmente scritta nella lingua che stai praticando.",
         "seeTitle": "Cosa vedi:",
         "seePartial": "La parola target mostrata parzialmente (devi digitare la parte mancante)",
         "seeInput": "Un campo di input per completare le lettere mancanti",
-        "note": "Questo esercizio non ha il pulsante Suggerimento, perche parte della parola e gia fornita."
+        "note": "Questo esercizio non ha il pulsante Suggerimento, perché parte della parola è già fornita."
       },
       "brokenWord": {
         "title": "3) Assemblaggio parola spezzata",
-        "goal": "Obiettivo: Assemblare la parola corretta mettendo le parti nell ordine giusto.",
+        "goal": "Obiettivo: Assemblare la parola corretta mettendo le parti nell'ordine giusto.",
         "seeTitle": "Cosa vedi:",
         "seeSlots": "Spazi vuoti per le parti della parola",
         "seeChunks": "Un set di parti mescolate da posizionare negli spazi"
@@ -942,7 +942,7 @@
         "seeLeft": "Lato sinistro: 4 parole nella lingua praticata",
         "seeRight": "Lato destro: 4 significati nella tua lingua madre",
         "howTitle": "Come funziona:",
-        "how1": "Tocca un elemento a sinistra, poi l elemento corrispondente a destra",
+        "how1": "Tocca un elemento a sinistra, poi l'elemento corrispondente a destra",
         "how2": "Le coppie corrette restano collegate",
         "how3": "Le coppie errate vengono evidenziate brevemente e possono essere ritentate"
       },
@@ -972,6 +972,237 @@
       "p3": "Le parole contano solo quando le ricordi correttamente (mostrare una parola non conta come richiamo corretto)."
     }
   },
+  "helpCenter": {
+    "page": {
+      "title": "Centro assistenza",
+      "subtitle": "Scopri come esercitarti con il vocabolario, imparare nuove parole, ripassare ciò che hai studiato e seguire i tuoi progressi con FluentStellar."
+    },
+    "navigation": {
+      "label": "In questa pagina",
+      "jumpTo": "Vai alla sezione",
+      "gettingStarted": "Per iniziare",
+      "customPractice": "Pratica personalizzata",
+      "personalizedLearning": "Apprendimento personalizzato",
+      "myLists": "Le mie liste",
+      "vocabularyProgress": "Vocabolario e progressi",
+      "resources": "Esplora e risorse",
+      "accountSettings": "Account e impostazioni",
+      "faq": "Domande frequenti"
+    },
+    "sections": {
+      "gettingStarted": {
+        "title": "Per iniziare",
+        "intro": "FluentStellar ti offre due modi per ampliare il tuo vocabolario: esercitarti liberamente senza un account oppure crearne uno per seguire un percorso di apprendimento personalizzato.",
+        "choosePath": {
+          "title": "Scegli come imparare",
+          "body": "Scegli Pratica personalizzata se vuoi esercitarti con il vocabolario al tuo ritmo, selezionando le lingue, gli esercizi e i filtri che preferisci.\n\nScegli Apprendimento personalizzato se desideri seguire un percorso strutturato per imparare nuove parole, ripassare quelle già studiate e monitorare i tuoi progressi nel tempo."
+        },
+        "withoutAccount": {
+          "title": "Esercitarsi senza un account",
+          "body": "Puoi iniziare subito, senza registrarti. Seleziona le tue lingue, personalizza il vocabolario e gli esercizi se lo desideri, quindi comincia. Le sessioni non hanno un limite di parole, quindi puoi terminarle quando vuoi.\n\nLe tue preferenze di pratica vengono memorizzate nel browser, ma le sessioni e i risultati degli utenti non registrati non vengono salvati in un account."
+        },
+        "withAccount": {
+          "title": "Creare un account per l'apprendimento personalizzato",
+          "body": "Crea un account gratuito utilizzando Google oppure il tuo indirizzo email. Dopo aver effettuato l'accesso, completa il tuo profilo inserendo le informazioni richieste, le tue lingue e il tuo livello attuale.\n\nCon un account puoi accedere a Impara nuove parole, Ripassa parole, alle liste personali di vocaboli e alle statistiche di apprendimento. I tuoi progressi vengono salvati automaticamente mentre studi e ripassi."
+        }
+      },
+      "customPractice": {
+        "title": "Pratica personalizzata",
+        "intro": "La Pratica personalizzata ti permette di esercitarti con il vocabolario in una qualsiasi delle sette lingue disponibili, scegliendo gli esercizi e le categorie di parole che preferisci. Non è necessario avere un account.",
+        "languages": {
+          "title": "Scegliere le lingue",
+          "body": "In La tua lingua seleziona la lingua in cui vuoi vedere significati e traduzioni. In Lingua da praticare scegli invece la lingua di cui vuoi imparare le parole. Le due lingue devono essere diverse.\n\nPuoi invertire le lingue utilizzando il pulsante di scambio. Le tue scelte vengono memorizzate nel browser."
+        },
+        "filters": {
+          "title": "Filtri del vocabolario",
+          "body": "Utilizza Personalizza i filtri per selezionare i livelli QCER da A1 a C2, gli argomenti del vocabolario o le categorie grammaticali, come sostantivi, verbi e aggettivi. Puoi selezionare più opzioni all'interno di ogni categoria.\n\nTutti i filtri sono facoltativi. Se non selezioni alcuna opzione in una categoria, saranno incluse tutte le opzioni di quella categoria. Seleziona Applica i filtri per tornare alla configurazione della pratica."
+        },
+        "exerciseSelection": {
+          "title": "Scegliere gli esercizi",
+          "body": "Scegli quali dei cinque tipi di esercizi vuoi utilizzare. Per impostazione predefinita sono tutti selezionati e almeno uno deve rimanere attivo.\n\nPuoi combinare esercizi di scrittura, composizione di parole, abbinamento e ascolto. Durante la sessione, FluentStellar utilizza automaticamente gli esercizi selezionati che sono adatti alle parole disponibili."
+        },
+        "sessions": {
+          "title": "Sessioni di pratica e conclusione",
+          "body": "Premi Inizia a praticare per cominciare. Non esistono una durata prestabilita o un limite di parole: puoi continuare quanto desideri e selezionare Termina quando vuoi. Alcune parole possono ricomparire durante la sessione.\n\nPuoi usare Salta per passare a un altro esercizio, richiedere aiuto quando disponibile oppure selezionare Mostrami la parola se non ricordi la risposta. Alla fine della sessione vedrai un riepilogo dei tentativi, della percentuale di risposte corrette, dei risultati per livello e categoria grammaticale e delle parole esercitate.\n\nLa Pratica personalizzata non modifica lo stato di apprendimento delle parole né la programmazione dei ripassi. Se hai effettuato l'accesso, il tempo di pratica attiva viene registrato in Attività di apprendimento, ma i risultati non contribuiscono al tuo Obiettivo giornaliero di nuove parole."
+        },
+        "exerciseTypes": {
+          "title": "Tipi di esercizi",
+          "intro": "FluentStellar offre cinque tipi di esercizi interattivi. Puoi scegliere quelli che preferisci prima di iniziare una sessione di Pratica personalizzata.",
+          "wordTyping": {
+            "title": "Digitazione parola",
+            "body": "Leggi il significato nella tua lingua e digita la parola completa nella lingua che stai praticando. Puoi anche ascoltarne la pronuncia e consultare informazioni aggiuntive.\n\nUtilizza Suggerimento per scoprire alcune lettere, oppure Mostrami la parola per visualizzare la risposta. Gli accenti e i caratteri speciali devono essere inseriti correttamente."
+          },
+          "halfWritten": {
+            "title": "Completamento parola a metà",
+            "body": "Una parte della parola è già scritta. Digita le lettere mancanti per completarla correttamente.\n\nQuesto esercizio ti aiuta a ricordare l'ortografia partendo dalle lettere già fornite. Non è disponibile un pulsante Suggerimento, perché una parte della risposta è già visibile."
+          },
+          "brokenWord": {
+            "title": "Assemblaggio parola spezzata",
+            "body": "La parola è divisa in più parti mescolate. Seleziona i frammenti nell'ordine corretto per ricostruire la parola completa.\n\nPuoi utilizzare Suggerimento per ricevere aiuto oppure Mostrami la parola per visualizzare la soluzione quando ne hai bisogno."
+          },
+          "connectWords": {
+            "title": "Collega parole",
+            "body": "Abbina quattro parole nella lingua che stai praticando ai rispettivi significati nella tua lingua. Seleziona una parola e poi il significato corrispondente.\n\nGli abbinamenti corretti rimangono collegati. Se un abbinamento è sbagliato, puoi riprovare."
+          },
+          "listening": {
+            "title": "Ascolto",
+            "body": "Ascolta le parole pronunciate e abbina ciascuna al significato corretto nella tua lingua. Utilizza i pulsanti audio per ascoltare le parole prima di scegliere gli abbinamenti.\n\nL'audio utilizza la sintesi vocale del browser, quindi la disponibilità delle voci e la qualità della pronuncia possono variare in base al dispositivo. Se l'audio non funziona, puoi selezionare Passa a Collega parole durante la sessione."
+          }
+        }
+      },
+      "personalizedLearning": {
+        "title": "Apprendimento personalizzato",
+        "intro": "Con un account FluentStellar puoi seguire un percorso strutturato che introduce nuove parole, ripropone quelle già studiate per il ripasso e registra i tuoi progressi.",
+        "studyNewWords": {
+          "title": "Impara nuove parole",
+          "body": "Apri Apprendimento e seleziona Impara nuove parole. FluentStellar sceglie nuovi vocaboli da una sequenza di apprendimento organizzata, partendo dal livello QCER che hai impostato ed escludendo le parole già studiate.\n\nOgni parola viene presentata con il significato, la definizione, una frase di esempio e la pronuncia. Successivamente la eserciti attraverso tre attività: Assemblaggio parola spezzata, Completamento parola a metà e Digitazione parola.\n\nLa parola viene salvata nel tuo vocabolario dopo aver completato tutti e tre gli esercizi. Puoi terminare la sessione in anticipo: le parole già completate rimangono salvate, mentre quella che stai ancora studiando non viene registrata."
+        },
+        "reviewWords": {
+          "title": "Ripassa parole",
+          "body": "Ripassa parole ti aiuta a consolidare il vocabolario che hai già studiato. FluentStellar utilizza la ripetizione dilazionata per riproporti le parole nel tempo, includendo anche vocaboli studiati per i quali non è ancora arrivato il momento del ripasso programmato.\n\nLe risposte corrette aiutano le parole a progredire verso una conoscenza più solida, mentre quelle sbagliate indicano che serve ulteriore esercizio. Ogni risposta viene salvata automaticamente.\n\nLe sessioni di ripasso non hanno un limite fisso di parole. Puoi continuare finché ci sono parole disponibili e terminare quando desideri."
+        },
+        "dailyGoal": {
+          "title": "Obiettivo giornaliero",
+          "body": "L'Obiettivo giornaliero stabilisce quante parole nuove vuoi studiare ogni giorno. Nella sezione Apprendimento puoi scegliere tra 10, 15, 20, 30 o 50 parole. Il valore predefinito è 15.\n\nSolo le nuove parole completamente studiate contribuiscono all'obiettivo. I ripassi e la Pratica personalizzata non aumentano il conteggio giornaliero delle parole nuove. Raggiungere l'obiettivo contribuisce alla tua Serie giornaliera.\n\nUna volta completato l'obiettivo, puoi continuare a ripassare. Se vuoi studiare altre parole nuove nello stesso giorno, puoi aumentare l'Obiettivo giornaliero."
+        },
+        "learningProgress": {
+          "title": "Come funziona il progresso del vocabolario",
+          "body": "Le parole completate in Impara nuove parole vengono aggiunte automaticamente al tuo vocabolario personale. Quando le ripassi, FluentStellar registra le tue risposte e modifica il momento in cui verranno riproposte.\n\nUna serie di risposte corrette aiuta le parole a raggiungere livelli di conoscenza più avanzati. Le risposte sbagliate possono farle retrocedere di uno stato, in modo che tu possa esercitarti ulteriormente.\n\nI progressi vengono salvati separatamente per ogni lingua di apprendimento. La Pratica personalizzata e la pratica delle liste non modificano lo stato delle parole né la programmazione dei ripassi."
+        }
+      },
+      "myLists": {
+        "title": "Le mie liste",
+        "intro": "Organizza le parole che vuoi esercitare in liste personali. Puoi creare raccolte per argomenti specifici, parole difficili o qualsiasi gruppo di vocaboli che desideri tenere insieme.",
+        "manageLists": {
+          "title": "Creare e gestire le liste",
+          "body": "Apri Le mie liste dal tuo profilo e seleziona Crea lista. Assegna un nome alla raccolta e salvala. Puoi creare più liste, cercarle, rinominarle ed eliminarle quando non ti servono più.\n\nOgni lista appartiene a una specifica lingua di apprendimento. Quando cambi lingua, vedrai le liste associate alla lingua selezionata. Eliminare una lista non cancella i progressi di apprendimento delle parole che conteneva."
+        },
+        "addWords": {
+          "title": "Aggiungere e rimuovere parole",
+          "body": "Apri una lista e seleziona Aggiungi parole per cercare e scegliere i vocaboli da includere. Puoi aggiungere sia parole che hai già studiato sia parole nuove.\n\nPuoi anche aggiungere parole alle tue liste dalla sezione Vocabolario, dalle schermate di conclusione delle sessioni e dagli elenchi completi di vocaboli disponibili nelle risorse pubbliche.\n\nUna parola può appartenere a più liste, ma non può essere inserita due volte nella stessa lista. Rimuovere una parola da una lista non modifica i tuoi progressi di apprendimento."
+        },
+        "practiceList": {
+          "title": "Esercitarsi con una lista",
+          "body": "Apri una lista che contiene parole e seleziona Esercita la lista. Puoi scegliere quante parole includere, l'ordine in cui presentarle e i tipi di esercizi da utilizzare.\n\nLa sessione utilizza gli stessi esercizi della Pratica personalizzata, ma soltanto con le parole selezionate dalla tua lista. Puoi continuare a esercitarti e terminare quando vuoi.\n\nEsercitarti con una lista non modifica lo stato di apprendimento delle parole né i ripassi programmati."
+        }
+      },
+      "vocabularyProgress": {
+        "title": "Vocabolario e progressi",
+        "intro": "Consulta le parole che hai studiato, organizza le tue Preferite e scopri come cresce il tuo vocabolario nel tempo.",
+        "vocabulary": {
+          "title": "La tua raccolta di vocaboli",
+          "body": "La sezione Vocabolario del tuo profilo raccoglie le parole che hai completato tramite Impara nuove parole. Puoi cercare i vocaboli, filtrarli per livello, categoria grammaticale e stato di apprendimento e controllare quando li hai esercitati l'ultima volta.\n\nPer ogni parola puoi aprire i dettagli, aggiungerla a una lista personale oppure contrassegnarla come preferita."
+        },
+        "statuses": {
+          "title": "In apprendimento, Conosciute e Padroneggiate",
+          "body": "FluentStellar suddivide le parole studiate in tre categorie in base ai tuoi progressi.\n\nIn apprendimento: parole che hai iniziato a studiare e che richiedono ancora esercizio.\n\nConosciute: parole che conosci bene e che hai consolidato attraverso i ripassi.\n\nPadroneggiate: parole che hai dimostrato di ricordare nel lungo periodo.\n\nQuesti stati possono cambiare in base alle tue risposte durante i ripassi. Non è necessario modificarli manualmente."
+        },
+        "favorites": {
+          "title": "Preferite",
+          "body": "Contrassegna le parole come preferite per ritrovarle più facilmente. Puoi visualizzarle e gestirle nella scheda Preferite della sezione Vocabolario e nelle altre schermate di apprendimento che offrono questa funzione.\n\nAggiungere una parola alle Preferite non modifica il suo stato di apprendimento né la frequenza dei ripassi."
+        },
+        "dashboard": {
+          "title": "Dashboard e statistiche",
+          "body": "La Dashboard del tuo profilo mostra un riepilogo delle tue attività: parole nuove studiate, avanzamento verso l'Obiettivo giornaliero, Serie giornaliera e Panoramica del vocabolario.\n\nPuoi anche consultare Attività di apprendimento, che mostra il tempo dedicato alle diverse modalità, inclusa la Pratica personalizzata quando hai effettuato l'accesso, e il numero di parole nuove apprese negli ultimi giorni."
+        },
+        "milestones": {
+          "title": "Traguardi e crescita del vocabolario",
+          "body": "La sezione Progressi mostra i tuoi Traguardi in diversi ambiti, tra cui vocaboli studiati, parole Conosciute, Padronanza, Ripassi e Costanza.\n\nIl grafico Crescita del vocabolario ti permette di osservare come è aumentata la tua raccolta di parole in diversi intervalli di tempo.\n\nLa Serie giornaliera richiede il completamento dell'Obiettivo giornaliero di parole nuove. La Costanza dei Traguardi può invece tenere conto anche dei giorni in cui hai studiato nuove parole o effettuato ripassi."
+        }
+      },
+      "resources": {
+        "title": "Esplora e risorse di apprendimento",
+        "intro": "Oltre agli esercizi, FluentStellar offre risorse gratuite per consultare parole, esplorare vocaboli per livello e conoscere meglio le lingue che stai imparando.",
+        "explore": {
+          "title": "Esplorare il vocabolario",
+          "body": "Apri Esplora e seleziona una delle sette lingue disponibili per scoprirne le risorse di vocabolario. Troverai elenchi di parole per livello, test di vocabolario e materiali di riferimento sui verbi.\n\nPuoi consultare queste risorse senza effettuare l'accesso e utilizzarle come punto di partenza per le tue sessioni di pratica."
+        },
+        "cefr": {
+          "title": "Risorse di vocabolario per livello",
+          "body": "Esplora vocaboli organizzati secondo i livelli A1, A2, B1, B2, C1 e C2 del Quadro comune europeo di riferimento per le lingue (QCER).\n\nLe pagine dedicate ai singoli livelli ti permettono di consultare parole della difficoltà corrispondente e avviare una sessione di Pratica personalizzata con quel livello già selezionato. Sono disponibili anche elenchi completi che riuniscono vocaboli di diversi livelli."
+        },
+        "wordDetails": {
+          "title": "Dettagli delle parole e pronuncia",
+          "body": "Le pagine dedicate alle singole parole mostrano informazioni utili come traduzioni, definizioni, frasi di esempio, pronuncia, categoria grammaticale e livello di vocabolario.\n\nPuoi anche svolgere un breve esercizio sulla parola o continuare a praticare vocaboli dello stesso livello. La riproduzione audio dipende dalle funzionalità e dalle voci disponibili nel tuo browser."
+        },
+        "verbs": {
+          "title": "Risorse di riferimento sui verbi",
+          "body": "Consulta elenchi dei verbi più comuni e materiali dedicati alle forme verbali e alle coniugazioni. Queste risorse ti permettono di scoprire come cambiano i verbi e ampliare il tuo vocabolario.\n\nLa disponibilità di alcuni materiali può variare a seconda della lingua. Puoi trovarli in Esplora o nelle Risorse di apprendimento."
+        },
+        "levelTest": {
+          "title": "Test di livello del vocabolario",
+          "body": "Il test di livello del vocabolario è gratuito e ti aiuta a ottenere una stima della tua conoscenza lessicale. Inizia dal livello A1 e prosegue gradualmente fino al C2.\n\nNei livelli A1 e A2 scegli la traduzione corretta tra sei opzioni. Dal B1 al C2 ricostruisci le parole a partire da frammenti. Il test termina dopo tre risposte errate nello stesso livello oppure quando hai completato tutti i livelli.\n\nIl risultato è una stima indicativa, non una certificazione ufficiale QCER. Puoi ripetere il test e utilizzare il livello ottenuto per configurare una sessione di Pratica personalizzata. Il risultato non modifica automaticamente il livello salvato nel tuo account."
+        }
+      },
+      "accountSettings": {
+        "title": "Account e impostazioni",
+        "intro": "Gestisci il tuo profilo, le preferenze di apprendimento e i dati associati al tuo account dalla sezione Impostazioni.",
+        "registration": {
+          "title": "Registrazione e accesso",
+          "body": "Puoi creare un account utilizzando Google oppure un indirizzo email e una password. Se ti registri con l'email, dovrai confermare il tuo indirizzo tramite il collegamento ricevuto.\n\nSe possiedi già un account, seleziona Accedi. Se hai dimenticato la password, puoi richiedere un collegamento per reimpostarla."
+        },
+        "profileSetup": {
+          "title": "Configurare il profilo",
+          "body": "Al primo accesso devi completare il tuo profilo prima di utilizzare il sistema di Apprendimento personalizzato.\n\nTi verranno richiesti un Soprannome, la Lingua madre, la Lingua di apprendimento, il tuo livello attuale, la tua età e il giorno e il mese di nascita.\n\nL'Obiettivo giornaliero iniziale è di 15 parole nuove e puoi modificarlo in seguito da Apprendimento. Il test di livello è facoltativo e non fa parte della registrazione."
+        },
+        "languages": {
+          "title": "Cambiare lingua e livello",
+          "body": "Apri Impostazioni e vai alla sezione Lingue per modificare la Lingua madre, la Lingua di apprendimento o il Livello attuale. Salva le modifiche per applicarle.\n\nIl Livello attuale determina da quale livello vengono selezionate le nuove parole da studiare. Cambiare la lingua di apprendimento non cancella i progressi ottenuti nelle altre lingue: ciascuna conserva il proprio vocabolario studiato, le liste e le statistiche.\n\nLa lingua dell'interfaccia può essere modificata separatamente tramite il selettore delle lingue del sito."
+        },
+        "timezone": {
+          "title": "Fuso orario",
+          "body": "In Impostazioni puoi scegliere il tuo Fuso orario oppure selezionare Usa il fuso orario attuale.\n\nQuesta preferenza determina quando inizia un nuovo giorno di apprendimento per gli obiettivi giornalieri, le serie e le statistiche. Non modifica la durata degli intervalli tra i ripassi."
+        },
+        "resetProgress": {
+          "title": "Reimpostare i progressi di apprendimento",
+          "body": "Se vuoi ricominciare da zero con una lingua, apri Impostazioni e utilizza Reimposta i progressi di apprendimento per la lingua selezionata. Per confermare dovrai digitare RESET.\n\nQuesta operazione elimina definitivamente i progressi delle parole, le Preferite, la cronologia dei ripassi, le statistiche e la cronologia della Pratica personalizzata relative alla lingua scelta. Il tuo account e i progressi delle altre lingue vengono conservati.\n\nL'operazione è irreversibile."
+        },
+        "deleteAccount": {
+          "title": "Eliminare l'account",
+          "body": "Puoi eliminare definitivamente il tuo account da Impostazioni, nella sezione Dati e account.\n\nPer confermare l'eliminazione dovrai digitare DELETE. Se utilizzi un account con password, dovrai anche inserire la password attuale.\n\nQuesta operazione elimina definitivamente l'account e i dati associati e non può essere annullata."
+        }
+      },
+      "faq": {
+        "title": "Domande frequenti",
+        "items": {
+          "accountRequired": {
+            "question": "Ho bisogno di un account?",
+            "answer": "No. Puoi utilizzare la Pratica personalizzata, svolgere il test di livello ed esplorare le risorse di vocabolario senza registrarti.\n\nÈ necessario un account per studiare nuove parole con il sistema personalizzato, effettuare ripassi con il monitoraggio dei progressi, creare liste personali e consultare le statistiche di apprendimento."
+          },
+          "practiceProgress": {
+            "question": "La Pratica personalizzata salva i miei progressi?",
+            "answer": "La Pratica personalizzata non modifica lo stato di apprendimento delle parole né i ripassi programmati.\n\nSe non hai effettuato l'accesso, i risultati delle sessioni non vengono salvati in un account. Se hai effettuato l'accesso, il tempo di pratica attiva viene registrato in Attività di apprendimento, ma i progressi del vocabolario e l'Obiettivo giornaliero non vengono modificati."
+          },
+          "reviewSystem": {
+            "question": "Come funziona Ripassa parole?",
+            "answer": "FluentStellar utilizza la ripetizione dilazionata per aiutarti a ricordare le parole già studiate. Le risposte corrette rafforzano i tuoi progressi, mentre gli errori indicano che una parola richiede ulteriore esercizio.\n\nI ripassi includono sia parole da ripetere sia altre parole già studiate, anche quando il loro prossimo ripasso non è ancora previsto. Puoi continuare a ripassare e terminare la sessione quando vuoi."
+          },
+          "changeLanguage": {
+            "question": "Posso cambiare la lingua che sto imparando?",
+            "answer": "Sì. Apri Impostazioni e modifica la Lingua di apprendimento nella sezione Lingue.\n\nI tuoi progressi vengono conservati separatamente per ogni lingua. Quando torni a una lingua già studiata, ritrovi le parole e le liste precedenti."
+          },
+          "audio": {
+            "question": "Perché l'audio non funziona?",
+            "answer": "FluentStellar utilizza la sintesi vocale del tuo browser. Alcune voci o lingue potrebbero non essere disponibili su determinati dispositivi.\n\nVerifica che l'audio sia attivo, prova a ricaricare la pagina e controlla che il browser disponga di una voce compatibile con la lingua selezionata. Se l'esercizio Ascolto non funziona, puoi selezionare Passa a Collega parole."
+          },
+          "finishSession": {
+            "question": "Posso terminare una sessione quando voglio?",
+            "answer": "Sì. Puoi terminare la Pratica personalizzata e le sessioni di Ripassa parole in qualsiasi momento. Queste modalità non prevedono un limite fisso di parole.\n\nPuoi anche terminare in anticipo una sessione di Impara nuove parole. Le parole già completate rimangono salvate, ma la parola che stai ancora studiando non verrà registrata se non hai terminato tutti i suoi esercizi."
+          }
+        }
+      }
+    },
+    "actions": {
+      "startPractice": "Inizia a praticare",
+      "createAccount": "Crea account",
+      "openLearning": "Apprendimento",
+      "openMyLists": "Le mie liste",
+      "exploreVocabulary": "Esplora",
+      "learningResources": "Vedi tutte le risorse di apprendimento",
+      "takeLevelTest": "Fai un test di livello rapido",
+      "openSettings": "Impostazioni"
+    }
+  },
   "languageNames": {
     "en": "Inglese",
     "es": "Spagnolo",
@@ -988,7 +1219,7 @@
     "skipNote": "Salta tutto per praticare tutto",
     "levels": "Livelli",
     "vocabularyLevel": "Seleziona livelli da praticare",
-    "levelsHelper": "Seleziona uno o piu livelli.",
+    "levelsHelper": "Seleziona uno o più livelli.",
     "categories": "Categorie",
     "topicsToPractice": "Argomenti da praticare",
     "wordTypes": "Tipi di parola",
@@ -999,7 +1230,7 @@
     "startPracticing": "Inizia a praticare",
     "backToLanguages": "Torna alle lingue",
     "back": "Indietro",
-    "takeLevelTest": "Fai un test livello rapido",
+    "takeLevelTest": "Fai un test di livello rapido",
     "testDescription": "Non sei sicuro del tuo livello? Fai un test rapido.",
     "notSureLevel": "Non sai da dove iniziare? Fai un test rapido di vocabolario per trovare il tuo livello.",
     "selection": {
@@ -1056,7 +1287,7 @@
     "types": {
       "skipAll": "Oppure salta per praticare tutti i tipi di parola",
       "showMore": "Mostra altro",
-      "showMoreWithCountPrefix": "Mostra piu tipi",
+      "showMoreWithCountPrefix": "Mostra più tipi",
       "showAll": "Mostra tutti i tipi",
       "showAllShort": "TUTTO"
     },
@@ -1121,10 +1352,10 @@
       "startCountPrefix": "Avvia",
       "startCountSuffix": "esercizi"
     },
-    "helperText": "Puoi cambiare gli esercizi piu tardi.",
+    "helperText": "Puoi cambiare gli esercizi più tardi.",
     "exercise": {
       "wordTyping": "Digitazione parola",
-      "halfWritten": "Completamento parola a meta",
+      "halfWritten": "Completamento parola a metà",
       "brokenWord": "Assemblaggio parola spezzata",
       "connectWords": "Collega parole",
       "listening": "Ascolto"
@@ -1195,7 +1426,7 @@
     "goalCompleteMessage": "L'obiettivo di nuove parole di oggi e completo.",
     "exhaustedMessage": "Hai completato tutto il vocabolario ordinato attualmente disponibile per questa lingua.",
     "missingProfileMessage": "Non possiamo ancora preparare la tua coda di studio. Imposta la tua lingua di apprendimento e il tuo obiettivo giornaliero nel profilo, poi riprova.",
-    "errorMessage": "Si e verificato un errore durante il caricamento delle parole.",
+    "errorMessage": "Si è verificato un errore durante il caricamento delle parole.",
     "retryButton": "Riprova",
     "startExercisesButton": "Inizia esercizi",
     "translationLabel": "Traduzione",
@@ -1205,14 +1436,14 @@
     "nextWordButton": "Parola successiva",
     "savingProgress": "Salvataggio in corso...",
     "saveErrorMessage": "Non siamo riusciti a salvare questa parola. Controlla la tua connessione e riprova.",
-    "sessionExpiredMessage": "La tua sessione e scaduta. Accedi di nuovo.",
+    "sessionExpiredMessage": "La tua sessione è scaduta. Accedi di nuovo.",
     "wordLearnedToastPrefix": "Parola",
     "wordLearnedToastSuffix": "imparata.",
     "wordPositionPrefix": "Parola",
     "ofConnector": "di",
     "exercisePrefix": "Esercizio",
     "returnToLearningButton": "Torna all’apprendimento",
-    "sessionErrorMessage": "Si e verificato un problema con la sessione di studio."
+    "sessionErrorMessage": "Si è verificato un problema con la sessione di studio."
   },
   "reviewWords": {
     "continuous": {
@@ -1233,11 +1464,11 @@
     },
     "startReviewButton": "Inizia il ripasso",
     "title": "Ripassa parole",
-    "subtitle": "Rafforza le parole che hai gia imparato.",
+    "subtitle": "Rafforza le parole che hai già imparato.",
     "backButton": "Torna ad Apprendimento",
     "loading": "Preparazione della sessione di ripasso...",
     "missingProfileMessage": "Non possiamo ancora preparare la tua sessione di ripasso. Imposta la tua lingua di destinazione nel profilo e riprova.",
-    "errorMessage": "Si e verificato un errore durante il caricamento della sessione di ripasso.",
+    "errorMessage": "Si è verificato un errore durante il caricamento della sessione di ripasso.",
     "retryButton": "Riprova",
     "noWordsYetMessage": "Ancora nessuna parola disponibile per il ripasso.",
     "studyNewWordsAction": "Studia nuove parole",
@@ -1246,10 +1477,10 @@
     "nextGroupButton": "Gruppo successivo",
     "continueButton": "Continua",
     "blockCompleteHeading": "Gruppo completato",
-    "exerciseErrorMessage": "Si e verificato un errore con questo esercizio.",
+    "exerciseErrorMessage": "Si è verificato un errore con questo esercizio.",
     "savingReview": "Salvataggio in corso...",
     "saveErrorMessage": "Non siamo riusciti a salvare questo ripasso. Controlla la tua connessione e riprova.",
-    "sessionExpiredMessage": "La tua sessione e scaduta. Accedi di nuovo."
+    "sessionExpiredMessage": "La tua sessione è scaduta. Accedi di nuovo."
   },
   "practice": {
     "backToFilters": "Torna ai filtri",
@@ -1261,7 +1492,7 @@
     "practicedCount_one": "{count} parola esercitata",
     "practicedCount_other": "{count} parole esercitate",
     "menu": "Menu",
-    "showMeWord": "Mostrami parola",
+    "showMeWord": "Mostrami la parola",
     "hint": "Suggerimento",
     "nextAction": "Avanti",
     "skipAction": "Salta",
@@ -1295,7 +1526,7 @@
     "correctStat": "Corrette",
     "incorrect": "Errate",
     "ofAttempts": "dei tentativi",
-    "noAttempts": "Nessuna parola e stata tentata in questa sessione.",
+    "noAttempts": "Nessuna parola è stata tentata in questa sessione.",
     "tryTyping": "Prova a digitare le risposte per tracciare i progressi!",
     "skipped": "saltate senza tentativo",
     "word": "parola",
@@ -1313,7 +1544,7 @@
     "targetLanguageHeader": "Lingua di destinazione",
     "wordTypeHeader": "Tipo di parola",
     "were": "sono state",
-    "was": "e stata",
+    "was": "è stata",
     "startAgain": "Ricomincia",
     "changeFilters": "Cambia filtri",
     "noWords": "Nessuna parola trovata",
@@ -1332,7 +1563,7 @@
     }
   },
   "exam": {
-    "title": "Test livello vocabolario",
+    "title": "Test di livello del vocabolario",
     "subtitle": "Trova il tuo livello approssimativo di vocabolario",
     "instructions": "Seleziona la traduzione corretta per ogni parola. Ci sono 6 domande per livello da A1 a C2.",
     "loading": "Caricamento test...",
@@ -1368,9 +1599,9 @@
     "confirmExitLeave": "Esci dal test"
   },
   "supabaseErrors": {
-    "sessionExpired": "La tua sessione e scaduta. Accedi di nuovo.",
-    "forbidden": "Questa azione non e consentita.",
-    "temporarilyUnavailable": "Questa funzione non e disponibile temporaneamente. Riprova tra poco.",
+    "sessionExpired": "La tua sessione è scaduta. Accedi di nuovo.",
+    "forbidden": "Questa azione non è consentita.",
+    "temporarilyUnavailable": "Questa funzione non è disponibile temporaneamente. Riprova tra poco.",
     "network": "Problema di connessione. Controlla la tua connessione a internet e riprova."
   },
   "learningResources": {

@@ -173,7 +173,7 @@ const EXPECTED = {
     wordsLearnedTitle: "Progresso do vocabulário",
     wordsLearnedSeries: "Palavras aprendidas",
     last7Days: "Últimos 7 dias",
-    milestonePreviewTitle: "Pré-visualização de marcos",
+    milestonePreviewTitle: "Prévia dos marcos",
     viewProgress: "Ver progresso",
   },
   "russian_interface.json": {

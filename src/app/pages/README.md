@@ -17,10 +17,11 @@ infrastructure (→ `src/data/`, `src/seo/`).
 
 ```
 src/app/pages/
-  About.tsx, Help.tsx,                    # standalone route pages
+  About.tsx,                              # standalone route pages
   NotFoundPage.tsx, SeoHubPage.tsx, VocabularyLevelExam.tsx
 
   explore/              # page family: explore route + its exclusive hook
+  help/                 # page family: Help Center + its section config and styles
   home/                 # page family: homepage + its exclusive components
   level-test/           # page family: level-test SEO page + its modal
   list-pages/           # grouping of list-style SEO page families (not a family)
@@ -40,7 +41,7 @@ with no exclusively owned supporting view, modal, layout, or local
 configuration — a one-file folder would add nesting without clarifying
 ownership.
 
-**Examples:** `About.tsx`, `Help.tsx`, `SeoHubPage.tsx`,
+**Examples:** `About.tsx`, `SeoHubPage.tsx`,
 `VocabularyLevelExam.tsx`. `NotFoundPage.tsx` also stays flat, for a
 different reason: it's a shared route fallback rendered from several
 unrelated route branches, so no single family owns it.

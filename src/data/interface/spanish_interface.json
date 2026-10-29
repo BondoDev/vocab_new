@@ -394,7 +394,7 @@
         "description": "Elige como quieres continuar tu aprendizaje de vocabulario hoy.",
         "modes": {
           "studyNewWords": {
-            "title": "Estudiar palabras nuevas",
+            "title": "Aprender palabras nuevas",
             "description": "Continua tu secuencia estructurada de vocabulario y aprende las palabras nuevas de hoy.",
             "metaLine": "Quedan 15 palabras - Aproximadamente 12-15 min",
             "buttonLabel": "Empezar aprendizaje"
@@ -407,7 +407,7 @@
             "buttonLabel": "Empezar repaso"
           },
           "customPractice": {
-            "title": "Practica personalizada",
+            "title": "Práctica personalizada",
             "description": "Elige tus propias palabras, listas, filtros, niveles y ejercicios.",
             "metaLine": "Nivel actual A2 - Todas las categorias",
             "buttonLabel": "Empezar practica"
@@ -972,6 +972,237 @@
       "p3": "Las palabras se cuentan solo cuando las recuerdas correctamente (revelar una palabra no cuenta como recuerdo exitoso)."
     }
   },
+  "helpCenter": {
+    "page": {
+      "title": "Centro de ayuda",
+      "subtitle": "Descubre cómo practicar vocabulario, aprender palabras nuevas, repasar lo aprendido y seguir tu progreso con FluentStellar."
+    },
+    "navigation": {
+      "label": "En esta página",
+      "jumpTo": "Ir a la sección",
+      "gettingStarted": "Primeros pasos",
+      "customPractice": "Práctica personalizada",
+      "personalizedLearning": "Aprendizaje personalizado",
+      "myLists": "Mis listas",
+      "vocabularyProgress": "Vocabulario y progreso",
+      "resources": "Explorar y recursos",
+      "accountSettings": "Cuenta y ajustes",
+      "faq": "Preguntas frecuentes"
+    },
+    "sections": {
+      "gettingStarted": {
+        "title": "Primeros pasos",
+        "intro": "FluentStellar ofrece dos formas de ampliar tu vocabulario: practicar libremente sin una cuenta o crear una cuenta para seguir un sistema de aprendizaje personalizado.",
+        "choosePath": {
+          "title": "Elige cómo quieres aprender",
+          "body": "Elige Práctica personalizada si quieres practicar vocabulario a tu ritmo y seleccionar los idiomas, ejercicios y filtros que prefieras.\n\nElige Aprendizaje personalizado si quieres seguir un plan estructurado para estudiar palabras nuevas, repasar vocabulario y consultar tu progreso a lo largo del tiempo."
+        },
+        "withoutAccount": {
+          "title": "Practicar sin una cuenta",
+          "body": "Puedes empezar a practicar inmediatamente sin registrarte. Selecciona tus idiomas, personaliza el vocabulario y los ejercicios si lo deseas y comienza. Las sesiones no tienen un límite de palabras, por lo que puedes terminarlas cuando quieras.\n\nTus preferencias de práctica se recuerdan en el navegador, pero las sesiones y los resultados de los visitantes no se guardan en una cuenta."
+        },
+        "withAccount": {
+          "title": "Crear una cuenta para aprender de forma personalizada",
+          "body": "Crea una cuenta gratuita con Google o con tu dirección de correo electrónico. Después de iniciar sesión, completa tu perfil con tus datos, idiomas y nivel actual de vocabulario.\n\nTu cuenta te permite acceder a Aprender palabras nuevas, Repasar palabras, listas personales de vocabulario y estadísticas de aprendizaje. Tu progreso se guarda automáticamente mientras estudias y repasas."
+        }
+      },
+      "customPractice": {
+        "title": "Práctica personalizada",
+        "intro": "La Práctica personalizada te permite practicar vocabulario en cualquiera de los idiomas disponibles, utilizando los ejercicios y las categorías de palabras que elijas. No necesitas una cuenta.",
+        "languages": {
+          "title": "Seleccionar idiomas",
+          "body": "Selecciona Tu idioma para las traducciones y los significados que verás durante los ejercicios. Después, selecciona Idioma de práctica para las palabras que quieres aprender. Los dos idiomas deben ser diferentes.\n\nPuedes intercambiar los idiomas con el botón correspondiente. Tus preferencias se recuerdan en el navegador."
+        },
+        "filters": {
+          "title": "Filtros de vocabulario",
+          "body": "Utiliza Personalizar filtros para seleccionar niveles del MCER (A1–C2), temas de vocabulario o tipos de palabras, como sustantivos, verbos y adjetivos. Puedes seleccionar varias opciones dentro de cada categoría.\n\nTodos los filtros son opcionales. Si no seleccionas ninguna opción en una categoría, se incluirá todo el vocabulario de esa categoría. Aplica los filtros para volver a la configuración de práctica."
+        },
+        "exerciseSelection": {
+          "title": "Seleccionar ejercicios",
+          "body": "Elige cuáles de los cinco tipos de ejercicios quieres utilizar. Los cinco están seleccionados de forma predeterminada y debes mantener al menos uno activado.\n\nPuedes combinar ejercicios de escritura, formación de palabras, asociación y comprensión auditiva. Durante la práctica, FluentStellar utiliza automáticamente los ejercicios seleccionados que sean adecuados para las palabras disponibles."
+        },
+        "sessions": {
+          "title": "Sesiones de práctica y finalización",
+          "body": "Pulsa Empezar a practicar para comenzar. No hay una duración fija ni un límite de palabras: puedes continuar tanto tiempo como quieras y pulsar Finalizar cuando lo desees. Algunas palabras pueden volver a aparecer durante la sesión.\n\nPuedes saltar un ejercicio, solicitar ayuda cuando esté disponible o utilizar Mostrar palabra si no recuerdas la respuesta. Al finalizar, verás un resumen de tus intentos, tu precisión, tus resultados por nivel y tipo de palabra y las palabras practicadas.\n\nLa Práctica personalizada no modifica el estado de las palabras aprendidas ni la programación de los repasos. Si has iniciado sesión, tu tiempo de práctica activa se incluye en Actividad de aprendizaje, pero los resultados no cuentan para tu meta diaria de palabras nuevas."
+        },
+        "exerciseTypes": {
+          "title": "Tipos de ejercicios",
+          "intro": "FluentStellar ofrece cinco tipos de ejercicios interactivos. Puedes seleccionar los que prefieras antes de comenzar la Práctica personalizada.",
+          "wordTyping": {
+            "title": "Escritura de palabra",
+            "body": "Lee el significado en tu idioma y escribe la palabra completa en el idioma que estás practicando. También puedes escuchar la pronunciación y consultar información adicional sobre la palabra.\n\nUtiliza Pista para descubrir algunas letras si necesitas ayuda, o Mostrar palabra para ver la respuesta. Debes escribir correctamente los acentos y caracteres especiales."
+          },
+          "halfWritten": {
+            "title": "Completar palabra a medias",
+            "body": "Una parte de la palabra ya está escrita. Introduce las letras que faltan para completarla correctamente.\n\nEste ejercicio te ayuda a recordar la ortografía utilizando las letras proporcionadas como punto de partida. No tiene botón de pista porque una parte de la respuesta ya está visible."
+          },
+          "brokenWord": {
+            "title": "Armado de palabra",
+            "body": "La palabra está dividida en varias partes desordenadas. Selecciónalas en el orden correcto para formar la palabra completa.\n\nPuedes utilizar Pista para recibir ayuda o Mostrar palabra para descubrir la respuesta cuando lo necesites."
+          },
+          "connectWords": {
+            "title": "Conectar palabras",
+            "body": "Relaciona cuatro palabras del idioma que estás practicando con sus significados en tu idioma. Selecciona una palabra y después su significado correspondiente.\n\nLas parejas correctas permanecen conectadas. Si una combinación es incorrecta, puedes volver a intentarlo."
+          },
+          "listening": {
+            "title": "Escucha",
+            "body": "Escucha las palabras pronunciadas y relaciona cada una con su significado correcto en tu idioma. Utiliza los botones de audio para escuchar las palabras antes de seleccionar sus parejas.\n\nEl audio utiliza la función de síntesis de voz de tu navegador, por lo que la disponibilidad de voces y la pronunciación pueden variar según el dispositivo. Si no puedes utilizar el audio, puedes pulsar Cambiar a Conectar palabras durante la sesión."
+          }
+        }
+      },
+      "personalizedLearning": {
+        "title": "Aprendizaje personalizado",
+        "intro": "Con una cuenta de FluentStellar puedes seguir un sistema estructurado que introduce vocabulario nuevo, recupera palabras estudiadas para repasarlas y registra tu progreso.",
+        "studyNewWords": {
+          "title": "Aprender palabras nuevas",
+          "body": "Abre Aprendizaje y selecciona Aprender palabras nuevas. FluentStellar elige vocabulario de una secuencia de aprendizaje organizada, comenzando por el nivel del MCER que hayas seleccionado y excluyendo las palabras que ya has estudiado.\n\nCada palabra se presenta con su significado, definición, frase de ejemplo y pronunciación. Después, la practicas mediante tres ejercicios: Armado de palabra, Completar palabra a medias y Escritura de palabra.\n\nLa palabra se guarda en tu vocabulario cuando completas los tres ejercicios. Puedes terminar la sesión antes de tiempo: las palabras ya completadas permanecen guardadas, pero la palabra que todavía estés estudiando no se guarda."
+        },
+        "reviewWords": {
+          "title": "Repasar palabras",
+          "body": "Repasar palabras te ayuda a reforzar el vocabulario que ya has estudiado. FluentStellar utiliza la repetición espaciada para recuperar palabras a lo largo del tiempo y también incluye otras palabras estudiadas que todavía no tienen un repaso programado para ese momento.\n\nLas respuestas correctas ayudan a que las palabras avancen hacia el dominio, mientras que las incorrectas indican que necesitan más práctica. Cada repaso se guarda automáticamente después de responder.\n\nLas sesiones de repaso no tienen un límite fijo de palabras. Puedes continuar mientras haya palabras disponibles y finalizar cuando quieras."
+        },
+        "dailyGoal": {
+          "title": "Meta diaria",
+          "body": "Tu meta diaria determina cuántas palabras nuevas quieres estudiar cada día. Puedes elegir entre 10, 15, 20, 30 o 50 palabras desde la sección Aprendizaje. El valor predeterminado es 15.\n\nSolo las palabras nuevas que hayas completado cuentan para esta meta. Repasar palabras y utilizar la Práctica personalizada no aumentan tu contador diario de palabras nuevas. Alcanzar la meta contribuye a tu Racha diaria.\n\nCuando hayas completado la meta, puedes seguir repasando vocabulario. Si quieres estudiar más palabras nuevas ese mismo día, puedes aumentar tu meta diaria."
+        },
+        "learningProgress": {
+          "title": "Cómo funciona el progreso del vocabulario",
+          "body": "Las palabras que completas en Aprender palabras nuevas se añaden automáticamente a tu vocabulario personal. A medida que las repasas, FluentStellar registra tus respuestas y ajusta cuándo volverán a aparecer.\n\nLas respuestas correctas consecutivas ayudan a que las palabras avancen hacia niveles de conocimiento más sólidos. Las respuestas incorrectas pueden hacer que una palabra retroceda para que puedas seguir practicándola.\n\nTu progreso se guarda por separado para cada idioma de aprendizaje. La Práctica personalizada y la práctica de listas no modifican el progreso de las palabras ni sus repasos programados."
+        }
+      },
+      "myLists": {
+        "title": "Mis listas",
+        "intro": "Organiza las palabras que quieres practicar en listas personales. Puedes crear colecciones para temas concretos, palabras difíciles o cualquier vocabulario que quieras tener reunido.",
+        "manageLists": {
+          "title": "Crear y gestionar listas",
+          "body": "Abre Mis listas desde tu perfil y selecciona Crear lista. Escribe un nombre para tu colección y guárdala. Puedes crear varias listas, buscar entre ellas, cambiarles el nombre y eliminarlas cuando ya no las necesites.\n\nCada lista pertenece a un idioma de aprendizaje. Al cambiar de idioma, verás las listas correspondientes a ese idioma. Eliminar una lista no elimina el progreso de aprendizaje de sus palabras."
+        },
+        "addWords": {
+          "title": "Añadir y eliminar palabras",
+          "body": "Abre una lista y utiliza Añadir palabras para buscar vocabulario y seleccionar las palabras que quieras incluir. Puedes añadir tanto palabras que ya hayas estudiado como palabras nuevas.\n\nTambién puedes añadir palabras a tus listas desde la sección Vocabulario, las pantallas de finalización de las sesiones y las listas completas de vocabulario disponibles en los recursos públicos.\n\nUna palabra puede pertenecer a varias listas, pero no aparecer dos veces en la misma lista. Puedes eliminar palabras de una lista sin afectar a tu progreso de aprendizaje."
+        },
+        "practiceList": {
+          "title": "Practicar una lista",
+          "body": "Abre una lista que contenga palabras y selecciona Practicar lista. Puedes elegir cuántas palabras incluir, el orden en que se presentan y los tipos de ejercicios que quieres utilizar.\n\nLa sesión utiliza los mismos ejercicios que la Práctica personalizada, pero se limita a las palabras seleccionadas de tu lista. Puedes seguir practicando y finalizar cuando quieras.\n\nLa práctica de listas no modifica el estado de aprendizaje de las palabras ni sus repasos programados."
+        }
+      },
+      "vocabularyProgress": {
+        "title": "Vocabulario y progreso",
+        "intro": "Consulta las palabras que has estudiado, organiza tus favoritas y descubre cómo evoluciona tu vocabulario con el tiempo.",
+        "vocabulary": {
+          "title": "Tu colección de vocabulario",
+          "body": "La sección Vocabulario de tu perfil reúne las palabras que has completado mediante Aprender palabras nuevas. Puedes buscar palabras, filtrarlas por nivel, tipo o estado de aprendizaje y consultar cuándo las practicaste por última vez.\n\nDesde cada palabra puedes abrir sus detalles, añadirla a una lista personal o marcarla como favorita."
+        },
+        "statuses": {
+          "title": "Aprendiendo, Conocidas y Dominadas",
+          "body": "FluentStellar organiza el vocabulario estudiado en tres categorías según tu progreso.\n\nAprendiendo: palabras que has empezado a estudiar y que todavía necesitan práctica.\n\nConocidas: palabras que recuerdas bien y que has reforzado mediante repasos.\n\nDominadas: palabras que has demostrado recordar a lo largo del tiempo.\n\nEstos estados pueden cambiar según tus respuestas durante los repasos. No necesitas modificarlos manualmente."
+        },
+        "favorites": {
+          "title": "Favoritas",
+          "body": "Marca palabras como favoritas para encontrarlas fácilmente más adelante. Puedes encontrarlas en la pestaña Favoritas de la sección Vocabulario y gestionarlas también desde otras pantallas de aprendizaje donde esté disponible esta opción.\n\nMarcar una palabra como favorita no modifica su estado de aprendizaje ni la frecuencia de sus repasos."
+        },
+        "dashboard": {
+          "title": "Panel y estadísticas",
+          "body": "El Panel de tu perfil muestra un resumen de tu actividad: palabras nuevas estudiadas, progreso hacia la meta diaria, racha de aprendizaje y estado general de tu vocabulario.\n\nEn Actividad de aprendizaje también puedes consultar tu tiempo de estudio por modalidad, incluida la Práctica personalizada cuando has iniciado sesión, y la cantidad de palabras nuevas aprendidas durante los últimos días."
+        },
+        "milestones": {
+          "title": "Hitos y crecimiento del vocabulario",
+          "body": "La sección Progreso muestra tus hitos en diferentes aspectos del aprendizaje, como vocabulario estudiado, palabras conocidas, dominio, repasos y constancia.\n\nEl gráfico Crecimiento del vocabulario te permite observar cómo ha aumentado tu colección de palabras durante distintos períodos.\n\nTen en cuenta que la Racha diaria exige completar tu meta diaria de palabras nuevas, mientras que los hitos de Constancia pueden reconocer días en los que estudiaste palabras nuevas o realizaste repasos."
+        }
+      },
+      "resources": {
+        "title": "Explorar y recursos de aprendizaje",
+        "intro": "Además de los ejercicios, FluentStellar ofrece recursos gratuitos para consultar palabras, explorar vocabulario por nivel y conocer mejor los idiomas que estás aprendiendo.",
+        "explore": {
+          "title": "Explorador de vocabulario",
+          "body": "Abre Explorar para elegir uno de los siete idiomas disponibles y descubrir sus recursos de vocabulario. Encontrarás listas por nivel, pruebas de vocabulario y herramientas de referencia para verbos.\n\nPuedes consultar estos recursos sin iniciar sesión y utilizarlos como punto de partida para practicar."
+        },
+        "cefr": {
+          "title": "Recursos de vocabulario por nivel",
+          "body": "Explora vocabulario organizado según los niveles A1, A2, B1, B2, C1 y C2 del Marco Común Europeo de Referencia (MCER).\n\nLas páginas por nivel permiten consultar palabras de una dificultad determinada e iniciar una sesión de Práctica personalizada con ese nivel seleccionado. También encontrarás listas de vocabulario que reúnen palabras de diferentes niveles."
+        },
+        "wordDetails": {
+          "title": "Detalles de palabras y pronunciación",
+          "body": "Las páginas de palabras muestran información útil, como traducciones, definiciones, ejemplos de uso, pronunciación, categoría gramatical y nivel de vocabulario.\n\nTambién puedes realizar un pequeño ejercicio con la palabra o continuar practicando vocabulario del mismo nivel. La reproducción de audio depende de las funciones y voces disponibles en tu navegador."
+        },
+        "verbs": {
+          "title": "Recursos de referencia para verbos",
+          "body": "Consulta listas de verbos frecuentes y recursos sobre formas verbales y conjugaciones. Estos materiales te permiten explorar cómo cambian los verbos y ampliar tu vocabulario.\n\nLa disponibilidad de determinados recursos puede variar según el idioma. Puedes encontrarlos desde Explorar o Recursos de aprendizaje."
+        },
+        "levelTest": {
+          "title": "Prueba de nivel de vocabulario",
+          "body": "La Prueba de nivel es gratuita y te ayuda a obtener una estimación de tu conocimiento de vocabulario. Comienza con preguntas de nivel A1 y avanza progresivamente hacia C2.\n\nEn los niveles A1 y A2 seleccionas la traducción correcta entre seis opciones. En los niveles B1 a C2 formas palabras a partir de fragmentos. La prueba termina cuando acumulas tres respuestas incorrectas dentro de un mismo nivel o cuando completas todos los niveles.\n\nEl resultado es una estimación orientativa, no una certificación oficial del MCER. Puedes repetir la prueba y utilizar el nivel obtenido para configurar una sesión de Práctica personalizada. El resultado no cambia automáticamente el nivel guardado en tu cuenta."
+        }
+      },
+      "accountSettings": {
+        "title": "Cuenta y ajustes",
+        "intro": "Gestiona tu perfil, tus preferencias de aprendizaje y los datos asociados a tu cuenta desde la sección Ajustes.",
+        "registration": {
+          "title": "Registro e inicio de sesión",
+          "body": "Puedes crear una cuenta con Google o utilizando una dirección de correo electrónico y una contraseña. Si te registras con correo electrónico, tendrás que confirmar tu dirección mediante el enlace que recibirás.\n\nSi ya tienes una cuenta, utiliza Iniciar sesión. También puedes solicitar el restablecimiento de tu contraseña si la has olvidado."
+        },
+        "profileSetup": {
+          "title": "Configurar el perfil",
+          "body": "La primera vez que inicies sesión, deberás completar tu perfil antes de utilizar el sistema de aprendizaje personalizado.\n\nSe te pedirá un apodo, tu idioma, el idioma que quieres aprender, tu nivel actual, tu edad y tu fecha de nacimiento (día y mes).\n\nLa meta diaria inicial es de 15 palabras nuevas y puedes modificarla más adelante desde Aprendizaje. La Prueba de nivel es opcional y no forma parte del registro."
+        },
+        "languages": {
+          "title": "Cambiar idiomas y nivel",
+          "body": "Abre Ajustes y busca la sección Idiomas para cambiar tu idioma, el idioma de aprendizaje o tu nivel actual. Guarda los cambios para aplicarlos.\n\nEl nivel seleccionado determina desde dónde comienza la selección de palabras nuevas. Cambiar el idioma de aprendizaje no elimina el progreso que ya hayas conseguido en otros idiomas: cada uno conserva sus propias palabras estudiadas, listas y estadísticas.\n\nEl idioma de la interfaz se selecciona por separado mediante el selector de idiomas del sitio web."
+        },
+        "timezone": {
+          "title": "Zona horaria",
+          "body": "En Ajustes puedes elegir tu zona horaria o utilizar la zona horaria actual de tu dispositivo.\n\nEsta preferencia determina cuándo comienza un nuevo día de aprendizaje para las metas diarias, las rachas y las estadísticas. No cambia la duración de los intervalos de repaso."
+        },
+        "resetProgress": {
+          "title": "Restablecer el progreso de aprendizaje",
+          "body": "Si quieres empezar de nuevo con un idioma, abre Ajustes y utiliza la opción para restablecer el progreso de ese idioma. Tendrás que escribir RESET para confirmar la operación.\n\nEsta acción elimina permanentemente el progreso de las palabras, los favoritos, el historial de repasos, las estadísticas y el historial de Práctica personalizada correspondientes al idioma seleccionado. No elimina tu cuenta ni el progreso de otros idiomas.\n\nEl restablecimiento no se puede deshacer."
+        },
+        "deleteAccount": {
+          "title": "Eliminar una cuenta",
+          "body": "Puedes eliminar permanentemente tu cuenta desde Ajustes, en la sección Datos y cuenta.\n\nPara confirmar la eliminación, tendrás que escribir DELETE. Si utilizas una cuenta con contraseña, también deberás introducir tu contraseña actual.\n\nEsta acción elimina tu cuenta y los datos asociados de forma permanente. No se puede deshacer."
+        }
+      },
+      "faq": {
+        "title": "Preguntas frecuentes",
+        "items": {
+          "accountRequired": {
+            "question": "¿Necesito una cuenta?",
+            "answer": "No. Puedes utilizar la Práctica personalizada, realizar la Prueba de nivel y explorar los recursos de vocabulario sin registrarte.\n\nNecesitas una cuenta para estudiar palabras nuevas mediante el sistema personalizado, realizar repasos con seguimiento de progreso, crear listas personales y consultar tus estadísticas de aprendizaje."
+          },
+          "practiceProgress": {
+            "question": "¿La Práctica personalizada guarda mi progreso?",
+            "answer": "La Práctica personalizada no modifica el estado de las palabras aprendidas ni sus repasos programados.\n\nSi no has iniciado sesión, los resultados de tus sesiones no se guardan en una cuenta. Si has iniciado sesión, se registra tu tiempo de práctica activa en Actividad de aprendizaje, pero no se actualiza tu progreso de vocabulario ni tu meta diaria."
+          },
+          "reviewSystem": {
+            "question": "¿Cómo funciona Repasar palabras?",
+            "answer": "FluentStellar utiliza la repetición espaciada para ayudarte a recordar las palabras que has estudiado. Las respuestas correctas refuerzan tu progreso y las incorrectas indican que necesitas practicar más.\n\nLos repasos combinan palabras que necesitan atención con otras que ya has estudiado, incluso si todavía no les corresponde un repaso programado. Puedes seguir repasando y finalizar la sesión cuando quieras."
+          },
+          "changeLanguage": {
+            "question": "¿Puedo cambiar el idioma que estoy aprendiendo?",
+            "answer": "Sí. Abre Ajustes y cambia el idioma de aprendizaje en la sección Idiomas.\n\nTu progreso se conserva por separado para cada idioma. Cuando vuelvas a seleccionar un idioma anterior, podrás continuar con las palabras y listas que ya tenías."
+          },
+          "audio": {
+            "question": "¿Por qué no se reproduce el audio?",
+            "answer": "FluentStellar utiliza las funciones de síntesis de voz de tu navegador. Algunas voces o idiomas pueden no estar disponibles en determinados dispositivos.\n\nComprueba que el sonido esté activado, prueba a actualizar la página y verifica si tu navegador dispone de una voz compatible con el idioma seleccionado. Si el ejercicio Escucha no funciona, puedes pulsar Cambiar a Conectar palabras."
+          },
+          "finishSession": {
+            "question": "¿Puedo terminar una sesión cuando quiera?",
+            "answer": "Sí. Puedes finalizar la Práctica personalizada y los repasos cuando lo desees. Las sesiones de estas modalidades no tienen un límite fijo de palabras.\n\nTambién puedes finalizar anticipadamente una sesión de Aprender palabras nuevas. Las palabras que ya hayas completado permanecen guardadas, pero la palabra que estés estudiando en ese momento no se guardará si todavía no has terminado sus ejercicios."
+          }
+        }
+      }
+    },
+    "actions": {
+      "startPractice": "Empezar a practicar",
+      "createAccount": "Crear cuenta",
+      "openLearning": "Aprendizaje",
+      "openMyLists": "Mis listas",
+      "exploreVocabulary": "Explorar",
+      "learningResources": "Ver todos los recursos de aprendizaje",
+      "takeLevelTest": "Hacer una prueba de nivel",
+      "openSettings": "Ajustes"
+    }
+  },
   "languageNames": {
     "en": "Inglés",
     "es": "Español",
@@ -999,7 +1230,7 @@
     "startPracticing": "Comenzar a practicar",
     "backToLanguages": "Volver a idiomas",
     "back": "Atras",
-    "takeLevelTest": "Hacer una prueba rapida de nivel",
+    "takeLevelTest": "Hacer una prueba de nivel",
     "testDescription": "No estas seguro de tu nivel? Haz una prueba rapida para descubrirlo.",
     "notSureLevel": "No sabes por donde empezar? Haz una prueba rapida de vocabulario para encontrar tu nivel.",
     "selection": {

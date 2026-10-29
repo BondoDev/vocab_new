@@ -105,8 +105,8 @@ in `App.tsx`); `src/app/components/` owns reusable, shared, and app-shell
 components (layout, dialogs, UI primitives) consumed by more than one page
 or by the app shell itself. This split is being introduced in phases as
 part of an ongoing `src/app/components/` cleanup — so far `About.tsx`,
-`Help.tsx`, `ExplorePage.tsx`, and `VocabularyLevelExam.tsx` have moved to
-`src/app/pages/`, and the profile route/shell has moved to
+`Help.tsx` (now `help/Help.tsx`), `ExplorePage.tsx`, and
+`VocabularyLevelExam.tsx` have moved to `src/app/pages/`, and the profile route/shell has moved to
 `src/features/user-profile/` (`sections/UserProfileDashboardPage.tsx`,
 `sections/dashboard/DashboardSection.tsx`, `sections/learning/LearningSection.tsx`,
 `components/UserProfileSidebar.tsx`, `styles/user-profile-sidebar.scss`,

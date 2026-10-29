@@ -121,7 +121,7 @@ const About = lazy(() =>
   })),
 );
 const Help = lazy(() =>
-  import("./pages/Help").then((module) => ({
+  import("./pages/help/Help").then((module) => ({
     default: module.Help,
   })),
 );
@@ -1332,7 +1332,15 @@ function AppContent({
         {routeMetadata ? <SEOHead metadata={routeMetadata} /> : null}
         <Header {...sharedHeaderProps} activePage="help" />
         <Suspense fallback={<RouteLoadingFallback />}>
-          <Help onBack={() => navigate(ROUTES.language)} />
+          {/* Guest-only, like the practice finish-screen CTA: withheld until
+              auth resolves so a signed-in user never sees Create account. */}
+          <Help
+            onCreateAccount={
+              isAuthResolved && !authUserId
+                ? () => setRequestedHeaderAuthMode("signup")
+                : undefined
+            }
+          />
         </Suspense>
         {accountOnboardingDialog}
         {passwordRecoveryDialog}

@@ -199,17 +199,17 @@ const EXPECTED = {
     deleteAccount: "Elimina account",
   },
   "portuguese_interface.json": {
-    title: "Definições",
-    subtitle: "Gira a sua conta e as preferências de aprendizagem.",
+    title: "Configurações",
+    subtitle: "Gerencie sua conta e suas preferências de aprendizagem.",
     account: "Conta",
     languages: "Idiomas",
     timeRegion: "Hora e região",
     dataAccount: "Dados e conta",
     useCurrent: "Usar fuso horário atual",
     explanation:
-      "O seu fuso horário determina quando começa um novo dia de aprendizagem para objetivos diários, sequências e estatísticas.",
-    resetProgress: "Repor progresso de aprendizagem",
-    deleteAccount: "Eliminar conta",
+      "Seu fuso horário determina quando começa um novo dia de aprendizagem para metas diárias, sequências e estatísticas.",
+    resetProgress: "Redefinir o progresso de aprendizagem",
+    deleteAccount: "Excluir conta",
   },
   "russian_interface.json": {
     title: "Настройки",

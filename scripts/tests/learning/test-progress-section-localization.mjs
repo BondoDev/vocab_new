@@ -117,7 +117,7 @@ const EXPECTED_PROGRESS_PAGE = {
   "spanish_interface.json": { title: "Progreso", subtitle: "Sigue tu progreso de aprendizaje a largo plazo." },
   "french_interface.json": { title: "Progression", subtitle: "Suivez vos progrès d’apprentissage à long terme." },
   "italian_interface.json": { title: "Progressi", subtitle: "Segui i tuoi progressi di apprendimento a lungo termine." },
-  "portuguese_interface.json": { title: "Progresso", subtitle: "Acompanhe o seu progresso de aprendizagem a longo prazo." },
+  "portuguese_interface.json": { title: "Progresso", subtitle: "Acompanhe seu progresso de aprendizagem a longo prazo." },
   "russian_interface.json": { title: "Прогресс", subtitle: "Отслеживайте свой долгосрочный прогресс в обучении." },
 };
 

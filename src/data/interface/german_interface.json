@@ -225,7 +225,7 @@
   "userProfile": {
     "dashboardPage": {
       "ariaLabel": "Übersichtsbereich",
-      "title": "Übersicht",
+      "title": "Dashboard",
       "greeting": {
         "morning": "Guten Morgen, {name}. Bereit, weiterzulernen?",
         "afternoon": "Guten Tag, {name}. Bereit, weiterzulernen?",
@@ -297,11 +297,11 @@
     },
     "sidebar": {
       "aria": {
-        "userSummary": "Benutzeruebersicht",
+        "userSummary": "Benutzerübersicht",
         "profileSections": "Profilbereiche",
-        "closeProfileMenu": "Profilmenue schliessen"
+        "closeProfileMenu": "Profilmenü schließen"
       },
-      "mobileMenu": "Profilmenue",
+      "mobileMenu": "Profilmenü",
       "groups": {
         "main": "Hauptbereich",
         "learning": "Studium",
@@ -330,18 +330,18 @@
     "learningSection": {
       "ariaLabel": "Lernbereich",
       "title": "Lernen",
-      "description": "Erledige die heutigen Lernziele und festige Woerter, die du bereits gelernt hast.",
+      "description": "Erledige die heutigen Lernziele und festige Wörter, die du bereits gelernt hast.",
       "dateLoadError": "Das heutige Lerndatum konnte nicht geladen werden. Bitte versuche es erneut.",
       "dateRetryButton": "Erneut versuchen",
       "dailyGoal": {
         "title": "Tagesziel",
-        "wordsPerDay": "Woerter/Tag",
+        "wordsPerDay": "Wörter/Tag",
         "recommended": "Empfohlen",
-        "ariaLabel": "Taegliches Wortziel",
+        "ariaLabel": "Tägliches Wortziel",
         "saveButton": "Speichern",
         "savedToast": "Tagesziel gespeichert.",
         "saveError": "Das Tagesziel konnte nicht gespeichert werden. Bitte versuche es erneut.",
-        "approximately": "Ungefaehr",
+        "approximately": "Ungefähr",
         "minutesUnit": "Min.",
         "paces": {
           "light": "Leichtes Tempo",
@@ -353,24 +353,24 @@
       },
       "todayProgress": {
         "title": "Heutiger Fortschritt",
-        "wordsUnit": "Woerter",
+        "wordsUnit": "Wörter",
         "aria": {
           "of": "von",
-          "dailyWordsCompleted": "tagliche Woerter abgeschlossen",
+          "dailyWordsCompleted": "tägliche Wörter abgeschlossen",
           "loading": "Dein heutiger Fortschritt wird geladen..."
         }
       },
       "dailyStreak": {
-        "title": "Taegliche Serie",
+        "title": "Tägliche Serie",
         "chip": "Diese Woche",
         "daysUnit": "Tage",
         "bestPrefix": "Bestwert:",
-        "weekAriaLabel": "Aktivitaet dieser Woche",
+        "weekAriaLabel": "Aktivität dieser Woche",
         "status": {
           "completed": "Abgeschlossen",
           "failed": "Ziel nicht erreicht",
           "inProgress": "In Bearbeitung",
-          "future": "Zukuenftiges Datum"
+          "future": "Zukünftiges Datum"
         },
         "weekdays": {
           "monShort": "M",
@@ -391,79 +391,79 @@
       },
       "modeCards": {
         "title": "Lernen starten",
-        "description": "Waehle, wie du heute mit deinem Wortschatzlernen fortfahren moechtest.",
+        "description": "Wähle, wie du heute mit deinem Wortschatzlernen fortfahren möchtest.",
         "modes": {
           "studyNewWords": {
-            "title": "Neue Woerter lernen",
-            "description": "Setze deine strukturierte Wortschatzfolge fort und lerne die neuen Woerter von heute.",
-            "metaLine": "15 Woerter uebrig - Ungefaehr 12-15 Min.",
+            "title": "Neue Wörter lernen",
+            "description": "Setze deine strukturierte Wortschatzfolge fort und lerne die neuen Wörter von heute.",
+            "metaLine": "15 Wörter übrig - Ungefähr 12-15 Min.",
             "buttonLabel": "Lernen starten"
           },
           "reviewWords": {
-            "title": "Woerter wiederholen",
+            "title": "Wörter wiederholen",
             "description": "Festige deinen Wortschatz durch verteilte Wiederholung.",
             "metaLine": "Wiederhole in deinem eigenen Tempo",
             "emptyMetaLine": "Lerne neue Wörter, um mit dem Wiederholen zu beginnen",
             "buttonLabel": "Wiederholung starten"
           },
           "customPractice": {
-            "title": "Eigene Uebung",
-            "description": "Waehle eigene Woerter, Listen, Filter, Niveaus und Uebungen.",
+            "title": "Individuelles Üben",
+            "description": "Wähle eigene Wörter, Listen, Filter, Niveaus und Übungen.",
             "metaLine": "Aktuelles Niveau A2 - Alle Kategorien",
-            "buttonLabel": "Uebung starten"
+            "buttonLabel": "Übung starten"
           }
         }
       }
     },
     "vocabularySection": {
       "ariaLabel": "Vokabelbereich",
-      "title": "Vokabeln",
-      "subtitle": "Durchsuche und verwalte die Woerter, die du gelernt hast.",
+      "title": "Wortschatz",
+      "subtitle": "Durchsuche und verwalte die Wörter, die du gelernt hast.",
       "search": {
-        "placeholder": "Woerter suchen...",
+        "placeholder": "Wörter suchen...",
         "ariaLabel": "Vokabeln durchsuchen"
       },
       "addWord": {
-        "label": "Wort hinzufuegen",
-        "toast": "Wort hinzufuegen ist derzeit nur eine Vorschau-Aktion."
+        "label": "Wort hinzufügen",
+        "toast": "Wort hinzufügen ist derzeit nur eine Vorschau-Aktion."
       },
       "loadError": "Beim Laden deines Wortschatzes ist ein Fehler aufgetreten.",
       "retryButton": "Erneut versuchen",
       "favoriteError": "Favorit konnte nicht aktualisiert werden. Bitte versuche es erneut.",
       "emptyStates": {
-        "noWordsYetTitle": "Noch keine Woerter",
-        "noWordsYetMessage": "Schliesse eine Sitzung von Neue Woerter lernen ab, um deinen Wortschatz aufzubauen.",
-        "noWordsYetAction": "Neue Woerter lernen",
-        "noSearchMatches": "Keine Woerter entsprechen deiner Suche.",
+        "noWordsYetTitle": "Noch keine Wörter",
+        "noWordsYetMessage": "Schließe eine Sitzung von Neue Wörter lernen ab, um deinen Wortschatz aufzubauen.",
+        "noWordsYetAction": "Neue Wörter lernen",
+        "noSearchMatches": "Keine Wörter entsprechen deiner Suche.",
         "noTabWords": {
-          "all": "Keine Woerter fuer diese Ansicht.",
-          "learning": "Noch keine Woerter in Bearbeitung.",
-          "known": "Noch keine bekannten Woerter.",
-          "mastered": "Noch keine gemeisterten Woerter.",
-          "favorites": "Noch keine favorisierten Woerter."
+          "all": "Keine Wörter für diese Ansicht.",
+          "learning": "Noch keine Wörter in Bearbeitung.",
+          "known": "Noch keine bekannten Wörter.",
+          "mastered": "Noch keine gemeisterten Wörter.",
+          "favorites": "Noch keine favorisierten Wörter."
         }
       },
       "summaryCards": {
         "learning": {
           "title": "Lernen",
-          "description": "Woerter, die du gerade lernst"
+          "description": "Wörter, die du gerade lernst"
         },
         "known": {
           "title": "Bekannt",
-          "description": "Woerter, die du gut kennst"
+          "description": "Wörter, die du gut kennst"
         },
         "mastered": {
           "title": "Gemeistert",
-          "description": "Woerter, die du dauerhaft behalten hast"
+          "description": "Wörter, die du dauerhaft behalten hast"
         },
         "favorites": {
           "title": "Favoriten",
-          "description": "Woerter, die du als Favorit markiert hast"
+          "description": "Wörter, die du als Favorit markiert hast"
         }
       },
       "tabs": {
         "ariaLabel": "Vokabelkategorien",
-        "all": "Alle Woerter",
+        "all": "Alle Wörter",
         "learning": "Lernen",
         "known": "Bekannt",
         "mastered": "Gemeistert",
@@ -490,22 +490,22 @@
       "table": {
         "columns": {
           "word": "Wort",
-          "translation": "Uebersetzung",
+          "translation": "Übersetzung",
           "level": "Niveau",
           "status": "Status",
-          "lastPracticed": "Zuletzt geuebt",
+          "lastPracticed": "Zuletzt geübt",
           "actions": "Aktionen"
         },
         "audioAriaLabel": "Aussprache abspielen",
-        "addFavoriteAriaLabelPrefix": "Zu Favoriten hinzufuegen:",
+        "addFavoriteAriaLabelPrefix": "Zu Favoriten hinzufügen:",
         "addFavoriteAriaLabelSuffix": "",
         "removeFavoriteAriaLabelPrefix": "Aus Favoriten entfernen:",
         "removeFavoriteAriaLabelSuffix": "",
         "moreActionsAriaLabel": "Weitere Aktionen",
         "menu": {
           "viewDetails": "Details ansehen",
-          "addToList": "Zu Liste hinzufuegen",
-          "practiceWord": "Wort ueben"
+          "addToList": "Zu Liste hinzufügen",
+          "practiceWord": "Wort üben"
         },
         "statuses": {
           "learning": "Lernen",
@@ -522,22 +522,22 @@
       "pagination": {
         "showingPrefix": "Anzeige von",
         "showingConnector": "von",
-        "previous": "Zurueck",
+        "previous": "Zurück",
         "next": "Weiter",
         "rowsPerPage": "Zeilen pro Seite"
       },
       "addToListDialog": {
-        "titlePrefix": "Zu einer Liste hinzufuegen:",
+        "titlePrefix": "Zu einer Liste hinzufügen:",
         "titleSuffix": "",
         "loading": "Deine Listen werden geladen…",
         "emptyState": "Du hast noch keine Liste.",
         "noMatch": "Keine Liste passt zu deiner Suche.",
-        "added": "Hinzugefuegt",
-        "createAndAdd": "Erstellen und hinzufuegen",
+        "added": "Hinzugefügt",
+        "createAndAdd": "Erstellen und hinzufügen",
         "done": "Fertig",
-        "addedToList": "Zu \"{name}\" hinzugefuegt",
+        "addedToList": "Zu \"{name}\" hinzugefügt",
         "removedFromList": "Aus \"{name}\" entfernt",
-        "addWordError": "Wir konnten dieses Wort nicht zu dieser Liste hinzufuegen. Bitte versuche es erneut.",
+        "addWordError": "Wir konnten dieses Wort nicht zu dieser Liste hinzufügen. Bitte versuche es erneut.",
         "removeWordError": "Wir konnten dieses Wort nicht aus dieser Liste entfernen. Bitte versuche es erneut."
       }
     },
@@ -597,20 +597,20 @@
         "streak-100": "100-Tage-Streak",
         "streak-365": "365-Tage-Streak",
         "known-1": "Erstes bekanntes Wort",
-        "known-10": "10 bekannte W?rter",
-        "known-25": "25 bekannte W?rter",
-        "known-50": "50 bekannte W?rter",
-        "known-100": "100 bekannte W?rter",
-        "known-250": "250 bekannte W?rter",
-        "known-500": "500 bekannte W?rter",
-        "known-1000": "1.000 bekannte W?rter",
-        "known-2500": "2.500 bekannte W?rter",
-        "known-5000": "5.000 bekannte W?rter",
-        "known-10000": "10.000 bekannte W?rter",
-        "learned-7500": "7.500 gelernte W?rter",
-        "mastered-2500": "2.500 gemeisterte W?rter",
-        "mastered-5000": "5.000 gemeisterte W?rter",
-        "mastered-10000": "10.000 gemeisterte W?rter",
+        "known-10": "10 bekannte Wörter",
+        "known-25": "25 bekannte Wörter",
+        "known-50": "50 bekannte Wörter",
+        "known-100": "100 bekannte Wörter",
+        "known-250": "250 bekannte Wörter",
+        "known-500": "500 bekannte Wörter",
+        "known-1000": "1.000 bekannte Wörter",
+        "known-2500": "2.500 bekannte Wörter",
+        "known-5000": "5.000 bekannte Wörter",
+        "known-10000": "10.000 bekannte Wörter",
+        "learned-7500": "7.500 gelernte Wörter",
+        "mastered-2500": "2.500 gemeisterte Wörter",
+        "mastered-5000": "5.000 gemeisterte Wörter",
+        "mastered-10000": "10.000 gemeisterte Wörter",
         "streak-1": "1-Tage-Streak",
         "streak-5": "5-Tage-Streak",
         "streak-150": "150-Tage-Streak",
@@ -736,7 +736,7 @@
       "change": "Ändern",
       "account": {
         "title": "Konto",
-        "nickname": "Nickname",
+        "nickname": "Spitzname",
         "editNickname": "Nickname bearbeiten",
         "nicknameSavedToast": "Nickname aktualisiert.",
         "nicknameSaveError": "Der Nickname konnte nicht aktualisiert werden. Bitte versuche es erneut.",
@@ -767,28 +767,28 @@
         "passwordManagedByGoogle": "Du hast dich mit Google angemeldet, daher gibt es kein FluentStellar-Passwort zu ändern."
       },
       "profileDetails": {
-        "title": "Profile details",
-        "age": "Age",
-        "birthDate": "Birth date",
-        "month": "Month",
-        "day": "Day",
-        "explanation": "These details help keep your profile consistent with the information you entered during signup.",
-        "savedToast": "Profile details updated.",
-        "saveError": "We could not update your profile details. Please try again.",
-        "ageInvalid": "Age must be between 10 and 100.",
+        "title": "Profildetails",
+        "age": "Alter",
+        "birthDate": "Geburtsdatum",
+        "month": "Monat",
+        "day": "Tag",
+        "explanation": "Diese Angaben sorgen dafür, dass dein Profil mit den Informationen übereinstimmt, die du bei der Registrierung angegeben hast.",
+        "savedToast": "Profildetails aktualisiert.",
+        "saveError": "Deine Profildetails konnten nicht aktualisiert werden. Bitte versuche es erneut.",
+        "ageInvalid": "Das Alter muss zwischen 10 und 100 liegen.",
         "months": {
-          "january": "January",
-          "february": "February",
-          "march": "March",
+          "january": "Januar",
+          "february": "Februar",
+          "march": "März",
           "april": "April",
-          "may": "May",
-          "june": "June",
-          "july": "July",
+          "may": "Mai",
+          "june": "Juni",
+          "july": "Juli",
           "august": "August",
           "september": "September",
-          "october": "October",
+          "october": "Oktober",
           "november": "November",
-          "december": "December"
+          "december": "Dezember"
         }
       },
       "languages": {
@@ -970,6 +970,237 @@
       "p1": "Jede Übung enthält einen Überspringen-Button.",
       "p2": "Du kannst die Sitzung jederzeit beenden.",
       "p3": "Wörter zählen nur, wenn du sie korrekt erinnerst (das Anzeigen eines Wortes zählt nicht als korrekte Erinnerung)."
+    }
+  },
+  "helpCenter": {
+    "page": {
+      "title": "Hilfe-Center",
+      "subtitle": "Erfahre, wie du mit FluentStellar Vokabeln übst, neue Wörter lernst, Gelerntes wiederholst und deinen Fortschritt verfolgst."
+    },
+    "navigation": {
+      "label": "Auf dieser Seite",
+      "jumpTo": "Zum Abschnitt",
+      "gettingStarted": "Erste Schritte",
+      "customPractice": "Individuelles Üben",
+      "personalizedLearning": "Personalisiertes Lernen",
+      "myLists": "Meine Listen",
+      "vocabularyProgress": "Wortschatz & Fortschritt",
+      "resources": "Entdecken & Lernmaterialien",
+      "accountSettings": "Konto & Einstellungen",
+      "faq": "Häufige Fragen"
+    },
+    "sections": {
+      "gettingStarted": {
+        "title": "Erste Schritte",
+        "intro": "FluentStellar bietet dir zwei Möglichkeiten, deinen Wortschatz zu erweitern: Du kannst ohne Konto frei üben oder mit einem Konto einem personalisierten Lernsystem folgen.",
+        "choosePath": {
+          "title": "So möchtest du lernen",
+          "body": "Wähle Individuelles Üben, wenn du in deinem eigenen Tempo Vokabeln trainieren und Sprachen, Übungen und Wortschatzfilter selbst bestimmen möchtest.\n\nWähle Personalisiertes Lernen, wenn du systematisch neue Wörter lernen, bereits gelernte Vokabeln wiederholen und deinen Fortschritt langfristig verfolgen möchtest."
+        },
+        "withoutAccount": {
+          "title": "Ohne Konto üben",
+          "body": "Du kannst sofort und ohne Registrierung anfangen. Wähle deine Sprachen aus, passe bei Bedarf den Wortschatz und die Übungen an und starte deine Übungseinheit. Es gibt keine feste Wortanzahl. Du entscheidest selbst, wann du aufhörst.\n\nDeine Übungseinstellungen werden in deinem Browser gespeichert. Ohne Anmeldung werden deine Übungseinheiten und Ergebnisse jedoch nicht in einem Benutzerkonto gespeichert."
+        },
+        "withAccount": {
+          "title": "Ein Konto für personalisiertes Lernen erstellen",
+          "body": "Erstelle ein kostenloses Konto mit Google oder deiner E-Mail-Adresse. Nach der Anmeldung vervollständigst du dein Profil mit den erforderlichen Angaben, deinen Sprachen und deinem aktuellen Sprachniveau.\n\nMit deinem Konto kannst du Neue Wörter lernen und Wörter wiederholen, persönliche Wortlisten erstellen und deine Lernstatistiken einsehen. Dein Fortschritt wird beim Lernen und Wiederholen automatisch gespeichert."
+        }
+      },
+      "customPractice": {
+        "title": "Individuelles Üben",
+        "intro": "Beim Individuellen Üben kannst du Vokabeln in jeder der sieben unterstützten Sprachen trainieren. Du entscheidest selbst, welche Übungen und Wortkategorien du verwenden möchtest. Dafür brauchst du kein Konto.",
+        "languages": {
+          "title": "Sprachen auswählen",
+          "body": "Wähle unter Deine Sprache die Sprache aus, in der du Bedeutungen und Übersetzungen sehen möchtest. Unter Übungssprache wählst du die Sprache aus, deren Wörter du üben möchtest. Die beiden Sprachen müssen unterschiedlich sein.\n\nMit der Tauschen-Schaltfläche kannst du die Sprachen vertauschen. Deine Auswahl wird in deinem Browser gespeichert."
+        },
+        "filters": {
+          "title": "Wortschatzfilter",
+          "body": "Über Filter anpassen kannst du GER-Niveaus von A1 bis C2, Wortschatzthemen und Wortarten wie Substantive, Verben und Adjektive auswählen. Innerhalb jeder Kategorie sind mehrere Optionen möglich.\n\nAlle Filter sind freiwillig. Wenn du in einer Kategorie nichts auswählst, werden alle Optionen dieser Kategorie berücksichtigt. Wähle Filter anwenden, um mit deiner Auswahl zur Übungseinrichtung zurückzukehren."
+        },
+        "exerciseSelection": {
+          "title": "Übungen auswählen",
+          "body": "Wähle aus den fünf Übungstypen diejenigen aus, die du verwenden möchtest. Standardmäßig sind alle fünf aktiviert. Mindestens eine Übung muss ausgewählt bleiben.\n\nDu kannst Schreibübungen, das Zusammensetzen von Wörtern, Zuordnungsaufgaben und Hörübungen kombinieren. FluentStellar verwendet während der Einheit automatisch die ausgewählten Übungen, die für die verfügbaren Wörter geeignet sind."
+        },
+        "sessions": {
+          "title": "Übungseinheiten und Abschluss",
+          "body": "Klicke auf Jetzt üben, um zu beginnen. Es gibt weder eine feste Dauer noch eine begrenzte Anzahl an Wörtern. Du kannst beliebig lange weiterüben und die Einheit jederzeit mit Beenden abschließen. Manche Wörter können im Verlauf der Einheit erneut erscheinen.\n\nDu kannst eine Aufgabe mit Überspringen auslassen, verfügbare Hilfen nutzen oder mit Wort anzeigen die Lösung aufdecken. Am Ende siehst du eine Zusammenfassung deiner Versuche, deiner Trefferquote, deiner Ergebnisse nach Niveau und Wortart sowie der geübten Wörter.\n\nIndividuelles Üben verändert weder den Lernstatus deiner Wörter noch deren Wiederholungsplan. Wenn du angemeldet bist, wird deine aktive Übungszeit unter Lernaktivität erfasst. Die Ergebnisse zählen jedoch nicht zu deinem Tagesziel für neue Wörter."
+        },
+        "exerciseTypes": {
+          "title": "Übungstypen",
+          "intro": "FluentStellar bietet fünf interaktive Übungstypen. Vor dem Start des Individuellen Übens kannst du auswählen, welche du verwenden möchtest.",
+          "wordTyping": {
+            "title": "Wort tippen",
+            "body": "Lies die Bedeutung in deiner Sprache und tippe das vollständige Wort in der Übungssprache ein. Du kannst dir auch die Aussprache anhören und zusätzliche Informationen zum Wort ansehen.\n\nMit Hinweis kannst du einige Buchstaben aufdecken. Wenn du die Lösung nicht weißt, kannst du Wort anzeigen wählen. Akzente und Sonderzeichen müssen korrekt eingegeben werden."
+          },
+          "halfWritten": {
+            "title": "Halbfertiges Wort ergänzen",
+            "body": "Ein Teil des gesuchten Wortes ist bereits vorgegeben. Gib die fehlenden Buchstaben ein, um das Wort richtig zu vervollständigen.\n\nDiese Übung hilft dir, dich mithilfe der vorgegebenen Buchstaben an die Schreibweise zu erinnern. Da bereits ein Teil der Lösung sichtbar ist, gibt es hier keine Hinweis-Schaltfläche."
+          },
+          "brokenWord": {
+            "title": "Wort aus Teilen zusammensetzen",
+            "body": "Das gesuchte Wort wurde in mehrere Teile zerlegt und durcheinandergebracht. Wähle die Teile in der richtigen Reihenfolge aus, um das vollständige Wort zusammenzusetzen.\n\nDu kannst Hinweis verwenden, wenn du Hilfe brauchst, oder mit Wort anzeigen die Lösung aufdecken."
+          },
+          "connectWords": {
+            "title": "Wörter verbinden",
+            "body": "Ordne vier Wörtern in deiner Übungssprache die richtigen Bedeutungen in deiner eigenen Sprache zu. Wähle zuerst ein Wort und danach die passende Bedeutung aus.\n\nRichtige Zuordnungen bleiben verbunden. Wenn du zwei Einträge falsch zuordnest, kannst du es erneut versuchen."
+          },
+          "listening": {
+            "title": "Hörübung",
+            "body": "Höre dir die gesprochenen Wörter an und ordne jedem Wort die richtige Bedeutung in deiner Sprache zu. Verwende die Audio-Schaltflächen, um die Wörter vor der Zuordnung anzuhören.\n\nFür die Sprachausgabe verwendet FluentStellar die Sprachsynthese deines Browsers. Verfügbare Stimmen und Aussprachequalität können je nach Gerät unterschiedlich sein. Wenn die Hörübung nicht funktioniert, kannst du während der Einheit Zu Wörter verbinden wechseln auswählen."
+          }
+        }
+      },
+      "personalizedLearning": {
+        "title": "Personalisiertes Lernen",
+        "intro": "Mit einem FluentStellar-Konto kannst du einem strukturierten Lernsystem folgen. Du lernst neue Wörter, wiederholst bereits gelernten Wortschatz und verfolgst deinen Fortschritt.",
+        "studyNewWords": {
+          "title": "Neue Wörter lernen",
+          "body": "Öffne Lernen und wähle Neue Wörter lernen. FluentStellar stellt neue Vokabeln aus einer festgelegten Lernreihenfolge zusammen. Dabei beginnt das System bei deinem gewählten GER-Niveau und lässt Wörter aus, die du bereits gelernt hast.\n\nZu jedem neuen Wort siehst du zunächst die Bedeutung, eine Definition, einen Beispielsatz und die Aussprache. Danach übst du es in drei Schritten: Wort aus Teilen zusammensetzen, Halbfertiges Wort ergänzen und Wort tippen.\n\nEin Wort wird gespeichert, sobald du alle drei Übungen abgeschlossen hast. Du kannst die Lerneinheit vorzeitig beenden. Bereits abgeschlossene Wörter bleiben gespeichert, das gerade begonnene Wort jedoch nicht."
+        },
+        "reviewWords": {
+          "title": "Wörter wiederholen",
+          "body": "Mit Wörter wiederholen festigst du Vokabeln, die du bereits gelernt hast. FluentStellar nutzt verteilte Wiederholungen, damit Wörter im Laufe der Zeit erneut erscheinen. Dabei können auch Wörter vorkommen, deren nächste geplante Wiederholung noch nicht fällig ist.\n\nRichtige Antworten helfen dir, Wörter langfristig sicherer zu beherrschen. Falsche Antworten zeigen, dass du noch mehr Übung brauchst. Deine Ergebnisse werden nach jedem Wort automatisch gespeichert.\n\nWiederholungseinheiten haben keine feste Wortgrenze. Du kannst so lange wiederholen, wie Wörter verfügbar sind, und die Einheit jederzeit beenden."
+        },
+        "dailyGoal": {
+          "title": "Tagesziel",
+          "body": "Dein Tagesziel legt fest, wie viele neue Wörter du pro Tag lernen möchtest. Im Bereich Lernen kannst du zwischen 10, 15, 20, 30 und 50 Wörtern wählen. Standardmäßig sind 15 Wörter eingestellt.\n\nNur vollständig abgeschlossene neue Wörter zählen für dein Tagesziel. Wiederholungen und Individuelles Üben erhöhen diese Zahl nicht. Wenn du dein Ziel erreichst, trägt das zu deiner täglichen Lernserie bei.\n\nNach Erreichen deines Tagesziels kannst du weiterhin Wörter wiederholen. Möchtest du am selben Tag noch mehr neue Wörter lernen, kannst du dein Tagesziel erhöhen."
+        },
+        "learningProgress": {
+          "title": "So funktioniert dein Wortschatzfortschritt",
+          "body": "Wörter, die du unter Neue Wörter lernen vollständig abschließt, werden automatisch in deinem persönlichen Wortschatz gespeichert. Bei späteren Wiederholungen erfasst FluentStellar deine Antworten und passt den Zeitpunkt der nächsten Wiederholung an.\n\nMehrere aufeinanderfolgende richtige Antworten helfen dir, Wörter zunehmend sicher zu beherrschen. Bei falschen Antworten kann ein Wort eine Lernstufe zurückfallen, damit du es weiter festigen kannst.\n\nDein Fortschritt wird für jede Lernsprache getrennt gespeichert. Individuelles Üben und das Üben persönlicher Listen verändern weder den Lernstatus der Wörter noch deren Wiederholungsplan."
+        }
+      },
+      "myLists": {
+        "title": "Meine Listen",
+        "intro": "Organisiere Wörter, die du gezielt üben möchtest, in persönlichen Listen. Du kannst beispielsweise Listen zu bestimmten Themen, schwierigen Wörtern oder eigenen Lernzielen erstellen.",
+        "manageLists": {
+          "title": "Listen erstellen und verwalten",
+          "body": "Öffne Meine Listen in deinem Profil und wähle Liste erstellen. Gib deiner Liste einen Namen und speichere sie. Du kannst mehrere Listen erstellen, durchsuchen, umbenennen und bei Bedarf löschen.\n\nJede Liste gehört zu einer bestimmten Lernsprache. Wenn du die Lernsprache wechselst, werden die Listen dieser Sprache angezeigt. Das Löschen einer Liste entfernt nicht den Lernfortschritt der enthaltenen Wörter."
+        },
+        "addWords": {
+          "title": "Wörter hinzufügen und entfernen",
+          "body": "Öffne eine Liste und wähle Wörter hinzufügen. Suche nach passenden Vokabeln und wähle die Wörter aus, die du aufnehmen möchtest. Du kannst sowohl bereits gelernte als auch noch nicht gelernte Wörter hinzufügen.\n\nDu kannst Wörter außerdem aus dem Bereich Wortschatz, von den Abschlussseiten deiner Lerneinheiten und aus den vollständigen öffentlichen Vokabellisten zu deinen Listen hinzufügen.\n\nEin Wort kann in mehreren Listen enthalten sein, aber nicht zweimal in derselben Liste. Wenn du ein Wort aus einer Liste entfernst, bleibt dein Lernfortschritt erhalten."
+        },
+        "practiceList": {
+          "title": "Eine Liste üben",
+          "body": "Öffne eine Liste mit Wörtern und wähle Liste üben. Lege fest, wie viele Wörter du verwenden möchtest, in welcher Reihenfolge sie erscheinen sollen und welche Übungstypen du nutzen willst.\n\nDie Einheit verwendet dieselben Übungen wie Individuelles Üben, beschränkt sich aber auf die ausgewählten Wörter deiner Liste. Du kannst weiterüben und jederzeit aufhören.\n\nDas Üben einer Liste verändert weder den Lernstatus der Wörter noch deren geplante Wiederholungen."
+        }
+      },
+      "vocabularyProgress": {
+        "title": "Wortschatz & Fortschritt",
+        "intro": "Sieh dir deine gelernten Wörter an, verwalte deine Favoriten und verfolge, wie sich dein Wortschatz im Laufe der Zeit entwickelt.",
+        "vocabulary": {
+          "title": "Deine Vokabelsammlung",
+          "body": "Im Profilbereich Wortschatz findest du die Wörter, die du unter Neue Wörter lernen abgeschlossen hast. Du kannst nach Wörtern suchen, sie nach Niveau, Wortart und Lernstatus filtern und sehen, wann du sie zuletzt geübt hast.\n\nFür jedes Wort kannst du die Details öffnen, es zu einer persönlichen Liste hinzufügen oder als Favorit markieren."
+        },
+        "statuses": {
+          "title": "Lernen, Bekannt und Gemeistert",
+          "body": "FluentStellar ordnet deine gelernten Wörter entsprechend deinem Fortschritt drei Kategorien zu.\n\nLernen: Wörter, mit denen du dich bereits beschäftigt hast und die du noch weiter festigen musst.\n\nBekannt: Wörter, die du gut kennst und durch Wiederholungen gefestigt hast.\n\nGemeistert: Wörter, die du über einen längeren Zeitraum erfolgreich behalten hast.\n\nDiese Kategorien können sich durch deine Antworten beim Wiederholen verändern. Du musst den Status nicht selbst anpassen."
+        },
+        "favorites": {
+          "title": "Favoriten",
+          "body": "Markiere Wörter als Favoriten, damit du sie später leichter wiederfindest. Im Tab Favoriten des Bereichs Wortschatz kannst du deine markierten Wörter ansehen und verwalten. Auch auf anderen Lernseiten kannst du Wörter als Favoriten speichern, wenn diese Funktion dort angeboten wird.\n\nDas Markieren als Favorit verändert weder den Lernstatus eines Wortes noch seine Wiederholungshäufigkeit."
+        },
+        "dashboard": {
+          "title": "Dashboard und Statistiken",
+          "body": "Dein Dashboard bietet dir eine Übersicht über deine Lernaktivitäten. Du siehst unter anderem, wie viele neue Wörter du gelernt hast, wie weit du mit deinem Tagesziel bist, wie deine tägliche Lernserie verläuft und wie sich dein Wortschatz zusammensetzt.\n\nUnter Lernaktivität findest du deine aktive Lernzeit nach Lernmodus. Dazu zählt auch die Zeit im Individuellen Üben, wenn du angemeldet bist. Außerdem kannst du sehen, wie viele neue Wörter du in den letzten Tagen gelernt hast."
+        },
+        "milestones": {
+          "title": "Meilensteine und Wortschatzentwicklung",
+          "body": "Im Bereich Fortschritt zeigen dir die Meilensteine deine Erfolge in verschiedenen Bereichen: gelernter Wortschatz, bekannte Wörter, Beherrschung, Wiederholungen und Beständigkeit.\n\nDas Diagramm Wortschatzentwicklung zeigt, wie deine Wortsammlung in unterschiedlichen Zeiträumen gewachsen ist.\n\nFür deine tägliche Lernserie musst du dein Tagesziel für neue Wörter erreichen. Bei den Meilensteinen für Beständigkeit können dagegen auch Tage zählen, an denen du neue Wörter gelernt oder bereits gelernte Wörter wiederholt hast."
+        }
+      },
+      "resources": {
+        "title": "Entdecken & Lernmaterialien",
+        "intro": "Neben interaktiven Übungen bietet FluentStellar kostenlose Lernmaterialien, mit denen du Wörter nachschlagen, Wortschatz nach Niveau erkunden und mehr über deine Lernsprachen erfahren kannst.",
+        "explore": {
+          "title": "Wortschatz entdecken",
+          "body": "Öffne Entdecken und wähle eine der sieben unterstützten Sprachen aus. Dort findest du Vokabellisten nach Niveau, Wortschatz-Niveautests und Nachschlagewerke zu Verben.\n\nDiese Materialien kannst du auch ohne Anmeldung nutzen und als Ausgangspunkt für deine Übungen verwenden."
+        },
+        "cefr": {
+          "title": "Wortschatz nach GER-Niveau",
+          "body": "Entdecke Vokabeln nach den Niveaustufen A1, A2, B1, B2, C1 und C2 des Gemeinsamen Europäischen Referenzrahmens für Sprachen (GER).\n\nAuf den Seiten zu den einzelnen Niveaus kannst du Wörter der jeweiligen Schwierigkeitsstufe ansehen und Individuelles Üben mit diesem Niveau als vorausgewähltem Filter starten. Außerdem gibt es vollständige Vokabellisten, die Wörter aus mehreren Niveaustufen zusammenfassen."
+        },
+        "wordDetails": {
+          "title": "Wortdetails und Aussprache",
+          "body": "Auf den Wortdetailseiten findest du hilfreiche Informationen wie Übersetzungen, Definitionen, Beispielsätze, Aussprache, Wortart und GER-Niveau.\n\nDu kannst dort auch eine kurze Übung zum jeweiligen Wort machen oder weitere Vokabeln desselben Niveaus trainieren. Die Audiowiedergabe hängt von den Funktionen und verfügbaren Stimmen deines Browsers ab."
+        },
+        "verbs": {
+          "title": "Lernmaterialien zu Verben",
+          "body": "Entdecke Listen häufig verwendeter Verben sowie Materialien zu Verbformen und Konjugationen. So kannst du nachschlagen, wie Verben in verschiedenen Formen verwendet werden, und deinen Wortschatz erweitern.\n\nWelche Materialien angeboten werden, kann je nach Sprache unterschiedlich sein. Du findest sie unter Entdecken oder Lernmaterialien."
+        },
+        "levelTest": {
+          "title": "Wortschatz-Niveautest",
+          "body": "Mit dem kostenlosen Wortschatz-Niveautest kannst du deinen Wortschatz ungefähr einschätzen. Der Test beginnt bei A1 und geht schrittweise bis C2.\n\nAuf den Niveaus A1 und A2 wählst du aus sechs Antworten die richtige Übersetzung aus. Von B1 bis C2 setzt du Wörter aus vorgegebenen Teilen zusammen. Der Test endet, wenn du innerhalb eines Niveaus drei falsche Antworten gegeben oder alle Niveaus abgeschlossen hast.\n\nDas Ergebnis ist eine Orientierung und kein offizieller GER-Sprachnachweis. Du kannst den Test beliebig oft wiederholen und das geschätzte Niveau als Filter für Individuelles Üben verwenden. Dein im Konto gespeichertes Niveau wird durch den Test nicht automatisch geändert."
+        }
+      },
+      "accountSettings": {
+        "title": "Konto & Einstellungen",
+        "intro": "In den Einstellungen kannst du dein Profil, deine Lernpräferenzen und die mit deinem Konto verbundenen Daten verwalten.",
+        "registration": {
+          "title": "Registrierung und Anmeldung",
+          "body": "Du kannst dich mit Google oder mit deiner E-Mail-Adresse und einem Passwort registrieren. Bei der Registrierung per E-Mail musst du deine Adresse über einen Bestätigungslink verifizieren.\n\nWenn du bereits ein Konto hast, wähle Anmelden. Falls du dein Passwort vergessen hast, kannst du einen Link zum Zurücksetzen anfordern."
+        },
+        "profileSetup": {
+          "title": "Profil einrichten",
+          "body": "Bei deiner ersten Anmeldung musst du dein Profil vervollständigen, bevor du das personalisierte Lernsystem nutzen kannst.\n\nDazu gibst du einen Spitznamen, deine Muttersprache, deine Lernsprache, dein aktuelles Niveau, dein Alter sowie den Tag und Monat deiner Geburt an.\n\nDein Tagesziel ist anfangs auf 15 neue Wörter eingestellt. Du kannst es später unter Lernen ändern. Der Niveautest ist freiwillig und gehört nicht zur Registrierung."
+        },
+        "languages": {
+          "title": "Lernsprache und Niveau ändern",
+          "body": "Öffne Einstellungen und gehe zu Sprachen, um deine Muttersprache, Lernsprache oder dein Aktuelles Niveau zu ändern. Speichere deine Änderungen, damit sie übernommen werden.\n\nDein Aktuelles Niveau bestimmt, ab welcher Stufe neue Wörter zum Lernen ausgewählt werden. Wenn du die Lernsprache wechselst, bleiben deine bisherigen Fortschritte in anderen Sprachen erhalten. Jede Lernsprache hat ihren eigenen Wortschatzfortschritt, eigene Listen und eigene Statistiken.\n\nDie Sprache der Benutzeroberfläche kannst du unabhängig davon mit dem Sprachmenü der Website ändern."
+        },
+        "timezone": {
+          "title": "Zeitzone",
+          "body": "Unter Einstellungen kannst du deine Zeitzone auswählen oder Aktuelle Zeitzone verwenden wählen.\n\nDeine Zeitzone bestimmt, wann für Tagesziele, Lernserien und Statistiken ein neuer Lerntag beginnt. Die zeitlichen Abstände zwischen den Wiederholungen werden dadurch nicht verändert."
+        },
+        "resetProgress": {
+          "title": "Lernfortschritt zurücksetzen",
+          "body": "Wenn du in einer Sprache von vorne beginnen möchtest, öffne Einstellungen und wähle Lernfortschritt zurücksetzen für die entsprechende Sprache. Zur Bestätigung musst du RESET eingeben.\n\nDadurch werden der Wortschatzfortschritt, die Favoriten, der Wiederholungsverlauf, die Lernstatistiken und der Verlauf des Individuellen Übens für die ausgewählte Sprache dauerhaft gelöscht. Dein Konto und deine Fortschritte in anderen Sprachen bleiben erhalten.\n\nDieser Vorgang kann nicht rückgängig gemacht werden."
+        },
+        "deleteAccount": {
+          "title": "Konto löschen",
+          "body": "Du kannst dein Konto unter Einstellungen im Bereich Daten & Konto dauerhaft löschen.\n\nZur Bestätigung musst du DELETE eingeben. Wenn du dich mit E-Mail und Passwort anmeldest, musst du zusätzlich dein aktuelles Passwort eingeben.\n\nDurch das Löschen werden dein Konto und die zugehörigen Daten dauerhaft entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden."
+        }
+      },
+      "faq": {
+        "title": "Häufige Fragen",
+        "items": {
+          "accountRequired": {
+            "question": "Brauche ich ein Konto?",
+            "answer": "Nein. Du kannst Individuelles Üben nutzen, den Niveautest machen und die Lernmaterialien zum Wortschatz ohne Registrierung erkunden.\n\nEin Konto brauchst du, um mit dem personalisierten System neue Wörter zu lernen, deinen Wiederholungsfortschritt zu speichern, persönliche Listen anzulegen und deine Lernstatistiken einzusehen."
+          },
+          "practiceProgress": {
+            "question": "Wird mein Fortschritt beim Individuellen Üben gespeichert?",
+            "answer": "Individuelles Üben verändert weder den Lernstatus deiner Wörter noch deren geplante Wiederholungen.\n\nOhne Anmeldung werden deine Übungsergebnisse nicht in einem Konto gespeichert. Wenn du angemeldet bist, wird deine aktive Übungszeit unter Lernaktivität erfasst. Dein Wortschatzfortschritt und dein Tagesziel werden dadurch jedoch nicht verändert."
+          },
+          "reviewSystem": {
+            "question": "Wie funktioniert Wörter wiederholen?",
+            "answer": "FluentStellar nutzt verteilte Wiederholungen, damit du dir bereits gelernte Wörter langfristig merken kannst. Richtige Antworten stärken deinen Fortschritt, während falsche Antworten zeigen, dass du noch mehr Übung brauchst.\n\nDie Wiederholung enthält sowohl Wörter, die gerade wiederholt werden sollten, als auch andere bereits gelernte Wörter, deren nächster geplanter Termin noch nicht erreicht ist. Du kannst beliebig lange wiederholen und die Einheit jederzeit beenden."
+          },
+          "changeLanguage": {
+            "question": "Kann ich meine Lernsprache ändern?",
+            "answer": "Ja. Öffne Einstellungen und ändere unter Sprachen deine Lernsprache.\n\nDein Fortschritt wird für jede Sprache getrennt aufbewahrt. Wenn du später zu einer früheren Lernsprache zurückkehrst, findest du deinen bisherigen Wortschatz und deine Listen wieder."
+          },
+          "audio": {
+            "question": "Warum funktioniert die Audiowiedergabe nicht?",
+            "answer": "FluentStellar verwendet die Sprachsynthese deines Browsers. Manche Stimmen oder Sprachen sind auf bestimmten Geräten möglicherweise nicht verfügbar.\n\nPrüfe, ob der Ton eingeschaltet ist, lade die Seite neu und kontrolliere, ob dein Browser eine passende Stimme für die gewählte Sprache unterstützt. Wenn die Hörübung nicht funktioniert, kannst du Zu Wörter verbinden wechseln auswählen."
+          },
+          "finishSession": {
+            "question": "Kann ich eine Einheit jederzeit beenden?",
+            "answer": "Ja. Individuelles Üben und Wörter wiederholen haben keine feste Wortgrenze. Du kannst beide Arten von Einheiten jederzeit beenden.\n\nAuch beim Modus Neue Wörter lernen kannst du vorzeitig aufhören. Bereits abgeschlossene Wörter bleiben gespeichert. Ein Wort, dessen Übungen du noch nicht vollständig abgeschlossen hast, wird jedoch nicht gespeichert."
+          }
+        }
+      }
+    },
+    "actions": {
+      "startPractice": "Jetzt üben",
+      "createAccount": "Konto erstellen",
+      "openLearning": "Lernen",
+      "openMyLists": "Meine Listen",
+      "exploreVocabulary": "Entdecken",
+      "learningResources": "Alle Lernmaterialien ansehen",
+      "takeLevelTest": "Schnellen Niveautest machen",
+      "openSettings": "Einstellungen"
     }
   },
   "languageNames": {
@@ -1299,7 +1530,7 @@
     "tryTyping": "Tippe Antworten, um deinen Fortschritt zu verfolgen!",
     "skipped": "ohne Versuch übersprungen",
     "word": "Wort",
-    "practicedWords": "Geubte Worter",
+    "practicedWords": "Geübte Wörter",
     "noPracticedWords": "In dieser Sitzung wurde kein Wort geschrieben — Wörter, die du selbst schreibst, ohne „Wort anzeigen“, erscheinen hier.",
     "signupCta": {
       "heading": "Jedes Wort zählt",
@@ -1307,8 +1538,8 @@
       "button": "Kostenloses Konto erstellen",
       "supportingText": "Kostenlos starten"
     },
-    "wordsInThisSession": "Worter in dieser Sitzung",
-    "closePracticedWords": "Geubte Worter schliessen",
+    "wordsInThisSession": "Wörter in dieser Sitzung",
+    "closePracticedWords": "Geübte Wörter schließen",
     "yourLanguageHeader": "Deine Sprache",
     "targetLanguageHeader": "Zielsprache",
     "wordTypeHeader": "Wortart",

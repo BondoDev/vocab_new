@@ -151,7 +151,7 @@ const EXPECTED_DASHBOARD_PAGE = {
     },
   },
   "german_interface.json": {
-    title: "Übersicht",
+    title: "Dashboard",
     greeting: {
       morning: "Guten Morgen, {name}. Bereit, weiterzulernen?",
       afternoon: "Guten Tag, {name}. Bereit, weiterzulernen?",
@@ -189,10 +189,10 @@ const EXPECTED_DASHBOARD_PAGE = {
   "portuguese_interface.json": {
     title: "Painel",
     greeting: {
-      morning: "Bom dia, {name}. Pronto para continuar a aprender?",
-      afternoon: "Boa tarde, {name}. Pronto para continuar a aprender?",
-      evening: "Boa noite, {name}. Pronto para continuar a aprender?",
-      fallback: "Pronto para continuar a aprender?",
+      morning: "Bom dia, {name}. Pronto para continuar aprendendo?",
+      afternoon: "Boa tarde, {name}. Pronto para continuar aprendendo?",
+      evening: "Boa noite, {name}. Pronto para continuar aprendendo?",
+      fallback: "Pronto para continuar aprendendo?",
     },
   },
   "russian_interface.json": {
@@ -344,9 +344,9 @@ const EXPECTED_HERO = {
     wordsLearnedLabel: "palavras aprendidas",
     dayStreakLabel: "dias seguidos",
     goalLabel: "Meta",
-    continueLearningTitle: "Continuar a aprender",
+    continueLearningTitle: "Continuar aprendendo",
     continueLearningMessage: "Ainda faltam {count} palavras para hoje.",
-    reviewWordsMessage: "Mantenha o seu vocabulário ativo com uma sessão de revisão.",
+    reviewWordsMessage: "Mantenha seu vocabulário ativo com uma sessão de revisão.",
   },
   "russian_interface.json": {
     ariaLabel: "Сводка за сегодня",
